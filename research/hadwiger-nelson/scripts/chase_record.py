@@ -49,18 +49,33 @@ def main():
         for c in range(K):
             cnf.append([-x(u, c), -x(v, c)])
 
+    # Colour symmetry breaking, which is not optional at this size: kissat took
+    # twenty minutes on the symmetry-broken formula for this graph and had not
+    # finished the plain one after a hundred and ten.  Every greedy deletion is
+    # another UNSAT solve, so that factor multiplies by thousands of queries.
+    # Sound because colours are interchangeable, and the three pinned vertices
+    # are protected from deletion so the pinning never dangles.
+    triangle = g.find_clique(3) or []
+    for i, v in enumerate(triangle):
+        cnf.append([x(v, i)])
+        for c in range(K):
+            if c != i:
+                cnf.append([-x(v, c)])
+    protected = set(triangle)
+    print(f"  pinned triangle {triangle} to colours 0,1,2", flush=True)
+
     s = Solver(name="cd19", bootstrap_with=cnf)
     try:
         keep = set(range(n))
         if s.solve(assumptions=[a(v) for v in keep]) is not False:
             print("the graph IS 4-colourable -- nothing to shrink", flush=True)
             return
-        core = {l - 1 - n * K for l in (s.get_core() or [])}
+        core = {l - 1 - n * K for l in (s.get_core() or [])} | protected
         print(f"  first UNSAT core: {len(core)}  [{time.time()-t0:.0f}s]", flush=True)
         for r in range(30):
             if s.solve(assumptions=[a(v) for v in core]) is not False:
                 break
-            new = {l - 1 - n * K for l in (s.get_core() or [])}
+            new = {l - 1 - n * K for l in (s.get_core() or [])} | protected
             if not new or len(new) >= len(core):
                 break
             core = new
@@ -74,7 +89,7 @@ def main():
             rnd.shuffle(order)
             dropped = 0
             for v in order:
-                if v not in cur:
+                if v not in cur or v in protected:
                     continue
                 trial = cur - {v}
                 if s.solve(assumptions=[a(t) for t in trial]) is False:
