@@ -1165,6 +1165,35 @@ completely different regimes at four and five colours.
 
 > That is the frontier, in one measurement, on one graph.
 
+### Small ρ does not need a small critical subgraph
+
+One direction is immediate: a k-chromatic subgraph uses all k colours in every
+k-colouring of the whole graph, so
+
+```
+rho(G, k) <= |H|   for every k-chromatic subgraph H of G.
+```
+
+At four colours that would explain everything — Sa contains Moser spindles,
+seven vertices, 4-critical — and it is the obvious reading of ρ(Sa, 4) = 7.
+
+**It is the wrong reading.** The seven vertices the construction returns are
+`S = [0, 3, 4, 6, 7, 8, 9]`, which induce **five edges**, have chromatic number
+**3**, and include **three isolated vertices**. Not a spindle, not critical, not
+4-chromatic. Re-derived from a CNF built from scratch rather than through the
+same code: for each of the four colours, no proper 4-colouring of Sa leaves
+that colour off S. And minimal — all seven single deletions break it.
+
+> So the forcing is **ambient**. It is carried by the other 390 vertices, not
+> by anything inside the set, and the converse of the theorem is false.
+
+That matters for what is left. A core of three at a degree-60 pivot needs
+ρ ≤ 63. Had small ρ required a small k-chromatic subgraph, this would be asking
+for a 5-chromatic unit-distance graph on 63 vertices, against a published record
+of around five hundred — hopeless. **It does not.** It asks for ambient rigidity
+of exactly the kind Sa already exhibits at four colours, with a set that is
+nearly edgeless.
+
 ## Corrections to my own claims, kept rather than edited away
 
 - **"Pressure > 2 at k = 5 *requires* the confined set to be 4-chromatic."**
@@ -1182,6 +1211,10 @@ completely different regimes at four and five colours.
 - **A hexagon family with `theta` alongside `theta/2`.** `CH² = CT` exactly, so
   it produced a coincident hexagon — the same mistake that caused a false
   positive earlier — and the guard skipped it silently. It now says so.
+- **"ρ(Sa,4) = 7 because Sa contains a Moser spindle."** The seven vertices
+  induce five edges and are 3-chromatic with three isolated points. The
+  forcing is ambient, and the converse of the subgraph theorem is false —
+  which is the one piece of good news in this section.
 - **"Every confined degree is even."** True on de Grey's configuration and
   false in general — 1276 of 9600 sampled orientations have an odd degree, and
   degree 5 occurs. It is a symmetry of that offset family.

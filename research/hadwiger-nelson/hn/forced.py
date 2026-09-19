@@ -1416,3 +1416,46 @@ RHO_JUMPS_AT_FIVE = {
     "caveat": "358 bounds the greedy path, not rho: a different set of that "
               "size might still be forcing",
 }
+
+
+# -- small rho does NOT need a small critical subgraph --------------------
+#
+# One direction is immediate: a k-chromatic subgraph uses all k colours in
+# every k-colouring of the whole graph, so
+#
+#     rho(G, k) <= |H|  for every k-chromatic subgraph H of G.
+#
+# At four colours that would explain everything -- Sa contains Moser spindles,
+# seven vertices, 4-critical -- and it is the obvious reading of rho(Sa,4) = 7.
+#
+# It is the WRONG reading. The seven vertices the construction returns are
+#
+#     S = [0, 3, 4, 6, 7, 8, 9],
+#
+# which induce FIVE edges, have chromatic number 3, and include three isolated
+# vertices. Not a spindle, not critical, not 4-chromatic. Re-derived from a
+# CNF built from scratch rather than through ColourRelations: for each of the
+# four colours, no proper 4-colouring of Sa leaves that colour off S. And
+# minimal -- all seven single deletions break it.
+#
+# So the forcing is AMBIENT. It is carried by the rest of the 397 vertices,
+# not by anything inside the set, and the converse of the theorem is false.
+#
+# That matters for what is left. A core of three at a degree-60 pivot needs
+# rho <= 63. Had small rho required a small k-chromatic subgraph, this would
+# be asking for a 5-chromatic unit-distance graph on 63 vertices, against a
+# published record of around five hundred -- hopeless. It does not. It is
+# asking for ambient rigidity of exactly the kind Sa already exhibits at four
+# colours, with a set that is nearly edgeless.
+
+SMALL_RHO_IS_AMBIENT = {
+    "theorem": "rho(G,k) <= |H| for every k-chromatic subgraph H",
+    "converse": False,
+    "witness": {"graph": "de Grey Sa", "k": 4, "set": [0, 3, 4, 6, 7, 8, 9],
+                "induced_edges": 5, "induced_chi": 3, "isolated": 3,
+                "minimal": True,
+                "verified": "independent CNF, all four colours checked"},
+    "consequence": "rho <= 63 at five colours does not ask for a 63-vertex "
+                   "5-chromatic unit-distance graph; it asks for ambient "
+                   "rigidity, which Sa already has at four",
+}

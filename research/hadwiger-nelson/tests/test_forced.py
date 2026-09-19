@@ -1044,3 +1044,15 @@ def test_rho_prediction_holds_where_the_method_works():
     assert R["rho_at_4"] <= R["predicted_bound_at_4"], "the prediction is met"
     assert R["rho_at_4"] * 50 < R["greedy_at_5_did_not_close_by"]
     assert "not rho" in R["caveat"], "the 358 is a path bound, not a value"
+
+
+def test_small_rho_does_not_need_a_small_critical_subgraph():
+    """Sa's seven forcing vertices induce five edges and are 3-chromatic."""
+    from hn.forced import SMALL_RHO_IS_AMBIENT as A
+
+    w = A["witness"]
+    assert A["converse"] is False
+    assert len(w["set"]) == 7 and w["induced_edges"] == 5
+    assert w["induced_chi"] < w["k"], "not a 4-chromatic subgraph at all"
+    assert w["isolated"] > 0, "three of the seven have no neighbour in the set"
+    assert w["minimal"] is True
