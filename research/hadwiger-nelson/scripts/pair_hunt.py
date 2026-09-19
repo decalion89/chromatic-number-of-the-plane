@@ -31,7 +31,8 @@ from hn.coloring import is_k_colorable
 from hn.degrey import build_S, build_Sa, build_Y
 from hn.geometry import Rotation
 from hn.graph import build_graph
-from hn.mixed import blocks_two_targets, conflict_isometries
+from hn.mixed import (blocks_two_targets, conflict_reflections,
+                      conflict_rotations)
 from hn.spindle import SeparationTest
 
 K = int(os.environ.get("HN_K", "4"))
@@ -81,7 +82,20 @@ def main() -> None:
                     if st.run(subset=[a, b])[0]:
                         continue
                     pairs += 1
-                    fam = conflict_isometries(g, bp, [a, b])
+                    # every isometry putting a target's image one from *any*
+                    # vertex is a copy worth having. Blocking a core of two is
+                    # monotone upward, so an extra copy can never spoil it,
+                    # and the 2-SAT test decides the lot in linear time.
+                    fam = {}
+                    for x in (a, b):
+                        for y in range(g.n):
+                            if y == bp:
+                                continue
+                            for r in conflict_rotations(g, bp, x, y):
+                                fam[("rot", r.cos, r.sin)] = r
+                            for r in conflict_reflections(g, bp, x, y):
+                                fam[("ref", r.cos, r.sin)] = r
+                    fam = list(fam.values())
                     blocked = bool(fam) and blocks_two_targets(
                         g, bp, [a, b], [ident] + fam)
                     print(f"  pivot {bp:4d}: FORCED PAIR ({a}, {b}), "
