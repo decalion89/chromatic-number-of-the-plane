@@ -90,3 +90,45 @@ def test_rank_two_lattices_can_never_block_a_coset_colouring():
     assert squares != nonsquares
     assert set(next(iter(squares))) == {(0, 1), (1, 0), (1, 1)}
     assert set(next(iter(nonsquares))) == {(1, 2), (1, 3), (1, 4)}
+
+
+def test_unit_directions_can_never_contain_a_projective_line():
+    """The cheapest blocking set in PG(r-1,5) is a line, six points, and unit
+    vectors cannot supply one.
+
+    They all satisfy Q(d) = N for a single N, so their directions carry a form
+    value in one square class; and no projective line over F_5 has all six of
+    its points in one square class. Checked exhaustively over every binary
+    form and every target: the maximum is five, reached only when the form
+    degenerates to rank one, the sixth point being its radical.
+    """
+    p = 5
+    squares = {(t * t) % p for t in range(1, p)}
+
+    def direction(v):
+        for lam in range(1, p):
+            w = tuple((t * lam) % p for t in v)
+            for i in range(len(w)):
+                if w[i] == 1 and all(w[j] == 0 for j in range(i)):
+                    return w
+        return None
+
+    best = 0
+    for a in range(p):
+        for b in range(p):
+            for c in range(p):
+                pts = {}
+                for x in range(p):
+                    for y in range(p):
+                        if (x, y) == (0, 0):
+                            continue
+                        d = direction((x, y))
+                        if d is None:
+                            continue
+                        pts.setdefault(d, set()).add(
+                            (a * x * x + b * x * y + c * y * y) % p)
+                for N in range(1, p):
+                    cls = {(N * s) % p for s in squares}
+                    best = max(best, sum(1 for vals in pts.values()
+                                         if vals & cls))
+    assert best == 5, f"a line should never be fully covered; got {best}"

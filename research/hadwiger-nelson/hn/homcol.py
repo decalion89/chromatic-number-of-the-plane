@@ -179,3 +179,44 @@ RANK_TWO_NEVER_BLOCKS = (
     "a plane lattice's unit vectors all share one norm, so their projective "
     "classes mod 5 lie in one square class: three of six, never a blocking set"
 )
+
+
+# -- and the cheapest blocking set is unreachable -------------------------
+#
+# Blocking a coset colouring means the hyperplanes d-perp cover the dual, which
+# asks the directions D to meet every hyperplane -- a blocking set. In
+# PG(r-1,5) the smallest one is a projective LINE, six points. So the cheapest
+# possible route is six unit vectors whose directions are the six points of a
+# line. It does not exist.
+#
+# THEOREM. No projective line over F_5 has all six of its points carrying a
+# quadratic form value in one square class. Hence the directions of unit
+# vectors -- which all satisfy Q(d) = N for one N -- never contain a complete
+# line.
+#
+# Checked exhaustively over every binary form (a, b, c) over F_5 and every
+# target N: the maximum is FIVE of the six points, reached only when the form
+# degenerates to rank one. The cases are easy to see by hand too. Anisotropic
+# gives three of six, the two square classes splitting the line evenly;
+# hyperbolic gives two, because two of the points are isotropic and carry
+# Q = 0; rank one gives five, the sixth point being the radical.
+#
+# So the minimum blocking set is out of reach, and blocking would need a
+# larger one. Measured across pairs of imaginary quadratic fields -- the only
+# source here of infinitely many unit vectors at fixed rank, since the
+# modulus-one elements of Q(sqrt-d1, sqrt-d2) are exactly the products of one
+# from each factor -- the direction sets reach 25 at rank 4 and contain ZERO
+# complete lines, on every pair tried.
+#
+# One trap, and it produced a false positive before it was found. Some of
+# those generators have denominators divisible by 5, for instance
+# (1 + 3 sqrt-11)/10. The module then stops being 5-integral, clearing
+# denominators makes EVERY vector divisible by 5, and the search dutifully
+# reports "no homomorphism" -- for reasons of arithmetic bookkeeping and
+# nothing else. Generators must be filtered to denominators coprime to 5.
+
+UNIT_DIRECTIONS_MISS_A_LINE = (
+    "unit vectors all have one norm N, and no projective line over F_5 has "
+    "all six points with Q in one square class -- at most five, and only for "
+    "a degenerate form -- so they never contain the minimum blocking set"
+)
