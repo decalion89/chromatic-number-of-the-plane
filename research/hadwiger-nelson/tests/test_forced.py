@@ -596,3 +596,45 @@ def test_three_hexagon_gadget_is_four_chromatic_with_no_small_core():
             f"smallest core {best}; a core of 3 or less would be blockable"
     finally:
         rel.close()
+
+
+def test_adding_one_point_to_a_critical_graph_gives_a_useless_core():
+    """W = G + v with G k-critical: every core of v is all of V(G) \\ N(v).
+
+    For any u outside N(v), G - u is (k-1)-colourable and so is W - u, since
+    v's neighbours all lie in it; colour it with k-1 and give u the kth, and u
+    is alone in that colour while none of v's neighbours carries it, so v can
+    be recoloured to k as well. A target set avoiding u then misses c(v). The
+    obvious resolution of the rigidity tension -- take the most rigid graph
+    there is and add a single point to escape criticality -- is dead on
+    arrival, since blocking caps at a core of three.
+    """
+    from hn.certify import load_certificate
+    from hn.coloring import is_k_colorable
+    from hn.forced import (cegar_core, forced_into_every_core, is_core,
+                           minimise_core)
+    from hn.mixed import circle_intersections
+
+    pts, _doc = load_certificate("certificates/moser_spindle_no3coloring.json")
+    g = build_graph(pts)
+    one = pts[0].x.field.rational(1)
+    assert all(is_k_colorable(build_graph([q for j, q in enumerate(pts)
+                                           if j != i]), 3)[0]
+               for i in range(g.n)), "the spindle must be 4-critical"
+    v = next(q for i in range(g.n) for j in range(i + 1, g.n)
+             if float(pts[i].dist2(pts[j])) <= 3.99
+             for q in circle_intersections(pts[i], one, pts[j], one)
+             if q not in set(pts))
+    w = build_graph(pts + [v])
+    piv = w.vertices.index(v)
+    outside = [u for u in range(w.n) if u != piv and u not in w.adj[piv]]
+    rel = ColourRelations(w, 4)
+    try:
+        assert rel.colourable
+        T, ok = cegar_core(rel, piv, limit=40)
+        assert ok
+        T = minimise_core(rel, piv, T)
+        assert sorted(T) == sorted(outside)
+        assert sorted(forced_into_every_core(rel, piv)) == sorted(outside)
+    finally:
+        rel.close()

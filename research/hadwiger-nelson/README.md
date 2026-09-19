@@ -292,6 +292,38 @@ So the requirement is sharp and unmet: **a 5-chromatic host, with the pivot
 non-critical, substantially overlapping a pressure gadget.** Each piece exists
 separately. Nothing here puts them in one graph.
 
+### The obvious resolution, and why it is dead
+
+There is a real tension. Rigid graphs have few colourings and so small cores —
+but the most rigid are the vertex-critical ones, and criticality kills cores
+outright. Loose graphs escape criticality, but their cores are huge: on
+`G ∪ f(G)` a counterexample can park the free colour anywhere, and hundreds of
+rounds of counterexample-killing close nothing.
+
+The obvious way out is to add **one** point to a k-critical graph. In W = G + v
+every old vertex u still has W − u ⊇ G − u, which is (k−1)-colourable, so u
+stays critical; only v has W − v = G. So v is the unique non-critical vertex,
+the unique possible pivot, and G keeps all its rigidity.
+
+**It is provably useless.**
+
+> **Theorem.** Let G be k-vertex-critical and W = G + v. Then every core of v
+> contains all of V(G) ∖ N(v) — so the minimal core is the whole graph but for
+> the pivot's neighbours.
+>
+> *Proof.* Fix u ∉ N(v). G − u is (k−1)-colourable, and v's neighbours all lie
+> in it, so W − u is too; colour it with 1…k−1 and give u the colour k. Then u
+> is the *only* vertex carrying k and none of v's neighbours does, so recolouring
+> v to k stays proper. In that colouring c(v) = k = c(u) and nothing else has
+> it, so any target set avoiding u misses c(v). ∎
+
+Verified on the Moser spindle, which is 4-critical: adding any exact point one
+away from two of its vertices gives a pivot of degree 2 whose minimal core is
+**exactly** the five vertices outside its neighbourhood, every one forced in.
+
+So a usable core needs a **third** condition on top of the other two: no vertex
+may be leavable alone in a colour. Nothing here satisfies all three.
+
 ### What pressure 3 actually needs
 
 de Grey's Sa reaches **pressure 3 at four colours** — k−1, the classical spindle

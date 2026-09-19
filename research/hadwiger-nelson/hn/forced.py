@@ -662,3 +662,58 @@ def minimise_core(rel: "ColourRelations", p: int,
                 cur, changed = trial, True
                 break
     return cur
+
+
+# -- and adding one point to a critical graph is provably useless ----------
+#
+# There is a real tension in what a core needs. Rigid graphs have few
+# colourings and so small cores -- but the most rigid are the vertex-critical
+# ones, and criticality kills cores outright. Loose graphs escape criticality,
+# but their cores are huge: a counterexample can park the free colour
+# anywhere, and hundreds of rounds of counterexample-killing close nothing on
+# the unions G union f(G).
+#
+# The obvious resolution is to add ONE point to a k-critical graph. In
+# W = G + v every old vertex u still has W - u containing G - u, which is
+# (k-1)-colourable, so u stays critical; only v has W - v = G, which is
+# k-chromatic. So v is the unique non-critical vertex, the unique possible
+# pivot, and G keeps every bit of its rigidity.
+#
+# It does not work, and the reason is exact.
+#
+# THEOREM. Let G be k-vertex-critical and W = G + v. Then every core of v
+# contains all of V(G) \ N(v) -- so the minimal core has size n - deg(v),
+# which is the whole graph but for the pivot's neighbours.
+#
+# Proof. Fix any u in V(G) \ N(v). G - u is (k-1)-colourable, and v has at
+# most deg(v) neighbours, all in G - u, so W - u is (k-1)-colourable too;
+# colour it with 1..k-1 and give u the colour k. Now u is the ONLY vertex
+# carrying k, and none of v's neighbours does, so recolouring v to k is
+# proper. In that colouring c(v) = k = c(u) and nothing else has it, so a
+# target set avoiding u fails to contain c(v) and is not a core. Hence every
+# core contains u. []
+#
+# Verified on the Moser spindle, which is 4-critical: adding any of the exact
+# points one away from two of its vertices gives a pivot of degree 2 whose
+# minimal core is 5 -- exactly the five vertices outside its neighbourhood,
+# every one of them forced in.
+#
+# So the tension does not resolve that way. A usable core needs a host that is
+# k-chromatic, has the pivot non-critical, AND has no vertex that can be left
+# alone in a colour -- which means no k-critical subgraph avoiding the pivot
+# can be (k-1)-coloured alongside it. That is a third condition, and nothing
+# in this package satisfies all three.
+
+def forced_into_every_core(rel: "ColourRelations", p: int,
+                           candidates: Optional[Sequence[int]] = None
+                           ) -> List[int]:
+    """Vertices no core of p can omit.
+
+    u is forced in exactly when dropping it breaks the core condition on
+    everything else -- which happens whenever some colouring leaves u alone in
+    a colour that p may take.
+    """
+    others = [v for v in range(rel.graph.n) if v != p]
+    pool = others if candidates is None else list(candidates)
+    return [u for u in pool
+            if not is_core(rel, p, [x for x in others if x != u])]
