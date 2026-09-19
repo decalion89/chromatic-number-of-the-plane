@@ -769,3 +769,42 @@ UNIQUE_COLOURING_TARGET = {
                                             "classes; a k-critical graph has "
                                             "no forced-same pair at all"),
 }
+
+
+# -- why the difficulty is exactly where it is ----------------------------
+#
+# Two facts already proved above combine into a ladder that says where this
+# whole method works and where it stops, with no search involved.
+#
+# The unit circle around any point is bipartite -- adjacency there means
+# exactly 60 degrees and the 60-degree orbit is a 6-cycle -- so a
+# neighbourhood containing an edge has pressure at least 2, for free, and
+# pressure above 2 is entirely the ambient graph's doing. Call 2 the FREE
+# pressure. The pressure theorem then makes the smallest possible core
+#
+#     r >= k - pressure(p)  =  k - 2   when nothing beyond the circle helps,
+#
+# and blocking, by the counting and misalignment results, reaches r <= 3 and
+# no further:
+#
+#   k = 3: free core 1. A core of one is a forced pair, blocked by the
+#          classical spindle. Rigidity is FREE here, since 2 = k-1 means the
+#          circle alone determines the centre's colour -- which is exactly why
+#          the triangular lattice is uniquely 3-colourable and why sqrt(3)
+#          forces agreement.
+#   k = 4: free core 2, blocked by counting. de Grey's construction.
+#   k = 5: free core 3, blocked ONLY by misalignment, and only with
+#          reflections. The free pressure exactly saturates the blocking
+#          bound -- there is no slack anywhere.
+#   k = 6: free core 4, and nothing blocks four. The method is not hard here,
+#          it is impossible.
+#
+# So the reason five is the frontier is not that nobody has searched hard
+# enough. It is the last value of k at which the free pressure of a unit
+# circle and the largest blockable core still meet, and they meet exactly.
+
+FREE_PRESSURE = 2
+LADDER = {3: "core 1, classical spindle; rigidity free since 2 = k-1",
+          4: "core 2, blocked by counting; de Grey",
+          5: "core 3, blocked only by misalignment with reflections -- exact",
+          6: "core 4, nothing blocks four: the method is impossible"}

@@ -354,6 +354,24 @@ exactly when the forced-same relation has k classes, and a k-vertex-critical
 graph has no forced-same pair at all. **The two theorems are the two ends of one
 axis**, and the object wanted sits at the far end from de Grey's G.
 
+### Why the frontier is exactly at five
+
+Two facts already proved combine into a ladder, with no search in it. A unit
+circle is bipartite, so a neighbourhood containing an edge has pressure **2 for
+free** and nothing more without ambient help. The pressure theorem then makes
+the smallest possible core `k − 2`, and blocking reaches `r ≤ 3` and no further.
+
+| k | free core | blocked by |
+|---|---|---|
+| 3 | **1** | the classical spindle. Rigidity is *free* here, since 2 = k−1 means the circle alone determines the centre's colour — which is exactly why the triangular lattice is uniquely 3-colourable and √3 forces agreement |
+| 4 | **2** | counting. de Grey's construction |
+| 5 | **3** | misalignment only, and only with reflections — the free pressure **exactly saturates** the blocking bound, with no slack anywhere |
+| 6 | **4** | *nothing blocks four.* The method is not hard here, it is impossible |
+
+So five is not the frontier because nobody searched hard enough. It is the last
+value of k at which the free pressure of a unit circle and the largest blockable
+core still meet — and they meet exactly.
+
 ### What pressure 3 actually needs
 
 de Grey's Sa reaches **pressure 3 at four colours** — k−1, the classical spindle

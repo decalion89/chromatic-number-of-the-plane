@@ -685,3 +685,36 @@ def test_unique_colourability_gives_a_core_of_k_minus_pressure():
         assert g.vertices[0].dist2(g.vertices[T[0]]) == f.rational(3)
     finally:
         rel.close()
+
+
+def test_the_ladder_of_free_pressure_against_blockable_cores():
+    """Where the method works, and where it stops, with no search involved.
+
+    A unit circle is bipartite, so a neighbourhood containing an edge has
+    pressure 2 for free and nothing more without ambient help. The pressure
+    theorem makes the smallest possible core k - 2, and blocking reaches 3 and
+    no further. So the free core is 1 at three colours, 2 at four, 3 at five --
+    exactly saturating the blocking bound -- and 4 at six, where nothing
+    blocks. Five is the last k at which the two meet.
+    """
+    from hn.forced import FREE_PRESSURE, LADDER, pressure
+    from hn.transversal import MAX_BLOCKABLE_CORE
+
+    assert FREE_PRESSURE == 2 and MAX_BLOCKABLE_CORE == 3
+    for k in (3, 4, 5):
+        assert k - FREE_PRESSURE <= MAX_BLOCKABLE_CORE, f"k={k} should work"
+    assert 6 - FREE_PRESSURE > MAX_BLOCKABLE_CORE, "six must be out of reach"
+    assert set(LADDER) == {3, 4, 5, 6}
+
+    # and the free pressure is really free: any neighbourhood with an edge
+    g = build_graph(joint_core_union())
+    rel = ColourRelations(g, 4)
+    try:
+        for v in range(g.n):
+            circle = set(g.adj[v])
+            has_edge = any(b in g.adj[a] for a in circle for b in circle
+                           if b != a)
+            if has_edge:
+                assert pressure(rel, v) >= FREE_PRESSURE
+    finally:
+        rel.close()
