@@ -544,3 +544,55 @@ def test_degrey_hexagon_offsets_are_generated_by_the_moser_angle():
     # and 60 degrees minus theta
     assert other == field.rational(Fraction(1, 2)) * cos_theta \
         + field.sqrt(3) * field.rational(Fraction(1, 2)) * sin_theta
+
+
+def test_minimise_core_shrinks_what_cegar_builds():
+    """Counterexample construction is greedy, so what it returns is a core but
+    rarely a small one, and the blockable sizes are exactly one, two, three."""
+    from hn.forced import cegar_core, is_core, minimise_core
+    from hn.mixed import joint_core_configuration
+
+    _E, pts, _rho, _sigma = joint_core_configuration()
+    g = build_graph(pts)
+    bp = g.vertices.index(pts[0])
+    rel = ColourRelations(g, 3)
+    try:
+        T, ok = cegar_core(rel, bp)
+        assert ok
+        small = minimise_core(rel, bp, T)
+        assert is_core(rel, bp, small)
+        assert len(small) <= len(T) == 2
+        for t in small:
+            assert not is_core(rel, bp, [x for x in small if x != t])
+    finally:
+        rel.close()
+
+
+@pytest.mark.slow
+def test_three_hexagon_gadget_is_four_chromatic_with_no_small_core():
+    """Pressure 3 permits a core of one; the gadget's smallest is seven.
+
+    The pressure bound is necessary, not tight -- worth pinning, because it is
+    the difference between "a core of one is possible here" and "there is one".
+    """
+    from hn.forced import cegar_core, minimise_core, pressure
+    from hn.coloring import is_k_colorable
+    from hn.mixed import three_hexagon_gadget
+
+    _field, pivot, pts = three_hexagon_gadget()
+    g = build_graph(pts)
+    assert not is_k_colorable(g, 3)[0] and is_k_colorable(g, 4)[0]
+    rel = ColourRelations(g, 4)
+    try:
+        best = None
+        for p in range(g.n):
+            if pressure(rel, p) < 3:
+                continue
+            T, ok = cegar_core(rel, p, limit=60)
+            if ok:
+                T = minimise_core(rel, p, T)
+                best = len(T) if best is None else min(best, len(T))
+        assert best is not None and best >= 4, \
+            f"smallest core {best}; a core of 3 or less would be blockable"
+    finally:
+        rel.close()

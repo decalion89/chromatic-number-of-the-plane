@@ -245,9 +245,29 @@ orientations refuse. The lists of size 3 and 4 are simply too generous for a
 depth-one design.
 
 The scope of that negative is worth stating exactly: it covers auxiliaries
-adjacent to two circle points and nothing deeper. Points adjacent to
-*auxiliaries* rather than to the circle propagate the constraint a second
-level, and de Grey's real construction has them. That is where this goes next.
+adjacent to two circle points and nothing deeper.
+
+**The second level was built, and it does not help.** Every point one away from
+two circle points is a Minkowski sum u + v, so the depth-one design is already
+exhausted — no further confined point exists without enlarging the circle. Points
+attached to *auxiliaries* instead have no list at all, only propagation, so only
+a solver sees them: adding all 498 of them to the gadget, 625 vertices and 3324
+edges, leaves the pressure at 2.
+
+### What a core of three actually needs, and why the gadget cannot host one
+
+Pressure 3 was never the target — the theorems pin the core size at **exactly
+three**, and pressure 2 is the condition that makes three right, not an obstacle.
+But the gadget is **4-colourable**, so at five colours the pivot can always take
+a fifth colour nobody else has and no core exists at all, of any size. That is
+the criticality corollary again, from the other side: **a core at k = 5 needs a
+host that is 5-chromatic with the pivot non-critical.** The gadget supplies
+pressure; it cannot supply that.
+
+And one honest measurement about how loose the pressure bound is. The gadget is
+4-chromatic — not 3-colourable — with pressure 3 at four colours, which *permits*
+a core of one. Its smallest core over all 127 pivots is **seven**. Necessary is a
+long way from sufficient.
 
 ### What pressure 3 actually needs
 

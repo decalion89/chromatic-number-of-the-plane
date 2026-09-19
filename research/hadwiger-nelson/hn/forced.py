@@ -640,3 +640,25 @@ def list_colourable(graph, vertices: Sequence[int], lists: dict) -> bool:
                     cls.append([-var[(u, c)], -var[(w, c)]])
     with Solver(name="cd19", bootstrap_with=cls) as s:
         return s.solve()
+
+
+def minimise_core(rel: "ColourRelations", p: int,
+                  targets: Sequence[int]) -> List[int]:
+    """Drop what is not needed: counterexample construction is greedy.
+
+    `cegar_core` adds whichever vertex kills the current counterexample, so
+    what it returns is a core but rarely a small one. Each removal is one
+    `is_core` query, which is at most k solves, so shrinking is cheap next to
+    building -- and shrinking to size matters, because the blockable sizes are
+    exactly one, two and three.
+    """
+    cur = list(targets)
+    changed = True
+    while changed and len(cur) > 1:
+        changed = False
+        for t in list(cur):
+            trial = [x for x in cur if x != t]
+            if trial and is_core(rel, p, trial):
+                cur, changed = trial, True
+                break
+    return cur
