@@ -371,6 +371,17 @@ moves the number that symmetric tightening never touched:
 Twelve exclusions, then nine, where a day of symmetric tightening held it at 34
 while the effort score climbed through 88, 2110, 22 697.
 
+**And it saturates at 11.** Carried on, the descent goes 34, 29, 24, 21, 17, 14,
+12, 11 and then stops dead. The first suspicion was exhausted candidates — each
+round took the eight highest-degree vertices as pivots, which after seven rounds
+are the same eight — so the search was rerun with **32 candidates sampled across
+the whole degree range**. Two further rounds returned 11 from all 32.
+
+That refutes the exhaustion explanation and settles the number: **11 is the floor
+of this construction, not an artefact of where it was looking.** The mechanism is
+real — two thirds of the way down from 34, where symmetric tightening moved nothing
+at all — and its reach stops well above the 2 a spindle needs.
+
 **The mechanism is real; the metric for it is not.** The obvious measure — what
 fraction of vertices the rotation about the forcing pivot still preserves — does
 not predict which tightening works, and is anti-correlated in round 2: the winning
