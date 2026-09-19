@@ -201,3 +201,48 @@ def test_forbidden_patterns_are_vacuous_without_a_colouring():
     rh = [origin(), eisenstein(1, 0), eisenstein(0, 1), eisenstein(1, 1)]
     g = build_graph(rh + [SPINDLE(p) for p in rh])
     assert len(forbidden_patterns(g, 3, [0, 3, 5])) == _bell(3)
+
+
+def test_two_target_blocking_is_two_sat():
+    """With two targets each copy makes a binary choice, so escapes are 2-SAT.
+
+    A conflict between two chosen images is a forbidden pair, an escape is a
+    satisfying assignment, and the copies block exactly when the instance is
+    unsatisfiable. That decides in linear time what cross_blocks searches in
+    2^m, so a core of two can be thrown against hundreds of copies at once.
+    """
+    import random
+
+    from hn.geometry import Rotation
+    from hn.mixed import blocks_two_targets, conflict_isometries
+    from hn.multispindle import cross_blocks
+
+    g = build_graph(build_Sa())
+    field = g.vertices[0].x.field
+    ident = Rotation(field.rational(1), field.zero())
+    rnd = random.Random(3)
+    pool = [j for j in range(1, g.n) if j not in g.adj[0]]
+    checked = 0
+    for _ in range(40):
+        a, b = rnd.sample(pool, 2)
+        fam = [ident] + conflict_isometries(g, 0, [a, b])[:6]
+        if len(fam) < 2:
+            continue
+        assert blocks_two_targets(g, 0, [a, b], fam) == cross_blocks(
+            g, 0, [a, b], fam)
+        checked += 1
+    assert checked >= 5
+
+
+def test_two_target_test_refuses_other_sizes():
+    from hn.geometry import Rotation
+    from hn.mixed import blocks_two_targets
+
+    g = build_graph(build_Sa())
+    field = g.vertices[0].x.field
+    ident = Rotation(field.rational(1), field.zero())
+    try:
+        blocks_two_targets(g, 0, [1, 2, 3], [ident])
+    except ValueError:
+        return
+    raise AssertionError("should refuse a core that is not of size two")

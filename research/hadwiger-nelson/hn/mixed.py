@@ -594,3 +594,95 @@ def _bell(n: int) -> int:
             new.append(new[-1] + x)
         row = new
     return row[0]
+
+
+def blocks_two_targets(graph, pivot: int, targets: Sequence[int],
+                       isometries: Sequence) -> bool:
+    """Exact blocking test for a core of two, in linear time, by 2-SAT.
+
+    With exactly two targets each copy makes a binary choice, and a conflict
+    between two chosen images is a forbidden pair -- which is a 2-SAT clause.
+    An escape is a satisfying assignment, so the copies block exactly when the
+    instance is unsatisfiable.
+
+    That matters for reach, not elegance. `cross_blocks` searches the choices
+    directly, which is 2^m in the number of copies and confines the test to a
+    handful of them; 2-SAT decides it in linear time, so a core of two can be
+    thrown against hundreds of copies at once. And since blocking is monotone
+    upward -- an escape for a larger set restricts to one for any subset --
+    more copies can only help here, which is not true for larger cores where
+    each copy also multiplies the choices.
+
+    Implemented by implication-graph strongly connected components: the
+    instance is unsatisfiable exactly when some variable shares a component
+    with its negation.
+    """
+    from .multispindle import cross_conflict_graph
+
+    targets = list(targets)
+    if len(targets) != 2:
+        raise ValueError("this test is for exactly two targets")
+    m = len(isometries)
+    adj = cross_conflict_graph(graph, pivot, targets, isometries)
+
+    # variable i true  <=> copy i chooses targets[0]
+    def lit(i, first):
+        return 2 * i + (0 if first else 1)
+
+    def neg(l):
+        return l ^ 1
+
+    imp = [[] for _ in range(2 * m)]
+    for i in range(m):
+        for a, qa in enumerate(targets):
+            for j in range(m):
+                if j == i:
+                    continue
+                for b, qb in enumerate(targets):
+                    if (j, qb) in adj[(i, qa)]:
+                        # not (i chooses qa and j chooses qb)
+                        imp[lit(i, a == 0)].append(neg(lit(j, b == 0)))
+                        imp[lit(j, b == 0)].append(neg(lit(i, a == 0)))
+
+    n = 2 * m
+    index, low, on, stack, comp = [0] * n, [0] * n, [False] * n, [], [-1] * n
+    counter = [1, 0]
+
+    def strong(v0):
+        work = [(v0, 0)]
+        while work:
+            v, pi = work[-1]
+            if pi == 0:
+                index[v] = low[v] = counter[0]
+                counter[0] += 1
+                stack.append(v)
+                on[v] = True
+            recurse = False
+            for i in range(pi, len(imp[v])):
+                w = imp[v][i]
+                if index[w] == 0:
+                    work[-1] = (v, i + 1)
+                    work.append((w, 0))
+                    recurse = True
+                    break
+                if on[w]:
+                    low[v] = min(low[v], index[w])
+            if recurse:
+                continue
+            if low[v] == index[v]:
+                while True:
+                    w = stack.pop()
+                    on[w] = False
+                    comp[w] = counter[1]
+                    if w == v:
+                        break
+                counter[1] += 1
+            work.pop()
+            if work:
+                u = work[-1][0]
+                low[u] = min(low[u], low[v])
+
+    for v in range(n):
+        if index[v] == 0:
+            strong(v)
+    return any(comp[2 * i] == comp[2 * i + 1] for i in range(m))
