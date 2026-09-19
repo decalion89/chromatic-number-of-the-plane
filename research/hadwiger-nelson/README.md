@@ -64,6 +64,91 @@ A certificate never asks you to trust this code. It asks you to run `drat-trim`.
 
 - ❌ χ(ℝ²) ≥ 6 — the actual goal. Not found.
 
+- ✅ A **19-vertex, 33-edge graph with no 3-colouring**, drat-trim verified and
+  **vertex-critical** — `certificates/genuine_pair_19_no3coloring.json`. Not a
+  record; the Moser spindle reaches χ ≥ 4 on seven. What is new is that its
+  forced pair is forced **only jointly** — neither leg is forced on its own, so
+  there is no single target to spindle and the classical argument has nothing to
+  grip. Built rather than found, over ℚ(√3,√11)(√v) with v = (−66 + 30√33)/256;
+  that extension is forced, since v has a negative conjugate and every
+  multiquadratic field is totally real.
+
+## Pressure, and why every k = 5 search was dead on arrival
+
+Write **pressure(p)** for the least number of colours N(p) can be squeezed into,
+over all k-colourings. `hn/forced.py` computes it in at most k incremental
+solves, and two theorems make it the right invariant.
+
+**A core of size r at p requires pressure(p) ≥ k − r.** Take a colouring
+attaining the minimum: at least k − pressure(p) colours are free for p while
+c(T) offers at most r values, so if k − pressure(p) > r, recolour p to a free
+colour outside c(T). Properness at p asks only that its colour avoid c(N(p)), so
+the colouring stays proper and T was not a core.
+
+**A k-vertex-critical graph has no core of any size, at any vertex.** Colour
+G − p with k−1 colours and give p the kth: p is then the *only* vertex carrying
+it, so c(p) lies outside c(T) for every T at once. de Grey's G is
+5-vertex-critical, so it is completely inert at five colours — checked directly,
+pivot 0 is separable from all 1520 of its non-neighbours *simultaneously*, pivot
+1 from all 1572. The 880 pivots of searching in this package were answering a
+question whose answer was fixed before any solver started.
+
+Measured pressure at k = 5: **exactly 2 at all 1581 vertices of G**, the two
+hubs of degree 60 included, in two seconds — and still 2 on every union tried,
+up to 5533 vertices. So the smallest core available at five colours is **three**.
+
+### The core condition is itself a pressure measurement
+
+T is a core of p exactly when **min |c(N(p) ∪ T)| = k**. If some colouring left a
+colour unused on both, recolouring p to it is proper and puts c(p) outside c(T);
+conversely the colouring witnessing a failure leaves c(p) itself unused on both.
+So cores can be *built forwards* instead of shrunk: ask whether a colouring
+leaves the first colour free on N(p) ∪ T — by symmetry that is the whole question
+— and either it proves T is a core or it hands back a colouring, and any vertex
+carrying that colour elsewhere kills it when added. One solve per vertex added.
+
+It reproduces the 19-vertex construction's pair in six solves, and it **fails** on
+de Grey's G at k = 5, which is exactly what the criticality corollary demands.
+
+### Where blocking stops
+
+Every leg's conflict graph on the copies has maximum degree 2 — a point of a
+circle is one apart from at most two points of that circle — so α ≥ m/3, and the
+counting certificate Σ α(G_L) < m needs r·m/3 < m, hence **r ≤ 2**. The
+19-vertex configuration sits exactly on that boundary: alphas [2, 3] against 6
+copies, blocking by one.
+
+So the two bounds meet. Pressure 2 puts every core at five colours at three or
+more; counting blocks only up to two.
+
+**A core of three can still be blocked, by misalignment.** Rotations alone never
+manage it — searched exhaustively over every N ≤ 30 and every triple of angles on
+the Nth roots of unity, an escape always exists, while the same search finds 298
+blocking *pairs*. Reflections break it, because each leg picks up its **own**
+angle in the cross-orbit conflicts: 27 344 configurations block. The smallest is
+N = 3, three legs at d² = 1/3, six copies over ℚ(√3) — alphas [2,2,2] against 6
+copies, exactly the counting floor, so counting says nothing while SAT and a
+brute force over all 3⁶ choices agree that it blocks.
+
+What is missing is the core itself, not the block.
+
+### What pressure 3 actually needs
+
+de Grey's Sa reaches **pressure 3 at four colours** — k−1, the classical spindle
+regime — with cores down to 7. And it does so with **no forced pair anywhere**:
+the forced-different graph on a pivot's circle is exactly its 30 unit-distance
+edges, every degree 2, no odd cycle, no forced non-edge at all. The ambient graph
+kills every 2-colouring of the circle *jointly*, without pinning any single pair.
+
+That removes the object this package kept failing to find. Pressure 3 at five
+colours needs no rainbow and no forced non-edge — it needs ambient rigidity, and
+pressure measures exactly that, and never decreases when points are added. What
+it has not yielded to is stacking: translated copies at the most frequent
+difference vector (|d|² = 1/3, folding 224 vertices), a 60-degree rotation about
+a centre folding 789 of 1581, and de Grey's own dihedral group applied to G — all
+still flat 2, up to 5533 vertices.
+
+
 ## What has been ruled out so far
 
 Recording failures is the point of a search log; these are real constraints on where
