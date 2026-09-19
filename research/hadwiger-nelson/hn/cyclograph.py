@@ -218,51 +218,56 @@ def common_denominator(steps) -> int:
     return d
 
 
-def scaled_walk(field, steps, rounds: int, radius: float, cap: int = 400000):
+def scaled_graph_walk(field, steps, rounds: int, radius: float,
+                      cap: int = 400000, seeds=None, centres=None):
     """Grow by translation with integer coordinates instead of fractions.
 
-    Hashing a twenty-long tuple of Fractions once per candidate is what the
-    generation actually spends its time on -- not the arithmetic.  Every step
-    zeta^k rho^m has denominator 6^|m|, so one common denominator clears them
-    all, and after scaling a point is a tuple of ints: addition is int
-    addition and the hash is an int hash.
+    Hashing a long tuple of Fractions once per candidate is what generation
+    actually spends its time on -- not the arithmetic.  Every step has a
+    bounded denominator, so one common denominator clears them all and a point
+    becomes a tuple of ints: addition is int addition and the hash is an int
+    hash.  Exactly the lesson `hn.fast.IntBasis` already learned for the
+    multiquadratic side.
 
-    Exactly the lesson `hn.fast.IntBasis` already learned for the multiquadratic
-    side, applied to the cyclotomic one.
+    `seeds` and `centres` are what make an *asymmetric* ball possible.  A ball
+    a rotation preserves never forces a proper subset of a target orbit, which
+    is what every core equal to its orbit size was saying; growing from several
+    centres breaks that, and at order 15 it took the core from 15 down to 5.
+
+    Returns the scaled integer coordinates, their complex values, and the
+    denominator, so a caller can wire the edges without leaving integers.
     """
     den = common_denominator(steps)
     ints = [tuple(int(Fraction(x) * den) for x in s) for s in steps]
     zs = [field.to_complex(s) for s in steps]
-    origin = (0,) * field.degree
-    seen = {origin: 0j}
-    frontier = [(origin, 0j)]
+    if seeds is None:
+        seeds = [tuple(Fraction(0) for _ in range(field.degree))]
+    iseeds = [tuple(int(Fraction(x) * den) for x in c) for c in seeds]
+    if centres is None:
+        centres = [0j]
+    seen = {c: field.to_complex(s) for c, s in zip(iseeds, seeds)}
+    frontier = list(seen.items())
     for _ in range(rounds):
         nxt = []
+        stop = False
         for c, zc in frontier:
             for iv, zv in zip(ints, zs):
                 zq = zc + zv
-                if radius and abs(zq) > radius:
+                if radius and all(abs(zq - m) > radius for m in centres):
                     continue
                 q = tuple(a + b for a, b in zip(c, iv))
                 if q not in seen:
                     seen[q] = zq
                     nxt.append((q, zq))
                     if len(seen) >= cap:
-                        return _unscale(field, seen, den)
-        frontier = nxt
-        if not frontier:
+                        stop = True
+                        break
+            if stop:
+                break
+        if stop or not nxt:
             break
-    return _unscale(field, seen, den)
-
-
-def _unscale(field, seen, den: int) -> List[CycloPoint]:
-    out = []
-    inv = Fraction(1, den)
-    for c, z in seen.items():
-        p = CycloPoint(field, tuple(x * inv for x in c))
-        p._z = z
-        out.append(p)
-    return out
+        frontier = nxt
+    return seen, ints, den
 
 
 def step_edges(field, points, steps) -> UnitDistanceGraph:
@@ -293,41 +298,16 @@ def step_edges(field, points, steps) -> UnitDistanceGraph:
     return UnitDistanceGraph(list(points), adj)
 
 
-def scaled_graph(field, steps, rounds: int, radius: float, cap: int = 400000):
+def scaled_graph(field, steps, rounds: int, radius: float, cap: int = 400000,
+                 seeds=None, centres=None):
     """Walk and wire in one pass, entirely in integer coordinates.
 
     Splitting the two costs more than the walk itself: 7921 points and 198
-    steps is 1.57 million lookups, and rebuilding a twenty-long Fraction tuple
-    for each one took 54 seconds against 0 for the walk.  Keeping the scaled
-    integers all the way through and converting once at the end removes that.
+    steps is 1.57 million lookups, and rebuilding a long Fraction tuple for
+    each one took 54 seconds against 0 for the walk.
     """
-    den = common_denominator(steps)
-    ints = [tuple(int(Fraction(x) * den) for x in s) for s in steps]
-    zs = [field.to_complex(s) for s in steps]
-    origin = (0,) * field.degree
-    seen = {origin: 0j}
-    frontier = [(origin, 0j)]
-    for _ in range(rounds):
-        nxt = []
-        for c, zc in frontier:
-            for iv, zv in zip(ints, zs):
-                zq = zc + zv
-                if radius and abs(zq) > radius:
-                    continue
-                q = tuple(a + b for a, b in zip(c, iv))
-                if q not in seen:
-                    seen[q] = zq
-                    nxt.append((q, zq))
-                    if len(seen) >= cap:
-                        frontier = []
-                        break
-            if not frontier and len(seen) >= cap:
-                break
-        else:
-            frontier = nxt
-            if frontier:
-                continue
-        break
+    seen, ints, den = scaled_graph_walk(field, steps, rounds, radius, cap,
+                                        seeds, centres)
     order = list(seen)
     index = {c: i for i, c in enumerate(order)}
     adj: List[Set[int]] = [set() for _ in order]
@@ -340,7 +320,7 @@ def scaled_graph(field, steps, rounds: int, radius: float, cap: int = 400000):
     inv = Fraction(1, den)
     pts = []
     for c in order:
-        p = CycloPoint(field, tuple(x * inv for x in c))
-        p._z = seen[c]
-        pts.append(p)
+        q = CycloPoint(field, tuple(x * inv for x in c))
+        q._z = seen[c]
+        pts.append(q)
     return UnitDistanceGraph(pts, adj)

@@ -25,10 +25,11 @@ import os
 import sys
 import time
 from fractions import Fraction
+from itertools import combinations
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from hn.cyclograph import CycloPoint, UnitDistanceGraph
+from hn.cyclograph import scaled_graph
 from hn.cyclotomic import CycloField
 from hn.quadext import QuadExtField
 from hn.spindle import SeparationTest
@@ -66,38 +67,6 @@ def unit_step_set(F, mult: int = 0):
     return [s for s in {t: None for t in steps} if F.norm2(s) == F.one()]
 
 
-def grow(F, steps, seeds, depth, radius, cap, centre=0j):
-    seen = {c: None for c in seeds}
-    frontier = list(seen)
-    for _ in range(depth):
-        nxt = []
-        for c in frontier:
-            for s in steps:
-                q = F.add(c, s)
-                if q in seen or abs(F.to_complex(q) - centre) > radius:
-                    continue
-                seen[q] = None
-                nxt.append(q)
-                if len(seen) >= cap:
-                    return list(seen)
-        frontier = nxt
-        if not frontier:
-            break
-    return list(seen)
-
-
-def wire(F, coeffs, steps):
-    index = {c: i for i, c in enumerate(coeffs)}
-    adj = [set() for _ in coeffs]
-    for s in steps:
-        for i, c in enumerate(coeffs):
-            j = index.get(F.add(c, s))
-            if j is not None and j != i:
-                adj[i].add(j)
-                adj[j].add(i)
-    return UnitDistanceGraph([CycloPoint(F, c) for c in coeffs], adj), index
-
-
 def shrink(st, core):
     core = list(core)
     changed = True
@@ -118,36 +87,28 @@ def main() -> None:
     print(f"order {ORDER}, k={K}: capacity {cap_r}, {len(steps)} unit steps",
           flush=True)
 
-    t0 = time.time()
-    coeffs = grow(F, steps, [F.zero()], DEPTH, RADIUS, CAP)
-    print(f"  ball: {len(coeffs)} points  [{time.time() - t0:.0f}s]", flush=True)
-
-    # break the rotation symmetry: an invariant ball never forces a proper
-    # subset of an orbit, which is what all of today's cores equal to the
-    # orbit size were saying.
-    # Centred on a unit step the extra ball lands almost entirely inside the
-    # first one -- 41 new points out of 7871 -- yet that alone took the core
-    # from the full orbit of 15 down to 5.  Pushing the centres out to where
-    # they actually add points is the obvious next turn of the same screw.
+    # Several centres, because a ball a rotation preserves never forces a
+    # proper subset of a target orbit -- which is what every core equal to the
+    # orbit size was saying. Off-centre growth took the core from 15 to 5.
+    seeds, centres = [F.zero()], [0j]
     for s in range(OFF):
         c = F.zero()
         for _ in range(OFFDIST):
             c = F.add(c, steps[1 + s * 3])
-        extra = grow(F, steps, [c], DEPTH - 1, RADIUS * OFFSCALE, CAP,
-                     centre=F.to_complex(c))
-        before = len(coeffs)
-        coeffs = list({**{c2: None for c2 in coeffs}, **{c2: None for c2 in extra}})
-        print(f"  + off-centre ball {s + 1}: {before} -> {len(coeffs)}", flush=True)
+        seeds.append(c)
+        centres.append(F.to_complex(c))
 
     t0 = time.time()
-    g, index = wire(F, coeffs, steps)
+    g = scaled_graph(F, steps, DEPTH, RADIUS, cap=CAP, seeds=seeds,
+                     centres=centres)
+    index = {p.c: i for i, p in enumerate(g.vertices)}
     print(f"  {g}  deg~{2 * g.m / max(g.n, 1):.2f}  [{time.time() - t0:.0f}s]",
           flush=True)
 
     z = F.root_of_unity(ORDER)
     witness = F.sub(F.rational(2), F.add(z, F.conj(z)))
     one = F.one()
-    circle = [c for c in coeffs if F.mul(F.norm2(c), witness) == one]
+    circle = [p.c for p in g.vertices if F.mul(F.norm2(p.c), witness) == one]
     print(f"  {len(circle)} points on the magic circle", flush=True)
     if not circle:
         return
@@ -161,32 +122,59 @@ def main() -> None:
             orb.append(x)
             used.add(x)
             x = F.mul(x, z)
-        orbits.append(orb)
-    print(f"  {len(orbits)} orbits of the order-{ORDER} rotation", flush=True)
+        if all(o in index for o in orb):
+            orbits.append(orb)
+    print(f"  {len(orbits)} complete orbits of the order-{ORDER} rotation",
+          flush=True)
+
+    blocking = blocking_subsets(ORDER, cap_r)
+    print(f"  {len(blocking)} blocking {cap_r}-subsets of C_{ORDER}", flush=True)
 
     pivot = index[F.zero()]
     for n, orb in enumerate(orbits):
-        targets = [index[c] for c in orb if c in index]
-        if len(targets) < 2:
-            continue
-        st = SeparationTest(g, K, pivot, targets)
+        idx = [index[c] for c in orb]
+        st = SeparationTest(g, K, pivot, idx)
         try:
             t0 = time.time()
-            sep, core = st.run(subset=targets)
+            sep, core = st.run(subset=idx)
             if sep:
-                print(f"  orbit {n}: {len(targets)} targets  separable"
-                      f"  [{time.time() - t0:.0f}s]", flush=True)
+                print(f"  orbit {n}: separable  [{time.time() - t0:.0f}s]",
+                      flush=True)
                 continue
             small = shrink(st, core)
-            ok = "WITHIN CAPACITY" if len(small) <= cap_r else "too many"
-            print(f"  orbit {n}: {len(targets)} targets  FORCED, minimal core "
-                  f"{len(small)} vs capacity {cap_r}: {ok}"
-                  f"  [{time.time() - t0:.0f}s]", flush=True)
-            if len(small) <= cap_r:
-                print(f"  *** {small} ***", flush=True)
-                return
+            pos = {t: k for k, t in enumerate(idx)}
+            arc = sorted(pos[t] for t in small)
+            print(f"  orbit {n}: FORCED, minimal core {len(small)} at {arc}"
+                  f" vs capacity {cap_r}  [{time.time() - t0:.0f}s]", flush=True)
+            # a minimal core is not unique, so ask the blocking sets directly
+            for T in blocking:
+                if not st.run(subset=[idx[t] for t in T])[0]:
+                    print(f"  *** FORCED on blocking subset {T} ***", flush=True)
+                    return
+            print(f"  none of the {len(blocking)} blocking subsets is forced",
+                  flush=True)
         finally:
             st.close()
+
+
+def blocking_subsets(n: int, r: int):
+    """The r-subsets of C_n that no independent set can meet in every shift.
+
+    The copies are the n rotations, so their image sets are the n shifts of T,
+    and a colouring escapes through an independent S with S - T = Z_n.  For
+    C_15 and r = 4 exactly 45 of the 1365 subsets survive, in three classes up
+    to rotation.  A minimal core is not unique, so these get asked directly
+    rather than hoped for from shrinking.
+    """
+    indep = [()]
+    for size in range(1, n // 2 + 1):
+        for S in combinations(range(n), size):
+            if all((a - b) % n not in (1, n - 1) for a in S for b in S if a != b):
+                indep.append(S)
+    full = set(range(n))
+    return [T for T in combinations(range(n), r)
+            if not any({(a - b) % n for a in S for b in T} == full
+                       for S in indep)]
 
 
 if __name__ == "__main__":
