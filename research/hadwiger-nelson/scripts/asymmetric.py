@@ -35,6 +35,8 @@ K = int(os.environ.get("HN_K", "4"))
 ROUNDS = int(os.environ.get("HN_ROUNDS", "10"))
 FANOUT = int(os.environ.get("HN_FANOUT", "6"))
 BUDGET = int(os.environ.get("HN_BUDGET", "30000"))
+SCAN = int(os.environ.get("HN_SCAN", "12"))   # pivots examined per candidate
+SAVE = os.environ.get("HN_SAVE", "asym")
 OUT = os.environ.get("HN_OUT", "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
 SRC = os.environ.get("HN_SRC", os.path.join(OUT, "f4_core.json"))
 
@@ -61,8 +63,12 @@ def forced_core(g, pivot, d2):
     return None if sep else core
 
 
-def find_pivot(g, d2):
-    for bp in sorted(range(g.n), key=lambda v: -len(g.adj[v]))[:40]:
+def find_pivot(g, d2, scan=None):
+    """Locate a forcing pivot.  Scanning every high-degree vertex costs 40 SAT
+    calls per candidate, which at 1400 vertices dominates the round; after the
+    first tightening the forcing pivot stays in much the same place, so a
+    shorter scan buys most of the same answers at a sixth of the price."""
+    for bp in sorted(range(g.n), key=lambda v: -len(g.adj[v]))[:(scan or SCAN)]:
         c = forced_core(g, bp, d2)
         if c:
             return bp, c
@@ -111,6 +117,9 @@ def main():
             return
         (size, sym), g, pivot, core = best
         history.append(size)
+        # checkpoint: without this an interrupted run loses every round it did
+        save_certificate(g, os.path.join(OUT, f"{SAVE}_round{rnd}.json"), K,
+                         f"asymmetric narrowing round {rnd}, forced core {size}")
         print(f"round {rnd}: n={g.n} core={size} symmetry={sym:.3f} "
               f"history={history} [{time.time()-t0:.0f}s]", flush=True)
 
