@@ -636,3 +636,90 @@ def test_genuine_pair_union_is_vertex_critical():
     for i in range(len(pts)):
         rest = build_graph([q for j, q in enumerate(pts) if j != i])
         assert is_k_colorable(rest, 3)[0], f"vertex {i} was not needed"
+
+
+# -- a core of three, blocked by misalignment ------------------------------
+#
+# Counting provably cannot produce this: every leg's conflict graph has
+# maximum degree two so alpha >= m/3, and sum_L alpha < m needs r <= 2.
+# Rotations alone cannot either -- an exhaustive search over every N <= 30 and
+# every triple of angles on the N-th roots of unity always finds an escape,
+# while the same search finds 298 blocking pairs at two legs. Reflections
+# break it, because each leg picks up its OWN angle in the cross-orbit
+# conflicts and the shifts no longer align.
+
+def test_three_leg_block_geometry():
+    from hn.mixed import three_leg_block_configuration
+
+    f, p, legs, copies = three_leg_block_configuration()
+    third = f.rational(Fraction(1, 3))
+    assert all(p.dist2(q) == third for q in legs)
+    assert legs[0].dist2(legs[1]) == f.rational(Fraction(4, 3))
+    assert legs[0].dist2(legs[2]) == third
+    assert legs[1].dist2(legs[2]) == f.rational(1)
+    assert len(copies) == 6
+
+
+def test_three_legs_block_but_counting_cannot_see_it():
+    from hn.mixed import blocks_targets, three_leg_block_configuration
+    from hn.transversal import counting_blocks, leg_conflict_alphas
+
+    f, p, legs, copies = three_leg_block_configuration()
+    g = build_graph([p] + legs)
+    bp = g.vertices.index(p)
+    idx = [g.vertices.index(q) for q in legs]
+    alphas = leg_conflict_alphas(g, bp, idx, copies)
+    assert alphas == [2, 2, 2]
+    assert sum(alphas) == len(copies) == 6          # exactly the theorem's floor
+    assert not counting_blocks(g, bp, idx, copies)  # so counting says nothing
+    assert blocks_targets(g, bp, idx, copies)       # and it blocks anyway
+    assert not blocks_targets(g, bp, idx, copies[:3]), "rotations alone must fail"
+
+
+def test_three_leg_block_agrees_with_brute_force():
+    """All 3^6 choices, sharing no code with the SAT encoding."""
+    from itertools import product
+
+    from hn.mixed import three_leg_block_configuration
+    from hn.multispindle import cross_conflict_graph
+
+    f, p, legs, copies = three_leg_block_configuration()
+    g = build_graph([p] + legs)
+    bp = g.vertices.index(p)
+    idx = [g.vertices.index(q) for q in legs]
+    adj = cross_conflict_graph(g, bp, idx, copies)
+    for pick in product(range(3), repeat=len(copies)):
+        if all((j, idx[pick[j]]) not in adj[(i, idx[pick[i]])]
+               for i in range(len(copies)) for j in range(i + 1, len(copies))):
+            raise AssertionError(f"escape {pick} exists; it must not")
+    # the same brute force must find the escape for rotations alone
+    adj3 = cross_conflict_graph(g, bp, idx, copies[:3])
+    assert any(all((j, idx[pick[j]]) not in adj3[(i, idx[pick[i]])]
+                   for i in range(3) for j in range(i + 1, 3))
+               for pick in product(range(3), repeat=3))
+
+
+def test_centroid_legs_do_not_block():
+    """The obvious three legs at 1/3 -- a unit triangle's corners seen from
+    its centroid -- fail, because the six copies map that configuration onto
+    itself and produce no new points. Angles matter, not just distances."""
+    from hn.geometry import Point
+    from hn.mixed import (Reflection, blocks_targets, compose_rotations,
+                          three_leg_block_configuration)
+
+    f, _p, _legs, _c = three_leg_block_configuration()
+    r3, one, zero = f.sqrt(3), f.rational(1), f.zero()
+    a = Point(zero, zero)
+    b = Point(one, zero)
+    c = Point(f.rational(Fraction(1, 2)), r3 * f.rational(Fraction(1, 2)))
+    p = Point(f.rational(Fraction(1, 2)), r3 * f.rational(Fraction(1, 6)))
+    assert all(p.dist2(q) == f.rational(Fraction(1, 3)) for q in (a, b, c))
+    rho = Rotation(f.rational(Fraction(-1, 2)), r3 * f.rational(Fraction(1, 2)))
+    rots = [Rotation(one, zero), rho, compose_rotations(rho, rho)]
+    copies = rots + [Reflection(r.cos, r.sin) for r in rots]
+    g = build_graph([p, a, b, c])
+    bp = g.vertices.index(p)
+    idx = [g.vertices.index(q) for q in (a, b, c)]
+    assert not blocks_targets(g, bp, idx, copies)
+    union = {iso.about(p)(q) for iso in copies for q in (p, a, b, c)}
+    assert len(union) == 7, "the centroid's symmetry collapses the copies"

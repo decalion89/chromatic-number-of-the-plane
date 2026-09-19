@@ -1041,3 +1041,72 @@ def blocks_targets(graph, pivot: int, targets: Sequence[int],
                         cls.append([-y(i, a), -y(j, b)])
     with Solver(name=solver, bootstrap_with=cls) as s:
         return not s.solve()
+
+
+# -- a core of three, blocked by misalignment ------------------------------
+#
+# `hn.transversal.counting_blocks` cannot reach this and provably never will:
+# every leg's conflict graph has maximum degree two, so alpha >= m/3, and the
+# counting certificate sum_L alpha(G_L) < m needs r*m/3 < m, hence r <= 2.
+# That mattered the moment pressure was measured, because pressure 2 at every
+# vertex means the smallest core available at five colours is three, not two.
+#
+# Rotations alone cannot reach it either. Put the copies at the N-th roots of
+# unity; leg L closes its circle at 2*pi*t_L/N, so its conflict graph is the
+# circulant on Z_N with connection set {+-t_L}, and an escape is a partition
+# of Z_N into three parts, each independent in its own circulant. Searched
+# exhaustively for every N <= 30 and every triple of angles: an escape always
+# exists. The same search finds 298 blocking pairs for a core of two, so it is
+# the three that fails, not the method of asking.
+#
+# Reflections break it, and they are free -- reflecting in the line at angle t
+# needs cos 2t and sin 2t, the same data as a rotation by 2t. Index a copy by
+# (k, e), e = 0 a rotation and e = 1 a reflection. Leg L sits at its own angle
+# phi_L, so its image under (k, 0) is at phi_L + 2*pi*k/N and under (k, 1) at
+# -phi_L + 2*pi*k/N. Within an orbit the conflict is the old circulant; ACROSS
+# the orbits it picks up the leg's own angle,
+#
+#     k - k'  =  +-t_L - s_L,      s_L = 2 phi_L in N-ths of a turn,
+#
+# and s_L differs from leg to leg because the legs sit at different angles.
+# That per-leg shift is the misalignment, and 27344 configurations block.
+#
+# The smallest needs nothing exotic: N = 3, all three legs at d^2 = 1/3, six
+# copies -- three rotations by 120 degrees and three reflections -- over
+# Q(sqrt 3). Its alphas are [2, 2, 2] against 6 copies, summing to exactly the
+# copy count, so counting says nothing while SAT and an independent brute
+# force over all 3^6 choices agree that it blocks.
+#
+# WHAT THIS IS NOT. It is a blocking certificate, not a proof of anything
+# about the plane. Blocking says: IF these three legs are a core of the pivot,
+# THEN the union of the copies has no k-colouring. Supplying that core is the
+# open half, and it is the hard half. At k colours a core of three needs
+# pressure k-3 at the pivot, which at three colours means the pivot has no
+# neighbours at all and the three legs are pairwise unable to share -- and the
+# legs here sit at squared distances 1, 1/3 and 4/3 from each other. On the
+# triangular lattice the forceable distances are exactly the Eisenstein norms
+# prime to 3 (measured: 1, 4, 7, every pair of them, nothing else), which does
+# not include 1/3 or 4/3; adding the centroids puts those distances in the
+# graph but gives the colouring so much freedom that even 7 stops being
+# forced. No graph here supplies the core.
+
+def three_leg_block_configuration():
+    """Pivot, three legs at d^2 = 1/3, and the six copies that block them.
+
+    Returns (field, pivot, [qa, qb, qc], copies). The legs sit at angles 0,
+    180 and 60 degrees; the copies are the three rotations by multiples of 120
+    degrees and the three reflections in the lines at 0, 60 and 120 degrees.
+    """
+    field = Field((3,))
+    r3 = field.sqrt(3)
+    one, zero = field.rational(1), field.zero()
+    pivot = Point(zero, zero)
+    legs = [Point(r3 * field.rational(Fraction(1, 3)), zero),
+            Point(-r3 * field.rational(Fraction(1, 3)), zero),
+            Point(r3 * field.rational(Fraction(1, 6)),
+                  field.rational(Fraction(1, 2)))]
+    rho = Rotation(field.rational(Fraction(-1, 2)),
+                   r3 * field.rational(Fraction(1, 2)))
+    rots = [Rotation(one, zero), rho, compose_rotations(rho, rho)]
+    copies = rots + [Reflection(r.cos, r.sin) for r in rots]
+    return field, pivot, legs, copies
