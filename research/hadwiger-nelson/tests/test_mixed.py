@@ -442,3 +442,62 @@ def test_two_orbit_block_runs_to_an_uncolourable_union():
             union[f(q)] = None
     u = build_graph(list(union))
     assert not is_k_colorable(u, 3)[0]
+
+
+def test_odd_orbit_block_generalises_the_six_copy_one():
+    """Two orbits of any odd-order rotation close a forced pair, with 2n copies.
+
+    Nothing in the six-copy argument needed the triangle, only that the cycle
+    be odd. An orbit's images of the leg form C_order(step), whose independent
+    sets hold at most (order-1)/2 elements, so at least (order+1)/2 copies per
+    orbit must choose the other target -- and two subsets of {0..order-1} of
+    that size total at least order+1, so they intersect.
+
+    At order 3 it must agree with two_orbit_block exactly, which is what this
+    pins. Orders 5 and up need a rotation of that order, and a multiquadratic
+    field has none: n | 24 leaves 1 and 3 as its only odd orders, so the
+    generalisation buys nothing here and everything in a cyclotomic field.
+    """
+    from fractions import Fraction
+
+    from hn.mixed import blocks_two_targets, odd_orbit_block, two_orbit_block
+    from hn.multispindle import cross_blocks
+
+    g = build_graph(build_Sa())
+    third = Fraction(1, 3)
+    checked = 0
+    for bp in range(g.n):
+        pv = g.vertices[bp]
+        legs = [j for j in range(g.n) if j != bp and j not in g.adj[bp]
+                and pv.dist2(g.vertices[j]).is_rational()
+                and pv.dist2(g.vertices[j]).c[0] == third]
+        if not legs:
+            continue
+        others = [j for j in range(g.n) if j != bp and j not in g.adj[bp]
+                  and j not in legs
+                  and pv.dist2(g.vertices[j]).is_rational()
+                  and pv.dist2(g.vertices[j]).c[0] >= Fraction(1, 4)]
+        for b in others[:3]:
+            old = two_orbit_block(g, bp, legs[0], b)
+            new = odd_orbit_block(g, bp, legs[0], b, order=3)
+            if old is None or new is None:
+                continue
+            assert len(new) == 6
+            assert blocks_two_targets(g, bp, [legs[0], b], new)
+            assert cross_blocks(g, bp, [legs[0], b], new)
+            checked += 1
+        if checked >= 6:
+            break
+    assert checked >= 3
+
+
+def test_odd_orbit_block_refuses_even_or_non_coprime_orders():
+    from hn.mixed import odd_orbit_block
+
+    g = build_graph(build_Sa())
+    for order, step in ((4, 1), (2, 1), (9, 3)):
+        try:
+            odd_orbit_block(g, 0, 1, 2, order=order, step=step)
+        except ValueError:
+            continue
+        raise AssertionError(f"should refuse order={order}, step={step}")

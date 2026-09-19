@@ -782,3 +782,78 @@ def unit_triangle_centroids(graph, limit: int = 20000) -> List[Point]:
                 if len(out) >= limit:
                     return out
     return out
+
+
+def odd_orbit_block(graph, pivot: int, a: int, b: int, order: int = 3,
+                    step: int = 1):
+    """Two orbits of an odd-order rotation close a forced pair. 2n copies.
+
+    The six-copy version is the case n = 3. Nothing in its argument needed the
+    triangle specifically -- only that the cycle be odd.
+
+    Let rho be the rotation by 2*pi/order about the pivot, and suppose a lies
+    on that order's magic circle, radius 1/(2 sin(pi*step/order)), so two of
+    its images `step` apart are exactly one apart. An orbit's images of a then
+    form the circulant C_order(step); for step coprime to order that is an
+    odd cycle, whose independent sets have at most (order-1)/2 elements. Every
+    chosen image carries the pivot's colour, so **at most (order-1)/2 copies
+    per orbit may choose a**, and at least (order+1)/2 must choose b.
+
+    Take a second orbit offset by sigma, the rotation by the unit-chord angle
+    of b's own circle. Two subsets of {0..order-1} each of size at least
+    (order+1)/2 have total size at least order+1, so they intersect. At the
+    shared index j both rho^j and sigma rho^j choose b, their images differ by
+    sigma, and so they are one apart while both carry the pivot's colour.
+
+    Returns the 2*order copies, or None when a rotation cannot be named in the
+    field. `order` must be odd and coprime to `step`.
+    """
+    from math import gcd
+
+    from .geometry import Rotation, rotation_joining
+
+    if order < 3 or order % 2 == 0 or gcd(order, step) != 1:
+        raise ValueError("order must be odd, at least 3, and coprime to step")
+    p = graph.vertices[pivot]
+    field = p.x.field
+    db2 = p.dist2(graph.vertices[b])
+    if not db2.is_rational():
+        return None
+
+    # rho: the rotation by 2*pi/order. For order 3 that is the joining
+    # rotation of d^2 = 1/3; in general it is built from the same identity,
+    # cos(2 pi/order) = 1 - 1/(2 d^2) at the magic radius d.
+    if order == 3:
+        try:
+            rho = rotation_joining(Fraction(1, 3), field)
+        except (ValueError, ZeroDivisionError):
+            return None
+    else:
+        rho = _rotation_of_order_in(field, order)
+        if rho is None:
+            return None
+    try:
+        sigma = rotation_joining(db2.c[0], field)
+    except (ValueError, ZeroDivisionError):
+        return None
+
+    def compose(x, y):
+        return Rotation(x.cos * y.cos - x.sin * y.sin,
+                        x.cos * y.sin + x.sin * y.cos, check=False)
+
+    ident = Rotation(field.rational(1), field.zero())
+    orbit, cur = [ident], ident
+    for _ in range(order - 1):
+        cur = compose(cur, rho)
+        orbit.append(cur)
+    return orbit + [compose(sigma, r) for r in orbit]
+
+
+def _rotation_of_order_in(field, order: int):
+    """A rotation of exactly this order over the field, or None."""
+    from .multispindle import _rotation_of_order
+
+    try:
+        return _rotation_of_order(order, field)
+    except (ValueError, ZeroDivisionError):
+        return None
