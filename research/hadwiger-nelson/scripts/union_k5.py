@@ -83,9 +83,13 @@ def main() -> None:
         st = SeparationTest(u, K, bp, legs + others)
         try:
             for a in legs:
+                if not st.run(subset=[a])[0]:
+                    continue        # the leg is forced alone: classical, r=1
                 for b in others:
                     if st.run(subset=[a, b])[0]:
                         continue
+                    if not st.run(subset=[b])[0]:
+                        continue    # so is this one; the pair is trivial
                     forced += 1
                     copies = two_orbit_block(u, bp, a, b)
                     blocked = copies is not None and blocks_two_targets(

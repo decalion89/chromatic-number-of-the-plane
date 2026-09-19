@@ -92,7 +92,11 @@ def main() -> None:
         st = SeparationTest(g, K, bp, cand)
         try:
             for a in thirds:
+                if not st.run(subset=[a])[0]:
+                    continue        # the leg is forced alone: classical, r=1
                 for b in others:
+                    if not st.run(subset=[b])[0]:
+                        continue    # so is this one; the pair is trivial
                     if not st.run(subset=[a, b])[0]:
                         forced += 1
                         pool = full_pool(g, bp, [a, b], ident)

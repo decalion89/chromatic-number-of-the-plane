@@ -13,6 +13,20 @@ How the graph was built
     target  2, at squared distance 3
   carries the pivot's colour.
 
+  HONEST NOTE ON WHAT THIS DOES AND DOES NOT SHOW.
+  Target 2 is forced *on its own* here -- a core of 1, not 2. In the
+  triangular lattice two points at distance sqrt(3) take the same colour in
+  every 3-colouring, which is the classical rhombus forcing, so the pair is
+  forced trivially and two or three copies of the ordinary spindle would
+  have closed it as well. The six-copy block is valid on this instance and
+  the certificate is real, but the construction was not *needed* here.
+
+  What it establishes is that the machinery runs end to end and produces a
+  machine-checked certificate. What it does not establish is that the block
+  reaches anything the classical argument cannot. For that the pair must have
+  both legs separable on their own -- a genuine core of 2 with one leg on the
+  classical circle -- which is the object still being searched for.
+
   The two-orbit block closes it with six copies: two orbits of the
   120-degree rotation about the pivot, the second offset by the
   unit-chord angle of target 2's circle.

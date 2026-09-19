@@ -363,13 +363,19 @@ def test_centroids_give_every_pivot_a_leg():
 def test_two_orbit_block_runs_to_an_uncolourable_union():
     """The whole chain on a real object: forced pair, six copies, no colouring.
 
-    A proof that has never produced a certificate is worth less than one that
-    has. At k=3 forcing is cheap, so the pipeline can be run to the end: the
-    triangular lattice is 3-chromatic, its unit triangles are everywhere, and
-    their centroids hand over the leg at d^2 = 1/3 for free.
+    What it shows: the machinery runs end to end and the union really has no
+    colouring. 91 vertices go in 3-colourable; the union of the six copies
+    comes out at 409 vertices and 1062 edges with none.
 
-    91 vertices go in 3-colourable; the union of the six copies comes out at
-    409 vertices and 1062 edges with no 3-colouring at all.
+    What it does *not* show: that the block reaches anything the classical
+    argument cannot. The sqrt(3) leg of this pair is forced on its own here --
+    a core of 1, since two points at distance sqrt(3) in the triangular
+    lattice take the same colour in every 3-colouring -- so the pair is forced
+    trivially and two copies of the ordinary spindle would close it too. The
+    test asserts that, so the limitation cannot quietly disappear.
+
+    A genuine demonstration needs both legs separable alone. That object has
+    not turned up yet, at any k.
     """
     from fractions import Fraction
 
@@ -416,6 +422,13 @@ def test_two_orbit_block_runs_to_an_uncolourable_union():
     assert found, "no forced pair with a leg on the classical circle"
 
     bp, a, b = found
+    st = SeparationTest(g, 3, bp, [a, b])
+    try:
+        # pinned deliberately: on this instance the pair is forced only
+        # because one leg already is, and that is the whole limitation
+        assert not st.run(subset=[b])[0]
+    finally:
+        st.close()
     copies = two_orbit_block(g, bp, a, b)
     assert copies is not None and len(copies) == 6
     assert blocks_two_targets(g, bp, [a, b], copies)
