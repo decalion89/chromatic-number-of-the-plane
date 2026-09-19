@@ -326,13 +326,17 @@ def test_centroids_sit_on_the_classical_circle():
     cents = unit_triangle_centroids(g, limit=60)
     assert cents
     third = Fraction(1, 3)
+    from itertools import combinations
+
     for c in cents:
         close = [q for q in g.vertices
                  if c.dist2(q).is_rational() and c.dist2(q).c[0] == third]
         assert len(close) >= 3                 # its own triangle, at least
-        for i, u in enumerate(close[:3]):
-            for v in close[i + 1:3]:
-                assert u.dist2(v) == 1         # and they are a unit triangle
+        # some triple among them is that triangle -- not necessarily the
+        # first three, since a centroid can sit 1/sqrt(3) from more points
+        # than the three it came from.
+        assert any(u.dist2(v) == 1 and v.dist2(w) == 1 and u.dist2(w) == 1
+                   for u, v, w in combinations(close, 3))
 
 
 def test_centroids_give_every_pivot_a_leg():
