@@ -37,6 +37,7 @@ square root either lives in the field or names the extension that holds it.
 """
 from __future__ import annotations
 
+from fractions import Fraction
 from typing import List, Optional, Sequence, Tuple
 
 from .geometry import Point, Rotation
@@ -327,3 +328,80 @@ def search_block(graph, pivot: int, targets: Sequence[int],
 
     rec([], [()], max_depth)
     return ([cands[i] for i in (best[0] or [])], best[1])
+
+
+def unit_circle_intersections(u: Point, v: Point) -> List[Point]:
+    """The points at distance exactly 1 from both u and v.
+
+    On the perpendicular bisector, h from the midpoint, with
+    h^2 = 1 - D/4 for D = |u - v|^2.  So
+
+        x = (u + v)/2 +- sqrt((4 - D) / (4 D)) * (-(dy), dx),   d = v - u,
+
+    and the square root goes through the same denesting as everything else --
+    present when the field holds it, and honestly absent otherwise.
+    """
+    d = v - u
+    D = d.x * d.x + d.y * d.y
+    field = D.field
+    four = field.rational(4)
+    if D == 0:
+        return []
+    t = (four - D) / (four * D)
+    root = _sqrt_in_field(t)
+    if root is None:
+        return []
+    half = field.rational(Fraction(1, 2))
+    mx, my = (u.x + v.x) * half, (u.y + v.y) * half
+    out = []
+    for sign in (1, -1):
+        sg = field.rational(sign)
+        x = Point(mx - sg * root * d.y, my + sg * root * d.x)
+        if x.dist2(u) == 1 and x.dist2(v) == 1:
+            out.append(x)
+    return out
+
+
+def deep_holes(graph, min_degree: int = 6, limit: int = 4000):
+    """Points of the plane with many graph vertices exactly one away.
+
+    Every pivot tried in this package was already a vertex, which is a
+    restriction the argument never asked for: the pivot is a point whose
+    colour is being constrained, and any point of the plane will do. The ones
+    worth adding are those with the most neighbours, since forcing comes from
+    how tightly a pivot's own neighbourhood is pinned.
+
+    Candidates are the intersections of unit circles about pairs of vertices,
+    which is where a point can have two neighbours at all; the count is then
+    exact against the whole vertex set.
+    """
+    from collections import defaultdict
+
+    pts = list(graph.vertices)
+    zs = [(complex(float(p.x), float(p.y)) if hasattr(p.x, "__float__")
+           else None) for p in pts]
+    seen = {}
+    for i, u in enumerate(pts):
+        for j in range(i + 1, len(pts)):
+            v = pts[j]
+            D = u.dist2(v)
+            if not D.is_rational():
+                continue
+            if not (0 < D.c[0] <= 4):
+                continue
+            for x in unit_circle_intersections(u, v):
+                if x not in seen:
+                    seen[x] = None
+                    if len(seen) >= limit:
+                        break
+            if len(seen) >= limit:
+                break
+        if len(seen) >= limit:
+            break
+    out = []
+    for x in seen:
+        deg = sum(1 for q in pts if x.is_unit_apart(q))
+        if deg >= min_degree:
+            out.append((deg, x))
+    out.sort(key=lambda t: -t[0])
+    return out

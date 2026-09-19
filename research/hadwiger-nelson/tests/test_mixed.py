@@ -76,3 +76,35 @@ def test_escape_count_is_zero_only_when_blocked():
     rots += conflict_rotation_set(g, pivot, targets)[:4]
     n = count_cross_transversals(g, pivot, targets, rots, cap=5000)
     assert (n == 0) == cross_blocks(g, pivot, targets, rots)
+
+
+def test_unit_circle_intersections_are_exactly_one_away():
+    """The points at distance 1 from both ends of a short edge."""
+    from hn.geometry import eisenstein, origin
+    from hn.mixed import unit_circle_intersections
+
+    u, v = origin(), eisenstein(1, 0)          # one apart
+    xs = unit_circle_intersections(u, v)
+    assert len(xs) == 2
+    for x in xs:
+        assert x.dist2(u) == 1 and x.dist2(v) == 1
+    assert xs[0] != xs[1]
+
+
+def test_no_intersection_when_the_ends_are_too_far():
+    from hn.geometry import eisenstein, origin
+    from hn.mixed import unit_circle_intersections
+
+    u, v = origin(), eisenstein(3, 0)          # three apart: no such point
+    assert unit_circle_intersections(u, v) == []
+
+
+def test_deep_holes_really_have_the_degree_claimed():
+    """A pivot need not be a vertex; these are the points worth adding."""
+    from hn.mixed import deep_holes
+
+    g = build_graph(build_Sa())
+    holes = deep_holes(g, min_degree=8, limit=200)
+    assert holes
+    for deg, x in holes[:5]:
+        assert sum(1 for q in g.vertices if x.is_unit_apart(q)) == deg
