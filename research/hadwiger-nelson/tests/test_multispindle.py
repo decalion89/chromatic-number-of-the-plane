@@ -174,3 +174,57 @@ def test_a_distance_outside_the_spectrum_is_rejected():
         rotation_joining(Fraction(25, 9), QSQRT3_11)
     # and it does exist once the field carries those radicals
     rotation_joining(Fraction(25, 9), Field((7, 13)))
+
+
+# -- the lemma without a restriction it never needed -----------------------
+
+def test_cross_target_conflicts_are_real_and_not_vacuous():
+    """The lemma says every chosen image carries the pivot's colour, so ANY
+    adjacent pair among them is a contradiction -- including one arising from
+    two *different* targets.  conflict_graphs only ever compared images of the
+    same target, which is the argument carrying a restriction it does not
+    require.
+
+    On the saturated k=4 configuration the cross-target edges are 30 against
+    33 same-target ones, so the difference is substantial rather than
+    cosmetic.  It still does not block there, for a reason that is structural
+    rather than a shortage of copies: see the next test.
+    """
+    from hn.multispindle import cross_conflict_graph, rotation_powers
+
+    r = QSQRT3_11.sqrt(3).inverse()
+    q = Point(r, QSQRT3_11.zero())
+    rho = ROT60 ** 2
+    g = build_graph([origin(), q, rho(q), rho(rho(q))])
+    rots = rotation_powers(rho, 3)
+    adj = cross_conflict_graph(g, 0, [1, 2, 3], rots)
+    assert len(adj) == 3 * 3                      # copies x targets
+    cross = sum(1 for (i, a), ns in adj.items() for (j, b) in ns if a != b)
+    assert cross > 0, "cross-target conflicts should exist on a unit triangle"
+
+
+def test_two_orbits_cannot_constrain_each_other():
+    """Why the narrowing floors at 11.
+
+    Two points on the circle of radius 1/sqrt(3) are at distance 1 exactly
+    when they are 120 degrees apart.  The eleven surviving targets sit at
+    38.55 + 60k for six of them and 69.6 + 60k for five -- two interleaved
+    six-fold orbits, 31.05 degrees apart.  Within an orbit, 120-degree pairs
+    exist; between them 31.05 + 60k is never 120, so no cross-orbit pair is
+    ever adjacent.
+
+    The two families therefore place no constraint on each other, an
+    independent choice always exists, and no number of rotated copies makes
+    the lemma fire.  The floor is the orbit structure, not the copy count.
+    """
+    from fractions import Fraction
+
+    offsets = [Fraction(3855, 100) + 60 * k for k in range(6)]
+    offsets += [Fraction(696, 10) + 60 * k for k in range(5)]
+    def adjacent(a, b):
+        return abs(float((b - a) % 360) - 120) < 1e-6
+    within = sum(1 for a in offsets for b in offsets if adjacent(a, b))
+    assert within > 0                              # orbits do contain 120-degree pairs
+    fam_a, fam_b = offsets[:6], offsets[6:]
+    assert not any(adjacent(a, b) for a in fam_a for b in fam_b)
+    assert not any(adjacent(b, a) for a in fam_a for b in fam_b)

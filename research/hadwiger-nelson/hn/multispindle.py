@@ -68,6 +68,9 @@ __all__ = [
     "spindle_spectrum",
     "squared_distance_for_step",
     "conflict_graphs",
+    "cross_conflict_graph",
+    "cross_independent_transversal",
+    "cross_blocks",
     "independent_transversal",
     "blocks_all_assignments",
     "multi_spindle_union",
@@ -383,3 +386,76 @@ def spindle_spectrum(field: Field, max_den: int = 12, max_num: int = 60) -> List
             if required_radical(d2) in available:
                 out.append(d2)
     return sorted(set(out))
+
+
+# --- the lemma without the restriction it does not need --------------------
+
+def cross_conflict_graph(
+    graph: UnitDistanceGraph,
+    pivot: int,
+    targets: Sequence[int],
+    rotations: Sequence[Rotation],
+) -> Dict:
+    """Conflicts between *any* two chosen images, not only same-target ones.
+
+    The lemma says: in each copy i some target f(i) satisfies
+    colour(rho_i(q_f(i))) = colour(p).  So every chosen image carries p's
+    colour, and ANY adjacent pair among them is a contradiction -- including a
+    pair that came from two different targets.
+
+    `conflict_graphs` only compared images of the same target, which is the
+    argument with a restriction it never required.  That restriction is what
+    caps the reach at |Q| <= 2: with same-target conflicts the images live on
+    one circle and at most three are pairwise adjacent.  Allowing cross-target
+    pairs drops that ceiling entirely, since two different targets on the same
+    circle can have adjacent images at many more rotation offsets.
+
+    Returns {(i, q): set of conflicting (j, q')}.
+    """
+    p = graph.vertices[pivot]
+    images = {(i, q): r.about(p)(graph.vertices[q])
+              for i, r in enumerate(rotations) for q in targets}
+    adj: Dict = {k: set() for k in images}
+    keys = list(images)
+    for a in range(len(keys)):
+        ia, qa = keys[a]
+        for b in range(a + 1, len(keys)):
+            ib, qb = keys[b]
+            if ia == ib:
+                continue                       # one choice per copy
+            if images[keys[a]].is_unit_apart(images[keys[b]]):
+                adj[keys[a]].add(keys[b])
+                adj[keys[b]].add(keys[a])
+    return adj
+
+
+def cross_independent_transversal(
+    m: int, targets: Sequence[int], adj: Dict
+):
+    """A choice of one target per copy whose images are pairwise non-adjacent,
+    or None when no such choice exists -- which is the contradiction."""
+    targets = list(targets)
+    chosen: List = []
+
+    def rec(i: int):
+        if i == m:
+            return list(chosen)
+        for q in targets:
+            k = (i, q)
+            if any(c in adj[k] for c in chosen):
+                continue
+            chosen.append(k)
+            r = rec(i + 1)
+            if r is not None:
+                return r
+            chosen.pop()
+        return None
+
+    return rec(0)
+
+
+def cross_blocks(graph, pivot, targets, rotations) -> bool:
+    """True when this family of rotations makes the lemma fire, using the full
+    cross-target conflict condition."""
+    adj = cross_conflict_graph(graph, pivot, targets, rotations)
+    return cross_independent_transversal(len(rotations), targets, adj) is None

@@ -382,6 +382,27 @@ of this construction, not an artefact of where it was looking.** The mechanism i
 real — two thirds of the way down from 34, where symmetric tightening moved nothing
 at all — and its reach stops well above the 2 a spindle needs.
 
+**Why 11, structurally.** Two points on the circle of radius 1/√3 are at distance
+1 exactly when they are 120° apart. The eleven surviving targets sit at
+
+```
+ 38.55  98.55  158.55  218.55  278.55  338.55     six, step 60°
+    69.6  129.6  189.6  249.6  309.6              five, step 60°
+```
+
+— two interleaved six-fold orbits, 31.05° apart. Within an orbit there are
+120° pairs; **between the orbits there are none**, since 31.05 + 60k is never 120.
+The two families place no constraint on each other, so an independent choice always
+exists and no number of rotated copies makes the spindle lemma fire. The floor is
+the orbit structure, not the copy count.
+
+Finding that also turned up a restriction the lemma never needed. It says every
+chosen image carries the pivot's colour, so *any* adjacent pair among them is a
+contradiction — including one arising from two **different** targets. The
+implementation compared only images of the same target. Lifting that adds 30
+cross-target conflict edges against 33 same-target ones here, so it is a real
+strengthening; it still does not block, for the orbit reason above.
+
 **The mechanism is real; the metric for it is not.** The obvious measure — what
 fraction of vertices the rotation about the forcing pivot still preserves — does
 not predict which tightening works, and is anti-correlated in round 2: the winning
