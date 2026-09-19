@@ -501,3 +501,60 @@ def test_odd_orbit_block_refuses_even_or_non_coprime_orders():
         except ValueError:
             continue
         raise AssertionError(f"should refuse order={order}, step={step}")
+
+
+def test_a_genuine_core_of_two_exists_on_four_points():
+    """The object the whole search is for, built by hand from K_4.
+
+    A pair {a,b} is forced exactly when the graph plus the two edges (p,a),
+    (p,b) has no k-colouring -- so the smallest instance is the smallest
+    (k+1)-critical graph with two edges removable at one vertex, which at
+    k = 3 is K_4.
+
+    Take a unit triangle x, y, z and a point p at distance 1 from x and
+    1/sqrt(3) from y. The triangle consumes all three colours and p differs
+    from x, so p must share with y or with z: forced. Neither leg is forced
+    alone, since p may take either. And y sits on the classical circle.
+
+    Its geometry is rigid: |p - x| = 1 and |p - y|^2 = 1/3 leave two positions
+    for p, and both give |p - z|^2 = (7 +- sqrt(33))/6. One is 0.209, too
+    short for a unit chord; the other is 2.124, long enough, but the rotation
+    it needs has sin^2 = (-66 + 30 sqrt(33))/256, whose conjugate is negative
+    -- so no real multiquadratic field names it. The pair is genuine; the
+    field is what stops the block being applied to it.
+    """
+    from fractions import Fraction
+
+    from hn.field import Field
+    from hn.geometry import Point
+    from hn.spindle import SeparationTest
+
+    fd = Field((3, 11))
+    x = Point(fd.rational(0), fd.rational(0))
+    y = Point(fd.rational(1), fd.rational(0))
+    z = Point(fd.rational(Fraction(1, 2)),
+              fd.sqrt(3) * fd.rational(Fraction(1, 2)))
+    p = Point(fd.rational(Fraction(5, 6)),
+              fd.sqrt(11) * fd.rational(Fraction(-1, 6)))
+
+    assert x.dist2(y) == 1 and y.dist2(z) == 1 and x.dist2(z) == 1
+    assert p.dist2(x) == 1
+    assert p.dist2(y) == fd.rational(Fraction(1, 3))
+    assert p.dist2(z) == fd.rational(Fraction(7, 6)) + fd.sqrt(33) * fd.rational(
+        Fraction(1, 6))
+
+    g = build_graph([p, x, y, z])
+    idx = {q: i for i, q in enumerate(g.vertices)}
+    bp, a, b = idx[p], idx[y], idx[z]
+    assert set(g.adj[bp]) == {idx[x]}            # p meets only x
+
+    st = SeparationTest(g, 3, bp, [a, b])
+    try:
+        assert st.run(subset=[a])[0]             # y alone: separable
+        assert st.run(subset=[b])[0]             # z alone: separable
+        assert not st.run(subset=[a, b])[0]      # the pair: forced
+    finally:
+        st.close()
+
+    from hn.mixed import two_orbit_block
+    assert two_orbit_block(g, bp, a, b) is None  # the field cannot name sigma
