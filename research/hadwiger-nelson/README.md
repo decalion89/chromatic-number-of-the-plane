@@ -300,6 +300,40 @@ The caveat that keeps this a lead rather than a result: Gibbs' observation conce
 *homomorphic* colourings, a restricted class, and forcing there does not imply
 forcing in general.
 
+## Slack: why the difficulty jumps where it does
+
+A unit-distance graph in the plane has clique number **3**. Four points pairwise at
+distance 1 would be a regular tetrahedron, which does not fit in two dimensions.
+
+Define the **slack** of a colouring problem as s = k − 3, and let **f(k)** be the
+number of vertices in the smallest unit-distance configuration containing a pair
+forced monochromatic under k colours.
+
+At **s = 0** a triangle exhausts the palette, so forcing is *local*: two triangles
+sharing an edge already do it. f(3) = 4, which meets the trivial bound f(k) ≥ k + 1
+(with n ≤ k, colour everything differently) **exactly**.
+
+At **s ≥ 1** no local configuration exhausts anything — a spare colour always
+remains — so forcing has to be assembled combinatorially across many vertices, and
+f jumps. The same four vertices force nothing at k = 4, and neither does the
+seven-vertex Moser spindle.
+
+| k | slack | f(k) | settled |
+|---|---|---|---|
+| 3 | 0 | **4** (tight) | trivial |
+| 4 | 1 | measured by `scripts/measure_fk.py` | 1961 |
+| 5 | 2 | > 1581 here | 2018, 57 years later |
+| 6 | 3 | — | open |
+
+The gap f(k) − (k+1) is what the plane's missing K₄ costs, and the history of the
+problem is that gap widening. The anchors are pinned in `tests/test_slack.py`; the
+clique bound is elementary and f(3) = 4 is immediate, so what is worth anything
+here is f(4) as an actual number, which decides whether a search reaching ten
+thousand vertices is close to s = 2 or missing orders of magnitude.
+
+Forcing and chromatic number are not the same thing — the Moser spindle is
+4-chromatic while forcing nothing at k = 4 — and the framing is about f, not χ.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
