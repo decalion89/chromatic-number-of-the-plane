@@ -269,6 +269,29 @@ And one honest measurement about how loose the pressure bound is. The gadget is
 a core of one. Its smallest core over all 127 pivots is **seven**. Necessary is a
 long way from sufficient.
 
+### The wall, stated precisely
+
+Two halves that have never been in the same graph:
+
+| | pressure | can host a core at k = 5 |
+|---|---|---|
+| three-hexagon gadget | 3 at k = 4, 2 at k = 5 | **no** — it is 4-colourable, so the pivot always finds a fifth colour of its own |
+| de Grey's G | flat 2 | **no** — it is 5-vertex-critical, so *every* vertex finds one |
+
+Grafting was tried both ways and neither cures the other. Landing the gadget's
+pivot on G's hub leaves that hub critical, because G is 5-vertex-critical and so
+G − hub is 4-colourable, and the gadget minus its pivot is 4-colourable too;
+the counterexample builder runs out, as it must. Placing a translated copy of G
+so it *avoids* the pivot does make the pivot non-critical in principle, but over
+204 placements the two never share more than a vertex or two, and near-disjoint
+copies colour independently — their colours can be permuted against each other,
+so no fixed target set is ever forced. Adding the whole second level, 625
+vertices, leaves the gadget 4-colourable still.
+
+So the requirement is sharp and unmet: **a 5-chromatic host, with the pivot
+non-critical, substantially overlapping a pressure gadget.** Each piece exists
+separately. Nothing here puts them in one graph.
+
 ### What pressure 3 actually needs
 
 de Grey's Sa reaches **pressure 3 at four colours** — k−1, the classical spindle

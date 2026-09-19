@@ -1112,7 +1112,7 @@ def three_leg_block_configuration():
     return field, pivot, legs, copies
 
 
-def three_hexagon_gadget():
+def three_hexagon_gadget(field=None):
     """A 127-point configuration with pressure 3 at four colours.
 
     de Grey's forcing, rebuilt from one angle. Taking the 47-vertex witness
@@ -1131,9 +1131,11 @@ def three_hexagon_gadget():
     Measured: pressure 3 at k = 4, so a core of one is possible -- the
     classical spindle regime -- and pressure 2 at k = 5. Everything lives in
     Q(sqrt 3, sqrt 11), since cos(theta/2) = sqrt(33)/6 and sin(theta/2) =
-    sqrt(3)/6, the same field as the jointly forced pair above.
+    sqrt(3)/6, the same field as the jointly forced pair above. Pass a larger
+    `field` to build it inside one -- de Grey's Q(sqrt3, sqrt5, sqrt7, sqrt11)
+    contains it -- so the gadget can be grafted onto a graph living there.
     """
-    field = Field((3, 11))
+    field = field or Field((3, 11))
     one, zero = field.rational(1), field.zero()
     ct = field.rational(Fraction(5, 6))
     st = field.sqrt(11) * field.rational(Fraction(1, 6))
