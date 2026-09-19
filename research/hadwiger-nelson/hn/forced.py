@@ -933,3 +933,59 @@ def core_from_forcing_set(rel: "ColourRelations", p: int,
     """S minus N(p), which is a core of p whenever S is forcing and p not in S."""
     nb = rel.graph.adj[p]
     return [v for v in S if v != p and v not in nb]
+
+
+# -- why stacking copies can never work, as a theorem ---------------------
+#
+# S is rainbow-forcing exactly when it meets every colour class of every
+# colouring -- equivalently, every independent set I with W - I still
+# (k-1)-colourable. That reading kills the whole family of constructions this
+# package kept returning to.
+#
+# THEOREM. Let W split as A, B and a shared part, with W - a - b
+# (k-1)-colourable for every non-adjacent a in A, b in B. Then every
+# rainbow-forcing set contains all of A or all of B, so rho >= min(|A|, |B|).
+#
+# Proof. For such a pair, colour W - a - b with k-1 and give a and b the kth
+# colour; they are non-adjacent, so it is proper, and {a, b} is then a colour
+# class. A forcing set must therefore contain a or b. Ranging over all pairs,
+# it is a vertex cover of the complete bipartite graph between A and B, and
+# the only vertex covers of that are A and B. []
+#
+# The hypothesis is exactly what a union of two k-critical graphs supplies:
+# deleting one vertex from each copy leaves both (k-1)-colourable. Verified on
+# two Moser spindles glued at two vertices -- all 22 non-adjacent cross pairs
+# are killable, and the forcing set comes back as all five of one side plus
+# both shared vertices, rho = 7 against the bound's 5.
+#
+# For G union (G + t), |A| = |B| = 1357. So rho >= 1357 there, and the
+# measured "> 400" was not the loop running out of patience: no stack of
+# copies of a critical graph can ever have a small forcing set, hence never a
+# small core, hence never a blockable one. Every union in this package was
+# dead before it was built.
+
+def cross_pair_bound(graph, k: int, A: Sequence[int], B: Sequence[int],
+                     sample: int = 8) -> dict:
+    """Check the hypothesis on a sample and report the bound it gives."""
+    import random
+
+    from .coloring import is_k_colorable
+    from .graph import build_graph
+
+    rng = random.Random(0)
+    pairs, killable = 0, 0
+    for a in rng.sample(list(A), min(sample, len(A))):
+        for b in rng.sample(list(B), min(sample, len(B))):
+            if b in graph.adj[a]:
+                continue
+            pairs += 1
+            sub = build_graph([q for m, q in enumerate(graph.vertices)
+                               if m != a and m != b])
+            if is_k_colorable(sub, k - 1)[0]:
+                killable += 1
+    return {
+        "pairs_tested": pairs,
+        "killable": killable,
+        "hypothesis_holds_on_sample": pairs > 0 and killable == pairs,
+        "bound": min(len(A), len(B)),
+    }

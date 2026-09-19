@@ -436,6 +436,34 @@ sets are tiny, so cores of the blockable size are within reach of a well-placed
 pivot. At five they explode past 400, and a core of three is not a matter of
 searching harder — it is 400 away.
 
+### And stacking copies can never close it
+
+A forcing set meets every colour class of every colouring — equivalently, every
+independent set I with `W − I` still (k−1)-colourable. That reading kills the
+whole family of constructions this package kept returning to.
+
+> **Theorem.** Let W split as A, B and a shared part, with `W − a − b`
+> (k−1)-colourable for every non-adjacent a ∈ A, b ∈ B. Then every forcing set
+> contains **all of A or all of B**, so **ρ ≥ min(|A|, |B|)**.
+>
+> *Proof.* For such a pair, colour W − a − b with k−1 and give a and b the kth;
+> they are non-adjacent, so it is proper, and {a, b} is then a colour class. A
+> forcing set must contain a or b. Over all pairs it is a vertex cover of the
+> complete bipartite graph between A and B — and the only vertex covers of that
+> are A and B. ∎
+
+The hypothesis is exactly what a union of two k-critical graphs supplies:
+deleting one vertex from each copy leaves both (k−1)-colourable. Verified on two
+Moser spindles glued at two vertices — **all 22** non-adjacent cross pairs are
+killable, and the forcing set comes back as one whole side plus both shared
+vertices, ρ = 7 against the bound's 5.
+
+For `G ∪ (G+t)`, |A| = |B| = **1357**. So ρ ≥ 1357 there, and the measured
+"> 400" was not the loop running out of patience. **No stack of copies of a
+critical graph can ever have a small forcing set, hence never a small core,
+hence never a blockable one.** Every union in this package was dead before it
+was built.
+
 ### What pressure 3 actually needs
 
 de Grey's Sa reaches **pressure 3 at four colours** — k−1, the classical spindle

@@ -804,3 +804,47 @@ def test_forcing_set_invariant_and_the_core_it_gives():
         assert is_core(rel, p, T)
     finally:
         rel.close()
+
+
+def test_stacking_critical_copies_can_never_give_a_small_forcing_set():
+    """rho >= min(|A|, |B|) whenever every cross pair can be killed.
+
+    A forcing set meets every colour class of every colouring. If W - a - b is
+    (k-1)-colourable for a non-adjacent cross pair, colouring it with k-1 and
+    giving both the kth makes {a, b} a colour class, so the set must contain a
+    or b; ranging over all pairs it must be a vertex cover of a complete
+    bipartite graph, hence all of A or all of B.
+
+    Two Moser spindles glued: all 22 non-adjacent cross pairs are killable and
+    the forcing set comes back as one whole side plus the shared vertices. For
+    G union (G+t) the same bound reads rho >= 1357, so no stack of copies of a
+    critical graph can ever have a small forcing set -- or a blockable core.
+    """
+    from hn.certify import load_certificate
+    from hn.coloring import is_k_colorable
+    from hn.forced import (cross_pair_bound, forcing_set, shrink_forcing_set)
+    from hn.geometry import Point
+
+    pts, _doc = load_certificate("certificates/moser_spindle_no3coloring.json")
+    dx, dy = pts[1].x - pts[0].x, pts[1].y - pts[0].y
+    allp = list(dict.fromkeys(pts + [Point(q.x + dx, q.y + dy) for q in pts]))
+    w = build_graph(allp)
+    P, Sh = set(pts), set(allp) - set(pts)
+    A = [n for n, v in enumerate(w.vertices) if v in P and v not in Sh]
+    B = [n for n, v in enumerate(w.vertices) if v in Sh and v not in P]
+    assert is_k_colorable(w, 4)[0] and not is_k_colorable(w, 3)[0]
+
+    r = cross_pair_bound(w, 4, A, B)
+    assert r["hypothesis_holds_on_sample"], r
+    assert r["bound"] == min(len(A), len(B))
+
+    rel = ColourRelations(w, 4)
+    try:
+        S, ok = forcing_set(rel)
+        assert ok
+        S = shrink_forcing_set(rel, S)
+        assert len(S) >= r["bound"]
+        assert set(A) <= set(S) or set(B) <= set(S), \
+            "the forcing set must swallow one whole side"
+    finally:
+        rel.close()
