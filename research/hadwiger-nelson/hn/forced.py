@@ -511,22 +511,29 @@ def cegar_core(rel: "ColourRelations", p: int, key=None,
 # 16-vertex, 27-edge unit-distance graph that is 3-chromatic and NOT
 # bipartite: it carries an odd cycle.
 #
-#   at k = 4 the confined points have 2 colours, an odd cycle does not fit,
-#     and the squeeze is impossible -- pressure 3;
-#   at k = 5 they have 3, the graph is 3-colourable, and the squeeze goes
-#     through -- pressure 2.
+#   at k = 4 the confined points have 2 colours, an odd cycle does not fit;
+#   at k = 5 they have 3, and the graph is 3-colourable.
 #
-# Checked causally, not just by coincidence of numbers: deleting three of the
-# sixteen makes their graph bipartite, and the pressure drops from 3 to 2 on
-# the spot.
+# The odd cycle is load-bearing, checked causally rather than by coincidence
+# of numbers: deleting three of the sixteen makes their graph bipartite, and
+# the pressure drops from 3 to 2 on the spot.
 #
-# So the mechanism is "an odd cycle against k-2 colours", and lifting it says
-# exactly what to build. At five colours the confined points get three, so the
-# gadget among them must be 4-CHROMATIC rather than merely non-bipartite --
-# a Moser spindle, or the 19-vertex jointly forced construction in `hn.mixed`,
-# every vertex of which is adjacent to two circle points lying in different
-# hexagons. That is a finite design problem with the pieces already in hand,
-# which is a different kind of difficulty from "search harder".
+# It is NOT the whole mechanism, and the tempting one-line story is wrong.
+# Enumerating all 32 orientations of the five hexagons, the confined set is
+# BIPARTITE in sixteen of them -- nine points confined, no odd cycle -- so
+# those orientations are killed by something longer-range, through the
+# confined points' other neighbours rather than among themselves. The odd
+# cycle covers half the cases and is necessary for those; the rest of the
+# argument has not been isolated. Generating every point one away from two
+# circle points of different hexagons, 344 of them, and taking the worst
+# orientation gives a confined graph of chromatic number 2, which is the same
+# fact from the other side: no choice of auxiliary points makes the confined
+# set do the work alone.
+#
+# So "an odd cycle against k-2 colours" is a real part of the machine and not
+# a description of it. Raising the confined gadget to 4-chromatic is
+# necessary for the lift to five colours on the orientations the odd cycle
+# does cover, and not sufficient anywhere.
 
 PRESSURE_GADGET = {
     "witness": "certificates/pressure3_witness_47.json",

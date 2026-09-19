@@ -168,21 +168,28 @@ differently-coloured circle points is barred from both, so it is confined to the
 remaining **k − 2**. And the sixteen among themselves form a 16-vertex, 27-edge
 unit-distance graph that is 3-chromatic and **not bipartite**: an odd cycle.
 
-> at k = 4 the confined points have 2 colours, the odd cycle does not fit, the
-> squeeze is impossible — **pressure 3**;
-> at k = 5 they have 3, the graph is 3-colourable, the squeeze goes through —
-> **pressure 2**.
+> at k = 4 the confined points have 2 colours and an odd cycle does not fit;
+> at k = 5 they have 3 and the graph is 3-colourable.
 
-Checked causally, not by coincidence of numbers: deleting three of the sixteen
-makes their graph bipartite and the pressure drops from 3 to 2 on the spot.
+The odd cycle is load-bearing, checked causally rather than by coincidence of
+numbers: deleting three of the sixteen makes their graph bipartite and the
+pressure drops from 3 to 2 on the spot.
 
-**So the mechanism is "an odd cycle against k − 2 colours", and lifting it says
-exactly what to build.** At five colours the confined points get three, so the
-gadget among them must be **4-chromatic** rather than merely non-bipartite — a
-Moser spindle, or the 19-vertex jointly forced construction above — with every
-vertex adjacent to two circle points in different hexagons. That is a finite
-design problem with the pieces already in hand, which is a different kind of
-difficulty from "search harder".
+**It is not the whole mechanism, and the tempting one-line story is wrong.**
+Enumerating all 32 orientations of the five hexagons, the confined set is
+**bipartite in sixteen of them** — nine points confined, no odd cycle — so those
+orientations are killed by something longer-range, through the confined points'
+other neighbours rather than among themselves. Generating *every* point one away
+from two circle points of different hexagons — 344 of them — and taking the worst
+orientation gives a confined graph of chromatic number 2: the same fact from the
+other side, that no choice of auxiliary points makes the confined set do the work
+alone.
+
+So "an odd cycle against k − 2 colours" is a real part of the machine and not a
+description of it. Raising the confined gadget to 4-chromatic is necessary for
+the lift on the orientations the odd cycle does cover, and sufficient nowhere.
+The other half of de Grey's argument is still unnamed, and naming it is the next
+thing worth doing.
 
 ### What pressure 3 actually needs
 

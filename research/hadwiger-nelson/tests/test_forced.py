@@ -409,3 +409,58 @@ def test_pressure_gadget_is_an_odd_cycle_against_k_minus_two():
             break
     else:
         raise AssertionError("no three extras make the gadget bipartite")
+
+
+def test_the_odd_cycle_covers_only_half_the_orientations():
+    """The correction to the tempting one-line story.
+
+    "An odd cycle against k-2 colours" is load-bearing but incomplete: over
+    the 32 orientations of the five hexagons the confined set is bipartite in
+    sixteen of them, so those are killed by something longer-range, through
+    the confined points' other neighbours rather than among themselves.
+    """
+    from hn.certify import load_certificate
+    from hn.coloring import is_k_colorable
+
+    pts, _doc = load_certificate("certificates/pressure3_witness_47.json")
+    g = build_graph(pts)
+    piv = 0
+    circle = set(g.adj[piv])
+    extras = [v for v in range(g.n) if v != piv and v not in circle]
+    seen, comps = set(), []
+    for s in sorted(circle):
+        if s in seen:
+            continue
+        comp, stack = [], [s]
+        seen.add(s)
+        while stack:
+            x = stack.pop()
+            comp.append(x)
+            for y in g.adj[x] & circle:
+                if y not in seen:
+                    seen.add(y)
+                    stack.append(y)
+        comps.append(set(comp))
+    par, comp_of = {}, {}
+    for ci, comp in enumerate(comps):
+        s = min(comp)
+        par[s], front = 0, [s]
+        for v in comp:
+            comp_of[v] = ci
+        while front:
+            x = front.pop()
+            for y in g.adj[x] & comp:
+                if y not in par:
+                    par[y] = 1 - par[x]
+                    front.append(y)
+
+    bipartite = 0
+    for bits in range(1 << len(comps)):
+        def col(v):
+            return par[v] ^ ((bits >> comp_of[v]) & 1)
+        barred = [v for v in extras
+                  if len({col(c) for c in g.adj[v] & circle}) == 2]
+        sub = build_graph([g.vertices[v] for v in barred])
+        if sub.n == 0 or is_k_colorable(sub, 2)[0]:
+            bipartite += 1
+    assert bipartite == 16, f"expected half, got {bipartite}/32"
