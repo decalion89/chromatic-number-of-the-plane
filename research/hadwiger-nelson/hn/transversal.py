@@ -312,3 +312,115 @@ def niven_capacity(d2) -> int:
     """
     n = niven_order(d2)
     return trapping_bound(n) if n else 0
+
+
+# -- how large a core rotations can block ---------------------------------
+#
+# The capacity results above are about one core of two at one distance. The
+# pressure theorem in `hn.forced` forces the general question, because it says
+# de Grey's G cannot have a core of two at five colours at all -- pressure
+# measures 2 at every vertex, and a core of r needs pressure >= k - r, so the
+# smallest core available there is three. Whether three can be blocked is
+# therefore not a detail.
+#
+# Set it up exactly. The copies are m isometries fixing the pivot, and a core
+# of r says each copy must place the pivot's colour on one of its r leg
+# images. An escape is an assignment of copies to legs such that no two copies
+# given the same leg have conflicting images, that is, a partition of the m
+# copies into classes A_1..A_r with A_L independent in the conflict graph
+# G_L of leg L. Blocking is the absence of any escape.
+#
+# THEOREM. alpha(G_L) >= m/3 for every leg, so a counting certificate --
+# sum_L alpha(G_L) < m, which rules out an escape because the classes
+# partition m copies and each is capped by its independence number -- can only
+# exist when r <= 2.
+#
+# Proof. Every image of leg L lies on the circle of radius d_L about the
+# pivot, and a point of a circle is one apart from at most two points of that
+# circle, so the graph on the DISTINCT images has maximum degree at most two.
+# G_L is that graph blown up by multiplicity, copies sharing an image being
+# non-adjacent, so each of its components is a blown-up path or cycle and the
+# largest class of any component is at least a third of it. Summing,
+# alpha(G_L) >= m/3, with equality only when every component is a blown-up
+# triangle -- which needs the rotation angle to be 120 degrees, so d_L^2 = 1/3,
+# the one odd order Niven's theorem leaves on a rational radius. A counting
+# certificate then needs r*m/3 <= sum_L alpha(G_L) < m, hence r < 3. []
+#
+# So for a core of three or more, counting never blocks. What remains is
+# misalignment: the maximum independent sets exist and are big enough, but
+# cannot be fitted together into a partition. That is a genuine possibility --
+# `hn.mixed.blocks_targets` decides it by SAT -- but it is a different kind of
+# argument, and every blocking result in this package so far, capacity
+# included, has been a counting one.
+#
+# Combined with the measurements the wall is exactly locatable. Pressure is 2
+# on everything measured, so at five colours every core has size at least
+# three; counting blocks only up to two. The rotation method at k = 5 needs
+# one of the two to give: a graph with pressure 3, which nothing here has
+# produced, or a misalignment block for a core of three.
+
+def _alpha(adj: List[set]) -> int:
+    """Exact independence number; components here are paths and cycles."""
+    n = len(adj)
+    seen, total = [False] * n, 0
+    for s in range(n):
+        if seen[s]:
+            continue
+        comp, stack = [], [s]
+        seen[s] = True
+        while stack:
+            v = stack.pop()
+            comp.append(v)
+            for w in adj[v]:
+                if not seen[w]:
+                    seen[w] = True
+                    stack.append(w)
+        idx = {v: i for i, v in enumerate(comp)}
+        local = [frozenset(idx[w] for w in adj[v]) for v in comp]
+        best = 0
+
+        def grow(i: int, chosen: frozenset, size: int):
+            nonlocal best
+            if size + (len(comp) - i) <= best:
+                return
+            if i == len(comp):
+                best = max(best, size)
+                return
+            if not (local[i] & chosen):
+                grow(i + 1, chosen | {i}, size + 1)
+            grow(i + 1, chosen, size)
+
+        grow(0, frozenset(), 0)
+        total += best
+    return total
+
+
+def leg_conflict_alphas(graph, pivot: int, targets: Sequence[int],
+                        isometries: Sequence) -> List[int]:
+    """The independence number of each leg's conflict graph on the copies."""
+    from .multispindle import cross_conflict_graph
+
+    targets = list(targets)
+    m = len(isometries)
+    adjmap = cross_conflict_graph(graph, pivot, targets, isometries)
+    out = []
+    for q in targets:
+        adj = [set() for _ in range(m)]
+        for i in range(m):
+            for j, qb in adjmap[(i, q)]:
+                if qb == q and j != i:
+                    adj[i].add(j)
+                    adj[j].add(i)
+        out.append(_alpha(adj))
+    return out
+
+
+def counting_blocks(graph, pivot: int, targets: Sequence[int],
+                    isometries: Sequence) -> bool:
+    """Whether the counting certificate alone rules out every escape.
+
+    Sufficient for blocking, never necessary: a core of three or more can only
+    ever be blocked by misalignment, which this test cannot see.
+    """
+    return sum(leg_conflict_alphas(graph, pivot, targets, isometries)) \
+        < len(isometries)

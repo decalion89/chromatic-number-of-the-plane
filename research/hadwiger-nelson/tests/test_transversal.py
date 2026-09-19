@@ -125,3 +125,68 @@ def test_only_the_classical_circle_traps_at_a_rational_radius():
     assert niven_capacity(Fraction(1, 3)) == 2
     for d2 in (1, Fraction(1, 2), Fraction(1, 4)):
         assert niven_capacity(d2) == 0       # even orders are bipartite
+
+
+# -- how large a core rotations can block ---------------------------------
+
+def test_counting_certificate_matches_the_built_block():
+    """alphas [2, 3] against 6 copies: the construction blocks by exactly one.
+
+    The 1/3 leg's conflict graph is two triangles, so alpha = 2 = m/3, the
+    theorem's floor; the other leg's is three disjoint edges, alpha = 3. Five
+    is less than six, so counting alone rules out every escape, and the SAT
+    test agrees.
+    """
+    from hn.graph import build_graph
+    from hn.mixed import (blocks_targets, joint_core_configuration,
+                          joint_core_copies)
+    from hn.transversal import counting_blocks, leg_conflict_alphas
+
+    E, pts, rho, sigma = joint_core_configuration()
+    g = build_graph(pts)
+    bp = g.vertices.index(pts[0])
+    pair = [g.vertices.index(pts[2]), g.vertices.index(pts[3])]
+    copies = joint_core_copies(E, rho, sigma)
+    alphas = leg_conflict_alphas(g, bp, pair, copies)
+    assert alphas == [2, 3] and sum(alphas) == 5 < len(copies) == 6
+    assert counting_blocks(g, bp, pair, copies)
+    assert blocks_targets(g, bp, pair, copies)
+
+
+def test_every_leg_alpha_is_at_least_a_third_of_the_copies():
+    """The floor the theorem rests on: images of one leg lie on one circle,
+    a point of a circle is one apart from at most two points of it, so each
+    conflict graph has maximum degree two and independence ratio >= 1/3.
+    """
+    from hn.graph import build_graph
+    from hn.mixed import joint_core_configuration, joint_core_copies
+    from hn.transversal import leg_conflict_alphas
+
+    E, pts, rho, sigma = joint_core_configuration()
+    g = build_graph(pts)
+    bp = g.vertices.index(pts[0])
+    legs = [g.vertices.index(pts[2]), g.vertices.index(pts[3])]
+    copies = joint_core_copies(E, rho, sigma)
+    for sub in (copies, copies[:3], copies[:5], copies[1:]):
+        for a in leg_conflict_alphas(g, bp, legs, sub):
+            assert 3 * a >= len(sub)
+
+
+def test_counting_can_never_block_a_core_of_three():
+    """r * m/3 <= sum alpha, so sum alpha < m forces r <= 2. Checked by
+    adding a third leg to the built configuration: the sum reaches the copy
+    count and the counting certificate dies, whatever the copies."""
+    from hn.graph import build_graph
+    from hn.mixed import joint_core_configuration, joint_core_copies
+    from hn.transversal import counting_blocks, leg_conflict_alphas
+
+    E, pts, rho, sigma = joint_core_configuration()
+    g = build_graph(pts)
+    bp = g.vertices.index(pts[0])
+    trio = [g.vertices.index(pts[1]), g.vertices.index(pts[2]),
+            g.vertices.index(pts[3])]
+    copies = joint_core_copies(E, rho, sigma)
+    for sub in (copies, copies[:4], copies[:5]):
+        alphas = leg_conflict_alphas(g, bp, trio, sub)
+        assert sum(alphas) >= len(sub), "counting must fail at three legs"
+        assert not counting_blocks(g, bp, trio, sub)
