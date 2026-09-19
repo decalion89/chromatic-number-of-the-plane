@@ -721,8 +721,19 @@ list. At k = 5, with the circle in colours {0,1}:
 So the condition is not on the whole auxiliary graph but on the **confined
 set**, and only in the orientations that actually arise:
 
-> pressure(p) > 2 at k = 5 requires the confined set to be **4-chromatic in
-> every proper 2-colouring of the circle**.
+> The **local** mechanism behind pressure 3 — the one the k = 4 construction
+> actually runs on — is the confined set's list problem, in every proper
+> 2-colouring of the circle.
+
+Stated that way deliberately. An earlier draft of this section claimed the
+condition was *necessary*, and it is not: a 3-colourable confined set does not
+by itself give a colouring of the whole graph, and pressure 3 could in
+principle come from deeper structure. What follows explains the measurements
+and bounds what the local mechanism can do — it is not a proof that the
+pressure must be 2.
+
+Two circles meet in at most two points, so no auxiliary ever sees three circle
+points: the list sizes are exactly 3 and 4, with nothing in between.
 
 A first guess that the auxiliary graph's chromatic number was the obstruction
 is **wrong**: measured on de Grey's Sa at its best pivot, χ(A) = 4 already,
@@ -804,14 +815,15 @@ counts at once, in opposite directions:
   the lists always complete and the pressure is 2. No number of hexagons
   changes that, because none of them changes the degeneracy.
 
-> The frontier at five colours is not a search that has not yet succeeded. It
-> is the gap between *"2-degenerate is not always 2-choosable"* and
-> *"2-degenerate is always 3-choosable"*, and the whole spindle method sits in
-> it.
+> The frontier at five colours is not a search that has not yet succeeded. The
+> mechanism the method runs on lives in the gap between *"2-degenerate is not
+> always 2-choosable"* and *"2-degenerate is always 3-choosable"*, and at five
+> colours it falls on the wrong side by exactly one.
 
-Raising the pressure needs a confined set of **degeneracy ≥ 3** — a statement
-about the geometry of Minkowski sums of hexagons, not about how hard the search
-is run.
+Reaching pressure 3 **through this mechanism** needs a confined set of
+**degeneracy ≥ 3** — a statement about the geometry of Minkowski sums of
+hexagons, not about how hard the search is run. Reaching it some *other* way is
+not excluded by any of this; nothing measured here does.
 
 ### A blocked graph cannot be a lattice
 

@@ -1027,12 +1027,20 @@ RHO_IS_N_WHEN = ("k > chi(W), since every vertex is then removable; or W is "
 
 # -- the confined set is indexed by a cut, and that bounds it -------------
 #
-# Pressure 3 at five colours reduces to one question about the CONFINED set:
-# squeeze the pivot's circle into colours {0,1} and an auxiliary seeing both
+# Squeeze the pivot's circle into colours {0,1} and an auxiliary seeing both
 # gets the list {2,3,4}, size 3, the SAME list for every such auxiliary, while
-# one seeing a single colour gets a list of size 4. So the confined set has to
-# be 4-chromatic -- and in every orientation, since a 2-colouring the design
-# does not control is an escape.
+# one seeing a single colour gets a list of size 4. (Two circles meet in at
+# most two points, so no auxiliary ever sees three: the list sizes are exactly
+# 3 and 4.) The confined set is where the squeeze is resisted, in every
+# orientation, since a 2-colouring the design does not control is an escape.
+#
+# STATED CAREFULLY, because an earlier version of this note overreached. The
+# confined set failing to be list-colourable is the LOCAL obstruction -- the
+# one the k = 4 construction actually runs on -- not an equivalent of pressure
+# 3. A 3-colourable confined set does not by itself give a colouring of the
+# whole graph, and pressure 3 could in principle come from deeper structure
+# instead. What follows explains the measurements and says what the local
+# mechanism can and cannot do; it is not a proof that the pressure must be 2.
 #
 #   WHAT IT IS NOT. "The auxiliary graph is 4-chromatic" is not the condition.
 #   Measured on de Grey's Sa at its best pivot: chi(A) = 4 already, degeneracy
@@ -1063,10 +1071,11 @@ RHO_IS_N_WHEN = ("k > chi(W), since every vertex is then removable; or W is "
 # Four is what is needed, in every orientation, and nothing here reaches it.
 
 CONFINED_SET_CONDITION = (
-    "pressure 3 at k = 5 needs the confined set 4-chromatic in EVERY proper "
-    "2-colouring of the circle; chi of the whole auxiliary graph is already 4 "
-    "on Sa and buys nothing, because only the auxiliaries seeing both colours "
-    "share a list"
+    "the local mechanism behind pressure 3 is the confined set's list "
+    "problem, not the auxiliary graph's chromatic number -- chi(A) is already "
+    "4 on Sa and buys nothing, because only the auxiliaries seeing both "
+    "colours share a list; whether pressure 3 could come from deeper "
+    "structure instead is open here"
 )
 
 CONFINED_SET_IS_A_CUT = (
@@ -1106,11 +1115,13 @@ CONFINED_SET_IS_A_CUT = (
 #   changes this, because none of them changes the degeneracy.
 #
 # So the frontier at five colours is not a search that has not yet succeeded.
-# It is the gap between "2-degenerate is not always 2-choosable" and
-# "2-degenerate is always 3-choosable", and the whole spindle method sits in
-# it. Raising the pressure needs a confined set of degeneracy at least 3 --
-# which is a statement about the geometry of Minkowski sums of hexagons, not
-# about how hard the search is run.
+# The mechanism the method runs on lives in the gap between "2-degenerate is
+# not always 2-choosable" and "2-degenerate is always 3-choosable", and at
+# five colours it falls on the wrong side of it by exactly one. Reaching
+# pressure 3 through this mechanism needs a confined set of degeneracy at
+# least 3 -- a statement about the geometry of Minkowski sums of hexagons, not
+# about how hard the search is run. Reaching it some OTHER way is not excluded
+# by any of this; nothing measured here does.
 
 CONFINED_SET_IS_TWO_DEGENERATE = {
     "measured_sizes": [72, 132, 210, 306, 420],
