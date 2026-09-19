@@ -63,9 +63,8 @@ def main() -> None:
     sub, removed = peel_to_colourable(g, K)
     print(f"  maximal {K}-colourable: {sub}  after removing {len(removed)}"
           f"  [{time.time() - t0:.0f}s]", flush=True)
-    save_certificate(OUT, sub.vertices,
-                     claim=f"maximal {K}-colourable subgraph of de Grey's G",
-                     k=K)
+    save_certificate(sub, OUT, k=K,
+                     claim=f"maximal {K}-colourable subgraph of de Grey's G")
     best = None
     order = sorted(range(sub.n), key=lambda v: -len(sub.adj[v]))[:PIVOTS]
     for bp in order:

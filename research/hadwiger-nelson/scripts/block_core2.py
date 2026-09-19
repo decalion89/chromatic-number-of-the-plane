@@ -99,9 +99,8 @@ def main() -> None:
     print(f"  pivot {bp} (degree {len(g2.adj[bp])}): core {core}", flush=True)
     for j, d in zip(core, d2s):
         print(f"    target {j}: d^2 = {d}", flush=True)
-    save_certificate(f"{OUT}/core2_graph.json", g2.vertices,
-                     claim=f"mixed-distance forced core of {len(core)} at k={K}",
-                     k=K)
+    save_certificate(g2, f"{OUT}/core2_graph.json", k=K,
+                     claim=f"mixed-distance forced core of {len(core)} at k={K}")
 
     field = pv.x.field
     ident = Rotation(field.rational(1), field.zero())
@@ -127,8 +126,8 @@ def main() -> None:
             ok = is_k_colorable(u, K)[0]
             print(f"  union: {u}  {K}-colourable: {ok}", flush=True)
             if not ok:
-                save_certificate(f"{OUT}/union_no{K}col.json", u.vertices,
-                                 claim=f"not {K}-colourable", k=K)
+                save_certificate(u, f"{OUT}/union_no{K}col.json", k=K,
+                                 claim=f"not {K}-colourable")
                 print(f"  *** certificate saved: chi >= {K + 1} ***",
                       flush=True)
             return
