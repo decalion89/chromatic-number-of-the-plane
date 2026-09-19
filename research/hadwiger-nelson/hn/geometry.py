@@ -200,6 +200,12 @@ def rotation_joining(d2, field: Field = QSQRT3_11) -> Rotation:
     d2 = Fraction(d2)
     c = Fraction(1) - Fraction(1, 2) / d2
     s2 = 1 - c * c
+    if s2 == 0:
+        # d2 = 1/4 exactly: the half-turn.  cos = -1, sin = 0, and two points
+        # at distance 1/2 from the pivot land at distance 1 after it.  A real
+        # spindle, and one that needs no radical at all -- taking sqrt(0) here
+        # used to raise and kill the search that met it.
+        return Rotation(field.rational(c), field.zero())
     num, den = s2.numerator, s2.denominator
     # sin = sqrt(num/den) = sqrt(num*den)/den
     root = field.sqrt(num * den)
@@ -227,6 +233,8 @@ def required_radical(d2) -> int:
     d2 = Fraction(d2)
     c = Fraction(1) - Fraction(1, 2) / d2
     s2 = 1 - c * c
+    if s2 == 0:
+        return 1        # the half-turn at d2 = 1/4 needs no radical
     n = s2.numerator * s2.denominator
     r, d = n, 2
     while d * d <= r:

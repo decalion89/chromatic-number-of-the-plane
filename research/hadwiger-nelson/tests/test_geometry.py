@@ -100,3 +100,33 @@ def test_small_field_rotations_are_the_centred_hexagonal_family():
         d2 = 3 * k * k + 3 * k + 1
         assert required_radical(d2) == (1 if d2 == 1 else 3) or required_radical(d2) == 3
         rotation_joining(d2)               # constructible without extension
+
+
+def test_the_half_turn_is_a_spindle_and_needs_no_radical():
+    """d^2 = 1/4 gives cos = -1, sin = 0: two points at distance 1/2 from the
+    pivot land exactly 1 apart under a half-turn.
+
+    A real spindle, and the one case where the sine vanishes.  Computing it as
+    sqrt(0) used to raise, which killed a running search when it first met
+    this distance.
+    """
+    from fractions import Fraction
+
+    from hn.geometry import required_radical
+
+    assert required_radical(Fraction(1, 4)) == 1
+    from hn.geometry import DEGREY_FIELD
+
+    for field in (F, DEGREY_FIELD):
+        rot = rotation_joining(Fraction(1, 4), field)
+        assert rot.cos == -1 and rot.sin.is_zero()
+        assert rot.cos * rot.cos + rot.sin * rot.sin == 1
+        p = Point(field.rational(Fraction(1, 2)), field.zero())
+        assert p.dist2(rot(p)) == 1
+
+
+def test_distances_just_below_a_quarter_are_still_refused():
+    from fractions import Fraction
+
+    with pytest.raises((ValueError, ZeroDivisionError)):
+        rotation_joining(Fraction(1, 5))      # 2r < 1: no rotation separates them
