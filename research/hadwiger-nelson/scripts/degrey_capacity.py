@@ -23,17 +23,34 @@ from collections import defaultdict
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from hn.degrey import build_G
+from hn.certify import load_certificate
+from hn.graph import build_graph
+from hn.coloring import is_k_colorable
 from hn.spindle import SeparationTest
 from hn.transversal import niven_capacity, niven_order
 
 K = int(os.environ.get("HN_K", "4"))
 PIVOTS = int(os.environ.get("HN_PIVOTS", "6"))
+CORE = os.environ.get(
+    "HN_CORE",
+    "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415"
+    "/scratchpad/f4_core.json")
 
 
 def main() -> None:
-    g = build_G()
-    print(g, f"k={K}", flush=True)
+    # It has to be a graph that *has* k-colourings. de Grey's G is
+    # 5-chromatic, so asking whether some 4-colouring separates a pivot from
+    # its targets is vacuous -- every query is UNSAT because there are no
+    # 4-colourings at all, and the "forcing" it reports means nothing. The
+    # 359-vertex core is 4-colourable and genuinely forces.
+    pts, _doc = load_certificate(CORE)
+    g = build_graph(pts)
+    ok = is_k_colorable(g, K)[0]
+    print(g, f"k={K}, {K}-colourable: {ok}", flush=True)
+    if not ok:
+        print("  vacuous: no k-colouring exists, every separation is UNSAT",
+              flush=True)
+        return
     order = sorted(range(g.n), key=lambda v: -len(g.adj[v]))
     for bp in order[:PIVOTS]:
         pv = g.vertices[bp]
