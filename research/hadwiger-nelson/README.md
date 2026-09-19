@@ -908,9 +908,18 @@ What does hold, across 1200 configurations and 9600 orientations:
 |--:|--:|--:|
 | 5 | **2** | 3 |
 
-Never 3 — which is what lists of size 3 would need to fail. Stated as a
-measurement, not a theorem: the surface is continuous and only its histogram
-peaks were evaluated.
+Never 3 — which is what lists of size 3 would need to fail.
+
+The peak method extends a hexagon at a time: given the offsets already placed,
+an edge joining an auxiliary that uses the **new** hexagon to one that does not
+reads `|r_new w^m − X| = 1` with `X` the old auxiliary minus the circle point
+it pairs with — the same line-meets-circle problem. Over three free angles, 360
+four-hexagon configurations: **still 2.**
+
+So the cap holds over a *complete* enumeration at two hexagons, 9600
+orientations at three, 360 configurations at four, and de Grey's own family out
+to seven. Stated as a measurement, not a theorem: the surface is continuous and
+only its histogram peaks were evaluated.
 
 ### A blocked graph cannot be a lattice
 

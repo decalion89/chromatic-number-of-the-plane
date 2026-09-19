@@ -1238,8 +1238,17 @@ THREE_HEXAGON_SCAN = {
 # measurement, since nothing here proves it: the surface is continuous and
 # only its histogram peaks were evaluated.
 
+# Extending the peak method one hexagon further: given the offsets already
+# placed, an edge joining an auxiliary that uses the NEW hexagon to one that
+# does not reads |r_new w^m - X| = 1 with X the old auxiliary minus the old
+# circle point it pairs with -- the same line-meets-circle problem. Scanned
+# over three free angles, 360 four-hexagon configurations: still 2. So the
+# cap holds over a complete enumeration at two hexagons, 9600 orientations at
+# three, 360 configurations at four, and de Grey's own family out to seven.
+
 CONFINED_DEGENERACY_NEVER_THREE = {
     "configurations": 1200,
+    "four_hexagon_configurations": 360,
     "orientations": 9600,
     "max_degree_seen": 5,
     "max_degeneracy_seen": 2,
