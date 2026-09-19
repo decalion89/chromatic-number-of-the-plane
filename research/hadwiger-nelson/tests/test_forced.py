@@ -231,3 +231,35 @@ def test_general_block_agrees_with_the_two_sat_one():
     assert blocks_two_targets(g, bp, pair, copies) is True
     # one orbit alone cannot close it: three copies leave an escape
     assert not blocks_targets(g, bp, pair, copies[:3])
+
+
+# -- the alignment condition ----------------------------------------------
+
+def test_core_must_be_a_rainbow_disjoint_from_the_neighbourhood():
+    """When pressure(p) = k - r exactly, a core of size r has a shape.
+
+    In a colouring attaining the minimum the pivot has exactly r free colours
+    and can take any of them, so c(T) must contain all r while holding at most
+    r -- hence c(T) = free(p): the targets are a rainbow AND none of them ever
+    shares a colour with a neighbour of the pivot. The built pair satisfies
+    both, and its legs are the two non-pivot corners of a unit triangle, so
+    they are forced apart by adjacency.
+    """
+    from hn.forced import core_must_be_rainbow, free_colours, pressure
+    from hn.mixed import joint_core_configuration
+
+    _E, pts, _rho, _sigma = joint_core_configuration()
+    g = build_graph(pts)
+    bp = g.vertices.index(pts[0])
+    legs = [g.vertices.index(pts[2]), g.vertices.index(pts[3])]
+    rel = ColourRelations(g, 3)
+    try:
+        assert pressure(rel, bp) == 1
+        assert free_colours(rel, bp) == 2 == len(legs)
+        assert not rel.can_share(*legs)
+        assert core_must_be_rainbow(rel, bp, legs)
+        # a repeated target is one distinct point, fewer than the free
+        # colours, so it cannot be a core and the test says so
+        assert not core_must_be_rainbow(rel, bp, [legs[0], legs[0]])
+    finally:
+        rel.close()

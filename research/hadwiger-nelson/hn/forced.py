@@ -306,3 +306,51 @@ def centre_pressure(rel: "ColourRelations", vertices: Sequence[int]) -> dict:
                     else "a joint core of two is possible" if t == rel.k - 2
                     else f"no core smaller than {rel.k - t}"),
     }
+
+
+# -- what a core must look like when pressure is exactly k - r -------------
+#
+# The pressure bound is tight in a way that constrains the core's shape, not
+# just its size. Suppose pressure(p) = k - r exactly and T is a core of size
+# r. Take a colouring attaining the minimum: p then has exactly r free
+# colours, and c(p) can be any of them, because properness at p asks only that
+# its colour avoid c(N(p)). For T to be a core in that colouring, c(T) must
+# contain all r, and |c(T)| <= r, so
+#
+#   c(T) = free(p)  exactly, in every minimum-pressure colouring.
+#
+# Two consequences, both checkable. T is a RAINBOW there -- its r members take
+# r different colours -- and c(T) is DISJOINT from c(N(p)). At five colours
+# with pressure 2 that means a core of three is three points taking three
+# different colours, none of them a colour any of the pivot's sixty
+# neighbours carries, in every colouring that squeezes the neighbourhood into
+# two. The legs may be a unit triangle, which is a rainbow for free, but the
+# disjointness is not free at all: it says no neighbour of the pivot ever
+# shares a colour with any of the three.
+#
+# This is why the shrinking searches keep returning "separable". It is not
+# that the core is large; it is that the core has to be aligned, and alignment
+# is a global condition on the colouring, not a local one on the distances.
+
+def free_colours(rel: "ColourRelations", p: int) -> int:
+    """How many colours p can still take, at minimum pressure: k - pressure."""
+    return rel.k - pressure(rel, p)
+
+
+def core_must_be_rainbow(rel: "ColourRelations", p: int,
+                         targets: Sequence[int]) -> bool:
+    """Whether these targets can be a core of p, by the alignment condition.
+
+    Necessary, not sufficient. Returns False as soon as some colouring puts
+    the neighbourhood at minimum pressure while two targets share a colour or
+    a target shares a colour with a neighbour -- either of which breaks
+    c(T) = free(p).
+    """
+    T = list(dict.fromkeys(targets))
+    if len(T) != free_colours(rel, p):
+        return len(T) > free_colours(rel, p)
+    for i, u in enumerate(T):
+        for v in T[i + 1:]:
+            if rel.can_share(u, v):
+                return False
+    return True
