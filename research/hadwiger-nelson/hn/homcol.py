@@ -142,3 +142,40 @@ def screen(graph, n: int = 5) -> dict:
         "verdict": (f"{n}-colourable by cosets, so never {n+1}-chromatic"
                     if phi else f"no coset {n}-colouring in this embedding"),
     }
+
+
+# -- where a coset colouring can and cannot be blocked --------------------
+#
+# phi must avoid every edge vector, so writing D for their images in M/5M, a
+# phi exists unless the hyperplanes d-perp for d in D cover the whole dual.
+# Two facts bound where that can happen, and the first is a theorem.
+#
+# RANK 2 NEVER BLOCKS. If the edge vectors span only rank 2 mod 5 then M is a
+# plane lattice, every unit vector has the same norm N, and the value of the
+# quadratic form on a projective point is well defined up to squares -- so all
+# of them land in one square class, which is three of the six points of the
+# projective line. Three hyperplanes cover 13 of the 25 points of (Z/5)^2, so
+# a phi always survives. Measured on the Eisenstein lattice at norms 1, 3, 7,
+# 13, 21, 49 and 91: every one gives exactly THREE classes, and which three is
+# decided by whether N is a square mod 5 -- {(0,1),(1,0),(1,1)} when it is,
+# {(1,2),(1,3),(1,4)} when it is not. Even 24 unit vectors, at norm 91, give
+# three.
+#
+# RANK 3 FAILS TOO, for the same kind of reason: the unit vectors lie on a
+# conic of PG(2,5), and a conic has exterior lines -- 10 of them -- so a phi
+# again survives. From rank 4 upward Chevalley-Warning makes every hyperplane
+# carry vectors of the right norm, so blocking becomes possible in principle.
+#
+# COUNTING IS NOT ENOUGH. A random phi survives m hyperplanes with probability
+# (4/5)^m, so coverage needs roughly m > 7.2 r. That predicts the three-hexagon
+# gadget (r = 4, m = 18, threshold 29) correctly and de Grey's G (r = 16,
+# m = 133, threshold 115) wrongly -- G clears the count and still admits a phi.
+# The unit vectors are confined to the quadric Q = N, and being few points of
+# it is what matters, not being many points overall. Every root-of-unity step
+# set up to n = 105 admits one: Z[zeta_n] has n distinct directions against
+# rank phi(n), a ratio that never exceeds about 3.5.
+
+RANK_TWO_NEVER_BLOCKS = (
+    "a plane lattice's unit vectors all share one norm, so their projective "
+    "classes mod 5 lie in one square class: three of six, never a blocking set"
+)

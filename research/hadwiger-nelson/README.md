@@ -533,6 +533,32 @@ smallest is a projective line, **q + 1 = six points**. So: *six unit vectors
 whose reductions mod 5 represent the six points of a projective line* rule out
 every coset colouring at once.
 
+### Where a coset colouring can and cannot be blocked
+
+> **Theorem (rank 2 never blocks).** If the edge vectors span only rank 2 mod 5
+> then M is a plane lattice, every unit vector has the same norm N, and the
+> value of the quadratic form on a projective point is well defined up to
+> squares — so all of them land in **one square class, three of the six points**
+> of the projective line. Three hyperplanes cover 13 of the 25 points of
+> (ℤ/5)², so a φ always survives.
+
+Measured on the Eisenstein lattice at norms 1, 3, 7, 13, 21, 49 and 91: every
+one gives exactly **three** classes, and which three is decided by whether N is a
+square mod 5 — {(0,1),(1,0),(1,1)} when it is, {(1,2),(1,3),(1,4)} when it is
+not. Even **24** unit vectors, at norm 91, give three.
+
+**Rank 3 fails too**: the unit vectors lie on a conic of PG(2,5), and a conic has
+10 exterior lines. From **rank 4** upward Chevalley–Warning makes every hyperplane
+carry vectors of the right norm, so blocking becomes possible in principle.
+
+**And counting is not enough.** A random φ survives m hyperplanes with
+probability (4/5)^m, so coverage needs roughly `m > 7.2 r`. That predicts the
+gadget (r = 4, m = 18, threshold 29) correctly and de Grey's G (r = 16, m = 133,
+threshold 115) **wrongly** — G clears the count and still admits a φ. Being many
+points is not the same as being the right points on the quadric. Every
+root-of-unity step set up to n = 105 admits one too: ℤ[ζ_n] has n directions
+against rank φ(n), a ratio never above about 3.5.
+
 Two caveats, stated because they bound what the tool proves. The search embeds M
 in ℤ^d by clearing a common denominator, so every φ it **finds** is genuine
 (restriction is a homomorphism) while a "none found" is only a statement about

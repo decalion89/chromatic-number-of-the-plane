@@ -57,3 +57,36 @@ def test_everything_here_is_five_colourable_by_cosets():
         assert phi is not None, f"{name}: {why}"
         assert _verify(phi, vecs, 5), f"{name}: phi does not avoid every vector"
         assert "never 6-chromatic" in screen(g, 5)["verdict"]
+
+
+def test_rank_two_lattices_can_never_block_a_coset_colouring():
+    """A plane lattice's unit vectors occupy exactly three of the six
+    projective points mod 5, and which three is decided by the square class of
+    their norm. Three hyperplanes cover 13 of the 25 points of (Z/5)^2, so a
+    homomorphism always survives -- blocking needs rank at least 4.
+    """
+    def proj(v, p=5):
+        v = (v[0] % p, v[1] % p)
+        if v == (0, 0):
+            return None
+        for lam in range(1, p):
+            w = ((v[0] * lam) % p, (v[1] * lam) % p)
+            if w[0] == 1 or (w[0] == 0 and w[1] == 1):
+                return w
+        return v
+
+    def norm(a, b):
+        return a * a - a * b + b * b
+
+    squares, nonsquares = set(), set()
+    for N in (1, 3, 7, 13, 21, 49, 91):
+        vecs = [(a, b) for a in range(-12, 13) for b in range(-12, 13)
+                if norm(a, b) == N]
+        assert vecs
+        cls = {proj(v) for v in vecs} - {None}
+        assert len(cls) == 3, f"norm {N} gave {len(cls)} classes"
+        (squares if N % 5 in (1, 4) else nonsquares).add(frozenset(cls))
+    assert len(squares) == 1 and len(nonsquares) == 1
+    assert squares != nonsquares
+    assert set(next(iter(squares))) == {(0, 1), (1, 0), (1, 1)}
+    assert set(next(iter(nonsquares))) == {(1, 2), (1, 3), (1, 4)}
