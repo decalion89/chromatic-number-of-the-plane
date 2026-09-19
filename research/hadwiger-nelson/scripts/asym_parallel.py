@@ -37,6 +37,7 @@ SCAN = int(os.environ.get("HN_SCAN", "12"))
 BUDGET = int(os.environ.get("HN_BUDGET", "40000"))
 LOCAL = float(os.environ.get("HN_LOCAL", "0"))   # >0 rotates only a ball
 WORKERS = int(os.environ.get("HN_WORKERS", "4"))
+SPREAD = os.environ.get("HN_SPREAD", "") not in ("", "0")
 OUT = os.environ.get("HN_OUT", "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
 SRC = os.environ.get("HN_SRC", os.path.join(OUT, "f4_core.json"))
 THIRD = Fraction(1, 3)
@@ -108,8 +109,16 @@ def main():
 
     with Pool(WORKERS) as pool:
         for rnd in range(1, ROUNDS + 1):
-            cands = [v for v in sorted(range(g.n), key=lambda v: -len(g.adj[v]))[:40]
-                     if v != pivot][:FANOUT]
+            ranked = [v for v in sorted(range(g.n), key=lambda v: -len(g.adj[v]))
+                      if v != pivot]
+            if SPREAD:
+                # taking the top FANOUT by degree means re-picking the same
+                # exhausted vertices every round; sample across the whole
+                # degree range instead so mid-degree pivots get a turn
+                step = max(1, len(ranked) // FANOUT)
+                cands = ranked[::step][:FANOUT]
+            else:
+                cands = ranked[:FANOUT]
             results = [r for r in pool.map(evaluate, [(path, q) for q in cands]) if r]
             if not results:
                 print(f"round {rnd}: no candidate produced forcing; stopping", flush=True)
