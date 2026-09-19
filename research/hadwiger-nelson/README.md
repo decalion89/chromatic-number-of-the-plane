@@ -191,6 +191,53 @@ explicitly as unverified.
 | `hn/spindle.py` | forced pairs and disjunctions; two- and three-copy spindles |
 | `hn/certify.py` | certificate creation and independent verification |
 
+## A gradient, and what it measured
+
+The search was blind for most of a day. Asking a SAT solver "is this pair forced?"
+returns yes or no, so a sweep is a run of independent coin flips with no sense of
+getting warmer — which is why 29 930 separation queries taught us nothing beyond
+"not that one either".
+
+The solver was measuring the missing quantity all along. A pair separated with zero
+conflicts is wide open; one costing thousands is nearly forced, since almost every
+colouring ties those vertices together and the solver had to work to find an
+exception. `SeparationDifficulty` reads it off.
+
+**Controlled against size.** A larger formula can cost more conflicts for no reason
+but its size. Adding a translate 100 units away doubles the vertex count and adds no
+constraint between the copies: score 88 → 129, a factor of 1.5. A genuine tightening
+of the same size reaches 4216, a factor of 48. The score tracks constraint.
+
+**Calibrated at k=4**, where the answer is known. Nested balls of de Grey's graph:
+
+| radius | vertices | score |
+|---|---|---|
+| 1.0 | 48 | 0 |
+| 1.5 | 210 | 4 |
+| 2.0 | 534 | 19 |
+| 2.5 | 915 | **2932** |
+| 3.0 | 1302 | **forced** |
+
+It does not saturate. It sits flat, explodes by two orders of magnitude, and crosses
+on the next step — at d² = 1/3, the radius the geometry and the gradient had each
+singled out independently.
+
+**Localisation was wrong.** Tightening the whole graph doubles the vertex count every
+round, so the plan was to tighten only a ball around the hardest pivot — forcing being
+a local question. Run side by side, the tight radius saturates while the global one
+keeps climbing:
+
+| round | radius 1.6 | radius 3.0 |
+|---|---|---|
+| 1 | 88 | 67 |
+| 2 | 262 | 2110 |
+| 3 | 2604 | 22 697 |
+| 4 | 2882 | — |
+
+The pair under test is local; what hardens it is not. So the compute wall that
+localisation was meant to dodge is still there, and the dodge does not work. A blind
+sweep could not have told these two runs apart at all.
+
 ## What the literature already had
 
 Read after the fact, which was the wrong order:
