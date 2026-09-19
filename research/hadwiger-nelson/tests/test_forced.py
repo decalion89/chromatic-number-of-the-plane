@@ -1009,3 +1009,16 @@ def test_l_core_separates_nothing():
     for name, byk in L["smallest_l_core"].items():
         assert byk[4] > 0 and byk[5] > 0, f"{name}: non-empty at both k"
     assert "separates nothing" in L["verdict"]
+
+
+def test_pressure_two_does_not_exclude_a_core_of_three():
+    """The floor is met at k=5, r=3: the flat 2 was read as a wall too early."""
+    from hn.forced import LADDER, WHAT_IS_MISSING
+
+    k, r = 5, 3
+    assert k - r == 2, "the pressure a core of three requires"
+    # and the measured pressure on every graph in this package is exactly 2
+    from hn.forced import FREE_PRESSURE
+    assert FREE_PRESSURE == k - r, "the floor is exactly met, not exceeded"
+    assert "core 3" in LADDER[k], "the ladder already said three at five"
+    assert "not a wall" in WHAT_IS_MISSING["not_pressure"]

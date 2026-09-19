@@ -1050,6 +1050,37 @@ a centre folding 789 of 1581, and de Grey's own dihedral group applied to G — 
 still flat 2, up to 5533 vertices.
 
 
+## The missing object, stated precisely
+
+Reading the theorems together narrows the gap more than any one of them does.
+
+The pressure theorem says a core of size `r` at `p` needs `pressure(p) ≥ k − r`.
+At five colours a core of **three** therefore needs pressure ≥ 2 — and the
+measured pressure is exactly 2, everywhere, on every graph here.
+
+> **Pressure does not exclude a core of three.** It never did. The flat 2 was
+> read as a wall when it is only a floor, and the floor is exactly met.
+
+Blocking a core of three is solved: 27 344 misalignment configurations do it,
+and the counting bound (`r ≤ 2`) together with the pressure floor (`r ≥ 3`)
+pins the size at exactly three from both sides.
+
+So neither pressure nor blocking is what is missing. What is missing is:
+
+> A 5-chromatic graph `W` with a pivot `p` that is **not essential** —
+> `χ(W − p)` still 5, so the criticality corollary cannot give `p` a colour of
+> its own — carrying an actual **core of three**: `min |c(N(p) ∪ T)| = 5` for
+> some `|T| = 3`.
+
+The first half is easy and known: `W = G ∪ (G + t)` works, because removing any
+vertex leaves a whole 5-chromatic copy. The second half has never been found on
+anything tested here. **That single measurement is the gap.**
+
+Note what it is *not*. Not a bigger search over de Grey's G, which the
+criticality corollary settles in one line. Not more pressure, which is already
+at the required floor. Not a better blocking configuration, of which there are
+27 344. **One core, of three, at five colours.**
+
 ## Corrections to my own claims, kept rather than edited away
 
 - **"Pressure > 2 at k = 5 *requires* the confined set to be 4-chromatic."**
