@@ -44,6 +44,8 @@ A certificate never asks you to trust this code. It asks you to run `drat-trim`.
 - ✅ The de Grey spindling argument is **automated**, and rediscovers the classic
   step unaided: given only a unit rhombus, it finds that 3 colours force the two far
   tips to match, spindles on that pair, and lands on the Moser spindle.
+- ✅ A **three-copy pigeonhole variant** of the argument, which needs only a forced
+  *disjunction* rather than a forced pair, implemented and validated.
 - ❌ χ(ℝ²) ≥ 5 **not yet reproduced independently.** See below — the negative
   results are recorded rather than hidden.
 - ❌ χ(ℝ²) ≥ 6 — the actual goal. Not found.
@@ -65,9 +67,16 @@ spindle-able distances — d² ∈ {1/3, 5/9, 1, 7/3, 3, 13/3, 7, 71/9, 31/3} �
 none, in balls up to **82 357 vertices and 931 158 edges**. Forcing is monotone
 under taking supergraphs, so each of these rules out every subgraph too.
 
-Two limitations worth naming: the search used only the origin as pivot, and the
-σ-exponent was capped at |m| ≤ 1 because |m| ≤ 2 overran the vertex budget. Both are
-the obvious next levers, not conclusions.
+**No forced disjunction either.** The weaker three-copy hypothesis was then tested
+across the six most central pivots of each ball and every spindle-able distance,
+using the single-query separation test. In every case a 4-colouring existed that
+separates the pivot from *all* targets at that distance at once — so no disjunction
+over any subset is forced, and neither spindle applies. Balls up to 25 675 vertices
+and 253 842 edges, searched this way.
+
+Limitations worth naming rather than burying: the σ-exponent stays at |m| ≤ 1 because
+|m| ≤ 2 overruns the vertex budget at these radii, pivots are drawn from the centre
+outwards rather than exhaustively, and the target distances are capped at d² ≤ 40.
 
 ## Method
 
@@ -90,10 +99,33 @@ answer, and `tests/test_fast_agrees.py` pins the fast path to the slow one.
 
 **Spindling, automated.** If every k-colouring of G paints p and q alike, and ρ is
 the rotation about p taking q to distance 1 from itself, then G ∪ ρ(G) has *no*
-k-colouring: both copies force colour(p) onto q and ρ(q), which are adjacent. One
-CNF with a selector per candidate pair answers "is this pair forced?" for all pairs
-at once. This is why searching balls for a 5-chromatic subgraph finds nothing while
-spindling one of those same balls can succeed.
+k-colouring: both copies force colour(p) onto q and ρ(q), which are adjacent. This
+is why searching balls for a 5-chromatic subgraph finds nothing while spindling one
+of those same balls can succeed.
+
+**A third copy weakens what has to be forced.** Demanding an outright forced pair is
+a lot to ask. Ask instead that every k-colouring tie p to *q₁ or q₂* — a disjunction,
+much weaker, and therefore much likelier to be found. Three rotated copies then
+suffice by pigeonhole: each copy forces one of the two, so two copies force the same
+one, and their images of it share p's colour while being adjacent.
+
+That last step needs the rotated images to be pairwise at distance 1, and the
+geometry permits it at exactly one radius. Two such points fit on any circle of
+radius ≥ 1/2; **three fit only on the circumcircle of a unit equilateral triangle**,
+radius 1/√3, with the rotations at 120° and 240°. So d² = 1/3 is special, and cores
+of size 3 or more are unusable — a fourth point pairwise at distance 1 does not exist
+on a circle.
+
+**One query per family.** Give each target q a selector asserting p and q take
+disjoint colours and assume them all at once. SAT means some colouring separates p
+from every target, killing every disjunction over that set in a single query rather
+than O(|Q|²). UNSAT means the disjunction is forced, and the solver's UNSAT core,
+shrunk by re-solving and single deletions, is the minimal forcing subset — whose size
+says which spindle applies.
+
+The same test run on a unit triangle shows exactly why k=4 is hard: with 3 colours
+the triangle exhausts the palette and the centre is forced to repeat one of the
+corners; with 4 colours a spare colour remains and nothing is forced at all.
 
 ## Running it
 
@@ -104,7 +136,9 @@ python -m hn.cli verify certificates/moser_spindle_no3coloring.json \
     --drat-trim /path/to/drat-trim
 pytest tests/ -q
 
-python scripts/search_forced.py                        # HN_K=4 (chi>=5) or HN_K=5 (open)
+python scripts/search_forced.py        # forced pairs, two-copy spindle
+python scripts/search_disjunction.py   # forced disjunctions, three-copy spindle
+#   HN_K=4 searches for chi >= 5; HN_K=5 is the open problem
 ```
 
 For real verification, build the checker from
@@ -122,7 +156,7 @@ explicitly as unverified.
 | `hn/generate.py` | vertex sets: lattice balls, reachable sets, rotation families |
 | `hn/fast.py` | the int64 path — generation, complete edge finding, overflow guard |
 | `hn/coloring.py` | SAT encoding, k-colourability, UNSAT-core minimisation |
-| `hn/spindle.py` | forced monochromatic pairs, and the spindle union |
+| `hn/spindle.py` | forced pairs and disjunctions; two- and three-copy spindles |
 | `hn/certify.py` | certificate creation and independent verification |
 
 ## Honest odds
