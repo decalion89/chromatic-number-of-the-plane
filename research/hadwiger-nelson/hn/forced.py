@@ -717,3 +717,55 @@ def forced_into_every_core(rel: "ColourRelations", p: int,
     pool = others if candidates is None else list(candidates)
     return [u for u in pool
             if not is_core(rel, p, [x for x in others if x != u])]
+
+
+# -- what the three conditions really ask for: unique colourability --------
+#
+# The three conditions a usable core needs -- k-chromatic, pivot non-critical,
+# no vertex leavable alone in a colour -- have a classical name between them.
+#
+# A core of size r asks that c(p) lie in c(T) always, with r as small as
+# possible; and what makes that hard is that colour CLASSES move. T has to
+# meet every class that could be free at p, and in a loose graph the classes
+# are large and mobile, so T is large. Pin the classes and T shrinks to one
+# representative each:
+#
+#   in a UNIQUELY k-colourable graph -- one whose k-colouring is unique up to
+#   permuting colours -- a pivot of pressure q has a core of exactly k - q,
+#   namely one vertex from each class its neighbourhood misses.
+#
+# At k = 5 with the pressure 2 that every graph here measures, that is a core
+# of exactly THREE, which is exactly the size the blocking bounds allow. So
+# the remaining object has a name:
+#
+#   A UNIQUELY 5-COLOURABLE UNIT-DISTANCE GRAPH, with a pivot whose three
+#   free-class representatives sit at radii and angles matching one of the
+#   27344 blocking patterns, gives chi(R^2) >= 6.
+#
+# The mechanism is visible one level down. The triangular lattice IS uniquely
+# 3-colourable -- its colouring is the Eisenstein residue modulo (1 - omega)
+# -- and measuring a pivot there gives pressure 2 and a core of size ONE, at
+# squared distance 3. That is the classical rhombus forcing, recovered as a
+# special case: sqrt(3) forces two points to agree at three colours precisely
+# because the lattice's classes cannot move.
+#
+# It also closes the loop with criticality. A graph is uniquely k-colourable
+# exactly when the forced-same relation has k classes, and a k-vertex-critical
+# graph has no forced-same pair at all -- so a k-critical graph is never
+# uniquely k-colourable beyond the trivial case. The two theorems are the two
+# ends of the same axis, and the object wanted sits at the far end from
+# de Grey's G.
+
+UNIQUE_COLOURING_TARGET = {
+    "statement": ("a uniquely 5-colourable unit-distance graph gives a core "
+                  "of size 5 - pressure at every pivot, which is 3 wherever "
+                  "pressure is 2 -- exactly the blockable size"),
+    "witness_one_level_down": ("the triangular lattice is uniquely "
+                               "3-colourable; a pivot there has pressure 2 "
+                               "and a core of ONE, at d^2 = 3, which is the "
+                               "classical rhombus forcing"),
+    "why_criticality_is_the_opposite_end": ("uniquely k-colourable means the "
+                                            "forced-same relation has k "
+                                            "classes; a k-critical graph has "
+                                            "no forced-same pair at all"),
+}

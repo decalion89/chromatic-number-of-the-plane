@@ -638,3 +638,50 @@ def test_adding_one_point_to_a_critical_graph_gives_a_useless_core():
         assert sorted(forced_into_every_core(rel, piv)) == sorted(outside)
     finally:
         rel.close()
+
+
+def test_unique_colourability_gives_a_core_of_k_minus_pressure():
+    """The triangular lattice is uniquely 3-colourable, and that is exactly
+    why sqrt(3) forces two points to agree at three colours.
+
+    Its colouring is the Eisenstein residue modulo (1 - omega), so the colour
+    classes cannot move; a pivot of pressure q therefore has a core of exactly
+    k - q, one representative per class its neighbourhood misses. Measured:
+    pressure 2, core of ONE, at squared distance 3 -- the classical rhombus.
+
+    At five colours with the pressure 2 every graph here measures, the same
+    statement would give a core of three, which is exactly the size the
+    blocking bounds allow. That is what the remaining object has to be.
+    """
+    from fractions import Fraction
+
+    from hn.field import Field
+    from hn.forced import cegar_core, is_core, minimise_core, pressure
+    from hn.geometry import Point
+
+    f = Field((3,))
+    r3, half = f.sqrt(3), f.rational(Fraction(1, 2))
+    steps = [Point(f.rational(1), f.zero()), Point(half, r3 * half),
+             Point(-half, r3 * half)]
+    lat = {Point(f.zero(), f.zero())}
+    for _ in range(3):
+        new = set()
+        for q in lat:
+            for s in steps:
+                new.add(Point(q.x + s.x, q.y + s.y))
+                new.add(Point(q.x - s.x, q.y - s.y))
+        lat |= new
+    pts = sorted(lat, key=lambda q: float(q.x * q.x + q.y * q.y))
+    g = build_graph(pts)
+    rel = ColourRelations(g, 3)
+    try:
+        assert rel.colourable
+        assert pressure(rel, 0) == 2
+        T, ok = cegar_core(rel, 0, limit=60)
+        assert ok
+        T = minimise_core(rel, 0, T)
+        assert len(T) == 3 - 2 == 1
+        assert is_core(rel, 0, T)
+        assert g.vertices[0].dist2(g.vertices[T[0]]) == f.rational(3)
+    finally:
+        rel.close()

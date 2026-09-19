@@ -324,6 +324,36 @@ away from two of its vertices gives a pivot of degree 2 whose minimal core is
 So a usable core needs a **third** condition on top of the other two: no vertex
 may be leavable alone in a colour. Nothing here satisfies all three.
 
+### What the three conditions really ask for
+
+They have a classical name between them. What makes a core hard to shrink is
+that colour *classes* move: T has to meet every class that could be free at the
+pivot, and in a loose graph the classes are large and mobile. **Pin the classes
+and T shrinks to one representative each.**
+
+> In a **uniquely k-colourable** graph — one whose k-colouring is unique up to
+> permuting colours — a pivot of pressure q has a core of exactly **k − q**.
+
+At five colours with the pressure 2 that every graph here measures, that is a
+core of exactly **three**, which is precisely the size the blocking bounds
+allow. So the remaining object has a name:
+
+> **A uniquely 5-colourable unit-distance graph**, with a pivot whose three
+> free-class representatives sit at radii and angles matching one of the 27 344
+> blocking patterns, gives **χ(ℝ²) ≥ 6**.
+
+The mechanism is visible one level down, and it recovers the oldest fact in the
+subject. The triangular lattice **is** uniquely 3-colourable — its colouring is
+the Eisenstein residue modulo (1 − ω) — and measuring a pivot there gives
+pressure 2 and a core of size **one**, at squared distance 3. That is the
+classical rhombus: √3 forces two points to agree at three colours *precisely
+because the lattice's colour classes cannot move*.
+
+It also closes the loop with criticality. A graph is uniquely k-colourable
+exactly when the forced-same relation has k classes, and a k-vertex-critical
+graph has no forced-same pair at all. **The two theorems are the two ends of one
+axis**, and the object wanted sits at the far end from de Grey's G.
+
 ### What pressure 3 actually needs
 
 de Grey's Sa reaches **pressure 3 at four colours** — k−1, the classical spindle
