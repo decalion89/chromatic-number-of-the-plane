@@ -147,6 +147,43 @@ matching one of the 27 344 blocking patterns. That is a far smaller target than
 
 What is missing is the core itself, not the block.
 
+### The machine that makes pressure, taken apart
+
+Exactly one configuration in this package reaches pressure 3, and it is worth
+naming rather than measuring. Delete everything from Sa that can go while the
+pivot's neighbourhood still refuses to be squeezed into two colours, and
+**47 vertices** survive — `certificates/pressure3_witness_47.json`:
+
+- the pivot;
+- its circle of 30, which splits into **five hexagons** — the 60° orbits, as the
+  bipartiteness argument requires — each with exactly two alternating
+  2-colourings, so five independent orientation bits;
+- **sixteen** further points, at d² = 1/3, (7 ± √33)/6 and (3 ± √33)/6, each
+  adjacent to exactly two circle points — and in all sixteen cases those two lie
+  in **different** hexagons, so each one reads the relative orientation of a pair
+  of them.
+
+Squeeze the circle into two colours. Every one of the sixteen that sees two
+differently-coloured circle points is barred from both, so it is confined to the
+remaining **k − 2**. And the sixteen among themselves form a 16-vertex, 27-edge
+unit-distance graph that is 3-chromatic and **not bipartite**: an odd cycle.
+
+> at k = 4 the confined points have 2 colours, the odd cycle does not fit, the
+> squeeze is impossible — **pressure 3**;
+> at k = 5 they have 3, the graph is 3-colourable, the squeeze goes through —
+> **pressure 2**.
+
+Checked causally, not by coincidence of numbers: deleting three of the sixteen
+makes their graph bipartite and the pressure drops from 3 to 2 on the spot.
+
+**So the mechanism is "an odd cycle against k − 2 colours", and lifting it says
+exactly what to build.** At five colours the confined points get three, so the
+gadget among them must be **4-chromatic** rather than merely non-bipartite — a
+Moser spindle, or the 19-vertex jointly forced construction above — with every
+vertex adjacent to two circle points in different hexagons. That is a finite
+design problem with the pieces already in hand, which is a different kind of
+difficulty from "search harder".
+
 ### What pressure 3 actually needs
 
 de Grey's Sa reaches **pressure 3 at four colours** — k−1, the classical spindle

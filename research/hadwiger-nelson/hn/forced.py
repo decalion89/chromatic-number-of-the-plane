@@ -487,3 +487,54 @@ def cegar_core(rel: "ColourRelations", p: int, key=None,
             return T, False       # nothing carries the free colour: no core
         T.append(min(cands, key=key))
     return T, False
+
+
+# -- the machine that makes pressure, and what it needs one level up -------
+#
+# Exactly one configuration in this package reaches pressure 3, and taking it
+# apart names the mechanism rather than leaving it a measurement. Deleting
+# everything from de Grey's Sa that can go while the pivot's neighbourhood
+# still refuses to be squeezed into two colours leaves 47 vertices:
+#
+#   the pivot;
+#   its circle of 30, which splits into FIVE hexagons -- the 60-degree orbits,
+#     as the bipartiteness argument above requires, each with exactly two
+#     alternating 2-colourings, so five independent orientation bits;
+#   sixteen further points, at d^2 = 1/3, (7 +- sqrt33)/6 and (3 +- sqrt33)/6,
+#     each adjacent to exactly two circle points -- and in all sixteen cases
+#     the two lie in DIFFERENT hexagons, so each one reads the relative
+#     orientation of a pair of them.
+#
+# Squeeze the circle into two colours. Every one of those sixteen that sees
+# two differently-coloured circle points is barred from both, so it is
+# confined to the remaining k-2. And the sixteen among themselves form a
+# 16-vertex, 27-edge unit-distance graph that is 3-chromatic and NOT
+# bipartite: it carries an odd cycle.
+#
+#   at k = 4 the confined points have 2 colours, an odd cycle does not fit,
+#     and the squeeze is impossible -- pressure 3;
+#   at k = 5 they have 3, the graph is 3-colourable, and the squeeze goes
+#     through -- pressure 2.
+#
+# Checked causally, not just by coincidence of numbers: deleting three of the
+# sixteen makes their graph bipartite, and the pressure drops from 3 to 2 on
+# the spot.
+#
+# So the mechanism is "an odd cycle against k-2 colours", and lifting it says
+# exactly what to build. At five colours the confined points get three, so the
+# gadget among them must be 4-CHROMATIC rather than merely non-bipartite --
+# a Moser spindle, or the 19-vertex jointly forced construction in `hn.mixed`,
+# every vertex of which is adjacent to two circle points lying in different
+# hexagons. That is a finite design problem with the pieces already in hand,
+# which is a different kind of difficulty from "search harder".
+
+PRESSURE_GADGET = {
+    "witness": "certificates/pressure3_witness_47.json",
+    "circle_components": 5,
+    "component_size": 6,
+    "confined_points": 16,
+    "confined_graph": (16, 27),
+    "confined_chromatic_number": 3,
+    "mechanism": "an odd cycle among the confined points against k-2 colours",
+    "lift_to_five": "the confined gadget must be 4-chromatic, not merely odd",
+}

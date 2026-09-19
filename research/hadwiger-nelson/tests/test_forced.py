@@ -335,3 +335,77 @@ def test_cegar_core_fails_on_a_critical_graph():
         assert not ok, "a critical graph must yield no core"
     finally:
         rel.close()
+
+
+# -- the mechanism behind the only pressure 3 ------------------------------
+
+def test_pressure_gadget_is_an_odd_cycle_against_k_minus_two():
+    """Take the 47-vertex witness apart and check the machine causally.
+
+    The circle splits into five hexagons, every one of the sixteen further
+    points is adjacent to exactly two circle points lying in DIFFERENT
+    hexagons, and those sixteen form a graph that is 3-chromatic but not
+    bipartite. Squeezing the circle into two colours confines them to k-2, so
+    the odd cycle bites at four colours and not at five -- and deleting three
+    of them to kill the odd cycle drops the pressure from 3 to 2, which is the
+    causal half rather than a coincidence of numbers.
+    """
+    import itertools
+
+    from hn.certify import load_certificate
+    from hn.coloring import is_k_colorable
+    from hn.forced import PRESSURE_GADGET, min_colours_on
+
+    pts, _doc = load_certificate("certificates/pressure3_witness_47.json")
+    g = build_graph(pts)
+    piv = 0
+    circle = set(g.adj[piv])
+    extras = [v for v in range(g.n) if v != piv and v not in circle]
+    assert len(circle) == 30 and len(extras) == PRESSURE_GADGET["confined_points"]
+
+    comps, seen = [], set()
+    for s in sorted(circle):
+        if s in seen:
+            continue
+        comp, stack = [], [s]
+        seen.add(s)
+        while stack:
+            x = stack.pop()
+            comp.append(x)
+            for y in g.adj[x] & circle:
+                if y not in seen:
+                    seen.add(y)
+                    stack.append(y)
+        comps.append(set(comp))
+    assert len(comps) == 5 and all(len(c) == 6 for c in comps)
+
+    for v in extras:
+        nb = [c for c in circle if c in g.adj[v]]
+        assert len(nb) == 2
+        assert sum(1 for c in comps if nb[0] in c) == 1
+        assert not any(nb[0] in c and nb[1] in c for c in comps), \
+            "both circle neighbours in one hexagon would read nothing"
+
+    sub = build_graph([g.vertices[v] for v in extras])
+    assert (sub.n, sub.m) == PRESSURE_GADGET["confined_graph"]
+    assert is_k_colorable(sub, 3)[0] and not is_k_colorable(sub, 2)[0]
+
+    def pressure_of(keep, k):
+        h = build_graph([g.vertices[v] for v in sorted(keep)])
+        j = h.vertices.index(g.vertices[piv])
+        rel = ColourRelations(h, k)
+        try:
+            return min_colours_on(rel, sorted(h.adj[j])) if rel.colourable else None
+        finally:
+            rel.close()
+
+    assert pressure_of(range(g.n), 4) == 3
+    assert pressure_of(range(g.n), 5) == 2
+    for drop in itertools.combinations(extras, 3):
+        rest = [v for v in extras if v not in drop]
+        if is_k_colorable(build_graph([g.vertices[v] for v in rest]), 2)[0]:
+            assert pressure_of(set(range(g.n)) - set(drop), 4) == 2, \
+                "killing the odd cycle must kill the pressure"
+            break
+    else:
+        raise AssertionError("no three extras make the gadget bipartite")
