@@ -43,7 +43,14 @@ def test_G_has_1581_vertices():
     assert len(build_G(as_graph=False)) == 1581
 
 
-def test_G_is_a_unit_distance_graph_with_the_published_edge_count():
+def test_G_is_a_unit_distance_graph_of_the_published_size():
+    """The vertex counts (39, 397, 1581) are de Grey's published figures.
+
+    The edge count is *not*: it is what this reconstruction produces, pinned
+    here as a regression check so a later change to the geometry code cannot
+    silently alter the graph.  Treat 7877 as ours until someone matches it
+    against a published enumeration.
+    """
     g = build_G()
     assert g.n == 1581
     assert g.m == 7877
