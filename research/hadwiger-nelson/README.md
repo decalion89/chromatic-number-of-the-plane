@@ -46,16 +46,22 @@ A certificate never asks you to trust this code. It asks you to run `drat-trim`.
   tips to match, spindles on that pair, and lands on the Moser spindle.
 - ✅ A **three-copy pigeonhole variant** of the argument, which needs only a forced
   *disjunction* rather than a forced pair, implemented and validated.
-- 🟡 χ(ℝ²) ≥ 5 **reproduced, pending independent verification.** de Grey's
-  1581-vertex graph was rebuilt from the published 39-point set S and its recipe;
-  every count matches (39 → 397 → 1581, with exactly one coincident point). kissat
-  4.0.4 returns UNSATISFIABLE for 4-colourability, twice, under two different
-  configurations. Both runs used the colour-symmetry-broken formula — sound, since
-  any proper 4-colouring can be permuted so a fixed triangle takes colours 0, 1, 2,
-  but an extra step a checker must accept. drat-trim verification of the 1.26 GB
-  proof, and the plain unbroken formula, were both still running. Until drat-trim
-  speaks this is *a solver's word*, which is exactly the distinction this package
-  exists to respect.
+- ✅ χ(ℝ²) ≥ 5 **reproduced and machine-verified.** de Grey's 1581-vertex graph
+  was rebuilt from the published 39-point set S and its recipe; every count
+  matches (39 → 397 → 1581, with exactly one coincident point). kissat 4.0.4
+  returns UNSATISFIABLE for 4-colourability under two configurations, and
+  **drat-trim verifies the proof**: `s VERIFIED`, 13 140 458 lemmas, 2 016 499 in
+  core, 130 857 426 resolution steps, 522 s.
+  `certificates/degrey_1581_no4coloring.json`.
+
+  Exactly what is verified, stated precisely: *no proper 4-colouring of this
+  graph assigns colours 0, 1, 2 to one pinned triangle.* One step remains outside
+  the proof — a triangle's three vertices are pairwise adjacent, so any proper
+  4-colouring gives them three distinct colours, and colours are interchangeable,
+  so permuting them to read 0, 1, 2 loses nothing. Standard, and still not
+  something drat-trim checked. The plain unbroken formula removes even that step
+  and was still solving.
+
 - ❌ χ(ℝ²) ≥ 6 — the actual goal. Not found.
 
 ## What has been ruled out so far

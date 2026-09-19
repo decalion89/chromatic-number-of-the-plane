@@ -60111,8 +60111,11 @@
  "notes": {
   "source": "de Grey, arXiv:1804.02385, rebuilt from the published 39-point set S",
   "field": "Q(sqrt3, sqrt5, sqrt7, sqrt11)",
-  "solver_verdict": "kissat 4.0.4 reports UNSATISFIABLE, twice, on the colour-symmetry-broken formula (default and --unsat configurations)",
+  "solver_verdict": "kissat 4.0.4: UNSATISFIABLE, twice (default and --unsat configurations)",
   "symmetry_breaking": "a triangle was pinned to colours 0,1,2; sound because any proper 4-colouring can be permuted so a fixed triangle takes those colours, but it is an extra step a checker must accept",
-  "drat_status": "drat-trim verification of the 1.26 GB proof was still running when this file was written; the plain unbroken formula had not yet returned"
+  "drat_status": "drat-trim verification of the 1.26 GB proof was still running when this file was written; the plain unbroken formula had not yet returned",
+  "drat_trim": "s VERIFIED -- 13140458 lemmas, 2016499 in core, 130857426 resolution steps, 521.9 s",
+  "what_is_verified": "no proper 4-colouring of this graph assigns colours 0,1,2 to the pinned triangle",
+  "remaining_step": "the three vertices of a triangle are pairwise adjacent, so any proper 4-colouring gives them three distinct colours, and colours are interchangeable; permuting so they read 0,1,2 loses nothing. This step is standard but it sits OUTSIDE the DRAT proof. The plain unbroken formula would remove it and was still running."
  }
 }
