@@ -990,3 +990,13 @@ def test_two_hexagon_angle_enumeration_is_recorded_with_its_caveat():
     assert T["best_degeneracy"] == 2, "none of the eight beats 2"
     assert "two hexagons only" in T["caveat"], (
         "the result must not be read as covering three or more")
+
+
+def test_even_confined_degrees_are_not_a_law():
+    """Recorded as a property of de Grey's family only, since it fails elsewhere."""
+    from hn.forced import CONFINED_DEGENERACY_NEVER_THREE as C
+
+    assert C["max_degree_seen"] == 5, "odd degrees occur, so the parity is local"
+    assert C["max_degeneracy_seen"] < C["needed"]
+    assert "not proof" in C["status"], (
+        "a scan of a continuous surface's peaks is not a theorem")

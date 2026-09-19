@@ -891,6 +891,27 @@ to 1e-9, where the arithmetic really carries 1e-15); and the largest histogram
 peak is always `α₂ = α₁`, the same six points, so coincident offsets are
 dropped before ranking rather than after.
 
+### What the confined set looks like
+
+On de Grey's own three-hexagon configuration every confined auxiliary has
+degree **0, 2 or 4 — never odd**, with 42 of 72 isolated, 36 edges, and
+components of cycle rank 1 or 4.
+
+That looked like a law. It is not: over 1200 configurations sampled across the
+three-hexagon surface, **1276 orientations carry an odd confined degree** and
+degree 5 occurs. The even degrees come from the reflective symmetry of that
+particular offset family, not from the construction.
+
+What does hold, across 1200 configurations and 9600 orientations:
+
+| largest confined degree | largest **degeneracy** | needed |
+|--:|--:|--:|
+| 5 | **2** | 3 |
+
+Never 3 — which is what lists of size 3 would need to fail. Stated as a
+measurement, not a theorem: the surface is continuous and only its histogram
+peaks were evaluated.
+
 ### A blocked graph cannot be a lattice
 
 Adding steps never hurts blocking or folding, but it does **dilute a ball**: at
@@ -967,6 +988,9 @@ still flat 2, up to 5533 vertices.
 - **A hexagon family with `theta` alongside `theta/2`.** `CH² = CT` exactly, so
   it produced a coincident hexagon — the same mistake that caused a false
   positive earlier — and the guard skipped it silently. It now says so.
+- **"Every confined degree is even."** True on de Grey's configuration and
+  false in general — 1276 of 9600 sampled orientations have an odd degree, and
+  degree 5 occurs. It is a symmetry of that offset family.
 - **A spurious degeneracy 4 at "60°."** Two hexagon offsets agreeing modulo
   60° are the *same* six points; a 1e-9 tolerance on the points missed a
   near-coincidence at 1e-7. The coincident-hexagon trap for the third time,

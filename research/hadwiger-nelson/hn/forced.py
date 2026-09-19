@@ -1217,3 +1217,34 @@ THREE_HEXAGON_SCAN = {
     "best_degeneracy": 2,
     "needed": 3,
 }
+
+
+# -- what the confined set looks like, and what it never does -------------
+#
+# On de Grey's own three-hexagon configuration every confined auxiliary has
+# degree 0, 2 or 4 -- never odd -- with 42 of 72 isolated, 36 edges, and
+# components of cycle rank 1 or 4. That looked like a law, and it is not: over
+# 1200 configurations sampled across the three-hexagon surface, 1276
+# orientations carry an odd confined degree and degree 5 occurs. The even
+# degrees come from the reflective symmetry of that particular offset family,
+# not from the construction.
+#
+# What does hold, across 1200 configurations and 9600 orientations:
+#
+#     largest confined degree seen:  5
+#     largest DEGENERACY seen:       2
+#
+# Never 3, which is what lists of size 3 would need to fail. Stated as a
+# measurement, since nothing here proves it: the surface is continuous and
+# only its histogram peaks were evaluated.
+
+CONFINED_DEGENERACY_NEVER_THREE = {
+    "configurations": 1200,
+    "orientations": 9600,
+    "max_degree_seen": 5,
+    "max_degeneracy_seen": 2,
+    "needed": 3,
+    "status": "measurement, not proof -- peaks of a continuous surface",
+    "de_grey_is_special": "its confined degrees are all even, a symmetry of "
+                          "that offset family; odd degrees occur elsewhere",
+}
