@@ -220,3 +220,46 @@ UNIT_DIRECTIONS_MISS_A_LINE = (
     "all six points with Q in one square class -- at most five, and only for "
     "a degenerate form -- so they never contain the minimum blocking set"
 )
+
+
+# -- and where a blocking set finally exists ------------------------------
+#
+# The multiquadratic families fail for a reason that is quantitative and
+# final. The projective direction count of the modulus-one group mod 5 is a
+# product of small factors -- 3 where 5 is inert in a quadratic factor, 2
+# where it splits -- so Q(sqrt-d1,...,sqrt-dt) of degree 2t gives at most 3^t
+# directions against PG(2t-1,5)'s (5^2t - 1)/4 points. Measured: 6 at (7,11),
+# 9 at (7,23), and 27 at (7,23,43) against 97656. The ratio (3/25)^t
+# collapses, and more generators do not help, because the group is finite and
+# already exhausted.
+#
+# The cause is the splitting. In a multiquadratic field the Galois group is
+# (Z/2)^t and the decomposition group at 5 is cyclic, so the residue degree is
+# at most 2 and O/5 breaks into many tiny fields. A LARGE norm-one group needs
+# the decomposition group to be everything -- a CYCLIC Galois group with 5
+# inert, which means Q(zeta_n) with 5 a primitive root mod n.
+#
+# n = 7 qualifies: 5 has order 6 in (Z/7)^*. Then O/5 = F_5^6 and the norm-one
+# subgroup has (5^6 - 1)/(5^3 - 1) = 126 elements. Modulus-one elements come
+# free from Hilbert 90 -- u = alpha/conj(alpha) has modulus one for every
+# alpha, with denominator a norm, which only has to stay coprime to 5.
+#
+# RESULT. Sixty-three of those directions, at full rank 6, admit NO
+# homomorphism to Z/5. Verified by brute force over all 5^6 = 15625 maps, not
+# on the solver's word: zero survive. It is the first step set in this package
+# with no coset 5-colouring at all.
+#
+# What that is and is not. It removes the structural colouring, which every
+# other graph here had; it does not make any particular graph 6-chromatic,
+# since an unstructured 5-colouring may still exist and only a solver can say.
+# It is a necessary condition, met for the first time.
+
+CYCLOTOMIC_BLOCKING = {
+    "field": "Q(zeta_7), where 5 is a primitive root mod 7 and so inert",
+    "norm_one_subgroup": (5 ** 6 - 1) // (5 ** 3 - 1),
+    "directions": 63,
+    "rank": 6,
+    "projective_points": (5 ** 6 - 1) // 4,
+    "homomorphisms_surviving": 0,
+    "verified": "brute force over all 5^6 = 15625 maps",
+}

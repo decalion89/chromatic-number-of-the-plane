@@ -588,6 +588,37 @@ being 5-integral, clearing denominators makes *every* vector divisible by 5, and
 the search reports "no homomorphism" for reasons of arithmetic bookkeeping and
 nothing else. Generators must be filtered to denominators coprime to 5.
 
+### Where a blocking set finally exists
+
+The multiquadratic families fail quantitatively and finally. The projective
+direction count of the modulus-one group mod 5 is a **product of small factors**
+— 3 where 5 is inert in a quadratic factor, 2 where it splits — so
+ℚ(√−d₁,…,√−d_t) of degree 2t gives at most **3^t** directions against
+PG(2t−1,5)'s (5^2t−1)/4 points. Measured: 6 at (7,11), 9 at (7,23), **27** at
+(7,23,43) against **97 656**. The ratio (3/25)^t collapses, and more generators
+do not help — the group is finite and already exhausted.
+
+The cause is the splitting: in a multiquadratic field the Galois group is (ℤ/2)^t
+and the decomposition group at 5 is cyclic, so the residue degree is at most 2
+and 𝒪/5 breaks into tiny fields. A *large* norm-one group needs the decomposition
+group to be everything — a **cyclic** Galois group with 5 **inert**, i.e. ℚ(ζ_n)
+with 5 a primitive root mod n.
+
+**n = 7 qualifies**: 5 has order 6 in (ℤ/7)^×. Then 𝒪/5 = F₅⁶ and the norm-one
+subgroup has (5⁶−1)/(5³−1) = **126** elements. Modulus-one elements come free
+from Hilbert 90 — u = α/conj(α) has modulus one for every α, with denominator a
+norm that only has to stay coprime to 5.
+
+> **63 of those directions, at full rank 6, admit NO homomorphism to ℤ/5.**
+> Verified by brute force over all 5⁶ = 15 625 maps rather than on the solver's
+> word: **zero survive.**
+
+It is the first step set here with no coset 5-colouring at all. What that is and
+is not: it removes the structural colouring that every other graph in this
+package had; it does **not** make any particular graph 6-chromatic, since an
+unstructured 5-colouring may still exist and only a solver can say. It is a
+necessary condition, met for the first time.
+
 Two caveats, stated because they bound what the tool proves. The search embeds M
 in ℤ^d by clearing a common denominator, so every φ it **finds** is genuine
 (restriction is a homomorphism) while a "none found" is only a statement about
