@@ -686,3 +686,58 @@ def blocks_two_targets(graph, pivot: int, targets: Sequence[int],
         if index[v] == 0:
             strong(v)
     return any(comp[2 * i] == comp[2 * i + 1] for i in range(m))
+
+
+def two_orbit_block(graph, pivot: int, a: int, b: int):
+    """Six copies that close any forced pair with one leg on d^2 = 1/3.
+
+    A theorem rather than a search. Let p be the pivot, |p - a|^2 = 1/3, and
+    let d be the distance from p to b. Take rho, the 120 degree rotation about
+    p, and sigma, the rotation by the unit-chord angle of b's circle, so that
+    two points of that circle sigma apart are exactly one apart. The six
+    copies are the two orbits
+
+        rho^0, rho^1, rho^2   and   sigma rho^0, sigma rho^1, sigma rho^2.
+
+    They block, for three reasons that fit together:
+
+    * On the circle of radius 1/sqrt(3) two points are adjacent exactly when
+      they are 120 degrees apart, so an orbit's three images of `a` form a
+      unit triangle. Every chosen image carries the pivot's colour, so **at
+      most one copy per orbit may choose a**, and at least two must choose b.
+
+    * Two subsets of size at least two of a three-element set intersect. So
+      there is a j for which rho^j and sigma rho^j both choose b.
+
+    * Those two b-images differ by sigma, which is the unit-chord angle of
+      their own circle, so they are one apart -- and both carry the pivot's
+      colour. Contradiction.
+
+    Returns the six copies, or None when sigma cannot be named in the field.
+    The caller still has to supply the forcing; this only closes it.
+    """
+    from fractions import Fraction
+
+    from .geometry import Rotation, rotation_joining
+
+    p = graph.vertices[pivot]
+    field = p.x.field
+    da2 = p.dist2(graph.vertices[a])
+    if not da2.is_rational() or da2.c[0] != Fraction(1, 3):
+        raise ValueError("a must sit on the classical circle, d^2 = 1/3")
+    db2 = p.dist2(graph.vertices[b])
+    if not db2.is_rational():
+        return None
+    try:
+        rho = rotation_joining(Fraction(1, 3), field)     # 120 degrees
+        sigma = rotation_joining(db2.c[0], field)
+    except (ValueError, ZeroDivisionError):
+        return None
+
+    def compose(x, y):
+        return Rotation(x.cos * y.cos - x.sin * y.sin,
+                        x.cos * y.sin + x.sin * y.cos, check=False)
+
+    ident = Rotation(field.rational(1), field.zero())
+    orbit = [ident, rho, compose(rho, rho)]
+    return orbit + [compose(sigma, r) for r in orbit]

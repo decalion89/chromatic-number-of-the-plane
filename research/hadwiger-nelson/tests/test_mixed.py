@@ -246,3 +246,66 @@ def test_two_target_test_refuses_other_sizes():
     except ValueError:
         return
     raise AssertionError("should refuse a core that is not of size two")
+
+
+def test_two_orbit_construction_blocks_any_pair_with_a_third_leg():
+    """Six copies close any forced pair with one target on d^2 = 1/3.
+
+    A theorem, not a search. On the circle of radius 1/sqrt(3) two points are
+    adjacent exactly when 120 degrees apart, so each orbit's three images of a
+    form a unit triangle and at most one copy per orbit may choose a --
+    leaving at least two choosing b. Two subsets of size two or more of a
+    three-element set intersect, so some j has both rho^j and sigma rho^j
+    choosing b, and those images differ by sigma, the unit-chord angle of
+    their own circle. They are one apart, both carry the pivot's colour, and
+    that is the contradiction.
+
+    Checked against both blocking tests, the linear one and the exponential
+    one, on every pair the graph offers.
+    """
+    from fractions import Fraction
+
+    from hn.mixed import blocks_two_targets, two_orbit_block
+    from hn.multispindle import cross_blocks
+
+    g = build_graph(build_Sa())
+    third = Fraction(1, 3)
+    tested = 0
+    for bp in range(g.n):
+        pv = g.vertices[bp]
+        legs = [j for j in range(g.n) if j != bp and j not in g.adj[bp]
+                and pv.dist2(g.vertices[j]).is_rational()
+                and pv.dist2(g.vertices[j]).c[0] == third]
+        if not legs:
+            continue
+        others = [j for j in range(g.n) if j != bp and j not in g.adj[bp]
+                  and j not in legs
+                  and pv.dist2(g.vertices[j]).is_rational()
+                  and pv.dist2(g.vertices[j]).c[0] >= Fraction(1, 4)]
+        for b in others[:4]:
+            copies = two_orbit_block(g, bp, legs[0], b)
+            if copies is None:
+                continue
+            assert len(copies) == 6
+            assert blocks_two_targets(g, bp, [legs[0], b], copies)
+            assert cross_blocks(g, bp, [legs[0], b], copies)
+            tested += 1
+        if tested >= 12:
+            break
+    assert tested >= 6
+
+
+def test_two_orbit_refuses_a_leg_off_the_classical_circle():
+    from hn.mixed import two_orbit_block
+
+    g = build_graph(build_Sa())
+    pv = g.vertices[0]
+    off = next(j for j in range(1, g.n) if j not in g.adj[0]
+               and pv.dist2(g.vertices[j]).is_rational()
+               and pv.dist2(g.vertices[j]).c[0] != __import__(
+                   "fractions").Fraction(1, 3))
+    try:
+        two_orbit_block(g, 0, off, 1)
+    except ValueError:
+        return
+    raise AssertionError("should refuse a leg that is not on d^2 = 1/3")
