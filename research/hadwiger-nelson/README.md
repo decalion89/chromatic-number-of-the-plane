@@ -46,9 +46,16 @@ A certificate never asks you to trust this code. It asks you to run `drat-trim`.
   tips to match, spindles on that pair, and lands on the Moser spindle.
 - ✅ A **three-copy pigeonhole variant** of the argument, which needs only a forced
   *disjunction* rather than a forced pair, implemented and validated.
-- ❌ χ(ℝ²) ≥ 5 **not yet reproduced independently.** The searches below were run in
-  ℚ(√3, √11), which is now known to be the wrong field — de Grey's rotations need
-  √7 and √15. Their negative results stand for that field and only that field.
+- 🟡 χ(ℝ²) ≥ 5 **reproduced, pending independent verification.** de Grey's
+  1581-vertex graph was rebuilt from the published 39-point set S and its recipe;
+  every count matches (39 → 397 → 1581, with exactly one coincident point). kissat
+  4.0.4 returns UNSATISFIABLE for 4-colourability, twice, under two different
+  configurations. Both runs used the colour-symmetry-broken formula — sound, since
+  any proper 4-colouring can be permuted so a fixed triangle takes colours 0, 1, 2,
+  but an extra step a checker must accept. drat-trim verification of the 1.26 GB
+  proof, and the plain unbroken formula, were both still running. Until drat-trim
+  speaks this is *a solver's word*, which is exactly the distinction this package
+  exists to respect.
 - ❌ χ(ℝ²) ≥ 6 — the actual goal. Not found.
 
 ## What has been ruled out so far
@@ -177,6 +184,34 @@ explicitly as unverified.
 | `hn/coloring.py` | SAT encoding, k-colourability, UNSAT-core minimisation |
 | `hn/spindle.py` | forced pairs and disjunctions; two- and three-copy spindles |
 | `hn/certify.py` | certificate creation and independent verification |
+
+## What the literature already had
+
+Read after the fact, which was the wrong order:
+
+- **Forced monochromatic pairs are standard.** Parts calls them *mono-pairs* and
+  builds 5-chromatic graphs from "cycles connecting two or more mono-pairs and one
+  unit edge", closed by a pigeonhole argument. The core of the spindle lemma here
+  is established work. What is not written down in that form is the conflict-graph
+  and independent-transversal statement, which systematises an idea that already
+  existed rather than introducing one.
+- **The order bound is classical.** (ℤ/n)* has exponent 2 exactly when n | 24.
+- **No consensus on the answer.** Polymath16 participants split between 5 and 6.
+- **Scale.** Parts derived N = 6906 as a bound tied to 6-colourability, which says
+  something about the size of the object being hunted.
+
+## An unexplored field
+
+One lead from that thread has not been followed. Philip Gibbs notes that 5/3 is
+monochromatic with the origin in any homomorphic 5-colouring, since 5/3 = η² + (−η)²
+in ℤ[ω₁, ω₃]. Spindling that point needs |5/3|² = 25/9, whose rotation
+(34.9152°, cos 41/50) has sine 3√91/50 — so it lives in **ℚ(√7, √13)**, a field that
+appears nowhere in the sources read here. Everything in the literature sits in
+ℚ(√3, √11), with √5 and √7 added for de Grey's rotations.
+
+The caveat that keeps this a lead rather than a result: Gibbs' observation concerns
+*homomorphic* colourings, a restricted class, and forcing there does not imply
+forcing in general.
 
 ## Honest odds
 
