@@ -36,6 +36,7 @@ a rainbow gets built at a distance the plane does not hand you.
 
 from __future__ import annotations
 
+import random as _rand
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
 from .graph import UnitDistanceGraph
@@ -354,3 +355,135 @@ def core_must_be_rainbow(rel: "ColourRelations", p: int,
             if rel.can_share(u, v):
                 return False
     return True
+
+
+# -- the core condition IS a pressure measurement --------------------------
+#
+# T is a core of p when c(p) lies in c(T) in every k-colouring. Suppose some
+# colouring left a colour g unused on N(p) and on T alike. Then recolouring p
+# to g is proper, because properness at p asks only that its colour avoid
+# c(N(p)), and it puts c(p) outside c(T). Conversely if T is not a core, the
+# colouring witnessing it has c(p) outside c(T) and outside c(N(p)) already,
+# so c(p) is such a colour. Hence
+#
+#     T is a core of p   <=>   min |c(N(p) union T)| = k,
+#
+# which `min_colours_on` answers in at most k incremental solves, against the
+# repeated shrinking that every core search in this package has used. It also
+# explains the shape: with pressure(p) = 2 at five colours, N(p) contributes
+# two and T has to supply the remaining three by itself, in every colouring.
+#
+# And the objective is MONOTONE. Enlarging S can only raise |c(S)| in each
+# colouring, so the minimum over colourings can only rise; adding a vertex to
+# T never undoes progress. That is the first search here with a gradient
+# rather than an all-or-nothing verdict, and it is what makes growing a core
+# from the neighbourhood outwards a sensible thing to do at all.
+
+def is_core(rel: "ColourRelations", p: int, targets: Sequence[int]) -> bool:
+    """Whether c(p) lies in c(targets) in every k-colouring."""
+    circle = sorted(rel.graph.adj[p])
+    return min_colours_on(rel, list(circle) + [t for t in targets
+                                               if t != p]) >= rel.k
+
+
+def grow_core(rel: "ColourRelations", p: int,
+              candidates: Optional[Sequence[int]] = None,
+              limit: int = 6, report=None) -> Tuple[List[int], int]:
+    """Greedily grow a core out of p's neighbourhood; return (T, coverage).
+
+    Each step takes the candidate that raises min |c(N(p) union T)| the most,
+    stopping at k -- where T is a core -- or when no candidate helps. Monotone,
+    so a step never has to be undone, and every evaluation is at most k solves
+    on the one persistent formula.
+    """
+    circle = sorted(rel.graph.adj[p])
+    pool = [v for v in (range(rel.graph.n) if candidates is None else candidates)
+            if v != p and v not in rel.graph.adj[p]]
+    chosen: List[int] = []
+    best = min_colours_on(rel, circle)
+
+    def squeeze(S, t):
+        """Assumptions forcing S into the first t colours."""
+        return [-rel._x(v, c) for v in S for c in range(t, rel.k)]
+
+    for step in range(limit):
+        # A candidate helps exactly when it breaks the current squeeze. One
+        # MODEL of that squeeze kills every candidate it colours inside the
+        # first `best` colours, because that model witnesses their fit -- so a
+        # handful of models clears almost the whole graph and only the
+        # survivors need a query each. Scanning candidates one at a time was
+        # 2900 solves per step; this is a few dozen.
+        live = list(pool)
+        for _ in range(8):
+            if not live:
+                break
+            rel.calls += 1
+            if not rel._s.solve(assumptions=squeeze(circle + chosen, best)):
+                break                       # already past `best`; nothing to do
+            m = set(rel._s.get_model())
+            live = [v for v in live
+                    if all(rel._x(v, c) not in m for c in range(best))]
+            # the same assumptions return the same model, so the next solve
+            # has to be pushed somewhere else or harvesting stops after one
+            rel._s.set_phases([_rand.choice([1, -1])
+                               * rel._x(v, _rand.randrange(rel.k))
+                               for v in _rand.sample(range(rel.graph.n),
+                                                     min(120, rel.graph.n))])
+        gain = None
+        for v in live:
+            rel.calls += 1
+            if not rel._s.solve(assumptions=squeeze(circle + chosen + [v], best)):
+                gain = (min_colours_on(rel, circle + chosen + [v]), v)
+                break
+        if gain is None:
+            break
+        best, v = gain
+        chosen.append(v)
+        pool = [w for w in pool if w != v]
+        if report:
+            report(step, chosen, best)
+        if best >= rel.k:
+            break
+    return chosen, best
+
+
+def cegar_core(rel: "ColourRelations", p: int, key=None,
+               limit: int = 40) -> Tuple[List[int], bool]:
+    """Build a core of p by counterexamples, one solve per vertex added.
+
+    Growing greedily stalls, and monotonicity is exactly why it is allowed to:
+    the objective never decreases, but no SINGLE vertex has to raise it even
+    when a pair would, so the search sits at a local plateau with a genuine
+    core still above it.
+
+    Counterexamples do not stall. T is a core when no colouring leaves a
+    colour unused on N(p) union T, and by colour symmetry it is enough to ask
+    that of the first colour. A solve either proves it -- done -- or returns a
+    colouring in which that colour IS free, and any vertex carrying it
+    elsewhere, added to T, kills that colouring. Each round costs one solve
+    and rules out at least the witness it was given, and the full vertex set
+    is a core whenever the graph is not k-vertex-critical, so it terminates.
+
+    `key` ranks the candidates that would kill the current counterexample;
+    the default prefers the ones nearest the pivot, since a leg's images only
+    conflict when its circle is small enough to matter.
+    """
+    g = rel.graph
+    circle = sorted(g.adj[p])
+    banned = set(circle) | {p}
+    if key is None:
+        pv = g.vertices[p]
+        key = lambda v: float(pv.dist2(g.vertices[v]))
+    T: List[int] = []
+    for _ in range(limit):
+        rel.calls += 1
+        ass = [-rel._x(v, 0) for v in circle + T]
+        if not rel._s.solve(assumptions=ass):
+            return T, True
+        m = set(rel._s.get_model())
+        cands = [v for v in range(g.n)
+                 if v not in banned and v not in T and rel._x(v, 0) in m]
+        if not cands:
+            return T, False       # nothing carries the free colour: no core
+        T.append(min(cands, key=key))
+    return T, False
