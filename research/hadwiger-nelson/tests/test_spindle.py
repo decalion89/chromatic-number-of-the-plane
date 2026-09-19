@@ -329,3 +329,23 @@ def test_effort_ranking_honours_a_conflict_budget():
     # this one is genuinely forced and cheap, so the budget does not bite
     assert rows[0][1] is False
     assert rows[0][4] == [3]
+
+
+def test_triple_spindle_works_over_a_larger_field():
+    """It is called exactly when a narrowed core reaches size 2, on graphs
+    living in Q(sqrt3, sqrt5, sqrt7, sqrt11) -- so building its 120-degree
+    rotation from the module-level ROT60, which is over Q(sqrt3, sqrt11),
+    would fail at the one moment it matters."""
+    from fractions import Fraction
+
+    from hn.geometry import DEGREY_FIELD, Point, _rot60
+    from hn.spindle import triple_spindle_union
+
+    F4 = DEGREY_FIELD
+    r = F4.sqrt(3).inverse()
+    q = Point(r, F4.zero())
+    rho = _rot60(F4) ** 2
+    g = build_graph([Point(F4.zero(), F4.zero()), q, rho(q), rho(rho(q))])
+    spun = triple_spindle_union(g, 0)
+    assert spun.n >= g.n
+    assert spun.vertices[0].field == F4

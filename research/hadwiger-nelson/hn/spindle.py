@@ -279,10 +279,13 @@ def triple_spindle_union(graph: UnitDistanceGraph, pivot: int) -> UnitDistanceGr
     Not k-colourable whenever some pair of vertices at distance 1/sqrt(3) from
     the pivot carries a forced disjunction for k colours.
     """
-    from .geometry import ROT60
+    from .geometry import _rot60
 
     p = graph.vertices[pivot]
-    rho = ROT60 ** 2                      # 120 degrees
+    # the rotation must be built in the graph's own field: the module-level
+    # ROT60 is over Q(sqrt3, sqrt11) and would be refused on anything larger,
+    # which is precisely where this function gets called
+    rho = _rot60(p.field) ** 2            # 120 degrees
     turn = rho.about(p)
     verts = list(graph.vertices)
     image1 = [turn(v) for v in verts]
