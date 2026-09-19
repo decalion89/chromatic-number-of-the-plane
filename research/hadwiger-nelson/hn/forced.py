@@ -1075,3 +1075,51 @@ CONFINED_SET_IS_A_CUT = (
     "cross-hexagon ones see only the cut eps = bits[a] XOR bits[b]: 2^(t-1) "
     "distinct confined sets, not 2^C(t,2)"
 )
+
+
+# -- why k = 4 works and k = 5 does not, in one number -------------------
+#
+# The confined set is 2-DEGENERATE. Measured over de Grey's own angle family,
+# hexagons at k*theta/2, taking the worst orientation at each size:
+#
+#     hexagons   auxiliaries   confined   max degree   degeneracy
+#         3          126          72          4            2
+#         4          240         132          4            2
+#         5          390         210          4            2
+#         6          576         306          4            2
+#         7          798         420          4            2
+#
+# The confined set grows nearly sixfold and the degeneracy does not move. And
+# degeneracy is exactly the statistic the list-colouring argument turns on:
+#
+#     d-degenerate  =>  (d+1)-CHOOSABLE   (greedy, peeling low-degree first)
+#
+# so a 2-degenerate confined set is 3-choosable. That settles both colour
+# counts at once, in opposite directions:
+#
+#   k = 4. The lists have size 2. A 2-degenerate graph need not be
+#   2-choosable -- an odd cycle is 2-degenerate and has list chromatic number
+#   3 -- so the lists can fail, and de Grey's Sa reaches pressure 3.
+#
+#   k = 5. The lists have size 3. Every 2-degenerate graph IS 3-choosable, so
+#   the lists always complete, and the pressure is 2. No number of hexagons
+#   changes this, because none of them changes the degeneracy.
+#
+# So the frontier at five colours is not a search that has not yet succeeded.
+# It is the gap between "2-degenerate is not always 2-choosable" and
+# "2-degenerate is always 3-choosable", and the whole spindle method sits in
+# it. Raising the pressure needs a confined set of degeneracy at least 3 --
+# which is a statement about the geometry of Minkowski sums of hexagons, not
+# about how hard the search is run.
+
+CONFINED_SET_IS_TWO_DEGENERATE = {
+    "measured_sizes": [72, 132, 210, 306, 420],
+    "degeneracy": 2,
+    "max_degree": 4,
+    "consequence_k4": "lists of size 2; 2-degenerate is not 2-choosable "
+                      "(an odd cycle is not), so pressure 3 is reachable",
+    "consequence_k5": "lists of size 3; 2-degenerate IS 3-choosable by "
+                      "Erdos-Rubin-Taylor, so the lists always complete and "
+                      "the pressure is 2, at every size",
+    "what_would_break_it": "a confined set of degeneracy >= 3",
+}

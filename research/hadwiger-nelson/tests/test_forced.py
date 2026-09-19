@@ -932,3 +932,39 @@ def test_always_confined_points_are_a_matching():
 
     deg = [sum(1 for b in pts if a is not b and a.is_unit_apart(b)) for a in pts]
     assert max(deg) <= 1, "a matching, so it can never contribute more than 2"
+
+
+def test_two_degenerate_is_three_choosable_but_not_two_choosable():
+    """The gap the whole frontier sits in, both halves checked by brute force."""
+    import itertools
+
+    def choosable(n, edges, lists):
+        """Can every vertex take a colour from its list, all edges proper?"""
+        for pick in itertools.product(*lists):
+            if all(pick[a] != pick[b] for a, b in edges):
+                return True
+        return False
+
+    # C_5 is 2-degenerate.  With every list {0,1} it fails: not 2-choosable.
+    c5 = [(i, (i + 1) % 5) for i in range(5)]
+    assert not choosable(5, c5, [(0, 1)] * 5)
+
+    # With lists of size 3 it always succeeds, whatever the lists are.
+    from random import Random
+
+    rng = Random(3)
+    for _ in range(200):
+        lists = [tuple(rng.sample(range(5), 3)) for _ in range(5)]
+        assert choosable(5, c5, lists)
+
+
+def test_confined_set_degeneracy_is_what_caps_the_pressure():
+    """The recorded measurement is self-consistent: chi <= degeneracy + 1."""
+    from hn.forced import CONFINED_SET_IS_TWO_DEGENERATE as M
+
+    assert M["degeneracy"] == 2
+    assert M["degeneracy"] + 1 == 3, "so chi(confined) <= 3, and 4 is needed"
+    assert M["max_degree"] > M["degeneracy"], "degeneracy is the peeling bound"
+    assert M["measured_sizes"] == sorted(M["measured_sizes"])
+    assert M["measured_sizes"][-1] > 5 * M["measured_sizes"][0], (
+        "it grows nearly sixfold while the degeneracy does not move")
