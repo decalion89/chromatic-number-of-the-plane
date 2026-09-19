@@ -235,6 +235,17 @@ def _clique(rel: ColourRelations, pool: Sequence[int],
 #   COROLLARY. A k-vertex-critical graph has no core of any size, at any
 #   vertex. Not one, not two, not thirty-four.
 #
+# CAVEAT, on the input rather than the theorem. That G is 5-vertex-critical is
+# an assertion in this package, not a measurement: what was checked is
+# separability, which is a CONSEQUENCE of criticality rather than a proof of
+# it. Testing it properly means 1581 four-colourability calls, each the same
+# shape as the one that took kissat 522 seconds. The 5-core (1557 vertices) IS
+# 4-colourable, which is consistent; a sample over hubs, leaves and the middle
+# is running. If it turns out false -- and the published reductions of de
+# Grey's graph to several hundred vertices are a reason to doubt it -- then
+# the corollary below does not apply to G, and every conclusion drawn from it
+# here needs re-deriving. The theorem itself is unaffected either way.
+#
 # de Grey's G is 5-vertex-critical, so it is completely inert at five colours:
 # every pivot is separable from every set of targets simultaneously, and no
 # search over it can ever return a forced anything. That accounts for all 880

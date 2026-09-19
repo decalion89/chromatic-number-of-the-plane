@@ -102,7 +102,15 @@ the colouring stays proper and T was not a core.
 **A k-vertex-critical graph has no core of any size, at any vertex.** Colour
 G − p with k−1 colours and give p the kth: p is then the *only* vertex carrying
 it, so c(p) lies outside c(T) for every T at once. de Grey's G is
-5-vertex-critical, so it is completely inert at five colours — checked directly,
+5-vertex-critical — **asserted here, not measured**: what was checked is
+separability, which is a *consequence* of criticality rather than a proof of it,
+and the published reductions of de Grey's graph to several hundred vertices are
+a reason to doubt it. A proper test is 1581 four-colourability calls, each the
+shape of the one that took kissat 522 s; the 5-core (1557 vertices) is
+4-colourable, which is consistent, and a sample is running. If it is false, the
+corollary does not apply to G and the conclusions drawn from it need
+re-deriving — the theorem itself is unaffected. So: G is inert at five colours —
+checked directly,
 pivot 0 is separable from all 1520 of its non-neighbours *simultaneously*, pivot
 1 from all 1572. The 880 pivots of searching in this package were answering a
 question whose answer was fixed before any solver started.
