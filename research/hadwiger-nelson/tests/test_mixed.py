@@ -309,3 +309,48 @@ def test_two_orbit_refuses_a_leg_off_the_classical_circle():
     except ValueError:
         return
     raise AssertionError("should refuse a leg that is not on d^2 = 1/3")
+
+
+def test_centroids_sit_on_the_classical_circle():
+    """A unit triangle's centroid is 1/sqrt(3) from each of its corners.
+
+    Which is what manufactures the leg the two-orbit block needs. Points that
+    close together are scarce in constructions built from unit steps, and on
+    Sa the centroids take every tested pivot from having no leg to having one.
+    """
+    from fractions import Fraction
+
+    from hn.mixed import unit_triangle_centroids
+
+    g = build_graph(build_Sa())
+    cents = unit_triangle_centroids(g, limit=60)
+    assert cents
+    third = Fraction(1, 3)
+    for c in cents:
+        close = [q for q in g.vertices
+                 if c.dist2(q).is_rational() and c.dist2(q).c[0] == third]
+        assert len(close) >= 3                 # its own triangle, at least
+        for i, u in enumerate(close[:3]):
+            for v in close[i + 1:3]:
+                assert u.dist2(v) == 1         # and they are a unit triangle
+
+
+def test_centroids_give_every_pivot_a_leg():
+    from fractions import Fraction
+
+    from hn.mixed import unit_triangle_centroids
+
+    g = build_graph(build_Sa())
+    known = set(g.vertices)
+    fresh = [c for c in unit_triangle_centroids(g) if c not in known]
+    assert fresh
+    g2 = build_graph(list(g.vertices) + fresh)
+    third = Fraction(1, 3)
+    has = 0
+    for bp in range(min(g2.n, 40)):
+        pv = g2.vertices[bp]
+        if any(pv.dist2(g2.vertices[j]).is_rational()
+               and pv.dist2(g2.vertices[j]).c[0] == third
+               for j in range(g2.n) if j != bp):
+            has += 1
+    assert has == min(g2.n, 40)

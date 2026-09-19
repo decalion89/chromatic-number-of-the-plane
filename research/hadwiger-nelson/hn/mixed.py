@@ -741,3 +741,44 @@ def two_orbit_block(graph, pivot: int, a: int, b: int):
     ident = Rotation(field.rational(1), field.zero())
     orbit = [ident, rho, compose(rho, rho)]
     return orbit + [compose(sigma, r) for r in orbit]
+
+
+def unit_triangle_centroids(graph, limit: int = 20000) -> List[Point]:
+    """The centroid of every unit triangle, which is 1/sqrt(3) from its corners.
+
+    The two-orbit block needs a target at squared distance 1/3 from the pivot,
+    and points that close together are scarce in the constructions here -- most
+    of them are built from unit steps and land no nearer than that. But the
+    distance is manufacturable. Three points pairwise one apart have a centroid
+    exactly 1/sqrt(3) from each of them, so every unit triangle in a graph
+    donates a point with three legs on the classical circle at once.
+
+    The centroid is (u + v + w)/3, exact in the field, and the distance is
+    checked rather than assumed.
+    """
+    from fractions import Fraction
+
+    third = Fraction(1, 3)
+    out, seen = [], set()
+    n = graph.n
+    for u in range(n):
+        nbrs = sorted(graph.adj[u])
+        for i, v in enumerate(nbrs):
+            if v < u:
+                continue
+            for w in nbrs[i + 1:]:
+                if w < u or w not in graph.adj[v]:
+                    continue
+                a, b, c = graph.vertices[u], graph.vertices[v], graph.vertices[w]
+                g = Point((a.x + b.x + c.x) * a.x.field.rational(third),
+                          (a.y + b.y + c.y) * a.y.field.rational(third))
+                if g in seen:
+                    continue
+                d = g.dist2(a)
+                if not (d.is_rational() and d.c[0] == third):
+                    continue
+                seen.add(g)
+                out.append(g)
+                if len(out) >= limit:
+                    return out
+    return out
