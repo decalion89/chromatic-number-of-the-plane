@@ -564,6 +564,58 @@ triangles, so the plane's clique number survives, and a three-step walk is
 lives there. Richer arithmetic on its own buys nothing; what the theory asks for
 is the compositum, a field holding both the spindles and an odd-order rotation.
 
+## Ramification decides which magic circles exist
+
+A unit step satisfies `u conj(u) = 1`, so at any prime `P` that complex
+conjugation fixes, `2 v_P(u) = 0` and `v_P(u) = 0`. Every point reachable from
+the origin by unit steps then has `v_P >= 0`, and so does every squared
+distance inside one connected component.
+
+The order-`n` magic radius squared is `1/((1 - zeta_n)(1 - zeta_n^-1))`. For
+`n` a prime power that is the ramified prime above `p`, so the radius has
+valuation `-2` and lies outside reach. Measured, and it is what every
+disconnection all day was saying: the pivot's component held 1306 of 5017
+vertices and **none** of the 11-gon, and 36481 points reached nothing one step
+from a pentagon vertex.
+
+The way out is for the prime to split with conjugation swapping the factors --
+and that is exactly what the classical construction is. 3 splits in
+`Q(sqrt(-11))` since `-11 = 1 mod 3` is a residue, `(1 + sqrt(-11))/2` has norm
+3, and its quotient by its conjugate is `(-5 + sqrt(-11))/6`: **the Moser
+rotation, up to sign**. `|1 - rho|^2 = 1/3` exactly, so `1 - rho` sits on the
+classical magic circle two steps from the origin. The spindle's angle was never
+chosen -- it is the split-prime quotient at 3.
+
+`15` is not a prime power, so `1 - zeta_15` is a unit, the radius is an
+algebraic integer, and nothing forbids it. Counting points on each circle in
+one ball, at depth 3:
+
+| order | prime power? | points found | capacity |
+|------:|:------------:|-------------:|---------:|
+| 3  | yes, ramified | 4  | 2 |
+| 5  | yes, ramified | **0** | 3 |
+| 15 | no, unit      | **30** | **4** |
+
+### How close it gets, and where it stops
+
+Over `Q(zeta_15)(sqrt(-11))` -- degree 16, the smallest field with `omega` for
+the triangles, `zeta_5` for the rotations, `sqrt5` for the radius and
+`sqrt(-11)` for the spindle -- the order-15 circle carries two full orbits of
+the order-15 rotation, and at `k = 3` the pivot's colour **is** forced onto an
+orbit. Off-centre balls take the minimal core from the full orbit of 15 down to
+**5**. The capacity is 4.
+
+Five is not four, and the shortfall is structural rather than a matter of
+searching harder. The core comes out as five *consecutive* positions of the
+15-cycle, and an arc of five never blocks: `S = {0, 5, 10}` is independent and
+meets every 5-arc. Of the 1365 four-subsets of `C_15` exactly **45 block**, in
+three classes up to rotation -- gaps `(1,2,10,2)`, `(2,3,4,6)`, `(2,6,4,3)` --
+and none of the 45 is forced on either orbit.
+
+At `k = 4` there is no forcing at all in this field: 55363 vertices at average
+degree 12.6, separable. Forcing at four colours needs a construction of de
+Grey's kind, not a ball.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
