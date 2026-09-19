@@ -145,3 +145,42 @@ class QuadExtField:
                 seen[z] = None
                 seen[self.neg(z)] = None
         return [z for z in seen if self.norm2(z) == self.one()]
+
+
+def degrey_field() -> "QuadExtField":
+    """Q(zeta_15, sqrt(-7), sqrt(-11)): de Grey's construction and zeta_15 at once.
+
+    Read as pairs (cos, sin) his rotations look like they need the real field
+    Q(sqrt3, sqrt5, sqrt7, sqrt11).  Read as complex numbers they are
+
+        2 arcsin(1/4)       -> (7 + sqrt(-15)) / 8
+        2 arcsin(1/8)       -> (31 + 3 sqrt(-7)) / 32
+        pi/2 - arcsin(1/8)  -> (-1 + 3 sqrt(-7)) / 8
+
+    each of modulus exactly 1, and the Moser rotation (5 + sqrt(-11))/6 with
+    them.  The radicals are sqrt(-15), sqrt(-7) and sqrt(-11), and sqrt(-15) =
+    sqrt(-3) sqrt(5) is already inside Q(zeta_15).
+
+    So two quadratic steps over the cyclotomic base carry the whole 2018
+    construction -- in a field that also has zeta_15, whose magic circle has
+    capacity 4 against the multiquadratic 2.  The multiquadratic field is not
+    where this lives; it is only where the coordinates were written down.
+    """
+    return QuadExtField(QuadExtField(CycloField(15), -7), -11)
+
+
+def degrey_rotations(L: "QuadExtField") -> dict:
+    """The four rotations, as elements of `degrey_field()`."""
+    inner = L.base
+    base = inner.base
+    r7 = L.embed(inner.radical())
+    r11 = L.radical()
+    r3 = L.embed(inner.embed(base.sqrt_disc(3)))      # sqrt(-3), 3 = 3 mod 4
+    r5 = L.embed(inner.embed(base.sqrt_disc(5)))      # sqrt(5),  5 = 1 mod 4
+    r15 = L.mul(r3, r5)                               # sqrt(-15)
+    return {
+        "spindle_2": L.scale(L.add(L.rational(7), r15), Fraction(1, 8)),
+        "spindle_4": L.scale(L.add(L.rational(31), L.scale(r7, 3)), Fraction(1, 32)),
+        "quarter": L.scale(L.add(L.rational(-1), L.scale(r7, 3)), Fraction(1, 8)),
+        "moser": L.scale(L.add(L.rational(5), r11), Fraction(1, 6)),
+    }
