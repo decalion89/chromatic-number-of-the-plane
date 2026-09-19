@@ -760,3 +760,47 @@ def test_unique_colourability_forces_pressure_k_minus_one_everywhere():
         assert d["uniquely_colourable_possible"]
     finally:
         rel.close()
+
+
+def test_forcing_set_invariant_and_the_core_it_gives():
+    """rho: the least set using all k colours in every colouring.
+
+    It is k in a uniquely k-colourable graph -- one representative per class,
+    measured as 3 on a triangular-lattice patch -- and n in a k-critical one,
+    since colouring W - u with k-1 and giving u the kth leaves any set omitting
+    u short of that colour. And it converts straight into cores: S minus N(p)
+    is a core of p, because N(p) together with it contains S.
+    """
+    from fractions import Fraction
+
+    from hn.field import Field
+    from hn.forced import (core_from_forcing_set, forcing_set, is_core,
+                           min_colours_on, shrink_forcing_set)
+    from hn.geometry import Point
+
+    f = Field((3,))
+    r3, half = f.sqrt(3), f.rational(Fraction(1, 2))
+    steps = [Point(f.rational(1), f.zero()), Point(half, r3 * half),
+             Point(-half, r3 * half)]
+    lat = {Point(f.zero(), f.zero())}
+    for _ in range(3):
+        new = set()
+        for q in lat:
+            for s in steps:
+                new.add(Point(q.x + s.x, q.y + s.y))
+                new.add(Point(q.x - s.x, q.y - s.y))
+        lat |= new
+    g = build_graph(sorted(lat, key=lambda q: float(q.x * q.x + q.y * q.y)))
+    rel = ColourRelations(g, 3)
+    try:
+        S, ok = forcing_set(rel)
+        assert ok
+        S = shrink_forcing_set(rel, S)
+        assert len(S) == 3, f"uniquely 3-colourable should give rho = k, got {len(S)}"
+        assert min_colours_on(rel, S) == 3
+        # and it becomes a core at any pivot outside it
+        p = next(v for v in range(g.n) if v not in S)
+        T = core_from_forcing_set(rel, p, S)
+        assert is_core(rel, p, T)
+    finally:
+        rel.close()

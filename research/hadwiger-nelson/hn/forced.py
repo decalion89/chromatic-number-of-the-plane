@@ -853,3 +853,83 @@ def unique_colouring_defect(rel: "ColourRelations") -> dict:
         "vertices": total,
         "uniquely_colourable_possible": hist.get(0, 0) == total,
     }
+
+
+# -- the invariant everything reduces to ----------------------------------
+#
+# Strip the pivot out of the core condition and one graph invariant is left:
+#
+#     rho(W, k) = the least size of a set that uses all k colours in EVERY
+#                 k-colouring -- a rainbow-forcing set.
+#
+# Every bound above is a statement about it.
+#
+#   In a k-vertex-critical graph rho = n. For any u, colour W - u with k-1 and
+#   give u the kth; a set omitting u then misses that colour. So every vertex
+#   is needed, which IS the inertness of de Grey's G.
+#   In a uniquely k-colourable graph rho = k, one representative per class.
+#   Measured: 3 on a triangular-lattice patch at three colours, and 6 on de
+#   Grey's Sa at four.
+#
+# And it converts into cores directly, with the pivot doing the work.
+#
+# THEOREM. If S is a rainbow-forcing set and p is any point, then S \ N(p) is
+# a core of p.
+#
+# Proof. N(p) union (S \ N(p)) contains S, so it uses every colour in every
+# colouring, which is the core condition. []
+#
+# So the core's size is |S| - |S intersect N(p)| and the requirement is just
+# that p be adjacent to at least |S| - 3 elements of S:
+#
+#   |S| = 4: one element -- trivially placed.
+#   |S| = 5: two -- the two circle intersections of any pair less than two
+#            apart, which always exist.
+#   |S| = 6: three, which needs them concyclic at radius EXACTLY one, and
+#            then p is their circumcentre.
+#
+# One trap, met on the first attempt and worth stating: p must not itself lie
+# in S. A minimal forcing set loses the property when any element is dropped,
+# so a circumcentre that happens to be a forcing vertex removes its own target
+# and the core evaporates -- measured, on Sa, as a perfectly good circumcentre
+# of degree 30 whose core was not one.
+
+def forcing_set(rel: "ColourRelations", order: Optional[Sequence[int]] = None,
+                limit: int = 400) -> Tuple[List[int], bool]:
+    """A set using all k colours in every colouring, built by counterexamples.
+
+    Returns (S, closed). `closed` is False when the limit was reached, in
+    which case S is a lower bound witness rather than a forcing set.
+    """
+    pool = list(range(rel.graph.n) if order is None else order)
+    S: List[int] = []
+    for _ in range(limit):
+        rel.calls += 1
+        if not rel._s.solve(assumptions=[-rel._x(v, 0) for v in S]):
+            return S, True
+        m = set(rel._s.get_model())
+        cand = [v for v in pool if v not in S and rel._x(v, 0) in m]
+        if not cand:
+            return S, False
+        S.append(cand[0])
+    return S, False
+
+
+def shrink_forcing_set(rel: "ColourRelations",
+                       S: Sequence[int]) -> List[int]:
+    cur, changed = list(S), True
+    while changed and len(cur) > 1:
+        changed = False
+        for t in list(cur):
+            trial = [x for x in cur if x != t]
+            if trial and min_colours_on(rel, trial) >= rel.k:
+                cur, changed = trial, True
+                break
+    return cur
+
+
+def core_from_forcing_set(rel: "ColourRelations", p: int,
+                          S: Sequence[int]) -> List[int]:
+    """S minus N(p), which is a core of p whenever S is forcing and p not in S."""
+    nb = rel.graph.adj[p]
+    return [v for v in S if v != p and v not in nb]

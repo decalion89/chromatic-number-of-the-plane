@@ -394,6 +394,48 @@ it is monotone in added points, so a search can climb it.
 
 **The gap is 2 against 4**, in the same units as everything else in this file.
 
+### One invariant, and the whole problem in one table
+
+Strip the pivot out of the core condition and a single graph invariant is left:
+
+> **ρ(W, k)** = the least size of a set that uses all k colours in **every**
+> k-colouring — a rainbow-forcing set.
+
+Every bound above is a statement about it. In a k-vertex-critical graph **ρ = n**
+(colour W − u with k−1 and give u the kth; a set omitting u misses that colour,
+so every vertex is needed — that *is* the inertness of de Grey's G). In a
+uniquely k-colourable graph **ρ = k**, one representative per class.
+
+And it converts straight into cores, with the pivot doing the work:
+
+> **Theorem.** If S is rainbow-forcing and p is any point, **S ∖ N(p) is a core
+> of p** — because N(p) together with it contains S. So the core has size
+> `|S| − |S ∩ N(p)|`, and all that is needed is a pivot adjacent to `|S| − 3`
+> elements of S.
+
+|S| = 4 needs one such element, placed trivially; |S| = 5 needs two, which any
+pair less than 2 apart supplies through its circle intersections; |S| = 6 needs
+three concyclic at radius **exactly one**, and then p is their circumcentre. (One
+trap, met on the first attempt: p must not lie in S. A minimal forcing set loses
+the property when any element is dropped, so a circumcentre that happens to be a
+forcing vertex removes its own target — measured on Sa as a perfectly good
+circumcentre of degree 30 whose core was not one.)
+
+Measured:
+
+| graph | n | k | ρ |
+|---|---:|---:|---:|
+| triangular-lattice patch | 37 | 3 | **3** — equals k, as unique colourability requires |
+| de Grey's Sa | 397 | 4 | **6** |
+| de Grey's Y | 791 | 4 | **9** |
+| de Grey's G | 1581 | 5 | **1581** — critical, so every vertex is needed |
+| G ∪ (G+t), best overlap | 2938 | 5 | **> 400** |
+
+**That is the whole gap in one number.** At three and four colours the forcing
+sets are tiny, so cores of the blockable size are within reach of a well-placed
+pivot. At five they explode past 400, and a core of three is not a matter of
+searching harder — it is 400 away.
+
 ### What pressure 3 actually needs
 
 de Grey's Sa reaches **pressure 3 at four colours** — k−1, the classical spindle
