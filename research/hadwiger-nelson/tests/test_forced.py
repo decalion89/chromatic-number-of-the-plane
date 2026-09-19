@@ -154,3 +154,80 @@ def test_pressure_forbids_small_cores_where_it_is_low():
             assert st.run(subset=list(pair))[0], f"{pair} should not be a core"
     finally:
         st.close()
+
+
+# -- criticality makes a graph inert ---------------------------------------
+
+def test_critical_graphs_have_no_core_at_all():
+    """Colour G - p with k-1 and give p the kth: p is then alone in its
+    colour, so c(p) lies outside c(T) for EVERY target set at once.
+
+    The Moser spindle is 4-critical, so at four colours every one of its
+    vertices is separable from all its non-neighbours simultaneously. This is
+    the corollary that accounts for all 880 pivots of fruitless searching on
+    de Grey's G, which is 5-critical, before any solver runs.
+    """
+    from hn.certify import load_certificate
+    from hn.coloring import is_k_colorable
+    from hn.spindle import SeparationTest
+
+    pts, _doc = load_certificate("certificates/moser_spindle_no3coloring.json")
+    g = build_graph(pts)
+    assert not is_k_colorable(g, 3)[0] and is_k_colorable(g, 4)[0]
+    for p in range(g.n):
+        rest = build_graph([q for j, q in enumerate(pts) if j != p])
+        assert is_k_colorable(rest, 3)[0], f"{p} not critical"
+        others = [v for v in range(g.n) if v != p and v not in g.adj[p]]
+        if not others:
+            continue
+        st = SeparationTest(g, 4, p, others)
+        try:
+            assert st.run(subset=others)[0], f"pivot {p} should be separable"
+        finally:
+            st.close()
+
+
+def test_union_of_two_copies_is_not_critical_and_has_a_core():
+    """The escape the corollary points at: in W = H union f(H), removing a
+    vertex leaves a whole chi-chromatic copy, so no vertex is critical, no
+    pivot can be given a colour of its own, and the full target set is a core.
+    """
+    from hn.certify import load_certificate
+    from hn.coloring import is_k_colorable
+    from hn.geometry import Point
+    from hn.spindle import SeparationTest
+
+    pts, _doc = load_certificate("certificates/moser_spindle_no3coloring.json")
+    dx = pts[1].x - pts[0].x
+    dy = pts[1].y - pts[0].y
+    both = list(dict.fromkeys(pts + [Point(q.x + dx, q.y + dy) for q in pts]))
+    w = build_graph(both)
+    assert is_k_colorable(w, 4)[0]
+    for v in range(w.n):
+        rest = build_graph([q for j, q in enumerate(both) if j != v])
+        if is_k_colorable(rest, 3)[0]:
+            break
+    else:
+        # no vertex is critical, so some pivot must fail to be separable
+        hub = max(range(w.n), key=lambda v: len(w.adj[v]))
+        others = [v for v in range(w.n) if v != hub and v not in w.adj[hub]]
+        st = SeparationTest(w, 4, hub, others)
+        try:
+            assert not st.run(subset=others)[0], "the full set must be a core"
+        finally:
+            st.close()
+
+
+def test_general_block_agrees_with_the_two_sat_one():
+    from hn.mixed import (blocks_targets, blocks_two_targets,
+                          joint_core_configuration, joint_core_copies)
+
+    E, pts, rho, sigma = joint_core_configuration()
+    g = build_graph(pts)
+    bp = g.vertices.index(pts[0])
+    pair = [g.vertices.index(pts[2]), g.vertices.index(pts[3])]
+    copies = joint_core_copies(E, rho, sigma)
+    assert blocks_targets(g, bp, pair, copies) is True
+    assert blocks_two_targets(g, bp, pair, copies) is True
+    # one orbit alone cannot close it: three copies leave an escape
+    assert not blocks_targets(g, bp, pair, copies[:3])

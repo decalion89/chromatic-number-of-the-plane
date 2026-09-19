@@ -994,3 +994,50 @@ def joint_core_union():
     p = pts[0]
     copies = joint_core_copies(field, rho, sigma)
     return list(dict.fromkeys(r.about(p)(q) for r in copies for q in pts))
+
+
+def blocks_targets(graph, pivot: int, targets: Sequence[int],
+                   isometries: Sequence, solver: str = "cd19") -> bool:
+    """Blocking test for a core of any size, by SAT on the choices.
+
+    `blocks_two_targets` is the linear-time special case; this one is why the
+    general case matters. The pressure theorem says a core of size r needs
+    pressure(p) >= k - r, and de Grey's G measures pressure exactly 2 at every
+    vertex at five colours, so its smallest possible core there is not two but
+    THREE. A test confined to pairs cannot see the only cores that graph is
+    allowed to have.
+
+    The encoding is the direct one. Each copy i must place the pivot's colour
+    on at least one of its images -- that is what a core says, transported by
+    an isometry fixing the pivot -- so one clause per copy. Two chosen images
+    one apart would then share the pivot's colour while being adjacent, so one
+    clause per conflicting pair, this time including pairs inside a single
+    copy, which the two-target version can afford to drop. Unsatisfiable means
+    no consistent choice exists and the union has no k-colouring.
+
+    Unlike the two-target case this is not monotone in the copies: each extra
+    copy adds choices as well as conflicts. Throwing more at it can genuinely
+    make matters worse, so callers should search subsets rather than pile on.
+    """
+    from pysat.solvers import Solver
+
+    from .multispindle import cross_conflict_graph
+
+    targets = list(targets)
+    m, r = len(isometries), len(targets)
+    if r < 2:
+        raise ValueError("a core of one is a forced pair, not a block")
+    adj = cross_conflict_graph(graph, pivot, targets, isometries)
+
+    def y(i, a):
+        return 1 + i * r + a
+
+    cls = [[y(i, a) for a in range(r)] for i in range(m)]
+    for i in range(m):
+        for a, qa in enumerate(targets):
+            for j in range(m):
+                for b, qb in enumerate(targets):
+                    if (j, qb) in adj[(i, qa)] and (i, a) < (j, b):
+                        cls.append([-y(i, a), -y(j, b)])
+    with Solver(name=solver, bootstrap_with=cls) as s:
+        return not s.solve()

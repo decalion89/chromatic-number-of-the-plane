@@ -226,10 +226,24 @@ def _clique(rel: ColourRelations, pool: Sequence[int],
 # proper. Now c(u) = c(v), so no non-adjacent pair through u is forced
 # different either. []
 #
-# de Grey's G is 5-vertex-critical -- G - p is 4-colourable at every p -- so
-# it has no forced pairs at all at five colours. A core of size one is exactly
-# a forced-same pair, so G has no core of size one anywhere, and the pressure
-# measurement rules out size two on top of that. Between them the two theorems
+# The same colouring proves more, and this is the sharpest form. In it p is
+# the ONLY vertex carrying the kth colour, so c(p) lies outside c(T) for every
+# set T at once:
+#
+#   COROLLARY. A k-vertex-critical graph has no core of any size, at any
+#   vertex. Not one, not two, not thirty-four.
+#
+# de Grey's G is 5-vertex-critical, so it is completely inert at five colours:
+# every pivot is separable from every set of targets simultaneously, and no
+# search over it can ever return a forced anything. That accounts for all 880
+# pivots, in one line, before any solver runs.
+#
+# It also says exactly what a candidate graph must not be. W = G union f(G)
+# escapes: removing one vertex still leaves a whole 5-chromatic copy, so W is
+# not vertex-critical, no pivot can be given a colour of its own, and the full
+# target set IS a core. How far that core shrinks is then the real question,
+# and pressure answers it from below -- measured at 2 on these unions, so
+# their smallest possible core is three, never two. Between them the two theorems
 # account for every negative this package recorded at k = 5, and they say what
 # a construction has to look like: the forced vertices must be ones whose
 # removal leaves the graph still k-chromatic, which for a graph built on top
