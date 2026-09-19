@@ -884,6 +884,27 @@ a centre folding 789 of 1581, and de Grey's own dihedral group applied to G — 
 still flat 2, up to 5533 vertices.
 
 
+## Corrections to my own claims, kept rather than edited away
+
+- **"Pressure > 2 at k = 5 *requires* the confined set to be 4-chromatic."**
+  Not proven in either direction. A 3-colourable confined set does not by
+  itself colour the whole graph, and pressure 3 could in principle come from
+  deeper structure. It is the *local* mechanism — what the k = 4 construction
+  runs on — and the degeneracy result bounds that mechanism, not the pressure.
+- **"The auxiliary graph being 4-chromatic is the condition."** Measured wrong:
+  χ(A) = 4 already on de Grey's Sa and the pressure at five colours is still 2.
+  Only auxiliaries seeing *both* circle colours share a list.
+- **Auxiliaries taken as cross-hexagon sums only.** A point one away from `u`
+  and `v` is `u + v` for *any* pair on the circle; an intermediate fix then
+  wrongly required `|u − v| = 1`. Both dropped most of the set, including the
+  always-confined √3 points.
+- **A hexagon family with `theta` alongside `theta/2`.** `CH² = CT` exactly, so
+  it produced a coincident hexagon — the same mistake that caused a false
+  positive earlier — and the guard skipped it silently. It now says so.
+- **"Blocking is what a 6-chromatic candidate needs."** A pendant edge in a
+  blocking direction blocks the graph and changes χ by nothing. Blocking is a
+  precondition for rigidity to be *measurable*, never a bound.
+
 ## What has been ruled out so far
 
 Recording failures is the point of a search log; these are real constraints on where
