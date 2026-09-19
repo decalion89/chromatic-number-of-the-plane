@@ -34,7 +34,14 @@ from hn.graph import build_graph
 from hn.multispindle import (available_rotation_orders, cross_blocks,
                              cross_conflict_graph, rotation_powers,
                              _rotation_of_order)
+from hn.geometry import Rotation, rotation_joining
 from hn.spindle import SeparationTest
+
+
+def _compose(a, b):
+    """The rotation by the sum of two angles."""
+    return (a.cos * b.cos - a.sin * b.sin,
+            a.cos * b.sin + a.sin * b.cos)
 
 K = int(os.environ.get("HN_K", "4"))
 PIVOTS = int(os.environ.get("HN_PIVOTS", "12"))
@@ -84,19 +91,42 @@ def main() -> None:
         circles = {pv.dist2(g.vertices[j]) for j in small}
         print(f"  pivot {bp:4d}: mixed core {len(small)} over {len(circles)} "
               f"circles  [{time.time() - t0:.0f}s]", flush=True)
-        for n in orders:
-            rot = _rotation_of_order(n, field)
-            if rot is None:
+        # Finite order was never a mixed-distance requirement. It came from
+        # the cycle structure of a single circle, where the images of one
+        # target must close up. With targets on several circles any set of
+        # rotations will do, so the natural set is the spindle rotation of
+        # each distance present -- each one puts two images of its own circle
+        # exactly one apart -- together with their products.
+        seeds = []
+        for d2 in sorted(circles, key=lambda e: str(e)):
+            if not d2.is_rational():
                 continue
-            rots = rotation_powers(rot, n)
+            try:
+                r = rotation_joining(d2.c[0], field)
+            except (ValueError, ZeroDivisionError):
+                continue
+            seeds.append(r)
+        for n in orders:
+            r = _rotation_of_order(n, field)
+            if r is not None:
+                seeds.append(r)
+        print(f"     {len(seeds)} seed rotations", flush=True)
+        families = {"seeds": seeds}
+        prods = list(seeds)
+        for a in seeds:
+            for b in seeds:
+                prods.append(Rotation(*_compose(a, b)))
+        families["products"] = list({(r.cos, r.sin): r for r in prods}.values())
+        for name, rots in families.items():
+            rots = [Rotation(field.rational(1), field.zero())] + list(rots)
             adj = cross_conflict_graph(g, bp, small, rots)
             deg = max((len(v) for v in adj.values()), default=0)
             blocked = cross_blocks(g, bp, small, rots)
-            print(f"     order {n:3d}: max cross-degree {deg:3d}  "
-                  f"blocks: {blocked}", flush=True)
+            print(f"     {name:9s} ({len(rots):3d} copies): max cross-degree "
+                  f"{deg:3d}  blocks: {blocked}", flush=True)
             if blocked:
-                print(f"  *** BLOCKED: core {small} closed by order {n} ***",
-                      flush=True)
+                print(f"  *** BLOCKED: core {small} closed by {len(rots)} "
+                      f"copies ***", flush=True)
                 return
 
 
