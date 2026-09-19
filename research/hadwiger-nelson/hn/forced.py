@@ -511,29 +511,37 @@ def cegar_core(rel: "ColourRelations", p: int, key=None,
 # 16-vertex, 27-edge unit-distance graph that is 3-chromatic and NOT
 # bipartite: it carries an odd cycle.
 #
-#   at k = 4 the confined points have 2 colours, an odd cycle does not fit;
-#   at k = 5 they have 3, and the graph is 3-colourable.
+# The mechanism is LIST COLOURING, and that is the whole of it.
 #
-# The odd cycle is load-bearing, checked causally rather than by coincidence
-# of numbers: deleting three of the sixteen makes their graph bipartite, and
-# the pressure drops from 3 to 2 on the spot.
+# Squeezing the circle into two colours hands each auxiliary point a list --
+# the colours its circle neighbours leave it. Seeing two differently-coloured
+# circle points gives a list of k-2; seeing two of the same colour gives k-1.
+# So the auxiliary graph does not face a single palette, it faces a list
+# assignment, and the squeeze is refused exactly when that assignment admits
+# no proper colouring.
 #
-# It is NOT the whole mechanism, and the tempting one-line story is wrong.
-# Enumerating all 32 orientations of the five hexagons, the confined set is
-# BIPARTITE in sixteen of them -- nine points confined, no odd cycle -- so
-# those orientations are killed by something longer-range, through the
-# confined points' other neighbours rather than among themselves. The odd
-# cycle covers half the cases and is necessary for those; the rest of the
-# argument has not been isolated. Generating every point one away from two
-# circle points of different hexagons, 344 of them, and taking the worst
-# orientation gives a confined graph of chromatic number 2, which is the same
-# fact from the other side: no choice of auxiliary points makes the confined
-# set do the work alone.
+# Measured over all 32 orientations of the five hexagons:
 #
-# So "an odd cycle against k-2 colours" is a real part of the machine and not
-# a description of it. Raising the confined gadget to 4-chromatic is
-# necessary for the lift to five colours on the orientations the odd cycle
-# does cover, and not sufficient anywhere.
+#   k = 4: lists of size 2 and 3, and the auxiliary graph is NOT
+#          list-colourable in 32 of 32 orientations -- pressure 3;
+#   k = 5: the same lists become size 3 and 4, and it IS list-colourable in
+#          all 32 -- pressure 2.
+#
+# The odd cycle among the confined points is the special case where every
+# list is the same pair, and it is load-bearing where it applies: deleting
+# three of the sixteen makes their graph bipartite and the pressure drops from
+# 3 to 2 at once. But it covers only half the orientations. In the other
+# sixteen the confined set is bipartite, and the minimal refusal there is 22
+# vertices using ELEVEN auxiliaries of which only six are confined -- the
+# other five carry lists of size 3 and sit at d^2 = 1/3. A frame with only
+# "confined" and "free" in it cannot express that; lists can.
+#
+# The lift is now an exact and standard question. At five colours the
+# auxiliary graph must fail to be list-colourable with lists of sizes 3 and 4
+# -- a choosability question, not a chromatic one. A 4-chromatic subgraph all
+# of whose vertices carry the SAME list of three is one sufficient way, which
+# is why the Moser spindle and the 19-vertex jointly forced construction are
+# the pieces to try; they are not the only way.
 
 PRESSURE_GADGET = {
     "witness": "certificates/pressure3_witness_47.json",
@@ -542,6 +550,93 @@ PRESSURE_GADGET = {
     "confined_points": 16,
     "confined_graph": (16, 27),
     "confined_chromatic_number": 3,
-    "mechanism": "an odd cycle among the confined points against k-2 colours",
-    "lift_to_five": "the confined gadget must be 4-chromatic, not merely odd",
+    "mechanism": ("the auxiliary graph is not list-colourable with the lists "
+                  "the squeezed circle hands it: k-2 where it sees two "
+                  "differently-coloured circle points, k-1 where it sees two "
+                  "of the same"),
+    "orientations_refused_at_k4": 32,
+    "orientations_refused_at_k5": 0,
+    "lift_to_five": ("an auxiliary graph that is not list-colourable with "
+                     "lists of sizes 3 and 4 -- choosability, not chromatic "
+                     "number"),
 }
+
+
+def circle_hexagons(graph, pivot: int):
+    """The pivot's circle split into its 60-degree orbits, with parities.
+
+    Returns (components, parity, component_of). Every component is a path or
+    a 6-cycle -- adjacency on a unit circle means exactly 60 degrees -- so a
+    2-colouring of the circle is a choice of colour pair plus one orientation
+    bit per component, and `parity` fixes the reference alternation.
+    """
+    circle = set(graph.adj[pivot])
+    seen, comps = set(), []
+    for s in sorted(circle):
+        if s in seen:
+            continue
+        comp, stack = [], [s]
+        seen.add(s)
+        while stack:
+            x = stack.pop()
+            comp.append(x)
+            for y in graph.adj[x] & circle:
+                if y not in seen:
+                    seen.add(y)
+                    stack.append(y)
+        comps.append(set(comp))
+    par, comp_of = {}, {}
+    for ci, comp in enumerate(comps):
+        s = min(comp)
+        par[s], front = 0, [s]
+        for v in comp:
+            comp_of[v] = ci
+        while front:
+            x = front.pop()
+            for y in graph.adj[x] & comp:
+                if y not in par:
+                    par[y] = 1 - par[x]
+                    front.append(y)
+    return comps, par, comp_of
+
+
+def induced_lists(graph, pivot: int, k: int, bits: int):
+    """The list each non-circle vertex gets when the circle is squeezed.
+
+    `bits` picks an orientation per hexagon; the circle then uses colours 0
+    and 1, and every other vertex keeps the colours none of its circle
+    neighbours took -- k-2 of them where it sees both, k-1 where it sees one.
+    """
+    comps, par, comp_of = circle_hexagons(graph, pivot)
+    circle = set(graph.adj[pivot])
+    fixed = {v: par[v] ^ ((bits >> comp_of[v]) & 1) for v in circle}
+    out = {}
+    for v in range(graph.n):
+        if v == pivot or v in circle:
+            continue
+        used = {fixed[u] for u in graph.adj[v] & circle}
+        out[v] = [c for c in range(k) if c not in used]
+    return out, len(comps)
+
+
+def list_colourable(graph, vertices: Sequence[int], lists: dict) -> bool:
+    """Whether the induced subgraph admits a colouring respecting the lists."""
+    from pysat.solvers import Solver
+
+    vs = list(vertices)
+    pos = {v: i for i, v in enumerate(vs)}
+    var, n = {}, 0
+    for v in vs:
+        if not lists.get(v):
+            return False
+        for c in lists[v]:
+            n += 1
+            var[(v, c)] = n
+    cls = [[var[(v, c)] for c in lists[v]] for v in vs]
+    for i, u in enumerate(vs):
+        for w in vs[i + 1:]:
+            if w in graph.adj[u]:
+                for c in set(lists[u]) & set(lists[w]):
+                    cls.append([-var[(u, c)], -var[(w, c)]])
+    with Solver(name="cd19", bootstrap_with=cls) as s:
+        return s.solve()

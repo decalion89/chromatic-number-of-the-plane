@@ -464,3 +464,35 @@ def test_the_odd_cycle_covers_only_half_the_orientations():
         if sub.n == 0 or is_k_colorable(sub, 2)[0]:
             bipartite += 1
     assert bipartite == 16, f"expected half, got {bipartite}/32"
+
+
+def test_the_mechanism_is_list_colouring():
+    """Named completely: the auxiliary graph versus the lists the circle gives.
+
+    Squeezing the pivot's circle into two colours hands every other vertex a
+    list -- k-2 colours where it sees two differently-coloured circle points,
+    k-1 where it sees two of the same. Over all 32 orientations of the five
+    hexagons the auxiliary graph fails to be list-colourable in ALL of them at
+    four colours, and in NONE at five, where the same lists grow to sizes 3
+    and 4. That is exactly the measured pressure, 3 and then 2.
+    """
+    from hn.certify import load_certificate
+    from hn.forced import circle_hexagons, induced_lists, list_colourable
+
+    pts, _doc = load_certificate("certificates/pressure3_witness_47.json")
+    g = build_graph(pts)
+    piv = 0
+    comps, _par, _co = circle_hexagons(g, piv)
+    assert len(comps) == 5 and all(len(c) == 6 for c in comps)
+    extras = [v for v in range(g.n) if v != piv and v not in g.adj[piv]]
+
+    for k, expected in ((4, 32), (5, 0)):
+        refused = 0
+        sizes = set()
+        for bits in range(1 << len(comps)):
+            lists, _ = induced_lists(g, piv, k, bits)
+            sizes |= {len(lists[v]) for v in extras}
+            if not list_colourable(g, extras, lists):
+                refused += 1
+        assert refused == expected, f"k={k}: {refused} refusals"
+        assert sizes == {k - 2, k - 1}

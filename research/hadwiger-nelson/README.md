@@ -168,28 +168,33 @@ differently-coloured circle points is barred from both, so it is confined to the
 remaining **k − 2**. And the sixteen among themselves form a 16-vertex, 27-edge
 unit-distance graph that is 3-chromatic and **not bipartite**: an odd cycle.
 
-> at k = 4 the confined points have 2 colours and an odd cycle does not fit;
-> at k = 5 they have 3 and the graph is 3-colourable.
+**The mechanism is list colouring.** Squeezing the circle into two colours hands
+each auxiliary point a *list* — the colours its circle neighbours leave it. Two
+differently-coloured neighbours give a list of k − 2; two of the same colour give
+k − 1. The auxiliary graph never faces one palette; it faces a list assignment,
+and the squeeze is refused exactly when that assignment admits no proper
+colouring. Over all 32 orientations:
 
-The odd cycle is load-bearing, checked causally rather than by coincidence of
-numbers: deleting three of the sixteen makes their graph bipartite and the
-pressure drops from 3 to 2 on the spot.
+| | lists | refused |
+|---|---|---|
+| k = 4 | sizes 2 and 3 | **32 of 32** → pressure 3 |
+| k = 5 | sizes 3 and 4 | **0 of 32** → pressure 2 |
 
-**It is not the whole mechanism, and the tempting one-line story is wrong.**
-Enumerating all 32 orientations of the five hexagons, the confined set is
-**bipartite in sixteen of them** — nine points confined, no odd cycle — so those
-orientations are killed by something longer-range, through the confined points'
-other neighbours rather than among themselves. Generating *every* point one away
-from two circle points of different hexagons — 344 of them — and taking the worst
-orientation gives a confined graph of chromatic number 2: the same fact from the
-other side, that no choice of auxiliary points makes the confined set do the work
-alone.
+The odd cycle is the special case where every list is the same pair, and it is
+load-bearing where it applies — deleting three of the sixteen makes their graph
+bipartite and the pressure drops from 3 to 2 at once. But it covers only half the
+orientations. In the other sixteen the confined set *is* bipartite, and the
+minimal refusal there is 22 vertices using **eleven** auxiliaries of which only
+six are confined; the other five carry lists of size 3 and sit at d² = 1/3. A
+frame with only "confined" and "free" in it cannot express that. Lists can.
 
-So "an odd cycle against k − 2 colours" is a real part of the machine and not a
-description of it. Raising the confined gadget to 4-chromatic is necessary for
-the lift on the orientations the odd cycle does cover, and sufficient nowhere.
-The other half of de Grey's argument is still unnamed, and naming it is the next
-thing worth doing.
+**So the lift is an exact and standard question, and it is about choosability
+rather than chromatic number:** at five colours the auxiliary graph must fail to
+be list-colourable with lists of sizes 3 and 4. A 4-chromatic subgraph all of
+whose vertices carry the *same* list of three is one sufficient way — which is
+why the Moser spindle and the 19-vertex jointly forced construction above are the
+pieces to try — but it is not the only way, and the non-uniform lists are where
+de Grey's construction gets its extra reach.
 
 ### What pressure 3 actually needs
 
