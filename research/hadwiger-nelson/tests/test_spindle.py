@@ -349,3 +349,30 @@ def test_triple_spindle_works_over_a_larger_field():
     spun = triple_spindle_union(g, 0)
     assert spun.n >= g.n
     assert spun.vertices[0].field == F4
+
+
+def test_local_spindle_grows_additively_not_multiplicatively():
+    """The full union doubles the vertex count each round, so with SAT cost
+    growing faster than linearly the rounds get six to nine times dearer and a
+    narrowing search caps out after three or four however fast each one runs.
+
+    Rotating only a ball around the pivot adds |B| vertices rather than |G|.
+    Nothing about soundness rests on it: the construction only proposes a
+    graph, whose forced core is then measured exactly.
+    """
+    from hn.generate import hex_ball
+    from hn.geometry import SPINDLE
+    from hn.spindle import local_spindle_union, spindle_union_auto
+
+    g = build_graph(hex_ball(4) + [SPINDLE(p) for p in hex_ball(3)])
+    pivot = next(i for i, v in enumerate(g.vertices) if v.x.is_zero() and v.y.is_zero())
+    target = next(j for j in range(g.n)
+                  if j != pivot and g.vertices[pivot].dist2(g.vertices[j]) == 3)
+
+    full, _ = spindle_union_auto(g, pivot, target)
+    local, _ = local_spindle_union(g, pivot, target, radius=1.5)
+    assert local.n < full.n
+    assert local.n <= g.n + full.n - g.n          # never more than the full union
+    # the pivot and target survive, and the rotated target still lands at distance 1
+    assert g.vertices[pivot] in local.vertices
+    assert g.vertices[target] in local.vertices

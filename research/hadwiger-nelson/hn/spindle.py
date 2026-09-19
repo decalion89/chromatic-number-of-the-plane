@@ -35,7 +35,7 @@ from .graph import UnitDistanceGraph, build_graph
 
 __all__ = ["ForcedPairFinder", "spindle_union", "candidate_pairs_from",
            "ForcedDisjunctionFinder", "targets_at_third", "triple_spindle_union",
-           "spindle_union_auto",
+           "spindle_union_auto", "local_spindle_union",
            "SeparationDifficulty",
            "local_ball", "core_preserving_forcing",
            "SeparationTest"]
@@ -546,3 +546,49 @@ def core_preserving_forcing(graph: UnitDistanceGraph, k: int, pivot: int, target
         return None
     remap = {old: new for new, old in enumerate(keep)}
     return graph.induced(keep), remap[pivot], [remap[t] for t in targets if t in remap]
+
+
+def local_spindle_union(
+    graph: UnitDistanceGraph, pivot: int, target: int, radius: float
+):
+    """G union rho(B), where B is the ball of `radius` around the pivot.
+
+    The full union G u rho(G) doubles the vertex count every round, and since
+    SAT cost grows faster than linearly the rounds get six to nine times more
+    expensive each time -- which caps a narrowing search after three or four
+    rounds regardless of how fast each one is made.
+
+    But when the union is being used to *break symmetry* rather than to prove
+    anything, the whole rotated copy is not needed: the asymmetry that buys
+    exclusions is local to the pivot.  Rotating only a ball around it adds
+    |B| vertices instead of |G|, so the graph grows additively.
+
+    Nothing about soundness rests on this.  The construction is a heuristic
+    for proposing a graph; whatever comes out, its forced core is then measured
+    exactly.  A worse construction gives a worse core, never a wrong one.
+
+    Returns (graph, field).
+    """
+    from .field import Field, embed
+    from .geometry import Point, required_radical
+
+    p, q = graph.vertices[pivot], graph.vertices[target]
+    d2 = p.dist2(q)
+    if not d2.is_rational():
+        raise ValueError(f"|p-q|^2 = {d2} is not rational")
+    val = d2.c[0]
+    if val < Fraction(1, 4):
+        raise ValueError(f"d^2 = {val} < 1/4: no rotation separates such a pair by 1")
+    needed = _squarefree_factors(required_radical(val))
+    field = graph.vertices[0].field
+    missing = [g for g in needed if g not in field.gens and g > 1]
+    big = Field(tuple(sorted(set(field.gens) | set(missing)))) if missing else field
+
+    verts = [Point(embed(v.x, big), embed(v.y, big)) for v in graph.vertices]
+    rot = rotation_joining(val, big)
+    turn = rot.about(verts[pivot])
+    px, py = graph.vertices[pivot].fx, graph.vertices[pivot].fy
+    r2 = radius * radius + 1e-9
+    image = [turn(verts[i]) for i, v in enumerate(graph.vertices)
+             if (v.fx - px) ** 2 + (v.fy - py) ** 2 <= r2]
+    return build_graph(verts + image), big

@@ -27,13 +27,15 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from hn.certify import load_certificate, save_certificate
 from hn.coloring import is_k_colorable
 from hn.graph import build_graph
-from hn.spindle import (SeparationTest, spindle_union_auto, triple_spindle_union)
+from hn.spindle import (SeparationTest, local_spindle_union, spindle_union_auto,
+                        triple_spindle_union)
 
 K = int(os.environ.get("HN_K", "4"))
 ROUNDS = int(os.environ.get("HN_ROUNDS", "14"))
 FANOUT = int(os.environ.get("HN_FANOUT", "8"))
 SCAN = int(os.environ.get("HN_SCAN", "12"))
 BUDGET = int(os.environ.get("HN_BUDGET", "40000"))
+LOCAL = float(os.environ.get("HN_LOCAL", "0"))   # >0 rotates only a ball
 WORKERS = int(os.environ.get("HN_WORKERS", "4"))
 OUT = os.environ.get("HN_OUT", "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
 SRC = os.environ.get("HN_SRC", os.path.join(OUT, "f4_core.json"))
@@ -81,7 +83,8 @@ def evaluate(args):
     if not tg:
         return None
     try:
-        cand, _ = spindle_union_auto(g, q, tg[0])
+        cand, _ = (local_spindle_union(g, q, tg[0], LOCAL) if LOCAL
+                   else spindle_union_auto(g, q, tg[0]))
     except (ValueError, AssertionError):
         return None
     if cand.n > BUDGET:
@@ -121,7 +124,8 @@ def main():
             pq = g.vertices[via]
             tg = [j for j in range(g.n) if j != via and pq.dist2(g.vertices[j]).is_rational()
                   and Fraction(1, 4) <= pq.dist2(g.vertices[j]).c[0] <= Fraction(8)]
-            g, _ = spindle_union_auto(g, via, tg[0])
+            g, _ = (local_spindle_union(g, via, tg[0], LOCAL) if LOCAL
+                    else spindle_union_auto(g, via, tg[0]))
             pivot, core = np_, ncore
             history.append(size)
             path = os.path.join(OUT, f"asymp_round{rnd}.json")
