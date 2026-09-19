@@ -449,16 +449,34 @@ class SeparationDifficulty(SeparationTest):
     """
 
     def effort_ranking(
-        self, groups: Dict, solver: str = DEFAULT_SOLVER, verbose: bool = False
+        self,
+        groups: Dict,
+        solver: str = DEFAULT_SOLVER,
+        verbose: bool = False,
+        conflict_budget: Optional[int] = None,
     ) -> List[Tuple]:
         """Return (d2, separable, conflicts, decisions, core) per distance group,
-        hardest first."""
+        hardest first.
+
+        `conflict_budget` caps each query.  Without it a query that is nearly
+        forced can run for hours: the whole point of the gradient is that
+        effort rises without bound as forcing approaches, so the last query
+        before a crossing is arbitrarily expensive.  A round that never
+        returns reports nothing, which is worse than a round that reports
+        "this one exhausted the budget" -- that is the strongest signal the
+        measure can give short of UNSAT.  Such a query comes back with
+        separable None.
+        """
         s = self._solver(solver)
         rows = []
         prev = s.accum_stats() or {}
         for val in sorted(groups):
             want = groups[val]
-            res = s.solve(assumptions=[self.sel[q] for q in want])
+            if conflict_budget:
+                s.conf_budget(conflict_budget)
+                res = s.solve_limited(assumptions=[self.sel[q] for q in want])
+            else:
+                res = s.solve(assumptions=[self.sel[q] for q in want])
             cur = s.accum_stats() or {}
             dc = cur.get("conflicts", 0) - prev.get("conflicts", 0)
             dd = cur.get("decisions", 0) - prev.get("decisions", 0)
@@ -467,9 +485,9 @@ class SeparationDifficulty(SeparationTest):
             if res is False:
                 back = {v: q for q, v in self.sel.items()}
                 core = [back[l] for l in (s.get_core() or [])]
-            rows.append((val, bool(res), dc, dd, core))
+            rows.append((val, res if res is None else bool(res), dc, dd, core))
             if verbose:
-                print(f"    d2={val}: sep={bool(res)} conflicts={dc} decisions={dd}", flush=True)
+                print(f"    d2={val}: sep={res} conflicts={dc} decisions={dd}", flush=True)
         rows.sort(key=lambda r: (-r[2], -r[3]))
         return rows
 

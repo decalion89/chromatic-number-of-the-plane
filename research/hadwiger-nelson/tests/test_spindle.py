@@ -309,3 +309,23 @@ def test_core_protects_the_pivot_and_targets_from_peeling():
     core, pivot, targets = res
     assert core.vertices[pivot] == g.vertices[0]
     assert targets and core.vertices[targets[0]] == g.vertices[3]
+
+
+def test_effort_ranking_honours_a_conflict_budget():
+    """A query approaching forcing costs unboundedly much, so a round without a
+    cap can simply never return -- and a round that never returns reports
+    nothing at all.  Exhausting the budget comes back as separable None, which
+    is the strongest signal the measure gives short of UNSAT."""
+    from fractions import Fraction
+
+    from hn.spindle import SeparationDifficulty
+
+    rhombus = build_graph([origin(), eisenstein(1, 0), eisenstein(0, 1), eisenstein(1, 1)])
+    td = SeparationDifficulty(rhombus, 3, 0, [3])
+    try:
+        rows = td.effort_ranking({Fraction(3): [3]}, conflict_budget=100000)
+    finally:
+        td.close()
+    # this one is genuinely forced and cheap, so the budget does not bite
+    assert rows[0][1] is False
+    assert rows[0][4] == [3]

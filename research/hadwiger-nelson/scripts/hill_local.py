@@ -31,6 +31,8 @@ RADIUS = float(os.environ.get("HN_RADIUS", "3.0"))
 SAMPLE = int(os.environ.get("HN_SAMPLE", "20"))
 ROUNDS = int(os.environ.get("HN_ROUNDS", "40"))
 BUDGET = int(os.environ.get("HN_BUDGET", "40000"))
+CONFLICTS = int(os.environ.get("HN_CONFLICTS", "200000"))
+SAVE = os.environ.get("HN_SAVE")
 OUT = os.environ.get("HN_OUT", "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
 
 
@@ -58,7 +60,7 @@ def best_rows(g, sample):
             continue
         td = SeparationDifficulty(g, K, pivot, sorted({j for js in grp.values() for j in js}))
         try:
-            for val, sep, dc, dd, core in td.effort_ranking(grp):
+            for val, sep, dc, dd, core in td.effort_ranking(grp, conflict_budget=CONFLICTS):
                 rows.append((dc, dd, pivot, val, sep, core))
         finally:
             td.close()
@@ -95,7 +97,7 @@ def main():
         if not rows:
             print("  no scorable pivot; stopping", flush=True)
             return
-        forced = [r for r in rows if not r[4]]
+        forced = [r for r in rows if r[4] is False]
         score, _, pivot, val, _, _ = rows[0]
         history.append(score)
         print(f"round {rnd}: n={g.n} m={g.m} score={score} (pivot {pivot}, d2={val}) "
@@ -126,6 +128,9 @@ def main():
         peeled = core_preserving_forcing(tight, K, 0, [])
         nxt = peeled[0] if peeled else tight
         print(f"    ball n={ball.n} -> tightened n={tight.n} -> peeled n={nxt.n}", flush=True)
+        if SAVE:
+            save_certificate(nxt, os.path.join(OUT, f"{SAVE}_round{rnd}.json"), K,
+                             f"hill-climb round {rnd}, score {score}, not yet {K}-uncolourable")
         if nxt.n > BUDGET:
             print(f"  budget {BUDGET} exceeded at n={nxt.n}; stopping", flush=True)
             return
