@@ -60,3 +60,34 @@ def test_arithmetic_is_consistent_with_the_complex_embedding():
     diff = R.sub(a, b)
     assert abs(abs(R.to_complex(diff)) ** 2
                - R.to_complex(R.norm2(diff)).real) < 1e-9
+
+
+def test_gauss_sum_gives_the_spindle_radical():
+    from hn.cyclotomic import CycloField, moser_rotation
+
+    F = CycloField(33)
+    r = F.sqrt_disc(11)
+    assert F.mul(r, r) == F.rational(-11)
+    rho = moser_rotation(F)
+    assert F.norm2(rho) == F.one()          # a rotation, so modulus one
+
+
+def test_moser_spindle_lives_in_a_cyclotomic_field():
+    """Four-chromatic, over a field with odd-order rotations available.
+
+    The spindle's rotation is multiplication by (5 + sqrt(-11))/6, and
+    sqrt(-11) is the Gauss sum over zeta_11, so the whole construction fits in
+    Q(zeta_33) -- which also carries rotations of order 11 and 33, capacities
+    6 and 17 against the multiquadratic 2.
+    """
+    from hn.coloring import is_k_colorable
+    from hn.cyclograph import build_cyclo_graph, moser_spindle_cyclotomic
+    from hn.cyclotomic import CycloField
+    from hn.transversal import trapping_capacity
+
+    F = CycloField(33)
+    g = build_cyclo_graph(moser_spindle_cyclotomic(F))
+    assert (g.n, g.m) == (7, 11)
+    assert not is_k_colorable(g, 3)[0]
+    assert is_k_colorable(g, 4)[0]
+    assert trapping_capacity(11) == 6 and trapping_capacity(33) == 17

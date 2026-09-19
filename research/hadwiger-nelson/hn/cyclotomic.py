@@ -27,6 +27,7 @@ cycles become 3, 5 and 15, trapping up to 8 targets instead of 2.
 """
 from __future__ import annotations
 
+from fractions import Fraction
 from functools import lru_cache
 from math import cos, gcd, pi, sin
 from typing import List, Sequence, Tuple
@@ -177,3 +178,63 @@ def odd_cycle_reach(n: int) -> int:
     from hn.transversal import same_distance_ceiling
 
     return same_distance_ceiling(rotation_orders(n))
+
+
+class CycloField(CycloRing):
+    """Q(zeta_n): the ring with rational coefficients.
+
+    Points of a construction are not algebraic integers -- the Moser spindle's
+    rotation is (5 + sqrt(-11))/6 -- so the coefficients have to be fractions.
+    The arithmetic is otherwise identical, inherited unchanged.
+    """
+
+    def zero(self):
+        return (Fraction(0),) * self.degree
+
+    def one(self):
+        return tuple(Fraction(c) for c in self._zeta_pow[0])
+
+    def zeta(self, k: int = 1):
+        return tuple(Fraction(c) for c in self._zeta_pow[k % self.n])
+
+    def rational(self, q) -> Tuple:
+        out = [Fraction(0)] * self.degree
+        out[0] = Fraction(q)
+        return tuple(out)
+
+    def scale(self, a, q):
+        q = Fraction(q)
+        return tuple(x * q for x in a)
+
+    def sqrt_disc(self, p: int):
+        """The quadratic Gauss sum: sqrt(p*) for p* = p if p%4==1 else -p.
+
+        g = sum_k (k|p) zeta_p^k equals sqrt(p) when p = 1 mod 4 and
+        sqrt(-p) otherwise, which is exactly the radical a spindle rotation
+        needs.  Requires p | n so that zeta_p is available here.
+        """
+        if self.n % p:
+            raise ValueError(f"zeta_{p} is not in Q(zeta_{self.n})")
+        step = self.n // p
+        residues = {(k * k) % p for k in range(1, p)}
+        out = [Fraction(0)] * self.degree
+        for k in range(1, p):
+            sign = 1 if k % p in residues else -1
+            for j, c in enumerate(self._zeta_pow[(k * step) % self.n]):
+                out[j] += sign * c
+        return tuple(out)
+
+
+def moser_rotation(field: "CycloField"):
+    """Multiplication by (5 + sqrt(-11))/6: the Moser spindle's rotation.
+
+    The spindle joins two points at distance sqrt(3) from a pivot, so its angle
+    has cos = 1 - 1/6 = 5/6 and sin = sqrt(11)/6.  As a complex number that is
+    (5 + i sqrt 11)/6 = (5 + sqrt(-11))/6, of modulus 1, and sqrt(-11) is the
+    Gauss sum over zeta_11.  So the rotation is available in Q(zeta_n) for any
+    n divisible by 11 -- no square root outside the field, and no separate
+    real field for the coordinates.
+    """
+    r = field.sqrt_disc(11)
+    five = field.rational(5)
+    return field.scale(field.add(five, r), Fraction(1, 6))
