@@ -40,6 +40,7 @@ from __future__ import annotations
 from fractions import Fraction
 from typing import List, Optional, Sequence, Tuple
 
+from .field import Field
 from .geometry import Point, Rotation
 
 
@@ -857,3 +858,139 @@ def _rotation_of_order_in(field, order: int):
         return _rotation_of_order(order, field)
     except (ValueError, ZeroDivisionError):
         return None
+
+
+def circle_intersections(c1: Point, r1sq, c2: Point, r2sq) -> List[Point]:
+    """The points at squared distance r1sq from c1 and r2sq from c2.
+
+    `unit_circle_intersections` is the case r1sq = r2sq = 1. The general form
+    is what a *constructed* configuration needs: placing a pivot at a chosen
+    distance from two chosen points, rather than taking whatever the graph
+    already offers.
+
+    With d = c2 - c1 and D = |d|^2, the foot of the perpendicular sits at
+    t = (D + r1sq - r2sq) / (2 D) along d, and the offset is h with
+    h^2 = r1sq - t^2 D, carried on d's perpendicular scaled by 1/sqrt(D).
+    Both square roots go through the same denesting as everything else, and an
+    empty list means the field cannot name the point, not that none exists.
+    """
+    d = c2 - c1
+    D = d.x * d.x + d.y * d.y
+    if D == 0:
+        return []
+    field = D.field
+    two = field.rational(2)
+    t = (D + r1sq - r2sq) / (two * D)
+    h2 = r1sq - t * t * D
+    scale = _sqrt_in_field(h2 / D)
+    if scale is None:
+        return []
+    fx, fy = c1.x + t * d.x, c1.y + t * d.y
+    out = []
+    for sign in (1, -1):
+        s = field.rational(sign) * scale
+        q = Point(fx - s * d.y, fy + s * d.x)
+        if q.dist2(c1) == r1sq and q.dist2(c2) == r2sq:
+            out.append(q)
+    return out
+
+
+def joining_rotation_exists(field, d2) -> bool:
+    """Whether the field can name the rotation closing a circle of this radius.
+
+    Two points of a circle of squared radius d2 are one apart at the angle
+    with cos = 1 - 1/(2 d2); the rotation needs its sine too. The radius must
+    also be at least 1/4, or the circle has no unit chord at all.
+    """
+    one = field.rational(1)
+    two = field.rational(2)
+    if isinstance(d2, (int, Fraction)):
+        d2 = field.rational(d2)
+    if d2 == 0:
+        return False
+    c = one - one / (two * d2)
+    return _sqrt_in_field(one - c * c) is not None
+
+
+# -- a core of two that is forced only jointly ----------------------------
+#
+# Every forced pair found by searching this package's graphs turned out to be
+# forced one leg at a time: the 409-vertex certificate blocks a pair whose 1/3
+# leg is already forced on its own, a core of one, so two copies of the
+# ordinary spindle would close it and the block was unnecessary. The case the
+# classical argument cannot reach is a pair where neither leg is forced by
+# itself -- there is then no single target to spindle, and the colours are
+# exhausted only by the pair together. This is such a configuration, built
+# rather than found.
+
+def joint_core_configuration():
+    """Four points and two rotations realising a genuinely joint core of 2.
+
+    Returns (field, [p, x, y, z], rho, sigma).
+
+        x = (0,0)   y = (1,0)   z = (1/2, sqrt(3)/2)      unit triangle
+        p = (5/6, -sqrt(11)/6)
+
+        |p-x|^2 = 1     |p-y|^2 = 1/3     |p-z|^2 = (7 + sqrt(33))/6
+
+    In any 3-colouring x, y, z take three colours and p differs from x, so p
+    repeats y's or z's -- and both completions exist, so neither leg alone.
+    The core is mixed, which is what carries it past the capacity ceiling:
+    same-distance cores are capped at 2 and same-distance blocks at 3 colours.
+
+    rho is the 120-degree rotation, the one odd order Niven's theorem leaves on
+    a rational radius, closing the 1/3 circle. sigma closes the other:
+
+        cos t = (-5 + 3 sqrt 33)/16,   sin^2 t = (-66 + 30 sqrt 33)/256
+
+    That sin^2 has a negative conjugate, so its square root lies in no totally
+    real field, and every multiquadratic field is totally real -- hence the one
+    real quadratic extension. The rotation is perfectly ordinary in the plane,
+    about 40.1 degrees; it is the arithmetic that needs room.
+    """
+    from .realext import RealQuadExt
+
+    base = Field((3, 11))
+    v = base.rational(Fraction(-66, 256)) \
+        + base.sqrt(33) * base.rational(Fraction(30, 256))
+    field = RealQuadExt(base, v)
+
+    def pt(ax, bx, rx, ay, by, ry):
+        cx = base.rational(ax) + (base.sqrt(rx) if rx else base.rational(1)) \
+            * base.rational(bx)
+        cy = base.rational(ay) + (base.sqrt(ry) if ry else base.rational(1)) \
+            * base.rational(by)
+        return Point(field.embed(cx), field.embed(cy))
+
+    pts = [pt(Fraction(5, 6), 0, 0, 0, Fraction(-1, 6), 11),   # p
+           pt(0, 0, 0, 0, 0, 0),                               # x
+           pt(1, 0, 0, 0, 0, 0),                               # y
+           pt(Fraction(1, 2), 0, 0, 0, Fraction(1, 2), 3)]     # z
+    rho = Rotation(field.rational(Fraction(-1, 2)),
+                   field.embed(base.sqrt(3) * base.rational(Fraction(1, 2))))
+    sigma = Rotation(
+        field.embed(base.rational(Fraction(-5, 16))
+                    + base.sqrt(33) * base.rational(Fraction(3, 16))),
+        field.radical())
+    return field, pts, rho, sigma
+
+
+def compose_rotations(u, w) -> Rotation:
+    """u after w, without re-checking cos^2 + sin^2 on every product."""
+    return Rotation(u.cos * w.cos - u.sin * w.sin,
+                    u.cos * w.sin + u.sin * w.cos, check=False)
+
+
+def joint_core_copies(field, rho, sigma):
+    """The six isometries of the block: the 120-degree orbit, twice."""
+    ident = Rotation(field.rational(1), field.zero())
+    orbit = [ident, rho, compose_rotations(rho, rho)]
+    return orbit + [compose_rotations(sigma, r) for r in orbit]
+
+
+def joint_core_union():
+    """The union of the six copies: 19 points with no 3-colouring."""
+    field, pts, rho, sigma = joint_core_configuration()
+    p = pts[0]
+    copies = joint_core_copies(field, rho, sigma)
+    return list(dict.fromkeys(r.about(p)(q) for r in copies for q in pts))

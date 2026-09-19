@@ -5,8 +5,13 @@ from hn.degrey import build_Sa
 from hn.field import Field
 from hn.geometry import Rotation
 from hn.graph import build_graph
-from hn.mixed import (_sqrt_in_field, conflict_rotation_set,
-                      count_cross_transversals)
+from hn.certify import exact_edges
+from hn.coloring import is_k_colorable
+from hn.mixed import (_sqrt_in_field, blocks_two_targets,
+                      compose_rotations, conflict_rotation_set,
+                      count_cross_transversals, joint_core_configuration,
+                      joint_core_copies, joint_core_union)
+from hn.spindle import SeparationTest
 
 
 def test_rational_square_roots():
@@ -558,3 +563,76 @@ def test_a_genuine_core_of_two_exists_on_four_points():
 
     from hn.mixed import two_orbit_block
     assert two_orbit_block(g, bp, a, b) is None  # the field cannot name sigma
+
+
+# -- the genuinely joint core of two --------------------------------------
+#
+# Every forced pair found by search was forced one leg at a time; the
+# 409-vertex certificate blocks a pair whose 1/3 leg is already forced alone,
+# so the block was valid and unnecessary. This configuration is the case the
+# classical argument cannot reach: neither leg forced by itself, the pair
+# forced only jointly, and six copies closing it. These tests pin the four
+# points, the two rotations, the joint forcing, and the union's chromatic
+# number, because every one of them is load-bearing for the claim.
+
+def _genuine_pair():
+    E, pts, rho, sigma = joint_core_configuration()
+    return E, pts, rho, sigma, compose_rotations
+
+
+def test_genuine_pair_distances_are_exact():
+    E, (p, x, y, z), _rho, _sigma, _c = _genuine_pair()
+    one = E.rational(1)
+    assert p.dist2(x) == one                      # p is adjacent to x
+    assert p.dist2(y) == E.rational(Fraction(1, 3))
+    # (7 + sqrt 33)/6, the leg no multiquadratic rotation can close
+    base = E.base
+    assert p.dist2(z) == E.embed(base.rational(Fraction(7, 6))
+                                 + base.sqrt(33) * base.rational(Fraction(1, 6)))
+    assert x.dist2(y) == one and y.dist2(z) == one and z.dist2(x) == one
+
+
+def test_genuine_pair_core_is_two_and_joint():
+    """Neither leg alone, both together. This is the whole point."""
+    E, (p, x, y, z), _rho, _sigma, _c = _genuine_pair()
+    g = build_graph([p, x, y, z])
+    bp = g.vertices.index(p)
+    ia, ib = g.vertices.index(y), g.vertices.index(z)
+    st = SeparationTest(g, 3, bp, [ia, ib])
+    try:
+        assert st.run(subset=[ia])[0], "y alone must NOT be forced"
+        assert st.run(subset=[ib])[0], "z alone must NOT be forced"
+        assert not st.run(subset=[ia, ib])[0], "the pair must be forced"
+    finally:
+        st.close()
+
+
+def test_genuine_pair_rotations_close_their_circles():
+    E, (p, _x, y, z), rho, sigma, _c = _genuine_pair()
+    one = E.rational(1)
+    assert sigma.cos * sigma.cos + sigma.sin * sigma.sin == one
+    assert y.dist2(rho.about(p)(y)) == one        # 120 degrees on the 1/3 circle
+    assert z.dist2(sigma.about(p)(z)) == one      # sqrt(v) on the other
+
+
+def test_genuine_pair_union_is_not_three_colourable():
+    E, (p, x, y, z), rho, sigma, compose = _genuine_pair()
+    copies = joint_core_copies(E, rho, sigma)
+    g4 = build_graph([p, x, y, z])
+    bp = g4.vertices.index(p)
+    assert blocks_two_targets(g4, bp, [g4.vertices.index(y),
+                                       g4.vertices.index(z)], copies)
+    pts = joint_core_union()
+    g = build_graph(pts)
+    assert (g.n, g.m) == (19, 33)
+    assert set(exact_edges(pts)) == set(g.edges())
+    assert not is_k_colorable(g, 3)[0]
+    assert is_k_colorable(g, 4)[0]
+
+
+def test_genuine_pair_union_is_vertex_critical():
+    """No vertex is spare: the block uses every copy it builds."""
+    pts = joint_core_union()
+    for i in range(len(pts)):
+        rest = build_graph([q for j, q in enumerate(pts) if j != i])
+        assert is_k_colorable(rest, 3)[0], f"vertex {i} was not needed"

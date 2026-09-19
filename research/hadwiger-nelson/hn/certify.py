@@ -31,6 +31,7 @@ from typing import Dict, List, Optional, Sequence, Tuple
 from .field import Field, FieldElement
 from .geometry import Point
 from .graph import UnitDistanceGraph
+from .realext import RealExtElement, RealQuadExt
 
 __all__ = [
     "save_certificate",
@@ -45,6 +46,50 @@ __all__ = [
 
 # -- serialisation --------------------------------------------------------
 
+# Two coordinate fields occur in this package, and a certificate has to be
+# readable without either of them: a multiquadratic Field, whose elements are
+# a rational vector over the square-free products of the generators, and a
+# RealQuadExt K(sqrt(v)) on top of one, whose elements are pairs over K. The
+# second exists because the rotation that closes the mixed pair has
+# sin^2 = (-66 + 30 sqrt(33))/256, an element with a negative conjugate, and no
+# totally real multiquadratic field contains its square root. Writing v out in
+# the base makes the extension reproducible from the file alone.
+
+def _field_doc(field) -> dict:
+    if isinstance(field, RealQuadExt):
+        return {
+            "kind": "real_quadratic_extension",
+            "field_generators": list(field.base.gens),
+            "radicand": [str(c) for c in field.v.c],
+            "basis": ["1", "sqrt(v)"],
+            "base_basis": ["1"] + [f"sqrt({field.base._prod[m]})"
+                                   for m in range(1, field.base.dim)],
+        }
+    return {
+        "kind": "multiquadratic",
+        "field_generators": list(field.gens),
+        "basis": ["1"] + [f"sqrt({field._prod[m]})"
+                          for m in range(1, field.dim)],
+    }
+
+
+def _coord_doc(e):
+    """A coordinate as nested lists of decimal rationals."""
+    if isinstance(e, RealExtElement):
+        return {"a": [str(c) for c in e.a.c], "b": [str(c) for c in e.b.c]}
+    return [str(c) for c in e.c]
+
+
+def _coord_from_doc(field, d):
+    if isinstance(field, RealQuadExt):
+        return RealExtElement(
+            field,
+            field.base.element([Fraction(s) for s in d["a"]]),
+            field.base.element([Fraction(s) for s in d["b"]]),
+        )
+    return field.element([Fraction(s) for s in d])
+
+
 def save_certificate(
     graph: UnitDistanceGraph,
     path: str,
@@ -54,24 +99,18 @@ def save_certificate(
     notes: Optional[dict] = None,
 ) -> dict:
     """Write the graph, the claim, and any colouring as exact rationals."""
-    field = graph.vertices[0].field
-    doc = {
-        "claim": claim,
-        "k": k,
-        "field_generators": list(field.gens),
-        "basis": ["1"] + [f"sqrt({field._prod[m]})" for m in range(1, field.dim)],
+    field = graph.vertices[0].x.field
+    doc = {"claim": claim, "k": k}
+    doc.update(_field_doc(field))
+    doc.update({
         "n": graph.n,
         "m": graph.m,
         "vertices": [
-            {
-                "x": [str(c) for c in v.x.c],
-                "y": [str(c) for c in v.y.c],
-            }
-            for v in graph.vertices
+            {"x": _coord_doc(v.x), "y": _coord_doc(v.y)} for v in graph.vertices
         ],
         "coloring": list(coloring) if coloring is not None else None,
         "notes": notes or {},
-    }
+    })
     with open(path, "w") as f:
         json.dump(doc, f, indent=1)
     return doc
@@ -81,11 +120,12 @@ def load_certificate(path: str) -> Tuple[List[Point], dict]:
     with open(path) as f:
         doc = json.load(f)
     field = Field(doc["field_generators"])
-    pts = [
-        Point(
-            field.element([Fraction(s) for s in v["x"]]),
-            field.element([Fraction(s) for s in v["y"]]),
+    if doc.get("kind") == "real_quadratic_extension":
+        field = RealQuadExt(
+            field, field.element([Fraction(s) for s in doc["radicand"]])
         )
+    pts = [
+        Point(_coord_from_doc(field, v["x"]), _coord_from_doc(field, v["y"]))
         for v in doc["vertices"]
     ]
     return pts, doc
