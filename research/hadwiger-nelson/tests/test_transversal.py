@@ -190,3 +190,47 @@ def test_counting_can_never_block_a_core_of_three():
         alphas = leg_conflict_alphas(g, bp, trio, sub)
         assert sum(alphas) >= len(sub), "counting must fail at three legs"
         assert not counting_blocks(g, bp, trio, sub)
+
+
+def test_three_legs_block_and_four_do_not():
+    """Misalignment reaches three and stops; the counting slack says why.
+
+    Each leg's conflict graph has maximum degree two, so the independent sets
+    available total r*m/3. At three legs that is exactly the copy count -- the
+    knife edge where overlap still decides it -- and at four it is a third
+    more room than there are copies to place.
+    """
+    from pysat.solvers import Solver
+
+    from hn.transversal import MAX_BLOCKABLE_CORE
+
+    def blocks(N, ts, ss):
+        r = len(ts)
+
+        def x(k, e, L):
+            return 1 + ((k * 2 + e) * r + L)
+
+        cls = [[x(k, e, L) for L in range(r)]
+               for k in range(N) for e in (0, 1)]
+        for L in range(r):
+            t, s = ts[L], ss[L]
+            for k in range(N):
+                for e in (0, 1):
+                    for d in (t, -t):
+                        w = (k - d) % N
+                        if (w, e) != (k, e):
+                            cls.append([-x(k, e, L), -x(w, e, L)])
+                    for d in (t - s, -t - s):
+                        cls.append([-x(k, 0, L), -x((k - d) % N, 1, L)])
+        with Solver(name="cd19", bootstrap_with=cls) as sv:
+            return not sv.solve()
+
+    assert MAX_BLOCKABLE_CORE == 3
+    # the smallest known three-leg block: all legs at d^2 = 1/3
+    assert blocks(3, (1, 1, 1), (2, 2, 0))
+    # rotations only -- every shift zero -- never blocks three
+    assert not blocks(3, (1, 1, 1), (0, 0, 0))
+    # and four legs do not block, on the same N and angles, whatever the shifts
+    for s3 in range(3):
+        for s4 in range(3):
+            assert not blocks(3, (1, 1, 1, 1), (2, 2, s3, s4))

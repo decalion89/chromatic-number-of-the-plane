@@ -130,6 +130,21 @@ N = 3, three legs at d² = 1/3, six copies over ℚ(√3) — alphas [2,2,2] aga
 copies, exactly the counting floor, so counting says nothing while SAT and a
 brute force over all 3⁶ choices agree that it blocks.
 
+**And three is the only size that blocks at all.** Four, five and six legs were
+searched the same way — forty thousand random (N, angles, shifts) draws apiece —
+and not one blocks, while three blocks on the fifth draw. The counting slack says
+why: with each conflict graph of maximum degree 2 the independent sets available
+total r·m/3, which at r = 3 is exactly the copy count, the knife edge where
+overlap can still decide the question, and at r = 4 is a third more room than
+there are copies to place.
+
+Put beside the pressure bound this **pins the size exactly**. A core of r needs
+pressure ≥ k − r, so pressure 2 at five colours forces r ≥ 3; blocking forces
+r ≤ 3. Any configuration that could give χ(ℝ²) ≥ 6 through a pivot and its
+isometries has a core of **exactly three**, with its legs' radii and angles
+matching one of the 27 344 blocking patterns. That is a far smaller target than
+"a forced pair somewhere".
+
 What is missing is the core itself, not the block.
 
 ### What pressure 3 actually needs

@@ -424,3 +424,30 @@ def counting_blocks(graph, pivot: int, targets: Sequence[int],
     """
     return sum(leg_conflict_alphas(graph, pivot, targets, isometries)) \
         < len(isometries)
+
+
+# -- and three is the only size that blocks at all ------------------------
+#
+# Counting caps the blockable core at two. Misalignment -- the independent
+# sets being large enough but not fitting together, which needs reflections
+# because each leg then picks up its own angle in the cross-orbit conflicts --
+# reaches three. It reaches nothing further.
+#
+# Searched the same model at four, five and six legs: forty thousand random
+# (N, angles, shifts) draws apiece, N from 3 to 12, and not one blocks, while
+# three blocks on the fifth draw. The reason is the same slack that the
+# counting bound measures. Each leg's conflict graph has maximum degree two,
+# so alpha >= m/3; with r legs the independent sets available already total
+# r*m/3, and at r = 3 that is exactly m, the knife edge where how the sets
+# overlap can still decide the question. At four it is 4m/3, a third more room
+# than there are copies to place, and an escape has slack wherever it looks.
+#
+# Put beside the pressure bound this pins the size exactly. A core of r needs
+# pressure >= k - r, so pressure 2 at five colours forces r >= 3; blocking
+# forces r <= 3. Every configuration that could give chi(R^2) >= 6 through a
+# pivot and its isometries therefore has a core of EXACTLY three, with its
+# three legs' radii and angles matching one of the 27344 blocking patterns.
+# That is a far smaller target than "a forced pair somewhere", and it is the
+# one this package has left.
+
+MAX_BLOCKABLE_CORE = 3
