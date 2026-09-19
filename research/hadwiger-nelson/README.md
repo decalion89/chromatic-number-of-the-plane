@@ -921,6 +921,30 @@ orientations at three, 360 configurations at four, and de Grey's own family out
 to seven. Stated as a measurement, not a theorem: the surface is continuous and
 only its histogram peaks were evaluated.
 
+### And the obvious generalisation is vacuous
+
+The confined set is one subgraph. The honest object is everything outside the
+circle, where the squeeze gives `L(v) = k − |colours v sees|` — 3, 4 or 5 at
+k = 5 — and greedy completes the list colouring unless some subgraph has
+`deg(v) ≥ L(v)` throughout. That maximal surviving subgraph, the **L-core**,
+would be the exact greedy obstruction. Smallest core over every orientation:
+
+| | Sa (397) | Sb (397) | Y (791) | gadget (127) |
+|---|--:|--:|--:|--:|
+| k = 4 | 366 | 366 | 730 | 108 |
+| k = 5 | 360 | 360 | 718 | 108 |
+
+**Non-empty everywhere and at both colour counts** — these graphs have average
+degree around ten and almost nothing peels. So the greedy criterion separates
+nothing: it does not explain why the pressure is 3 at four colours and 2 at
+five, and it yields no new sufficient condition.
+
+That is why the degeneracy result above is stated about the confined set's
+*mechanism* and not about the pressure. The mechanism is genuinely sufficient
+when it fails — an odd cycle on one shared 2-list is infeasible outright, which
+is what k = 4 runs on — and at five colours it never fails. Whether pressure 3
+could come from somewhere else stays open.
+
 ### A blocked graph cannot be a lattice
 
 Adding steps never hurts blocking or folding, but it does **dilute a ball**: at

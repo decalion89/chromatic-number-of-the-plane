@@ -1000,3 +1000,12 @@ def test_even_confined_degrees_are_not_a_law():
     assert C["max_degeneracy_seen"] < C["needed"]
     assert "not proof" in C["status"], (
         "a scan of a continuous surface's peaks is not a theorem")
+
+
+def test_l_core_separates_nothing():
+    """Recorded so the degeneracy result is not read as deciding the pressure."""
+    from hn.forced import L_CORE_IS_NOT_THE_OBSTRUCTION as L
+
+    for name, byk in L["smallest_l_core"].items():
+        assert byk[4] > 0 and byk[5] > 0, f"{name}: non-empty at both k"
+    assert "separates nothing" in L["verdict"]

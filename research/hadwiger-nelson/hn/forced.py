@@ -1257,3 +1257,41 @@ CONFINED_DEGENERACY_NEVER_THREE = {
     "de_grey_is_special": "its confined degrees are all even, a symmetry of "
                           "that offset family; odd degrees occur elsewhere",
 }
+
+
+# -- and the obvious generalisation is vacuous ----------------------------
+#
+# The confined set is one subgraph; the honest object is everything outside
+# the circle, where squeezing into two colours gives
+#
+#     L(v) = k - |colours v sees on the circle|,  so 3, 4 or 5 at k = 5,
+#
+# and greedy completes the list colouring unless some subgraph S has
+# deg_S(v) >= L(v) for every v in S. That maximal surviving subgraph, the
+# L-CORE, would be the exact greedy obstruction. Measured, over every
+# orientation, taking the SMALLEST core each graph achieves:
+#
+#     de Grey Sa   k=4: 366    k=5: 360     (397 vertices)
+#     de Grey Sb   k=4: 366    k=5: 360
+#     de Grey Y    k=4: 730    k=5: 718     (791 vertices)
+#     gadget       k=4: 108    k=5: 108     (127 vertices)
+#
+# Non-empty everywhere and at both colour counts, because these graphs have
+# average degree around ten and almost nothing peels. So the greedy criterion
+# separates nothing: it does not explain why the pressure is 3 at four colours
+# and 2 at five, and it yields no new sufficient condition.
+#
+# That is why the degeneracy result above is stated about the confined set's
+# MECHANISM and not about the pressure. The mechanism is genuinely sufficient
+# when it fails -- an odd cycle on one shared 2-list is infeasible outright,
+# which is what k = 4 runs on -- and at five colours it never fails. Whether
+# pressure 3 could come from somewhere else stays open, and nothing measured
+# here decides it in either direction.
+
+L_CORE_IS_NOT_THE_OBSTRUCTION = {
+    "smallest_l_core": {"Sa": {4: 366, 5: 360}, "Sb": {4: 366, 5: 360},
+                        "Y": {4: 730, 5: 718}, "gadget": {4: 108, 5: 108}},
+    "verdict": "non-empty at both colour counts, so greedy peeling separates "
+               "nothing and gives no sufficient condition; the confined-set "
+               "mechanism remains sufficient-when-it-fails, and only that",
+}
