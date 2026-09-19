@@ -737,6 +737,39 @@ circle is five hexagons, each a 6-cycle with two proper 2-colourings):
 **Maximum 3, needed 4, in all 32.** The wall is exactly one colour wide, and
 uniformly so — not a few awkward orientations but every one of them.
 
+### The confined set is indexed by a cut
+
+Write `bits[a]` for the parity chosen on hexagon `a`; the circle point at
+position `i` in it takes colour `(i + bits[a]) mod 2`. So the auxiliary
+`u_i + v_j` drawn from hexagons `a` and `b` is confined exactly when
+
+```
+i + j + bits[a] + bits[b]   is odd.
+```
+
+Two consequences, both measured rather than assumed.
+
+**Same hexagon:** the bits cancel, so those auxiliaries are confined in *every*
+orientation. They are the points at **√3** from the pivot — and their graph has
+maximum degree **one**: a matching, 9 disjoint edges on 18 points. They can
+contribute 2 to a chromatic number and never more.
+
+**Across hexagons:** only `eps_ab = bits[a] XOR bits[b]` matters, and `eps` is a
+**cut** of `K_t`, so `eps_ab + eps_bc + eps_ac = 0` for every triple. The `2^t`
+orientations give only `2^(t−1)` distinct confined sets, and no design can
+choose the pair-parities independently — at t = 3 exactly 4 of the 8 patterns
+arise, and every missing one breaks the triangle identity.
+
+Measured maxima of χ(confined set) over all orientations:
+
+| | auxiliaries | χ(confined) |
+|---|--:|---|
+| 2 hexagons | 48 | [1, 1] |
+| 3 hexagons | 126 | [2, 3] |
+| de Grey Sa, 5 hexagons | 150 | [2, 3] |
+
+Four is what is needed, in every orientation, and nothing here reaches it.
+
 ### A blocked graph cannot be a lattice
 
 Adding steps never hurts blocking or folding, but it does **dilute a ball**: at

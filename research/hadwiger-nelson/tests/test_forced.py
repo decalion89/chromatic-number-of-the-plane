@@ -880,3 +880,55 @@ def test_rho_is_n_when_the_graph_is_over_coloured():
         sub = build_graph([q for m, q in enumerate(pts) if m != u])
         assert not is_k_colorable(sub, 3)[0], "not critical at four"
         assert is_k_colorable(sub, 4)[0], "but removable at five"
+
+
+def test_confined_set_is_indexed_by_a_cut():
+    """Only 2^(t-1) of the pair-parity patterns arise, and cuts explain which."""
+    import itertools
+
+    for t in (3, 4, 5):
+        seen = set()
+        for bits in itertools.product((0, 1), repeat=t):
+            seen.add(tuple(bits[a] ^ bits[b]
+                           for a in range(t) for b in range(a + 1, t)))
+        assert len(seen) == 2 ** (t - 1)
+        pairs = [(a, b) for a in range(t) for b in range(a + 1, t)]
+        for pat in itertools.product((0, 1), repeat=len(pairs)):
+            eps = dict(zip(pairs, pat))
+            closed = all(
+                (eps[(a, b)] + eps[(b, c)] + eps[(a, c)]) % 2 == 0
+                for a in range(t) for b in range(a + 1, t)
+                for c in range(b + 1, t))
+            assert closed == (pat in seen), "cuts are exactly the closed patterns"
+
+
+def test_always_confined_points_are_a_matching():
+    """Same-hexagon auxiliaries sit at sqrt 3 and have maximum degree one."""
+    from fractions import Fraction
+
+    from hn.field import Field
+    from hn.geometry import Point, Rotation
+
+    fld = Field((3, 11))
+    one, zero = fld.rational(1), fld.zero()
+    rot60 = Rotation(fld.rational(Fraction(1, 2)),
+                     fld.sqrt(3) * fld.rational(Fraction(1, 2)))
+    q, hexagon = Point(one, zero), []
+    for _ in range(6):
+        hexagon.append(q)
+        q = rot60(q)
+
+    three = fld.rational(3)
+    pts = []
+    for i in range(6):
+        for j in range(i + 1, 6):
+            if (i + j) % 2 == 0:
+                continue
+            s = Point(hexagon[i].x + hexagon[j].x, hexagon[i].y + hexagon[j].y)
+            if s.norm2() in (one, zero):
+                continue
+            assert s.norm2() == three, "always-confined points sit at sqrt 3"
+            pts.append(s)
+
+    deg = [sum(1 for b in pts if a is not b and a.is_unit_apart(b)) for a in pts]
+    assert max(deg) <= 1, "a matching, so it can never contribute more than 2"

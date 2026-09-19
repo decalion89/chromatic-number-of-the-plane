@@ -1023,3 +1023,55 @@ def cross_pair_bound(graph, k: int, A: Sequence[int], B: Sequence[int],
 
 RHO_IS_N_WHEN = ("k > chi(W), since every vertex is then removable; or W is "
                  "k-vertex-critical, by the same colouring")
+
+
+# -- the confined set is indexed by a cut, and that bounds it -------------
+#
+# Pressure 3 at five colours reduces to one question about the CONFINED set:
+# squeeze the pivot's circle into colours {0,1} and an auxiliary seeing both
+# gets the list {2,3,4}, size 3, the SAME list for every such auxiliary, while
+# one seeing a single colour gets a list of size 4. So the confined set has to
+# be 4-chromatic -- and in every orientation, since a 2-colouring the design
+# does not control is an escape.
+#
+#   WHAT IT IS NOT. "The auxiliary graph is 4-chromatic" is not the condition.
+#   Measured on de Grey's Sa at its best pivot: chi(A) = 4 already, degeneracy
+#   4, and the pressure at five colours is still 2. The lists are what differ.
+#
+# Writing bits[a] for the parity of hexagon a, the point at position i in it
+# takes colour (i + bits[a]) mod 2, so the auxiliary u_i + v_j from hexagons a
+# and b is confined exactly when i + j + bits[a] + bits[b] is odd. Two
+# consequences, both measured rather than assumed.
+#
+#   SAME HEXAGON: the bits cancel, so those auxiliaries are confined in EVERY
+#   orientation. They are the points at sqrt 3 from the pivot, and their graph
+#   has maximum degree ONE -- a matching, 9 disjoint edges on 18 points. They
+#   can contribute 2 to a chromatic number and never more.
+#
+#   ACROSS HEXAGONS: only eps_ab = bits[a] XOR bits[b] matters, and eps is a
+#   CUT of K_t, so eps_ab + eps_bc + eps_ac = 0 for every triple. The 2^t
+#   orientations give only 2^(t-1) distinct confined sets, and no design can
+#   choose the pair-parities independently: of the 8 patterns at t = 3 exactly
+#   4 arise, and every missing one breaks the triangle identity.
+#
+# Measured maxima of chi(confined set), over all orientations:
+#
+#     2 hexagons   48 auxiliaries    chi in [1, 1]
+#     3 hexagons  126 auxiliaries    chi in [2, 3]
+#     de Grey Sa, 5 hexagons          chi in [2, 3]   (4 orientations at 2)
+#
+# Four is what is needed, in every orientation, and nothing here reaches it.
+
+CONFINED_SET_CONDITION = (
+    "pressure 3 at k = 5 needs the confined set 4-chromatic in EVERY proper "
+    "2-colouring of the circle; chi of the whole auxiliary graph is already 4 "
+    "on Sa and buys nothing, because only the auxiliaries seeing both colours "
+    "share a list"
+)
+
+CONFINED_SET_IS_A_CUT = (
+    "confinement of u_i + v_j depends on i + j + bits[a] + bits[b], so "
+    "same-hexagon auxiliaries are always confined and form a matching, while "
+    "cross-hexagon ones see only the cut eps = bits[a] XOR bits[b]: 2^(t-1) "
+    "distinct confined sets, not 2^C(t,2)"
+)
