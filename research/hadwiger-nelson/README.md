@@ -73,6 +73,20 @@ A certificate never asks you to trust this code. It asks you to run `drat-trim`.
   that extension is forced, since v has a negative conjugate and every
   multiquadratic field is totally real.
 
+- ✅ The **first graph here with no coset 5-colouring** — 15 313 vertices over
+  ℚ(ζ₇), built from every modulus-one step of denominator ≤ 29. Every other
+  construction in this package, de Grey's included, admits a colouring that is
+  a homomorphism of the edge module to ℤ/5; this one admits none. It is
+  nevertheless **3-chromatic**, because ζ₆ ∉ ℚ(ζ₇) and so it has no triangle.
+
+- ✅ **Why the method stops at five, in one number.** Squeezing a pivot's circle
+  into two colours gives every auxiliary that sees both colours the *same* list
+  of size k−2, and that subgraph — the confined set — is measured
+  **2-degenerate** at every size from 72 to 420 points. A 2-degenerate graph is
+  not always 2-choosable (an odd cycle is not), which is what makes k = 4 work;
+  it is always 3-choosable, which is what kills k = 5. The mechanism falls on
+  the wrong side of that gap by exactly one.
+
 ## Pressure, and why every k = 5 search was dead on arrival
 
 Write **pressure(p)** for the least number of colours N(p) can be squeezed into,
