@@ -201,3 +201,60 @@ def test_effort_ranking_puts_the_hardest_first():
         td.close()
     conflicts = [r[2] for r in rows]
     assert conflicts == sorted(conflicts, reverse=True)
+
+
+def test_effort_measures_constraint_not_size():
+    """The control the gradient needs to be worth anything.
+
+    A bigger formula can cost more conflicts for no reason but its size, which
+    would make the hill climb an artefact.  Adding a far-away translate doubles
+    the vertex count while adding no constraint between the copies, so whatever
+    it buys is the size effect alone.  Measured on de Grey's graph at k=5:
+
+        G alone                        1581 vertices   score   88
+        G + a translate 100 units away 3162 vertices   score  129   (x1.5)
+        G u rho(G), genuinely tighter  3008 vertices   score 4216   (x48)
+
+    Size buys half again; tightening buys forty-eight times.  The score tracks
+    constraint.
+
+    Checked here structurally on a small graph, since at four vertices the
+    conflict counts are too small for a ratio to mean anything: a far copy must
+    leave the original's forcing exactly as it was, and must itself force
+    nothing.
+    """
+    from fractions import Fraction
+
+    from hn.geometry import Point
+    from hn.spindle import SeparationDifficulty
+
+    base = build_graph([origin(), eisenstein(1, 0), eisenstein(0, 1), eisenstein(1, 1)])
+    shift = Point(F.rational(100), F.zero())
+    translated = build_graph(list(base.vertices) + [v + shift for v in base.vertices])
+
+    assert translated.n == 2 * base.n
+    assert translated.m == 2 * base.m          # no edge crosses between copies
+
+    def rows(g, k):
+        p = g.vertices[0]
+        groups = {}
+        for j in range(1, g.n):
+            d2 = p.dist2(g.vertices[j])
+            if d2.is_rational() and d2.c[0] >= Fraction(1, 4):
+                groups.setdefault(d2.c[0], []).append(j)
+        td = SeparationDifficulty(g, k, 0, sorted({j for js in groups.values() for j in js}))
+        try:
+            return {r[0]: r[1] for r in td.effort_ranking(groups)}
+        finally:
+            td.close()
+
+    before, after = rows(base, 3), rows(translated, 3)
+    # the rhombus still forces its far tips, and the near distances are unchanged
+    assert before[Fraction(3)] is False
+    assert after[Fraction(3)] is False
+    for d2, separable in before.items():
+        assert after[d2] == separable
+    # and every distance reaching the far copy forces nothing
+    for d2, separable in after.items():
+        if d2 > 100:
+            assert separable is True
