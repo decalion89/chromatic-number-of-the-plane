@@ -718,3 +718,45 @@ def test_the_ladder_of_free_pressure_against_blockable_cores():
                 assert pressure(rel, v) >= FREE_PRESSURE
     finally:
         rel.close()
+
+
+def test_unique_colourability_forces_pressure_k_minus_one_everywhere():
+    """A uniquely k-colourable graph has pressure exactly k-1 at every vertex.
+
+    Pressure is at most k-1 always, since a vertex's own colour never appears
+    in its neighbourhood; and if one had two free colours, switching between
+    them would move it to a different class, giving a genuinely different
+    partition rather than a permutation. So the defect k-1-pressure(v) is a
+    per-vertex distance to unique colourability.
+
+    Checked on the triangular lattice, which is uniquely 3-colourable: defect
+    zero at every vertex. At three colours that costs nothing, because a unit
+    circle is bipartite and 2 = k-1 is exactly its free pressure. At five it
+    would need pressure 4, and nothing here reaches even 3.
+    """
+    from fractions import Fraction
+
+    from hn.field import Field
+    from hn.forced import unique_colouring_defect
+    from hn.geometry import Point
+
+    f = Field((3,))
+    r3, half = f.sqrt(3), f.rational(Fraction(1, 2))
+    steps = [Point(f.rational(1), f.zero()), Point(half, r3 * half),
+             Point(-half, r3 * half)]
+    lat = {Point(f.zero(), f.zero())}
+    for _ in range(3):
+        new = set()
+        for q in lat:
+            for s in steps:
+                new.add(Point(q.x + s.x, q.y + s.y))
+                new.add(Point(q.x - s.x, q.y - s.y))
+        lat |= new
+    g = build_graph(sorted(lat, key=lambda q: float(q.x * q.x + q.y * q.y)))
+    rel = ColourRelations(g, 3)
+    try:
+        d = unique_colouring_defect(rel)
+        assert d["defect_histogram"] == {0: g.n}
+        assert d["uniquely_colourable_possible"]
+    finally:
+        rel.close()

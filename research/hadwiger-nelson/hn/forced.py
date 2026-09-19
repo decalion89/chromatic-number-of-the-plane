@@ -36,6 +36,7 @@ a rainbow gets built at a distance the plane does not hand you.
 
 from __future__ import annotations
 
+import collections
 import random as _rand
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
@@ -808,3 +809,47 @@ LADDER = {3: "core 1, classical spindle; rigidity free since 2 = k-1",
           4: "core 2, blocked by counting; de Grey",
           5: "core 3, blocked only by misalignment with reflections -- exact",
           6: "core 4, nothing blocks four: the method is impossible"}
+
+
+# -- how far a graph is from unique colourability, in one number ----------
+#
+# THEOREM. A uniquely k-colourable graph has pressure exactly k-1 at EVERY
+# vertex.
+#
+# Proof. Pressure is at most k-1 always, since v's own colour never appears in
+# N(v). If some v had pressure at most k-2, a minimising colouring would leave
+# it two free colours; switching v between them moves v to a different class
+# and so gives a genuinely different partition, not a permutation of the same
+# one. []
+#
+# That turns "how close is this graph to uniquely k-colourable" into a
+# measurement, vertex by vertex, with a gradient rather than a verdict. And it
+# says exactly how far the problem is from its target:
+#
+#   k = 3: pressure 2 is the FREE pressure of a unit circle, so unique
+#          3-colourability costs nothing extra -- the triangular lattice.
+#   k = 4: pressure 3 is one above free. de Grey's Sa reaches it at some
+#          vertices, which is where its forcing comes from.
+#   k = 5: pressure 4 is two above free, and nothing measured here reaches
+#          even 3 -- every graph tried comes back at a flat 2.
+#
+# The gap is 2 against 4, stated in the same units as everything else.
+
+def unique_colouring_defect(rel: "ColourRelations") -> dict:
+    """Vertices at pressure k-1, and the shortfall at the rest.
+
+    Zero defect everywhere is necessary for unique k-colourability, never
+    sufficient; but the count is monotone in added points, so it is something
+    a search can climb.
+    """
+    hist = collections.Counter()
+    for v in range(rel.graph.n):
+        if rel.graph.adj[v]:
+            hist[rel.k - 1 - pressure(rel, v)] += 1
+    total = sum(hist.values())
+    return {
+        "defect_histogram": dict(sorted(hist.items())),
+        "at_k_minus_one": hist.get(0, 0),
+        "vertices": total,
+        "uniquely_colourable_possible": hist.get(0, 0) == total,
+    }

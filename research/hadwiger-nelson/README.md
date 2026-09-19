@@ -372,6 +372,28 @@ So five is not the frontier because nobody searched hard enough. It is the last
 value of k at which the free pressure of a unit circle and the largest blockable
 core still meet — and they meet exactly.
 
+### The distance to the target, in one number
+
+> **Theorem.** A uniquely k-colourable graph has pressure **exactly k − 1 at every
+> vertex.** Pressure is at most k − 1 always, since a vertex's own colour never
+> appears in its neighbourhood; and if one had two free colours, switching between
+> them would move it to a different class and give a genuinely different partition,
+> not a permutation. ∎
+
+That turns "how close is this graph to the target" into a per-vertex measurement
+with a gradient — `unique_colouring_defect` reports `k − 1 − pressure(v)` — and
+it is monotone in added points, so a search can climb it.
+
+- **k = 3**: pressure 2 is exactly the free pressure of a unit circle, so unique
+  3-colourability costs nothing. Measured on a triangular-lattice patch: defect
+  **zero at all 37 vertices**.
+- **k = 4**: pressure 3 is one above free. Sa reaches it at some vertices — that
+  is where its forcing comes from.
+- **k = 5**: pressure 4 is two above free, and nothing measured here reaches even
+  3. Every graph tried comes back at a flat 2.
+
+**The gap is 2 against 4**, in the same units as everything else in this file.
+
 ### What pressure 3 actually needs
 
 de Grey's Sa reaches **pressure 3 at four colours** — k−1, the classical spindle
