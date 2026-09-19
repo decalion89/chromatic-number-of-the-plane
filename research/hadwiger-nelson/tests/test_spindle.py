@@ -258,3 +258,54 @@ def test_effort_measures_constraint_not_size():
     for d2, separable in after.items():
         if d2 > 100:
             assert separable is True
+
+
+# -- keeping the search local, so the machine lasts -------------------------
+
+def test_local_ball_keeps_the_pivot_and_its_neighbourhood():
+    from hn.generate import hex_ball
+    from hn.spindle import local_ball
+
+    g = build_graph(hex_ball(4))
+    centre = next(i for i, v in enumerate(g.vertices)
+                  if v.x.is_zero() and v.y.is_zero())
+    ball, bp = local_ball(g, centre, 1.5)
+    assert ball.n < g.n
+    assert ball.vertices[bp] == g.vertices[centre]
+    # every kept vertex really is within the radius
+    p = ball.vertices[bp]
+    for v in ball.vertices:
+        assert (v.fx - p.fx) ** 2 + (v.fy - p.fy) ** 2 <= 1.5 ** 2 + 1e-9
+    # and every unit neighbour of the centre survived
+    assert len(ball.adj[bp]) == len(g.adj[centre])
+
+
+def test_core_preserves_forcing_not_just_colourability():
+    """A vertex of degree below k is always colourable last, so the colourings
+    of G restricted to G - v are exactly those of G - v.  Forcing among the
+    survivors is therefore unchanged -- which is what licenses peeling the
+    graph between rounds of the hill climb."""
+    from hn.generate import hex_ball
+    from hn.spindle import SeparationTest, core_preserving_forcing
+
+    rhombus = [origin(), eisenstein(1, 0), eisenstein(0, 1), eisenstein(1, 1)]
+    g = build_graph(rhombus + hex_ball(3))
+    tip = next(j for j in range(g.n) if g.vertices[j] == eisenstein(1, 1))
+    before = SeparationTest(g, 3, 0, [tip]).run()
+    res = core_preserving_forcing(g, 3, 0, [tip])
+    assert res is not None
+    core, pivot, targets = res
+    after = SeparationTest(core, 3, pivot, targets).run()
+    assert before[0] == after[0] is False       # forced before, forced after
+    assert core.n <= g.n
+
+
+def test_core_protects_the_pivot_and_targets_from_peeling():
+    from hn.spindle import core_preserving_forcing
+
+    g = build_graph([origin(), eisenstein(1, 0), eisenstein(0, 1), eisenstein(1, 1)])
+    res = core_preserving_forcing(g, 5, 0, [3])   # k above every degree here
+    assert res is not None
+    core, pivot, targets = res
+    assert core.vertices[pivot] == g.vertices[0]
+    assert targets and core.vertices[targets[0]] == g.vertices[3]

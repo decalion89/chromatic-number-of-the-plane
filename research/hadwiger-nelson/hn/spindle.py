@@ -37,6 +37,7 @@ __all__ = ["ForcedPairFinder", "spindle_union", "candidate_pairs_from",
            "ForcedDisjunctionFinder", "targets_at_third", "triple_spindle_union",
            "spindle_union_auto",
            "SeparationDifficulty",
+           "local_ball", "core_preserving_forcing",
            "SeparationTest"]
 
 
@@ -471,3 +472,56 @@ class SeparationDifficulty(SeparationTest):
                 print(f"    d2={val}: sep={bool(res)} conflicts={dc} decisions={dd}", flush=True)
         rows.sort(key=lambda r: (-r[2], -r[3]))
         return rows
+
+
+def local_ball(graph: UnitDistanceGraph, pivot: int, radius: float) -> Tuple[UnitDistanceGraph, int]:
+    """The induced subgraph on vertices within `radius` of `pivot`.
+
+    Forcing is a local phenomenon: the pair under test lies within sqrt(40) of
+    the pivot, and what decides whether it is forced is the structure around
+    it.  Tightening the whole graph to constrain one neighbourhood doubles the
+    vertex count for nothing, and a few rounds of that exhausts the machine
+    rather than the mathematics.
+
+    Returns (subgraph, index of the pivot inside it).
+    """
+    p = graph.vertices[pivot]
+    px, py = p.fx, p.fy
+    keep = [v for v in range(graph.n)
+            if (graph.vertices[v].fx - px) ** 2 + (graph.vertices[v].fy - py) ** 2
+            <= radius * radius + 1e-9]
+    sub = graph.induced(keep)
+    return sub, keep.index(pivot)
+
+
+def core_preserving_forcing(graph: UnitDistanceGraph, k: int, pivot: int, targets: Sequence[int]):
+    """The k-core, with pivot and targets re-indexed.
+
+    Sound for forcing, not just for colourability.  A vertex of degree below k
+    can always be coloured last, so every proper k-colouring of G - v extends
+    to one of G; the colourings of G restricted to G - v are exactly the
+    colourings of G - v.  Hence for any p, q surviving the peel, "every
+    colouring makes them agree" holds in G precisely when it holds in the core.
+
+    Returns (core, new_pivot, new_targets), or None if the pivot does not
+    survive.
+    """
+    protected = set(targets) | {pivot}
+    deg = [len(a) for a in graph.adj]
+    alive = [True] * graph.n
+    stack = [v for v in range(graph.n) if deg[v] < k and v not in protected]
+    while stack:
+        v = stack.pop()
+        if not alive[v]:
+            continue
+        alive[v] = False
+        for w in graph.adj[v]:
+            if alive[w] and w not in protected:
+                deg[w] -= 1
+                if deg[w] < k:
+                    stack.append(w)
+    keep = [v for v in range(graph.n) if alive[v]]
+    if pivot not in keep:
+        return None
+    remap = {old: new for new, old in enumerate(keep)}
+    return graph.induced(keep), remap[pivot], [remap[t] for t in targets if t in remap]
