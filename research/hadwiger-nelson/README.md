@@ -464,6 +464,39 @@ critical graph can ever have a small forcing set, hence never a small core,
 hence never a blockable one.** Every union in this package was dead before it
 was built.
 
+And it gets *worse* with more copies. With three pairwise-overlapping copies a
+forcing set must hit every cross **triple**, so it is a vertex cover of a
+complete tripartite 3-uniform hypergraph and has to swallow **two** whole parts.
+
+### When ρ is n, and therefore when it can be small
+
+Two disjoint reasons force ρ = n, and between them they cover everything here at
+five colours.
+
+- **k > χ(W).** Every vertex is then removable: χ(W − u) ≤ χ(W) ≤ k−1, so u can
+  be left alone in the kth colour and every forcing set needs it.
+- **W is k-vertex-critical.** Same conclusion, same colouring.
+
+So ρ can only be small where **χ(W) = k exactly and W is not vertex-critical**.
+Measured:
+
+| graph | k | ρ | critical (sampled) |
+|---|---:|---:|---:|
+| three-hexagon gadget | 4 | **9** | **0 / 12** |
+| three-hexagon gadget | 5 | > 123 | 12 / 12 |
+| 19-vertex joint core | 4 | 19 = n | 12 / 12 |
+
+The gadget has both properties at four colours and is useless at five for a
+reason that has nothing to do with its geometry — it is 4-chromatic. G is
+critical. The unions fall to the cross-pair theorem. **Nothing has both at
+five.**
+
+Which returns the same object from the other side: few realisable colour classes
+is what makes ρ small, and a graph with exactly one 5-colouring up to permutation
+has exactly five of them, giving ρ = 5. The target is a **uniquely 5-colourable
+unit-distance graph** — which by the pressure theorem needs pressure 4, every
+neighbourhood using four colours, at *every* vertex.
+
 ### What pressure 3 actually needs
 
 de Grey's Sa reaches **pressure 3 at four colours** — k−1, the classical spindle

@@ -989,3 +989,37 @@ def cross_pair_bound(graph, k: int, A: Sequence[int], B: Sequence[int],
         "hypothesis_holds_on_sample": pairs > 0 and killable == pairs,
         "bound": min(len(A), len(B)),
     }
+
+
+# -- when rho is n, and therefore when it can be small --------------------
+#
+# Two disjoint reasons make rho equal n, and between them they account for
+# every graph in this package at five colours.
+#
+#   k > chi(W). Every vertex is then removable: chi(W - u) <= chi(W) <= k-1,
+#     so u can be left alone in the kth colour and every forcing set needs it.
+#     The three-hexagon gadget is 4-chromatic, so at k = 5 it measures
+#     rho > 123 with all twelve sampled vertices critical -- useless, for a
+#     reason that has nothing to do with its geometry.
+#   W k-vertex-critical. Same conclusion by the same colouring. de Grey's G.
+#
+# So rho can only be small where chi(W) = k EXACTLY and W is not
+# vertex-critical. The three-hexagon gadget has both at four colours -- rho 9,
+# zero of twelve sampled vertices critical -- and nothing here has both at
+# five: G is critical, the gadget is 4-chromatic, and the unions fall to the
+# cross-pair theorem.
+#
+# Adding copies makes it worse, not better. With three pairwise-overlapping
+# copies a forcing set must hit every cross TRIPLE, so it is a vertex cover of
+# a complete tripartite 3-uniform hypergraph and has to swallow two whole
+# parts rather than one. The family degrades with every copy added.
+#
+# What is left is the same object from the other side. Few realisable colour
+# classes is what makes rho small, and a graph with exactly one 5-colouring up
+# to permutation has exactly five of them, giving rho = 5. The target is a
+# uniquely 5-colourable unit-distance graph, which by the pressure theorem
+# needs pressure 4 -- every neighbourhood using four colours -- at every
+# single vertex.
+
+RHO_IS_N_WHEN = ("k > chi(W), since every vertex is then removable; or W is "
+                 "k-vertex-critical, by the same colouring")

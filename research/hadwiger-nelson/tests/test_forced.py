@@ -848,3 +848,35 @@ def test_stacking_critical_copies_can_never_give_a_small_forcing_set():
             "the forcing set must swallow one whole side"
     finally:
         rel.close()
+
+
+def test_rho_is_n_when_the_graph_is_over_coloured():
+    """k > chi(W) makes every vertex removable, so rho = n for a reason that
+    has nothing to do with geometry.
+
+    chi(W - u) <= chi(W) <= k-1, so u can be left alone in the kth colour and
+    every forcing set needs it. The three-hexagon gadget is 4-chromatic, so at
+    five colours it is useless however good its pressure at four -- which is
+    why rho can only be small where chi(W) = k exactly AND W is not
+    vertex-critical. The gadget has both at four: rho 9, nothing critical.
+    """
+    from hn.coloring import is_k_colorable
+    from hn.forced import forcing_set, shrink_forcing_set
+    from hn.mixed import three_hexagon_gadget
+
+    _field, _pivot, pts = three_hexagon_gadget()
+    g = build_graph(pts)
+    assert not is_k_colorable(g, 3)[0] and is_k_colorable(g, 4)[0]
+
+    rel = ColourRelations(g, 4)
+    try:
+        S, ok = forcing_set(rel, limit=200)
+        assert ok
+        S = shrink_forcing_set(rel, S)
+        assert len(S) == 9
+    finally:
+        rel.close()
+    for u in range(6):
+        sub = build_graph([q for m, q in enumerate(pts) if m != u])
+        assert not is_k_colorable(sub, 3)[0], "not critical at four"
+        assert is_k_colorable(sub, 4)[0], "but removable at five"
