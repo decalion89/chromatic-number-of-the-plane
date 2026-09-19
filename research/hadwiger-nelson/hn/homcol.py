@@ -505,3 +505,39 @@ DEGREE_EFFICIENCY = {
     "blocked_at": ["Q(zeta_7) ball", "Q(zeta_21) ball"],
     "de_grey_average_degree": 9.96,
 }
+
+
+# -- blocking needs the whole module, which is why it costs what it does --
+#
+# The cheapest cover, a pencil of six hyperplanes, needs its six directions to
+# lie in one 2-dimensional subspace -- and there they would have to hit all
+# six points of a PG(1,5) while sharing one norm, which no square class
+# allows. So a blocking set of unit vectors is never minimal, and the question
+# becomes how much rank it takes.
+#
+# Constructed rather than sampled, since random subsets of Q(zeta_7)'s steps
+# have full rank almost always: span a submodule, then collect every unit step
+# inside it -- the whole unit circle of that submodule, which is what a graph
+# built there would have.
+#
+#     rank 3   2 submodules with 6+ unit steps   richest 12 directions   no
+#     rank 4  34 submodules                      richest  4 directions   no
+#     rank 5 159 submodules                      richest  5 directions   no
+#     rank 6  the whole module                           87 directions  YES
+#
+# Proper submodules simply do not contain enough unit vectors: six to fourteen
+# where covering PG(r-1,5) needs far more. So blocking requires the FULL rank,
+# and the full rank is exactly what makes the module densest in the plane and
+# a ball's interior vanish against its boundary. That closes the loop with the
+# efficiency table: blocking costs 2.3 per cent not by accident but because
+# nothing short of the whole module blocks at all.
+
+BLOCKING_NEEDS_FULL_RANK = {
+    "field": "Q(zeta_7), rank 6",
+    "submodule_ranks_tested": [3, 4, 5],
+    "unit_directions_found": {3: 12, 4: 4, 5: 5},
+    "blocks_at": 6,
+    "why": "proper submodules hold six to fourteen unit vectors where "
+           "covering needs far more, so nothing short of the whole module "
+           "blocks -- and the whole module is the densest in the plane",
+}

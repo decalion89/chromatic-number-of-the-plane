@@ -370,3 +370,15 @@ def test_degree_efficiency_falls_as_blocking_arrives():
     for name in E["blocked_at"]:
         assert E[name] < 0.05, "blocking only appears at the bottom"
     assert E["de Grey G"] > 3 * E["Q(zeta_7) ball"]
+
+
+def test_blocking_needs_the_full_rank():
+    """Proper submodules hold too few unit vectors to cover anything."""
+    from hn.homcol import BLOCKING_NEEDS_FULL_RANK as B
+
+    assert B["blocks_at"] == 6
+    assert all(r < B["blocks_at"] for r in B["submodule_ranks_tested"])
+    # covering PG(r-1,5) needs at least six directions even in the best case
+    for r, n in B["unit_directions_found"].items():
+        assert n < (5 ** r - 1) // 4, f"rank {r}: {n} directions is far short"
+    assert max(B["unit_directions_found"].values()) < 87

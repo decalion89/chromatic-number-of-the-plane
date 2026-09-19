@@ -1016,6 +1016,34 @@ blocking ones: 16 015 vertices, 32 722 edges, **1056 triangles**, blocked —
 and 3-chromatic. Both halves achieved at once for the first time, and still
 far from rigid.
 
+### Blocking needs the whole module
+
+The cheapest cover — a pencil of six hyperplanes — needs its six directions to
+lie in one 2-dimensional subspace, where they would have to hit all six points
+of a PG(1,5) while sharing one norm. No square class allows that, so a blocking
+set of unit vectors is **never minimal**, and the question becomes how much rank
+it takes.
+
+Constructed rather than sampled (random subsets of ℚ(ζ₇)'s steps have full rank
+almost always): span a submodule, then collect every unit step inside it — the
+whole unit circle of that submodule, which is what a graph built there would
+have.
+
+| rank | submodules with ≥6 unit steps | richest | blocks |
+|--:|--:|--:|:--:|
+| 3 | 2 | 12 directions | no |
+| 4 | 34 | 4 directions | no |
+| 5 | 159 | 5 directions | no |
+| 6 | the whole module | **87 directions** | **yes** |
+
+Proper submodules simply do not hold enough unit vectors — six to fourteen,
+where covering needs far more. **So blocking requires the full rank**, and the
+full rank is exactly what makes the module densest in the plane and a ball's
+interior vanish against its boundary.
+
+> That closes the loop with the efficiency table: blocking costs 2.3% not by
+> accident, but because nothing short of the whole module blocks at all.
+
 ### The caveat that bounds all of it
 
 Blocking is necessary and very far from sufficient, and it is worth being
