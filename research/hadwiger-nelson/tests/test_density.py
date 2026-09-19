@@ -73,3 +73,18 @@ def test_counting_can_never_prove_six():
 
     assert CROFT_DENSITY > 0.2
     assert 5 * CROFT_DENSITY > 1.0            # five classes have room to spare
+
+
+def test_fractional_methods_are_blind_to_this_problem():
+    """chi_f(R^2) <= 1/m_1 < 5, so no relaxation sees even chi >= 5.
+
+    Translating a density-m_1 independent set over the isometry group covers
+    every point equally, so weighting the copies is a fractional colouring of
+    weight 1/m_1. With Croft's 0.2293 that is 4.36, below five -- which is why
+    de Grey's result had to be integral, and why the LP line stalling for
+    decades was never a shortage of computation.
+    """
+    from hn.density import CROFT_DENSITY
+
+    assert 1 / CROFT_DENSITY < 5
+    assert 1 / CROFT_DENSITY > 3.8992         # the published chi_f lower bound

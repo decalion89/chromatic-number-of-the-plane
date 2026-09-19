@@ -32,6 +32,22 @@ under 0.2, and chi_m(R^2) >= 6 cannot be reached this way at all.  The most
 this argument yields is 1/0.2293 = 4.36, so chi_m >= 5 -- true, and already
 known both from here and from de Grey.
 
+**And the same set closes every fractional method, not just this one.**  Take
+Croft's independent set of density m_1 and translate it over the isometry
+group: the copies cover each point of the plane equally, so weighting them
+gives a *fractional colouring* of total weight 1/m_1.  Hence
+
+    chi_f(R^2) <= 1 / m_1 <= 1 / 0.2293 = 4.36 < 5.
+
+The fractional chromatic number of the plane is below five.  Every LP and SDP
+relaxation is bounded by chi_f, so **no relaxation can see chi >= 5, let alone
+chi >= 6** -- which is why de Grey's 2018 result had to be an integral
+combinatorial argument, and why the LP line had stalled for decades without it
+being a shortage of computation.  The only route to six is integral, and the
+same is true of the object: a 6-chromatic unit-distance graph has independent
+sets of at least 0.2293 n, so five of them cover 1.1465 n with room to spare,
+and whatever stops it colouring is never counting.
+
 Worth keeping anyway, for two reasons.  It is the only quantity in this
 package that reports progress on a bad day, and improving a graph's ratio
 towards 0.2293 is a real number moving.  And knowing *why* a whole avenue

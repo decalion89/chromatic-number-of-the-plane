@@ -673,6 +673,20 @@ of density about `0.2293`, and averaging runs the other way too: that forces
 `0.2293 > 1/5`, no graph ever brings the ratio under `0.2`, and the most this
 argument can yield is `1/0.2293 = 4.36` — `chi_m >= 5`, which is already known.
 
+### Every fractional method is blind to this problem
+
+The same set closes more than one avenue. Translate Croft's independent set of
+density `m_1` over the isometry group: the copies cover every point equally, so
+weighting them is a *fractional colouring* of total weight `1/m_1`. Hence
+
+    chi_f(R^2) <= 1 / m_1 <= 1 / 0.2293 = 4.36 < 5.
+
+The fractional chromatic number of the plane is **below five**. Every LP and
+SDP relaxation is bounded by `chi_f`, so no relaxation can see `chi >= 5`, let
+alone `chi >= 6`. That is why de Grey's 2018 result had to be an integral
+combinatorial argument, and why the LP line had stalled for decades without it
+being a shortage of computation. **The only route to six is integral.**
+
 ### And what that says about the object being searched for
 
 Turned around, the same bound is a fact about the target rather than about the
