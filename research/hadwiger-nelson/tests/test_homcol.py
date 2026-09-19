@@ -311,3 +311,31 @@ def test_eisenstein_lattice_does_have_triangles():
     b = Point(fld.one(), fld.zero())
     c = Point(h, fld.sqrt(3) * h)       # multiplication by zeta_6
     assert a.is_unit_apart(b) and b.is_unit_apart(c) and a.is_unit_apart(c)
+
+
+def test_blocking_is_cheap_and_changes_no_chromatic_number():
+    """A pendant edge blocks without helping: the caveat, made explicit.
+
+    Six slopes at rank 2 block Z/5.  Hang them off a triangle as degree-one
+    vertices and the graph blocks while staying 3-chromatic, because a
+    degree-one vertex extends any colouring of the rest.
+    """
+    from hn.homcol import has_homomorphism
+
+    triangle = [(1, 0), (0, 1), (1, -1)]           # rank 2, does not block
+    assert has_homomorphism(triangle, 5)[0] is not None
+
+    pendants = [(1, 1), (1, 2), (1, 3), (1, 4)]    # completes the line
+    assert has_homomorphism(triangle + pendants, 5)[0] is None
+
+    # the graph itself: K3 plus one pendant per added direction
+    edges = [(0, 1), (1, 2), (0, 2)] + [(0, 3 + i) for i in range(len(pendants))]
+    n = 3 + len(pendants)
+    from pysat.solvers import Solver
+    for k in (2, 3):
+        cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
+        for a, b in edges:
+            for c in range(k):
+                cls.append([-(1 + a * k + c), -(1 + b * k + c)])
+        with Solver(name="cd19", bootstrap_with=cls) as s:
+            assert s.solve() is (k == 3), f"k={k}"

@@ -412,3 +412,28 @@ FIRST_BLOCKED_GRAPH = {
     "why_low": "triangle-free: zeta_6 is not in Q(zeta_7)",
     "next_field": "Q(zeta_21), the smallest with both zeta_6 and the split primes",
 }
+
+
+# -- and the caveat that bounds all of it ---------------------------------
+#
+# Blocking is necessary and very far from sufficient, and it is worth being
+# blunt about how far. Attaching a PENDANT edge in a blocking direction -- a
+# single new vertex of degree one -- puts that direction into the edge module
+# and so helps cover the dual, while changing the chromatic number by nothing
+# at all: a degree-one vertex extends any colouring of the rest greedily. So
+# any graph whatever can be made blocked without becoming one colour harder.
+#
+# What blocking buys is therefore not a bound but a MEASUREMENT that means
+# something. A coset colouring composes with every automorphism of Z/n and
+# every translation of the module, so while one exists the colour classes
+# slide and every rigidity statistic reads flat -- which is exactly what
+# happened to every forcing search in this package. Removing it is a
+# precondition for the forcing machinery to have anything to detect. The
+# chromatic number still has to be established by a solver, on a graph that is
+# blocked AND rigid, and only the second half is hard.
+
+BLOCKING_IS_NOT_SUFFICIENT = (
+    "a pendant edge in a blocking direction blocks the graph and changes its "
+    "chromatic number by nothing, so blocking is a precondition for rigidity "
+    "to be measurable, never a bound on its own"
+)

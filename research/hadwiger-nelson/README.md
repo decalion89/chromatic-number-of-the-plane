@@ -627,6 +627,104 @@ vector by one integer, which made the whole set look divisible by 4 and 6 until
 the common content was divided out; the divisibility obstructions at n = 3, 4, 6
 are real only after that correction.
 
+### Where blocking begins: the prime 29
+
+Grouping the modulus-one elements of ℚ(ζ₇) by denominator locates the
+obstruction exactly. Taking all of them up to each bound:
+
+| denominator ≤ | 1 | 2 | 4 | 8 | 11 | 16 | **29** |
+|---|--:|--:|--:|--:|--:|--:|--:|
+| directions | 7 | 21 | 31 | 33 | 35 | 37 | **87** |
+| blocks ℤ/5 | no | no | no | no | no | no | **yes** |
+
+Nothing under 29 ever blocks, however many elements are collected — and
+**29 = 4·7 + 1 is the least rational prime splitting completely in ℚ(ζ₇)**.
+Splitting is what supplies many independent modulus-one elements sharing one
+small denominator, which is exactly what covering PG(5,5) needs. The
+denominators appearing next — 43, 71, 113, 127 — are the following primes
+≡ 1 mod 7, as that reasoning predicts.
+
+Blocking is a covering problem, so it has an exact optimum, and
+`minimum_blocking_set` computes it by MaxSAT rather than greedily — greedy
+carries a ln(points) factor and reported 25 directions where the structure
+allows far fewer. It recovers the projective line of six at rank 2, and
+correctly reports that the triangular lattice's three directions cover nothing.
+
+### The first blocked graph, and why it is only 3-chromatic
+
+Every modulus-one element of denominator ≤ 29 as a step, two rounds:
+**15 313 vertices, 30 276 edges**, realising all 87 directions.
+
+```
+87 edge vectors; coset 5-colouring: NONE -- blocked
+3-colourable: True
+```
+
+The first half is a first for this package — the structural colouring that
+every other construction here admitted is gone. The second half is a theorem,
+not bad luck.
+
+> **Theorem.** A unit-distance graph over a field K contains a triangle **iff**
+> ζ₆ ∈ K.
+
+Three mutually unit-apart points are equilateral, so one is another rotated 60°
+about the third: multiplication by a primitive sixth root of unity, which must
+therefore lie in K. Conversely ζ₆ builds one outright. The roots of unity of
+ℚ(ζ₇) are exactly **μ₁₄**, and 6 ∤ 14, so **no graph over ℚ(ζ₇) has a single
+triangle however large it grows.** Clique number 2, measured average degree
+3.95 — and every high-chromatic unit-distance graph known leans on triangles
+throughout.
+
+### Blocking and folding do not trade off
+
+A first reading of the accompanying table suggests they do:
+
+| graph | n | m | \|S\| | rank | corank | χ | blocked |
+|---|--:|--:|--:|--:|--:|--:|:--:|
+| Moser spindle | 7 | 11 | 7 | 4 | 3 | 4 | no |
+| triangular patch | 121 | 320 | 3 | 2 | 1 | 3 | no |
+| de Grey S | 39 | 18 | 8 | 4 | 4 | 3 | no |
+| de Grey Sa | 397 | 1974 | 15 | 4 | 11 | 4 | no |
+| de Grey Y | 791 | 3938 | 33 | 8 | 25 | 4 | no |
+
+Low rank everywhere, high corank, never blocked. But folding needs *relations*
+among the steps — ℤ-independent steps build a tree, and a tree is bipartite —
+while blocking needs hyperplanes covering the dual, and **both are monotone
+increasing in the step set**: another step adds a hyperplane and can only add
+relations. They never trade against each other. The known graphs miss blocking
+for want of steps, not for want of rank, and the object to build is the
+**union** of a folding set and a blocking one.
+
+That names the field between them. Triangles need ζ₆, so 3 | n; blocking needs
+a completely split prime, which is where ℚ(ζ₇) came from. The smallest
+cyclotomic field with both is
+
+> **ℚ(ζ₂₁) = ℚ(ζ₃, ζ₇), degree φ(21) = 12**
+
+— carrying the whole Eisenstein lattice and its triangles while inheriting
+ℚ(ζ₇)'s split primes. In it 5 has order 6 in (ℤ/21)^×, so 5 splits into two
+primes of residue degree 6 rather than staying inert. And blocking is
+**inherited upward for free**: a φ on the degree-12 module would restrict to a
+homomorphism on the ℚ(ζ₇) submodule, nonzero on all 87 directions, and none
+exists.
+
+### The caveat that bounds all of it
+
+Blocking is necessary and very far from sufficient, and it is worth being
+blunt about how far. Attach a **pendant** edge in a blocking direction — one
+new vertex of degree one — and that direction joins the edge module and helps
+cover the dual, while the chromatic number changes by nothing at all: a
+degree-one vertex extends any colouring of the rest greedily. **Any graph
+whatever can be made blocked without becoming one colour harder.**
+
+What blocking buys is therefore not a bound but a *measurement that means
+something*. While a coset colouring exists the colour classes slide freely and
+every rigidity statistic reads flat — which is exactly what happened to every
+forcing search here. Removing it is a precondition for the forcing machinery
+to have anything to detect. The chromatic number still has to be established
+by a solver, on a graph that is blocked **and** rigid, and only the second half
+is hard.
+
 ### What pressure 3 actually needs
 
 de Grey's Sa reaches **pressure 3 at four colours** — k−1, the classical spindle
