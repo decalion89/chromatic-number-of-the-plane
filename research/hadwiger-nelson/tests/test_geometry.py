@@ -58,3 +58,45 @@ def test_rotation_about_a_pivot_fixes_the_pivot():
     pivot = eisenstein(2, 1)
     turn = SPINDLE.about(pivot)
     assert turn(pivot) == pivot
+
+
+# -- the field de Grey's construction actually needs -----------------------
+
+def test_degrey_rotations_are_outside_the_small_field():
+    """The diagnosis that redirected this project: restricting to rotations
+    that keep the field at Q(sqrt3, sqrt11) excludes exactly the two angles
+    de Grey used, so his graph cannot lie in any set generated that way."""
+    from hn.geometry import required_radical
+
+    assert required_radical(4) == 15       # 2*arcsin(1/4): sin = sqrt(15)/8
+    assert required_radical(16) == 7       # 2*arcsin(1/8): sin = 3*sqrt(7)/32
+    for d2 in (4, 16):
+        with pytest.raises(ValueError):
+            rotation_joining(d2)           # rejected by Q(sqrt3, sqrt11)
+
+
+def test_degrey_rotations_are_exact_in_the_extended_field():
+    from hn.geometry import DEGREY_FIELD, degrey_rotations
+
+    assert DEGREY_FIELD.dim == 16
+    for name, rot in degrey_rotations().items():
+        assert rot.cos * rot.cos + rot.sin * rot.sin == 1, name
+
+
+@pytest.mark.parametrize("d2,dist", [(4, 2), (16, 4)])
+def test_degrey_spindles_move_a_point_by_exactly_one(d2, dist):
+    from hn.geometry import DEGREY_FIELD
+
+    F = DEGREY_FIELD
+    p = Point(F.rational(dist), F.zero())
+    assert p.dist2(rotation_joining(d2, F)(p)) == 1
+
+
+def test_small_field_rotations_are_the_centred_hexagonal_family():
+    """d2 = 3k^2+3k+1 always works over Q(sqrt3): sin = (2k+1)sqrt(3)/(2 d2)."""
+    from hn.geometry import required_radical
+
+    for k in range(6):
+        d2 = 3 * k * k + 3 * k + 1
+        assert required_radical(d2) == (1 if d2 == 1 else 3) or required_radical(d2) == 3
+        rotation_joining(d2)               # constructible without extension

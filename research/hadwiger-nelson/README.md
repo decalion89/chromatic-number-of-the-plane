@@ -46,8 +46,9 @@ A certificate never asks you to trust this code. It asks you to run `drat-trim`.
   tips to match, spindles on that pair, and lands on the Moser spindle.
 - ✅ A **three-copy pigeonhole variant** of the argument, which needs only a forced
   *disjunction* rather than a forced pair, implemented and validated.
-- ❌ χ(ℝ²) ≥ 5 **not yet reproduced independently.** See below — the negative
-  results are recorded rather than hidden.
+- ❌ χ(ℝ²) ≥ 5 **not yet reproduced independently.** The searches below were run in
+  ℚ(√3, √11), which is now known to be the wrong field — de Grey's rotations need
+  √7 and √15. Their negative results stand for that field and only that field.
 - ❌ χ(ℝ²) ≥ 6 — the actual goal. Not found.
 
 ## What has been ruled out so far
@@ -66,6 +67,24 @@ conclusive for those sets: they contain no 5-chromatic subgraph at all.
 spindle-able distances — d² ∈ {1/3, 5/9, 1, 7/3, 3, 13/3, 7, 71/9, 31/3} — found
 none, in balls up to **82 357 vertices and 931 158 edges**. Forcing is monotone
 under taking supergraphs, so each of these rules out every subgraph too.
+
+**Why all of that failed — the field was wrong.** A ball of 82 357 vertices came
+back 4-colourable. If de Grey's 1581-vertex graph were inside it, the ball could not
+be. So it is not inside, and no amount of extra radius or compute was ever going to
+put it there: the *generating set* was wrong, not too small.
+
+Reading the construction in [de Grey 2018](https://arxiv.org/abs/1804.02385) says
+why. His rotations are 2·arcsin(1/4) and 2·arcsin(1/8) — the spindles at distance 2
+and 4 — plus π/2 ± arcsin(1/8). Their sines are √15/8, 3√7/32 and 3√7/8. So the
+construction does **not** live in ℚ(√3, √11); it needs **√7 and √15 = √3·√5** too.
+
+The filter that kept rotations inside ℚ(√3, √11) — the ones indexed by Eisenstein
+norms — excludes precisely the two angles de Grey used. `rotation_joining(4)` and
+`rotation_joining(16)` raise `ValueError` against the small field, which was correct
+behaviour serving a false assumption. `hn/geometry.py` now carries `DEGREY_FIELD =
+Field((3, 5, 7, 11))`, dimension 16, in which all of his rotations are exact and a
+point at distance 2 rotated by 2·arcsin(1/4) moves by exactly 1. The general
+multiquadratic `Field` meant this was a parameter change rather than a rewrite.
 
 **No forced disjunction either.** The weaker three-copy hypothesis was then tested
 across the six most central pivots of each ball and every spindle-able distance,

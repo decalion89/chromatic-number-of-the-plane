@@ -15,7 +15,8 @@ from typing import Iterable, Sequence
 
 from .field import Field, FieldElement, QSQRT3_11
 
-__all__ = ["Point", "Rotation", "origin", "eisenstein", "ROT60", "SPINDLE", "rotation_joining"]
+__all__ = ["Point", "Rotation", "origin", "eisenstein", "ROT60", "SPINDLE",
+           "rotation_joining", "DEGREY_FIELD", "required_radical", "degrey_rotations"]
 
 
 class Point:
@@ -198,3 +199,46 @@ def rotation_joining(d2, field: Field = QSQRT3_11) -> Rotation:
     # sin = sqrt(num/den) = sqrt(num*den)/den
     root = field.sqrt(num * den)
     return Rotation(field.rational(c), root * field.rational(Fraction(1, den)))
+
+
+# The field de Grey's 2018 construction actually needs.
+#
+# His rotations are 2*arcsin(1/4) and 2*arcsin(1/8) -- the spindles at distance
+# 2 and 4 -- plus pi/2 +- arcsin(1/8).  Their sines are sqrt(15)/8, 3sqrt(7)/32
+# and 3sqrt(7)/8, so the construction does NOT live in Q(sqrt3, sqrt11): it
+# needs sqrt(7) and sqrt(15) = sqrt(3)sqrt(5) as well.
+#
+# This matters more than it looks.  Restricting to the rotations that keep the
+# field at Q(sqrt3, sqrt11) -- the ones indexed by Eisenstein norms -- excludes
+# exactly the two angles de Grey used, so no amount of searching inside that
+# smaller field can ever contain his graph.
+DEGREY_FIELD = Field((3, 5, 7, 11))
+
+
+def required_radical(d2) -> int:
+    """The squarefree integer whose square root a spindle at distance^2 = d2
+    needs.  A field contains that rotation exactly when it contains sqrt of
+    this."""
+    d2 = Fraction(d2)
+    c = Fraction(1) - Fraction(1, 2) / d2
+    s2 = 1 - c * c
+    n = s2.numerator * s2.denominator
+    r, d = n, 2
+    while d * d <= r:
+        while r % (d * d) == 0:
+            r //= d * d
+        d += 1
+    return r
+
+
+def degrey_rotations(field: Field = DEGREY_FIELD) -> dict:
+    """The rotations named in de Grey (2018), built exactly."""
+    half = Fraction(1, 8)
+    return {
+        "2asin(1/4)": rotation_joining(4, field),
+        "2asin(1/8)": rotation_joining(16, field),
+        "pi/2-asin(1/8)": Rotation(field.rational(half), field.sqrt(7) * field.rational(Fraction(3, 8))),
+        "pi/2+asin(1/8)": Rotation(field.rational(-half), field.sqrt(7) * field.rational(Fraction(3, 8))),
+        "60deg": _rot60(field),
+        "arccos(5/6)": _spindle(field),
+    }
