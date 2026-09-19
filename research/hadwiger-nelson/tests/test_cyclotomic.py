@@ -91,3 +91,34 @@ def test_moser_spindle_lives_in_a_cyclotomic_field():
     assert not is_k_colorable(g, 3)[0]
     assert is_k_colorable(g, 4)[0]
     assert trapping_capacity(11) == 6 and trapping_capacity(33) == 17
+
+
+def test_unit_polygon_realises_the_magic_circle():
+    """The magic circle of order n is the circumcircle of a unit n-gon.
+
+    And the n-gon has a closed form with no radicals: v_k = z^k / (z - 1),
+    whose consecutive vertices are |z - 1| / |z - 1| = 1 apart. For odd n it
+    is an odd unit-distance cycle, which is the only structure that traps.
+    """
+    import math
+
+    from hn.cyclotomic import CycloField, unit_polygon
+
+    F = CycloField(33)
+    for order in (3, 11, 33):
+        vs = unit_polygon(F, order)
+        assert len(vs) == order
+        for k in range(order):
+            assert F.norm2(F.sub(vs[(k + 1) % order], vs[k])) == F.one()
+        r2 = F.to_complex(F.norm2(vs[0])).real
+        assert abs(r2 - 1 / (4 * math.sin(math.pi / order) ** 2)) < 1e-9
+
+
+def test_the_classical_magic_circle_is_the_order_three_case():
+    from fractions import Fraction
+
+    from hn.cyclotomic import CycloField, unit_polygon
+
+    F = CycloField(33)
+    v = unit_polygon(F, 3)[0]
+    assert F.norm2(v) == F.rational(Fraction(1, 3))

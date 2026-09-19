@@ -87,6 +87,10 @@ class CycloRing:
                     cur[j] += top * f
         return tuple(cur)
 
+    def _modulus(self):
+        """Phi_n as rational coefficients, for polynomial inversion."""
+        return [Fraction(c) for c in cyclotomic_poly(self.n)]
+
     # -- arithmetic ---------------------------------------------------------
     def zero(self) -> Tuple[int, ...]:
         return (0,) * self.degree
@@ -238,3 +242,60 @@ def moser_rotation(field: "CycloField"):
     r = field.sqrt_disc(11)
     five = field.rational(5)
     return field.scale(field.add(five, r), Fraction(1, 6))
+
+
+def _poly_inv_mod(a: List[Fraction], mod: List[Fraction]) -> List[Fraction]:
+    """Inverse of a modulo mod, over Q, by the extended Euclidean algorithm."""
+    def deg(p):
+        d = len(p) - 1
+        while d >= 0 and p[d] == 0:
+            d -= 1
+        return d
+
+    def sub_scaled(p, q, c, shift):
+        out = list(p)
+        for i, x in enumerate(q):
+            while len(out) <= i + shift:
+                out.append(Fraction(0))
+            out[i + shift] -= c * x
+        return out
+
+    r0, r1 = list(mod), list(a)
+    s0, s1 = [Fraction(0)], [Fraction(1)]
+    while deg(r1) >= 0:
+        d0, d1 = deg(r0), deg(r1)
+        if d0 < d1:
+            r0, r1, s0, s1 = r1, r0, s1, s0
+            continue
+        c = r0[d0] / r1[d1]
+        r0 = sub_scaled(r0, r1, c, d0 - d1)
+        s0 = sub_scaled(s0, s1, c, d0 - d1)
+        if deg(r0) < deg(r1):
+            r0, r1, s0, s1 = r1, r0, s1, s0
+    if deg(r0) != 0:
+        raise ZeroDivisionError("element is not invertible")
+    scale = r0[0]
+    return [x / scale for x in s0]
+
+
+def unit_polygon(field: "CycloField", order: int) -> List[Tuple]:
+    """The regular `order`-gon of side 1, centred at the origin.
+
+    Its circumradius is the magic radius 1/(2 sin(pi/order)), because a chord
+    of a circle subtending one full rotation step has length 1 exactly there.
+    And it has a closed form needing no radicals at all: with z the primitive
+    root of that order,
+
+        v_k = z^k / (z - 1),
+
+    since |v_1 - v_0| = |z - 1| / |z - 1| = 1.  Adjacent vertices are one
+    apart, so the polygon *is* a unit-distance cycle of length `order` -- odd
+    when the order is odd, which is the whole point.
+    """
+    if field.n % order:
+        raise ValueError(f"zeta_{order} is not in Q(zeta_{field.n})")
+    z = field.zeta(field.n // order)
+    denom = field.sub(z, field.one())
+    inv = tuple(_poly_inv_mod(list(denom), list(field._modulus()))[: field.degree]
+                + [Fraction(0)] * field.degree)[: field.degree]
+    return [field.mul(field.zeta((field.n // order) * k), inv) for k in range(order)]
