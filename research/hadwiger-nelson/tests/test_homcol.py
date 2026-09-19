@@ -222,3 +222,47 @@ def test_cyclotomic_step_set_admits_no_coset_five_colouring():
     survivors = sum(1 for f in itertools.product(range(5), repeat=D)
                     if all(sum(p * t for p, t in zip(f, v)) % 5 for v in vecs))
     assert survivors == 0, f"{survivors} coset colourings survive"
+
+
+def test_minimum_blocking_set_finds_the_projective_line():
+    """Six slopes at rank 2 cover the dual, and six is the proven minimum."""
+    from hn.homcol import has_homomorphism, minimum_blocking_set
+
+    six = [(1, 0), (0, 1), (1, 1), (1, 2), (1, 3), (1, 4)]
+    best = minimum_blocking_set(six, 5)
+    assert len(best) == 6, "a projective line has no redundant point"
+    assert has_homomorphism(best, 5)[0] is None
+    # and dropping any one of them lets a colouring back in
+    for d in six:
+        rest = [e for e in six if e != d]
+        assert has_homomorphism(rest, 5)[0] is not None
+
+
+def test_triangular_lattice_directions_never_cover():
+    """Unit vectors of a plane lattice give three of the six slopes."""
+    from hn.homcol import minimum_blocking_set
+
+    assert minimum_blocking_set([(1, 0), (0, 1), (1, -1)], 5) == []
+
+
+def test_blocking_is_monotone_in_the_step_set():
+    """Adding a direction can only help: the claim the construction rests on."""
+    from hn.homcol import has_homomorphism
+
+    six = [(1, 0), (0, 1), (1, 1), (1, 2), (1, 3), (1, 4)]
+    assert has_homomorphism(six, 5)[0] is None
+    assert has_homomorphism(six + [(2, 3), (1, 4)], 5)[0] is None
+
+
+def test_blocking_denominator_threshold_is_the_first_split_prime():
+    """29 = 4*7 + 1 is why the directions suddenly cover PG(5,5)."""
+    from hn.homcol import BLOCKING_DENOMINATOR
+
+    d = BLOCKING_DENOMINATOR["threshold"]
+    assert d % 7 == 1
+    assert all(p % 7 == 1 for p in BLOCKING_DENOMINATOR["later_denominators"])
+    assert all(q % 7 != 1 for q in range(2, d) if _prime(q))
+
+
+def _prime(q):
+    return q > 1 and all(q % i for i in range(2, int(q ** 0.5) + 1))

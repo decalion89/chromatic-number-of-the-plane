@@ -43,7 +43,7 @@ from fractions import Fraction
 from math import gcd
 from typing import List, Optional, Sequence, Tuple
 
-__all__ = ["edge_vectors", "has_homomorphism", "screen"]
+__all__ = ["edge_vectors", "has_homomorphism", "screen", "minimum_blocking_set"]
 
 
 def _coords(e) -> Tuple[Fraction, ...]:
@@ -263,3 +263,101 @@ CYCLOTOMIC_BLOCKING = {
     "homomorphisms_surviving": 0,
     "verified": "brute force over all 5^6 = 15625 maps",
 }
+
+
+# -- blocking and folding are both monotone, and that is the way out ------
+#
+# A first reading of the measurements below suggests the two demands fight:
+# every graph in this package has a LOW-rank edge module and admits a coset
+# colouring, while blocking wants directions spread through a high-rank one.
+#
+#   graph               n     m   |S|  rank  corank  chi  blocked
+#   Moser spindle       7    11     7     4       3    4    no
+#   triangular patch  121   320     3     2       1    3    no
+#   de Grey S          39    18     8     4       4    3    no
+#   de Grey Sa        397  1974    15     4      11    4    no
+#   de Grey Sb        397  1974    15     4      11    4    no
+#   de Grey Y         791  3938    33     8      25    4    no
+#
+# The reading is wrong, and saying why matters more than the table. Folding
+# needs RELATIONS among the steps -- Z-independent steps build a tree, and a
+# tree is bipartite -- so it is governed by the corank |S| - rank. Blocking
+# needs the hyperplanes d-perp to cover PG(rank-1,5). BOTH are monotone
+# increasing in the step set: adding a step adds a hyperplane to the cover and
+# can only add relations. They therefore never trade against each other, and
+# the right construction is the UNION of a folding set and a blocking one.
+# The graphs above fail to block because their step sets are SMALL, not
+# because their corank is large.
+
+FOLDING_VERSUS_BLOCKING = (
+    "blocking and folding are both monotone in the step set, so they never "
+    "trade off; the known graphs miss blocking for want of steps, not for "
+    "want of rank"
+)
+
+
+# -- where the blocking steps actually live -------------------------------
+#
+# Modulus-one elements of Q(zeta_7) come by Hilbert 90 as u = alpha/conj(alpha),
+# and grouping them by denominator locates the obstruction exactly. Measured
+# over a box of 1028 such elements, taking all those of denominator at most d:
+#
+#     d <= 1      14 elements     7 directions   no block
+#     d <= 2      30             21              no block
+#     d <= 4      40             31              no block
+#     d <= 8      42             33              no block
+#     d <= 11     44             35              no block
+#     d <= 16     46             37              no block
+#     d <= 29    106             87              BLOCKS
+#
+# Nothing below 29 suffices however many elements are collected, and 29 is the
+# smallest rational prime that splits completely in Q(zeta_7) -- 29 = 4*7 + 1,
+# so 29 = 1 mod 7. Splitting is what supplies many independent modulus-one
+# elements of the same small denominator, which is exactly what covering
+# PG(5,5) needs. The next denominators to appear, 43, 71, 113 and 127, are the
+# following primes congruent to 1 mod 7, as the same reasoning predicts.
+
+BLOCKING_DENOMINATOR = {
+    "field": "Q(zeta_7)",
+    "threshold": 29,
+    "why": "the least rational prime splitting completely, 29 = 4*7 + 1",
+    "directions_at_threshold": 87,
+    "directions_below": 37,
+    "later_denominators": [43, 71, 113, 127],
+}
+
+
+def minimum_blocking_set(vecs: Sequence[Sequence[int]], n: int = 5
+                         ) -> List[Tuple[int, ...]]:
+    """The fewest of these directions whose hyperplanes still cover the dual.
+
+    Blocking is a covering problem: a direction d rules out the maps with
+    phi(d) = 0, which is the hyperplane d-perp, so a set blocks exactly when
+    its hyperplanes cover every projective point. Minimising the number of
+    directions under that condition is unweighted MaxSAT, and worth solving
+    exactly -- greedy covering carries a ln(points) factor and overshoots
+    badly, so its answer says little about how small a construction could be.
+
+    Returns [] when these directions do not cover at all.
+    """
+    import itertools
+
+    from pysat.examples.rc2 import RC2
+    from pysat.formula import WCNF
+
+    vecs = [tuple(v) for v in vecs]
+    dim = len(vecs[0])
+    pts = [p for p in itertools.product(range(n), repeat=dim)
+           if any(p) and next(x for x in p if x) == 1]
+    w = WCNF()
+    for p in pts:
+        cl = [j + 1 for j, d in enumerate(vecs)
+              if sum(a * b for a, b in zip(d, p)) % n == 0]
+        if not cl:
+            return []
+        w.append(cl)
+    for j in range(len(vecs)):
+        w.append([-(j + 1)], weight=1)
+    with RC2(w) as rc2:
+        model = rc2.compute()
+    return [vecs[j] for j in range(len(vecs)) if model[j] > 0]
