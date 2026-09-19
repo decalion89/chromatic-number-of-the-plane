@@ -108,7 +108,18 @@ class Rotation:
         return Point(self.cos * p.x - self.sin * p.y, self.sin * p.x + self.cos * p.y)
 
     def about(self, pivot: Point):
-        """The same rotation, but centred on `pivot`."""
+        """The same rotation, but centred on `pivot`.
+
+        The rotation and the pivot must live in the same field.  Module-level
+        rotations like ROT60 are built over Q(sqrt3, sqrt11), so applying one
+        to a graph in a larger field is a mistake that used to surface deep
+        inside field multiplication; it is caught here instead.
+        """
+        if self.field != pivot.field:
+            raise TypeError(
+                f"rotation is over {self.field} but the pivot is over "
+                f"{pivot.field}; rebuild the rotation in the pivot's field"
+            )
 
         def rotate(p: Point, _r=self, _c=pivot) -> Point:
             return _r(p - _c) + _c

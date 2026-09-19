@@ -130,3 +130,18 @@ def test_distances_just_below_a_quarter_are_still_refused():
 
     with pytest.raises((ValueError, ZeroDivisionError)):
         rotation_joining(Fraction(1, 5))      # 2r < 1: no rotation separates them
+
+
+def test_rotation_about_a_pivot_in_another_field_is_refused():
+    """ROT60 lives in Q(sqrt3, sqrt11).  Applying it to a graph over a larger
+    field used to fail deep inside field multiplication, with a message that
+    named neither the rotation nor the caller."""
+    from hn.geometry import DEGREY_FIELD, ROT60
+
+    foreign = Point(DEGREY_FIELD.zero(), DEGREY_FIELD.zero())
+    with pytest.raises(TypeError, match="rebuild the rotation"):
+        ROT60.about(foreign)
+    # and the correctly-built one works
+    from hn.geometry import _rot60
+
+    assert _rot60(DEGREY_FIELD).about(foreign)(foreign) == foreign
