@@ -154,3 +154,50 @@ def test_spindle_rejects_targets_closer_than_half():
                      Point(base.rational(Fraction(1, 4)), base.zero())])
     with pytest.raises(ValueError):
         spindle_union_auto(g, 0, 1)                    # no rotation separates them by 1
+
+
+# -- a gradient where there was none ---------------------------------------
+
+def test_separation_difficulty_reports_effort_per_query():
+    """Asking "is this pair forced?" gives yes or no and no sense of distance.
+    The solver's conflict count supplies the missing gradient: zero conflicts
+    means wide open, many means nearly forced."""
+    from fractions import Fraction
+
+    from hn.spindle import SeparationDifficulty
+
+    rhombus = build_graph([origin(), eisenstein(1, 0), eisenstein(0, 1), eisenstein(1, 1)])
+    targets = [3]
+    td = SeparationDifficulty(rhombus, 3, 0, targets)
+    try:
+        rows = td.effort_ranking({Fraction(3): targets})
+    finally:
+        td.close()
+    assert len(rows) == 1
+    d2, separable, conflicts, decisions, core = rows[0]
+    assert d2 == 3
+    assert separable is False          # the rhombus forces its far tips
+    assert core == [3]
+    assert conflicts >= 0 and decisions >= 0
+
+
+def test_effort_ranking_puts_the_hardest_first():
+    from fractions import Fraction
+
+    from hn.spindle import SeparationDifficulty
+
+    g = build_graph([origin(), eisenstein(1, 0), eisenstein(0, 1), eisenstein(1, 1),
+                     eisenstein(2, 0), eisenstein(2, 1), eisenstein(1, 2)])
+    p = g.vertices[0]
+    groups = {}
+    for j in range(1, g.n):
+        d2 = p.dist2(g.vertices[j])
+        if d2.is_rational() and d2.c[0] >= Fraction(1, 4):
+            groups.setdefault(d2.c[0], []).append(j)
+    td = SeparationDifficulty(g, 4, 0, sorted({j for js in groups.values() for j in js}))
+    try:
+        rows = td.effort_ranking(groups)
+    finally:
+        td.close()
+    conflicts = [r[2] for r in rows]
+    assert conflicts == sorted(conflicts, reverse=True)

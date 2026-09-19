@@ -36,6 +36,7 @@ from .graph import UnitDistanceGraph, build_graph
 __all__ = ["ForcedPairFinder", "spindle_union", "candidate_pairs_from",
            "ForcedDisjunctionFinder", "targets_at_third", "triple_spindle_union",
            "spindle_union_auto",
+           "SeparationDifficulty",
            "SeparationTest"]
 
 
@@ -424,3 +425,49 @@ def spindle_union_auto(graph: UnitDistanceGraph, pivot: int, target: int):
     if not verts[target].is_unit_apart(image[target]):
         raise AssertionError("spindle rotation did not land the target at distance 1")
     return build_graph(verts + image), big
+
+
+class SeparationDifficulty(SeparationTest):
+    """A separation test that reports *how hard* each query was, not just its answer.
+
+    The blind spot this fixes: asking a SAT solver "is this pair forced?"
+    returns yes or no, and a long run of noes carries no information about
+    whether the search is getting warmer.  There is no gradient, so a sweep
+    over thousands of pivots is thousands of independent coin flips.
+
+    But the solver already measures something useful.  A pair it separates
+    with zero conflicts is wide open -- the very first assignment it tried
+    worked.  A pair that costs fifty thousand conflicts before a separating
+    colouring turns up is nearly forced: almost every way of colouring the
+    graph ties those two vertices together, and the solver had to work to find
+    an exception.  Effort is a continuous proximity-to-forcing measure, and it
+    comes free with the answer.
+
+    That turns a blind sweep into a hill climb.  Rank the pairs by effort,
+    tighten the graph around the hardest ones, and measure again.
+    """
+
+    def effort_ranking(
+        self, groups: Dict, solver: str = DEFAULT_SOLVER, verbose: bool = False
+    ) -> List[Tuple]:
+        """Return (d2, separable, conflicts, decisions, core) per distance group,
+        hardest first."""
+        s = self._solver(solver)
+        rows = []
+        prev = s.accum_stats() or {}
+        for val in sorted(groups):
+            want = groups[val]
+            res = s.solve(assumptions=[self.sel[q] for q in want])
+            cur = s.accum_stats() or {}
+            dc = cur.get("conflicts", 0) - prev.get("conflicts", 0)
+            dd = cur.get("decisions", 0) - prev.get("decisions", 0)
+            prev = cur
+            core = []
+            if res is False:
+                back = {v: q for q, v in self.sel.items()}
+                core = [back[l] for l in (s.get_core() or [])]
+            rows.append((val, bool(res), dc, dd, core))
+            if verbose:
+                print(f"    d2={val}: sep={bool(res)} conflicts={dc} decisions={dd}", flush=True)
+        rows.sort(key=lambda r: (-r[2], -r[3]))
+        return rows
