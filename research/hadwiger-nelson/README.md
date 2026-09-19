@@ -1109,6 +1109,37 @@ criticality corollary settles in one line. Not more pressure, which is already
 at the required floor. Not a better blocking configuration, of which there are
 27 344. **One core, of three, at five colours.**
 
+### And all of it is one number after all
+
+A core of size `r` at `p` means `min |c(N(p) ∪ T)| = k`: every colouring uses
+all `k` colours on that set. That is exactly what **ρ**, the rainbow-forcing
+number, measures — the least size of a set using all `k` colours in every
+colouring. So a core of size `r` at `p` forces
+
+```
+rho <= deg(p) + r
+```
+
+On de Grey's G, whose maximum degree is 60, a core of three needs **ρ ≤ 63**.
+Measured there: **ρ = n = 1581**, because a k-vertex-critical graph has ρ = n.
+And the cross-pair theorem says a union of critical graphs has
+`ρ ≥ min(|A|,|B|)`, so `G ∪ f(G)` has ρ ≥ 1581 too, however heavily it folds.
+
+The folded union was therefore ruled out before it was built — and duly was:
+its exact 60° rotation centre folds **789 of 1581**, giving 2373 vertices and
+11 832 edges, and the forward core construction finds **no core in 60 steps at
+any of four pivots**, with pressure 2 throughout. Confirmation, not discovery.
+
+> So the ladder, the pressure, the cores, the criticality corollary and the
+> cross-pair bound are all the same statement about ρ, and the target is:
+>
+> **a 5-chromatic unit-distance graph with ρ ≤ 63.**
+
+For comparison ρ = k exactly when the graph is uniquely k-colourable. So what
+is wanted is a unit-distance graph that is *nearly uniquely 5-colourable* — and
+every graph measured in this package has ρ = n or ρ ≥ n/2. That is the whole
+distance to the goal, in one number.
+
 ## Corrections to my own claims, kept rather than edited away
 
 - **"Pressure > 2 at k = 5 *requires* the confined set to be 4-chromatic."**

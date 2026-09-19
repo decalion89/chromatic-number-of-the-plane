@@ -1339,3 +1339,45 @@ WHAT_IS_MISSING = {
     "where_to_look": "unions G u (G + t): removing any vertex leaves a whole "
                      "5-chromatic copy, so no pivot gets a colour of its own",
 }
+
+
+# -- and all of it is one number after all --------------------------------
+#
+# A core of size r at p means min |c(N(p) u T)| = k: every colouring uses all
+# k colours on that set. That is exactly what rho, the rainbow-forcing number,
+# measures -- the least size of a set using all k colours in every colouring.
+# So a core of size r at p forces
+#
+#     rho <= deg(p) + r,
+#
+# and on de Grey's G, whose maximum degree is 60, a core of three needs
+# rho <= 63. Measured there: rho = n = 1581, because a k-vertex-critical graph
+# has rho = n. And the cross-pair theorem says a union of critical graphs has
+# rho >= min(|A|,|B|), so G u f(G) has rho >= 1581 too, however heavily it
+# folds. The folded union was therefore ruled out before it was built:
+# 2373 vertices, 789 of them folded, pressure 2 at every hub, and no core in
+# 60 steps at any of four pivots. Confirmation, not discovery.
+#
+# So the ladder, the pressure, the cores, the criticality corollary and the
+# cross-pair bound are all the same statement about rho, and the target is:
+#
+#     A 5-chromatic unit-distance graph with rho <= 63.
+#
+# For comparison rho = k exactly when the graph is uniquely k-colourable, so
+# what is wanted is a unit-distance graph that is NEARLY uniquely 5-colourable
+# -- and every graph measured in this package has rho = n or rho >= n/2.
+# That is the whole distance to the goal, in one number.
+
+RHO_IS_THE_WHOLE_GAP = {
+    "identity": "a core of size r at p means N(p) u T uses all k colours in "
+                "every colouring, so rho <= deg(p) + r",
+    "degrey_needs": 63,
+    "degrey_has": 1581,
+    "why": "vertex-critical graphs have rho = n; unions of critical graphs "
+           "have rho >= min(|A|,|B|) by the cross-pair theorem",
+    "folded_union_checked": {"vertices": 2373, "folded": 789, "pressure": 2,
+                             "core_in_60_steps": False},
+    "target": "a 5-chromatic unit-distance graph with rho <= 63, which is to "
+              "say one that is nearly uniquely 5-colourable",
+    "rho_of_uniquely_colourable": 5,
+}

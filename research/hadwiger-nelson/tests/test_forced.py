@@ -1022,3 +1022,16 @@ def test_pressure_two_does_not_exclude_a_core_of_three():
     assert FREE_PRESSURE == k - r, "the floor is exactly met, not exceeded"
     assert "core 3" in LADDER[k], "the ladder already said three at five"
     assert "not a wall" in WHAT_IS_MISSING["not_pressure"]
+
+
+def test_a_core_bounds_rho_and_that_is_the_whole_gap():
+    """Every earlier theorem is one statement about rho."""
+    from hn.forced import RHO_IS_THE_WHOLE_GAP as R
+
+    # a core of three at a degree-60 pivot would force rho <= 63
+    assert R["degrey_needs"] == 60 + 3
+    assert R["degrey_has"] > 20 * R["degrey_needs"]
+    # and the folded union, which the cross-pair theorem already excluded,
+    # duly produced no core
+    assert R["folded_union_checked"]["core_in_60_steps"] is False
+    assert R["rho_of_uniquely_colourable"] == 5
