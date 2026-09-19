@@ -65,6 +65,7 @@ __all__ = [
     "MULTIQUADRATIC_ORDERS",
     "available_rotation_orders",
     "spindle_catalogue",
+    "spindle_spectrum",
     "squared_distance_for_step",
     "conflict_graphs",
     "independent_transversal",
@@ -345,3 +346,40 @@ def spindle_catalogue(field: Field, max_targets: int = 3) -> List[dict]:
                         "rotations": rotation_powers(base, n),
                     })
     return out
+
+
+def spindle_spectrum(field: Field, max_den: int = 12, max_num: int = 60) -> List[Fraction]:
+    """Every rational d^2 whose spindle rotation exists in this field.
+
+    A spindle at squared distance d needs sin = sqrt(4d-1)/(2d), so the field
+    must contain one particular square root; `required_radical` names it, and
+    a multiquadratic field holds exactly the square roots of products of its
+    generators.  Counting them measures how much forcing machinery a field
+    actually offers, which turns out to vary a lot:
+
+        Q(sqrt3, sqrt11)                    35     the field the literature uses
+        Q(sqrt3, sqrt5, sqrt7, sqrt11)      95     de Grey's, once his rotations
+                                                   are accounted for
+        Q(sqrt2, sqrt3, sqrt5, sqrt7, sqrt11)  134  adding sqrt2, which nothing
+                                                   in the sources read here does
+
+    Searching for forced structure is searching for targets at spindle-able
+    distances, so a field with four times the spindle distances is a materially
+    larger space to look in, at no cost beyond wider coordinates.  d^2 = 1 is
+    included by the arithmetic but is useless in practice: such a target is
+    adjacent to the pivot and so never shares its colour.
+    """
+    from .geometry import required_radical
+
+    available = {1}
+    for g in field.gens:
+        available |= {a * g for a in available}
+    out = []
+    for den in range(1, max_den + 1):
+        for num in range(1, max_num + 1):
+            d2 = Fraction(num, den)
+            if d2 < Fraction(1, 4):
+                continue
+            if required_radical(d2) in available:
+                out.append(d2)
+    return sorted(set(out))

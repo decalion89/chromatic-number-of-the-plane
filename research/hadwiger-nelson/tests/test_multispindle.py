@@ -137,3 +137,40 @@ def test_catalogued_distances_are_exact_field_elements():
             rot = e["rotations"][step]
             # a point at squared distance d2 really does move by exactly 1
             assert (rot.cos - 1) * (rot.cos - 1) + rot.sin * rot.sin == (d2 * 2).inverse() * 2
+
+
+# -- how much forcing machinery a field actually offers ---------------------
+
+def test_spindle_spectrum_grows_with_the_field():
+    """Counting spindle-able distances measures the search space a field gives.
+
+    The literature works in Q(sqrt3, sqrt11); de Grey's rotations force the
+    larger field; adding sqrt2 -- which nothing in the sources read here does --
+    widens it further again.
+    """
+    from hn.multispindle import spindle_spectrum
+
+    small = spindle_spectrum(QSQRT3_11)
+    degrey = spindle_spectrum(DEGREY_FIELD)
+    with_root2 = spindle_spectrum(Field((2, 3, 5, 7, 11)))
+    assert len(small) < len(degrey) < len(with_root2)
+    assert set(small) <= set(degrey) <= set(with_root2)
+
+
+def test_spectrum_entries_really_have_spindle_rotations():
+    from hn.multispindle import spindle_spectrum
+
+    for d2 in spindle_spectrum(QSQRT3_11)[:20]:
+        rot = rotation_joining(d2, QSQRT3_11)
+        assert rot.cos * rot.cos + rot.sin * rot.sin == 1
+
+
+def test_a_distance_outside_the_spectrum_is_rejected():
+    from hn.multispindle import spindle_spectrum
+
+    spectrum = set(spindle_spectrum(QSQRT3_11))
+    assert Fraction(25, 9) not in spectrum        # needs sqrt91 = sqrt7*sqrt13
+    with pytest.raises(ValueError):
+        rotation_joining(Fraction(25, 9), QSQRT3_11)
+    # and it does exist once the field carries those radicals
+    rotation_joining(Fraction(25, 9), Field((7, 13)))
