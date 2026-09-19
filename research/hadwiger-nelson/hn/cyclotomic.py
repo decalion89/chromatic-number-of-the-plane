@@ -299,3 +299,39 @@ def unit_polygon(field: "CycloField", order: int) -> List[Tuple]:
     inv = tuple(_poly_inv_mod(list(denom), list(field._modulus()))[: field.degree]
                 + [Fraction(0)] * field.degree)[: field.degree]
     return [field.mul(field.zeta((field.n // order) * k), inv) for k in range(order)]
+
+
+def unit_steps_extended(field: "CycloField", rot, m_max: int = 2) -> List[Tuple]:
+    """Unit steps beyond the roots of unity: ±zeta^k * rot^m.
+
+    `unit_steps` returns the algebraic *integers* of modulus 1, which Kronecker
+    pins to the 2n roots of unity.  But a unit step only has to have modulus 1,
+    and Q(zeta_n) has far more such elements than Z[zeta_n] does -- the Moser
+    rotation (5 + sqrt(-11))/6 is one, with a denominator of 6.
+
+    Multiplying the roots of unity by powers of such a rotation gives a much
+    larger step set, and a richer one: a step set closed under multiplication
+    by zeta_n forces every ball grown from it to be rotation-invariant, and
+    invariance is what stops a core shrinking below a full orbit.  Powers of
+    rot break that closure while keeping every step exactly unit length.
+
+    It also puts spindles everywhere rather than only about the origin, which
+    is what a rotation applied as a generator, rather than as a step, can never
+    do.
+    """
+    if field.norm2(rot) != field.one():
+        raise ValueError("rot must have modulus 1")
+    powers = [field.one()]
+    for _ in range(m_max):
+        powers.append(field.mul(powers[-1], rot))
+    inv = field.conj(rot)                       # modulus 1, so the inverse
+    back = [field.one()]
+    for _ in range(m_max):
+        back.append(field.mul(back[-1], inv))
+    seen = {}
+    for m in powers + back[1:]:
+        for k in range(field.n):
+            z = field.mul(field.zeta(k), m)
+            seen[z] = None
+            seen[field.neg(z)] = None
+    return [z for z in seen if field.norm2(z) == field.one()]
