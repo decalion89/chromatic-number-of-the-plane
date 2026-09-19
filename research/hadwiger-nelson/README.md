@@ -238,6 +238,40 @@ The pair under test is local; what hardens it is not. So the compute wall that
 localisation was meant to dodge is still there, and the dodge does not work. A blind
 sweep could not have told these two runs apart at all.
 
+## The upper bound, and why searching it is closed
+
+Everyone repeats that lowering the upper bound needs an infinite object and so
+cannot be searched. That is false for *periodic* colourings — Isbell's 7-colouring
+is periodic, one hexagon repeated — and a periodic colouring is determined by a
+finite fundamental domain.
+
+So: tile by a lattice, cut the fundamental domain into cells, and forbid two cells
+sharing a colour whenever a unit distance between them is *possible*, over every
+lattice translation. Closed cells make that conservative, so SAT yields a genuine
+colouring while UNSAT rules out only that lattice at that resolution.
+
+It calibrates. A first attempt with cells of diameter 0.35 came back UNSAT even at
+k=7, which the encoding must satisfy — too coarse, since cells of diameter d forbid
+the whole band [1−d, 1+d] rather than the circle. Measuring the slack in the known
+colouring fixed the resolution: with hexagons of circumradius 0.45 the same-colour
+distances avoid [0.8953, 1.2256], so cells under 0.105 fit. On the index-7
+sublattice with 28 cells a side, 784 cells and 78 792 constrained pairs, a
+7-colouring is found in 0.7 s.
+
+**And it cannot reach six, by a theorem rather than by a compute limit.** Cell-based
+colourings are map-type colourings with polygonal regions, and those need at least
+seven colours: Woodall (1973) and Townsend (1981) give six,
+[arXiv:2502.01958](https://arxiv.org/abs/2502.01958) raises it to seven for maps
+whose boundaries are not arcs of unit circles, with arbitrary polygons as a
+corollary. Any discretisation into cells lands squarely inside that.
+
+Which is worth knowing precisely because of the exception the theorem is careful to
+state. Boundaries that *are* arcs of unit circles are not excluded. So a 6-colouring
+of the plane, if one exists, cannot have polygonal colour classes — it needs curved
+boundaries of radius exactly 1, or non-measurable ones. No grid will ever find it.
+
+Recorded here so the next person does not spend the afternoon on it, as this did.
+
 ## What the literature already had
 
 Read after the fact, which was the wrong order:
