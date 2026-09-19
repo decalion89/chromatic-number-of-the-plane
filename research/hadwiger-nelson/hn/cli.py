@@ -52,6 +52,11 @@ def main(argv=None) -> int:
     v.add_argument("--drat-trim", default=None, help="path to the drat-trim binary")
     v.set_defaults(func=cmd_verify)
 
+    dg = sub.add_parser("degrey", help="rebuild de Grey's 1581-vertex graph and certify chi >= 5")
+    dg.add_argument("--out", default=None)
+    dg.add_argument("--timeout", type=float, default=3600)
+    dg.set_defaults(func=cmd_degrey)
+
     d = sub.add_parser("demo", help="rebuild and certify the classic chi >= 4 result")
     d.add_argument("--out", default=None)
     d.set_defaults(func=cmd_demo)
@@ -62,3 +67,30 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+
+
+def cmd_degrey(args) -> int:
+    """Rebuild de Grey's 1581-vertex graph and certify chi(R^2) >= 5."""
+    import os
+
+    from .certify import save_certificate
+    from .coloring import is_k_colorable
+    from .degrey import build_G
+
+    g = build_G()
+    print(f"de Grey 1581: {g}  (paper: n=1581, m=7877)")
+    sat, _ = is_k_colorable(g, 4, timeout=args.timeout)
+    print(f"  4-colourable: {sat}")
+    if sat is not False:
+        print("  reconstruction did NOT reproduce the result")
+        return 1
+    out = args.out or "certificates"
+    os.makedirs(out, exist_ok=True)
+    p = os.path.join(out, "degrey_1581_no4coloring.json")
+    save_certificate(
+        g, p, 4,
+        "chi(R^2) >= 5: this 1581-vertex unit-distance graph has no proper 4-colouring",
+        notes={"source": "de Grey, arXiv:1804.02385", "rebuilt_from": "published recipe"},
+    )
+    print(f"  wrote {p}")
+    return 0

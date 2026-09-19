@@ -17,7 +17,7 @@ import math
 from typing import Iterable, List, Sequence, Set
 
 from .field import Field, QSQRT3_11
-from .geometry import Point, Rotation, ROT60, SPINDLE, eisenstein, origin
+from .geometry import Point, Rotation, ROT60, SPINDLE, _rot60, eisenstein, origin
 
 __all__ = [
     "unit_vectors",
@@ -169,12 +169,13 @@ def unit_vectors_multi(
         frontier = nxt
         if cap and len(seen) > cap:
             break
+    rot60 = _rot60(field)          # must live in THIS field, not the default one
     out = set()
     for p in seen:
         q = p
         for _ in range(6):
             out.add(q)
-            q = ROT60(q)
+            q = rot60(q)
     return list(out)
 
 
