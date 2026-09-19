@@ -29,6 +29,13 @@ from hn.spindle import SeparationTest
 K = int(os.environ.get("HN_K", "5"))
 BASE = os.environ.get("HN_BASE", "G")
 PIVOTS = int(os.environ.get("HN_PIVOTS", "0"))          # 0 = every pivot
+# Targets beyond this squared distance are dropped. Taking every non-neighbour
+# asks "is there a colouring where the pivot's colour is unique to it", i.e.
+# "is G - p (k-1)-colourable" -- on a k-chromatic graph that is the expensive
+# UNSAT direction, and it took seven minutes on the first pivot alone. Distant
+# targets are useless for blocking anyway: their circles are enormous and
+# their images never meet.
+MAXD = float(os.environ.get("HN_MAXD", "12"))
 BUILDERS = {"G": build_G, "Sa": build_Sa, "Y": build_Y}
 
 
@@ -65,7 +72,11 @@ def main() -> None:
     hist, best, t0 = Counter(), None, time.time()
     for n, bp in enumerate(order):
         nb = set(g.adj[bp]) | {bp}
-        targets = [j for j in range(g.n) if j not in nb]
+        pv = g.vertices[bp]
+        targets = [j for j in range(g.n) if j not in nb
+                   and float(pv.dist2(g.vertices[j])) <= MAXD]
+        if len(targets) < 2:
+            continue
         st = SeparationTest(g, K, bp, targets)
         try:
             sep, core = st.run(subset=targets)

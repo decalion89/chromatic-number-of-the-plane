@@ -673,6 +673,20 @@ of density about `0.2293`, and averaging runs the other way too: that forces
 `0.2293 > 1/5`, no graph ever brings the ratio under `0.2`, and the most this
 argument can yield is `1/0.2293 = 4.36` — `chi_m >= 5`, which is already known.
 
+### And what that says about the object being searched for
+
+Turned around, the same bound is a fact about the target rather than about the
+method. `alpha(G)/n < 1/5` would give `chi(G) >= 6` outright, with no measure
+theory at all: a 5-colouring splits `n` vertices into five independent sets and
+one of them has at least `n/5`. Croft's bound says no unit-distance graph ever
+qualifies.
+
+So **a 6-chromatic unit-distance graph has independent sets of at least
+`0.2293 n`**, and five of them cover at least `1.1465 n` -- more than the whole
+graph, with room to spare. Whatever stops such a graph from 5-colouring, it is
+never counting. It has to be structure, and the classes have to fail to fit
+together for reasons no cardinality argument can see.
+
 Recorded rather than dropped, because knowing why an avenue closes is worth as
 much as a search that fails quietly inside it. The ceiling here is a
 construction, not a shortage of computation, and `tests/test_density.py` pins

@@ -54,3 +54,22 @@ def test_the_density_route_is_capped_below_six():
     assert CROFT_DENSITY > 1 / 5
     assert 1 / CROFT_DENSITY < 5                  # at most chi_m >= 5, never 6
     assert independence_ratio(moser()) > CROFT_DENSITY
+
+
+def test_counting_can_never_prove_six():
+    """What Croft's bound says about the object being searched for.
+
+    alpha(G)/n < 1/5 would give chi(G) >= 6 outright, with no measure theory:
+    a 5-colouring splits n vertices into five independent sets and one has at
+    least n/5. But averaging forces alpha(G)/n >= 0.2293 for every finite
+    unit-distance graph, so no graph ever qualifies.
+
+    Turned around, that is a fact about the target. A 6-chromatic
+    unit-distance graph must have independent sets of at least 0.2293 n, so
+    five of them cover at least 1.1465 n -- more than the whole graph.
+    Whatever stops it from 5-colouring, it is never counting.
+    """
+    from hn.density import CROFT_DENSITY
+
+    assert CROFT_DENSITY > 0.2
+    assert 5 * CROFT_DENSITY > 1.0            # five classes have room to spare
