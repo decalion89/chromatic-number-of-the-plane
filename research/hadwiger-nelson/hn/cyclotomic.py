@@ -335,3 +335,53 @@ def unit_steps_extended(field: "CycloField", rot, m_max: int = 2) -> List[Tuple]
             seen[z] = None
             seen[field.neg(z)] = None
     return [z for z in seen if field.norm2(z) == field.one()]
+
+
+def unit_steps_from_quotients(field: "CycloField", spread: int = 1,
+                              max_den: int = 200, limit: int = 400) -> List[Tuple]:
+    """Modulus-one elements built as alpha / conj(alpha).
+
+    `unit_steps` gives the algebraic integers of modulus one, which Kronecker
+    pins to the 2n roots of unity, and those are closed under multiplying by
+    zeta_n -- so a ball grown from them is rotation-invariant, and in an
+    invariant ball no proper subset of a target orbit is ever forced.
+
+    Hilbert 90 says every modulus-one element of Q(zeta_n) is alpha/conj(alpha)
+    for some alpha, and those are *not* closed under zeta_n.  They are also
+    where the spindles come from: the Moser rotation (5 + sqrt(-11))/6 is one
+    of them, and a field without it needs its own.  Q(zeta_15) has no sqrt(-11)
+    and its integer walk is 3-chromatic, which is the whole problem.
+
+    `spread` bounds the coefficients of alpha, `max_den` the denominator of the
+    quotient, since an unbounded one makes the integer walk overflow rather
+    than help.
+    """
+    from itertools import product
+
+    out = {}
+    rng = range(-spread, spread + 1)
+    for coeffs in product(rng, repeat=min(4, field.degree)):
+        if not any(coeffs):
+            continue
+        a = list(field.zero())
+        for j, c in enumerate(coeffs):
+            a[j] = Fraction(c)
+        a = tuple(a)
+        try:
+            inv = _poly_inv_mod(list(field.conj(a)), field._modulus())
+        except ZeroDivisionError:
+            continue
+        inv = tuple((inv + [Fraction(0)] * field.degree)[: field.degree])
+        q = field.mul(a, inv)
+        if field.norm2(q) != field.one():
+            continue
+        den = 1
+        for x in q:
+            den = den * x.denominator // __import__("math").gcd(den, x.denominator)
+        if den > max_den:
+            continue
+        out[q] = None
+        out[field.neg(q)] = None
+        if len(out) >= limit:
+            break
+    return list(out)

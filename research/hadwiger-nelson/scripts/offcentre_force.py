@@ -32,6 +32,7 @@ K = int(os.environ.get("HN_K", "4"))
 ORDER = int(os.environ.get("HN_ORDER", "11"))
 RADIUS = float(os.environ.get("HN_RADIUS", "2.2"))
 OFF = float(os.environ.get("HN_OFF", "1.6"))
+DEPTH = int(os.environ.get("HN_DEPTH", "8"))
 CAP = int(os.environ.get("HN_CAP", "9000"))
 SHIFTS = int(os.environ.get("HN_SHIFTS", "2"))
 
@@ -40,7 +41,7 @@ def ball(F, gens, centre, radius, cap, extra=()):
     seeds = [CycloPoint(F, centre)] + list(extra)
     cz = F.to_complex(centre)
     r2 = radius * radius
-    return [p for p in cyclo_generated(F, seeds, gens, 4, cap=cap)
+    return [p for p in cyclo_generated(F, seeds, gens, DEPTH, cap=cap)
             if abs(p.z - cz) ** 2 <= r2]
 
 
@@ -64,8 +65,20 @@ def main() -> None:
     F = CycloField(33)
     poly = unit_polygon(F, ORDER)
     rho = moser_rotation(F)
-    units = [("add", tuple(Fraction(x) for x in u)) for u in F.unit_steps()]
-    gens = units + [("mul", rho), ("mul", F.conj(rho))]
+    # A low-rank step set, because rank decides whether there is an interior.
+    # The 66 roots of unity generate Z[zeta_33], rank 20, and a ball over it is
+    # all boundary: depth 3 gave an empty 8-core. omega and rho generate
+    # Q(omega, sqrt(-11)), degree 4, with denominators bounded by 6 -- the
+    # classical setting, where depth pays off and interior points keep their
+    # full complement of neighbours.
+    w = F.zeta(F.n // 3)
+    base = [F.one(), w, F.mul(w, w)]
+    steps = []
+    for b in base:
+        for mult in (F.one(), rho, F.conj(rho)):
+            z = F.mul(b, mult)
+            steps += [z, F.neg(z)]
+    gens = [("add", z) for z in steps]
     cap = trapping_bound(ORDER)
     print(f"order {ORDER}, k={K}: capacity {cap}, polygon radius "
           f"{abs(F.to_complex(poly[0])):.4f}", flush=True)
