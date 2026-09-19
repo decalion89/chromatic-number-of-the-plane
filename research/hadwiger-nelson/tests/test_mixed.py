@@ -358,3 +358,74 @@ def test_centroids_give_every_pivot_a_leg():
                for j in range(g2.n) if j != bp):
             has += 1
     assert has == min(g2.n, 40)
+
+
+def test_two_orbit_block_runs_to_an_uncolourable_union():
+    """The whole chain on a real object: forced pair, six copies, no colouring.
+
+    A proof that has never produced a certificate is worth less than one that
+    has. At k=3 forcing is cheap, so the pipeline can be run to the end: the
+    triangular lattice is 3-chromatic, its unit triangles are everywhere, and
+    their centroids hand over the leg at d^2 = 1/3 for free.
+
+    91 vertices go in 3-colourable; the union of the six copies comes out at
+    409 vertices and 1062 edges with no 3-colouring at all.
+    """
+    from fractions import Fraction
+
+    from hn.coloring import is_k_colorable
+    from hn.generate import hex_ball
+    from hn.mixed import (blocks_two_targets, two_orbit_block,
+                          unit_triangle_centroids)
+    from hn.multispindle import cross_blocks
+    from hn.spindle import SeparationTest
+
+    pts = list(hex_ball(3))
+    g0 = build_graph(pts)
+    cents = [c for c in unit_triangle_centroids(g0) if c not in set(g0.vertices)]
+    g = build_graph(pts + cents)
+    assert is_k_colorable(g, 3)[0]
+
+    third = Fraction(1, 3)
+    found = None
+    for bp in sorted(range(g.n), key=lambda v: -len(g.adj[v])):
+        p = g.vertices[bp]
+        legs, others = [], []
+        for j in range(g.n):
+            if j == bp or j in g.adj[bp]:
+                continue
+            d2 = p.dist2(g.vertices[j])
+            if not d2.is_rational():
+                continue
+            (legs if d2.c[0] == third else others).append(j)
+        if not legs or not others:
+            continue
+        st = SeparationTest(g, 3, bp, legs + others)
+        try:
+            for a in legs:
+                for b in others:
+                    if not st.run(subset=[a, b])[0]:
+                        found = (bp, a, b)
+                        break
+                if found:
+                    break
+        finally:
+            st.close()
+        if found:
+            break
+    assert found, "no forced pair with a leg on the classical circle"
+
+    bp, a, b = found
+    copies = two_orbit_block(g, bp, a, b)
+    assert copies is not None and len(copies) == 6
+    assert blocks_two_targets(g, bp, [a, b], copies)
+    assert cross_blocks(g, bp, [a, b], copies)
+
+    p = g.vertices[bp]
+    union = {q: None for q in g.vertices}
+    for r in copies:
+        f = r.about(p)
+        for q in g.vertices:
+            union[f(q)] = None
+    u = build_graph(list(union))
+    assert not is_k_colorable(u, 3)[0]
