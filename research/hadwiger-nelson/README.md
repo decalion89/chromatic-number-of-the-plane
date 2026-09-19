@@ -649,6 +649,37 @@ At `k = 4` there is no forcing at all in this field: 55363 vertices at average
 degree 12.6, separable. Forcing at four colours needs a construction of de
 Grey's kind, not a ball.
 
+## A whole avenue, closed with a reason
+
+Every search here chases one binary fact, and until it turns up there is
+nothing to show. There is a continuous quantity giving the same conclusion,
+and every finite graph reports a value for it.
+
+Let `S` be measurable, avoiding distance 1, of upper density `d`, and `G` a
+finite unit-distance graph on `n` vertices. Average over rigid motions: the
+expected size of `sigma(V) ∩ S` is `n d`, and that intersection is independent
+in a copy of `G`, so it never exceeds `alpha(G)`. Hence
+
+    m_1(R^2) <= alpha(G) / n
+
+for every finite unit-distance graph, and five measurable classes covering the
+plane force one of density at least `1/5`. So a single `G` with
+`alpha/n < 1/5` would give `chi_m(R^2) >= 6`, from one independent-set
+computation.
+
+**It cannot happen.** Croft's 1967 construction is a measurable 1-avoiding set
+of density about `0.2293`, and averaging runs the other way too: that forces
+`alpha(G)/n >= 0.2293` for *every* finite unit-distance graph. Since
+`0.2293 > 1/5`, no graph ever brings the ratio under `0.2`, and the most this
+argument can yield is `1/0.2293 = 4.36` — `chi_m >= 5`, which is already known.
+
+Recorded rather than dropped, because knowing why an avenue closes is worth as
+much as a search that fails quietly inside it. The ceiling here is a
+construction, not a shortage of computation, and `tests/test_density.py` pins
+it. The Moser spindle's `2/7 = 0.2857` and the published `m_1 <= 0.2470`
+(Ambrus, Csiszárik, Matolcsi, Varga, Zsámboki 2023, by Fourier methods rather
+than from a graph) sit between the two.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

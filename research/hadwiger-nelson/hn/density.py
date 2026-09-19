@@ -20,9 +20,23 @@ them has density at least 1/5, so
     alpha(G) / n < 1/5   for a single finite G   =>   chi_m(R^2) >= 6.
 
 That is a certificate, not a search: one graph, one independent-set
-computation, and the number either clears 0.2 or does not. The Moser spindle
-gives 2/7 = 0.2857. The best known bound on m_1 is about 0.2470, from Fourier
-methods rather than from a graph, so the graph route has room in it.
+computation, and a number that always exists. The Moser spindle gives
+2/7 = 0.2857, and the best published bound on m_1 is about 0.2470, by Fourier
+methods rather than from a graph.
+
+**And the route is capped, provably, short of six.**  Croft's 1967
+construction is a measurable 1-avoiding set of density about 0.2293, so by the
+same averaging in reverse, alpha(G)/n >= 0.2293 for *every* finite
+unit-distance graph.  Since 0.2293 > 1/5, no graph can ever bring the ratio
+under 0.2, and chi_m(R^2) >= 6 cannot be reached this way at all.  The most
+this argument yields is 1/0.2293 = 4.36, so chi_m >= 5 -- true, and already
+known both from here and from de Grey.
+
+Worth keeping anyway, for two reasons.  It is the only quantity in this
+package that reports progress on a bad day, and improving a graph's ratio
+towards 0.2293 is a real number moving.  And knowing *why* a whole avenue
+closes is worth as much as a search that fails quietly in it: the ceiling is
+Croft's set, not a shortage of computation.
 """
 from __future__ import annotations
 
@@ -35,6 +49,10 @@ from pysat.solvers import Solver
 from .graph import UnitDistanceGraph
 
 DEFAULT_SOLVER = "cd19"
+
+# Croft's 1967 construction: a measurable 1-avoiding set of this density, so
+# no finite unit-distance graph has a smaller independence ratio.
+CROFT_DENSITY = 0.2293
 
 
 def _independent_at_least(graph: UnitDistanceGraph, size: int, pool: IDPool):

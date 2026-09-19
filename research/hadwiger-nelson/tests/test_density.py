@@ -39,3 +39,18 @@ def test_a_triangle_free_graph_has_the_ratio_it_should():
     g = build_graph([o(), eisenstein(1, 0)])
     assert independence_number(g)[0] == 1
     assert abs(measurable_bound(g) - 2.0) < 1e-12
+
+
+def test_the_density_route_is_capped_below_six():
+    """Croft's 1967 set has density 0.2293, so no graph beats it.
+
+    Averaging runs both ways: a measurable 1-avoiding set of density d forces
+    alpha(G)/n >= d for every finite unit-distance graph. Since 0.2293 > 1/5,
+    no ratio ever clears 0.2 and chi_m >= 6 is out of reach by this argument --
+    the ceiling is a construction, not a shortage of computation.
+    """
+    from hn.density import CROFT_DENSITY
+
+    assert CROFT_DENSITY > 1 / 5
+    assert 1 / CROFT_DENSITY < 5                  # at most chi_m >= 5, never 6
+    assert independence_ratio(moser()) > CROFT_DENSITY
