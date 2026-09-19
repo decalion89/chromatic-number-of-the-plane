@@ -512,3 +512,85 @@ def conflict_isometries(graph, pivot: int, targets: Sequence[int],
             if len(seen) >= limit:
                 return list(seen.values())
     return list(seen.values())
+
+
+def forbidden_patterns(graph, k: int, W: Sequence[int],
+                       solver: str = "cd19") -> List[Tuple]:
+    """Which colour patterns on W no k-colouring of the graph realises.
+
+    Forcing, as this package has used it, is the smallest case of a much more
+    general question. "Some target carries the pivot's colour" says one
+    particular partition of {pivot} u T -- the one where the pivot is alone --
+    is unrealisable. Nothing restricts the question to that shape.
+
+    So: for a small set W, ask of every set partition of W whether some
+    k-colouring of the graph induces it. The ones that do not are forced
+    constraints, and a set with several of them is carrying far more
+    information than a single disjunction does.
+
+    On a graph with no k-colouring at all every partition comes back
+    forbidden, which is vacuous rather than informative -- the same trap as
+    measuring forcing on a 5-chromatic graph at k=4. Check colourability first.
+
+    Returned as canonical partitions: a tuple of blocks, each a sorted tuple,
+    ordered by their least element.
+    """
+    from itertools import product
+
+    from pysat.formula import CNF
+    from pysat.solvers import Solver
+
+    W = list(W)
+    n, w = graph.n, len(W)
+
+    def x(v, c):
+        return 1 + v * k + c
+
+    base = CNF()
+    for v in range(n):
+        base.append([x(v, c) for c in range(k)])
+    for u, v in graph.edges():
+        for c in range(k):
+            base.append([-x(u, c), -x(v, c)])
+
+    out = []
+    seen = set()
+    for assign in product(range(k), repeat=w):
+        blocks = {}
+        for i, c in enumerate(assign):
+            blocks.setdefault(c, []).append(i)
+        part = tuple(sorted((tuple(b) for b in blocks.values()),
+                            key=lambda t: t[0]))
+        if part in seen:
+            continue
+        seen.add(part)
+        cnf = CNF(from_clauses=base.clauses)
+        for i, c in enumerate(assign):
+            cnf.append([x(W[i], c)])
+        with Solver(name=solver, bootstrap_with=cnf) as s:
+            if not s.solve():
+                out.append(part)
+    return out
+
+
+def pattern_pressure(graph, k: int, W: Sequence[int], **kw) -> float:
+    """Fraction of W's partitions the graph forbids.
+
+    Zero means W is unconstrained and carries nothing; one would mean no
+    colouring survives at all. A single forced disjunction shows up here as
+    one forbidden partition among many, which is how little of the available
+    information the spindle argument uses.
+    """
+    forb = forbidden_patterns(graph, k, W, **kw)
+    total = _bell(len(W))
+    return len(forb) / total if total else 0.0
+
+
+def _bell(n: int) -> int:
+    row = [1]
+    for _ in range(n):
+        new = [row[-1]]
+        for x in row:
+            new.append(new[-1] + x)
+        row = new
+    return row[0]

@@ -170,3 +170,34 @@ def test_reflections_cut_the_escapes():
     a = count_cross_transversals(g, pivot, targets, rots, cap=50000)
     b = count_cross_transversals(g, pivot, targets, both, cap=50000)
     assert b <= a
+
+
+def test_forbidden_patterns_generalise_forcing():
+    """A forced disjunction is one forbidden partition; there are others.
+
+    "Some target carries the pivot's colour" says exactly that the partition
+    putting the pivot in a block of its own is unrealisable. Nothing restricts
+    the question to that shape, and on the Moser spindle at k=4 a three-point
+    set already has two of its five partitions forbidden.
+    """
+    from hn.geometry import SPINDLE, eisenstein, origin
+    from hn.mixed import _bell, forbidden_patterns, pattern_pressure
+
+    rh = [origin(), eisenstein(1, 0), eisenstein(0, 1), eisenstein(1, 1)]
+    g = build_graph(rh + [SPINDLE(p) for p in rh])
+    assert _bell(3) == 5 and _bell(4) == 15
+    forb = forbidden_patterns(g, 4, [0, 3, 5])
+    assert 0 < len(forb) < _bell(3)
+    for part in forb:
+        assert sorted(i for b in part for i in b) == [0, 1, 2]
+    assert 0 < pattern_pressure(g, 4, [0, 3, 5]) < 1
+
+
+def test_forbidden_patterns_are_vacuous_without_a_colouring():
+    """The spindle is 4-chromatic, so at k=3 every partition is 'forbidden'."""
+    from hn.geometry import SPINDLE, eisenstein, origin
+    from hn.mixed import _bell, forbidden_patterns
+
+    rh = [origin(), eisenstein(1, 0), eisenstein(0, 1), eisenstein(1, 1)]
+    g = build_graph(rh + [SPINDLE(p) for p in rh])
+    assert len(forbidden_patterns(g, 3, [0, 3, 5])) == _bell(3)
