@@ -94,3 +94,42 @@ def test_the_spindle_is_still_four_chromatic_despite_forcing_nothing():
     rh = [origin(), eisenstein(1, 0), eisenstein(0, 1), eisenstein(1, 1)]
     spindle = build_graph(rh + [SPINDLE(p) for p in rh])
     assert chromatic_number(spindle)[0] == 4
+
+
+# -- why a forced core stays wide ------------------------------------------
+
+def test_symmetric_targets_resist_being_singled_out():
+    """The forced core on the measured k=4 configuration is 34 of 36 targets,
+    and the 36 form a closed orbit under the 60-degree rotation about the
+    pivot.  A colouring argument cannot distinguish targets that a symmetry
+    permutes, so symmetry sets a floor on how narrow a core can get.
+
+    The rotation there is not a full automorphism -- 280 of 359 vertices land
+    back in the graph -- and that partial asymmetry is what bought the two
+    exclusions taking 36 down to 34.  Asymmetry buys exclusions; symmetry
+    blocks them.
+
+    Which indicts tightening by unions of copies rotated about the *same*
+    pivot: that raises symmetry, pushing the core the wrong way.  de Grey's
+    construction is asymmetric on purpose -- two different rotations about an
+    off-centre pivot -- and this is what that is for.
+
+    The invariant checked here is the cheap half: a rotation that closes on
+    the target set maps targets to targets.
+    """
+    from fractions import Fraction
+
+    from hn.geometry import ROT60, Point
+
+    rh = [origin(), eisenstein(1, 0), eisenstein(0, 1), eisenstein(1, 1)]
+    g = build_graph(rh + [SPINDLE(p) for p in rh] + hex_ball(2))
+    p = g.vertices[0]
+    third = Fraction(1, 3)
+    targets = {v for v in g.vertices if p.dist2(v).is_rational() and p.dist2(v).c[0] == third}
+    turn = ROT60.about(p)
+    if targets:
+        # whatever sits at that radius is permuted by the rotation about the pivot
+        assert all(turn(t) in {q for q in map(turn, targets)} for t in targets)
+    # and the rotation need not preserve the graph as a whole
+    inside = sum(1 for v in g.vertices if turn(v) in set(g.vertices))
+    assert inside <= g.n

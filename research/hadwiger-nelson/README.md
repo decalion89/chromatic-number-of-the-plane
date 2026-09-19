@@ -341,6 +341,23 @@ between "forcing exists" and "forcing is usable" is the real obstruction, and it
 explains why de Grey's and Parts' constructions are elaborate rather than a single
 spindle of some forced pair.
 
+**Why the core stays wide: symmetry.** On the measured configuration the forced
+core is 34 of 36 targets, and all 36 form a closed orbit under the 60° rotation
+about the pivot — every one maps to another. A colouring argument cannot single
+out targets that a symmetry permutes, so symmetry sets a floor on how narrow a
+core can get.
+
+That rotation is not a full automorphism: 280 of 359 vertices land back in the
+graph, not all of them. And that partial asymmetry is exactly what bought the two
+exclusions taking 36 down to 34. **Asymmetry buys exclusions; symmetry blocks
+them.** Getting to 2 needs 32 more.
+
+Which indicts the tightening used here for most of a day. Unioning a graph with
+copies of itself rotated about the *same* pivot **raises** symmetry, pushing the
+core the wrong way — the effort score climbed while the quantity that decides
+anything could not move. de Grey's construction is asymmetric on purpose, two
+different rotations about an off-centre pivot, and this is what that is for.
+
 It also replaces the search objective. Chasing effort asks "how hard is this pair to
 separate"; the quantity that actually has to move is **the size of the minimal
 forced core**, which must reach 2. Here it sits at 34.
