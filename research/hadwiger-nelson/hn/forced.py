@@ -1381,3 +1381,38 @@ RHO_IS_THE_WHOLE_GAP = {
               "say one that is nearly uniquely 5-colourable",
     "rho_of_uniquely_colourable": 5,
 }
+
+
+# -- the frontier in one measurement --------------------------------------
+#
+# The rho reading is only worth anything if it comes out right where the
+# construction actually succeeds. At four colours de Grey's Sa reaches
+# pressure 3 with cores down to 7 at a pivot of degree 30, which predicts
+# rho(Sa, 4) <= 37. Measured on the same 397 points, one colour apart:
+#
+#     Moser spindle, k = 4:   rho = 7 = n     (4-vertex-critical, so rho = n)
+#     de Grey Sa,    k = 4:   rho = 7         on 397 vertices
+#     de Grey Sa,    k = 5:   the same construction runs past 358 without
+#                             closing
+#
+# Seven vertices out of 397 use all four colours in every colouring. That is
+# the rigidity the whole spindle method runs on, and the prediction is met
+# with room to spare. Add ONE colour to the same graph and the construction
+# that closed at seven does not close at 358.
+#
+# Stated carefully: the 358 bounds the greedy path, not rho itself, since a
+# different set of that size might still be forcing. What it does show is that
+# the counterexample construction -- the same one, on the same points --
+# behaves in completely different regimes at four and five colours.
+#
+# That is the frontier, in one measurement, on one graph.
+
+RHO_JUMPS_AT_FIVE = {
+    "graph": "de Grey Sa, 397 vertices, maximum degree 30",
+    "rho_at_4": 7,
+    "greedy_at_5_did_not_close_by": 358,
+    "predicted_bound_at_4": 37,
+    "moser_spindle_at_4": 7,
+    "caveat": "358 bounds the greedy path, not rho: a different set of that "
+              "size might still be forcing",
+}

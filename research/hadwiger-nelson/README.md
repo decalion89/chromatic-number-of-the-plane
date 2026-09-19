@@ -1140,6 +1140,31 @@ is wanted is a unit-distance graph that is *nearly uniquely 5-colourable* — an
 every graph measured in this package has ρ = n or ρ ≥ n/2. That is the whole
 distance to the goal, in one number.
 
+### The frontier in one measurement
+
+The ρ reading is only worth anything if it comes out right where the
+construction actually succeeds. At four colours de Grey's Sa reaches pressure 3
+with cores down to 7 at a pivot of degree 30, which **predicts ρ(Sa, 4) ≤ 37**.
+Measured on the same 397 points, one colour apart:
+
+| | ρ |
+|---|---|
+| Moser spindle, k = 4 | **7** = n (4-vertex-critical, so ρ = n) |
+| de Grey Sa, k = 4 | **7** — on 397 vertices |
+| de Grey Sa, k = 5 | the same construction runs past **358** without closing |
+
+Seven vertices out of 397 use all four colours in every colouring. That is the
+rigidity the whole spindle method runs on, and the prediction is met with room
+to spare. **Add one colour to the same graph and the construction that closed
+at seven does not close at 358.**
+
+Stated carefully: the 358 bounds the *greedy path*, not ρ itself, since a
+different set of that size might still be forcing. What it shows is that the
+counterexample construction — the same one, on the same points — is in
+completely different regimes at four and five colours.
+
+> That is the frontier, in one measurement, on one graph.
+
 ## Corrections to my own claims, kept rather than edited away
 
 - **"Pressure > 2 at k = 5 *requires* the confined set to be 4-chromatic."**

@@ -1035,3 +1035,12 @@ def test_a_core_bounds_rho_and_that_is_the_whole_gap():
     # duly produced no core
     assert R["folded_union_checked"]["core_in_60_steps"] is False
     assert R["rho_of_uniquely_colourable"] == 5
+
+
+def test_rho_prediction_holds_where_the_method_works():
+    """rho <= deg + r at four colours, met with room; broken at five."""
+    from hn.forced import RHO_JUMPS_AT_FIVE as R
+
+    assert R["rho_at_4"] <= R["predicted_bound_at_4"], "the prediction is met"
+    assert R["rho_at_4"] * 50 < R["greedy_at_5_did_not_close_by"]
+    assert "not rho" in R["caveat"], "the 358 is a path bound, not a value"
