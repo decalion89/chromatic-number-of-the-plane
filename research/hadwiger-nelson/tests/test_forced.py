@@ -263,3 +263,75 @@ def test_core_must_be_a_rainbow_disjoint_from_the_neighbourhood():
         assert not core_must_be_rainbow(rel, bp, [legs[0], legs[0]])
     finally:
         rel.close()
+
+
+# -- cores built forwards --------------------------------------------------
+
+def test_core_condition_is_a_pressure_measurement():
+    """T is a core of p exactly when N(p) union T uses every colour.
+
+    If some colouring left a colour free on both, recolouring p to it stays
+    proper -- properness at p asks only that its colour avoid c(N(p)) -- and
+    puts c(p) outside c(T). The two characterisations must agree with the
+    separation test on the built construction, where the answer is known.
+    """
+    from hn.forced import is_core, min_colours_on
+    from hn.mixed import joint_core_configuration
+    from hn.spindle import SeparationTest
+
+    _E, pts, _rho, _sigma = joint_core_configuration()
+    g = build_graph(pts)
+    bp = g.vertices.index(pts[0])
+    y, z = g.vertices.index(pts[2]), g.vertices.index(pts[3])
+    rel = ColourRelations(g, 3)
+    try:
+        assert is_core(rel, bp, [y, z])
+        assert not is_core(rel, bp, [y])
+        assert not is_core(rel, bp, [z])
+        circle = sorted(g.adj[bp])
+        assert min_colours_on(rel, circle + [y, z]) == 3
+        assert min_colours_on(rel, circle + [y]) < 3
+    finally:
+        rel.close()
+    st = SeparationTest(g, 3, bp, [y, z])
+    try:
+        assert not st.run(subset=[y, z])[0]      # forced, i.e. a core
+        assert st.run(subset=[y])[0]             # not forced alone
+        assert st.run(subset=[z])[0]
+    finally:
+        st.close()
+
+
+def test_cegar_core_finds_the_built_pair():
+    from hn.forced import cegar_core, is_core
+    from hn.mixed import joint_core_configuration
+
+    _E, pts, _rho, _sigma = joint_core_configuration()
+    g = build_graph(pts)
+    bp = g.vertices.index(pts[0])
+    rel = ColourRelations(g, 3)
+    try:
+        T, ok = cegar_core(rel, bp)
+        assert ok and is_core(rel, bp, T)
+        assert set(T) == {g.vertices.index(pts[2]), g.vertices.index(pts[3])}
+    finally:
+        rel.close()
+
+
+@pytest.mark.slow
+def test_cegar_core_fails_on_a_critical_graph():
+    """A k-vertex-critical graph has no core, so the construction must run out.
+
+    This is the criticality corollary as an executable statement: de Grey's G
+    is 5-vertex-critical, so no amount of counterexample-killing can ever
+    close a core there, and the builder has to come back empty.
+    """
+    from hn.forced import cegar_core
+
+    g = build_G()
+    rel = ColourRelations(g, 5)
+    try:
+        _T, ok = cegar_core(rel, 0, limit=40)
+        assert not ok, "a critical graph must yield no core"
+    finally:
+        rel.close()
