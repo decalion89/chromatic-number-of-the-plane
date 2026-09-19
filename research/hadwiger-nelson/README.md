@@ -859,6 +859,38 @@ case, absent from the eight, and χ(confined) is 1 at two hexagons and jumps to
 > through a continuous space**, not the space. It explains why de Grey's family
 > stops where it does. It does not close the route.
 
+### Scanning the surface, not the curve
+
+With three hexagons the confined set's edges come from equations relating
+**two** free angles, so the space is a surface. It can still be scanned,
+because a configuration is rich exactly where many equations hold at once.
+Fixing `α₁`, an edge between `q = u_i + v_j` from pair (0,1) and
+`q' = u_i' + w_l` from (0,2) needs
+
+```
+|(w^i - w^i') + e^(i a1) w^j - e^(i a2) w^l| = 1
+```
+
+which for `A` = the first two terms and `C = A conj(w^l)` reads
+`Re(C e^(-i a2)) = |A|²/2`, so `a2 = arg C ∓ arccos(|A|/2)` whenever `|A| ≤ 2`.
+Each `(i, i', j, l)` gives up to two values, 2160 in all, and the rich
+configurations are the **histogram peaks**.
+
+The method reproduces de Grey's own configuration as a check: at `α₁ = θ/2`
+the value `α₂ = θ` carries multiplicity 144, and the configuration measures
+126 auxiliaries, 306 edges, confined degeneracy 2 — agreeing exactly with the
+field arithmetic.
+
+**Scanned over 900 values of α₁ and the six richest α₂ at each — 5400
+configurations — nothing exceeds degeneracy 2.**
+
+Two measurement bugs are worth recording, because both made the scan *blind*
+rather than wrong-looking: rounding auxiliary coordinates to 1e-6 while testing
+distances against 1e-7 found 50 of de Grey's 306 edges (keys are now rounded
+to 1e-9, where the arithmetic really carries 1e-15); and the largest histogram
+peak is always `α₂ = α₁`, the same six points, so coincident offsets are
+dropped before ranking rather than after.
+
 ### A blocked graph cannot be a lattice
 
 Adding steps never hurts blocking or folding, but it does **dilute a ball**: at

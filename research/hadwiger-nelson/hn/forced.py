@@ -1176,3 +1176,44 @@ TWO_HEXAGON_ANGLES_ARE_FINITE = {
               "hexagon pairs, giving two angles against one equation -- a "
               "curve, and de Grey's theta/2 lives on it",
 }
+
+
+# -- scanning the two-parameter space de Grey's family is a curve in ------
+#
+# With three hexagons the confined set's edges come from equations relating
+# TWO free angles, so the design space is a surface rather than a list. It can
+# still be scanned, because a configuration is rich exactly where many
+# equations hold at once. Fixing alpha1, an edge between q = u_i + v_j from
+# the pair (0,1) and q' = u_i' + w_l from (0,2) needs
+#
+#     |(w^i - w^i') + e^(i alpha1) w^j - e^(i alpha2) w^l| = 1,
+#
+# which for A = the first two terms and C = A conj(w^l) reads
+# Re(C e^(-i alpha2)) = |A|^2 / 2, so alpha2 = arg C -+ arccos(|A|/2) whenever
+# |A| <= 2. Each (i, i', j, l) gives up to two values, 2160 in all, and the
+# rich configurations are the HISTOGRAM PEAKS of those values.
+#
+# The method reproduces de Grey's own configuration as a check: at
+# alpha1 = theta/2 the value alpha2 = theta carries multiplicity 144, and the
+# configuration measures 126 auxiliaries, 306 edges, confined degeneracy 2 --
+# agreeing exactly with the field arithmetic.
+#
+# Scanned over 900 values of alpha1 and the six richest alpha2 at each, 5400
+# configurations: nothing exceeds degeneracy 2.
+#
+# TWO MEASUREMENT BUGS worth recording, because both made the scan blind
+# rather than wrong-looking. Rounding auxiliary coordinates to 1e-6 while
+# testing distances against 1e-7 found 50 of de Grey's 306 edges; the keys are
+# now rounded to 1e-9, where the arithmetic really carries 1e-15. And the
+# largest histogram peak is always alpha2 = alpha1, which is the same six
+# points, so coincident offsets are dropped before ranking rather than after.
+
+THREE_HEXAGON_SCAN = {
+    "free_parameters": 2,
+    "candidate_equations": 2160,
+    "validated_on": "de Grey's alpha1 = theta/2, alpha2 = theta: multiplicity "
+                    "144, 126 auxiliaries, 306 edges, degeneracy 2",
+    "configurations_evaluated": 5400,
+    "best_degeneracy": 2,
+    "needed": 3,
+}
