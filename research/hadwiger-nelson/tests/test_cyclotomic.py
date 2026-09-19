@@ -48,7 +48,7 @@ def test_zeta_fifteen_keeps_the_triangle_and_lifts_the_ceiling():
     assert tri                                        # omega is still in there
     assert 5 in rotation_orders(15) and 15 in rotation_orders(15)
     assert odd_cycle_reach(3) == 2
-    assert odd_cycle_reach(15) == 8
+    assert odd_cycle_reach(15) == 4
 
 
 def test_arithmetic_is_consistent_with_the_complex_embedding():
@@ -78,7 +78,7 @@ def test_moser_spindle_lives_in_a_cyclotomic_field():
     The spindle's rotation is multiplication by (5 + sqrt(-11))/6, and
     sqrt(-11) is the Gauss sum over zeta_11, so the whole construction fits in
     Q(zeta_33) -- which also carries rotations of order 11 and 33, capacities
-    6 and 17 against the multiquadratic 2.
+    5 and 5 against the multiquadratic 2.
     """
     from hn.coloring import is_k_colorable
     from hn.cyclograph import build_cyclo_graph, moser_spindle_cyclotomic
@@ -90,7 +90,7 @@ def test_moser_spindle_lives_in_a_cyclotomic_field():
     assert (g.n, g.m) == (7, 11)
     assert not is_k_colorable(g, 3)[0]
     assert is_k_colorable(g, 4)[0]
-    assert trapping_capacity(11) == 6 and trapping_capacity(33) == 17
+    assert trapping_capacity(11) == 5 and trapping_capacity(33) == 5
 
 
 def test_unit_polygon_realises_the_magic_circle():

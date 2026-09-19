@@ -78,16 +78,71 @@ def cycle_lengths(order: int) -> list:
     return sorted({order // gcd(order, t) for t in range(1, order + 1)})
 
 
+# Capacities computed exhaustively by `_capacity` below, which is exponential
+# in the cycle length.  Beyond 15 the enumeration stops being cheap; nothing
+# here assumes a value it has not computed.
+_CAPACITY = {3: 2, 5: 3, 7: 4, 9: 4, 11: 5, 13: 5, 15: 4}
+
+# Past this the enumeration is not affordable: C_33 alone has more independent
+# sets than the whole table cost.  Asking beyond it raises rather than guessing,
+# because a silent 0 would read as "traps nothing" when it means "not computed".
+CAPACITY_LIMIT = 15
+
+
+def _capacity(n: int) -> int:
+    """Largest r for which some r-subset of C_n resists every escape.
+
+    The copies are the n rotations of the cycle, so their image sets are the n
+    shifts of the target set T, and a colouring escapes by choosing one image
+    per copy with no two adjacent -- an independent set S of C_n meeting every
+    shift.  S meets T + k exactly when k lies in S - T, so escape means
+
+        S - T = Z_n   for some independent S,
+
+    and blocking means no independent S covers.  That is the real condition,
+    and it is stricter than the independence number suggests.
+    """
+    from itertools import combinations
+
+    if n < 3 or n % 2 == 0:
+        return 0
+    indep = [()]
+    for size in range(1, n // 2 + 1):
+        for S in combinations(range(n), size):
+            if all((a - b) % n not in (1, n - 1) for a in S for b in S if a != b):
+                indep.append(S)
+    full = set(range(n))
+    best = 0
+    for r in range(1, n + 1):
+        for T in combinations(range(n), r):
+            if not any({(a - b) % n for a in S for b in T} == full for S in indep):
+                best = r
+                break
+    return best
+
+
 def trapping_bound(cycle_length: int) -> int:
     """Largest same-distance target set an odd cycle of this length can trap.
 
     A bipartite component never traps: one side is an independent set meeting
-    every copy, so the escape always exists and the bound is 0.  An odd cycle
-    C_q has independence number (q-1)/2, leaving q - (q-1)/2 targets trappable.
+    every copy, so the escape always exists and the bound is 0.
+
+    An earlier version of this returned ``q - (q-1)/2`` here, reading the
+    independence number as the answer.  That is an over-estimate, and from
+    length 9 upwards a wrong one: the capacities are 2, 3, 4, 4, 5, 5, 4 for
+    lengths 3 to 15, against 2, 3, 4, 5, 6, 7, 8.  They do not grow with the
+    cycle -- they peak and come back down, because a longer cycle also has
+    larger independent sets and covering gets easier faster than trapping does.
     """
     if cycle_length < 3 or cycle_length % 2 == 0:
         return 0
-    return cycle_length - (cycle_length - 1) // 2
+    if cycle_length not in _CAPACITY:
+        if cycle_length > CAPACITY_LIMIT:
+            raise ValueError(
+                f"capacity of C_{cycle_length} is not computed "
+                f"(limit {CAPACITY_LIMIT}); the enumeration is exponential")
+        _CAPACITY[cycle_length] = _capacity(cycle_length)
+    return _CAPACITY[cycle_length]
 
 
 def same_distance_ceiling(orders: Iterable[int]) -> int:
@@ -168,20 +223,29 @@ def magic_radius(n: int, t: int = 1) -> float:
 
 
 def trapping_capacity(n: int) -> int:
-    """Targets an order-n rotation can trap, once they sit on its circle.
+    """Best a field with zeta_n offers, across all the radii it can reach.
 
-    The cycles have length n / gcd(n, t); the odd ones are what trap, and the
-    longest available is the largest odd divisor q of n, holding (q + 1) / 2.
+    The cycles have length n / gcd(n, t), so every odd divisor of n is a
+    reachable cycle length and the best of them is what the field is worth.
+    Not the largest: capacity is not monotone in the cycle length, so a field
+    with zeta_15 is worth its C_5 (3), not its C_15 (4)... and in fact C_15
+    gives 4 while C_5 gives 3, so both have to be checked.
     """
+    best = 0
     q = largest_odd_divisor(n)
-    return trapping_bound(q) if q >= 3 else 0
+    for d in range(3, min(q, CAPACITY_LIMIT) + 1, 2):
+        if q % d == 0:
+            best = max(best, trapping_bound(d))
+    return best
 
 
-def order_for_capacity(r: int, limit: int = 200) -> int:
+def order_for_capacity(r: int, limit: int = 15) -> int:
     """Smallest rotation order whose circle can trap r targets, or 0.
 
-    The narrowing runs here stalled at 11 same-distance targets while the
-    multiquadratic capacity is 2.  Eleven needs an odd cycle of length 21.
+    Bounded by the computed capacities, which stop at cycle length 15 because
+    the enumeration is exponential.  Capacity peaks at 5 over that range, so
+    anything larger returns 0 -- not "unknown, try harder", but "no cycle up to
+    15 does it", and the trend is downwards after 11.
     """
     for n in range(3, limit + 1):
         if trapping_capacity(n) >= r:

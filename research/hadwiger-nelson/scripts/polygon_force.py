@@ -29,6 +29,7 @@ K = int(os.environ.get("HN_K", "4"))
 ORDER = int(os.environ.get("HN_ORDER", "11"))
 ROUNDS = int(os.environ.get("HN_ROUNDS", "3"))
 CAP = int(os.environ.get("HN_CAP", "20000"))
+RADIUS = float(os.environ.get("HN_RADIUS", "0"))
 
 
 def main() -> None:
@@ -36,17 +37,22 @@ def main() -> None:
     poly = unit_polygon(F, ORDER)
     rho = moser_rotation(F)
     units = [("add", tuple(Fraction(x) for x in u)) for u in F.unit_steps()]
-    # Rotations about the origin by zeta_ORDER map the polygon to itself, so
-    # they grow the structure without moving the targets off their circle.
-    gens = units + [("mul", rho), ("mul", F.conj(rho)),
-                    ("mul", F.zeta(F.n // ORDER))]
+    # Rotating by zeta_ORDER grows the structure without moving the targets
+    # off their circle -- but it also makes the graph invariant under it, and
+    # then the forced core has to be a union of its orbits: the whole polygon
+    # or nothing.  At order 3 that is a core of 3 against a capacity of 2, one
+    # target too many, purely from the symmetry of the generator.  HN_SYM=0
+    # drops it, which is the only way a core can come out smaller than an orbit.
+    gens = units + [("mul", rho), ("mul", F.conj(rho))]
+    if os.environ.get("HN_SYM", "1") != "0":
+        gens.append(("mul", F.zeta(F.n // ORDER)))
     seeds = [CycloPoint(F, F.zero())] + [CycloPoint(F, v) for v in poly]
 
     print(f"order {ORDER}: capacity {trapping_bound(ORDER)}, k={K}, "
           f"{len(gens)} generators", flush=True)
     for rounds in range(1, ROUNDS + 1):
         t0 = time.time()
-        g = build_cyclo_graph(cyclo_generated(F, seeds, gens, rounds, cap=CAP))
+        g = build_cyclo_graph(cyclo_generated(F, seeds, gens, rounds, cap=CAP, radius=RADIUS))
         idx = {p.c: i for i, p in enumerate(g.vertices)}
         pivot = idx[F.zero()]
         targets = [idx[v] for v in poly if v in idx]

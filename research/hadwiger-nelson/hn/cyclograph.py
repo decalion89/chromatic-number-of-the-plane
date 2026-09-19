@@ -146,7 +146,8 @@ def moser_spindle_cyclotomic(field):
     return [CycloPoint(field, c) for c in pts]
 
 
-def cyclo_generated(field, seeds, gens, rounds: int, cap: int = 40000):
+def cyclo_generated(field, seeds, gens, rounds: int, cap: int = 40000,
+                    radius: float = 0.0):
     """Close a seed set under a list of maps, each given as a field element.
 
     A generator ``(kind, value)`` is either ``("add", v)`` for a translation by
@@ -156,11 +157,18 @@ def cyclo_generated(field, seeds, gens, rounds: int, cap: int = 40000):
     """
     seen = {p.c: None for p in seeds}
     frontier = [p.c for p in seeds]
+    # Z[zeta_n] is dense for phi(n) > 2, so growth spreads thin unless it is
+    # held in: 20000 points let loose covered a wide disc at 4.4 edges each and
+    # forced nothing.  Capping the radius spends the same budget inside the
+    # ball that holds the targets, where the constraint has to come from.
+    r2 = radius * radius
     for _ in range(rounds):
         nxt = []
         for c in frontier:
             for kind, v in gens:
                 q = field.add(c, v) if kind == "add" else field.mul(c, v)
+                if radius and abs(field.to_complex(q)) ** 2 > r2:
+                    continue
                 if q not in seen:
                     seen[q] = None
                     nxt.append(q)

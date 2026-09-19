@@ -530,15 +530,27 @@ cannot be trapped at all.
 |------:|-------:|------:|
 | 3  | 0.5774 = 1/sqrt3 | 2 |
 | 5  | 0.8507 | 3 |
-| 7  | 1.1524 | 4 |
-| 15 | 2.4049 | 8 |
-| 21 | 3.3548 | 11 |
-| 33 | 5.2601 | 17 |
+| 7  | 1.1524 | **4** |
+| 9  | 1.4619 | 4 |
+| 11 | 1.7747 | **5** |
+| 13 | 2.0900 | 5 |
+| 15 | 2.4049 | 4 |
 
 `n = 3` is the circle where two points are adjacent exactly when they are 120
 degrees apart -- the one every spindle argument in the literature is built on,
-and the only one `n | 24` permits. The eleven targets the narrowing stalled at
-would need an odd cycle of length 21.
+and the only one `n | 24` permits.
+
+The capacities are computed, not read off the independence number. An earlier
+version of this table claimed `(n+1)/2` -- 8 at order 15, 11 at order 21 -- and
+that is wrong from length 9 upwards. The copies are the `n` rotations of the
+cycle, so their image sets are the `n` shifts of the target set `T`, and a
+colouring escapes when some independent set `S` of `C_n` meets every shift,
+which happens exactly when `S - T = Z_n`. Blocking means no independent `S`
+covers, and that is stricter than `S` merely being large. **Capacity does not
+grow with the cycle: it peaks at 5 and comes back down**, because a longer
+cycle also has larger independent sets and covering gets easier faster than
+trapping does. Past length 15 the enumeration stops being affordable, and
+`trapping_bound` raises rather than guessing.
 
 `hn/cyclotomic.py` builds points where the arithmetic is different: `Z[zeta_n]`,
 where `|z| = 1` forces `z conj(z) = 1` exactly, so Kronecker makes `z` a root of

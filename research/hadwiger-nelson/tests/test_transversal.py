@@ -31,7 +31,7 @@ def test_ceiling_is_two_and_odd_orders_lift_it():
     assert same_distance_ceiling(multiquadratic_orders()) == 2
     assert same_distance_ceiling(multiquadratic_orders() + [5]) == 3
     assert same_distance_ceiling(multiquadratic_orders() + [7]) == 4
-    assert same_distance_ceiling(multiquadratic_orders() + [15]) == 8
+    assert same_distance_ceiling(multiquadratic_orders() + [11]) == 5
 
 
 @pytest.mark.parametrize("d2v", ["1/3", "5/9"])
@@ -80,23 +80,26 @@ def test_magic_radius_is_the_famous_one_at_order_three():
 
 
 def test_capacity_hierarchy():
-    from hn.transversal import largest_odd_divisor, trapping_capacity
+    """Computed, not read off the independence number, which over-counts."""
+    from hn.transversal import largest_odd_divisor, trapping_bound, trapping_capacity
 
     assert largest_odd_divisor(24) == 3
     assert trapping_capacity(3) == 2          # every multiquadratic field
     assert trapping_capacity(24) == 2         # even at the largest order
     assert trapping_capacity(5) == 3
-    assert trapping_capacity(15) == 8
-    assert trapping_capacity(21) == 11
+    assert [trapping_bound(q) for q in (3, 5, 7, 9, 11, 13, 15)] == [2, 3, 4, 4, 5, 5, 4]
+    assert trapping_capacity(15) == 4         # its C_15 beats its C_5 and C_3
 
 
-def test_eleven_targets_need_order_twenty_one():
-    """The size the narrowing stalled at, and the order that would hold it."""
-    from hn.transversal import order_for_capacity, trapping_capacity
+def test_capacity_peaks_at_five_and_eleven_is_out_of_reach():
+    """The size the narrowing stalled at is past every capacity computed."""
+    from hn.transversal import order_for_capacity, trapping_bound
 
     assert order_for_capacity(2) == 3
-    n = order_for_capacity(11)
-    assert n == 21 and trapping_capacity(n) == 11
+    assert order_for_capacity(4) == 7
+    assert order_for_capacity(5) == 11
+    assert order_for_capacity(6) == 0         # nothing up to length 15 holds 6
+    assert max(trapping_bound(q) for q in range(3, 16, 2)) == 5
 
 
 def test_niven_leaves_exactly_four_rational_radii():
