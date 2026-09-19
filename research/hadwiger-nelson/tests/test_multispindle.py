@@ -74,9 +74,15 @@ def test_orders_need_their_radicals(field):
 
 
 @pytest.mark.parametrize("field", FIELDS)
-def test_no_multiquadratic_field_supports_three_targets(field):
-    """The hard ceiling: exhausting every realisable order and every step
-    combination yields no three-target spindle at all."""
+def test_catalogue_reaches_no_further_than_two_targets(field):
+    """The reach of the CATALOGUE, which is not the same as a theorem.
+
+    spindle_catalogue only searches cyclic families {rho^0..rho^(n-1)}.  Over
+    those it finds nothing with three targets.  Arbitrary finite families --
+    a torsion rotation mixed with an infinite-order one, say -- are allowed by
+    the lemma and are not covered here, so this pins current reach, not
+    impossibility.
+    """
     cat = spindle_catalogue(field, max_targets=3)
     assert cat, "field supports no spindles at all"
     assert all(len(e["steps"]) <= 2 for e in cat)
@@ -89,14 +95,17 @@ def test_catalogue_contains_the_known_triple_spindle():
     assert hit, "the classic d^2 = 1/3 three-copy spindle is missing"
 
 
-def test_catalogue_finds_mixed_radius_spindles_beyond_the_known_one():
-    """Two targets at *different* radii also block, which the usual account
-    does not cover."""
+def test_bipartite_conflict_graphs_can_still_block_two_targets():
+    """Order 4 has no odd cycle, yet steps (1, 2) block two targets.
+
+    So "blocking needs a non-bipartite conflict graph" is false once the two
+    graphs differ; chromatic number governs only the all-equal case.
+    """
     cat = spindle_catalogue(QSQRT3_11, max_targets=2)
     mixed = [e for e in cat if len(e["steps"]) == 2 and e["d2"][0] != e["d2"][1]]
     assert len(mixed) >= 5
     pairs = {(e["n"], str(e["d2"][0]), str(e["d2"][1])) for e in mixed}
-    assert (4, "1/2", "1/4") in pairs
+    assert (4, "1/2", "1/4") in pairs      # order 4: no odd cycle anywhere
     assert (6, "1/3", "1/4") in pairs
 
 

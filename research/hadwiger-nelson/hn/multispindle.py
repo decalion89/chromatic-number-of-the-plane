@@ -175,27 +175,37 @@ def multi_spindle_union(
 #     Realisable orders:  1, 2, 3, 4, 6, 8, 12, 24.
 #     The only odd one above 1 is 3.
 #
-# That single line explains the ceiling everyone runs into.  Each conflict
-# graph H_q has one connection element, so it is a union of cycles whose
-# length is the order of that rotation divided by gcd -- and a union of *even*
-# cycles is bipartite.  Blocking two targets needs a non-bipartite conflict
-# structure, which needs odd order, and order 3 is the only one on offer.
-# That is precisely the d^2 = 1/3 triple spindle, arrived at from arithmetic
+# That order bound is classical, not a discovery here: (Z/n)* has exponent 2
+# exactly when n | 24 is a standard fact, and the rest is bookkeeping.  What it
+# buys is a precise statement of which rotations are on the table at all.
+#
+# Each conflict graph has a single connection element, so it is a union of
+# cycles of that element's order (or of paths, for infinite order) and is
+# bipartite unless that order is odd.  Since 3 is the only odd order available,
+# the only *non-bipartite* conflict graph over a multiquadratic field is the
+# triangle -- which is exactly the d^2 = 1/3 case, recovered from arithmetic
 # rather than from the picture of a triangle inscribed in a circle.
 #
-# Two consequences that are *not* in the usual account:
+# Two cautions, both of which cost earlier versions of this file a wrong claim:
 #
-#   * mixing radii rescues the even orders.  Two targets at different radii
-#     give conflict graphs with different step lengths, and the pair can be
-#     jointly unblockable even though each is bipartite on its own.  So the
-#     two-target spindle is available at many more radius pairs than the
-#     single (1/3, 1/3) one -- see `spindle_catalogue`.
+#   * Non-bipartiteness is NOT required to block two targets.  When the two
+#     conflict graphs differ, a pair of bipartite graphs can be jointly
+#     unblockable: order 4 with steps (1, 2) does it.  What χ(H) > r governs is
+#     the case where every H_q is the *same* graph.  With distinct radii the
+#     question is a joint covering problem, and the answer is not read off any
+#     single chromatic number.
 #
-#   * three targets are impossible over any multiquadratic field.  Exhausting
-#     every realisable order and every step combination yields nothing.  To
-#     get past two targets the field itself has to go, which is a concrete
-#     direction rather than a wish: it needs a Galois group that is not of
-#     exponent 2, for instance Q(sin 2pi/7), where order-7 rotations live.
+#   * Three targets have NOT been shown impossible.  `spindle_catalogue`
+#     searches families of the form {rho^0 .. rho^(n-1)} for a single rho of
+#     order n, and over those it finds no three-target configuration.  The
+#     lemma allows arbitrary finite families, including a torsion rotation
+#     mixed with an infinite-order one, and that space has not been settled
+#     here.  Treat "two targets" as the reach of the catalogue, not as a
+#     theorem.
+#
+# Leaving multiquadratic fields is still the natural direction for more odd
+# orders -- Q(sin 2pi/7) carries order-7 rotations -- but that is a lead, not
+# a result.
 
 import math
 from fractions import Fraction
