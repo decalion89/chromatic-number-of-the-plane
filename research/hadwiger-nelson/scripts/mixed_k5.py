@@ -39,7 +39,14 @@ MAXD = float(os.environ.get("HN_MAXD", "12"))
 BUILDERS = {"G": build_G, "Sa": build_Sa, "Y": build_Y}
 
 
-def shrink(st, core, budget=3000):
+def shrink(st, core, budget=150):
+    """Greedy from both ends, on a tight budget.
+
+    The budget is the whole cost of a pivot. At three thousand it was up to
+    three thousand SAT calls per pivot, which at k=5 on 1581 vertices is
+    minutes each and swallowed the scan whole; the first useful digit of a
+    core does not need that many.
+    """
     best = list(core)
     for order in (list(core), list(reversed(core))):
         cur, spent, changed = list(core), 0, True
@@ -75,29 +82,31 @@ def main() -> None:
         pv = g.vertices[bp]
         targets = [j for j in range(g.n) if j not in nb
                    and float(pv.dist2(g.vertices[j])) <= MAXD]
-        if len(targets) < 2:
-            continue
-        st = SeparationTest(g, K, bp, targets)
-        try:
-            sep, core = st.run(subset=targets)
-            if sep:
+        if len(targets) >= 2:
+            st = SeparationTest(g, K, bp, targets)
+            try:
+                sep, core = st.run(subset=targets)
+                small = None if sep else shrink(st, core)
+            finally:
+                st.close()
+            if small is None:
                 hist["separable"] += 1
-                continue
-            small = shrink(st, core)
-        finally:
-            st.close()
-        hist[len(small)] += 1
-        if best is None or len(small) < best[0]:
-            best = (len(small), bp, small)
-            pv = g.vertices[bp]
-            circles = {pv.dist2(g.vertices[j]) for j in small}
-            print(f"  pivot {bp:5d}: MIXED CORE {len(small)} over "
-                  f"{len(circles)} circles  [{time.time() - t0:.0f}s]",
-                  flush=True)
-        if n % 100 == 99:
+            else:
+                hist[len(small)] += 1
+                if best is None or len(small) < best[0]:
+                    best = (len(small), bp, small)
+                    circles = {pv.dist2(g.vertices[j]) for j in small}
+                    print(f"  pivot {bp:5d}: MIXED CORE {len(small)} over "
+                          f"{len(circles)} circles  [{time.time() - t0:.0f}s]",
+                          flush=True)
+        # Outside the branch on purpose. A scan where every pivot separates is
+        # exactly the case worth watching, and putting this after a `continue`
+        # kept it silent for ten minutes while it was working correctly.
+        if n % 10 == 9:
             print(f"    ... {n + 1} pivots, best {best[0] if best else None}, "
                   f"{hist['separable']} separable  [{time.time() - t0:.0f}s]",
                   flush=True)
+
     print(f"  core sizes: {dict(sorted(hist.items(), key=lambda kv: str(kv[0])))}",
           flush=True)
     print(f"  best at k={K}: {best[0] if best else None}  "
