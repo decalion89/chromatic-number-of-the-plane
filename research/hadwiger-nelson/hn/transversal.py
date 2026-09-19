@@ -128,3 +128,62 @@ def diagnose(graph, pivot: int, targets: Sequence[int], orders=None) -> dict:
         # the images outside the reach of this argument, in either direction.
         "hopeless": single and len(targets) > ceiling,
     }
+
+
+# -- the magic circles --------------------------------------------------------
+#
+# The analysis above assumed H was a cycle, and that assumption pins the radius.
+# Adjacency on the circle joins images whose angular separation is
+# beta = 2*arcsin(1/(2d)), and H is the circulant C_n(t) only when beta is
+# exactly t steps of the rotation, beta = 2*pi*t/n.  Then
+#
+#     cos beta = 1 - 1/(2 d^2) = cos(2 pi t / n)   =>   d = 1/(2 sin(pi t / n)),
+#
+# so each rotation order comes with its own radius, and targets anywhere else
+# see a path, which is bipartite, and cannot be trapped at all.
+#
+# n = 3 gives d = 1/sqrt(3): the circle where two points are adjacent exactly
+# when they are 120 degrees apart, the one every spindle argument in the
+# literature uses, and -- since n | 24 -- the only one a multiquadratic field
+# has.  The rest of the hierarchy has never been available to look at.
+
+
+def largest_odd_divisor(n: int) -> int:
+    while n % 2 == 0:
+        n //= 2
+    return n
+
+
+def magic_radius(n: int, t: int = 1) -> float:
+    """Where targets must sit for an order-n rotation to close them into cycles.
+
+    Exactly, d^2 = 1 / (2 - zeta^t - zeta^-t), an element of Q(zeta_n).  The
+    float is for reading; nothing in a decision path should use it.
+    """
+    from math import pi, sin
+
+    if n < 3 or not 0 < t < n:
+        raise ValueError("need n >= 3 and 0 < t < n")
+    return 1.0 / (2.0 * sin(pi * t / n))
+
+
+def trapping_capacity(n: int) -> int:
+    """Targets an order-n rotation can trap, once they sit on its circle.
+
+    The cycles have length n / gcd(n, t); the odd ones are what trap, and the
+    longest available is the largest odd divisor q of n, holding (q + 1) / 2.
+    """
+    q = largest_odd_divisor(n)
+    return trapping_bound(q) if q >= 3 else 0
+
+
+def order_for_capacity(r: int, limit: int = 200) -> int:
+    """Smallest rotation order whose circle can trap r targets, or 0.
+
+    The narrowing runs here stalled at 11 same-distance targets while the
+    multiquadratic capacity is 2.  Eleven needs an odd cycle of length 21.
+    """
+    for n in range(3, limit + 1):
+        if trapping_capacity(n) >= r:
+            return n
+    return 0

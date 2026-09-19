@@ -71,3 +71,29 @@ def test_diagnose_calls_the_stalled_core_hopeless():
     assert d["single_circle"] and d["ceiling"] == 2
     if len(same) > 2:
         assert d["hopeless"]
+
+
+def test_magic_radius_is_the_famous_one_at_order_three():
+    from hn.transversal import magic_radius
+
+    assert abs(magic_radius(3) ** 2 - 1 / 3) < 1e-12
+
+
+def test_capacity_hierarchy():
+    from hn.transversal import largest_odd_divisor, trapping_capacity
+
+    assert largest_odd_divisor(24) == 3
+    assert trapping_capacity(3) == 2          # every multiquadratic field
+    assert trapping_capacity(24) == 2         # even at the largest order
+    assert trapping_capacity(5) == 3
+    assert trapping_capacity(15) == 8
+    assert trapping_capacity(21) == 11
+
+
+def test_eleven_targets_need_order_twenty_one():
+    """The size the narrowing stalled at, and the order that would hold it."""
+    from hn.transversal import order_for_capacity, trapping_capacity
+
+    assert order_for_capacity(2) == 3
+    n = order_for_capacity(11)
+    assert n == 21 and trapping_capacity(n) == 11

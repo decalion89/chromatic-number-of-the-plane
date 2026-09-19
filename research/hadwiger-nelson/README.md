@@ -459,6 +459,72 @@ Still no forcing at k = 5. But the comparison is finally a fair one — the earl
 negatives were measuring graphs too loose to force anything, not graphs too
 symmetric.
 
+## The ceiling was the field, and the number is 24
+
+The narrowing programme needed a forced core of 2 and stalled at 11. It was
+not the search that failed.
+
+Targets at one distance from the pivot put every rotated image on a single
+circle, and a point of a circle lies at unit distance from at most two of its
+points, so the unit-distance graph on the distinct images has maximum degree 2
+-- a disjoint union of paths and cycles. Bipartite pieces never trap, since one
+side is an independent set meeting every copy, so blocking lives entirely in
+the odd cycles, and an odd cycle `C_q` traps at most `(q+1)/2` targets.
+
+Which odd cycles exist is a question about the field. A rotation of order `n`
+needs `zeta_n` inside `K(i)`; for multiquadratic `K` that Galois group is an
+elementary abelian 2-group, which forces `(Z/n)*` to be one too, and that
+happens exactly when **n divides 24**. The odd divisors of `24 = 2^3 * 3` are 1
+and 3. Over any multiquadratic field, on any circle, with any number of copies,
+**the only odd cycle available is the triangle** -- and a triangle traps 2.
+
+de Grey's field is `Q(sqrt3, sqrt5, sqrt7, sqrt11)`. Every configuration
+examined here lives in a multiquadratic field. The ceiling arrived with the
+arithmetic, before any searching started.
+
+One measurement corrected the first version of this. Conflict-graph degrees
+grow 4, 10, 22, 46, 94 as copies are added and look like an escape; that is
+multiplicity. At squared distance 1/3, 384 images collapse onto 12 distinct
+points, and among distinct points the degree is 2 at every copy count tried.
+`tests/test_transversal.py` pins it.
+
+### A hierarchy of magic circles
+
+Closing the images into a cycle at all pins the radius. Adjacency joins images
+`beta = 2 arcsin(1/2d)` apart, and that is `t` rotation steps only when
+`cos beta = 1 - 1/(2d^2) = cos(2 pi t/n)`, so
+
+    d = 1 / (2 sin(pi t / n)).
+
+Each rotation order owns a radius, and targets anywhere else see a path and
+cannot be trapped at all.
+
+| order | radius | traps |
+|------:|-------:|------:|
+| 3  | 0.5774 = 1/sqrt3 | 2 |
+| 5  | 0.8507 | 3 |
+| 7  | 1.1524 | 4 |
+| 15 | 2.4049 | 8 |
+| 21 | 3.3548 | 11 |
+| 33 | 5.2601 | 17 |
+
+`n = 3` is the circle where two points are adjacent exactly when they are 120
+degrees apart -- the one every spindle argument in the literature is built on,
+and the only one `n | 24` permits. The eleven targets the narrowing stalled at
+would need an odd cycle of length 21.
+
+`hn/cyclotomic.py` builds points where the arithmetic is different: `Z[zeta_n]`,
+where `|z| = 1` forces `z conj(z) = 1` exactly, so Kronecker makes `z` a root of
+unity and the unit steps are precisely the `2n` elements `±zeta_n^k`. `n = 3` is
+the Eisenstein lattice everything here was built from: 6 steps, capacity 2.
+
+It is not yet a construction. `Z[zeta_15]` gives 30 unit steps and keeps unit
+triangles, so the plane's clique number survives, and a three-step walk is
+3901 vertices at average degree 11.4 -- denser than de Grey's graph. It is also
+**3-chromatic**, because `sqrt11` is not in `Q(zeta_15)` and so no Moser spindle
+lives there. Richer arithmetic on its own buys nothing; what the theory asks for
+is the compositum, a field holding both the spindles and an odd-order rotation.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
