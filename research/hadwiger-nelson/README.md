@@ -945,6 +945,38 @@ when it fails — an odd cycle on one shared 2-list is infeasible outright, whic
 is what k = 4 runs on — and at five colours it never fails. Whether pressure 3
 could come from somewhere else stays open.
 
+### Degree efficiency: what blocking actually costs
+
+Blocking and folding are both monotone in the step set, so they do not trade
+off directly. **Density per vertex does**, and one statistic shows it:
+
+```
+efficiency = average degree / unit vectors available in the module
+```
+
+A rank-2 module is discrete, so a patch of it is **closed** — nearly every
+point has all its neighbours present. A module of rank ≥ 3 is dense in the
+plane, so no bounded region contains a closed piece, every ball is boundary,
+and most available steps land outside it.
+
+| graph | n | m | steps | avg degree | efficiency | blocked |
+|---|--:|--:|--:|--:|--:|:--:|
+| triangular patch | 121 | 320 | 6 | 5.29 | **88.2%** | no |
+| de Grey S | 39 | 18 | 16 | 0.92 | 5.8% | no |
+| de Grey Sa | 397 | 1974 | 30 | 9.94 | 33.1% | no |
+| de Grey Y | 791 | 3938 | 66 | 9.96 | 15.1% | no |
+| de Grey G | 1581 | 7877 | 134 | 9.96 | 7.4% | no |
+| ℚ(ζ₇) ball | 15 313 | 30 276 | 174 | 3.95 | **2.3%** | **YES** |
+| ℚ(ζ₂₁) ball | 16 015 | 32 722 | 178 | 4.09 | **2.3%** | **YES** |
+
+Efficiency falls monotonically as the structures get richer, and blocking
+appears only at the bottom. Note what does *not* fall: de Grey's three sizes
+all sit at average degree **9.96**, unchanged. What collapses is the fraction
+of the available density a finite construction manages to collect.
+
+> The cost of blocking is not fewer neighbours. It is needing forty times as
+> many steps to get the same ten.
+
 ### A blocked graph cannot be a lattice
 
 Adding steps never hurts blocking or folding, but it does **dilute a ball**: at

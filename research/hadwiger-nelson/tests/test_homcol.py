@@ -357,3 +357,16 @@ def test_a_plane_lattice_can_never_block():
             assert has_homomorphism(list(dirs), 5)[0] is not None, (
                 f"{k} directions should never block at rank 2")
     assert has_homomorphism(pg1, 5)[0] is None
+
+
+def test_degree_efficiency_falls_as_blocking_arrives():
+    """The measured cost of blocking: forty times the steps for the same ten."""
+    from hn.homcol import DEGREE_EFFICIENCY as E
+
+    order = ["triangular patch", "de Grey Sa", "de Grey Y", "de Grey G",
+             "Q(zeta_7) ball"]
+    vals = [E[k] for k in order]
+    assert vals == sorted(vals, reverse=True), "efficiency falls monotonically"
+    for name in E["blocked_at"]:
+        assert E[name] < 0.05, "blocking only appears at the bottom"
+    assert E["de Grey G"] > 3 * E["Q(zeta_7) ball"]

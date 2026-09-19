@@ -468,3 +468,40 @@ DISCRETE_NEVER_BLOCKS = (
     "six points hence three directions, and covering PG(1,5) needs six -- so "
     "no lattice graph ever blocks, and a blocked graph must be non-discrete"
 )
+
+
+# -- degree efficiency: what the tension actually costs -------------------
+#
+# Blocking and folding are both monotone in the step set, so they do not trade
+# off directly. Density per VERTEX does, and one statistic shows it:
+#
+#     efficiency = average degree / unit vectors available in the module.
+#
+# A rank-2 module is discrete, so a patch of it is CLOSED -- nearly every
+# point has all its neighbours present. A module of rank 3 or more is dense in
+# the plane, so no bounded region contains a closed piece, every ball is
+# boundary, and most available steps land outside it. Measured:
+#
+#     graph                  n      m  steps  avg deg  efficiency  blocked
+#     triangular patch     121    320      6     5.29     88.2%      no
+#     de Grey S             39     18     16     0.92      5.8%      no
+#     de Grey Sa           397   1974     30     9.94     33.1%      no
+#     de Grey Y            791   3938     66     9.96     15.1%      no
+#     de Grey G           1581   7877    134     9.96      7.4%      no
+#     Q(zeta_7) ball     15313  30276    174     3.95      2.3%     YES
+#     Q(zeta_21) ball    16015  32722    178     4.09      2.3%     YES
+#
+# Efficiency falls monotonically as the structures get richer, and blocking
+# appears only at the bottom. Note what does NOT fall: de Grey's three sizes
+# all sit at average degree 9.96, unchanged. What collapses is the fraction of
+# the available density a finite construction manages to collect.
+#
+# So the cost of blocking is not fewer neighbours -- it is needing forty times
+# as many steps to get the same ten.
+
+DEGREE_EFFICIENCY = {
+    "triangular patch": 0.882, "de Grey Sa": 0.331, "de Grey Y": 0.151,
+    "de Grey G": 0.074, "Q(zeta_7) ball": 0.023, "Q(zeta_21) ball": 0.023,
+    "blocked_at": ["Q(zeta_7) ball", "Q(zeta_21) ball"],
+    "de_grey_average_degree": 9.96,
+}
