@@ -429,6 +429,36 @@ thousand vertices is close to s = 2 or missing orders of magnitude.
 Forcing and chromatic number are not the same thing — the Moser spindle is
 4-chromatic while forcing nothing at k = 4 — and the framing is about f, not χ.
 
+## Every generator in the package symmetrises
+
+A minimal forced core has to reach 2. Asymmetric tightening floors it at 11, and
+the reason turned out to be upstream of the tightening: **the search space was
+symmetric by construction.** `hex_ball` is the six-fold triangular lattice by
+definition. `walk_ball` steps along the sixth roots of unity. de Grey's own `Sa`
+is, in his words, "all points obtained by rotating S about the origin by multiples
+of 60 degrees and/or negating their y-coordinates" — a twelve-element group
+applied deliberately.
+
+That is not a flaw in those constructions; symmetry is what makes them tractable
+to state and to verify. But it means every configuration examined here was a union
+of orbits, and the 11 surviving core targets confirm it: they sit at 38.55 + 60k
+and 69.6 + 60k, two interleaved six-fold orbits 31.05 degrees apart, with no
+cross-orbit pair at 120 degrees. A core of 1 or 2 cannot be a union of six-fold
+orbits. The object was excluded by the generator, not by the mathematics.
+
+`scripts/asym_grow.py` drops the group: it accretes points at distance 1 from a
+Moser-spindle seed and never symmetrises. The first version attached at random and
+traded one structural defect for another — 699 vertices with 1070 edges, average
+degree 3.06 against de Grey's 9.97, and a sparse graph forces nothing because it
+colours with room to spare. Sampling a pool of candidate attachments and keeping
+whichever lands adjacent to the most existing points fixes that: 499 vertices,
+2453 edges, average degree 9.83, matched to de Grey's graph while staying
+asymmetric.
+
+Still no forcing at k = 5. But the comparison is finally a fair one — the earlier
+negatives were measuring graphs too loose to force anything, not graphs too
+symmetric.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
