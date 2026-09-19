@@ -25,7 +25,7 @@ from hn.spindle import SeparationTest
 
 K = int(os.environ.get("HN_K", "4"))
 BASE = os.environ.get("HN_BASE", "Sa")
-HOLES = int(os.environ.get("HN_HOLES", "12"))
+PIVOTS = int(os.environ.get("HN_PIVOTS", "60"))
 MIN_DEG = int(os.environ.get("HN_MINDEG", "6"))
 LIMIT = int(os.environ.get("HN_LIMIT", "1500"))
 BUILDERS = {"S": build_S, "Sa": build_Sa, "Y": build_Y}
@@ -67,19 +67,28 @@ def main() -> None:
         return
     print(f"  top new degrees: {[d for d, _ in fresh[:8]]}", flush=True)
 
-    added = [x for _, x in fresh[:HOLES]]
+    # Add as many as the graph will take while staying k-colourable: more
+    # constraint is what shrinks a core, and a graph that stops colouring
+    # makes the question vacuous instead of hard. Binary search on the count.
+    lo, hi, best_added = 0, len(fresh), []
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        cand = [x for _, x in fresh[:mid]]
+        if is_k_colorable(build_graph(pts + cand), K)[0]:
+            best_added, lo = cand, mid + 1
+        else:
+            hi = mid - 1
+    added = best_added
     g2 = build_graph(pts + added)
-    ok = is_k_colorable(g2, K)[0]
-    print(f"  with {len(added)} holes added: {g2}  {K}-colourable: {ok}",
-          flush=True)
-    if not ok:
-        print("  the augmented graph is already uncolourable -- "
-              "forcing would be vacuous", flush=True)
+    print(f"  most holes it takes while staying {K}-colourable: "
+          f"{len(added)} -> {g2}  [{time.time() - t0:.0f}s]", flush=True)
+    if not added:
         return
     index = {p: i for i, p in enumerate(g2.vertices)}
     best = None
-    for x in added:
-        bp = index[x]
+    # every pivot now, holes and original vertices alike
+    order = sorted(range(g2.n), key=lambda v: -len(g2.adj[v]))[:PIVOTS]
+    for bp in order:
         core = minimal_core(g2, K, bp)
         if not core:
             print(f"  hole pivot deg {len(g2.adj[bp]):3d}: separable",
