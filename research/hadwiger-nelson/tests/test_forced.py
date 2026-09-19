@@ -496,3 +496,51 @@ def test_the_mechanism_is_list_colouring():
                 refused += 1
         assert refused == expected, f"k={k}: {refused} refusals"
         assert sizes == {k - 2, k - 1}
+
+
+def test_degrey_hexagon_offsets_are_generated_by_the_moser_angle():
+    """The five hexagons sit at 0, +-theta/2 and +-(60 deg - theta), exactly,
+    where cos theta = 5/6 is the Moser rotation -- the angle with
+    |1 - rho|^2 = 1/3, the split-prime quotient at 3 in Q(sqrt -11).
+
+    Checked in the field, not in degrees: the cosines between hexagon 0 and
+    the rest are 1, sqrt(33)/6 twice and (5 + sqrt(33))/12 twice, and
+    2*(sqrt(33)/6)^2 - 1 = 5/6 is the double-angle identity while
+    (5 + sqrt 33)/12 = cos(60) cos(theta) + sin(60) sin(theta) with
+    sin theta = sqrt(11)/6.
+    """
+    from fractions import Fraction
+
+    from hn.certify import load_certificate
+    from hn.forced import circle_hexagons
+
+    pts, _doc = load_certificate("certificates/pressure3_witness_47.json")
+    g = build_graph(pts)
+    piv = 0
+    comps, _par, _co = circle_hexagons(g, piv)
+    pv = g.vertices[piv]
+    field = pv.x.field
+    reps = [(g.vertices[min(c)].x - pv.x, g.vertices[min(c)].y - pv.y)
+            for c in comps]
+    a = reps[0]
+    cosines = [a[0] * b[0] + a[1] * b[1] for b in reps]
+
+    half = field.sqrt(33) * field.rational(Fraction(1, 6))
+    other = field.rational(Fraction(5, 12)) \
+        + field.sqrt(33) * field.rational(Fraction(1, 12))
+    assert sorted(map(float, cosines))[::-1] == sorted(
+        map(float, [field.rational(1), half, half, other, other]))[::-1]
+    assert cosines.count(half) == 2 and cosines.count(other) == 2
+
+    cos_theta = field.rational(Fraction(5, 6))
+    sin_theta = field.sqrt(11) * field.rational(Fraction(1, 6))
+    assert cos_theta * cos_theta + sin_theta * sin_theta == field.rational(1)
+    # theta is the Moser rotation: the chord it subtends on the unit circle
+    # squares to 2 - 2 cos theta = 1/3
+    two = field.rational(2)
+    assert two - two * cos_theta == field.rational(Fraction(1, 3))
+    # half-angle
+    assert two * half * half - field.rational(1) == cos_theta
+    # and 60 degrees minus theta
+    assert other == field.rational(Fraction(1, 2)) * cos_theta \
+        + field.sqrt(3) * field.rational(Fraction(1, 2)) * sin_theta
