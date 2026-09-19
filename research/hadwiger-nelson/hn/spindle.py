@@ -35,6 +35,7 @@ from .graph import UnitDistanceGraph, build_graph
 
 __all__ = ["ForcedPairFinder", "spindle_union", "candidate_pairs_from",
            "ForcedDisjunctionFinder", "targets_at_third", "triple_spindle_union",
+           "spindle_union_auto",
            "SeparationTest"]
 
 
@@ -374,3 +375,52 @@ class SeparationTest:
         if getattr(self, "_s", None) is not None:
             self._s.delete()
             self._s = None
+
+
+def _squarefree_factors(n: int) -> List[int]:
+    out, d = [], 2
+    while d * d <= n:
+        if n % d == 0:
+            out.append(d)
+            while n % d == 0:
+                n //= d
+        d += 1
+    if n > 1:
+        out.append(n)
+    return out
+
+
+def spindle_union_auto(graph: UnitDistanceGraph, pivot: int, target: int):
+    """`spindle_union`, enlarging the field on demand.
+
+    The earlier search only considered targets whose spindle rotation already
+    lived in the graph's field.  That restriction was never needed and cost a
+    large share of the candidates -- in de Grey's graph the missing radicals
+    are sqrt17, sqrt13 and sqrt19, together accounting for more candidate pairs
+    than sqrt2 does by two orders of magnitude.  Whether a pair is forced is
+    decided by SAT on the graph alone; the field only has to be wide enough to
+    write the rotated copy down, and widening it is free.
+
+    Returns (graph, field).
+    """
+    from .field import Field, embed
+    from .geometry import Point, required_radical
+
+    p, q = graph.vertices[pivot], graph.vertices[target]
+    d2 = p.dist2(q)
+    if not d2.is_rational():
+        raise ValueError(f"|p-q|^2 = {d2} is not rational")
+    val = d2.c[0]
+    if val < Fraction(1, 4):
+        raise ValueError(f"d^2 = {val} < 1/4: no rotation separates such a pair by 1")
+    needed = _squarefree_factors(required_radical(val))
+    field = graph.vertices[0].field
+    missing = [g for g in needed if g not in field.gens and g > 1]
+    big = Field(tuple(sorted(set(field.gens) | set(missing)))) if missing else field
+    verts = [Point(embed(v.x, big), embed(v.y, big)) for v in graph.vertices]
+    rot = rotation_joining(val, big)
+    turn = rot.about(verts[pivot])
+    image = [turn(v) for v in verts]
+    if not verts[target].is_unit_apart(image[target]):
+        raise AssertionError("spindle rotation did not land the target at distance 1")
+    return build_graph(verts + image), big

@@ -11,7 +11,8 @@ from hn.field import QSQRT3_11 as F
 from hn.geometry import ROT60, Point, eisenstein, origin
 from hn.graph import build_graph
 from hn.spindle import (ForcedPairFinder, SeparationTest, candidate_pairs_from,
-                        spindle_union, targets_at_third, triple_spindle_union)
+                        spindle_union, spindle_union_auto, targets_at_third,
+                        triple_spindle_union)
 
 
 def unit_triangle_about_origin():
@@ -90,3 +91,66 @@ def test_two_copy_spindle_still_works_after_the_refactor():
     forced = ForcedPairFinder(rhombus, 3, candidate_pairs_from(rhombus, 0, F)).run(verbose=False)
     spun = spindle_union(rhombus, forced[0][0], forced[0][1], F)
     assert is_k_colorable(spun, 3)[0] is False
+
+
+# -- the field is a choice, not a constraint -------------------------------
+
+def test_embedding_preserves_arithmetic():
+    from hn.field import Field, embed
+
+    big = Field((2, 3, 7, 11, 13))
+    x = F.sqrt(33) * 2 + F.rational(5)
+    y = F.sqrt(3) - F.rational(1)
+    bx, by = embed(x, big), embed(y, big)
+    assert (bx * by).c[0] == (x * y).c[0]
+    assert embed(x + y, big) == bx + by
+    assert bx * bx == embed(x * x, big)
+
+
+def test_embedding_refuses_a_field_that_lacks_a_radical():
+    from hn.field import Field, embed
+
+    with pytest.raises(ValueError):
+        embed(F.sqrt(11), Field((2, 3)))
+
+
+def test_spindle_union_auto_matches_the_fixed_field_version():
+    rhombus = build_graph([origin(), eisenstein(1, 0), eisenstein(0, 1), eisenstein(1, 1)])
+    fixed = spindle_union(rhombus, 0, 3, F)
+    auto, field = spindle_union_auto(rhombus, 0, 3)
+    assert (auto.n, auto.m) == (fixed.n, fixed.m) == (7, 11)
+    assert is_k_colorable(auto, 3)[0] is False
+
+
+def test_spindle_union_auto_widens_the_field_when_needed():
+    """A pair whose spindle needs a radical the graph's field lacks is not a
+    reason to skip it -- forcing is decided by SAT on the graph, and the field
+    only has to be wide enough to write the rotated copy down."""
+    from fractions import Fraction
+
+    from hn.field import Field
+    from hn.geometry import Point, required_radical
+
+    # d^2 = 25/9 needs sqrt(91) = sqrt7 * sqrt13, absent from Q(sqrt3, sqrt11)
+    assert required_radical(Fraction(25, 9)) == 91
+    base = Field((3, 11))
+    p = Point(base.zero(), base.zero())
+    q = Point(base.rational(Fraction(5, 3)), base.zero())
+    g = build_graph([p, q])
+    spun, field = spindle_union_auto(g, 0, 1)
+    assert 7 in field.gens and 13 in field.gens
+    assert 3 in field.gens and 11 in field.gens        # the originals survive
+    assert spun.n == 3                                 # pivot fixed, target imaged
+
+
+def test_spindle_rejects_targets_closer_than_half():
+    from fractions import Fraction
+
+    from hn.field import Field
+    from hn.geometry import Point
+
+    base = Field((3,))
+    g = build_graph([Point(base.zero(), base.zero()),
+                     Point(base.rational(Fraction(1, 4)), base.zero())])
+    with pytest.raises(ValueError):
+        spindle_union_auto(g, 0, 1)                    # no rotation separates them by 1

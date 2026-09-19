@@ -21,7 +21,7 @@ from fractions import Fraction
 from math import isqrt
 from typing import Iterable, Sequence
 
-__all__ = ["Field", "FieldElement", "QSQRT3_11"]
+__all__ = ["Field", "FieldElement", "QSQRT3_11", "embed"]
 
 
 def _is_squarefree(n: int) -> bool:
@@ -268,3 +268,32 @@ class FieldElement:
 # sqrt(3) for the triangular (Eisenstein) lattice, sqrt(11) for the Moser
 # spindle rotation arccos(5/6).  sqrt(33) comes along as their product.
 QSQRT3_11 = Field((3, 11))
+
+
+def embed(element: "FieldElement", target: Field) -> "FieldElement":
+    """Re-express an element of one multiquadratic field inside a larger one.
+
+    Needed because a spindle's rotation may require a square root the graph's
+    own field does not have.  That is never a reason to skip the spindle: the
+    field is a choice, and one more generator is free.  Whether a pair is
+    forced monochromatic is a combinatorial fact about the graph that no field
+    enters into -- the field only has to be big enough to write the rotated
+    copy down afterwards.
+    """
+    src = element.field
+    if src == target:
+        return element
+    coeffs = [0] * target.dim
+    for m, c in enumerate(element.c):
+        if not c:
+            continue
+        radicand = src._prod[m]
+        placed = False
+        for t in range(target.dim):
+            if target._prod[t] == radicand:
+                coeffs[t] = c
+                placed = True
+                break
+        if not placed:
+            raise ValueError(f"{target} does not contain sqrt({radicand})")
+    return target.element(coeffs)
