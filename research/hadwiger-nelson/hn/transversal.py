@@ -187,3 +187,64 @@ def order_for_capacity(r: int, limit: int = 200) -> int:
         if trapping_capacity(n) >= r:
             return n
     return 0
+
+
+# -- Niven: the rational radii, and why there are only four -------------------
+#
+# The Galois argument above is about which fields admit which rotations.  There
+# is a second bound, elementary and field-independent, and it turns out to be
+# the binding one for everything this package searched.
+#
+# A rotation traps only if it closes the images into a cycle, which needs its
+# angle commensurable with 2*pi.  And cos t = 1 - 1/(2 d^2) is rational exactly
+# when d^2 is.  Niven's theorem says the only rational cosines of rational
+# multiples of pi are 0, +-1/2, +-1, so a rational squared distance admits a
+# finite-order rotation for just four values:
+#
+#     d^2 = 1     -> 60 degrees,  order 6
+#     d^2 = 1/2   -> 90 degrees,  order 4
+#     d^2 = 1/3   -> 120 degrees, order 3     <- the only odd one
+#     d^2 = 1/4   -> 180 degrees, order 2
+#
+# At every other rational d^2 the images form a path, which is bipartite, and
+# nothing is trapped at all -- over any field, with any number of copies.
+#
+# Twelve call sites in this package skip a target whose squared distance is
+# irrational.  Every search run here was therefore inside a space capped at 2
+# before it started, and no field would have rescued it: the escape needs
+# targets at an *irrational* squared distance, namely 1 / (4 sin^2(pi t/n)) for
+# an n with an odd divisor of at least 5.
+
+NIVEN_RADII = {
+    "1": 6,
+    "1/2": 4,
+    "1/3": 3,
+    "1/4": 2,
+}
+
+
+def niven_order(d2) -> int:
+    """Rotation order available at a rational squared distance, or 0.
+
+    `d2` is a Fraction or anything Fraction accepts.  Returns 0 when the angle
+    is incommensurable with 2*pi, which is the generic case and means the
+    images form a path and cannot be trapped.
+    """
+    from fractions import Fraction
+
+    return NIVEN_RADII.get(str(Fraction(d2)), 0)
+
+
+def niven_capacity(d2) -> int:
+    """Targets trappable at a rational squared distance: 2 at 1/3, else 0.
+
+    The cycle length here is the rotation order itself, not its largest odd
+    divisor.  A radius fixes the adjacency angle, and the images close into a
+    cycle whose length is the denominator of that angle over 2*pi in lowest
+    terms -- 6 at d^2 = 1, which is even and traps nothing, however many
+    triangles an order-6 rotation could reach at some *other* radius.
+    `trapping_capacity` answers that other question: what a field offers across
+    all its radii.
+    """
+    n = niven_order(d2)
+    return trapping_bound(n) if n else 0

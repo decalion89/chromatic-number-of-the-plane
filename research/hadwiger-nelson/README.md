@@ -488,6 +488,33 @@ multiplicity. At squared distance 1/3, 384 images collapse onto 12 distinct
 points, and among distinct points the degree is 2 at every copy count tried.
 `tests/test_transversal.py` pins it.
 
+### Niven closes it, elementarily
+
+There is a second bound, and it is the one that actually bound every search
+here. Trapping needs the images to close into a cycle, so the angle must be
+commensurable with `2 pi`; and `cos t = 1 - 1/(2 d^2)` is rational exactly when
+`d^2` is. **Niven's theorem** allows only `0, ±1/2, ±1` as rational cosines of
+rational multiples of `pi`, so a rational squared distance admits a
+finite-order rotation at just four values:
+
+| `d^2` | angle | cycle | traps |
+|------:|------:|------:|------:|
+| 1     | 60°   | 6  | 0 |
+| 1/2   | 90°   | 4  | 0 |
+| 1/3   | 120°  | 3  | **2** |
+| 1/4   | 180°  | 2  | 0 |
+
+At every other rational `d^2` the images form a path -- bipartite -- and
+nothing is trapped at all, over any field, with any number of copies.
+
+Twelve call sites in this package skip a target whose squared distance is
+irrational: four in `hn/spindle.py` and eight across `scripts/`. **Every search
+run here was inside a space capped at 2 before it started**, and no choice of
+field would have rescued it. The escape needs targets at an *irrational*
+squared distance, `1 / (4 sin^2(pi t/n))` for an `n` with an odd divisor of at
+least 5 -- which is also, independently, where the Galois bound above stops
+applying.
+
 ### A hierarchy of magic circles
 
 Closing the images into a cycle at all pins the radius. Adjacency joins images

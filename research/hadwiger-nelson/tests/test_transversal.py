@@ -97,3 +97,28 @@ def test_eleven_targets_need_order_twenty_one():
     assert order_for_capacity(2) == 3
     n = order_for_capacity(11)
     assert n == 21 and trapping_capacity(n) == 11
+
+
+def test_niven_leaves_exactly_four_rational_radii():
+    """cos t = 1 - 1/(2d^2) is rational iff d^2 is, and Niven allows four."""
+    from fractions import Fraction
+
+    from hn.transversal import niven_capacity, niven_order
+
+    assert niven_order(1) == 6
+    assert niven_order(Fraction(1, 2)) == 4
+    assert niven_order(Fraction(1, 3)) == 3
+    assert niven_order(Fraction(1, 4)) == 2
+    for d2 in (2, 3, Fraction(5, 3), Fraction(1, 5), Fraction(2, 3), 7):
+        assert niven_order(d2) == 0          # a path: nothing is trapped
+        assert niven_capacity(d2) == 0
+
+
+def test_only_the_classical_circle_traps_at_a_rational_radius():
+    from fractions import Fraction
+
+    from hn.transversal import niven_capacity
+
+    assert niven_capacity(Fraction(1, 3)) == 2
+    for d2 in (1, Fraction(1, 2), Fraction(1, 4)):
+        assert niven_capacity(d2) == 0       # even orders are bipartite
