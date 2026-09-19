@@ -825,6 +825,40 @@ Reaching pressure 3 **through this mechanism** needs a confined set of
 hexagons, not about how hard the search is run. Reaching it some *other* way is
 not excluded by any of this; nothing measured here does.
 
+### How much of the design space that actually covers
+
+Two auxiliaries from the **same** pair of hexagons differ by `D1 + D2`, and
+
+```
+|q - q'|^2 = |D1|^2 + |D2|^2 + 2 Re(t z) = 1,    t = r_a conj(r_b)
+```
+
+is a **line in t meeting the unit circle** — so for two hexagons the good
+angles are a finite set. Enumerating all 31 × 31 pairs of hexagon differences:
+48 solutions, **eight** distinct modulo 60°. Measured at each:
+
+| degeneracy | 0 | 1 | 2 | ≥3 |
+|---|--:|--:|--:|--:|
+| angles | 1 | 2 | 3 | **0** |
+
+One case is free and useless: `D2 = 0` — same `v`, adjacent `u` — holds at
+every angle, but confinement of `u_i + v_j` turns on `i + j` and adjacent `i`
+differ by one, so **every always-available edge joins a confined auxiliary to
+a non-confined one**. That is why Pythagorean rotations (cos and sin both
+rational, so the whole thing lives in ℚ(√3)) leave the confined set with no
+edges at all — measured, degeneracy 0 across 40 configurations.
+
+**What this does not show.** The enumeration is complete for *two* hexagons
+only. With three, an edge can join auxiliaries from **different pairs** — `q`
+from (a,b) and `q'` from (a,c) — which is two free angles against one
+equation: a **curve**, not a discrete set. de Grey's θ/2 is exactly such a
+case, absent from the eight, and χ(confined) is 1 at two hexagons and jumps to
+3 at three.
+
+> So the flat degeneracy measured as hexagons are added describes **one curve
+> through a continuous space**, not the space. It explains why de Grey's family
+> stops where it does. It does not close the route.
+
 ### A blocked graph cannot be a lattice
 
 Adding steps never hurts blocking or folding, but it does **dilute a ball**: at
@@ -901,6 +935,13 @@ still flat 2, up to 5533 vertices.
 - **A hexagon family with `theta` alongside `theta/2`.** `CH² = CT` exactly, so
   it produced a coincident hexagon — the same mistake that caused a false
   positive earlier — and the guard skipped it silently. It now says so.
+- **A spurious degeneracy 4 at "60°."** Two hexagon offsets agreeing modulo
+  60° are the *same* six points; a 1e-9 tolerance on the points missed a
+  near-coincidence at 1e-7. The coincident-hexagon trap for the third time,
+  now in floating point. The guard compares offsets, generously.
+- **"The degeneracy result closes the route."** It covers de Grey's angle
+  family, which is one curve; for three or more hexagons the space is
+  continuous.
 - **"Blocking is what a 6-chromatic candidate needs."** A pendant edge in a
   blocking direction blocks the graph and changes χ by nothing. Blocking is a
   precondition for rigidity to be *measurable*, never a bound.

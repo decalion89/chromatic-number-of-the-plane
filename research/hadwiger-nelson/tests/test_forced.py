@@ -968,3 +968,25 @@ def test_confined_set_degeneracy_is_what_caps_the_pressure():
     assert M["measured_sizes"] == sorted(M["measured_sizes"])
     assert M["measured_sizes"][-1] > 5 * M["measured_sizes"][0], (
         "it grows nearly sixfold while the degeneracy does not move")
+
+
+def test_free_auxiliary_edges_never_join_two_confined_points():
+    """D2 = 0 holds at every angle and is useless: the parities disagree."""
+    # q = u_i + v_j and q' = u_i' + v_j are one apart when |i - i'| = 1.
+    # Confinement turns on i + j + bits, so both confined needs i = i' mod 2.
+    for i in range(6):
+        for ip in range(6):
+            sep = min((i - ip) % 6, (ip - i) % 6)
+            if sep != 1:
+                continue
+            assert (i % 2) != (ip % 2), (
+                "adjacent hexagon positions always differ in parity")
+
+
+def test_two_hexagon_angle_enumeration_is_recorded_with_its_caveat():
+    from hn.forced import TWO_HEXAGON_ANGLES_ARE_FINITE as T
+
+    assert T["distinct_mod_60"] == 8
+    assert T["best_degeneracy"] == 2, "none of the eight beats 2"
+    assert "two hexagons only" in T["caveat"], (
+        "the result must not be read as covering three or more")

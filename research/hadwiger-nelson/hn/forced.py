@@ -1134,3 +1134,45 @@ CONFINED_SET_IS_TWO_DEGENERATE = {
                       "the pressure is 2, at every size",
     "what_would_break_it": "a confined set of degeneracy >= 3",
 }
+
+
+# -- how much of the design space that measurement actually covers --------
+#
+# Two auxiliaries q = u + v and q' = u' + v' from the SAME pair of hexagons a
+# and b differ by D1 + D2 with D1 = r_a(w^i - w^i'), D2 = r_b(w^j - w^j'), and
+#
+#     |q - q'|^2 = |D1|^2 + |D2|^2 + 2 Re(t z) = 1,   t = r_a conj(r_b),
+#
+# a LINE in t meeting the unit circle twice: for two hexagons the good angles
+# are a finite set, and enumerating all 31 x 31 pairs of hexagon differences
+# gives 48 solutions, EIGHT distinct modulo 60 degrees. Measured at each:
+#
+#     degeneracy 0: 1 angle      degeneracy 2: 3 angles
+#     degeneracy 1: 2 angles     degeneracy 3 or more: NONE
+#
+# One case is free and useless: D2 = 0, same v and adjacent u, holds at every
+# angle -- but confinement of u_i + v_j turns on i + j, adjacent i differ by
+# one, so those two auxiliaries never share a parity. Every always-available
+# edge joins a confined auxiliary to a non-confined one, which is why
+# Pythagorean rotations leave the confined set with no edges at all.
+#
+# WHAT THIS DOES NOT SHOW, stated because the obvious reading is wrong. The
+# enumeration is complete for TWO hexagons only. With three, an edge can join
+# auxiliaries from DIFFERENT pairs -- q from (a,b) and q' from (a,c) -- which
+# is two free angles against one equation, a CURVE rather than a discrete set.
+# de Grey's theta/2 is exactly such a case: it is absent from the eight, and
+# chi(confined) is 1 at two hexagons and jumps to 3 at three. So the flat
+# degeneracy measured as hexagons are added describes ONE CURVE through a
+# continuous space, not the space. It explains why de Grey's family stops; it
+# does not close the route.
+
+TWO_HEXAGON_ANGLES_ARE_FINITE = {
+    "raw_solutions": 48,
+    "distinct_mod_60": 8,
+    "best_degeneracy": 2,
+    "free_case": "D2 = 0 holds at every angle but always joins a confined "
+                 "auxiliary to a non-confined one, so it never helps",
+    "caveat": "complete for two hexagons only; with three the edges can cross "
+              "hexagon pairs, giving two angles against one equation -- a "
+              "curve, and de Grey's theta/2 lives on it",
+}
