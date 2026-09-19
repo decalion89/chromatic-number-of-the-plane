@@ -89,26 +89,68 @@ def conflict_rotations(graph, pivot: int, a: int, b: int) -> List[Rotation]:
     return out
 
 
-def _sqrt_in_field(v) -> Optional[object]:
-    """A square root of v inside its own field, or None.
+def _rational_sqrt(field, q):
+    """sqrt of a non-negative rational, inside the field, or None."""
+    from fractions import Fraction
 
-    Only the rational case is decided here: a general multiquadratic square
-    root is a separate problem, and returning None loses a rotation rather
-    than inventing one.
-    """
-    field = v.field
-    if not v.is_rational():
-        return None
-    q = v.c[0]
     if q < 0:
         return None
+    if q == 0:
+        return field.zero()
     num, den = q.numerator, q.denominator
     try:
         root = field.sqrt(num * den)
     except ValueError:
         return None
-    from fractions import Fraction
     return root * field.rational(Fraction(1, den))
+
+
+def _sqrt_in_field(v) -> Optional[object]:
+    """A square root of v inside its own field, or None.
+
+    The rational case is easy.  The two-term case is the classical denesting
+
+        sqrt(a + b sqrt(d)) = sqrt(x) + sqrt(y),
+        x + y = a,  4 x y = b^2 d,   so   x, y = (a +- sqrt(a^2 - b^2 d)) / 2,
+
+    which lands inside a multiquadratic field exactly when a^2 - b^2 d is a
+    rational square and the squarefree parts of x and y are already generators.
+    A negative a^2 - b^2 d means the element is not totally positive, so its
+    square root is not in any real multiquadratic field at all -- that is
+    arithmetic refusing, not this function giving up.
+
+    It matters more than it looks.  Restricted to the rational case this
+    returned nothing at all for a core of three on Sa, whose conflict
+    discriminants are all of the form a + b sqrt(33); three of the six denest,
+    and they are exactly the cross-target pairs that mixed-distance blocking
+    needs.  The whole rotation set was being thrown away by a weak square root.
+    """
+    field = v.field
+    terms = [(i, c) for i, c in enumerate(v.c) if c]
+    if not terms:
+        return field.zero()
+    if len(terms) == 1 and terms[0][0] == 0:
+        return _rational_sqrt(field, terms[0][1])
+    if len(terms) != 2 or terms[0][0] != 0:
+        return None                       # more than two terms: not handled
+    a = terms[0][1]
+    mask, b = terms[1]
+    d = 1
+    for i, g in enumerate(field.gens):
+        if mask >> i & 1:
+            d *= g
+    inner = _rational_sqrt(field, a * a - b * b * d)
+    if inner is None or not inner.is_rational():
+        return None
+    sgn = inner.c[0]
+    from fractions import Fraction
+    x = (a + sgn) / 2
+    y = (a - sgn) / 2
+    rx, ry = _rational_sqrt(field, x), _rational_sqrt(field, y)
+    if rx is None or ry is None:
+        return None
+    root = rx + ry if b > 0 else rx - ry
+    return root if root * root == v else None
 
 
 def conflict_rotation_set(graph, pivot: int, targets: Sequence[int],
@@ -215,3 +257,73 @@ def in_field_rotations(graph, pivot: int, targets: Sequence[int],
                         return list(seen.values())
         cur = list(seen.values())
     return list(seen.values())
+
+
+def search_block(graph, pivot: int, targets: Sequence[int],
+                 candidates: Sequence[Rotation], cap: int = 40000,
+                 nodes: int = 20000, max_depth: int = 14, width: int = 4):
+    """Search for a set of copies leaving no escape at all.
+
+    Adding copies wholesale makes things worse, not better: seven conflict
+    rotations left 432 escapes on a core of three, and closing them under
+    products to nineteen pushed it past 200000. Every copy multiplies the
+    choices by |targets| while pruning only in proportion to its own conflict
+    degree, so the count is not monotone and the set has to be chosen.
+
+    An escape is a choice of one target per copy whose images are pairwise
+    non-adjacent. The surviving escapes are kept explicitly, and a new copy
+    extends each of them by its own targets that clash with nothing already
+    chosen.
+
+    The count rises before it falls -- with no copies there is exactly one
+    escape, the empty assignment, and the first copy always takes it to
+    |targets| -- so refusing any copy that increases it stalls at the root,
+    which is what a first attempt did. Every candidate under the cap is tried
+    instead, cheapest first, keeping the best `width` at each level and
+    backtracking. Reaching zero is the lemma firing.
+    """
+    from .multispindle import cross_conflict_graph
+
+    targets = list(targets)
+    cands = list(candidates)
+    adj = cross_conflict_graph(graph, pivot, targets, cands)
+    budget = [nodes]
+    best = [None, None]
+
+    def extend(esc, i):
+        out = []
+        for e in esc:
+            for q in targets:
+                if any(c in adj[(i, q)] for c in e):
+                    continue
+                out.append(e + ((i, q),))
+                if len(out) > cap:
+                    return None            # runaway branch, not worth keeping
+        return out
+
+    def rec(used, esc, depth):
+        if not esc:
+            best[0], best[1] = list(used), 0
+            return True
+        if budget[0] <= 0 or depth == 0:
+            return False
+        if used and (best[1] is None or len(esc) < best[1]):
+            best[0], best[1] = list(used), len(esc)
+        options = []
+        for i in range(len(cands)):
+            if i in used:
+                continue
+            budget[0] -= 1
+            if budget[0] <= 0:
+                break
+            nxt = extend(esc, i)
+            if nxt is not None:
+                options.append((len(nxt), i, nxt))
+        options.sort(key=lambda t: t[0])
+        for _, i, nxt in options[:width]:
+            if rec(used + [i], nxt, depth - 1):
+                return True
+        return False
+
+    rec([], [()], max_depth)
+    return ([cands[i] for i in (best[0] or [])], best[1])
