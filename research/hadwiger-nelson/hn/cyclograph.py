@@ -13,6 +13,7 @@ points at every radius instead of filling a fixed grid.
 from __future__ import annotations
 
 from collections import defaultdict
+from fractions import Fraction
 from typing import Dict, List, Sequence, Set, Tuple
 
 from .cyclotomic import CycloRing
@@ -155,26 +156,191 @@ def cyclo_generated(field, seeds, gens, rounds: int, cap: int = 40000,
     order 11 and 33 are what Q(zeta_33) brings that no multiquadratic field
     has, so they belong in the generator list beside the unit steps.
     """
-    seen = {p.c: None for p in seeds}
-    frontier = [p.c for p in seeds]
     # Z[zeta_n] is dense for phi(n) > 2, so growth spreads thin unless it is
     # held in: 20000 points let loose covered a wide disc at 4.4 edges each and
     # forced nothing.  Capping the radius spends the same budget inside the
     # ball that holds the targets, where the constraint has to come from.
-    r2 = radius * radius
+    #
+    # The complex value rides along rather than being recomputed.  The radius
+    # test needs it for every candidate, and `to_complex` is a degree-long sum
+    # -- twenty complex multiply-adds at n = 33 -- while a translation shifts
+    # it by a constant and a rotation multiplies it by one, both O(1).  The
+    # embedding is a ring homomorphism, so carrying it costs nothing in
+    # exactness: it decides only which points to *try*, and every point kept is
+    # exact.
+    zg = [(kind, v, field.to_complex(v)) for kind, v in gens]
+    seen = {p.c: p.z for p in seeds}
+    frontier = list(seen.items())
     for _ in range(rounds):
         nxt = []
-        for c in frontier:
-            for kind, v in gens:
-                q = field.add(c, v) if kind == "add" else field.mul(c, v)
-                if radius and abs(field.to_complex(q)) ** 2 > r2:
-                    continue
+        for c, zc in frontier:
+            for kind, v, zv in zg:
+                if kind == "add":
+                    zq = zc + zv
+                    if radius and abs(zq) > radius:
+                        continue
+                    q = field.add(c, v)
+                else:
+                    zq = zc * zv
+                    if radius and abs(zq) > radius:
+                        continue
+                    q = field.mul(c, v)
                 if q not in seen:
-                    seen[q] = None
-                    nxt.append(q)
+                    seen[q] = zq
+                    nxt.append((q, zq))
                     if len(seen) >= cap:
-                        return [CycloPoint(field, x) for x in seen]
+                        return _points(field, seen)
         frontier = nxt
         if not frontier:
             break
-    return [CycloPoint(field, c) for c in seen]
+    return _points(field, seen)
+
+
+def _points(field, seen) -> List[CycloPoint]:
+    out = []
+    for c, z in seen.items():
+        p = CycloPoint(field, c)
+        p._z = z                       # already known; skip the degree-long sum
+        out.append(p)
+    return out
+
+
+# -- the integer fast path ----------------------------------------------------
+
+def common_denominator(steps) -> int:
+    """Least d with every step's coefficients in (1/d) Z."""
+    from math import lcm
+
+    d = 1
+    for s in steps:
+        for x in s:
+            d = lcm(d, Fraction(x).denominator)
+    return d
+
+
+def scaled_walk(field, steps, rounds: int, radius: float, cap: int = 400000):
+    """Grow by translation with integer coordinates instead of fractions.
+
+    Hashing a twenty-long tuple of Fractions once per candidate is what the
+    generation actually spends its time on -- not the arithmetic.  Every step
+    zeta^k rho^m has denominator 6^|m|, so one common denominator clears them
+    all, and after scaling a point is a tuple of ints: addition is int
+    addition and the hash is an int hash.
+
+    Exactly the lesson `hn.fast.IntBasis` already learned for the multiquadratic
+    side, applied to the cyclotomic one.
+    """
+    den = common_denominator(steps)
+    ints = [tuple(int(Fraction(x) * den) for x in s) for s in steps]
+    zs = [field.to_complex(s) for s in steps]
+    origin = (0,) * field.degree
+    seen = {origin: 0j}
+    frontier = [(origin, 0j)]
+    for _ in range(rounds):
+        nxt = []
+        for c, zc in frontier:
+            for iv, zv in zip(ints, zs):
+                zq = zc + zv
+                if radius and abs(zq) > radius:
+                    continue
+                q = tuple(a + b for a, b in zip(c, iv))
+                if q not in seen:
+                    seen[q] = zq
+                    nxt.append((q, zq))
+                    if len(seen) >= cap:
+                        return _unscale(field, seen, den)
+        frontier = nxt
+        if not frontier:
+            break
+    return _unscale(field, seen, den)
+
+
+def _unscale(field, seen, den: int) -> List[CycloPoint]:
+    out = []
+    inv = Fraction(1, den)
+    for c, z in seen.items():
+        p = CycloPoint(field, tuple(x * inv for x in c))
+        p._z = z
+        out.append(p)
+    return out
+
+
+def step_edges(field, points, steps) -> UnitDistanceGraph:
+    """Edges by table lookup: p ~ p + u for u a unit step in the set.
+
+    A float spatial hash asks every nearby pair, which is fine for a lattice
+    and hopeless for a dense ring: 109000 points inside radius 2 put ~8600 in
+    every unit cell, so each point proposes tens of thousands of candidates.
+    A set closed under a known step list does not need the question asked --
+    its edges *are* the steps, found by one dictionary lookup each.
+
+    Sound but not complete.  Q(zeta_n) has modulus-one elements outside any
+    finite step list, so two points can be one apart with their difference
+    absent from `steps`, and that edge is missed.  The result is a subgraph of
+    the true unit-distance graph on these points, which is still a
+    unit-distance graph: a colouring bound proved on it holds for the plane,
+    and only the sharpness is lost, never the soundness.
+    """
+    index = {p.c: i for i, p in enumerate(points)}
+    adj: List[Set[int]] = [set() for _ in points]
+    for u in steps:
+        uc = tuple(Fraction(x) for x in u)
+        for i, p in enumerate(points):
+            j = index.get(field.add(p.c, uc))
+            if j is not None and j != i:
+                adj[i].add(j)
+                adj[j].add(i)
+    return UnitDistanceGraph(list(points), adj)
+
+
+def scaled_graph(field, steps, rounds: int, radius: float, cap: int = 400000):
+    """Walk and wire in one pass, entirely in integer coordinates.
+
+    Splitting the two costs more than the walk itself: 7921 points and 198
+    steps is 1.57 million lookups, and rebuilding a twenty-long Fraction tuple
+    for each one took 54 seconds against 0 for the walk.  Keeping the scaled
+    integers all the way through and converting once at the end removes that.
+    """
+    den = common_denominator(steps)
+    ints = [tuple(int(Fraction(x) * den) for x in s) for s in steps]
+    zs = [field.to_complex(s) for s in steps]
+    origin = (0,) * field.degree
+    seen = {origin: 0j}
+    frontier = [(origin, 0j)]
+    for _ in range(rounds):
+        nxt = []
+        for c, zc in frontier:
+            for iv, zv in zip(ints, zs):
+                zq = zc + zv
+                if radius and abs(zq) > radius:
+                    continue
+                q = tuple(a + b for a, b in zip(c, iv))
+                if q not in seen:
+                    seen[q] = zq
+                    nxt.append((q, zq))
+                    if len(seen) >= cap:
+                        frontier = []
+                        break
+            if not frontier and len(seen) >= cap:
+                break
+        else:
+            frontier = nxt
+            if frontier:
+                continue
+        break
+    order = list(seen)
+    index = {c: i for i, c in enumerate(order)}
+    adj: List[Set[int]] = [set() for _ in order]
+    for iv in ints:
+        for i, c in enumerate(order):
+            j = index.get(tuple(a + b for a, b in zip(c, iv)))
+            if j is not None and j != i:
+                adj[i].add(j)
+                adj[j].add(i)
+    inv = Fraction(1, den)
+    pts = []
+    for c in order:
+        p = CycloPoint(field, tuple(x * inv for x in c))
+        p._z = seen[c]
+        pts.append(p)
+    return UnitDistanceGraph(pts, adj)
