@@ -358,6 +358,32 @@ core the wrong way — the effort score climbed while the quantity that decides
 anything could not move. de Grey's construction is asymmetric on purpose, two
 different rotations about an off-centre pivot, and this is what that is for.
 
+**Asymmetric tightening narrows it.** Acting on that, tightening about pivots
+*other* than the forcing one — breaking its symmetry instead of reinforcing it —
+moves the number that symmetric tightening never touched:
+
+| round | vertices | forced core |
+|---|---|---|
+| start | 359 | **34** |
+| 1 | 634 | **22** |
+| 2 | 987 | **13** |
+
+Twelve exclusions, then nine, where a day of symmetric tightening held it at 34
+while the effort score climbed through 88, 2110, 22 697.
+
+**The mechanism is real; the metric for it is not.** The obvious measure — what
+fraction of vertices the rotation about the forcing pivot still preserves — does
+not predict which tightening works, and is anti-correlated in round 2: the winning
+candidate (core 13) was the *most* symmetric of the five by that measure, and the
+least symmetric stayed at 22. Particular positions win repeatedly; an aggregate
+quantity does not explain why. Recorded as a mechanism without a metric rather
+than dressed in an explanation that fits.
+
+Scope: this is at k = 4, which is settled territory. It is a proof of mechanism,
+not the prize. Applying it at k = 5 needs forcing to exist there first, and on de
+Grey's graph 29 930 queries found none — there is no core to narrow until one
+appears.
+
 It also replaces the search objective. Chasing effort asks "how hard is this pair to
 separate"; the quantity that actually has to move is **the size of the minimal
 forced core**, which must reach 2. Here it sits at 34.
