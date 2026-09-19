@@ -191,6 +191,11 @@ def rotation_joining(d2, field: Field = QSQRT3_11) -> Rotation:
 
     From |r*e^{i t} - r|^2 = 2 r^2 (1 - cos t) = 1 we get cos t = 1 - 1/(2 d2)
     and sin t = sqrt(1 - cos^2 t), which must be representable in the field.
+
+    `d2` must be rational.  Irrational squared distances do occur -- 2 + sqrt(3)
+    is one, at rotation order 12 -- and recovering their spindle angle would
+    mean taking a square root inside the field.  Where such a rotation is
+    needed it is known by construction instead; see `hn.multispindle`.
     """
     d2 = Fraction(d2)
     c = Fraction(1) - Fraction(1, 2) / d2
