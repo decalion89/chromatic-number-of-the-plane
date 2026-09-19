@@ -437,3 +437,34 @@ BLOCKING_IS_NOT_SUFFICIENT = (
     "chromatic number by nothing, so blocking is a precondition for rigidity "
     "to be measurable, never a bound on its own"
 )
+
+
+# -- why density and blocking really are at odds --------------------------
+#
+# Adding steps never hurts either property, but it does dilute a ball: at
+# radius 2 over 178 steps only about one step-application in ninety lands back
+# inside, so the graph has 16015 vertices and average degree 4.1. Density
+# wants FEW, highly related steps -- a lattice, where every translate lands on
+# a point. And there the obstruction is absolute.
+#
+# THEOREM. A unit-distance graph whose edge vectors generate a DISCRETE
+# subgroup of R^2 can never block.
+#
+# A discrete subgroup of R^2 is isomorphic to Z^r with r <= 2, so the module
+# has rank at most 2 and the dual is PG(1,5) -- six points, whose hyperplanes
+# are single points, so covering needs SIX directions. But the unit circle
+# meets a plane lattice in at most six points, the hexagonal case, giving at
+# most THREE directions. Three against six: never. (And the bound is tight in
+# the wrong direction -- the triangular lattice attains three and is exactly
+# the classical coset 3-colouring.)
+#
+# So a blocked graph cannot live in a lattice, and must live in a module that
+# is dense in the plane, where "every point of a region" is not a finite
+# construction and a ball's boundary dominates its interior. That is the real
+# reason the blocked graphs here come out sparse, and it is structural.
+
+DISCRETE_NEVER_BLOCKS = (
+    "a discrete subgroup of R^2 has rank <= 2, its unit circle holds at most "
+    "six points hence three directions, and covering PG(1,5) needs six -- so "
+    "no lattice graph ever blocks, and a blocked graph must be non-discrete"
+)

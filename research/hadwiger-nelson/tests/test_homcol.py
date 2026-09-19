@@ -339,3 +339,21 @@ def test_blocking_is_cheap_and_changes_no_chromatic_number():
                 cls.append([-(1 + a * k + c), -(1 + b * k + c)])
         with Solver(name="cd19", bootstrap_with=cls) as s:
             assert s.solve() is (k == 3), f"k={k}"
+
+
+def test_a_plane_lattice_can_never_block():
+    """At most three unit directions against PG(1,5)'s six points."""
+    import itertools
+
+    from hn.homcol import has_homomorphism
+
+    # PG(1,5) has six points and its hyperplanes are single points, so six
+    # directions are needed; a lattice supplies at most three.
+    pg1 = [p for p in itertools.product(range(5), repeat=2)
+           if any(p) and next(x for x in p if x) == 1]
+    assert len(pg1) == 6
+    for k in range(1, 6):
+        for dirs in itertools.combinations(pg1, k):
+            assert has_homomorphism(list(dirs), 5)[0] is not None, (
+                f"{k} directions should never block at rank 2")
+    assert has_homomorphism(pg1, 5)[0] is None

@@ -708,6 +708,60 @@ primes of residue degree 6 rather than staying inert. And blocking is
 homomorphism on the ℚ(ζ₇) submodule, nonzero on all 87 directions, and none
 exists.
 
+### The wall at five colours is exactly one colour wide
+
+Squeezing the circle into two colours does not hand every auxiliary the same
+list. At k = 5, with the circle in colours {0,1}:
+
+- an auxiliary seeing **both** gets the list {2,3,4} — size 3, and *every*
+  such auxiliary gets the **same** list, so colouring that group is ordinary
+  3-colouring;
+- an auxiliary seeing only one gets a list of size 4, which is slack.
+
+So the condition is not on the whole auxiliary graph but on the **confined
+set**, and only in the orientations that actually arise:
+
+> pressure(p) > 2 at k = 5 requires the confined set to be **4-chromatic in
+> every proper 2-colouring of the circle**.
+
+A first guess that the auxiliary graph's chromatic number was the obstruction
+is **wrong**: measured on de Grey's Sa at its best pivot, χ(A) = 4 already,
+degeneracy 4, and the pressure at five colours is still 2. The lists are what
+differ. Measuring the confined set instead, over all 32 orientations (the
+circle is five hexagons, each a 6-cycle with two proper 2-colourings):
+
+| χ(confined set) | 2 | 3 | 4 |
+|---|--:|--:|--:|
+| orientations | 4 | **28** | **0** |
+
+**Maximum 3, needed 4, in all 32.** The wall is exactly one colour wide, and
+uniformly so — not a few awkward orientations but every one of them.
+
+### A blocked graph cannot be a lattice
+
+Adding steps never hurts blocking or folding, but it does **dilute a ball**: at
+radius 2 over 178 steps only about one step-application in ninety lands back
+inside, which is why the blocked graphs here come out with average degree near
+4. Density wants **few, highly related** steps — a lattice, where every
+translate lands on a point. And there the obstruction is absolute.
+
+> **Theorem.** A unit-distance graph whose edge vectors generate a *discrete*
+> subgroup of ℝ² can never block.
+
+A discrete subgroup of ℝ² is ℤ^r with r ≤ 2, so the dual is PG(1,5): six
+points whose hyperplanes are single points, so covering needs **six**
+directions. The unit circle meets a plane lattice in at most six points — the
+hexagonal case — giving at most **three**. Three against six, never. The bound
+is tight in the wrong direction: the triangular lattice attains three, and is
+exactly the classical coset 3-colouring.
+
+So a blocked graph must live in a module **dense** in the plane, where "every
+point of a region" is not a finite construction and a ball's boundary
+dominates its interior. Measured, in ℚ(ζ₂₁) with 6 Eisenstein steps and 174
+blocking ones: 16 015 vertices, 32 722 edges, **1056 triangles**, blocked —
+and 3-chromatic. Both halves achieved at once for the first time, and still
+far from rigid.
+
 ### The caveat that bounds all of it
 
 Blocking is necessary and very far from sufficient, and it is worth being
