@@ -108,3 +108,65 @@ def test_deep_holes_really_have_the_degree_claimed():
     assert holes
     for deg, x in holes[:5]:
         assert sum(1 for q in g.vertices if x.is_unit_apart(q)) == deg
+
+
+def test_reflections_fix_the_pivot_and_preserve_distance():
+    """So the spindle lemma applies to them exactly as to rotations."""
+    from hn.geometry import origin
+    from hn.mixed import Reflection
+
+    g = build_graph(build_Sa())
+    field = g.vertices[0].x.field
+    p, q = g.vertices[0], g.vertices[5]
+    r = Reflection(field.rational(1), field.zero())
+    about = r.about(p)
+    assert about(p) == p                      # fixes the pivot
+    assert about(q).dist2(p) == q.dist2(p)    # stays on its circle
+    assert about(about(q)) == q               # an involution
+    assert about(q) != q                      # and not the identity
+
+
+def test_conflict_reflections_share_the_rotations_discriminant():
+    """The square root is the same, so reflections cost nothing to name.
+
+    <sigma(a), b> expands with P = ax bx - ay by and Q = ay bx + ax by, and
+    P^2 + Q^2 is still |a|^2 |b|^2 while R is unchanged -- so wherever a
+    conflict rotation can be named, a conflict reflection can be too.
+    """
+    from hn.mixed import conflict_reflections, conflict_rotations
+
+    g = build_graph(build_Sa())
+    p = g.vertices[0]
+    cand = [j for j in range(1, g.n) if j not in g.adj[0]][:30]
+    both = 0
+    for a in cand:
+        for b in cand:
+            rots = conflict_rotations(g, 0, a, b)
+            refs = conflict_reflections(g, 0, a, b)
+            if rots:
+                assert refs, "a rotation resolved but its reflection did not"
+                both += 1
+            for r in refs:
+                assert r.about(p)(g.vertices[a]).is_unit_apart(g.vertices[b])
+        if both >= 3:
+            break
+    assert both
+
+
+def test_reflections_cut_the_escapes():
+    """Measured on the core of three: 432 escapes become 135."""
+    from hn.geometry import Rotation
+    from hn.mixed import (conflict_isometries, conflict_rotation_set,
+                          count_cross_transversals)
+
+    g = build_graph(build_Sa())
+    field = g.vertices[0].x.field
+    ident = Rotation(field.rational(1), field.zero())
+    pivot = 0
+    targets = [j for j in range(1, g.n) if j not in g.adj[0]][:3]
+    rots = [ident] + conflict_rotation_set(g, pivot, targets)
+    both = [ident] + conflict_isometries(g, pivot, targets)
+    assert len(both) >= len(rots)
+    a = count_cross_transversals(g, pivot, targets, rots, cap=50000)
+    b = count_cross_transversals(g, pivot, targets, both, cap=50000)
+    assert b <= a

@@ -405,3 +405,110 @@ def deep_holes(graph, min_degree: int = 6, limit: int = 4000):
             out.append((deg, x))
     out.sort(key=lambda t: -t[0])
     return out
+
+
+class Reflection:
+    """Reflection in a line through the origin, at half-angle (c, s).
+
+    The spindle argument needs its copies to fix the pivot and preserve
+    distances, and rotations are not the only isometries that do. A reflection
+    in any line through the pivot fixes it, so its images carry the pivot's
+    colour exactly as a rotation's do, and the lemma applies unchanged.
+
+    They are also free. A rotation by an angle that creates a conflict needs a
+    square root, and two thirds of those turned out to be outside the field.
+    Reflecting in the line at angle t needs cos 2t and sin 2t, which is the
+    same data as a rotation by 2t -- so every rotation already in hand gives a
+    reflection for nothing, and the composition of two reflections is a
+    rotation, so the group they generate is larger than the rotations alone.
+    """
+
+    __slots__ = ("cos", "sin")
+
+    def __init__(self, cos, sin):
+        self.cos = cos
+        self.sin = sin
+
+    @property
+    def field(self):
+        return self.cos.field
+
+    def __call__(self, p: Point) -> Point:
+        # (x, y) -> (x cos + y sin, x sin - y cos), the reflection in the line
+        # at half the angle of (cos, sin)
+        return Point(p.x * self.cos + p.y * self.sin,
+                     p.x * self.sin - p.y * self.cos)
+
+    def about(self, pivot: Point):
+        def reflect(p: Point, _r=self, _c=pivot) -> Point:
+            return _r(p - _c) + _c
+
+        return reflect
+
+
+def reflections_from(rotations: Sequence) -> List[Reflection]:
+    """One reflection per rotation, reusing its cos and sin exactly."""
+    return [Reflection(r.cos, r.sin) for r in rotations]
+
+
+def conflict_reflections(graph, pivot: int, a: int, b: int) -> List[Reflection]:
+    """The reflections about the pivot putting a's image one from b.
+
+    The same derivation as for rotations, with the reflection's expansion in
+    place of the rotation's:
+
+        <sigma(a), b> = c (a_x b_x - a_y b_y) + s (a_y b_x + a_x b_y),
+
+    so P and Q change but P^2 + Q^2 is still |a|^2 |b|^2, and R is unchanged.
+    **The discriminant is therefore identical.** Whenever a conflict rotation
+    can be named in the field, a conflict reflection can be named too, from the
+    same square root -- the copies double for nothing, and no new radical is
+    needed anywhere.
+    """
+    p = graph.vertices[pivot]
+    qa, qb = graph.vertices[a], graph.vertices[b]
+    ax, ay = qa.x - p.x, qa.y - p.y
+    bx, by = qb.x - p.x, qb.y - p.y
+    da2 = ax * ax + ay * ay
+    db2 = bx * bx + by * by
+    field = ax.field
+    P = ax * bx - ay * by
+    Q = ay * bx + ax * by
+    R = (da2 + db2 - field.rational(1)) / field.rational(2)
+    denom = P * P + Q * Q
+    if denom == 0:
+        return []
+    D = _sqrt_in_field(denom - R * R)
+    if D is None:
+        return []
+    out = []
+    for sign in (1, -1):
+        sg = field.rational(sign)
+        c = (P * R + sg * Q * D) / denom
+        s = (Q * R - sg * P * D) / denom
+        if c * c + s * s != 1:
+            continue
+        r = Reflection(c, s)
+        if r.about(p)(qa).is_unit_apart(qb):
+            out.append(r)
+    return out
+
+
+def conflict_isometries(graph, pivot: int, targets: Sequence[int],
+                        limit: int = 400) -> List:
+    """Every rotation *and* reflection creating a conflict among the targets.
+
+    Reflections were left out of this package entirely, and they cost nothing:
+    they fix the pivot, so the lemma applies to them unchanged, and they share
+    their square root with the rotations.
+    """
+    seen = {}
+    for a in targets:
+        for b in targets:
+            for r in conflict_rotations(graph, pivot, a, b):
+                seen[("rot", r.cos, r.sin)] = r
+            for r in conflict_reflections(graph, pivot, a, b):
+                seen[("ref", r.cos, r.sin)] = r
+            if len(seen) >= limit:
+                return list(seen.values())
+    return list(seen.values())
