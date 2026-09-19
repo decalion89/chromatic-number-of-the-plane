@@ -612,6 +612,39 @@ meets every 5-arc. Of the 1365 four-subsets of `C_15` exactly **45 block**, in
 three classes up to rotation -- gaps `(1,2,10,2)`, `(2,3,4,6)`, `(2,6,4,3)` --
 and none of the 45 is forced on either orbit.
 
+### One order, a family of circles -- and the same answer on all of them
+
+Adjacency on the circle need not be one step of the rotation. At `t` steps the
+radius is `1/(2 sin(pi t/n))` and the cycle is `C_{n/gcd(n,t)}` taken in the
+order `0, t, 2t, ...`, so the *same angular arc* lands on a different subset of
+the cycle. At `n = 15` the family is:
+
+| t | radius | cycle | capacity | points found |
+|--:|-------:|:-----:|---------:|-------------:|
+| 1 | 2.4049 | C₁₅ | 4 | 30 |
+| 2 | 1.2293 | C₁₅ | 4 | 30 |
+| 3 | 0.8507 | C₅  | 3 | **0** — the order-5 radius, ramified |
+| 4 | 0.6728 | C₁₅ | 4 | 30 |
+| 5 | 0.5774 | C₃  | 2 | 4 — this is `1/sqrt3`, the classical circle |
+| 7 | 0.5028 | C₁₅ | 4 | 30 |
+
+The theory falls out of the table twice over: `t = 5` reproduces the classical
+`1/sqrt3` circle with its capacity of 2, and `t = 3` is the order-5 radius with
+**no points at all**, exactly as ramification predicts.
+
+The four capacity-4 circles have genuinely different radii and different point
+sets, and **all four give the same minimal core: the angular arc `[0,1,2,3,4]`**.
+Relabelling by the cycle turns that arc into `[0,1,2,8,9]`, `[0,1,4,8,12]` and
+`[0,7,9,11,13]` — four different shapes, none of them forced down to four.
+
+So the forcing is *angularly local*: the constraint reaches the pivot from its
+own neighbourhood, which sees a bounded range of directions, and a blocking
+subset needs its targets spread around the circle. That is a shape mismatch, not
+a size one, and it does not look like something a bigger ball fixes. Bigger, in
+fact, is worse: raising the cap to 120000 vertices left 20 points on the circle
+and **no complete orbit**, because a truncated breadth-first frontier cuts
+orbits in half.
+
 At `k = 4` there is no forcing at all in this field: 55363 vertices at average
 degree 12.6, separable. Forcing at four colours needs a construction of de
 Grey's kind, not a ball.

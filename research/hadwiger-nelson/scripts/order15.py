@@ -44,6 +44,12 @@ OFF = int(os.environ.get("HN_OFF", "2"))
 OFFDIST = int(os.environ.get("HN_OFFDIST", "3"))
 OFFSCALE = float(os.environ.get("HN_OFFSCALE", "0.8"))
 MULT = int(os.environ.get("HN_MULT", "0"))
+# Adjacency on the circle need not be one step of the rotation. At t steps the
+# radius is 1/(2 sin(pi t/n)) and the cycle is C_{n/gcd(n,t)} taken in the
+# order 0, t, 2t, ... -- so the same angular arc becomes a different subset of
+# the cycle. At n=15: t=5 is 1/sqrt3, the classical circle with capacity 2;
+# t=3 is the order-5 radius, capacity 3; t=1,2,4,7 all give C_15 and 4.
+T_STEP = int(os.environ.get("HN_T", "1"))
 
 
 def unit_step_set(F, mult: int = 0):
@@ -84,7 +90,7 @@ def main() -> None:
     F = QuadExtField(CycloField(15), -11)
     steps = unit_step_set(F, MULT)
     cap_r = trapping_bound(ORDER)
-    print(f"order {ORDER}, k={K}: capacity {cap_r}, {len(steps)} unit steps",
+    print(f"order {ORDER}, k={K}, t={T_STEP}: {len(steps)} unit steps",
           flush=True)
 
     # Several centres, because a ball a rotation preserves never forces a
@@ -106,7 +112,8 @@ def main() -> None:
           flush=True)
 
     z = F.root_of_unity(ORDER)
-    witness = F.sub(F.rational(2), F.add(z, F.conj(z)))
+    zt = F.root_of_unity(ORDER, T_STEP)
+    witness = F.sub(F.rational(2), F.add(zt, F.conj(zt)))
     one = F.one()
     circle = [p.c for p in g.vertices if F.mul(F.norm2(p.c), witness) == one]
     print(f"  {len(circle)} points on the magic circle", flush=True)
@@ -127,8 +134,15 @@ def main() -> None:
     print(f"  {len(orbits)} complete orbits of the order-{ORDER} rotation",
           flush=True)
 
-    blocking = blocking_subsets(ORDER, cap_r)
-    print(f"  {len(blocking)} blocking {cap_r}-subsets of C_{ORDER}", flush=True)
+    from math import gcd
+    cyc = ORDER // gcd(ORDER, T_STEP)
+    cap_r = trapping_bound(cyc)
+    blocking = blocking_subsets(cyc, cap_r)
+    # a cycle position p is the angular index p*t, since the cycle runs
+    # 0, t, 2t, ... in angle
+    blocking = [tuple((p * T_STEP) % ORDER for p in T) for T in blocking]
+    print(f"  t={T_STEP}: cycle C_{cyc}, capacity {cap_r}, "
+          f"{len(blocking)} blocking subsets", flush=True)
 
     pivot = index[F.zero()]
     for n, orb in enumerate(orbits):
