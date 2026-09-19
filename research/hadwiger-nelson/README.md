@@ -325,6 +325,25 @@ seven-vertex Moser spindle.
 | 5 | 2 | > 1581 here | 2018, 57 years later |
 | 6 | 3 | — | open |
 
+**Why f(4) has stakes either way.** If G is a unit-distance graph on m vertices with
+a pair forced monochromatic at k = 4, spindling it yields a genuine unit-distance
+graph on at most 2m − 1 vertices with no proper 4-colouring — a 5-chromatic
+unit-distance graph. The smallest known is Parts' 509. So
+
+> either **f(4) ≥ 255**, or measuring it produces a smaller 5-chromatic
+> unit-distance graph than any on record.
+
+There is no third case, which is what makes the measurement worth the machine. A
+number below 255 beats the record; 255 or more is a lower bound nobody appears to
+have written down, confirming that construction's minimality from a different
+direction.
+
+The same argument runs the other way at k = 5 and is the reason the climb is worth
+pushing: **any forced pair found at five colours immediately gives a 6-chromatic
+unit-distance graph of less than twice its size.** At the 11 582 vertices the climb
+had reached, that would be a graph of about 23 000 — unremarkable as sizes go in
+this literature.
+
 The gap f(k) − (k+1) is what the plane's missing K₄ costs, and the history of the
 problem is that gap widening. The anchors are pinned in `tests/test_slack.py`; the
 clique bound is elementary and f(3) = 4 is immediate, so what is worth anything
