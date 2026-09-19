@@ -325,24 +325,25 @@ seven-vertex Moser spindle.
 | 5 | 2 | > 1581 here | 2018, 57 years later |
 | 6 | 3 | — | open |
 
-**Why f(4) has stakes either way.** If G is a unit-distance graph on m vertices with
-a pair forced monochromatic at k = 4, spindling it yields a genuine unit-distance
-graph on at most 2m − 1 vertices with no proper 4-colouring — a 5-chromatic
-unit-distance graph. The smallest known is Parts' 509. So
+**Measured, and then corrected.** Minimising from a ball known to carry forcing
+gives a 359-vertex configuration in which the pivot is forced monochromatic with
+*something* at d² = 1/3. The first reading of that was that spindling it would give
+a 5-chromatic unit-distance graph on ≤ 717 vertices, which is wrong: the forced
+object is a **disjunction over 34 targets**, not a pair. Spindling a disjunction of
+size r needs r+1 rotated images pairwise at distance 1, and a circle holds at most
+three. So that configuration is not spindle-able at all, and no bound on the
+5-chromatic record follows from it.
 
-> either **f(4) ≥ 255**, or measuring it produces a smaller 5-chromatic
-> unit-distance graph than any on record.
+**What that correction reveals is more useful than the claim was.** Forcing at k = 4
+is not absent — it is the wrong *shape*. It appears as a wide disjunction, and the
+spindle needs a narrow one: core size 1, or size 2 at exactly d² = 1/3. That gap
+between "forcing exists" and "forcing is usable" is the real obstruction, and it
+explains why de Grey's and Parts' constructions are elaborate rather than a single
+spindle of some forced pair.
 
-There is no third case, which is what makes the measurement worth the machine. A
-number below 255 beats the record; 255 or more is a lower bound nobody appears to
-have written down, confirming that construction's minimality from a different
-direction.
-
-The same argument runs the other way at k = 5 and is the reason the climb is worth
-pushing: **any forced pair found at five colours immediately gives a 6-chromatic
-unit-distance graph of less than twice its size.** At the 11 582 vertices the climb
-had reached, that would be a graph of about 23 000 — unremarkable as sizes go in
-this literature.
+It also replaces the search objective. Chasing effort asks "how hard is this pair to
+separate"; the quantity that actually has to move is **the size of the minimal
+forced core**, which must reach 2. Here it sits at 34.
 
 The gap f(k) − (k+1) is what the plane's missing K₄ costs, and the history of the
 problem is that gap widening. The anchors are pinned in `tests/test_slack.py`; the
