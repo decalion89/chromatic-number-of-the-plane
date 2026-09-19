@@ -723,3 +723,51 @@ def test_centroid_legs_do_not_block():
     assert not blocks_targets(g, bp, idx, copies)
     union = {iso.about(p)(q) for iso in copies for q in (p, a, b, c)}
     assert len(union) == 7, "the centroid's symmetry collapses the copies"
+
+
+# -- de Grey's forcing, rebuilt from one angle -----------------------------
+
+def test_three_hexagon_gadget_has_pressure_three_at_four_colours():
+    """Three hexagon offsets suffice where de Grey uses five.
+
+    Hexagons at 0, theta/2 and theta on the pivot's unit circle, with
+    cos theta = 5/6 the Moser rotation, and auxiliaries at every u + v with u
+    and v in different hexagons -- which is every auxiliary there is, since a
+    point one away from u and v is the pivot reflected across the chord.
+    """
+    from hn.forced import ColourRelations, circle_hexagons, min_colours_on
+    from hn.mixed import three_hexagon_gadget
+
+    field, pivot, pts = three_hexagon_gadget()
+    g = build_graph(pts)
+    piv = g.vertices.index(pivot)
+    assert (g.n, g.m) == (127, 528)
+    assert len(g.adj[piv]) == 18
+    comps, _par, _co = circle_hexagons(g, piv)
+    assert len(comps) == 3 and all(len(c) == 6 for c in comps)
+
+    for k, expected in ((4, 3), (5, 2)):
+        rel = ColourRelations(g, k)
+        try:
+            assert rel.colourable
+            assert min_colours_on(rel, sorted(g.adj[piv])) == expected
+        finally:
+            rel.close()
+
+
+def test_three_hexagon_angles_are_the_moser_rotation():
+    from fractions import Fraction
+
+    from hn.mixed import three_hexagon_gadget
+
+    field, pivot, _pts = three_hexagon_gadget()
+    one = field.rational(1)
+    ct = field.rational(Fraction(5, 6))
+    st = field.sqrt(11) * field.rational(Fraction(1, 6))
+    ch = field.sqrt(33) * field.rational(Fraction(1, 6))
+    sh = field.sqrt(3) * field.rational(Fraction(1, 6))
+    assert ct * ct + st * st == one and ch * ch + sh * sh == one
+    assert field.rational(2) * ch * ch - one == ct          # half angle
+    # the chord theta subtends on the unit circle squares to 1/3
+    assert field.rational(2) - field.rational(2) * ct \
+        == field.rational(Fraction(1, 3))

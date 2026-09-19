@@ -1110,3 +1110,55 @@ def three_leg_block_configuration():
     rots = [Rotation(one, zero), rho, compose_rotations(rho, rho)]
     copies = rots + [Reflection(r.cos, r.sin) for r in rots]
     return field, pivot, legs, copies
+
+
+def three_hexagon_gadget():
+    """A 127-point configuration with pressure 3 at four colours.
+
+    de Grey's forcing, rebuilt from one angle. Taking the 47-vertex witness
+    apart shows its five hexagons sitting at 0, +-theta/2 and +-(60 - theta)
+    modulo 60, where cos theta = 5/6 is the Moser rotation -- the angle whose
+    chord on the unit circle squares to 2 - 2 cos theta = 1/3. Three of those
+    offsets are enough:
+
+        hexagons at 0, theta/2 and theta on the pivot's unit circle,
+        auxiliaries at every u + v with u, v in different hexagons.
+
+    The sum is exactly the right set: a point one away from circle points u
+    and v is the pivot reflected across the chord uv, which is u + v, so
+    Minkowski summing the hexagons enumerates every auxiliary there is.
+
+    Measured: pressure 3 at k = 4, so a core of one is possible -- the
+    classical spindle regime -- and pressure 2 at k = 5. Everything lives in
+    Q(sqrt 3, sqrt 11), since cos(theta/2) = sqrt(33)/6 and sin(theta/2) =
+    sqrt(3)/6, the same field as the jointly forced pair above.
+    """
+    field = Field((3, 11))
+    one, zero = field.rational(1), field.zero()
+    ct = field.rational(Fraction(5, 6))
+    st = field.sqrt(11) * field.rational(Fraction(1, 6))
+    ch = field.sqrt(33) * field.rational(Fraction(1, 6))
+    sh = field.sqrt(3) * field.rational(Fraction(1, 6))
+    rot60 = Rotation(field.rational(Fraction(1, 2)),
+                     field.sqrt(3) * field.rational(Fraction(1, 2)))
+
+    def hexagon(c, s):
+        q, out = Point(c, s), []
+        for _ in range(6):
+            out.append(q)
+            q = rot60(q)
+        return out
+
+    hexes = [hexagon(one, zero), hexagon(ch, sh), hexagon(ct, st)]
+    aux = set()
+    for a in range(3):
+        for b in range(a + 1, 3):
+            for u in hexes[a]:
+                for v in hexes[b]:
+                    q = Point(u.x + v.x, u.y + v.y)
+                    if not (q.x == zero and q.y == zero):
+                        aux.add(q)
+    pivot = Point(zero, zero)
+    circle = [q for h in hexes for q in h]
+    pts = [pivot] + circle + sorted(aux, key=lambda q: (float(q.x), float(q.y)))
+    return field, pivot, pts
