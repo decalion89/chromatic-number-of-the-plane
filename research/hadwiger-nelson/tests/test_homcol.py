@@ -266,3 +266,48 @@ def test_blocking_denominator_threshold_is_the_first_split_prime():
 
 def _prime(q):
     return q > 1 and all(q % i for i in range(2, int(q ** 0.5) + 1))
+
+
+def test_unit_distance_triangle_needs_zeta6():
+    """Equilateral triangles are 60-degree rotations, so Q(zeta_7) has none."""
+    import itertools
+    from fractions import Fraction
+
+    from hn.cyclotomic import CycloField
+
+    F = CycloField(7)
+    one = F.rational(1)
+
+    # A primitive sixth root of unity is a root of p^2 - p + 1, which pins it
+    # down exactly; testing p^6 == 1 does not, since -1 passes that too.
+    zeta = F.zeta(1)
+    roots, z = [], one
+    for _ in range(7):
+        z = F.mul(z, zeta)
+        roots += [z, F.neg(z)]
+    assert one in roots and len(set(roots)) == 14, "the roots of unity are mu_14"
+    assert not any(F.add(F.sub(F.mul(p, p), p), one) == F.zero() for p in roots)
+
+    # so no two unit-apart modulus-one elements exist: no triangle through 0
+    us = set()
+    for c in itertools.product(range(-1, 2), repeat=3):
+        a = tuple(Fraction(x) for x in c) + (Fraction(0),) * 3
+        if any(a) and F.norm2(a) == one:
+            us.add(a)
+    assert len(us) > 1
+    assert not any(F.norm2(F.sub(u, v)) == one for u in us for v in us if u != v)
+
+
+def test_eisenstein_lattice_does_have_triangles():
+    """The converse half: zeta_6 present, triangles present."""
+    from fractions import Fraction
+
+    from hn.field import Field
+    from hn.geometry import Point
+
+    fld = Field((3,))
+    h = fld.rational(Fraction(1, 2))
+    a = Point(fld.zero(), fld.zero())
+    b = Point(fld.one(), fld.zero())
+    c = Point(h, fld.sqrt(3) * h)       # multiplication by zeta_6
+    assert a.is_unit_apart(b) and b.is_unit_apart(c) and a.is_unit_apart(c)

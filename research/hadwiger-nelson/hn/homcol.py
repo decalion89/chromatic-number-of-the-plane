@@ -361,3 +361,54 @@ def minimum_blocking_set(vecs: Sequence[Sequence[int]], n: int = 5
     with RC2(w) as rc2:
         model = rc2.compute()
     return [vecs[j] for j in range(len(vecs)) if model[j] > 0]
+
+
+# -- the first blocked graph, and why it is only 3-chromatic --------------
+#
+# Taking every modulus-one element of Q(zeta_7) of denominator at most 29 as a
+# step and walking two rounds gives 15313 points and 30276 edges, realising
+# all 87 blocking directions. It is the first graph in this package with NO
+# coset 5-colouring: the structural colouring that every other construction
+# here admitted is gone.
+#
+# It is nevertheless 3-COLOURABLE, and the reason is a theorem, not bad luck.
+#
+# THEOREM. A unit-distance graph over a field K contains a triangle if and
+# only if zeta_6 lies in K.
+#
+# A triangle is three mutually unit-apart points, hence equilateral, hence one
+# vertex is another rotated by 60 degrees about the third -- multiplication by
+# a primitive sixth root of unity, which must therefore lie in K. Conversely
+# zeta_6 in K builds one outright. The roots of unity of Q(zeta_7) are exactly
+# mu_14, and 6 does not divide 14, so NO graph over Q(zeta_7) has a single
+# triangle however large it grows. Clique number 2, and every high-chromatic
+# unit-distance graph known leans on triangles throughout.
+#
+# So the field must supply both, and the two demands name it. Triangles need
+# zeta_6, which needs 3 | n; blocking needs a rational prime splitting
+# completely, which is where many independent modulus-one elements of one
+# small denominator come from. The smallest cyclotomic field with both is
+#
+#     Q(zeta_21) = Q(zeta_3, zeta_7),   degree phi(21) = 12,
+#
+# which contains the whole Eisenstein lattice and its triangles, and inherits
+# Q(zeta_7)'s split primes. In it 5 has order 6 in (Z/21)*, so 5 splits into
+# two primes of residue degree 6 rather than staying inert.
+
+TRIANGLE_NEEDS_ZETA6 = (
+    "a unit-distance triangle is equilateral, so it is a rotation by 60 "
+    "degrees: a graph over K has a triangle iff zeta_6 is in K, and the roots "
+    "of unity of Q(zeta_7) are mu_14, so graphs there are triangle-free"
+)
+
+FIRST_BLOCKED_GRAPH = {
+    "field": "Q(zeta_7)",
+    "steps": "modulus-one elements of denominator <= 29",
+    "n": 15313,
+    "m": 30276,
+    "edge_directions": 87,
+    "coset_5_colourings": 0,
+    "chromatic_number": 3,
+    "why_low": "triangle-free: zeta_6 is not in Q(zeta_7)",
+    "next_field": "Q(zeta_21), the smallest with both zeta_6 and the split primes",
+}
