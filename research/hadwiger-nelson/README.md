@@ -2148,9 +2148,9 @@ swapped pair lies over one of degree `f`. The four that block are exactly the
 four of **residue degree at least 3 over `F`**. So:
 
 > **Theorem.** Let `Gamma` be a unit-distance graph whose edge module is
-> 5-maximal and whose edge vectors are integral at 5. If some prime of
-> `F = K n R` above 5 has residue degree at most 2, then `Gamma` has a coset
-> 5-colouring, and `chi(Gamma) <= 5`.
+> 5-maximal, whose edge vectors are integral at 5, and whose field has 5
+> **unramified**. If some prime of `F = K n R` above 5 has residue degree at
+> most 2, then `Gamma` has a coset 5-colouring, and `chi(Gamma) <= 5`.
 >
 > **Corollary.** Every 6-chromatic unit-distance graph has residue degree at
 > least 3 at every prime of its real subfield above 5 — every residue field of
@@ -2158,6 +2158,14 @@ four of **residue degree at least 3 over `F`**. So:
 
 The integrality hypothesis is automatic when every prime above 5 is
 `sigma`-fixed: then `2 v_p(u) = v_p(u.sigma(u)) = 0` for every unit step.
+
+The **unramified** hypothesis is real, and is stated because the table above
+enumerates the unramified types only. A field containing `sqrt5` — de Grey's
+does — has 5 ramified and needs its own computation. `Q(zeta_5)` is such a
+case and was computed directly: `|N| = 50`, and 11 of its 156 hyperplanes miss
+it, so it cannot block either. The orbit-wise reduction needs no such
+hypothesis, since `A = O/5` factors over the primes above 5 whether they
+ramify or not.
 
 ### What it rules out
 
