@@ -3421,3 +3421,55 @@ ROTATIONS_THAT_BITE_G = {
     "rotations_found": 987,
     "against": "81 that bite Sa over K, and de Grey's own single rho_4",
 }
+
+
+# ---------------------------------------------------------------------------
+# Rotations about a pivot, which is the family every solve here had missed.
+#
+# Every cross-edge solve above looked for u with |p - u.q| = 1, and that is a
+# rotation about the ORIGIN.  de Grey's final step is not one: Ya and Yb are Y
+# turned about (-2, 0).  So a whole family went untested, and the fix is a
+# translation -- a cross edge for the rotation about p0 is
+#
+#     |p - (p0 + u.(q - p0))| = 1,   i.e.   |p' - u.q'| = 1
+#
+# for p' = p - p0, q' = q - p0.  The same equation on the translated set, so
+# the same machinery, one subtraction earlier.
+#
+# The difference it makes is not marginal.  Over de Grey's own field, rotations
+# about the origin bite G with ONE to FOUR cross edges -- 600 of the 987 solved
+# were checked and none did better.  About a vertex of degree 60:
+#
+#     2371 points, 791 shared,   796 cross edges
+#     2813 points, 349 shared,  1182 cross edges
+#
+# against the six that make his own step work.  Both still 5-colourable, which
+# is what a candidate looks like rather than what a failure looks like.
+#
+# One caution the measurement forced: a rotation that maps the translated set
+# to ITSELF is a symmetry, the union adds nothing, and the multiplicity it
+# scores is just the edges it preserves.  About the degree-60 vertex exactly
+# one of the top forty was such, and it scored the highest count of all --
+# 386 against the 199 of the best genuine one.  Symmetries have to go before
+# any number means anything.
+
+ROTATE_ABOUT_A_PIVOT_NOT_THE_ORIGIN = {
+    "gap": "every cross-edge solve here looked for |p - u.q| = 1, which is a "
+           "rotation about the origin; de Grey's final step turns Y about "
+           "(-2,0)",
+    "fix": "a cross edge about p0 is |p' - u.q'| = 1 for p' = p - p0 and "
+           "q' = q - p0 -- the same equation on the translated set",
+    "about_the_origin": "rotations of de Grey's field bite G with one to four "
+                        "cross edges; 600 of 987 checked, none better",
+    "about_a_degree_60_vertex": [
+        {"points": 2371, "shared": 791, "cross": 796, "five_colourable": True},
+        {"points": 2813, "shared": 349, "cross": 1182, "five_colourable": True},
+    ],
+    "against": "the six cross edges that make de Grey's own step work",
+    "caution": "a rotation mapping the translated set to itself is a symmetry "
+               "-- the union adds nothing and the multiplicity it scores is "
+               "just the edges it preserves; about the degree-60 vertex one "
+               "of the top forty was such and scored the highest count of all",
+    "scanned_so_far": "32424 pairs at a closable distance on the 796-cross "
+                      "union, none forced",
+}
