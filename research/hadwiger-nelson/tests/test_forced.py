@@ -1327,3 +1327,13 @@ def test_the_unique_colouring_ladder_stops_after_one_rung():
     assert two["rho"] == two["chi"] + 3
     assert "Moser spindles" in L["why_seven"]
     assert "stops after one step" in L["verdict"]
+
+
+def test_the_distance_left_is_a_factor_of_about_six():
+    from hn.forced import DISTANCE_LEFT as D
+
+    assert max(D["gains"].values()) == D["best_gain_measured"]
+    assert D["gain_required"] / D["best_gain_measured"] > 5
+    # the structural floor at four colours is the Moser spindle
+    assert D["structural_floor_k4"] == 7
+    assert "not excluded" in D["caveat"], "the bound is one-sided"

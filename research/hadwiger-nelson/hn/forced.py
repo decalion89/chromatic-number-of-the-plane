@@ -2283,3 +2283,50 @@ UNIQUE_COLOURING_LADDER = {
                "uniquely 4-colourable unit-distance graph, and containing a "
                "spindle already caps rho at 7 by a different set",
 }
+
+
+# -- the distance left, calibrated ---------------------------------------
+#
+# Two mechanisms can make rho small, and they can be told apart by a number.
+#
+# STRUCTURAL. Any k-chromatic subgraph forces, so rho <= its size. At four
+# colours the smallest unit-distance one is the Moser spindle: seven. Every
+# 4-chromatic graph here that contains a spindle therefore has rho <= 7.
+#
+# AMBIENT. The rest of the graph can force a set smaller than that, with no
+# k-chromatic subgraph inside it at all. Define the gain as 7 / rho:
+#
+#     Moser spindle            rho = 7   gain 1.0
+#     three-hexagon gadget     rho = 7   gain 1.0
+#     lattice + Moser copy     rho = 7   gain 1.0
+#     de Grey Sa               rho = 5   gain 1.4
+#
+# The largest ambient gain measured anywhere in this package is 1.4, on Sa.
+#
+# AT FIVE COLOURS the structural floor is the smallest 5-chromatic
+# unit-distance graph, around five hundred vertices in the published record,
+# against the 63 a core of three needs. The gain required is therefore about
+#
+#     500 / 63  =  8.
+#
+# Eight, against 1.4 measured. That is the distance left, and it is not a
+# question of running the search longer: it asks for ambient rigidity nearly
+# six times stronger than anything this package has produced or measured.
+#
+# Stated with its caveats. The 500 is a published record I have not verified
+# here, and the gain is bounded below by measurements on the graphs available,
+# not above by any theorem -- a construction with a much larger gain is not
+# excluded. What the number does is say how much would have to change.
+
+DISTANCE_LEFT = {
+    "structural_floor_k4": 7,
+    "gains": {"Moser spindle": 1.0, "three-hexagon gadget": 1.0,
+              "lattice + Moser copy": 1.0, "de Grey Sa": 1.4},
+    "best_gain_measured": 1.4,
+    "structural_floor_k5": "about 500, the published smallest 5-chromatic "
+                           "unit-distance graph, unverified here",
+    "needed_at_k5": 63,
+    "gain_required": 8,
+    "caveat": "the gain is bounded below by measurement, not above by any "
+              "theorem; a construction with a larger one is not excluded",
+}
