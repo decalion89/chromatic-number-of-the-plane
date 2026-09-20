@@ -2295,6 +2295,80 @@ like a theorem:
   stacked matrix rather than the rank comparison it should have been. The
   correct test says 964 of 986.
 
+## The three-rhombus chain, parametrised — and the field becomes a choice
+
+The chain closes when `|1 + a + b|^2 = 1/3`. With `c = 1 + a`, `m0 = |c|^2 =
+2 + r` and `r = a + abar`, the closing quadratic `cbar.b^2 - T.b + c = 0` has
+`T = -2/3 - m0` and discriminant
+
+    Delta = T^2 - 4 m0 = r^2 + (4/3) r - 8/9,
+
+which depends **only on the real part of `a`**. Since `K = F(sqrt-3)`, that is
+a square in `K` exactly when `3(8 - 12r - 9r^2)` is one in `F`; and `a` itself
+exists as a unit step with `a + abar = r` exactly when `3(4 - r^2)` is. So the
+whole question is a curve:
+
+    y1^2 = 3(4 - r^2),      y2^2 = 3(8 - 12 r - 9 r^2).
+
+The first conic carries the rational point `(r, y1) = (1, 3)`, so it is
+rationally parametrised, and substituting collapses the pair to **one quartic**:
+
+    r  = (m^2 - 6m - 3)/(m^2 + 3),        y1 = 3 + m(r - 1)
+    V(m) = -39 m^4 + 540 m^3 - 666 m^2 - 324 m + 297,    y2 = sqrt(V)/(m^2+3)
+    a  = (r + y1 sqrt-3 / 3)/2
+    b  = (-8/3 - r + y2 sqrt-3 / 9) / (2(1 + abar))
+
+Two conditions then come for free. `r + 2 = 3(m-1)^2/(m^2+3)` and
+`2 - r = (m+3)^2/(m^2+3)` are both non-negative, so `|r| <= 2` at *every* real
+embedding and the unit step `a` always exists. And a closing chain forces some
+prime above 3 to be moved by conjugation — proved above — so **building** the
+chain settles the condition at 3 instead of having to impose it. Hence
+
+> **Every real `m` with `V(m) > 0` gives a chain of three rhombi in the plane,
+> over the field `K = Q(m, sqrt(V(m)), sqrt-3)`.**
+
+Checked numerically to machine precision and then exactly, in a degree-12
+tower.
+
+### The field stops being given and starts being chosen
+
+Take `m` cubic. Then `F = Q(m, sqrt V)` is a totally real sextic, and the
+residue degrees at 5 are read straight off the factorisation of
+`prod_i (X^2 - V(m_i))` mod 5. Among the totally real cubics with `V` totally
+positive, **40 give a field where every prime above 5 has residue degree at
+least 3** — blocking-capable by the theorem above. Built over
+`T^3 - 9T^2 + 14T + 8`, the chain is
+
+    10 points, 16 edges, chi = 4, 20 directions, MODULE RANK 6
+
+the first 4-chromatic graph here whose directions escape the spindle's rank-4
+field. **The arithmetic no longer obstructs.** What does is the direction
+count: 20 hyperplanes do not cover `PG(5,5)`.
+
+### Why a longer chain does not help
+
+The rhombus on `w` has edges `w`, `zeta_6 w`, and diagonal
+`w(1 - zeta_6) = w.zeta_6bar`. So a step contributes exactly its
+**`zeta_6`-orbit** — three projective directions — and splitting `w` into
+`w.zeta_6 + w.zeta_6bar`, always possible since `zeta_6 + zeta_6bar = 1`,
+stays inside that orbit. Measured: 20 directions at `k = 3`, and still 20 at
+`k = 32` across 77 points and 161 edges. Length is free and buys nothing.
+
+New directions need new **orbits** — which the chain does allow, because only
+the closing sum is constrained and `w_1, .., w_{k-2}` are free.
+
+### Errors caught in this stretch
+
+* the pair sweep compared `(a+abar) + (b+bbar) + (a.bbar+abar.b)` against
+  `-4/3`, but expanding `|1+a+b|^2 = 3 + 2[...]` makes the target `-8/3`. It
+  was searching for `|1+a+b|^2 = 5/3`. The `k = 2` control it carried was
+  right either way — `2 + (a+abar) = 1/3` really is `-5/3` — which is exactly
+  why the fault survived. The parametrisation above has no target constant to
+  get wrong.
+* the cubic sweep used `3 * V(m)` where `V(m)` already carries the factor 3,
+  so it searched `Q(sqrt(3V))` instead of `Q(sqrt V)` — different fields
+  entirely. Caught by writing the derivation out numerically first.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

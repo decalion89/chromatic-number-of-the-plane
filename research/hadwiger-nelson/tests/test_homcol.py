@@ -716,3 +716,61 @@ def test_chain_closing_condition_is_equivalent():
                     K.add(K.add(K.add(a, K.conj(a)), K.add(b, K.conj(b))),
                           K.add(t, K.conj(t))))
         assert lhs == rhs
+
+
+def test_chain_parametrisation_is_an_identity():
+    """The closing conditions, as exact identities in m.
+
+    r + 2 and 2 - r are visibly non-negative, which is why |r| <= 2 holds at
+    every real place and the unit step a always exists; y1 solves the first
+    conic; and the second condition is V(m) up to the square (m^2+3)^2.
+    """
+    from fractions import Fraction as Fr
+
+    def V(m):
+        return -39 * m ** 4 + 540 * m ** 3 - 666 * m ** 2 - 324 * m + 297
+
+    for num in range(-9, 10):
+        for den in (1, 2, 3, 5):
+            m = Fr(num, den)
+            d = m * m + 3
+            r = (m * m - 6 * m - 3) / d
+            assert r + 2 == 3 * (m - 1) ** 2 / d
+            assert 2 - r == (m + 3) ** 2 / d
+            assert -2 <= r <= 2
+            y1 = 3 + m * (r - 1)
+            assert y1 * y1 == 3 * (4 - r * r)
+            assert 3 * (8 - 12 * r - 9 * r * r) * d * d == V(m)
+            delta = r * r + Fr(4, 3) * r - Fr(8, 9)
+            assert delta == -3 * (8 - 12 * r - 9 * r * r) / 27
+
+
+def test_chain_closes_for_every_m_with_V_positive():
+    """|a| = |b| = 1 and |1 + a + b|^2 = 1/3, built from m alone."""
+    import math
+
+    def V(m):
+        return -39 * m ** 4 + 540 * m ** 3 - 666 * m ** 2 - 324 * m + 297
+
+    tested = 0
+    for k in range(-60, 61):
+        m = k / 10.0
+        v = V(m)
+        if v <= 1e-9:
+            continue
+        r = (m * m - 6 * m - 3) / (m * m + 3)
+        y1 = 3 + m * (r - 1)
+        y2 = math.sqrt(v) / (m * m + 3)
+        a = (r + 1j * abs(y1) / math.sqrt(3)) / 2
+        assert abs(abs(a) - 1) < 1e-9
+        T = -8.0 / 3 - r
+        cb = (1 + a).conjugate()
+        ok = False
+        for sgn in (1, -1):
+            b = (T + sgn * 1j * y2 / math.sqrt(27)) / (2 * cb)
+            if abs(abs(b) - 1) < 1e-9 and abs(abs(1 + a + b) ** 2 - 1 / 3) < 1e-9:
+                ok = True
+                break
+        assert ok, m
+        tested += 1
+    assert tested > 20, tested

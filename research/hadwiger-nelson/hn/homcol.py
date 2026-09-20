@@ -1257,3 +1257,104 @@ ROTATION_ABOUT_A_SHARED_POINT_IS_A_BOUQUET = {
     "repair": "rotate about a point the copies do not share, as de Grey does "
               "with (-2, 0)",
 }
+
+
+# -- the three-rhombus chain, parametrised -----------------------------------
+#
+# The chain closes when |1 + a + b|^2 = 1/3 for unit steps a, b. Expanding,
+# with c = 1 + a and m0 = |c|^2 = 2 + r where r = a + abar, the closing
+# quadratic cbar.b^2 - T.b + c = 0 has T = -2/3 - m0 and discriminant
+#
+#     Delta = T^2 - 4 m0 = r^2 + (4/3) r - 8/9,
+#
+# which depends ONLY on the real part of a. K = F(sqrt-3), so Delta -- negative
+# at every real place -- is a square in K exactly when 3(8 - 12r - 9r^2) is a
+# square in F; and a itself exists as a unit step with a + abar = r exactly
+# when 3(4 - r^2) is. So the whole question is a curve:
+#
+#     y1^2 = 3(4 - r^2),     y2^2 = 3(8 - 12 r - 9 r^2).
+#
+# The first conic carries the rational point (r, y1) = (1, 3), so it is
+# rationally parametrised, and substituting collapses the pair to ONE quartic:
+#
+#     r = (m^2 - 6m - 3)/(m^2 + 3),   y1 = 3 + m(r - 1),
+#     V(m) = -39 m^4 + 540 m^3 - 666 m^2 - 324 m + 297,   y2 = sqrt(V)/(m^2+3),
+#     a = (r + y1.sqrt-3/3)/2,   b = (-8/3 - r + y2.sqrt-3/9)/(2(1 + abar)).
+#
+# Two conditions then come for free. r + 2 = 3(m-1)^2/(m^2+3) and
+# 2 - r = (m+3)^2/(m^2+3) are both non-negative, so |r| <= 2 at EVERY real
+# embedding and the unit step a always exists. And a closing chain forces some
+# prime above 3 to be moved by conjugation, so building the chain settles the
+# condition at 3 instead of having to impose it. Hence
+#
+#     EVERY REAL m WITH V(m) > 0 GIVES A CHAIN OF THREE RHOMBI IN THE PLANE,
+#     over the field K = Q(m, sqrt(V(m)), sqrt-3).
+#
+# Verified numerically to machine precision -- |a| = |b| = 1 and
+# |1 + a + b|^2 = 1/3 -- and then exactly, in a degree-12 tower.
+#
+# THE FIELD IS NOW A CHOICE. Taking m cubic makes F = Q(m, sqrt V) a totally
+# real sextic, and the residue degrees at 5 are read off the factorisation of
+# prod_i (X^2 - V(m_i)) mod 5. Among the totally real cubics with V totally
+# positive, 40 give a field where every prime above 5 has residue degree at
+# least 3 -- blocking-capable by the theorem above. Built over
+# T^3 - 9T^2 + 14T + 8, the chain is
+#
+#     10 points, 16 edges, chi = 4, 20 directions, MODULE RANK 6
+#
+# the first 4-chromatic graph here whose directions escape the spindle's
+# rank-4 field, and the arithmetic no longer obstructs. It still admits a
+# coset colouring: 20 directions do not cover PG(5,5).
+#
+# And lengthening the chain does not help, for a reason worth recording. The
+# rhombus on w has edges w, zeta_6 w and diagonal w(1 - zeta_6) = w.zeta_6bar,
+# so a step contributes exactly its zeta_6-ORBIT, three projective directions.
+# Splitting w into w.zeta_6 and w.zeta_6bar -- always possible, since
+# zeta_6 + zeta_6bar = 1 -- keeps the same orbit: measured, 20 directions at
+# k = 3 and still 20 at k = 32, over 77 points and 161 edges. New directions
+# need new orbits, which the chain does allow, since only the closing sum is
+# constrained and w_1 .. w_{k-2} are free.
+
+CHAIN_PARAMETRISATION = {
+    "closing": "|1 + a + b|^2 = 1/3",
+    "discriminant": "Delta = r^2 + 4r/3 - 8/9, depending only on r = a + abar",
+    "curve": ["y1^2 = 3(4 - r^2)", "y2^2 = 3(8 - 12r - 9r^2)"],
+    "rational_point": "(r, y1) = (1, 3) on the first conic",
+    "parametrisation": {
+        "r": "(m^2 - 6m - 3)/(m^2 + 3)",
+        "y1": "3 + m(r - 1)",
+        "V": "-39 m^4 + 540 m^3 - 666 m^2 - 324 m + 297",
+        "y2": "sqrt(V)/(m^2 + 3)",
+        "a": "(r + y1 sqrt-3 / 3)/2",
+        "b": "(-8/3 - r + y2 sqrt-3 / 9) / (2(1 + abar))",
+    },
+    "free": ["r + 2 = 3(m-1)^2/(m^2+3) >= 0 and 2 - r = (m+3)^2/(m^2+3) >= 0, "
+             "so |r| <= 2 at every real place",
+             "a closing chain forces a prime above 3 to move, so building one "
+             "settles the condition at 3"],
+    "consequence": "every real m with V(m) > 0 gives a chain, over "
+                   "K = Q(m, sqrt V(m), sqrt-3)",
+}
+
+CHAIN_OVER_A_CHOSEN_FIELD = {
+    "cubic": "T^3 - 9T^2 + 14T + 8",
+    "tower": "L = Q(m), F = L(sqrt V) totally real sextic, K = F(sqrt-3)",
+    "blocking_capable_cubics_found": 40,
+    "graph": {"points": 10, "edges": 16, "chi": 4, "directions": 20,
+              "module_rank": 6},
+    "blocks": False,
+    "reading": "the first 4-chromatic graph here with module rank above 4; the "
+               "arithmetic no longer obstructs, the direction count does",
+}
+
+CHAIN_LENGTH_ADDS_NO_DIRECTIONS = {
+    "reason": "the rhombus on w has edges w, zeta_6 w and diagonal "
+              "w(1 - zeta_6) = w.zeta_6bar, so a step contributes exactly its "
+              "zeta_6-orbit",
+    "splitting": "w = w.zeta_6 + w.zeta_6bar always works, and stays in the "
+                 "orbit",
+    "measured": {"k": [3, 32], "points": [10, 77], "edges": [16, 161],
+                 "directions": [20, 20]},
+    "what_does_add": "steps in new orbits, which the chain allows since only "
+                     "the closing sum is constrained",
+}
