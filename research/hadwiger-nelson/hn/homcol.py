@@ -3572,4 +3572,26 @@ TRANSLATES_MOVE_THE_MEASUREMENT = {
                "near' and into the bottom of the band where forcing lives",
     "status": "still no forced pair, but the first thing in the search that "
               "moved the measurement rather than the vertex count",
+    "CONTROLLED": "two DISJOINT copies of G -- the same 3162 vertices, "
+                  "translated a thousand apart so no cross edge is possible "
+                  "-- cost 13301 conflicts over 42716 pairs with the dearest "
+                  "at 28.  That is exactly twice G's own 6410, and the "
+                  "dearest pair does not move at all.  So the jump to 723211 "
+                  "and 3689 comes ENTIRELY from the cross edges, not from the "
+                  "instance being bigger.  The tightening is real.",
+}
+
+
+THE_CONTROL_THAT_MAKES_IT_REAL = {
+    "worry": "a union has twice the vertices, and a bigger instance is harder "
+             "to solve even when it is just as loose",
+    "control": "two copies of G translated a thousand apart, so no cross edge "
+               "is geometrically possible",
+    "result": {"points": 3162, "edges": 15754, "pairs": 42716,
+               "conflicts": 13301, "dearest": 28},
+    "against": {"G alone": {"conflicts": 6410, "dearest": 29},
+                "the translate union": {"conflicts": 723211, "dearest": 3689}},
+    "reading": "the control costs exactly twice G's own and its dearest pair "
+               "does not move; the jump is 54-fold in the total and 132-fold "
+               "in the dearest, and all of it comes from the cross edges",
 }

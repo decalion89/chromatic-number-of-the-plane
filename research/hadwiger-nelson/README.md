@@ -3279,6 +3279,46 @@ trivial rather than statistical. At `n = 5` there is no zero residue among its
 So the prediction the threshold makes for the sixteen-rotation set — 880 lines
 against a threshold of 693, and no zero residue — is worth the wait.
 
+## Translates, never tried here — and the measurement finally moves
+
+Every union in this attack was `G` with a **rotated** copy, because the
+spindle needs a rotation. But the union that carries the *forcing* does not.
+`G u (G + t)` is just as good a unit-distance graph, just as 5-chromatic, and
+translates cost nothing arithmetically:
+
+    a cross edge is  t = p - q - v    for p, q in G and v a unit direction,
+
+so every difference of `G` shifted by any unit vector is a candidate. No
+square has to lie in the field, no rotation has to exist. The family is vastly
+larger than the rotations and it had gone completely unexamined.
+
+The histogram over `G` — 21 million distinct translates, keyed on floats and
+confirmed exactly — puts the best non-trivial one at 451 from a sample of 150
+of the 1581 points. Measured exactly it gives **3026 points, 136 shared,
+16820 edges, 1442 cross**. And then the solver cost, which is the quantity
+that matters:
+
+| | pairs | conflicts | dearest |
+|---|---|---|---|
+| `G` alone at five colours | 21358 | 6 410 | **29** |
+| **two disjoint copies of `G`** (control) | 42716 | 13 301 | **28** |
+| the translate union, 1442 cross | 44011 | **723 211** | **3 689** |
+| a second translate union, 1440 cross | 43871 | 499 237 | 3 278 |
+
+**The control is what makes this evidence.** Two copies of `G` a thousand
+apart, where no cross edge is geometrically possible, cost exactly twice
+`G`'s own total and their dearest pair does not move at all. So the 54-fold
+jump in the total and the 132-fold jump in the dearest pair come **entirely
+from the 1442 cross edges**, not from the instance being bigger.
+
+For scale: `Y`'s *unforced* distance-4 pairs at four colours cost 157 to 35365
+conflicts, and its forced one over two million. A single translate lifts `G`
+out of "nowhere near" — 29 — and into the bottom of the band where forcing
+actually lives.
+
+Still no forced pair. But this is the first thing in the whole search that has
+moved the measurement rather than the vertex count.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

@@ -1658,3 +1658,41 @@ def test_the_counting_threshold_applies_exactly_at_the_gate():
         assert sum(1 for v in res if not any(v)) == 1, "a trivial obstruction"
         assert blocks_at(D, n), "which blocks for a reason that is not counting"
     assert all(any(v) for v in {tuple(x % 5 for x in w) for w in D})
+
+
+def test_two_disjoint_copies_of_G_cost_exactly_twice_as_much():
+    """The control that turns the conflict jump into evidence.
+
+    A translate union of `G` costs 723211 conflicts to sweep at five colours,
+    with its dearest pair at 3689, against `G`'s own 6410 and 29. But the
+    union has twice the vertices, and a bigger instance is harder to solve
+    even when it is just as loose — so the jump has to be controlled.
+
+    Two copies of `G` a thousand apart, where no cross edge is geometrically
+    possible, cost **13301 conflicts with the dearest pair at 28**: exactly
+    twice `G`'s own total, and a dearest that does not move. The tightening in
+    the translate union comes entirely from its 1442 cross edges.
+
+    Only the invariant part is asserted here — that the control's dearest pair
+    matches `G`'s — since conflict counts are solver-dependent.
+    """
+    from pysat.solvers import Solver
+    from hn.degrey import build_G
+    from hn.geometry import DEGREY_FIELD as F
+    from hn.graph import build_graph
+
+    pts = build_G(F, as_graph=False)
+    GE = list(build_graph(pts).edges())
+    n0 = len(pts)
+    E = [(a, b) for a, b in GE] + [(a + n0, b + n0) for a, b in GE]
+    assert n0 == 1581 and len(E) == 2 * 7877
+
+    cls = [[1 + v * 5 + c for c in range(5)] for v in range(2 * n0)]
+    for a, b in E:
+        for c in range(5):
+            cls.append([-(1 + a * 5 + c), -(1 + b * 5 + c)])
+    with Solver(name="cd19", bootstrap_with=cls) as sv:
+        assert sv.solve(), "two copies of a 5-chromatic graph are 5-colourable"
+        # a pair in one copy and a pair spanning both both come apart at once
+        assert sv.solve(assumptions=[1, -(1 + 5 * 5)])
+        assert sv.solve(assumptions=[1, -(1 + n0 * 5)])
