@@ -4836,4 +4836,60 @@ THE_DILUTION_ANOMALY = {
     "verdict": "the guess is unsupported and the anomaly is unexplained.  "
                "What the five-colour test establishes is only that no such "
                "spike occurs there.",
+    "RESOLVED": "the spike is the sampler, not the graph.  Two independent "
+                "proper k-colourings disagree on about (1 - 1/k) of the "
+                "vertices; the spiking subgraphs' twenty-four samples "
+                "disagree on 0.019 and 0.060, against 0.653 and 0.655 for "
+                "ordinary draws from the same population.  Their samples are "
+                "one colouring wearing twenty-four names, so every pair looks "
+                "correlated.  'Distinct after renaming' does not catch this: "
+                "colourings differing in three vertices are distinct tuples.",
+    "rate": "about one draw in forty, at 0.95 and at 0.9 alike",
+}
+
+
+# The instrument check the ladder rests on.
+#
+# A correlation ratio inflates whenever the sampler returns near-identical
+# colourings, and that failure is real: about one Sa subgraph in forty returns
+# twenty-four colourings differing on two per cent of vertices and scores 700.
+# So the question is whether the headline figures suffer the same way, and it
+# is answered by measuring how far apart the samples actually are -- each pair
+# compared under the best of the k! colour renamings, against the (1 - 1/k)
+# that two independent colourings would give.
+#
+#     graph                k    ratio   spread   independent
+#     triangular lattice   3  11014.3    0.000         0.667
+#     Sa                   4     24.0    0.652         0.750
+#     Sa                   5      1.2    0.725         0.800
+#     Y                    4     25.4    0.598         0.750
+#     G                    5      1.1    0.762         0.800
+#
+# The lattice's zero is not a failure: its 3-colouring is unique up to
+# permutation, so twenty-four samples MUST coincide, and its ratio of eleven
+# thousand is exactly what a unique colouring produces.  The rest are well
+# mixed -- Sa at 87 per cent of independent, G at 95 -- so their ratios
+# measure the graphs and not the solver.
+#
+# The spread sitting below the independent value throughout is expected rather
+# than suspicious: proper colourings of a constrained graph are not
+# independent random assignments, which is the very thing being measured.
+THE_SAMPLES_ARE_MIXED = {
+    "why_it_matters": "a ratio inflates when samples are near-identical, and "
+                      "one Sa subgraph in forty does exactly that",
+    "measure": "mean disagreement between samples, under the best of the k! "
+               "renamings, against (1 - 1/k)",
+    "table": {"triangular lattice at 3": {"ratio": 11014.3, "spread": 0.000,
+                                          "independent": 0.667},
+              "Sa at 4": {"ratio": 24.0, "spread": 0.652,
+                          "independent": 0.750},
+              "Sa at 5": {"ratio": 1.2, "spread": 0.725,
+                          "independent": 0.800},
+              "Y at 4": {"ratio": 25.4, "spread": 0.598,
+                         "independent": 0.750},
+              "G at 5": {"ratio": 1.1, "spread": 0.762,
+                         "independent": 0.800}},
+    "the_lattice_zero_is_correct": "its 3-colouring is unique up to "
+                                   "permutation, so the samples must coincide",
+    "verdict": "the ladder measures the graphs, not the solver",
 }

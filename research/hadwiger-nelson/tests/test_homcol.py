@@ -2180,3 +2180,35 @@ def test_the_lattice_cannot_contain_a_moser_spindle():
     # And the scale the argument points at is the one Z happens to have.
     assert abs(397 * (500 / 7) - 28357) < 1
     assert abs(T["and_Z_has"] - 397 * (500 / 7)) < 1000
+
+
+def test_a_ratio_is_only_as_good_as_the_mixing_behind_it():
+    """The failure mode that made one subgraph score 700, and the check for it.
+
+    A correlation ratio inflates whenever the sampler returns near-identical
+    colourings: twenty-four copies of one colouring make every pair look
+    constrained.  Renaming does not catch it, since colourings differing in
+    three vertices are still distinct tuples.  What catches it is distance --
+    two independent proper k-colourings disagree on about (1 - 1/k) of the
+    vertices, and the spiking subgraphs disagreed on 0.019 and 0.060.
+
+    The graphs the ladder rests on pass: Sa at four sits at 87 per cent of
+    independent and G at five at 95.  The triangular lattice's zero is not a
+    failure but the answer -- its 3-colouring is unique up to permutation, so
+    the samples must coincide, which is where its ratio of eleven thousand
+    comes from.
+    """
+    from hn.homcol import THE_SAMPLES_ARE_MIXED as M
+
+    t = M["table"]
+    assert t["triangular lattice at 3"]["spread"] == 0.0
+    assert t["triangular lattice at 3"]["ratio"] > 1000
+
+    for key in ("Sa at 4", "G at 5", "Y at 4", "Sa at 5"):
+        row = t[key]
+        assert row["spread"] / row["independent"] > 0.75, key
+
+    # The spiking subgraphs, for contrast, sat two orders below that.
+    from hn.homcol import THE_DILUTION_ANOMALY as A
+    assert "RESOLVED" in A
+    assert 0.019 / 0.653 < 0.05

@@ -3777,6 +3777,31 @@ Also 66%. The filter recognises the uniqueness with nothing told to it.
 (`Sa` at four reads 16.8 here and 19.6 under a different seed; the order of
 magnitude is the reading, not the digit.)
 
+### The instrument check the ladder rests on
+
+A correlation ratio inflates whenever the sampler returns near-identical
+colourings — twenty-four copies of one colouring make every pair look
+constrained — and that failure is real here: about one random subgraph of `Sa`
+in forty returns twenty-four colourings differing on two per cent of vertices
+and scores **700**. Renaming does not catch it, since colourings differing in
+three vertices are still distinct tuples. Distance does.
+
+| graph | `k` | ratio | samples disagree on | independent |
+|---|---|---|---|---|
+| triangular lattice | 3 | 11 014 | **0.000** | 0.667 |
+| `Sa` | 4 | 24.0 | 0.652 | 0.750 |
+| `Sa` | 5 | 1.2 | 0.725 | 0.800 |
+| `Y` | 4 | 25.4 | 0.598 | 0.750 |
+| `G` | 5 | 1.1 | **0.762** | 0.800 |
+
+The lattice's zero is not a failure but the answer: its 3-colouring is unique
+up to permutation, so twenty-four samples *must* coincide, and that is exactly
+where its ratio of eleven thousand comes from. The rest are well mixed — `Sa`
+at 87% of independent, `G` at 95% — so their ratios measure the graphs, not
+the solver. (The spread sitting below the independent value throughout is the
+thing being measured, not a defect: proper colourings of a constrained graph
+are not independent random assignments.)
+
 ## The gadget is the unit, and at five colours it is seventy times bigger
 
 The triangular lattice is rigid at three colours because every triangle spends
