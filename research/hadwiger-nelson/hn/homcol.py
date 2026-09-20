@@ -49,7 +49,8 @@ __all__ = ["edge_vectors", "has_homomorphism", "screen", "minimum_blocking_set",
            "rotation_field_degree",
            "cayley_chromatic",
            "cyclotomic_chain_closes",
-           "denominator_29_directions"]
+           "denominator_29_directions",
+           "closing_radicand", "closable_distance", "closable_over"]
 
 
 def _coords(e) -> Tuple[Fraction, ...]:
@@ -2357,4 +2358,222 @@ NECKLACE_OVER_THE_MOSER_FIELD = {
                 "is available",
     "honest": "still 4-chromatic; what it is is the substrate a sixth colour "
               "would need, with nothing arithmetic left in the way",
+}
+
+
+# ---------------------------------------------------------------------------
+# The spindle of a forced pair.
+#
+# de Grey's last step, read backwards.  His G is Ya u Yb: two copies of Y
+# turned about p = (-2, 0) by pi/2 +- arcsin(1/8).  The angle between the
+# copies is 2 arcsin(1/8), so a point at distance 4 from p has its two images
+# exactly one apart.  For that to be a contradiction rather than a case split,
+# what Y has to supply is not a sphere condition but a PAIR:
+#
+#     p and q at distance d, monochromatic in every proper 4-colouring.
+#
+# Given one, the rest is a line.  Let rho be a rotation about p with
+# |rho| = 1 and |1 - rho| = 1/d, so that |q - rho(q)| = d.(1/d) = 1.  In
+# H u rho_p(H) both copies read c(q) = c(p), because rho fixes p and carries H
+# onto a copy of itself; but q and rho(q) are adjacent.  So
+#
+#     THEOREM.  If H carries a pair at distance d monochromatic in every
+#     proper k-colouring, and the field admits a rotation closing d, then
+#     H u rho_p(H) is (k+1)-chromatic.
+#
+# Which distances a field can close is pure arithmetic.  Writing D = d^2, the
+# rotation must satisfy rho + rhobar = 2 - 1/D and rho.rhobar = 1, so it is a
+# root of t^2 - (2 - 1/D)t + 1, of discriminant -(4D - 1)/D^2.  In real
+# coordinates that is cos = 1 - 1/(2D), rational always, and
+#
+#     sin = sqrt(4D - 1) / (2D),
+#
+# so the whole question is whether sqrt(4D - 1) lies in the field.  D >= 1/4 is
+# forced, since 2d sin(theta/2) = 1 is unachievable below it.
+#
+# Running de Grey's own chain of distances through this:
+#
+#     D  =    1     3     4     16
+#     4D-1 =  3    11    15    63 = 9.7
+#
+# -- the radicands 3, 11, 15, 7, which is exactly Q(sqrt3, sqrt5, sqrt7,
+# sqrt11) and exactly the order he introduces them: 1 for the triangular
+# lattice, 3 for the Moser spindle, 4 for Sb = rho(Sa), 16 for Ya u Yb.  His
+# field is not a choice.  It is what his chain of closing distances demands,
+# term by term.
+#
+# The same computation over K = Q(m, sqrt-3, sqrt-11) says which distances
+# survive the port.  A rational r has sqrt(r) in K only through one of K's
+# three quadratic subfields Q(sqrt-3), Q(sqrt-11), Q(sqrt33) -- the cubic
+# Q(m) admits none, 2 not dividing 3 -- so D is closable over K exactly when
+# the squarefree part of 1 - 4D is 1, -3, -11 or 33.  K keeps de Grey's first
+# two steps and loses both of the last two.
+
+def closing_radicand(d2) -> int:
+    """The squarefree r with sqrt(r) needed to close distance sqrt(d2).
+
+    A rotation carrying a pair at distance d to a unit pair has
+    cos = 1 - 1/(2 d^2) and sin = sqrt(4 d^2 - 1) / (2 d^2); this returns the
+    squarefree part of 4 d^2 - 1.  Zero means no such rotation exists over any
+    field, which happens exactly for d < 1/2.
+    """
+    q = Fraction(d2)
+    if q <= Fraction(1, 4):
+        return 0
+    r = 4 * q - 1
+    n = r.numerator * r.denominator
+    s, d = 1, n
+    f = 2
+    while f * f <= d:
+        e = 0
+        while d % f == 0:
+            d //= f
+            e += 1
+        if e % 2:
+            s *= f
+        f += 1
+    return s * d
+
+
+def closable_distance(d2, radicands: Sequence[int] = (3, 5, 7, 11)) -> bool:
+    """Can the multiquadratic field on `radicands` close the distance sqrt(d2)?
+
+    True exactly when sqrt(4 d^2 - 1) lies in Q(sqrt(r) : r in radicands),
+    i.e. when the squarefree part of 4 d^2 - 1 is a product of distinct
+    generators.  de Grey's (3, 5, 7, 11) closes 1, 2, 3, 4, 7, 9, 14, 16, ...
+    """
+    r = closing_radicand(d2)
+    if r <= 0:
+        return False
+    reach = {1}
+    for p in radicands:
+        reach |= {t * p for t in reach}
+    return r in reach
+
+
+def closable_over(d2, square_classes: Sequence[int]) -> bool:
+    """Closability stated for the complex coordinate field directly.
+
+    The rotation is a root of t^2 - (2 - 1/D)t + 1, so it exists in the field
+    the points live in exactly when sqrt(1 - 4D) does; `square_classes` are
+    that field's rational square classes, squarefree and signed.
+
+    For a real multiquadratic F the points sit in F(i), whose classes are the
+    products of the generators with both signs, and the condition collapses to
+    sqrt(4D - 1) in F -- which is `closable_distance`.  For a field that does
+    NOT contain i the two differ, and the difference bites: over
+    K = Q(m, sqrt-3, sqrt-11) the classes are 1, -3, -11, 33, so 1 - 4D must
+    be -3 or -11 times a square and D = 5/2, whose radicand is 1, is not
+    closable there although sqrt(4D - 1) = 3 is as rational as can be.
+    """
+    r = closing_radicand(d2)
+    if r <= 0:
+        return False
+    return -r in set(square_classes)
+
+
+FORCED_PAIR_SPINDLE = {
+    "theorem": "if H carries a pair at distance d that is monochromatic in "
+               "every proper k-colouring, and the field admits a rotation rho "
+               "about one end with |rho| = 1 and |1 - rho| = 1/d, then "
+               "H u rho_p(H) is (k+1)-chromatic",
+    "proof": "rho fixes p and carries H to a copy of itself, so both copies "
+             "read c(q) = c(p); but |q - rho(q)| = d.(1/d) = 1",
+    "closability": "D = d^2 is closable over F iff sqrt(4D - 1) is in F; "
+                   "cos = 1 - 1/(2D) is rational, sin = sqrt(4D-1)/(2D)",
+    "floor": "D >= 1/4, since 2d sin(theta/2) = 1 is unachievable below",
+    "use": "at k = 4 this is de Grey's last step; at k = 5 it would be "
+           "chi(R^2) >= 6",
+}
+
+
+DEGREY_CHAIN_FORCES_HIS_FIELD = {
+    "chain": [(1, 3), (3, 11), (4, 15), (16, 7)],
+    "reading": "D = 1, 3, 4, 16 give 4D - 1 = 3, 11, 15, 63 = 9.7, so the "
+               "radicands 3, 11, 15, 7",
+    "field": "Q(sqrt3, sqrt5, sqrt7, sqrt11) -- exactly de Grey's, and in the "
+             "order he introduces them",
+    "steps": {1: "the triangular lattice", 3: "the Moser spindle",
+              4: "Sb = rho(Sa), sin = sqrt15/8",
+              16: "Ya u Yb, sin = 3 sqrt7 / 8"},
+    "consequence": "his field is not a choice but what his chain of closing "
+                   "distances demands, term by term",
+}
+
+
+THE_FORCED_PAIR_IN_Y = {
+    "graph": "de Grey's Y, 791 vertices and 3938 edges, 4-colourable",
+    "pairs_at_distance_four": 6,
+    "forced": [((2, 0), (-2, 0))],
+    "uniqueness": "exactly one of the six, and it is the pair his final "
+                  "rotation spindles -- (-2,0) is his pivot",
+    "cost": "the solver needs a real unsatisfiability proof for it: 282s "
+            "against milliseconds for the five that are not forced",
+    "meaning": "the whole of Ya u Yb is this pair, spindled",
+}
+
+
+# ---------------------------------------------------------------------------
+# Where the forcing is, and where it is not.
+#
+# Measured, with the pair test above.  Fixing c(a) = 0 costs nothing, colours
+# being interchangeable, so "is there a k-colouring with c(a) = 0 and
+# c(b) != 0" is one pair of assumptions against a single incremental solver,
+# and unsatisfiable means the pair is forced.
+#
+#   Sa, over K            397 points, 1974 edges   4200 pairs   none forced
+#   X, the closure of the
+#   Moser spindle over K  597 points, 1476 edges   1762 pairs   none forced
+#   Y, de Grey's          791 points, 3938 edges      6 pairs   ONE forced
+#   G, de Grey's, at
+#   FIVE colours         1581 points, 7877 edges  21358 pairs   none forced
+#
+# The pattern at four colours is exactly de Grey's: neither seed forces, the
+# union does.  Sa carries nothing, and Y = Sa u rho(Sa) carries (2,0),(-2,0) --
+# one pair out of six at distance 4, and the one his final rotation spindles.
+#
+# At five colours G carries nothing at all, and not narrowly: every one of the
+# 21358 queries came back satisfiable inside a 40000-conflict budget, none
+# even needed the budget.  So a sixth colour is not hiding one rotation away
+# from de Grey's graph.  Whatever forces at five is a longer union than G is.
+
+NO_FIVE_COLOUR_FORCED_PAIR_IN_G = {
+    "graph": "de Grey's G, 1581 vertices and 7877 edges, 5-chromatic",
+    "pairs_tested": 21358,
+    "closable_set": "sqrt(4D - 1) in Q(sqrt3, sqrt5, sqrt7, sqrt11); integer "
+                    "D up to 100 are 1,2,3,4,7,9,14,16,19,25,34,37,44,58,61,"
+                    "69,79,86,91,94",
+    "forced": 0,
+    "hard": 0,
+    "margin": "none of the queries reached a 40000-conflict budget, so this "
+              "is not a near miss",
+    "meaning": "a sixth colour is not one rotation away from G; whatever "
+               "forces at five colours is a longer union than G is",
+}
+
+
+FORCING_NEEDS_THE_UNION = {
+    "at_four": {"Sa": "397 points, 4200 pairs, none forced",
+                "X over K": "597 points, 1762 pairs, none forced",
+                "Y = Sa u rho(Sa)": "791 points, 6 pairs at distance 4, "
+                                    "exactly one forced"},
+    "reading": "neither seed forces and the union does -- forcing is born in "
+               "the union, not in the closure",
+    "consequence": "the search for five-colour forcing belongs on unions of "
+                   "G, not on G",
+}
+
+
+CLOSABLE_DISTANCES_OVER_K = {
+    "field": "K = Q(m, sqrt-3, sqrt-11), square classes 1, -3, -11, 33",
+    "criterion": "squarefree(1 - 4D) must be -3 or -11, since 1 - 4D < 0 and "
+                 "K contains neither i nor sqrt-33",
+    "integer_D_to_139": [1, 3, 7, 19, 25, 37, 61, 69, 91, 127, 135],
+    "loeschian_ones": [1, 3, 7, 19, 25, 37, 61, 91, 127],
+    "realised_by_X": {"1/3": 296, "1": 1476, "3": 878, "7": 588},
+    "lost_from_de_Grey": [4, 16],
+    "gained": "7, 19, 25, ... which his field does not close at 19, 61, 91, "
+              "127",
+    "consequence": "de Grey's chain 1 -> 3 -> 4 -> 16 breaks over K after its "
+                   "second step; the continuation K offers is 1 -> 3 -> 7",
 }

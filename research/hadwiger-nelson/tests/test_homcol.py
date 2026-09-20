@@ -1154,3 +1154,101 @@ def test_four_colour_forcing_appears_in_Y_and_not_in_Sa():
     size, separable = at_origin(build_Y())
     assert size == 12
     assert separable is False, "Y must have it: no 4-colouring avoids it"
+
+
+def test_closing_radicand_reads_de_greys_chain():
+    """His four radicands are his four closing distances, in order.
+
+    A rotation taking a pair at distance d to a unit pair has
+    cos = 1 - 1/(2 d^2) and sin = sqrt(4 d^2 - 1) / (2 d^2), so the field has
+    to contain sqrt(4 d^2 - 1).  Running de Grey's own chain of distances --
+    1 for the triangular lattice, sqrt3 for the Moser spindle, 2 for
+    Sb = rho(Sa), 4 for Ya u Yb -- through that gives 3, 11, 15, 7, which is
+    Q(sqrt3, sqrt5, sqrt7, sqrt11) and nothing more.  His field is not a
+    choice; it is what his chain demands, term by term.
+    """
+    from hn.homcol import closing_radicand
+
+    assert [closing_radicand(D) for D in (1, 3, 4, 16)] == [3, 11, 15, 7]
+    assert closing_radicand(Fraction(1, 5)) == 0, "d < 1/2 closes nothing"
+    assert closing_radicand(Fraction(1, 4)) == 0, "2d sin(theta/2) = 1 needs d >= 1/2"
+
+
+def test_the_doubling_chain_stops_where_de_greys_field_stops():
+    """D -> 4D, and the step from D needs sqrt(16D - 1).
+
+    Y's forced pair sits on the ring of radius sqrt(D) about the union's
+    pivot, antipodally, so at squared distance 4D; the next union has to close
+    that.  Starting at 1 the chain is 1, 4, 16, 64, ... and the radicands are
+    15, 7, 255, ...  de Grey has 3, 5, 7 and 11, so he closes 1, 4 and 16 and
+    stops: 255 = 3.5.17 asks for sqrt17.  His construction is exactly as long
+    as his field allows.
+    """
+    from hn.homcol import closable_distance, closing_radicand
+
+    assert [D for D in (1, 4, 16, 64, 256) if closable_distance(D)] == [1, 4, 16]
+    assert closing_radicand(64) == 255 and 255 == 3 * 5 * 17
+    assert not closable_distance(64), "sqrt17 is not in Q(sqrt3,sqrt5,sqrt7,sqrt11)"
+    assert closable_distance(64, (3, 5, 7, 11, 17)), "adjoining sqrt17 reopens it"
+
+
+def test_closable_over_a_field_without_i_is_a_stricter_test():
+    """K = Q(m, sqrt-3, sqrt-11) has no i, and that costs it distances.
+
+    For a real multiquadratic F the points live in F(i), so sqrt(1 - 4D) is in
+    reach whenever sqrt(4D - 1) is.  K is not of that shape: its rational
+    square classes are 1, -3, -11 and 33, so 1 - 4D must be -3 or -11 times a
+    square.  D = 5/2 has 4D - 1 = 9, as rational a square root as exists, and
+    is still not closable over K.
+    """
+    from hn.homcol import closable_distance, closable_over
+
+    K = (1, -3, -11, 33)
+    assert closable_distance(Fraction(5, 2)) is True
+    assert closable_over(Fraction(5, 2), K) is False
+    assert [D for D in range(1, 30) if closable_over(D, K)] == [1, 3, 7, 19, 25]
+    assert not closable_over(4, K) and not closable_over(16, K), \
+        "K loses both of de Grey's last two steps"
+    assert closable_over(1, K) and closable_over(3, K), "and keeps the first two"
+
+
+def test_de_greys_union_adds_exactly_one_edge():
+    """G = Ya u Yb is two copies of Y glued at the pivot, plus the spindle.
+
+    Y has 791 vertices and 3938 edges, and G has 1581 = 2.791 - 1 and
+    7877 = 2.3938 + 1.  The single extra edge joins the two images of (2,0),
+    and it is the whole of the step from four colours to five: (2,0),(-2,0) is
+    monochromatic in every 4-colouring of Y, both copies read the pivot's
+    colour onto that edge, and the contradiction is immediate.
+    """
+    from hn.degrey import build_G, build_Y
+    from hn.graph import build_graph
+
+    y = build_graph(build_Y())
+    g = build_graph(build_G(as_graph=False))
+    assert len(y.vertices) == 791 and len(list(y.edges())) == 3938
+    assert len(g.vertices) == 1581 == 2 * 791 - 1
+    assert len(list(g.edges())) == 7877 == 2 * 3938 + 1
+
+
+def test_the_forced_pair_of_Y_sits_on_the_ring_the_rotation_moves():
+    """(2,0) and (-2,0): on the ring of radius 2 about the pivot, antipodal.
+
+    Sb is Sa turned about the ORIGIN by the rotation closing distance 2, so
+    the ring the union pins has radius 2; the forced pair is a diameter of it,
+    at distance 4.  This is the geometry the SAT result rests on -- proving
+    the pair forced needs a real unsatisfiability proof, 282 seconds against
+    milliseconds for the five distance-4 pairs that are not forced, so only
+    the placement is checked here.
+    """
+    from hn.degrey import build_Y
+    from hn.geometry import DEGREY_FIELD as F, Point
+
+    Y = build_Y()
+    a = Point(F.rational(2), F.zero())
+    b = Point(F.rational(-2), F.zero())
+    assert a in Y and b in Y
+    o = Point(F.zero(), F.zero())
+    assert (a - o).x ** 2 + (a - o).y ** 2 == F.rational(4)
+    assert (b - o).x ** 2 + (b - o).y ** 2 == F.rational(4)
+    assert (a - b).x ** 2 + (a - b).y ** 2 == F.rational(16), "4D, a diameter"

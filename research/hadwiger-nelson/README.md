@@ -2821,6 +2821,115 @@ plentiful where `Y`'s 4-colourings are tight. The step that bought forcing at
 four was `Sa` to `Y`, 397 points to 791. The analogue at five has to be taken
 above 1581 — and that is the honest frontier.
 
+## de Grey's last step is one forced pair, and his field is his chain
+
+Read `G = Ya u Yb` backwards. It is two copies of `Y` turned about
+`p = (-2, 0)` by `pi/2 +- arcsin(1/8)`; the angle between the copies is
+`2 arcsin(1/8)`, so a point at distance 4 from `p` has its two images exactly
+one apart. For that to be a contradiction rather than a case split, `Y` has to
+supply not a sphere condition but a **pair**:
+
+> `p` and `q` at distance `d`, monochromatic in every proper 4-colouring.
+
+Given one, the rest is a line. Let `rho` be a rotation about `p` with
+`|rho| = 1` and `|1 - rho| = 1/d`, so `|q - rho(q)| = d.(1/d) = 1`. In
+`H u rho_p(H)` both copies read `c(q) = c(p)`, because `rho` fixes `p` and
+carries `H` onto a copy of itself — but `q` and `rho(q)` are adjacent.
+
+> **Theorem.** If `H` carries a pair at distance `d` monochromatic in every
+> proper `k`-colouring, and the field admits a rotation closing `d`, then
+> `H u rho_p(H)` is `(k+1)`-chromatic.
+
+The edge counts say this is exactly what `G` is. `Y` has 791 vertices and 3938
+edges; `G` has `1581 = 2.791 - 1` and `7877 = 2.3938 + 1`. **The union adds one
+edge.** That edge is the whole step from four colours to five.
+
+And the pair is there. Scanning `Y`'s six distance-4 pairs, exactly one is
+monochromatic in every 4-colouring — `(2,0)` and `(-2,0)` — and the solver has
+to work for it, 282 seconds of unsatisfiability proof against milliseconds for
+the five that are not forced. `(-2,0)` is de Grey's pivot.
+
+### Which distances a field can close
+
+Pure arithmetic. With `D = d^2` the rotation satisfies
+`rho + rhobar = 2 - 1/D` and `rho.rhobar = 1`, so it is a root of
+`t^2 - (2 - 1/D)t + 1`, of discriminant `-(4D - 1)/D^2`. In real coordinates
+that is `cos = 1 - 1/(2D)`, rational always, and
+
+    sin = sqrt(4D - 1) / (2D),
+
+so the only question is whether `sqrt(4D - 1)` lies in the field, with
+`D >= 1/4` forced since `2d sin(theta/2) = 1` is unachievable below it. Now run
+de Grey's own chain of distances through it:
+
+| step | what it is | `D` | `4D - 1` | radicand |
+|---|---|---|---|---|
+| 1 | the triangular lattice | 1 | 3 | **3** |
+| 2 | the Moser spindle | 3 | 11 | **11** |
+| 3 | `Sb = rho(Sa)`, `sin = sqrt15/8` | 4 | 15 | **15** |
+| 4 | `Ya u Yb`, `sin = 3 sqrt7 / 8` | 16 | 63 | **7** |
+
+`Q(sqrt3, sqrt5, sqrt7, sqrt11)` — his field, in the order he introduces it.
+**His field is not a choice. It is what his chain demands, term by term.**
+
+### The chain doubles, and it stops where the field stops
+
+`Y`'s forced pair is not anywhere: `(2,0)` and `(-2,0)` both sit on the ring of
+radius `sqrt(D) = 2` about the union's pivot, antipodally, so at squared
+distance `4D`. That is where the rigidity is — the ring is exactly the set the
+rotation moves by one. So the chain doubles, `D -> 4D`, and the step from `D`
+needs `sqrt(16D - 1)`:
+
+| `D` | 1 | 4 | 16 | 64 | 256 |
+|---|---|---|---|---|---|
+| `16D - 1` | 15 | 63 | 255 | 1023 | 4095 |
+| radicand | 15 | 7 | **255 = 3.5.17** | 1023 | 455 |
+
+de Grey has `3, 5, 7, 11`, so he closes 1, 4 and 16 and stops: 255 asks for
+`sqrt17`, which he has not got. **His construction is exactly as long as his
+field allows.** Adjoining `sqrt17` reopens it — `closable_distance(64, (3,5,7,11,17))`
+is true.
+
+### What this buys, and what it does not
+
+Two things, immediately. First a pruning: the forced pair lives on the ring,
+so a union is scanned in sixty pairs instead of eighty thousand. Second a
+statement of what is missing at five colours, which can now be measured rather
+than guessed.
+
+Measured, with the pair test (fixing `c(a) = 0` is free, colours being
+interchangeable, so each query is one pair of assumptions against a single
+incremental solver, and unsatisfiable means forced):
+
+| graph | | pairs at a closable distance | forced |
+|---|---|---|---|
+| `Sa`, over `K` | 397 pts, 1974 edges | 4200 | none |
+| `X`, the Moser closure over `K` | 597 pts, 1476 edges | 1762 | none |
+| `Y`, de Grey's | 791 pts, 3938 edges | 6 at distance 4 | **one** |
+| `G`, de Grey's, at **five** colours | 1581 pts, 7877 edges | 21358 | none |
+
+At four colours the pattern is de Grey's own: neither seed forces, the union
+does. At five colours `G` carries nothing, and not narrowly — every one of the
+21358 queries came back satisfiable inside a 40000-conflict budget, and not one
+needed the budget. **A sixth colour is not one rotation away from `G`.**
+
+### What `K` can and cannot close
+
+`K = Q(m, sqrt-3, sqrt-11)` is not of the form `F(i)`, and the difference
+bites. A rational `r` has `sqrt(r)` in `K` only through one of `K`'s three
+quadratic subfields `Q(sqrt-3)`, `Q(sqrt-11)`, `Q(sqrt33)` — the cubic `Q(m)`
+admits none, 2 not dividing 3 — so `D` is closable over `K` exactly when the
+squarefree part of `1 - 4D` is `-3` or `-11`. Integer `D` up to 139:
+
+    1, 3, 7, 19, 25, 37, 61, 69, 91, 127, 135
+
+`K` keeps de Grey's first two steps and **loses both of the last two**: 4 needs
+`sqrt-15`, 16 needs `sqrt-7`, and `K` has neither. What it offers instead is
+`1 -> 3 -> 7`, and the Moser closure over `K` realises `D = 1/3, 1, 3` and `7`
+— 588 pairs at `sqrt7`. So the port of de Grey's architecture to the one field
+that blocks at every modulus up to five is not a translation. It is a different
+chain, and finding its forced pair is the open end of this work.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
