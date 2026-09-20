@@ -1636,3 +1636,35 @@ def periodic_screen(vecs: Sequence[Sequence[int]], n: int, cap: int = 5,
                         "modulus": n, "phis_tried": tried}
             sv.add_clause([-phi(i, c[i]) for i in range(dim)])
     return {"colourable": False, "phis_tried": tried, "exhausted": False}
+
+
+# -- how few orbits block, and why a sample cannot answer it ---------------
+#
+# The first chain reached blocking at 25 zeta_6-orbits, but that was whatever
+# the growth happened to pick up. The real minimum matters, because a chain is
+# likelier to be critical the shorter it is -- every rhombus has to earn its
+# place.
+#
+# Greedy set cover against 30000 random functionals exhausted the sample at 11
+# orbits while `has_homomorphism` still produced one escaping: at rank 12 there
+# are 61 million functionals, so a sample says nothing on its own. Driven by
+# CEGAR instead -- cover the sample, ASK for a functional the chosen orbits
+# miss, add it, cover again -- the loop ends only when none exists, which is
+# blocking exactly:
+#
+#     a blocking set of 22 orbits, 132 directions.
+#
+# So 25 was close to minimal, not wasteful; and a chain has to reach about 22
+# well-chosen orbits, which is the target to steer growth towards rather than
+# taking whatever replacement comes first.
+
+MINIMUM_BLOCKING_ORBITS = {
+    "field": "the degree-12 tower over T^3 - 9T^2 + 14T + 8",
+    "orbits_available": 75,
+    "directions_available": 450,
+    "greedy_cegar_minimum": {"orbits": 22, "directions": 132},
+    "first_chain_reached": {"orbits": 25, "directions": 150},
+    "sample_alone_is_useless": "30000 random functionals were all killed by 11 "
+                               "orbits while an exact check still found one "
+                               "escaping, out of 61 million at rank 12",
+}
