@@ -2309,14 +2309,29 @@ UNIQUE_COLOURING_LADDER = {
 #
 #     500 / 63  =  8.
 #
-# Eight, against 1.4 measured. That is the distance left, and it is not a
-# question of running the search longer: it asks for ambient rigidity nearly
-# six times stronger than anything this package has produced or measured.
+# CORRECTED, because comparing those two numbers directly is wrong. The gain
+# has a CEILING, and the ceilings differ. Since rho >= k always,
 #
-# Stated with its caveats. The 500 is a published record I have not verified
-# here, and the gain is bounded below by measurements on the graphs available,
-# not above by any theorem -- a construction with a much larger gain is not
-# excluded. What the number does is say how much would have to change.
+#     gain  =  structural floor / rho  <=  structural floor / k,
+#
+# so at four colours no graph can ever exceed 7/4 = 1.75. Sa's 1.4 is not a
+# weak result against a target of 8 -- it is EIGHTY PER CENT of everything
+# four colours has to give. At five the ceiling is 500/5 = 100, and the 63 a
+# core of three needs asks for a gain of 7.94:
+#
+#     k = 4   ceiling 1.75   achieved 1.40   =  80% of the ceiling
+#     k = 5   ceiling 100    needed   7.94   =   8% of the ceiling
+#
+# The fraction required at five colours is TEN TIMES SMALLER than the fraction
+# already achieved at four. The raw comparison said the distance was six times
+# anything measured; normalised, the measurements are encouraging rather than
+# discouraging, and my earlier reading was an arithmetic mistake dressed as a
+# conclusion.
+#
+# What stays true is that nothing here has produced it. The ceiling at five is
+# high only because the structural floor is, and whether ambient rigidity can
+# reach 63 on a 5-chromatic graph is open. The 500 is a published record not
+# verified in this package.
 
 DISTANCE_LEFT = {
     "structural_floor_k4": 7,
@@ -2326,7 +2341,16 @@ DISTANCE_LEFT = {
     "structural_floor_k5": "about 500, the published smallest 5-chromatic "
                            "unit-distance graph, unverified here",
     "needed_at_k5": 63,
-    "gain_required": 8,
-    "caveat": "the gain is bounded below by measurement, not above by any "
-              "theorem; a construction with a larger one is not excluded",
+    "gain_required": 7.94,
+    "ceiling_k4": 1.75,
+    "ceiling_k5": 100,
+    "fraction_achieved_k4": 0.80,
+    "fraction_needed_k5": 0.079,
+    "correction": "comparing raw gains was wrong: the ceiling is floor / k, "
+                  "so four colours can never exceed 1.75 and Sa's 1.4 is 80 "
+                  "per cent of it, while five colours needs 8 per cent of a "
+                  "ceiling of 100",
+    "caveat": "the ceiling at five is high only because the structural floor "
+              "is; whether ambient rigidity reaches 63 on a 5-chromatic graph "
+              "is open, and the 500 is a published record not verified here",
 }

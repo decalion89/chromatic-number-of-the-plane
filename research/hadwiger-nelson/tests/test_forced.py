@@ -1329,11 +1329,14 @@ def test_the_unique_colouring_ladder_stops_after_one_rung():
     assert "stops after one step" in L["verdict"]
 
 
-def test_the_distance_left_is_a_factor_of_about_six():
+def test_the_gain_must_be_read_against_its_ceiling():
     from hn.forced import DISTANCE_LEFT as D
 
     assert max(D["gains"].values()) == D["best_gain_measured"]
-    assert D["gain_required"] / D["best_gain_measured"] > 5
+    # the raw comparison is the mistake; the ceilings differ
+    assert D["ceiling_k4"] == D["structural_floor_k4"] / 4
+    assert abs(D["fraction_achieved_k4"] - 1.4 / D["ceiling_k4"]) < 0.01
+    assert D["fraction_needed_k5"] < D["fraction_achieved_k4"] / 5
     # the structural floor at four colours is the Moser spindle
     assert D["structural_floor_k4"] == 7
     assert "not excluded" in D["caveat"], "the bound is one-sided"
