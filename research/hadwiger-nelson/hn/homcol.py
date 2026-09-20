@@ -3266,7 +3266,38 @@ THE_TOWER_OVER_K = {
     "second_floor_unions": "up to 1585 points and 8232 edges",
     "probe": "de Grey's pair (2,0),(-2,0), which sits in all of them and "
              "which the K-closable filter skips",
-    "result": "free in every one of the first hundred unions tried",
+    "result": "203 distinct second-floor unions, ZERO forced",
+    "verdict": "K fails at both floors -- 81 rotations at the first, 203 "
+               "unions at the second, and his pair free in every one",
+}
+
+
+# The size of a forcer, as a function of the number of colours.
+#
+#     k = 3   the unit rhombus              4 vertices
+#     k = 4   Y                           791 vertices, and vertex-critical
+#     k = 5   nothing known
+#
+# Y being vertex-critical does not make it the smallest four-colour forcer in
+# the plane -- it makes it a LOCAL minimum, with nothing inside it to trim.
+# But it is the only datum there is above the rhombus, and it is a jump of
+# roughly two hundredfold.  If the next step is anything like it, a five-
+# colour forcer runs to the order of a hundred thousand vertices, which is
+# past what this approach searches and, more to the point, past what the
+# forced-pair test can decide: G's 1581 vertices already cost 283 seconds to
+# set up and 6410 conflicts to sweep.
+
+FORCER_SIZE_BY_COLOUR = {
+    3: {"graph": "the unit rhombus", "vertices": 4,
+        "pair": "its two tips, at sqrt3"},
+    4: {"graph": "de Grey's Y", "vertices": 791,
+        "pair": "(2,0) and (-2,0), at 4", "critical": "vertex-critical"},
+    5: {"graph": None},
+    "caveat": "vertex-critical is a local minimum, not the smallest forcer "
+              "in the plane",
+    "jump": "roughly two hundredfold from 3 to 4",
+    "projection": "if the next step is anything like it, a five-colour forcer "
+                  "runs to the order of a hundred thousand vertices",
 }
 
 
