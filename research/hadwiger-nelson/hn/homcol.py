@@ -2255,3 +2255,54 @@ RATIONAL_CHORDS_CONFINE_THE_CLOSURE = {
                            "and 5 dividing any denominator, then divide out "
                            "the 2-3-5 part of the global content",
 }
+
+
+# -- blocking at every modulus over the field that also spindles -----------
+#
+# The spindle's own 14 directions, rotated by rotations of IRRATIONAL chord
+# chosen against the escaping functional, reach every modulus at once:
+#
+#     11 rotations, 73 points, 132 edges, chi = 4, 168 directions,
+#     blocking at 2, 3, 4 AND 5
+#
+# over K = Q(m, sqrt-3, sqrt-11) -- the field that carries the Moser rotation,
+# so de Grey's step from four colours to five is available in it, and whose
+# residue degree at 5 is 6.
+#
+# Half the size of the necklace, and over a better field. But the 4-critical
+# core is 7 points, 11 edges, 14 directions, blocking at 2 and 3 only: one
+# spindle. It is a bouquet, and bouquets collapse -- the same lesson the
+# 367-point union taught, arrived at again. The necklace construction is what
+# fixes that, being 4-critical by proof rather than by hope.
+#
+# THREE SCALING FAULTS were caught getting here, all mine, and the last two
+# only because the exact arithmetic was run afterwards as a check:
+#
+#   1. each rotation orbit scaled by its own denominator, then compared
+#      against a phi computed on the globally scaled set -- different scales,
+#      so the comparison compared nothing;
+#   2. a flat mod-60 reduction that DROPPED every direction whose denominator
+#      was divisible by 2, 3 or 5, the spindle's own among them, and reported
+#      no blocking at 3 -- impossible for a graph containing a spindle;
+#   3. a per-VECTOR denominator inside the orbit loop, which is fault 1 again
+#      in a smaller place. It said all four moduli; the exact test said 2, 3
+#      and 5.
+#
+# The shortcut was abandoned and the search run on the true module.
+
+SPINDLE_ROTATED_BLOCKS_EVERYWHERE = {
+    "field": "K = Q(m, sqrt-3, sqrt-11), m a root of x^3 - 10x^2 + 26x - 11",
+    "why_this_field": "it carries the Moser rotation, so the step from four "
+                      "colours to five is available, and its residue degree "
+                      "at 5 is 6",
+    "construction": "the spindle's 14 directions rotated by 11 rotations of "
+                    "irrational chord, chosen by CEGAR against the escaping "
+                    "functional",
+    "graph": {"points": 73, "edges": 132, "chi": 4, "directions": 168},
+    "blocks_at": [2, 3, 4, 5],
+    "critical_core": {"points": 7, "edges": 11, "directions": 14,
+                      "blocks_at": [2, 3]},
+    "honest": "a bouquet: the core is one spindle, so the blocking is not "
+              "load bearing. The necklace construction is what fixes that",
+    "scaling_faults_caught": 3,
+}
