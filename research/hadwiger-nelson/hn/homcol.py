@@ -4978,3 +4978,61 @@ THE_FORCER_GROWS_BY_TWO_HUNDRED = {
                            "the ladder: 11014 -> 24 -> 1.1 at k = chi",
                            "the relation: empty at five colours"],
 }
+
+
+# Two independent attempts to escape the ladder, and both fail.
+#
+# The ladder says correlation at k = chi collapses as chi rises -- 11014 for
+# the triangular lattice at three, 24 for Sa at four, 1.1 for G at five.  Two
+# things could have been wrong with reading that as a wall: the graphs might
+# be too small, or they might be the wrong graphs.  Both were tested.
+#
+# SIZE.  G* is the dihedral closure of G, 13873 points, twenty-eight times the
+# minimum for chi = 5, and the only object available inside the gap between
+# G's three times and Sa's fifty-seven.  Sixty samples, ninety-six million
+# pairs, chance 147.5:
+#
+#     candidates 168, ratio 1.14, forced-same candidates 0
+#
+# Which is G's 1.10 again.  The five-colour size curve is flat throughout:
+# 3.2x gives 1.10, 6.3x gives 1.22, 6.1x gives 1.18, 28x gives 1.14.
+#
+# BASE.  Every construction here started from Sa, at 24.  The lattice sits a
+# thousand times higher, and its 3-colouring being unique means (0,0) and
+# (3,0) agree in every colouring there is -- a forced pair at distance 3, with
+# sqrt(4*9-1) = sqrt(35) = sqrt(5)*sqrt(7) in de Grey's field.  So it can be
+# spindled: rho = 17/18 + i sqrt(35)/18 about one end puts the other at
+# squared distance exactly 1 from itself, and lattice u rho(lattice) is 721
+# points and NOT 3-colourable.  The construction works perfectly.
+#
+# What it inherits is nothing.  That 721-point 4-chromatic graph measures 1.6
+# at four colours, with its samples well mixed at 0.695 of independent --
+# LESS correlated than Sa, from a base a thousand times more correlated.
+#
+# So the collapse is not a property of de Grey's graphs, and not of their
+# size.  Spindling a uniquely-colourable graph does not produce a nearly
+# uniquely-colourable one; it produces an ordinary one.  The rigidity does not
+# survive the step.
+BOTH_ESCAPES_FROM_THE_LADDER_FAIL = {
+    "size": {"G*": {"points": 13873, "x_minimum": 28, "samples": 60,
+                    "pairs": 96223128, "chance": 147.5, "candidates": 168,
+                    "ratio": 1.14, "forced_same_candidates": 0},
+             "the_curve": {"3.2x": 1.10, "6.1x": 1.18, "6.3x": 1.22,
+                           "28x": 1.14},
+             "verdict": "flat"},
+    "base": {"start": {"triangular lattice at 3": 10992.7,
+                       "spread": 0.0, "colouring": "unique"},
+             "the_forced_pair": "(0,0) and (3,0), distance 3, and "
+                                "sqrt(35) = sqrt(5)*sqrt(7) is in the field",
+             "rho": "17/18 + i sqrt(35)/18 about one end",
+             "check": "P and rho(P) at squared distance exactly 1",
+             "result": {"points": 721, "three_colourable": False,
+                        "ratio_at_four": 1.6, "spread": 0.695},
+             "verdict": "a 721-point 4-chromatic graph that is LESS "
+                        "correlated than Sa, from a base a thousand times "
+                        "more correlated"},
+    "reading": "the collapse belongs to the colour count, not to de Grey's "
+               "graphs and not to their size.  Spindling a uniquely "
+               "colourable graph gives an ordinary one: the rigidity does not "
+               "survive the step.",
+}
