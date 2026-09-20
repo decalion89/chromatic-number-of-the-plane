@@ -1470,3 +1470,41 @@ SMALL_RHO_IS_AMBIENT = {
                    "5-chromatic unit-distance graph; it asks for ambient "
                    "rigidity, which Sa already has at four",
 }
+
+
+# -- and being at the boundary is the hardest case, not a free one --------
+#
+# "Pressure does not exclude a core of three" is true and was worth saying,
+# but it is easy to read as more room than it gives. The inequality
+# pressure >= k - r is necessary; sitting exactly ON it is the worst place to
+# be.
+#
+# A core of size r at p means every colouring uses all k colours on
+# N(p) u T. The circle supplies at least pressure(p) of them. So in the
+# colourings that squeeze the circle down to its minimum, T has to supply
+#
+#     k - pressure(p)   colours, all of them new,
+#
+# which at k = 5 with pressure 2 and r = 3 means THREE targets carrying three
+# colours, all different, none of them the circle's two -- in every such
+# colouring. Three vertices forced to be rainbow and colour-disjoint from the
+# circle is close to the original problem restated.
+#
+# Room appears only where pressure EXCEEDS k - r. That is exactly what happens
+# at four colours: de Grey's Sa has pressure 3 against k - r = 4 - 7 < 0, so
+# the targets have slack everywhere, and the measured cores go down to 7 while
+# rho comes out at 7 on 397 vertices. The spindle method has always run on
+# that slack.
+#
+# So the honest form is: pressure 2 leaves a core of three possible and gives
+# it no margin at all. The place to look is a pivot with pressure 3 at five
+# colours, which is the thing the degeneracy measurements say this angle
+# family cannot produce.
+
+BOUNDARY_PRESSURE_HAS_NO_MARGIN = (
+    "pressure >= k - r is necessary, and sitting exactly on it means the r "
+    "targets must carry all k - pressure remaining colours, rainbow and "
+    "disjoint from the circle's, in every squeezing colouring; margin needs "
+    "pressure strictly above k - r, which is what four colours has and five "
+    "does not"
+)

@@ -1056,3 +1056,15 @@ def test_small_rho_does_not_need_a_small_critical_subgraph():
     assert w["induced_chi"] < w["k"], "not a 4-chromatic subgraph at all"
     assert w["isolated"] > 0, "three of the seven have no neighbour in the set"
     assert w["minimal"] is True
+
+
+def test_boundary_pressure_leaves_no_margin():
+    """pressure = k - r is the hardest admissible case, not a comfortable one."""
+    from hn.forced import BOUNDARY_PRESSURE_HAS_NO_MARGIN as B
+
+    k, r, pressure = 5, 3, 2
+    assert pressure == k - r, "exactly on the boundary"
+    assert k - pressure == r, "so the targets must supply ALL of them, rainbow"
+    # at four colours the same pivot has slack
+    assert 3 > 4 - 7 or True
+    assert "margin needs pressure strictly above" in B

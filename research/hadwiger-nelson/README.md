@@ -1097,6 +1097,20 @@ measured pressure is exactly 2, everywhere, on every graph here.
 > **Pressure does not exclude a core of three.** It never did. The flat 2 was
 > read as a wall when it is only a floor, and the floor is exactly met.
 
+But *exactly met* is the worst place to be, and it would be easy to read that
+as more room than it gives. Every colouring must use all k colours on
+`N(p) ∪ T`, and the circle supplies at least `pressure(p)` of them — so in the
+colourings that squeeze the circle to its minimum, `T` must supply
+`k − pressure(p)` colours, **all new**. At k = 5 with pressure 2 and r = 3 that
+means three targets carrying three distinct colours, none of them the circle's
+two, in every such colouring. Three vertices forced to be rainbow *and*
+colour-disjoint from the circle is close to the original problem restated.
+
+Room appears only where pressure **exceeds** k − r, and that is exactly what
+four colours has: Sa's pressure 3 against a requirement of far less, which is
+why its cores go down to 7 and ρ comes out at 7 on 397 vertices. The spindle
+method has always run on that slack.
+
 Blocking a core of three is solved: 27 344 misalignment configurations do it,
 and the counting bound (`r ≤ 2`) together with the pressure floor (`r ≥ 3`)
 pins the size at exactly three from both sides.
