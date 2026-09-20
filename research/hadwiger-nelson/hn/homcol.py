@@ -3155,7 +3155,25 @@ DEGREYS_ROTATION_IS_NOT_GENERIC = {
 # after the rank saturates does each further copy tell.
 
 BLOCKING_HAS_A_COUNTING_THRESHOLD = {
-    "heuristic": "5^r . (4/5)^L < 1, so L > 3.49 r lines are needed",
+    "heuristic": "n^r . ((n-1)/n)^L < 1, so L > r log n / log(n/(n-1)) "
+                 "lines are needed; at n = 5 that is 7.21 r",
+    "when_it_applies": "exactly when no direction reduces to zero mod n.  A "
+                       "zero residue means the set contains n times one of "
+                       "its own members, every phi kills it, and the blocking "
+                       "is trivial rather than statistical -- which is what "
+                       "happens for de Grey's G at n = 2, 3 and 4, where the "
+                       "count would predict an escape and the truth is a "
+                       "block.  At n = 5 there is no zero residue among his "
+                       "109 and the count governs.",
+    "tested_at_the_gate": {"denominator-29 set":
+                           "rank 12, 120 lines, threshold 87 -> blocks, and "
+                           "it does",
+                           "de Grey's G":
+                           "rank 16, 54 lines, threshold 116 -> escapes, and "
+                           "it does"},
+    "score": "2 of 2 at the gate; not applicable below it",
+    "superseded_heuristic": "5^r . (4/5)^L < 1, so L > 3.49 r lines are "
+                            "needed -- the constant was wrong, it is 7.21",
     "status": "a heuristic -- the directions are structured, not random -- "
               "but it calibrates the search",
     "for_G_plus_rotated_copies": {

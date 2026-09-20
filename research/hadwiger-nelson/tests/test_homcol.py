@@ -1616,3 +1616,45 @@ def test_every_sampled_vertex_of_Y_is_essential_to_its_forcing():
             assert sv.solve(assumptions=[1 + idx[ia] * 4,
                                          -(1 + idx[ib] * 4)]), \
                 f"vertex {drop} must be essential"
+
+
+def test_the_counting_threshold_applies_exactly_at_the_gate():
+    """A zero residue blocks trivially; the count governs only without one.
+
+    The heuristic is `n^r . ((n-1)/n)^L < 1`, so a rank-`r` direction set needs
+    more than `r log n / log(n/(n-1))` independent lines mod `n` — at `n = 5`,
+    `7.21 r`. It calls both known cases at the gate correctly: the
+    denominator-29 set has 120 lines against a threshold of 87 and blocks; de
+    Grey's `G` has 54 against 116 and escapes.
+
+    Below the gate it is inapplicable, and the reason is sharp. `G`'s
+    directions contain a vector congruent to zero mod 2, 3 and 4 — the set
+    holds `n` times one of its own members — so every `phi` kills it and the
+    blocking is trivial. At `n = 5` there is no zero residue among its 109.
+    """
+    import math
+
+    from hn.degrey import build_G
+    from hn.graph import build_graph
+    from hn.homcol import (blocks_at, denominator_29_directions,
+                           edge_vectors, _rank_q)
+
+    def lines(v, n):
+        return len({tuple(x % n for x in w) for w in v}) // 2
+
+    def threshold(r, n):
+        return math.ceil(r * math.log(n) / math.log(n / (n - 1)))
+
+    D = edge_vectors(build_graph(build_G(as_graph=False)))
+    assert _rank_q(D) == 16 and lines(D, 5) == 54
+    assert threshold(16, 5) == 116 and not blocks_at(D, 5)
+
+    E = denominator_29_directions(3)
+    assert _rank_q(E) == 12 and lines(E, 5) == 120
+    assert threshold(12, 5) == 87 and blocks_at(E, 5)
+
+    for n in (2, 3, 4):
+        res = {tuple(x % n for x in v) for v in D}
+        assert sum(1 for v in res if not any(v)) == 1, "a trivial obstruction"
+        assert blocks_at(D, n), "which blocks for a reason that is not counting"
+    assert all(any(v) for v in {tuple(x % 5 for x in w) for w in D})

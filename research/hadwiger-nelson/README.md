@@ -3253,6 +3253,32 @@ So `Y` is a minimal four-colour forcer for its pair, with nothing to trim.
 Which is the sharpest reason to expect the five-colour analogue to be large:
 there is no fat in the four-colour one.
 
+## The counting threshold, and exactly where it applies
+
+A direction set of rank `r` over `F_n` blocks once it carries enough
+independent lines: a random functional survives `L` of them with probability
+`((n-1)/n)^L`, and there are `n^r` functionals, so
+
+    L  >  r . log n / log(n/(n-1)),    which at n = 5 is 7.21 r.
+
+It is a heuristic — the directions are structured, not random — so it is worth
+checking against every verdict already established. **At the gate it calls
+both known cases right:**
+
+| | rank | lines mod 5 | threshold | predicts | truth |
+|---|---|---|---|---|---|
+| denominator-29 set | 12 | 120 | 87 | blocks | **blocks** |
+| de Grey's `G` | 16 | 54 | 116 | escapes | **escapes** |
+
+Below the gate it is inapplicable, and the reason is sharp. `G`'s directions
+contain a vector **congruent to zero** mod 2, mod 3 and mod 4 — the set holds
+`n` times one of its own members — so every `phi` kills it and the blocking is
+trivial rather than statistical. At `n = 5` there is no zero residue among its
+109, and the count governs.
+
+So the prediction the threshold makes for the sixteen-rotation set — 880 lines
+against a threshold of 693, and no zero residue — is worth the wait.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
