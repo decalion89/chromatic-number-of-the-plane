@@ -1996,6 +1996,107 @@ it. The Moser spindle's `2/7 = 0.2857` and the published `m_1 <= 0.2470`
 (Ambrus, Csiszárik, Matolcsi, Varga, Zsámboki 2023, by Fourier methods rather
 than from a graph) sit between the two.
 
+## The gate: every 6-chromatic unit-distance graph is blocked
+
+The blocking machinery was, until now, a thing running alongside the chromatic
+number rather than under it. One line puts it underneath.
+
+A **coset colouring** is a homomorphism `phi` from the edge module `M` to
+`Z/n` that is nonzero on every edge vector. The vertices of a connected
+unit-distance graph all lie in `v0 + M`, so colouring `v` by `phi(v - v0)` is
+well defined, and adjacent `u, v` get `phi(u - v) != 0` — different colours. So
+a coset colouring with `n` colours *is* an `n`-colouring, and `chi <= n`.
+Contrapositive, at `n = 5`:
+
+> **Every 6-chromatic unit-distance graph is blocked.**
+
+Blocking is therefore the **first necessary condition** for `chi >= 6` — a gate
+every candidate has to pass before any colouring argument begins. `phi` is
+propagated along a spanning tree of `Sa` in `tests/test_homcol.py` and checked
+on all 3938 edges, so the gate is walked, not asserted.
+
+And the only 5-chromatic graph anyone has **fails it**. de Grey's `G` lives
+over `Q(sqrt3, sqrt5, sqrt7, sqrt11)`, and a multiquadratic field provably
+never blocks. Not "has not been shown to block": cannot.
+
+### The first 5-chromatic blocked graph
+
+Let `w` run over the unit steps of `Q(zeta_7)` of denominator exactly 29 — 29
+being the least rational prime that splits completely there, which is what
+makes those steps the cheapest blocking ones — and set
+
+    U = G u {w.G},    each w.G the rotation of G about the origin by w.
+
+`chi(U) >= 5` because `U` contains `G`. For the blocking, two levers:
+
+* it is **monotone** in the direction set, so a blocking *subset* suffices;
+* it is **invariant under a global rotation**, because `phi -> phi . u` is a
+  bijection between the homomorphisms out of `uM` and those out of `M`
+  preserving which vectors go to zero.
+
+`G` contains a rotated copy `r.Y` of `Y`, and `Y` keeps all six hexagonal unit
+edges at the origin — de Grey deletes only `(1/3, 0)` and `(-1/3, 0)`, and the
+origin is measured here to have 60 neighbours, `(+-1, 0)` and
+`(+-1/2, +-sqrt3/2)` among them. So `U`'s directions contain
+`r.{w . zeta_6^k}`, which blocks exactly when `{w . zeta_6^k}` does — and that
+set, 50 generators times the six sixth roots, **blocks**:
+
+    300 directions, all projectively distinct, no coset 5-colouring
+
+So `U` is **5-chromatic and blocked**: the first graph that is both, and the
+first to pass the gate. Stated for what it is — `U` is not claimed to be
+6-chromatic, and nothing above says it is.
+
+### Every triangle of unit steps is a 60-degree pair
+
+`|u| = |v| = |u - v| = 1` expands to `u.vbar + ubar.v = 1`; with `t = u.vbar`
+that is `|t| = 1` and `t + tbar = 1`, so `t` is a primitive sixth root of
+unity. Hence `u = zeta_6^{+-1} v` for **every** triangle of unit steps.
+
+Two consequences. A `zeta_6`-closed step set carries triangles whatever its
+denominators — and `zeta_6` is a unit at 29, so the denominator-29 steps are
+closed under it and support 300 such pairs. The blocking directions are not a
+rigidity-free fringe. And the rhombus is pinned: its tip is `u + zeta_6 u`,
+with `|u + zeta_6 u|^2 = 2 + 1 = 3` — always `sqrt3`, whatever `u` is.
+
+### Why the blocking keeps dying: the spindle is unique
+
+A Moser spindle is two rhombi sharing an apex, tips at `sqrt3` by the identity
+above, joined by a unit edge. If the arms are the rhombi on `u` and on `v`,
+the closing edge has length `|u - v| sqrt3`, so
+
+    |u - v|^2 = 1/3,   u.vbar + ubar.v = 5/3,   v = rho^{+-1} u,
+    rho = (5 +- sqrt-11)/6.
+
+**No freedom at all.** The arm rotation is a single algebraic number and the
+spindle is unique up to isometry. With rotation invariance, one measurement
+settles the whole class — and the measurement says the spindle admits a coset
+5-colouring. Its 14 projective directions are not enough. So
+
+> **No 7-vertex 4-critical unit-distance graph blocks.**
+
+Which is exactly why the blocking keeps evaporating. Hang 144 rotated copies
+of the spindle together and the union is 367 points, 671 edges, 427
+directions, `chi = 4`, **blocked** — every edge a spindle edge, not a pendant
+in sight. Then strip it to a 4-critical subgraph and what is left is
+
+    7 points, 11 edges, 7 directions — one spindle, and not blocked.
+
+The copies are each 4-chromatic alone, so the core keeps one and discards the
+rest. That is the obstruction, and it sharpens the whole programme to a single
+question:
+
+> **Can a critical unit-distance graph block?**
+
+A lower bound on what that would take: blocking at `n = 5` is covering
+`PG(r-1,5)` by the hyperplanes `d-perp`, and the cheapest cover of a
+projective space over `F_q` is a pencil of `q+1` hyperplanes through a fixed
+codimension-2 subspace. So a blocked graph has **at least six edge
+directions**, and six suffice only when their reductions mod 5 span a rank-2
+space and occupy all six points of that projective line. Weak, but the right
+shape: blocking is about how the directions sit mod 5, not how many there are.
+The spindle has 14 and fails; the denominator-29 set has 300 and succeeds.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

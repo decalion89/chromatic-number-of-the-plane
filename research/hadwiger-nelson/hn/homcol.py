@@ -39,11 +39,13 @@ summand, so this module screens IN rather than screens OUT.
 
 from __future__ import annotations
 
+import itertools
 from fractions import Fraction
 from math import gcd
 from typing import List, Optional, Sequence, Tuple
 
-__all__ = ["edge_vectors", "has_homomorphism", "screen", "minimum_blocking_set"]
+__all__ = ["edge_vectors", "has_homomorphism", "screen", "minimum_blocking_set",
+           "denominator_29_directions"]
 
 
 def _coords(e) -> Tuple[Fraction, ...]:
@@ -623,4 +625,275 @@ FIRST_BLOCKED_AND_CHROMATIC = {
               "chromatic number; the object shows the field works, not that "
               "the blocking is load bearing",
     "needed_forty_vs": 144,
+}
+
+
+# -- the gate: every 6-chromatic unit-distance graph is blocked -------------
+#
+# This is what makes blocking worth anything, and it is one line. A coset
+# colouring is a homomorphism phi from the edge module M to Z/n that is
+# nonzero on every edge vector. The vertices of a connected unit-distance
+# graph all lie in v0 + M, so colouring v by phi(v - v0) is well defined, and
+# adjacent u, v get phi(u - v) != 0, hence different colours. So
+#
+#     a coset colouring with n colours is an n-colouring, and chi <= n.
+#
+# Contrapositive at n = 5:
+#
+#     EVERY 6-CHROMATIC UNIT-DISTANCE GRAPH IS BLOCKED.
+#
+# Blocking is therefore not a curiosity running alongside the chromatic
+# number, it is the FIRST NECESSARY CONDITION on the way to chi >= 6 -- a gate
+# every candidate has to pass before any colouring argument starts.
+#
+# And the only 5-chromatic graph anyone has fails it outright. de Grey's G
+# lives over Q(sqrt3, sqrt5, sqrt7, sqrt11), and a multiquadratic field never
+# blocks (recorded above). Not "has not been shown to block": cannot.
+
+SIX_CHROMATIC_MUST_BLOCK = {
+    "statement": "a coset colouring with n colours is an n-colouring, so "
+                 "chi >= n+1 forces the edge module to admit no homomorphism "
+                 "to Z/n that is nonzero on every edge vector",
+    "at_n": 5,
+    "consequence": "every 6-chromatic unit-distance graph is blocked",
+    "why_it_bites": "de Grey's G is multiquadratic, and a multiquadratic "
+                    "field provably never blocks, so the only known "
+                    "5-chromatic graph fails the gate",
+}
+
+
+# -- blocking is invariant under a global rotation --------------------------
+#
+# If u is a unit of the field then multiplication by u carries the module M
+# isomorphically onto uM, and phi -> phi . u is a bijection between the
+# homomorphisms out of uM and those out of M carrying nonzero to nonzero. So
+#
+#     a rotated copy of a graph blocks exactly when the graph does.
+#
+# Small, but it does real work twice below: it turns one measurement on the
+# Moser spindle into a statement about every 7-vertex 4-critical graph, and it
+# lets the blocking of U be read off a set of directions with the outer
+# rotation divided out.
+
+BLOCKING_IS_ROTATION_INVARIANT = {
+    "statement": "phi -> phi . u is a bijection between the homomorphisms out "
+                 "of uM and those out of M, preserving which vectors are sent "
+                 "to zero",
+    "consequence": "blocking is a property of a graph up to isometry, so a "
+                   "single measurement settles a whole rotation class",
+}
+
+
+# -- every triangle of unit steps is a 60-degree pair ------------------------
+#
+# Three points at mutual distance 1: |u| = |v| = |u - v| = 1 expands to
+# 2 - u.vbar - ubar.v = 1, so u.vbar + ubar.v = 1. Put t = u.vbar; then
+# |t| = 1 and t + tbar = 1, which forces t to be a primitive sixth root of
+# unity. Hence
+#
+#     u = zeta_6^{+-1} v for every triangle of unit steps,
+#
+# and a step set closed under zeta_6 carries triangles no matter what its
+# denominators are. This matters because zeta_6 is a unit at 29, so the
+# denominator-29 steps are closed under it: the blocking directions are not
+# some rigidity-free fringe, they support the same triangles the cheap steps
+# do. Measured: the 300 denominator-29 steps carry 300 such pairs.
+#
+# It also pins the rhombus. Its tip is u + v with v = zeta_6 u, so
+# |u + v|^2 = 2 + (u.vbar + ubar.v) = 3 -- ALWAYS sqrt3, whatever u is.
+
+TRIANGLES_ARE_SIXTY_DEGREE_PAIRS = {
+    "statement": "|u| = |v| = |u-v| = 1 forces u.vbar + ubar.v = 1, hence "
+                 "u/v is a primitive sixth root of unity",
+    "consequence": "any zeta_6-closed step set carries triangles, the "
+                   "denominator-29 set included",
+    "rhombus_tip": "|u + zeta_6 u|^2 = 3 for every unit u",
+    "measured_triangles_among_300": 300,
+}
+
+
+# -- the spindle rotation is forced, and the spindle does not block ----------
+#
+# A Moser spindle is two rhombi sharing an apex, tips at distance sqrt3 from
+# it by the identity above, joined by a unit edge. If the arms are the rhombi
+# on u and on v then the closing edge has length |u - v| sqrt3, so
+#
+#     |u - v|^2 = 1/3,  u.vbar + ubar.v = 5/3,  v = rho^{+-1} u
+#     with rho = (5 +- sqrt-11)/6.
+#
+# No freedom at all: the arm rotation is a single algebraic number, and the
+# spindle is unique up to isometry. Combined with rotation invariance, ONE
+# measurement settles the whole class -- and the measurement says the spindle
+# admits a coset 5-colouring. Its 14 projective directions are not enough.
+#
+#     NO 7-VERTEX 4-CRITICAL UNIT-DISTANCE GRAPH BLOCKS.
+#
+# Which is why the blocking keeps dying in the critical core: every
+# construction here whose 4-chromaticity comes from a spindle has a core that
+# is a spindle, and a spindle cannot block.
+
+SPINDLE_ROTATION_IS_FORCED = {
+    "derivation": "closing edge |u-v| sqrt3 = 1 gives u.vbar + ubar.v = 5/3",
+    "rotation": "(5 +- sqrt-11)/6, the only solution",
+    "spindle_directions": 14,
+    "blocks": False,
+    "consequence": "no 7-vertex 4-critical unit-distance graph blocks, since "
+                   "the spindle is unique up to isometry and blocking is "
+                   "rotation invariant",
+}
+
+
+# -- how few directions can block -------------------------------------------
+#
+# Blocking at n = 5 is covering the points of PG(r-1,5) by the hyperplanes
+# d-perp. The cheapest cover of a projective space over F_q by hyperplanes is
+# a pencil: fix a codimension-2 subspace, take the q+1 hyperplanes through it,
+# and every point is caught. So
+#
+#     a blocked graph has at least 6 distinct edge directions,
+#
+# and six suffice only when their reductions mod 5 span a rank-2 space and
+# occupy all six points of that PG(1,5). The bound is weak but it is the right
+# shape: blocking is a statement about how the directions sit mod 5, not about
+# how many there are. The spindle has 14 and fails; the denominator-29 set has
+# 300 and succeeds.
+
+BLOCKING_NEEDS_SIX_DIRECTIONS = {
+    "bound": 6,
+    "reason": "a pencil of q+1 hyperplanes through a fixed codimension-2 "
+              "subspace is the cheapest cover of PG(r-1,q)",
+    "tight_when": "the six directions span rank 2 mod 5 and occupy all six "
+                  "points of that projective line",
+}
+
+
+def denominator_29_directions(box: int = 3) -> List[Tuple[int, ...]]:
+    """The unit steps of Q(zeta_7) of denominator exactly 29, zeta_6-closed.
+
+    29 is the least rational prime that splits completely in Q(zeta_7), which
+    is what makes denominator-29 steps the cheapest blocking ones. Each is
+    produced by Hilbert 90 as a/conj(a) over a box of coefficients, then
+    multiplied through by the powers of zeta_6 -- legitimate because zeta_6 is
+    a unit at 29, so the denominator survives, and necessary because triangles
+    only exist between 60-degree pairs.
+
+    Returned as primitive integer vectors in the Q(zeta_21) basis, ready for
+    `has_homomorphism`. With the default box: 50 generators, 300 directions,
+    all projectively distinct, and they block.
+    """
+    from .cyclotomic import CycloField
+
+    K = CycloField(21)
+    d = K.degree
+
+    def inv(a):
+        rows = [list(K.mul(a, tuple(Fraction(1 if j == i else 0)
+                                    for j in range(d)))) for i in range(d)]
+        M = [[rows[j][i] for j in range(d)] + [Fraction(1 if i == 0 else 0)]
+             for i in range(d)]
+        for c in range(d):
+            p = next(r for r in range(c, d) if M[r][c])
+            M[c], M[p] = M[p], M[c]
+            s = Fraction(1) / M[c][c]
+            M[c] = [v * s for v in M[c]]
+            for r in range(d):
+                if r != c and M[r][c]:
+                    f = M[r][c]
+                    M[r] = [x - f * y for x, y in zip(M[r], M[c])]
+        return tuple(M[i][d] for i in range(d))
+
+    def den(t):
+        out = 1
+        for x in t:
+            out = out * x.denominator // gcd(out, x.denominator)
+        return out
+
+    z6 = K.neg(K.mul(K.zeta(7), K.zeta(7)))
+    steps = set()
+    for coeffs in itertools.product(range(-box, box + 1), repeat=4):
+        if not any(coeffs):
+            continue
+        a, p = K.zero(), K.rational(1)
+        for c in coeffs:
+            a = K.add(a, tuple(Fraction(c) * x for x in p))
+            p = K.mul(p, K.zeta(3))
+        try:
+            u = K.mul(a, inv(K.conj(a)))
+        except (StopIteration, ZeroDivisionError):
+            continue
+        if K.norm2(u) != K.rational(1) or den(u) != 29:
+            continue
+        v = u
+        for _ in range(6):
+            steps.add(v)
+            v = K.mul(v, z6)
+
+    scale = 1
+    for v in steps:
+        scale = scale * den(v) // gcd(scale, den(v))
+    out = []
+    for v in sorted(steps):
+        w = tuple(int(x * scale) for x in v)
+        g = 0
+        for t in w:
+            g = gcd(g, abs(t))
+        w = tuple(t // g for t in w) if g > 1 else w
+        if w not in out:
+            out.append(w)
+    return out
+
+
+# -- the first 5-chromatic blocked unit-distance graph ----------------------
+#
+# Let w run over the denominator-29 unit steps and set
+#
+#     U = G u {w.G},   each w.G the rotation of G about the origin by w.
+#
+# chi(U) >= 5 because U contains G. For the blocking, two levers: it is
+# monotone in the direction set, so a blocking SUBSET is enough, and it is
+# rotation invariant, so a global factor divides out.
+#
+# G contains a rotated copy r.Y of Y, and Y keeps all six hexagonal unit edges
+# at the origin -- de Grey deletes only (1/3, 0) and (-1/3, 0), and the origin
+# is measured here to have 60 neighbours, among them (+-1, 0) and
+# (+-1/2, +-sqrt3/2). So U's directions contain r.{w . zeta_6^k}, which blocks
+# exactly when {w . zeta_6^k} does, and that set is the 300 above. Hence
+#
+#     U IS 5-CHROMATIC AND BLOCKED -- the first graph that is both.
+#
+# STATED FOR WHAT IT IS, again. U passes the gate of SIX_CHROMATIC_MUST_BLOCK;
+# it is not 6-chromatic, and nothing here says it is. What it settles is that
+# the gate is passable at five colours at all, which no previously known
+# object did.
+#
+# And the blocking is still not load bearing. Strip a rotated construction to
+# a 4-critical subgraph and the copies do not hold each other up: measured on
+# the 367-point spindle union, the core is 7 points, 11 edges, 7 directions --
+# one spindle, which by SPINDLE_ROTATION_IS_FORCED cannot block. The copies
+# are each 4-chromatic alone, so the core is free to pick one and drop the
+# rest. That is the obstruction to beat, and it is now a sharp question:
+#
+#     CAN A CRITICAL UNIT-DISTANCE GRAPH BLOCK?
+
+FIRST_FIVE_CHROMATIC_BLOCKED = {
+    "graph": "U = G u {w.G : w a denominator-29 unit step of Q(zeta_7)}",
+    "chi": ">= 5, since U contains de Grey's G",
+    "blocked": True,
+    "via": "directions contain r.{w.zeta_6^k}; blocking is monotone in the "
+           "direction set and invariant under the global rotation r",
+    "y_origin_neighbours": 60,
+    "blocking_subset": 300,
+    "honest": "U passes the necessary gate for chi >= 6; it is not claimed to "
+              "be 6-chromatic",
+}
+
+CRITICAL_CORE_COLLAPSES = {
+    "construction": "Moser spindle plus its images under 144 blocking steps",
+    "union": {"points": 367, "edges": 671, "directions": 427, "chi": 4,
+              "blocked": True},
+    "four_critical_core": {"points": 7, "edges": 11, "directions": 7,
+                           "blocked": False},
+    "why": "each rotated copy is 4-chromatic on its own, so the core keeps one "
+           "and discards the rest",
+    "open": "can a critical unit-distance graph block?",
 }

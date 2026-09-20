@@ -1,4 +1,5 @@
 """Homomorphism colourings: the structural screen, and what it says."""
+from fractions import Fraction
 from hn.degrey import build_G
 from hn.graph import build_graph
 from hn.homcol import edge_vectors, has_homomorphism, screen
@@ -407,3 +408,152 @@ def test_the_degree_24_field_carries_both_properties():
     assert B["coset_colourings"] == 0 and B["chi"] == 4
     assert "pendant" in B["honest"], "the blocking is not load bearing"
     assert B["needed_forty_vs"] == 144, "forty steps left a coset colouring"
+
+
+def test_coset_colouring_is_a_colouring():
+    """The gate: a coset n-colouring really is a proper n-colouring.
+
+    This is the whole reason blocking matters -- it makes chi >= 6 imply
+    blocked -- so it is walked out on a real graph rather than asserted.
+    Colours are propagated along a spanning tree by phi of the edge vector;
+    that the result is consistent around every cycle and proper on every
+    non-tree edge is exactly the claim.
+    """
+    from collections import deque
+    from fractions import Fraction
+    from math import gcd
+
+    from hn.degrey import build_Sa
+    from hn.graph import build_graph
+    from hn.homcol import _coords, edge_vectors, has_homomorphism
+
+    g = build_graph(build_Sa())
+    edges = list(g.edges())
+    vecs = edge_vectors(g)
+    phi, _ = has_homomorphism(vecs, 5)
+    assert phi is not None, "Sa is multiquadratic, so it cannot block"
+
+    raw = {}
+    for a, b in edges:
+        d = (g.vertices[b].x - g.vertices[a].x, g.vertices[b].y - g.vertices[a].y)
+        raw[(a, b)] = _coords(d[0]) + _coords(d[1])
+    den = 1
+    for v in raw.values():
+        for q in v:
+            den = den * Fraction(q).denominator // gcd(den, Fraction(q).denominator)
+    ints = {e: tuple(int(Fraction(q) * den) for q in v) for e, v in raw.items()}
+    content = 0
+    for v in ints.values():
+        for x in v:
+            content = gcd(content, abs(x))
+    if content > 1:
+        ints = {e: tuple(x // content for x in v) for e, v in ints.items()}
+
+    def step(e):
+        return sum(c * x for c, x in zip(phi, ints[e])) % 5
+
+    adj = {}
+    for a, b in edges:
+        adj.setdefault(a, []).append(b)
+        adj.setdefault(b, []).append(a)
+    colour = {0: 0}
+    q = deque([0])
+    while q:
+        v = q.popleft()
+        for w in adj.get(v, ()):
+            if w in colour:
+                continue
+            colour[w] = (colour[v] + (step((v, w)) if (v, w) in ints
+                                      else -step((w, v)))) % 5
+            q.append(w)
+
+    assert len(colour) == len(g.vertices), "Sa should be connected"
+    for a, b in edges:
+        assert colour[a] != colour[b], (a, b)
+
+
+def test_denominator_29_directions_block():
+    from hn.homcol import denominator_29_directions, has_homomorphism
+
+    d = denominator_29_directions()
+    assert len(d) == 300 and len(set(d)) == 300
+    assert has_homomorphism(d, 5)[0] is None, "the 300 must block"
+
+
+def test_blocking_is_monotone_in_the_direction_set():
+    """Used to read U's blocking off a subset of its directions."""
+    from hn.homcol import denominator_29_directions, has_homomorphism
+
+    d = denominator_29_directions()
+    assert has_homomorphism(d[:6], 5)[0] is not None
+    assert has_homomorphism(d, 5)[0] is None
+
+
+def test_every_unit_triangle_is_a_sixty_degree_pair():
+    """|u| = |v| = |u-v| = 1 forces u/v to be a primitive sixth root."""
+    import itertools
+    from fractions import Fraction
+    from hn.cyclotomic import CycloField
+
+    K = CycloField(21)
+    one = K.rational(1)
+    z6 = K.neg(K.mul(K.zeta(7), K.zeta(7)))
+    units = []
+    for k in range(6):
+        p, z = K.rational(1), one
+        for _ in range(k):
+            p = K.mul(p, z6)
+        units.append(p)
+    for u, v in itertools.permutations(units, 2):
+        if K.norm2(K.sub(u, v)) != one:
+            continue
+        t = K.mul(u, K.conj(v))
+        assert K.add(t, K.conj(t)) == one
+        assert K.norm2(t) == one
+
+
+def test_y_keeps_the_hexagonal_edges_at_the_origin():
+    """What lets U inherit a blocking subset from G."""
+    from hn.degrey import build_Y
+    from hn.geometry import DEGREY_FIELD
+    from hn.graph import build_graph
+
+    Y = build_Y()
+    g = build_graph(Y)
+    zero = DEGREY_FIELD.zero()
+    o = next(i for i, p in enumerate(Y) if p.x == zero and p.y == zero)
+    nb = [j for i, j in g.edges() if i == o] + [i for i, j in g.edges() if j == o]
+    half, root3 = DEGREY_FIELD.rational(Fraction(1, 2)), DEGREY_FIELD.sqrt(3)
+    want = {(DEGREY_FIELD.rational(1), zero),
+            (DEGREY_FIELD.rational(-1), zero)}
+    for sx in (1, -1):
+        for sy in (1, -1):
+            want.add((DEGREY_FIELD.rational(Fraction(sx, 2)),
+                      root3 * DEGREY_FIELD.rational(Fraction(sy, 2))))
+    got = {(Y[j].x - Y[o].x, Y[j].y - Y[o].y) for j in nb}
+    assert want <= got, "Y must keep all six hexagonal unit steps"
+    assert len(nb) == 60
+
+
+def test_moser_spindle_does_not_block():
+    """One measurement settles every 7-vertex 4-critical graph.
+
+    The spindle's arm rotation is forced to (5 +- sqrt-11)/6 and blocking is
+    invariant under a global rotation, so the class has a single member up to
+    isometry.
+    """
+    from hn.geometry import DEGREY_FIELD, Point, Rotation
+    from hn.graph import build_graph
+    from hn.homcol import edge_vectors, has_homomorphism
+
+    F = DEGREY_FIELD
+    half = F.rational(Fraction(1, 2))
+    rhombus = [Point(F.zero(), F.zero()), Point(F.rational(1), F.zero()),
+               Point(half, F.sqrt(3) * half),
+               Point(F.rational(Fraction(3, 2)), F.sqrt(3) * half)]
+    rho = Rotation(F.rational(Fraction(5, 6)),
+                   F.sqrt(11) * F.rational(Fraction(1, 6)))
+    g = build_graph(rhombus + [rho(q) for q in rhombus[1:]])
+    vecs = edge_vectors(g)
+    assert len(g.vertices) == 7 and len(list(g.edges())) == 11
+    assert has_homomorphism(vecs, 5)[0] is not None
