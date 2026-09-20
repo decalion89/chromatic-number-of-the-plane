@@ -1081,3 +1081,13 @@ def test_no_five_chromatic_subgraph_inside_the_dense_part():
     from hn.forced import RHO_JUMPS_AT_FIVE as R
     assert R["rho_at_4"] * 100 < m["133_neighbourhoods"]
     assert "no 5-chromatic subgraph" in O["consequence"]
+
+
+def test_rho_bound_directions_cost_differently():
+    """Why this package has cheap non-forcing evidence and no tight upper bound."""
+    from hn.forced import RHO_BOUNDS_ARE_ASYMMETRIC as A
+
+    assert "not-forcing is SAT" in A and "forcing is UNSAT" in A
+    from hn.forced import ONE_PIVOT_CANNOT_REACH_FIVE as O
+    # the cheap direction reached 1201 of 1581; the expensive one is open
+    assert O["measured_not_forcing"]["133_neighbourhoods"] < O["graph_size"]

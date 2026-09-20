@@ -1551,3 +1551,34 @@ ONE_PIVOT_CANNOT_REACH_FIVE = {
     "consequence": "a superset of a forcing set is forcing, so no 5-chromatic "
                    "subgraph of G fits inside those 1201 vertices",
 }
+
+
+# -- why rho is cheap to bound below and expensive to bound above ---------
+#
+# The two directions cost completely different amounts, and it is worth saying
+# so, because the asymmetry decides which measurements this package can make.
+#
+# Showing a set is NOT forcing is SAT: exhibit a proper k-colouring that
+# leaves some colour off it. Small sets have many such colourings and the
+# solver finds one in under two seconds even at 1201 vertices.
+#
+# Showing a set IS forcing is UNSAT: prove that no such colouring exists. For
+# the whole vertex set that is exactly "G is not 4-colourable", the instance
+# kissat needed 522 seconds for. For V - {v} it is "chi(G - v) < k", which is
+# the vertex-criticality question. There is no cheap direction.
+#
+# So peeling from the top, which would give an upper bound on rho, costs a
+# hard UNSAT per vertex; growing from the bottom, which gives lower-bound
+# evidence, is nearly free. This package therefore has:
+#
+#     1201 vertices measured NOT forcing      (cheap, certain)
+#     rho(G,5) <= 1581                        (trivial, since chi(G) = 5)
+#
+# and closing the gap between them is the same computation as deciding
+# vertex-criticality. Both are running; neither is cheap.
+
+RHO_BOUNDS_ARE_ASYMMETRIC = (
+    "not-forcing is SAT and costs seconds; forcing is UNSAT and costs the "
+    "same as the 4-colourability proof, so lower-bound evidence is nearly "
+    "free and any upper bound below n is as hard as vertex-criticality"
+)
