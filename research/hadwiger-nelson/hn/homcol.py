@@ -4435,3 +4435,43 @@ THE_RELATION_IS_JUST_THE_EDGES = {
                         "all three colours across 24 samples, and none "
                         "survives verification",
 }
+
+
+# Size does not switch the relation on either.  The curve is flat.
+#
+# The one hypothesis left standing after redundancy was ruled out was scale:
+# at four colours Sa is fifty-seven times the minimum for chi = 4 and its
+# relation sits twenty times above chance, while at five colours G is three
+# times the minimum and sits at chance.  Between three and fifty-seven nothing
+# had been measured at five, and a point either side is not a curve.
+#
+# Measured at a fixed forty samples so the numbers compare:
+#
+#     graph                          points   x min   ratio   verified
+#     G                                1581    3.2    1.34    0 and 0
+#     G u rho_4(G) about vertex 14     3161    6.3    1.22    0 and 0
+#     translate stack, depth 1         3050    6.1    1.18    0 and 0
+#
+# It does not climb.  It falls slightly, which is what finite-sample noise
+# around 1.0 looks like, and every one of the candidates -- 222, 808 and 731
+# of them -- was put to the solver and came back free.  So doubling the graph
+# does not begin to turn the relation on, and the gap to twenty times chance
+# is not being crossed by growth of this kind.
+THE_SIZE_HYPOTHESIS_IS_FLAT = {
+    "measured_at_40_samples": {
+        "G": {"points": 1581, "x_minimum": 3.2, "candidates": 222,
+              "chance": 166.0, "ratio": 1.34, "verified": "0 and 0"},
+        "G u rho_4(G)": {"points": 3161, "x_minimum": 6.3, "candidates": 808,
+                         "chance": 663.9, "ratio": 1.22,
+                         "verified": "0 and 0"},
+        "stack depth 1": {"points": 3050, "x_minimum": 6.1,
+                          "candidates": 731, "chance": 618.1, "ratio": 1.18,
+                          "verified": "0 and 0"},
+    },
+    "the_four_colour_anchor": {"Sa at 4": {"x_minimum": 57, "ratio": 19.63}},
+    "reading": "the ratio does not climb with size; it drifts down, which is "
+               "what noise around 1.0 looks like.  Every candidate at every "
+               "size was verified free.",
+    "still_open": "G* at 13873 points is twenty-eight times the minimum, the "
+                  "only point available inside the gap, and is being measured",
+}
