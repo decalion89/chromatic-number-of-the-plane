@@ -1246,3 +1246,11 @@ def test_the_added_chord_points_are_not_inert():
     assert sum(M["added_degrees"].values()) == M["added"]
     assert M["added_mutual_edges"] > 2000, "and they are linked to each other"
     assert "unchanged at both" in M["control"]
+
+
+def test_level_three_densification_leaves_the_pressure_flat():
+    from hn.forced import LEVEL_THREE_CHANGES_NOTHING as L
+
+    assert L["vertices"] > 6 * 1581 and L["edges"] > 8 * 7877
+    assert L["pressure"] == 2
+    assert "rho <= n - (min colour class) + 1" in L["class_size_bound"]

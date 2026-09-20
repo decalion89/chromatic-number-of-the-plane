@@ -1980,3 +1980,36 @@ MAXIMAL_ENRICHMENT_STILL_TWO = {
                "for k=5 -- unchanged at both, so this is not a five-colour "
                "phenomenon",
 }
+
+
+# -- and one level further out changes nothing either --------------------
+#
+# What local enrichment cannot see is structure beyond the first two levels.
+# The cheapest way out: for every unit-distance pair u, v, the two points
+# completing an equilateral triangle on uv. They exist in de Grey's field
+# because sqrt 3 does, they are one away from both by construction, and they
+# are exactly what a spindle reaches for. Applied to the chord-enriched graph:
+#
+#     +    0 completions    2961 vertices   14624 edges   pressure 2
+#     +  200                3161           15534         pressure 2
+#     + 1000                3961           19921         pressure 2
+#     + 7118                10079          63064         pressure 2
+#
+# Six times the vertices of G and eight times the edges, all of it built
+# around the pivot, and the pressure at five colours does not move.
+#
+# A BOUND THAT COMES FREE. A set is forcing when it meets every colour class,
+# so if every class has at least m vertices, then any set of more than n - m
+# vertices meets them all: rho <= n - m + 1. Sampled classes on G run 267 to
+# 326, which would give rho <= 1315 -- and the 1201 measured NOT forcing sits
+# below that, consistently. The bound is far from 63 either way, but it is the
+# only upper bound on rho available without a hard UNSAT.
+
+LEVEL_THREE_CHANGES_NOTHING = {
+    "completions_added": 7118,
+    "vertices": 10079,
+    "edges": 63064,
+    "pressure": 2,
+    "class_size_bound": "rho <= n - (min colour class) + 1; sampled classes "
+                        "run 267 to 326, giving rho <= 1315",
+}
