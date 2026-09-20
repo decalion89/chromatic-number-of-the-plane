@@ -4278,3 +4278,52 @@ CRITICALITY_IS_WHAT_IS_MISSING = {
                                "usable ranking and not a figure; every union "
                                "that reaches the filter is rebuilt exactly.",
 }
+
+
+# The control: the same scan, one level down, finds de Grey's construction
+# first.
+#
+# A negative is only worth what the method behind it is worth, so the pivot
+# scan was run again on Sa at four colours, unchanged -- every pivot orbit,
+# every rational closable ring about it, the rotation that carries the ring to
+# distance 1, the same sampling and the same bucketed agreement filter.
+#
+# The very first union it looked at:
+#
+#     pivot 0, D = 4: 793 points, 6 cross edges, 211 pairs agree, 28 of them
+#     at a closable distance
+#
+# Pivot 0 is the origin, D = 4 is de Grey's ring, and 793 points with six
+# cross edges is Sa u Sb exactly.  The scan rediscovers his construction
+# unprompted, as the first thing it tries, and finds a couple of dozen other
+# unions that pin pairs besides -- 256 at pivot 7 with D = 3, 209 at pivot 1
+# with D = 1/3, 148 at D = 5/9, and 22 from a union with a SINGLE cross edge.
+#
+# Against which: at five colours, 123 unions of G over 44 distinct biting
+# rotations, exact cross counts to 812, and zero agreeing pairs in all but one
+# (which had one, at a distance that cannot be closed).
+#
+# So the search is not what fails.  The negative at five colours is a
+# statement about five colours.
+THE_CONTROL_FINDS_DE_GREY_FIRST = {
+    "method": "identical: pivot orbits, closable rings, rotation_joining, "
+              "twelve sampled colourings, bucketed agreement",
+    "first_union_tried": {"pivot": "the origin", "ring": 4, "points": 793,
+                          "cross": 6, "agreeing": 211, "closable": 28,
+                          "what_it_is": "Sa u Sb, de Grey's own"},
+    "others_found": {"pivot 7, D=3": 256, "pivot 1, D=1/3": 209,
+                     "pivot 1, D=5/9": 148, "pivot 1, D=16/9": 22},
+    "the_one_cross_edge_case": "D = 16/9 pins 22 pairs with a single cross "
+                               "edge, which is the clearest statement yet "
+                               "that crossing is not the quantity",
+    "at_five_colours": {"unions": 123, "rings_that_bite": 44,
+                        "best_cross": 812, "agreeing": 0},
+    "reading": "the method finds pinned pairs in abundance one level down, "
+               "so the five-colour negative is about five colours and not "
+               "about the search",
+    "caveat": "the four-colour run reports no FORCED count at all -- the SAT "
+              "confirmation was removed from it, because one forced-pair "
+              "proof at four colours runs over ten minutes on these graphs "
+              "and what it would confirm is a published theorem.  Agreement "
+              "is the discovery step and is what the control tests.",
+}
