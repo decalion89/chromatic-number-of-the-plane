@@ -106,8 +106,9 @@ it, so c(p) lies outside c(T) for every T at once. de Grey's G is
 throughout, is **retracted**:
 
 > **G − 1420 is still 5-chromatic.** Vertex 1420 has degree 4; removing it and
-> asking for a 4-colouring with a triangle pinned to 0, 1, 2 comes back UNSAT
-> after 1581 s. A proper subgraph on 1580 vertices is already 5-chromatic.
+> asking for a 4-colouring with a triangle pinned to 0, 1, 2 comes back UNSAT —
+> CaDiCaL in 1581 s, **and Glucose independently in 1900 s on a formula rebuilt
+> from scratch.** A proper subgraph on 1580 vertices is already 5-chromatic.
 
 What was offered as evidence before was *separability*, which is a
 **consequence** of criticality rather than a proof of it — a consequence read
@@ -1277,6 +1278,36 @@ it the conclusion that every union here was dead before it was built.
 Verified where ρ is computable by brute force: the Moser spindle has ρ = 7 at
 four colours, and embedding it in a 13-vertex rotated union keeps ρ at 7 with
 the same witness — never rising.
+
+### Unioning copies drives ρ down to k + 1
+
+Monotonicity gives `ρ(W) ≤ ρ(G)`, but ≤ is not <, and the strategy rests on the
+difference. Measured at four colours, where ρ is cheap — Sa unioned with
+rotated copies of itself through the half-Moser angle, each graph strictly
+containing the last:
+
+| copies | n | m | minimal ρ |
+|--:|--:|--:|--:|
+| 1 | 397 | 1974 | **7** |
+| 2 | 619 | 3324 | **5** |
+| 3 | 829 | 4638 | 5 |
+| 7 | 1645 | 9558 | 5 |
+
+**It drops**, from 7 to 5, and then holds. Five is one above the floor, since
+ρ ≥ k always. So enlarging works — and works immediately: one extra copy
+captures whatever rigidity there is, and further copies add nothing.
+
+The five vertices are the interesting part. On `Sa ∪ rot(Sa)` they are
+`[107, 208, 502, 568, 618]` — five points spanning seven edges in three
+overlapping triangles, and **3-chromatic**: 208 can take 107's colour and 618
+can take 502's. A 3-chromatic set of five points forces all **four** colours,
+because of the 614 vertices around it. The same ambient mechanism as the seven
+on Sa, now sharper: **ρ = k + 1 with a locally unremarkable set.**
+
+> If five colours behave the same way, ρ falls to **6** — an order of magnitude
+> below the 63 a core of three needs. That is the experiment the strategy now
+> turns on, and at five colours it costs one hard UNSAT: assuming every
+> selector is exactly the 4-colourability instance.
 
 ## Corrections to my own claims, kept rather than edited away
 

@@ -1657,3 +1657,46 @@ RHO_IS_MONOTONE = (
     "cross-pair bound that seemed to forbid unions needed the criticality "
     "that is now retracted"
 )
+
+
+# -- unioning copies drives rho down to k + 1 -----------------------------
+#
+# Monotonicity says rho(W) <= rho(G) when G sits inside W, but <= is not <,
+# and the whole strategy rests on the difference. Measured at four colours,
+# where rho is cheap: Sa unioned with rotated copies of itself through the
+# half-Moser angle, each graph strictly containing the last, minimal forcing
+# set computed the same way at every size.
+#
+#     copies      n       m    minimal rho
+#          1    397    1974          7
+#          2    619    3324          5
+#          3    829    4638          5
+#          7   1645    9558          5
+#
+# It DROPS, from 7 to 5, and then holds. Five is one above the floor, since
+# rho >= k always. So enlarging works, and it works immediately -- one extra
+# copy captures whatever rigidity there is, and further copies add nothing.
+#
+# The five vertices are the interesting part. On Sa u rot(Sa) they are
+# [107, 208, 502, 568, 618]: five points spanning seven edges, three
+# overlapping triangles, and 3-CHROMATIC -- 208 can take 107's colour and 618
+# can take 502's. A 3-chromatic set of five points forces all FOUR colours,
+# because of the 614 vertices around it. The same ambient mechanism as the
+# seven on Sa, now sharper: rho = k + 1 with a set that is locally
+# unremarkable.
+#
+# If five colours behave the same way, rho would fall to 6 -- an order of
+# magnitude below the 63 a core of three needs. That is the experiment the
+# whole strategy now turns on, and at five colours it costs one hard UNSAT:
+# assuming every selector is exactly the 4-colourability instance.
+
+UNION_DRIVES_RHO_TO_K_PLUS_ONE = {
+    "k": 4,
+    "trend": {1: 7, 2: 5, 3: 5, 7: 5},
+    "floor": "rho >= k, so 5 is one above it",
+    "witness": [107, 208, 502, 568, 618],
+    "witness_edges": 7,
+    "witness_chi": 3,
+    "reading": "a 3-chromatic set of five points forces all four colours; the "
+               "rigidity is entirely ambient",
+}

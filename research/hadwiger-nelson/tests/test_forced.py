@@ -1153,3 +1153,15 @@ def test_rho_is_monotone_under_adding_structure():
     large = build_graph(big)
     assert large.n > small.n
     assert rho(large, 4, 7) <= rho(small, 4, 7), "rho never rises"
+
+
+def test_unioning_copies_drives_rho_down(): 
+    """The strategic experiment: rho drops and then holds one above the floor."""
+    from hn.forced import UNION_DRIVES_RHO_TO_K_PLUS_ONE as U
+
+    t = U["trend"]
+    assert t[2] < t[1], "enlarging strictly lowers rho, not merely bounds it"
+    assert t[3] == t[2] == t[7], "and then it holds"
+    assert t[7] == U["k"] + 1, "one above the floor rho >= k"
+    assert U["witness_chi"] < U["k"], "the witness is not itself k-chromatic"
+    assert len(U["witness"]) == t[7]
