@@ -894,3 +894,81 @@ def test_multiquadratic_cannot_block_either_way():
     v = edge_vectors(build_graph(build_Sa()))
     assert has_homomorphism(v, 5)[0] is not None
     assert periodic_screen(v, 5)["colourable"] is True
+
+
+def test_the_chain_rotation_has_an_irrational_chord():
+    """What the corollary demands of any 6-chromatic candidate.
+
+    The chain's rotation has a + abar = r = (m^2-6m-3)/(m^2+3) with m a root
+    of T^3 - 9T^2 + 14T + 8, so its chord 2 - r has degree 3 over Q -- unlike
+    every rotation in every construction the barrier argument covers.
+    """
+    cub = (8, 14, -9)              # T^3 - 9T^2 + 14T + 8, constant first
+
+    def mul(x, y):
+        r = [Fraction(0)] * 5
+        for i, a in enumerate(x):
+            if a:
+                for j, b in enumerate(y):
+                    r[i + j] += a * b
+        for k in (4, 3):
+            c = r[k]
+            if c:
+                r[k] = Fraction(0)
+                r[k - 3] -= c * cub[0]
+                r[k - 2] -= c * cub[1]
+                r[k - 1] -= c * cub[2]
+        return tuple(r[:3])
+
+    def inv(x):
+        cols = [mul(x, tuple(Fraction(1 if k == j else 0) for k in range(3)))
+                for j in range(3)]
+        A = [[cols[j][i] for j in range(3)] + [Fraction(1 if i == 0 else 0)]
+             for i in range(3)]
+        for c in range(3):
+            p = next(t for t in range(c, 3) if A[t][c])
+            A[c], A[p] = A[p], A[c]
+            sc = Fraction(1) / A[c][c]
+            A[c] = [v * sc for v in A[c]]
+            for t in range(3):
+                if t != c and A[t][c]:
+                    f = A[t][c]
+                    A[t] = [u - f * v for u, v in zip(A[t], A[c])]
+        return tuple(A[i][3] for i in range(3))
+
+    one = (Fraction(1), Fraction(0), Fraction(0))
+    m = (Fraction(0), Fraction(1), Fraction(0))
+    mm = mul(m, m)
+
+    def add(x, y):
+        return tuple(a + b for a, b in zip(x, y))
+
+    def sub(x, y):
+        return tuple(a - b for a, b in zip(x, y))
+
+    def sc(c, x):
+        return tuple(Fraction(c) * a for a in x)
+
+    r = mul(sub(sub(mm, sc(6, m)), sc(3, one)), inv(add(mm, sc(3, one))))
+    chord = sub(sc(2, one), r)
+    assert chord[1] or chord[2], "the chord must not be rational"
+    # degree 3: 1, chord, chord^2 independent
+    rows, pw = [], one
+    for _ in range(3):
+        rows.append(list(pw))
+        pw = mul(pw, chord)
+    M = [row[:] for row in rows]
+    rank = 0
+    for c in range(3):
+        pr = next((t for t in range(rank, 3) if M[t][c]), None)
+        if pr is None:
+            continue
+        M[rank], M[pr] = M[pr], M[rank]
+        f = M[rank][c]
+        M[rank] = [v / f for v in M[rank]]
+        for t in range(3):
+            if t != rank and M[t][c]:
+                g = M[t][c]
+                M[t] = [u - g * v for u, v in zip(M[t], M[rank])]
+        rank += 1
+    assert rank == 3, "1, chord, chord^2 must be independent"

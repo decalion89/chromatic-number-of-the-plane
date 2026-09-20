@@ -1722,6 +1722,14 @@ RATIONAL_CHORDS_CANNOT_REACH_SIX = {
                      "Q(sqrt3, sqrt5, sqrt7, sqrt11) of the paper",
     "corollary": "a 6-chromatic unit-distance graph must use a rotation whose "
                  "chord is irrational",
+    "the_chain_has_one": {
+        "rotation": "a, with a + abar = r = (m^2-6m-3)/(m^2+3)",
+        "chord": "2 - r = (919 + 222 m - 36 m^2)/397 over "
+                 "T^3 - 9T^2 + 14T + 8",
+        "degree_over_Q": 3,
+        "note": "the first construction here meeting the condition the "
+                "corollary demands",
+    },
 }
 
 

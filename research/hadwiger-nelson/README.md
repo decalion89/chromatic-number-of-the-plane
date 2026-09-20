@@ -2548,9 +2548,14 @@ another at a rational distance — and each buys exactly one square root. No
 amount of ingenuity inside that habit can pass five, because the obstruction
 is arithmetic and is fixed the moment the rotations are chosen.
 
-It also says what the chain construction above is for: `r` of degree 3 means a
-rotation of irrational chord, which is the first thing any candidate has to
-have.
+It also says what the chain construction above is for, and that it delivers.
+The chain's rotation has `a + abar = r = (m^2 - 6m - 3)/(m^2 + 3)` with `m` a
+root of `T^3 - 9T^2 + 14T + 8`, so its chord is
+
+    2 - r = (919 + 222 m - 36 m^2)/397,    of degree 3 over Q.
+
+**Irrational** — the first construction here meeting the condition the
+corollary demands of any 6-chromatic candidate.
 
 ## Honest odds
 
