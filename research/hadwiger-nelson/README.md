@@ -2148,24 +2148,32 @@ swapped pair lies over one of degree `f`. The four that block are exactly the
 four of **residue degree at least 3 over `F`**. So:
 
 > **Theorem.** Let `Gamma` be a unit-distance graph whose edge module is
-> 5-maximal, whose edge vectors are integral at 5, and whose field has 5
-> **unramified**. If some prime of `F = K n R` above 5 has residue degree at
-> most 2, then `Gamma` has a coset 5-colouring, and `chi(Gamma) <= 5`.
+> 5-maximal and whose edge vectors are integral at 5. If **either** `K/F`
+> ramifies at some prime above 5, **or** some prime of `F = K n R` above 5 has
+> residue degree at most 2, then `Gamma` has a coset 5-colouring, and
+> `chi(Gamma) <= 5`.
 >
-> **Corollary.** Every 6-chromatic unit-distance graph has residue degree at
-> least 3 at every prime of its real subfield above 5 — every residue field of
-> `F` at 5 has at least **125 elements**.
+> **Corollary.** Every 6-chromatic unit-distance graph has `K/F` unramified
+> above 5 **and** residue degree at least 3 at every prime of its real
+> subfield above 5 — every residue field of `F` at 5 has at least **125
+> elements**.
 
 The integrality hypothesis is automatic when every prime above 5 is
 `sigma`-fixed: then `2 v_p(u) = v_p(u.sigma(u)) = 0` for every unit step.
 
-The **unramified** hypothesis is real, and is stated because the table above
-enumerates the unramified types only. A field containing `sqrt5` — de Grey's
-does — has 5 ramified and needs its own computation. `Q(zeta_5)` is such a
-case and was computed directly: `|N| = 50`, and 11 of its 156 hyperplanes miss
-it, so it cannot block either. The orbit-wise reduction needs no such
-hypothesis, since `A = O/5` factors over the primes above 5 whether they
-ramify or not.
+**The ramified half has its own one-line proof.** Suppose `K/F` ramifies at a
+prime `p` above 5. Then the residue extension is trivial, so `sigma` — which
+generates `Gal(K/F)` — acts trivially on `O/p`, and a unit step's
+`x.sigma(x) = 1` reduces to `xbar^2 = 1`. So `N mod p` is contained in
+`{+1, -1}`: **two elements**. Compose `A -> O/p` with any `F_5`-functional
+`psi` having `psi(1) != 0` and every element of `N` lands on `+-psi(1)`, never
+on `0`. A coset colouring exists, so no graph over such a `K` blocks.
+
+Ramification of 5 in `F/Q` by itself changes nothing — only the residue degree
+does. Checked by exhaustion in three cases where `K/F` is ramified above 5:
+`Q(zeta_5)` (11 of 156 hyperplanes miss `N`), `Q(zeta_15)` (3 of 97656) and
+`Q(zeta_20)` (4 of 97656). Each was predicted unable to block before it was
+computed.
 
 ### What it rules out
 

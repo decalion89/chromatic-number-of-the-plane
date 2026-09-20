@@ -946,17 +946,35 @@ CRITICAL_CORE_COLLAPSES = {
 # of degree f/2, a swapped pair over one of degree f. So:
 #
 #     THEOREM. Let Gamma be a unit-distance graph whose edge module is
-#     5-maximal, whose edge vectors are integral at 5, and whose field has 5
-#     UNRAMIFIED. If some prime of F = K n R above 5 has residue degree at
-#     most 2, then Gamma has a coset 5-colouring, hence chi(Gamma) <= 5.
+#     5-maximal and whose edge vectors are integral at 5. If EITHER K/F
+#     ramifies at some prime above 5, OR some prime of F = K n R above 5 has
+#     residue degree at most 2, then Gamma has a coset 5-colouring, hence
+#     chi(Gamma) <= 5.
 #
-# The unramified hypothesis is real and is stated because the enumeration
-# above covers the unramified types only. A field containing sqrt5 -- de
-# Grey's does -- has 5 ramified and needs its own computation. Q(zeta_5) is
-# such a case and was computed directly: |N| = 50, 11 of its 156 hyperplanes
-# miss it, so it cannot block either. The orbit-wise reduction itself does not
-# need the hypothesis, since A = O/5 factors over the primes above 5 whether
-# or not they ramify.
+#     COROLLARY. A 6-chromatic unit-distance graph has K/F unramified above 5
+#     AND residue degree at least 3 at every prime of F above 5.
+#
+# THE HYPOTHESIS CAN BE REMOVED, and replaced by a second condition that is
+# itself necessary. Suppose K/F RAMIFIES at a prime p above 5. Then the
+# residue extension k(p)/k(p n F) is trivial, so sigma -- which generates
+# Gal(K/F) -- acts trivially on O/p. For a unit step, x.sigma(x) = 1 reduces
+# to xbar^2 = 1, hence
+#
+#     N mod p is contained in {+1, -1},
+#
+# two elements. Take any F_5-functional psi on the residue field with
+# psi(1) != 0 and compose it with A -> O/p: the result sends every element of
+# N to +-psi(1), never to 0. A coset colouring exists. So
+#
+#     IF K/F RAMIFIES ABOVE 5, NO GRAPH OVER K BLOCKS.
+#
+# When K/F is unramified above 5 the residue extension is trivial or degree 2
+# and the analysis is exactly the orbit classification above, at the residue
+# degree f of p over F. Ramification of 5 in F/Q by itself changes nothing --
+# only the residue degree does. Verified by exhaustion in three cases where 5
+# ramifies in K: Q(zeta_5) (11 of 156 hyperplanes miss N), Q(zeta_15) (3 of
+# 97656) and Q(zeta_20) (4 of 97656). In each, K/F is ramified above 5, so
+# each was predicted unable to block before it was computed.
 #
 #     COROLLARY. Every 6-chromatic unit-distance graph has residue degree at
 #     least 3 at every prime of F above 5 -- every residue field of F at 5 has
@@ -986,12 +1004,17 @@ CRITICAL_CORE_COLLAPSES = {
 RESIDUE_DEGREE_THREE = {
     "theorem": "if some prime of F = K n R above 5 has residue degree <= 2, "
                "the graph has a coset 5-colouring, so chi <= 5",
-    "corollary": "every 6-chromatic unit-distance graph has residue degree "
-                 ">= 3 at every prime of its real subfield above 5",
-    "hypotheses": ["5 is unramified in K -- the orbit types enumerated are "
-                   "the unramified ones, so a field containing sqrt5 needs "
-                   "its own computation; Q(zeta_5) was done and cannot block",
-                   "the edge module is 5-maximal",
+    "corollary": "every 6-chromatic unit-distance graph has K/F unramified "
+                 "above 5 and residue degree >= 3 at every prime of its real "
+                 "subfield above 5",
+    "ramified_case": "if K/F ramifies above 5 the residue extension is "
+                     "trivial, so sigma acts trivially there and N mod p "
+                     "collapses to {+1,-1}; a functional through the residue "
+                     "field misses it, so no graph over K blocks",
+    "verified_ramified": {"Q(zeta_5)": "11 of 156 hyperplanes miss N",
+                          "Q(zeta_15)": "3 of 97656",
+                          "Q(zeta_20)": "4 of 97656"},
+    "hypotheses": ["the edge module is 5-maximal",
                    "the edge vectors are integral at 5, automatic when every "
                    "prime above 5 is fixed by complex conjugation"],
     "orbit_reduction": "N factors along the sigma-orbits, so a functional "
