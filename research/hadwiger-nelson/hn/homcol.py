@@ -1402,5 +1402,49 @@ BLOCKING_THAT_CARRIES_WEIGHT = {
     "graph": {"points": 141, "edges": 236, "chi": 4, "directions": 152,
               "blocked": True},
     "load_bearing": "one chain, no copies and no pendants: every edge is a "
-                    "rhombus edge and every rhombus carries a forcing link",
+                    "rhombus edge",
+    "but_the_core_collapses": {"points": 10, "edges": 16, "directions": 20,
+                               "rank": 6, "blocks": False},
+}
+
+
+# -- retraction: "every rhombus carries a forcing link" was wrong -----------
+#
+# Predicted, then measured, and the measurement says no. The 4-critical core
+# of the 141-point graph is
+#
+#     10 points, 16 edges, 20 directions, rank 6 -- and it does NOT block,
+#
+# which is a three-rhombus chain: the profile the k = 3 chain had before any
+# growth. So the long chain is not minimal at all, and the blocking is still
+# not load bearing in the strict sense. The claim is withdrawn.
+#
+# The reason is visible once looked for. Every partial sum
+# B_j = (1 + zeta_6)(w_1 + .. + w_j) is forced to the origin's colour, so if
+# ANY two of them land at distance 1, that pair already contradicts a
+# 3-colouring and a shorter chain closes inside the long one. With 47 steps
+# there are over a thousand such pairs and some of them hit. Greedy deletion
+# then keeps the short one and discards everything else -- the same collapse
+# the bouquet showed, arriving by a different route.
+#
+# The repair is a condition to impose during growth rather than a hope: accept
+# a replacement only when no pair (B_i, B_j) other than the closing (B_0, B_k)
+# sits at distance 1. Measured with that guard in place, the chain grows
+# through 5, 7, 9 steps at ranks 8, 10, 12 with no premature closing.
+#
+# Recorded because a prediction about a critical core has now failed twice
+# here, in two different constructions. They are not worth making.
+
+CORE_COLLAPSE_WAS_PREDICTED_WRONG = {
+    "claimed": "every rhombus of the chain carries a forcing link, so the "
+               "4-critical core is the whole chain",
+    "measured": {"points": 10, "edges": 16, "directions": 20, "rank": 6,
+                 "blocks": False},
+    "why": "every partial sum B_j is forced to the origin's colour, so any "
+           "two of them at distance 1 close a shorter chain inside the long "
+           "one",
+    "repair": "reject a replacement unless no pair (B_i, B_j) other than the "
+              "closing pair is at distance 1",
+    "lesson": "a prediction about a critical core has now failed twice here, "
+              "in two different constructions",
 }

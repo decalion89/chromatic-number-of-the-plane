@@ -2398,9 +2398,34 @@ survives — asserted exactly at every round — so the closing edge survives an
 | 367 points, `chi = 4` | yes | every edge a spindle edge, but a hitting set for all 145 spindles has size **one**: a bouquet tied at a knot |
 | **141 points, `chi = 4`** | **yes** | **one chain** — no copies to discard, no pendants to strip |
 
-Every edge here is an edge of a rhombus, and every rhombus carries one link of
-the forcing that walks the origin's colour out to the far end, where the
-closing edge contradicts it.
+Every edge here is an edge of a rhombus. But the next sentence, that every
+rhombus carries one link of the forcing, was a prediction — and it is wrong.
+
+### Retraction: the core collapses here too
+
+The 4-critical core of the 141-point graph is
+
+    10 points, 16 edges, 20 directions, rank 6 — and it does NOT block,
+
+which is a three-rhombus chain: the profile the `k = 3` chain had before any
+growth. The long chain is not minimal, and the blocking is still not load
+bearing in the strict sense. The claim is withdrawn.
+
+The reason is visible once looked for. Every partial sum
+`B_j = (1 + zeta_6)(w_1 + .. + w_j)` is forced to the origin's colour, so if
+**any** two of them land at distance 1, that pair already contradicts a
+3-colouring and a shorter chain closes inside the long one. With 47 steps
+there are over a thousand such pairs, and some hit. Greedy deletion keeps the
+short one and discards the rest — the same collapse the bouquet showed,
+reached by a different route.
+
+The repair is a condition imposed during growth rather than hoped for: accept
+a replacement only when no pair `(B_i, B_j)` other than the closing
+`(B_0, B_k)` sits at distance 1. With that guard the chain grows through 5, 7,
+9 steps at ranks 8, 10, 12 with no premature closing.
+
+Recorded because a prediction about a critical core has now failed twice here,
+in two different constructions. They are not worth making.
 
 ## Honest odds
 
