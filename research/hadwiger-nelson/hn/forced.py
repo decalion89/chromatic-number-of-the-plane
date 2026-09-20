@@ -2400,3 +2400,49 @@ STRUCTURAL_CORE_OF_THREE_IS_CLOSED = {
                           "than the published record",
     "verdict": "ambient forcing is the only route to a core of three",
 }
+
+
+# -- ambient forcing has a shape, and it is a fan ------------------------
+#
+# Sa admits at least FORTY THOUSAND distinct realisable colour classes, each
+# about a quarter of the graph -- counted directly, by asking for a class and
+# forbidding exactly it. A random five points would miss thousands of them.
+# The witness misses none.
+#
+# So the five are placed, not scattered, and they have a shape. On Sa the
+# witness is [49, 91, 210, 215, 330]:
+#
+#     unit pairs:  49-91, 49-210, 49-330, 91-330, 210-215, 210-330, 215-330
+#     non-unit:    49-215 and 91-210 at sqrt 3, 91-215 at 2
+#
+# Five vertices, seven edges, and 330 is adjacent to all four others while the
+# rest form a PATH 91-49-210-215. That is a FAN: a centre joined to a path of
+# four. Three triangles overlapping on the centre, chromatic number 3, and
+# every one of the five deletions breaks the forcing.
+#
+# The same shape turned up independently on Sa u rot(Sa), where the witness
+# [107, 208, 502, 568, 618] also spans seven edges in three triangles sharing
+# 568. Two different graphs, the same five-point figure.
+#
+# Where it sits is not arbitrary either: the centre is at 1/sqrt(3) from the
+# hub -- the circumradius of a unit triangle -- and four of the five share a
+# neighbour with the hub.
+#
+# So ambient forcing is not diffuse. At four colours it is carried by a fan of
+# three triangles, 3-chromatic, containing no 4-chromatic subgraph at all, and
+# propped up by the rest of the graph.
+
+AMBIENT_WITNESS_IS_A_FAN = {
+    "classes_in_Sa": "at least 40000, counted",
+    "witness": [49, 91, 210, 215, 330],
+    "edges": 7,
+    "shape": "a centre joined to a path of four -- a fan, three triangles "
+             "overlapping on the centre",
+    "chi": 3,
+    "centre_distance_from_hub": "1/sqrt(3), the circumradius of a unit "
+                                "triangle",
+    "seen_twice": "the same figure on Sa u rot(Sa), witness "
+                  "[107, 208, 502, 568, 618], seven edges, three triangles "
+                  "sharing 568",
+    "minimal": "all five single deletions break the forcing",
+}

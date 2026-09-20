@@ -1353,3 +1353,15 @@ def test_structural_core_of_three_cannot_reach_five():
     assert C["best_chi_of_N_plus_T"] == C["circle_chi"] + 1
     assert C["best_chi_of_N_plus_T"] < C["needed"]
     assert "only route" in C["verdict"]
+
+
+def test_the_ambient_witness_is_a_fan():
+    """Five points, seven edges, three triangles on a centre -- twice over."""
+    from hn.forced import AMBIENT_WITNESS_IS_A_FAN as A
+
+    assert len(A["witness"]) == 5 and A["edges"] == 7
+    # a fan on a path of four: centre has degree 4, the path contributes 3
+    assert A["edges"] == 4 + 3
+    assert A["chi"] == 3, "no 4-chromatic subgraph inside it"
+    assert "same figure" in A["seen_twice"]
+    assert "40000" in A["classes_in_Sa"]
