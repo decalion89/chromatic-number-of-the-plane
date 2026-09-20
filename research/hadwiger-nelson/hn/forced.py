@@ -984,11 +984,16 @@ def core_from_forcing_set(rel: "ColourRelations", p: int,
 # are killable, and the forcing set comes back as all five of one side plus
 # both shared vertices, rho = 7 against the bound's 5.
 #
-# For G union (G + t), |A| = |B| = 1357. So rho >= 1357 there, and the
-# measured "> 400" was not the loop running out of patience: no stack of
-# copies of a critical graph can ever have a small forcing set, hence never a
-# small core, hence never a blockable one. Every union in this package was
-# dead before it was built.
+# WITHDRAWN AS APPLIED TO G. The hypothesis asks that W - a - b be
+# (k-1)-colourable for every non-adjacent cross pair, which for copies of de
+# Grey's G means G - a must be 4-colourable -- exactly the vertex-criticality
+# that is retracted above, since G - 1420 is still 5-chromatic. So the bound
+# rho >= 1357 for G union (G + t) does not follow, and the conclusion that
+# "every union in this package was dead before it was built" is withdrawn with
+# it. The theorem stands for genuinely critical A and B; G is not one.
+#
+# Monotonicity points the other way in any case: rho(W) <= rho(G) whenever G
+# sits inside W, so unions can only lower it.
 
 def cross_pair_bound(graph, k: int, A: Sequence[int], B: Sequence[int],
                      sample: int = 8) -> dict:
@@ -1031,9 +1036,9 @@ def cross_pair_bound(graph, k: int, A: Sequence[int], B: Sequence[int],
 #
 # So rho can only be small where chi(W) = k EXACTLY and W is not
 # vertex-critical. The three-hexagon gadget has both at four colours -- rho 9,
-# zero of twelve sampled vertices critical -- and nothing here has both at
-# five: G is critical, the gadget is 4-chromatic, and the unions fall to the
-# cross-pair theorem.
+# zero of twelve sampled vertices critical. At five colours the reading has
+# changed: G is NOT critical after all, so it meets both conditions too, and
+# the unions no longer fall to the cross-pair theorem.
 #
 # Adding copies makes it worse, not better. With three pairwise-overlapping
 # copies a forcing set must hit every cross TRIPLE, so it is a vertex cover of
@@ -1622,3 +1627,33 @@ DEGREY_G_IS_NOT_VERTEX_CRITICAL = {
     "verification": "two solvers, formulas rebuilt independently; drat-trim "
                     "is not installed here so the proof is unchecked",
 }
+
+
+# -- rho only goes DOWN when structure is added --------------------------
+#
+# If G sits inside W, every proper k-colouring of W restricts to one of G, so
+# a set forcing in G forces in W:
+#
+#     rho(W) <= rho(G)   whenever G is contained in W.
+#
+# Which reverses the strategy this package had been following. The way to a
+# small rho is a BIGGER graph, not a smaller one.
+#
+# That was hidden while the cross-pair theorem was thought to apply to unions
+# of copies of de Grey's G. The theorem is correct, but its hypothesis asks
+# that W - a - b be (k-1)-colourable for every non-adjacent cross pair, which
+# for copies of G means G - a must be 4-colourable -- exactly the
+# vertex-criticality that is now retracted. G - 1420 is 5-chromatic, so the
+# hypothesis fails and the bound rho >= 1357 for G u (G + t) is withdrawn.
+# Unions are back on the table, and monotonicity says they can only help.
+#
+# Verified where rho can be computed exactly by brute force: the Moser spindle
+# has rho = 7 at four colours, and embedding it in a 13-vertex graph built by
+# rotating it keeps rho at 7 with the same witness -- never rising.
+
+RHO_IS_MONOTONE = (
+    "rho(W) <= rho(G) whenever G sits inside W, since colourings of W "
+    "restrict; so the route to a small rho is a larger graph, and the "
+    "cross-pair bound that seemed to forbid unions needed the criticality "
+    "that is now retracted"
+)

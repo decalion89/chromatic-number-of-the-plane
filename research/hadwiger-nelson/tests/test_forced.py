@@ -1103,3 +1103,53 @@ def test_degrey_g_is_not_vertex_critical():
     # the measurements that rested on the claim are now unexplained, not wrong
     assert len(D["now_unexplained"]) == 4
     assert "does not apply to G" in D["unaffected"]
+
+
+def test_rho_is_monotone_under_adding_structure():
+    """Colourings of W restrict to G, so a forcing set of G forces in W."""
+    import itertools
+    from fractions import Fraction
+
+    from hn.field import Field
+    from hn.geometry import Point, Rotation
+    from hn.graph import build_graph
+    from pysat.solvers import Solver
+
+    fld = Field((3, 11))
+    h = fld.rational(Fraction(1, 2))
+    one = Point(fld.one(), fld.zero())
+    rh = [Point(fld.zero(), fld.zero()), one, Point(h, fld.sqrt(3) * h),
+          one + Point(h, fld.sqrt(3) * h)]
+    spin = Rotation(fld.rational(Fraction(5, 6)),
+                    fld.sqrt(11) * fld.rational(Fraction(1, 6)))
+    pts = rh + [spin(p) for p in rh[1:]]
+
+    def rho(g, k, cap):
+        nv = g.n * k
+
+        def x(v, c):
+            return 1 + v * k + c
+
+        base = [[x(v, c) for c in range(k)] for v in range(g.n)]
+        for a, b in g.edges():
+            for c in range(k):
+                base.append([-x(a, c), -x(b, c)])
+        for size in range(1, cap + 1):
+            for S in itertools.combinations(range(g.n), size):
+                if all(not Solver(name="g4", bootstrap_with=base
+                                  + [[-x(v, c)] for v in S]).solve()
+                       for c in range(k)):
+                    return size
+        return None
+
+    small = build_graph(pts)
+    rot = Rotation(fld.sqrt(33) * fld.rational(Fraction(1, 6)),
+                   fld.sqrt(3) * fld.rational(Fraction(1, 6)))
+    big = list(pts)
+    for p in pts:
+        q = rot(p)
+        if q not in big:
+            big.append(q)
+    large = build_graph(big)
+    assert large.n > small.n
+    assert rho(large, 4, 7) <= rho(small, 4, 7), "rho never rises"

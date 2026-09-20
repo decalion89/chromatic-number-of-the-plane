@@ -1255,6 +1255,29 @@ does not — consistent with G being vertex-critical after all, and with the
 published smaller 5-chromatic graphs being separate constructions rather than
 subgraphs of this one.
 
+### ρ only goes down when structure is added
+
+If G sits inside W, every proper k-colouring of W restricts to one of G, so a
+set forcing in G forces in W:
+
+```
+rho(W) <= rho(G)   whenever G is contained in W.
+```
+
+**That reverses the strategy.** The way to a small ρ is a *bigger* graph, not a
+smaller one.
+
+It was hidden while the cross-pair theorem was thought to apply to unions of
+copies of G. The theorem is correct, but its hypothesis asks that `W − a − b`
+be (k−1)-colourable for every non-adjacent cross pair — which for copies of G
+means `G − a` must be 4-colourable, exactly the vertex-criticality now
+retracted. So the bound `ρ ≥ 1357` for `G ∪ (G + t)` is **withdrawn**, and with
+it the conclusion that every union here was dead before it was built.
+
+Verified where ρ is computable by brute force: the Moser spindle has ρ = 7 at
+four colours, and embedding it in a 13-vertex rotated union keeps ρ at 7 with
+the same witness — never rising.
+
 ## Corrections to my own claims, kept rather than edited away
 
 - **"Pressure > 2 at k = 5 *requires* the confined set to be 4-chromatic."**
@@ -1272,6 +1295,9 @@ subgraphs of this one.
 - **A hexagon family with `theta` alongside `theta/2`.** `CH² = CT` exactly, so
   it produced a coincident hexagon — the same mistake that caused a false
   positive earlier — and the guard skipped it silently. It now says so.
+- **"Every union in this package was dead before it was built."** The
+  cross-pair bound needs `G − a` to be 4-colourable, which is the retracted
+  criticality. Withdrawn — and monotonicity says unions can only lower ρ.
 - **"de Grey's G is 5-vertex-critical."** **False**, and it was load-bearing:
   G − 1420 is still 5-chromatic (UNSAT, 1581 s). Separability was measured and
   read backwards — it is a consequence of criticality, not a proof. Every
