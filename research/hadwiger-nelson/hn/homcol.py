@@ -5036,3 +5036,58 @@ BOTH_ESCAPES_FROM_THE_LADDER_FAIL = {
                "colourable graph gives an ordinary one: the rigidity does not "
                "survive the step.",
 }
+
+
+# The mechanism, confirmed: correlation tracks gadget density.
+#
+# Three families, nine objects, one measurement each -- spindles per point
+# against the correlation ratio at four colours:
+#
+#     triangular lattice          0.000    2.2
+#     lattice + 1 hinge           0.000    2.0
+#     lattice + 2 hinges          0.007    1.5
+#     lattice + 4 hinges          0.004    1.2
+#     Sa thinned to 0.4           0.289    1.3
+#     Sa thinned to 0.6           0.534    1.7
+#     Sa thinned to 0.7           0.705    2.4
+#     Sa thinned to 0.8           0.984    5.0
+#     Sa                          1.451   24.0
+#     Y                           1.456   25.4
+#
+# Monotone from end to end, across a lattice, a spindled lattice and thinned
+# copies of de Grey's core -- three constructions with nothing in common but
+# the count.  The one outlier in the thinning series, at 0.9, was the sampler
+# rather than the graph.
+#
+# So the claim that Sa's correlation comes from its 576 Moser spindles is not
+# a story fitted to two points.  It is a relation measured over two orders of
+# magnitude in density and one in correlation.
+#
+# Worth noting on the way past: lattice + 1 hinge is 4-chromatic and contains
+# NO Moser spindle at all.  Being 4-chromatic does not require one, which is
+# why the count and the chromatic number are different questions.
+CORRELATION_TRACKS_GADGET_DENSITY = {
+    "table": [("triangular lattice", 0.000, 2.2),
+              ("lattice + 1 hinge", 0.000, 2.0),
+              ("lattice + 2 hinges", 0.007, 1.5),
+              ("lattice + 4 hinges", 0.004, 1.2),
+              ("Sa thinned to 0.4", 0.289, 1.3),
+              ("Sa thinned to 0.6", 0.534, 1.7),
+              ("Sa thinned to 0.7", 0.705, 2.4),
+              ("Sa thinned to 0.8", 0.984, 5.0),
+              ("Sa", 1.451, 24.0),
+              ("Y", 1.456, 25.4)],
+    "columns": ("object", "Moser spindles per point", "ratio at 4 colours"),
+    "families": "a lattice, a spindled lattice, and thinned copies of de "
+                "Grey's core -- three constructions sharing nothing but the "
+                "count",
+    "the_one_outlier": "Sa thinned to 0.9, which was the sampler and not the "
+                       "graph; see THE_DILUTION_ANOMALY",
+    "an_aside": "lattice + 1 hinge is 4-chromatic and contains no Moser "
+                "spindle at all, so the count and the chromatic number are "
+                "different questions",
+    "why_it_matters": "the five-colour unit is a ~500-vertex 5-critical "
+                      "subgraph, and no construction here reaches a density "
+                      "of those above 0.002 per point -- three orders below "
+                      "where four colours starts to bite",
+}

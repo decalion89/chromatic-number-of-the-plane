@@ -3858,6 +3858,46 @@ correlation at `k = χ` falls 11 014 → 24 → 1.1; and with the relation, whic
 at five colours is empty. Four independent measurements pointing at the same
 wall.
 
+## The mechanism, confirmed — and three escapes that fail
+
+Three families, ten objects, spindles per point against correlation at four
+colours:
+
+| object | spindles/point | ratio at 4 |
+|---|---|---|
+| triangular lattice | 0.000 | 2.2 |
+| lattice + 1 hinge | 0.000 | 2.0 |
+| lattice + 4 hinges | 0.004 | 1.2 |
+| `Sa` thinned to 0.4 | 0.289 | 1.3 |
+| `Sa` thinned to 0.6 | 0.534 | 1.7 |
+| `Sa` thinned to 0.7 | 0.705 | 2.4 |
+| `Sa` thinned to 0.8 | 0.984 | 5.0 |
+| **`Sa`** | **1.451** | **24.0** |
+| `Y` | 1.456 | 25.4 |
+
+Monotone end to end, across a lattice, a spindled lattice and thinned copies
+of de Grey's core — three constructions sharing nothing but the count. So the
+claim that `Sa`'s correlation comes from its 576 Moser spindles is a relation
+measured over two orders of magnitude, not a story fitted to two points.
+
+(An aside worth keeping: **`lattice + 1 hinge` is 4-chromatic and contains no
+Moser spindle at all.** The count and the chromatic number are different
+questions.)
+
+Three ways out of the ladder were tried, and all three fail:
+
+- **Size.** `G*` at 28× the minimum, sixty samples over 96 million pairs:
+  ratio **1.14**, against `G`'s 1.10 at 3×. The five-colour size curve is flat
+  throughout — 1.10, 1.18, 1.22, 1.14.
+- **Base.** The lattice sits a thousand times above `Sa` in correlation, and
+  its unique 3-colouring makes `(0,0)`,`(3,0)` a forced pair at distance 3
+  with `√35 = √5·√7` in the field. Spindling it works perfectly — 721 points,
+  not 3-colourable — and inherits **nothing**: ratio 1.6 at four colours,
+  *below* `Sa`'s 24.
+- **Hinges.** Stacking spindles on the lattice lowers it: 2.0 → 1.5 → 1.4 →
+  1.2, because the added copies carry no gadgets of their own (0.004 per
+  point against `Sa`'s 1.451).
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

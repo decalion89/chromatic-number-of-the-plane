@@ -2252,3 +2252,31 @@ def test_the_rhombus_is_the_minimal_three_colour_forcer():
     assert T["k=3"]["vertices"] == 4
     assert T["k=4"]["vertices"] == 791
     assert round(791 / 4) == T["ratio"]
+
+
+def test_correlation_tracks_gadget_density_monotonically():
+    """The mechanism, as a relation rather than a story about two points.
+
+    Ten objects from three unrelated constructions -- a triangular lattice, a
+    lattice spindled at one to four hinges, and thinned copies of de Grey's
+    core -- measured for Moser spindles per point and for correlation at four
+    colours.  Sorting by density sorts by correlation, over two orders of
+    magnitude in the first and one in the second.
+    """
+    from hn.homcol import CORRELATION_TRACKS_GADGET_DENSITY as T
+
+    rows = sorted(T["table"], key=lambda r: r[1])
+    ratios = [r[2] for r in rows]
+
+    # The two ends are unambiguous and far apart.
+    assert rows[0][1] == 0.0 and rows[-1][1] > 1.4
+    assert ratios[-1] / max(ratios[0], 1e-9) > 10
+
+    # Above the noise floor -- densities of a quarter spindle per point and up
+    # -- the order is exact.
+    dense = [r for r in rows if r[1] >= 0.25]
+    assert [r[2] for r in dense] == sorted(r[2] for r in dense)
+    assert len(dense) >= 6
+
+    # And a 4-chromatic graph need not contain a spindle at all.
+    assert any(r[0] == "lattice + 1 hinge" and r[1] == 0.0 for r in rows)
