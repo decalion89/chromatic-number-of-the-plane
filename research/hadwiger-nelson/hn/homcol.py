@@ -1870,6 +1870,44 @@ NECKLACE_FAILS_THE_STRONGER_GATE = {
 }
 
 
+# -- what the n = 8 failure actually was -----------------------------------
+#
+# Diagnosed rather than left as a curiosity. The failing homomorphism sends
+# the directions onto S = {1,2,3,5,6,7} -- everything but 4 -- and
+# Cay(Z/8, S) has chromatic number 4, because {0,4},{1,5},{2,6},{3,7} are
+# independent pairs. Missing any element other than 4 leaves chi = 8.
+#
+# And {0, 4} is a SUBGROUP of Z/8. Avoiding it is the same as a homomorphism
+# to Z/8 / {0,4} = Z/4 that is nonzero on every direction -- a coset colouring
+# with FOUR colours. So the n = 8 result was not a subtlety at all: it said
+# the necklace is 4-colourable, which it is.
+#
+# That sharpens the screen and makes it cheaper at the same time. A coset
+# colouring mod n gives chi <= n, so
+#
+#     A 6-CHROMATIC UNIT-DISTANCE GRAPH MUST BLOCK AT n = 2, 3, 4 AND 5.
+#
+# Four SAT calls, no Cayley chromatic numbers. Measured:
+#
+#     necklace, 138 directions       blocks at 2, 3, 5; NOT at 4
+#     denominator-29, 300 directions blocks at 2, 3, 4 and 5
+#     the field's 450 directions     blocks at 2, 3, 4 and 5
+#
+# So the necklace's gap is not forced -- the field has the material, and a
+# longer one can reach it. That is what the growth now targets.
+
+BLOCK_AT_EVERY_MODULUS_TO_FIVE = {
+    "n8_was": "S = {1,2,3,5,6,7}, missing only 4; {0,4} is a subgroup of Z/8, "
+              "so avoiding it is a coset colouring with four colours",
+    "sharpened": "a 6-chromatic unit-distance graph must block at n = 2, 3, 4 "
+                 "and 5, since a coset colouring mod n gives chi <= n",
+    "measured": {"necklace": "blocks at 2, 3, 5 but not 4",
+                 "denominator_29": "blocks at 2, 3, 4, 5",
+                 "field_orbits": "blocks at 2, 3, 4, 5"},
+    "reading": "the necklace's gap is not forced; the field has the material",
+}
+
+
 # -- a field with de Grey's spindle AND the residue degree that blocks ------
 #
 # A distance d spindles iff K holds a rotation with |1 - rho|^2 = 1/d^2. With

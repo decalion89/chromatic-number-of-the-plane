@@ -2627,12 +2627,33 @@ So colouring `v` by that colouring of `phi(v - v0)` is a proper 5-colouring of
 *any* graph over those directions. **The necklace can never be the substrate
 of a 6-chromatic graph**, however blocked and however critical it is.
 
-Which is the point of having built the stronger screen. Blocking at 5 is
-necessary and not sufficient, and this is the first case where the difference
-is visible rather than theoretical — the denominator-29 directions survive
-every modulus from 5 to 20; the necklace's do not survive 8. It also turns
-into a design rule: grow a necklace so that **no** modulus admits a periodic
-5-colouring, which is a stronger and equally checkable target.
+### What that failure actually was
+
+Diagnosed rather than left as a curiosity. The failing homomorphism sends the
+directions onto `S = {1,2,3,5,6,7}` — everything but **4** — and
+`Cay(Z/8, S)` has chromatic number 4, because `{0,4},{1,5},{2,6},{3,7}` are
+independent pairs. Missing any element other than 4 leaves `chi = 8`.
+
+And `{0, 4}` is a **subgroup** of `Z/8`. Avoiding it is the same as a
+homomorphism to `Z/8 / {0,4} = Z/4` nonzero on every direction — a coset
+colouring with **four** colours. So the `n = 8` result was no subtlety at all:
+it said the necklace is 4-colourable, which it is.
+
+That sharpens the screen and makes it *cheaper*. A coset colouring mod `n`
+gives `chi <= n`, so
+
+> **A 6-chromatic unit-distance graph must block at `n = 2, 3, 4` and `5`.**
+
+Four SAT calls, no Cayley chromatic numbers. Measured:
+
+| direction set | 2 | 3 | 4 | 5 |
+|---|---|---|---|---|
+| necklace, 138 | blocks | blocks | **coset colouring** | blocks |
+| denominator-29, 300 | blocks | blocks | blocks | blocks |
+| the field's 450 | blocks | blocks | blocks | blocks |
+
+So the necklace's gap is **not forced** — the field has the material, and a
+longer necklace can reach it. That is what the growth now targets.
 
 ## A field with de Grey's spindle *and* the arithmetic a sixth colour needs
 
