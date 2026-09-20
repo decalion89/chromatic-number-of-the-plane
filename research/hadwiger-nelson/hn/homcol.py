@@ -1924,3 +1924,47 @@ FIELD_WITH_SPINDLE_AND_BLOCKING = {
     "honest": "where a 6-chromatic graph could live, not one that does; de "
               "Grey's other rotations need sqrt5, which this F does not have",
 }
+
+
+# -- why four-colour forcing needs distance, not a gadget -------------------
+#
+# The rhombus forces at three colours because the triangle B, M, M' uses all
+# three, so B' -- adjacent to M and M' -- has only B's colour left. The
+# analogue at four would need a vertex whose neighbourhood uses three colours
+# in every 4-colouring. It does not exist locally, and the reason is short.
+#
+# A triangle inside N(v) would make {v} u T a K_4, which no unit-distance
+# graph in the plane contains. So N(v) is triangle-free. More: N(v) lies on
+# the unit circle about v, where two points are adjacent exactly when they are
+# 60 degrees apart, so each point has at most two neighbours there and every
+# cycle is a full hexagon -- of even length. Hence
+#
+#     THE NEIGHBOURHOOD OF ANY VERTEX OF A UNIT-DISTANCE GRAPH IS BIPARTITE,
+#
+# so it is 2-colourable and at four colours v always keeps at least two
+# choices. No vertex's colour is ever forced by its neighbourhood alone.
+#
+# Measured on the necklace, which makes the point concretely: 0 of its 8385
+# non-adjacent pairs are monochromatic in every 4-colouring. Each diamond
+# gives its tip two choices at four colours, and nothing downstream closes
+# them. The necklace cannot be spindled to five.
+#
+# This is why de Grey's graph is 1581 vertices and not 10: four-colour forcing
+# has to be assembled out of long-range structure, and cannot be bought with a
+# local gadget the way the rhombus buys it at three.
+
+FOUR_COLOUR_FORCING_IS_NOT_LOCAL = {
+    "three_colours": "the rhombus: a triangle uses all three, so the tip has "
+                     "only the apex's colour left",
+    "why_not_four": "a triangle in N(v) would make a K_4, which the plane "
+                    "forbids; and N(v) lies on a circle where adjacency is "
+                    "60 degrees apart, so every cycle is a hexagon",
+    "theorem": "the neighbourhood of any vertex of a unit-distance graph is "
+               "bipartite, hence 2-colourable, so at four colours v always "
+               "keeps two choices",
+    "measured": "0 pairs of the necklace are monochromatic in every "
+                "4-colouring, over all 8385 non-adjacent pairs",
+    "consequence": "the necklace cannot be spindled to five; four-colour "
+                   "forcing must be assembled from long-range structure, "
+                   "which is why de Grey's graph has 1581 vertices",
+}

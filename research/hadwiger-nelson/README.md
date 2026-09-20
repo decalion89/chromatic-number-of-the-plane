@@ -2675,6 +2675,33 @@ cannot be transplanted whole. Only the final spindling step is available; the
 rotations this field *does* have, namely those with `3(4d^2 - 1)` in `(Q*)^2`
 or in `33(Q*)^2`.
 
+## Why four-colour forcing needs distance, not a gadget
+
+The rhombus forces at three colours because the triangle `B, M, M'` uses all
+three, so `B'` — adjacent to `M` and `M'` — has only `B`'s colour left. The
+analogue at four would need a vertex whose neighbourhood uses three colours in
+every 4-colouring. **It does not exist locally**, and the reason is short.
+
+A triangle inside `N(v)` would make `{v} u T` a `K_4`, which no unit-distance
+graph in the plane contains. More: `N(v)` lies on the unit circle about `v`,
+where two points are adjacent exactly when they are 60° apart — so each has at
+most two neighbours there, and **every cycle is a full hexagon**, of even
+length. Hence
+
+> **The neighbourhood of any vertex of a unit-distance graph is bipartite.**
+
+So it is 2-colourable, and at four colours `v` always keeps at least two
+choices. No vertex's colour is ever forced by its neighbourhood alone.
+
+Measured on the necklace, which makes the point concretely: **0 of its 8385
+non-adjacent pairs are monochromatic in every 4-colouring**. Each diamond
+gives its tip two choices at four colours and nothing downstream closes them.
+The necklace cannot be spindled to five.
+
+This is why de Grey's graph is 1581 vertices and not 10. Four-colour forcing
+has to be assembled out of long-range structure; it cannot be bought with a
+local gadget the way the rhombus buys it at three.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

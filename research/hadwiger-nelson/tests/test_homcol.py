@@ -1061,3 +1061,40 @@ def test_field_with_both_spindle_and_blocking():
     # 5 inert in Q(sqrt33): 33 = 3 mod 5 is a non-residue
     assert pow(3, 2, 5) != 3 and 3 not in {pow(k, 2, 5) for k in range(5)}
     # so the residue degree in F = Q(m, sqrt33) is lcm(3, 2) = 6 >= 3
+
+
+def test_neighbourhoods_are_bipartite():
+    """N(v) lies on a circle where adjacency is 60 degrees apart.
+
+    So every cycle there is a full hexagon, of even length, and N(v) is
+    bipartite -- which is why no vertex's colour is ever forced by its
+    neighbourhood at four colours, and why the rhombus trick does not lift.
+    """
+    from hn.degrey import build_Sa
+    from hn.graph import build_graph
+
+    g = build_graph(build_Sa())
+    adj = {}
+    for a, b in g.edges():
+        adj.setdefault(a, set()).add(b)
+        adj.setdefault(b, set()).add(a)
+    checked = 0
+    for v, nb in adj.items():
+        sub = {u: (adj[u] & nb) for u in nb}
+        assert all(len(s) <= 2 for s in sub.values()), v
+        colour = {}
+        for start in sub:
+            if start in colour:
+                continue
+            colour[start] = 0
+            stack = [start]
+            while stack:
+                x = stack.pop()
+                for y in sub[x]:
+                    if y not in colour:
+                        colour[y] = 1 - colour[x]
+                        stack.append(y)
+                    else:
+                        assert colour[y] != colour[x], (v, x, y)
+        checked += 1
+    assert checked > 100
