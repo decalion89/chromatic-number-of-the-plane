@@ -681,3 +681,38 @@ def test_no_chain_over_q_zeta_21_at_length_two():
         for v in units:
             t = K.mul(u, K.conj(v))
             assert K.add(t, K.conj(t)) != target
+
+
+def test_chain_closing_condition_is_equivalent():
+    """|1 + a + b|^2 = 1/3 is Re(a) + Re(b) + Re(a.bbar) = -2/3.
+
+    And at k = 2 it collapses to a + abar = -5/3, whose only unit solutions
+    are -(5 -+ sqrt-11)/6 -- the Moser rotation up to sign, which is why the
+    spindle is unique.
+    """
+    from hn.cyclotomic import CycloField
+
+    K = CycloField(33)
+    one = K.rational(1)
+    z11 = K.zeta(3)
+    g, p = K.zero(), one
+    for k in range(1, 11):
+        p = K.mul(p, z11) if k > 1 else z11
+        g = K.add(g, p if k in {1, 3, 4, 5, 9} else K.neg(p))
+    assert K.mul(g, g) == K.rational(-11)
+    rho = tuple(Fraction(1, 6) * x for x in K.add(K.rational(5), g))
+    assert K.norm2(rho) == one
+    assert K.add(rho, K.conj(rho)) == K.rational(Fraction(5, 3))
+    # k = 2: |1 + a|^2 = 1/3 with a = -rho
+    a = K.neg(rho)
+    assert K.norm2(K.add(one, a)) == K.rational(Fraction(1, 3))
+    # the general identity, checked on that pair plus a third unit step
+    z3 = K.zeta(11)
+    z6 = K.neg(K.mul(z3, z3))
+    for b in (one, z6, K.mul(z6, z6), rho, K.conj(rho)):
+        lhs = K.norm2(K.add(K.add(one, a), b))
+        t = K.mul(b, K.conj(a))
+        rhs = K.add(K.rational(3),
+                    K.add(K.add(K.add(a, K.conj(a)), K.add(b, K.conj(b))),
+                          K.add(t, K.conj(t))))
+        assert lhs == rhs

@@ -2240,6 +2240,61 @@ has residue degree 10 over `F` at 5, and has its two primes above 3 swapped by
 conjugation. That the arithmetic picks out exactly the field containing both
 the triangle root and the spindle rotation was not put in by hand.
 
+## Building in `Q(zeta_33)`: what worked, and what did not
+
+Two things were built in the field the arithmetic picked out, and both results
+are worth having.
+
+**Chains of three exist.** Over `Q(zeta_33)` the closing condition
+`|1 + a + b|^2 = 1/3` — equivalently `Re(a) + Re(b) + Re(a.bbar) = -2/3` — has
+solutions, and two of them give
+
+    10 points, 19 edges, chi = 4
+
+genuinely new 4-chromatic unit-distance graphs: three chained rhombi rather
+than two paired ones, not a Moser spindle. The `k = 2` control returns exactly
+the two rotations `(5 +- sqrt-11)/6`, as it must.
+
+**And they still do not block.** Their 14 directions have module rank 4 — the
+steps landed inside `Q(zeta_3, sqrt-11)`, the spindle's own field, which the
+residue-degree theorem closes permanently. The graph is new; the arithmetic it
+sits on is not. 964 of the 986 steps enumerated do lie outside that subfield,
+so the narrowed search is not vacuous; it is running.
+
+### Rotating about a shared point gives a bouquet
+
+The 367-point union of the spindle with its 144 blocking rotations is
+4-chromatic and blocked, and its 4-critical core is one spindle. The obvious
+repair: delete a hitting set for the spindles, so no copy is 4-chromatic alone
+and any surviving core must span copies.
+
+**The hitting set has size one.** All 145 copies are rotations about the
+origin, so they share exactly that vertex; delete it and the remaining 366
+points are 3-colourable. The union was never an interlocking structure — it is
+a bouquet of spindles tied at a knot, and the whole chromatic number lives at
+the knot.
+
+That says what any repair has to do: rotate about a point the copies do *not*
+share, so they overlap in many vertices — which is exactly what de Grey does,
+rotating `Y` about `(-2, 0)` rather than about one of its own vertices.
+
+### Errors caught here, kept rather than edited away
+
+Two enumeration faults, both of the kind that returns a clean zero and reads
+like a theorem:
+
+* the first `Q(zeta_33)` pass enumerated `a/abar` over a box of low powers of
+  `zeta_33` and reported **no Moser spindle at all** — impossible, since
+  `sqrt-11` lies in `Q(zeta_11)`. The Gauss sum
+  `g = sum (k|11) zeta_11^k` needs `zeta_33^{3k}` up to `k = 10`, far outside
+  that box. Fixed by constructing `g` directly and generating the unit steps
+  *multiplicatively* — they form a group, so products of a few generators
+  reach further than any box.
+* the subfield filter returned "0 of 986 steps lie outside `Q(zeta_3,
+  sqrt-11)`", because the membership test was written as a pivot check on a
+  stacked matrix rather than the rank comparison it should have been. The
+  correct test says 964 of 986.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

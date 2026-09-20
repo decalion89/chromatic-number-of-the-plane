@@ -1195,3 +1195,65 @@ def cyclotomic_chain_closes(n: int) -> bool:
         x = x * 3 % m
         f += 1
     return (m - 1) % m not in {pow(3, k, m) for k in range(f)}
+
+
+# -- chains of three exist, and are still not enough ------------------------
+#
+# Over Q(zeta_33) the closing condition |1 + a + b|^2 = 1/3, equivalently
+#
+#     Re(a) + Re(b) + Re(a.bbar) = -2/3,
+#
+# has solutions. Two were built: 10 points, 19 edges, chi = 4 -- genuinely new
+# 4-chromatic unit-distance graphs, three chained rhombi rather than two
+# paired ones, and not a spindle. The k = 2 control returns exactly the two
+# rotations (5 +- sqrt-11)/6, as it must.
+#
+# And they still do not block. Their 14 directions have module rank 4: the
+# steps landed inside Q(zeta_3, sqrt-11), the spindle's own field, which by
+# the residue-degree theorem can never block whatever is built over it. The
+# graph is new; the arithmetic it sits on is not.
+#
+# Recorded as the sharp form of what is missing. A chain whose steps stay in
+# the spindle subfield is a different graph over the same dead field. What is
+# needed is one whose steps LEAVE it -- 964 of the 986 steps enumerated here
+# do lie outside, so the search is not vacuous.
+
+THREE_CHAINS_EXIST_OVER_ZETA33 = {
+    "field": "Q(zeta_33), degree 20",
+    "condition": "Re(a) + Re(b) + Re(a.bbar) = -2/3",
+    "k2_control": "2 rotations, exactly (5 +- sqrt-11)/6",
+    "graphs": {"points": 10, "edges": 19, "chi": 4, "directions": 14,
+               "module_rank": 4},
+    "blocks": False,
+    "why": "the steps fell inside Q(zeta_3, sqrt-11), which the residue-degree "
+           "theorem closes permanently",
+    "steps_outside_that_subfield": "964 of 986",
+}
+
+
+# -- rotating about a shared point gives a bouquet, not a structure ---------
+#
+# The 367-point union of the spindle with its images under 144 blocking steps
+# is 4-chromatic and blocked, and its 4-critical core is one spindle. The
+# obvious repair is to delete a hitting set for the spindles, so no copy is
+# 4-chromatic alone and any surviving core has to span copies.
+#
+# The hitting set has size ONE. All 145 copies are rotations about the origin,
+# so they share exactly that vertex, and deleting it leaves 366 points that
+# are 3-colourable. The union was never an interlocking structure -- it is a
+# bouquet of spindles tied at a point, and its whole chromatic number lives at
+# the knot.
+#
+# Which says what any repair has to do: rotate about a point the copies do NOT
+# share, so they overlap in many vertices, the way de Grey's G is two copies
+# of Y rotated about (-2, 0) rather than about a vertex of Y.
+
+ROTATION_ABOUT_A_SHARED_POINT_IS_A_BOUQUET = {
+    "union": {"points": 367, "edges": 671, "chi": 4, "blocked": True},
+    "hitting_set_for_all_145_spindles": 1,
+    "after_deleting_it": {"points": 366, "three_colourable": True},
+    "reading": "the copies share only the centre of rotation, so the union is "
+               "a bouquet tied at one vertex, not an interlocking structure",
+    "repair": "rotate about a point the copies do not share, as de Grey does "
+              "with (-2, 0)",
+}
