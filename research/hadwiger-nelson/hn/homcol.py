@@ -1358,3 +1358,49 @@ CHAIN_LENGTH_ADDS_NO_DIRECTIONS = {
     "what_does_add": "steps in new orbits, which the chain allows since only "
                      "the closing sum is constrained",
 }
+
+
+# -- blocking that carries weight: one chain, every edge load bearing -------
+#
+# The field is chosen first. Over the degree-12 tower K = Q(m, sqrt V(m),
+# sqrt-3) with m a root of T^3 - 9T^2 + 14T + 8, every prime of the real
+# subfield above 5 has residue degree at least 3, so the residue-degree
+# theorem does not close it -- and measured directly, the 450 directions of
+# its 75 zeta_6-orbits BLOCK, at rank 12. The material is there before any
+# graph is drawn.
+#
+# Then the chain is grown into it. The move is to replace a step w by three
+# unit steps summing to w: any u leaves z = w - u to be split as v1 + v2,
+# which is a lookup once the pairwise sums of the enumerated steps are
+# tabulated. The total sum is untouched, so |sum w_i|^2 = 1/3 survives --
+# asserted exactly at every round -- so the closing edge survives and chi
+# stays 4, while each replacement brings new orbits into the direction set.
+#
+#     round 22:  47 steps, 25 orbits, 150 directions, rank 12,  BLOCKS
+#     graph:     141 points, 236 edges, chi = 4, 152 directions, BLOCKED
+#
+# Blocking is monotone in the direction set, so the steps' orbits blocking is
+# enough to conclude the graph does; the graph's own 152 directions confirm it.
+#
+# WHY THIS IS DIFFERENT from everything above. The 107-point graph blocked by
+# pendants, which change no chromatic number. The 367-point union blocked with
+# every edge a spindle edge, but a hitting set for all 145 of its spindles had
+# size one -- a bouquet tied at a knot. Here there is one chain, no copies to
+# discard and no pendants to strip: every edge is an edge of a rhombus, and
+# every rhombus carries one link of the forcing that walks the origin's colour
+# out to the far end, where the closing edge contradicts it.
+
+BLOCKING_THAT_CARRIES_WEIGHT = {
+    "field": "Q(m, sqrt V(m), sqrt-3), degree 12, m a root of "
+             "T^3 - 9T^2 + 14T + 8",
+    "field_orbits": {"orbits": 75, "directions": 450, "rank": 12,
+                     "block": True},
+    "move": "replace a step w by three unit steps summing to w, which leaves "
+            "the closing sum untouched and adds zeta_6-orbits",
+    "chain": {"steps": 47, "orbits": 25, "directions": 150, "rank": 12,
+              "blocks": True},
+    "graph": {"points": 141, "edges": 236, "chi": 4, "directions": 152,
+              "blocked": True},
+    "load_bearing": "one chain, no copies and no pendants: every edge is a "
+                    "rhombus edge and every rhombus carries a forcing link",
+}
