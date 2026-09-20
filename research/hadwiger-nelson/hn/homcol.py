@@ -3078,3 +3078,47 @@ ROTATIONS_THAT_BITE_MUST_BE_SOLVED_FOR = {
                     48, 48, 48, 48, 36, 36, 24, 24, 24, 24],
     "against": "de Grey's own union has six",
 }
+
+
+# ---------------------------------------------------------------------------
+# rho_4 is not one rotation among many.
+#
+# The unions built over K are built on HIS Sa, so (2,0) and (-2,0) sit in
+# every one of them -- and the pair scan never asked about them, because
+# D = 16 is not closable over K.  It should have.  If some u.Sa forced the
+# pair where rho_4.Sa does, the spindle would be one quadratic step away, over
+#
+#     K(sqrt-15) = Q(m, sqrt-3, sqrt-11, sqrt-15),
+#
+# and adjoining a quadratic to Q(m) cannot drop the residue degree at 5 below
+# 3 -- the prime with f = 3 either stays inert, splits into primes still of
+# f = 3, or ramifies with f = 3 -- so that field can still block, while
+# carrying m through u, which is what blocking needs and what de Grey's own
+# field can never supply.
+#
+# Asked of all 81: the pair is FREE in every one.  Each query is a couple of
+# seconds of satisfiability, against the 282 seconds of unsatisfiability proof
+# rho_4 costs.  So his rotation is not one of many that would have done; among
+# every rotation K supplies that bites Sa at all, not one forces his pair.
+#
+# Which says what the six cross edges are worth.  Unions over K reach 156 of
+# them against his six and force nothing, at any K-closable distance or at
+# his.  Six edges in the right place beat a hundred and fifty-six anywhere.
+
+DEGREYS_ROTATION_IS_NOT_GENERIC = {
+    "tested": "the pair (2,0),(-2,0), at D = 16, in Sa u u.Sa for each of the "
+              "81 rotations of K that bite Sa",
+    "result": "free in all 81",
+    "cost": "a couple of seconds of satisfiability each, against the 282 "
+            "seconds of unsatisfiability proof rho_4 costs",
+    "why_it_was_worth_asking": "D = 16 is not closable over K, so the filtered "
+                               "scan skipped the very pair Y forces; a hit "
+                               "would have been spindleable over "
+                               "K(sqrt-15) = Q(m, sqrt-3, sqrt-11, sqrt-15), "
+                               "which still has residue degree at least 3 at "
+                               "5 and so can still block",
+    "cross_edges": "the K unions reach 156 cross edges against his six and "
+                   "force nothing, at any K-closable distance or at his",
+    "conclusion": "six edges in the right place beat a hundred and fifty-six "
+                  "anywhere; rho_4 is not one rotation among many",
+}

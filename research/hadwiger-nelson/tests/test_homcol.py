@@ -1514,3 +1514,23 @@ def test_the_cross_edge_equation_reproduces_de_greys_rotation():
         re = w.x * p.x + w.y * p.y
         im = w.y * p.x - w.x * p.y
         assert re * re + im * im == A * P
+
+
+def test_adjoining_a_quadratic_keeps_the_residue_degree_at_five():
+    """`Q(m)` has `f = 3` at 5, and no quadratic extension can drop it.
+
+    `x^3 - 10x^2 + 26x - 11` is irreducible mod 5, so the single prime of
+    `Q(m)` above 5 has residue degree 3. In any quadratic extension that prime
+    stays inert (`f = 6`), splits into primes still of residue degree 3, or
+    ramifies with `f = 3` — never lower. So `K(sqrt-15)` and every other
+    quadratic step keeps the arithmetic a sixth colour needs, which is why
+    asking about de Grey's own pair over `K` was worth the run.
+    """
+    poly = [-11, 26, -10, 1]          # constant first
+
+    def ev(x, p):
+        return sum(c * pow(x, i, p) for i, c in enumerate(poly)) % p
+
+    assert all(ev(x, 5) for x in range(5)), "no root mod 5"
+    # a cubic with no root mod p is irreducible there, so f = 3
+    assert [ev(x, 5) for x in range(5)] == [4, 1, 4, 4, 2]

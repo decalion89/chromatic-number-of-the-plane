@@ -3181,6 +3181,29 @@ And they bite far harder than his six. Exact cross-edge counts:
 
     156, 156, 126, 126, 108, 108, 108, 108, 60, 60, 48, 48, 48, 48, 36, 36, ...
 
+## `rho_4` is not one rotation among many
+
+The unions built over `K` are built on *his* `Sa`, so `(2,0)` and `(-2,0)` sit
+in every one of them — and the filtered pair scan never asked about them,
+because `D = 16` is not closable over `K`. It should have. A hit would have
+been spindleable one quadratic step away, over
+
+    K(sqrt-15) = Q(m, sqrt-3, sqrt-11, sqrt-15),
+
+and adjoining a quadratic to `Q(m)` cannot drop the residue degree at 5 below
+3 — the prime with `f = 3` either stays inert, splits into primes still of
+`f = 3`, or ramifies with `f = 3`. So that field still blocks, while carrying
+`m` through `u`, which is exactly what de Grey's own field can never supply.
+
+Asked of all 81: **the pair is free in every one.** A couple of seconds of
+satisfiability each, against the 282 seconds of unsatisfiability proof `rho_4`
+costs. Among every rotation `K` supplies that bites `Sa` at all, not one
+forces his pair.
+
+Which says what those six cross edges are worth. The `K` unions reach **156**
+of them against his six and force nothing — at any `K`-closable distance, or
+at his. **Six edges in the right place beat a hundred and fifty-six anywhere.**
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
