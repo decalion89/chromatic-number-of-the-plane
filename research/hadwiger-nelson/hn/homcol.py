@@ -1827,6 +1827,46 @@ CLOSED_NECKLACE_IS_CRITICAL = {
     },
     "shorter_one": {"steps": 43, "orbits": 23, "directions": 138,
                     "blocks": True},
+    "fails_the_stronger_gate": {
+        5: "no homomorphism at all -- blocking",
+        6: "60 phi tried, all needing more than 5",
+        7: "no homomorphism at all -- blocking",
+        8: "5-COLOURABLE: a homomorphism whose Cayley graph needs only 4",
+    },
+}
+
+
+# -- the stronger gate bites, on my own object -----------------------------
+#
+# The necklace's directions block at 5 -- that is what makes it the first
+# 4-critical blocked unit-distance graph -- and they survive n = 6 and n = 7.
+# At n = 8 they do not: the seventh homomorphism tried has a Cayley graph of
+# chromatic number FOUR, so
+#
+#     colour v by that colouring of phi(v - v0)
+#
+# is a proper 5-colouring of any graph over those directions. The necklace can
+# never be the substrate of a 6-chromatic graph, however blocked and however
+# critical it is.
+#
+# Which is the point of having built the stronger screen: blocking at 5 is
+# necessary and NOT sufficient, and here is the first case where the
+# difference is visible rather than theoretical. The denominator-29 directions
+# survive every modulus from 5 to 20; the necklace's do not survive 8.
+#
+# It also turns into a design rule. Growing a necklace to block is not enough;
+# it has to be grown so that no modulus admits a periodic 5-colouring, which
+# is a stronger and equally checkable target.
+
+NECKLACE_FAILS_THE_STRONGER_GATE = {
+    "blocked_at": [5, 7],
+    "survived": [6],
+    "failed_at": 8,
+    "how": "the seventh homomorphism tried has Cayley chromatic number 4",
+    "consequence": "any graph over the necklace's directions is 5-colourable, "
+                   "so it cannot be a substrate for a 6-chromatic graph",
+    "contrast": "the denominator-29 directions survive every modulus 5 to 20",
+    "design_rule": "grow for the stronger gate, not merely for blocking",
 }
 
 

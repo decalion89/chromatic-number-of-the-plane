@@ -2611,6 +2611,29 @@ and whose direction set admits no coset 5-colouring at all.
 A shorter one exists too: 43 steps, 23 orbits, 138 directions, also blocking —
 130 points.
 
+### And the stronger gate bites, on this very object
+
+The necklace's directions block at 5, and survive `n = 6` and `n = 7`. At
+`n = 8` they do not:
+
+| modulus | verdict |
+|---|---|
+| 5 | no homomorphism at all — blocking |
+| 6 | 60 homomorphisms tried, all needing more than 5 |
+| 7 | no homomorphism at all — blocking |
+| **8** | **5-colourable**: the seventh homomorphism has Cayley chromatic number **4** |
+
+So colouring `v` by that colouring of `phi(v - v0)` is a proper 5-colouring of
+*any* graph over those directions. **The necklace can never be the substrate
+of a 6-chromatic graph**, however blocked and however critical it is.
+
+Which is the point of having built the stronger screen. Blocking at 5 is
+necessary and not sufficient, and this is the first case where the difference
+is visible rather than theoretical — the denominator-29 directions survive
+every modulus from 5 to 20; the necklace's do not survive 8. It also turns
+into a design rule: grow a necklace so that **no** modulus admits a periodic
+5-colouring, which is a stronger and equally checkable target.
+
 ## A field with de Grey's spindle *and* the arithmetic a sixth colour needs
 
 A distance `d` spindles iff `K` holds a rotation with `|1 - rho|^2 = 1/d^2`.
