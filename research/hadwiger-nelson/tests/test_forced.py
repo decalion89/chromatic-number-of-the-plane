@@ -1188,3 +1188,13 @@ def test_a_small_forcing_set_pads_into_a_core():
     assert "non-vacuity confirmed" in a["verified"]
     # and the cost at five colours is inherent, not an implementation detail
     assert "not 4-colourable" in C["cost_at_k5"]
+
+
+def test_the_rho_drop_happens_on_all_three_pieces():
+    """Sa, Sb and Y all go 7 -> 5: the drop is about unioning, not about Sa."""
+    from hn.forced import RHO_DROP_ON_ALL_THREE as D
+
+    assert set(D["alone"]) == set(D["with_one_rotated_copy"]) == {"Sa", "Sb", "Y"}
+    assert all(v == 7 for v in D["alone"].values())
+    assert all(v == D["k"] + 1 for v in D["with_one_rotated_copy"].values())
+    assert "one of the two is wrong" in D["tension"]

@@ -1780,3 +1780,39 @@ SMALL_RHO_CLOSES_IT = {
     "cost_at_k5": "one hard UNSAT, unavoidably: forcing in a 5-chromatic "
                   "graph implies not 4-colourable",
 }
+
+
+# -- and it is not a fact about Sa: all three pieces do it ---------------
+#
+# Each of de Grey's 4-chromatic pieces, alone and with ONE rotated copy
+# through the half-Moser angle, rho measured identically and guarded against
+# vacuity:
+#
+#     Sa alone   397 vertices   rho = 7      Sa + copy    619   rho = 5
+#     Sb alone   397            rho = 7      Sb + copy    619   rho = 5
+#     Y  alone   791            rho = 7      Y  + copy   1233   rho = 5
+#
+# Three independent bases, all exactly 7 alone and 5 with a copy -- k + 1 in
+# every case. The drop is a property of unioning a non-critical, not-uniquely-
+# colourable graph with a rotated copy of itself, not a property of Sa.
+#
+# A PREDICTION WITH A CONSEQUENCE. If de Grey's G behaves the same way at five
+# colours, rho(G,5) is single figures. Padding then gives a core of at most
+# that size at EVERY pivot -- and the forward core construction found no core
+# in 60 steps at four pivots of the folded union. Both cannot be right.
+#
+# The greedy construction is the likelier to be wrong: its own docstring notes
+# that no single vertex has to raise the objective even when a pair would, so
+# it sits on plateaus with genuine cores above it. But the alternative is that
+# rho(G,5) is large and the four-colour pattern simply does not transfer. The
+# measurement settles it, and costs one hard UNSAT.
+
+RHO_DROP_ON_ALL_THREE = {
+    "alone": {"Sa": 7, "Sb": 7, "Y": 7},
+    "with_one_rotated_copy": {"Sa": 5, "Sb": 5, "Y": 5},
+    "k": 4,
+    "reading": "k + 1 in every case, so the drop is about unioning, not Sa",
+    "tension": "if it transfers to five colours, padding gives tiny cores "
+               "everywhere -- but cegar_core found none in 60 steps on the "
+               "folded union, so one of the two is wrong",
+}
