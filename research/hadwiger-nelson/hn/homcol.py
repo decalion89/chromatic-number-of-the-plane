@@ -3024,3 +3024,57 @@ THE_ANATOMY_OF_Y = {
     "over_K": "sweeping the 3030 units of K as rotations of Sa finds rotations "
               "with one shared point and THIRTY cross edges, against his six",
 }
+
+
+# ---------------------------------------------------------------------------
+# Solving for the rotations that bite, instead of sampling for them.
+#
+# Sampling finds none.  All 3030 known units of K, used as rotations of Sa,
+# leave Sa and its image sharing only the origin with ZERO cross edges once
+# the float filter is checked in exact arithmetic -- the counts a 1e-9
+# tolerance reported were artefacts of evaluating long elements of K in double
+# precision.  Nor should sampling work: a cross edge is an exact algebraic
+# condition, and de Grey did not stumble on 2 arcsin(1/4) either.
+#
+# Set it up properly.  A cross edge is p, q in Sa with |p - u.q| = 1 and
+# |u| = 1.  Put w = u.q, A = |q|^2, P = |p|^2.  Then |w|^2 = A and
+# |w - p|^2 = 1 expand to
+#
+#     w.pbar + wbar.p = A + P - 1 =: 2R,        |w.pbar|^2 = A.P,
+#
+# so w.pbar is a root of t^2 - 2Rt + A.P, i.e. w.pbar = R +- sqrt(R^2 - A.P),
+# and the rotation exists over the field exactly when that square root does.
+# R and A.P are real and the radicand is negative, so over K = F(sqrt-3) with
+# F = Q(m, sqrt33) the condition is
+#
+#     the rotation lies in K  iff  (R^2 - A.P) / (-3)  is a square in F,
+#
+# and F = Q(m)(sqrt33) makes that two square-root tests in the cubic Q(m),
+# each screened for free by the norm being a rational square and then read off
+# the cubic's three real embeddings to fifty digits and confirmed exactly.
+#
+# Sa is zeta_6-invariant, so u.Sa = (zeta_6.u).Sa and q may be taken one per
+# orbit: 66 representatives against 397 points, 26136 pairs.  The answer is
+#
+#     81 rotations of K, and they bite far harder than his six:
+#     exact cross-edge counts 156, 156, 126, 126, 108, 108, 108, 108, 60, ...
+
+ROTATIONS_THAT_BITE_MUST_BE_SOLVED_FOR = {
+    "sampling": "all 3030 known units of K give ZERO cross edges with Sa in "
+                "exact arithmetic; the counts a float filter reported were "
+                "artefacts of double precision on long elements of K",
+    "equation": "w = u.q with |w|^2 = A = |q|^2 and |w - p|^2 = 1 gives "
+                "w.pbar = R +- sqrt(R^2 - A.P), R = (A + P - 1)/2",
+    "criterion": "the rotation lies in K = F(sqrt-3) iff (R^2 - A.P)/(-3) is "
+                 "a square in F = Q(m, sqrt33)",
+    "reduction": "F = Q(m)(sqrt33), so two square-root tests in the cubic, "
+                 "each screened by the norm being a rational square and then "
+                 "read off the three real embeddings and confirmed exactly",
+    "symmetry": "Sa is zeta_6-invariant and u.Sa = (zeta_6.u).Sa, so q runs "
+                "over 66 orbit representatives, not 397 points",
+    "pairs_tried": 26136,
+    "rotations_found": 81,
+    "cross_edges": [156, 156, 126, 126, 108, 108, 108, 108, 60, 60,
+                    48, 48, 48, 48, 36, 36, 24, 24, 24, 24],
+    "against": "de Grey's own union has six",
+}

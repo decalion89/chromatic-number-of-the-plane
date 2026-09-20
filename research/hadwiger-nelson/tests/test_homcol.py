@@ -1474,3 +1474,43 @@ def test_Y_is_two_copies_of_Sa_glued_at_a_point_by_six_edges():
     a = Point(F.rational(2), F.zero())
     b = Point(F.rational(-2), F.zero())
     assert a in Sa and b in Sa and a not in Sb and b not in Sb
+
+
+def test_the_cross_edge_equation_reproduces_de_greys_rotation():
+    """A cross edge pins the rotation to the root of an explicit quadratic.
+
+    With `w = u.q`, `A = |q|^2`, `P = |p|^2`, the conditions `|w|^2 = A` and
+    `|w - p|^2 = 1` expand to `w.pbar + wbar.p = A + P - 1 =: 2R` and
+    `|w.pbar|^2 = A.P`, so `w.pbar` is a root of `t^2 - 2Rt + A.P` and the
+    rotation exists over a field exactly when `sqrt(R^2 - A.P)` does.
+
+    Checked on de Grey's own: every cross edge of `Y` satisfies the identity,
+    with `w` in `Sb` and `q = rho_4^{-1}(w)` back in `Sa`.  That is what makes
+    the search over another field a solve rather than a sample -- sampling all
+    3030 known units of `K` gives no cross edge at all.
+    """
+    from hn.degrey import build_Sa, build_Sb, build_Y
+    from hn.geometry import DEGREY_FIELD as F
+    from hn.graph import build_graph
+
+    Sa, Sb = set(build_Sa()), set(build_Sb())
+    Y = build_Y()
+    gy = build_graph(Y)
+    only_a, only_b = Sa - Sb, Sb - Sa
+    cross = [(Y[i], Y[j]) for i, j in gy.edges()
+             if (Y[i] in only_a and Y[j] in only_b)
+             or (Y[j] in only_a and Y[i] in only_b)]
+    assert len(cross) == 6
+
+    half = F.rational(Fraction(1, 2))
+    for x, y in cross:
+        p, w = (x, y) if x in only_a else (y, x)
+        P = p.x * p.x + p.y * p.y
+        A = w.x * w.x + w.y * w.y
+        R = half * (A + P - F.rational(1))
+        # w.pbar = (wx px + wy py) + i(wy px - wx py); its real part is R
+        assert w.x * p.x + w.y * p.y == R
+        # and its squared modulus is A.P
+        re = w.x * p.x + w.y * p.y
+        im = w.y * p.x - w.x * p.y
+        assert re * re + im * im == A * P

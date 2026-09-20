@@ -3150,6 +3150,37 @@ finds them in quantity, and harder than his:
 
 > **one shared point and thirty cross edges**, against his six.
 
+## Solving for the rotations that bite, instead of sampling for them
+
+Sampling finds none. All 3030 known units of `K`, used as rotations of `Sa`,
+leave `Sa` and its image sharing only the origin with **zero** cross edges
+once the float filter is checked exactly — the counts a `1e-9` tolerance
+reported were artefacts of evaluating long elements of `K` in double
+precision. Nor should sampling work: a cross edge is an exact algebraic
+condition, and de Grey did not stumble on `2 arcsin(1/4)` either.
+
+Set it up properly. A cross edge is `p, q` in `Sa` with `|p - u.q| = 1` and
+`|u| = 1`. Put `w = u.q`, `A = |q|^2`, `P = |p|^2`; then `|w|^2 = A` and
+`|w - p|^2 = 1` expand to
+
+    w.pbar + wbar.p = A + P - 1 =: 2R,      |w.pbar|^2 = A.P,
+
+so `w.pbar` is a root of `t^2 - 2Rt + A.P`, and the rotation exists over a
+field exactly when `sqrt(R^2 - A.P)` does. Both `R` and `A.P` are real and the
+radicand is negative, so over `K = F(sqrt-3)` with `F = Q(m, sqrt33)`:
+
+> the rotation lies in `K` **iff** `(R^2 - A.P) / (-3)` is a square in `F`.
+
+And `F = Q(m)(sqrt33)` turns that into two square-root tests in the cubic
+`Q(m)`, each screened for free by the norm being a rational square, then read
+off the cubic's three real embeddings to fifty digits and confirmed exactly.
+`Sa` is `zeta_6`-invariant and `u.Sa = (zeta_6.u).Sa`, so `q` runs over 66
+orbit representatives rather than 397 points — **26136 pairs, 81 rotations**.
+
+And they bite far harder than his six. Exact cross-edge counts:
+
+    156, 156, 126, 126, 108, 108, 108, 108, 60, 60, 48, 48, 48, 48, 36, 36, ...
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
