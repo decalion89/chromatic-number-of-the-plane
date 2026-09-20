@@ -1198,3 +1198,13 @@ def test_the_rho_drop_happens_on_all_three_pieces():
     assert all(v == 7 for v in D["alone"].values())
     assert all(v == D["k"] + 1 for v in D["with_one_rotated_copy"].values())
     assert "one of the two is wrong" in D["tension"]
+
+
+def test_padding_needs_the_pivot_outside_the_forcing_set():
+    """The two failing rows are the hypothesis failing, and being caught."""
+    from hn.forced import CEGAR_IS_SUBOPTIMAL_NOT_BLIND as C
+
+    assert "p outside S" in C["padding_needs"]
+    for p, size in C["verified_cores"].items():
+        assert C["cegar_found"][p] >= size, "greedy overshoots, never undershoots"
+    assert "evidence, not an artefact" in C["reading"]

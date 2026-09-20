@@ -1816,3 +1816,40 @@ RHO_DROP_ON_ALL_THREE = {
                "everywhere -- but cegar_core found none in 60 steps on the "
                "folded union, so one of the two is wrong",
 }
+
+
+# -- the tension resolves, and against the optimistic reading ------------
+#
+# Padding is a proof, not a search: on Sa u rot(Sa) at four colours, with
+# rho = 5 and S = [107, 208, 502, 568, 618], the set T = S minus N(p) minus p
+# is a core of p for any pivot p NOT IN S. Verified:
+#
+#     pivot   0 (deg 36)   padding gives a core of 4, confirmed;  cegar finds 7
+#     pivot  25 (deg 22)   a core of 5, confirmed;                cegar finds 10
+#     pivot  26 (deg 22)   a core of 5, confirmed;                cegar finds 9
+#     pivot  27 (deg 22)   a core of 5, confirmed;                cegar finds 10
+#     pivot 107 (in S)     padding gives 1, NOT a core -- correctly
+#     pivot 208 (in S)     padding gives 2, NOT a core -- correctly
+#
+# Two things. The padding argument needs p outside S, since otherwise
+# N(p) u T no longer contains S; the last two rows are that condition failing
+# and being caught rather than believed.
+#
+# And the greedy core builder WORKS. It finds cores of 7 to 10 where 4 and 5
+# exist -- suboptimal, never failing. So its verdict on the folded union at
+# five colours, no core at all in 60 steps at four pivots, is meaningful
+# rather than an artefact of the method. Which resolves the tension the wrong
+# way: the four-colour pattern probably does NOT transfer, and rho(G,5) is
+# probably large.
+#
+# Stated as probable, not settled: the direct measurement is what decides it.
+
+CEGAR_IS_SUBOPTIMAL_NOT_BLIND = {
+    "padding_needs": "p outside S, else N(p) u T no longer contains S",
+    "verified_cores": {0: 4, 25: 5, 26: 5, 27: 5},
+    "cegar_found": {0: 7, 25: 10, 26: 9, 27: 10},
+    "reading": "it overshoots but never fails, so 'no core in 60 steps' on "
+               "the folded union at five colours is evidence, not an artefact",
+    "consequence": "the four-colour pattern probably does not transfer and "
+                   "rho(G,5) is probably large -- probable, not settled",
+}
