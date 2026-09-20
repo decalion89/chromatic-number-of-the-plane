@@ -2306,3 +2306,55 @@ SPINDLE_ROTATED_BLOCKS_EVERYWHERE = {
               "load bearing. The necklace construction is what fixes that",
     "scaling_faults_caught": 3,
 }
+
+
+# -- the necklace over the field that also spindles ------------------------
+#
+# The chain of length two is w_1 = 1, w_2 = -rho, since |1 - rho|^2 = 1/3: it
+# closes, and it IS the Moser spindle -- 7 points and 11 edges, which is 3k+1
+# and 5k+1 at k = 2. The shortest necklace there is.
+#
+# Grown from there over K = Q(m, sqrt-3, sqrt-11), with the premature-closing
+# guard so no shorter necklace sits inside, and the requirement that every
+# replacement bring a NEW zeta_6-orbit -- without it the necklace reached
+# k = 76 with its direction count stuck at 18, since a step contributes
+# exactly its orbit and nothing else:
+#
+#     44 rhombi, 23 orbits, 138 step directions, blocking at 2, 3, 4 and 5
+#     graph: 133 points (3k+1) and 221 edges (5k+1), EXACTLY
+#     chi = 4, 140 directions, blocks at 2, 3, 4, 5
+#     4-critical core: the whole graph, still blocking at all four
+#
+# The counts matching 3k+1 and 5k+1 exactly is the necklace theorem's
+# hypothesis -- no accidental adjacency -- so 4-criticality is proved, and
+# greedy deletion confirms it by removing none of the 133 vertices.
+#
+#     A 4-CRITICAL UNIT-DISTANCE GRAPH, BLOCKING AT EVERY MODULUS UP TO FIVE,
+#     OVER A FIELD THAT CARRIES THE MOSER ROTATION.
+#
+# Every necessary condition this work produced, met at once, by a critical
+# graph -- and now over a field in which de Grey's step from four colours to
+# five is available, which the tower the earlier necklace was built on could
+# not offer. Smaller too: 133 points against 154.
+#
+# It is still 4-chromatic. What it is is the substrate a sixth colour would
+# need, with nothing arithmetic left standing in the way.
+
+NECKLACE_OVER_THE_MOSER_FIELD = {
+    "field": "K = Q(m, sqrt-3, sqrt-11), m a root of x^3 - 10x^2 + 26x - 11",
+    "start": "the 2-chain w = (1, -rho) is the Moser spindle itself, 7 points "
+             "and 11 edges = 3k+1 and 5k+1 at k = 2",
+    "grown": {"rhombi": 44, "orbits": 23, "step_directions": 138},
+    "graph": {"points": 133, "edges": 221, "chi": 4, "directions": 140},
+    "blocks_at": [2, 3, 4, 5],
+    "critical_core": "the whole graph, confirmed by greedy deletion, still "
+                     "blocking at all four",
+    "orbit_requirement": "without it the necklace reached k = 76 with 18 "
+                         "directions, since a step contributes exactly its "
+                         "zeta_6-orbit",
+    "standing": "every necessary condition met at once by a critical graph, "
+                "over a field where de Grey's step from four colours to five "
+                "is available",
+    "honest": "still 4-chromatic; what it is is the substrate a sixth colour "
+              "would need, with nothing arithmetic left in the way",
+}
