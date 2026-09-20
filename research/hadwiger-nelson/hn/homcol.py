@@ -4732,3 +4732,51 @@ COUNTING_IS_NOT_CORRELATION = {
                                 "The fifth colour removes the structure, not "
                                 "the space.",
 }
+
+
+# The gadget is the unit of constraint, and it is seventy times bigger at five.
+#
+# The triangular lattice is rigid at three colours because every triangle
+# spends all three.  At four colours a triangle leaves one spare, so something
+# bigger must do the propagating, and the smallest 4-chromatic graph is the
+# Moser spindle: seven vertices, two unit rhombi hinged at a point with their
+# far diagonals at distance 1.  Counted directly -- pairs at squared distance
+# 3 from a hub, themselves at distance 1:
+#
+#     triangular lattice (chi = 3)   400 points      0 spindles   0.00/point
+#     Sa                 (chi = 4)   397 points    576 spindles   1.45/point
+#     Y                  (chi = 4)   791 points   1152 spindles   1.46/point
+#     G                  (chi = 5)  1581 points   2304 spindles   1.46/point
+#
+# The lattice has none, exactly as it must: it is 3-colourable and a spindle
+# is not.  And de Grey's whole family carries the same density, 1.45 per
+# point, because G is built from Y and Y from Sa.
+#
+# That is where Sa's correlation at four colours comes from, and why G's does
+# not survive at five.  A spindle is a 4-CRITICAL gadget: it pins four colours
+# and leaves slack against five.  The unit that would pin five colours is a
+# 5-critical subgraph, and the smallest known is about five hundred vertices
+# against the spindle's seven.
+#
+# Which says what scale would be needed rather than that none would do.  For a
+# five-colour graph to carry 5-critical gadgets as densely as Sa carries
+# spindles takes roughly 500/7 times as many points: 397 x 71, about 28000.
+# Z = G* u rho_4(G*) has 27673.
+THE_GADGET_IS_SEVENTY_TIMES_BIGGER = {
+    "counted": {"triangular lattice": {"points": 400, "spindles": 0,
+                                       "per_point": 0.0},
+                "Sa": {"points": 397, "spindles": 576, "per_point": 1.45},
+                "Y": {"points": 791, "spindles": 1152, "per_point": 1.46},
+                "G": {"points": 1581, "spindles": 2304, "per_point": 1.46}},
+    "the_lattice_must_have_none": "it is 3-colourable and a spindle is not",
+    "the_family_shares_a_density": "1.45 per point throughout, since G is "
+                                   "built from Y and Y from Sa",
+    "why_it_stops_working_at_five": "a spindle is 4-critical: it pins four "
+                                    "colours and leaves slack against five",
+    "the_five_colour_unit": "a 5-critical subgraph, smallest known about 500 "
+                            "vertices against the spindle's 7",
+    "the_scale_that_would_be_needed": "500/7 times as many points to pack "
+                                      "them as densely -- 397 x 71, about "
+                                      "28000",
+    "and_Z_has": 27673,
+}

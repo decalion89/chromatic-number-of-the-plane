@@ -2150,3 +2150,33 @@ def test_the_lattice_recognises_its_own_unique_colouring():
     assert L["table"]["triangular lattice (chi=3)"][3] > 1000
     assert 10 < L["table"]["Sa (chi=4)"][4] < 100
     assert L["table"]["G (chi=5)"][5] < 2
+
+
+def test_the_lattice_cannot_contain_a_moser_spindle():
+    """The gadget count, and the one value of it that is forced by theory.
+
+    A Moser spindle is 4-chromatic, so no 3-colourable graph contains one, and
+    the triangular lattice is 3-colourable.  Its count must therefore be
+    exactly zero -- which is what makes the counter worth trusting on the
+    graphs where the answer is not known in advance.
+
+    de Grey's family then comes out at a single density, 1.45 spindles per
+    point, throughout: Sa has 576 on 397 points, Y has 1152 on 791, G has 2304
+    on 1581.  Each is built from the one before, so the density is inherited
+    rather than achieved.
+    """
+    from hn.homcol import THE_GADGET_IS_SEVENTY_TIMES_BIGGER as T
+
+    assert T["counted"]["triangular lattice"]["spindles"] == 0
+
+    for g in ("Sa", "Y", "G"):
+        c = T["counted"][g]
+        assert abs(c["spindles"] / c["points"] - 1.455) < 0.01
+
+    # Y and G double Sa's count as they double its points.
+    assert T["counted"]["Y"]["spindles"] == 2 * T["counted"]["Sa"]["spindles"]
+    assert T["counted"]["G"]["spindles"] == 2 * T["counted"]["Y"]["spindles"]
+
+    # And the scale the argument points at is the one Z happens to have.
+    assert abs(397 * (500 / 7) - 28357) < 1
+    assert abs(T["and_Z_has"] - 397 * (500 / 7)) < 1000

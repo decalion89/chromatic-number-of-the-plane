@@ -3777,6 +3777,38 @@ Also 66%. The filter recognises the uniqueness with nothing told to it.
 (`Sa` at four reads 16.8 here and 19.6 under a different seed; the order of
 magnitude is the reading, not the digit.)
 
+## The gadget is the unit, and at five colours it is seventy times bigger
+
+The triangular lattice is rigid at three colours because every triangle spends
+all three. At four a triangle leaves one spare, so something bigger must
+propagate — and the smallest 4-chromatic graph is the Moser spindle: seven
+vertices, two unit rhombi hinged at a point with their far diagonals at
+distance 1. Counted directly:
+
+| graph | `χ` | points | spindles | per point |
+|---|---|---|---|---|
+| triangular lattice | 3 | 400 | **0** | 0.00 |
+| `Sa` | 4 | 397 | 576 | 1.45 |
+| `Y` | 4 | 791 | 1152 | 1.46 |
+| `G` | 5 | 1581 | 2304 | **1.46** |
+
+The lattice has none, exactly as it must — it is 3-colourable and a spindle is
+not — which is what makes the counter worth trusting elsewhere. And de Grey's
+whole family carries one density, 1.45 per point, inherited rather than
+achieved: `G` is built from `Y` and `Y` from `Sa`.
+
+That is where `Sa`'s correlation at four colours comes from, and why `G`'s does
+not survive at five. **A spindle is a 4-*critical* gadget**: it pins four
+colours and leaves slack against five. The unit that would pin five is a
+5-critical subgraph, and the smallest known is about five hundred vertices
+against the spindle's seven.
+
+Which says what scale would be needed rather than that none would do. To carry
+5-critical gadgets as densely as `Sa` carries spindles takes roughly `500/7`
+times as many points — `397 × 71`, about **28 000**.
+
+`Z = G* ∪ ρ₄(G*)` has **27 673**, and is being measured.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
