@@ -3230,3 +3230,55 @@ DISTANCE_TO_FORCING_IN_CONFLICTS = {
     "consequence": "the forcing is not local, and whatever forces at five "
                    "colours will not be small either",
 }
+
+
+# ---------------------------------------------------------------------------
+# The tower over K, floor by floor.
+#
+# de Grey's construction is not one union but four floors: S, Sa, Y, G.  So
+# the honest continuation over K, after Sa u u.Sa forced nothing, is to ask
+# the same question of the union itself.  The cross-edge equation does not
+# care what the point set is:
+#
+#     Sa, 397 points, zeta_6-invariant:     26136 pairs ->    81 rotations
+#     U1 = Sa u u1.Sa, 793 points, 4104 edges, not invariant:
+#                                          104544 pairs ->  1218 rotations
+#
+# Fifteen times the material, and the second floor's unions run to 1585 points
+# and 8232 edges.  The cheapest decisive probe is the one that settled the
+# first floor -- de Grey's own pair, which sits in all of them and which the
+# K-closable filter skips because D = 16 needs sqrt-15.  A hundred unions in,
+# it is free in every one.
+#
+# And Y itself does not shrink easily.  Of a stratified sample of 61 of its
+# vertices, 39 are outright essential: deleting one frees the pair in
+# milliseconds.  The remaining 22 exceed a 60000-conflict budget, which is
+# ambiguous by construction, since Y's own unforced pairs cost up to 35365.
+
+THE_TOWER_OVER_K = {
+    "principle": "the cross-edge equation does not care what the point set "
+                 "is, so the same solve applies floor by floor",
+    "floors": {
+        "Sa": {"points": 397, "pairs": 26136, "rotations": 81},
+        "U1 = Sa u u1.Sa": {"points": 793, "edges": 4104, "cross": 156,
+                            "pairs": 104544, "rotations": 1218},
+    },
+    "second_floor_unions": "up to 1585 points and 8232 edges",
+    "probe": "de Grey's pair (2,0),(-2,0), which sits in all of them and "
+             "which the K-closable filter skips",
+    "result": "free in every one of the first hundred unions tried",
+}
+
+
+Y_DOES_NOT_SHRINK_EASILY = {
+    "sample": 61,
+    "outright_essential": 39,
+    "meaning": "deleting one frees the pair in milliseconds",
+    "undecided": 22,
+    "why_ambiguous": "a 60000-conflict budget cannot separate 'still forced, "
+                     "needs a full refutation' from 'separates, but the "
+                     "search is hard' -- Y's own unforced pairs cost up to "
+                     "35365 conflicts",
+    "ball_result": "radius 1.5 about the segment keeps 773 of 791 and "
+                   "separates; radius 2.0 is all 791 and forces",
+}
