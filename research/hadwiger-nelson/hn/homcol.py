@@ -4080,3 +4080,71 @@ THE_TEMPLATE_DOES_NOT_CLIMB = {
                               "and 6410 for G.  The union is far harder than "
                               "anything before it and still colours.",
 }
+
+
+# Forcing does not accumulate.  It arrives.
+#
+# Z4 = Sa u rho(Sa) has 793 points and 3954 edges; two separate copies of Sa
+# would have 3948.  So de Grey's forcing at four colours is produced by SIX
+# cross edges.  The translate unions built here carried 1552 of them and the
+# stacks 4306, and forced nothing.  Counting cross edges was measuring the
+# wrong thing from the beginning -- and the anatomy of Y, six edges and all,
+# was already written down here before the counting started.
+#
+# The obvious repair was that six edges can only close a structure that is
+# nearly closed already, so the real quantity would be how constrained a
+# single copy is.  That is also wrong, and the measurement is flat about it:
+#
+#     Sa at four colours          0 pairs agree in every sampled colouring
+#     Sa u rho(Sa) at four       75 pairs, 35 of them at a closable distance,
+#                                 including all six antipodal pairs of the ring
+#     Y at four                  20 pairs, 1 closable -- the forced one
+#     Sa at five                  0
+#     G at five                   0
+#
+# Sa alone is completely free.  Nothing is nearly closed.  Six edges take a
+# graph with no agreeing pairs at all to one with seventy-five, and the pair
+# de Grey needs is among them.  Whatever predicts forcing, it is not a
+# quantity that grows smoothly with the graph -- not cross edges, not
+# agreement, not size, not solver cost.
+FORCING_ARRIVES_IT_DOES_NOT_ACCUMULATE = {
+    "the_six_edges": "Z4 has 3954 edges where two loose copies of Sa have "
+                     "3948",
+    "what_was_counted_instead": {"translate unions": 1552, "stacks": 4306,
+                                 "forced": 0},
+    "agreement_before_and_after": {"Sa at 4": 0, "Sa u rho(Sa) at 4": 75,
+                                   "of those closable": 35, "Y at 4": 20,
+                                   "Sa at 5": 0, "G at 5": 0},
+    "the_refuted_repair": "that a single copy must already be nearly closed.  "
+                          "Sa has zero agreeing pairs; it is completely free.",
+    "reading": "forcing is not the top of a slope.  Six edges move a graph "
+               "from no agreeing pairs to seventy-five, and no quantity "
+               "measured here -- cross edges, agreement, size, conflicts -- "
+               "rises towards it beforehand.",
+}
+
+
+# The census of translates, complete and witnessed.
+#
+# All 399 candidate translates of G, ranked by exact cross-edge count, each
+# unioned with G and each interrogated for a forced pair at five colours.  The
+# verdict is zero, and it is not a budget running out: every candidate pair in
+# every union was separated by an explicit sampled colouring, so each negative
+# is witnessed.  Counts ran from 1552 cross edges at the top of the census down
+# to 126 at the bottom, and the candidate sets -- between 43000 and 46000 pairs
+# a union -- collapsed to nothing in eight to fifty-five samples.
+#
+# By monotonicity this covers more than the 399 unions: a graph with no forced
+# pair has no subgraph with one, so the negative extends to every subgraph of
+# every union in the census.
+THE_CENSUS_IS_COMPLETE_AND_EMPTY = {
+    "translates": 399,
+    "cross_edges": {"top": 1552, "bottom": 126},
+    "pairs_per_union": "43000 to 46000",
+    "forced": 0,
+    "witnessed": "every candidate separated by an explicit colouring; no "
+                 "budget anywhere",
+    "samples_to_empty": "8 to 55",
+    "cost": "4773 seconds for all 399, about twelve seconds a union",
+    "reach": "monotonicity extends it to every subgraph of every union",
+}
