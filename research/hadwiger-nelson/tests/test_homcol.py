@@ -2004,3 +2004,43 @@ def test_the_ring_criterion_rebuilds_de_greys_graph_exactly():
     spun = Y | {sigma(p) for p in Y}
     turn = _rot_half_pi_pm(F, -1).about(pivot)
     assert {turn(p) for p in spun} == set(build_G(F, as_graph=False))
+
+
+def test_the_four_colour_core_sits_at_its_own_threshold():
+    """chi(Sa) = 4, measured, and what it does and does not license.
+
+    The criticality story needed Sa to sit at its threshold at four colours,
+    as G does at five, and it does: Sa is not 3-colourable and is
+    4-colourable.  What the story also needed -- that Sa's colourings are
+    scarce because Sa is lean -- is false, and flatly.  Sa reaches chi = 4 on
+    397 vertices where the Moser spindle does it on seven; G reaches chi = 5
+    on 1581 where about five hundred suffice.  The graph that pins 211 pairs
+    when rotated is the more redundant by a factor of twenty.
+
+    So redundancy is not the variable, and the claim built on it is withdrawn
+    in the module beside the original.
+    """
+    from pysat.solvers import Solver
+    from hn.degrey import build_Sa, build_S
+    from hn.geometry import DEGREY_FIELD as F
+    from hn.graph import build_graph
+
+    def colourable(pts, k):
+        g = build_graph(pts)
+        n = len(pts)
+        cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
+        for a, b in g.edges():
+            for c in range(k):
+                cls.append([-(1 + a * k + c), -(1 + b * k + c)])
+        sv = Solver(name="cd19", bootstrap_with=cls)
+        out = sv.solve()
+        sv.delete()
+        return out
+
+    S, Sa = build_S(F), build_Sa(F)
+    assert colourable(S, 3), "S alone is only 3-chromatic"
+    assert not colourable(Sa, 3)
+    assert colourable(Sa, 4)          # chi(Sa) = 4, at its threshold
+
+    # And the redundancy that the withdrawn claim rested on, in numbers.
+    assert len(Sa) == 397            # against 7 for the Moser spindle

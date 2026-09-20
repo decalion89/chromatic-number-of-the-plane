@@ -4267,6 +4267,15 @@ CRITICALITY_IS_WHAT_IS_MISSING = {
     "diagnosis": "Y is nearly 4-critical and its colourings are scarce; G is "
                  "5-chromatic on 1581 vertices where 500 suffice, so its "
                  "colourings are plentiful and nothing pins",
+    "DIAGNOSIS_WITHDRAWN": "redundancy does not explain it, and the figures "
+                           "are flat the other way.  Sa reaches chi = 4 on "
+                           "397 vertices where the Moser spindle does it on "
+                           "SEVEN -- fifty-seven times over -- and G reaches "
+                           "chi = 5 on 1581 where about five hundred suffice, "
+                           "three times over.  The graph that pins 211 pairs "
+                           "is the far more redundant of the two.  Criticality "
+                           "was the wrong variable; see "
+                           "THE_SLACK_IS_IN_THE_COLOURS.",
     "the_tool": "an unsatisfiable core over per-vertex selectors, which "
                 "reduces in one solve what vertex-by-vertex deletion would "
                 "take 1581 to do",
@@ -4326,4 +4335,46 @@ THE_CONTROL_FINDS_DE_GREY_FIRST = {
               "proof at four colours runs over ten minutes on these graphs "
               "and what it would confirm is a published theorem.  Agreement "
               "is the discovery step and is what the control tests.",
+}
+
+
+# What is left once redundancy is ruled out: the plane has no clique bigger
+# than three, and at five colours that leaves two spare instead of one.
+#
+# chi(Sa) is 4 -- measured, not assumed: not 3-colourable in 21 conflicts,
+# 4-colourable in 909 -- and chi(Sa u rho(Sa)) is 4 as well, at 5491.  So the
+# four-colour core sits exactly at its own threshold, as G does at five.  That
+# much of the criticality story survives.  The rest does not: Sa is
+# fifty-seven times the minimum for chi = 4 and G is three times the minimum
+# for chi = 5, so the graph that pins pairs is the more redundant one by a
+# factor of twenty.
+#
+# The difference that is left is the plane's, not the graph's.  A unit-distance
+# graph in the plane has no clique larger than a triangle.  Against four
+# colours a triangle spends three and leaves one spare; against five it spends
+# three and leaves two.  Every local structure that propagates constraint --
+# triangle, rhombus, spindle -- is working against twice the slack, and the
+# measurements say so uniformly: at four colours six cross edges pin 211 pairs
+# and a single cross edge pins 22, while at five colours 812 cross edges pin
+# nothing at all.
+#
+# This is an explanation and not a theorem.  What it is fitted to is every
+# negative in this file, and what it predicts is that no amount of ingenuity
+# with rotations of these particular graphs will close the gap -- the search
+# has to find local structure that constrains five colours, which the plane
+# does not obviously provide.
+THE_SLACK_IS_IN_THE_COLOURS = {
+    "measured": {"chi(S)": 3, "chi(Sa)": 4, "chi(Sa u rho(Sa))": 4,
+                 "conflicts": {"Sa at 4": 909, "Sa u rho(Sa) at 4": 5491,
+                               "G at 5": 6410, "G* at 5": 51628}},
+    "redundancy_ruled_out": {"Sa": "397 vertices for chi = 4, against 7 for "
+                                   "the Moser spindle -- 57x",
+                             "G": "1581 for chi = 5, against about 500 -- 3x",
+                             "so": "the pinning graph is the redundant one"},
+    "what_is_left": "the plane's clique number is 3.  Four colours leave one "
+                    "spare on a triangle, five leave two.",
+    "the_evidence_it_fits": {"4 colours": "6 cross edges pin 211 pairs; 1 "
+                                          "cross edge pins 22",
+                             "5 colours": "812 cross edges pin 0"},
+    "status": "an explanation fitted to the negatives, not a theorem",
 }

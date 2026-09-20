@@ -3617,6 +3617,60 @@ overlaps `G*` with itself most — 6937 shared points, a third of a copy,
 against 73 for `D = 4` — and its spindled union is the *easiest* of the three
 to colour. Overlap does not predict hardness either.
 
+## The control, and what it rules out
+
+A negative is worth what the method behind it is worth, so the pivot scan was
+run again on `Sa` at four colours, unchanged: every pivot orbit, every
+rational closable ring about it, the rotation carrying that ring to distance
+1, the same twelve sampled colourings and the same bucketed agreement filter.
+
+The first union it looked at:
+
+```
+pivot 0, D = 4: 793 points, 6 cross edges, 211 agree, 28 closable
+```
+
+Pivot 0 is the origin, `D = 4` is de Grey's ring, and 793 points with six
+cross edges is `Sa ∪ Sb` exactly. **The scan rediscovers his construction
+unprompted, as the first thing it tries** — and finds others besides: 256
+agreeing pairs at pivot 7 with `D = 3`, 209 at `D = 1/3`, 148 at `D = 5/9`,
+and 22 from a union carrying a *single* cross edge.
+
+Against which, at five colours: 12 199 (pivot, ring) candidates over `G`, 44
+distinct rings that actually bite, exact cross counts to 812, and **zero**
+agreeing pairs in all but one — which had one, at a distance that cannot be
+closed.
+
+So the search is not what fails. The negative at five colours is a statement
+about five colours.
+
+## Why, as far as the measurements reach
+
+The first explanation was criticality: `Y` is nearly 4-critical, so its
+colourings are scarce, while `G` is 5-chromatic on 1581 vertices where about
+500 suffice. It does not survive contact with the numbers.
+
+> **Withdrawn.** `χ(Sa) = 4`, measured — not 3-colourable in 21 conflicts,
+> 4-colourable in 909 — so the four-colour core does sit at its threshold, as
+> `G` does at five. But `Sa` reaches `χ = 4` on **397** vertices where the
+> Moser spindle does it on **seven**, fifty-seven times over, while `G`
+> reaches `χ = 5` on 1581 where ~500 suffice, three times over. The graph
+> that pins 211 pairs is the more redundant *by a factor of twenty*.
+> Redundancy is not the variable.
+
+What is left is the plane's, not the graph's. A unit-distance graph in the
+plane has no clique larger than a triangle. Against four colours a triangle
+spends three and leaves one spare; against five it spends three and leaves
+two. Every local structure that propagates constraint — triangle, rhombus,
+spindle — works against twice the slack, and the measurements agree
+uniformly: at four colours six cross edges pin 211 pairs and one cross edge
+pins 22, while at five colours 812 pin nothing.
+
+That is an explanation fitted to the negatives, not a theorem. What it
+predicts is that no amount of ingenuity with rotations of *these* graphs
+closes the gap: the search has to find local structure that constrains five
+colours, and the plane does not obviously provide any.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
