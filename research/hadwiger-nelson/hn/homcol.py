@@ -45,7 +45,8 @@ from math import gcd
 from typing import List, Optional, Sequence, Tuple
 
 __all__ = ["edge_vectors", "has_homomorphism", "screen", "minimum_blocking_set",
-           "cyclotomic_can_block", "orbit_can_block",
+           "cyclotomic_can_block", "orbit_can_block", "periodic_screen",
+           "cayley_chromatic",
            "cyclotomic_chain_closes",
            "denominator_29_directions"]
 
@@ -1448,3 +1449,123 @@ CORE_COLLAPSE_WAS_PREDICTED_WRONG = {
     "lesson": "a prediction about a critical core has now failed twice here, "
               "in two different constructions",
 }
+
+
+# -- the gate, strengthened: every finite abelian quotient ------------------
+#
+# A coset colouring is the case G = Z/5 of something much larger. For ANY
+# finite abelian G and homomorphism phi from the edge module M to G with
+# 0 not in phi(D), colour v by the colour of phi(v - v0) in a proper colouring
+# of the Cayley graph Cay(G, phi(D)). Adjacent vertices differ by an element
+# of D, phi sends it to a nonzero connection element, so the colours differ:
+#
+#     chi(Gamma) <= chi(Cay(G, phi(D)))  for every such phi,
+#
+# and therefore
+#
+#     EVERY 6-CHROMATIC UNIT-DISTANCE GRAPH HAS chi(Cay(G, phi(D))) >= 6
+#     FOR EVERY FINITE ABELIAN QUOTIENT.
+#
+# Blocking is the bottom rung. At G = Z/5, phi(D) missing 0 means the Cayley
+# graph is the complete graph K_5, whose chromatic number is exactly 5 -- so
+# ANY valid phi settles it, which is why "no phi to Z/5" was the right
+# condition. Above 5 the Cayley graph is no longer complete and its chromatic
+# number has to be computed, so the screen keeps biting after blocking stops.
+#
+# `periodic_screen` runs it by CEGAR: solve for a phi, colour its Cayley
+# graph, and if that needs more than five colours exclude this phi and solve
+# again. UNSAT at a modulus means no phi exists there at all -- blocking, for
+# that n. A hit at any modulus proves the graph 5-colourable outright, and no
+# amount of blocking at 5 can save it.
+
+STRONGER_GATE = {
+    "statement": "chi(Gamma) <= chi(Cay(G, phi(D))) for every finite abelian "
+                 "quotient phi with 0 not in phi(D)",
+    "consequence": "a 6-chromatic unit-distance graph has Cayley chromatic "
+                   "number at least 6 in every finite abelian quotient",
+    "blocking_is_the_case": "G = Z/5, where phi(D) missing 0 makes the Cayley "
+                            "graph K_5 and any valid phi settles it",
+    "why_it_keeps_biting": "above 5 the Cayley graph is not complete, so its "
+                           "chromatic number must be computed rather than "
+                           "read off",
+}
+
+
+def cayley_chromatic(n: int, conn, cap: int = 5) -> Optional[int]:
+    """chi(Cay(Z/n, conn)) when it is at most `cap`, else None."""
+    from pysat.solvers import Solver
+
+    S = {s % n for s in conn} | {(-s) % n for s in conn}
+    S.discard(0)
+    edges = [(v, (v + s) % n) for v in range(n) for s in S if v < (v + s) % n]
+    for k in range(2, cap + 1):
+        cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
+        for a, b in edges:
+            for c in range(k):
+                cls.append([-(1 + a * k + c), -(1 + b * k + c)])
+        with Solver(name="cd19", bootstrap_with=cls) as sv:
+            if sv.solve():
+                return k
+    return None
+
+
+def periodic_screen(vecs: Sequence[Sequence[int]], n: int, cap: int = 5,
+                    rounds: int = 200) -> dict:
+    """Look for a periodic `cap`-colouring through the quotient Z/n.
+
+    Returns {"colourable": True, "phi": ..., "cayley_chi": k} on a hit, or
+    {"colourable": False, "phis_tried": t, "exhausted": bool}. `exhausted`
+    means the solver ran out of homomorphisms rather than out of rounds -- at
+    n = 5 that is exactly blocking.
+    """
+    from pysat.formula import IDPool
+    from pysat.solvers import Solver
+
+    vecs = [tuple(v) for v in vecs]
+    dim = len(vecs[0])
+    pool = IDPool()
+    cls = []
+
+    def phi(i, val):
+        return pool.id(("phi", i, val))
+
+    for i in range(dim):
+        cls.append([phi(i, v) for v in range(n)])
+        for a in range(n):
+            for b in range(a + 1, n):
+                cls.append([-phi(i, a), -phi(i, b)])
+    for t, d in enumerate(vecs):
+        idx = [i for i in range(dim) if d[i] % n]
+        if not idx:
+            return {"colourable": False, "phis_tried": 0, "exhausted": True,
+                    "reason": f"an edge vector is divisible by {n}"}
+
+        def s(j, val):
+            return pool.id(("s", t, j, val))
+
+        for val in range(n):
+            cls.append([-phi(idx[0], val), s(0, (val * d[idx[0]]) % n)])
+        for j in range(1, len(idx)):
+            for prev in range(n):
+                for val in range(n):
+                    cls.append([-s(j - 1, prev), -phi(idx[j], val),
+                                s(j, (prev + val * d[idx[j]]) % n)])
+        cls.append([-s(len(idx) - 1, 0)])
+
+    tried = 0
+    with Solver(name="cd19", bootstrap_with=cls) as sv:
+        for _ in range(rounds):
+            if not sv.solve():
+                return {"colourable": False, "phis_tried": tried,
+                        "exhausted": True}
+            m = set(sv.get_model())
+            c = tuple(next(v for v in range(n) if phi(i, v) in m)
+                      for i in range(dim))
+            tried += 1
+            conn = {sum(x * y for x, y in zip(c, d)) % n for d in vecs}
+            k = cayley_chromatic(n, conn, cap)
+            if k is not None:
+                return {"colourable": True, "phi": c, "cayley_chi": k,
+                        "modulus": n, "phis_tried": tried}
+            sv.add_clause([-phi(i, c[i]) for i in range(dim)])
+    return {"colourable": False, "phis_tried": tried, "exhausted": False}

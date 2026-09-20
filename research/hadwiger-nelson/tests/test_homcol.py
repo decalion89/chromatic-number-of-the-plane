@@ -774,3 +774,51 @@ def test_chain_closes_for_every_m_with_V_positive():
         assert ok, m
         tested += 1
     assert tested > 20, tested
+
+
+def test_cayley_chromatic_basics():
+    from hn.homcol import cayley_chromatic
+
+    assert cayley_chromatic(5, {1, 2, 3, 4}) == 5      # K_5
+    assert cayley_chromatic(7, {1}) == 3               # odd cycle
+    assert cayley_chromatic(8, {1}) == 2               # even cycle
+    assert cayley_chromatic(9, {1, 2, 3, 4}, cap=5) is None
+
+
+def test_periodic_screen_agrees_with_blocking_at_five():
+    """At n = 5 the Cayley graph is K_5, so the screen IS blocking.
+
+    Sa has a coset colouring, so one phi settles it; the denominator-29
+    directions block, so the solver exhausts with no phi at all.
+    """
+    from hn.degrey import build_Sa
+    from hn.graph import build_graph
+    from hn.homcol import (denominator_29_directions, edge_vectors,
+                           has_homomorphism, periodic_screen)
+
+    v = edge_vectors(build_graph(build_Sa()))
+    got = periodic_screen(v, 5)
+    assert got["colourable"] is True
+    assert got["cayley_chi"] == 5
+    assert has_homomorphism(v, 5)[0] is not None
+
+    d = denominator_29_directions()
+    got = periodic_screen(d, 5)
+    assert got["colourable"] is False
+    assert got["exhausted"] is True and got["phis_tried"] == 0
+    assert has_homomorphism(d, 5)[0] is None
+
+
+def test_the_stronger_gate_keeps_biting_above_five():
+    """n = 6 is decided outright: every homomorphism there needs 6 colours.
+
+    Blocking says nothing about quotients above 5, where the Cayley graph is
+    no longer complete -- so this is a strictly stronger condition, and the
+    denominator-29 directions pass it too.
+    """
+    from hn.homcol import denominator_29_directions, periodic_screen
+
+    got = periodic_screen(denominator_29_directions(), 6, cap=5, rounds=100)
+    assert got["colourable"] is False
+    assert got["exhausted"] is True
+    assert got["phis_tried"] > 0

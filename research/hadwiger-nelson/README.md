@@ -2427,6 +2427,45 @@ a replacement only when no pair `(B_i, B_j)` other than the closing
 Recorded because a prediction about a critical core has now failed twice here,
 in two different constructions. They are not worth making.
 
+## The gate, strengthened: every finite abelian quotient
+
+A coset colouring is the bottom rung of something much larger. For **any**
+finite abelian `G` and homomorphism `phi` from the edge module `M` to `G` with
+`0` not in `phi(D)`, colour `v` by the colour of `phi(v - v0)` in a proper
+colouring of the Cayley graph `Cay(G, phi(D))`. Adjacent vertices differ by an
+element of `D`, `phi` sends it to a nonzero connection element, so their
+colours differ:
+
+    chi(Gamma) <= chi(Cay(G, phi(D)))     for every such phi
+
+> **Every 6-chromatic unit-distance graph has Cayley chromatic number at least
+> 6 in every finite abelian quotient.**
+
+Blocking is the case `G = Z/5`: there `phi(D)` missing `0` makes the Cayley
+graph the complete graph `K_5`, whose chromatic number is exactly 5, so *any*
+valid `phi` settles it. That is why "no `phi` to `Z/5`" was the right
+condition — and why it is only the first of a family. Above 5 the Cayley graph
+is no longer complete and its chromatic number has to be computed, so the
+screen keeps biting after blocking stops.
+
+`periodic_screen(vecs, n)` runs it by CEGAR: solve for a `phi`, colour its
+Cayley graph, and if that needs more than five colours, exclude this `phi` and
+solve again. `exhausted` with no `phi` at all is exactly blocking, for that
+`n`. A hit at any modulus proves the graph 5-colourable outright, and no
+amount of blocking at 5 can save it.
+
+Run on the 300 denominator-29 directions, which block at 5:
+
+| modulus | verdict |
+|---|---|
+| 5 | no homomorphism at all — blocking |
+| 6 | **exhausted**: all 48 homomorphisms need more than 5 colours |
+| 7, 8, 9, 10 | 60 homomorphisms tried, every one needing more than 5 |
+
+So the set survives the stronger gate as far as it has been pushed. That is
+worth more than blocking alone: it is the condition an actual 6-chromatic
+candidate would have to meet, and it is checkable one modulus at a time.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
