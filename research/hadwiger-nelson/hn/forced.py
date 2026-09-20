@@ -1508,3 +1508,46 @@ BOUNDARY_PRESSURE_HAS_NO_MARGIN = (
     "pressure strictly above k - r, which is what four colours has and five "
     "does not"
 )
+
+
+# -- and how far that is from happening on G ------------------------------
+#
+# rho(Sa,4) = 7 works because the pressure at the pivot is 3: N(p) always
+# carries three colours, so p together with a small piece of its circle
+# already forces all four. ONE pivot suffices at four colours.
+#
+# At five it cannot. Pressure is 2 everywhere, so {p} u N(p) forces three
+# colours at most -- the pivot's own plus the circle's two -- and three is not
+# five. Measured on de Grey's G, where every test is a single SAT call and
+# comes back in under two seconds:
+#
+#     one hub's closed neighbourhood      61 vertices   not forcing
+#     adjacent hub pairs                  38 vertices   not forcing
+#     the 133 highest-degree closed neighbourhoods, united:
+#                                       1201 vertices   NOT FORCING
+#
+# Seventy-six per cent of the graph, and a 5-colouring still exists that
+# leaves one colour off all of it. Against seven vertices out of 397 at four
+# colours.
+#
+# What that does and does not prove. A superset of a forcing set is forcing,
+# so a non-forcing set contains NO 5-chromatic subgraph: any 5-chromatic
+# subgraph of G must use a vertex outside those 1201. It does not bound rho
+# itself, since some other set of that size might force.
+#
+# It also bears on the criticality question from an unexpected side. If G had
+# a small 5-chromatic subgraph it would sit in the dense part, and this says
+# it does not -- which is consistent with G being vertex-critical after all,
+# and with the published smaller 5-chromatic graphs being separate
+# constructions rather than subgraphs of this one.
+
+ONE_PIVOT_CANNOT_REACH_FIVE = {
+    "mechanism_at_4": "pressure 3 makes {p} u N(p) force all four colours, "
+                      "which is why rho(Sa,4) = 7",
+    "at_5": "pressure 2 makes {p} u N(p) force three, and three is not five",
+    "measured_not_forcing": {"one_hub": 61, "adjacent_pair": 38,
+                             "133_neighbourhoods": 1201},
+    "graph_size": 1581,
+    "consequence": "a superset of a forcing set is forcing, so no 5-chromatic "
+                   "subgraph of G fits inside those 1201 vertices",
+}

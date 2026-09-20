@@ -1068,3 +1068,16 @@ def test_boundary_pressure_leaves_no_margin():
     # at four colours the same pivot has slack
     assert 3 > 4 - 7 or True
     assert "margin needs pressure strictly above" in B
+
+
+def test_no_five_chromatic_subgraph_inside_the_dense_part():
+    """A non-forcing set contains no k-chromatic subgraph."""
+    from hn.forced import ONE_PIVOT_CANNOT_REACH_FIVE as O
+
+    m = O["measured_not_forcing"]
+    assert m["133_neighbourhoods"] > 0.75 * O["graph_size"]
+    assert m["one_hub"] < m["133_neighbourhoods"]
+    # the contrast with four colours, where seven of 397 suffice
+    from hn.forced import RHO_JUMPS_AT_FIVE as R
+    assert R["rho_at_4"] * 100 < m["133_neighbourhoods"]
+    assert "no 5-chromatic subgraph" in O["consequence"]

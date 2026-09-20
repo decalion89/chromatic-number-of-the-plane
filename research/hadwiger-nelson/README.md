@@ -1216,6 +1216,37 @@ of around five hundred — hopeless. **It does not.** It asks for ambient rigidi
 of exactly the kind Sa already exhibits at four colours, with a set that is
 nearly edgeless.
 
+### One pivot cannot reach five, and nor can seventy-six per cent of the graph
+
+ρ(Sa, 4) = 7 has a mechanism behind it: the pressure at the pivot is 3, so
+N(p) always carries three colours, and `p` together with a small piece of its
+circle already forces all four. **One pivot suffices at four colours.**
+
+At five it cannot. Pressure is 2 everywhere, so `{p} ∪ N(p)` forces three
+colours at most — the pivot's own plus the circle's two — and three is not
+five. Measured on de Grey's G, where each test is a single SAT call returning
+in under two seconds:
+
+| set | vertices | forcing |
+|---|--:|:--:|
+| one hub's closed neighbourhood | 61 | no |
+| adjacent hub pairs | 38 | no |
+| the 133 highest-degree closed neighbourhoods, united | **1201** | **no** |
+
+Seventy-six per cent of the graph, and a 5-colouring still exists leaving one
+colour off all of it — against **seven vertices out of 397** at four colours.
+
+**What that proves, and what it does not.** A superset of a forcing set is
+forcing, so a non-forcing set contains *no* 5-chromatic subgraph: any
+5-chromatic subgraph of G must use a vertex outside those 1201. It does *not*
+bound ρ itself, since some other set of that size might force.
+
+It also bears on the criticality question from an unexpected side. If G had a
+small 5-chromatic subgraph it would sit in the dense part, and this says it
+does not — consistent with G being vertex-critical after all, and with the
+published smaller 5-chromatic graphs being separate constructions rather than
+subgraphs of this one.
+
 ## Corrections to my own claims, kept rather than edited away
 
 - **"Pressure > 2 at k = 5 *requires* the confined set to be 4-chromatic."**
