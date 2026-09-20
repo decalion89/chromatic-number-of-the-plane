@@ -3546,6 +3546,77 @@ down and its geometry is exact one level up. What fails is that `G*`'s
 the symmetry, which was the one structural lever available, did not make them
 so.
 
+## The census closes at zero, and it was the wrong thing to count
+
+All 399 translates are done — each unioned with `G`, each interrogated for a
+forced pair at five colours — and the answer is zero. Not a budget running
+out: every candidate pair in every union was separated by an explicit sampled
+colouring, so each negative is witnessed, and monotonicity extends it to every
+subgraph of every union. Cross counts ran from 1552 at the top of the census
+down to 126 at the bottom; the candidate sets, 43 000 to 46 000 pairs a union,
+collapsed to nothing in eight to fifty-five samples. 4773 seconds for the lot.
+
+And the quantity being counted was never the right one. `Z₄ = Sa ∪ ρ(Sa)` has
+3954 edges where two loose copies of `Sa` have 3948 — so de Grey's forcing at
+four colours is produced by **six** cross edges. The translate unions here
+carried 1552 and the stacks 4306.
+
+The obvious repair is that six edges can only close a structure that is nearly
+closed already, so the real quantity would be how constrained a single copy
+is. That is wrong too, and the measurement is flat about it:
+
+| graph | colours | pairs agreeing in all 14 samples |
+|---|---|---|
+| `Sa` | 4 | **0** |
+| `Sa ∪ ρ(Sa)` | 4 | **75** (35 closable, incl. all 6 antipodal) |
+| `Y` | 4 | 20 (1 closable — the forced one) |
+| `Sa` | 5 | 0 |
+| `G` | 5 | 0 |
+| `G*` | 5 | 0 |
+
+`Sa` alone is completely free. Nothing is nearly closed. Six edges take a
+graph with no agreeing pairs at all to one with seventy-five, and the pair de
+Grey needs is among them.
+
+So forcing does not accumulate; it arrives. No quantity measured anywhere in
+this search — cross edges, agreement, size, solver conflicts — rises towards
+it beforehand, which means there is no gradient for a search to climb. That is
+a real constraint on method, not a complaint: candidates have to be *proposed*
+by structure and then tested, and the ring criterion is exactly such a
+proposer.
+
+That `G*` is free at five colours is therefore not evidence against it. `Sa`
+is equally free at four, and forcing still arrived when it was rotated.
+
+## Past where the chain stopped: adjoining √17
+
+de Grey's doubling chain is `D = 1, 3, 4, 16`, and it halts at 16 because the
+next step wants `√(16·16 - 1) = √255 = √(3·5·17)` and his field has no `√17`.
+That field was forced on him by the chain, not chosen, and nothing obliges a
+search to stay inside it.
+
+`G*`'s ring `D = 16` pays its two radicals separately. `ρ` needs
+`√(4·16-1) = √63 = 3√7`, already present — `ρ` is `31/32 + i(3/32)√7`, the
+same turn that served as the *spindle* at `D = 4`. Only the spindle of the
+antipodal pair, at squared distance 64, needs `√255`. So the extension buys
+one step at the very end, and the copy it produces is still an exact
+unit-distance graph: its coordinates live in a 32-dimensional field instead of
+a 16-dimensional one.
+
+| ring | field | shared | `Z` | `W` | edges | conflicts | 5-colourable |
+|---|---|---|---|---|---|---|---|
+| `D = 4` | `K` | 73 | 27 673 | 55 345 | 314 283 | 842 373 | yes |
+| `D = 17/2` | `K` | — | 27 745 | 55 489 | — | 169 887 | yes |
+| `D = 16` | `K(√17)` | 6 937 | 20 809 | 41 617 | 221 353 | 136 144 | yes |
+
+All three land exactly — `A` and `σ(A)` at squared distance 1 every time — and
+all three colour. The structural programme on `G*` is exhausted, cleanly.
+
+One more intuition dies on the way out. `D = 16` is the ring whose rotation
+overlaps `G*` with itself most — 6937 shared points, a third of a copy,
+against 73 for `D = 4` — and its spindled union is the *easiest* of the three
+to colour. Overlap does not predict hardness either.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

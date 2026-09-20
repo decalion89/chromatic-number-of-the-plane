@@ -4114,7 +4114,14 @@ FORCING_ARRIVES_IT_DOES_NOT_ACCUMULATE = {
                                  "forced": 0},
     "agreement_before_and_after": {"Sa at 4": 0, "Sa u rho(Sa) at 4": 75,
                                    "of those closable": 35, "Y at 4": 20,
-                                   "Sa at 5": 0, "G at 5": 0},
+                                   "Sa at 5": 0, "G at 5": 0,
+                                   "G* at 5": 0},
+    "G_star_is_free_too": "0 agreeing pairs in 14 samples, on 13873 points.  "
+                          "That is not evidence against it: Sa is equally "
+                          "free and forcing still arrived when it was "
+                          "rotated.  Freedom before the rotation is the "
+                          "normal state, which is exactly why nothing "
+                          "measured beforehand predicts what follows.",
     "the_refuted_repair": "that a single copy must already be nearly closed.  "
                           "Sa has zero agreeing pairs; it is completely free.",
     "reading": "forcing is not the top of a slope.  Six edges move a graph "
@@ -4147,4 +4154,42 @@ THE_CENSUS_IS_COMPLETE_AND_EMPTY = {
     "samples_to_empty": "8 to 55",
     "cost": "4773 seconds for all 399, about twelve seconds a union",
     "reach": "monotonicity extends it to every subgraph of every union",
+}
+
+
+# Every doubly-usable ring of G*, including the one that needed a new field.
+#
+# The criterion gives G* two rings over de Grey's own field and a third once
+# sqrt(17) is adjoined -- which is exactly the root his doubling chain stopped
+# for.  D = 16 costs its two radicals separately: rho needs sqrt(63) = 3 sqrt7,
+# already present, and only the spindle of the antipodal pair at squared
+# distance 64 needs sqrt(255) = sqrt(3*5*17).  So the extension buys one step
+# at the very end, and the copy it produces is still an exact unit-distance
+# graph, with coordinates in a 32-dimensional field instead of a 16.
+#
+# All three spindle to 5-colourable graphs.
+#
+# The numbers refuse one more intuition on the way out.  D = 16 is the ring
+# whose rotation overlaps G* with itself most -- 6937 shared points, a third of
+# a copy, against 73 for D = 4 -- and its spindled union is the EASIEST of the
+# three to colour, 136144 conflicts against 842373.  Overlap does not predict
+# hardness either.
+EVERY_DOUBLY_USABLE_RING_OF_GSTAR = {
+    "D=4": {"field": "Q(r3,r5,r7,r11)", "shared": 73, "Z": 27673,
+            "W": 55345, "edges": 314283, "conflicts": 842373,
+            "five_colourable": True},
+    "D=17/2": {"field": "Q(r3,r5,r7,r11)", "Z": 27745, "W": 55489,
+               "conflicts": 169887, "five_colourable": True},
+    "D=16": {"field": "Q(r3,r5,r7,r11,r17)", "shared": 6937, "Z": 20809,
+             "W": 41617, "edges": 221353, "conflicts": 136144,
+             "five_colourable": True,
+             "note": "the ring de Grey's chain stopped at; rho is free over "
+                     "his field and only the spindle needs sqrt(255)"},
+    "overlap_does_not_predict": "the most overlapping ring gives the easiest "
+                                "union: 6937 shared points and 136144 "
+                                "conflicts, against 73 shared and 842373",
+    "verdict": "the structural programme on G* is exhausted, and cleanly.  "
+               "The criterion proposed three candidates, the geometry landed "
+               "exactly on all three -- A and sigma(A) at squared distance 1 "
+               "every time -- and all three colour.",
 }
