@@ -1336,3 +1336,22 @@ def test_an_escape_found_over_the_ambient_lattice_is_always_genuine():
     assert all(sum(p * x for p, x in zip(phi, d)) % 5 for d in D)
     red = on_lattice(D)
     assert len(red[0]) == 16, "rank 16 inside dimension 32"
+
+
+def test_the_gate_verdict_needs_no_hermite_reduction():
+    """Full rank mod 5 makes the ambient test correct at the gate, by theorem.
+
+    Restriction `Hom(Z^d, Z/n) -> Hom(M, Z/n)` is onto when no invariant
+    factor of `M` shares a prime with `n`, and that is exactly the rank
+    surviving reduction mod each such prime.  The denominator-29 set has full
+    rank at every modulus, so none of its verdicts could ever have moved --
+    which is why `U`, whose blocking comes from a rotated copy of it, needed
+    no revisiting.
+    """
+    from hn.homcol import (_rank_mod, _rank_q, denominator_29_directions,
+                           saturated_at)
+
+    D = denominator_29_directions(3)
+    assert _rank_q(D) == 12
+    assert all(_rank_mod(D, p) == 12 for p in (2, 3, 5))
+    assert all(saturated_at(D, n) for n in (2, 3, 4, 5))

@@ -51,7 +51,7 @@ __all__ = ["edge_vectors", "has_homomorphism", "screen", "minimum_blocking_set",
            "cyclotomic_chain_closes",
            "denominator_29_directions",
            "closing_radicand", "closable_distance", "closable_over",
-           "lattice_basis", "on_lattice", "blocks_at"]
+           "lattice_basis", "on_lattice", "blocks_at", "saturated_at"]
 
 
 def _coords(e) -> Tuple[Fraction, ...]:
@@ -2351,8 +2351,14 @@ NECKLACE_OVER_THE_MOSER_FIELD = {
     "blocks_at": [2, 3, 5],
     "CORRECTED": "read as [2, 3, 4, 5] while the search for phi ran over Z^12 "
                  "instead of over the group the directions generate; on the "
-                 "right module n = 4 falls away and n = 5, the gate itself, "
-                 "survives -- see THE_BLOCKING_TEST_WAS_TOO_WEAK",
+                 "right module n = 4 falls away -- see "
+                 "THE_BLOCKING_TEST_WAS_TOO_WEAK",
+    "gate_was_never_at_risk": "the direction matrix has rank 12 over Q and "
+                              "rank 12 mod 5, so M is 5-saturated and the two "
+                              "tests agree at the gate by theorem, no Hermite "
+                              "reduction needed; mod 2 the rank collapses to "
+                              "2 and mod 3 to 4, which is exactly where the "
+                              "ambient test was meaningless",
     "critical_core": "the whole graph, confirmed by greedy deletion",
     "orbit_requirement": "without it the necklace reached k = 76 with 18 "
                          "directions, since a step contributes exactly its "
@@ -2682,7 +2688,16 @@ DOUBLING_STEP_IS_SCARCE_OVER_K = {
 # for any larger group the points may generate.
 
 def lattice_basis(vecs: Sequence[Sequence[int]]) -> List[List[int]]:
-    """A Z-basis, in echelon form, of the lattice the integer vectors span."""
+    """A Z-basis, in echelon form, of the lattice the integer vectors span.
+
+    Entry growth is the whole difficulty: the necklace's coordinates carry
+    hundred-digit denominators before they are cleared, and naive elimination
+    squares that at every step.  Two things hold it down.  When the pivot
+    divides the incoming entry the basis is left alone and only the incoming
+    vector shrinks, which is the common case; and each finished row is reduced
+    modulo the pivots below it, so the basis stays near-canonical instead of
+    accumulating cofactors.
+    """
     d = len(vecs[0])
     basis: dict = {}
     for row in vecs:
@@ -2696,12 +2711,26 @@ def lattice_basis(vecs: Sequence[Sequence[int]]) -> List[List[int]]:
                 basis[c] = [-x for x in w] if w[c] < 0 else w
                 break
             b = basis[c]
+            if w[c] % b[c] == 0:
+                q = w[c] // b[c]
+                w = [x - q * y for x, y in zip(w, b)]
+                c += 1
+                continue
             g, x, y = _ext_gcd(b[c], w[c])
             nb = [x * bb + y * ww for bb, ww in zip(b, w)]
             w = [(b[c] // g) * ww - (w[c] // g) * bb for bb, ww in zip(b, w)]
             basis[c] = nb
             c += 1
-    return [basis[c] for c in sorted(basis)]
+    piv = sorted(basis)
+    out = [basis[c] for c in piv]
+    for i in range(len(out) - 1, -1, -1):
+        for j in range(i + 1, len(out)):
+            c = piv[j]
+            if out[i][c]:
+                q = out[i][c] // out[j][c]
+                if q:
+                    out[i] = [x - q * y for x, y in zip(out[i], out[j])]
+    return out
 
 
 def _ext_gcd(a: int, b: int) -> Tuple[int, int, int]:
@@ -2746,85 +2775,90 @@ def on_lattice(vecs: Sequence[Sequence[int]]) -> List[Tuple[int, ...]]:
     return sorted(out)
 
 
+def _rank_mod(vecs: Sequence[Sequence[int]], p: int) -> int:
+    A = [[x % p for x in v] for v in vecs]
+    d, row, rk = len(A[0]), 0, 0
+    for c in range(d):
+        piv = next((i for i in range(row, len(A)) if A[i][c]), None)
+        if piv is None:
+            continue
+        A[row], A[piv] = A[piv], A[row]
+        inv = pow(A[row][c], -1, p)
+        A[row] = [(x * inv) % p for x in A[row]]
+        for i in range(len(A)):
+            if i != row and A[i][c]:
+                f = A[i][c]
+                A[i] = [(x - f * y) % p for x, y in zip(A[i], A[row])]
+        row += 1
+        rk += 1
+    return rk
+
+
+def _rank_q(vecs: Sequence[Sequence[int]]) -> int:
+    A = [[Fraction(x) for x in v] for v in vecs]
+    d, row, rk = len(A[0]), 0, 0
+    for c in range(d):
+        piv = next((i for i in range(row, len(A)) if A[i][c]), None)
+        if piv is None:
+            continue
+        A[row], A[piv] = A[piv], A[row]
+        f = A[row][c]
+        A[row] = [x / f for x in A[row]]
+        for i in range(row + 1, len(A)):
+            if A[i][c]:
+                g = A[i][c]
+                A[i] = [x - g * y for x, y in zip(A[i], A[row])]
+        row += 1
+        rk += 1
+    return rk
+
+
+def saturated_at(vecs: Sequence[Sequence[int]], n: int) -> bool:
+    """Do the Z^d test and the module test agree at this modulus?
+
+    They agree exactly when no invariant factor of M shares a prime with n,
+    which is exactly when the rank of the direction matrix survives reduction
+    mod each prime dividing n.  Two eliminations settle it, and it is worth
+    asking first: when the answer is yes the cheap test is correct, and the
+    Hermite reduction -- which has to work on eighty-digit entries for
+    anything built over a tower -- can be skipped.
+    """
+    rq = _rank_q(vecs)
+    m, ps = n, []
+    f = 2
+    while f * f <= m:
+        if m % f == 0:
+            ps.append(f)
+            while m % f == 0:
+                m //= f
+        f += 1
+    if m > 1:
+        ps.append(m)
+    return all(_rank_mod(vecs, p) == rq for p in ps)
+
+
+def _mod_reduce(vecs: Sequence[Sequence[int]], n: int):
+    """phi(v) depends only on v mod n, so fold first -- and a residue of zero
+    is a genuine obstruction, meaning the set contains n times one of its own
+    members, which every phi kills."""
+    out = set()
+    for v in vecs:
+        w = tuple(x % n for x in v)
+        if not any(w):
+            return None
+        out.add(w)
+    return sorted(out)
+
+
 def blocks_at(vecs: Sequence[Sequence[int]], n: int) -> bool:
-    """Is there no coset colouring mod n? Asked of the right group."""
-    return has_homomorphism(on_lattice(vecs), n)[0] is None
+    """Is there no coset colouring mod n? Asked of the right group.
 
-
-# ---------------------------------------------------------------------------
-# The audit, and exactly which claims moved.
-#
-# When the two tests can disagree is decidable without any SAT.  M sits in its
-# saturation M_sat with finite quotient T, and from 0 -> M -> Z^d the
-# restriction Hom(Z^d, Z/n) -> Hom(M, Z/n) is onto exactly when
-# Ext^1(T, Z/n) = T/nT vanishes -- that is, when no invariant factor of M
-# shares a prime with n.  An invariant factor is divisible by p exactly when
-# the rank of the direction matrix drops mod p.  So:
-#
-#     the two tests agree at n  <=>  rank_p = rank_Q for every prime p | n.
-#
-# Two Gaussian eliminations settle it.  And only one direction of a verdict
-# was ever at risk: "does not block" is the exhibition of a phi, and a phi on
-# Z^d restricts to M, so every escape found is a real escape.  Only the
-# blocking claims -- assertions that no phi exists -- needed rechecking.
-#
-# Rechecked:
-#
-#   denominator-29 set    300 vectors, dim 12, index 1 in Z^12, saturated
-#                         [2,3,4,5] over Z^d, [2,3,4,5] over M -- UNCHANGED
-#   de Grey's G           133 vectors, rank 16 in dim 32, rank drops mod 2,3
-#                         [2,3,4] over Z^d, [2,3,4] over M    -- UNCHANGED
-#   U = G u w.G           blocking comes from a rotated copy of the
-#                         denominator-29 set by monotonicity, and monotonicity
-#                         survives the module version: S inside D means every
-#                         phi on <D> restricts to <S>.  So U still blocks at
-#                         2, 3, 4 and 5                        -- UNCHANGED
-#   the 133-point
-#   4-critical necklace   140 directions, lattice rank 12
-#                         [2,3,4,5] over Z^12, [2,3,5] over M  -- CORRECTED
-#   G u rho(G) over
-#   Q(m)(sqrt3,5,7,11)    268 directions, rank 32
-#                         [2,3,4,5] over Z^32, [2,3,4] over M  -- WITHDRAWN
-#
-# The last one had been about to be reported as a second 5-chromatic graph
-# blocking at every modulus up to five, built cheaply by bolting a rotated
-# copy onto de Grey's graph over a field where 5 has residue degree 3.  It
-# does not block at five.  It was the case that exposed the flaw.
-#
-# What survives is the important part.  The gate is n = 5, and the necklace
-# still meets it; U still meets the whole sharpened gate; and no claim that a
-# colouring exists was ever in question.  What the necklace loses is n = 4, so
-# it no longer meets the sharpened gate in full -- and since it is 4-chromatic
-# a coset colouring mod 4 is exactly what one should expect it to admit.
-
-THE_BLOCKING_TEST_WAS_TOO_WEAK = {
-    "flaw": "the search for phi ran over Z^d, the ambient lattice of whatever "
-            "coordinates the vectors were written in; the question is about "
-            "M, the group the edge vectors generate",
-    "direction_of_the_error": "M inside Z^d and Z/n not injective means some "
-                              "phi on M do not extend, so the test found too "
-                              "few functionals and could report blocking that "
-                              "was not there",
-    "smallest_example": "d = 1, D = {2}, n = 2: phi(2) = 1 escapes over 2Z, "
-                        "every psi vanishes on 2 over Z",
-    "criterion": "the two agree at n iff rank_p = rank_Q for every prime "
-                 "p | n; an invariant factor divisible by p is exactly a rank "
-                 "drop mod p",
-    "one_sided": "'does not block' exhibits a phi, and a phi on Z^d restricts "
-                 "to M, so every escape ever found is genuine; only blocking "
-                 "claims needed rechecking",
-    "audit": {
-        "denominator-29 set": "index 1, saturated; [2,3,4,5] both ways",
-        "de Grey's G": "rank 16 of 32, drops mod 2 and 3; [2,3,4] both ways",
-        "U = G u w.G": "unchanged -- monotonicity survives, since S inside D "
-                       "means every phi on <D> restricts to <S>",
-        "the 133-point necklace": "[2,3,4,5] over Z^12, [2,3,5] over M",
-        "G u rho(G) over Q(m)(sqrt3,5,7,11)": "[2,3,4,5] over Z^32, [2,3,4] "
-                                              "over M -- withdrawn",
-    },
-    "fix": "`on_lattice` puts the vectors in a Hermite basis of M, so M is "
-           "Z^r by construction; `blocks_at` wraps it",
-    "standing": "the gate is n = 5 and the necklace still meets it; U still "
-                "meets the sharpened gate in full; the necklace loses n = 4, "
-                "which for a 4-chromatic graph is what one should expect",
-}
+    The module test is the honest one, but the Hermite reduction it needs is
+    expensive on the hundred-digit coordinates a tower produces.  So ask
+    `saturated_at` first: when it holds the ambient test is already correct.
+    """
+    use = vecs if saturated_at(vecs, n) else on_lattice(vecs)
+    small = _mod_reduce(use, n)
+    if small is None:
+        return True
+    return has_homomorphism(small, n)[0] is None

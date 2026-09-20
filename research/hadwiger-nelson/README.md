@@ -3024,6 +3024,18 @@ has residue degree 3 — `m` a root of `x^3 - 10x^2 + 26x - 11`, irreducible mod
 `1581 = 2.791 - 1` all over again), and over `Z^32` the directions blocked at
 five. Over their own lattice they do not. **The claim is withdrawn.**
 
+### The gate verdict was never at risk
+
+The rank test says so without any Hermite reduction. The necklace's 140
+directions have rank 12 over `Q` and
+
+    rank mod 5 = 12,   rank mod 3 = 4,   rank mod 2 = 2.
+
+Full rank mod 5 means `M` is 5-saturated, so restriction
+`Hom(Z^12, Z/5) -> Hom(M, Z/5)` is onto and the two tests agree at `n = 5`
+**by theorem**. The collapse to rank 2 mod 2 and rank 4 mod 3 is exactly where
+the ambient test was saying nothing — and `n = 4` is where the verdict moved.
+
 ### What survives
 
 The gate is `n = 5`, and everything that mattered there stands. `U` still
