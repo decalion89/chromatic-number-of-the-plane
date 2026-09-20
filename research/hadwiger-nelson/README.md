@@ -2557,6 +2557,48 @@ root of `T^3 - 9T^2 + 14T + 8`, so its chord is
 **Irrational** — the first construction here meeting the condition the
 corollary demands of any 6-chromatic candidate.
 
+## A 4-critical blocked unit-distance graph
+
+The chain closed into a **necklace** is, as a graph, a cycle of `k` diamonds —
+each rhombus `B_{j-1}, M_j, M'_j, B_j` is `K_4` minus the edge
+`B_{j-1}B_j`, five edges — plus the closing edge `B_k B_0`. So it has
+
+    3k + 1 points and 5k + 1 edges, and nothing else,
+
+provided no two of its points accidentally land at distance 1. That proviso is
+checkable by counting, and the 47-step necklace meets it exactly: **142 points,
+236 edges**, and `5·47 + 1 = 236`. Every rhombus edge is forced to be present
+by construction, so a total of `5k+1` leaves room for no others.
+
+Then 4-criticality is a **proof**, not a prediction — which matters, since a
+prediction about a critical core has failed twice here.
+
+* `chi >= 4`: in each diamond `B_{j-1}, M_j, M'_j` is a triangle and `B_j` is
+  adjacent to both middles, so `c(B_j) = c(B_{j-1})`. All tips share a colour,
+  and `B_k` is adjacent to `B_0`.
+* Remove a middle `M_j`: its diamond becomes the path `B_{j-1} M'_j B_j` and
+  stops forcing. Colour the tips before `j` with 0, those from `j` on with 1,
+  `M'_j` the third colour, and each intact diamond's middles the two colours
+  its tips leave. `B_k = 1` differs from `B_0 = 0`. Proper.
+* Remove a tip `B_j`: the two diamonds meeting there become triangles, the two
+  runs of tips colour independently, and the same assignment works. Removing
+  `B_0` deletes the closing edge outright.
+
+**Every vertex is critical.** Verified combinatorially for `k = 3, 4, 5, 7`,
+vertex by vertex, with the geometry stripped out.
+
+> **A closed rhombus necklace whose step orbits block is a 4-critical blocked
+> unit-distance graph.**
+
+And the 47-step necklace over the degree-12 tower — grown with the
+premature-closing guard, so no shorter necklace sits inside it — reaches 25
+orbits and 150 directions, and **those block**.
+
+That is blocking which cannot be separated from the chromatic number. Not
+pendants, which change nothing. Not a bouquet, where one vertex carried
+everything. A graph in which deleting **any** vertex drops it to 3-colourable,
+and whose direction set admits no coset 5-colouring at all.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

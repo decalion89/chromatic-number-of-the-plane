@@ -1761,3 +1761,61 @@ def rotation_field_degree(chord) -> dict:
     return {"chord": q, "degree": 1 if disc == 0 else 2,
             "radicand": sign * rad,
             "note": "every rational chord gives degree at most 2"}
+
+
+# -- the closed necklace, and why it is 4-critical --------------------------
+#
+# A chain of k rhombi glued tip to apex and closed by one edge is, as a graph,
+# a cycle of k DIAMONDS -- each rhombus B_{j-1}, M_j, M'_j, B_j is K_4 minus
+# the edge B_{j-1}B_j, five edges -- plus the closing edge B_k B_0. So it has
+#
+#     3k + 1 points and 5k + 1 edges, and nothing else, provided no two of
+#     its points accidentally land at distance 1.
+#
+# That proviso is checkable by counting, and the 47-step chain meets it
+# exactly: 142 points, 236 edges, and 5*47 + 1 = 236. Every rhombus edge is
+# forced to be present by construction, so a total of 5k+1 leaves room for no
+# others.
+#
+# Then 4-criticality is a proof, not a prediction -- which matters, because a
+# prediction about a critical core has failed twice here.
+#
+#   chi >= 4: in each diamond, B_{j-1}, M_j, M'_j is a triangle and B_j is
+#   adjacent to both middles, so c(B_j) = c(B_{j-1}). All tips share a colour,
+#   and B_k is adjacent to B_0. Contradiction.
+#
+#   Remove a middle M_j: its diamond becomes the path B_{j-1} M'_j B_j and
+#   stops forcing. Colour the tips before j with 0, those from j on with 1,
+#   give M'_j the third colour, and each intact diamond's two middles the two
+#   colours its tips do not use. B_k = 1 differs from B_0 = 0. Proper.
+#
+#   Remove a tip B_j: the two diamonds meeting there become triangles, the two
+#   runs of tips colour independently, and the same assignment works. Removing
+#   B_0 deletes the closing edge outright.
+#
+# So EVERY VERTEX IS CRITICAL. A closed rhombus necklace with no accidental
+# adjacency is 4-critical, and its direction set is the union of the
+# zeta_6-orbits of its steps together with the closing direction. Hence
+#
+#     A CLOSED RHOMBUS NECKLACE WHOSE STEP ORBITS BLOCK IS A 4-CRITICAL
+#     BLOCKED UNIT-DISTANCE GRAPH.
+#
+# Which is what the growth was for. Over the degree-12 tower, with the
+# premature-closing guard in place so no shorter necklace sits inside, the
+# 47-step chain reaches 25 orbits and 150 directions, and those block.
+
+CLOSED_NECKLACE_IS_CRITICAL = {
+    "shape": "a cycle of k diamonds (K_4 minus an edge) glued tip to apex, "
+             "plus one closing edge",
+    "counts": "3k+1 points, 5k+1 edges, with no others when no two points "
+              "accidentally meet at distance 1",
+    "measured": {"k": 47, "points": 142, "edges": 236, "5k+1": 236},
+    "chi_at_least_4": "each diamond forces its tip to its apex's colour, so "
+                      "all tips agree, and the closing edge contradicts it",
+    "criticality": "removing a middle turns its diamond into a path and stops "
+                   "the forcing; removing a tip turns two diamonds into "
+                   "triangles; either way the runs of tips colour "
+                   "independently and three colours suffice",
+    "consequence": "a closed rhombus necklace whose step orbits block is a "
+                   "4-critical blocked unit-distance graph",
+}

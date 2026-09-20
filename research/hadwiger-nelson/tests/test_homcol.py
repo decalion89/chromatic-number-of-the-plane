@@ -972,3 +972,44 @@ def test_the_chain_rotation_has_an_irrational_chord():
                 M[t] = [u - g * v for u, v in zip(M[t], M[rank])]
         rank += 1
     assert rank == 3, "1, chord, chord^2 must be independent"
+
+
+def test_closed_necklace_is_four_critical():
+    """A cycle of k diamonds plus a closing edge, checked as a graph.
+
+    This is the combinatorial content of the chain construction, with the
+    geometry stripped out: 3k+1 vertices, 5k+1 edges, chromatic number 4, and
+    every single vertex critical. Proved in the module; verified here for
+    several k so the argument is not taken on trust.
+    """
+    from pysat.solvers import Solver
+
+    def necklace(k):
+        # tips B_0..B_k are 0..k; diamond j has middles at k+1+2(j-1), +1
+        edges = []
+        for j in range(1, k + 1):
+            a, b = j - 1, j
+            m1, m2 = k + 1 + 2 * (j - 1), k + 2 + 2 * (j - 1)
+            edges += [(a, m1), (a, m2), (m1, m2), (m1, b), (m2, b)]
+        edges.append((k, 0))
+        return 3 * k + 1, edges
+
+    def colourable(n, edges, keep, k):
+        idx = {v: i for i, v in enumerate(sorted(keep))}
+        cls = [[1 + i * k + c for c in range(k)] for i in range(len(idx))]
+        for a, b in edges:
+            if a in idx and b in idx:
+                for c in range(k):
+                    cls.append([-(1 + idx[a] * k + c), -(1 + idx[b] * k + c)])
+        with Solver(name="cd19", bootstrap_with=cls) as s:
+            return s.solve()
+
+    for k in (3, 4, 5, 7):
+        n, edges = necklace(k)
+        assert n == 3 * k + 1
+        assert len(edges) == 5 * k + 1
+        allv = set(range(n))
+        assert not colourable(n, edges, allv, 3), k
+        assert colourable(n, edges, allv, 4), k
+        for v in range(n):
+            assert colourable(n, edges, allv - {v}, 3), (k, v)
