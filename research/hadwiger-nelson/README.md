@@ -3081,6 +3081,38 @@ images overlap heavily — 397, not 468. Doing the same to `G`:
 `G` spans too much for its own rotations to interlock. **The move that builds
 the fourth floor does not build the fifth.**
 
+## Most of the sharpened gate is free — and one of my own claims is a tautology
+
+A coset colouring mod `n` **is** a proper `n`-colouring. So if one exists then
+`chi <= n`, and contrapositively
+
+> `chi(Gamma) > n`  implies  `Gamma` blocks at `n`,
+
+with no arithmetic involved at all. Two consequences, and the first is against
+this work's own framing.
+
+**The sharpened gate is a tautology.** "Every 6-chromatic unit-distance graph
+blocks at `n = 2, 3, 4, 5`" is true because such a graph has no proper
+`n`-colouring for any `n <= 5`, so it certainly has no coset one. As a
+necessary condition on the target it says nothing that `chi >= 6` does not
+already say. Measured on `G`, which is 5-chromatic:
+
+    blocks at 2, 3, 4  -- every modulus below its chromatic number, free
+    fails at 5         -- the barrier theorem, the one place content existed
+    blocks at 6        -- content of a different kind
+
+**What survives is the reading as a design criterion**, and there it is sharp.
+For a graph of chromatic number `c`, blocking at `n < c` is free and blocking
+at `n >= c` is real. So of the necklace's four moduli:
+
+    chi = 4:   n = 2, 3 free;   n = 4 and n = 5 are the content.
+
+The corrected verdict `[2, 3, 5]` therefore says the necklace **keeps the
+gate** — which is the thing a sixth colour needs — and loses the one other
+real fact it had. The headline "blocks at every modulus up to five" was, for a
+4-chromatic graph, two free facts and two real ones, and one of the real ones
+went.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

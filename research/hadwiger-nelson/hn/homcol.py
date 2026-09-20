@@ -2928,3 +2928,53 @@ CLOSING_G_UNDER_ROTATIONS_ADDS_NOTHING = {
     "consequence": "the trick that builds the fourth floor does not build the "
                    "fifth",
 }
+
+
+# ---------------------------------------------------------------------------
+# Most of the sharpened gate is free, and saying so costs one line.
+#
+# A coset colouring mod n IS a proper n-colouring.  So if one exists then
+# chi <= n, and contrapositively
+#
+#     chi(Gamma) > n  =>  Gamma blocks at n,
+#
+# with no arithmetic involved at all.  Two consequences, and the first is
+# against this work's own framing.
+#
+# The SHARPENED GATE -- that every 6-chromatic unit-distance graph blocks at
+# n = 2, 3, 4 and 5 -- is a TAUTOLOGY.  A 6-chromatic graph has no proper
+# n-colouring for any n <= 5, so it has no coset one either.  As a necessary
+# condition on the target it says nothing that chi >= 6 does not already say.
+# Measured on de Grey's G, which is 5-chromatic: it blocks at 2, 3, 4 -- every
+# modulus below its chromatic number, for free -- fails at 5, which is the
+# barrier theorem and the only place content was ever available, and blocks
+# again at 6, which is content of a different kind.
+#
+# What survives is the reading as a DESIGN CRITERION for substrate, and there
+# it is sharp.  For a graph of chromatic number c, blocking at n < c is free
+# and blocking at n >= c is real.  So of the necklace's four moduli:
+#
+#     chi = 4:   n = 2, 3 free;   n = 4 and n = 5 are the content.
+#
+# The corrected verdict [2, 3, 5] therefore says the necklace keeps the gate,
+# which is what a sixth colour needs, and loses the one other thing it had.
+# The headline "blocks at every modulus up to five" was, for a 4-chromatic
+# graph, two free facts and two real ones -- and one of the real ones went.
+
+BLOCKING_BELOW_CHI_IS_FREE = {
+    "one_line": "a coset colouring mod n is a proper n-colouring, so chi > n "
+                "forces blocking at n with no arithmetic at all",
+    "casualty": "the SHARPENED GATE is a tautology: a 6-chromatic graph "
+                "blocks at 2, 3, 4, 5 because it has no proper n-colouring "
+                "at all for n <= 5",
+    "measured": {"de Grey's G, chi = 5": [2, 3, 4, 6],
+                 "reading": "2, 3, 4 free; 5 is the barrier theorem and the "
+                            "only place content was available; 6 is content "
+                            "of a different kind"},
+    "what_survives": "as a design criterion for substrate it is sharp -- for "
+                     "chromatic number c, blocking at n < c is free and at "
+                     "n >= c is real",
+    "the_necklace": "chi = 4, so n = 2 and 3 are free and n = 4 and 5 are the "
+                    "content; the corrected [2, 3, 5] keeps the gate and "
+                    "loses the one other real fact it had",
+}

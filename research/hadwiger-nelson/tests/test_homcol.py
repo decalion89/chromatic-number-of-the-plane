@@ -1417,3 +1417,23 @@ def test_closing_de_greys_G_under_its_own_rotations_barely_overlaps():
                 seen.add(q)
                 q = rot60(q)
     assert len(seen) == 18966 == 12 * len(G) - 6
+
+
+def test_blocking_below_the_chromatic_number_is_free():
+    """A coset colouring mod `n` is a proper `n`-colouring, so `chi > n` blocks.
+
+    That makes the sharpened gate -- every 6-chromatic graph blocks at 2, 3, 4
+    and 5 -- a tautology: such a graph has no proper `n`-colouring at all for
+    `n <= 5`.  de Grey's `G` shows the shape.  It is 5-chromatic and blocks at
+    every modulus below 5 for nothing, fails at 5, which is the barrier
+    theorem and the only place content was available, and blocks again at 6.
+
+    What survives is the reading as a design criterion: for a graph of
+    chromatic number `c`, blocking at `n < c` is free and at `n >= c` is real.
+    """
+    from hn.degrey import build_G
+    from hn.graph import build_graph
+    from hn.homcol import blocks_at, edge_vectors
+
+    D = edge_vectors(build_graph(build_G(as_graph=False)))
+    assert [n for n in (2, 3, 4, 5, 6) if blocks_at(D, n)] == [2, 3, 4, 6]
