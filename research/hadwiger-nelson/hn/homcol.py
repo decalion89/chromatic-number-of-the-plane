@@ -3320,6 +3320,13 @@ FORCER_SIZE_BY_COLOUR = {
 
 
 Y_DOES_NOT_SHRINK_AT_ALL = {
+    "CORRECTED": "the sample was not the population.  A full sweep of all 789 "
+                 "non-pair vertices, with no budget anywhere, finds vertex "
+                 "630 -- degree 4 -- SLACK: Y minus it still forces the pair. "
+                 "So Y is NOT vertex-critical for its forcing, and the claim "
+                 "below holds only of the 61 sampled.  Sampling by degree put "
+                 "every thirteenth vertex in the sample and this one fell "
+                 "between.",
     "sample": 61,
     "essential": 61,
     "slack": 0,
@@ -3331,9 +3338,10 @@ Y_DOES_NOT_SHRINK_AT_ALL = {
                           "them look hard",
     "ball_result": "radius 1.5 about the segment keeps 773 of 791 and "
                    "separates; radius 2.0 is all 791 and forces",
-    "reading": "Y is a minimal four-colour forcer for its pair, with nothing "
-               "to trim -- which is the sharpest reason to expect the "
-               "five-colour analogue to be large",
+    "reading": "WITHDRAWN -- Y is not minimal; at least one vertex comes "
+               "out.  What survives is that it is nearly so: 61 of 61 "
+               "sampled, and only one exception found in the first 630 of a "
+               "full sweep",
 }
 
 

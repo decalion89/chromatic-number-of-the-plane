@@ -1576,7 +1576,12 @@ def test_the_forcing_in_Y_is_not_local():
 
 
 def test_every_sampled_vertex_of_Y_is_essential_to_its_forcing():
-    """`Y` has no slack: delete any vertex and the pair comes apart.
+    """Every vertex of the sample is essential — but the sample is not all of `Y`.
+
+    A full sweep later found vertex 630, of degree 4, to be slack: `Y` minus
+    it still forces the pair. So `Y` is *not* vertex-critical, and what this
+    test records is the sample, which is what it always was.
+
 
     A stratified sample of 61 of `Y`'s 789 non-pair vertices, by degree, and
     every one of them is essential — deleting it lets `(2,0)` and `(-2,0)`

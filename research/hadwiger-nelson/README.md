@@ -3249,9 +3249,13 @@ points the safe way, though — giving up early produces *more* undecideds,
 never fewer, so a scan reporting **zero** hard queries decided every one of
 them, and the negatives elsewhere in this work stand untouched.
 
-So `Y` is a minimal four-colour forcer for its pair, with nothing to trim.
-Which is the sharpest reason to expect the five-colour analogue to be large:
-there is no fat in the four-colour one.
+> **Corrected.** The sample was not the population. A full sweep of all 789
+> non-pair vertices, no budget anywhere, finds **vertex 630 — degree 4 —
+> slack**: `Y` minus it still forces the pair. So `Y` is **not**
+> vertex-critical, and "every vertex is essential" holds only of the 61
+> sampled. Sampling by degree took every thirteenth vertex and this one fell
+> between. What survives is that `Y` is *nearly* minimal — one exception in
+> the first 630 checked — not that it is minimal.
 
 ## The counting threshold, and exactly where it applies
 
