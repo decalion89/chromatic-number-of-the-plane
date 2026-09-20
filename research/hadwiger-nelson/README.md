@@ -3690,9 +3690,21 @@ forced to differ — and every survivor put to the solver.
 
 "Chance" is `((k-1)/k)²⁴`, the rate at which an unconstrained pair survives
 twenty-four samples. At four colours these graphs sit **twenty times above
-it** — that is real structure. At five they sit *at* it, and the verification
-is absolute rather than statistical: all 6502 of `G`'s candidates were checked
-individually, and every one is free.
+it**; at five they sit *at* it, and the verification there is absolute rather
+than statistical: all 6502 of `G`'s candidates were checked individually, and
+every one is free.
+
+> **Careful.** The four-colour excess is *correlation*, not forcing. Forty of
+> `Sa`'s 1548 candidates were drawn at random and put to the solver with no
+> budget: all forty are free. Two controls fix the distinction — a rhombus at
+> three colours has one non-edge and it *is* forced-same, so the test does
+> find constrained pairs; the Moser spindle at four is 4-critical with ten
+> non-edges and not one is constrained, so criticality alone guarantees
+> nothing. What the table shows is that at four colours these colourings are
+> strongly correlated and at five they are indistinguishable from
+> independent. Forcing is absent from both bare cores — de Grey's pair lives
+> in `Sa ∪ ρ(Sa)`, not in `Sa`. Correlation is the raw material; the rotation
+> converts it. At five colours there is nothing to convert.
 
 > **`G`'s colour relation at five colours is exactly its edge set.** No pair
 > of non-adjacent points is constrained in either direction, in any proper

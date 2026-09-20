@@ -4520,3 +4520,53 @@ NO_RAINBOWS_AT_EITHER_LEVEL = {
                    "distances, and the relation measurement says there are "
                    "none of those at all",
 }
+
+
+# CORRECTION: the four-colour ratio is correlation, not forcing.
+#
+# THE_RELATION_IS_JUST_THE_EDGES reports Sa at four colours leaving 1548 pairs
+# that differ in every one of twenty-four samples against 79 by chance, and
+# calls the nineteenfold excess structure, in a table whose other rows are
+# verified forced pairs.  The excess is real.  Reading it as forcing is not.
+#
+# Forty of the 1548 were drawn at random and put to the solver with no budget
+# anywhere.  All forty are free: neither forced to differ nor forced to agree.
+# So Sa's four-colour excess measures how CORRELATED its colourings are, and
+# correlation is not constraint.
+#
+# Two small controls fix the distinction in place.  A rhombus at three colours
+# has exactly one non-edge, its two apexes, and that pair is genuinely
+# forced-same -- so constrained non-edges do exist and the test finds them.
+# The Moser spindle at four colours is 4-critical, has ten non-edges, and not
+# one of them is constrained in either direction -- so criticality by itself
+# guarantees no relation at all, which is the other half of why the
+# criticality diagnosis was withdrawn.
+#
+# What survives, and is what the contrast was always about:
+#
+#     Sa at four    1548 candidates against 79 chance   ratio 19.6   0 forced
+#     G  at five    6502 candidates against 5898        ratio  1.1   0 forced
+#
+# At four colours the colourings of these graphs are strongly correlated; at
+# five they are indistinguishable from independent.  Forcing is absent at both
+# levels in the bare cores -- de Grey's forced pair lives in Y = Sa u rho(Sa),
+# not in Sa -- so the honest reading is that correlation is the raw material
+# and the rotation is what converts it into a forced pair.  At five colours
+# there is no raw material to convert.
+THE_FOUR_COLOUR_EXCESS_IS_CORRELATION = {
+    "CORRECTS": "THE_RELATION_IS_JUST_THE_EDGES, which presented Sa's "
+                "nineteenfold excess at four colours alongside verified "
+                "forced-pair counts, inviting it to be read as forcing",
+    "what_was_checked": "40 of the 1548 drawn at random, solver, no budget",
+    "result": "all 40 free -- neither forced to differ nor forced to agree",
+    "controls": {"rhombus at 3": "1 non-edge, forced-same: the test does find "
+                                 "constrained non-edges",
+                 "Moser spindle at 4": "4-critical, 10 non-edges, none "
+                                       "constrained in either direction"},
+    "what_survives": {"Sa at 4": {"ratio": 19.6, "forced": 0},
+                      "G at 5": {"ratio": 1.1, "forced": 0}},
+    "the_honest_reading": "correlation is the raw material and the rotation "
+                          "converts it into a forced pair -- de Grey's pair "
+                          "lives in Sa u rho(Sa), not in Sa.  At five colours "
+                          "there is no raw material to convert.",
+}
