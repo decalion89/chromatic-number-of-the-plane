@@ -1690,7 +1690,19 @@ RHO_IS_MONOTONE = (
 # whole strategy now turns on, and at five colours it costs one hard UNSAT:
 # assuming every selector is exactly the 4-colourability instance.
 
+# RETRACTED IN FULL. Both ends are now measured by decision rather than by
+# greedy deletion, and they are the same: rho(Sa,4) = 5 and
+# rho(Sa u rot(Sa),4) = 5, the second settled by refuting budget 4 after
+# 13008 seconds. There is NO DROP. The 7s were minimal-set sizes, never
+# values, and the trend below is an artefact of measuring that way at every
+# point of it -- including the three-piece table for Sb and Y.
+#
+# What survives is smaller but real: rho = k + 1 is attained, by Sa and by its
+# union alike. Unioning did not bring it about.
+
 UNION_DRIVES_RHO_TO_K_PLUS_ONE = {
+    "RETRACTED": "both ends measure 5; the drop was an artefact of greedy "
+                 "deletion, which returns minimal sets rather than minimum",
     "k": 4,
     "trend": {1: 7, 2: 5, 3: 5, 7: 5},
     "floor": "rho >= k, so 5 is one above it",
@@ -1807,7 +1819,12 @@ SMALL_RHO_CLOSES_IT = {
 # rho(G,5) is large and the four-colour pattern simply does not transfer. The
 # measurement settles it, and costs one hard UNSAT.
 
+# RETRACTED WITH IT: every number here came from greedy deletion, and the one
+# pair since measured by decision (Sa alone and Sa with a copy) reads 5 and 5.
+# The table is internally consistent and says nothing about values.
+
 RHO_DROP_ON_ALL_THREE = {
+    "RETRACTED": "minimal sets throughout; the decided pair reads 5 and 5",
     "alone": {"Sa": 7, "Sb": 7, "Y": 7},
     "with_one_rotated_copy": {"Sa": 5, "Sb": 5, "Y": 5},
     "k": 4,
@@ -2199,9 +2216,9 @@ RHO_SA_IS_FIVE = {
     "budget_5": "forcing set found in 88 rounds",
     "budget_4": "refuted in 59 rounds -- no 4-set hits 59 classes",
     "replaces": "7, from greedy deletion, which returns a minimal set",
-    "drop_status": "Sa u rot(Sa) also admits a forcing 5; if its budget 4 is "
-                   "refuted the drop is nothing, and it is withdrawn until "
-                   "that lands",
+    "drop_status": "SETTLED: budget 4 refuted on the union too, after 13008 "
+                   "seconds, so rho(Sa u rot(Sa),4) = 5 as well and the drop "
+                   "is nothing at all",
 }
 
 

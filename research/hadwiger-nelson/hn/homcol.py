@@ -541,3 +541,43 @@ BLOCKING_NEEDS_FULL_RANK = {
            "covering needs far more, so nothing short of the whole module "
            "blocks -- and the whole module is the densest in the plane",
 }
+
+
+# -- no Eisenstein spindle exists over Q(zeta_21), and that is provable --
+#
+# Every union built over Q(zeta_21) came back 3-chromatic, however many
+# rotated copies were stacked -- 241 points, 630 edges, chi 3. The reason is a
+# theorem rather than bad luck.
+#
+# A spindle needs two points forced to the SAME colour at k colours, at some
+# distance d, and a rotation rho with |1 - rho| = 1/d. In the Eisenstein
+# lattice at three colours the forcing is exact, the lattice being uniquely
+# 3-colourable: p and q share a colour precisely when p - q lies in the
+# index-3 sublattice, so d^2 = N(p-q) is divisible by 3. Write d^2 = 3m. Then
+#
+#     |1 - rho|^2 = 2 - 2 Re(rho) = 1/(3m)   =>   Re(rho) = (6m-1)/(6m),
+#     rho = ( (6m-1) +- sqrt(-(12m-1)) ) / (6m).
+#
+# So rho lies in the field exactly when sqrt(-(12m-1)) does. The imaginary
+# quadratic subfields of Q(zeta_21) are only Q(sqrt-3) and Q(sqrt-7), so the
+# condition is 12m - 1 = 3t^2 or 7t^2 -- and modulo 12 that is impossible:
+# 12m - 1 is 11, while 3t^2 takes only 0 and 3, and 7t^2 only 0, 3, 4 and 7.
+# Checked directly for the first thousand m as well: none.
+#
+# m = 1 is the classical case, 12 - 1 = 11, the Moser rotation's sqrt(-11) --
+# exactly the subfield Q(zeta_21) does not have.
+#
+# WHICH NAMES THE FIELD. Triangles need zeta_6, blocking needs zeta_7, and the
+# spindle needs sqrt(-11). Q(zeta_21, sqrt-11), degree 24, is the smallest
+# field with all three.
+
+NO_EISENSTEIN_SPINDLE_OVER_ZETA21 = {
+    "condition": "12m - 1 must be 3t^2 or 7t^2",
+    "obstruction": "12m - 1 = 11 mod 12, while 3t^2 takes 0 and 3 and 7t^2 "
+                   "takes 0, 3, 4 and 7",
+    "checked_to": 1000,
+    "solutions": 0,
+    "classical_case": "m = 1 gives 11 -- the Moser rotation's sqrt(-11)",
+    "field_that_works": "Q(zeta_21, sqrt-11), degree 24: zeta_6 for triangles, "
+                        "zeta_7 for blocking, sqrt-11 for the spindle",
+}

@@ -382,3 +382,19 @@ def test_blocking_needs_the_full_rank():
     for r, n in B["unit_directions_found"].items():
         assert n < (5 ** r - 1) // 4, f"rank {r}: {n} directions is far short"
     assert max(B["unit_directions_found"].values()) < 87
+
+
+def test_no_eisenstein_spindle_over_zeta21():
+    """12m - 1 is 11 mod 12, and neither 3t^2 nor 7t^2 ever is."""
+    from math import isqrt
+
+    from hn.homcol import NO_EISENSTEIN_SPINDLE_OVER_ZETA21 as N
+
+    assert {3 * t * t % 12 for t in range(12)} == {0, 3}
+    assert 11 not in {7 * t * t % 12 for t in range(12)}
+    hits = [m for m in range(1, N["checked_to"] + 1)
+            for d in (3, 7)
+            if (12 * m - 1) % d == 0
+            and isqrt((12 * m - 1) // d) ** 2 == (12 * m - 1) // d]
+    assert len(hits) == N["solutions"] == 0
+    assert 12 * 1 - 1 == 11, "the classical case is sqrt(-11)"

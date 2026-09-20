@@ -1159,10 +1159,9 @@ def test_unioning_copies_drives_rho_down():
     """The strategic experiment: rho drops and then holds one above the floor."""
     from hn.forced import UNION_DRIVES_RHO_TO_K_PLUS_ONE as U
 
+    assert "RETRACTED" in U, "both ends measure 5; there is no drop"
     t = U["trend"]
-    assert t[2] < t[1], "enlarging strictly lowers rho, not merely bounds it"
-    assert t[3] == t[2] == t[7], "and then it holds"
-    assert t[7] == U["k"] + 1, "one above the floor rho >= k"
+    assert t[7] == U["k"] + 1, "k + 1 is attained -- that part survives"
     assert U["witness_chi"] < U["k"], "the witness is not itself k-chromatic"
     assert len(U["witness"]) == t[7]
 
@@ -1194,6 +1193,7 @@ def test_the_rho_drop_happens_on_all_three_pieces():
     """Sa, Sb and Y all go 7 -> 5: the drop is about unioning, not about Sa."""
     from hn.forced import RHO_DROP_ON_ALL_THREE as D
 
+    assert "RETRACTED" in D, "minimal sets throughout"
     assert set(D["alone"]) == set(D["with_one_rotated_copy"]) == {"Sa", "Sb", "Y"}
     assert all(v == 7 for v in D["alone"].values())
     assert all(v == D["k"] + 1 for v in D["with_one_rotated_copy"].values())
@@ -1304,7 +1304,7 @@ def test_rho_sa_is_exactly_five():
     assert R["value"] == R["floor"] + 1
     assert "refuted" in R["budget_4"] and "forcing set found" in R["budget_5"]
     assert "minimal set" in R["replaces"]
-    assert "withdrawn" in R["drop_status"]
+    assert "nothing at all" in R["drop_status"]
 
 
 def test_the_rho_decision_trajectory_does_not_reach_63():
