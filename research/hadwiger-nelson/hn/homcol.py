@@ -2151,3 +2151,34 @@ NO_FIVE_COLOUR_FORCING_IN_G = {
                            "needs c(4-c) to be a square there, since "
                            "rho = x + iy with x = (2-c)/2 and y^2 = c(4-c)/4",
 }
+
+
+# -- the forcing is not the hexagon skeleton -------------------------------
+#
+# One hexagon at a vertex cannot force. Its rhombus tip t = n_i + n_{i+1} is
+# adjacent only to n_i and n_{i+1}, so at four colours c(t) has a choice
+# outside c(0) for free. So the forcing in Y must come from the tips
+# constraining EACH OTHER, which needs several hexagons -- and two tips at
+# sqrt3 are adjacent exactly when their angles differ by arccos(5/6), the
+# Moser angle, which is available.
+#
+# Built and measured: the origin, m hexagons at the angles of de Grey's 36
+# rotations, and every rhombus tip. At m = 36 that is 421 points and a sphere
+# of 210 -- and only 864 edges, of which about 24 are tip-to-tip. Average
+# degree 4. No forcing at four colours, let alone five.
+#
+# Sa carries 1974 edges on 397 points, five times denser. So the forcing is
+# NOT the hexagon-and-tip skeleton; it needs whatever else Sa is made of, and
+# isolating it that way does not work.
+
+FORCING_IS_NOT_THE_SKELETON = {
+    "gadget": "origin, m hexagons at the angles of de Grey's 36 rotations, "
+              "and every rhombus tip",
+    "largest": {"m": 36, "points": 421, "edges": 864, "sphere": 210},
+    "tip_to_tip_edges": "about 24 -- two tips at sqrt3 are adjacent only when "
+                        "their angles differ by arccos(5/6)",
+    "result": "no forcing at four colours, let alone five",
+    "contrast": "Sa has 1974 edges on 397 points, five times denser",
+    "reading": "the forcing is not the hexagon-and-tip skeleton, and cannot "
+               "be isolated that way",
+}
