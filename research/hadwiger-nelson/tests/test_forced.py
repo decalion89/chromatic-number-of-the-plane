@@ -1276,3 +1276,12 @@ def test_pressure_does_not_predict_rho():
     # the link that does hold, and is vacuous at rho = 6
     k, r = 5, 6
     assert k - r < 0, "so pressure 2 is no obstacle to a forcing set of six"
+
+
+def test_greedy_deletion_gives_minimal_not_minimum():
+    """The budget method found a forcing six where deletion had stopped at 7."""
+    from hn.forced import DECISION_NOT_VALUE as D
+
+    assert "budget 6" in str(D["control"]), "a forcing six exists on Sa"
+    assert "MINIMAL set rather than a minimum" in D["correction"]
+    assert "upper bounds, not values" in D["correction"]

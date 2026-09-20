@@ -2080,3 +2080,45 @@ PRESSURE_AND_RHO_ARE_DECOUPLED = {
     "one_way_link": "a core of size r needs pressure >= k - r, so pressure 2 "
                     "forces r >= 3; with rho = 6 the inequality is vacuous",
 }
+
+
+# -- ask the decision, not the value -------------------------------------
+#
+# Computing rho is expensive in one direction only -- proving a set forcing is
+# UNSAT -- so asking for the VALUE pays that price again and again. The
+# question that matters is a DECISION, "is rho <= 63", and it has a cheap
+# side.
+#
+# Keep a finite family F of realisable colour classes and alternate:
+#
+#   (a) is there a set of at most B vertices hitting every class in F? A
+#       cardinality-constrained SAT call. If NO, no B-set hits even this
+#       subfamily, so none hits all of them: rho > B, decided, cheaply.
+#   (b) given such a set S, is there a proper colouring whose colour-0 class
+#       misses S? If YES that class joins F and the loop turns; if NO then S
+#       is forcing and rho <= B.
+#
+# Both are SAT calls. On Sa at four colours it runs at sixty rounds a second
+# and settles budget 7 in 42 seconds and budget 6 in 11.
+#
+# A CORRECTION IT FORCED. rho(Sa,4) was recorded here as 7, from greedy
+# deletion -- which returns a MINIMAL forcing set, one no single vertex can
+# leave, not a minimum one. The budget run finds a forcing SIX. So 7 was never
+# the minimum, and the same caveat applies to the 5 recorded for
+# Sa u rot(Sa): both are upper bounds on rho, not values.
+#
+# On de Grey's G at five colours with budget 63 the loop sits exactly on the
+# boundary: past thirty thousand classes collected, a 63-set still hits them
+# all, and a colouring still escapes every such set. Neither side has given.
+
+DECISION_NOT_VALUE = {
+    "method": "alternate a cardinality-bounded hitting set against a "
+              "colouring that escapes it; both sides are SAT",
+    "control": {"Sa k=4 budget 7": "forcing in 165 rounds, 42 s",
+                "Sa k=4 budget 6": "forcing in 62 rounds, 11 s"},
+    "correction": "rho(Sa,4) = 7 came from greedy deletion, which returns a "
+                  "MINIMAL set rather than a minimum; a forcing six exists, "
+                  "so 7 and the union's 5 are upper bounds, not values",
+    "G_at_63": "past 30000 classes, still finding 63-sets and still finding "
+               "colourings that escape them -- exactly on the boundary",
+}
