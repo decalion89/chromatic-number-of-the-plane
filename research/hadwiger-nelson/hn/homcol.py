@@ -4193,3 +4193,38 @@ EVERY_DOUBLY_USABLE_RING_OF_GSTAR = {
                "exactly on all three -- A and sigma(A) at squared distance 1 "
                "every time -- and all three colour.",
 }
+
+
+# rho_16 is not a fresh rotation.  It is the one already inside G.
+#
+# G is Ya u Yb, two turns of Y about (-2,0) through pi/2 + arcsin(1/8) and
+# pi/2 - arcsin(1/8).  Those differ by 2 arcsin(1/8), which is exactly the
+# angle of rotation_joining(16).  So rho_16(Yb) = Ya: the rotation maps half
+# of G onto its other half, and applying it to G* does not open a new
+# configuration -- it extends the fan of Y-copies by one more blade.
+#
+# The measurement says so flatly.  Z = G* u rho_16(G*) is 20809 points and
+# 110676 edges with ZERO cross edges: not one new adjacency between the two
+# halves.  The 6937 shared points that looked like rich interlocking are the
+# overlap a half-symmetry produces, and the reason its spindled union was the
+# EASIEST of the three to colour -- 136144 conflicts against 842373 -- is that
+# it is the least constrained, not the most.
+#
+# So a ring needs a third test beyond the two radicals: its rotation has to
+# produce cross edges at all.  A rotation that carries part of the core onto
+# another part of the core adds points without adding adjacencies, and a union
+# with no cross edges cannot force anything its halves do not already force.
+A_ROTATION_MUST_ALSO_BITE = {
+    "rho_16_is_internal": "rho_16(Yb) = Ya, because de Grey's two turns differ "
+                          "by exactly 2 arcsin(1/8)",
+    "Z": {"points": 20809, "edges": 110676, "cross": 0, "shared": 6937},
+    "what_the_overlap_was": "the footprint of a half-symmetry, not "
+                            "interlocking",
+    "why_it_coloured_easiest": "fewest constraints of the three, not most",
+    "the_third_test": "beyond sqrt(4D-1) and sqrt(16D-1), the rotation must "
+                      "actually create cross edges; a union with none cannot "
+                      "force what its halves do not",
+    "corrects": "EVERY_DOUBLY_USABLE_RING_OF_GSTAR, which read D = 16's 6937 "
+                "shared points as the richest of the three unions.  It is the "
+                "poorest.",
+}
