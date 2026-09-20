@@ -4893,3 +4893,46 @@ THE_SAMPLES_ARE_MIXED = {
                                    "permutation, so the samples must coincide",
     "verdict": "the ladder measures the graphs, not the solver",
 }
+
+
+# A prediction, recorded before its test returns.
+#
+# The gadget argument said a five-colour graph would need about 28000 points
+# to pack 5-critical subgraphs as densely as Sa packs Moser spindles, and
+# noted that Z = G* u rho_4(G*) has 27673.  That reading was too quick.
+#
+# Density is not bought by size.  The spindle count settles it one level down:
+# Sa has 1.45 per point, Y has 1.46, G has 1.46 -- each built from the one
+# before, each inheriting the density rather than raising it.  Z is two copies
+# of twelve copies of G, so its 5-critical density is G's, and G's is about
+# three subgraphs of five hundred vertices in 1581 points: 0.002 per point,
+# against the spindle's 1.45.  A factor of seven hundred, unchanged by any
+# amount of unioning.
+#
+# So the prediction for Z at five colours is a ratio near one, and for the
+# same reason as every other negative here: not that 27673 points are too few,
+# but that they are the wrong 27673 -- twenty-four copies of a graph that
+# contains three gadgets, rather than a graph that contains thousands.
+#
+# What would test the argument properly is a graph built to pack 5-critical
+# subgraphs, which is a construction problem and not a scaling one.  Nothing
+# in this session produces one.
+THE_PREDICTION_FOR_Z = {
+    "recorded": "before the measurement returned",
+    "prediction": "ratio near 1, like every other five-colour graph here",
+    "why": "density is not bought by size.  Sa 1.45 spindles per point, Y "
+           "1.46, G 1.46 -- inherited, never raised.  Z is two copies of "
+           "twelve copies of G, so its 5-critical density is G's.",
+    "the_numbers": {"G's 5-critical density": "about 3 subgraphs of ~500 "
+                                              "vertices in 1581 points, "
+                                              "0.002 per point",
+                    "Sa's spindle density": 1.45,
+                    "the gap": "a factor of about 700, unchanged by unioning"},
+    "corrects": "THE_GADGET_IS_SEVENTY_TIMES_BIGGER, which read Z's 27673 "
+                "points as the scale the argument called for.  The scale is "
+                "right and the graph is not: twenty-four copies of something "
+                "carrying three gadgets, not something carrying thousands.",
+    "what_would_test_it": "a graph built to pack 5-critical subgraphs, which "
+                          "is a construction problem rather than a scaling "
+                          "one.  Nothing here produces one.",
+}
