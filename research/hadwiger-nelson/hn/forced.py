@@ -2044,3 +2044,39 @@ DISJOINT_UNIONS_MEASURE_NOTHING = (
     "pressure cannot move; Sa's copies overlap in 175 points, which is why "
     "its union changed anything"
 )
+
+
+# -- pressure and rho are DECOUPLED, which reframes most of the evidence -
+#
+# Measured on the same graphs, one colour count, four best pivots each:
+#
+#     Sa            397 vertices   pressure [3, 3, 3, 3]   rho = 7
+#     Sa u rot(Sa)  619 vertices   pressure [3, 3, 3, 3]   rho = 5
+#
+# Identical pressure, and rho falls. The two are not measuring the same
+# rigidity, and the consequence runs through a large part of this branch.
+#
+# Every pressure figure recorded at five colours is 2 -- flat through maximal
+# chord enrichment (2961 vertices, 1680 auxiliaries), through level-three
+# densification (10079 vertices, 63064 edges), through unions to 11067
+# vertices, and at every one of G's 1581 pivots. NONE of that constrains rho.
+# A small rho on de Grey's G is not excluded by any of it.
+#
+# The two are still linked, but only one way. A core of size r needs
+# pressure >= k - r, so pressure 2 at five colours forces r >= 3 -- it bounds
+# the core size from below. It says nothing about how small the forcing SET
+# can be, and rho = 6 with pressure 2 is perfectly consistent: k - r = 5 - 6
+# is negative, so the inequality is vacuous there.
+#
+# So the measurement that decides the target is rho itself, and the pressure
+# evidence, however extensive, does not predict it.
+
+PRESSURE_AND_RHO_ARE_DECOUPLED = {
+    "same_graph_pair": {"Sa": {"pressure": 3, "rho": 7},
+                        "Sa u rot(Sa)": {"pressure": 3, "rho": 5}},
+    "consequence": "every flat pressure at five colours -- maximal "
+                   "enrichment, level-three densification, unions to 11067 "
+                   "vertices -- constrains rho by nothing",
+    "one_way_link": "a core of size r needs pressure >= k - r, so pressure 2 "
+                    "forces r >= 3; with rho = 6 the inequality is vacuous",
+}

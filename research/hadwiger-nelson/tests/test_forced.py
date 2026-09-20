@@ -1264,3 +1264,15 @@ def test_exact_doubling_signals_a_disjoint_union():
     assert 619 < 2 * 397, "Sa's copies overlap, by 175 points"
     assert 2 * 397 - 619 == 175
     assert "measure nothing" in D or "cannot move" in D
+
+
+def test_pressure_does_not_predict_rho():
+    """Same pressure, different rho: the flat 2s say nothing about the target."""
+    from hn.forced import PRESSURE_AND_RHO_ARE_DECOUPLED as D
+
+    a, b = D["same_graph_pair"]["Sa"], D["same_graph_pair"]["Sa u rot(Sa)"]
+    assert a["pressure"] == b["pressure"] and a["rho"] > b["rho"]
+    assert "constrains rho by nothing" in D["consequence"]
+    # the link that does hold, and is vacuous at rho = 6
+    k, r = 5, 6
+    assert k - r < 0, "so pressure 2 is no obstacle to a forcing set of six"
