@@ -1254,3 +1254,13 @@ def test_level_three_densification_leaves_the_pressure_flat():
     assert L["vertices"] > 6 * 1581 and L["edges"] > 8 * 7877
     assert L["pressure"] == 2
     assert "rho <= n - (min colour class) + 1" in L["class_size_bound"]
+
+
+def test_exact_doubling_signals_a_disjoint_union():
+    """The arithmetic that caught a vacuous experiment."""
+    from hn.forced import DISJOINT_UNIONS_MEASURE_NOTHING as D
+
+    assert 3162 == 2 * 1581 and 15754 == 2 * 7877, "G's copies are disjoint"
+    assert 619 < 2 * 397, "Sa's copies overlap, by 175 points"
+    assert 2 * 397 - 619 == 175
+    assert "measure nothing" in D or "cannot move" in D

@@ -2013,3 +2013,34 @@ LEVEL_THREE_CHANGES_NOTHING = {
     "class_size_bound": "rho <= n - (min colour class) + 1; sampled classes "
                         "run 267 to 326, giving rho <= 1315",
 }
+
+
+# -- a union experiment that was vacuous, and the arithmetic that says so -
+#
+# Unioning G with copies rotated about the ORIGIN through the half-Moser angle
+# and its powers leaves the pressure at 2 everywhere, up to 11067 vertices.
+# The vertex and edge counts say why, and it is not a fact about pressure:
+#
+#     1581 ->  3162 vertices,  7877 -> 15754 edges   -- exactly doubled
+#     3162 ->  6324,          15754 -> 31508         -- exactly doubled
+#
+# Exactly twice, every time. The rotated copy shares no vertex with G and
+# creates no edge to it: these are DISJOINT unions, whose colourings are
+# independent, so no pivot of one can be constrained by the other and the
+# pressure cannot move. The experiment measured nothing.
+#
+# Sa is different, which is why its union worked: 397 -> 619 rather than 794,
+# so 175 points are shared and the copies genuinely interlock.
+#
+# The overlapping union of G was measured separately and earlier: the exact
+# 60-degree rotation centre folds 789 of 1581, giving 2373 vertices, and the
+# pressure there is 2 as well, with no core in 60 steps at four pivots. So
+# both the disjoint and the overlapping union give 2 -- but only the second
+# was ever a question.
+
+DISJOINT_UNIONS_MEASURE_NOTHING = (
+    "rotating G about the origin produces a copy sharing no vertex and no "
+    "edge -- counts exactly double -- so colourings are independent and the "
+    "pressure cannot move; Sa's copies overlap in 175 points, which is why "
+    "its union changed anything"
+)
