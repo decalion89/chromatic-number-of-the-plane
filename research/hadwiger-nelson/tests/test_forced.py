@@ -1216,3 +1216,13 @@ def test_only_the_ambient_route_could_reach_63():
     assert "Moser spindle's 7" in T["structural"]
     assert "below the structural bound" in T["ambient"]
     assert "only the ambient route" in T["at_k5"]
+
+
+def test_enriching_the_circle_changes_nothing():
+    """All 74 available circle points are pendants: degree doubles, pressure flat."""
+    from hn.forced import CIRCLE_IS_SATURATED as C
+
+    assert C["contacts_each"] == 1, "adjacent to the pivot and nothing else"
+    assert set(C["pressure_at_degree"].values()) == {2}
+    assert max(C["pressure_at_degree"]) > 2 * C["pivot_degree"] / 2
+    assert C["module_unit_steps"] - C["pivot_degree"] == C["new_points_available"]

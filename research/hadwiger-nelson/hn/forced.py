@@ -1887,3 +1887,37 @@ TWO_ROUTES_TO_SMALL_RHO = {
     "at_k5": "the structural bound is around 500 vertices, eight times the "
              "63 needed, so only the ambient route could ever close it",
 }
+
+
+# -- the pivot's circle cannot be enriched: G is saturated ---------------
+#
+# A core of three at p needs N(p) u T forcing, and supersets of forcing sets
+# force -- so a BIGGER circle makes the condition easier. de Grey's G has
+# maximum degree 60 while its edge module carries 134 unit steps, so the
+# circle looks like it has room to double.
+#
+# It has none. Of the 74 module steps from the pivot that do not already land
+# on a vertex of G, every single one lands on a point adjacent to NOTHING ELSE
+# -- contact count exactly 1, all 74. They are pendants: free, unconstrained,
+# and worth nothing to the pressure. Measured:
+#
+#     +  0 circle points   degree  60   pressure at k=5 = 2
+#     + 10                 degree  70   pressure = 2
+#     + 30                 degree  90   pressure = 2
+#     + 74                 degree 134   pressure = 2
+#
+# Degree more than doubles and the pressure does not move. So de Grey's G
+# already contains every constrained point on its pivot's circle: within its
+# own module the construction is saturated, and enriching the circle is not a
+# lever that exists there. It would need points outside the module, which
+# means a larger field.
+
+CIRCLE_IS_SATURATED = {
+    "pivot_degree": 60,
+    "module_unit_steps": 134,
+    "new_points_available": 74,
+    "contacts_each": 1,
+    "pressure_at_degree": {60: 2, 70: 2, 90: 2, 134: 2},
+    "reading": "every new circle point is a pendant, so G already holds every "
+               "constrained point on its pivot's circle",
+}

@@ -1,88 +1,64 @@
-#!/usr/bin/env python3
-"""Build the most constrained graph that still colours, and keep it.
+"""Enrich a pivot's circle: the one lever on rho <= deg(p) + 3 not yet pulled.
 
-Three sources of extra points, each added while the graph still k-colours --
-past that the forcing question goes vacuous, which is the trap already caught
-twice here.
+A core of three at p needs N(p) u T forcing, and supersets of forcing sets
+force -- so a BIGGER circle makes the condition easier, not harder.  de Grey's
+G has maximum degree 60, but its edge module carries about 134 unit vectors,
+so the pivot's circle can in principle hold twice what it does.
 
-*Unit-triangle centroids.* The two-orbit block needs a target at squared
-distance 1/3 from the pivot, and the constructions here are built from unit
-steps and rarely land that close. Three points pairwise one apart have a
-centroid exactly 1/sqrt(3) from each, so every unit triangle donates a point
-with three legs on the classical circle. On Sa: 469 centroids, 288 of them new,
-and every pivot tested then has a leg.
+The points to add are p + u for each unit step u of the module.  Most are new.
+What matters is whether they are CONSTRAINED -- a new circle point adjacent to
+nothing else is free, takes any colour, and raises the pressure by nothing.
+So each candidate is scored by how many existing vertices it is one away from,
+and only the constrained ones are worth adding.
 
-*Deep holes.* Points of the plane with many graph vertices exactly one away,
-found as unit-circle intersections. A pivot need not be a vertex, and the
-useful ones are those whose neighbourhood is most tightly pinned.
-
-*And nothing else*, because the binary search stops where the colouring does.
+Then the question the whole thing turns on: does the pressure at p rise above
+2 once the circle is enriched?
 """
-import os
-import sys
-import time
-
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-
-from hn.certify import save_certificate
-from hn.coloring import is_k_colorable
-from hn.degrey import build_G, build_S, build_Sa, build_Y
+import sys, time, itertools
+sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+from fractions import Fraction
+from hn import degrey
+from hn.geometry import Point
 from hn.graph import build_graph
-from hn.mixed import deep_holes, unit_triangle_centroids
+from hn.forced import ColourRelations, pressure
 
-K = int(os.environ.get("HN_K", "4"))
-BASE = os.environ.get("HN_BASE", "Sa")
-MIN_DEG = int(os.environ.get("HN_MINDEG", "4"))
-LIMIT = int(os.environ.get("HN_LIMIT", "2500"))
-OUT = os.environ.get(
-    "HN_OUT",
-    "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415"
-    "/scratchpad/enriched.json")
-BUILDERS = {"S": build_S, "Sa": build_Sa, "Y": build_Y, "G": build_G}
+g = degrey.build_G()
+pts = list(g.vertices)
+one = pts[0].x.field.one()
+deg = g.degrees()
+p_idx = max(range(g.n), key=lambda v: deg[v])
+p = pts[p_idx]
+print(f"G: {g.n} vertices; pivot {p_idx} has degree {deg[p_idx]}", flush=True)
 
+# the module's unit steps, as differences that occur in the graph
+steps = set()
+for a, b in g.edges():
+    d = (pts[b].x - pts[a].x, pts[b].y - pts[a].y)
+    steps.add(d)
+    steps.add((-d[0], -d[1]))
+print(f"  {len(steps)} unit steps in the edge module", flush=True)
 
-def most_that_colours(pts, extra, k):
-    """Binary search on how many extras the graph takes while still colouring."""
-    lo, hi, best = 0, len(extra), []
-    while lo <= hi:
-        mid = (lo + hi) // 2
-        cand = extra[:mid]
-        if is_k_colorable(build_graph(pts + cand), k)[0]:
-            best, lo = cand, mid + 1
-        else:
-            hi = mid - 1
-    return best
+index = {q: i for i, q in enumerate(pts)}
+cands = []
+for dx, dy in steps:
+    q = Point(p.x + dx, p.y + dy)
+    if q in index:
+        continue
+    # how many existing vertices is it one away from?
+    touch = sum(1 for r in pts if q.is_unit_apart(r))
+    cands.append((touch, q))
+cands.sort(key=lambda t: -t[0])
+print(f"  {len(cands)} candidate circle points not already present; "
+      f"contacts {cands[0][0] if cands else 0} down to "
+      f"{cands[-1][0] if cands else 0}", flush=True)
 
-
-def main() -> None:
-    t0 = time.time()
-    base = BUILDERS[BASE]()
-    pts = list(base.vertices if hasattr(base, "vertices") else base)
-    g = build_graph(pts)
-    print(f"{BASE}: {g}", flush=True)
-
-    known = set(g.vertices)
-    cents = [c for c in unit_triangle_centroids(g) if c not in known]
-    take = most_that_colours(pts, cents, K)
-    pts = pts + take
-    g = build_graph(pts)
-    print(f"  + {len(take)} of {len(cents)} centroids: {g}  "
-          f"[{time.time() - t0:.0f}s]", flush=True)
-
-    known = set(g.vertices)
-    holes = [x for _d, x in deep_holes(g, min_degree=MIN_DEG, limit=LIMIT)
-             if x not in known]
-    take = most_that_colours(pts, holes, K)
-    pts = pts + take
-    g = build_graph(pts)
-    print(f"  + {len(take)} of {len(holes)} holes: {g}  "
-          f"[{time.time() - t0:.0f}s]", flush=True)
-
-    save_certificate(g, OUT, k=K,
-                     claim=f"{BASE} enriched with centroids and holes, "
-                           f"still {K}-colourable")
-    print(f"  saved to {OUT}", flush=True)
-
-
-if __name__ == "__main__":
-    main()
+for keep in (0, 10, 30, len(cands)):
+    sel = [q for _, q in cands[:keep]]
+    w = build_graph(pts + sel)
+    pi = w.index_of(p)
+    t = time.time()
+    pr = pressure(ColourRelations(w, 5), pi)
+    print(f"  +{keep:3} circle points: n={w.n:5} m={w.m:6}, "
+          f"pivot degree {len(w.adj[pi]):3}, pressure at k=5 = {pr}"
+          + ("   *** ABOVE 2 ***" if pr > 2 else "")
+          + f"  [{time.time()-t:.0f}s]", flush=True)
