@@ -586,8 +586,26 @@ def test_cyclotomic_verdicts():
         got = cyclotomic_can_block(n)
         assert got["residue_degree_over_F"] == deg, (n, got)
         assert got["can_block"] is ok, (n, got)
-    assert cyclotomic_can_block(5)["ramified"] is True
-    assert cyclotomic_can_block(5)["can_block"] is False
+    # K/F ramifies above 5 exactly when n = 5^a or 2.5^a: there the residue
+    # extension is trivial, N mod p lies in {+1,-1}, and nothing blocks.
+    for n in (5, 10, 25, 50):
+        got = cyclotomic_can_block(n)
+        assert got["ramified_over_F"] is True
+        assert got["can_block"] is False
+    # But 5 | n does NOT imply K/F is ramified. Q(zeta_35) has
+    # f = ord(5 mod 7) = 6 with the primes sigma-fixed, so residue degree 3
+    # over F -- an earlier blanket verdict called this unable to block.
+    got = cyclotomic_can_block(35)
+    assert got["ramified_over_F"] is False
+    assert got["residue_degree_over_F"] == 3
+    assert got["can_block"] is True
+    assert got["residue_field_only"] is True
+    # The two ramified-in-K/Q cases settled by exhaustion agree.
+    for n in (15, 20):
+        got = cyclotomic_can_block(n)
+        assert got["ramified_over_F"] is False
+        assert got["residue_degree_over_F"] <= 2
+        assert got["can_block"] is False
 
 
 def test_the_verdict_matches_the_measurement():

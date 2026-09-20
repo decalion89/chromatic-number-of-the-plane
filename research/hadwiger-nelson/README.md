@@ -2198,7 +2198,29 @@ next. That is the same 7 that put 29 — the least prime splitting completely in
 `Q(zeta_7)` — at the bottom of the blocking denominators, reached here from the
 opposite direction entirely.
 
-`cyclotomic_can_block(n)` returns the verdict from `ord(5 mod n)` alone, and
+### A verdict of my own that was wrong
+
+`cyclotomic_can_block(n)` used to return "cannot block" for **every** `n`
+divisible by 5, on the grounds that 5 ramifies there. That confuses
+ramification of 5 in `K/Q` with ramification of `K/F`, and they are different.
+Writing `n = 5^a m` with `5` not dividing `m`, the inertia group at 5 is
+`(Z/5^a)* x {1}` and conjugation is `(-1, -1)`, so
+
+    K/F ramifies above 5  <=>  conjugation lies in inertia  <=>  m | 2,
+
+that is, only for `n = 5^a` and `n = 2.5^a`. `Q(zeta_35)` has
+`f = ord(5 mod 7) = 6` with the primes `sigma`-fixed, hence residue degree
+**3** over `F` — and the blanket verdict called it unable to block. Corrected,
+and the two ramified cases settled by exhaustion agree with the new logic:
+`Q(zeta_15)` and `Q(zeta_20)` both have residue degree 1 over `F`.
+
+One caveat is kept explicit. When `5 | n` the local ring is `O_p/p^e` rather
+than a field, so the orbit classification — which is about residue fields —
+only rules out the functionals factoring through `O/p`. A `True` there means
+"not obstructed by the residue field", and the result carries a
+`residue_field_only` flag saying so.
+
+`cyclotomic_can_block(n)` returns the verdict from the arithmetic of 5, and
 `orbit_can_block(kind, f)` decides an orbit by exhaustion. Two that fall out:
 `Q(zeta_11)` blocks (`f = 5`, swapped), and therefore so does `Q(zeta_33)` —
 which contains `zeta_3` for the triangles **and** `sqrt-11` for the Moser
