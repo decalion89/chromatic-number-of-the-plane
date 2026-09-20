@@ -1098,3 +1098,17 @@ def test_neighbourhoods_are_bipartite():
                         assert colour[y] != colour[x], (v, x, y)
         checked += 1
     assert checked > 100
+
+
+def test_blocking_at_every_modulus_up_to_five():
+    """A coset colouring mod n gives chi <= n, so all of 2, 3, 4, 5 matter.
+
+    The denominator-29 directions clear all four; the necklace's clear 2, 3
+    and 5 and fail at 4, which is exactly the coset 4-colouring the n = 8
+    Cayley screen had found by a longer route.
+    """
+    from hn.homcol import denominator_29_directions, has_homomorphism
+
+    d = denominator_29_directions()
+    for n in (2, 3, 4, 5):
+        assert has_homomorphism(d, n)[0] is None, n

@@ -889,6 +889,14 @@ FIRST_FIVE_CHROMATIC_BLOCKED = {
     "blocking_subset": 300,
     "honest": "U passes the necessary gate for chi >= 6; it is not claimed to "
               "be 6-chromatic",
+    "blocks_at_every_modulus_to_five": True,
+    "why": "its directions contain r.{w.zeta_6^k}, which is the "
+           "denominator-29 set up to a global rotation, and that set blocks "
+           "at n = 2, 3, 4 and 5; rotation preserves blocking at every n",
+    "standing": "the only object here that is 5-chromatic AND meets every "
+                "necessary condition known for a sixth colour: blocked at "
+                "2, 3, 4, 5, and surviving the Cayley screen at every modulus "
+                "from 5 to 20",
 }
 
 CRITICAL_CORE_COLLAPSES = {

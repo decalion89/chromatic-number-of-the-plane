@@ -2047,6 +2047,13 @@ So `U` is **5-chromatic and blocked**: the first graph that is both, and the
 first to pass the gate. Stated for what it is — `U` is not claimed to be
 6-chromatic, and nothing above says it is.
 
+It is also, as it turns out, the only object here that meets **every**
+necessary condition known for a sixth colour. Its directions contain
+`r·{w·zeta_6^k}`, which is the denominator-29 set up to a global rotation, and
+that set blocks at `n = 2, 3, 4` **and** `5` while surviving the Cayley screen
+at every modulus from 5 to 20. Rotation preserves blocking at every `n`, so
+`U` inherits all of it.
+
 ### Every triangle of unit steps is a 60-degree pair
 
 `|u| = |v| = |u - v| = 1` expands to `u.vbar + ubar.v = 1`; with `t = u.vbar`
