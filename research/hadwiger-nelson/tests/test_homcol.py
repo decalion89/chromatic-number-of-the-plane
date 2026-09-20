@@ -1842,3 +1842,55 @@ def test_a_curve_that_reaches_zero_has_no_tail_and_no_floor():
                                      (10, 30), (20, 11), (40, 2)])
     assert floor == 2
     assert tail is not None and tail > 0.85
+
+
+def test_the_ring_criterion_picks_de_greys_ring_out_of_his_own_core():
+    """The retrodiction that makes the criterion worth trusting.
+
+    A ring of the symmetric core pays twice: sqrt(4D-1) for the rotation that
+    makes it bite, sqrt(16D-1) for the spindle of the antipodal pair that
+    rotation aims at.  Sa has five rational closable rings, of squared radius
+    1, 1/3, 5/9, 4 and 3.  D = 1 is the 60-degree turn and fixes Sa, so it is
+    degenerate; of the rest exactly one passes both tests, and it is the one
+    de Grey used.
+
+    It is not the populous one.  D = 1 carries 30 of Sa's points and D = 4
+    carries six, so ranking rings by how many points sit on them -- the
+    obvious heuristic, and the one tried first here -- picks the wrong ring.
+    """
+    from hn.homcol import doubly_usable_ring, closable_distance
+
+    sa_rings = [Fraction(1), Fraction(1, 3), Fraction(5, 9),
+                Fraction(4), Fraction(3)]
+    assert all(closable_distance(D) for D in sa_rings)   # all rho-able
+    assert [D for D in sa_rings if doubly_usable_ring(D)] == [Fraction(4)]
+
+    # (2,0) and (-2,0) -- the pair Y forces -- are antipodal on that ring.
+    assert Fraction(2) ** 2 == Fraction(4)
+    # and the spindle of a pair at distance 4 is de Grey's own next step.
+    assert closable_distance(Fraction(16))
+
+
+def test_the_five_colour_core_has_a_ring_the_four_colour_one_lacks():
+    """G* offers D = 17/2, which Sa has no analogue of.
+
+    rho needs sqrt(4*17/2 - 1) = sqrt(33), which is sqrt(3)*sqrt(11) and so
+    lies in de Grey's field; the spindle needs sqrt(16*17/2 - 1) = sqrt(135) =
+    3 sqrt(15), which does too.  Of G*'s twelve rational closable rings only
+    this one and D = 4 pay both costs.  D = 16, where de Grey's own doubling
+    chain stopped for want of sqrt(17), still does not.
+    """
+    from hn.homcol import doubly_usable_ring, closing_radicand
+
+    assert doubly_usable_ring(Fraction(17, 2))
+    assert closing_radicand(Fraction(17, 2)) == 33
+    assert closing_radicand(4 * Fraction(17, 2)) == 15
+
+    assert not doubly_usable_ring(Fraction(16))
+    assert closing_radicand(64) == 255          # 3 * 5 * 17, and 17 is absent
+
+    gstar = [Fraction(1), Fraction(4), Fraction(31, 3), Fraction(17, 2),
+             Fraction(7), Fraction(20, 3), Fraction(13, 3), Fraction(7, 3),
+             Fraction(3, 2), Fraction(16)]
+    assert [D for D in gstar if doubly_usable_ring(D)] == [Fraction(4),
+                                                           Fraction(17, 2)]

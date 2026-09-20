@@ -51,7 +51,7 @@ __all__ = ["edge_vectors", "has_homomorphism", "screen", "minimum_blocking_set",
            "cyclotomic_chain_closes",
            "denominator_29_directions",
            "closing_radicand", "closable_distance", "closable_over",
-           "lattice_basis", "on_lattice", "blocks_at", "saturated_at", "decay_rates"]
+           "lattice_basis", "on_lattice", "blocks_at", "saturated_at", "decay_rates", "doubly_usable_ring"]
 
 
 def _coords(e) -> Tuple[Fraction, ...]:
@@ -3768,6 +3768,34 @@ THE_CONFLICT_METRIC_NEEDS_A_FIXED_SIZE = {
 }
 
 
+def doubly_usable_ring(d2, radicands=(3, 5, 7, 11)):
+    """Can this ring carry both halves of the step, rotation and spindle?
+
+    A ring of squared radius D about the centre of a symmetric core is used
+    twice, and each use costs a radical.
+
+    First, rho: the rotation that makes the ring bite, carrying each of its
+    points to distance exactly 1 from itself.  From |r e^{it} - r|^2 = 1 that
+    is cos t = 1 - 1/(2D), sin t = sqrt(4D-1)/(2D), so the field must contain
+    sqrt(4D-1).  That is `closable_distance(D)`.
+
+    Second, the spindle: the pair the construction aims at is the ANTIPODAL
+    pair on that ring, which sits at squared distance 4D.  Forcing it is only
+    worth anything if it can then be spindled, and that rotation needs
+    sqrt(4(4D)-1) = sqrt(16D-1).  That is `closable_distance(4*D)`.
+
+    Requiring both at once is a savage filter, and the reason to trust it is
+    that it retrodicts de Grey's choice uniquely.  Sa has five rational
+    closable rings -- 1, 1/3, 5/9, 4, 3 -- and apart from the degenerate D = 1,
+    which is the 60-degree rotation that fixes Sa, exactly one passes both:
+    D = 4.  That is the ring he used, and the pair he forces, (2,0) and
+    (-2,0), is its antipodal pair.
+    """
+    if d2 == 1:                       # the 60-degree turn: it fixes the core
+        return False
+    return (closable_distance(d2, radicands)
+            and closable_distance(4 * d2, radicands))
+
 def decay_rates(curve, tail_from=5):
     """Head rate, tail rate and floor of a survivor curve.
 
@@ -3844,4 +3872,38 @@ THE_DECAY_CURVE_CALIBRATED = {
                "handful of pairs that no colouring separates while everything "
                "around them separates freely.  A metric that averages over "
                "all pairs cannot see it; the floor can.",
+}
+
+
+# The ring criterion, and what it leaves.
+#
+# Rotating a symmetric core about its own centre is de Grey's step from Sa to
+# Y, and the ring it turns on has to pay twice: sqrt(4D-1) to build the
+# rotation, sqrt(16D-1) to spindle the antipodal pair the rotation is aimed at.
+# Over Q(sqrt3, sqrt5, sqrt7, sqrt11) that is a very short list.
+#
+# Ranking rings by population, which is the obvious thing to do, is wrong --
+# and measurably so.  Sa's most populous closable ring is D = 1 with 30 points
+# and de Grey used D = 4, which has six.  Population is not the property; being
+# spendable twice is.
+THE_RING_MUST_PAY_TWICE = {
+    "first_cost": "sqrt(4D-1), for the rotation that makes the ring bite",
+    "second_cost": "sqrt(16D-1), for the spindle of the antipodal pair at "
+                   "squared distance 4D",
+    "Sa_rings": {"closable": [1, Fraction(1, 3), Fraction(5, 9), 4, 3],
+                 "populations": {1: 30, "1/3": 18, "5/9": 12, 4: 6, 3: 6},
+                 "pass_both": [4],
+                 "de_greys_choice": 4},
+    "retrodiction": "the criterion picks de Grey's ring uniquely out of his "
+                    "own core, and it is not the populous one -- 6 points "
+                    "against 30 for D = 1",
+    "Gstar_rings": {"rational_and_closable": 12, "of_572_rings_in_all": 572,
+                    "pass_both": [4, Fraction(17, 2)]},
+    "the_new_one": "D = 17/2 has 24 points, rho by sqrt(33), spindle by "
+                   "sqrt(135) = 3 sqrt(15).  Sa has no such ring: it is "
+                   "something the five-colour core has and the four-colour "
+                   "core did not.",
+    "what_it_buys": "two candidates instead of a search space, and the pairs "
+                    "to interrogate are the ones on the ring -- a few dozen, "
+                    "not the 360 million pairs of a 27000-point union",
 }
