@@ -4780,3 +4780,60 @@ THE_GADGET_IS_SEVENTY_TIMES_BIGGER = {
                                       "28000",
     "and_Z_has": 27673,
 }
+
+
+# An anomaly in the dilution curve, and what it does and does not mean.
+#
+# Thinning Sa was meant to dilute its Moser spindles and watch the correlation
+# fall with them.  It mostly does:
+#
+#     keep 1.0   397 points   576 spindles  1.45/pt   ratio  24.0
+#     keep 0.9   357 points   427 spindles  1.20/pt   ratio 251.4   <-- ten
+#                                                                       times
+#     keep 0.8   318 points   313 spindles  0.98/pt   ratio   5.0
+#     keep 0.7   278 points   196 spindles  0.70/pt   ratio   2.4
+#     keep 0.6   238 points   127 spindles  0.53/pt   ratio   1.7
+#     keep 0.5   198 points    81 spindles  0.41/pt   ratio   2.1
+#     keep 0.4   159 points    46 spindles  0.29/pt   ratio   1.3
+#
+# At ninety per cent the spindle density FELL and the ratio rose tenfold.  It
+# is not an artefact: that subgraph is connected, is not 3-colourable, and
+# returns twenty-four distinct colourings out of twenty-four, so neither the
+# sampling nor the structure has degenerated.  Deleting forty of Sa's vertices
+# made its colourings ten times more correlated.
+#
+# A mechanism suggested itself -- Sa is invariant under the twelve-element
+# dihedral group, so its colourings lie in large symmetry orbits that sampling
+# spreads over, and deleting vertices breaks the symmetry and concentrates the
+# space.  If that were right it would cut against the symmetrise-then-rotate
+# programme, since G* was built by symmetrising.
+#
+# It was tested and it is not supported.  Forty random subgraphs of G at five
+# colours, keeping between seventy and ninety-five per cent, give ratios
+# between 1.0 and 1.1 throughout, against 1.09 for the whole graph.  Breaking
+# the symmetry raises nothing at five colours.
+#
+# So the anomaly stands, real and unexplained.  The dilution curve is
+# monotone apart from it, the mechanism guessed for it is unsupported, and
+# what the five-colour test shows is only that no such spike occurs there --
+# forty tries, none above 1.1.
+THE_DILUTION_ANOMALY = {
+    "curve": {"1.0": {"spindles_per_point": 1.45, "ratio": 24.0},
+              "0.9": {"spindles_per_point": 1.20, "ratio": 251.4},
+              "0.8": {"spindles_per_point": 0.98, "ratio": 5.0},
+              "0.7": {"spindles_per_point": 0.70, "ratio": 2.4},
+              "0.6": {"spindles_per_point": 0.53, "ratio": 1.7},
+              "0.5": {"spindles_per_point": 0.41, "ratio": 2.1},
+              "0.4": {"spindles_per_point": 0.29, "ratio": 1.3}},
+    "the_anomaly": "at 0.9 the gadget density falls and the ratio rises "
+                   "tenfold",
+    "not_an_artefact": "connected, not 3-colourable, 24 distinct colourings "
+                       "of 24",
+    "guessed_mechanism": "symmetry spreads the colouring space and deletion "
+                         "concentrates it",
+    "tested": "40 random subgraphs of G at five colours, 70 to 95 per cent: "
+              "ratios 1.0 to 1.1, against 1.09 for the whole graph",
+    "verdict": "the guess is unsupported and the anomaly is unexplained.  "
+               "What the five-colour test establishes is only that no such "
+               "spike occurs there.",
+}
