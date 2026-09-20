@@ -2185,3 +2185,47 @@ FORCING_IS_NOT_THE_SKELETON = {
     "reading": "the forcing is not the hexagon-and-tip skeleton, and cannot "
                "be isolated that way",
 }
+
+
+# -- the barrier theorem catching my own construction ----------------------
+#
+# de Grey's recipe rebuilt over K = Q(m, sqrt-3, sqrt-11), the degree-12 field
+# with the Moser rotation and residue degree 6 at 5: the spindle closed under
+# the rotations K provides. Six of them exist, of chords
+#
+#     1,  1/3,  3,  11/3,  11/9,  25/9
+#
+# found by the criterion that a chord c admits a rotation iff 3c(4-c) is a
+# square in F = Q(m, sqrt33) -- rational or 33 times rational, for rational c.
+# The closure reaches 597 points, 1476 edges, chi = 4, 594 directions, and
+# blocks at 2, 3 and 4 -- but NOT at 5.
+#
+# The reason is the barrier theorem, applied to the construction that was
+# built to escape it. Every one of those six chords is RATIONAL, so every
+# rotation lies in Q(sqrt-3, sqrt-11) -- degree 4, the Moser spindle's own
+# field, which provably never blocks. The construction was using a quarter of
+# the field it was built in, and no amount of closing under those rotations
+# escapes a subfield.
+#
+# What the theorem demands instead is a rotation of IRRATIONAL chord, and
+# Hilbert 90 supplies them: 282 were found in K, each with u + ubar moving
+# with m. Used as rotations -- X u u.X -- they multiply the direction count
+# rather than adding one at a time, 594 per rotation against the 1 a
+# translation brought.
+
+RATIONAL_CHORDS_CONFINE_THE_CLOSURE = {
+    "field": "K = Q(m, sqrt-3, sqrt-11), degree 12, m a root of "
+             "x^3 - 10x^2 + 26x - 11",
+    "criterion": "a chord c admits a rotation iff 3c(4-c) is a square in "
+                 "F = Q(m, sqrt33)",
+    "rotations_found": [1, "1/3", 3, "11/3", "11/9", "25/9"],
+    "closure": {"points": 597, "edges": 1476, "chi": 4, "directions": 594,
+                "blocks_at": [2, 3, 4]},
+    "why_not_5": "every one of those chords is rational, so every rotation "
+                 "lies in the degree-4 subfield Q(sqrt-3, sqrt-11), which "
+                 "provably never blocks -- the construction used a quarter of "
+                 "its own field",
+    "the_fix": "rotations of irrational chord, 282 of them found by Hilbert "
+               "90, each contributing 594 directions where a translation "
+               "contributed one",
+}
