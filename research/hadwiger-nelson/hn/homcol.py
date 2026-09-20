@@ -3282,3 +3282,43 @@ Y_DOES_NOT_SHRINK_EASILY = {
     "ball_result": "radius 1.5 about the segment keeps 773 of 791 and "
                    "separates; radius 2.0 is all 791 and forces",
 }
+
+
+# ---------------------------------------------------------------------------
+# A budget that lies, and why the negatives survive it anyway.
+#
+# `solve_limited` with a conflict budget came back undecided on queries that
+# resolve in three seconds with no budget at all: vertices 184 and 359 of Y
+# both exceeded a 60000-conflict budget and then SEPARATED immediately when
+# asked without one.  So the budget is not a clean bound -- the solver gives
+# up before reaching it -- and any budgeted "undecided" has to be rerun to the
+# end before it means anything.
+#
+# That is the protocol every pair scan here already used: the hard list is
+# collected and then rerun without a budget.  And the error points the safe
+# way.  Giving up early produces MORE undecideds, never fewer, so
+#
+#     a scan reporting ZERO hard queries decided every one of them,
+#
+# and the decided answers -- a model, or a refutation -- are trustworthy
+# whatever the budget did.  The negatives stand: G's 21358 pairs at five
+# colours, the 81 rotations of K at de Grey's own pair, the 125 second-floor
+# unions.  What did not survive is the triage that skipped the rerun.
+
+THE_BUDGET_LIES_BUT_SAFELY = {
+    "symptom": "solve_limited came back undecided at a 60000-conflict budget "
+               "on queries that resolve in three seconds with no budget",
+    "instances": "vertices 184 and 359 of Y, both degree 6, both separating "
+                 "immediately once the budget was removed",
+    "rule": "every budgeted 'undecided' must be rerun to the end before it "
+            "means anything",
+    "why_the_negatives_survive": "giving up early produces MORE undecideds, "
+                                 "never fewer, so a scan reporting zero hard "
+                                 "queries decided every one of them, and a "
+                                 "model or a refutation is trustworthy "
+                                 "whatever the budget did",
+    "unaffected": ["G's 21358 pairs at five colours",
+                   "the 81 rotations of K at de Grey's own pair",
+                   "the second-floor unions"],
+    "affected": "the vertex triage, which skipped the rerun",
+}
