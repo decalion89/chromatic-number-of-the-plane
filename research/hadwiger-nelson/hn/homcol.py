@@ -4570,3 +4570,36 @@ THE_FOUR_COLOUR_EXCESS_IS_CORRELATION = {
                           "lives in Sa u rho(Sa), not in Sa.  At five colours "
                           "there is no raw material to convert.",
 }
+
+
+# The correlation ratio only compares at equal sample counts.
+#
+# A pair survives s samples with probability p^s, where p = (k-1)/k for an
+# independent pair and some p' > p for a correlated one.  So the ratio of the
+# observed count to chance is (p'/p)^s times the correlated fraction, and it
+# GROWS exponentially with the number of samples.  Two ratios taken at
+# different s are not the same measurement.
+#
+# Which is why the figures here are paired deliberately.  Sa at four colours
+# and G at five were both taken at twenty-four samples -- 19.6 against 1.10 --
+# and Z at five is taken at twenty-four as well, so that it lands beside Sa's
+# number rather than needing conversion.  The relcurve series is internally
+# consistent at forty throughout.  G* at sixty is on its own scale: there
+# chance is 147 of its 96 million pairs, so the count itself is the reading,
+# and a few hundred means nothing while a few thousand would mean a great deal.
+#
+# The same exponent explains why G's own ratio drifts from 1.10 at
+# twenty-four samples to 1.34 at forty.  If that drift were correlation it
+# would imply p'/p = 1.004 and 1.0073 respectively, which disagree; it is
+# noise around independence, which is what the verification says too.
+THE_RATIO_NEEDS_A_FIXED_SAMPLE_COUNT = {
+    "why": "survival is p^s, so observed/chance is (p'/p)^s -- exponential in "
+           "the sample count",
+    "paired_at_24": {"Sa at 4": 19.6, "G at 5": 1.10, "Z at 5": "pending"},
+    "series_at_40": {"G": 1.34, "G u rho_4(G)": 1.22, "stack depth 1": 1.18},
+    "at_60": {"G*": "chance is 147 of 96 million pairs; the count is the "
+                    "reading"},
+    "the_drift_is_noise": "G gives 1.10 at 24 samples and 1.34 at 40, which "
+                          "would need p'/p = 1.004 and 1.0073 -- inconsistent, "
+                          "so noise, as the verification independently says",
+}

@@ -2071,3 +2071,30 @@ def test_the_chance_rate_of_a_sampling_filter_depends_on_the_colours():
     gpairs = 1581 * 1580 // 2
     assert round(gpairs * (4 / 5) ** s) == 5898
     assert 1.0 < 6502 / (gpairs * (4 / 5) ** s) < 1.2
+
+
+def test_the_correlation_ratio_is_exponential_in_the_sample_count():
+    """Two ratios taken at different sample counts are different measurements.
+
+    A pair survives s samples with probability p^s -- p = (k-1)/k when it is
+    unconstrained, some p' > p when it is correlated -- so observed/chance is
+    (p'/p)^s and grows exponentially with s.  A mild correlation invisible at
+    twenty-four samples is glaring at sixty, and comparing across s reads that
+    exponent as structure.
+
+    Hence the pairing in the measurements: Sa at four colours and G at five
+    are both at twenty-four samples, and Z at five is too.
+    """
+    k, p = 5, 4 / 5
+
+    # A pair 5% more likely than chance to differ, at three sample counts.
+    pp = p * 1.05
+    r = [(pp / p) ** s for s in (24, 40, 60)]
+    assert round(r[0], 2) == 3.23
+    assert round(r[1], 2) == 7.04
+    assert round(r[2], 2) == 18.68
+    assert r[2] / r[0] > 5, "the same correlation, read five times larger"
+
+    # And G's own drift is too small to be a consistent p'/p.
+    assert abs((1.10 ** (1 / 24)) - 1.0040) < 1e-3
+    assert abs((1.34 ** (1 / 40)) - 1.0073) < 1e-3
