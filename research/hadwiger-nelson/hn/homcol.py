@@ -4936,3 +4936,45 @@ THE_PREDICTION_FOR_Z = {
                           "is a construction problem rather than a scaling "
                           "one.  Nothing here produces one.",
 }
+
+
+# How the forcer grows, which is the scale chi >= 6 would actually need.
+#
+# The spindling lemma turns a forced pair at k colours into a (k+1)-chromatic
+# graph, so the object to size is the FORCER: the smallest graph carrying a
+# pair monochromatic in every proper k-colouring, at a distance the field can
+# close.
+#
+#     k = 3    the rhombus, 4 vertices -- and minimal, since a triangle has
+#              no non-adjacent pair to force at all
+#     k = 4    Y, 791 vertices, and nearly minimal: the full sweep of all 789
+#              non-pair vertices finds exactly two slack, so 787 are
+#              individually indispensable
+#
+# A factor of 198.  If the next step costs the same, a five-colour forcer runs
+# to about 157000 vertices -- and everything built in this session tops out at
+# 55345.
+#
+# That is not a proof of anything, and the two points of a curve are two
+# points.  But it is measured rather than assumed at both ends, and it agrees
+# with everything else here: with the gadget count, where the 4-critical
+# spindle is seven vertices and the 5-critical unit is about five hundred;
+# with the ladder, where correlation at k = chi falls from eleven thousand to
+# twenty-four to one; and with the relation, which at five colours is empty.
+# Four independent measurements pointing at the same wall.
+THE_FORCER_GROWS_BY_TWO_HUNDRED = {
+    "k=3": {"forcer": "the rhombus", "vertices": 4,
+            "minimal": "yes -- a triangle has no non-adjacent pair"},
+    "k=4": {"forcer": "Y", "vertices": 791,
+            "minimal": "nearly -- 787 of 789 non-pair vertices are "
+                       "individually indispensable, two are slack"},
+    "ratio": 198,
+    "extrapolated_k=5": "about 157000 vertices",
+    "largest_built_here": 55345,
+    "status": "two points are two points; this is an extrapolation, not a "
+              "theorem",
+    "but_it_agrees_with": ["the gadget count: 7-vertex 4-critical spindle "
+                           "against a ~500-vertex 5-critical unit",
+                           "the ladder: 11014 -> 24 -> 1.1 at k = chi",
+                           "the relation: empty at five colours"],
+}

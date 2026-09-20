@@ -3834,6 +3834,30 @@ times as many points — `397 × 71`, about **28 000**.
 
 `Z = G* ∪ ρ₄(G*)` has **27 673**, and is being measured.
 
+## How the forcer grows, and the scale six would need
+
+The spindling lemma turns a forced pair at `k` colours into a
+`(k+1)`-chromatic graph, so the object whose size matters is the **forcer**:
+the smallest graph carrying a pair monochromatic in every proper
+`k`-colouring, at a distance the field can close.
+
+| `k` | forcer | vertices | minimal? |
+|---|---|---|---|
+| 3 | the rhombus | **4** | yes — a triangle has no non-adjacent pair to force |
+| 4 | `Y` | **791** | nearly — 787 of 789 non-pair vertices are individually indispensable |
+
+A factor of **198**. If the next step costs the same, a five-colour forcer
+runs to about **157 000 vertices** — and everything built in this session tops
+out at 55 345.
+
+Two points are two points, and this is an extrapolation rather than a theorem.
+But both ends are measured rather than assumed, and it agrees with everything
+else here: with the gadget count, where the 4-critical spindle is seven
+vertices and the 5-critical unit is about five hundred; with the ladder, where
+correlation at `k = χ` falls 11 014 → 24 → 1.1; and with the relation, which
+at five colours is empty. Four independent measurements pointing at the same
+wall.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

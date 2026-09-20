@@ -2212,3 +2212,43 @@ def test_a_ratio_is_only_as_good_as_the_mixing_behind_it():
     from hn.homcol import THE_DILUTION_ANOMALY as A
     assert "RESOLVED" in A
     assert 0.019 / 0.653 < 0.05
+
+
+def test_the_rhombus_is_the_minimal_three_colour_forcer():
+    """The small end of the forcer curve, established rather than assumed.
+
+    A forcer is a graph carrying a pair monochromatic in every proper
+    k-colouring.  At three colours the rhombus does it on four vertices, and
+    nothing smaller can: a graph on three vertices that is 3-colourable has at
+    most a triangle, and a triangle has no non-adjacent pair to force.  So 4
+    is exact, and the other end of the curve -- Y at 791, with 787 of its 789
+    non-pair vertices individually indispensable -- is measured too.
+    """
+    from pysat.solvers import Solver
+    from hn.homcol import THE_FORCER_GROWS_BY_TWO_HUNDRED as T
+
+    def forces(n, edges, k):
+        cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
+        for a, b in edges:
+            for c in range(k):
+                cls.append([-(1 + a * k + c), -(1 + b * k + c)])
+        sv = Solver(name="cd19", bootstrap_with=cls)
+        assert sv.solve()
+        es = {(min(a, b), max(a, b)) for a, b in edges}
+        out = any(not sv.solve(assumptions=[1 + i * k, -(1 + j * k)])
+                  for i in range(n) for j in range(i + 1, n)
+                  if (i, j) not in es)
+        sv.delete()
+        return out
+
+    assert forces(4, [(0, 1), (0, 2), (1, 2), (0, 3), (1, 3)], 3)
+
+    # Nothing on three vertices does: every 3-colourable graph on three
+    # vertices is a subgraph of a triangle, which has no non-adjacent pair.
+    for edges in ([], [(0, 1)], [(0, 1), (1, 2)],
+                  [(0, 1), (1, 2), (0, 2)]):
+        assert not forces(3, edges, 3)
+
+    assert T["k=3"]["vertices"] == 4
+    assert T["k=4"]["vertices"] == 791
+    assert round(791 / 4) == T["ratio"]
