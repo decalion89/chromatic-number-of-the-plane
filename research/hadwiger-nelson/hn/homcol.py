@@ -3510,3 +3510,66 @@ THE_SIXTEEN_ROTATION_SET = {
     "why_stopped": "it would give a second example of what U already is; the "
                    "marginal value did not justify the core",
 }
+
+
+# ---------------------------------------------------------------------------
+# Translates, which this whole attack had never tried -- and the needle moves.
+#
+# Every union here had been G with a ROTATED copy, because the spindle needs a
+# rotation.  But the union that carries the forcing does not: G u (G + t) is
+# just as good a unit-distance graph, just as 5-chromatic, and translates cost
+# nothing arithmetically -- a cross edge is |p - (q + t)| = 1, i.e.
+#
+#     t = p - q - v      for p, q in G and v a unit direction,
+#
+# so every difference of G shifted by any unit vector is a candidate.  No
+# square has to lie in the field, no rotation has to exist.  The family is
+# vastly larger than the rotations and it had gone completely unexamined.
+#
+# What makes a translate good is multiplicity, which is exactly its cross-edge
+# count.  The histogram over G -- 21 million distinct translates, keyed on
+# floats and confirmed exactly -- puts the best non-trivial one at 451 from a
+# sample of 150 of the 1581 points.  Measured exactly:
+#
+#     3026 points (136 shared), 16820 edges, 1442 CROSS
+#     3008 points (154 shared), 16691 edges, 1440 cross
+#
+# and, far more to the point, the SOLVER COST:
+#
+#     G alone at five colours:     6410 conflicts over 21358 pairs, dearest 29
+#     translate union:           723211 conflicts over 44011 pairs, dearest 3689
+#     second translate union:    499237 conflicts over 43871 pairs, dearest 3278
+#
+# A hundredfold in the total and a hundred and twenty-fold in the dearest pair.
+# For scale, Y's UNFORCED distance-4 pairs at four colours cost 157 to 35365
+# conflicts and its forced one over two million.  So a single translate lifts G
+# out of "nowhere near" -- 29 -- and into the bottom of the band where forcing
+# actually lives.
+#
+# Still no forced pair.  But this is the first thing in the whole search that
+# has moved the measurement rather than just the vertex count.
+
+TRANSLATES_MOVE_THE_MEASUREMENT = {
+    "gap": "every union here was G with a ROTATED copy; the union that "
+           "carries the forcing needs no rotation at all",
+    "family": "t = p - q - v for p, q in G and v a unit direction -- every "
+              "difference of G shifted by any unit vector, with no square "
+              "required to lie in the field",
+    "histogram": "21 million distinct translates, keyed on floats and "
+                 "confirmed exactly; best non-trivial 451 from a sample of "
+                 "150 of 1581 points",
+    "measured": [
+        {"points": 3026, "shared": 136, "edges": 16820, "cross": 1442,
+         "pairs": 44011, "conflicts": 723211, "dearest": 3689},
+        {"points": 3008, "shared": 154, "edges": 16691, "cross": 1440,
+         "pairs": 43871, "conflicts": 499237, "dearest": 3278},
+    ],
+    "against": {"G alone at five": {"conflicts": 6410, "dearest": 29},
+                "Y's unforced band at four": [157, 35365],
+                "Y's forced pair at four": "> 2000000"},
+    "reading": "a hundredfold in the total cost and a hundred and twenty-fold "
+               "in the dearest pair; one translate lifts G out of 'nowhere "
+               "near' and into the bottom of the band where forcing lives",
+    "status": "still no forced pair, but the first thing in the search that "
+              "moved the measurement rather than the vertex count",
+}
