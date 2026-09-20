@@ -3127,3 +3127,56 @@ DEGREYS_ROTATION_IS_NOT_GENERIC = {
     "conclusion": "six edges in the right place beat a hundred and fifty-six "
                   "anywhere; rho_4 is not one rotation among many",
 }
+
+
+# ---------------------------------------------------------------------------
+# A counting threshold for blocking, and what it says about the rotated copies.
+#
+# Over F_5 a direction v kills the functionals with phi(v) = 0, a hyperplane,
+# so a random phi survives L independent direction LINES with probability
+# (4/5)^L and blocking needs 5^r . (4/5)^L < 1, i.e.
+#
+#     L  >  r . log 5 / log(5/4)  =  3.49 r.
+#
+# It is a heuristic -- the directions are structured, not random -- but it
+# calibrates the search, and the calibration is what mattered here.  Taking
+# de Grey's G and adjoining rotated copies over Q(m)(sqrt3, sqrt5, sqrt7,
+# sqrt11), every copy contributes 55 lines mod 5, while the rank climbs
+#
+#     32, 48, 64, 80, 96, 96, 96, ...
+#
+# saturating at the full dimension after five.  So the threshold settles at
+# 693 lines and the supply grows 55 at a time: eight rotations give 495 and
+# blocking CANNOT arrive, twelve give 715 and it can.  The run that was
+# grinding at six rotations was grinding for nothing.
+#
+# The moral is general.  Adding a rotated copy buys 55 lines and costs 16
+# rank until the rank is spent -- the first few copies cannot help, and only
+# after the rank saturates does each further copy tell.
+
+BLOCKING_HAS_A_COUNTING_THRESHOLD = {
+    "heuristic": "5^r . (4/5)^L < 1, so L > 3.49 r lines are needed",
+    "status": "a heuristic -- the directions are structured, not random -- "
+              "but it calibrates the search",
+    "for_G_plus_rotated_copies": {
+        "lines_per_rotation": 55,
+        "rank_by_rotation": [32, 48, 64, 80, 96, 96, 96, 96],
+        "threshold": 693,
+        "eight_rotations": "495 lines, cannot block",
+        "twelve_rotations": "715 lines, can",
+    },
+    "moral": "a rotated copy buys 55 lines and costs 16 rank until the rank "
+             "is spent; the first few copies cannot help and only after the "
+             "rank saturates does each further one tell",
+}
+
+
+PARTIAL_SCAN_OF_THE_BITING_ROTATIONS = {
+    "scanned": 8,
+    "of": 81,
+    "cross_edges": [156, 156, 126, 126, 108, 108, 108, 108],
+    "forced": 0,
+    "hard": 0,
+    "stopped": "the decisive question was answered instead by testing de "
+               "Grey's own pair in all 81, where it is free everywhere",
+}
