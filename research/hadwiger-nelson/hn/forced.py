@@ -1700,3 +1700,45 @@ UNION_DRIVES_RHO_TO_K_PLUS_ONE = {
     "reading": "a 3-chromatic set of five points forces all four colours; the "
                "rigidity is entirely ambient",
 }
+
+
+# -- but the drop is not a general pattern, and one guard is needed -------
+#
+# rho -> k + 1 under unioning is a fact about Sa, not about unioning. Measured
+# on two other bases, with the same method:
+#
+#   triangular patch, k = 3:  rho = 3 at one copy -- already the FLOOR, since
+#     rho = k exactly when the graph is uniquely k-colourable, and the lattice
+#     is: its 3-colouring is the coset colouring and nothing else. Unions have
+#     nothing left to give.
+#
+#   Moser spindle, k = 4:  rho = 7 = n at every size. It is 4-vertex-critical,
+#     so rho = n, and the copies add six to fifteen vertices -- too little
+#     ambient structure to change anything.
+#
+# So the drop needs a graph in BETWEEN: not uniquely colourable, where rho is
+# already minimal, and not critical, where rho is n. Sa at four colours is
+# exactly that, and de Grey's G at five is not critical either -- which is
+# what makes the measurement worth the hard solve.
+#
+# THE GUARD. rho means nothing unless proper k-colourings exist. Without that
+# check a union that stops being k-colourable reports every set as forcing for
+# want of a counterexample: the triangular patch returned rho = 1 at three
+# colours, below the floor rho >= k, because two copies at the Moser angle are
+# already 4-chromatic. That is the spindle construction, arriving as a bug.
+# Checked on the result it threatened: every Sa union up to seven copies and
+# 1645 vertices IS 4-colourable, so the 7 -> 5 drop is real.
+
+RHO_DROP_NEEDS_THE_MIDDLE = {
+    "uniquely_colourable": "rho = k already, nothing to gain "
+                           "(triangular patch at k=3, rho=3)",
+    "vertex_critical": "rho = n, nothing helps "
+                       "(Moser spindle at k=4, rho=7=n at every size)",
+    "in_between": "Sa at k=4, rho 7 -> 5 under unioning",
+    "vacuity_guard": "a union that stops being k-colourable reports every set "
+                     "as forcing; the triangular patch gave rho = 1, below "
+                     "the floor, because two copies at the Moser angle are "
+                     "4-chromatic",
+    "checked": "every Sa union to 1645 vertices is 4-colourable, so the drop "
+               "is real",
+}

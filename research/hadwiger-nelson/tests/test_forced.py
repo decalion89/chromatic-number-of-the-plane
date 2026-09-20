@@ -1165,3 +1165,14 @@ def test_unioning_copies_drives_rho_down():
     assert t[7] == U["k"] + 1, "one above the floor rho >= k"
     assert U["witness_chi"] < U["k"], "the witness is not itself k-chromatic"
     assert len(U["witness"]) == t[7]
+
+
+def test_rho_below_the_floor_means_vacuity():
+    """rho >= k always, so anything less signals no colourings at all."""
+    from hn.forced import RHO_DROP_NEEDS_THE_MIDDLE as R
+
+    assert "below the floor" in R["vacuity_guard"]
+    assert "4-colourable" in R["checked"], "the threatened result was re-checked"
+    # the two ends of the range where unioning cannot help
+    assert "rho = k already" in R["uniquely_colourable"]
+    assert "rho = n" in R["vertex_critical"]
