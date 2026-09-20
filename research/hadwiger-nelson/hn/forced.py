@@ -2354,3 +2354,49 @@ DISTANCE_LEFT = {
               "is; whether ambient rigidity reaches 63 on a 5-chromatic graph "
               "is open, and the 500 is a published record not verified here",
 }
+
+
+# -- the structural route to a core of three is closed -------------------
+#
+# A core of three at p needs N(p) u T forcing, and there are exactly two ways
+# for a set to force: contain a k-chromatic subgraph, or be forced by the
+# ambient graph. The first is closed, twice over.
+#
+# FIRST, IT WOULD BREAK A RECORD. If N(p) u T contained a 5-chromatic
+# subgraph, then N(p) u T is itself a 5-chromatic unit-distance graph on
+# deg(p) + 3 vertices -- 63 at de Grey's best pivot, against a published
+# record near five hundred.
+#
+# SECOND, AND DECISIVELY, THE GEOMETRY DOES NOT REACH IT. The circle's own
+# unit-distance graph is paths and 6-cycles, so it is BIPARTITE -- measured,
+# chi = 2 on all 60 points. Each target is one away from at most TWO circle
+# points, since two unit circles meet twice. So the only shape that could push
+# the chromatic number up is a TRIANGLE of targets, each seeing both circle
+# colours. Searched on the chord-enriched graph, which carries every auxiliary
+# the pivot can have:
+#
+#     1680 auxiliaries with two circle contacts
+#      228 triangles among them
+#     best chi(N(p) u T) over all of them:  3
+#
+# Three, where five is needed. Not close, and not a matter of searching
+# further: the circle contributes two colours and a triangle of targets
+# contributes one more, because their circle neighbours can be given equal
+# colours by choosing the circle's 2-colouring.
+#
+# So ambient forcing is not the better route to a core of three. It is the
+# ONLY route -- proven here rather than assumed, which is how the rest of this
+# section had been treating it.
+
+STRUCTURAL_CORE_OF_THREE_IS_CLOSED = {
+    "circle_chi": 2,
+    "contacts_per_target": 2,
+    "auxiliaries": 1680,
+    "triangles": 228,
+    "best_chi_of_N_plus_T": 3,
+    "needed": 5,
+    "record_consequence": "a 5-chromatic subgraph there would be a 63-vertex "
+                          "5-chromatic unit-distance graph, eight times better "
+                          "than the published record",
+    "verdict": "ambient forcing is the only route to a core of three",
+}

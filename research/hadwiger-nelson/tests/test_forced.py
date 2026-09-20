@@ -1341,3 +1341,15 @@ def test_the_gain_must_be_read_against_its_ceiling():
     assert D["structural_floor_k4"] == 7
     assert "is open" in D["caveat"], "the question is not settled either way"
     assert "not verified here" in D["caveat"], "the 500 is someone else's"
+
+
+def test_structural_core_of_three_cannot_reach_five():
+    """The circle is bipartite and targets see two points: chi stops at 3."""
+    from hn.forced import STRUCTURAL_CORE_OF_THREE_IS_CLOSED as C
+
+    assert C["circle_chi"] == 2, "paths and 6-cycles"
+    assert C["contacts_per_target"] == 2, "two unit circles meet twice"
+    # two from the circle plus one from a triangle of targets
+    assert C["best_chi_of_N_plus_T"] == C["circle_chi"] + 1
+    assert C["best_chi_of_N_plus_T"] < C["needed"]
+    assert "only route" in C["verdict"]
