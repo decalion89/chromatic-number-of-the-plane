@@ -1112,3 +1112,52 @@ def test_blocking_at_every_modulus_up_to_five():
     d = denominator_29_directions()
     for n in (2, 3, 4, 5):
         assert has_homomorphism(d, n)[0] is None, n
+
+
+def test_four_colour_forcing_appears_in_Y_and_not_in_Sa():
+    """(*) at u: every 4-colouring puts u's colour on u's sqrt3-sphere.
+
+    Sa has it nowhere; Y has it at the origin, on a sphere of 12. That is
+    where de Grey's forcing lives, and sqrt3 is the distance because
+    |1 - rho|^2 = 1/3 sends a point at sqrt3 to distance exactly 1.
+    """
+    from pysat.solvers import Solver
+    from hn.degrey import build_Sa, build_Y
+    from hn.graph import build_graph
+
+    def star(pts):
+        g = build_graph(pts)
+        edges = list(g.edges())
+        n = len(pts)
+
+        def x(v, c):
+            return 1 + v * 4 + c
+
+        cls = [[x(v, c) for c in range(4)] for v in range(n)]
+        for a, b in edges:
+            for c in range(4):
+                cls.append([-x(a, c), -x(b, c)])
+        sphere = {}
+        for i in range(n):
+            s = []
+            for j in range(n):
+                if i == j:
+                    continue
+                dx, dy = pts[j].x - pts[i].x, pts[j].y - pts[i].y
+                if dx * dx + dy * dy == 3:
+                    s.append(j)
+            sphere[i] = s
+        out = []
+        with Solver(name="cd19", bootstrap_with=cls) as sv:
+            for u in range(n):
+                if not sphere[u]:
+                    continue
+                ass = [x(u, 0)] + [-x(v, 0) for v in sphere[u]]
+                if not sv.solve(assumptions=ass):
+                    out.append((u, len(sphere[u])))
+        return out
+
+    assert star(build_Sa()) == []
+    hits = star(build_Y())
+    assert hits, "Y must carry the forcing"
+    assert min(sz for _, sz in hits) == 12

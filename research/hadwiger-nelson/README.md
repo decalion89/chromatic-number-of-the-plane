@@ -2771,6 +2771,53 @@ spindled upward: by the bipartite-neighbourhood theorem no vertex's colour is
 ever forced by its neighbourhood at four colours, so the rhombus trick that
 carried 3 to 4 has no analogue here. That is the honest shape of the gap.
 
+## Four-colour forcing, extracted — and the same question at five
+
+A single pair forced monochromatic in every 4-colouring is too much to hope
+for: the necklace has none of its 8385, and forcing is never local. What works
+is weaker and **disjunctive**. For a vertex `u`, say `(*)` holds at `u` when
+
+> every 4-colouring puts `u`'s colour somewhere on `u`'s `sqrt3`-sphere.
+
+One SAT call: fix `c(u) = 0`, forbid colour 0 on the whole sphere, and UNSAT
+is the property. Measured:
+
+| graph | points | vertices with `(*)` |
+|---|---|---|
+| `Sa` | 397 | **none** |
+| `Y` | 791 | **the origin**, on a sphere of 12 |
+
+So the forcing appears exactly where de Grey puts it — in `Y = Sa u Sb`, not
+in `Sa` alone — and the jump from 397 to 791 points is what buys it.
+
+And `sqrt3` is forced to be the distance: `|1 - rho|^2 = 1/3` means the
+rotation angle has `cos = 5/6`, so a point at `sqrt3` moves to distance
+`sqrt3 · (1/sqrt3) = 1` — adjacent. The Moser rotation spindles this sphere
+and no other.
+
+### The same question one colour up
+
+That is the shot at six, so it was asked directly of the only 5-chromatic
+graph there is:
+
+> is there a vertex `u` of `G` such that **every 5-colouring** puts `u`'s
+> colour somewhere on `u`'s `sqrt3`-sphere?
+
+**No** — not at one of `G`'s 1581 vertices. And since `sqrt3` was only forced
+at four colours by the rotation that spindles it, the sweep was widened to the
+**60 commonest squared distances** in `G`, each tested at every centre with a
+sphere of four or more points — spheres up to 12, over a thousand centres per
+distance:
+
+    0 hits.
+
+> **de Grey's `G` does not force at five colours on any common sphere.**
+
+Consistent rather than surprising: `G` is 5-chromatic, so its 5-colourings are
+plentiful where `Y`'s 4-colourings are tight. The step that bought forcing at
+four was `Sa` to `Y`, 397 points to 791. The analogue at five has to be taken
+above 1581 — and that is the honest frontier.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

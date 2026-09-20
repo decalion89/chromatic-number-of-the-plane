@@ -2059,3 +2059,81 @@ NECKLACE_BLOCKING_AT_EVERY_MODULUS = {
     "honest": "4-chromatic, not 6; and it cannot be spindled upward, since no "
               "vertex's colour is forced by its neighbourhood at four colours",
 }
+
+
+# -- four-colour forcing, extracted rather than recalled --------------------
+#
+# A single pair forced monochromatic in every 4-colouring is too much to hope
+# for: the necklace has none of its 8385, and by the bipartite-neighbourhood
+# theorem forcing is never local. What works is weaker and DISJUNCTIVE. For a
+# vertex u, say (*) holds at u when
+#
+#     every 4-colouring puts u's colour somewhere on u's sqrt3-sphere.
+#
+# One SAT call: fix c(u) = 0 and forbid colour 0 on the whole sphere; UNSAT is
+# the property. Measured:
+#
+#     Sa, 397 points:  (*) holds at NO vertex
+#     Y,  791 points:  (*) HOLDS at the origin, sphere of 12
+#
+# So the forcing appears exactly where de Grey puts it -- in Y = Sa u Sb, not
+# in Sa alone -- and the jump from 397 to 791 points is what buys it.
+#
+# And sqrt3 is forced to be the distance. |1 - rho|^2 = 1/3 means the rotation
+# angle has cos = 5/6, so a point at sqrt3 moves to distance
+# sqrt3 . (1/sqrt3) = 1: adjacent. That is why the Moser rotation spindles
+# this sphere and no other.
+#
+# What (*) does not immediately give is a contradiction. In Y some v on the
+# sphere is monochromatic with u, and in a rotated copy some w is -- but they
+# need not be the same point, and closing that gap is what takes de Grey from
+# 791 vertices to 1581.
+
+FOUR_COLOUR_FORCING_EXTRACTED = {
+    "property": "every 4-colouring puts u's colour somewhere on u's "
+                "sqrt3-sphere",
+    "test": "one SAT call: fix c(u) = 0 and forbid colour 0 on the sphere; "
+            "UNSAT is the property",
+    "Sa": {"points": 397, "vertices_with_the_property": 0},
+    "Y": {"points": 791, "holds_at": "the origin", "sphere": 12},
+    "why_sqrt3": "|1 - rho|^2 = 1/3 gives cos = 5/6, so a point at sqrt3 moves "
+                 "to distance 1 -- the Moser rotation spindles this sphere and "
+                 "no other",
+    "gap": "the monochromatic point of one copy need not be that of a rotated "
+           "copy, which is what takes de Grey from 791 vertices to 1581",
+}
+
+
+# -- the same question at five colours, and its answer ---------------------
+#
+# (*) at four colours holds in Y and not in Sa, so the natural attempt is the
+# same property one colour up, on the only 5-chromatic graph there is:
+#
+#     is there a vertex u of G such that EVERY 5-colouring puts u's colour
+#     somewhere on u's sqrt3-sphere?
+#
+# No. Not at one of G's 1581 vertices. And sqrt3 was only forced at four
+# colours because the Moser rotation spindles it, so the sweep was widened to
+# the 60 commonest squared distances in G, each tested at every centre with a
+# sphere of four or more points -- spheres up to 12, over a thousand centres
+# per distance:
+#
+#     0 hits.
+#
+#     DE GREY'S G DOES NOT FORCE AT FIVE COLOURS ON ANY COMMON SPHERE.
+#
+# Which is consistent rather than surprising: G is 5-chromatic, so its
+# 5-colourings are plentiful where Y's 4-colourings are tight. The step that
+# bought forcing at four colours was Sa to Y, 397 points to 791. The analogue
+# at five would have to be taken above 1581, and that is the honest frontier.
+
+NO_FIVE_COLOUR_FORCING_IN_G = {
+    "question": "a vertex of G whose colour every 5-colouring repeats on its "
+                "sqrt3-sphere",
+    "sqrt3": "none of the 1581 vertices",
+    "all_distances": "0 hits over the 60 commonest squared distances, every "
+                     "centre with a sphere of 4 or more, spheres up to 12",
+    "reading": "G is 5-chromatic so its 5-colourings are plentiful; the step "
+               "that bought forcing at four colours was Sa (397) to Y (791), "
+               "and the analogue at five must be taken above 1581",
+}
