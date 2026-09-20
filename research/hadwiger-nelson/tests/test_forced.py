@@ -1296,3 +1296,12 @@ def test_the_decision_loop_bug_and_its_signature():
     assert core[4600] == 0 and core[200] > 200, "the common core falls to zero"
     assert list(core.values()) == sorted(core.values(), reverse=True)
     assert "not established" in B["consequence"]
+
+
+def test_rho_sa_is_exactly_five():
+    from hn.forced import RHO_SA_IS_FIVE as R
+
+    assert R["value"] == R["floor"] + 1
+    assert "refuted" in R["budget_4"] and "forcing set found" in R["budget_5"]
+    assert "minimal set" in R["replaces"]
+    assert "withdrawn" in R["drop_status"]

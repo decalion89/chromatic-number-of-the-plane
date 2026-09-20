@@ -2169,3 +2169,37 @@ DECISION_LOOP_NEEDED_A_MINIMAL_HITTING_SET = {
                    "deletion, and the 7 -> 5 drop is not established until "
                    "both ends are re-measured by decision",
 }
+
+
+# -- rho(Sa,4) = 5 exactly, by decision rather than deletion -------------
+#
+# Budget 5 finds a forcing set in 88 rounds; budget 4 is REFUTED in 59 rounds,
+# no 4-set hitting the 59 classes collected. So
+#
+#     rho(Sa, 4) = 5,
+#
+# against the 7 this package recorded from greedy deletion. The deletion
+# figure was a minimal set -- one no single vertex can leave -- and minimal is
+# not minimum. Five is one above the floor rho >= k.
+#
+# THE DROP IS IN DOUBT AND MAY BE NOTHING. Sa u rot(Sa) also admits a forcing
+# set of 5, found in 66 rounds. If its budget 4 is refuted too, both graphs
+# have rho = 5 and the "7 -> 5 under unioning" reported earlier is entirely an
+# artefact of measuring minimal sets at both ends. That refutation is the slow
+# direction and is still running; until it lands, the drop is withdrawn rather
+# than defended.
+#
+# What survives either way: the three-piece table (Sa, Sb, Y all 7 alone and
+# 5 with a copy) was measured the same way throughout, so it is consistent,
+# but its numbers are upper bounds, not values.
+
+RHO_SA_IS_FIVE = {
+    "value": 5,
+    "floor": 4,
+    "budget_5": "forcing set found in 88 rounds",
+    "budget_4": "refuted in 59 rounds -- no 4-set hits 59 classes",
+    "replaces": "7, from greedy deletion, which returns a minimal set",
+    "drop_status": "Sa u rot(Sa) also admits a forcing 5; if its budget 4 is "
+                   "refuted the drop is nothing, and it is withdrawn until "
+                   "that lands",
+}
