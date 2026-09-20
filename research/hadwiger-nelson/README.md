@@ -3113,6 +3113,31 @@ real fact it had. The headline "blocks at every modulus up to five" was, for a
 4-chromatic graph, two free facts and two real ones, and one of the real ones
 went.
 
+## The anatomy of `Y`: one shared point and six edges
+
+Measured, not inferred. `Sa` and `Sb = rho_4(Sa)` have 397 points each and
+their intersection is **a single point, the origin**; the union is 793, and
+`Y` is that less the two vertices de Grey drops. The edges decompose exactly:
+
+    2 x 1974 = 3948   the two copies
+          + 6         edges joining the exclusive half of Sa to that of Sb
+         - 16         taken away with the two dropped vertices
+        = 3938
+
+So `Y` is two copies of `Sa` glued at one point by six edges — and that is the
+entire difference between a graph with no forced pair and one that has one.
+`Sa` alone: 4200 pairs at a closable distance, **none forced**. `Y`: the pair
+`(2,0), (-2,0)`, which lies **wholly inside the `Sa` copy**. Six edges landing
+elsewhere are what make two points of `Sa` unable to differ.
+
+That is a sharp and cheap filter for the same search over another field. A
+rotation about the origin producing no cross edge glues two lumps at a point
+and can force nothing new, so only the ones that *bite* deserve a pair scan.
+Sweeping the 3030 units of `K = Q(m, sqrt-3, sqrt-11)` as rotations of `Sa`
+finds them in quantity, and harder than his:
+
+> **one shared point and thirty cross edges**, against his six.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

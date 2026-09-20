@@ -1437,3 +1437,40 @@ def test_blocking_below_the_chromatic_number_is_free():
 
     D = edge_vectors(build_graph(build_G(as_graph=False)))
     assert [n for n in (2, 3, 4, 5, 6) if blocks_at(D, n)] == [2, 3, 4, 6]
+
+
+def test_Y_is_two_copies_of_Sa_glued_at_a_point_by_six_edges():
+    """The whole difference between no forced pair and one forced pair.
+
+    `Sa` and `Sb` have 397 points each and meet in the origin alone; their
+    union is 793 and `Y` is that less the two vertices de Grey drops. The edge
+    count decomposes exactly: `2 x 1974 = 3948`, plus six edges joining the
+    exclusive half of `Sa` to the exclusive half of `Sb`, less the sixteen the
+    dropped vertices take with them, giving 3938.
+
+    And the forced pair `(2,0), (-2,0)` lies *wholly inside the `Sa` copy*,
+    which on its own forces nothing in 4200 pairs. Six edges landing elsewhere
+    are what make two points of `Sa` unable to differ.
+    """
+    from hn.degrey import build_Sa, build_Sb, build_Y
+    from hn.geometry import DEGREY_FIELD as F, Point
+    from hn.graph import build_graph
+
+    Sa, Sb = set(build_Sa()), set(build_Sb())
+    assert len(Sa) == len(Sb) == 397
+    assert len(Sa & Sb) == 1 and len(Sa | Sb) == 793
+
+    Y = build_Y()
+    gy = build_graph(Y)
+    assert len(Y) == 791 and len(list(gy.edges())) == 3938
+
+    only_a, only_b = Sa - Sb, Sb - Sa
+    cross = sum(1 for i, j in gy.edges()
+                if (Y[i] in only_a and Y[j] in only_b)
+                or (Y[j] in only_a and Y[i] in only_b))
+    assert cross == 6
+    assert 2 * 1974 + cross - 16 == 3938
+
+    a = Point(F.rational(2), F.zero())
+    b = Point(F.rational(-2), F.zero())
+    assert a in Sa and b in Sa and a not in Sb and b not in Sb

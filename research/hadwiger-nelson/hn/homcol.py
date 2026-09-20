@@ -2978,3 +2978,49 @@ BLOCKING_BELOW_CHI_IS_FREE = {
                     "content; the corrected [2, 3, 5] keeps the gate and "
                     "loses the one other real fact it had",
 }
+
+
+# ---------------------------------------------------------------------------
+# The anatomy of Y: one shared point and six edges.
+#
+# Measured, not inferred.  Sa and Sb = rho_4(Sa) have 397 points each and
+# their intersection is a single point, the origin; their union is 793, and Y
+# is that less the two de Grey drops, 791.  Of Y's 3938 edges, 3948 = 2 x 1974
+# would be the two copies alone, the two dropped vertices take 16 with them,
+# and SIX join the exclusive half of Sa to the exclusive half of Sb.
+#
+#     3948 + 6 - 16 = 3938.
+#
+# So Y is two copies of Sa glued at one point by six edges -- and that is the
+# entire difference between a graph with no forced pair and one that has one.
+# Sa alone: 4200 pairs at a closable distance, none forced.  Y: the pair
+# (2,0),(-2,0), which lies WHOLLY INSIDE the Sa copy.  Six edges landing
+# elsewhere are what make two points of Sa unable to differ.
+#
+# That is a sharp and cheap filter for the search over another field.  A
+# rotation about the origin that produces no cross edge glues two lumps at a
+# point and can force nothing new, so only the ones that bite are worth a pair
+# scan.  Sweeping the 3030 units of K = Q(m, sqrt-3, sqrt-11) as rotations of
+# Sa finds them in quantity, and harder than his:
+#
+#     one shared point and THIRTY cross edges, against his six.
+
+THE_ANATOMY_OF_Y = {
+    "Sa": {"points": 397, "edges": 1974},
+    "Sb": "rho_4(Sa), rho_4 the rotation by 2 arcsin(1/4)",
+    "intersection": "one point, the origin",
+    "union_before_dropping": 793,
+    "Y": {"points": 791, "edges": 3938},
+    "edge_count": "3948 = 2 x 1974, plus 6 cross edges, less the 16 the two "
+                  "dropped vertices take with them",
+    "cross_edges": 6,
+    "the_point": "Sa alone forces nothing in 4200 pairs; Y forces "
+                 "(2,0),(-2,0), which lies wholly inside the Sa copy -- six "
+                 "edges landing elsewhere are what make two points of Sa "
+                 "unable to differ",
+    "as_a_filter": "a rotation producing no cross edge glues two lumps at a "
+                   "point and can force nothing new, so only the biting ones "
+                   "deserve a pair scan",
+    "over_K": "sweeping the 3030 units of K as rotations of Sa finds rotations "
+              "with one shared point and THIRTY cross edges, against his six",
+}
