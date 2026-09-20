@@ -1030,7 +1030,8 @@ def test_a_core_bounds_rho_and_that_is_the_whole_gap():
 
     # a core of three at a degree-60 pivot would force rho <= 63
     assert R["degrey_needs"] == 60 + 3
-    assert R["degrey_has"] > 20 * R["degrey_needs"]
+    assert "retracted" in R["degrey_has"], (
+        "the rho = n reading rested on criticality, which is now refuted")
     # and the folded union, which the cross-pair theorem already excluded,
     # duly produced no core
     assert R["folded_union_checked"]["core_in_60_steps"] is False
@@ -1091,3 +1092,14 @@ def test_rho_bound_directions_cost_differently():
     from hn.forced import ONE_PIVOT_CANNOT_REACH_FIVE as O
     # the cheap direction reached 1201 of 1581; the expensive one is open
     assert O["measured_not_forcing"]["133_neighbourhoods"] < O["graph_size"]
+
+
+def test_degrey_g_is_not_vertex_critical():
+    """The retraction, pinned down: G - 1420 is still 5-chromatic."""
+    from hn.forced import DEGREY_G_IS_NOT_VERTEX_CRITICAL as D
+
+    assert D["witness"] == 1420 and D["witness_degree"] == 4
+    assert "no proper 4-colouring" in D["result"]
+    # the measurements that rested on the claim are now unexplained, not wrong
+    assert len(D["now_unexplained"]) == 4
+    assert "does not apply to G" in D["unaffected"]

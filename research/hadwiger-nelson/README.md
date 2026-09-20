@@ -102,18 +102,24 @@ the colouring stays proper and T was not a core.
 **A k-vertex-critical graph has no core of any size, at any vertex.** Colour
 G − p with k−1 colours and give p the kth: p is then the *only* vertex carrying
 it, so c(p) lies outside c(T) for every T at once. de Grey's G is
-5-vertex-critical — **asserted here, not measured**: what was checked is
-separability, which is a *consequence* of criticality rather than a proof of it,
-and the published reductions of de Grey's graph to several hundred vertices are
-a reason to doubt it. A proper test is 1581 four-colourability calls, each the
-shape of the one that took kissat 522 s; the 5-core (1557 vertices) is
-4-colourable, which is consistent, and a sample is running. If it is false, the
-corollary does not apply to G and the conclusions drawn from it need
-re-deriving — the theorem itself is unaffected. So: G is inert at five colours —
-checked directly,
-pivot 0 is separable from all 1520 of its non-neighbours *simultaneously*, pivot
-1 from all 1572. The 880 pivots of searching in this package were answering a
-question whose answer was fixed before any solver started.
+**not** 5-vertex-critical — and that claim, which this package leaned on
+throughout, is **retracted**:
+
+> **G − 1420 is still 5-chromatic.** Vertex 1420 has degree 4; removing it and
+> asking for a 4-colouring with a triangle pinned to 0, 1, 2 comes back UNSAT
+> after 1581 s. A proper subgraph on 1580 vertices is already 5-chromatic.
+
+What was offered as evidence before was *separability*, which is a
+**consequence** of criticality rather than a proof of it — a consequence read
+backwards. The warning sign was there: others have published 5-chromatic
+unit-distance graphs of several hundred vertices.
+
+The theorem is unaffected — a k-vertex-critical graph does have no core of any
+size. It simply says nothing about G. What survives, because it was measured
+rather than inferred: pressure exactly 2 at all 1581 vertices, no forced pair
+in 29 930 queries, no forced-different non-edge in 40 539 pairs, and 1201
+vertices not rainbow-forcing. **Those results stand and are now unexplained** —
+criticality was the explanation, and it is gone.
 
 Measured pressure at k = 5: **exactly 2 at all 1581 vertices of G**, the two
 hubs of degree 60 included, in two seconds — and still 2 on every union tried,
@@ -298,7 +304,7 @@ Two halves that have never been in the same graph:
 | | pressure | can host a core at k = 5 |
 |---|---|---|
 | three-hexagon gadget | 3 at k = 4, 2 at k = 5 | **no** — it is 4-colourable, so the pivot always finds a fifth colour of its own |
-| de Grey's G | flat 2 | **no** — it is 5-vertex-critical, so *every* vertex finds one |
+| de Grey's G | flat 2 | **no** — measured inert at every pivot; the criticality explanation is retracted, so this is now an observation without a reason |
 
 Grafting was tried both ways and neither cures the other. Landing the gadget's
 pivot on G's hub leaves that hub critical, because G is 5-vertex-critical and so
@@ -1143,11 +1149,13 @@ rho <= deg(p) + r
 ```
 
 On de Grey's G, whose maximum degree is 60, a core of three needs **ρ ≤ 63**.
-Measured there: **ρ = n = 1581**, because a k-vertex-critical graph has ρ = n.
-And the cross-pair theorem says a union of critical graphs has
-`ρ ≥ min(|A|,|B|)`, so `G ∪ f(G)` has ρ ≥ 1581 too, however heavily it folds.
+Its actual value there is now **open**: the reading ρ = n rested on G being
+vertex-critical, which is retracted above. What is measured is ρ ≤ 1580, and
+that 1201 vertices are not forcing. The cross-pair bound still holds in form
+but needs a critical graph to apply to, which G is not.
 
-The folded union was therefore ruled out before it was built — and duly was:
+So the folded union is no longer excluded in advance. It was simply checked,
+and came back empty:
 its exact 60° rotation centre folds **789 of 1581**, giving 2373 vertices and
 11 832 edges, and the forward core construction finds **no core in 60 steps at
 any of four pivots**, with pressure 2 throughout. Confirmation, not discovery.
@@ -1264,6 +1272,11 @@ subgraphs of this one.
 - **A hexagon family with `theta` alongside `theta/2`.** `CH² = CT` exactly, so
   it produced a coincident hexagon — the same mistake that caused a false
   positive earlier — and the guard skipped it silently. It now says so.
+- **"de Grey's G is 5-vertex-critical."** **False**, and it was load-bearing:
+  G − 1420 is still 5-chromatic (UNSAT, 1581 s). Separability was measured and
+  read backwards — it is a consequence of criticality, not a proof. Every
+  conclusion drawn from it is withdrawn; the measurements themselves stand and
+  are now unexplained.
 - **"ρ(Sa,4) = 7 because Sa contains a Moser spindle."** The seven vertices
   induce five edges and are 3-chromatic with three isolated points. The
   forcing is ambient, and the converse of the subgraph theorem is false —
