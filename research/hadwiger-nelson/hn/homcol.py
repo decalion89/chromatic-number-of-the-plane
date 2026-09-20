@@ -2242,4 +2242,16 @@ RATIONAL_CHORDS_CONFINE_THE_CLOSURE = {
                             "set -- against those vectors. Different scalings, "
                             "so the comparison meant nothing. Caught before it "
                             "produced a number; one global denominator now",
+    "second_fault_caught": "clearing hundred-digit denominators was the next "
+                           "bottleneck, so the directions were reduced mod 60 "
+                           "directly -- but the reduction DROPPED every "
+                           "direction whose denominator was divisible by 2, 3 "
+                           "or 5, and the spindle's own are among them, since "
+                           "rho = (5 + sqrt-11)/6. That measured a mutilated "
+                           "subset and reported no blocking at 3, which is "
+                           "impossible for a graph containing a spindle -- the "
+                           "contradiction is what exposed it. The scaling is "
+                           "now global: multiply by the largest power of 2, 3 "
+                           "and 5 dividing any denominator, then divide out "
+                           "the 2-3-5 part of the global content",
 }
