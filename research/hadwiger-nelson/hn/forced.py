@@ -1947,6 +1947,19 @@ CIRCLE_IS_SATURATED = {
 # What remains open is only what this cannot see: structure beyond the first
 # two levels, and fields larger than de Grey's.
 
+# A CONTROL, and an explanation of mine that failed it. The same enrichment
+# applied to Sa leaves the pressure unchanged at BOTH colour counts -- 3 at
+# four, 2 at five -- so it is not that enrichment works at four and fails at
+# five. I proposed that the added points must be individually inert, since a
+# vertex with two neighbours is colourable whenever k >= 3 and a chord point
+# adjacent only to its two circle points constrains nothing.
+#
+# That explanation is false. Of the 1380 added points NOT ONE has degree 2:
+# the distribution runs 6, 7, 8, 9, 10, 11, 14, 15, with 942 of them at degree
+# six, and they span 2583 edges among themselves. The enrichment adds richly
+# connected structure, and the pressure and the confined degeneracy still do
+# not move. The result is stronger than the explanation I tried to give it.
+
 MAXIMAL_ENRICHMENT_STILL_TWO = {
     "chord_candidates": 1770,
     "added": 1380,
@@ -1958,4 +1971,12 @@ MAXIMAL_ENRICHMENT_STILL_TWO = {
     "pressure": 2,
     "reading": "not the hexagon family, not the angle -- the geometry of "
                "points one away from two points of a unit circle",
+    "added_degrees": {6: 942, 7: 162, 8: 192, 9: 12, 10: 12, 11: 24, 14: 24,
+                      15: 12},
+    "added_mutual_edges": 2583,
+    "not_inert": "none of the 1380 has degree 2, so they are not free "
+                 "vertices; the enrichment is real and changes nothing",
+    "control": "the same enrichment on Sa leaves pressure at 3 for k=4 and 2 "
+               "for k=5 -- unchanged at both, so this is not a five-colour "
+               "phenomenon",
 }

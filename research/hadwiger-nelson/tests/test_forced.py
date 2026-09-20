@@ -1236,3 +1236,13 @@ def test_maximal_enrichment_does_not_reach_degeneracy_three():
     assert M["confined_degeneracy"] == 2 < M["auxiliary_degeneracy"]
     assert M["pressure"] == 2, "and the pressure did not move"
     assert M["added"] + (M["chord_candidates"] - M["added"]) == M["chord_candidates"]
+
+
+def test_the_added_chord_points_are_not_inert():
+    """An explanation I tried and had to drop: none of them has degree two."""
+    from hn.forced import MAXIMAL_ENRICHMENT_STILL_TWO as M
+
+    assert min(M["added_degrees"]) == 6, "no free vertices among them"
+    assert sum(M["added_degrees"].values()) == M["added"]
+    assert M["added_mutual_edges"] > 2000, "and they are linked to each other"
+    assert "unchanged at both" in M["control"]
