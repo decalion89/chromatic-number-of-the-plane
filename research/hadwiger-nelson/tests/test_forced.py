@@ -1208,3 +1208,11 @@ def test_padding_needs_the_pivot_outside_the_forcing_set():
     for p, size in C["verified_cores"].items():
         assert C["cegar_found"][p] >= size, "greedy overshoots, never undershoots"
     assert "evidence, not an artefact" in C["reading"]
+
+
+def test_only_the_ambient_route_could_reach_63():
+    from hn.forced import TWO_ROUTES_TO_SMALL_RHO as T
+
+    assert "Moser spindle's 7" in T["structural"]
+    assert "below the structural bound" in T["ambient"]
+    assert "only the ambient route" in T["at_k5"]

@@ -1853,3 +1853,37 @@ CEGAR_IS_SUBOPTIMAL_NOT_BLIND = {
     "consequence": "the four-colour pattern probably does not transfer and "
                    "rho(G,5) is probably large -- probable, not settled",
 }
+
+
+# -- two routes to a small rho, and only one can reach 63 ----------------
+#
+# STRUCTURAL. A k-chromatic subgraph uses all k colours in every k-colouring,
+# so rho <= its size. At four colours the smallest unit-distance one is the
+# Moser spindle: seven vertices. rho(Sa,4) = 7 sits exactly on that bound.
+#
+# AMBIENT. Unioning with a rotated copy takes rho to 5, BELOW the structural
+# bound, with a set containing no 4-chromatic subgraph at all -- five points,
+# seven edges, chromatic number 3.
+#
+#     Sa            397 vertices   4-chromatic subgraph 30   rho = 7
+#     Sa u rot(Sa)  619 vertices   4-chromatic subgraph 11   rho = 5
+#
+# (Both subgraph figures come from an UNSAT core and are not minimal -- the
+# true minimum is the spindle's 7 -- but rho is below even the core's answer
+# in the second row, and below the spindle's 7 as well.)
+#
+# Only the ambient route matters at five colours. There the structural bound
+# is the smallest 5-chromatic unit-distance graph, around five hundred
+# vertices in the published record, which is eight times the 63 a core of
+# three needs. Ambient rigidity is the only mechanism that could close that
+# gap, and at four colours it does beat the structural bound -- by 7/5 on the
+# union, and by 30/7 against what the same core method finds.
+
+TWO_ROUTES_TO_SMALL_RHO = {
+    "structural": "rho <= |smallest k-chromatic subgraph|; at k=4 that is the "
+                  "Moser spindle's 7, and rho(Sa,4) = 7 sits on it",
+    "ambient": "unioning takes rho to 5, below the structural bound, with a "
+               "set that is 3-chromatic and nearly edgeless",
+    "at_k5": "the structural bound is around 500 vertices, eight times the "
+             "63 needed, so only the ambient route could ever close it",
+}
