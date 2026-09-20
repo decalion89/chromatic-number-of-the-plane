@@ -1339,4 +1339,5 @@ def test_the_gain_must_be_read_against_its_ceiling():
     assert D["fraction_needed_k5"] < D["fraction_achieved_k4"] / 5
     # the structural floor at four colours is the Moser spindle
     assert D["structural_floor_k4"] == 7
-    assert "not excluded" in D["caveat"], "the bound is one-sided"
+    assert "is open" in D["caveat"], "the question is not settled either way"
+    assert "not verified here" in D["caveat"], "the 500 is someone else's"
