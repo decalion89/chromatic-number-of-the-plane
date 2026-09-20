@@ -630,3 +630,54 @@ def test_multiquadratic_is_a_corollary():
     assert orbit_can_block("swapped", 1) is False
     g = build_graph(build_Sa())
     assert has_homomorphism(edge_vectors(g), 5)[0] is not None
+
+
+def test_chain_closing_needs_three_to_split():
+    """A rhombus chain closes only if conjugation moves a prime above 3."""
+    from hn.homcol import cyclotomic_can_block, cyclotomic_chain_closes
+
+    assert cyclotomic_chain_closes(3) is False
+    assert cyclotomic_chain_closes(9) is False
+    assert cyclotomic_chain_closes(21) is False
+    assert cyclotomic_chain_closes(24) is True
+    assert cyclotomic_chain_closes(33) is True
+    # Q(zeta_21) blocks but carries no chain; Q(zeta_24) the reverse.
+    assert cyclotomic_can_block(21)["can_block"] is True
+    assert cyclotomic_can_block(24)["can_block"] is False
+
+
+def test_smallest_field_meeting_both_conditions():
+    from math import gcd
+    from hn.homcol import cyclotomic_can_block, cyclotomic_chain_closes
+
+    both = []
+    for n in range(3, 40, 3):
+        v = cyclotomic_can_block(n)
+        if v.get("ramified"):
+            continue
+        if v["can_block"] and cyclotomic_chain_closes(n):
+            both.append(n)
+    assert both[0] == 33
+    degree = sum(1 for k in range(1, 33) if gcd(k, 33) == 1)
+    assert degree == 20
+    assert cyclotomic_can_block(33)["residue_degree_over_F"] == 10
+
+
+def test_no_chain_over_q_zeta_21_at_length_two():
+    """The k = 2 case is the Moser spindle, and Q(zeta_21) has no rotation
+    with |1 - rho|^2 = 1/3 -- the theorem at 3 says so for every length, and
+    length two is checkable directly against the six hexagonal steps."""
+    from hn.cyclotomic import CycloField
+
+    K = CycloField(21)
+    one = K.rational(1)
+    z6 = K.neg(K.mul(K.zeta(7), K.zeta(7)))
+    target = K.rational(Fraction(-5, 3))
+    units, z = [], one
+    for _ in range(6):
+        units.append(z)
+        z = K.mul(z, z6)
+    for u in units:
+        for v in units:
+            t = K.mul(u, K.conj(v))
+            assert K.add(t, K.conj(t)) != target

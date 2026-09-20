@@ -2188,6 +2188,58 @@ opposite direction entirely.
 which contains `zeta_3` for the triangles **and** `sqrt-11` for the Moser
 rotation, in degree 20.
 
+## The condition at 3, and the smallest field where both can hold
+
+The condition at 5 says which fields can block. There is a second one, at 3,
+that says which fields can carry the construction at all — and they pull in
+opposite directions.
+
+A rhombus `0, w, zeta_6 w, w(1 + zeta_6)` forces its tip to the apex's colour
+at three colours, and `|1 + zeta_6| = sqrt3` whatever `w` is. Chain `k` of them
+in directions `w_1, .., w_k`: every partial sum is forced to the origin's
+colour, and the chain **closes** into a 4-chromatic graph when the last point
+is also adjacent to the origin —
+
+    | w_1 + .. + w_k |^2 = 1/3.
+
+Now let `q` be a prime above 3 fixed by conjugation. Every unit step has
+`v_q(u) + v_q(ubar) = v_q(1) = 0`, and `v_q(ubar) = v_q(u)` because `q` is
+fixed, so `v_q(u) = 0`. A sum of such steps has `v_q >= 0`, while `1/3` has
+`v_q = -e < 0`. Hence
+
+> **Theorem.** If every prime above 3 is fixed by complex conjugation, no
+> rhombus chain ever closes — at any length `k`, over any such field.
+
+This generalises the earlier no-Eisenstein-spindle result from `k = 2` to every
+`k`, and it *explains* the Moser spindle rather than merely permitting it:
+`rho = (5 + sqrt-11)/6` has valuation `+1` at one prime above 3 of
+`Q(sqrt-11)` and `-1` at its conjugate, which is possible only because 3
+**splits** there. A chain needs some prime of `F` above 3 to split in `K`.
+
+Stated for what it is: this closes the rhombus-chain mechanism — how the Moser
+spindle and every spindle-type construction here works. It does not claim no
+4-chromatic unit-distance graph exists over such a field by some other route.
+
+### The two conditions together
+
+| field | degree | residue deg at 5 | blocks | 3 splits |
+|---|---|---|---|---|
+| `Q(zeta_9)`, `Q(zeta_18)`, `Q(zeta_21)`, `Q(zeta_27)`, `Q(zeta_42)` | 6–18 | `>= 3` | yes | **no** |
+| `Q(zeta_24)`, `Q(zeta_48)` | 8, 16 | 2, 4 | **no** | yes |
+| **`Q(zeta_33)`** | **20** | **10** | **yes** | **yes** |
+
+`Q(zeta_21)` blocks — one `sigma`-fixed prime above 5 of residue degree 6 —
+but 3 is totally ramified there with a single prime, so nothing closes. The
+first field where a chain construction and a blocked one can be **the same
+object** is
+
+> `Q(zeta_33) = Q(zeta_3, zeta_11)`, degree 20,
+
+which carries `zeta_3` for the triangles and `sqrt-11` for the Moser rotation,
+has residue degree 10 over `F` at 5, and has its two primes above 3 swapped by
+conjugation. That the arithmetic picks out exactly the field containing both
+the triangle root and the spindle rotation was not put in by hand.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
