@@ -46,6 +46,7 @@ from typing import List, Optional, Sequence, Tuple
 
 __all__ = ["edge_vectors", "has_homomorphism", "screen", "minimum_blocking_set",
            "cyclotomic_can_block", "orbit_can_block", "periodic_screen",
+           "rotation_field_degree",
            "cayley_chromatic",
            "cyclotomic_chain_closes",
            "denominator_29_directions"]
@@ -1668,3 +1669,87 @@ MINIMUM_BLOCKING_ORBITS = {
                                "orbits while an exact check still found one "
                                "escaping, out of 61 million at rank 12",
 }
+
+
+# -- why every known construction stops at five ----------------------------
+#
+# A rotation rho has |rho| = 1, so rho.rhobar = 1, and its chord is
+# |1 - rho|^2 = 2 - (rho + rhobar). Hence
+#
+#     the chord is rational  <=>  rho + rhobar is rational
+#                            <=>  rho is a root of X^2 - (2-c)X + 1
+#                            <=>  [Q(rho) : Q] <= 2.
+#
+# A ROTATION WITH RATIONAL CHORD LIVES IN A QUADRATIC FIELD. Compose several
+# and the field generated is a compositum of quadratic fields -- multiquadratic
+# -- whose Galois group is elementary abelian. Every decomposition group at 5
+# is then elementary abelian with cyclic quotient by inertia, so the residue
+# degree is at most 2, below the bound; and if K/F happens to ramify above 5
+# the collapse of N to {+1,-1} settles it instead. Either way:
+#
+#     A MULTIQUADRATIC UNIT-DISTANCE GRAPH HAS A COSET 5-COLOURING,
+#     SO ITS CHROMATIC NUMBER IS AT MOST 5.
+#
+# And every rotation in de Grey's construction has a rational chord. Measured:
+#
+#     hexagonal, 60 degrees          |1 - rho|^2 = 1      Q(sqrt-3)
+#     Moser, 2 arcsin(1/(2 sqrt3))                 1/3    Q(sqrt-11)
+#     Sb, 2 arcsin(1/4)                            1/4    Q(sqrt-15)
+#     Ya, pi/2 + arcsin(1/8)                       9/4    Q(sqrt-7)
+#     Yb, pi/2 - arcsin(1/8)                       7/4    Q(sqrt-7)
+#
+# whose compositum is Q(sqrt-3, sqrt-11, sqrt-15, sqrt-7) -- exactly the
+# Q(sqrt3, sqrt5, sqrt7, sqrt11) the paper names, since sqrt-15 = sqrt-3.sqrt5.
+#
+#     COROLLARY. A 6-CHROMATIC UNIT-DISTANCE GRAPH MUST USE A ROTATION WHOSE
+#     CHORD IS IRRATIONAL.
+#
+# That is the whole explanation of the barrier at five. Rational chords are
+# what one reaches for -- they are the rotations that carry a lattice point to
+# another at a rational distance -- and every one of them buys a single square
+# root. No amount of ingenuity inside that habit can pass five, because the
+# obstruction is arithmetic and is fixed the moment the rotations are chosen.
+
+RATIONAL_CHORDS_CANNOT_REACH_SIX = {
+    "lemma": "|1 - rho|^2 = 2 - (rho + rhobar), so a rational chord makes rho "
+             "a root of X^2 - (2-c)X + 1 and [Q(rho):Q] <= 2",
+    "consequence": "a construction from rotations with rational chords is "
+                   "multiquadratic, hence has residue degree at most 2 at 5, "
+                   "hence has a coset 5-colouring and chi <= 5",
+    "de_grey_chords": {"hexagonal": "1", "moser": "1/3", "Sb": "1/4",
+                       "Ya": "9/4", "Yb": "7/4"},
+    "de_grey_field": "Q(sqrt-3, sqrt-11, sqrt-15, sqrt-7), which is the "
+                     "Q(sqrt3, sqrt5, sqrt7, sqrt11) of the paper",
+    "corollary": "a 6-chromatic unit-distance graph must use a rotation whose "
+                 "chord is irrational",
+}
+
+
+def rotation_field_degree(chord) -> dict:
+    """Where a rotation of the given chord |1 - rho|^2 lives.
+
+    Returns the degree of Q(rho) and, for a rational chord, the squarefree
+    radicand of the quadratic field it generates. The point of the function is
+    the degree: 2 for every rational chord, which is what caps a construction
+    built from them at five colours.
+    """
+    q = Fraction(chord)
+    # rho^2 - (2-q) rho + 1 = 0, discriminant (2-q)^2 - 4
+    disc = (2 - q) ** 2 - 4
+    num = disc.numerator * disc.denominator
+    sign = -1 if num < 0 else 1
+    num = abs(num)
+    rad = 1
+    d = 2
+    while d * d <= num:
+        e = 0
+        while num % d == 0:
+            num //= d
+            e += 1
+        if e % 2:
+            rad *= d
+        d += 1
+    rad *= num
+    return {"chord": q, "degree": 1 if disc == 0 else 2,
+            "radicand": sign * rad,
+            "note": "every rational chord gives degree at most 2"}

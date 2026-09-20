@@ -2504,6 +2504,54 @@ So the set survives the stronger gate at every modulus from 5 to 20. That is
 worth more than blocking alone: it is the condition an actual 6-chromatic
 candidate would have to meet, and it is checkable one modulus at a time.
 
+## Why every known construction stops at five
+
+A rotation `rho` has `|rho| = 1`, so `rho.rhobar = 1`, and its chord is
+`|1 - rho|^2 = 2 - (rho + rhobar)`. Hence
+
+    the chord is rational  <=>  rho + rhobar is rational
+                           <=>  rho is a root of X^2 - (2-c)X + 1
+                           <=>  [Q(rho) : Q] <= 2.
+
+**A rotation with rational chord lives in a quadratic field.** Compose several
+and the field generated is a compositum of quadratic fields — multiquadratic —
+whose Galois group is elementary abelian. Every decomposition group at 5 is
+then elementary abelian with cyclic quotient by inertia, so the residue degree
+is at most 2, below the bound; and if `K/F` happens to ramify above 5, the
+collapse of `N` to `{+1,-1}` settles it instead. Either way:
+
+> **A multiquadratic unit-distance graph has a coset 5-colouring, so its
+> chromatic number is at most 5.**
+
+And **every rotation in de Grey's construction has a rational chord** —
+computed from the angles, not read off the paper:
+
+| rotation | `\|1 - rho\|^2` | field |
+|---|---|---|
+| hexagonal, 60° | `1` | `Q(sqrt-3)` |
+| Moser, `2 arcsin(1/(2 sqrt3))` | `1/3` | `Q(sqrt-11)` |
+| `Sb`, `2 arcsin(1/4)` | `1/4` | `Q(sqrt-15)` |
+| `Ya`, `pi/2 + arcsin(1/8)` | `9/4` | `Q(sqrt-7)` |
+| `Yb`, `pi/2 - arcsin(1/8)` | `7/4` | `Q(sqrt-7)` |
+
+whose compositum is `Q(sqrt-3, sqrt-11, sqrt-15, sqrt-7)` — exactly the
+`Q(sqrt3, sqrt5, sqrt7, sqrt11)` the paper names, since
+`sqrt-15 = sqrt-3 . sqrt5`. The field was not assumed; it falls out of the
+five chords.
+
+> **Corollary. A 6-chromatic unit-distance graph must use a rotation whose
+> chord is irrational.**
+
+That is the whole explanation of the barrier at five. Rational chords are what
+one naturally reaches for — they are the rotations carrying a lattice point to
+another at a rational distance — and each buys exactly one square root. No
+amount of ingenuity inside that habit can pass five, because the obstruction
+is arithmetic and is fixed the moment the rotations are chosen.
+
+It also says what the chain construction above is for: `r` of degree 3 means a
+rotation of irrational chord, which is the first thing any candidate has to
+have.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

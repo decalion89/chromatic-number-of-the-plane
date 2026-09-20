@@ -840,3 +840,57 @@ def test_the_stronger_gate_keeps_biting_above_five():
     assert got["colourable"] is False
     assert got["exhausted"] is True
     assert got["phis_tried"] > 0
+
+
+def test_rational_chords_give_quadratic_fields():
+    """|1 - rho|^2 = 2 - (rho + rhobar), so a rational chord caps the degree.
+
+    Every rotation de Grey uses has one, and the radicands they produce are
+    exactly the field the paper names.
+    """
+    from hn.homcol import rotation_field_degree
+
+    chords = {Fraction(1): -3,        # hexagonal, 60 degrees
+              Fraction(1, 3): -11,    # Moser
+              Fraction(1, 4): -15,    # Sb, 2 arcsin(1/4)
+              Fraction(9, 4): -7,     # Ya, pi/2 + arcsin(1/8)
+              Fraction(7, 4): -7}     # Yb, pi/2 - arcsin(1/8)
+    for c, rad in chords.items():
+        got = rotation_field_degree(c)
+        assert got["degree"] == 2, c
+        assert got["radicand"] == rad, (c, got)
+
+
+def test_de_greys_rotations_have_rational_chords():
+    """Computed from the angles themselves, not read off the paper."""
+    import math
+
+    angles = {"hexagonal": math.pi / 3,
+              "moser": 2 * math.asin(1 / (2 * math.sqrt(3))),
+              "Sb": 2 * math.asin(0.25),
+              "Ya": math.pi / 2 + math.asin(0.125),
+              "Yb": math.pi / 2 - math.asin(0.125)}
+    want = {"hexagonal": Fraction(1), "moser": Fraction(1, 3),
+            "Sb": Fraction(1, 4), "Ya": Fraction(9, 4), "Yb": Fraction(7, 4)}
+    for name, th in angles.items():
+        chord = 2 - 2 * math.cos(th)
+        assert abs(chord - float(want[name])) < 1e-12, name
+
+
+def test_multiquadratic_cannot_block_either_way():
+    """Elementary abelian Galois group forces residue degree at most 2.
+
+    Both small orbit types fail, so whichever way 5 behaves in a
+    multiquadratic field the coset colouring exists -- which is exactly why
+    de Grey's G, and every construction from rational chords, stops at 5.
+    """
+    from hn.degrey import build_Sa
+    from hn.graph import build_graph
+    from hn.homcol import (edge_vectors, has_homomorphism, orbit_can_block,
+                           periodic_screen)
+
+    assert orbit_can_block("fixed", 2) is False
+    assert orbit_can_block("swapped", 1) is False
+    v = edge_vectors(build_graph(build_Sa()))
+    assert has_homomorphism(v, 5)[0] is not None
+    assert periodic_screen(v, 5)["colourable"] is True
