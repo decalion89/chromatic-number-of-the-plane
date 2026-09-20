@@ -3473,3 +3473,40 @@ ROTATE_ABOUT_A_PIVOT_NOT_THE_ORIGIN = {
     "scanned_so_far": "32424 pairs at a closable distance on the 796-cross "
                       "union, none forced",
 }
+
+
+# ---------------------------------------------------------------------------
+# One computation left unfinished, and why it was stopped.
+#
+# G with sixteen rotated copies over Q(m)(sqrt3, sqrt5, sqrt7, sqrt11) gives
+# 2278 directions of rank 96, proved 5-saturated (rank mod 5 equals the
+# ambient dimension, which forces the rank over Q to match), carrying 880
+# independent lines mod 5 against a threshold of 693 and no zero residue.  The
+# count therefore predicts BLOCKING, and the threshold has called both known
+# cases at the gate correctly.
+#
+# The refutation did not finish.  Seventy minutes on a single SAT call over
+# 880 lines in dimension 96 -- two million clauses with ninety-six-step chains
+# -- and no verdict.  It was stopped rather than left running, because what it
+# would establish is a SECOND example of something already in hand: U is
+# 5-chromatic and blocks at every modulus up to five, verified and unaffected
+# by the lattice audit.  The marginal value did not justify the core.
+#
+# Recorded as a prediction, not a result.
+
+THE_SIXTEEN_ROTATION_SET = {
+    "object": "G with sixteen rotated copies over Q(m)(sqrt3, sqrt5, sqrt7, "
+              "sqrt11), 5-chromatic since it contains G",
+    "directions": 2278,
+    "rank": 96,
+    "saturated_at_5": "proved -- rank mod 5 equals the ambient dimension, "
+                      "which forces the rank over Q to match",
+    "lines": 880,
+    "threshold": 693,
+    "zero_residue": False,
+    "prediction": "blocks at the gate",
+    "status": "NOT ESTABLISHED -- seventy minutes of SAT on two million "
+              "clauses with 96-step chains, no verdict, stopped",
+    "why_stopped": "it would give a second example of what U already is; the "
+                   "marginal value did not justify the core",
+}
