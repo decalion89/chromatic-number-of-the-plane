@@ -2095,7 +2095,10 @@ FOUR_COLOUR_FORCING_EXTRACTED = {
     "test": "one SAT call: fix c(u) = 0 and forbid colour 0 on the sphere; "
             "UNSAT is the property",
     "Sa": {"points": 397, "vertices_with_the_property": 0},
-    "Y": {"points": 791, "holds_at": "the origin", "sphere": 12},
+    "Y": {"points": 791, "holds_at": "the origin", "sphere": 12,
+          "and_nowhere_else": "the full survey of all 791 vertices found "
+                              "exactly one -- the shared centre of the two "
+                              "copies"},
     "why_sqrt3": "|1 - rho|^2 = 1/3 gives cos = 5/6, so a point at sqrt3 moves "
                  "to distance 1 -- the Moser rotation spindles this sphere and "
                  "no other",

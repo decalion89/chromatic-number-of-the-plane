@@ -2785,7 +2785,10 @@ is the property. Measured:
 | graph | points | vertices with `(*)` |
 |---|---|---|
 | `Sa` | 397 | **none** |
-| `Y` | 791 | **the origin**, on a sphere of 12 |
+| `Y` | 791 | **the origin** only, on a sphere of 12 |
+
+A full survey of all 791 vertices of `Y` finds **exactly one**: the shared
+centre of the two copies. de Grey's forcing lives at a single point.
 
 So the forcing appears exactly where de Grey puts it — in `Y = Sa u Sb`, not
 in `Sa` alone — and the jump from 397 to 791 points is what buys it.
