@@ -51,7 +51,7 @@ __all__ = ["edge_vectors", "has_homomorphism", "screen", "minimum_blocking_set",
            "cyclotomic_chain_closes",
            "denominator_29_directions",
            "closing_radicand", "closable_distance", "closable_over",
-           "lattice_basis", "on_lattice", "blocks_at", "saturated_at"]
+           "lattice_basis", "on_lattice", "blocks_at", "saturated_at", "decay_rates"]
 
 
 def _coords(e) -> Tuple[Fraction, ...]:
@@ -3765,4 +3765,83 @@ THE_CONFLICT_METRIC_NEEDS_A_FIXED_SIZE = {
                      "edge count, zero cross edges, 13301 conflicts against "
                      "the union's far larger figure.  Fixed size, so the "
                      "difference is the crossing and nothing else.",
+}
+
+
+def decay_rates(curve, tail_from=5):
+    """Head rate, tail rate and floor of a survivor curve.
+
+    `curve` is a list of (samples, survivors) marks, which need NOT be evenly
+    spaced -- in practice they are taken at 1, 2, 3, 5, 10, 20, 40.  That is
+    the whole reason this function exists.  Averaging a ratio measured over
+    two samples together with ratios measured over one understates the rate,
+    which is exactly the mistake it was written to stop: it once turned 0.238
+    and 0.242 into 0.228 and 0.229 and made a stack look flatter than it was.
+
+    The head rate uses consecutive marks only.  The tail rate is taken as a
+    geometric mean per sample from `tail_from` to the last positive mark, and
+    is None when the curve has no positive tail.  The floor is the last
+    survivor count: a graph that forces something cannot reach zero, because
+    the forced pair agrees in every colouring there is.
+    """
+    marks = [(int(s), int(c)) for s, c in curve]
+    head = [b / a for (s1, a), (s2, b) in zip(marks, marks[1:])
+            if s2 == s1 + 1 and a > 0]
+    head_rate = sum(head) / len(head) if head else None
+    lo = [m for m in marks if m[0] >= tail_from and m[1] > 0]
+    tail_rate = None
+    if len(lo) >= 2 and lo[0][1] > 0 and lo[-1][0] > lo[0][0]:
+        tail_rate = (lo[-1][1] / lo[0][1]) ** (1.0 / (lo[-1][0] - lo[0][0]))
+    return head_rate, tail_rate, marks[-1][1]
+
+# The decay curve, calibrated -- and the head of it says almost nothing.
+#
+# Sampling proper colourings and counting the candidate pairs that still agree
+# gives a curve.  The obvious summary is its rate: how much of the surviving
+# set each new colouring kills.  Independent pairs in a k-colouring would leave
+# a fraction 1/k, so the rate divided by 1/k is a tightness.  Measured, that
+# number barely moves: 1.07 for Y at five colours, 1.16 for G at five, 1.19,
+# 1.21 and 1.18 for the first three depths of the translate stack, against
+# 1.36 for Y at four colours, where a pair really is forced.  The head of the
+# curve is dominated by generic pairs and generic pairs behave generically.
+#
+# The tail is where forcing lives.  Y at four colours decays at 0.882 per
+# sample from sample 5 onwards and settles on a floor of 2, of which exactly
+# one is genuinely forced -- the pair (2,0) and (-2,0) that de Grey's whole
+# construction is about, recovered here from 10647 candidates by sampling
+# alone, with nothing told to the filter about where to look.  Everything at
+# five colours crashes to zero instead: Y by sample 7, G by 8, the stack at
+# depths 1 and 2 by 9.  Depth 3 is the first thing in this search to grow a
+# tail at all, 0.525 per sample, and it still reaches zero by sample 12.
+#
+# CORRECTION.  An earlier reading of these curves averaged ratios across marks
+# that are not evenly spaced -- 1, 2, 3, 5, 10, 20, 40 -- so a two-sample step
+# was averaged with one-sample steps and the rates came out too low (0.228 and
+# 0.229 for depths 1 and 2, against 0.238 and 0.242 computed from consecutive
+# marks only).  The conclusion drawn from them, that stacking does nothing,
+# was too strong: the head does barely move, but depth 3 grew a tail that
+# depths 1 and 2 did not have, and the tail is the part that matters.
+THE_DECAY_CURVE_CALIBRATED = {
+    "metric": "sample proper k-colourings one at a time; a candidate pair "
+              "survives a sample if the two ends agree in it",
+    "head_is_generic": {
+        "Y at 5": 1.07, "G at 5": 1.16, "stack depth 1": 1.19,
+        "stack depth 2": 1.21, "stack depth 3": 1.18,
+        "Y at 4 (forces)": 1.36,
+        "units": "per-sample survival rate divided by 1/k, so 1.00 is what "
+                 "independent pairs would give",
+    },
+    "tail_is_the_signal": {
+        "Y at 4 (forces)": {"rate": 0.882, "floor": 2, "forced": 1},
+        "stack depth 3": {"rate": 0.525, "floor": 0, "forced": 0},
+        "everything else at 5": {"rate": None, "reaches_zero_by": "7 to 9",
+                                 "forced": 0},
+    },
+    "the_validation": "the filter recovered Y's forced pair unaided -- 1 of "
+                      "10647 candidates, by sampling and nothing else.  That "
+                      "is the pipeline checking itself against a known answer.",
+    "reading": "forcing is not a shortage of colourings overall, it is a "
+               "handful of pairs that no colouring separates while everything "
+               "around them separates freely.  A metric that averages over "
+               "all pairs cannot see it; the floor can.",
 }

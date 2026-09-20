@@ -3346,6 +3346,78 @@ control at zero cross is flat, and the best union so far — 1528 cross, dearest
 17 555 — sits near the **top** of `Y`'s unforced band of 157 to 35 365 rather
 than at its bottom. That is the closest anything in this search has come.
 
+## Sampling, and a metric that finally has a calibration
+
+Deciding whether a pair is forced by SAT costs the solver real time, and a
+union of two copies of `G` offers about 44 000 candidate pairs. Separating
+them all runs to roughly 700 000 conflicts and twenty minutes, so the census of
+399 translates would have taken a week.
+
+But a pair is forced only if it agrees in *every* proper 5-colouring, and one
+colouring in which it differs settles it for good. Sampling colourings
+collapses the candidate set geometrically — 44 414 pairs to zero in a dozen
+samples — and only the survivors need a SAT call. The filter is sound in the
+direction that matters: a separation comes with an explicit colouring as its
+witness, so no forced pair can be filtered away. Twelve seconds a union
+instead of twenty minutes, and a *stronger* verdict, because "zero survive"
+proves there is no forced pair rather than reporting that none was found
+inside a budget.
+
+Diversity has to come from randomising the solver's saved phases. Cadical
+ignores `set_phases` and hands back the same model every time — one distinct
+colouring in eight tries — so it samples nothing; glucose honours them and
+gives eight out of eight.
+
+The point of a curve is that it can be calibrated, and `Y` is the calibration:
+it forces a monochromatic pair in every proper 4-colouring, so its curve
+cannot reach zero. The filter found that pair unaided — one of 10 647
+candidates, by sampling alone, with nothing told to it about where to look.
+
+| graph | colours | head rate ÷ (1/k) | tail rate | floor | forced |
+|---|---|---|---|---|---|
+| `Y` | 4 | 1.36 | **0.882** | 2 | **1** |
+| `Y` | 5 | 1.07 | — | 0 | 0 |
+| `G` | 5 | 1.16 | — | 0 | 0 |
+| stack, depth 1 | 5 | 1.19 | — | 0 | 0 |
+| stack, depth 2 | 5 | 1.21 | — | 0 | 0 |
+| stack, depth 3 | 5 | 1.18 | 0.525 | 0 | 0 |
+
+The head of the curve says almost nothing: it is dominated by generic pairs,
+and generic pairs behave generically — everything at five colours sits between
+1.07 and 1.21. The tail is the signal. `Y` at four colours decays at 0.882 a
+sample and settles on a floor; everything at five crashes to zero by sample 7
+to 9. Depth 3 of the stack is the first object in this search to grow a tail
+at all, and it still reaches zero.
+
+> **Corrected.** An earlier reading averaged ratios across marks that are not
+> evenly spaced — 1, 2, 3, 5, 10, 20, 40 — mixing a two-sample step in with
+> one-sample steps, which understated the rates (0.228 and 0.229 for depths 1
+> and 2, against 0.238 and 0.242 computed from consecutive marks alone). The
+> conclusion drawn from them, that stacking does nothing, was too strong. The
+> head does barely move; the tail at depth 3 is new.
+
+## Symmetrise first, then rotate
+
+`Sa` is the 12-element dihedral orbit of `S` about the origin, and it is
+exactly invariant: 397 points in, 397 out. That invariance is what makes
+rotating it useful. Every point stays on its own ring, so a rotation by any
+angle whose chord at that radius is 1 produces cross edges in bulk. Rotating a
+lopsided graph produces nothing, which is exactly what the earlier scan found:
+987 rotations of de Grey's field bite `G`, and the best of them contributes
+four cross edges.
+
+So close under the symmetry *before* rotating — and about the centre the graph
+was actually built around. About the origin, `G`'s dihedral orbit is 6 × 1581
+points and 6 × 7877 edges, to the last unit: six copies that never touch. `G`
+does not live at the origin. It lives at `(-2,0)`, the pivot its two copies of
+`Y` were turned about, and about that point its orbit is 13 873 points and
+73 782 edges — five thousand points short of twelve disjoint copies.
+
+`Y`'s own closure is smaller than it looks: 791 points become 1189, not 9492.
+Rotating `Sb` by 60° gives `Sb` back, because `Sa` is 60°-invariant and `Sb`
+is a rotation of `Sa`; so the whole dihedral orbit of `Y` is
+`Sa ∪ Sb ∪ Sb'`, with `Sb'` the mirror rotation, and 397 + 396 + 396 = 1189.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

@@ -1793,3 +1793,52 @@ def test_the_decay_curve_has_a_floor_exactly_when_something_forces():
     # Delete one triangle and the forcing goes with it: the curve bottoms out.
     path = [(0, 1), (0, 2), (1, 2), (0, 3)]
     assert curve(4, path, 3, allpairs) == []
+
+
+def test_decay_rates_ignores_the_unevenly_spaced_marks():
+    """The bug this function exists to prevent, pinned.
+
+    The survivor curve is sampled at 1, 2, 3, 5, 10, 20, 40, so three of its
+    six steps span more than one sample.  Averaging all six ratios treats a
+    two-sample decay as a one-sample decay and reports a rate that is too low.
+    On the real curves it turned 0.238 and 0.242 into 0.228 and 0.229, which
+    was small enough to look like agreement and led to the wrong conclusion
+    that stacking translates changes nothing.
+    """
+    from hn.homcol import decay_rates
+
+    # A curve that halves exactly once per sample: the honest rate is 0.5.
+    curve = [(1, 1024), (2, 512), (3, 256), (5, 64), (10, 2)]
+    head, tail, floor = decay_rates(curve)
+    assert abs(head - 0.5) < 1e-12
+
+    # Averaging every step, spacing ignored, would have understated it.
+    naive = [b / a for (_, a), (_, b) in zip(curve, curve[1:])]
+    assert sum(naive) / len(naive) < 0.42
+
+    # The tail is a geometric mean per sample, so it recovers 0.5 as well.
+    assert abs(tail - 0.5) < 1e-12
+    assert floor == 2
+
+
+def test_a_curve_that_reaches_zero_has_no_tail_and_no_floor():
+    """Zero is the whole verdict: nothing is forced, and it is witnessed.
+
+    A forced pair agrees in every colouring, so it survives every sample by
+    definition.  A curve that reaches zero therefore proves there is no forced
+    pair at all -- each pair was separated by an explicit colouring.  That is
+    strictly more than a budgeted scan can say.
+    """
+    from hn.homcol import decay_rates
+
+    head, tail, floor = decay_rates([(1, 4774), (2, 1119), (3, 259),
+                                     (5, 22), (8, 0)])
+    assert floor == 0
+    assert tail is None
+    assert 0.23 < head < 0.24
+
+    # Y at four colours forces, so its curve floors instead of vanishing.
+    head, tail, floor = decay_rates([(1, 2759), (2, 1117), (3, 310), (5, 159),
+                                     (10, 30), (20, 11), (40, 2)])
+    assert floor == 2
+    assert tail is not None and tail > 0.85
