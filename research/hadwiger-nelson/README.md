@@ -2852,6 +2852,11 @@ carries `H` onto a copy of itself — but `q` and `rho(q)` are adjacent.
 > proper `k`-colouring, and the field admits a rotation closing `d`, then
 > `H u rho_p(H)` is `(k+1)`-chromatic.
 
+That lemma is not new here — it is `hn/spindle.py`, stated in its docstring
+and automated by `ForcedPairFinder`, from earlier in this work. What is new is
+reading de Grey's own last step through it: *which* pair, *how many* edges the
+union adds, and the arithmetic of which distances a field can close.
+
 The edge counts say this is exactly what `G` is. `Y` has 791 vertices and 3938
 edges; `G` has `1581 = 2.791 - 1` and `7877 = 2.3938 + 1`. **The union adds one
 edge.** That edge is the whole step from four colours to five.

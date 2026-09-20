@@ -2484,6 +2484,11 @@ def closable_over(d2, square_classes: Sequence[int]) -> bool:
 
 
 FORCED_PAIR_SPINDLE = {
+    "not_new": "the spindling lemma itself is `hn.spindle`, stated in its "
+               "docstring and automated by ForcedPairFinder; what is new here "
+               "is reading de Grey's own last step through it -- the pair is "
+               "(2,0),(-2,0), the union adds exactly one edge, and which "
+               "distances a field can close is sqrt(4D - 1) lying in it",
     "theorem": "if H carries a pair at distance d that is monochromatic in "
                "every proper k-colouring, and the field admits a rotation rho "
                "about one end with |rho| = 1 and |1 - rho| = 1/d, then "
