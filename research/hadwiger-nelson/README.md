@@ -3209,6 +3209,30 @@ Which says what those six cross edges are worth. The `K` unions reach **156**
 of them against his six and force nothing — at any `K`-closable distance, or
 at his. **Six edges in the right place beat a hundred and fifty-six anywhere.**
 
+## How far five is from six, measured rather than guessed
+
+A pair is forced when the solver cannot separate it. Short of that, the *work*
+it takes to separate it is a distance to forcing: a pair that comes apart in
+no conflicts is wide open, one that costs tens of thousands is nearly pinned.
+The scale is calibrated by the case where the answer is known.
+
+| | conflicts |
+|---|---|
+| `Y` at four colours, the five distance-4 pairs that separate | 157, 4756, 12227, 16483, 35365 |
+| `Y` at four colours, the pair that is **forced** | > 2 000 000 (budget exhausted) |
+| `G` at five colours, **all 21358 pairs together** | **6410 in total**; 2044 cost anything; dearest 29 |
+
+So `G`'s hardest pair at five colours costs **29** conflicts, against the
+**157** of `Y`'s *easiest non-forced* pair at four, and the two million of the
+one that is forced. The entire five-colour scan costs a fifth of what one easy
+four-colour pair does. Five is not near six, and this is how near it is not.
+
+And the forcing does not shrink. The ball of radius 1.5 about the segment
+joining `(2,0)` and `(-2,0)` holds **773 of `Y`'s 791** vertices and the pair
+comes apart — so the eighteen vertices *furthest* from the pair are load
+bearing. Forcing is not a local phenomenon that a smaller gadget could carry,
+and whatever forces at five colours will not be small either.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

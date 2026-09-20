@@ -1534,3 +1534,42 @@ def test_adjoining_a_quadratic_keeps_the_residue_degree_at_five():
     assert all(ev(x, 5) for x in range(5)), "no root mod 5"
     # a cubic with no root mod p is irreducible there, so f = 3
     assert [ev(x, 5) for x in range(5)] == [4, 1, 4, 4, 2]
+
+
+def test_the_forcing_in_Y_is_not_local():
+    """The ball of radius 1.5 about the pair holds 773 of 791 and separates.
+
+    Forcing could in principle be carried by a small gadget near the pair. It
+    is not. Cutting `Y` to the points within 1.5 of the segment joining
+    `(2,0)` and `(-2,0)` keeps 773 of its 791 vertices and the pair comes
+    apart — so the eighteen vertices *furthest* from the pair are load
+    bearing, and whatever forces at five colours will not be small either.
+    """
+    from pysat.solvers import Solver
+    from hn.degrey import build_Y
+    from hn.geometry import DEGREY_FIELD as F, Point
+    from hn.graph import build_graph
+
+    Y = build_Y()
+    g = build_graph(Y)
+    ia = next(i for i, p in enumerate(Y)
+              if p == Point(F.rational(2), F.zero()))
+    ib = next(i for i, p in enumerate(Y)
+              if p == Point(F.rational(-2), F.zero()))
+
+    def dist(p):
+        x, y = float(p.x), float(p.y)
+        return ((x - min(2.0, max(-2.0, x))) ** 2 + y * y) ** 0.5
+
+    keep = sorted(i for i, p in enumerate(Y) if dist(p) <= 1.5 + 1e-9)
+    assert len(keep) == 773 and ia in keep and ib in keep
+    idx = {v: i for i, v in enumerate(keep)}
+    cls = [[1 + v * 4 + c for c in range(4)] for v in range(len(keep))]
+    for a, b in g.edges():
+        if a in idx and b in idx:
+            for c in range(4):
+                cls.append([-(1 + idx[a] * 4 + c), -(1 + idx[b] * 4 + c)])
+    with Solver(name="cd19", bootstrap_with=cls) as sv:
+        assert sv.solve()
+        assert sv.solve(assumptions=[1 + idx[ia] * 4, -(1 + idx[ib] * 4)]), \
+            "the pair must come apart once the far vertices are gone"

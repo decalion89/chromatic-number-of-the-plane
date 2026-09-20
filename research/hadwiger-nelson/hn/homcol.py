@@ -3180,3 +3180,53 @@ PARTIAL_SCAN_OF_THE_BITING_ROTATIONS = {
     "stopped": "the decisive question was answered instead by testing de "
                "Grey's own pair in all 81, where it is free everywhere",
 }
+
+
+# ---------------------------------------------------------------------------
+# How far five is from six, measured rather than guessed.
+#
+# A pair is forced when the solver cannot separate it.  Short of that, the
+# WORK the solver needs to separate it is a distance to forcing: a pair that
+# comes apart in no conflicts at all is wide open; one that costs tens of
+# thousands is nearly pinned.  The scale is calibrated by the case where the
+# answer is known.
+#
+#   Y at four colours, the six pairs at distance 4:
+#       157, 4756, 12227, 16483, 35365 conflicts -- separable
+#       > 2000000 conflicts (budget exhausted) -- the FORCED one
+#
+#   G at five colours, all 21358 pairs at a closable distance:
+#       6410 conflicts IN TOTAL, 2044 pairs costing any at all,
+#       and the ten dearest cost 29, 28, 25, 23, 23, 22, 22, 21, 20, 19.
+#
+# So G's hardest pair at five colours costs 29 conflicts against the 157 of
+# Y's EASIEST non-forced pair at four, and against the two million of the one
+# that is forced.  Five is not near six, and this is how near it is not: the
+# whole five-colour scan costs a fifth of what one easy four-colour pair does.
+#
+# The other half of the calibration is that Y cannot be shrunk.  The ball of
+# radius 1.5 about the segment joining (2,0) and (-2,0) holds 773 of Y's 791
+# vertices and is SEPARABLE -- so the eighteen vertices furthest from the pair
+# are load bearing, and the forcing is not a local phenomenon that a smaller
+# gadget could carry.  Whatever forces at five colours will not be small
+# either.
+
+DISTANCE_TO_FORCING_IN_CONFLICTS = {
+    "idea": "the work a solver needs to separate a pair measures how close it "
+            "is to being forced",
+    "Y_at_four": {"separable": [157, 4756, 12227, 16483, 35365],
+                  "forced": "> 2000000, budget exhausted"},
+    "G_at_five": {"pairs": 21358, "total_conflicts": 6410,
+                  "pairs_costing_anything": 2044,
+                  "ten_dearest": [29, 28, 25, 23, 23, 22, 22, 21, 20, 19]},
+    "reading": "G's hardest pair at five costs 29 against the 157 of Y's "
+               "easiest non-forced pair at four, and the two million of the "
+               "forced one; the whole five-colour scan costs a fifth of what "
+               "one easy four-colour pair does",
+    "and_Y_does_not_shrink": "the ball of radius 1.5 about the segment "
+                             "joining the pair holds 773 of Y's 791 vertices "
+                             "and is SEPARABLE, so the eighteen furthest "
+                             "vertices are load bearing",
+    "consequence": "the forcing is not local, and whatever forces at five "
+                   "colours will not be small either",
+}
