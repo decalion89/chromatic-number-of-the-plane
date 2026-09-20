@@ -4032,3 +4032,51 @@ THE_RECIPE_RECONSTRUCTS_DE_GREYS_GRAPH = {
                         "criterion narrows where to look; it does not promise "
                         "that a ring of G* forces anything.",
 }
+
+
+# The template that rebuilds de Grey's graph does not climb.
+#
+# Applied to G* -- the dihedral closure of G about its own pivot, 5-chromatic
+# and exactly invariant, which is Sa's role one level up -- the same recipe
+# runs through without a hitch geometrically and fails arithmetically.
+#
+# The construction lands exactly where it should: rho = rotation_joining(4)
+# about the pivot, Z = G* u rho(G*) at 27673 points, the ring's antipodal pair
+# at squared distance 16, sigma = rotation_joining(16) about one of its ends,
+# and A and sigma(A) come out at squared distance exactly 1, as they must.
+# W is 55345 points and 314283 edges.
+#
+# And W is 5-colourable.  842373 conflicts to find the colouring -- sixteen
+# times what G* alone costs, the most expensive colouring in this search by an
+# order of magnitude -- but found.  So Z does NOT force the antipodal pair on
+# de Grey's own ring at five colours, and it is not close to doing so: the
+# spindle is exact, the geometry is exact, and the pair simply comes apart.
+#
+# The contrast with the level below is the measurement.  Z4 = Sa u rho(Sa) at
+# four colours keeps all six antipodal pairs of its ring through fourteen
+# sampled colourings, and 75 of its pairs agree in every one of them, 35 at a
+# closable distance.  That is a floor.  Z at five has to show the same floor
+# and does not.
+THE_TEMPLATE_DOES_NOT_CLIMB = {
+    "at_four": {"Z": "Sa u rho(Sa), 793 points, 3954 edges",
+                "antipodal_surviving": "6 of 6 through 14 samples",
+                "pairs_agreeing_everywhere": 75,
+                "of_those_closable": 35,
+                "verdict": "a floor, which is what forcing looks like"},
+    "at_five_D4": {"core": "G*, 13873 points",
+                   "Z": "27673 points",
+                   "W": "55345 points, 314283 edges",
+                   "spindle_check": "A and sigma(A) at squared distance "
+                                    "exactly 1",
+                   "five_colourable": True,
+                   "conflicts": 842373,
+                   "verdict": "the antipodal pair is not forced"},
+    "reading": "the recipe is not what fails -- it reproduces de Grey's graph "
+               "exactly one level down, and its geometry is exact one level "
+               "up.  What fails is that G*'s 5-colourings are not rigid the "
+               "way Sa's 4-colourings are, and symmetry alone did not make "
+               "them so.",
+    "the_cost_is_the_signal": "842373 conflicts against 51628 for G* alone "
+                              "and 6410 for G.  The union is far harder than "
+                              "anything before it and still colours.",
+}

@@ -3512,6 +3512,40 @@ and its two doubly-usable rings, `D = 4` and `D = 17/2`, in place of the one.
 What it does not license is optimism about the outcome: the criterion says
 where to look, not that anything is there.
 
+## The same template, one level up, does not climb
+
+`G*` is the dihedral closure of `G` about its own pivot: 13 873 points,
+5-chromatic because it contains `G`, and exactly invariant under the
+12-element group. That is `Sa`'s role one level up, and the recipe that
+rebuilds de Grey's graph from `Sa` can be run on it unchanged.
+
+Geometrically it runs through without a hitch. `ρ = rotation_joining(4)` about
+the pivot gives `Z = G* ∪ ρ(G*)` at 27 673 points; the ring's antipodal pair
+sits at squared distance 16; `σ = rotation_joining(16)` about one of its ends
+puts `A` and `σ(A)` at squared distance **exactly 1**, as it must; and
+`W = Z ∪ σ(Z)` is 55 345 points and 314 283 edges.
+
+And `W` is 5-colourable. 842 373 conflicts to find the colouring — sixteen
+times what `G*` alone costs and an order of magnitude past anything else here
+— but found. So `Z` does not force the antipodal pair on de Grey's own ring at
+five colours.
+
+The contrast with the level below is the measurement, not the verdict:
+
+| | `Z₄ = Sa ∪ ρ(Sa)` at 4 | `Z₅ = G* ∪ ρ(G*)` at 5 |
+|---|---|---|
+| points | 793 | 27 673 |
+| antipodal pairs surviving 14 samples | **6 of 6** | — |
+| pairs agreeing in every sample | 75 (35 closable) | — |
+| spindle lands at distance 1 | yes | yes |
+| spindled union colourable | **no** (that is `χ ≥ 5`) | **yes**, 842 373 conflicts |
+
+The recipe is not what fails. It reproduces de Grey's graph exactly one level
+down and its geometry is exact one level up. What fails is that `G*`'s
+5-colourings are not rigid the way `Sa`'s 4-colourings are — and closing under
+the symmetry, which was the one structural lever available, did not make them
+so.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
