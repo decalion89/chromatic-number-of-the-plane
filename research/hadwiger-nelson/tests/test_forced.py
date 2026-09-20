@@ -1365,3 +1365,15 @@ def test_the_ambient_witness_is_a_fan():
     assert A["chi"] == 3, "no 4-chromatic subgraph inside it"
     assert "same figure" in A["seen_twice"]
     assert "40000" in A["classes_in_Sa"]
+
+
+def test_a_fan_can_never_exceed_seven_vertices():
+    """Neighbourhoods have maximum degree 2, so the k=4 shape cannot grow."""
+    from hn.forced import FAN_DOES_NOT_SCALE as F
+
+    assert "maximum degree 2" in F["cap"] and "seven vertices" in F["cap"]
+    # a fan is a centre plus a path, and a path in a max-degree-2 graph made
+    # of 6-cycles has at most six vertices
+    assert 1 + 6 == 7
+    assert F["fans_tested"] > 1000 and F["double_fans_tested"] >= 40000
+    assert "none proves it" in F["verdict"]

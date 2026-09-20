@@ -2446,3 +2446,41 @@ AMBIENT_WITNESS_IS_A_FAN = {
                   "sharing 568",
     "minimal": "all five single deletions break the forcing",
 }
+
+
+# -- the fan does not scale, and nothing replaces it at five -------------
+#
+# A STRUCTURAL CAP. In a unit-distance graph the neighbourhood of any vertex
+# is a set of points on a unit circle, and two of them are adjacent exactly
+# when they are 60 degrees apart -- so the neighbourhood's own graph is a
+# union of paths and 6-cycles, MAXIMUM DEGREE 2. A fan is a centre plus a path
+# in its neighbourhood, so a fan has at most SEVEN vertices, ever. The shape
+# that carries ambient forcing at four colours cannot grow.
+#
+# Searched anyway, on de Grey's G at five colours:
+#
+#     2530 fans, every vertex of G as centre     none forcing
+#     40000 double fans, eight to fourteen points none forcing
+#
+# AND THE OBJECT ITSELF, hunted directly. Local search on sets of exactly 63
+# vertices: hold the size, ask for a colouring whose colour-0 class escapes,
+# swap in a vertex of that class and swap out the least useful member.
+#
+#     20000 rounds, an escaping colouring found every single time.
+#
+# Three independent lines -- the hitting-set loop past eleven thousand rounds
+# with a greedy cover of 17, the fan search, and the local search -- all say
+# rho(G,5) > 63. None of them proves it. The lower-bound side cannot reach 63
+# by exhaustion and the upper-bound side keeps finding escapes, which is what
+# the open middle looks like from both ends.
+
+FAN_DOES_NOT_SCALE = {
+    "cap": "a vertex's neighbourhood lies on a unit circle with adjacency at "
+           "60 degrees, so it has maximum degree 2 and a fan has at most "
+           "seven vertices",
+    "fans_tested": 2530,
+    "double_fans_tested": 40000,
+    "local_search_rounds": 20000,
+    "escapes": "every round",
+    "verdict": "three independent lines say rho(G,5) > 63; none proves it",
+}
