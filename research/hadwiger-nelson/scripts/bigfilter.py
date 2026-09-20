@@ -7,9 +7,14 @@ then walk the pairs once and keep only those that agree in every sample.  Ten
 samples leave about a ten-millionth of them, so the survivors fit in a
 handful of tuples and memory stays flat.
 
-Vectorised, the agreement test is a single numpy reduction per row, and the
-geometry is only computed for the rows that survive it -- which is almost
-none.  What would have been ten minutes of Python is a few seconds.
+Even that is too slow at scale: a reduction per row is O(samples * n^2), ten
+billion element comparisons at 27000 points, three hours a union.  But two
+vertices agree in EVERY sample exactly when their colour signatures across the
+samples are identical, so the pairs never have to be compared at all -- bucket
+the vertices by signature and the candidates are the pairs inside a bucket.
+Fourteen samples give 5^14 signatures, six billion of them, so almost every
+bucket is a singleton and the few collisions are the entire candidate set.
+O(n) instead of O(n^2), and the size of the graph stops mattering.
 """
 import time
 import numpy as np
@@ -44,29 +49,43 @@ def sample_colourings(cls, n, k, samples=14, seed=0):
 
 def survivors(cols, zf, denom=1584, lim=36.0, report=None):
     """Pairs that agree in every sampled colouring and sit at a closable
-    rational distance.  Geometry is only touched for pairs that agree."""
+    rational distance.
+
+    Vertices are bucketed by their colour signature across the samples, which
+    is what "agrees in every sample" means, so no pair is ever compared.  The
+    geometry is then computed only inside buckets, of which almost all are
+    singletons.
+    """
     n = cols.shape[1]
-    xs = np.array([p[0] for p in zf])
-    ys = np.array([p[1] for p in zf])
-    out, t0 = [], time.time()
-    for i in range(n - 1):
-        agree = (cols[:, i + 1:] == cols[:, i:i + 1]).all(axis=0)
-        idx = np.nonzero(agree)[0]
-        if idx.size:
-            j = idx + i + 1
-            v = (xs[i] - xs[j]) ** 2 + (ys[i] - ys[j]) ** 2
-            for jj, vv in zip(j, v):
-                if vv > lim:
-                    continue
-                D = Fr(round(vv * denom), denom)
-                if abs(float(D) - vv) > 1e-7 or D == 1:
-                    continue
-                if closable_distance(D):
-                    out.append((i, int(jj)))
-        if report and i % report == 0:
-            print(f"    ... {i}/{n}, {len(out)} survivors "
-                  f"[{time.time()-t0:.0f}s]", flush=True)
-    return out
+    key = np.zeros(n, dtype=np.int64)
+    for s in range(cols.shape[0]):
+        key = key * 5 + cols[s].astype(np.int64)
+    order = np.argsort(key, kind="stable")
+    out, start = [], 0
+    ks = key[order]
+    while start < n:
+        stop = start + 1
+        while stop < n and ks[stop] == ks[start]:
+            stop += 1
+        if stop - start > 1:
+            grp = order[start:stop]
+            for a in range(len(grp)):
+                for b in range(a + 1, len(grp)):
+                    i, j = int(grp[a]), int(grp[b])
+                    v = ((zf[i][0] - zf[j][0]) ** 2
+                         + (zf[i][1] - zf[j][1]) ** 2)
+                    if v > lim:
+                        continue
+                    D = Fr(round(v * denom), denom)
+                    if abs(float(D) - v) > 1e-7 or D == 1:
+                        continue
+                    if closable_distance(D):
+                        out.append((min(i, j), max(i, j)))
+        start = stop
+    if report:
+        print(f"    {n} vertices, {n - len(np.unique(key))} in collisions, "
+              f"{len(out)} survivors", flush=True)
+    return sorted(set(out))
 
 
 def forced_among(cls, k, cands):

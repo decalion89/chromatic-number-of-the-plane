@@ -1932,3 +1932,33 @@ def test_forcing_is_monotone_under_adding_vertices():
     # result can rely on them -- the pair is free in the smaller graph too.
     path = [(0, 1), (0, 2), (1, 2), (0, 3)]
     assert not forced(4, path, 3, 2, 3)
+
+
+def test_agreeing_pairs_never_compares_a_pair():
+    """Bucketing by signature, and why it is the same question.
+
+    Two vertices agree in every sample exactly when their colour signatures
+    across the samples are equal, so the quadratic comparison is not an
+    approximation that was dropped -- it is the same predicate, read as a
+    sort.  At 27000 vertices the comparison is ten billion element operations
+    and the sort is milliseconds.
+    """
+    from hn.homcol import agreeing_pairs
+
+    cols = [[0, 1, 2, 0, 1],
+            [3, 1, 4, 3, 2],
+            [2, 0, 1, 2, 0]]
+    # 0 and 3 agree throughout; 1 and 4 agree twice and differ in the middle.
+    assert agreeing_pairs(cols) == [(0, 3)]
+
+    # It must agree with the brute-force predicate, always.
+    import random
+    rng = random.Random(17)
+    for _ in range(40):
+        n, s = rng.randrange(2, 30), rng.randrange(1, 4)
+        cols = [[rng.randrange(3) for _ in range(n)] for _ in range(s)]
+        brute = sorted((i, j) for i in range(n) for j in range(i + 1, n)
+                       if all(row[i] == row[j] for row in cols))
+        assert agreeing_pairs(cols, colours=3) == brute
+
+    assert agreeing_pairs([]) == []

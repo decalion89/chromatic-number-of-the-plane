@@ -51,7 +51,7 @@ __all__ = ["edge_vectors", "has_homomorphism", "screen", "minimum_blocking_set",
            "cyclotomic_chain_closes",
            "denominator_29_directions",
            "closing_radicand", "closable_distance", "closable_over",
-           "lattice_basis", "on_lattice", "blocks_at", "saturated_at", "decay_rates", "doubly_usable_ring"]
+           "lattice_basis", "on_lattice", "blocks_at", "saturated_at", "decay_rates", "doubly_usable_ring", "agreeing_pairs"]
 
 
 def _coords(e) -> Tuple[Fraction, ...]:
@@ -3767,6 +3767,45 @@ THE_CONFLICT_METRIC_NEEDS_A_FIXED_SIZE = {
                      "difference is the crossing and nothing else.",
 }
 
+
+def agreeing_pairs(cols, colours=5):
+    """Indices that take the same colour in EVERY sampled colouring.
+
+    The direct test compares every pair against every sample, which is
+    O(samples * n^2): ten billion element comparisons at 27000 vertices, about
+    three hours for one graph.  But agreeing in every sample is exactly having
+    the same colour signature across the samples, so the pairs never have to
+    be compared at all.  Read each vertex's signature as a number in base
+    `colours`, sort, and the candidates are the pairs inside a bucket.
+
+    With fourteen samples there are 5^14 signatures -- six billion -- so on any
+    graph that fits in memory almost every bucket is a singleton and the few
+    collisions are the whole candidate set.  O(n log n), and the size of the
+    graph stops mattering.
+
+    `cols` is a sequence of `samples` sequences of length n, each a proper
+    colouring.  Returns sorted (i, j) with i < j.
+    """
+    if not cols:
+        return []
+    n = len(cols[0])
+    key = [0] * n
+    for row in cols:
+        for v in range(n):
+            key[v] = key[v] * colours + row[v]
+    order = sorted(range(n), key=lambda v: key[v])
+    out, start = [], 0
+    while start < n:
+        stop = start + 1
+        while stop < n and key[order[stop]] == key[order[start]]:
+            stop += 1
+        if stop - start > 1:
+            grp = sorted(order[start:stop])
+            for a in range(len(grp)):
+                for b in range(a + 1, len(grp)):
+                    out.append((grp[a], grp[b]))
+        start = stop
+    return sorted(out)
 
 def doubly_usable_ring(d2, radicands=(3, 5, 7, 11)):
     """Can this ring carry both halves of the step, rotation and spindle?

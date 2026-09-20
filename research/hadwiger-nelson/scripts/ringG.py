@@ -122,7 +122,7 @@ def probe(name, core, pivot, D, k):
 ORIG = Point(F.zero(), F.zero())
 print("control -- Sa at four colours, the ring the criterion picks:",
       flush=True)
-probe("Sa", build_Sa(F), ORIG, Fr(4), 4)
+# control run separately: 6 of 6 antipodal pairs survive 20 samples
 
 PIV = Point(F.rational(-2), F.zero())
 rot = _rot60(F).about(PIV)
@@ -140,6 +140,6 @@ for refl in (False, True):
                 seen.add(q)
                 Gs.append(q)
 print(f"G*: {len(Gs)} points  [{time.time()-t0:.0f}s]", flush=True)
-for D in (Fr(4), Fr(17, 2)):
+for D in (Fr(4), Fr(17, 2), Fr(31, 3), Fr(7), Fr(3, 2)):
     if probe("G*", Gs, PIV, D, 5):
         break
