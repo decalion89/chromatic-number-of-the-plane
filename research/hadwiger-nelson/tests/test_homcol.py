@@ -557,3 +557,76 @@ def test_moser_spindle_does_not_block():
     vecs = edge_vectors(g)
     assert len(g.vertices) == 7 and len(list(g.edges())) == 11
     assert has_homomorphism(vecs, 5)[0] is not None
+
+
+def test_orbit_types_decide_blocking():
+    """The six small sigma-orbit types, by exhaustion over O/5.
+
+    Exactly the two with residue degree 3 over the real subfield block -- a
+    fixed prime of degree 6 lies over one of degree 3, a swapped pair of
+    degree 3 over one of degree 3.
+    """
+    from hn.homcol import orbit_can_block
+
+    assert orbit_can_block("fixed", 2) is False
+    assert orbit_can_block("fixed", 4) is False
+    assert orbit_can_block("fixed", 6) is True
+    assert orbit_can_block("swapped", 1) is False
+    assert orbit_can_block("swapped", 2) is False
+    assert orbit_can_block("swapped", 3) is True
+
+
+def test_cyclotomic_verdicts():
+    from hn.homcol import cyclotomic_can_block
+
+    for n, deg, ok in [(3, 1, False), (4, 1, False), (6, 1, False),
+                       (7, 3, True), (8, 2, False), (9, 3, True),
+                       (11, 5, True), (12, 2, False), (13, 2, False),
+                       (21, 3, True), (24, 2, False), (33, 10, True)]:
+        got = cyclotomic_can_block(n)
+        assert got["residue_degree_over_F"] == deg, (n, got)
+        assert got["can_block"] is ok, (n, got)
+    assert cyclotomic_can_block(5)["ramified"] is True
+    assert cyclotomic_can_block(5)["can_block"] is False
+
+
+def test_the_verdict_matches_the_measurement():
+    """Predicted from the arithmetic, then measured on real direction sets.
+
+    Q(zeta_3) is the triangular lattice, predicted unable to block; its six
+    unit steps admit a coset colouring. Q(zeta_21) has residue degree 3 over
+    its real subfield, predicted able; its denominator-29 steps block.
+    """
+    from fractions import Fraction
+    from hn.cyclotomic import CycloField
+    from hn.homcol import (cyclotomic_can_block, denominator_29_directions,
+                           has_homomorphism)
+
+    K = CycloField(3)
+    z6 = K.neg(K.mul(K.zeta(3), K.zeta(3))) if K.degree == 2 else None
+    steps, z = [], K.rational(1)
+    for _ in range(6):
+        steps.append(tuple(int(x) for x in z))
+        z = K.mul(z, K.neg(K.rational(1)) if z6 is None else z6)
+    assert cyclotomic_can_block(3)["can_block"] is False
+    assert has_homomorphism(sorted(set(steps)), 5)[0] is not None
+
+    assert cyclotomic_can_block(21)["can_block"] is True
+    assert has_homomorphism(denominator_29_directions(), 5)[0] is None
+
+
+def test_multiquadratic_is_a_corollary():
+    """A multiquadratic field has residue degree 1 over its real subfield.
+
+    Its Galois group is elementary abelian, so every decomposition group is
+    cyclic of order at most 2 and f <= 2. de Grey's G could never have
+    blocked, and the measurement on Sa agrees.
+    """
+    from hn.degrey import build_Sa
+    from hn.graph import build_graph
+    from hn.homcol import edge_vectors, has_homomorphism, orbit_can_block
+
+    assert orbit_can_block("fixed", 2) is False
+    assert orbit_can_block("swapped", 1) is False
+    g = build_graph(build_Sa())
+    assert has_homomorphism(edge_vectors(g), 5)[0] is not None
