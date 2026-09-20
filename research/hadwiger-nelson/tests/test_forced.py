@@ -1176,3 +1176,15 @@ def test_rho_below_the_floor_means_vacuity():
     # the two ends of the range where unioning cannot help
     assert "rho = k already" in R["uniquely_colourable"]
     assert "rho = n" in R["vertex_critical"]
+
+
+def test_a_small_forcing_set_pads_into_a_core():
+    """Any forcing set gives a core at every pivot, which is why rho is the gap."""
+    from hn.forced import SMALL_RHO_CLOSES_IT as C
+
+    assert "N(p) u T contains S" in C["padding"]
+    a = C["achieved_at_k4"]
+    assert a["rho"] == 5 and len(a["witness"]) == 5
+    assert "non-vacuity confirmed" in a["verified"]
+    # and the cost at five colours is inherent, not an implementation detail
+    assert "not 4-colourable" in C["cost_at_k5"]

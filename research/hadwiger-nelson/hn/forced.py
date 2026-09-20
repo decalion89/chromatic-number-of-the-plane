@@ -1742,3 +1742,41 @@ RHO_DROP_NEEDS_THE_MIDDLE = {
     "checked": "every Sa union to 1645 vertices is 4-colourable, so the drop "
                "is real",
 }
+
+
+# -- what a small rho would actually hand over ---------------------------
+#
+# A core of size r at p means N(p) u T is forcing. So a forcing set S of ANY
+# shape can be padded into one: pick a pivot p, set T = S minus N(p) minus p,
+# and N(p) u T contains S, hence forces. The core at p is then |T| <= |S|.
+#
+#     rho = 6  =>  a core of at most 6 at EVERY pivot,
+#                  and of 3 at any pivot adjacent to three of the six.
+#
+# Which is the whole argument: cores of three are blockable, 27344
+# configurations do it, and the counting bound caps r at 3 from the other
+# side. So rho = 6 on a 5-chromatic unit-distance graph would close it.
+#
+# That is exactly what unioning delivered at four colours. rho = 5 = k + 1 on
+# Sa u rot(Sa), verified independently of the code that found it: the CNF
+# rebuilt from scratch, all four colours checked, all five single deletions
+# breaking it, the union confirmed 4-colourable so the question is not vacuous
+# -- and the five points inducing seven edges with chromatic number 3.
+#
+# Whether five colours behave the same way is the open measurement. It costs
+# one hard UNSAT, and unavoidably so: any proof that a set forces in a
+# 5-chromatic graph contains a proof that the graph is not 4-colourable, since
+# a 4-colouring would leave the fifth colour off every set at once.
+
+SMALL_RHO_CLOSES_IT = {
+    "padding": "N(p) u T contains S for T = S minus N(p), so a forcing set of "
+               "any shape gives a core of at most |S| at every pivot",
+    "rho_6_gives": "a core of at most 6 everywhere, and of 3 at any pivot "
+                   "adjacent to three of the six -- which is blockable",
+    "achieved_at_k4": {"graph": "Sa u rot(Sa)", "n": 619, "rho": 5,
+                       "witness": [107, 208, 502, 568, 618],
+                       "verified": "independent CNF, four colours, all five "
+                                   "deletions, non-vacuity confirmed"},
+    "cost_at_k5": "one hard UNSAT, unavoidably: forcing in a 5-chromatic "
+                  "graph implies not 4-colourable",
+}
