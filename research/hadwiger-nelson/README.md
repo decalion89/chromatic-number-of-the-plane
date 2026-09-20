@@ -2460,9 +2460,9 @@ Run on the 300 denominator-29 directions, which block at 5:
 |---|---|
 | 5 | no homomorphism at all — blocking |
 | 6 | **exhausted**: all 48 homomorphisms need more than 5 colours |
-| 7, 8, 9, 10 | 60 homomorphisms tried, every one needing more than 5 |
+| 7 … 20 | 60 homomorphisms tried at each, every one needing more than 5 |
 
-So the set survives the stronger gate as far as it has been pushed. That is
+So the set survives the stronger gate at every modulus from 5 to 20. That is
 worth more than blocking alone: it is the condition an actual 6-chromatic
 candidate would have to meet, and it is checkable one modulus at a time.
 

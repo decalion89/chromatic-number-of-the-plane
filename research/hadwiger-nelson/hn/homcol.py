@@ -1488,6 +1488,12 @@ STRONGER_GATE = {
     "why_it_keeps_biting": "above 5 the Cayley graph is not complete, so its "
                            "chromatic number must be computed rather than "
                            "read off",
+    "measured_on_denominator_29": {
+        5: "no homomorphism at all -- blocking",
+        6: "exhausted: all 48 homomorphisms need more than 5 colours",
+        "7..20": "60 homomorphisms tried at each, every one needing more "
+                 "than 5",
+    },
 }
 
 
