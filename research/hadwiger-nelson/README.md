@@ -3671,6 +3671,46 @@ predicts is that no amount of ingenuity with rotations of *these* graphs
 closes the gap: the search has to find local structure that constrains five
 colours, and the plane does not obviously provide any.
 
+## The one measurement that explains all the negatives
+
+A graph constrains its colourings through two relations: pairs forced to
+*agree*, and pairs forced to *differ*. Edges supply the second for free, so
+the question is what survives beyond them. Both halves can be filtered the
+same way, run in opposite directions — a pair that differs in some sampled
+colouring cannot be forced to agree, and a pair that agrees in one cannot be
+forced to differ — and every survivor put to the solver.
+
+| graph | colours | pairs | chance | candidates | ratio | verified same / different |
+|---|---|---|---|---|---|---|
+| `G` | 5 | 1 248 990 | 5 898 | 6 502 | **1.10** | **0 / 0** |
+| `Y` | 5 | 312 445 | 1 475 | 1 659 | **1.12** | **0 / 0** |
+| `Sa` | 5 | 78 606 | 371 | 496 | 1.34 | **0 / 0** |
+| `Sa` | 4 | 78 606 | 79 | 1 548 | **19.63** | counts only |
+| `Y` | 4 | 312 445 | 314 | 6 871 | **21.92** | counts only |
+
+"Chance" is `((k-1)/k)²⁴`, the rate at which an unconstrained pair survives
+twenty-four samples. At four colours these graphs sit **twenty times above
+it** — that is real structure. At five they sit *at* it, and the verification
+is absolute rather than statistical: all 6502 of `G`'s candidates were checked
+individually, and every one is free.
+
+> **`G`'s colour relation at five colours is exactly its edge set.** No pair
+> of non-adjacent points is constrained in either direction, in any proper
+> 5-colouring.
+
+That single fact accounts for every negative in this work at once — the
+translates, the stacks, the pivot unions, the symmetric closures, the
+spindles. None of them failed for want of size, crossing, or the right field.
+They failed because there was nothing to work with: **a rotation of a graph
+with no colour relation has no relation to combine.**
+
+The rainbow search agrees. `forced.py` identifies a 5-rainbow — five points
+pairwise forced onto different colours — as what `χ ≥ 6` would need, and since
+the plane's clique number is 3 it must use pairs forced apart at distances
+other than 1. There are none: of `G`'s 2840 triangles, four have a vertex
+avoiding all three colours across 24 samples, and not one survives
+verification. Not even a *4*-rainbow exists.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

@@ -4378,3 +4378,60 @@ THE_SLACK_IS_IN_THE_COLOURS = {
                              "5 colours": "812 cross edges pin 0"},
     "status": "an explanation fitted to the negatives, not a theorem",
 }
+
+
+# G's colour relation at five colours is exactly its edge set.
+#
+# A graph constrains its colourings through two relations: pairs forced to
+# agree and pairs forced to differ.  Edges supply the second for free, so the
+# question is what survives beyond them.  Both halves were measured, with the
+# same filter run in both directions -- a pair that differs in some sampled
+# colouring cannot be forced to agree, and a pair that agrees in one cannot be
+# forced to differ -- and every survivor was put to the solver.
+#
+#     graph      k    pairs     chance   candidates   ratio   verified
+#     G          5  1248990       5898         6502    1.10   0 and 0
+#     Y          5   312445       1475         1659    1.12   0 and 0
+#     Sa         5    78606        371          496    1.34   0 and 0
+#     Sa         4    78606         79         1548   19.63   (counts only)
+#     Y          4   312445        314         6871   21.92   (counts only)
+#
+# "Chance" is ((k-1)/k)^24, the rate at which independent pairs survive
+# twenty-four samples.  At four colours the graphs sit twenty times above it,
+# which is structure.  At five they sit at it, and the verification is
+# absolute: all 6502 of G's candidates were checked and every one is free.
+#
+# So no pair of non-adjacent points of G is constrained in either direction in
+# any proper 5-colouring.  That single fact accounts for every negative in
+# this file at once -- the translates, the stacks, the pivot unions, the
+# symmetric closures, the spindles.  None of them failed for want of size or
+# crossing or the right field.  They failed because there was nothing there to
+# work with: at five colours G imposes no constraint beyond its own edges, and
+# a rotation of a graph with no relation has no relation to combine.
+THE_RELATION_IS_JUST_THE_EDGES = {
+    "measured": {
+        "G at 5": {"pairs": 1248990, "chance": 5898, "candidates": 6502,
+                   "ratio": 1.10, "forced_same": 0, "forced_different": 0},
+        "Y at 5": {"pairs": 312445, "chance": 1475, "candidates": 1659,
+                   "ratio": 1.12, "forced_same": 0, "forced_different": 0},
+        "Sa at 5": {"pairs": 78606, "chance": 371, "candidates": 496,
+                    "ratio": 1.34, "forced_same": 0, "forced_different": 0},
+        "Sa at 4": {"chance": 79, "candidates": 1548, "ratio": 19.63},
+        "Y at 4": {"chance": 314, "candidates": 6871, "ratio": 21.92},
+    },
+    "chance_rate": "((k-1)/k)^samples -- 3/4 at four colours and 4/5 at five. "
+                   "Using 0.8 for both, as this was first computed, "
+                   "understates the four-colour contrast fivefold.",
+    "verification": "every one of G's 6502 candidates was put to the solver; "
+                    "all 6502 are free",
+    "what_it_explains": "every negative recorded here at once.  The "
+                        "translates, the stacks, the pivot unions, the "
+                        "symmetric closures and the spindles did not fail for "
+                        "want of size, crossing or field.  A rotation of a "
+                        "graph with no colour relation has no relation to "
+                        "combine.",
+    "and_the_rainbows": "consistent: no 4-rainbow exists in G at five colours "
+                        "either -- 4 of 2840 triangles have a vertex avoiding "
+                        "all three colours across 24 samples, and none "
+                        "survives verification",
+}

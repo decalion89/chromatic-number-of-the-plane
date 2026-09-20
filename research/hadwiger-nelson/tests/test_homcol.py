@@ -2044,3 +2044,30 @@ def test_the_four_colour_core_sits_at_its_own_threshold():
 
     # And the redundancy that the withdrawn claim rested on, in numbers.
     assert len(Sa) == 397            # against 7 for the Moser spindle
+
+
+def test_the_chance_rate_of_a_sampling_filter_depends_on_the_colours():
+    """The rate an independent pair survives is ((k-1)/k)^samples.
+
+    Two random vertices differ with probability 3/4 at four colours and 4/5 at
+    five, so a filter that keeps pairs differing in every sample retains
+    ((k-1)/k)^s of the free ones.  Writing 0.8 for both -- as the relation
+    scan first did -- understates the four-colour baseline fivefold, and with
+    it the contrast the scan exists to measure: Sa's 1548 candidates are 19.6
+    times chance at four colours, not 4.2.
+    """
+    s = 24
+    assert abs((3 / 4) ** s - 0.00100339) < 1e-8
+    assert abs((4 / 5) ** s - 0.00472237) < 1e-8
+
+    # Sa: 397 points, so 78606 pairs.
+    pairs = 397 * 396 // 2
+    assert pairs == 78606
+    assert round(pairs * (3 / 4) ** s) == 79          # four colours
+    assert round(pairs * (4 / 5) ** s) == 371         # five colours
+    assert 1548 / (pairs * (3 / 4) ** s) > 19         # what was measured
+
+    # G: 1581 points at five colours sits at chance, 6502 against 5898.
+    gpairs = 1581 * 1580 // 2
+    assert round(gpairs * (4 / 5) ** s) == 5898
+    assert 1.0 < 6502 / (gpairs * (4 / 5) ** s) < 1.2
