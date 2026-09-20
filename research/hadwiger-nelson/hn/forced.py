@@ -2237,3 +2237,49 @@ RHO_DECISION_NOT_REACHABLE = {
                "time; the other termination, a small forcing set, has not "
                "occurred either",
 }
+
+
+# -- the unique-colouring ladder: one rung exists, the next does not -----
+#
+# rho = k exactly when a graph is uniquely k-colourable. The triangular
+# lattice does it at three -- rho = 3, its only 3-colouring is the coset one.
+# And destroying that unique colouring RAISES the chromatic number: unioned
+# with a Moser-rotated copy of itself the lattice stops being 3-colourable, at
+# every radius tried.
+#
+#     patch radius 2   n =  25  3-colourable   + rotated copy  n =  49  NOT
+#     patch radius 3   n =  49  3-colourable   + rotated copy  n =  97  NOT
+#     patch radius 4   n =  81  3-colourable   + rotated copy  n = 161  NOT
+#
+# That is a mechanism, and this package first met it as a BUG -- a union
+# silently ceasing to be 3-colourable made every set vacuously forcing and
+# reported rho = 1, below the floor. Read forwards it is the spindle.
+#
+# The rung above needs the union to be uniquely 4-colourable. It is not:
+#
+#     patch 2 + copy   n = 49, m = 118, chi = 4, rho = 7 = k + 3
+#     patch 3 + copy   n = 97, m = 246, chi = 4, rho = 7 = k + 3
+#
+# Budgets 4, 5 and 6 are all refuted; 7 gives a forcing set. And 7 is not a
+# coincidence: the union contains Moser spindles, every 4-chromatic subgraph
+# forces, so rho <= 7 outright -- and it is exactly 7.
+#
+# So the ladder stops after one step, for a reason rather than for want of
+# trying. A fourth rung would need a 4-chromatic unit-distance graph that is
+# uniquely 4-colourable, which means rho = 4 -- and any such graph containing
+# a Moser spindle already has rho <= 7 through a set that is not its colour
+# classes. The two demands pull apart.
+
+UNIQUE_COLOURING_LADDER = {
+    "rung_one": "the triangular lattice is uniquely 3-colourable (rho = 3), "
+                "and a Moser-rotated copy makes it 4-chromatic -- measured at "
+                "radii 2, 3 and 4",
+    "met_first_as_a_bug": "a union ceasing to be 3-colourable made every set "
+                          "vacuously forcing and reported rho = 1",
+    "rung_two": {"n": [49, 97], "chi": 4, "rho": 7, "refuted": [4, 5, 6]},
+    "why_seven": "the union contains Moser spindles, and any 4-chromatic "
+                 "subgraph forces, so rho <= 7 outright",
+    "verdict": "the ladder stops after one step; a fourth rung needs a "
+               "uniquely 4-colourable unit-distance graph, and containing a "
+               "spindle already caps rho at 7 by a different set",
+}

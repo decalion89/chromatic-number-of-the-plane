@@ -1316,3 +1316,14 @@ def test_the_rho_decision_trajectory_does_not_reach_63():
     inc = [t[k + 1] - t[k] for k in range(3, 9)]
     assert inc[-1] > inc[0], "each further vertex costs more rounds"
     assert "not refutable" in R["verdict"]
+
+
+def test_the_unique_colouring_ladder_stops_after_one_rung():
+    from hn.forced import UNIQUE_COLOURING_LADDER as L
+
+    two = L["rung_two"]
+    assert two["rho"] == 7 and two["chi"] == 4
+    assert two["refuted"] == [4, 5, 6], "not uniquely 4-colourable"
+    assert two["rho"] == two["chi"] + 3
+    assert "Moser spindles" in L["why_seven"]
+    assert "stops after one step" in L["verdict"]
