@@ -2594,10 +2594,22 @@ And the 47-step necklace over the degree-12 tower — grown with the
 premature-closing guard, so no shorter necklace sits inside it — reaches 25
 orbits and 150 directions, and **those block**.
 
+**Confirmed by machine, independently of the proof.** Greedy deletion over all
+142 vertices could remove none of them:
+
+    4-CRITICAL CORE: 142 points, 236 edges, 152 directions, rank 12, BLOCKED
+
+The core is the whole graph. Unlike the two earlier predictions about critical
+cores — both of which failed — this one was a proof before it was a
+measurement.
+
 That is blocking which cannot be separated from the chromatic number. Not
 pendants, which change nothing. Not a bouquet, where one vertex carried
 everything. A graph in which deleting **any** vertex drops it to 3-colourable,
 and whose direction set admits no coset 5-colouring at all.
+
+A shorter one exists too: 43 steps, 23 orbits, 138 directions, also blocking —
+130 points.
 
 ## Honest odds
 

@@ -1818,4 +1818,13 @@ CLOSED_NECKLACE_IS_CRITICAL = {
                    "independently and three colours suffice",
     "consequence": "a closed rhombus necklace whose step orbits block is a "
                    "4-critical blocked unit-distance graph",
+    "machine_confirmed": {
+        "core": "142 points, 236 edges, 152 directions, rank 12, BLOCKED",
+        "how": "greedy deletion over all 142 vertices could remove none of "
+               "them: the 4-critical core is the whole graph",
+        "note": "the proof above predicted this; unlike the two earlier "
+                "predictions about critical cores, it was a proof",
+    },
+    "shorter_one": {"steps": 43, "orbits": 23, "directions": 138,
+                    "blocks": True},
 }
