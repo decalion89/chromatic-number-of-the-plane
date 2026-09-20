@@ -3044,6 +3044,43 @@ at 2 and 3 — what it loses is `n = 4`, so it no longer meets the sharpened
 gate in full. For a 4-chromatic graph, admitting a coset colouring mod 4 is
 what one should expect; the interesting thing was always `n = 5`.
 
+## What a forced pair actually is, and how far five is from six
+
+`H` carries a pair `a, b` monochromatic in every proper `k`-colouring exactly
+when `H` plus the single edge `ab` has no proper `k`-colouring. Same sentence
+twice, and the second reading is the useful one:
+
+> **A forced pair is one extra edge that pushes `chi` from `k` to `k+1`.**
+
+The spindle turns that virtual edge into geometry. If the field closes
+`|a - b|` then `rho` about `a` sends `b` to distance exactly 1 from itself,
+both copies of `H` in `H u rho_a(H)` read `c(b) = c(a)`, and the virtual edge
+is a real one. So the whole of *get from `k` colours to `k+1`* is:
+
+> find a `k`-chromatic unit-distance graph that becomes `(k+1)`-chromatic when
+> **one** edge is added, at a distance the field can close.
+
+At `k = 3` that graph is the unit rhombus and the edge joins its two tips at
+`sqrt3` — `4D - 1 = 11`, and the closing rotation `(5 + sqrt-11)/6` is Moser's.
+At `k = 4` it is `Y` and the edge joins `(2,0)` to `(-2,0)` at 4 — `4D-1 = 63`.
+At `k = 5` nothing of the sort is known, and this says how far off it is:
+**`G` is 5-chromatic, and adding any one of its 21358 pairs at a closable
+distance leaves it 5-colourable**, with no query even reaching a
+40000-conflict budget.
+
+### Density is not obtained by closing under rotations
+
+`S` works as a seed because it is 39 points in a small region whose twelve
+images overlap heavily — 397, not 468. Doing the same to `G`:
+
+    W = G closed under the 12-element dihedral group
+    18966 points out of 12 x 1581 = 18972, so six shared and nothing else
+    94548 edges, mean degree 10.0 -- G's own 10.0
+    0 forced pairs at five colours among the 400 busiest vertices
+
+`G` spans too much for its own rotations to interlock. **The move that builds
+the fourth floor does not build the fifth.**
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

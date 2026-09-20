@@ -2862,3 +2862,69 @@ def blocks_at(vecs: Sequence[Sequence[int]], n: int) -> bool:
     if small is None:
         return True
     return has_homomorphism(small, n)[0] is None
+
+
+# ---------------------------------------------------------------------------
+# What a forced pair actually is.
+#
+# H carries a pair a, b monochromatic in every proper k-colouring exactly when
+# H plus the single edge ab has no proper k-colouring.  The two statements are
+# the same sentence read twice, and the second one is the useful form:
+#
+#     A FORCED PAIR IS ONE EXTRA EDGE THAT PUSHES CHI FROM k TO k+1.
+#
+# The spindle turns that virtual edge into geometry.  If the field closes the
+# distance |a - b| -- if sqrt(4D - 1) is in it, D = |a-b|^2 -- then rho about
+# a sends b to distance exactly 1 from itself, both copies of H in
+# H u rho_a(H) read c(b) = c(a), and the virtual edge has become a real one.
+#
+# So the whole of "get from k colours to k+1" is:
+#
+#     find a k-chromatic unit-distance graph that becomes (k+1)-chromatic
+#     when ONE edge is added at a distance the field can close.
+#
+# At k = 4 that graph is de Grey's Y, and the edge joins (2,0) to (-2,0).
+# At k = 5 nothing of the sort is known, and this says how far off it is.
+# de Grey's G is 5-chromatic; among its 21358 pairs at a closable distance,
+# adding any ONE of them leaves it 5-colourable -- and not narrowly, since no
+# query even reached a 40000-conflict budget.  G is not one edge from six.
+#
+# Density is not obtained by closing under rotations, either.  Closing G under
+# the same 12-element dihedral group that builds Sa out of S gives
+#
+#     W: 18966 points, 94548 edges, mean degree 10.0 -- G's own 10.0,
+#     and 18966 against 12 x 1581 = 18972, so the twelve images share six
+#     points and essentially nothing else.
+#
+# S works as a seed because it is 39 points in a small region whose twelve
+# images overlap heavily.  G spans too much for its own rotations to interlock,
+# so the trick that builds the fourth floor does not build the fifth.
+
+FORCED_PAIR_IS_ONE_EDGE = {
+    "identity": "H carries a pair monochromatic in every proper k-colouring "
+                "iff H plus that single edge is not k-colourable",
+    "restatement": "getting from k colours to k+1 is exactly: find a "
+                   "k-chromatic unit-distance graph that becomes "
+                   "(k+1)-chromatic when ONE edge is added at a distance the "
+                   "field can close",
+    "at_four": "de Grey's Y, and the edge joins (2,0) to (-2,0)",
+    "at_five": "nothing of the sort is known",
+    "how_far": "G is 5-chromatic and every one of its 21358 pairs at a "
+               "closable distance leaves it 5-colourable when added, none of "
+               "the queries even reaching a 40000-conflict budget",
+}
+
+
+CLOSING_G_UNDER_ROTATIONS_ADDS_NOTHING = {
+    "W": "G closed under the 12-element dihedral group about the origin",
+    "points": 18966,
+    "edges": 94548,
+    "mean_degree": 10.0,
+    "G_mean_degree": 10.0,
+    "overlap": "18966 against 12 x 1581 = 18972 -- the twelve images share "
+               "six points and essentially nothing else",
+    "why": "S is 39 points in a small region and its twelve images overlap "
+           "heavily; G spans too much for its own rotations to interlock",
+    "consequence": "the trick that builds the fourth floor does not build the "
+                   "fifth",
+}

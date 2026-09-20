@@ -1355,3 +1355,65 @@ def test_the_gate_verdict_needs_no_hermite_reduction():
     assert _rank_q(D) == 12
     assert all(_rank_mod(D, p) == 12 for p in (2, 3, 5))
     assert all(saturated_at(D, n) for n in (2, 3, 4, 5))
+
+
+def test_a_forced_pair_is_one_extra_edge_the_rhombus_at_three_colours():
+    """The lemma in miniature, where it runs instantly.
+
+    A unit rhombus is `K4` minus an edge; at three colours its two tips must
+    share a colour, and they lie `sqrt3` apart.  That is a forced pair, and by
+    the identity it says the rhombus plus the single edge joining the tips is
+    not 3-colourable -- which is what makes the Moser spindle work, since
+    `sqrt3` is closable (`4D - 1 = 11`) and the closing rotation
+    `(5 + sqrt-11)/6` brings the two tips of two rhombi to distance 1.
+
+    Same sentence, same proof, at `k = 4` with `Y` and the pair `(2,0)`,
+    `(-2,0)` at distance 4, where `4D - 1 = 63 = 9.7`.
+    """
+    from hn.homcol import closing_radicand
+    from pysat.solvers import Solver
+
+    # rhombus 0-1-2, 1-2-3 : two unit triangles sharing the edge 1-2
+    rhombus = [(0, 1), (0, 2), (1, 2), (1, 3), (2, 3)]
+
+    def colourable(edges, k, extra=()):
+        cls = [[1 + v * k + c for c in range(k)] for v in range(4)]
+        for a, b in list(edges) + list(extra):
+            for c in range(k):
+                cls.append([-(1 + a * k + c), -(1 + b * k + c)])
+        with Solver(name="cd19", bootstrap_with=cls) as sv:
+            return sv.solve()
+
+    assert colourable(rhombus, 3), "the rhombus alone is 3-colourable"
+    assert not colourable(rhombus, 3, [(0, 3)]), \
+        "adding the tip-to-tip edge kills it -- the tips are forced equal"
+    assert colourable(rhombus, 4, [(0, 3)]), "at four colours they are free"
+
+    assert closing_radicand(3) == 11, "sqrt3 closes through sqrt11"
+    assert closing_radicand(16) == 7, "and 4 through sqrt7, de Grey's step"
+
+
+def test_closing_de_greys_G_under_its_own_rotations_barely_overlaps():
+    """`S` works as a seed because it is small; `G` is not.
+
+    `Sa` is `S`'s twelve images and they overlap heavily -- 39 points give 397,
+    not 468.  Doing the same to `G` gives 18966 points out of a possible
+    `12 x 1581 = 18972`: the images share six points and nothing else, and the
+    mean degree stays at `G`'s own 10.0.  So the move that builds the fourth
+    floor does not build the fifth.
+    """
+    from hn.degrey import build_G, build_S, build_Sa
+    from hn.geometry import DEGREY_FIELD as F, Point, _rot60
+
+    assert len(build_S()) == 39 and len(build_Sa()) == 397 < 12 * 39
+
+    G = build_G(F, as_graph=False)
+    rot60 = _rot60(F)
+    seen = set()
+    for p in G:
+        for base in (p, Point(p.x, -p.y)):
+            q = base
+            for _ in range(6):
+                seen.add(q)
+                q = rot60(q)
+    assert len(seen) == 18966 == 12 * len(G) - 6
