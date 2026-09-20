@@ -4603,3 +4603,39 @@ THE_RATIO_NEEDS_A_FIXED_SAMPLE_COUNT = {
                           "would need p'/p = 1.004 and 1.0073 -- inconsistent, "
                           "so noise, as the verification independently says",
 }
+
+
+# The same graph, the same samples, only the colour count changes.
+#
+# Every comparison so far has moved two things at once -- a four-colour graph
+# against a five-colour one, of different sizes and different constructions.
+# One pair of numbers does not:
+#
+#     Sa at four colours   1548 candidates against 79 chance    19.6x
+#     Sa at five colours    496 candidates against 371 chance    1.34x
+#
+# Three hundred and ninety-seven points, 1974 edges, twenty-four samples, one
+# graph.  The only thing that differs is whether the solver is given four
+# colours or five, and the correlation in its colourings collapses by a factor
+# of fifteen.
+#
+# That is the finding in its cleanest form.  It is not about de Grey's
+# construction, not about size, not about symmetry or the field or the
+# crossing: a unit-distance graph whose colourings are strongly correlated at
+# four colours has colourings indistinguishable from independent at five.  The
+# fifth colour is enough slack to decouple them, and there is nothing left for
+# a rotation to work with.
+THE_FIFTH_COLOUR_DECOUPLES_THE_SAME_GRAPH = {
+    "graph": "Sa, 397 points, 1974 edges -- one graph, unchanged",
+    "samples": 24,
+    "at_four": {"candidates": 1548, "chance": 79, "ratio": 19.6},
+    "at_five": {"candidates": 496, "chance": 371, "ratio": 1.34},
+    "collapse": "a factor of fifteen, with nothing varying but the colour "
+                "count",
+    "why_it_matters": "every other comparison here moves two things at once.  "
+                      "This one moves one.",
+    "reading": "a unit-distance graph whose colourings are strongly "
+               "correlated at four colours has colourings indistinguishable "
+               "from independent at five.  The fifth colour is enough slack "
+               "to decouple them.",
+}

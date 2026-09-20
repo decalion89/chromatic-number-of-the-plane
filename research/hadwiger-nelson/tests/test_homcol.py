@@ -2098,3 +2098,26 @@ def test_the_correlation_ratio_is_exponential_in_the_sample_count():
     # And G's own drift is too small to be a consistent p'/p.
     assert abs((1.10 ** (1 / 24)) - 1.0040) < 1e-3
     assert abs((1.34 ** (1 / 40)) - 1.0073) < 1e-3
+
+
+def test_the_fifth_colour_decouples_the_same_graph():
+    """One graph, one sample count, only the colour count moves.
+
+    Every other comparison in this work changes two things at once: a
+    four-colour graph against a five-colour one, of different sizes and
+    different constructions.  Sa against itself changes one.  At twenty-four
+    samples it leaves 1548 candidates against 79 by chance at four colours,
+    and 496 against 371 at five -- the correlation in its colourings collapses
+    by a factor of fifteen when the solver is handed a fifth colour.
+    """
+    from hn.homcol import THE_FIFTH_COLOUR_DECOUPLES_THE_SAME_GRAPH as T
+
+    pairs, s = 397 * 396 // 2, 24
+    assert round(pairs * (3 / 4) ** s) == T["at_four"]["chance"] == 79
+    assert round(pairs * (4 / 5) ** s) == T["at_five"]["chance"] == 371
+
+    four = T["at_four"]["candidates"] / T["at_four"]["chance"]
+    five = T["at_five"]["candidates"] / T["at_five"]["chance"]
+    assert round(four, 1) == 19.6
+    assert round(five, 2) == 1.34
+    assert four / five > 14

@@ -3723,6 +3723,29 @@ other than 1. There are none: of `G`'s 2840 triangles, four have a vertex
 avoiding all three colours across 24 samples, and not one survives
 verification. Not even a *4*-rainbow exists.
 
+## The same graph, the same samples, only the colour count changes
+
+Every comparison above moves two things at once: a four-colour graph against a
+five-colour one, of different sizes and different constructions. One pair of
+numbers does not.
+
+| | candidates | chance | ratio |
+|---|---|---|---|
+| `Sa` at **four** colours | 1548 | 79 | **19.6×** |
+| `Sa` at **five** colours | 496 | 371 | **1.34×** |
+
+Three hundred and ninety-seven points, 1974 edges, twenty-four samples, one
+graph. The only thing that differs is whether the solver is handed four
+colours or five, and the correlation in its colourings collapses by a factor
+of fifteen.
+
+That is the finding in its cleanest form. It is not about de Grey's
+construction, not about size, symmetry, the field or the crossing: **a
+unit-distance graph whose colourings are strongly correlated at four colours
+has colourings indistinguishable from independent at five.** The fifth colour
+is enough slack to decouple them, and a rotation of a decoupled graph has
+nothing to combine.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
