@@ -2672,6 +2672,12 @@ closes at
 against the 25 that `n = 5` alone needed. The four conditions together cost
 almost nothing over the one.
 
+> **Corrected below.** Every "blocking at 2, 3, 4 and 5" in this section and
+> the next was read off a search over `Z^d` rather than over the module the
+> directions generate — see *A flaw in the blocking test*. On the right module
+> `n = 4` falls away; `n = 5`, the gate, survives, and `n = 2, 3` were free
+> all along for a 4-chromatic graph.
+
 ## A field with de Grey's spindle *and* the arithmetic a sixth colour needs
 
 A distance `d` spindles iff `K` holds a rotation with `|1 - rho|^2 = 1/d^2`.
@@ -2757,6 +2763,12 @@ necklace theorem — no two points accidentally at distance 1 — so
 
 > **A 4-critical unit-distance graph whose directions admit no coset colouring
 > with 2, 3, 4 or 5 colours.**
+
+> **Corrected below.** Same flaw, same outcome: on the module the verdict is
+> `2, 3, 5`. And of those four, only `n = 4` and `n = 5` were ever content —
+> a 4-chromatic graph blocks at 2 and 3 for nothing, since a coset colouring
+> mod `n` is a proper `n`-colouring. So what this graph really carries is the
+> gate, and the `n = 4` claim is withdrawn.
 
 And the Cayley screen, which caught the previous necklace at `n = 8`, now
 passes there and at **every modulus from 5 to 20** — no homomorphism at all at
