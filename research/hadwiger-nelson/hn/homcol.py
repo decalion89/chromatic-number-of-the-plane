@@ -2136,4 +2136,18 @@ NO_FIVE_COLOUR_FORCING_IN_G = {
     "reading": "G is 5-chromatic so its 5-colourings are plentiful; the step "
                "that bought forcing at four colours was Sa (397) to Y (791), "
                "and the analogue at five must be taken above 1581",
+    "doubling_does_not_do_it": {
+        "attempt": "G u rho(G) for each of the 36 rotations available over "
+                   "de Grey's field, about the vertex with the largest "
+                   "sqrt3-sphere",
+        "result": "no forcing at any of them, with spheres reaching 24",
+        "caught": "the first pass rotated about the ORIGIN, which is not a "
+                  "vertex of G, and produced exactly 2 x 7877 edges -- a "
+                  "disjoint union measuring nothing. de Grey rotates about a "
+                  "point that is in the graph, which is why Y's forcing sits "
+                  "at the shared origin with a sphere of 6 + 6",
+    },
+    "rotations_available": "36 over Q(sqrt3, sqrt5, sqrt7, sqrt11): a chord c "
+                           "needs c(4-c) to be a square there, since "
+                           "rho = x + iy with x = (2-c)/2 and y^2 = c(4-c)/4",
 }
