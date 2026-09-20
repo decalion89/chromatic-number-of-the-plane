@@ -3657,4 +3657,17 @@ CROSS_EDGES_PREDICT_THE_FORCING = {
               "law continues.  But it is the first quantity in this search "
               "that moves, the zero-cross point is measured rather than "
               "assumed, and it says exactly where to look.",
+    "REFUTED": "it broke at the first test.  Depth 3 of the translate stack "
+               "carries 4306 cross edges, where L = 300 predicts 48 million, "
+               "and the dearest pair in 50 sampled came to 131260 -- short by "
+               "a factor of 365.  And the variance at fixed cross count is "
+               "large: 1440, 1442, 1442 and 1444 cross edges give 3278, 3689, "
+               "3184 and 2279, while 1528 gives 17555, a fivefold jump for "
+               "six percent more crossing.  So the cross count does not "
+               "determine the cost -- structure does -- and no single "
+               "exponent fits.",
+    "what_survives": "the cost grows steeply with crossing, the control at "
+                     "zero cross is flat, and the best union so far (1528 "
+                     "cross, dearest 17555) sits near the TOP of Y's unforced "
+                     "band of 157 to 35365 rather than at its bottom",
 }

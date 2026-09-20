@@ -3323,6 +3323,29 @@ actually lives.
 Still no forced pair. But this is the first thing in the whole search that has
 moved the measurement rather than the vertex count.
 
+### The law I fitted to it, and how it broke
+
+Three points — the control at 0 cross and 28, a glide reflection at 393 and
+151, a translate at 1442 and 3689 — fit `dearest = 28 . exp(cross/L)` with
+`L = 233` and `295`. At `L = 300` that put the forced regime, where `Y`'s own
+forced pair sits above two million, at about **3350 cross edges**, between
+depth 2 of the translate stack (2864) and depth 3 (4306).
+
+**It broke at the first test.** Depth 3 carries 4306 cross, where the law
+predicts 48 million; the dearest pair in 50 sampled came to **131 260** —
+short by a factor of 365. And the variance at fixed crossing is large:
+
+    1440, 1442, 1442, 1444 cross  ->  3278, 3689, 3184, 2279
+    1528 cross                    ->  17 555
+
+A fivefold jump for six percent more crossing. So the cross count does **not**
+determine the cost — structure does — and no single exponent fits.
+
+What survives is worth keeping: the cost grows steeply with crossing, the
+control at zero cross is flat, and the best union so far — 1528 cross, dearest
+17 555 — sits near the **top** of `Y`'s unforced band of 157 to 35 365 rather
+than at its bottom. That is the closest anything in this search has come.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
