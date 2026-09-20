@@ -2228,4 +2228,18 @@ RATIONAL_CHORDS_CONFINE_THE_CLOSURE = {
     "the_fix": "rotations of irrational chord, 282 of them found by Hilbert "
                "90, each contributing 594 directions where a translation "
                "contributed one",
+    "blind_choice_stalls": "five of them give 3564 directions and still leave "
+                           "n = 5 open: the orbits u.D are correlated, so a "
+                           "functional escaping one tends to escape them all, "
+                           "and every u.D sits in a rank-4 submodule which by "
+                           "the classification never blocks on its own. Only "
+                           "the incompatibility of those escapes across many "
+                           "u can close it, so the rotations have to be "
+                           "chosen by CEGAR rather than taken in order",
+    "scaling_fault_caught": "the first CEGAR pass scaled each rotation orbit "
+                            "by its own denominator and then tested the "
+                            "escaping phi -- computed on the globally scaled "
+                            "set -- against those vectors. Different scalings, "
+                            "so the comparison meant nothing. Caught before it "
+                            "produced a number; one global denominator now",
 }
