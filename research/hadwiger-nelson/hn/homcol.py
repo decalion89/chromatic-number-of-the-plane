@@ -3603,3 +3603,58 @@ THE_CONTROL_THAT_MAKES_IT_REAL = {
                "does not move; the jump is 54-fold in the total and 132-fold "
                "in the dearest, and all of it comes from the cross edges",
 }
+
+
+# ---------------------------------------------------------------------------
+# A law relating cross edges to how hard the pairs are, and what it predicts.
+#
+# The dearest pair in a five-colour scan -- the conflicts the solver spends
+# separating the hardest pair it meets -- moves with the number of CROSS edges
+# in the union, and it moves exponentially.  Three measurements, all on unions
+# of de Grey's G, all at five colours, all with the same scan:
+#
+#     cross edges       dearest pair
+#             0                  28     two disjoint copies (the control)
+#           393                 151     a glide reflection
+#          1442                3689     a translate
+#
+# Fitting dearest = 28 . exp(cross / L) gives L = 233 from the first and
+# L = 295 from the second -- two independent estimates within a quarter of
+# each other, which is as much agreement as a two-point fit can offer.  Taking
+# L = 300:
+#
+#     cross      predicted dearest
+#      2864                392000
+#      4300              47000000
+#
+# and Y's FORCED pair costs over two million.  So the law predicts that the
+# pairs enter the forced regime at about
+#
+#     3350 CROSS EDGES,
+#
+# which is between the second and third floors of the translate stack: depth 2
+# carries 2864 and depth 3 should carry about 4300.
+#
+# It is an extrapolation from three points and it may well break -- the
+# conflict count is a solver statistic, not an invariant, and nothing
+# guarantees the law continues.  But it is the first quantity in this search
+# that moves at all, it is controlled (the zero-cross point is measured, not
+# assumed), and it says exactly where to look.
+
+CROSS_EDGES_PREDICT_THE_FORCING = {
+    "measured": [{"cross": 0, "dearest": 28, "what": "two disjoint copies"},
+                 {"cross": 393, "dearest": 151, "what": "a glide reflection"},
+                 {"cross": 1442, "dearest": 3689, "what": "a translate"}],
+    "fit": "dearest = 28 . exp(cross / L), with L = 233 and 295 from the two "
+           "non-trivial points",
+    "prediction_at_L_300": {2864: 392000, 4300: 47000000},
+    "forced_regime": "Y's forced pair costs over two million, so the law puts "
+                     "the threshold at about 3350 cross edges",
+    "where_that_is": "between depth 2 of the translate stack (2864 cross) and "
+                     "depth 3 (about 4300)",
+    "honest": "an extrapolation from three points; the conflict count is a "
+              "solver statistic, not an invariant, and nothing guarantees the "
+              "law continues.  But it is the first quantity in this search "
+              "that moves, the zero-cross point is measured rather than "
+              "assumed, and it says exactly where to look.",
+}
