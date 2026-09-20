@@ -1921,3 +1921,41 @@ CIRCLE_IS_SATURATED = {
     "reading": "every new circle point is a pendant, so G already holds every "
                "constrained point on its pivot's circle",
 }
+
+
+# -- and the degeneracy survives MAXIMAL local enrichment ----------------
+#
+# The earlier degeneracy result was carefully hedged: the hexagon scans
+# describe one curve through a continuous space. This lifts most of that
+# hedge, from a completely different direction.
+#
+# Take de Grey's pivot and add EVERY point that could constrain its circle:
+# for each pair of circle points a, b, the reflection a + b - p, which is one
+# away from both. Of the 1770 chord candidates, 1380 are missing from G. Add
+# them all -- 2961 vertices, 14624 edges, and the auxiliaries go from 150 to
+# 1680, every one with exactly two circle contacts by construction.
+#
+#     pressure at five colours: 2, unchanged, at every stage
+#     auxiliary graph degeneracy: 4
+#     confined set degeneracy, worst over all 1024 orientations: 2
+#
+# So the maximal local enrichment available in the field the construction
+# lives in still cannot produce a confined set of degeneracy 3. It is not the
+# hexagon family that is the limitation, and it is not the angle: it is the
+# geometry of points one away from two points of a unit circle.
+#
+# What remains open is only what this cannot see: structure beyond the first
+# two levels, and fields larger than de Grey's.
+
+MAXIMAL_ENRICHMENT_STILL_TWO = {
+    "chord_candidates": 1770,
+    "added": 1380,
+    "vertices_after": 2961,
+    "auxiliaries_after": 1680,
+    "auxiliary_degeneracy": 4,
+    "confined_degeneracy": 2,
+    "orientations": 1024,
+    "pressure": 2,
+    "reading": "not the hexagon family, not the angle -- the geometry of "
+               "points one away from two points of a unit circle",
+}

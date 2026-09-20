@@ -1226,3 +1226,13 @@ def test_enriching_the_circle_changes_nothing():
     assert set(C["pressure_at_degree"].values()) == {2}
     assert max(C["pressure_at_degree"]) > 2 * C["pivot_degree"] / 2
     assert C["module_unit_steps"] - C["pivot_degree"] == C["new_points_available"]
+
+
+def test_maximal_enrichment_does_not_reach_degeneracy_three():
+    """Every chord point added, 1024 orientations, confined degeneracy still 2."""
+    from hn.forced import MAXIMAL_ENRICHMENT_STILL_TWO as M
+
+    assert M["auxiliaries_after"] > 10 * 150, "auxiliaries grew tenfold"
+    assert M["confined_degeneracy"] == 2 < M["auxiliary_degeneracy"]
+    assert M["pressure"] == 2, "and the pressure did not move"
+    assert M["added"] + (M["chord_candidates"] - M["added"]) == M["chord_candidates"]
