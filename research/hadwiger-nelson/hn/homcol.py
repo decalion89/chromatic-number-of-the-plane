@@ -2021,3 +2021,39 @@ FOUR_COLOUR_FORCING_IS_NOT_LOCAL = {
                    "forcing must be assembled from long-range structure, "
                    "which is why de Grey's graph has 1581 vertices",
 }
+
+
+# -- a 4-critical graph blocking at every modulus up to five ----------------
+#
+# The first necklace blocked at 5 and failed at 4, which is what its apparent
+# n = 8 Cayley failure had been saying. Aimed at the 26-orbit cover that
+# blocks at all four, the growth closes one orbit further out:
+#
+#     51 steps, 27 orbits, 162 directions, blocking at 2, 3, 4 and 5
+#     graph: 154 points, 256 edges = 3.51+1 and 5.51+1, exactly
+#     chi = 4, 164 directions, BLOCKED
+#     4-critical core: the whole graph, 154 points, still BLOCKED
+#
+# The counts matching 3k+1 and 5k+1 exactly is the hypothesis of the necklace
+# theorem -- no two points accidentally at distance 1 -- so 4-criticality is
+# proved, and greedy deletion confirms it by removing nothing.
+#
+#     A 4-CRITICAL UNIT-DISTANCE GRAPH WHOSE DIRECTIONS ADMIT NO COSET
+#     COLOURING WITH 2, 3, 4 OR 5 COLOURS.
+#
+# Every necessary condition this work has produced, met at once by a graph
+# that is critical rather than padded. What it is not is 6-chromatic: it is
+# 4-chromatic, and by FOUR_COLOUR_FORCING_IS_NOT_LOCAL the necklace cannot be
+# spindled upward, since no vertex's colour is ever forced by its
+# neighbourhood at four colours.
+
+NECKLACE_BLOCKING_AT_EVERY_MODULUS = {
+    "steps": 51, "orbits": 27, "directions": 162,
+    "blocks_at": [2, 3, 4, 5],
+    "graph": {"points": 154, "edges": 256, "chi": 4, "directions": 164},
+    "counts_match": "3k+1 = 154 and 5k+1 = 256 exactly, so no accidental "
+                    "adjacency and the necklace theorem applies",
+    "critical_core": "the whole graph, confirmed by greedy deletion",
+    "honest": "4-chromatic, not 6; and it cannot be spindled upward, since no "
+              "vertex's colour is forced by its neighbourhood at four colours",
+}

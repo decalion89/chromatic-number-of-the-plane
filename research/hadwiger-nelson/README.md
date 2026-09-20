@@ -2740,6 +2740,32 @@ This is why de Grey's graph is 1581 vertices and not 10. Four-colour forcing
 has to be assembled out of long-range structure; it cannot be bought with a
 local gadget the way the rhombus buys it at three.
 
+## A 4-critical graph blocking at every modulus up to five
+
+The first necklace blocked at 5 and failed at 4 — which is what its apparent
+`n = 8` Cayley failure had been saying all along. Aimed at the 26-orbit cover
+that blocks at all four, the growth closes one orbit further out:
+
+    51 steps, 27 orbits, 162 directions, blocking at 2, 3, 4 and 5
+    graph:  154 points, 256 edges  =  3·51+1 and 5·51+1, exactly
+    chi = 4, 164 directions, BLOCKED
+    4-critical core: the whole graph, 154 points, still BLOCKED
+
+The counts matching `3k+1` and `5k+1` **exactly** is the hypothesis of the
+necklace theorem — no two points accidentally at distance 1 — so
+4-criticality is proved, and greedy deletion confirms it by removing nothing.
+
+> **A 4-critical unit-distance graph whose directions admit no coset colouring
+> with 2, 3, 4 or 5 colours.**
+
+Every necessary condition this work has produced, met at once, by a graph that
+is critical rather than padded.
+
+What it is **not** is 6-chromatic. It is 4-chromatic, and it cannot be
+spindled upward: by the bipartite-neighbourhood theorem no vertex's colour is
+ever forced by its neighbourhood at four colours, so the rhombus trick that
+carried 3 to 4 has no analogue here. That is the honest shape of the gap.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
