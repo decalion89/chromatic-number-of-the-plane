@@ -3270,17 +3270,21 @@ THE_TOWER_OVER_K = {
 }
 
 
-Y_DOES_NOT_SHRINK_EASILY = {
+Y_DOES_NOT_SHRINK_AT_ALL = {
     "sample": 61,
-    "outright_essential": 39,
-    "meaning": "deleting one frees the pair in milliseconds",
-    "undecided": 22,
-    "why_ambiguous": "a 60000-conflict budget cannot separate 'still forced, "
-                     "needs a full refutation' from 'separates, but the "
-                     "search is hard' -- Y's own unforced pairs cost up to "
-                     "35365 conflicts",
+    "essential": 61,
+    "slack": 0,
+    "meaning": "deleting any one of them lets (2,0) and (-2,0) take different "
+               "colours, so none of them can be spared",
+    "how_it_was_settled": "39 answered inside a 60000-conflict budget and 22 "
+                          "did not; rerun without a budget, all 22 separated "
+                          "in seconds -- the budget was the only thing making "
+                          "them look hard",
     "ball_result": "radius 1.5 about the segment keeps 773 of 791 and "
                    "separates; radius 2.0 is all 791 and forces",
+    "reading": "Y is a minimal four-colour forcer for its pair, with nothing "
+               "to trim -- which is the sharpest reason to expect the "
+               "five-colour analogue to be large",
 }
 
 

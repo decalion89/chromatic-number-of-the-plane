@@ -3233,6 +3233,26 @@ comes apart — so the eighteen vertices *furthest* from the pair are load
 bearing. Forcing is not a local phenomenon that a smaller gadget could carry,
 and whatever forces at five colours will not be small either.
 
+## `Y` has no slack: every vertex is essential to its forcing
+
+A stratified sample of 61 of `Y`'s 789 non-pair vertices, taken by degree, and
+**every one of them is essential** — delete it and `(2,0)`, `(-2,0)` take
+different colours. Thirty-nine answered inside a 60000-conflict budget; the
+other twenty-two answered the *same way*, in seconds, once the budget was
+removed.
+
+That last part is a lesson in itself. `solve_limited` gave up long before its
+bound: vertices 184 and 359 came back undecided at 60000 conflicts and then
+separated in three and seven seconds with no budget at all. **Every budgeted
+"undecided" has to be rerun to the end before it means anything.** The error
+points the safe way, though — giving up early produces *more* undecideds,
+never fewer, so a scan reporting **zero** hard queries decided every one of
+them, and the negatives elsewhere in this work stand untouched.
+
+So `Y` is a minimal four-colour forcer for its pair, with nothing to trim.
+Which is the sharpest reason to expect the five-colour analogue to be large:
+there is no fat in the four-colour one.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

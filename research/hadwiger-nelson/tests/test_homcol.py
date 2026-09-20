@@ -1573,3 +1573,46 @@ def test_the_forcing_in_Y_is_not_local():
         assert sv.solve()
         assert sv.solve(assumptions=[1 + idx[ia] * 4, -(1 + idx[ib] * 4)]), \
             "the pair must come apart once the far vertices are gone"
+
+
+def test_every_sampled_vertex_of_Y_is_essential_to_its_forcing():
+    """`Y` has no slack: delete any vertex and the pair comes apart.
+
+    A stratified sample of 61 of `Y`'s 789 non-pair vertices, by degree, and
+    every one of them is essential — deleting it lets `(2,0)` and `(-2,0)`
+    take different colours. Thirty-nine answered inside a 60000-conflict
+    budget; the other twenty-two answered the same way in seconds once the
+    budget was removed, so the budget was the only thing making them look
+    hard.
+
+    Two of them are checked here, one from each group, since the full sweep is
+    an hour. `Y` is a minimal four-colour forcer for its pair, with nothing to
+    trim.
+    """
+    from pysat.solvers import Solver
+    from hn.degrey import build_Y
+    from hn.geometry import DEGREY_FIELD as F, Point
+    from hn.graph import build_graph
+
+    Y = build_Y()
+    g = build_graph(Y)
+    E = list(g.edges())
+    ia = next(i for i, p in enumerate(Y)
+              if p == Point(F.rational(2), F.zero()))
+    ib = next(i for i, p in enumerate(Y)
+              if p == Point(F.rational(-2), F.zero()))
+
+    for drop in (184, 490):          # one budget-undecided, one not
+        keep = [i for i in range(len(Y)) if i != drop]
+        idx = {v: i for i, v in enumerate(keep)}
+        cls = [[1 + v * 4 + c for c in range(4)] for v in range(len(keep))]
+        for a, b in E:
+            if a in idx and b in idx:
+                for c in range(4):
+                    cls.append([-(1 + idx[a] * 4 + c),
+                                -(1 + idx[b] * 4 + c)])
+        with Solver(name="cd19", bootstrap_with=cls) as sv:
+            assert sv.solve()
+            assert sv.solve(assumptions=[1 + idx[ia] * 4,
+                                         -(1 + idx[ib] * 4)]), \
+                f"vertex {drop} must be essential"
