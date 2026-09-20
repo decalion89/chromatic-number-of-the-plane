@@ -2577,3 +2577,68 @@ CLOSABLE_DISTANCES_OVER_K = {
     "consequence": "de Grey's chain 1 -> 3 -> 4 -> 16 breaks over K after its "
                    "second step; the continuation K offers is 1 -> 3 -> 7",
 }
+
+
+# ---------------------------------------------------------------------------
+# The doubling step, and how scarce it is.
+#
+# Where Y's forced pair sits is not incidental.  (2,0) and (-2,0) both lie on
+# the ring of radius sqrt(D) = 2 about the union's pivot -- the origin, since
+# Sb is Sa turned about it -- and antipodally on that ring, so at squared
+# distance 4D.  The ring is exactly the set the rotation moves by one, which
+# is where the union's rigidity is concentrated.
+#
+# That is an observed mechanism, not a theorem: nothing forbids a forced pair
+# elsewhere.  But if it IS the mechanism, the chain doubles, D -> 4D, and the
+# step from D needs sqrt(16D - 1), which is a strong arithmetic filter.
+# Rerunning de Grey's own step under it recovers his pair from scratch: the
+# ring scan of Sa u rho_4(Sa) about the origin turns up exactly one forced
+# pair, at d^2 = 16 = 4D, in 239 seconds of unsatisfiability proof.
+#
+# Asking which D admit the step -- D and 4D both closable -- separates the two
+# fields sharply.  Over Q(sqrt3, sqrt5, sqrt7, sqrt11) they are common:
+#
+#     1/2, 1, 4, 17/2, 37/4, 61/4, 86, 397/4, 721/4, 271, ...
+#
+# and de Grey's chain walks two of them in a row, 1 -> 4 -> 16, stopping
+# because 16 is not on the list (64 would need sqrt255 = sqrt(3.5.17)).
+# Over K = Q(m, sqrt-3, sqrt-11), searched to D = 40000, there are TWO:
+#
+#     7/12  and  397/4,
+#
+# and neither chains again -- 7/3 -> 28/3 needs sqrt(327), 397 -> 1588 needs
+# sqrt(6351) = sqrt(3.29.73).  The reason is a congruence.  If 4D - 1 = 3u^2
+# then 16D - 1 = 3(4u^2 + 1), and 3(4u^2+1) = 11v^2 forces u^2 = -3 mod 11,
+# which is 8, not a square there; 4u^2 + 1 = w^2 has only u = 0.  If
+# 4D - 1 = 11u^2 then 16D - 1 = 44u^2 + 3, which is never 11v^2 (3 = 0 mod 11
+# fails) and is 3v^2 only along the Pell equation v^2 - 132 u1^2 = 1, whose
+# fundamental solution 23^2 - 132.2^2 = 1 gives D = 397/4 and whose next
+# solution is already out of reach of any unit-distance graph.
+#
+# So de Grey's architecture does not port to K by translation.  The field that
+# blocks at every modulus up to five is the field where his mechanism has
+# almost nowhere to stand, and whatever reaches five colours over K has to
+# find its forced pair another way.
+
+DOUBLING_STEP_IS_SCARCE_OVER_K = {
+    "mechanism": "Y's forced pair is antipodal on the ring of radius sqrt(D) "
+                 "about the union's pivot, so at squared distance 4D; the "
+                 "next step needs sqrt(16D - 1)",
+    "status": "observed, not proved -- nothing forbids a forced pair off the "
+              "ring",
+    "validation": "the ring scan of Sa u rho_4(Sa) about the origin recovers "
+                  "exactly one forced pair, at d^2 = 16 = 4D, in 239s",
+    "degrey_field": [Fraction(1, 2), 1, 4, Fraction(17, 2), Fraction(37, 4),
+                     Fraction(61, 4), 86, Fraction(397, 4)],
+    "degrey_chain": "1 -> 4 -> 16, two steps in a row, stopping because 64 "
+                    "needs sqrt255 = sqrt(3.5.17)",
+    "over_K": [Fraction(7, 12), Fraction(397, 4)],
+    "searched_to": 40000,
+    "neither_chains": "7/3 -> 28/3 needs sqrt327; 397 -> 1588 needs sqrt6351",
+    "why": "4D-1 = 3u^2 gives 16D-1 = 3(4u^2+1), and 3(4u^2+1) = 11v^2 forces "
+           "u^2 = 8 mod 11, a non-residue; 4D-1 = 11u^2 gives 44u^2+3, never "
+           "11v^2, and 3v^2 only on the Pell curve v^2 - 132u^2 = 1",
+    "consequence": "de Grey's architecture does not port to K by translation; "
+                   "whatever reaches five colours over K finds its forced "
+                   "pair another way",
+}

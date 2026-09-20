@@ -2930,6 +2930,41 @@ squarefree part of `1 - 4D` is `-3` or `-11`. Integer `D` up to 139:
 that blocks at every modulus up to five is not a translation. It is a different
 chain, and finding its forced pair is the open end of this work.
 
+### The doubling step is almost nowhere over `K`
+
+Where `Y`'s forced pair sits is not incidental: `(2,0)` and `(-2,0)` are
+antipodal on the ring the rotation moves by one. That is an observed
+mechanism, not a theorem — nothing forbids a forced pair off the ring — but it
+is *reproducible*. Rerunning de Grey's own step under the ring pruning, with
+no knowledge of his answer, turns up exactly one forced pair in
+`Sa u rho_4(Sa)`, at `d^2 = 16 = 4D`, after 239 seconds of unsatisfiability
+proof. The pruning recovers his construction from scratch.
+
+If that is the mechanism, then asking which `D` admit the step — `D` and `4D`
+both closable — separates the two fields sharply. Over `Q(sqrt3, sqrt5, sqrt7,
+sqrt11)` they are common:
+
+    1/2, 1, 4, 17/2, 37/4, 61/4, 86, 397/4, 721/4, 271, ...
+
+and de Grey walks two in a row, `1 -> 4 -> 16`, stopping because 16 is not on
+the list. Over `K`, searched to `D = 40000`, there are **two**: `7/12` and
+`397/4` — and neither chains again (`7/3 -> 28/3` needs `sqrt327`;
+`397 -> 1588` needs `sqrt6351 = sqrt(3.29.73)`).
+
+The reason is a congruence. If `4D - 1 = 3u^2` then `16D - 1 = 3(4u^2 + 1)`,
+and `3(4u^2+1) = 11v^2` forces `u^2 = 8 mod 11`, a non-residue, while
+`4u^2 + 1 = w^2` has only `u = 0`. If `4D - 1 = 11u^2` then
+`16D - 1 = 44u^2 + 3`, never `11v^2`, and `3v^2` only along the Pell equation
+`v^2 - 132 u^2 = 1`, whose fundamental solution `23^2 - 132.2^2 = 1` gives
+`D = 397/4` and whose next solution is far out of reach of any unit-distance
+graph.
+
+So the field that blocks at every modulus up to five is precisely the field
+where de Grey's mechanism has almost nowhere to stand. That is not a defeat —
+it is the sharpest statement yet of why the two halves of this problem resist
+being solved at once, and it says exactly what a construction over `K` must
+do instead: find its forced pair off the ring.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

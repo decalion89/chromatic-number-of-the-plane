@@ -1252,3 +1252,30 @@ def test_the_forced_pair_of_Y_sits_on_the_ring_the_rotation_moves():
     assert (a - o).x ** 2 + (a - o).y ** 2 == F.rational(4)
     assert (b - o).x ** 2 + (b - o).y ** 2 == F.rational(4)
     assert (a - b).x ** 2 + (a - b).y ** 2 == F.rational(16), "4D, a diameter"
+
+
+def test_the_doubling_step_is_scarce_over_K():
+    """D and 4D both closable: common over de Grey's field, almost nowhere over K.
+
+    If the forced pair is antipodal on the ring -- which is where Y's is, and
+    where the ring scan of `Sa u rho_4(Sa)` independently rediscovers it -- the
+    chain doubles and the step from `D` needs `sqrt(16D - 1)`.  de Grey's field
+    admits that step at 1/2, 1, 4, 17/2, 37/4, 61/4, 86, ... and his chain
+    walks two in a row.  `K` admits exactly two below 4000, and neither chains
+    again, so his architecture does not port by translation.
+    """
+    from hn.homcol import closable_distance, closable_over
+
+    K = (1, -3, -11, 33)
+    common = [Fraction(1, 2), Fraction(1), Fraction(4), Fraction(17, 2),
+              Fraction(37, 4), Fraction(61, 4), Fraction(86)]
+    assert all(closable_distance(D) and closable_distance(4 * D)
+               for D in common)
+
+    got = sorted({D for q in (1, 2, 3, 4, 6, 12) for p in range(1, 4001)
+                  for D in [Fraction(p, q)] if D.denominator == q
+                  and closable_over(D, K) and closable_over(4 * D, K)},
+                 key=float)
+    assert got == [Fraction(7, 12), Fraction(397, 4)]
+    assert not closable_over(Fraction(28, 3), K), "7/3 does not chain on"
+    assert not closable_over(1588, K), "397 does not chain on either"
