@@ -2054,6 +2054,8 @@ NECKLACE_BLOCKING_AT_EVERY_MODULUS = {
     "counts_match": "3k+1 = 154 and 5k+1 = 256 exactly, so no accidental "
                     "adjacency and the necklace theorem applies",
     "critical_core": "the whole graph, confirmed by greedy deletion",
+    "cayley_screen": "survives every modulus from 5 to 20 -- n = 8, where the "
+                     "previous necklace failed, now passes",
     "honest": "4-chromatic, not 6; and it cannot be spindled upward, since no "
               "vertex's colour is forced by its neighbourhood at four colours",
 }

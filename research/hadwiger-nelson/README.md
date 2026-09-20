@@ -2758,6 +2758,11 @@ necklace theorem — no two points accidentally at distance 1 — so
 > **A 4-critical unit-distance graph whose directions admit no coset colouring
 > with 2, 3, 4 or 5 colours.**
 
+And the Cayley screen, which caught the previous necklace at `n = 8`, now
+passes there and at **every modulus from 5 to 20** — no homomorphism at all at
+5, and at each of the other fifteen, sixty homomorphisms tried and every one
+needing more than five colours.
+
 Every necessary condition this work has produced, met at once, by a graph that
 is critical rather than padded.
 
