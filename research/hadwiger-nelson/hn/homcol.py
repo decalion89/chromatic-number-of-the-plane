@@ -1828,3 +1828,59 @@ CLOSED_NECKLACE_IS_CRITICAL = {
     "shorter_one": {"steps": 43, "orbits": 23, "directions": 138,
                     "blocks": True},
 }
+
+
+# -- a field with de Grey's spindle AND the residue degree that blocks ------
+#
+# A distance d spindles iff K holds a rotation with |1 - rho|^2 = 1/d^2. With
+# t = rho + rhobar = 2 - 1/d^2 one gets 4 - t^2 = (4d^2 - 1)/d^4, so since
+# K = F(sqrt-3) the condition is
+#
+#     3(4d^2 - 1) is a square in F.
+#
+# At d^2 = 3 -- de Grey's distance, the rhombus tip -- that is 33. And
+# F = Q(m)(sqrt V) contains Q(sqrt33) exactly when V = 33 times a square in
+# Q(m): if sqrt V lay in Q(m, sqrt D) then V = a^2 + b^2 D + 2ab sqrt D forces
+# ab = 0, and b = 0 would make V a square outright.
+#
+# 33 is POSITIVE, so V = 33 s^2 is compatible with V totally positive, which
+# the chain needs. Searching the totally real cubics with V totally positive
+# and filtering by the necessary condition that N(V)/33^3 be a rational
+# square turns up two, and one of them is the object:
+#
+#     x^3 - 10x^2 + 26x - 11,   totally real, irreducible, 5 INERT
+#     V(m) = 1947 - 4653 m + 1848 m^2,  totally positive
+#     V = 33 s^2  with  s = 13 - 26 m + 5 m^2   -- checked exactly
+#
+# So F = Q(m, sqrt33) and K = F(sqrt-3) = Q(m, sqrt-3, sqrt-11), degree 12,
+# which holds the Moser rotation (5 + sqrt-11)/6. And 5 is inert in Q(m),
+# where the cubic has no root mod 5, and inert in Q(sqrt33), since 33 = 3 mod
+# 5 is a non-residue; so its residue degree in F is lcm(3,2) = 6, and K/F is
+# unramified there because -3 is a unit at 5. Both conditions of the
+# residue-degree theorem hold.
+#
+#     THE FIRST FIELD CARRYING BOTH THE ROTATION THAT TAKES FOUR COLOURS TO
+#     FIVE AND THE ARITHMETIC THAT A SIXTH REQUIRES.
+#
+# STATED FOR WHAT IT IS. This is where a 6-chromatic graph could live, not one
+# that does. And de Grey's OTHER rotations are not available here: chord 1/4
+# needs sqrt-15, hence sqrt5, and F = Q(m).Q(sqrt33) has Q(sqrt33) as its only
+# quadratic subfield because Q(m) is cubic. So his construction cannot be
+# transplanted whole -- only the final spindling step is available, and the
+# 4-chromatic forcing structure beneath it would have to be rebuilt from the
+# rotations this field does have: those with 3(4d^2 - 1) in (Q*)^2 or in
+# 33(Q*)^2.
+
+FIELD_WITH_SPINDLE_AND_BLOCKING = {
+    "cubic": "x^3 - 10x^2 + 26x - 11",
+    "V": "1947 - 4653 m + 1848 m^2, totally positive",
+    "V_is_33_times_a_square": "s = 13 - 26 m + 5 m^2, checked exactly",
+    "F": "Q(m, sqrt33), degree 6, 5 inert with residue degree 6",
+    "K": "Q(m, sqrt-3, sqrt-11), degree 12",
+    "spindle_available": "the Moser rotation (5 + sqrt-11)/6, so d^2 = 3 "
+                         "spindles -- de Grey's step from four colours to five",
+    "blocks": "residue degree 6 >= 3 and K/F unramified above 5",
+    "spindleable_distances": "those with 3(4d^2 - 1) in (Q*)^2 or 33(Q*)^2",
+    "honest": "where a 6-chromatic graph could live, not one that does; de "
+              "Grey's other rotations need sqrt5, which this F does not have",
+}

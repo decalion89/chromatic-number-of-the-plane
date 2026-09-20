@@ -1013,3 +1013,51 @@ def test_closed_necklace_is_four_critical():
         assert colourable(n, edges, allv, 4), k
         for v in range(n):
             assert colourable(n, edges, allv - {v}, 3), (k, v)
+
+
+def test_field_with_both_spindle_and_blocking():
+    """x^3 - 10x^2 + 26x - 11: V = 33 s^2, and 5 is inert.
+
+    33 is what d^2 = 3 asks for, since a distance spindles iff 3(4d^2-1) is a
+    square in F. So sqrt33 lies in F, K = F(sqrt-3) holds the Moser rotation,
+    and the residue degree at 5 is lcm(3, 2) = 6 -- both conditions at once.
+    """
+    cub = (-11, 26, -10)               # constant, x, x^2
+
+    def cmul(x, y):
+        r = [Fraction(0)] * 5
+        for i, a in enumerate(x):
+            if a:
+                for j, b in enumerate(y):
+                    r[i + j] += a * b
+        for k in (4, 3):
+            c = r[k]
+            if c:
+                r[k] = Fraction(0)
+                r[k - 3] -= c * cub[0]
+                r[k - 2] -= c * cub[1]
+                r[k - 1] -= c * cub[2]
+        return tuple(r[:3])
+
+    def lin(*pairs):
+        out = [Fraction(0)] * 3
+        for c, x in pairs:
+            for i in range(3):
+                out[i] += Fraction(c) * x[i]
+        return tuple(out)
+
+    one = (Fraction(1), Fraction(0), Fraction(0))
+    m = (Fraction(0), Fraction(1), Fraction(0))
+    mm = cmul(m, m)
+    m3 = cmul(mm, m)
+    m4 = cmul(m3, m)
+    V = lin((-39, m4), (540, m3), (-666, mm), (-324, m), (297, one))
+    assert V == (Fraction(1947), Fraction(-4653), Fraction(1848))
+    s = lin((13, one), (-26, m), (5, mm))
+    assert lin((33, cmul(s, s))) == V, "V must be 33 times a square"
+    # 5 inert in the cubic: no root mod 5
+    assert all((t ** 3 + cub[2] * t * t + cub[1] * t + cub[0]) % 5
+               for t in range(5))
+    # 5 inert in Q(sqrt33): 33 = 3 mod 5 is a non-residue
+    assert pow(3, 2, 5) != 3 and 3 not in {pow(k, 2, 5) for k in range(5)}
+    # so the residue degree in F = Q(m, sqrt33) is lcm(3, 2) = 6 >= 3

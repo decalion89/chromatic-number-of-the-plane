@@ -2611,6 +2611,47 @@ and whose direction set admits no coset 5-colouring at all.
 A shorter one exists too: 43 steps, 23 orbits, 138 directions, also blocking —
 130 points.
 
+## A field with de Grey's spindle *and* the arithmetic a sixth colour needs
+
+A distance `d` spindles iff `K` holds a rotation with `|1 - rho|^2 = 1/d^2`.
+With `t = rho + rhobar = 2 - 1/d^2` one gets `4 - t^2 = (4d^2 - 1)/d^4`, so
+since `K = F(sqrt-3)` the condition is
+
+> a distance `d` spindles **iff `3(4d^2 - 1)` is a square in `F`**.
+
+At `d^2 = 3` — de Grey's distance, the rhombus tip — that is **33**. And
+`F = Q(m)(sqrt V)` contains `Q(sqrt33)` exactly when `V = 33 ·` (a square in
+`Q(m)`): if `sqrt V` lay in `Q(m, sqrt D)` then `V = a^2 + b^2 D + 2ab sqrt D`
+forces `ab = 0`, and `b = 0` would make `V` a square outright.
+
+**33 is positive**, so `V = 33 s^2` is compatible with `V` totally positive,
+which the chain needs. Searching the totally real cubics with `V` totally
+positive, filtered by the necessary condition that `N(V)/33^3` be a rational
+square, turns up two — and one of them is the object:
+
+    x^3 - 10x^2 + 26x - 11        totally real, irreducible, 5 INERT
+    V(m) = 1947 - 4653 m + 1848 m^2          totally positive
+    V = 33 s^2   with   s = 13 - 26 m + 5 m^2        checked exactly
+
+So `F = Q(m, sqrt33)` and `K = F(sqrt-3) = Q(m, sqrt-3, sqrt-11)`, degree 12,
+which holds **the Moser rotation `(5 + sqrt-11)/6`**. And 5 is inert in `Q(m)`
+— the cubic has no root mod 5 — and inert in `Q(sqrt33)`, since `33 = 3` mod 5
+is a non-residue; so its residue degree in `F` is `lcm(3,2) = 6`, and `K/F` is
+unramified there because `-3` is a unit at 5. **Both conditions of the
+residue-degree theorem hold.**
+
+> **The first field carrying both the rotation that takes four colours to five
+> and the arithmetic that a sixth requires.**
+
+Stated for what it is: this is where a 6-chromatic graph *could* live, not one
+that does. And de Grey's **other** rotations are not available here — chord
+`1/4` needs `sqrt-15`, hence `sqrt5`, and `F = Q(m)·Q(sqrt33)` has `Q(sqrt33)`
+as its only quadratic subfield because `Q(m)` is cubic. His construction
+cannot be transplanted whole. Only the final spindling step is available; the
+4-chromatic forcing structure beneath it would have to be rebuilt from the
+rotations this field *does* have, namely those with `3(4d^2 - 1)` in `(Q*)^2`
+or in `33(Q*)^2`.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
