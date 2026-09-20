@@ -2122,3 +2122,50 @@ DECISION_NOT_VALUE = {
     "G_at_63": "past 30000 classes, still finding 63-sets and still finding "
                "colourings that escape them -- exactly on the boundary",
 }
+
+
+# -- the decision loop had a bug, and it was hiding in plain sight -------
+#
+# The first version asked for ANY set of at most 63 vertices hitting the
+# family, then for a colouring whose colour-0 class escapes it. It ran for
+# forty thousand rounds without deciding, which read like a boundary. It was
+# not. Diagnosed by looking at the classes it was generating:
+#
+#     400 escaping classes, sizes 282 to 314 -- and 152 vertices common to
+#     EVERY ONE of them.
+#
+# A single vertex hit the whole family. The minimum hitting set read 2, below
+# the floor rho >= k = 5, which is the impossible number that gave it away.
+# The loop was spinning on near-identical colourings.
+#
+# The cause is slack. An arbitrary 63-set hits each class through whichever
+# vertex it likes, so the escaping colouring is barely constrained and comes
+# back almost unchanged. Shrinking S to a MINIMAL hitting set first removes
+# it: every vertex left is needed by some class, so an escaping colouring must
+# avoid all of them. Measured after the fix, on de Grey's G:
+#
+#     round  200   |F|  201   |S| 17   common to all 207
+#     round 1400   |F| 1401   |S| 38   common to all 100
+#     round 2400   |F| 2401   |S| 46   common to all  72
+#     round 4600   |F| 4601   |S| 31   common to all   0
+#
+# The common core falls to zero and the family becomes genuinely diverse.
+#
+# AND IT CORRECTS A HEADLINE. rho(Sa,4) has now been 7 (greedy deletion), then
+# 6, then 5. Greedy deletion returns a MINIMAL set, not a minimum, so 7 was
+# never the value -- and the "drop from 7 to 5 under unioning" was measured
+# with the same method at both ends. Re-measurement by decision is running;
+# until it reports, the drop is not established.
+
+DECISION_LOOP_NEEDED_A_MINIMAL_HITTING_SET = {
+    "symptom": "forty thousand rounds without deciding, reading as a boundary",
+    "diagnosis": "152 vertices common to all 400 escaping classes; minimum "
+                 "hitting set 2, below the floor rho >= 5",
+    "cause": "an arbitrary 63-set leaves slack, so the escaping colouring is "
+             "barely constrained and repeats",
+    "fix": "shrink S to a minimal hitting set before asking for an escape",
+    "after_fix_common_core": {200: 207, 1400: 100, 2400: 72, 4600: 0},
+    "consequence": "rho(Sa,4) is at most 5, not the 7 recorded from greedy "
+                   "deletion, and the 7 -> 5 drop is not established until "
+                   "both ends are re-measured by decision",
+}

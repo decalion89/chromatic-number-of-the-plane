@@ -1285,3 +1285,14 @@ def test_greedy_deletion_gives_minimal_not_minimum():
     assert "budget 6" in str(D["control"]), "a forcing six exists on Sa"
     assert "MINIMAL set rather than a minimum" in D["correction"]
     assert "upper bounds, not values" in D["correction"]
+
+
+def test_the_decision_loop_bug_and_its_signature():
+    """A minimum hitting set below the floor rho >= k is the impossible number."""
+    from hn.forced import DECISION_LOOP_NEEDED_A_MINIMAL_HITTING_SET as B
+
+    assert "below the floor" in B["diagnosis"]
+    core = B["after_fix_common_core"]
+    assert core[4600] == 0 and core[200] > 200, "the common core falls to zero"
+    assert list(core.values()) == sorted(core.values(), reverse=True)
+    assert "not established" in B["consequence"]
