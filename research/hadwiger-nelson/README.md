@@ -3477,6 +3477,41 @@ search that only ever grows its graphs is spending its budget in the wrong
 place. `G*` has 13 873 points and forces nothing; `Y` has 791 and forces a
 pair. Size is not the variable.
 
+## The recipe, driven only by the criterion, rebuilds de Grey's graph
+
+Start from `Sa` and the criterion alone, knowing nothing about the answer. Of
+`Sa`'s five rational closable rings exactly one pays both costs, `D = 4`, and
+that single choice fixes everything downstream with no further decisions:
+
+| step | what the criterion forces |
+|---|---|
+| `ρ` | `rotation_joining(4)` about `Sa`'s centre — `cos 7/8`, `sin √15/8` |
+| `Z` | `Sa ∪ ρ(Sa)`, which forces the ring's antipodal pair |
+| pivot | one end of that pair, `(-2,0)` |
+| `σ` | `rotation_joining(16)` about the pivot — the pair is at squared distance `4D = 16` |
+| `W` | `Z ∪ σ(Z)` |
+
+Then, measured rather than assumed:
+
+- `ρ(Sa) = Sb`, all 397 points;
+- `A = (2,0)` and `σ(A)` come out at squared distance **exactly 1**;
+- `Y ∪ σ(Y)`, turned by `π/2 - arcsin(1/8)` about the pivot, **is `G`** —
+  1581 of 1581 points, and `|G| = 1581`.
+
+That last line is the validation. de Grey builds `G` as `Ya ∪ Yb`, two turns of
+`Y` through `π/2 ± arcsin(1/8)`; those two angles differ by `2 arcsin(1/8)`,
+which is precisely `σ`. His pair of turns and this recipe's single turn
+describe the same configuration, so the recipe lands on his graph exactly
+rather than on something merely like it.
+
+`W` therefore contains a rotated copy of `G` and cannot be 4-coloured — a
+proof by containment, with no solver anywhere in the argument.
+
+What this licenses is the same template one level up, with `G*` in `Sa`'s place
+and its two doubly-usable rings, `D = 4` and `D = 17/2`, in place of the one.
+What it does not license is optimism about the outcome: the criterion says
+where to look, not that anything is there.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

@@ -3980,3 +3980,55 @@ FORCING_IS_MONOTONE = {
                              "not the variable -- G* has 13873 points and "
                              "forces nothing, Y has 791 and forces a pair.",
 }
+
+
+# The recipe, driven only by the criterion, reconstructs de Grey's graph.
+#
+# Take Sa, his dihedral core, and ask the ring criterion which ring to turn on.
+# Of its five rational closable rings exactly one pays both costs: D = 4.  That
+# fixes everything downstream with no further choices:
+#
+#     rho    = rotation_joining(4) about Sa's centre      -- cos 7/8, sin r15/8
+#     Z      = Sa u rho(Sa)                               -- forces the ring's
+#                                                            antipodal pair
+#     pivot  = one end of that pair, (-2,0)
+#     sigma  = rotation_joining(16) about the pivot       -- the pair sits at
+#                                                            squared distance
+#                                                            4D = 16
+#     W      = Z u sigma(Z)
+#
+# and then, measured rather than assumed:
+#
+#     rho(Sa) = Sb exactly, all 397 points
+#     A = (2,0) and sigma(A) are at squared distance exactly 1
+#     Y u sigma(Y), turned by pi/2 - arcsin(1/8) about the pivot, IS G --
+#         1581 of 1581 points, and |G| = 1581
+#
+# The last line is the whole validation.  de Grey's G is Ya u Yb, two turns of
+# Y through pi/2 +- arcsin(1/8); those two angles differ by 2 arcsin(1/8),
+# which is precisely sigma.  So his pair of turns and this recipe's single turn
+# describe the same configuration, and the recipe lands on his graph exactly
+# rather than on something like it.
+#
+# W therefore contains a rotated copy of G and cannot be 4-coloured -- a proof
+# by containment, which is why the SAT run is confirmation and not evidence.
+THE_RECIPE_RECONSTRUCTS_DE_GREYS_GRAPH = {
+    "input": "Sa, and the ring criterion.  Nothing about the answer.",
+    "the_only_choice": "D = 4, the unique ring of Sa that pays both costs",
+    "rho": "rotation_joining(4): cos 7/8, sin sqrt(15)/8, and rho(Sa) = Sb "
+           "to the last of 397 points",
+    "sigma": "rotation_joining(16) about (-2,0), which puts A = (2,0) and "
+             "sigma(A) at squared distance exactly 1",
+    "landing": "rho_{pi/2 - arcsin(1/8)}(Y u sigma(Y)) = G, 1581 of 1581",
+    "why_the_angles_agree": "G is Y turned through pi/2 + arcsin(1/8) and "
+                            "pi/2 - arcsin(1/8); those differ by "
+                            "2 arcsin(1/8), which is sigma",
+    "consequence": "W = Z u sigma(Z) contains a rotated copy of G, so it is "
+                   "not 4-colourable by containment, no solver needed",
+    "what_it_licenses": "the same template at five colours, with G* in Sa's "
+                        "place and its two doubly-usable rings, D = 4 and "
+                        "D = 17/2, in place of the one",
+    "what_it_does_not": "it validates the machinery, not the outcome.  The "
+                        "criterion narrows where to look; it does not promise "
+                        "that a ring of G* forces anything.",
+}

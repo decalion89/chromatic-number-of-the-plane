@@ -1962,3 +1962,45 @@ def test_agreeing_pairs_never_compares_a_pair():
         assert agreeing_pairs(cols, colours=3) == brute
 
     assert agreeing_pairs([]) == []
+
+
+def test_the_ring_criterion_rebuilds_de_greys_graph_exactly():
+    """The end-to-end check: criterion in, de Grey's 1581 vertices out.
+
+    Start from Sa and the criterion alone.  Of Sa's five rational closable
+    rings only D = 4 pays both costs, and that single choice fixes everything:
+    rho = rotation_joining(4) about Sa's centre, the antipodal pair on that
+    ring at squared distance 16, and sigma = rotation_joining(16) about one of
+    its ends.
+
+    Then Y u sigma(Y), turned by de Grey's own pi/2 - arcsin(1/8) about that
+    pivot, is G -- not a graph like G, but G, all 1581 points.  His
+    construction turns Y through pi/2 + arcsin(1/8) and pi/2 - arcsin(1/8),
+    and those two angles differ by 2 arcsin(1/8), which is exactly sigma.
+
+    So a union built this way contains a rotated copy of G and is not
+    4-colourable by containment, with no solver in the argument at all.
+    """
+    from hn.degrey import build_Sa, build_Y, build_G, _rot_half_pi_pm
+    from hn.geometry import DEGREY_FIELD as F, Point, rotation_joining
+    from hn.homcol import doubly_usable_ring
+
+    Sa = build_Sa(F)
+    rings = [Fraction(1), Fraction(1, 3), Fraction(5, 9),
+             Fraction(4), Fraction(3)]
+    assert [D for D in rings if doubly_usable_ring(D)] == [Fraction(4)]
+
+    from hn.degrey import build_Sb
+    rho = rotation_joining(4, F)
+    assert {rho(p) for p in Sa} == set(build_Sb(F))
+
+    pivot = Point(F.rational(-2), F.zero())
+    sigma = rotation_joining(4 * 4, F).about(pivot)
+    A = Point(F.rational(2), F.zero())
+    d2 = (A.x - sigma(A).x) ** 2 + (A.y - sigma(A).y) ** 2
+    assert d2 == F.one(), "the spindle must land the pair at distance 1"
+
+    Y = set(build_Y(F))
+    spun = Y | {sigma(p) for p in Y}
+    turn = _rot_half_pi_pm(F, -1).about(pivot)
+    assert {turn(p) for p in spun} == set(build_G(F, as_graph=False))
