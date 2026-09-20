@@ -3357,3 +3357,49 @@ THE_BUDGET_LIES_BUT_SAFELY = {
                    "the second-floor unions"],
     "affected": "the vertex triage, which skipped the rerun",
 }
+
+
+# ---------------------------------------------------------------------------
+# The experiment at five colours that had not actually been run.
+#
+# The step that works at four is a union whose rotation BITES: Sa and
+# rho_4(Sa) share one point and are joined by six edges.  The unions of G
+# tried earlier used CLOSING rotations instead -- picked because G realises
+# the distance, not because they produce a cross edge -- and they produced
+# almost none, +5 on a ring of eleven.  So the analogue at five colours had
+# never been performed.
+#
+# The same equation answers it.  A cross edge is p, q in G with |p - u.q| = 1
+# and |u| = 1; with w = u.q, A = |q|^2, P = |p|^2 it forces
+#
+#     w.pbar = R +- i sqrt(A.P - R^2),     R = (A + P - 1)/2,
+#
+# so the rotation exists over F(i) exactly when sqrt(A.P - R^2) lies in
+# F = Q(sqrt3, sqrt5, sqrt7, sqrt11).  That is a multiquadratic square test,
+# and multiquadratic square roots come out of the obvious recursion: with
+# y = a + b sqrt(g), a square root u + v sqrt(g) needs a^2 - g b^2 to be a
+# square one generator down, and then (a +- that)/2 to be one as well.  The
+# b = 0 branch has to try both y and y/g.  Base case Q, everything exact.
+#
+#     987 rotations of de Grey's field bite G, from 147033 pairs.
+#
+# Against the 81 that bite Sa over K, and his own single rho_4.
+
+MULTIQUADRATIC_SQUARE_TEST = {
+    "recursion": "y = a + b sqrt(g) is a square iff a^2 - g b^2 is one a "
+                 "generator down and then (a +- its root)/2 is too",
+    "edge_case": "b = 0 needs both y and y/g tried, since y may be g times a "
+                 "square",
+    "base": "Q, exact throughout -- nothing reconstructed from floats",
+}
+
+
+ROTATIONS_THAT_BITE_G = {
+    "why_it_matters": "the four-colour step is a union whose rotation bites; "
+                      "the earlier unions of G used closing rotations and got "
+                      "+5 cross edges on a ring of eleven, which is not the "
+                      "experiment",
+    "pairs_tried": 147033,
+    "rotations_found": 987,
+    "against": "81 that bite Sa over K, and de Grey's own single rho_4",
+}
