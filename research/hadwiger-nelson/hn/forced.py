@@ -2203,3 +2203,37 @@ RHO_SA_IS_FIVE = {
                    "refuted the drop is nothing, and it is withdrawn until "
                    "that lands",
 }
+
+
+# -- the decision is not reachable by exhaustion, and the trajectory says so
+#
+# The loop needs a near-minimum hitting set each round or the escaping
+# colourings repeat. Shrinking to MINIMAL was not enough -- it returned 40 to
+# 56 vertices where one sometimes hit the whole family, and the exact minimum
+# read 1 at three thousand classes. Greedy set cover -- most-covering vertex
+# first -- is far closer, and with it the bound finally climbs:
+#
+#     greedy cover   1   2    3    4    5    6    7     8     9
+#     at round       1  67  175  255  406  568  881  1366  1795
+#
+# The increments grow by a factor of about 1.5 from k = 3 on. Extrapolated,
+# reaching 63 would take on the order of 1.5^63, around 10^11 rounds. So the
+# lower bound will not reach 63 by exhaustion, and this method cannot refute
+# rho <= 63 on de Grey's G in any feasible time.
+#
+# The loop can still terminate the other way: if the small set it currently
+# holds ever turns out forcing, rho is at most its size, and at nine vertices
+# that would be spectacular. It has not.
+#
+# So the decision stands open, and honestly so. What is established is the
+# trajectory, the growth law, and that neither side is close.
+
+RHO_DECISION_NOT_REACHABLE = {
+    "greedy_cover_at_round": {1: 1, 2: 67, 3: 175, 4: 255, 5: 406, 6: 568,
+                              7: 881, 8: 1366, 9: 1795},
+    "growth_factor": 1.5,
+    "rounds_to_reach_63": "about 1.5^63, some 10^11",
+    "verdict": "rho <= 63 on G is not refutable by this method in feasible "
+               "time; the other termination, a small forcing set, has not "
+               "occurred either",
+}

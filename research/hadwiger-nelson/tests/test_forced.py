@@ -1305,3 +1305,14 @@ def test_rho_sa_is_exactly_five():
     assert "refuted" in R["budget_4"] and "forcing set found" in R["budget_5"]
     assert "minimal set" in R["replaces"]
     assert "withdrawn" in R["drop_status"]
+
+
+def test_the_rho_decision_trajectory_does_not_reach_63():
+    from hn.forced import RHO_DECISION_NOT_REACHABLE as R
+
+    t = R["greedy_cover_at_round"]
+    assert list(t) == sorted(t) and list(t.values()) == sorted(t.values())
+    # the increments grow, which is what makes 63 unreachable
+    inc = [t[k + 1] - t[k] for k in range(3, 9)]
+    assert inc[-1] > inc[0], "each further vertex costs more rounds"
+    assert "not refutable" in R["verdict"]
