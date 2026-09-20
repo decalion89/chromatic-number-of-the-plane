@@ -50,7 +50,8 @@ __all__ = ["edge_vectors", "has_homomorphism", "screen", "minimum_blocking_set",
            "cayley_chromatic",
            "cyclotomic_chain_closes",
            "denominator_29_directions",
-           "closing_radicand", "closable_distance", "closable_over"]
+           "closing_radicand", "closable_distance", "closable_over",
+           "lattice_basis", "on_lattice", "blocks_at"]
 
 
 def _coords(e) -> Tuple[Fraction, ...]:
@@ -2347,15 +2348,19 @@ NECKLACE_OVER_THE_MOSER_FIELD = {
              "and 11 edges = 3k+1 and 5k+1 at k = 2",
     "grown": {"rhombi": 44, "orbits": 23, "step_directions": 138},
     "graph": {"points": 133, "edges": 221, "chi": 4, "directions": 140},
-    "blocks_at": [2, 3, 4, 5],
-    "critical_core": "the whole graph, confirmed by greedy deletion, still "
-                     "blocking at all four",
+    "blocks_at": [2, 3, 5],
+    "CORRECTED": "read as [2, 3, 4, 5] while the search for phi ran over Z^12 "
+                 "instead of over the group the directions generate; on the "
+                 "right module n = 4 falls away and n = 5, the gate itself, "
+                 "survives -- see THE_BLOCKING_TEST_WAS_TOO_WEAK",
+    "critical_core": "the whole graph, confirmed by greedy deletion",
     "orbit_requirement": "without it the necklace reached k = 76 with 18 "
                          "directions, since a step contributes exactly its "
                          "zeta_6-orbit",
-    "standing": "every necessary condition met at once by a critical graph, "
+    "standing": "a 4-critical graph blocking at the gate and at 2 and 3, "
                 "over a field where de Grey's step from four colours to five "
-                "is available",
+                "is available; the sharpened gate asks for n = 4 as well, and "
+                "that one it does not meet",
     "honest": "still 4-chromatic; what it is is the substrate a sixth colour "
               "would need, with nothing arithmetic left in the way",
 }
@@ -2641,4 +2646,185 @@ DOUBLING_STEP_IS_SCARCE_OVER_K = {
     "consequence": "de Grey's architecture does not port to K by translation; "
                    "whatever reaches five colours over K finds its forced "
                    "pair another way",
+}
+
+
+# ---------------------------------------------------------------------------
+# A flaw in the blocking test, and the fix.
+#
+# A coset colouring is a homomorphism phi from the group the points generate
+# to Z/n, and it is proper exactly when phi is nonzero on every edge vector.
+# Blocking is the assertion that no such phi exists.  The group that decides
+# it is M, the subgroup the edge vectors generate -- and `has_homomorphism`
+# has been searching over Z^d, the ambient lattice of whatever coordinates the
+# vectors were written in.
+#
+# Those are not the same question, and the difference points the dangerous
+# way.  M sits inside Z^d, possibly properly, and Z/n is not injective, so a
+# homomorphism M -> Z/n need not extend to Z^d.  Searching over Z^d therefore
+# finds too few functionals and can report blocking that is not there:
+#
+#     d = 1, D = {2}, n = 2.  Over M = 2Z the map phi(2) = 1 escapes.
+#     Over Z every psi has psi(2) = 0, and the test says "blocked".
+#
+# Dividing out the global content kills that particular example, which is why
+# `edge_vectors` has done it from the start, but content 1 does not give
+# M = Z^d.  The gap is not hypothetical.  The direction set of G u rho(G), G
+# de Grey's graph and rho a rotation of irrational chord over Q(m)(sqrt3,
+# sqrt5, sqrt7, sqrt11), has 268 vectors of rank 32 and
+#
+#     over Z^32 it blocks at 2, 3, 4 and 5;  over M it blocks at 2, 3 and 4.
+#
+# The "blocks at five" was the artefact.  The fix is to put the vectors in a
+# Z-basis of M, by Hermite reduction, so that M is Z^r by construction; the
+# test over M is also the conservative one, since every phi that a colouring
+# of the points supplies restricts to M, so blocking over M implies blocking
+# for any larger group the points may generate.
+
+def lattice_basis(vecs: Sequence[Sequence[int]]) -> List[List[int]]:
+    """A Z-basis, in echelon form, of the lattice the integer vectors span."""
+    d = len(vecs[0])
+    basis: dict = {}
+    for row in vecs:
+        w = list(row)
+        c = 0
+        while c < d:
+            if w[c] == 0:
+                c += 1
+                continue
+            if c not in basis:
+                basis[c] = [-x for x in w] if w[c] < 0 else w
+                break
+            b = basis[c]
+            g, x, y = _ext_gcd(b[c], w[c])
+            nb = [x * bb + y * ww for bb, ww in zip(b, w)]
+            w = [(b[c] // g) * ww - (w[c] // g) * bb for bb, ww in zip(b, w)]
+            basis[c] = nb
+            c += 1
+    return [basis[c] for c in sorted(basis)]
+
+
+def _ext_gcd(a: int, b: int) -> Tuple[int, int, int]:
+    old_r, r = a, b
+    old_s, s = 1, 0
+    old_t, t = 0, 1
+    while r:
+        q = old_r // r
+        old_r, r = r, old_r - q * r
+        old_s, s = s, old_s - q * s
+        old_t, t = t, old_t - q * t
+    if old_r < 0:
+        old_r, old_s, old_t = -old_r, -old_s, -old_t
+    return old_r, old_s, old_t
+
+
+def on_lattice(vecs: Sequence[Sequence[int]]) -> List[Tuple[int, ...]]:
+    """The same vectors, in coordinates where their lattice IS Z^r.
+
+    Use this before `has_homomorphism` whenever the answer is to be read as a
+    statement about coset colourings.  Without it the search runs over the
+    ambient Z^d and can report blocking the module does not have.
+    """
+    d = len(vecs[0])
+    B = lattice_basis(vecs)
+    piv = []
+    for b in B:
+        piv.append(next(i for i, x in enumerate(b) if x))
+    out = set()
+    for v in vecs:
+        w, co = list(v), []
+        for b, c in zip(B, piv):
+            q, rem = divmod(w[c], b[c])
+            if rem:
+                raise ValueError("vector outside the computed lattice")
+            co.append(q)
+            if q:
+                w = [x - q * y for x, y in zip(w, b)]
+        if any(w):
+            raise ValueError("Hermite reduction left a residue")
+        out.add(tuple(co))
+    return sorted(out)
+
+
+def blocks_at(vecs: Sequence[Sequence[int]], n: int) -> bool:
+    """Is there no coset colouring mod n? Asked of the right group."""
+    return has_homomorphism(on_lattice(vecs), n)[0] is None
+
+
+# ---------------------------------------------------------------------------
+# The audit, and exactly which claims moved.
+#
+# When the two tests can disagree is decidable without any SAT.  M sits in its
+# saturation M_sat with finite quotient T, and from 0 -> M -> Z^d the
+# restriction Hom(Z^d, Z/n) -> Hom(M, Z/n) is onto exactly when
+# Ext^1(T, Z/n) = T/nT vanishes -- that is, when no invariant factor of M
+# shares a prime with n.  An invariant factor is divisible by p exactly when
+# the rank of the direction matrix drops mod p.  So:
+#
+#     the two tests agree at n  <=>  rank_p = rank_Q for every prime p | n.
+#
+# Two Gaussian eliminations settle it.  And only one direction of a verdict
+# was ever at risk: "does not block" is the exhibition of a phi, and a phi on
+# Z^d restricts to M, so every escape found is a real escape.  Only the
+# blocking claims -- assertions that no phi exists -- needed rechecking.
+#
+# Rechecked:
+#
+#   denominator-29 set    300 vectors, dim 12, index 1 in Z^12, saturated
+#                         [2,3,4,5] over Z^d, [2,3,4,5] over M -- UNCHANGED
+#   de Grey's G           133 vectors, rank 16 in dim 32, rank drops mod 2,3
+#                         [2,3,4] over Z^d, [2,3,4] over M    -- UNCHANGED
+#   U = G u w.G           blocking comes from a rotated copy of the
+#                         denominator-29 set by monotonicity, and monotonicity
+#                         survives the module version: S inside D means every
+#                         phi on <D> restricts to <S>.  So U still blocks at
+#                         2, 3, 4 and 5                        -- UNCHANGED
+#   the 133-point
+#   4-critical necklace   140 directions, lattice rank 12
+#                         [2,3,4,5] over Z^12, [2,3,5] over M  -- CORRECTED
+#   G u rho(G) over
+#   Q(m)(sqrt3,5,7,11)    268 directions, rank 32
+#                         [2,3,4,5] over Z^32, [2,3,4] over M  -- WITHDRAWN
+#
+# The last one had been about to be reported as a second 5-chromatic graph
+# blocking at every modulus up to five, built cheaply by bolting a rotated
+# copy onto de Grey's graph over a field where 5 has residue degree 3.  It
+# does not block at five.  It was the case that exposed the flaw.
+#
+# What survives is the important part.  The gate is n = 5, and the necklace
+# still meets it; U still meets the whole sharpened gate; and no claim that a
+# colouring exists was ever in question.  What the necklace loses is n = 4, so
+# it no longer meets the sharpened gate in full -- and since it is 4-chromatic
+# a coset colouring mod 4 is exactly what one should expect it to admit.
+
+THE_BLOCKING_TEST_WAS_TOO_WEAK = {
+    "flaw": "the search for phi ran over Z^d, the ambient lattice of whatever "
+            "coordinates the vectors were written in; the question is about "
+            "M, the group the edge vectors generate",
+    "direction_of_the_error": "M inside Z^d and Z/n not injective means some "
+                              "phi on M do not extend, so the test found too "
+                              "few functionals and could report blocking that "
+                              "was not there",
+    "smallest_example": "d = 1, D = {2}, n = 2: phi(2) = 1 escapes over 2Z, "
+                        "every psi vanishes on 2 over Z",
+    "criterion": "the two agree at n iff rank_p = rank_Q for every prime "
+                 "p | n; an invariant factor divisible by p is exactly a rank "
+                 "drop mod p",
+    "one_sided": "'does not block' exhibits a phi, and a phi on Z^d restricts "
+                 "to M, so every escape ever found is genuine; only blocking "
+                 "claims needed rechecking",
+    "audit": {
+        "denominator-29 set": "index 1, saturated; [2,3,4,5] both ways",
+        "de Grey's G": "rank 16 of 32, drops mod 2 and 3; [2,3,4] both ways",
+        "U = G u w.G": "unchanged -- monotonicity survives, since S inside D "
+                       "means every phi on <D> restricts to <S>",
+        "the 133-point necklace": "[2,3,4,5] over Z^12, [2,3,5] over M",
+        "G u rho(G) over Q(m)(sqrt3,5,7,11)": "[2,3,4,5] over Z^32, [2,3,4] "
+                                              "over M -- withdrawn",
+    },
+    "fix": "`on_lattice` puts the vectors in a Hermite basis of M, so M is "
+           "Z^r by construction; `blocks_at` wraps it",
+    "standing": "the gate is n = 5 and the necklace still meets it; U still "
+                "meets the sharpened gate in full; the necklace loses n = 4, "
+                "which for a 4-chromatic graph is what one should expect",
 }

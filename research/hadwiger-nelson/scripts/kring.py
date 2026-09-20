@@ -130,10 +130,28 @@ for D in (Fr(3), Fr(7)):
         for j in range(len(Sa)):
             if i != j and abs(abs(zsA[i] - zsA[j]) ** 2 - fd) < 1e-7:
                 ring[i] += 1
-    order = ring.most_common()
-    print(f"\nD = {D}: {len(order)} pivots, largest ring "
-          f"{order[0][1] if order else 0}  [{time.time()-t0:.0f}s]",
-          flush=True)
+    # Sa is invariant under the 12-element dihedral group, so pivots in one
+    # orbit give isomorphic unions -- a rotation g conjugates rho_p to
+    # rho_{gp}, a reflection conjugates it to the inverse, and both rotations
+    # are scanned anyway.  361 pivots become about thirty.
+    pos = {p: i for i, p in enumerate(Sa)}
+    reps, done = [], set()
+    for i, _ in ring.most_common():
+        if i in done:
+            continue
+        orb, q = set(), Sa[i]
+        for base in (q, kconj(q)):
+            r = base
+            for _ in range(6):
+                if r in pos:
+                    orb.add(pos[r])
+                r = kmul(Z6, r)
+        done |= orb
+        reps.append((i, ring[i], len(orb)))
+    order = [(i, sz) for i, sz, _ in reps]
+    print(f"\nD = {D}: {len(ring)} pivots in {len(order)} dihedral orbits, "
+          f"largest ring {order[0][1] if order else 0}  "
+          f"[{time.time()-t0:.0f}s]", flush=True)
     for rho in (ROT[D], kconj(ROT[D])):
         for k, (pi_, sz) in enumerate(order):
             piv = Sa[pi_]

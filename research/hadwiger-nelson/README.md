@@ -2965,6 +2965,73 @@ it is the sharpest statement yet of why the two halves of this problem resist
 being solved at once, and it says exactly what a construction over `K` must
 do instead: find its forced pair off the ring.
 
+## A flaw in the blocking test, an audit, and one withdrawn claim
+
+A coset colouring is a homomorphism `phi` from the group the points generate
+to `Z/n`; it is proper exactly when `phi` is nonzero on every edge vector, and
+blocking is the assertion that no such `phi` exists. The group that decides it
+is `M`, the subgroup the edge vectors generate. `has_homomorphism` was
+searching over `Z^d` — the ambient lattice of whatever coordinates the vectors
+happened to be written in.
+
+Those are different questions, and the difference points the wrong way. `M`
+sits inside `Z^d`, possibly properly, and `Z/n` is not injective, so a
+homomorphism `M -> Z/n` need not extend to `Z^d`. The search therefore finds
+*too few* functionals and can report blocking that is not there. One dimension
+is enough to see it:
+
+    d = 1, D = {2}, n = 2.  Over M = 2Z the map phi(2) = 1 escapes.
+    Over Z every psi has psi(2) = 0, and the test says "blocked".
+
+Dividing out the global content kills that example, which is why the pipeline
+has done it from the start — but content 1 does not give `M = Z^d`.
+
+### When the two tests can disagree, decided without SAT
+
+`M` sits in its saturation with finite quotient `T`, and restriction
+`Hom(Z^d, Z/n) -> Hom(M, Z/n)` is onto exactly when `Ext^1(T, Z/n) = T/nT`
+vanishes — when no invariant factor of `M` shares a prime with `n`. An
+invariant factor is divisible by `p` exactly when the rank of the direction
+matrix drops mod `p`. So
+
+> the two tests agree at `n` **iff** `rank_p = rank_Q` for every prime `p | n`,
+
+two Gaussian eliminations and no solver. And only one direction of a verdict
+was ever at risk: *"does not block"* exhibits a `phi`, and a `phi` on `Z^d`
+restricts to `M`, so **every escape ever found is genuine**. Only blocking
+claims needed rechecking.
+
+### The audit
+
+| object | | over `Z^d` | over `M` | |
+|---|---|---|---|---|
+| denominator-29 set | 300 vectors, index 1 in `Z^12` | 2,3,4,5 | 2,3,4,5 | unchanged |
+| de Grey's `G` | 133 vectors, rank 16 of 32 | 2,3,4 | 2,3,4 | unchanged |
+| `U = G u w.G` | via a rotated denominator-29 subset | 2,3,4,5 | 2,3,4,5 | unchanged |
+| the 133-point 4-critical necklace | 140 directions, rank 12 | 2,3,4,5 | **2,3,5** | **corrected** |
+| `G u rho(G)` over `Q(m)(sqrt3,5,7,11)` | 268 directions, rank 32 | 2,3,4,5 | **2,3,4** | **withdrawn** |
+
+`U`'s blocking survives because monotonicity survives the module version: if
+`S` is inside `D` then every `phi` on `<D>` restricts to `<S>`, so a blocked
+subset blocks the whole set. Its blocking comes from a rotated copy of the
+denominator-29 set, which is saturated, so nothing moved.
+
+The last row is the one that exposed the flaw. It was about to be reported as
+a second 5-chromatic graph blocking at every modulus up to five, got cheaply
+by bolting a rotated copy of de Grey's graph onto itself over a field where 5
+has residue degree 3 — `m` a root of `x^3 - 10x^2 + 26x - 11`, irreducible mod
+5. The chromatic number is untouched (the two copies share one vertex, and
+`1581 = 2.791 - 1` all over again), and over `Z^32` the directions blocked at
+five. Over their own lattice they do not. **The claim is withdrawn.**
+
+### What survives
+
+The gate is `n = 5`, and everything that mattered there stands. `U` still
+meets the sharpened gate in full. The necklace still blocks at the gate, and
+at 2 and 3 — what it loses is `n = 4`, so it no longer meets the sharpened
+gate in full. For a 4-chromatic graph, admitting a coset colouring mod 4 is
+what one should expect; the interesting thing was always `n = 5`.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

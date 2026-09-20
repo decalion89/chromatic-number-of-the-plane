@@ -1279,3 +1279,60 @@ def test_the_doubling_step_is_scarce_over_K():
     assert got == [Fraction(7, 12), Fraction(397, 4)]
     assert not closable_over(Fraction(28, 3), K), "7/3 does not chain on"
     assert not closable_over(1588, K), "397 does not chain on either"
+
+
+def test_the_blocking_test_must_run_on_the_module_not_the_ambient_lattice():
+    """`has_homomorphism` over Z^d can report blocking the module does not have.
+
+    A coset colouring is a homomorphism from the group `M` the edge vectors
+    generate to `Z/n`.  `M` sits inside `Z^d`, possibly properly, and `Z/n` is
+    not injective, so a homomorphism on `M` need not extend -- the search over
+    `Z^d` finds too few functionals.  The smallest case is one dimension wide:
+    over `2Z` the map sending 2 to 1 escapes, over `Z` every map kills 2.
+    """
+    from hn.homcol import blocks_at, has_homomorphism, on_lattice
+
+    assert has_homomorphism([(2,)], 2)[0] is None, "over Z it looks blocked"
+    assert on_lattice([(2,)]) == [(1,)]
+    assert blocks_at([(2,)], 2) is False, "over 2Z it is not"
+
+
+def test_the_two_blocking_tests_agree_exactly_when_the_rank_holds_mod_p():
+    """`M_sat/M` obstructs the restriction, and it is visible as a rank drop.
+
+    From `0 -> M -> M_sat -> T -> 0`, restriction `Hom(Z^d, Z/n) ->
+    Hom(M, Z/n)` is onto exactly when `T/nT` vanishes, i.e. when no invariant
+    factor of `M` shares a prime with `n` -- which happens exactly when the
+    rank of the direction matrix drops mod that prime.  The denominator-29 set
+    has index 1, so it is saturated and every verdict on it stands as it was.
+    """
+    from hn.homcol import (blocks_at, denominator_29_directions,
+                           has_homomorphism, lattice_basis)
+
+    D = denominator_29_directions(3)
+    B = lattice_basis(D)
+    assert len(B) == len(D[0]) == 12, "full rank"
+    index = 1
+    for b in B:
+        index *= abs(b[next(i for i, x in enumerate(b) if x)])
+    assert index == 1, "saturated, so the two tests cannot differ"
+    assert has_homomorphism(D, 5)[0] is None and blocks_at(D, 5)
+
+
+def test_an_escape_found_over_the_ambient_lattice_is_always_genuine():
+    """Only blocking claims were ever at risk; exhibited colourings are safe.
+
+    A homomorphism `Z^d -> Z/n` restricts to `M`, so any `phi` the search
+    produces really is a coset colouring.  That is why "de Grey's G does not
+    block at 5" needed no revisiting, while "the necklace blocks at 4" did.
+    """
+    from hn.degrey import build_G
+    from hn.graph import build_graph
+    from hn.homcol import edge_vectors, has_homomorphism, on_lattice
+
+    D = edge_vectors(build_graph(build_G(as_graph=False)))
+    phi, _ = has_homomorphism(D, 5)
+    assert phi is not None, "a coset colouring mod 5 exists, as it must"
+    assert all(sum(p * x for p, x in zip(phi, d)) % 5 for d in D)
+    red = on_lattice(D)
+    assert len(red[0]) == 16, "rank 16 inside dimension 32"
