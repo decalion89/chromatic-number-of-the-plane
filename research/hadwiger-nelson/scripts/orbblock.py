@@ -344,135 +344,31 @@ print(f"{len(steps_all)} unit steps of the tower in {n_orb} zeta_6-orbits",
 # only then look for an arrangement of them that closes.  If they cannot, no
 # chain over this field ever blocks and the field has to change; if they can,
 # a blocking subset is the target the closing search has to hit.
-# The 450 directions of this field's 75 zeta_6-orbits block, at rank 12.  So
-# the field has the material; what is needed is a CHAIN that uses enough of
-# it, since blocking is monotone and every step of a chain is load bearing --
-# remove a rhombus and the forcing breaks.
-#
-# The move that adds orbits without touching the closing sum: replace a step w
-# by three unit steps summing to w.  Any u leaves z = w - u to be split as
-# v1 + v2, which is a hash lookup once all pairwise sums of the enumerated
-# steps are tabulated.  Each success adds up to three orbits to the direction
-# set, and the sum -- hence the closing edge, hence chi = 4 -- is untouched.
-import time
-
-t0 = time.time()
-pairsum = {}
-for i1, u in enumerate(steps_all):
-    for v in steps_all:
-        pairsum.setdefault(k_add(u, v), (u, v))
-print(f"{len(pairsum)} distinct pairwise sums tabulated "
-      f"[{time.time()-t0:.0f}s]", flush=True)
-
-
-def orbits_of(ws):
-    return {orbit[w] for w in ws}
-
-
-def dirs_of(ws):
-    raw = []
-    for w in ws:
-        v = w
-        for _ in range(6):
-            raw.append(flat(v))
-            v = k_mul(v, Z6)
-    dn2 = 1
-    for v in raw:
-        for q in v:
-            dn2 = dn2 * q.denominator // gcd(dn2, q.denominator)
-    out = set()
-    for v in raw:
-        w2 = tuple(int(q * dn2) for q in v)
-        gg2 = 0
-        for t in w2:
-            gg2 = gcd(gg2, abs(t))
-        out.add(tuple(t // gg2 for t in w2) if gg2 > 1 else w2)
-    return sorted(out)
-
-
-ws = [K_ONE, a, b]
-assert k_norm2(k_add(k_add(ws[0], ws[1]), ws[2])) == m_of(l_rat(Fr(1, 3)))
-rounds = 0
-while rounds < 40:
-    grew = False
-    for idx in range(len(ws)):
-        w = ws[idx]
-        for u in steps_all:
-            z = k_sub(w, u)
-            hit = pairsum.get(z)
-            if hit is None:
-                continue
-            new = {orbit[u], orbit[hit[0]], orbit[hit[1]]}
-            if new <= orbits_of(ws):
-                continue
-            ws = ws[:idx] + [u, hit[0], hit[1]] + ws[idx + 1:]
-            grew = True
-            break
-        if grew:
-            break
-    if not grew:
-        print("  no replacement adds a new orbit", flush=True)
-        break
-    rounds += 1
-    tot = k_add(k_add(ws[0], ws[1]), ws[2]) if len(ws) == 3 else None
-    acc = ws[0]
-    for w in ws[1:]:
-        acc = k_add(acc, w)
-    assert k_norm2(acc) == m_of(l_rat(Fr(1, 3))), "the chain stopped closing"
-    dd = dirs_of(ws)
-    phi, _ = has_homomorphism(dd, 5)
-    print(f"  round {rounds}: {len(ws)} steps, {len(orbits_of(ws))} orbits, "
-          f"{len(dd)} directions, rank {rank_of(dd)}, "
-          + ("*** BLOCKS ***" if phi is None else "coset colouring")
-          + f"  [{time.time()-t0:.0f}s]", flush=True)
-    if phi is None:
-        import pickle
-        with open("/tmp/claude-0/-home-user-darwin-50/"
-                  "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/ws.pkl",
-                  "wb") as fh:
-            pickle.dump(ws, fh)
-        uniq, E = build(ws)
-        print(f"  graph: {len(uniq)} points, {len(E)} edges "
-              f"[{time.time()-t0:.0f}s]", flush=True)
-        chi = chrom(uniq, E)
-        full = directions(uniq, E)
-        ph2, _ = has_homomorphism(full, 5)
-        print(f"  chi = {chi}, {len(full)} directions, "
-              + ("BLOCKED" if ph2 is None else "coset colouring"), flush=True)
-
-        # The honest test: strip to a 4-critical subgraph and ask again.  A
-        # chain is built so that every rhombus carries a forcing link, so the
-        # core should be the whole chain -- but that is a prediction, and the
-        # 367-point union taught that predictions about cores are worth
-        # nothing until measured.
-        def three_col(keep):
-            ix = {v: i2 for i2, v in enumerate(sorted(keep))}
-            cls = [[1 + i2 * 3 + c for c in range(3)] for i2 in range(len(ix))]
-            for x2, y2 in E:
-                if x2 in ix and y2 in ix:
-                    for c in range(3):
-                        cls.append([-(1 + ix[x2] * 3 + c),
-                                    -(1 + ix[y2] * 3 + c)])
-            with Solver(name="cd19", bootstrap_with=cls) as sv:
-                return sv.solve()
-
-        keep = set(range(len(uniq)))
-        deg = {v: 0 for v in keep}
-        for x2, y2 in E:
-            deg[x2] += 1
-            deg[y2] += 1
-        for v in sorted(keep, key=lambda u2: deg[u2]):
-            keep.discard(v)
-            if three_col(keep):
-                keep.add(v)
-        core = directions(uniq, E, keep)
-        ph3, _ = has_homomorphism(core, 5)
-        ne = sum(1 for x2, y2 in E if x2 in keep and y2 in keep)
-        print(f"  4-CRITICAL CORE: {len(keep)} points, {ne} edges, "
-              f"{len(core)} directions, rank {rank_of(core)}, "
-              + ("*** BLOCKED -- the blocking carries chromatic weight ***"
-                 if ph3 is None else "coset colouring exists"),
-              f" [{time.time()-t0:.0f}s]", flush=True)
-        break
-    if False:
-        uniq, E = build(ws)
+reps = sorted(set(orbit.values()))
+alldirs = []
+for u in steps_all:
+    alldirs.append(flat(u))
+dn = 1
+for v in alldirs:
+    for q in v:
+        dn = dn * q.denominator // gcd(dn, q.denominator)
+iv = set()
+for v in alldirs:
+    w = tuple(int(q * dn) for q in v)
+    gg = 0
+    for t in w:
+        gg = gcd(gg, abs(t))
+    iv.add(tuple(t // gg for t in w) if gg > 1 else w)
+iv = sorted(iv)
+print(f"{len(iv)} projective directions from {len(reps)} orbits, rank "
+      f"{rank_of(iv)}", flush=True)
+phi, _ = has_homomorphism(iv, 5)
+print("  all orbits together: "
+      + ("*** BLOCK ***" if phi is None else "admit a coset 5-colouring"),
+      flush=True)
+if phi is None:
+    from hn.homcol import minimum_blocking_set
+    best = minimum_blocking_set(iv, n=5)
+    print(f"  minimum blocking subset: {len(best) if best else None} "
+          f"directions -- the closing search only has to reach that many",
+          flush=True)

@@ -426,53 +426,11 @@ while rounds < 40:
           + ("*** BLOCKS ***" if phi is None else "coset colouring")
           + f"  [{time.time()-t0:.0f}s]", flush=True)
     if phi is None:
-        import pickle
-        with open("/tmp/claude-0/-home-user-darwin-50/"
-                  "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/ws.pkl",
-                  "wb") as fh:
-            pickle.dump(ws, fh)
         uniq, E = build(ws)
-        print(f"  graph: {len(uniq)} points, {len(E)} edges "
-              f"[{time.time()-t0:.0f}s]", flush=True)
         chi = chrom(uniq, E)
         full = directions(uniq, E)
         ph2, _ = has_homomorphism(full, 5)
-        print(f"  chi = {chi}, {len(full)} directions, "
+        print(f"  GRAPH: {len(uniq)} points, {len(E)} edges, chi = {chi}, "
+              f"{len(full)} directions, "
               + ("BLOCKED" if ph2 is None else "coset colouring"), flush=True)
-
-        # The honest test: strip to a 4-critical subgraph and ask again.  A
-        # chain is built so that every rhombus carries a forcing link, so the
-        # core should be the whole chain -- but that is a prediction, and the
-        # 367-point union taught that predictions about cores are worth
-        # nothing until measured.
-        def three_col(keep):
-            ix = {v: i2 for i2, v in enumerate(sorted(keep))}
-            cls = [[1 + i2 * 3 + c for c in range(3)] for i2 in range(len(ix))]
-            for x2, y2 in E:
-                if x2 in ix and y2 in ix:
-                    for c in range(3):
-                        cls.append([-(1 + ix[x2] * 3 + c),
-                                    -(1 + ix[y2] * 3 + c)])
-            with Solver(name="cd19", bootstrap_with=cls) as sv:
-                return sv.solve()
-
-        keep = set(range(len(uniq)))
-        deg = {v: 0 for v in keep}
-        for x2, y2 in E:
-            deg[x2] += 1
-            deg[y2] += 1
-        for v in sorted(keep, key=lambda u2: deg[u2]):
-            keep.discard(v)
-            if three_col(keep):
-                keep.add(v)
-        core = directions(uniq, E, keep)
-        ph3, _ = has_homomorphism(core, 5)
-        ne = sum(1 for x2, y2 in E if x2 in keep and y2 in keep)
-        print(f"  4-CRITICAL CORE: {len(keep)} points, {ne} edges, "
-              f"{len(core)} directions, rank {rank_of(core)}, "
-              + ("*** BLOCKED -- the blocking carries chromatic weight ***"
-                 if ph3 is None else "coset colouring exists"),
-              f" [{time.time()-t0:.0f}s]", flush=True)
         break
-    if False:
-        uniq, E = build(ws)

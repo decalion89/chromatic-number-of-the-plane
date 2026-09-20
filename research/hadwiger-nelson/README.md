@@ -2369,6 +2369,39 @@ the closing sum is constrained and `w_1, .., w_{k-2}` are free.
   so it searched `Q(sqrt(3V))` instead of `Q(sqrt V)` — different fields
   entirely. Caught by writing the derivation out numerically first.
 
+## Blocking that carries weight: one chain, every edge load bearing
+
+The field is chosen first. Over the degree-12 tower
+`K = Q(m, sqrt V(m), sqrt-3)` with `m` a root of `T^3 - 9T^2 + 14T + 8`, every
+prime of the real subfield above 5 has residue degree at least 3 — so the
+residue-degree theorem does not close it — and measured directly, **the 450
+directions of its 75 `zeta_6`-orbits block, at rank 12**. The material is there
+before any graph is drawn. That ordering matters: blocking is monotone in the
+direction set, so establishing that the field *can* supply a blocking set
+comes before hunting for a graph that uses one.
+
+Then the chain is grown into it. The move is to **replace a step `w` by three
+unit steps summing to `w`**: any `u` leaves `z = w - u` to be split as
+`v1 + v2`, which is a hash lookup once the pairwise sums of the enumerated
+steps are tabulated. The total sum is untouched, so `|sum w_i|^2 = 1/3`
+survives — asserted exactly at every round — so the closing edge survives and
+`chi` stays 4, while each replacement brings new orbits into the direction set.
+
+    round 22:  47 steps, 25 orbits, 150 directions, rank 12,  BLOCKS
+    graph:     141 points, 236 edges, chi = 4, 152 directions, BLOCKED
+
+### Why this one is different
+
+| construction | blocked | what carried it |
+|---|---|---|
+| 107 points, `chi = 4` | yes | **pendants** — which change no chromatic number |
+| 367 points, `chi = 4` | yes | every edge a spindle edge, but a hitting set for all 145 spindles has size **one**: a bouquet tied at a knot |
+| **141 points, `chi = 4`** | **yes** | **one chain** — no copies to discard, no pendants to strip |
+
+Every edge here is an edge of a rhombus, and every rhombus carries one link of
+the forcing that walks the origin's colour out to the far end, where the
+closing edge contradicts it.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
