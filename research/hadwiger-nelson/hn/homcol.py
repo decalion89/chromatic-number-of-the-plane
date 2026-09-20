@@ -581,3 +581,46 @@ NO_EISENSTEIN_SPINDLE_OVER_ZETA21 = {
     "field_that_works": "Q(zeta_21, sqrt-11), degree 24: zeta_6 for triangles, "
                         "zeta_7 for blocking, sqrt-11 for the spindle",
 }
+
+
+# -- the field works, and here is the first graph with both properties ---
+#
+# Q(zeta_21, sqrt-11), degree 24, built as a quadratic extension of the
+# cyclotomic field: elements a + b s with s^2 = -11, complex conjugation
+# sending zeta to its inverse and negating s. Verified in it:
+#
+#     |rho|^2 = 1 and |1 - rho|^2 = 1/3 for rho = (5 + sqrt-11)/6
+#     the Moser spindle: 7 points, 11 edges, chi = 4
+#
+# So the field carries the spindle that Q(zeta_21) provably cannot, and it
+# contains Q(zeta_7), whose denominator-29 steps block every homomorphism to
+# Z/5. Building from both gives 107 points, 111 edges, 107 edge directions:
+#
+#     coset 5-colouring: NONE       3-colourable: no       chi = 4
+#
+# The first graph here with a chromatic number above 3 AND no coset colouring.
+# Everything blocked before was 3-chromatic, and everything with a chromatic
+# number admitted a coset colouring.
+#
+# STATED FOR WHAT IT IS. The blocking comes from pendant vertices hung off a
+# single spindle point -- all 144 steps, since forty of them left a coset
+# colouring intact and the inheritance needs every direction of the Q(zeta_7)
+# submodule. By the caveat recorded above, a pendant in a blocking direction
+# blocks the graph and changes the chromatic number by nothing. So this object
+# demonstrates that the field carries both properties at once; it does not
+# demonstrate that the blocking is doing any work.
+#
+# What would: the same two properties where the blocking steps are load
+# bearing, and at five colours rather than four.
+
+FIRST_BLOCKED_AND_CHROMATIC = {
+    "field": "Q(zeta_21, sqrt-11), degree 24",
+    "spindle": {"points": 7, "edges": 11, "chi": 4},
+    "graph": {"points": 107, "edges": 111, "directions": 107},
+    "coset_colourings": 0,
+    "chi": 4,
+    "honest": "the blocking is carried by pendant vertices, which change no "
+              "chromatic number; the object shows the field works, not that "
+              "the blocking is load bearing",
+    "needed_forty_vs": 144,
+}

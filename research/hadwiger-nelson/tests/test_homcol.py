@@ -398,3 +398,12 @@ def test_no_eisenstein_spindle_over_zeta21():
             and isqrt((12 * m - 1) // d) ** 2 == (12 * m - 1) // d]
     assert len(hits) == N["solutions"] == 0
     assert 12 * 1 - 1 == 11, "the classical case is sqrt(-11)"
+
+
+def test_the_degree_24_field_carries_both_properties():
+    from hn.homcol import FIRST_BLOCKED_AND_CHROMATIC as B
+
+    assert B["spindle"] == {"points": 7, "edges": 11, "chi": 4}
+    assert B["coset_colourings"] == 0 and B["chi"] == 4
+    assert "pendant" in B["honest"], "the blocking is not load bearing"
+    assert B["needed_forty_vs"] == 144, "forty steps left a coset colouring"
