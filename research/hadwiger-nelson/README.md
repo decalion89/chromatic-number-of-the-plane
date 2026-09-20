@@ -2662,6 +2662,16 @@ Four SAT calls, no Cayley chromatic numbers. Measured:
 So the necklace's gap is **not forced** — the field has the material, and a
 longer necklace can reach it. That is what the growth now targets.
 
+And the target is cheap. Running the CEGAR cover over all four moduli at once
+— hold a set of orbits, ask `has_homomorphism` at each `n` for a `phi` it
+misses, add the orbit killing the most escapes collected so far — the loop
+closes at
+
+    26 orbits, 156 directions, blocking at 2, 3, 4 and 5
+
+against the 25 that `n = 5` alone needed. The four conditions together cost
+almost nothing over the one.
+
 ## A field with de Grey's spindle *and* the arithmetic a sixth colour needs
 
 A distance `d` spindles iff `K` holds a rotation with `|1 - rho|^2 = 1/d^2`.

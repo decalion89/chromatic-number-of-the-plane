@@ -1913,6 +1913,13 @@ BLOCK_AT_EVERY_MODULUS_TO_FIVE = {
                  "denominator_29": "blocks at 2, 3, 4, 5",
                  "field_orbits": "blocks at 2, 3, 4, 5"},
     "reading": "the necklace's gap is not forced; the field has the material",
+    "orbit_cover": {"orbits": 26, "directions": 156,
+                    "note": "CEGAR over all four moduli at once: hold a set "
+                            "of orbits, ask has_homomorphism at each n for a "
+                            "phi it misses, add the orbit killing the most "
+                            "escapes collected so far"},
+    "cheap": "26 orbits against the 25 that n = 5 alone needed, so the four "
+             "conditions together cost almost nothing over the one",
 }
 
 
