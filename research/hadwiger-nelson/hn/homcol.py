@@ -3342,6 +3342,21 @@ Y_DOES_NOT_SHRINK_AT_ALL = {
                "out.  What survives is that it is nearly so: 61 of 61 "
                "sampled, and only one exception found in the first 630 of a "
                "full sweep",
+    "FINAL": "the sweep finished.  Of all 789 non-pair vertices, exactly TWO "
+             "are slack -- 630 and 633, both of degree 4 -- and none is "
+             "isolated.  So Y is not vertex-critical, but it misses by two: "
+             "787 of its 789 vertices are individually indispensable to the "
+             "forcing, and each of those 787 deletions was confirmed with no "
+             "budget.",
+    "slack_vertices": [630, 633],
+    "essential_vertices": 787,
+    "isolated": 0,
+    "cost": "5142 seconds for the full sweep",
+    "what_it_means": "there is no cheap reduction of Y.  Whatever makes the "
+                     "pair forced is spread over essentially the whole graph, "
+                     "which is why no local argument found it and why the "
+                     "unions here, which are far larger but far looser, force "
+                     "nothing.",
 }
 
 
@@ -3670,4 +3685,84 @@ CROSS_EDGES_PREDICT_THE_FORCING = {
                      "zero cross is flat, and the best union so far (1528 "
                      "cross, dearest 17555) sits near the TOP of Y's unforced "
                      "band of 157 to 35365 rather than at its bottom",
+}
+
+
+# The census re-ranks the translates, and the sampled order was wrong.
+#
+# The histogram that proposed the 399 translates counted cross edges from a
+# sample of G's points -- every 150th, for want of memory: the exact histogram
+# reached two gigabytes in two minutes.  The sample is a good enough filter to
+# find candidates but a bad ranking of them.  Counting exactly, in full, over
+# all 399, puts a different set on top, and eight of them tie.
+CENSUS_REORDERS_THE_TRANSLATES = {
+    "sampled_top_four": [451, 445, 439, 435],
+    "what_they_are_exactly": [1442, 1440, 1442, 1444],
+    "census_top": [1552] * 8 + [1540] * 8 + [1534] * 4,
+    "the_leader": "translate 157 of the sampled list: 1552 cross edges, 112 "
+                  "points shared with G, 3050 points in the union",
+    "why_it_matters": "the one the sample ranked fifth gives 1528 exactly and "
+                      "cost 17555 conflicts on its dearest pair, against "
+                      "about 3000 for the four above it.  The sample was "
+                      "ordering by noise.",
+    "cost": "485 seconds for all 399, counting only cross edges -- each "
+            "copy's own 7877 edges are known and never recomputed",
+}
+
+
+# Sampling filters the pairs; SAT only decides the survivors.
+#
+# Separating all 44000 candidate pairs of a union by SAT costs the solver
+# about 700000 conflicts and twenty minutes.  Over the census that is a week.
+# But a pair is forced only if it agrees in EVERY proper 5-colouring, so one
+# colouring in which it differs refutes it outright -- and a random colouring
+# refutes about four fifths of them.  The survivor set collapses geometrically
+# and is empty after a dozen samples.
+#
+# The filter is sound in the only direction that matters.  A pair separated by
+# a sampled colouring is definitively not forced, and the colouring is the
+# witness.  Sampling can never hide a forced pair; it can only decline to
+# confirm one, and the SAT check on the survivors does the confirming.  So
+# "0 survive" is a complete, witnessed negative -- strictly stronger than the
+# budgeted scan it replaces, which could only report "not found within
+# 200000 conflicts".
+SAMPLING_FILTERS_THE_PAIRS = {
+    "old_cost_per_union": "about 700000 conflicts, roughly twenty minutes",
+    "new_cost_per_union": "17 seconds, of which most is building the union",
+    "collapse": "44414 pairs to 0 in 12 sampled colourings",
+    "soundness": "one-sided and in the safe direction: a separation is "
+                 "witnessed by an explicit colouring, so no forced pair can "
+                 "be filtered away",
+    "verdict_strength": "'0 survive' proves no forced pair at five colours in "
+                        "that union; the budgeted scan could only say 'none "
+                        "found within the budget'",
+    "diversity": "eight random vertices assumed into random colours, retried "
+                 "on UNSAT.  Phase saving otherwise returns the same "
+                 "colouring every time, and identical samples filter nothing.",
+    "what_it_buys": "the whole census in two hours instead of a week",
+}
+
+
+# The conflict metric does not compare across sizes.
+#
+# Depth 3 of the translate stack has a pair costing 156283 conflicts to
+# separate -- 42 times depth 1, and four times the top of Y's unforced band.
+# That does not mean it is closer to forcing than Y ever was.  Conflict counts
+# grow with the graph, and depth 3 has seven times Y's vertices.  The only
+# comparison the metric supports is at FIXED size: G against two disjoint
+# copies of G (6410 against 13301), or one translate against another.  Across
+# sizes it says nothing, and reading it that way was the error that produced
+# the refuted law.
+THE_CONFLICT_METRIC_NEEDS_A_FIXED_SIZE = {
+    "depth_1": {"points": 3026, "cross": 1442, "dearest": 3689},
+    "depth_3": {"points": 5866, "cross": 4306, "dearest": 156283,
+                "forced": 0, "sampled": 400},
+    "depth_4": {"points": 7316, "cross": 5747, "five_colourable": True},
+    "Y": {"points": 791, "unforced_band": [157, 35365]},
+    "the_error": "comparing 156283 against Y's 35365 reads a size effect as "
+                 "progress",
+    "what_is_valid": "the control: two disjoint copies of G, same size, same "
+                     "edge count, zero cross edges, 13301 conflicts against "
+                     "the union's far larger figure.  Fixed size, so the "
+                     "difference is the crossing and nothing else.",
 }

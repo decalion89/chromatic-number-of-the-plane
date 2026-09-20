@@ -1701,3 +1701,95 @@ def test_two_disjoint_copies_of_G_cost_exactly_twice_as_much():
         # a pair in one copy and a pair spanning both both come apart at once
         assert sv.solve(assumptions=[1, -(1 + 5 * 5)])
         assert sv.solve(assumptions=[1, -(1 + n0 * 5)])
+
+
+def test_sampling_never_hides_a_forced_pair():
+    """The filter's soundness, on a case where the answer is known.
+
+    A rhombus -- two unit triangles sharing an edge -- forces its two apexes
+    to the same colour in every proper 3-colouring: the shared edge takes two
+    of the three colours, and each apex is adjacent to both of its ends, so
+    each is driven to the third.  Sample as many 3-colourings as you like and
+    the apex pair agrees in all of them, because there is no colouring where
+    it does not.
+
+    That is the whole argument for filtering by sampling.  A colouring that
+    separates a pair is a proof the pair is not forced; the absence of such a
+    colouring among the samples is not a proof of anything, which is why the
+    survivors go to SAT.  The direction that could go wrong -- a forced pair
+    quietly filtered out -- cannot happen at all.
+    """
+    import random
+    from pysat.solvers import Solver
+
+    # Two triangles on the edge (0,1): apexes 2 and 3.
+    edges = [(0, 1), (0, 2), (1, 2), (0, 3), (1, 3)]
+    n, k = 4, 3
+    cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
+    for a, b in edges:
+        for c in range(k):
+            cls.append([-(1 + a * k + c), -(1 + b * k + c)])
+    sv = Solver(name="cd19", bootstrap_with=cls)
+    assert sv.solve()
+
+    rng = random.Random(4242)
+    agreed_apex, separated_other = 0, False
+    for _ in range(200):
+        v = rng.randrange(n)
+        sv.solve(assumptions=[1 + v * k + rng.randrange(k)]) or sv.solve()
+        m = sv.get_model()
+        col = [next(c for c in range(k) if m[w * k + c] > 0) for w in range(n)]
+        assert col[2] == col[3]          # the forced pair, every single time
+        agreed_apex += 1
+        if col[0] != col[2]:
+            separated_other = True       # an unforced pair does separate
+    sv.delete()
+
+    assert agreed_apex == 200
+    assert separated_other, "sampling must be able to separate a free pair"
+
+
+def test_the_decay_curve_has_a_floor_exactly_when_something_forces():
+    """Why the survivor curve is the right metric, and conflicts are not.
+
+    Sampling drives the surviving-pair count down geometrically -- each
+    colouring kills the pairs it separates -- but it can never drive a forced
+    pair out.  So the curve of a graph that forces has a floor at least as
+    high as the number of forced pairs, and the curve of a graph that does not
+    reaches zero.  Zero is a complete, witnessed negative.
+
+    Conflict counts have no such meaning: they grow with the graph, so the
+    156283 conflicts of the depth-3 stack and the 35365 of Y are not on the
+    same scale and comparing them was an error.  Survivor counts are pairs.
+    """
+    import random
+    from pysat.solvers import Solver
+
+    def curve(n, edges, k, pairs, samples=40, seed=99):
+        cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
+        for a, b in edges:
+            for c in range(k):
+                cls.append([-(1 + a * k + c), -(1 + b * k + c)])
+            # (edges only)
+        sv = Solver(name="cd19", bootstrap_with=cls)
+        assert sv.solve()
+        rng, surv = random.Random(seed), list(pairs)
+        for _ in range(samples):
+            v = rng.randrange(n)
+            sv.solve(assumptions=[1 + v * k + rng.randrange(k)]) or sv.solve()
+            m = sv.get_model()
+            col = [next(c for c in range(k) if m[w * k + c] > 0)
+                   for w in range(n)]
+            surv = [(i, j) for i, j in surv if col[i] == col[j]]
+        sv.delete()
+        return surv
+
+    rhombus = [(0, 1), (0, 2), (1, 2), (0, 3), (1, 3)]
+    allpairs = [(i, j) for i in range(4) for j in range(i + 1, 4)]
+
+    floor = curve(4, rhombus, 3, allpairs)
+    assert floor == [(2, 3)], floor          # the forced pair, and only it
+
+    # Delete one triangle and the forcing goes with it: the curve bottoms out.
+    path = [(0, 1), (0, 2), (1, 2), (0, 3)]
+    assert curve(4, path, 3, allpairs) == []
