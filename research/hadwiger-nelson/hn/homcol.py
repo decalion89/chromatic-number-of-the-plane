@@ -4639,3 +4639,53 @@ THE_FIFTH_COLOUR_DECOUPLES_THE_SAME_GRAPH = {
                "from independent at five.  The fifth colour is enough slack "
                "to decouple them.",
 }
+
+
+# The ladder: correlation at a graph's own chromatic number, as chi rises.
+#
+# One method, twenty-four samples, three graphs, measured at their own
+# chromatic number and above it:
+#
+#                          k=3      k=4    k=5    k=6
+#     triangular lattice  11014.3    2.2    0.9     --
+#     Sa                      --    16.8    1.4    1.1
+#     G                       --      --    1.1    1.0
+#
+# At k = chi the ratio collapses as chi rises: eleven thousand at three
+# colours, seventeen at four, one at five.  One colour above chi it is always
+# about one -- 2.2, 1.4, 1.0 -- so the slack of a single spare colour already
+# decouples everything, at every level.
+#
+# The lattice validates the instrument on the way past.  Its proper
+# 3-colouring is unique up to permuting the colours, so every pair in
+# different classes differs in every colouring there is, and the fraction of
+# such pairs among three classes of 133 is 1 - 3*C(133,2)/C(400,2) = 66%.
+# Measured: 52212 of 78679 non-edge pairs, which is 66%.  The measurement
+# recognises the uniqueness by itself, with nothing told to it.
+#
+# So the difficulty of chi(R^2) >= 6 is not a matter of finding the right
+# graph.  The plane's unit-distance graphs stop constraining their own
+# colourings somewhere between four colours and five, and by five there is
+# nothing left to constrain with.  Every negative in this file is a corollary.
+THE_LADDER_OF_COLOUR_COUNTS = {
+    "method": "one measurement, 24 samples, ratio of observed to "
+              "((k-1)/k)^24 * pairs",
+    "table": {
+        "triangular lattice (chi=3)": {3: 11014.3, 4: 2.2, 5: 0.9},
+        "Sa (chi=4)": {4: 16.8, 5: 1.4, 6: 1.1},
+        "G (chi=5)": {5: 1.1, 6: 1.0},
+    },
+    "at_own_chromatic_number": "11014 -> 17 -> 1.1 as chi goes 3 -> 4 -> 5",
+    "one_above": "always about one: 2.2, 1.4, 1.0",
+    "instrument_check": "the lattice's 3-colouring is unique up to "
+                        "permutation, so 1 - 3*C(133,2)/C(400,2) = 66% of "
+                        "non-edge pairs must differ always; measured 52212 of "
+                        "78679, which is 66%",
+    "seed_sensitivity": "Sa at four gives 16.8 here and 19.6 under a "
+                        "different seed -- the order of magnitude is the "
+                        "reading, not the digit",
+    "reading": "the plane's unit-distance graphs stop constraining their own "
+               "colourings between four colours and five.  chi >= 6 is not "
+               "hard for want of the right graph; every negative recorded "
+               "here is a corollary of this table.",
+}

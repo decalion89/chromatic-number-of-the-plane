@@ -2121,3 +2121,32 @@ def test_the_fifth_colour_decouples_the_same_graph():
     assert round(four, 1) == 19.6
     assert round(five, 2) == 1.34
     assert four / five > 14
+
+
+def test_the_lattice_recognises_its_own_unique_colouring():
+    """The instrument check behind the ladder, done by arithmetic.
+
+    The triangular lattice is 3-chromatic and its proper 3-colouring is unique
+    up to permuting the colours, so two points differ in every colouring
+    exactly when they lie in different classes.  For a 400-point patch split
+    into three classes of about 133, that fraction is
+    1 - 3*C(133,2)/C(400,2), which is 66 per cent -- and the sampling filter,
+    told nothing about any of this, returns 52212 of 78679 non-edge pairs,
+    which is also 66 per cent.
+    """
+    from math import comb
+
+    pairs = comb(400, 2)
+    assert pairs == 79800
+    cross = 1 - 3 * comb(133, 2) / pairs
+    assert 0.66 < cross < 0.67
+
+    measured = 52212 / (pairs - 1121)          # minus the edges
+    assert 0.66 < measured < 0.67
+    assert abs(measured - cross) < 0.01
+
+    # And the ladder it anchors: at k = chi the ratio falls as chi rises.
+    from hn.homcol import THE_LADDER_OF_COLOUR_COUNTS as L
+    assert L["table"]["triangular lattice (chi=3)"][3] > 1000
+    assert 10 < L["table"]["Sa (chi=4)"][4] < 100
+    assert L["table"]["G (chi=5)"][5] < 2

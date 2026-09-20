@@ -3746,6 +3746,37 @@ has colourings indistinguishable from independent at five.** The fifth colour
 is enough slack to decouple them, and a rotation of a decoupled graph has
 nothing to combine.
 
+## The ladder, and why six is hard
+
+One measurement, twenty-four samples, three graphs, each at its own chromatic
+number and above it:
+
+| | `k=3` | `k=4` | `k=5` | `k=6` |
+|---|---|---|---|---|
+| triangular lattice (`χ=3`) | **11 014×** | 2.2 | 0.9 | — |
+| `Sa` (`χ=4`) | — | **16.8×** | 1.4 | 1.1 |
+| `G` (`χ=5`) | — | — | **1.1×** | 1.0 |
+
+At `k = χ` the correlation collapses as `χ` rises: **eleven thousand at three
+colours, seventeen at four, one at five.** One colour above `χ` it is always
+about one — 2.2, 1.4, 1.0 — so a single spare colour already decouples
+everything, at every level.
+
+The lattice validates the instrument on the way past. Its proper 3-colouring
+is unique up to permuting the colours, so two points differ in every colouring
+exactly when they lie in different classes, and for three classes of ~133 that
+is `1 - 3·C(133,2)/C(400,2) = 66%`. Measured: 52 212 of 78 679 non-edge pairs.
+Also 66%. The filter recognises the uniqueness with nothing told to it.
+
+> So the difficulty of `χ(ℝ²) ≥ 6` is not a matter of finding the right graph.
+> The plane's unit-distance graphs **stop constraining their own colourings
+> somewhere between four colours and five**, and by five there is nothing left
+> to constrain with. Every negative recorded in this work is a corollary of
+> that table.
+
+(`Sa` at four reads 16.8 here and 19.6 under a different seed; the order of
+magnitude is the reading, not the digit.)
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
