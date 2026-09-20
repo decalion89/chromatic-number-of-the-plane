@@ -4228,3 +4228,53 @@ A_ROTATION_MUST_ALSO_BITE = {
                 "shared points as the richest of the three unions.  It is the "
                 "poorest.",
 }
+
+
+# Forty-four biting rotations, and not one pinned pair.  The diagnosis is
+# criticality.
+#
+# Every vertex of G is a pivot, and about each one the closable rings give a
+# rotation whose ring points land at distance 1 from their images: 12199
+# (pivot, ring) candidates in all, of which 44 distinct rings actually produce
+# cross edges.  Taking the best three unions per ring -- breadth across
+# rotations rather than sixty repeats of the one that ranks highest -- gives
+# exact cross counts up to 812 on unions of about 3100 points.
+#
+# In every single one, ZERO pairs agree across fourteen sampled colourings.
+# Not few: none.  Against Sa u rho(Sa), where six cross edges pin
+# seventy-five.
+#
+# What separates them is not size, symmetry, field, or crossing.  It is that
+# Y is nearly 4-critical -- 787 of its 789 non-pair vertices are individually
+# indispensable -- so its 4-colourings are scarce and six edges are enough to
+# pin pairs.  G is 5-chromatic on 1581 vertices where about five hundred are
+# known to suffice, so it is redundant threefold, its 5-colourings are
+# plentiful, and nothing is pinned however hard it is rotated.
+#
+# So a core must be made critical BEFORE it is rotated, and an unsatisfiable
+# core extracts that in one solve rather than 1581: gate each vertex behind a
+# selector, so that declining to assert it lets the vertex go uncoloured --
+# deletion, since the edge clauses stay satisfied by an uncoloured endpoint --
+# and the proof names a subset of selectors that already suffices.
+CRITICALITY_IS_WHAT_IS_MISSING = {
+    "space_searched": {"pivot_ring_candidates": 12199,
+                       "distinct_rings_that_bite": 44,
+                       "unions_filtered": 123,
+                       "best_exact_cross": 812,
+                       "union_size": "about 3100 points"},
+    "agreeing_pairs_found": 0,
+    "for_contrast": {"Sa u rho(Sa)": {"cross": 6, "agreeing": 75}},
+    "diagnosis": "Y is nearly 4-critical and its colourings are scarce; G is "
+                 "5-chromatic on 1581 vertices where 500 suffice, so its "
+                 "colourings are plentiful and nothing pins",
+    "the_tool": "an unsatisfiable core over per-vertex selectors, which "
+                "reduces in one solve what vertex-by-vertex deletion would "
+                "take 1581 to do",
+    "a_caveat_on_the_ranking": "scoring cross edges in floating point "
+                               "overcounts, because it cannot tell an edge "
+                               "between two images that landed on shared "
+                               "points from a genuine cross edge.  D = 1/3 "
+                               "scored 1460 and counts 652 exactly.  It is a "
+                               "usable ranking and not a figure; every union "
+                               "that reaches the filter is rebuilt exactly.",
+}
