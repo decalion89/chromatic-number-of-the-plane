@@ -4689,3 +4689,46 @@ THE_LADDER_OF_COLOUR_COUNTS = {
                "hard for want of the right graph; every negative recorded "
                "here is a corollary of this table.",
 }
+
+
+# Counting the colourings, which is not the same as measuring correlation.
+#
+# The ratio is an indirect reading, so the colourings were counted directly:
+# sample, rename each one's colours by order of first appearance so that
+# permutations collapse, and count the distinct results.
+#
+#     triangular lattice at 3    1 distinct of 24   400 of 400 vertices pinned
+#     triangular lattice at 4   24 distinct of 24
+#     triangular lattice at 5   24 distinct of 24
+#     Sa at 4                   24 distinct of 24
+#     Sa at 5                   24 distinct of 24
+#     Y  at 4                   24 distinct of 24
+#     Y  at 5                   24 distinct of 24
+#     G  at 5                   24 distinct of 24
+#
+# The lattice at three colours is confirmed unique, every vertex pinned, which
+# is where its ratio of eleven thousand comes from.  Everything else returns a
+# different colouring every time.
+#
+# So the two quantities are not the same thing, and Sa at four colours is the
+# case that separates them: 24 distinct colourings out of 24 -- a space far
+# larger than the sample -- and a correlation ratio of 16.8 all the same.  Its
+# colourings are plentiful AND correlated.  At five colours they stay
+# plentiful and stop being correlated.
+#
+# That matters for what the ladder means.  The collapse from four colours to
+# five is not the colouring space growing; it is already far too large to
+# count at four.  It is the space losing its internal structure.
+COUNTING_IS_NOT_CORRELATION = {
+    "method": "canonicalise each sample by first-appearance renaming, count "
+              "distinct",
+    "unique_case": {"triangular lattice at 3": "1 of 24, all 400 pinned"},
+    "everything_else": "24 distinct of 24, at four colours and at five",
+    "the_separating_case": "Sa at four -- 24 distinct colourings and a ratio "
+                           "of 16.8.  Plentiful and correlated at once.",
+    "what_the_ladder_measures": "not the size of the colouring space, which "
+                                "is already uncountable at four colours, but "
+                                "whether that space has internal structure.  "
+                                "The fifth colour removes the structure, not "
+                                "the space.",
+}
