@@ -4475,3 +4475,48 @@ THE_SIZE_HYPOTHESIS_IS_FLAT = {
     "still_open": "G* at 13873 points is twenty-eight times the minimum, the "
                   "only point available inside the gap, and is being measured",
 }
+
+
+# No rainbows anywhere, at either level.
+#
+# hn/forced.py identifies the gadget chi >= 6 would need: a 5-rainbow, five
+# points pairwise forced onto different colours.  The plane's clique number is
+# 3, so it cannot be made of edges -- some of its pairs must be forced apart
+# at distances other than 1 -- and the module's own search asks the solver
+# about each pair, which is why it has only run small.
+#
+# Sampling makes the first step cheap.  A vertex can complete a triangle only
+# if it avoids all three of the triangle's colours in EVERY sampled colouring,
+# which is one numpy reduction per triangle, and twenty-four samples leave a
+# free vertex with probability (2/5)^24.  Then the survivors go to the solver.
+#
+#     graph        k   triangles   with a candidate   best   verified
+#     Sa           4         714                  2      1   (sampling only)
+#     Y            4        1420                 64      2   (sampling only)
+#     G            5        2840                  4      1   0 and 0
+#     Y            5        1420                  2      1   0 and 0
+#     G*           5       26928                 14      1   0 and 0
+#
+# Not one 4-rainbow exists, let alone a 5-rainbow -- and not at four colours
+# either, in de Grey's own core.  So the rainbow is not how his forcing works,
+# and it is not waiting to be found one level up.  The finding agrees with the
+# relation measurement exactly: a 4-rainbow needs three pairs forced apart at
+# non-unit distances, and there are no such pairs at all.
+NO_RAINBOWS_AT_EITHER_LEVEL = {
+    "what_a_5_rainbow_is": "five points pairwise forced onto different "
+                           "colours; hn/forced.py names it as what chi >= 6 "
+                           "needs",
+    "why_it_cannot_be_edges": "the plane's clique number is 3",
+    "measured": {"Sa at 4": {"triangles": 714, "with_candidate": 2},
+                 "Y at 4": {"triangles": 1420, "with_candidate": 64},
+                 "G at 5": {"triangles": 2840, "with_candidate": 4,
+                            "verified": 0},
+                 "Y at 5": {"triangles": 1420, "with_candidate": 2,
+                            "verified": 0},
+                 "G* at 5": {"triangles": 26928, "with_candidate": 14,
+                             "verified": 0}},
+    "verdict": "not one 4-rainbow, let alone a 5-rainbow, at either level",
+    "consistency": "a 4-rainbow needs three pairs forced apart at non-unit "
+                   "distances, and the relation measurement says there are "
+                   "none of those at all",
+}
