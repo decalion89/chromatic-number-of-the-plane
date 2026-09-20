@@ -3418,6 +3418,65 @@ Rotating `Sb` by 60° gives `Sb` back, because `Sa` is 60°-invariant and `Sb`
 is a rotation of `Sa`; so the whole dihedral orbit of `Y` is
 `Sa ∪ Sb ∪ Sb'`, with `Sb'` the mirror rotation, and 397 + 396 + 396 = 1189.
 
+## The ring has to pay twice
+
+Turning a symmetric core about its own centre is the step from `Sa` to `Y`,
+and the ring it turns on is spent twice over.
+
+Once on the rotation itself. To make a ring of squared radius `D` produce
+cross edges, the turn has to carry each of its points to distance exactly 1
+from where it started, which means `cos t = 1 - 1/(2D)` and
+`sin t = √(4D-1)/(2D)`. The field has to contain `√(4D-1)`.
+
+Once on the spindle afterwards. The pair the construction is aiming at is the
+*antipodal* pair on that ring, which sits at squared distance `4D`, and
+forcing it is worth nothing unless it can then be spindled — which needs
+`√(16D-1)`.
+
+Asking for both at once is a savage filter, and the reason to trust it is that
+it retrodicts de Grey's own choice. `Sa` has five rational closable rings —
+1, 1/3, 5/9, 4 and 3. `D = 1` is the 60° turn and fixes `Sa`, so it is
+degenerate. Of the rest **exactly one** passes both tests, and it is `D = 4`,
+the ring de Grey used, whose antipodal pair `(2,0)`, `(-2,0)` is precisely the
+pair `Y` forces.
+
+It is not the populous ring. `D = 1` carries 30 of `Sa`'s 397 points and
+`D = 4` carries six. Ranking rings by population — the obvious heuristic, and
+the one tried here first — picks the wrong one. Population is not the
+property; being spendable twice is.
+
+Applied to `G*`, which is 5-chromatic and exactly dihedral and so plays `Sa`'s
+role one level up: of 572 rings, twelve are rational and closable, and two pay
+both costs — `D = 4` again, and `D = 17/2`, which `Sa` has no analogue of
+(`ρ` by `√33`, spindle by `√135 = 3√15`). `D = 16`, where de Grey's own
+doubling chain stopped for want of `√17`, still does not qualify.
+
+So the five-colour step has two candidates rather than a search space, and the
+pairs worth interrogating are the ones on the ring — a few dozen, not the 360
+million of a 27 000-point union. Along the way, `rotation_joining(4)` turns
+out to be exactly de Grey's rotation, `cos 7/8` and `sin √15/8`, and it
+carries `Sa` onto `Sb`, all 397 points of it.
+
+## Forcing is monotone, and that cuts both ways
+
+A pair forced in `H` is forced in every graph containing `H`: each proper
+colouring of the larger restricts to one of the smaller, so a pair that agrees
+in all colourings of `H` agrees in all colourings of anything built on it.
+Growth can create forcing; it can never destroy it.
+
+That answers a question for free. The dihedral closure `Y*` contains `Y`, so
+it forces `Y`'s pair, and since `Y*` is invariant under the 12-element group
+which carries `(2,0)`, `(-2,0)` to the antipodal pairs of the ring of squared
+radius 4, all six of those are forced. A sampling-and-SAT sweep of `Y*` had
+spent twenty-five minutes on the first of them before it was stopped.
+
+The other direction stings more. A union that forces nothing has *no subgraph
+that forces anything* — so every negative recorded here is a negative about
+everything inside it, which is a large claim cheaply bought, and it means a
+search that only ever grows its graphs is spending its budget in the wrong
+place. `G*` has 13 873 points and forces nothing; `Y` has 791 and forces a
+pair. Size is not the variable.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

@@ -68,10 +68,18 @@ def probe(name, core, pivot, D, k):
                 if pa.x + pb.x == pivot.x + pivot.x and \
                    pa.y + pb.y == pivot.y + pivot.y:
                     anti.append((i, j))
-        for i, j in [(ring[a], ring[b]) for a in range(len(ring))
-                     for b in range(a + 1, len(ring))]:
+        # Antipodal pairs only.  Proving one pair forced costs six seconds
+        # on an 800-point graph at four colours and far more at five, so the
+        # 66 pairs of a 12-point ring are already eleven minutes and the 2500
+        # of G*'s are unaffordable.  The criterion does not ask for them: the
+        # pair it aims at is the antipodal one, which is what de Grey forces.
+        for nth, (i, j) in enumerate(anti):
+            t1 = time.time()
             if not sv.solve(assumptions=[1 + i * k, -(1 + j * k)]):
                 hits.append((i, j))
+            print(f"      antipodal {nth+1}/{len(anti)}: "
+                  f"{'FORCED' if (i, j) in hits else 'free'} "
+                  f"[{time.time()-t1:.0f}s]", flush=True)
         sv.delete()
         star = " *** FORCED ***" if hits else ""
         print(f"  {name} D={D} {tag}: {n} points, {len(E)} edges, "

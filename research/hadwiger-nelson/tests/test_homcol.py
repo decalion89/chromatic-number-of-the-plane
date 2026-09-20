@@ -1894,3 +1894,41 @@ def test_the_five_colour_core_has_a_ring_the_four_colour_one_lacks():
              Fraction(3, 2), Fraction(16)]
     assert [D for D in gstar if doubly_usable_ring(D)] == [Fraction(4),
                                                            Fraction(17, 2)]
+
+
+def test_forcing_is_monotone_under_adding_vertices():
+    """A forced pair stays forced in every supergraph, and it is free to know.
+
+    Every proper colouring of the larger graph restricts to a proper colouring
+    of the smaller, so a pair that agrees in all colourings of the smaller
+    agrees in all colourings of the larger.  Growth can create forcing; it can
+    never destroy it.
+
+    The rhombus forces its apexes at three colours.  Hang anything else off it
+    and they stay forced -- here a pendant path, which adds colourings in
+    quantity without touching the two triangles.
+    """
+    from pysat.solvers import Solver
+
+    def forced(n, edges, k, i, j):
+        cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
+        for a, b in edges:
+            for c in range(k):
+                cls.append([-(1 + a * k + c), -(1 + b * k + c)])
+        sv = Solver(name="cd19", bootstrap_with=cls)
+        assert sv.solve(), "the graph must be colourable at all"
+        out = not sv.solve(assumptions=[1 + i * k, -(1 + j * k)])
+        sv.delete()
+        return out
+
+    rhombus = [(0, 1), (0, 2), (1, 2), (0, 3), (1, 3)]
+    assert forced(4, rhombus, 3, 2, 3)
+
+    bigger = rhombus + [(3, 4), (4, 5), (5, 6), (6, 2)]
+    assert forced(7, bigger, 3, 2, 3)
+
+    # And the contrapositive: no forced pair means no forcing subgraph.
+    # Deleting a triangle unforces the apexes, so nothing containing the
+    # result can rely on them -- the pair is free in the smaller graph too.
+    path = [(0, 1), (0, 2), (1, 2), (0, 3)]
+    assert not forced(4, path, 3, 2, 3)

@@ -3907,3 +3907,37 @@ THE_RING_MUST_PAY_TWICE = {
                     "to interrogate are the ones on the ring -- a few dozen, "
                     "not the 360 million pairs of a 27000-point union",
 }
+
+
+# Forcing is monotone, which settles a question without computing it.
+#
+# If a pair is forced in H, it is forced in every graph containing H: each
+# proper colouring of the larger graph restricts to a proper colouring of H,
+# and the pair agrees in all of those.  Adding vertices and edges can create
+# forcing, never destroy it.
+#
+# So the dihedral closure of Y forces the pair Y forces, for nothing.  And Y*
+# is invariant under the 12-element group, which carries (2,0) and (-2,0) to
+# the antipodal pairs of the ring of squared radius 4 -- six of them, each hit
+# twice -- so all six are forced.  A sampling-and-SAT sweep of Y* spent
+# twenty-five minutes establishing the first of these before it was stopped.
+#
+# The other direction of the same fact is the one that stings: a union that
+# forces nothing has no subgraph that forces anything.  Every negative here is
+# therefore a negative about every graph inside it, which is a large claim
+# cheaply bought -- and it means a search that only ever grows its graphs is
+# spending its budget in the wrong place.  Growth cannot unforce, but it also
+# cannot be undone; what makes forcing appear is the arrangement, not the size.
+FORCING_IS_MONOTONE = {
+    "statement": "a pair forced in H is forced in every supergraph of H",
+    "why": "every proper colouring of the supergraph restricts to one of H",
+    "corollary_up": "Y* forces the pair Y forces, and by its dihedral symmetry "
+                    "all six antipodal pairs of the ring D = 4",
+    "corollary_down": "a graph with no forced pair contains no subgraph with "
+                      "one, so each negative here covers everything inside it",
+    "cost_saved": "a sweep of Y* was twenty-five minutes into proving the "
+                  "first of these when it was stopped",
+    "what_it_does_not_give": "any hint of where forcing comes from.  Size is "
+                             "not the variable -- G* has 13873 points and "
+                             "forces nothing, Y has 791 and forces a pair.",
+}
