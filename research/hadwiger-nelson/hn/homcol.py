@@ -5589,3 +5589,65 @@ SINGLE_DISTANCE_LATTICES_ARE_BIPARTITE = {
                    "6502 candidates put to the solver, every one free -- and "
                    "Y remains the only graph here with a forced-same pair.",
 }
+
+
+# The graded metric, and G is not at chance after all.
+#
+# Every measurement here asked whether a pair agrees in EVERY sampled
+# colouring, which is binary and throws away everything in between.  The
+# mechanism of Y says the in-between is the story: Sa alone does not force
+# (2,0), (-2,0) -- its 4-colourings split into those that separate the pair
+# and those that do not, and six cross edges kill one class.  What matters is
+# how big that class was to start with.
+#
+# Measured as a FREQUENCY, over thirty-two samples, best non-edge pair:
+#
+#     graph             k    best agreement   chance   times chance
+#     Sa                4       27/32 = 0.84     0.25           3.36
+#     Sa u rho(Sa)      4       32/32 = 1.00     0.25           4.00
+#     Y                 4       32/32 = 1.00     0.25           4.00
+#     Sa                5       22/32 = 0.69     0.20           3.45
+#     Y                 5       20/32 = 0.62     0.20           3.10
+#     G                 5       21/32 = 0.66     0.20           3.30
+#
+# Sa at four sits at 3.36 times chance and one rotation takes it to 4.00,
+# which is the ceiling.  G at five sits at 3.30 -- the same relative position,
+# before any rotation.
+#
+# That corrects the reading, not the data.  The binary metric reported G at
+# 1.1 times chance and called it independence, because a pair agreeing 66 per
+# cent of the time essentially never agrees thirty-two times running, so it
+# vanishes from a count of pairs that always agree.  The graded metric sees
+# it, and sees that G has 104 non-edge pairs agreeing in at least seventeen of
+# thirty-two, thirty-nine of them at nineteen or more.
+#
+# What it does NOT say is that a rotation exists to finish the job.  Of G's
+# top sixty pairs exactly one sits on a rational closable ring about its own
+# midpoint -- the symmetric choice, and de Grey's -- and that ring is D = 1,
+# whose rotation lowers the agreement from 18/32 to 12/32.
+THE_GRADED_METRIC_PUTS_G_WHERE_SA_WAS = {
+    "why_graded": "Sa's colourings split into those separating the pair and "
+                  "those not; six edges kill one class.  The size of that "
+                  "class is the quantity, and a binary test cannot see it.",
+    "best_non_edge_pair_over_32_samples": {
+        "Sa at 4": {"agree": 27, "chance": 0.25, "times": 3.36},
+        "Sa u rho(Sa) at 4": {"agree": 32, "chance": 0.25, "times": 4.00},
+        "Y at 4": {"agree": 32, "chance": 0.25, "times": 4.00},
+        "Sa at 5": {"agree": 22, "chance": 0.20, "times": 3.45},
+        "Y at 5": {"agree": 20, "chance": 0.20, "times": 3.10},
+        "G at 5": {"agree": 21, "chance": 0.20, "times": 3.30},
+    },
+    "the_correction": "the binary metric reported G at 1.1 times chance and "
+                      "read it as independence.  A pair agreeing 66 per cent "
+                      "of the time essentially never agrees thirty-two times "
+                      "running, so it vanishes from a count of pairs that "
+                      "ALWAYS agree.  The data were right; the reading was "
+                      "measuring the wrong tail.",
+    "G_has": "104 non-edge pairs agreeing in >= 17 of 32, and 39 at >= 19",
+    "what_it_does_not_say": "that a rotation exists to finish it.  Of G's top "
+                            "sixty pairs exactly one lies on a rational "
+                            "closable ring about its own midpoint -- de "
+                            "Grey's symmetric choice -- and that ring is "
+                            "D = 1, whose rotation takes the agreement DOWN, "
+                            "18/32 to 12/32.",
+}
