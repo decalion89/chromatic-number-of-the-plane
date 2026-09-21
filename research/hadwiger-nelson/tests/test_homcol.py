@@ -3717,3 +3717,57 @@ def test_the_larger_closure_doubles_every_ring():
     assert (n6, six) == (397, [30, 24, 18, 18, 12, 6, 6, 6])
     assert (n12, twelve) == (793, [60, 48, 36, 36, 24, 12, 12, 12])
     assert all(b == 2 * a for a, b in zip(six, twelve))
+
+
+def test_the_bite_is_a_finite_elimination_on_ten_shapes():
+    """De Grey's bite, derived rather than observed.
+
+    The census gives ten surviving patterns for Sa's centre and ring at four
+    colours.  The bite fixes the centre and joins each ring point to its image
+    by an edge, so the two copies must disagree everywhere on the ring -- which
+    says exactly that the sets sharing the centre's colour are disjoint.  Six
+    of a hundred shape pairs survive that, all of them with both sets
+    antipodal pairs, and in each the remaining four ring points share the
+    second colour, so all three antipodal pairs come out monochromatic.
+    """
+    SHAPES = [
+        ((0, 1, 2, 3, 4, 5, 6),),
+        ((1, 2), (0, 3, 4, 5, 6)), ((2, 3), (0, 1, 4, 5, 6)),
+        ((0, 1, 2, 3, 4), (5, 6)), ((3, 4), (0, 1, 2, 5, 6)),
+        ((0, 1, 4), (2, 3, 5, 6)), ((0, 2, 3, 4, 5), (1, 6)),
+        ((1, 2, 4, 5), (0, 3, 6)), ((4, 5), (0, 1, 2, 3, 6)),
+        ((0, 2, 5), (1, 3, 4, 6)),
+    ]
+    ANTI = [(1, 4), (2, 5), (3, 6)]
+    assert len(SHAPES) == 10
+    # every shape uses at most two blocks and the centre is never alone
+    for sh in SHAPES:
+        assert len(sh) <= 2
+        assert all(len(b) > 1 for b in sh if 0 in b)
+
+    def a_set(shape):
+        return frozenset(x for x in next(b for b in shape if 0 in b) if x)
+
+    kinds = {}
+    for sh in SHAPES:
+        A = a_set(sh)
+        if len(A) == 6:
+            kinds["all six"] = kinds.get("all six", 0) + 1
+        elif tuple(sorted(A)) in ANTI:
+            kinds["antipodal"] = kinds.get("antipodal", 0) + 1
+        else:
+            rest = tuple(sorted(set(range(1, 7)) - A))
+            assert rest[1] - rest[0] in (1, 5), rest   # adjacent on the ring
+            kinds["adjacent complement"] = kinds.get("adjacent complement",
+                                                     0) + 1
+    assert kinds == {"all six": 1, "adjacent complement": 6, "antipodal": 3}
+
+    survivors = [(a_set(sa), a_set(sb)) for sa in SHAPES for sb in SHAPES
+                 if not (a_set(sa) & a_set(sb))]
+    assert len(survivors) == 6
+    for A, B in survivors:
+        assert tuple(sorted(A)) in ANTI and tuple(sorted(B)) in ANTI
+        assert A != B
+        # and then every antipodal pair is inside one class or the other
+        for x, y in ANTI:
+            assert (x in A) == (y in A)

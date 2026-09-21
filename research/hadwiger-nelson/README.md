@@ -4798,6 +4798,44 @@ antipodal pairs is **three disjoint ladders**, bipartite at any thickness.
 > through 8 are certified and the rest are not reported.
 
 
+## The bite, derived by hand
+
+The census taken on the ring alone gives "at most two colours". Taken on the
+**centre and the ring together** it gives much more: at four colours **ten of
+715** patterns survive, the seven points take at most two colours between
+them, and the centre is **never alone**. Writing `A` for the ring points that
+share the centre's colour, the ten sort into three shapes:
+
+| shape of `A` | how many |
+|---|---|
+| all six ring points | 1 |
+| the complement of an **adjacent** ring pair | 6 |
+| an **antipodal** pair | 3 |
+
+The bite fixes the centre and adds six edges, `h_j — ρ(h_j)`. So a 4-colouring
+of `Sa ∪ ρ(Sa)` picks one pattern per copy, the two agree on the centre's
+colour, and corresponding ring points must differ — which says exactly that
+`A` and `B` are **disjoint**. That single condition does all the work:
+
+    A = all six                 ->  B empty                       impossible
+    A = complement of {j, j+1}  ->  B inside an adjacent pair      impossible
+    A = antipodal {j, j+3}      ->  B = {j+1,j+4} or {j+2,j+5}     the only case
+
+**Six of a hundred** shape pairs survive, every one of the last kind. And in
+that case the remaining four ring points all carry the second colour, so the
+other two antipodal pairs are monochromatic as well — **all three are**.
+
+That is de Grey's forced pair, and naming one of them is a convenience rather
+than a fact about the union: rotating by sixty degrees carries `Sa ∪ ρ(Sa)` to
+itself and permutes the three pairs cyclically, so no single pair can be
+singled out, and none needs to be.
+
+At five colours the same census returns **855 of 855**. There is nothing to
+eliminate, so the derivation has no input — which restates the target
+exactly: *a graph whose joint centre-and-ring census at five colours is small,
+with shapes closed under complement the way these are.*
+
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

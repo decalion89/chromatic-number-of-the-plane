@@ -6278,6 +6278,83 @@ THE_SUITE_WAS_ONE_TEST = {
 }
 
 
+# The bite, derived by hand, from one census and a finite elimination.
+#
+# The joint census of centre and ring says exactly what Sa claims at four
+# colours: TEN patterns of 715 survive, the seven points take at most two
+# colours between them, and the centre is never alone.  Sorted by shape, where
+# A is the set of ring points sharing the centre's colour:
+#
+#     1 pattern    A = all six
+#     6 patterns   A = the complement of an ADJACENT ring pair
+#     3 patterns   A = an ANTIPODAL pair
+#
+# The bite fixes the centre and adds six edges, h_j to rho(h_j).  So a
+# 4-colouring of Sa u rho(Sa) picks one pattern per copy, the two agree on the
+# centre's colour, and corresponding ring points differ -- which says exactly
+# that A and B are DISJOINT.  That one condition does all the work:
+#
+#     A = all six                 ->  B empty                    impossible
+#     A = complement of {j, j+1}  ->  B inside an adjacent pair   impossible
+#     A = antipodal {j, j+3}      ->  B = {j+1,j+4} or {j+2,j+5}  the only case
+#
+# Six of a hundred shape pairs survive, all of the last kind.  And in that
+# case the other four ring points all carry the second colour, so the other
+# two antipodal pairs are monochromatic as well: ALL THREE ARE.
+#
+# That is de Grey's forced pair, and the naming of one of them is a
+# convenience rather than a fact about the union -- rotating by sixty degrees
+# carries Sa u rho(Sa) to itself and permutes the three pairs cyclically, so
+# no single pair can be singled out, and none needs to be.
+THE_BITE_DERIVED_BY_HAND = {
+    "input": "the joint centre+ring census of Sa at four colours, 10 of 715",
+    "the shapes": {"A = all six": 1,
+                   "A = complement of an adjacent pair": 6,
+                   "A = an antipodal pair": 3},
+    "what the bite contributes": "six edges and a fixed centre, which force "
+                                 "A and B to be disjoint",
+    "shape pairs surviving": "6 of 100, every one with A and B distinct "
+                             "antipodal pairs",
+    "conclusion": "all THREE antipodal pairs of the ring are monochromatic, "
+                  "not merely one",
+    "why no pair is special": "sixty-degree rotation carries the union to "
+                              "itself and permutes the three pairs, so the "
+                              "property is symmetric and must be",
+    "at five colours": "855 of 855 centre+ring patterns survive, so there is "
+                       "nothing to eliminate and the derivation has no input",
+}
+
+
+# The centre is never alone, which is the part the antipodal statement hides.
+#
+# Reading the census on the ring alone gives "at most two colours" and, as a
+# corollary, "some antipodal pair is monochromatic".  Reading it on the centre
+# AND the ring gives more: in all ten surviving patterns the centre shares its
+# colour with at least two ring points, and the seven points together take at
+# most two colours.  It is that joint statement the bite consumes; the ring-
+# only version is too weak to run the elimination, because it says nothing
+# about which class the centre is in.
+THE_CENTRE_IS_NEVER_ALONE = {
+    "Sa at four colours, centre+ring": {"patterns available": 715,
+                                        "surviving": 10,
+                                        "centre alone": 0,
+                                        "colours on the ring": {1: 1, 2: 9}},
+    "Sa at five colours, centre+ring": {"patterns available": 855,
+                                        "surviving": 855,
+                                        "centre alone": 187,
+                                        "colours on the ring": {1: 2, 2: 93,
+                                                                3: 360,
+                                                                4: 325,
+                                                                5: 75}},
+    "so the design target, stated exactly": "a graph whose joint centre+ring "
+                                            "census at five colours is SMALL "
+                                            "and whose surviving shapes are "
+                                            "closed under taking complements "
+                                            "the way these are",
+}
+
+
+
 
 THE_WEAK_PROPERTY_IS_THE_GATEWAY = {
     "weak": "some antipodal pair of ring D is monochromatic in EVERY proper "
