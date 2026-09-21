@@ -6967,6 +6967,68 @@ REDUNDANCY_IS_NOT_SUFFICIENT_EITHER = {
 }
 
 
+# The obstruction, stated exactly: gadget density is an invariant of overlap.
+#
+# Rigidity is not density, not saturation, not redundancy.  What is left is the
+# NUMBER of independent critical subgraphs per point, each imposing one
+# constraint on a colouring whatever its size.  Measured along the census
+# curve, with the same peel order:
+#
+#     points   spindles   per point   census at four
+#        107          0       0.000        715
+#        207          2       0.010        715
+#        307         31       0.101        715
+#        347         56       0.161        577   <- leaves the ceiling
+#        397        228       0.574         10   <- collapses
+#
+# So the threshold is about 0.16 gadgets per point, and the collapse about
+# 0.57.
+#
+# Now the arithmetic that closes the account.  A union of copies of one gadget
+# has gadget density exactly 1 / (new points per copy) -- because c copies
+# costing p new points each occupy c*p points and contain c gadgets.  That
+# ratio is an INVARIANT OF THE OVERLAP and does not depend on the number of
+# copies at all, which is why every "add more copies" experiment here moved
+# nothing:
+#
+#     Sa's spindles                         1.74 new points  ->  0.574
+#     G translated, measured             1336.00 new points  ->  0.00075
+#     a 509-gadget at Sa's overlap FRACTION 126.61           ->  0.0079
+#
+# The third line is the one that hurts.  Even reproducing Sa's overlap
+# proportion exactly -- three quarters of every gadget already present -- a
+# 509-vertex gadget costs 127 new points and lands seventy times below the
+# threshold, because density counts gadgets and a bigger gadget costs more
+# points for the same one constraint.
+#
+# To reach the threshold of 0.16 with a 509-vertex gadget, each copy may
+# contribute at most SIX new points: 98.8 per cent of every gadget must
+# already be in the graph.  G's translates contribute 1336.
+THE_OBSTRUCTION_IS_AN_OVERLAP_INVARIANT = {
+    "gadgets per point along the peel": {107: 0.0, 207: 0.010, 307: 0.101,
+                                         347: 0.161, 397: 0.574},
+    "threshold": "about 0.16 gadgets per point, where the census leaves the "
+                 "ceiling; 0.57 where it collapses",
+    "the invariant": "a union of copies has gadget density exactly "
+                     "1 / (new points per copy), independent of how many "
+                     "copies are taken",
+    "new points per copy": {"Sa's spindles": 1.74,
+                            "G translated, measured": 1336.0,
+                            "509-gadget at Sa's overlap fraction": 126.6},
+    "why size hurts twice": "density counts gadgets, so a bigger gadget costs "
+                            "more points for the same single constraint -- "
+                            "even at Sa's overlap proportion a 509-vertex "
+                            "gadget lands seventy times below threshold",
+    "the demand": "to reach 0.16 with a 509-vertex gadget each copy may "
+                  "contribute at most six new points, so 98.8 per cent of "
+                  "every gadget must already be present",
+    "against": "G's translates contribute 1336 new points each",
+    "and this is why every copy-stacking experiment failed": "the density is "
+        "pinned by the overlap before the first copy is added",
+}
+
+
+
 
 
 

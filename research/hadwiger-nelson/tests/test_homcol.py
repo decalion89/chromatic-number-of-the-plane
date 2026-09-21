@@ -4379,3 +4379,28 @@ def test_the_two_redundancy_measures_diverge_and_only_one_matters():
     assert 120 < by_count / by_incidence < 170
     assert abs((1000 / 7) / (by_count / by_incidence) - 1) < 0.1
     assert "the count, not the incidences" in c["which measure matters"]
+
+
+def test_gadget_density_is_an_overlap_invariant():
+    """A union of copies cannot improve its gadget density by taking more.
+
+    c copies costing p new points each occupy c*p points and contain c
+    gadgets, so the density is 1/p whatever c is.  That is why every
+    copy-stacking experiment here moved nothing, and it turns the requirement
+    into a bound on how much of each gadget may be new.
+    """
+    from fractions import Fraction as Fr
+    for p in (Fr(174, 100), Fr(1336), Fr(1266, 10)):
+        for c in (1, 2, 10, 1000):
+            assert Fr(c, 1) / (c * p) == 1 / p           # independent of c
+    c = _hc.THE_OBSTRUCTION_IS_AN_OVERLAP_INVARIANT
+    npc = c["new points per copy"]
+    assert abs(1 / npc["Sa's spindles"] - 0.574) < 0.005
+    assert abs(1 / npc["G translated, measured"] - 0.00075) < 0.00005
+    # Sa's overlap FRACTION applied to a 509-vertex gadget still falls short
+    frac = npc["Sa's spindles"] / 7                      # new fraction per copy
+    assert abs(509 * frac - npc["509-gadget at Sa's overlap fraction"]) < 1
+    assert 1 / npc["509-gadget at Sa's overlap fraction"] < 0.161 / 20
+    # and the demand: at most six new points per copy to reach the threshold
+    assert 1 / 0.161 < 6.3
+    assert (509 - 1 / 0.161) / 509 > 0.98

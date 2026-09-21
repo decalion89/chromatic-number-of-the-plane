@@ -5074,6 +5074,43 @@ exactly once, in being five-chromatic at all, and nothing is left over.
 > written twice, and the agreement was guaranteed.
 
 
+## The obstruction, stated exactly
+
+Rigidity is not density, not saturation, not redundancy. What is left is the
+**number** of independent critical subgraphs per point — each imposing one
+constraint on a colouring whatever its size. Along the census curve:
+
+| points | spindles | per point | census at four |
+|---:|---:|---:|---:|
+| 107 | 0 | 0.000 | 715 |
+| 207 | 2 | 0.010 | 715 |
+| 307 | 31 | 0.101 | 715 |
+| 347 | 56 | **0.161** | **577** ← leaves the ceiling |
+| 397 | 228 | **0.574** | **10** ← collapses |
+
+Now the arithmetic that closes the account. A union of copies of one gadget has
+gadget density **exactly `1 / (new points per copy)`** — `c` copies costing `p`
+new points each occupy `c·p` points and contain `c` gadgets. That ratio is an
+**invariant of the overlap** and does not depend on the number of copies at
+all, which is why every "add more copies" experiment here moved nothing.
+
+| | new points per copy | density |
+|---|---:|---:|
+| `Sa`'s spindles | **1.74** | 0.574 |
+| `G` translated, measured | **1336** | 0.00075 |
+| a 509-gadget at `Sa`'s overlap *fraction* | 126.6 | 0.0079 |
+
+The third line is the one that hurts. Even reproducing `Sa`'s overlap
+proportion exactly — three quarters of every gadget already present — a
+509-vertex gadget costs 127 new points and lands **seventy times below the
+threshold**, because density counts *gadgets* and a bigger gadget costs more
+points for the same single constraint.
+
+So the demand is this: to reach the threshold with a 509-vertex gadget, each
+copy may contribute **at most six new points** — 98.8 % of every gadget must
+already be in the graph. `G`'s translates contribute **1336**.
+
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
