@@ -9834,3 +9834,47 @@ THE_BITE_NEEDS_A_SYMMETRIC_DISJUNCTION = {
     "the carrier for it": "Gc, 11047 points in 923 orbits of sizes 1, 6 "
                           "and 12",
 }
+
+
+# The symmetric capped set, and why the first one found was worthless.
+#
+# The bite needs a symmetric disjunction, so the search moved to Gc, whose
+# 11047 points fall into 923 genuine orbits under the order-twelve group about
+# its centre -- sizes 1, 6 and 12, as a group of that order requires.  Asking
+# for a capped union of orbits returned one immediately: three orbits, 36
+# points, palette 4 of 5, carried onto itself by the sixty-degree rotation.
+#
+# It was the free cap.  All 36 points sit at distance exactly 1 from the
+# centre, so all are adjacent to it and none can carry its colour; palette 4
+# follows with no geometry at all.  The giveaway is the number this work had
+# already recorded for radius-1 rings and then failed to apply here: the
+# palette of the set TOGETHER WITH the centre is 5.  Nothing is held.
+#
+# The fix is de Grey's own formulation.  His lemma is about a centre with its
+# ring, not a ring alone, so the centre goes into the watched set -- which
+# makes the free cap impossible, since the centre's own colour is then always
+# present.  Rerun that way:
+#
+#   1 orbit  + centre: unsatisfiable
+#   2 orbits + centre: unsatisfiable
+#   3 orbits + centre: unsatisfiable
+#
+# Absence proofs, not failed searches: no union of that many orbits of Gc,
+# taken with its centre, is capped at four colours.  de Grey's exact shape --
+# a centre with symmetric rings around it, held below the full palette -- is
+# not there at five.
+THE_SYMMETRIC_CAP_IS_ABSENT_AND_THE_FIRST_ONE_WAS_FREE = {
+    "what was found first": "3 orbits, 36 points, palette 4, rotation "
+                            "invariant -- and every point at distance 1 from "
+                            "the centre",
+    "why it was worthless": "a set inside the centre's neighbourhood cannot "
+                            "carry the centre's colour, so palette k-1 is "
+                            "free; palette of the set WITH the centre is 5",
+    "the fix": "watch centre and union together, which is de Grey's own "
+               "formulation and makes the free cap impossible",
+    "rerun": {"1 orbit + centre": "unsatisfiable",
+              "2 orbits + centre": "unsatisfiable",
+              "3 orbits + centre": "unsatisfiable"},
+    "so": "de Grey's exact shape is absent at five colours in Gc, proved "
+          "rather than unfound",
+}
