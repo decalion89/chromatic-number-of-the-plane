@@ -5226,3 +5226,53 @@ CRITICALITY_AND_CORRELATION_RUN_OPPOSITE = {
     "finishes": "the criticality diagnosis, withdrawn earlier on weaker "
                 "grounds",
 }
+
+
+# A hypothesis of mine, formed and refuted in the same hour.
+#
+# The account had a gap: Sa's 576 spindles are seven vertices across and sit
+# in a disc of radius two, while G's single 5-critical subgraph is a thousand
+# vertices spanning the whole graph.  The obvious way to make that matter was
+# LOCALITY -- correlation being a short-range phenomenon, carried by structure
+# that fits between the two points, so that a gadget too big to fit in a
+# neighbourhood cannot produce any.
+#
+# Measured, the correlated pairs are not short-range at all:
+#
+#     Sa at four   median distance 1.26 against 1.20 for all pairs
+#     Sa at five   1.19 against 1.20
+#     G  at five   1.22 against 1.24
+#
+# The distributions are the same to two digits, and their 50th, 75th and 90th
+# percentiles agree throughout.  These graphs also cannot settle the question
+# either way: Sa spans about four units and G about eight, so 99 per cent of
+# ALL their pairs are within distance three and there is no long range to
+# compare against.
+#
+# But the lattice settles it, and against the hypothesis.  Its 3-colouring is
+# unique, so two points are correlated exactly when they lie in different
+# classes -- at ANY distance, across a patch twenty units wide.  Correlation
+# there is global, carried by a constraint that propagates rather than by
+# anything fitting between the pair.
+#
+# So locality is not the missing piece, and the gap in the account stays open:
+# the five-colour gadget is a thousand times scarcer than the spindle, and why
+# scarcity should kill correlation is not established here, only observed.
+LOCALITY_WAS_THE_WRONG_GUESS = {
+    "the_hypothesis": "correlation is short-range, so a gadget too large to "
+                      "fit in a neighbourhood cannot produce any",
+    "measured": {"Sa at 4": {"correlated_median": 1.26, "all_median": 1.20},
+                 "Sa at 5": {"correlated_median": 1.19, "all_median": 1.20},
+                 "G at 5": {"correlated_median": 1.22, "all_median": 1.24}},
+    "and_the_test_could_not_discriminate": "Sa spans about four units and G "
+                                           "about eight, so 99 per cent of "
+                                           "all their pairs are within "
+                                           "distance three",
+    "what_settles_it": "the lattice.  Its 3-colouring is unique, so pairs are "
+                       "correlated exactly when they lie in different "
+                       "classes -- at any distance, across twenty units.  "
+                       "Correlation there is global.",
+    "verdict": "refuted.  The gap stays open: the five-colour gadget is a "
+               "thousand times scarcer than the spindle, and why scarcity "
+               "should kill correlation is observed here, not explained.",
+}
