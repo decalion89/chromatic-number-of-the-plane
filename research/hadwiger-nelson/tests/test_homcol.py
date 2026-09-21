@@ -4651,7 +4651,15 @@ def test_a_richer_field_leaves_the_graph_alone_and_only_adds_operations():
                     for a, c in _ft.fast_edges_complete(b, r)))
         assert e == 1974
     c = _hc.THE_FLOOR_IS_NOT_A_PROPERTY_OF_THE_FIELD
-    assert c["bites and best census"]["Q(3,5,7,11)"][1] == 3
-    assert c["bites and best census"]["Q(2,3,5,7,11)"][1] == 3
-    assert (c["bites and best census"]["Q(2,3,5,7,11)"][0] >
-            c["bites and best census"]["Q(3,5,7,11)"][0])
+    rows = c["bites and best census"]
+    assert len(rows) == 3
+    assert all(best == 3 for _, best in rows.values())
+    counts = [n for n, _ in rows.values()]
+    assert counts == sorted(counts) and counts[0] < counts[-1]
+    # more radicals, strictly more closable rings, and the same floor
+    rings = c["rings closable of the first 279"]
+    assert sorted(rings.values()) == list(rings.values()) == [52, 80, 97]
+    # and the catalogue is closed by Beckman-Quarles, not by choice
+    bq = _hc.BECKMAN_QUARLES_CLOSES_THE_CATALOGUE
+    assert "isometry" in bq["the theorem"]
+    assert "seed search" in bq["what it does not cover"]

@@ -7231,6 +7231,42 @@ THE_CATALOGUE_OF_OPERATIONS_IS_COMPLETE = {
 }
 
 
+# Beckman-Quarles closes the catalogue by necessity, not by choice.
+#
+# The catalogue above enumerates the isometric operations because those are the
+# ones anyone would think to try.  A classical theorem makes the enumeration
+# complete rather than merely thorough.
+#
+#     BECKMAN AND QUARLES (1953).  Every map of R^n into itself, n >= 2, that
+#     preserves unit distance is an isometry.
+#
+# So a map carrying a unit-distance graph to a congruent copy inside the plane
+# has no choice about what it is: it is a rotation, a reflection, a translation
+# or a composition of them.  There is no exotic unit-distance-preserving
+# transformation waiting to be found, and "copy the graph and glue it on" is
+# therefore a family with exactly the members already listed -- of which
+# exactly one, de Grey's bite, does anything.
+#
+# What the theorem does NOT close is the other kind of construction: adding
+# points that are not the image of anything, which is the seed search.  That
+# one is open and its size is measured elsewhere at one in 2^39 for a single
+# level.
+BECKMAN_QUARLES_CLOSES_THE_CATALOGUE = {
+    "the theorem": "Beckman and Quarles, 1953: every unit-distance preserving "
+                   "map of R^n into itself, n >= 2, is an isometry",
+    "consequence": "gluing a congruent copy of a unit-distance graph into the "
+                   "plane can only be done by an isometry, so the catalogue "
+                   "of operations is complete by necessity",
+    "what it covers": "every 'copy the graph and glue it on' construction",
+    "of which": "exactly one does anything -- de Grey's bite, to a floor of "
+                "three of ten",
+    "what it does not cover": "adding points that are the image of nothing, "
+                              "which is the seed search, measured at one in "
+                              "2**39 for a single level",
+}
+
+
+
 # And the second bites close the chain: nothing takes it below three.
 #
 # The three surviving patterns of Sa u Sb are one orbit under sixty degrees, so
@@ -7275,9 +7311,10 @@ THE_SECOND_BITES_CLOSE_THE_CHAIN = {
 #     field                    rings closable   bites   best census
 #     Q(3,5,7,11)                    52           104         3
 #     Q(2,3,5,7,11)                  80           160         3
+#     Q(2,3,5,7,11,13)               97           194         3
 #
-# Twenty-eight rings that did not exist before, fifty-six new bites, and not
-# one of them beats de Grey's D = 4.  So three of ten is a property of the
+# Forty-five rings that did not exist before, ninety new bites, and not one of
+# them beats de Grey's D = 4.  So three of ten is a property of the
 # construction rather than of the arithmetic it was written in.
 THE_FLOOR_IS_NOT_A_PROPERTY_OF_THE_FIELD = {
     "why the field could have mattered": "it decides which rings are "
@@ -7290,7 +7327,8 @@ THE_FLOOR_IS_NOT_A_PROPERTY_OF_THE_FIELD = {
                                    "closure is the same graph in every field "
                                    "containing it; only the operations change",
     "bites and best census": {"Q(3,5,7,11)": (104, 3),
-                              "Q(2,3,5,7,11)": (160, 3)},
+                              "Q(2,3,5,7,11)": (160, 3),
+                              "Q(2,3,5,7,11,13)": (194, 3)},
     "so": "three of ten is a property of the construction, not of the "
           "arithmetic it is written in",
 }
