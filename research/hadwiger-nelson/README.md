@@ -4096,6 +4096,118 @@ degree in any graph at all; it does **not** measure proximity to forcing.
 > remains the only graph here with a forced-*same* pair, which is what the
 > spindle actually needs.
 
+## The exact test, and what it retires
+
+Forced-same is not a quantity to estimate. The pair `(i, j)` takes one colour in
+every proper `k`-colouring exactly when the graph with the edge `(i, j)` added is
+not `k`-colourable, and colour symmetry collapses the `k(k-1)` ordered colour
+pairs to a single normal form: assume `c(i) = 0` and `c(j) != 0`, and read the
+answer off one SAT call. `hn.homcol.forced_same` is that call.
+
+> **Corrected.** The preceding section ranks graphs by their best non-edge pair
+> over thirty-two sampled colourings, and a hill-climb was built on that ranking:
+> scan unions `G u rho(G)`, take the maximum over every non-edge pair, watch it
+> climb. It did climb — 21, 22, 23, 24, 25 over the first fifty unions — and the
+> climb is free. The null control is two copies of `G` translated a thousand
+> apart, so **not one edge crosses between them**: same vertex count, same clause
+> count, same search, zero coupling. It reaches 23 and 24, against 21 and 22 for
+> `G` alone. Twice the vertices is four times the pairs, and the maximum of four
+> times as many `Binomial(32, p)` draws is higher for nothing; a solver under 5%
+> phase randomisation also returns less diverse colourings on a bigger instance,
+> lifting every pair at once. The winning union had **one** cross edge and its
+> winning pair lay entirely inside the original copy, which was the tell. The
+> graded metric comparing equal-sized graphs at equal sample counts stands; the
+> ranking across sizes does not.
+
+The exact test is also faster than what it replaces, by three orders of
+magnitude. `G`'s entire closable-pair census — every non-edge pair whose squared
+distance is rational *and* whose spindle rotation the field admits — is 21344
+pairs, and it runs in twenty-one seconds:
+
+| | |
+|---|---|
+| pairs at a rational squared distance | 44341 |
+| distinct rational squared distances | 106 |
+| closable ones | 36 |
+| pairs they carry | 21344 |
+| **forced at five colours** | **0** |
+
+Complete, not sampled. And forcing survives adding vertices, so no subgraph of
+`G` carries a forced closable pair either.
+
+## de Grey's forced pair, identified
+
+Everything above had guessed at what his forcer forces. The exact test made
+asking cheap, and the answer is what the ring criterion predicted, to the letter.
+
+`Sa` is the twelve-element dihedral closure of `S` about the origin, and it
+carries a ring of squared radius 4. The rotation that makes that ring bite itself
+is `cos 7/8, sin sqrt(15)/8` — it wants `sqrt(4D - 1) = sqrt(15)`. `Sb` is its
+image, and `Y = Sa u Sb` less two points forces the ring's **antipodal** pair
+`(-2, 0), (2, 0)`, at squared distance `4D = 16`, whose spindle rotation wants
+`sqrt(16D - 1) = sqrt(63) = 3 sqrt(7)`. Both radicals are in the field. That is
+the ring paying twice, and it is why `D = 4` and nothing else.
+
+| | |
+|---|---|
+| `Y` at four colours | **forced same** (UNSAT, 210 s) |
+| `Y` at five colours | free — the control |
+| `Sa` at four, before the bite | free — the rotation makes it |
+| `Y`'s vertices at squared distance 16 from `(-2,0)` | 1 |
+
+The spindle then turns about **one end** of that pair, and `build_G`'s pivot is
+`(-2, 0)`: an end, not a midpoint. Its two rotations are `pi/2 -+ arcsin(1/8)`,
+and their composition has `cos 31/32, sin sqrt(63)/32` — the `D = 16` spindle
+rotation exactly. The two symmetric turns are one spindle written evenly. That
+identity is checked in the tests, not asserted here.
+
+## The bottleneck is arithmetic, not scale
+
+The template wants a ring that pays twice. De Grey's field admits twenty-two such
+`D` among the rationals with numerator and denominator at most forty — `2/7`,
+`2/5`, `4/9`, `1/2`, `8/7`, `4`, `17/2` and more.
+
+`G` populates one of them. Scanning every vertex of `G` and four thousand
+midpoints as the centre, the richest doubly-usable ring anywhere in `G` holds
+**twelve points** — which is exactly the ring `Sa` already had. Four times the
+size bought no extra coupling, so the bite at five colours runs with the same
+twelve cross edges that sufficed at four, against a harder problem. Scale was
+never the binding constraint. Ring population is.
+
+Two levers raise it. The first is the bite itself: `|1 - rho| = 1/2` for `D = 4`,
+so a radius-2 point and its image are one apart, and so are that image and *its*
+image. Iterating `rho` threads a path along the circle, one per point of the
+orbit already there, and `arccos(7/8)` is not a rational part of a turn, so the
+paths never close. Centred at `G[0]`, where `G`'s ring actually is, the ring goes
+12, 24, 36, 48 and the antipodal pairs 12, 18, 24 — at 2372 extra vertices a
+step. Centred at the origin it goes 1, 2, 3, 4, 5, 6, because `G` has a single
+vertex at radius 2 from the origin. The centre is not a detail.
+
+The second lever is free. **Adjoining a radical costs no vertices**: the points
+of `G` do not move, and only the rotations need the new square root. Censusing
+every rational ring at every vertex centre and asking which single adjunction
+turns the biggest one usable:
+
+| adjoin | unlocks | points on the ring |
+|---|---|---|
+| `sqrt(17)` | `D = 5/3` | **48** |
+| `sqrt(13)` | `D = 1/3` | 36 |
+| `sqrt(71)` | `D = 5/9` | 24 |
+| — (de Grey's own field) | `D = 4` | 12 |
+
+`D = 5/3` is the one to want, and its arithmetic is clean: `4D - 1 = 17/3`, whose
+squarefree part is `51 = 3 * 17`, so it is the **bite** that wants the new
+generator; `16D - 1 = 77/3`, squarefree part `231 = 3 * 7 * 11`, already there,
+so the **spindle is free**. Four times de Grey's coupling for one generator and
+not one extra point. Built over `Q(sqrt3, sqrt5, sqrt7, sqrt11, sqrt17)` about
+`G[0]`, the bite is `cos 7/10, sin sqrt(51)/10`, ring points and their images
+come out at distance exactly one as they must, and one step gives 4741 points
+with **72 antipodal pairs** against de Grey's 6.
+
+None of them is forced yet, and every union so far is still 5-colourable. What
+has changed is that the mechanism is now measured rather than guessed at, and the
+quantity it turns on has a name and a lever.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

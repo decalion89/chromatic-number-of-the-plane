@@ -2518,3 +2518,133 @@ def test_single_distance_lattice_graphs_are_always_bipartite():
 
     assert set(B["checked"].values()) == {2}
     assert B["up_to"]["degree"] > 19
+
+import hn.homcol
+
+# --- the exact forced-same test --------------------------------------------
+
+def test_colour_symmetry_assumptions_picks_two_literals():
+    # vertex v colour c is variable 1 + v*k + c
+    assert hn.homcol.colour_symmetry_assumptions(3, 7, 5) == [16, -36]
+    assert hn.homcol.colour_symmetry_assumptions(0, 1, 4) == [1, -5]
+
+
+def _colour_solver(n, edges, k):
+    from pysat.solvers import Solver
+    cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
+    for a, b in edges:
+        for c in range(k):
+            cls.append([-(1 + a * k + c), -(1 + b * k + c)])
+    return Solver(name="cd15", bootstrap_with=cls)
+
+
+def test_forced_same_on_k4_minus_an_edge():
+    # 1,2,3 is a triangle and 0 sees 1 and 2, so at three colours 0 is left
+    # with the colour 3 already has -- the missing edge (0,3) is forced same.
+    E = [(0, 1), (0, 2), (1, 2), (1, 3), (2, 3)]
+    sv = _colour_solver(4, E, 3)
+    assert sv.solve()
+    assert hn.homcol.forced_same(sv, 0, 3, 3)
+    sv.delete()
+
+
+def test_forced_same_is_false_when_a_colour_is_spare():
+    # the same graph at four colours: 0 may take the fourth colour
+    E = [(0, 1), (0, 2), (1, 2), (1, 3), (2, 3)]
+    sv = _colour_solver(4, E, 4)
+    assert sv.solve()
+    assert not hn.homcol.forced_same(sv, 0, 3, 4)
+    sv.delete()
+
+
+def test_forced_same_agrees_with_adding_the_edge():
+    # the definition it stands in for: forced iff the graph plus that edge
+    # is uncolourable.  Checked on both answers of the K4-minus-an-edge pair.
+    E = [(0, 1), (0, 2), (1, 2), (1, 3), (2, 3)]
+    for k, expect in ((3, True), (4, False)):
+        sv = _colour_solver(4, E, k)
+        plus = _colour_solver(4, E + [(0, 3)], k)
+        assert hn.homcol.forced_same(sv, 0, 3, k) is expect
+        assert (not plus.solve()) is expect
+        sv.delete()
+        plus.delete()
+
+
+# --- the null that retired the sampled ranking ------------------------------
+
+def test_max_agreement_null_brackets_the_climb():
+    c = hn.homcol.THE_MAX_AGREEMENT_IS_AN_EXTREME_VALUE
+    alone = max(c["G alone, four seeds"])
+    null = max(c["G + G, zero cross edges, two seeds"])
+    climb = max(c["the climb it was compared against"])
+    # the uncoupled control beats the graph itself, and the climb is not
+    # meaningfully past the control -- one step, over fifty draws against two
+    assert null > alone
+    assert climb - null <= 1
+
+
+# --- de Grey's template, as measured ---------------------------------------
+
+def test_the_ring_that_pays_twice_is_unique_among_Sa_rings():
+    from fractions import Fraction as Fr
+    # Sa's rational rings; only D = 4 closes both 4D-1 and 16D-1
+    rings = [Fr(1), Fr(1, 3), Fr(5, 9), Fr(4), Fr(3)]
+    assert [d for d in rings if hn.homcol.doubly_usable_ring(d)] == [Fr(4)]
+
+
+def test_four_ninths_is_doubly_usable_but_unpopulated():
+    from fractions import Fraction as Fr
+    # the field closes it -- 4D-1 = 7/9 and 16D-1 = 55/9, both squares times
+    # products of the generators -- and it is in the recorded hit list
+    assert hn.homcol.doubly_usable_ring(Fr(4, 9))
+    c = hn.homcol.THE_FIELD_OFFERS_RINGS_THE_GRAPH_DOES_NOT_POPULATE
+    assert "4/9" in c["the small ones"]
+    assert c["G's best populated doubly-usable ring, over every vertex "
+             "centre and 4000 midpoints"]["points"] == 12
+
+
+def test_the_unit_ring_is_excluded_for_the_right_reason():
+    from fractions import Fraction as Fr
+    # D = 1 closes both radicals but its rotation is the 60-degree turn, which
+    # fixes the whole Eisenstein core -- it bites nothing
+    assert hn.homcol.closable_distance(Fr(1))
+    assert hn.homcol.closable_distance(Fr(4))
+    assert not hn.homcol.doubly_usable_ring(Fr(1))
+
+
+def test_build_G_rotations_compose_to_the_D16_spindle():
+    # the two turns are pi/2 -+ arcsin(1/8); their composition must be the
+    # rotation the spindling lemma needs for squared distance 16, namely
+    # cos = 1 - 1/(2*16) = 31/32 and sin = sqrt(4*16-1)/(2*16) = sqrt(63)/32
+    from fractions import Fraction as Fr
+    from hn.degrey import _rot_half_pi_pm
+    from hn.geometry import DEGREY_FIELD as F, rotation_joining
+    a = _rot_half_pi_pm(F, +1)
+    b = _rot_half_pi_pm(F, -1)
+    # a * b^-1
+    cos = a.cos * b.cos + a.sin * b.sin
+    sin = a.sin * b.cos - a.cos * b.sin
+    spindle = rotation_joining(Fr(16), F)
+    assert cos == F.rational(Fr(31, 32))
+    assert cos == spindle.cos
+    assert sin * sin == spindle.sin * spindle.sin
+
+
+def test_the_bite_threads_because_the_step_is_one():
+    # |1 - rho| = 1/2 for D = 4, so a radius-2 point and its image are at
+    # distance exactly one: that is why iterating threads a path
+    from fractions import Fraction as Fr
+    from hn.geometry import DEGREY_FIELD as F, Point, rotation_joining
+    rho = rotation_joining(Fr(4), F)
+    p = Point(F.rational(2), F.zero())
+    assert p.dist2(rho(p)) == 1
+    assert p.dist2(rho(rho(p))) != 1        # only consecutive ones touch
+    c = hn.homcol.THE_BITE_THREADS_THE_RING
+    assert c["at G[0] = (-2.25, +1.984313)"]["ring"] == [12, 24, 36, 48]
+
+
+def test_the_exhaustive_census_of_G_is_recorded_complete():
+    c = hn.homcol.THE_CENSUS_OF_G_IS_EXHAUSTIVE_AND_EMPTY
+    assert c["forced at five colours"] == 0
+    assert c["pairs they carry"] < c["pairs at a rational squared distance"]
+    assert c["closable ones"] < c["distinct rational squared distances"]

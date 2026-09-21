@@ -51,7 +51,8 @@ __all__ = ["edge_vectors", "has_homomorphism", "screen", "minimum_blocking_set",
            "cyclotomic_chain_closes",
            "denominator_29_directions",
            "closing_radicand", "closable_distance", "closable_over",
-           "lattice_basis", "on_lattice", "blocks_at", "saturated_at", "decay_rates", "doubly_usable_ring", "agreeing_pairs"]
+           "lattice_basis", "on_lattice", "blocks_at", "saturated_at", "decay_rates", "doubly_usable_ring", "agreeing_pairs",
+           "forced_same", "colour_symmetry_assumptions"]
 
 
 def _coords(e) -> Tuple[Fraction, ...]:
@@ -3768,6 +3769,40 @@ THE_CONFLICT_METRIC_NEEDS_A_FIXED_SIZE = {
 }
 
 
+def colour_symmetry_assumptions(i, j, k):
+    """The two literals that ask a solver to separate vertices i and j.
+
+    A k-colouring formula with no colour pinned is invariant under permuting
+    the colours, so "some proper colouring gives i and j different colours" is
+    witnessed by one already in the normal form c(i) = 0, c(j) != 0: permute
+    any separating colouring so that i takes colour 0, and j still differs.
+    Two literals decide it, not the k(k-1) ordered pairs.
+    """
+    return [1 + i * k, -(1 + j * k)]
+
+
+def forced_same(solver, i, j, k):
+    """Do vertices i and j share a colour in EVERY proper k-colouring?
+
+    This is the hypothesis the spindling lemma needs, and it is decidable
+    exactly -- the pair is forced iff adding the edge (i, j) makes the graph
+    uncolourable, which is one call on an already-bootstrapped solver with the
+    assumptions above.  No samples, no error bars, no budget.
+
+    The sampled version that preceded this ranked pairs by how often they
+    agreed across a few dozen colourings, and the null control retired it: two
+    copies of a graph with no edge between them reach a higher maximum than
+    the graph alone, because the maximum over four times as many noisy
+    estimates is an extreme value and not a signal.  This function is what the
+    sampling was approximating, and it is both exact and faster -- the 21344
+    closable non-edge pairs of G take twelve seconds in all.
+
+    `solver` must already hold the k-colouring clauses with vertex v's colour
+    c as variable 1 + v*k + c, and must be satisfiable.
+    """
+    return not solver.solve(assumptions=colour_symmetry_assumptions(i, j, k))
+
+
 def agreeing_pairs(cols, colours=5):
     """Indices that take the same colour in EVERY sampled colouring.
 
@@ -5650,4 +5685,148 @@ THE_GRADED_METRIC_PUTS_G_WHERE_SA_WAS = {
                             "Grey's symmetric choice -- and that ring is "
                             "D = 1, whose rotation takes the agreement DOWN, "
                             "18/32 to 12/32.",
+}
+
+
+# CORRECTION: the maximum agreement over all pairs is an extreme value.
+#
+# THE_GRADED_METRIC_PUTS_G_WHERE_SA_WAS ranks graphs by their best non-edge
+# pair over thirty-two sampled colourings, and a hill-climb was built on it:
+# scan unions G u rho(G), take the maximum over every non-edge pair, and watch
+# it climb.  It did climb -- 21, then 22, 23, 24, 25 in the first fifty unions
+# -- and the climb is free.
+#
+# The null control is two copies of G translated a thousand apart, so that not
+# one edge crosses between them.  Same vertex count, same clause count, same
+# search, and exactly zero coupling; whatever the maximum reaches there is
+# bought by size alone.  It reaches 23 and 24, against 21 and 22 for G itself.
+#
+# Two things produce that and neither is the mechanism.  Twice the vertices is
+# four times the pairs, and the maximum of four times as many Binomial(32, p)
+# draws is higher for free.  And a solver under 5% phase randomisation returns
+# less diverse colourings on a bigger instance, which lifts every pair at once.
+# The winning union had ONE cross edge and its winning pair lay entirely
+# inside the original copy, which was the tell.
+THE_MAX_AGREEMENT_IS_AN_EXTREME_VALUE = {
+    "G alone, four seeds": [21, 22, 22, 22],
+    "G + G, zero cross edges, two seeds": [23, 24],
+    "the climb it was compared against": [21, 22, 23, 24, 25],
+    "verdict": "inside the null; the ranking ranks nothing",
+    "corrects": "the hill-climb, not the graded metric itself -- comparing "
+                "graphs of the SAME size at the same sample count is still "
+                "sound, and that is all the graded metric did",
+    "what_replaced_it": "forced_same: the exact test, one SAT call",
+}
+
+
+# The exact test, and what it costs.
+#
+# Forced-same is not a quantity to be estimated.  The pair (i, j) is the same
+# colour in every proper k-colouring iff the graph with the edge (i, j) added
+# is not k-colourable, and colour symmetry collapses the k(k-1) ordered colour
+# pairs to one: assume c(i) = 0 and c(j) != 0 and read the answer.
+#
+# The sampling it replaces took three hours at 27000 vertices for a one-sided
+# filter.  This is complete, and G's entire closable-pair census -- every
+# non-edge pair whose squared distance is rational AND whose spindle rotation
+# the field admits -- runs in twelve seconds.
+THE_CENSUS_OF_G_IS_EXHAUSTIVE_AND_EMPTY = {
+    "pairs at a rational squared distance": 44341,
+    "distinct rational squared distances": 106,
+    "closable ones": 36,
+    "pairs they carry": 21344,
+    "forced at five colours": 0,
+    "cost": "21 seconds, complete",
+    "the populous rings": {"1/3": 6510, "5/3": 5592, "7/3": 3648,
+                           "4/3": 3316, "3": 3216},
+    "monotonicity": "forcing survives adding vertices, so no subgraph of G "
+                    "has a forced closable pair either",
+}
+
+
+# de Grey's forced pair, identified rather than inferred.
+#
+# Everything here had guessed at what his forcer forces.  The exact test made
+# asking cheap, and the answer is exactly what the ring criterion predicted.
+#
+# Sa is the twelve-element dihedral closure of S about the ORIGIN.  It carries
+# a ring of squared radius 4.  The rotation that makes that ring bite itself is
+# cos 7/8, sin sqrt(15)/8 -- it needs sqrt(4D - 1) = sqrt(15) -- and Sb is its
+# image.  Y = Sa u Sb, less two points, forces the ring's ANTIPODAL pair
+# (-2, 0), (2, 0), at squared distance 4D = 16, whose spindle rotation needs
+# sqrt(16D - 1) = sqrt(63) = 3 sqrt(7).  Both radicals are in the field.  That
+# is the ring paying twice, and it is why D = 4 and nothing else.
+#
+# The spindle then turns about ONE END of that pair, and build_G's pivot is
+# (-2, 0): an end, not a midpoint.  Its two rotations are pi/2 -+ arcsin(1/8),
+# and their composition has cos 31/32, sin sqrt(63)/32, which is the D = 16
+# spindle rotation exactly.  The two symmetric turns are one spindle written
+# evenly.
+DE_GREYS_FORCED_PAIR = {
+    "the pair": "(-2, 0) and (2, 0), squared distance 16",
+    "Y at four colours": "FORCED SAME (UNSAT, 210 seconds)",
+    "Y at five colours": "free -- the control",
+    "Sa at four colours, before the bite": "free -- the rotation makes it",
+    "Y's vertices at squared distance 16 from (-2,0)": 1,
+    "so the pair is": "the antipodal pair of the D = 4 ring, and the only "
+                      "candidate the geometry allows",
+    "chain": "Sa 397 (4-chromatic, forces nothing) -> bite at D=4 -> Y 791 "
+             "(forces the antipodal pair) -> spindle at D=16 -> G 1581 "
+             "(5-chromatic)",
+}
+
+
+# Why the template stalls at five colours, and it is arithmetic.
+#
+# The template needs a ring that pays twice: sqrt(4D - 1) to build the bite and
+# sqrt(16D - 1) to spindle the antipodal pair it forces.  De Grey's field
+# admits twenty-two such D among the rationals with numerator and denominator
+# at most forty -- 2/7, 2/5, 4/9, 1/2, 8/7, 4, 17/2 and more.
+#
+# G populates one of them.  Scanning every vertex of G and four thousand
+# midpoints as the centre, the richest doubly-usable ring anywhere in G holds
+# twelve points -- which is exactly the ring Sa already had.  Four times the
+# size bought no extra coupling at all, so the bite at five colours runs with
+# the same twelve cross edges that sufficed at four, against a harder problem.
+#
+# The bottleneck is not scale and not search.  It is that the field knows how
+# to close distances the graph has no points at.
+THE_FIELD_OFFERS_RINGS_THE_GRAPH_DOES_NOT_POPULATE = {
+    "doubly usable D in Q(v3,v5,v7,v11), num and den <= 40": 22,
+    "the small ones": ["2/7", "2/5", "4/9", "1/2", "8/7", "4", "17/2"],
+    "with sqrt(17) adjoined": 38,
+    "with sqrt(13), sqrt(17), sqrt(19)": 85,
+    "G's best populated doubly-usable ring, over every vertex centre and "
+    "4000 midpoints": {"D": 4, "points": 12, "same as": "Sa's"},
+    "rings that appear at some centre": {"4/9": 1239, "4": 1102, "7/12": 503,
+                                         "31/12": 254, "1/2": 173,
+                                         "17/2": 49},
+    "G* about (-2,0)": {"rational rings": 30, "doubly usable": ["4", "17/2"]},
+    "reading": "scale was never the binding constraint; ring population is",
+}
+
+
+# The bite threads the ring, which is the one lever that grows it.
+#
+# rho = rotation_joining(4) has |1 - rho| = 1/2, so a point at radius 2 and its
+# image are one apart -- and so are that image and ITS image.  Iterating rho
+# about a centre threads a path along the circle, one per point of the orbit
+# already there, and arccos(7/8) is not a rational part of a turn, so the paths
+# never close.  Every step adds unit edges that were not there before.
+#
+# Centred at G[0], which is where G's twelve-point ring actually is, the ring
+# goes 12, 24, 36, 48 and the antipodal pairs 12, 18, 24.  Centred at the
+# origin it goes 2, 3, 4, 5, 6: G has a single vertex at radius 2 from the
+# origin, so there is one thread and nothing to thicken.  The centre is not a
+# detail.
+THE_BITE_THREADS_THE_RING = {
+    "why": "|1 - rho| = 1/2, so consecutive images on the radius-2 ring are "
+           "at distance exactly one",
+    "at G[0] = (-2.25, +1.984313)": {"ring": [12, 24, 36, 48],
+                                     "antipodal pairs": [12, 18, 24],
+                                     "points": [1581, 3953, 6325, 8697]},
+    "at the origin": {"ring": [1, 2, 3, 4, 5, 6],
+                      "why so thin": "G has ONE vertex at radius 2 from the "
+                                     "origin"},
+    "status": "still 5-colourable, still 0 forced, at every step measured",
 }
