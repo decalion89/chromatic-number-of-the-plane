@@ -6833,8 +6833,8 @@ THE_SPINDLE_COUNT_WAS_COUNTING_HINGES = {
 #
 # Second, growing FOR saturation drives it far past the family's and buys
 # nothing.  Starting from Sa and adding, at each step, the points completing
-# the most rhombi: 1197 points at 12.84 memberships per point, nearly three
-# times G's 4.47, and still 4-colourable at every step.
+# the most rhombi: twenty-five steps to 1397 points at 13.65 memberships per
+# point, three times G's 4.47, and 4-colourable at every one of them.
 #
 # So the honest statement is narrower than the one recorded: saturation tracks
 # the census WITHIN a design, at fixed k, and predicts which subset of a given
@@ -6851,9 +6851,10 @@ SATURATION_DOES_NOT_DETERMINE_CHI = {
               "chi": 4},
         "G": {"edges/pt": 4.98, "memberships": 4.47, "spindles/pt": 0.57,
               "chi": 5}},
-    "grown for saturation": {"points": 1197, "edges/pt": 6.93,
-                             "memberships": 12.84, "4-colourable": True},
-    "so": "nearly three times G's saturation and one colour fewer; the gain "
+    "grown for saturation": {"steps": 25, "points": 1397,
+                             "edges/pt": 7.06, "memberships": 13.65,
+                             "4-colourable at every step": True},
+    "so": "three times G's saturation and one colour fewer; the gain "
           "from four to five is global, not local",
 }
 

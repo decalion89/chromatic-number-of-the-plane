@@ -4962,8 +4962,8 @@ down; the collapse still needs the complete object.
 > rotated copies joined by six edges and a spindle, so nothing local changes
 > and the whole gain is global. Second, growing *for* saturation drives it far
 > past the family's and buys nothing: starting from `Sa` and adding the points
-> that complete the most rhombi reaches **1197 points at 12.84 memberships**,
-> nearly three times `G`'s, and it is 4-colourable at every step. So saturation
+> that complete the most rhombi reaches **1397 points at 13.65 memberships**,
+> three times `G`'s, and it is 4-colourable at every one of twenty-five steps. So saturation
 > tracks the census *within* a design at fixed `k`, and predicts which subset
 > of a given graph is rigid. It does not predict `χ`.
 
