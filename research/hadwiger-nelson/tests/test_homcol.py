@@ -2799,12 +2799,28 @@ def test_the_deletion_is_actually_two_points():
     assert len(build_Y(DF)) == 791
 
 
-def test_the_carrying_classes_are_an_arithmetic_progression():
+def test_sa_carries_four_classes_not_three():
+    # an earlier reading of this listed three and called the distances an
+    # arithmetic progression of step 2/3.  There are four: the fourth is
+    # D = 16 with just three pairs, which are de Grey's own -- the antipodal
+    # pairs of the D = 4 ring -- and 4 is not 2 + 2/3.
     from fractions import Fraction as Fr
-    c = hn.homcol.FOUR_NINTHS_IS_THE_FAMILYS_DISTANCE
-    # the squared radii are 4/9, 16/9, 4 -- so the distances are 2/3, 4/3, 2
-    d = sorted(Fr(k) for k in ("4/9", "16/9", "4"))
-    roots = [Fr(2, 3), Fr(4, 3), Fr(2)]
-    assert [r * r for r in roots] == d
-    assert roots[1] - roots[0] == roots[2] - roots[1] == Fr(2, 3)
-    assert set(c["Sa's three carrying classes"]) == {"4/9", "16/9", "4"}
+    c = hn.homcol.FOUR_NINTHS_IS_THE_FAMILYS_DISTANCE["Sa's carrying classes"]
+    assert set(c) == {"4/9", "16/9", "4", "16"}
+    roots = sorted(Fr(k) ** Fr(1, 2) if False else r
+                   for r, k in ((Fr(2, 3), "4/9"), (Fr(4, 3), "16/9"),
+                                (Fr(2), "4"), (Fr(4), "16")))
+    assert [r * r for r in roots] == sorted(Fr(k) for k in c)
+    # they are 2/3 times 1, 2, 3, 6 -- not an arithmetic progression
+    assert [r / Fr(2, 3) for r in roots] == [1, 2, 3, 6]
+    assert roots[3] - roots[2] != roots[1] - roots[0]
+    assert hn.homcol.FOUR_NINTHS_IS_THE_FAMILYS_DISTANCE[
+        "as multiples of 2/3"] == [1, 2, 3, 6]
+
+
+def test_de_greys_class_is_the_smallest_that_carries():
+    # three pairs out of Sa's fourteen classes, and the one he built on
+    c = hn.homcol.FOUR_NINTHS_IS_THE_FAMILYS_DISTANCE["Sa's carrying classes"]
+    assert "3 pairs" in c["16"] and "de Grey's" in c["16"]
+    sizes = {k: int(v.split()[-2]) for k, v in c.items()}
+    assert min(sizes, key=sizes.get) == "16"

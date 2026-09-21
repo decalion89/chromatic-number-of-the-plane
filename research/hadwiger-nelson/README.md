@@ -4377,14 +4377,34 @@ of them from all the rest — and the same one every time:
 | `Sb` | 5 | `4/9` | the same |
 | `G` | 5 | `4/9`, 1558 pairs | over an hour against four solvers — the only one of thirty-six to resist |
 
+`Y` at five is the same story one size up: 0 of its 23 closable classes carry
+the property, `4/9` takes **577 s**, the next slowest (`5/9`) takes 10, and the
+rest take none. The dihedral closure about the hub — 11047 points, the densest
+object here — clears all 34 of its small and middle classes in five seconds or
+less and then takes **372 s** on `16/9`.
+
 And `build_Y` deletes exactly two points from `Sa u Sb`: `(1/3, 0)` and
 `(-1/3, 0)`, whose squared distance is `4/9`. They are the antipodal pair of the
 `D = 1/9` ring about the origin. Whether that is *why* he deleted them is his
 business; what is measurable is that it costs nothing — `Y` still carries the
 property on that class afterwards, with 779 pairs instead of 786.
 
-The distance is `2/3`, and `Sa`'s three carrying classes are `4/9`, `16/9`, `4`
-— distances `2/3`, `4/3`, `2`, an arithmetic progression of step `2/3`.
+> **Corrected.** An earlier reading of this listed three carrying classes and
+> called their distances an arithmetic progression of step `2/3`. There are
+> **four**, and the fourth breaks it. The complete list for `Sa` at four
+> colours:
+>
+> | class | pairs | distance |
+> |---|---|---|
+> | `D = 4/9` | 393 | `2/3` |
+> | `D = 4` | 273 | `2` |
+> | `D = 16/9` | 156 | `4/3` |
+> | `D = 16` | **3** | `4` |
+>
+> The fourth is de Grey's own — three pairs, which are exactly the antipodal
+> pairs of the `D = 4` ring — and it is the *smallest* carrying class of the
+> four, which is why it is the one worth building on. The distances are `2/3`
+> times `1, 2, 3, 6`, not an arithmetic progression.
 
 Solver time is not a metric and is not offered as one. What is stated is that
 one class behaves unlike the other thirteen, or thirty-five, on five different

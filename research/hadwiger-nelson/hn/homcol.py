@@ -6119,17 +6119,25 @@ FOUR_NINTHS_IS_THE_FAMILYS_DISTANCE = {
                                           "Y": "779 pairs, 8s"},
     "at five, colours but slowly": {"Sa": "10s against 0s for the other 13",
                                     "Sb": "10s",
+                                    "Y": "577s; next slowest of its 23 is "
+                                         "5/9 at 10s",
                                     "G": "over an hour, four solvers, the "
-                                         "only one of 36"},
+                                         "only one of 36",
+                                    "the hub closure, at D=16/9": "372s "
+                                         "against 5s or less for all 34 of "
+                                         "its small and middle classes"},
     "the deleted pair": {"points": "(1/3, 0) and (-1/3, 0)",
                          "squared distance": "4/9",
                          "what they are": "the antipodal pair of the D = 1/9 "
                                           "ring about the origin",
                          "what the deletion costs": "nothing -- Y carries the "
                                                     "class at four anyway"},
-    "Sa's three carrying classes": {"4/9": "distance 2/3", "16/9": "4/3",
-                                    "4": "2"},
-    "which is": "an arithmetic progression of step 2/3",
+    "Sa's carrying classes": {"4/9": "distance 2/3, 393 pairs",
+                              "16/9": "4/3, 156 pairs",
+                              "4": "2, 273 pairs",
+                              "16": "4, 3 pairs -- de Grey's, the antipodal "
+                                    "pairs of the D = 4 ring"},
+    "as multiples of 2/3": [1, 2, 3, 6],
     "caution": "solver time is not a metric.  What is stated here is that one "
                "class behaves unlike the other thirteen or thirty-five, on "
                "five graphs, and that it is the class that carries at four.",
