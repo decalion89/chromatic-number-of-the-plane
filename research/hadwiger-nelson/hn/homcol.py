@@ -9587,3 +9587,31 @@ THE_FREE_FORM_SEARCH_IS_BLIND = {
                         "genuinely at full palette; the absence claim is not "
                         "supported",
 }
+
+
+# The largest graph built in this work, and it colours.
+#
+# G's intersection universe at radius 4.5 -- G together with every point that
+# two unit circles about its points meet at, inside that radius -- has 35132
+# points and 183096 edges.  It took 88 minutes to settle and it is
+# 5-colourable.
+#
+# The number matters because of what it covers rather than what it is.  Every
+# subgraph of that universe is 5-colourable too, so a single satisfiable
+# answer retires the whole family: G, every graph reachable from G by one
+# round of unit-circle intersection inside that radius, and every subgraph of
+# any of them.  That is the largest family this work has been able to kill in
+# one call.
+#
+# It also says the obvious thing about cost.  Eighty-eight minutes of solving
+# ended in a colouring, which is the third time in this project that a long
+# run has meant a satisfiable instance rather than a hard proof.
+THE_INTERSECTION_UNIVERSE_OF_G_COLOURS = {
+    "graph": "G plus every unit-circle intersection inside radius 4.5",
+    "size": "35132 points, 183096 edges",
+    "answer": "5-colourable, in 5299 seconds",
+    "what it retires": "every subgraph of it, which is G and everything one "
+                       "round of intersection reaches inside that radius",
+    "cost is not evidence, a fourth time": "88 minutes of solving produced a "
+                                           "colouring",
+}
