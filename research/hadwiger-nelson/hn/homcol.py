@@ -7118,3 +7118,45 @@ THE_DISJUNCTION_IS_EXACTLY_ONE = {
                        "coincidence and may choose which, and this says that "
                        "freedom is real rather than an artefact of placement",
 }
+
+
+# Minimising the witness destroyed what the bite needs.  The two pull apart.
+#
+# The spindle fails on the witness for a measured reason, but the spindle is
+# stage two of the template and consumes a NAMED pair.  What turns "one of
+# three" into "this one" is the BITE, which is a different operation: one copy
+# rotated about a common centre by the angle that makes a whole RING touch its
+# own image, not one copy per pair about that pair's own end.  It had never
+# been applied to the witness.
+#
+# Applied now -- every vertex and the origin as centre, every rational ring
+# the field can bite, both directions -- 177 bites, unions of 183 to 187
+# points, about 1100 closable pairs each, and NOT ONE forced pair.
+#
+# The reason is in the ring sizes: the witness's rings hold two to four
+# points.  Sa's D = 4 ring holds six, a full D6 orbit, and the bite hooks all
+# six to their images at once; two points hook almost nothing.
+#
+# And the witness has small rings BECAUSE it was minimised.  Peeling it from
+# 1581 vertices to 63 optimised the disjunction -- keep only what is
+# load-bearing for "some pair is monochromatic" -- and the ring structure was
+# not load-bearing for that, so it went.  The two requirements pull against
+# each other: what makes the obstruction small and checkable is exactly what
+# makes it unbiteable.
+MINIMISING_DESTROYS_THE_RINGS = {
+    "the bite": "one copy about a common centre at the angle that makes a "
+                "ring touch its image -- the operation that SHARPENS a "
+                "disjunction into a named pair",
+    "never applied to the witness until now": True,
+    "bites tried": 177,
+    "union sizes": "183 to 187 points, about 1100 closable pairs each",
+    "forced pairs found": 0,
+    "why": "the witness's rings hold 2 to 4 points; Sa's D = 4 ring holds "
+           "six, a full D6 orbit, and the bite hooks all six at once",
+    "and the rings are small because": "the witness was minimised.  Peeling "
+                                       "1581 vertices to 63 kept only what "
+                                       "is load-bearing for the disjunction, "
+                                       "and ring structure is not.",
+    "the tension": "what makes the obstruction small and checkable is exactly "
+                   "what makes it unbiteable",
+}

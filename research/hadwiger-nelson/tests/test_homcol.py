@@ -3308,3 +3308,14 @@ def test_the_disjunction_cannot_be_strengthened():
     assert "exact, not sampled" in c["method"]
     # it is the spindle failure seen from the other side
     assert "SPINDLING_A_DISJUNCTION_DOES_NOT_WORK" in c["and it explains"]
+
+
+def test_minimising_destroys_the_rings():
+    c = hn.homcol.MINIMISING_DESTROYS_THE_RINGS
+    assert c["bites tried"] == 177 and c["forced pairs found"] == 0
+    assert "2 to 4 points" in c["why"] and "six" in c["why"]
+    # the tension is stated, not glossed
+    assert "pull against" in c["and the rings are small because"] or \
+        "unbiteable" in c["the tension"]
+    # and the bite is distinguished from the spindle
+    assert "SHARPENS" in c["the bite"]
