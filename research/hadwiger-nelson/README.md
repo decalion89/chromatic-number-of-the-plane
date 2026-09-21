@@ -4324,6 +4324,45 @@ union and rotation preserve density to two parts in a thousand. Neither closes a
 gap of 10.8 any more than one of 764. Only the size of the thing to be closed
 changes, and it changes by a lot.
 
+## What each operation can and cannot do
+
+Three moves are used throughout: **bite** (union with one rotated copy at the
+angle that makes a ring touch its image), **thicken** (iterate the bite), and
+**close** (the twelve-element dihedral closure about a centre). Their effect on
+edge density separates cleanly, and sharply:
+
+| | points | edges | per vertex |
+|---|---|---|---|
+| `Sa` | 397 | 1974 | 4.972 |
+| `Y = Sa u rho_4(Sa)` | 791 | 3938 | 4.979 |
+| `G` | 1581 | 7877 | 4.982 |
+| `G` bitten at `D = 4`, both ways | 3953 | 19715 | 4.987 |
+| `G` bitten at `D = 4/9`, both ways | 4741 | 23643 | 4.987 |
+| `G` bitten at `D = 5/3` (needs `sqrt17`) | 4741 | 23727 | 5.005 |
+| `G` bitten at `5/3`, `1/3` and `4` at once | 8693 | 43443 | 4.997 |
+| `G` with the ring thickened, `m = 9` | 22929 | 114419 | 4.990 |
+| `G` bitten at `D = 5/3`, `m = 4` | 14221 | 71277 | 5.012 |
+| `G` closed about the origin, then bitten | 37932 | 189114 | 4.986 |
+| `G` closed about its hub | 11047 | 59919 | **5.424** |
+| `G*` about `(-2,0)` ∪ `rho_16(G*)` | 27673 | 157140 | **5.678** |
+
+Bites and thickenings land between 4.98 and 5.01 without exception — twelve
+thousand points added at `m = 9` and the density moves by eight parts in ten
+thousand. Only the dihedral closure raises it at all, and by fourteen per cent.
+
+The sharper point is that density is not the discriminator anyway. `Sa` sits at
+4.972 and **carries** the weak property at four colours; `G` sits at 4.982 and
+does not at five. What separates them is 5-critical coverage — 10.16
+gadget-vertex incidences per point against 0.95 — and no operation available
+here touches that.
+
+Which gives the structural conclusion these measurements converge on: **the
+bite sharpens a weak property into a named pair, it does not create one.** `Sa`
+carries it alone and `Y` names it. `G` lacks it, and every union, thickening and
+closure of `G` lacks it too. So the target is not a bigger union of `G`. It is a
+five-chromatic graph carrying the weak property *on its own* — and nothing in
+this repository produces one.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

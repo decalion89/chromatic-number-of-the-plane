@@ -6037,3 +6037,55 @@ THE_GAP_IS_TEN_NOT_SEVEN_HUNDRED = {
                         "rotation preserve it exactly, so neither closes a "
                         "gap of 10.8 any more than one of 764",
 }
+
+
+# What each operation can and cannot do, measured across everything built.
+#
+# Three moves have been used throughout: BITE (union with one rotated copy at
+# the angle that makes a ring touch its image), THICKEN (iterate the bite),
+# and CLOSE (the twelve-element dihedral closure about a centre).  Their effect
+# on edge density separates cleanly and the separation is sharp.
+#
+#   Sa                                  397    1974   4.972
+#   Y = Sa u rho_4(Sa)                  791    3938   4.979
+#   G                                  1581    7877   4.982
+#   G bitten at D=4, both ways         3953   19715   4.987
+#   G bitten at D=4/9, both ways       4741   23643   4.987
+#   G bitten at D=5/3 (needs sqrt17)   4741   23727   5.005
+#   G bitten at 5/3, 1/3 and 4 at once 8693   43443   4.997
+#   G with the ring thickened, m=9    22929  114419   4.990
+#   G bitten at D=5/3, m=4            14221   71277   5.012
+#   G closed about the origin, bitten 37932  189114   4.986
+#   G closed about its hub            11047   59919   5.424
+#   G* about (-2,0) u rho_16(G*)      27673  157140   5.678
+#
+# Bites and thickenings land between 4.98 and 5.01 without exception -- twelve
+# thousand points added at m=9 and the density moves by eight parts in ten
+# thousand.  Only the dihedral closure raises it at all, to 5.42 and 5.68, and
+# that is fourteen per cent.
+#
+# The sharper point is that density is not the discriminator anyway.  Sa sits
+# at 4.972 and CARRIES the weak property at four colours; G sits at 4.982 and
+# does not at five.  What separates them is 5-critical coverage -- 10.16
+# gadget-vertex incidences per point against 0.95 -- and no operation here
+# touches that.
+EACH_OPERATION_AND_WHAT_IT_MOVES = {
+    "bite and thicken": {"edges per vertex": "4.98 to 5.01, twelve cases",
+                         "raises coverage": False},
+    "dihedral closure": {"edges per vertex": "5.42 and 5.68",
+                         "raises coverage": False,
+                         "note": "the only move that raises density at all, "
+                                 "and by fourteen per cent"},
+    "but density is not the discriminator": {
+        "Sa": {"edges per vertex": 4.972, "carries the weak property at 4":
+               True},
+        "G": {"edges per vertex": 4.982, "carries it at 5": False},
+    },
+    "what separates them": "5-critical coverage, 10.16 incidences per point "
+                           "against 0.95",
+    "and the bite cannot supply it": "the bite SHARPENS a weak property into "
+                                     "a named pair -- Sa carries it alone and "
+                                     "Y names it -- it does not create one.  "
+                                     "G lacks it and every union of G lacks "
+                                     "it.",
+}

@@ -2765,3 +2765,14 @@ def test_density_is_inherited_across_the_family():
     vals = list(d.values())
     assert max(vals) - min(vals) < 0.02      # constant to two parts in a
     assert all(4.9 < v < 5.0 for v in vals)  # thousand, bites included
+
+
+def test_bites_do_not_move_density_and_closures_barely_do():
+    c = hn.homcol.EACH_OPERATION_AND_WHAT_IT_MOVES
+    assert c["bite and thicken"]["raises coverage"] is False
+    assert c["dihedral closure"]["raises coverage"] is False
+    # the two sides of the discriminator: near-equal density, opposite verdict
+    d = c["but density is not the discriminator"]
+    assert abs(d["Sa"]["edges per vertex"] - d["G"]["edges per vertex"]) < 0.02
+    assert d["Sa"]["carries the weak property at 4"] is True
+    assert d["G"]["carries it at 5"] is False
