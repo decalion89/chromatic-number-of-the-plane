@@ -4897,6 +4897,25 @@ assumes the proxy improves as the object improves. **It does not.** There is
 nothing to climb until the object is essentially complete, and by then there is
 no climb left to do.
 
+And it is not simply that four colours are scarce only near the end. Walking
+the same peel and asking for the chromatic number refutes that: `χ` reaches
+**4 at 207 points** and the census does not move for another 140 vertices.
+
+| points | `χ` | census at four |
+|---:|---:|---:|
+| 157 | 3 | 715 of 715 |
+| **207** | **4** | 715 |
+| 307 | 4 | 715 |
+| 347 | 4 | **577** |
+| 397 | 4 | **10** |
+
+Being `k`-chromatic is necessary for rigidity at `k` and nowhere near
+sufficient — a factor of about **1.9** in size separates the two, and
+everything in that gap is structure the chromatic number does not see. That is
+what `G`'s readings mean: 5-chromatic puts it at the analogue of 207 points,
+not 397, and the 13 356-point unions of translates are *wide* rather than
+*tight*, which is the same place.
+
 
 ## What the object would have to be, and how big
 

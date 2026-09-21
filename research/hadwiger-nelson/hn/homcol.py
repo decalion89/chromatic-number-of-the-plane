@@ -6646,6 +6646,50 @@ THE_SCALE_THE_DESIGN_WOULD_NEED = {
 }
 
 
+# Criticality arrives long before rigidity, and the gap is the whole problem.
+#
+# The obvious explanation of the census cliff is that four colours are simply
+# not scarce below it: a graph that 3-colours has abundant 4-colourings, so of
+# course every pattern survives, and rigidity would appear exactly when the
+# fourth colour becomes necessary.  Walking the same peel and asking for the
+# chromatic number at each size refutes it.
+#
+#     points   edges   chi   census at four
+#          7       0     3      715 of 715
+#        107     143     3      715
+#        157     288     3      715
+#        207     537     4      715      <- four colours become necessary
+#        257     819     4      715
+#        307    1145     4      715
+#        347    1445     4      577      <- rigidity begins
+#        397    1974     4       10
+#
+# Four colours become necessary at 207 points and the census does not move for
+# another 140 vertices, collapsing only in the last fifty.  Being k-chromatic
+# is necessary for rigidity at k and nowhere near sufficient; the ratio here is
+# 397/207, about 1.9, and everything in that gap is structure the chromatic
+# number does not see.
+#
+# That is what G's readings mean.  G is 5-chromatic, which puts it at the
+# analogue of 207 points, not 397 -- and the 13356-point unions of translates
+# are wide rather than tight, which is the same place.  They are all past
+# criticality and nowhere near rigidity.
+CRITICALITY_ARRIVES_LONG_BEFORE_RIGIDITY = {
+    "chi reaches four at": "207 points of Sa's 397",
+    "census leaves the ceiling at": "between 307 and 347",
+    "census collapses at": "397, the complete graph",
+    "the gap": "190 vertices, a factor of about 1.9 in size",
+    "so": "being k-chromatic is necessary for rigidity at k and nowhere near "
+          "sufficient",
+    "what it says about G": "5-chromatic puts G at the analogue of 207 "
+                            "points, not 397; the unions of translates are "
+                            "wide rather than tight and sit in the same place",
+    "the peel order": "identical to the census curve's, so the two columns "
+                      "are the same graphs",
+}
+
+
+
 
 
 

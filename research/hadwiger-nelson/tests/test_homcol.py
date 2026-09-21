@@ -3934,3 +3934,58 @@ def test_the_scale_arithmetic_is_what_it_claims():
     assert c["the gadget one level up"]["G, built here"] == 1581
     # and the saturation figure is the one the account rests on
     assert abs(576 / 397 - 1.45) < 0.01
+
+
+def test_criticality_and_rigidity_are_different_thresholds():
+    """Four colours become necessary long before any pattern is eliminated.
+
+    Checked at the size where the two disagree most cheaply: a 257-point
+    subgraph of Sa in the census curve's own peel order is already
+    4-chromatic -- not 3-colourable -- while its census is still the full
+    ceiling.  Both readings are the fast direction: one exhibits a
+    4-colouring, the other fails to 3-colour a graph small enough to settle
+    at once.
+    """
+    import math, random
+    import numpy as np
+    from fractions import Fraction as Fr
+    from hn.geometry import Point
+    from pysat.solvers import Solver
+    K = _gm.DEGREY_FIELD
+    P0 = _dg.build_Sa(K)
+    b = _ft.IntBasis.covering(P0)
+    r = b.rows(P0)
+    dm, d2 = b.dim, b.D * b.D
+    zi = P0.index(Point(K.zero(), K.zero()))
+    d = r - r[zi]
+    sq = b._field_square(d[:, :dm]) + b._field_square(d[:, dm:])
+    ok = np.ones(len(sq), dtype=bool)
+    for j in range(1, dm):
+        ok &= sq[:, j] == 0
+    ring = [int(o) for o in np.nonzero(ok)[0] if Fr(int(sq[o, 0]), d2) == 4]
+    ring.sort(key=lambda i: math.atan2(float(P0[i].y), float(P0[i].x)))
+    PIN = [P0[zi]] + [P0[i] for i in ring]
+    rng = random.Random(11)
+    order = [p for p in P0 if p not in set(PIN)]
+    rng.shuffle(order)
+    P = list(PIN) + order[:250]
+    assert len(P) == 257
+    bb = _ft.IntBasis.covering(P)
+    rr = bb.rows(P)
+    E = sorted(set((min(a, c), max(a, c))
+                   for a, c in _ft.fast_edges_complete(bb, rr)))
+
+    def colours(k):
+        cls = [[1 + v * k + c for c in range(k)] for v in range(len(P))]
+        for a, c in E:
+            for col in range(k):
+                cls.append([-(1 + a * k + col), -(1 + c * k + col)])
+        s = Solver(name="cd15", bootstrap_with=cls)
+        out = s.solve()
+        s.delete()
+        return out
+
+    assert not colours(3) and colours(4)       # chi is exactly four here
+    c = _hc.CRITICALITY_ARRIVES_LONG_BEFORE_RIGIDITY
+    assert "207" in c["chi reaches four at"]
+    assert c["census collapses at"].startswith("397")
