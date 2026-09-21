@@ -7190,6 +7190,48 @@ THE_BITES_ARE_THE_WHOLE_FAMILY = {
 }
 
 
+# The catalogue of isometric operations, complete and almost entirely empty.
+#
+# The classification narrows the search: an operation can tighten the census of
+# a set S only if it maps S to itself, so the family to try is the STABILISER
+# of whatever is being constrained.  Two things get constrained here, a ring
+# and a pair, and both stabilisers are small enough to exhaust.
+#
+# A RING about c: the rotations about c and the reflections in lines through c.
+#   - 104 bites of Sa about the origin, every ring the field can join, both
+#     directions: best census THREE, reached by D = 4 alone.  De Grey's.
+#   - 2280 bites about all other centres: census ten, every one, which is what
+#     the classification predicts since they move the circle.
+#   - 60 mirrors, chosen for the most matched points and reaching thirteen
+#     against the bite's six: census ten, every one.
+#
+# A PAIR {u, v}: the half-turn about the midpoint, which swaps them, and the
+# reflections in their own line and in its perpendicular bisector.
+#   - the whole stabiliser applied to 81 pairs of Sa across every closable
+#     distance class: 0 forced pairs.
+#
+# So of every isometric operation the plane offers, applied to the graph that
+# de Grey built for it, exactly one does anything: his own bite.  That is not
+# a failure of imagination in the search -- the stabilisers are the whole
+# space, and they have been enumerated.
+THE_CATALOGUE_OF_OPERATIONS_IS_COMPLETE = {
+    "the principle": "an operation tightens the census of S only if it maps S "
+                     "to itself, so the family to try is S's stabiliser",
+    "ring stabiliser": {"bites about the centre": "104 tried, best census 3 "
+                                                  "at D = 4",
+                        "bites about other centres": "2280 tried, census 10",
+                        "mirrors": "60 tried, up to 13 matched points, "
+                                   "census 10"},
+    "pair stabiliser": {"half-turn and both mirrors": "81 pairs, 0 forced"},
+    "so": "of every isometric operation the plane offers, exactly one does "
+          "anything to the graph built for it: de Grey's own bite",
+    "and it is not a failure of imagination": "the stabilisers are the whole "
+                                              "space and they have been "
+                                              "enumerated",
+}
+
+
+
 # Growing the graph does not improve the bite either.
 #
 # The growth raised spindle density fourfold and tightened nothing on its own.

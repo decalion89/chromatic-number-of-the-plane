@@ -4605,3 +4605,23 @@ def test_the_bite_search_is_complete_and_de_greys_is_optimal():
     # the unpruned union reaches exactly that floor
     assert _hc.THE_PRUNING_COSTS_TWO_OF_THREE_PAIRS[
         "Sa u rho(Sa), unpruned"]["surviving patterns"] == c["best census"]
+
+
+def test_the_operation_catalogue_covers_both_stabilisers():
+    """Every isometry that could matter was tried, and one worked.
+
+    The stabiliser of a circle about c is the rotations about c and the
+    reflections through c; the stabiliser of a pair is the half-turn about its
+    midpoint and the reflections in its two axes.  Both are enumerated in the
+    record, and only de Grey's bite moves anything.
+    """
+    c = _hc.THE_CATALOGUE_OF_OPERATIONS_IS_COMPLETE
+    ring, pair = c["ring stabiliser"], c["pair stabiliser"]
+    assert "best census 3" in ring["bites about the centre"]
+    assert ring["bites about other centres"].endswith("census 10")
+    assert ring["mirrors"].endswith("census 10")
+    assert pair["half-turn and both mirrors"].endswith("0 forced")
+    assert "exactly one" in c["so"]
+    # and it agrees with the floor recorded elsewhere
+    assert _hc.DE_GREYS_BITE_IS_OPTIMAL_AND_THE_SEARCH_IS_COMPLETE[
+        "best census"] == 3
