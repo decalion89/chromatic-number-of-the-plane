@@ -5219,6 +5219,29 @@ What this does **not** close is the other kind of construction: adding points
 that are the image of nothing — the seed search. That is open, and its size is
 measured: **one in 2³⁹** for a single level.
 
+## Testing the universe instead of the seed
+
+The seed search is the right target, but it was being asked the wrong way. The
+cap is **monotone in both directions**: it survives adding vertices, since more
+vertices means fewer colourings; and an *un*capped ring stays uncapped in every
+subgraph that still contains it, since a colouring restricts. So for a ring of
+at least `k` points, testing the **maximal** point set answers the question for
+every subgraph containing that ring — and a universe that fails rules out its
+entire subgraph lattice at once.
+
+Built as richly as the arithmetic allows: every point a short unit walk reaches
+using every unit direction the field offers, inside a disc.
+
+| radius | directions | points | edges | rings | capped at 5 |
+|---:|---:|---:|---:|---:|---:|
+| 2.6 | 30 | 1 717 | 8 292 | 7 | **0** |
+| 3.5 | 66 | 24 003 | 122 848 | 21 | **0** |
+| 5.0 | 90 | **70 021** | **374 333** | 27 | **0** |
+
+Seventy thousand points and three hundred and seventy thousand edges, swept in
+**105 seconds**, because "not capped" is the satisfiable answer. That is by far
+the largest object tested in this work, and its negative is not about it alone.
+
 
 ## Honest odds
 

@@ -4704,5 +4704,9 @@ def test_the_cap_is_monotone_in_both_directions():
     c = _hc.TEST_THE_UNIVERSE_NOT_THE_SEED
     assert c["universes tested"]["radius 3.5"]["capped"] == 0
     assert c["universes tested"]["radius 3.5"]["points"] == 24003
-    assert (c["universes tested"]["radius 3.5"]["points"] >
-            c["universes tested"]["radius 2.6"]["points"])
+    u = c["universes tested"]
+    pts = [u[r]["points"] for r in ("radius 2.6", "radius 3.5", "radius 5.0")]
+    assert pts == sorted(pts) and pts[-1] == 70021
+    assert all(u[r]["capped"] == 0 for r in u)
+    # every universe colours, so none of them is itself the answer
+    assert all(u[r]["rings"] >= 7 for r in u)

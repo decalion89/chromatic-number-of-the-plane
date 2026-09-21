@@ -7391,20 +7391,24 @@ THE_GROWTH_GROWS_AWAY_FROM_THE_RING = {
 #     radius   directions   points    edges   rings   capped
 #        2.6        30       1717      8292      7       0
 #        3.5        66      24003    122848     21       0
+#        5.0        90      70021    374333     27       0
 #
-# Twenty-four thousand points, a hundred and twenty thousand edges, and the
-# whole sweep costs twenty-six seconds because "not capped" is the satisfiable
-# answer.  That is the largest object tested anywhere in this work, and the
-# negative it gives is not about it alone: it is about every subgraph of it.
+# Seventy thousand points, three hundred and seventy thousand edges, ninety
+# unit directions, and the whole sweep costs a hundred and five seconds because
+# "not capped" is the satisfiable answer.  That is by far the largest object
+# tested anywhere in this work, and the negative it gives is not about it
+# alone: it is about every subgraph of it that keeps one of those rings.
 TEST_THE_UNIVERSE_NOT_THE_SEED = {
     "why the seed search was the wrong question": "the cap is monotone, so "
         "the maximal set answers for every subgraph containing the ring",
     "universes tested": {"radius 2.6": {"points": 1717, "edges": 8292,
                                         "rings": 7, "capped": 0},
                          "radius 3.5": {"points": 24003, "edges": 122848,
-                                        "rings": 21, "capped": 0}},
-    "cost": "twenty-six seconds for the larger, since 'not capped' is the "
-            "satisfiable answer",
+                                        "rings": 21, "capped": 0},
+                         "radius 5.0": {"points": 70021, "edges": 374333,
+                                        "rings": 27, "capped": 0}},
+    "cost": "a hundred and five seconds for the largest, since 'not capped' "
+            "is the satisfiable answer",
     "what it rules out": "not the universe alone but every subgraph of it "
                          "that contains one of those rings",
     "what it does not": "subgraphs whose ring is smaller than k points, which "
