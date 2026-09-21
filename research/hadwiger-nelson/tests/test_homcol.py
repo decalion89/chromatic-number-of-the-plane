@@ -4776,3 +4776,20 @@ def test_no_ring_feature_separates_capped_from_uncapped():
     assert "no local criterion" in c["which is"]
     # the hypothesis that died is recorded as having died
     assert "until D = 7" in c["the criterion that died"]
+
+
+def test_cost_is_not_evidence_and_the_record_says_so_three_times():
+    """The claim is that a long run carries no information, stated in advance.
+
+    Three instances in this work took a long time and came back satisfiable;
+    the record keeps them together so the lesson cannot be quietly forgotten
+    the next time something runs for half an hour.
+    """
+    c = _hc.COST_IS_NOT_EVIDENCE_A_THIRD_TIME
+    assert c["verdict"].startswith("SATISFIABLE")
+    assert c["said before the answer, not after"] is True
+    assert len(c["the earlier two"]) == 2
+    assert "1507" in c["time to decide"]
+    # and the asymmetry that makes racing worthwhile is recorded
+    assert "proves satisfiability" in c["what to do instead of waiting"]
+    assert "proves nothing" in c["what to do instead of waiting"]

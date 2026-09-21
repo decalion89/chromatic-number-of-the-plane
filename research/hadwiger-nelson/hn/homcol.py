@@ -7570,6 +7570,42 @@ NOTHING_ABOUT_THE_RING_DECIDES_THE_CAP = {
 }
 
 
+# A third confirmation that cost is not evidence, offered before the answer.
+#
+# The largest instance in this work -- G closed once under the intersection
+# generator, 26002 points and 122085 edges, 130010 variables -- took 1507
+# SECONDS to decide five-colourability, against one second for the same
+# question at four colours on a comparable graph.  While it ran, the honest
+# reading of that wait was that it carried no information, and that was said
+# rather than discovered afterwards.
+#
+# It came back SATISFIABLE.  So the wait meant nothing, for the third recorded
+# time: a ball instance here climbed from 21 to 6893 seconds and coloured, a
+# local-search plateau was twice read as evidence of unsatisfiability and twice
+# falsified, and now the biggest instance yet.
+#
+# The useful move while waiting is not to wait.  A local search landing on a
+# colouring PROVES satisfiability and ends the question; failing to land proves
+# nothing.  That asymmetry is why it is worth racing the solver rather than
+# watching it.
+COST_IS_NOT_EVIDENCE_A_THIRD_TIME = {
+    "instance": "G closed once under intersections: 26002 points, 122085 "
+                "edges, 130010 variables",
+    "time to decide": "1507 seconds",
+    "the same question at four colours elsewhere": "one second",
+    "verdict": "SATISFIABLE -- the wait carried no information",
+    "said before the answer, not after": True,
+    "the earlier two": ["a ball instance climbing 21 -> 6893 seconds and "
+                        "colouring",
+                        "a local-search plateau read as unsatisfiability, "
+                        "twice, and falsified twice"],
+    "what to do instead of waiting": "race it -- a local search that lands "
+                                     "proves satisfiability outright, while "
+                                     "failing to land proves nothing",
+}
+
+
+
 
 
 
