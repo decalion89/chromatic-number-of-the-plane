@@ -52,7 +52,8 @@ __all__ = ["edge_vectors", "has_homomorphism", "screen", "minimum_blocking_set",
            "denominator_29_directions",
            "closing_radicand", "closable_distance", "closable_over",
            "lattice_basis", "on_lattice", "blocks_at", "saturated_at", "decay_rates", "doubly_usable_ring", "agreeing_pairs",
-           "forced_same", "colour_symmetry_assumptions"]
+           "forced_same", "colour_symmetry_assumptions",
+    "width_two_spindle_separation", "independent_transversal_exists"]
 
 
 def _coords(e) -> Tuple[Fraction, ...]:
@@ -5853,6 +5854,127 @@ THE_BITE_THREADS_THE_RING = {
 # strong property implies the weak one, so a graph failing the weak one cannot
 # have the strong one anywhere on that ring -- which makes it the cheap
 # gateway test every scan should have started from.
+
+def width_two_spindle_separation(d2, steps=2):
+    """How far apart the two ends of a width-two hub disjunction must sit.
+
+    The spindle rotation about a hub turns the ring of squared radius d2 by the
+    angle whose chord is one.  Two points that many steps apart are separated
+    by the chord of that many times the angle, and every such chord is
+    rational: writing g(j) for the signed chord across j steps, g(0) = 0,
+    g(1) = 1 and g(j+1) = 2*cos(phi)*g(j) - g(j-1), where cos(phi)^2 is the
+    rational (4*d2 - 1) / (4*d2).  Carrying g as a rational pair -- a part with
+    no cos(phi) and a part with one -- keeps the recurrence exact, and one of
+    the two parts always vanishes, so the square of the chord is rational.
+
+    That square is the whole hypothesis of THE_WIDTH_TWO_SPINDLE: two points of
+    one ring, this far apart, standing in for the single forced pair the
+    ordinary spindle demands.  Only an even number of steps is usable, and it
+    then costs steps + 1 rotated copies.
+    """
+    d2 = Fraction(d2)
+    x = (4 * d2 - 1) / (4 * d2)          # cos(phi) squared
+    p, q = Fraction(0), Fraction(0)      # g(0) = 0
+    pn, qn = Fraction(1), Fraction(0)    # g(1) = 1
+    for _ in range(steps - 1):
+        p, q, pn, qn = pn, qn, 2 * qn * x - p, 2 * pn - q
+    return pn * pn + qn * qn * x + 2 * pn * qn * (x if pn == 0 or qn == 0
+                                                  else 0) \
+        if pn == 0 or qn == 0 else None
+
+
+def independent_transversal_exists(offsets, copies):
+    """Can one point be chosen from each rotated copy of a ring set?
+
+    Points of a circle are written as exponents of the spindle rotation, and
+    two are at unit distance exactly when their exponents differ by one.  The
+    t-th rotated copy of the graph states its disjunction over offsets shifted
+    by t, so the colour class of the shared hub must contain one exponent from
+    each shifted set, no two of them consecutive.
+
+    Searching for that choice is what decides whether stacking copies closes.
+    A transversal is a colouring, so finding one means the construction fails;
+    finding none means the union needs one more colour.
+    """
+    sets = [sorted({o + t for o in offsets}) for t in range(copies)]
+
+    def walk(i, chosen):
+        if i == len(sets):
+            return True
+        for a in sets[i]:
+            if all(abs(a - b) != 1 for b in chosen):
+                if walk(i + 1, chosen + [a]):
+                    return True
+        return False
+
+    return walk(0, [])
+
+
+# The spindle survives a disjunction of width two, and only at one separation.
+#
+# Every disjunction found so far refuses the spindle because each of its pairs
+# carries its own centre of rotation, and one rotation cannot serve them all.
+# Making the pairs SHARE an endpoint removes that objection: a hub u and a set
+# W of points at one distance from it, with u monochromatic with some point of
+# W in every proper k-colouring.  The rotation rho about u fixes u, so every
+# rotated copy rho^t(H) repeats the disjunction about the same hub over
+# rho^t(W), and the colour class of u must hold one point of each -- an
+# independent transversal inside a single circle.
+#
+# Write the circle's points as exponents of rho.  Two are at unit distance
+# exactly when their exponents differ by one, by rho's definition.  For W two
+# points apart by m the transversal is a walk that must change branch at every
+# step, and it exists for every m except +-2:
+#
+#     W = {0, -2}:  a0 in {0,-2}, a1 in {1,-1}, a2 in {2,0}
+#     a0 =  0  ->  both choices of a1 are one away.     dead
+#     a0 = -2  ->  a1 = 1  ->  both choices of a2 are one away.  dead
+#
+# So THREE copies suffice, against the ordinary spindle's two, and the price is
+# a hypothesis strictly weaker than a forced pair: "u is monochromatic with one
+# of these two" rather than "u is monochromatic with this one".
+#
+# The separation is forced to be a distance, which makes the hypothesis a
+# search: rho^2 moves a ring point by 2cos(theta/2), so |w - w'|^2 = 4 - 1/D.
+THE_WIDTH_TWO_SPINDLE = {
+    "hypothesis": "a hub u, a ring of squared radius D about it, and two "
+                  "points w, w' of that ring such that in EVERY proper "
+                  "k-colouring u is monochromatic with w or with w'",
+    "separation forced": "|w - w'|^2 = the squared chord across m steps of "
+                         "rho, rational for every m",
+    "conclusion": "the union of m + 1 rotated copies needs k+1 colours",
+    "which m work": "every even m, and no odd one; m costs exactly m + 1 "
+                    "copies, verified by exhaustive transversal search for "
+                    "m up to 11 and copies up to 12",
+    "why": {
+        "m odd": "every shifted pair holds one even exponent and one odd, so "
+                 "taking the even one always is a transversal, and even "
+                 "numbers are never consecutive -- no number of copies helps",
+        "m even": "every exponent inherits the parity of its copy, so a "
+                  "transversal must switch branch at every step; the two "
+                  "branches then drift apart until, at the (m+1)-th copy, an "
+                  "even choice and an odd one land one apart",
+    },
+    "weaker than": "the ordinary spindle, which is the case |W| = 1",
+    "the rotation's order does not matter": "on a ring whose rotation has "
+        "finite order N the exponents live in Z/N, and the wrap-around only "
+        "ADDS adjacencies, so a transversal modulo N lifts to one over Z and "
+        "the integer search is the safe direction",
+    "tested on": {"Sa at four": "1962 candidate (hub, ring, m, pair), "
+                                "0 carry it",
+                  "G at five": "7800 candidate (hub, ring, m, pair), "
+                               "0 carry it"},
+    "why so few candidates": "widening m from 2 to {2,4,6,8} added NOT ONE "
+                             "candidate: Sa and G realise the two-step chord "
+                             "on D = 3 and, degenerately, on D = 1/3, whose "
+                             "rotation has order six so that its two-, four- "
+                             "and eight-step chords all collapse to one.  No "
+                             "other chord is a distance in either graph",
+    "so the hypothesis must be built, not found": "rho^m(w) is constructible "
+        "wherever rho is, so closing a seed under rho puts every chord in the "
+        "graph by fiat; the family was simply never built for this",
+}
+
 THE_WEAK_PROPERTY_IS_THE_GATEWAY = {
     "weak": "some antipodal pair of ring D is monochromatic in EVERY proper "
             "k-colouring",

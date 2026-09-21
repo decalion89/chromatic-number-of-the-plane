@@ -3319,3 +3319,132 @@ def test_minimising_destroys_the_rings():
         "unbiteable" in c["the tension"]
     # and the bite is distinguished from the spindle
     assert "SHARPENS" in c["the bite"]
+
+
+from hn import homcol as _hc, degrey as _dg, geometry as _gm, fast as _ft  # noqa: E402
+
+
+def test_the_width_two_spindle_separation_matches_the_chord():
+    """The exact recurrence agrees with the trigonometry it replaces."""
+    import math
+    for d2 in (Fraction(4), Fraction(4, 9), Fraction(3), Fraction(16),
+               Fraction(7), Fraction(19, 4)):
+        d = math.sqrt(float(d2))
+        phi = math.asin(1 / (2 * d))
+        for m in (2, 3, 4, 5, 6, 8):
+            exact = _hc.width_two_spindle_separation(d2, m)
+            assert exact is not None
+            approx = (2 * d * math.sin(m * phi)) ** 2
+            assert abs(float(exact) - approx) < 1e-9, (d2, m, exact, approx)
+        # one step is the unit that defines the rotation
+        assert _hc.width_two_spindle_separation(d2, 1) == 1
+
+
+def test_the_hub_disjunction_closes_exactly_for_even_steps():
+    """Every even separation closes, at exactly one more copy than its size.
+
+    The transversal search is the lemma's whole content: a transversal is a
+    colouring of the shared hub's class, so finding one means the stack of
+    copies still colours and the construction fails.  Odd separations always
+    admit one -- take the even exponent from every shifted pair -- and even
+    separations admit one until the copies outnumber the separation.
+    """
+    ite = _hc.independent_transversal_exists
+    # the ordinary spindle is the case of a single point: two copies close
+    assert ite((0,), 1)
+    assert not ite((0,), 2)
+    for m in range(1, 12):
+        closing = [c for c in range(1, 14) if not ite((0, -m), c)]
+        if m % 2:
+            assert closing == [], m
+        else:
+            assert closing and closing[0] == m + 1, (m, closing)
+            # once it closes it stays closed: more copies only add constraints
+            assert closing == list(range(m + 1, 14)), (m, closing)
+
+
+def test_the_width_two_hypothesis_is_absent_from_de_greys_family():
+    """Sa's distance spectrum does not contain the chords the lemma needs.
+
+    Not a failure of the lemma but of the graph: Sa realises the two-step chord
+    on exactly two of its rings and no longer chord at all, so there is almost
+    nothing to test and nothing passes.
+    """
+    P = _dg.build_Sa(_gm.DEGREY_FIELD)
+    basis = _ft.IntBasis.covering(P)
+    rows = basis.rows(P)
+    dim, D2 = basis.dim, basis.D * basis.D
+    import numpy as np
+    sq_all = {}
+    for i in range(len(P)):
+        d = rows - rows[i]
+        sq = basis._field_square(d[:, :dim]) + basis._field_square(d[:, dim:])
+        rat = np.ones(len(sq), dtype=bool)
+        for m in range(1, dim):
+            rat &= sq[:, m] == 0
+        for j in np.nonzero(rat)[0]:
+            j = int(j)
+            if j != i:
+                sq_all[(i, j)] = Fraction(int(sq[j, 0]), D2)
+    from collections import defaultdict
+    realised = defaultdict(set)
+    for u in range(len(P)):
+        ring = defaultdict(list)
+        for j in range(len(P)):
+            if j != u and (u, j) in sq_all:
+                ring[sq_all[(u, j)]].append(j)
+        for d2, mem in ring.items():
+            if d2 == 1 or len(mem) < 2 or not _hc.closable_distance(d2):
+                continue
+            have = {sq_all[(a, b)] for a in mem for b in mem
+                    if a != b and (a, b) in sq_all}
+            for m in (2, 4, 6, 8):
+                if _hc.width_two_spindle_separation(d2, m) in have:
+                    realised[m].add(d2)
+    assert {m: sorted(v) for m, v in sorted(realised.items())} == {
+        2: [Fraction(1, 3), Fraction(3)],
+        4: [Fraction(1, 3)],
+        8: [Fraction(1, 3)],
+    }, dict(realised)
+    # D = 1/3 is the ring where the unit chord subtends sixty degrees, so its
+    # rotation has order six and the chords across two, four and eight steps
+    # all collapse onto the single value one.  Every chord Sa realises is
+    # therefore an artefact of that one degenerate ring, plus D = 3 at m = 2.
+    assert _hc.width_two_spindle_separation(Fraction(1, 3), 2) == 1
+    assert _hc.width_two_spindle_separation(Fraction(1, 3), 4) == 1
+    assert _hc.width_two_spindle_separation(Fraction(1, 3), 6) == 0
+
+
+def test_a_finite_order_rotation_cannot_rescue_the_transversal():
+    """Searching the integers rather than the cycle is the safe direction.
+
+    When the ring's rotation has finite order N the exponents live in Z/N, and
+    the wrap-around identifies points that the integers keep apart.  That can
+    only ADD adjacencies -- two exponents one apart modulo N need not be one
+    apart in Z -- so a transversal modulo N always lifts to a transversal in
+    Z, and the absence of one in Z is the stronger statement.  The lemma may
+    therefore be applied without knowing the rotation's order.
+
+    Checked against the cyclic search directly, over every order and every
+    separation small enough to enumerate.
+    """
+    def cyclic(offsets, copies, N):
+        sets = [sorted({(o + t) % N for o in offsets}) for t in range(copies)]
+
+        def walk(i, chosen):
+            if i == len(sets):
+                return True
+            for a in sets[i]:
+                if all((a - b) % N not in (1, N - 1) for b in chosen):
+                    if walk(i + 1, chosen + [a]):
+                        return True
+            return False
+
+        return walk(0, [])
+
+    for N in range(3, 16):
+        for m in range(1, 9):
+            for copies in range(1, 10):
+                cyc = cyclic((0, -m), copies, N)
+                itg = _hc.independent_transversal_exists((0, -m), copies)
+                assert not (cyc and not itg), (N, m, copies)
