@@ -9615,3 +9615,46 @@ THE_INTERSECTION_UNIVERSE_OF_G_COLOURS = {
     "cost is not evidence, a fourth time": "88 minutes of solving produced a "
                                            "colouring",
 }
+
+
+# A decision procedure for tightness, and what it says at four colours.
+#
+# Hill climbing over sets could not find de Grey's configuration even inside
+# Sa, because a tight set is an isolated minimum: swap any one of its points
+# out and the palette jumps back to full, so there is no approach path.  The
+# question needs a method that does not walk.
+#
+# It has one.  A set fails to be tight the moment ONE colouring shows too many
+# colours on it, so a finite sample of colourings gives a necessary condition
+# that encodes directly: a variable per vertex, a cardinality constraint for
+# the size, and for each sampled colouring a demand that enough colours be
+# missing from the chosen set.  Solve; verify the candidate exactly; if it
+# survives, it is tight, and if not, the verification returns the colouring
+# that breaks it, which joins the sample.
+#
+# The loop decides rather than searches.  A genuinely tight set satisfies the
+# condition against every sample, so unsatisfiability is a proof that no tight
+# set of that size exists -- not a failure to find one.
+#
+# On Sa at four colours, asked for seven points at palette 2, it returns after
+# 175 seconds:
+#
+#   the origin, and (+-2, 0), (+-1, +-sqrt3)
+#
+# which is the regular hexagon of radius 2 about the origin -- de Grey's exact
+# configuration, with 12 pairs at distance 2, 6 at 2*sqrt3 and 3 at 4, the
+# antipodal ones.  Reconstructed from nothing but the graph and the question.
+THE_DECISION_PROCEDURE_FINDS_DE_GREYS_SET = {
+    "why a search will not do": "a tight set is an isolated minimum -- "
+                                "swapping one point out restores the full "
+                                "palette -- so hill climbing has no approach",
+    "the method": "sample colourings; require the chosen set to miss enough "
+                  "colours in each; verify exactly; feed the refuting "
+                  "colouring back",
+    "what makes it a decision": "unsatisfiable means no tight set of that "
+                                "size exists at all",
+    "Sa at four colours, seven points, palette 2": "the origin and the "
+                                                   "radius-2 hexagon, in 175 "
+                                                   "seconds",
+    "distances inside it": "12 pairs at 2, 6 at 2*sqrt3, 3 at 4",
+}
