@@ -2890,3 +2890,25 @@ def test_the_local_search_plateau_was_not_evidence():
     assert "landing proves satisfiability" in r["the rule"]
     # and it happened on both graphs, so it is a pattern and not one miss
     assert "G's class 4/9" in r["the other time"]
+
+
+def test_two_distance_lattices_all_coloured():
+    c = hn.homcol.TWO_DISTANCE_LATTICES_ARE_CAYLEY_GRAPHS
+    assert c["instances"] == c["5-colourable"] == 45
+    assert "Cayley" in c["why"]
+    # the count adds up: three patches times the distances, both lattices
+    t = c["tested"]
+    total = sum(len(v["patches"]) * len(v["second distances"])
+                for v in t.values())
+    assert total == c["instances"]
+    # and it does not touch the single-distance result
+    assert "still holds" in c["does not contradict"]
+
+
+def test_the_lattice_distances_really_are_closable():
+    # the sweep only used second distances the field can spindle
+    from fractions import Fraction as Fr
+    c = hn.homcol.TWO_DISTANCE_LATTICES_ARE_CAYLEY_GRAPHS["tested"]
+    for lat in c.values():
+        for d in lat["second distances"]:
+            assert hn.homcol.closable_distance(Fr(d)), d

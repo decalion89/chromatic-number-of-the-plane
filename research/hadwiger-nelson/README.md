@@ -4457,6 +4457,35 @@ bite sharpens a weak property into a named pair rather than creating one, `Sa`
 carries one at four and `G` carries none at five, and no union, thickening or
 closure of `G` changes that.
 
+## Leaving the family: two-distance lattices, and why they fail
+
+Everything above descends from one seed. `S` gives `Sa` gives `Y` gives `G`, and
+the closures, bites and thickenings of `G` are still `G`. The family carries the
+weak property at four colours and nothing at five, and the bite cannot create
+one — so the search has to leave the family, not grow it.
+
+The mechanism does not require the family. The weak property is exactly "the
+graph on this point set with **both** distance 1 and distance `d` joined is not
+`k`-colourable", and the point set is free. Single-distance lattices were ruled
+out here earlier and correctly — they are always bipartite — but that argument
+says nothing about two distances, where the parity classes interleave and the
+bipartition dies.
+
+Forty-five instances: triangular patches of 127, 301 and 517 points with second
+distance squared in `{3, 4, 7, 9, 16, 19, 25, 37}`, square patches of 113, 253
+and 441 with `{2, 4, 9, 16, 25, 34, 37}`, every second distance closable over de
+Grey's own field. **Every one 5-colourable, every one in under a second.**
+
+The reason is structural: a two-distance lattice graph is a **Cayley graph of
+`Z^2`**. Both edge sets are translation-invariant, so a periodic colouring by
+cosets of a sublattice avoiding both generator sets works, and five colours
+leave far too much room. Homogeneity is exactly what makes them easy.
+
+Which says where the structure has to come from. `Sa` is inhomogeneous: it is a
+dihedral closure under a rotation of **infinite order**, so its points sit at
+many scales — radii `1`, `1/3`, `5/9`, `4/3`, `5/3` — and no translation
+preserves it. A lattice has one scale and order-six rotations.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
