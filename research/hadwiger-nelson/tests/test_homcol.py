@@ -2720,3 +2720,28 @@ def test_de_greys_lemma_has_no_slack():
     assert hub["same as G's about G[0]"] is True
     assert hub["rings carrying the weak property"] == 0
     assert hub["added"] > 9000        # many points, no new ring points
+
+
+def test_the_hard_class_is_not_the_big_one():
+    # if difficulty tracked the number of forbidden pairs, the 6510-pair class
+    # would be the hard one.  The hard one has 1558.
+    c = hn.homcol.THE_EDGE_IS_AT_FOUR_NINTHS["G's closable classes at five, "
+                                             "by cost"]
+    assert "instant" in c["1/3 (6510 pairs)"]
+    assert "unresolved" in c["4/9 (1558)"]
+
+
+def test_four_ninths_needs_no_adjunction():
+    # both radicals the template wants are already in de Grey's field
+    from fractions import Fraction as Fr
+    assert hn.homcol.doubly_usable_ring(Fr(4, 9), (3, 5, 7, 11))
+    assert hn.homcol.closing_radicand(Fr(4, 9)) == 7
+    assert hn.homcol.closing_radicand(4 * Fr(4, 9)) == 55
+
+
+def test_the_ball_curve_is_monotone_and_steep():
+    b = hn.homcol.THE_EDGE_IS_AT_FOUR_NINTHS["balls about the hub, all "
+                                             "colouring"]
+    secs = [int(v.rstrip("s")) for _, v in sorted(b.items())]
+    assert secs == sorted(secs)
+    assert secs[-1] > 50 * secs[0]      # 21s to 6893s over 360 points

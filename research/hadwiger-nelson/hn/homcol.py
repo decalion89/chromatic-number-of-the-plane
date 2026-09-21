@@ -5947,3 +5947,50 @@ THE_LEMMA_IS_TIGHT_AND_THE_HUB_CLOSURE_IS_EMPTY = {
                                               "still colourable",
                                               "Sa": "60 pairs, uncolourable"},
 }
+
+
+# The by-distance gateway is the sensitive instrument, and G sits at its edge.
+#
+# Forbidding a whole closable distance class, rather than one ring's antipodal
+# pairs, is strictly stronger and enormously more expensive -- and the expense
+# is the measurement.  At five colours G clears its four biggest classes in
+# seconds each and then stops dead on the FIFTH, which is also its smallest of
+# the five: D = 4/9, 1558 pairs, which resisted cadical, glucose, minisat and
+# lingeling for over an hour.
+#
+# Balls about the hub locate it exactly.  Every one of them colours, so the
+# full graph almost certainly does too; what the curve says is where G stands.
+# The cost goes 21s, 72s, 1279s, 4969s, 6893s for 1200, 1400, 1500, 1540, 1560
+# points -- super-exponential, and the last of those has 1548 of the 1558
+# pairs forbidden and still colours.
+#
+# So the verdict is probably negative and the reading is not the verdict.  G is
+# nowhere near the property on nine of its closable classes and right at the
+# edge on one, and that one, D = 4/9, is doubly usable with no adjunction:
+# 4D - 1 = 7/9 wants sqrt(7) for the bite, 16D - 1 = 55/9 wants sqrt(55) for
+# the spindle, both already in de Grey's field.  It is also one of the three
+# classes Sa carries at four colours.
+THE_EDGE_IS_AT_FOUR_NINTHS = {
+    "G's closable classes at five, by cost": {
+        "1/3 (6510 pairs)": "colours, instant",
+        "7/3 (3648)": "colours, instant",
+        "3 (3216)": "colours, instant",
+        "5/9 (2448)": "colours, 20s",
+        "4/9 (1558)": "over an hour on four solvers, unresolved",
+    },
+    "balls about the hub, all colouring": {1200: "21s", 1400: "72s",
+                                           1500: "1279s", 1540: "4969s",
+                                           1560: "6893s"},
+    "at 1560 points": "1548 of the 1558 pairs forbidden, and it still colours",
+    "so": "the full instance is probably satisfiable; the curve is the result",
+    "why 4/9 and not another": {
+        "doubly usable with no adjunction": "4D-1 = 7/9 -> sqrt(7) for the "
+                                            "bite, 16D-1 = 55/9 -> sqrt(55) "
+                                            "for the spindle",
+        "Sa carries it at four colours": True,
+        "G's ring of it": "six points, about 1239 of G's 1581 vertices",
+    },
+    "caution": "solver difficulty is not a principled distance to the "
+               "property.  It is a real asymmetry across classes of the same "
+               "graph at the same size, and no more than that.",
+}

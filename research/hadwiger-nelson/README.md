@@ -4247,6 +4247,56 @@ a graph whose bite can be sharpened; it is a graph with nothing to sharpen.
 What it does not touch is other graphs. The weak property belongs to a graph,
 and `G` is one graph.
 
+## The by-distance gateway, and where G's edge is
+
+Antipodality was de Grey's *symmetric* choice, not the lemma's requirement. The
+weak property needs a set of non-adjacent pairs all at the **same distance**,
+such that forbidding every one kills colourability — they share the distance, so
+they share the spindle rotation's angle; only its centre moves from pair to
+pair. Dropping antipodality widens the family from 119 antipodal pairs over 8
+rings to 21344 pairs over 36 closable distance classes.
+
+`Sa` carries it on three of its fourteen closable classes — `D = 4/9` (393
+pairs), `D = 4` (273), `D = 16/9` (156) — and size is not what decides: those sit
+5th, 6th and 9th of fourteen, while the four biggest classes all colour. De Grey
+took `D = 4` and then only the three **antipodal** pairs out of its 273, the
+tightest of the three statements. His lemma has no slack: drop any one of the
+three and `Sa` colours again.
+
+The same test on `G` at five colours is enormously more expensive, and the
+expense is the measurement. `G` clears its four biggest classes in seconds each
+and then stops dead on the fifth — which is also the *smallest* of the five:
+
+| class | pairs forbidden | cost |
+|---|---|---|
+| `D = 1/3` | 6510 | instant |
+| `D = 7/3` | 3648 | instant |
+| `D = 3` | 3216 | instant |
+| `D = 5/9` | 2448 | 20 s |
+| **`D = 4/9`** | **1558** | **over an hour, on four solvers, unresolved** |
+
+Balls about the hub locate it. Every one of them **colours**, so the full graph
+almost certainly does too — what the curve says is where `G` stands:
+
+| ball | cost |
+|---|---|
+| 1200 pts | 21 s |
+| 1400 pts | 72 s |
+| 1500 pts | 1279 s |
+| 1540 pts | 4969 s |
+| 1560 pts | 6893 s — with **1548 of the 1558** pairs forbidden, and it still colours |
+
+So the verdict is probably negative and the reading is not the verdict. `G` is
+nowhere near the property on nine of its closable classes and right at the edge
+on one. That one is `D = 4/9`, which is **doubly usable with no adjunction at
+all** — `4D - 1 = 7/9` wants `sqrt(7)` for the bite, `16D - 1 = 55/9` wants
+`sqrt(55) = sqrt(5) sqrt(11)` for the spindle, both already in de Grey's field —
+and it is one of the three classes `Sa` carries at four.
+
+Solver difficulty is not a principled distance to the property, and is not
+offered as one. It is a real asymmetry across classes of the same graph at the
+same size, and it points at one class rather than the others.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
