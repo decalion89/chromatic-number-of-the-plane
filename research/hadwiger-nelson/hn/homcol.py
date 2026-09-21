@@ -5091,3 +5091,46 @@ CORRELATION_TRACKS_GADGET_DENSITY = {
                       "of those above 0.002 per point -- three orders below "
                       "where four colours starts to bite",
 }
+
+
+# G contains essentially one 5-critical subgraph, and it is enormous.
+#
+# The mechanism needs gadgets at density, and the five-colour gadget is a
+# 5-critical subgraph.  Sa carries 576 spindles on 397 points, ten
+# memberships per point; for 500-vertex gadgets to match that a graph would
+# need about n/50 distinct ones, thirty-two inside G.
+#
+# It has one.  If G - v is 4-COLOURABLE then v lies in EVERY 5-critical
+# subgraph, and that is the cheap side of the query -- the solver need only
+# exhibit a colouring.  Thirty random vertices, 400000 conflicts each:
+#
+#     19 essential   (G - v is 4-colourable: v is in every one)
+#      0 dispensable (G - v still 5-chromatic)
+#     11 undecided within the budget
+#
+# Nineteen proved, none refuted.  So every 5-critical subgraph of G contains
+# at least those nineteen, and by proportion at least 63 per cent of G's 1581
+# vertices -- about a thousand.  The density of five-colour gadgets in G is
+# therefore at most 0.001 per point, against the Moser spindle's 1.45 in Sa.
+# A factor of fourteen hundred, and the last piece of the account.
+#
+# The budget is safe-sided in the direction used.  It can fail to find a
+# colouring but never invent one, so every "essential" is sound; the eleven
+# undecided are genuinely open and are not counted either way.
+G_HAS_ONE_FIVE_CRITICAL_SUBGRAPH = {
+    "probed": 30,
+    "essential": 19,
+    "dispensable": 0,
+    "undecided": 11,
+    "budget": 400000,
+    "what_essential_means": "G - v is 4-colourable, so v lies in every "
+                            "5-critical subgraph of G",
+    "consequence": "every 5-critical subgraph of G contains at least 63 per "
+                   "cent of its 1581 vertices, about a thousand",
+    "density": "at most 0.001 five-colour gadgets per point, against 1.45 "
+               "Moser spindles per point in Sa -- a factor of 1400",
+    "the_budget_is_safe_sided": "it can fail to find a colouring but never "
+                                "invent one, so every 'essential' is sound; "
+                                "the eleven undecided are open and counted "
+                                "neither way",
+}
