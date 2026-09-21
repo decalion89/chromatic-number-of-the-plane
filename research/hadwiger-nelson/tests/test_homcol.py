@@ -2321,3 +2321,49 @@ def test_G_minus_a_vertex_can_be_four_coloured():
 
     assert not [1 for x, y in sub if col[x] == col[y]]
     assert len(keep) == 1580 and len(sub) == 7869
+
+
+def test_criticality_and_correlation_run_opposite():
+    """The inversion, on the two graphs it is measured on.
+
+    Sa and Y are as far from critical as a graph can be -- not one deletion
+    in forty drops their chromatic number -- and carry the strongest colour
+    relations here, 24.0 and 25.4.  G is nearly vertex-critical, nineteen
+    deletions in thirty dropping it, and carries none, 1.1.
+
+    Which is the right way round, once said properly: critical means minimal,
+    exactly enough constraint to force the chromatic number and nothing to
+    spare, so everything not load-bearing is free.  Redundant structure
+    correlates; tight structure does not.  This is the measurement that
+    finishes off the criticality diagnosis, already withdrawn on the weaker
+    grounds that the pinning graph is the more redundant.
+    """
+    from pysat.solvers import Solver
+    from hn.degrey import build_Sa
+    from hn.geometry import DEGREY_FIELD as F
+    from hn.graph import build_graph
+    from hn.homcol import CRITICALITY_AND_CORRELATION_RUN_OPPOSITE as C
+
+    # Sa loses no chromatic number to a single deletion -- spot-check three.
+    g = build_graph(build_Sa(F))
+    n, k = g.n, 3
+    E = [(min(a, b), max(a, b)) for a, b in g.edges()]
+    for v in (0, 100, 250):
+        keep = [w for w in range(n) if w != v]
+        idx = {w: i for i, w in enumerate(keep)}
+        cls = [[1 + i * k + c for c in range(k)] for i in range(len(keep))]
+        for a, b in E:
+            if a == v or b == v:
+                continue
+            x, y = idx[a], idx[b]
+            for c in range(k):
+                cls.append([-(1 + x * k + c), -(1 + y * k + c)])
+        sv = Solver(name="cd19", bootstrap_with=cls)
+        still_four = not sv.solve()
+        sv.delete()
+        assert still_four, f"Sa - {v} should still need four colours"
+
+    m = C["measured"]
+    assert m["Sa at 4"]["correlation"] > 20 > m["G at 5"]["correlation"]
+    assert m["Sa at 4"]["deletions_dropping_chi"].startswith("0")
+    assert m["G at 5"]["deletions_dropping_chi"].startswith("19")

@@ -3934,6 +3934,34 @@ hundred, and the account closes.
 colouring but never invent one, so every "essential" verdict is sound. The
 eleven undecided are genuinely open and counted neither way.)
 
+## Criticality and correlation run opposite
+
+The criticality diagnosis was withdrawn once already, on the weak grounds that
+the graph which pins pairs is the more redundant. Measuring criticality
+directly finishes it off, and the other way round from the intuition this
+search began with:
+
+| graph | `k` | one deletion drops `χ`? | correlation at `k` |
+|---|---|---|---|
+| `Sa` | 4 | **0 of 40** — never | **24.0** |
+| `Y` | 4 | **0 of 40** — never | 25.4 |
+| `G` | 5 | **19 of 30** — usually | **1.1** |
+
+`Sa` and `Y` are as far from critical as a graph can be, and carry the
+strongest colour relations measured here. `G` is nearly vertex-critical and
+carries none.
+
+In hindsight that is the right way round. **Critical means minimal** — exactly
+enough constraint to force the chromatic number and nothing to spare — so
+everything not load-bearing is free. It is the *redundant* structure that
+correlates.
+
+Which says the five-colour search cannot be fixed by finding a leaner
+5-chromatic graph. Leaner is the wrong direction. What forced de Grey's pair
+was `Sa`'s **surplus** — 397 vertices where seven suffice, 576 spindles packed
+into them — and a five-colour object with that surplus has to be built, not
+trimmed.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

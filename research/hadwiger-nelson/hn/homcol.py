@@ -5173,3 +5173,56 @@ G_IS_NEARLY_VERTEX_CRITICAL = {
     "the_stronger_statement": "a tight, nearly critical 5-chromatic graph has "
                               "no colour relation beyond its edges",
 }
+
+
+# Criticality and correlation run opposite, and the inversion is total.
+#
+# The criticality diagnosis was withdrawn once already, on the weak grounds
+# that the graph which pins pairs is the more redundant of the two.  Measuring
+# criticality directly finishes it off, and in the stronger direction:
+#
+#     graph   k   one deletion drops chi?   correlation at k
+#     Sa      4   0 of 40  -- never          24.0
+#     Y       4   0 of 40  -- never          25.4
+#     G       5   19 of 30 -- usually         1.1
+#
+# Sa and Y are as far from critical as a graph can be -- not one single
+# deletion out of forty drops their chromatic number -- and they carry the
+# strongest colour relations measured here.  G is nearly vertex-critical, most
+# deletions dropping it, and carries none.
+#
+# The two quantities are anti-correlated, which inverts the intuition this
+# search began with.  In hindsight it is the right way round: critical means
+# MINIMAL, exactly enough constraint to force the chromatic number and nothing
+# to spare, so everything not load-bearing is free.  It is the redundant
+# structure that correlates, not the tight structure.
+#
+# Which also says why the five-colour search cannot be fixed by finding a
+# leaner 5-chromatic graph.  Leaner is the wrong direction.  What forced
+# de Grey's pair was Sa's surplus -- 397 vertices where seven suffice, and 576
+# spindles packed into them -- and a five-colour object with the same surplus
+# would need to be built, not trimmed.
+CRITICALITY_AND_CORRELATION_RUN_OPPOSITE = {
+    "measured": {"Sa at 4": {"deletions_dropping_chi": "0 of 40",
+                             "correlation": 24.0},
+                 "Y at 4": {"deletions_dropping_chi": "0 of 40",
+                            "correlation": 25.4},
+                 "G at 5": {"deletions_dropping_chi": "19 of 30",
+                            "correlation": 1.1}},
+    "the_inversion": "the graphs furthest from critical carry the strongest "
+                     "relations; the nearly critical one carries none",
+    "why_it_is_the_right_way_round": "critical means minimal -- exactly "
+                                     "enough constraint to force the "
+                                     "chromatic number and nothing to spare, "
+                                     "so everything not load-bearing is free. "
+                                     " Redundant structure correlates; tight "
+                                     "structure does not.",
+    "consequence_for_the_search": "a leaner 5-chromatic graph is the wrong "
+                                  "direction.  What forced de Grey's pair was "
+                                  "Sa's surplus -- 397 vertices where seven "
+                                  "suffice, 576 spindles packed into them -- "
+                                  "and a five-colour object with that surplus "
+                                  "has to be built, not trimmed.",
+    "finishes": "the criticality diagnosis, withdrawn earlier on weaker "
+                "grounds",
+}
