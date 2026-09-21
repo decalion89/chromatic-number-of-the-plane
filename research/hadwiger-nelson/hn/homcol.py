@@ -9439,3 +9439,37 @@ THE_CHAIN_RUNS_AND_NOTHING_HAPPENS = {
                              "found none at any centre or radius",
     "what it rules out": "that the chain itself was the missing ingredient",
 }
+
+
+# The radius-one ring, which every scan here skipped as trivial.
+#
+# A ring at distance exactly 1 from its centre is capped for free: the centre
+# touches all of it, so the ring cannot carry the centre's colour and its
+# palette is at most k-1 with no geometry involved.  Every scan skipped it on
+# that ground, and the ground is sound for the bound but not for the question.
+# A radius-one ring whose palette falls BELOW k-1 is capped by the graph
+# rather than by its centre, and that would not be trivial at all -- it is a
+# cap on a vertex's own neighbourhood, the one ring every vertex has, and the
+# turn that stitches it to itself is the sixty-degree rotation, free in any
+# field.
+#
+# Asked of every vertex, on the whole graph, at both levels:
+#
+#   Sa at four colours: all 397 neighbourhoods have palette exactly 3
+#   G  at five colours: all 1581 neighbourhoods have palette exactly 4
+#
+# Not one below the free bound, at either level.  So this hole is closed the
+# same way at four and at five, which is itself worth knowing: unlike the ring
+# caps, which are abundant at four and absent at five, the neighbourhood
+# carries nothing at either.  Whatever de Grey's lemma is made of, it is not
+# made of neighbourhoods.
+THE_NEIGHBOURHOOD_SITS_EXACTLY_AT_THE_FREE_BOUND = {
+    "the free bound": "k-1, because the centre is adjacent to all of it",
+    "Sa at k=4": "397 of 397 neighbourhoods at palette 3",
+    "G at k=5": "1581 of 1581 neighbourhoods at palette 4",
+    "below the free bound": 0,
+    "why it matters that both levels agree": "the ring caps separate four "
+                                             "from five; the neighbourhood "
+                                             "does not, so it is not what the "
+                                             "cap is made of",
+}
