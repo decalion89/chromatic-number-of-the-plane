@@ -2700,3 +2700,23 @@ def test_de_greys_ring_carries_the_weak_property_with_three_pairs():
     # and the spindle distance it names is the one the pair sits at
     assert "16" in c["D=4"]
     assert hn.homcol.closable_distance(Fraction(16))
+
+
+def test_the_carrying_classes_are_not_the_biggest():
+    # if the property were just "forbid enough pairs", the classes carrying it
+    # would be the populous ones.  They are not: Sa's three sit 5th, 6th and
+    # 9th of fourteen by size.
+    c = hn.homcol.THE_WEAK_PROPERTY_GENERALISES_PAST_ANTIPODAL
+    yes = c["Sa at four, closable classes carrying it"]
+    no = c["Sa at four, closable classes that do not"]
+    assert max(no.values()) > max(yes.values())
+    assert min(no.values()) < min(yes.values())
+
+
+def test_de_greys_lemma_has_no_slack():
+    c = hn.homcol.THE_LEMMA_IS_TIGHT_AND_THE_HUB_CLOSURE_IS_EMPTY
+    assert c["Sa's D=4 antipodal pairs"] == c["how many are needed"]
+    hub = c["G closed about its hub"]
+    assert hub["same as G's about G[0]"] is True
+    assert hub["rings carrying the weak property"] == 0
+    assert hub["added"] > 9000        # many points, no new ring points

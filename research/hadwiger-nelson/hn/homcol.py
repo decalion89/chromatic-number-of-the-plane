@@ -5888,3 +5888,62 @@ G_FAILS_THE_GATEWAY_EVERYWHERE = {
     "what it does not touch": "graphs other than G -- the weak property is a "
                               "property of a graph, and G is one graph",
 }
+
+
+# Antipodality was de Grey's symmetric choice, not the lemma's requirement.
+#
+# The weak property needs a set of non-adjacent pairs, all at the SAME distance
+# d, such that forbidding every one of them kills colourability.  They all
+# share the distance, so they all share the spindle rotation's angle; only its
+# centre differs from pair to pair.  Nothing in that asks the pairs to be
+# antipodal about a common point.
+#
+# Dropping the requirement widens the family enormously.  G carries 21344
+# non-edge pairs at a rational closable distance over 36 classes, against 119
+# antipodal pairs over 8 rings about its hub -- and forbidding six thousand
+# pairs is a serious constraint where forbidding three is not.
+#
+# Sa carries the weak property on three distance classes, and its antipodal
+# D = 4 ring -- the one de Grey used -- is the middle of them by size.
+THE_WEAK_PROPERTY_GENERALISES_PAST_ANTIPODAL = {
+    "Sa at four, closable classes carrying it": {"4/9": 393, "4": 273,
+                                                 "16/9": 156},
+    "Sa at four, closable classes that do not": {"1/3": 1632, "7/3": 912,
+                                                 "3": 804, "5/9": 624,
+                                                 "11/9": 210, "13/3": 180,
+                                                 "7": 36, "20/3": 24,
+                                                 "9": 12, "31/3": 12},
+    "so": "3 of Sa's 14 closable classes carry it, and more pairs is not "
+          "more likely -- the three that carry it are 5th, 6th and 9th by "
+          "size out of fourteen",
+    "de Grey used": "D = 4, and only its three ANTIPODAL pairs of the 273 in "
+                    "the class, which is the tightest statement of the three",
+}
+
+
+# De Grey's lemma has no slack, and closing G about its hub adds nothing.
+#
+# Sa's D = 4 ring carries three antipodal pairs and all three are needed:
+# dropping any one lets the graph colour again.  The lemma is exactly as small
+# as it can be.
+#
+# On the other side, the obvious way to make G look like Sa fails.  Sa is the
+# dihedral closure of its seed about the origin, and the origin is its hub --
+# degree 60, the highest in the graph, symmetry and density at one point.  G
+# has a hub of degree 60 too, at G[0], but G's symmetry is about (-2, 0), the
+# spindle pivot, which is not a hub.  Closing G about G[0] to make them
+# coincide gives 11047 points and identical ring populations -- 60, 48, 36, 36,
+# 24, 12, 12 -- because G was already six-fold symmetric there.  9466 new
+# points, not one new ring point, and 0 of 11 rings carry the property.
+THE_LEMMA_IS_TIGHT_AND_THE_HUB_CLOSURE_IS_EMPTY = {
+    "Sa's D=4 antipodal pairs": 3,
+    "how many are needed": 3,
+    "G closed about its hub": {"points": 11047, "added": 9466,
+                               "ring populations": [60, 48, 36, 36, 24,
+                                                    12, 12],
+                               "same as G's about G[0]": True,
+                               "rings carrying the weak property": 0},
+    "and with every ring forbidden at once": {"G about G[0]": "258 pairs, "
+                                              "still colourable",
+                                              "Sa": "60 pairs, uncolourable"},
+}
