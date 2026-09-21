@@ -5434,3 +5434,47 @@ SURPLUS_DOES_NOT_PREDICT = {
     "and_so": "within four colours degree predicts and surplus does not; at "
               "five colours degree is flat.  Neither axis leads anywhere.",
 }
+
+
+# Two extrapolations to the scale six would need, and they disagree by eighty.
+#
+# The degree curve at four colours rises roughly exponentially above degree
+# eight -- 5.0 at 8.11 and 24.0 at 9.94, a slope of 0.857 per degree.  At five
+# colours it is flat at one up to the highest degree reached here, 10.64.  If
+# the five-colour curve has the same slope and simply starts later, reaching a
+# ratio of 24 would take degree about 14.3.
+#
+# Average degree in this family grows very slowly with size -- 9.96 at G's
+# 1581 points, 10.64 at G*'s 13873, 11.36 at Z's 27673, which fits
+# 9.96 + 0.49 ln(n/1581).  Degree 14.3 on that fit needs about 1.3e7 points.
+#
+# The other extrapolation, from the size of the forcer, said 157000: the
+# rhombus forces at three colours on 4 vertices and Y at four on 791, a factor
+# of 198, and one more such factor from 791.
+#
+# They disagree by a factor of eighty, which is the honest headline.  Both are
+# extrapolations from two or three points; one assumes the five-colour curve
+# shares the four-colour slope, which nothing supports, and the other assumes
+# the forcer keeps growing by the same factor, which nothing supports either.
+# What they agree on is the only part worth quoting: the scale is somewhere
+# between a hundred thousand and ten million points, and everything built in
+# this session tops out at 55345.
+TWO_EXTRAPOLATIONS_TO_THE_SCALE_NEEDED = {
+    "by_degree": {"four_colour_slope": 0.857,
+                  "fit": "ratio ~ 5.0 exp(0.857 (d - 8.11))",
+                  "five_colour_curve": "flat at 1 up to degree 10.64",
+                  "degree_for_ratio_24": 14.3,
+                  "degree_growth": "9.96 + 0.49 ln(n/1581), from G, G* and Z",
+                  "points_needed": 1.3e7},
+    "by_forcer": {"k=3": 4, "k=4": 791, "factor": 198,
+                  "points_needed": 157000},
+    "they_disagree_by": 80,
+    "why_both_are_crude": "each is an extrapolation from two or three points; "
+                          "one assumes the five-colour curve shares the "
+                          "four-colour slope and the other that the forcer "
+                          "keeps growing by the same factor, and nothing "
+                          "supports either",
+    "what_they_agree_on": "somewhere between a hundred thousand and ten "
+                          "million points; everything built here tops out at "
+                          "55345",
+}

@@ -2455,3 +2455,34 @@ def test_surplus_does_not_predict_but_degree_does():
     assert len(high) == 2 and len(low) == 3
     assert all(r[2] > 9.9 for r in high)
     assert all(r[2] < 5.7 for r in low)
+
+
+def test_the_two_extrapolations_disagree_by_two_orders():
+    """Both estimates of the scale six would need, and their disagreement.
+
+    One runs through degree: the four-colour ratio rises as
+    5.0 exp(0.857 (d - 8.11)), the five-colour curve is flat at one up to
+    degree 10.64, so reaching 24 would take degree 14.3 -- and degree grows as
+    9.96 + 0.49 ln(n/1581) in this family, which puts that at 1.3e7 points.
+
+    The other runs through the forcer: 4 vertices at three colours, 791 at
+    four, a factor of 198, and one more such factor gives 157000.
+
+    They differ by eighty, which is the honest headline.  Quoting either
+    figure alone would be quoting the assumptions rather than the data.
+    """
+    import math
+    from hn.homcol import TWO_EXTRAPOLATIONS_TO_THE_SCALE_NEEDED as T
+
+    a = math.log(24.0 / 5.0) / (9.94 - 8.11)
+    assert abs(a - T["by_degree"]["four_colour_slope"]) < 0.01
+    assert abs((10.64 + math.log(24.0) / a)
+               - T["by_degree"]["degree_for_ratio_24"]) < 0.1
+
+    assert round(791 / 4) == T["by_forcer"]["factor"] == 198
+    assert abs(791 * 198 - T["by_forcer"]["points_needed"]) < 1000
+
+    big = T["by_degree"]["points_needed"]
+    small = T["by_forcer"]["points_needed"]
+    assert 70 < big / small < 90
+    assert small > 55345, "both are past anything built here"

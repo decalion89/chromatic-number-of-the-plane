@@ -4038,6 +4038,31 @@ colours degree is flat. Neither axis leads anywhere, and the `Z` measurement
 was stopped rather than spend half a day placing a point on one that carries
 no signal.
 
+## Two extrapolations to the scale six would need — and they disagree by eighty
+
+**Through degree.** The four-colour ratio rises roughly exponentially above
+degree eight — 5.0 at 8.11 and 24.0 at 9.94, a slope of 0.857 per degree. At
+five colours the curve is flat at one up to the highest degree reached here,
+10.64. If the five-colour curve shares that slope and simply starts later,
+reaching a ratio of 24 takes **degree ≈ 14.3**. Average degree grows very
+slowly with size in this family — 9.96 at `G`'s 1581 points, 10.64 at `G*`'s
+13 873, 11.36 at `Z`'s 27 673, fitting `9.96 + 0.49 ln(n/1581)` — which puts
+degree 14.3 at about **1.3 × 10⁷ points**.
+
+**Through the forcer.** The rhombus forces at three colours on 4 vertices and
+`Y` at four on 791 — a factor of 198 — and one more such factor gives about
+**157 000**.
+
+They disagree by a factor of **eighty**, and that is the honest headline. Each
+is an extrapolation from two or three points; one assumes the five-colour
+curve shares the four-colour slope, the other that the forcer keeps growing by
+the same factor, and nothing supports either. Quoting one figure alone would
+be quoting the assumption rather than the data.
+
+What they agree on is the only part worth having: the scale is somewhere
+between a hundred thousand and ten million points. Everything built in this
+session tops out at 55 345.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
