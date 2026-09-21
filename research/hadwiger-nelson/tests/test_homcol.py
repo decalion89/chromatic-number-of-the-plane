@@ -3202,3 +3202,25 @@ def test_the_two_measures_agree():
     d = hn.homcol.G_CARRIES_A_WEAK_PROPERTY_AT_FIVE["the gap, quantified"]
     assert d["Sa at four"].startswith("1 class")
     assert d["G at five"].startswith("5 classes")
+
+
+def test_the_obstruction_shrinks_to_sixty_three_vertices():
+    c = hn.homcol.THE_OBSTRUCTION_FITS_IN_SIXTY_THREE_VERTICES
+    steps = [c["all of G"]["vertices"], c["endpoints + neighbours"]["vertices"],
+             c["endpoints alone"]["vertices"], c["peeled"]["vertices"]]
+    assert steps == sorted(steps, reverse=True)      # each stage smaller
+    assert all(not c[k]["colours"] for k in
+               ("all of G", "endpoints + neighbours", "endpoints alone",
+                "peeled"))
+    # irreducible: a second sweep drops nothing
+    assert c["peeled"]["second sweep drops"] == 0
+    assert c["peeled"]["vertices"] * 25 < c["all of G"]["vertices"]
+
+
+def test_minimal_is_not_claimed_to_be_minimum():
+    c = hn.homcol.THE_OBSTRUCTION_FITS_IN_SIXTY_THREE_VERTICES
+    counts = c["pair counts by removal order"]
+    # different orders give different minimal sets, which is the whole point
+    assert len(set(counts.values())) > 1
+    assert min(counts.values()) < counts["descending distance"]
+    assert "upper bounds" in c["minimal is not minimum"]

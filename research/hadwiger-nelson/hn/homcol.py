@@ -6976,3 +6976,51 @@ THE_LENS_DISCRIMINATES_BETWEEN_LEVELS = {
     "agrees with": "the class count from the other side -- 1 class and 3 "
                    "pairs at four, 5 classes and 229 pairs at five",
 }
+
+
+# The obstruction is small: 63 vertices of G's 1581 carry the whole thing.
+#
+# G_CARRIES_A_WEAK_PROPERTY_AT_FIVE states it over all 1581 vertices and 229
+# pairs, which is true and unwieldy.  Removing vertices only makes colouring
+# easier, so any subgraph that still fails is a smaller witness to the same
+# fact -- and a small explicit witness is what makes a result checkable by
+# someone who did not run the search.
+#
+#     all of G                1581 vertices   does not colour
+#     the pairs' endpoints
+#       plus their neighbours  505            does not colour
+#     the endpoints alone       71            does not colour
+#     peeled to irreducible     63            does not colour, 183 pairs
+#
+# Sixty-three vertices, and the second peeling sweep drops none, so every one
+# of them is load-bearing.
+#
+# MINIMAL IS NOT MINIMUM, and the orders say so.  Greedy removal stops at a
+# set nothing more can leave, but WHICH set depends on the order: dropping by
+# descending distance leaves 181 pairs, one random order leaves 159 and
+# another 169.  So the pair count is sampled over orders rather than trusted
+# from one, and what is reported is an upper bound on the true minimum, not
+# the minimum.
+#
+# The two reductions feed each other -- dropping pairs frees vertices, since a
+# vertex matters only through what touches it, and dropping vertices frees
+# pairs, since a pair with a removed endpoint goes with it -- so they are run
+# alternately rather than once each.
+THE_OBSTRUCTION_FITS_IN_SIXTY_THREE_VERTICES = {
+    "all of G": {"vertices": 1581, "colours": False},
+    "endpoints + neighbours": {"vertices": 505, "colours": False},
+    "endpoints alone": {"vertices": 71, "colours": False},
+    "peeled": {"vertices": 63, "pairs": 183, "colours": False,
+               "second sweep drops": 0},
+    "pair counts by removal order": {"descending distance": 181,
+                                     "random 1": 159, "random 2": 169},
+    "minimal is not minimum": "greedy removal stops where nothing more can "
+                              "leave, but which set it stops at depends on "
+                              "the order; the figures are upper bounds on the "
+                              "minimum",
+    "why alternate": "dropping pairs frees vertices and dropping vertices "
+                     "frees pairs, so run singly they stop early",
+    "what it gives": "a witness small enough to print -- points with exact "
+                     "coordinates, the unit edges among them, and the "
+                     "forbidden pairs",
+}

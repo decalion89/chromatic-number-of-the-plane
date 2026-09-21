@@ -1,114 +1,128 @@
-"""How much graph does ambient forcing need?  Measure the support.
+"""How much of G does the obstruction actually need?
 
-Sa has rho = 5 at four colours, with a witness of five points that induce a
-handful of edges and are only 3-chromatic.  The forcing comes from the other
-392 vertices -- but how many of them?
+G with 181 pairs forbidden does not 5-colour, and those pairs are irreducible.
+But the statement is about all 1581 vertices, and there is no reason the whole
+graph is load-bearing.  Removing vertices only ever makes colouring EASIER, so
+any subgraph that still fails to colour is a smaller witness to the same fact
+-- and a small explicit witness is what makes a result checkable by someone
+else.
 
-Give every vertex OUTSIDE the witness a selector, assume them all, and ask for
-a proper 4-colouring leaving colour 0 off the witness.  It is UNSAT, and the
-solver's core names a subset of the ambient vertices that already suffices.
-Iterating shrinks it.  What comes back is the AMBIENT SUPPORT: the smallest
-piece of Sa that makes those five points force all four colours.
-\nIf the support is small the mechanism is local and transplantable; if it is
-most of the graph, ambient forcing is as expensive as the graph itself, and
-the five-colour version would need something the size of de Grey's G to make
-63 points force.
+Two stages.  First keep only what the forbidden pairs touch plus its
+neighbourhood, since a vertex far from every forbidden pair can hardly be
+carrying the argument.  Then peel greedily: try each remaining vertex, drop it
+if the rest still fails to colour, and repeat until a whole sweep drops
+nothing.  What survives is vertex-irreducible.
+
+The forbidden pairs are carried along: a pair whose endpoint is removed is
+removed with it, so the survivor is a genuine subgraph statement and not a
+bookkeeping artefact.
 """
 import sys, time
 sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
-from hn import degrey
-from hn.graph import build_graph
-from rhotight import run
+import numpy as np
+from fractions import Fraction as Fr
+from collections import defaultdict, Counter
+from hn.degrey import build_G
+from hn.geometry import DEGREY_FIELD as K
+from hn.fast import IntBasis, fast_edges_complete
 from pysat.solvers import Solver
 
-g = build_graph(degrey.build_Sa())
-k = 4
-print(f"Sa: {g.n} vertices, {g.m} edges", flush=True)
-
-# the witness, by decision at the known value
-S = None
-for budget in (5,):
-    v = run(g, k, budget, rounds=100000, report=10 ** 9)
-print("  (rho = 5 established earlier; recovering a witness)", flush=True)
-
-# recover one explicitly: grow a family, take the greedy cover that forces
-def x(v, c):
-    return 1 + v * k + c
-
-
-cls = [[x(v, c) for c in range(k)] for v in range(g.n)]
-for a, b in g.edges():
-    for c in range(k):
-        cls.append([-x(a, c), -x(b, c)])
-
-
-def greedy_cover(fam, n):
-    if not fam:
-        return []
-    sets = [set(cl) for cl in fam]
-    live = set(range(len(fam)))
-    cnt = [0] * n
-    for i in live:
-        for u in sets[i]:
-            cnt[u] += 1
-    out = []
-    while live:
-        u = max(range(n), key=lambda z: cnt[z])
-        out.append(u)
-        for i in [i for i in live if u in sets[i]]:
-            live.discard(i)
-            for z in sets[i]:
-                cnt[z] -= 1
-    return out
+k = 5
+t0 = time.time()
+KEEP = [Fr(15, 16), Fr(16), Fr(17, 2), Fr(9), Fr(7)]
+P = build_G(K, as_graph=False)
+basis = IntBasis.covering(P)
+rows = basis.rows(P)
+dim, D2 = basis.dim, basis.D * basis.D
+n = len(P)
+E = sorted(set((min(a, b), max(a, b))
+               for a, b in fast_edges_complete(basis, rows)))
+Eset = set(E)
+byd = defaultdict(list)
+for i in range(n - 1):
+    d = rows[i + 1:] - rows[i]
+    sq = basis._field_square(d[:, :dim]) + basis._field_square(d[:, dim:])
+    rat = np.ones(len(sq), dtype=bool)
+    for m in range(1, dim):
+        rat &= sq[:, m] == 0
+    for off in np.nonzero(rat)[0]:
+        j = i + 1 + int(off)
+        if (i, j) not in Eset:
+            v = int(sq[off, 0])
+            if v:
+                byd[Fr(v, D2)].append((i, j))
+FORB = [p for D in KEEP for p in byd[D]]
+print(f"G: {n} pts, {len(E)} edges, {len(FORB)} forbidden pairs"
+      f"  [{time.time()-t0:.0f}s]", flush=True)
 
 
-colour = Solver(name="cd19", bootstrap_with=cls)
-fam = []
-for rnd in range(100000):
-    C = greedy_cover(fam, g.n)
-    if not colour.solve(assumptions=[-x(v, 0) for v in C]):
-        S = sorted(C)
-        print(f"  witness of {len(S)}: {S}  (round {rnd})", flush=True)
+def colours(keep):
+    kept = set(keep)
+    ren = {v: i for i, v in enumerate(sorted(kept))}
+    m = len(ren)
+    cls = [[1 + v * k + c for c in range(k)] for v in range(m)]
+    cnt = 0
+    for a, b in E:
+        if a in kept and b in kept:
+            for c in range(k):
+                cls.append([-(1 + ren[a] * k + c), -(1 + ren[b] * k + c)])
+    for a, b in FORB:
+        if a in kept and b in kept:
+            cnt += 1
+            for c in range(k):
+                cls.append([-(1 + ren[a] * k + c), -(1 + ren[b] * k + c)])
+    sv = Solver(name="cd15", bootstrap_with=cls)
+    ok = sv.solve()
+    sv.delete()
+    return ok, m, cnt
+
+
+touched = set()
+for a, b in FORB:
+    touched.add(a)
+    touched.add(b)
+adj = defaultdict(set)
+for a, b in E:
+    adj[a].add(b)
+    adj[b].add(a)
+ring1 = set(touched)
+for v in list(touched):
+    ring1 |= adj[v]
+for label, keep in (("all of G", set(range(n))),
+                    ("touched + neighbours", ring1),
+                    ("touched only", touched)):
+    ok, m, cnt = colours(keep)
+    print(f"  {label}: {m} vertices, {cnt} forbidden pairs kept -> "
+          f"{'colours' if ok else 'DOES NOT COLOUR'}"
+          f"  [{time.time()-t0:.0f}s]", flush=True)
+
+# Start the peel from the SMALLEST set that already fails, not from the
+# neighbourhood ring: the 71 touched vertices suffice, and peeling 505 costs
+# seven times as many solves per sweep for the same destination.
+for start in (touched, ring1, set(range(n))):
+    ok, _, _ = colours(start)
+    if not ok:
+        cur = set(start)
+        print(f"   peeling from {len(cur)} vertices", flush=True)
         break
-    m = set(colour.get_model())
-    fam.append([v for v in range(g.n) if x(v, 0) in m])
-colour.delete()
-
-# now the support: selectors on everything outside S
-NV = g.n * k
-sel = lambda v: NV + 1 + v
-base = [[x(v, c) for c in range(k)] for v in range(g.n)]
-for a, b in g.edges():
-    for c in range(k):
-        base.append([-x(a, c), -x(b, c)])
-for v in S:
-    base.append([-x(v, 0)])          # the witness must avoid colour 0
-outside = [v for v in range(g.n) if v not in set(S)]
-# a selector switches a vertex's "needs a colour" clause on
-hard = [cl for cl in base if len(cl) != k or cl[0] % k != 1]
-enc = []
-for v in range(g.n):
-    if v in set(S):
-        enc.append([x(v, c) for c in range(k)])
-    else:
-        enc.append([-sel(v)] + [x(v, c) for c in range(k)])
-form = enc + [cl for cl in base if len(cl) == 2 or len(cl) == 1]
-
-cur, t0 = outside, time.time()
-for rnd in range(10):
-    with Solver(name="cd19", bootstrap_with=form) as s:
-        if s.solve(assumptions=[sel(v) for v in cur]):
-            print(f"  round {rnd}: SAT -- {len(cur)} ambient vertices are not "
-                  f"enough", flush=True)
-            break
-        core = sorted({abs(l) - NV - 1 for l in s.get_core()})
-    print(f"  round {rnd}: ambient support {len(cur)} -> {len(core)}  "
-          f"[{time.time()-t0:.0f}s]", flush=True)
-    if len(core) >= len(cur):
+sweep = 0
+while True:
+    sweep += 1
+    dropped = 0
+    for v in sorted(cur):
+        if v not in cur:
+            continue
+        trial = cur - {v}
+        ok, m, cnt = colours(trial)
+        if not ok:
+            cur = trial
+            dropped += 1
+    ok, m, cnt = colours(cur)
+    print(f"  sweep {sweep}: dropped {dropped}, {m} vertices left, {cnt} "
+          f"forbidden pairs, colours {ok}  [{time.time()-t0:.0f}s]",
+          flush=True)
+    if dropped == 0:
         break
-    cur = core
-print(f"\nambient support: {len(cur)} of {g.n - len(S)} outside vertices "
-      f"({100*len(cur)/g.n:.0f} per cent of Sa) make {len(S)} points force "
-      f"all four colours")
+print(f"\nvertex-irreducible witness: {len(cur)} vertices of G's {n}"
+      f"  [{time.time()-t0:.0f}s]", flush=True)
+print("DONE", flush=True)
