@@ -5281,6 +5281,24 @@ That negative means what the earlier one did not. The universe demonstrably
 about five rather than about the universe — and by monotonicity it covers every
 subgraph that keeps one of those rings.
 
+Four times larger, the same shape of answer. Closing `Sa` once at radius 4.5
+gives **8 953 points and 47 724 edges**:
+
+| | rings of ≥ k points | capped |
+|---|---:|---|
+| `k = 4` | 11 | **4** — `D = 5/9` (36 pts), `D = 7/3` (36), `D = 4` (18, de Grey's), `D = 16/9` (6) |
+| `k = 5` | 11 | **0**, in 915 s |
+
+The tell is in the timings: deciding five-colourability took **164 seconds**
+against **one** at four colours, so the graph is far tighter at five — and caps
+nothing.
+
+> The `int64` guard earned its keep here too. Asking for *two* rounds of
+> intersections reached 14 001 points with headroom **1.30**, and the run
+> aborted rather than handing back a graph with no edges and calling it
+> colourable — which is exactly the silent failure that cost three levels of
+> meaningless measurements earlier in this work.
+
 
 ## Honest odds
 

@@ -7500,6 +7500,14 @@ THE_INSTRUMENT_CALIBRATED_AND_WHAT_IT_SAYS = {
                                       "D = 16/9, 4 points"],
                             "the walk universe found": 0},
     "at five colours": "0 of 7 rings capped",
+    "and the same again, four times larger": {
+        "universe": "Sa closed once at radius 4.5, 8953 points, 47724 edges",
+        "at four": "4 of 11 capped -- D = 5/9 (36 points), D = 7/3 (36), "
+                   "D = 4 (18, de Grey's), D = 16/9 (6)",
+        "at five": "0 of 11 capped, in 915 seconds",
+        "the tell": "five-colourability itself took 164 seconds against one "
+                    "at four, so the graph is far tighter at five and still "
+                    "caps nothing"},
     "why this negative counts": "the universe demonstrably contains capped "
                                 "configurations at four, so its silence at "
                                 "five is about five",
