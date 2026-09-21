@@ -4184,3 +4184,93 @@ def test_choosing_for_saturation_moves_the_census_off_the_ceiling():
     sv.delete()
     assert surv == 341, surv
     assert surv < len(PARTS)          # off the ceiling, unlike the random one
+
+
+def _local_stats(P):
+    """Edges, rhombus memberships, hinge triples and true spindles per point."""
+    import numpy as np
+    from collections import defaultdict
+    b = _ft.IntBasis.covering(P)
+    r = b.rows(P)
+    assert b.overflow_headroom(r) < 1.0
+    n = len(P)
+    dm, D2 = b.dim, b.D * b.D
+    E = sorted(set((min(a, c), max(a, c))
+                   for a, c in _ft.fast_edges_complete(b, r)))
+    nb = [set() for _ in range(n)]
+    for a, c in E:
+        nb[a].add(c)
+        nb[c].add(a)
+    per = defaultdict(int)
+    hinge = strict = 0
+    for i in range(n):
+        dv = r - r[i]
+        s = b._field_square(dv[:, :dm]) + b._field_square(dv[:, dm:])
+        g = s[:, 0] == 3 * D2
+        for m in range(1, dm):
+            g &= s[:, m] == 0
+        far = [int(j) for j in np.nonzero(g)[0]]
+        for j in far:
+            if j > i and len(nb[i] & nb[j]) >= 2:
+                sh = len(nb[i] & nb[j])
+                c2 = sh * (sh - 1) // 2
+                per[i] += c2
+                per[j] += c2
+                for x in nb[i] & nb[j]:
+                    per[x] += sh - 1
+        for a in range(len(far) - 1):
+            for c in range(a + 1, len(far)):
+                x, y = far[a], far[c]
+                if y not in nb[x]:
+                    continue
+                hinge += 1
+                sx, sy = sorted(nb[i] & nb[x]), sorted(nb[i] & nb[y])
+                if len(sx) < 2 or len(sy) < 2:
+                    continue
+                if any(len({i, x, y, sx[p], sx[q], sy[u], sy[v]}) == 7
+                       for p in range(len(sx) - 1)
+                       for q in range(p + 1, len(sx))
+                       for u in range(len(sy) - 1)
+                       for v in range(u + 1, len(sy))):
+                    strict += 1
+    return n, len(E) / n, sum(per.values()) / n, hinge, strict
+
+
+def test_the_spindle_count_was_counting_hinges():
+    """Sixty per cent of the counted spindles are missing their rhombi.
+
+    `count_spindles` checks three distances -- the hinge -- and never that
+    either rhombus is present, so a counted "spindle" can be short four of its
+    seven vertices.  Requiring both rhombi and seven distinct vertices halves
+    the figure and then some.
+    """
+    K = _gm.DEGREY_FIELD
+    n, _, _, hinge, strict = _local_stats(_dg.build_Sa(K))
+    assert (n, hinge, strict) == (397, 576, 228)
+    assert abs(hinge / n - 1.45) < 0.01 and abs(strict / n - 0.57) < 0.01
+    c = _hc.THE_SPINDLE_COUNT_WAS_COUNTING_HINGES
+    assert c["hinge triples"]["Sa"] == 576
+    assert c["true spindles"]["Sa"] == 228
+    assert abs(576 / 228 - 2.53) < 0.01
+
+
+def test_the_chain_is_locally_identical_while_chi_rises():
+    """Sa, Y and G agree to two decimals on every local statistic.
+
+    Y and G are unions of rotated copies joined by six edges and a spindle, so
+    nothing local changes across the chain -- and the chromatic number rises
+    from four to five anyway.  Whatever carries de Grey's construction upward
+    is global, and no local density can be read as predicting it.
+    """
+    K = _gm.DEGREY_FIELD
+    rows = [_local_stats(P) for P in (_dg.build_Sa(K), _dg.build_Y(K),
+                                      _dg.build_G(K, as_graph=False))]
+    assert [r[0] for r in rows] == [397, 791, 1581]
+    for _, dens, memb, hinge, strict in rows:
+        assert abs(dens - 4.98) < 0.01
+        assert abs(memb - 4.47) < 0.01
+    assert all(abs(r[4] / r[0] - 0.57) < 0.01 for r in rows)   # spindles
+    assert all(abs(r[3] / r[0] - 1.45) < 0.01 for r in rows)   # hinges
+    c = _hc.SATURATION_DOES_NOT_DETERMINE_CHI
+    chis = [c["the chain's local statistics"][k]["chi"] for k in ("Sa", "Y", "G")]
+    assert chis == [4, 4, 5]

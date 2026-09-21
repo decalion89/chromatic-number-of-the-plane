@@ -4952,7 +4952,35 @@ quantity of interest at all — density does not, size does not, symmetry does
 not, contact does not. It is also **not sufficient**, and the table says so: at
 257 points the chosen subset has *higher* saturation than complete `Sa` and a
 census of 259 rather than 10. Saturation carries the census most of the way
-down; the collapse still needs the complete object. That is
+down; the collapse still needs the complete object.
+
+> **Corrected, by the next measurement.** Read as a statement about the
+> *chromatic number*, that is false, and two things say so. First, de Grey's
+> own chain has **identical local statistics** throughout — `Sa`, `Y` and `G`
+> all sit at 4.98 edges/point, 4.47 rhombus memberships and 0.57 spindles per
+> point, to two decimals — while `χ` goes 4, 4, **5**. Y and G are unions of
+> rotated copies joined by six edges and a spindle, so nothing local changes
+> and the whole gain is global. Second, growing *for* saturation drives it far
+> past the family's and buys nothing: starting from `Sa` and adding the points
+> that complete the most rhombi reaches **1197 points at 12.84 memberships**,
+> nearly three times `G`'s, and it is 4-colourable at every step. So saturation
+> tracks the census *within* a design at fixed `k`, and predicts which subset
+> of a given graph is rigid. It does not predict `χ`.
+
+> **Corrected: the spindle count was counting hinges.** `count_spindles` checks
+> three distances — `|a−d|² = |a−g|² = 3`, `|d−g|² = 1` — which is the *hinge*,
+> three of a Moser spindle's seven vertices, and never that either rhombus is
+> present. Requiring both rhombi and seven distinct vertices:
+>
+> | | hinge triples | true spindles |
+> |---|---|---|
+> | `Sa` | 576 (1.45/pt) | **228 (0.57/pt)** |
+> | `Y` | 1152 (1.46/pt) | **452 (0.57/pt)** |
+> | `G` | 2304 (1.46/pt) | **904 (0.57/pt)** |
+>
+> Sixty per cent of what was counted is not a spindle. The qualitative account
+> survives — the triangular lattice has none by either count — but every figure
+> scaled from 1.45 per point is 2.5 times too generous. That is
 what `G`'s readings mean: 5-chromatic puts it at the analogue of 207 points,
 not 397, and the 13 356-point unions of translates are *wide* rather than
 *tight*, which is the same place.

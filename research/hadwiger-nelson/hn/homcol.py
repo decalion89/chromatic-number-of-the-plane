@@ -6632,7 +6632,9 @@ THERE_IS_NO_GRADIENT = {
 # far as this work can tell, anywhere -- gives the seed.
 THE_SCALE_THE_DESIGN_WOULD_NEED = {
     "the ratio": "Sa 397 points over the Moser spindle's 7, about 57",
-    "saturation": "576 spindles inside Sa, 1.45 per point",
+    "saturation": "228 true Moser spindles inside Sa, 0.57 per point "
+                  "-- see THE_SPINDLE_COUNT_WAS_COUNTING_HINGES; the "
+                  "figure of 576 recorded elsewhere counts hinges",
     "the gadget one level up": {"smallest known 5-chromatic": 509,
                                 "G, built here": 1581},
     "carrier at the same ratio": {"from 509": "about 29000 points",
@@ -6774,6 +6776,87 @@ SATURATION_PREDICTS = {
                           "saturation than complete Sa and a census of 259, "
                           "so the collapse still needs the complete object",
 }
+
+
+# CORRECTED: the spindle count was counting hinges, and it is 2.5x too high.
+#
+# `count_spindles` in scripts/gadget.py counts triples (a, d, g) with
+# |a-d|^2 = |a-g|^2 = 3 and |d-g|^2 = 1 -- the HINGE of a Moser spindle, three
+# of its seven vertices.  It never checks that the two rhombi are present, and
+# a hinge can be missing up to four of the seven points.  Every figure derived
+# from it is a count of hinges.
+#
+# Requiring both rhombi -- two common unit neighbours for each of the two pairs
+# at squared distance 3 -- and the seven vertices distinct:
+#
+#              hinge triples        true 7-vertex spindles
+#     Sa        576  (1.45/pt)       228  (0.57/pt)
+#     Y        1152  (1.46/pt)       452  (0.57/pt)
+#     G        2304  (1.46/pt)       904  (0.57/pt)
+#
+# So sixty per cent of what was counted is not a spindle.  The qualitative
+# account survives -- the triangular lattice has none by either count, and de
+# Grey's whole family carries one constant density because G is built from Y
+# and Y from Sa -- but the number is 0.57 per point, not 1.45, and anything
+# scaled from 1.45 is 2.5 times too generous.
+THE_SPINDLE_COUNT_WAS_COUNTING_HINGES = {
+    "what was counted": "triples at the right three distances -- the hinge, "
+                        "three of a spindle's seven vertices",
+    "what was not checked": "that either rhombus is actually present",
+    "hinge triples": {"Sa": 576, "Y": 1152, "G": 2304, "per point": 1.45},
+    "true spindles": {"Sa": 228, "Y": 452, "G": 904, "per point": 0.57},
+    "overcount": "a factor of 2.53; sixty per cent of them are not spindles",
+    "what survives": "the lattice has none by either count, and the family "
+                     "carries one constant density either way",
+    "what changes": "every figure scaled from 1.45 per point",
+}
+
+
+# CORRECTED, and by my own next measurement: saturation does not determine chi.
+#
+# Recorded earlier today: saturation is the discriminator, being the one
+# variable that moves the census.  Within the peel of Sa that is measured and
+# stands -- at 207 points a random subset reads the ceiling and a
+# saturation-chosen one reads 341 of 715.  Read as a statement about the
+# CHROMATIC NUMBER it is false, and two measurements say so.
+#
+# First, de Grey's own chain has constant local statistics throughout:
+#
+#              points  edges/pt  rhombus memberships  spindles/pt   chi
+#     Sa          397      4.98                 4.47         0.57     4
+#     Y           791      4.98                 4.47         0.57     4
+#     G          1581      4.98                 4.47         0.57     5
+#
+# Identical to two decimal places, and chi rises anyway.  Y and G are unions of
+# rotated copies joined by six edges and a spindle, so nothing local changes;
+# the whole gain is global.
+#
+# Second, growing FOR saturation drives it far past the family's and buys
+# nothing.  Starting from Sa and adding, at each step, the points completing
+# the most rhombi: 1197 points at 12.84 memberships per point, nearly three
+# times G's 4.47, and still 4-colourable at every step.
+#
+# So the honest statement is narrower than the one recorded: saturation tracks
+# the census WITHIN a design, at fixed k, and predicts which subset of a given
+# graph is rigid.  It does not predict the chromatic number, and it is not what
+# carries de Grey's chain from four colours to five.
+SATURATION_DOES_NOT_DETERMINE_CHI = {
+    "what stands": "at fixed size inside Sa, choosing for saturation moves "
+                   "the census off a ceiling that random choice never leaves",
+    "what does not": "any reading of it as a statement about chi",
+    "the chain's local statistics": {
+        "Sa": {"edges/pt": 4.98, "memberships": 4.47, "spindles/pt": 0.57,
+               "chi": 4},
+        "Y": {"edges/pt": 4.98, "memberships": 4.47, "spindles/pt": 0.57,
+              "chi": 4},
+        "G": {"edges/pt": 4.98, "memberships": 4.47, "spindles/pt": 0.57,
+              "chi": 5}},
+    "grown for saturation": {"points": 1197, "edges/pt": 6.93,
+                             "memberships": 12.84, "4-colourable": True},
+    "so": "nearly three times G's saturation and one colour fewer; the gain "
+          "from four to five is global, not local",
+}
+
 
 
 
