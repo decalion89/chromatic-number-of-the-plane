@@ -4911,7 +4911,29 @@ the same peel and asking for the chromatic number refutes that: `χ` reaches
 
 Being `k`-chromatic is necessary for rigidity at `k` and nowhere near
 sufficient — a factor of about **1.9** in size separates the two, and
-everything in that gap is structure the chromatic number does not see. That is
+everything in that gap is structure the chromatic number does not see.
+
+Naming that structure is worth more than another search, and it is measurable
+on the same peel. A Moser spindle is assembled from rhombi — two points at
+squared distance 3 with two common unit neighbours — so rhombus memberships per
+point count the raw material:
+
+| points | edges/v | rhombi | memberships | `χ` | census |
+|---:|---:|---:|---:|---:|---:|
+| 157 | 1.83 | 4 | 0.10 | 3 | 715 |
+| **207** | 2.59 | 29 | **0.56** | **4** | 715 |
+| 307 | 3.73 | 136 | 1.77 | 4 | 715 |
+| 347 | 4.16 | 214 | **2.47** | 4 | **577** |
+| 397 | 4.97 | 444 | **4.47** | 4 | **10** |
+
+Across the gap density rises by **×1.9** and saturation by **×8**. Saturation
+is what moves, and it moves with a threshold: rigidity begins near 2.5
+memberships per point and collapses near 4.5.
+
+`G`'s five-colour saturation is at most **0.001** gadgets per point, measured
+independently. Against a threshold of 2.5–4.5 that is a shortfall of **two to
+four thousand** — not the factor of 1400 estimated earlier from gadget sizes
+alone, and now measured on both sides rather than argued from one. That is
 what `G`'s readings mean: 5-chromatic puts it at the analogue of 207 points,
 not 397, and the 13 356-point unions of translates are *wide* rather than
 *tight*, which is the same place.

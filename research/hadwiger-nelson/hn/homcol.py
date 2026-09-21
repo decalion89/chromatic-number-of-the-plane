@@ -6689,6 +6689,51 @@ CRITICALITY_ARRIVES_LONG_BEFORE_RIGIDITY = {
 }
 
 
+# Saturation is the discriminator, it has a threshold, and G is off by three
+# orders of magnitude.
+#
+# Something in the gap between criticality at 207 points and rigidity at 397
+# does the work, and it is not the chromatic number.  Two candidates are
+# measurable on the same peel: mean degree, which this work already showed
+# decoupled from chi, and saturation with the gadget one level down.  A Moser
+# spindle is assembled from rhombi -- two points at squared distance 3 with two
+# common unit neighbours -- so counting rhombus memberships per point counts
+# the raw material.
+#
+#     points  edges/v  rhombi  memberships  chi  census
+#        107     1.34       1         0.04    3     715
+#        157     1.83       4         0.10    3     715
+#        207     2.59      29         0.56    4     715      <- chi = 4
+#        257     3.19      65         1.01    4     715
+#        307     3.73     136         1.77    4     715
+#        347     4.16     214         2.47    4     577      <- rigidity begins
+#        397     4.97     444         4.47    4      10      <- collapse
+#
+# Across that gap density rises by a factor of 1.9 and saturation by a factor
+# of EIGHT.  Saturation is what moves, and it moves with a threshold: rigidity
+# begins near 2.5 memberships per point and collapses near 4.5.
+#
+# G's five-colour saturation is at most 0.001 gadgets per point, measured
+# independently.  Against a threshold of 2.5 to 4.5 that is a factor of two to
+# four THOUSAND -- not the 1400 estimated before from gadget sizes alone, and
+# now measured on both sides rather than argued from one.
+SATURATION_IS_THE_DISCRIMINATOR = {
+    "measured on": "the census curve's own peel of Sa, same order",
+    "rhombus memberships per point": {107: 0.04, 157: 0.10, 207: 0.56,
+                                      257: 1.01, 307: 1.77, 347: 2.47,
+                                      397: 4.47},
+    "across the criticality-to-rigidity gap": {"density": "x1.9",
+                                               "saturation": "x8"},
+    "the threshold": "rigidity begins near 2.5 memberships per point and "
+                     "collapses near 4.5",
+    "G at five colours": "at most 0.001 gadgets per point",
+    "the shortfall": "a factor of 2500 to 4500",
+    "supersedes": "the factor of 1400 estimated from gadget sizes alone; this "
+                  "one is measured on both sides",
+}
+
+
+
 
 
 
