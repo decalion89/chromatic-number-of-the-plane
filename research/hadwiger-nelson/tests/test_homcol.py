@@ -3802,3 +3802,49 @@ def test_the_census_numbers_are_consistent_with_each_other():
                if k not in ("out of", "centre alone in"))
     assert c["at four colours"]["Y"] < c["at four colours"]["Sa"]
     assert c["at four colours"]["D12 closure of S"] > c["at four colours"]["Sa"]
+
+
+def test_the_pruning_costs_two_of_three_forced_pairs():
+    """Y is strictly weaker than the union it is pruned from.
+
+    The seven patterns Y keeps are recorded; the unpruned union keeps three of
+    them, and which three is forced by the shapes rather than by the solver.
+    Removing vertices can only ADD survivors, so the union's set is a subset,
+    and the four it drops are exactly those with the centre alone -- which the
+    hand derivation says cannot occur, because the sets sharing the centre's
+    colour must be disjoint and non-empty in both copies.
+    """
+    SEVEN = [
+        [[0, 1, 4], [2, 3, 5, 6]],
+        [[1, 2, 4, 5], [0, 3, 6]],
+        [[0], [1], [2, 4, 5], [3, 6]],
+        [[0], [2], [1, 4, 5], [3, 6]],
+        [[0, 2, 5], [1, 3, 4, 6]],
+        [[0], [1, 2, 4], [5], [3, 6]],
+        [[0], [4], [1, 2, 5], [3, 6]],
+    ]
+    ANTI = [(1, 4), (2, 5), (3, 6)]
+
+    def mono(part, pair):
+        return any(pair[0] in b and pair[1] in b for b in part)
+
+    # every pattern Y keeps has the pair (3, 6) monochromatic: Y forces one
+    assert all(mono(p, (3, 6)) for p in SEVEN)
+    # and exactly one, since the other two fail somewhere
+    assert not all(mono(p, (1, 4)) for p in SEVEN)
+    assert not all(mono(p, (2, 5)) for p in SEVEN)
+    # the three with the centre beside an antipodal pair are exactly the three
+    # with ALL pairs monochromatic, and exactly the three the union keeps
+    with_centre = [p for p in SEVEN if [0] not in p]
+    assert len(with_centre) == 3
+    for p in with_centre:
+        assert all(mono(p, a) for a in ANTI)
+        block = next(b for b in p if 0 in b)
+        assert tuple(sorted(x for x in block if x)) in ANTI
+    assert len([p for p in SEVEN if [0] in p]) == 4
+
+    c = _hc.THE_PRUNING_COSTS_TWO_OF_THREE_PAIRS
+    assert c["Y"]["surviving patterns"] == 7
+    assert c["Sa u rho(Sa), unpruned"]["surviving patterns"] == 3
+    assert c["Y"]["antipodal pairs forced"] == 1
+    assert c["Sa u rho(Sa), unpruned"]["antipodal pairs forced"] == 3

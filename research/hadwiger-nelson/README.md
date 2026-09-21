@@ -4836,6 +4836,35 @@ exactly: *a graph whose joint centre-and-ring census at five colours is small,
 with shapes closed under complement the way these are.*
 
 
+## The pruning costs two of the three pairs, and the bite is a one-off
+
+`Y` is `Sa ∪ ρ(Sa)` **less** the two vertices `(±1/3, 0)`. Removing vertices
+can only *add* surviving patterns, so `Y` is strictly weaker than the union it
+comes from — and the census says by exactly how much. Numbering the centre 0
+and the ring by angle, so the antipodal pairs are `(1,4)`, `(2,5)`, `(3,6)`:
+
+| | patterns | pairs forced | centre alone |
+|---|---|---|---|
+| `Sa ∪ ρ(Sa)`, 793 points | **3** | **all three** | 0 |
+| `Y`, 791 points | 7 | one, namely `(3,6)` | 4 |
+
+The three the union keeps are precisely those where the centre sits beside an
+antipodal pair — exactly what the hand derivation predicts, since `A` and `B`
+must be disjoint *and non-empty*. The four `Y` gains all have the centre
+alone, and each loses one of the other two pairs. Confirmed both ways: seven
+SAT calls on the union, and an `UNSAT` proof per pair.
+
+So the pruning is a saving of two vertices that costs two thirds of the
+conclusion. For a write-up that needs one forced pair, de Grey's choice is
+right; for a search, the unpruned union is the stronger object.
+
+And biting again buys nothing. The census tightens *across* the first bite —
+`Sa` 10 of 715, `Y` 7 — which invites the obvious question, and seven SAT
+calls answer it, because survivors only ever shrink. Biting `Y` takes it to
+1187 points and the ring from twelve to eighteen, and **all seven patterns
+survive**. The chain has exactly the levels de Grey used.
+
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

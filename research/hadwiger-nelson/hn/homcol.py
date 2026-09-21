@@ -6397,6 +6397,69 @@ THE_CENSUS_IS_THE_COMPARABLE_NUMBER = {
 }
 
 
+# The two points de Grey removes cost him two of his three forced pairs.
+#
+# Y is Sa u rho(Sa) LESS the vertices (1/3, 0) and (-1/3, 0).  Removing
+# vertices can only ADD surviving patterns, never take one away, so Y is
+# strictly weaker than the unpruned union -- and the census says by how much.
+#
+# Y's seven survivors, with the centre at position 0 and the ring numbered by
+# angle so that the antipodal pairs are (1,4), (2,5) and (3,6):
+#
+#     [0,1,4] [2,3,5,6]        centre with (1,4); all three pairs mono
+#     [1,2,4,5] [0,3,6]        centre with (3,6); all three pairs mono
+#     [0,2,5] [1,3,4,6]        centre with (2,5); all three pairs mono
+#     [0] [1] [2,4,5] [3,6]    centre ALONE; (1,4) is NOT monochromatic
+#     [0] [2] [1,4,5] [3,6]    centre alone; (2,5) is not
+#     [0] [1,2,4] [5] [3,6]    centre alone; (2,5) is not
+#     [0] [4] [1,2,5] [3,6]    centre alone; (1,4) is not
+#
+# Every one keeps (3,6).  So Y forces exactly ONE antipodal pair, which is de
+# Grey's statement, while the first three patterns are precisely the ones the
+# hand derivation predicts for the unpruned union -- where all three are
+# forced and the centre is never alone.
+#
+# The pruning is a saving of two vertices that costs two thirds of the
+# conclusion.  For a search rather than a write-up, Sa u rho(Sa) is the
+# stronger object.
+THE_PRUNING_COSTS_TWO_OF_THREE_PAIRS = {
+    "Y": {"points": 791, "surviving patterns": 7,
+          "antipodal pairs forced": 1, "centre alone in": 4},
+    "Sa u rho(Sa), unpruned": {"points": 793, "surviving patterns": 3,
+                               "antipodal pairs forced": 3,
+                               "centre alone in": 0},
+    "why the direction is certain": "removing vertices can only add surviving "
+                                    "patterns, so Y's survivors contain the "
+                                    "union's, and the four extra ones are "
+                                    "exactly those with the centre alone",
+    "confirmed by solver": "the union's antipodal pairs come back forced-same "
+                           "at four colours, one UNSAT proof each",
+    "so": "the two removed vertices are a saving of two points that costs two "
+          "thirds of the conclusion; for searching, use the unpruned union",
+}
+
+
+# The bite is a trick, not a process.
+#
+# The census tightens across it -- Sa 10 of 715, Y 7 -- which invites the
+# obvious question: does biting again tighten again?  It costs seven SAT calls
+# to answer rather than seven hundred, because adding vertices can only remove
+# survivors, so testing only Y's seven settles it exactly.
+#
+# Biting Y takes it to 1187 points and the ring from twelve to eighteen, and
+# all seven patterns survive.  No tightening at all.  So the chain has exactly
+# the levels de Grey used, and looking for more by repeating his own operation
+# is looking in a direction that is already known to be flat.
+THE_BITE_IS_A_ONE_OFF = {
+    "Sa": "10 of 715 patterns at four colours",
+    "Y = one bite": 7,
+    "two bites": {"points": 1187, "ring": 18, "patterns": 7},
+    "tightening on the second bite": 0,
+    "cost of asking": "seven SAT calls, because survivors only shrink",
+}
+
+
+
 
 
 
