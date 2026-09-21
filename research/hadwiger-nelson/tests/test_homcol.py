@@ -2912,3 +2912,25 @@ def test_the_lattice_distances_really_are_closable():
     for lat in c.values():
         for d in lat["second distances"]:
             assert hn.homcol.closable_distance(Fr(d)), d
+
+
+def test_sumsets_beat_the_family_on_density():
+    c = hn.homcol.SUMSETS_BEAT_THE_FAMILY_ON_DENSITY
+    best = max(c["edges per vertex"].values())
+    assert best > max(c["the family for comparison"].values())
+    # and the family itself is flat: Sa, Y and G within a hundredth
+    fam = c["the family for comparison"]
+    assert max(fam["Sa"], fam["Y"], fam["G"]) - min(
+        fam["Sa"], fam["Y"], fam["G"]) < 0.02
+    # honest about what it is
+    assert c["all 5-colourable"] is True
+    assert "not a result" in c["status"]
+
+
+def test_density_climbs_with_generator_count():
+    d = hn.homcol.SUMSETS_BEAT_THE_FAMILY_ON_DENSITY["edges per vertex"]
+    # count generators in each key and check the trend is upward
+    pts = sorted((len(kk.split(", ")), v) for kk, v in d.items())
+    for (g1, v1), (g2, v2) in zip(pts, pts[1:]):
+        if g2 > g1:
+            assert v2 > v1, (g1, v1, g2, v2)

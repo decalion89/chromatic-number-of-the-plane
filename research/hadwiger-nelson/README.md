@@ -4486,6 +4486,41 @@ dihedral closure under a rotation of **infinite order**, so its points sit at
 many scales — radii `1`, `1/3`, `5/9`, `4/3`, `5/3` — and no translation
 preserves it. A lattice has one scale and order-six rotations.
 
+## Sumsets of unit vectors: the first lever that moves density
+
+Density is what the structural account says matters, and nothing in the family
+moves it — `Sa`, `Y` and `G` all sit at 4.98 edges per vertex, and bites,
+thickenings and closures leave it there. The bitten lattices came out at 2.5 to
+3.1, which is why they coloured instantly. So build for density directly.
+
+Take unit vectors `v_1 … v_m` of the field and form every integer combination
+`Σ a_i v_i` with `|a_i| ≤ c` inside a radius. Each point has an edge to every
+point differing by one generator, so the degree is `2m` before any coincidence,
+and every algebraic relation between the generators folds the set onto itself
+and adds more. Generic generators give a hypercube, which is bipartite; the
+generators used here are `rho_D` for `D = 2, 3, 4, 7, 9, 14, 16`, all of
+**infinite order**, so the point set keeps the many scales the lattices lacked.
+
+| generators | points | edges per vertex |
+|---|---|---|
+| `1, w` | 49 | 2.45 |
+| `1, w, r4` | 323 | 3.84 |
+| `1, w, r7` | 323 | 4.43 |
+| `1, w, r4, r7` | 593 | 4.72 |
+| `1, w, r3, r4, r7` | 2819 | 5.47 |
+| `1, w, r2, r3, r4, r7` | 13483 | 6.20 |
+| `1, w, r3, c3, r4, c4` | 13639 | 6.25 |
+| `1, w, r3, r4, r7, r9` | 13505 | 6.37 |
+| **`1, w, r3, r4, c4, r7`** | **13579** | **6.59** |
+
+against 4.97 for `Sa`, 4.98 for `Y` and `G`, 5.42 for the densest dihedral
+closure and 5.68 for `G*` union its spindle. Five generators already beat
+everything in the family, and the trend has not turned over.
+
+Every one of them is 5-colourable, so this is a **lever, not a result**. What it
+is, is the first lever in this work that moves the quantity the structural
+account points at, rather than the size.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

@@ -6382,3 +6382,56 @@ TWO_DISTANCE_LATTICES_ARE_CAYLEY_GRAPHS = {
     "does not contradict": "SINGLE_DISTANCE_LATTICES_ARE_BIPARTITE, which is "
                            "about one distance and still holds",
 }
+
+
+# Sumsets of unit vectors beat the whole family on density, by a lot.
+#
+# Density was identified as what separates Sa from G -- both at 4.98 edges per
+# vertex, and no operation available in the family moves it -- and the bitten
+# lattices came out at 2.5 to 3.1, which is why they coloured instantly.  So
+# build for density directly.
+#
+# Take unit vectors v_1 .. v_m of the field and form every integer combination
+# sum a_i v_i with |a_i| <= c inside a radius.  Each point has an edge to every
+# point differing by one generator, so the degree is 2m before any coincidence,
+# and every algebraic relation between the generators folds the set onto itself
+# and adds more.  Generic generators give a hypercube, which is bipartite; the
+# generators here are rho_D for D = 2, 3, 4, 7, 9, 14, 16, all of infinite
+# order, so the point set keeps the many scales the lattices lacked.
+#
+#     1, w                         49 pts    2.45 per vertex
+#     1, w, r4                    323       3.84
+#     1, w, r7                    323       4.43
+#     1, w, r4, r7                593       4.72
+#     1, w, r3, r4, r7           2819       5.47
+#     1, w, r2, r3, r4, r7      13483       6.20
+#     1, w, r3, c3, r4, c4      13639       6.25
+#     1, w, r3, r4, r7, r9      13505       6.37
+#     1, w, r3, r4, c4, r7      13579       6.59
+#
+# against 4.97 for Sa, 4.98 for Y and G, 5.42 for the densest dihedral closure
+# and 5.68 for G* union its spindle.  Five generators already beat everything
+# in the family and the trend has not turned over.
+#
+# Every one of them is 5-colourable, so this is a lever and not a result.  What
+# it is, is the first lever in this work that moves the quantity the structural
+# account says matters, rather than the size.
+SUMSETS_BEAT_THE_FAMILY_ON_DENSITY = {
+    "construction": "all sum a_i v_i with |a_i| <= c inside a radius, v_i "
+                    "unit vectors of the field",
+    "why dense": "degree 2m before coincidences, plus whatever the algebraic "
+                 "relations between the generators fold together",
+    "edges per vertex": {"1, w": 2.45, "1, w, r4": 3.84, "1, w, r7": 4.43,
+                         "1, w, r4, r7": 4.72, "1, w, r3, r4, r7": 5.47,
+                         "1, w, r2, r3, r4, r7": 6.20,
+                         "1, w, r3, c3, r4, c4": 6.25,
+                         "1, w, r3, r4, r7, r9": 6.37,
+                         "1, w, r3, r4, c4, r7": 6.59},
+    "the family for comparison": {"Sa": 4.97, "Y": 4.98, "G": 4.98,
+                                  "hub closure": 5.42, "G* u spindle": 5.68},
+    "all 5-colourable": True,
+    "status": "a lever, not a result -- but the first one here that moves "
+              "density rather than size",
+    "generic generators give": "a hypercube, which is bipartite; the relations "
+                               "are what make it interesting",
+}
