@@ -3098,3 +3098,24 @@ def test_thirteen_neighbours_was_not_enough():
     assert c["largest neighbourhood reached"] == 13
     assert c["candidates on G"][13] == 22
     assert "not enough" in c["so"]
+
+
+def test_thirteen_is_exhaustive_not_sampled():
+    c = hn.homcol.THIRTEEN_IS_AN_EXHAUSTIVE_CEILING
+    assert c["G"]["largest neighbourhood"] == 13
+    assert c["Y"]["largest neighbourhood"] == 13
+    assert c["G"]["new intersection points"] > 30000
+    assert c["G"]["all placeable"] is True
+    # the multiplicity of a 13-neighbour point is C(13,2) = 78 in principle;
+    # the observed top is 19, so the candidates are not seen by every pair
+    assert c["top multiplicity"] if False else c["G"]["top multiplicity"] == 19
+
+
+def test_the_hub_artefact_was_caught():
+    c = hn.homcol.THIRTEEN_IS_AN_EXHAUSTIVE_CEILING
+    assert "degree-60 hub" in c["the bug"]
+    assert "trivially placeable" in c["the bug"]
+    # and growth moves the ceiling by one, not by much
+    g = c["growth barely moves it"]
+    assert max(g.values()) - min(g.values()) == 1
+    assert "FALL" in c["and dilutes"]

@@ -1,116 +1,154 @@
-"""A 4-chromatic graph over a field that can block, with no spindle in it.
+"""Chain the two: grow G, then ask the exact question of the grown graph.
 
-The theorem says the critical core must live in a field of residue degree at
-least 3 over its real subfield.  The Moser spindle's field is degree 4, so a
-spindle can never be that core -- and every 4-critical unit-distance graph
-anyone has is multiquadratic, hence out.  Something new is needed.
+The exact test says G's largest constructible neighbourhood is thirteen and
+every candidate with five or more neighbours is placeable.  It also says what
+would change that: bigger neighbourhoods, which need more points, because a
+candidate's neighbours beyond the two that construct it are concurrences of
+unit circles and concurrences need circles to concur.
 
-Chain rhombi instead of pairing them.  A rhombus 0, w, zeta_6 w,
-w(1 + zeta_6) forces its tip to the colour of its apex at three colours, and
-|1 + zeta_6| = sqrt3 always.  So chaining rhombi in directions w_1, .., w_k
-forces every partial sum (1 + zeta_6)(w_1 + .. + w_j) to the colour of the
-origin, and if
+The growth is producing exactly that -- 1581 points to 2601 and climbing, 4.98
+edges per vertex to 6.15 -- so run the test on the grown graph rather than on
+G, at each stage, and watch the largest neighbourhood.  If it climbs past
+thirteen the two lines are feeding each other; if it sticks, the ceiling is
+structural and worth knowing as one.
 
-    | w_1 + .. + w_k | = 1/sqrt3
-
-the last one is at distance 1 from the origin -- forced equal and adjacent, so
-no three-colouring exists.  k = 2 is the Moser spindle and needs
-u.vbar + ubar.v = -5/3, i.e. (-5 + sqrt-11)/6, which Q(zeta_21) provably does
-not contain.  k = 3 asks instead for
-
-    r(u,v) + r(u,w) + r(v,w) = -4/3,     r(a,b) = a.bbar + abar.b,
-
-three terms of the real subfield summing to a rational -- a real search, not a
-closed form, and one nothing rules out.
+Every candidate that fails is a proper five-colouring found, which is a real
+answer.  Any candidate that succeeds is a point with no colour available, and
+the graph plus that point needs six.
 """
-import sys, itertools, time
-from fractions import Fraction
-from math import gcd
+import sys, time, random
 sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-from hn.cyclotomic import CycloField
+import numpy as np
+from fractions import Fraction as Fr
+from collections import Counter
+from hn.degrey import build_G
+from hn.geometry import DEGREY_FIELD as K, Point
+from hn.fast import IntBasis, fast_edges_complete
+from pysat.solvers import Solver
 
-K = CycloField(21)
-D = K.degree
-ONE = K.rational(1)
-
-
-def inv(a):
-    rows = [list(K.mul(a, tuple(Fraction(1 if j == i else 0) for j in range(D))))
-            for i in range(D)]
-    M = [[rows[j][i] for j in range(D)] + [Fraction(1 if i == 0 else 0)]
-         for i in range(D)]
-    for c in range(D):
-        p = next(r for r in range(c, D) if M[r][c])
-        M[c], M[p] = M[p], M[c]
-        s = Fraction(1) / M[c][c]
-        M[c] = [v * s for v in M[c]]
-        for r in range(D):
-            if r != c and M[r][c]:
-                f = M[r][c]
-                M[r] = [x - f * y for x, y in zip(M[r], M[c])]
-    return tuple(M[i][D] for i in range(D))
-
-
-def den(t):
-    d = 1
-    for x in t:
-        d = d * x.denominator // gcd(d, x.denominator)
-    return d
-
-
-Z6 = K.neg(K.mul(K.zeta(7), K.zeta(7)))
-steps = set()
-for coeffs in itertools.product(range(-2, 3), repeat=6):
-    if not any(coeffs):
-        continue
-    a, p = K.zero(), ONE
-    for c in coeffs:
-        a = K.add(a, tuple(Fraction(c) * x for x in p))
-        p = K.mul(p, K.zeta(1) if False else K.zeta(21))
-    try:
-        u = K.mul(a, inv(K.conj(a)))
-    except (StopIteration, ZeroDivisionError):
-        continue
-    if K.norm2(u) != ONE:
-        continue
-    v = u
-    for _ in range(6):
-        steps.add(v)
-        v = K.mul(v, Z6)
-steps = sorted(steps)
-dens = {}
-for u in steps:
-    dens[den(u)] = dens.get(den(u), 0) + 1
-print(f"{len(steps)} unit steps of Q(zeta_21); denominators "
-      + ", ".join(f"{k}x{v}" for k, v in sorted(dens.items())[:12]), flush=True)
-
+k = 5
 t0 = time.time()
-TARGET2 = tuple([Fraction(-5, 3)] + [Fraction(0)] * (D - 1))
-TARGET3 = tuple([Fraction(-4, 3)] + [Fraction(0)] * (D - 1))
-r = {}
-for i, u in enumerate(steps):
-    for j in range(i + 1, len(steps)):
-        v = steps[j]
-        t = K.mul(u, K.conj(v))
-        r[(i, j)] = K.add(t, K.conj(t))
-print(f"{len(r)} pair values precomputed  [{time.time()-t0:.0f}s]", flush=True)
+rng = random.Random(29)
+CLASSES = [1, 3, 5, 7, 11, 15, 21, 33, 35, 55, 77, 105, 165, 231, 385, 1155]
 
-pairs = [k for k, v in r.items() if v == TARGET2]
-print(f"k = 2 (the Moser spindle): {len(pairs)} solutions "
-      "-- the no-spindle theorem says this must be 0", flush=True)
 
-found, n = [], len(steps)
-for i in range(n):
-    for j in range(i + 1, n):
-        rij = r[(i, j)]
-        for k in range(j + 1, n):
-            s = K.add(K.add(rij, r[(i, k)]), r[(j, k)])
-            if s == TARGET3:
-                found.append((i, j, k))
-                if len(found) <= 3:
-                    print(f"  *** k = 3 CHAIN FOUND: steps {i}, {j}, {k}  "
-                          f"[{time.time()-t0:.0f}s]", flush=True)
-    if i % 20 == 0:
-        print(f"  ... i = {i}/{n}, {len(found)} so far "
-              f"[{time.time()-t0:.0f}s]", flush=True)
-print(f"k = 3: {len(found)} chains  [{time.time()-t0:.0f}s]", flush=True)
+def rsqrt(e):
+    if any(x for x in e.c[1:]):
+        return None
+    v = e.c[0]
+    if v <= 0:
+        return None
+    for r in CLASSES:
+        q = v / r
+        n2, d2 = q.numerator, q.denominator
+        rn, rd = int(round(n2 ** .5)), int(round(d2 ** .5))
+        if rn * rn == n2 and rd * rd == d2:
+            sq = K.rational(Fr(rn, rd))
+            return sq if r == 1 else K.sqrt(r) * sq
+    return None
+
+
+def candidates(P, tries):
+    half = K.rational(Fr(1, 2))
+    out, seen = [], set(P)
+    n = len(P)
+    for _ in range(tries):
+        A, B = P[rng.randrange(n)], P[rng.randrange(n)]
+        if A == B:
+            continue
+        D = A.dist2(B)
+        f = float(D)
+        if f > 3.99 or f < .05:
+            continue
+        sD, s4 = rsqrt(D), rsqrt(K.rational(4) - D)
+        if sD is None or s4 is None:
+            continue
+        inv = K.rational(1) / sD
+        mx, my = (A.x + B.x) * half, (A.y + B.y) * half
+        nx = -(B.y - A.y) * inv * s4 * half
+        ny = (B.x - A.x) * inv * s4 * half
+        for q in (Point(mx + nx, my + ny), Point(mx - nx, my - ny)):
+            if q not in seen:
+                seen.add(q)
+                out.append(q)
+    return out
+
+
+def graph(P):
+    b = IntBasis.covering(P)
+    r = b.rows(P)
+    return b, r, sorted(set((min(a, c), max(a, c))
+                            for a, c in fast_edges_complete(b, r)))
+
+
+def probe(P, tag, tries=120000):
+    b, r, E = graph(P)
+    n = len(P)
+    cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
+    for a, c in E:
+        for col in range(k):
+            cls.append([-(1 + a * k + col), -(1 + c * k + col)])
+    sv = Solver(name="cd15", bootstrap_with=cls)
+    if not sv.solve():
+        print(f"  {tag}: {n} pts NOT 5-COLOURABLE", flush=True)
+        return True
+    cand = candidates(P, tries)
+    gb = IntBasis.covering(P + cand)
+    dim, D2 = gb.dim, gb.D * gb.D
+    Prows, crows = gb.rows(P), gb.rows(cand)
+    sizes, worst, placeable = Counter(), 0, 0
+    for t, o in enumerate(crows):
+        d = Prows - o
+        sq = gb._field_square(d[:, :dim]) + gb._field_square(d[:, dim:])
+        hit = sq[:, 0] == D2
+        for m in range(1, dim):
+            hit &= sq[:, m] == 0
+        nb = np.nonzero(hit)[0]
+        sizes[len(nb)] += 1
+        if len(nb) < k:
+            continue
+        worst = max(worst, len(nb))
+        if sv.solve(assumptions=[-(1 + int(v) * k) for v in nb]):
+            placeable += 1
+        else:
+            print(f"*** {tag}: a point with {len(nb)} neighbours has NO free "
+                  f"colour -- chi >= 6 ***  [{time.time()-t0:.0f}s]",
+                  flush=True)
+            return True
+    sv.delete()
+    big = {a: c for a, c in sorted(sizes.items()) if a >= 5}
+    print(f"  {tag}: {n} pts, {len(E)} edges, {len(E)/n:.2f} per vertex, "
+          f"{len(cand)} candidates; >=5 neighbours {big}; largest {worst}, "
+          f"all {placeable} placeable  [{time.time()-t0:.0f}s]", flush=True)
+    return False
+
+
+P = build_G(K, as_graph=False)
+have = set(P)
+probe(P, "G")
+BATCH = 120
+for step in range(1, 12):
+    cand = [c for c in candidates(P, 60000) if c not in have]
+    if not cand:
+        break
+    gb = IntBasis.covering(P + cand[:1500])
+    dim, D2 = gb.dim, gb.D * gb.D
+    Prows = gb.rows(P)
+    scored = []
+    for c in cand[:1500]:
+        o = gb.rows([c])[0]
+        d = Prows - o
+        sq = gb._field_square(d[:, :dim]) + gb._field_square(d[:, dim:])
+        hit = sq[:, 0] == D2
+        for m in range(1, dim):
+            hit &= sq[:, m] == 0
+        scored.append((int(hit.sum()), c))
+    scored.sort(key=lambda t: -t[0])
+    add = [c for s, c in scored[:BATCH] if s >= 3]
+    if not add:
+        break
+    P = list(dict.fromkeys(P + add))
+    have = set(P)
+    if probe(P, f"grown x{step}"):
+        break
+print("DONE", flush=True)

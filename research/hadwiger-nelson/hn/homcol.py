@@ -6777,3 +6777,56 @@ THE_EXACT_QUESTION_ABOUT_A_NEW_POINT = {
     "corrects": "an earlier five-call version of the same test whose count "
                 "could only ever read 0 or 5",
 }
+
+
+# Thirteen is a ceiling, established exhaustively, and growth barely moves it.
+#
+# Random sampling of pairs found candidates with at most thirteen neighbours,
+# which proves nothing -- sampling misses things.  The multiplicity trick makes
+# the search exhaustive and cheap.  A point with k neighbours is the
+# intersection of the unit circles about each of C(k,2) PAIRS of them, so it
+# appears C(k,2) times in the candidate list: 78 times at thirteen neighbours,
+# 190 at twenty.  Count multiplicities and the high-concurrence points sort
+# themselves to the top instead of being thrown away by sampling.
+#
+# It is affordable because an intersection is constructible only when the pair
+# sits at squared distance D with sqrt(D) and sqrt(4-D) both in the field, so
+# only RATIONAL squared distances contribute -- 52218 pairs of G over 107
+# classes, of which 19 classes are usable, rather than its 1.25 million pairs.
+#
+# CORRECTION, caught by the first run reporting a 60-neighbour point: vertices
+# ALREADY in the graph appear as intersections of their own neighbours, and the
+# hub of G has degree 60, so it is the intersection of C(60,2) = 1770 pairs and
+# topped the list.  Such a point is trivially "placeable" -- its own colour is
+# free -- and it is not a candidate at all.  Excluding them:
+#
+#     G: 34424 distinct NEW intersection points, top multiplicity 19,
+#        largest neighbourhood 13, every one placeable
+#     Y: 17198 distinct NEW points, same ceiling of 13
+#
+# So thirteen is not what the sampling happened to find, it is the most any
+# constructible point can see in G, over all of them.  Growing the graph moves
+# it hardly at all: 1821 points yield one candidate at fourteen, 1941 points
+# two, and the twelve- and thirteen-neighbour counts FALL as the graph grows
+# because new points mostly generate candidates with only their two
+# constructing neighbours.
+THIRTEEN_IS_AN_EXHAUSTIVE_CEILING = {
+    "the trick": "a k-neighbour point appears C(k,2) times among pairwise "
+                 "intersections, so multiplicity finds it where sampling "
+                 "loses it",
+    "why affordable": "only rational squared distances give constructible "
+                      "intersections -- 52218 pairs of G over 107 classes, 19 "
+                      "usable, not 1.25 million",
+    "the bug": "existing vertices appear as intersections of their own "
+               "neighbours; the degree-60 hub topped the first run and is "
+               "trivially placeable",
+    "G": {"new intersection points": 34424, "top multiplicity": 19,
+          "largest neighbourhood": 13, "all placeable": True},
+    "Y": {"new intersection points": 17198, "largest neighbourhood": 13},
+    "growth barely moves it": {"1701 points": 13, "1821": 14, "1941": 14},
+    "and dilutes": "the 12- and 13-neighbour counts FALL as the graph grows, "
+                   "because new points mostly make candidates with only their "
+                   "two constructing neighbours",
+    "so": "thirteen is a ceiling over all constructible points, not an "
+          "artefact of how they were sampled",
+}
