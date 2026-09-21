@@ -9878,3 +9878,40 @@ THE_SYMMETRIC_CAP_IS_ABSENT_AND_THE_FIRST_ONE_WAS_FREE = {
     "so": "de Grey's exact shape is absent at five colours in Gc, proved "
           "rather than unfound",
 }
+
+
+# Two forbidden distances are enormously cheaper than one.
+#
+# The smallest known unit-distance graph needing five colours has about five
+# hundred vertices, and finding one was a research programme.  Forbid a second
+# distance as well and the cost collapses: inside de Grey's own 1581 points,
+# the graph whose edges are the pairs at distance 1 OR at distance sqrt3 has
+# chromatic number 5, and its 5-chromatic cores have between NINE and fourteen
+# vertices.  Three hundred and thirty-seven distinct ones were extracted in
+# under a minute, simply by shuffling the clause order before each
+# unsatisfiable-core call.
+#
+# That is worth stating on its own: chi(R^2, {1, sqrt3}) >= 5 is witnessed by
+# nine points, against five hundred for chi(R^2, {1}) >= 5.
+#
+# It also sets up the reduction this work now turns on.  A set capped at
+# palette 4 splits into four classes, each independent for distance 1; if its
+# {1, sqrt3} graph needed five colours those classes could not all avoid sqrt3
+# either, and some class would hold two points a distance sqrt3 apart in one
+# colour -- a monochromatic pair at a named distance.
+#
+# The two halves have not met.  Every one of the 337 cores has palette 5, so
+# none is capped; and the capped set, sixty points, has two-distance chromatic
+# number 3, so it is nowhere near.  Measured on the two carriers where both
+# could be asked.
+THE_SECOND_DISTANCE_IS_CHEAP_AND_THE_HALVES_DO_NOT_MEET = {
+    "chi of {1, sqrt3} on G": 5,
+    "size of its 5-chromatic cores": "9 to 14 vertices",
+    "how many distinct cores": "337, in under a minute, by shuffling the "
+                               "clause order",
+    "compare": "a unit-distance graph needs about 500 vertices for the same",
+    "the reduction": "capped at palette 4 plus two-distance chi at least 5 "
+                     "gives a monochromatic pair at distance sqrt3",
+    "why it has not closed": {"all 337 cores": "palette 5, none capped",
+                              "the 60-point capped set": "two-distance chi 3"},
+}
