@@ -7020,6 +7020,11 @@ THE_OBSTRUCTION_FITS_IN_SIXTY_THREE_VERTICES = {
                               "minimum",
     "why alternate": "dropping pairs frees vertices and dropping vertices "
                      "frees pairs, so run singly they stop early",
+    "and alternating is ALSO order-dependent": "pairs-then-vertices from "
+        "71/229 converges to 69 vertices and 166 pairs; vertices-then-pairs "
+        "reaches 63 and 161, which is the witness that was kept.  Greedy is "
+        "order-dependent at every layer, including the layer that alternates "
+        "the layers, so none of these figures is the minimum.",
     "what it gives": "a witness small enough to print -- points with exact "
                      "coordinates, the unit edges among them, and the "
                      "forbidden pairs",

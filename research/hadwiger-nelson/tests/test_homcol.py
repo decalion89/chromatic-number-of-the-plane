@@ -3288,3 +3288,13 @@ def test_spindling_a_disjunction_was_built_and_colours():
     assert c["every one"] == "5-colourable"
     # and the rotations were checked, not assumed
     assert "moves by exactly 1" in c["the rotations are right"]
+
+
+def test_alternating_is_order_dependent_too():
+    c = hn.homcol.THE_OBSTRUCTION_FITS_IN_SIXTY_THREE_VERTICES
+    note = c["and alternating is ALSO order-dependent"]
+    assert "69 vertices and 166 pairs" in note
+    assert "63 and 161" in note
+    assert "none of these figures is the minimum" in note
+    # the kept witness is the better of the two
+    assert c["peeled"]["vertices"] == 63
