@@ -5044,6 +5044,27 @@ many *independent* `k`-chromatic subgraphs each constrain a colouring and the
 constraints accumulate into a census of ten. `G`'s five-chromaticity is used up
 exactly once, in being five-chromatic at all, and nothing is left over.
 
+> **Refined, again by the next thing checked.** Redundancy is not sufficient
+> either. The packed union of ten overlapping copies of `G` — 13 356 points —
+> is redundantly 5-chromatic by exactly this definition: removing any vertex
+> leaves at least seven copies untouched, so **no vertex is essential**. Its
+> census is **855 of 855**. Redundant and entirely loose.
+>
+> And there is a measure that makes the gap look small and is wrong:
+>
+> | | gadgets per point | incidences per point |
+> |---|---|---|
+> | `Sa` at four | **0.57** | 4.02 |
+> | `G` at five | **0.00063** | 0.63 |
+> | ten copies of `G` | **0.00075** | 0.75 |
+>
+> By incidences the shortfall is a factor of six; by gadget **count** it is a
+> factor of nine hundred. The count is the one that matters — each gadget
+> imposes one constraint whatever its size, so a single critical subgraph
+> spanning every vertex scores high on incidences and constrains nothing beyond
+> making the graph `k`-chromatic. Counting incidences would have turned 900 into
+> 6 and made the problem look nearly solved.
+
 > **Withdrawn, immediately.** Packing density looked like an independent
 > confirmation of the size estimate: `Sa` holds 228 spindles of seven vertices
 > in 397 points — four incidences per point — so the same packing with

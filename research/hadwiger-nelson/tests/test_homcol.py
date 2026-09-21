@@ -4358,3 +4358,24 @@ def test_the_packing_estimate_is_not_an_independent_route():
     c = _hc.REDUNDANCY_IS_THE_GLOBAL_QUANTITY
     assert "NOT a second route" in "".join(c)
     assert "cancels" in c["the size it implies is NOT a second route"]
+
+
+def test_the_two_redundancy_measures_diverge_and_only_one_matters():
+    """Incidences per point flatters the gap by a factor of a hundred and fifty.
+
+    A gadget imposes one constraint on a colouring whatever its size, so what
+    has to be counted is gadgets per point, not vertex incidences.  The two
+    differ by the gadget size, and the gadget grows from seven vertices to
+    about a thousand between four colours and five -- which is exactly the
+    factor that would be hidden.
+    """
+    c = _hc.REDUNDANCY_IS_NOT_SUFFICIENT_EITHER
+    gp, ip = c["gadgets per point"], c["incidences per point"]
+    by_count = gp["Sa at four"] / gp["G at five"]
+    by_incidence = ip["Sa at four"] / ip["G at five"]
+    assert 850 < by_count < 950        # one gadget in 1581 points
+    assert 5 < by_incidence < 8
+    # the ratio between the two readings IS the gadget size, about 1000 to 7
+    assert 120 < by_count / by_incidence < 170
+    assert abs((1000 / 7) / (by_count / by_incidence) - 1) < 0.1
+    assert "the count, not the incidences" in c["which measure matters"]

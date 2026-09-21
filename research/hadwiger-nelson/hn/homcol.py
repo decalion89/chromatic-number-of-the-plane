@@ -6917,6 +6917,57 @@ REDUNDANCY_IS_THE_GLOBAL_QUANTITY = {
 }
 
 
+# REFINED: redundancy is necessary and not sufficient either, and there is a
+# measure that looks like it helps and does not.
+#
+# Sa is redundantly 4-chromatic and rigid; G is barely 5-chromatic and loose.
+# That invites reading redundancy as the missing ingredient.  The packed union
+# refutes it without any new computation.  Ten overlapping copies of G on 13356
+# points: removing any single vertex leaves at least seven copies untouched,
+# each of them 5-chromatic, so NO vertex is essential and the union is
+# redundantly 5-chromatic by the same definition Sa satisfies.  Its census is
+# 855 of 855.  Redundant and entirely loose.
+#
+# The trap is which redundancy is counted.  Two measures diverge badly:
+#
+#                       gadgets per point      incidences per point
+#     Sa at four           228/397   = 0.57      228*7/397    = 4.02
+#     G at five              1/1581  = 0.00063   ~1000/1581   = 0.63
+#     ten copies of G       10/13356 = 0.00075   ~10000/13356 = 0.75
+#
+# By incidences the packed union looks five times short of Sa and G six.  By
+# gadget count both are nine hundred times short.  The second is the one that
+# matters: each gadget imposes ONE constraint on a colouring whatever its size,
+# so a single enormous critical subgraph covering every vertex scores high on
+# incidences and constrains nothing beyond making the graph k-chromatic.
+#
+# Counting incidences would have turned a factor of nine hundred into a factor
+# of six and made the problem look nearly solved.  It is the gadget COUNT that
+# has to rise, and raising it is exactly what nothing here can do.
+REDUNDANCY_IS_NOT_SUFFICIENT_EITHER = {
+    "the refutation": "ten overlapping copies of G, 13356 points: no vertex "
+                      "is essential, since removing one leaves at least seven "
+                      "copies untouched, so the union is redundantly "
+                      "5-chromatic -- and its census is 855 of 855",
+    "gadgets per point": {"Sa at four": 0.57, "G at five": 0.00063,
+                          "ten copies of G": 0.00075},
+    "incidences per point": {"Sa at four": 4.02, "G at five": 0.63,
+                             "ten copies of G": 0.75},
+    "which measure matters": "the count, not the incidences: each gadget "
+                             "imposes one constraint whatever its size, so a "
+                             "single critical subgraph spanning every vertex "
+                             "scores high on incidences and constrains "
+                             "nothing",
+    "the trap": "by incidences the shortfall reads as a factor of six and by "
+                "count as a factor of nine hundred -- 0.57 against one gadget "
+                "in 1581 points; the second is right",
+    "so the list is now": "density no, size no, symmetry no, contact no, "
+                          "saturation no, redundancy no -- only the number of "
+                          "independent critical subgraphs per point",
+}
+
+
+
 
 
 
