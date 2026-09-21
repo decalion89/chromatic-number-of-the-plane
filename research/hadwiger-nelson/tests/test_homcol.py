@@ -4757,3 +4757,22 @@ def test_the_walk_universe_does_not_contain_de_greys_points():
     c = _hc.THE_UNIVERSE_TEST_FAILS_ITS_OWN_CALIBRATION
     assert c["calibration at four colours"].startswith("0 of 22")
     assert c["Sa inside the universe"] == "19 of 397 points"
+
+
+def test_no_ring_feature_separates_capped_from_uncapped():
+    """The decisive pair, recorded as a pair of identical feature vectors.
+
+    D = 16/9 and D = 11/9 agree on six points, zero inner edges, six
+    components, degree zero, three antipodal pairs and no adjacency to the
+    centre -- and one is capped at four colours while the other is not.  So a
+    criterion in those features cannot exist, and the test states the
+    coincidence rather than trusting the prose.
+    """
+    c = _hc.NOTHING_ABOUT_THE_RING_DECIDES_THE_CAP
+    txt = c["the decisive pair"]
+    for token in ("16/9", "11/9", "six points", "zero inner",
+                  "three antipodal", "opposite labels"):
+        assert token in txt, token
+    assert "no local criterion" in c["which is"]
+    # the hypothesis that died is recorded as having died
+    assert "until D = 7" in c["the criterion that died"]

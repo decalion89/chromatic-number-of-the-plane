@@ -7516,6 +7516,61 @@ THE_INSTRUMENT_CALIBRATED_AND_WHAT_IT_SAYS = {
 }
 
 
+# What distinguishes a capped ring?  Nothing about the ring.
+#
+# The calibrated universe poses a question nobody could pose before: it
+# produces capped AND uncapped rings inside ONE graph, all centred on the same
+# vertex, so the labels are clean and a criterion could be read off.  At four
+# colours, on 8953 points, five of twelve rings are capped.
+#
+#      ring  pts  inner  comps  maxdeg  anti  at centre   capped
+#         1   90     90     15       2    45         90   YES (trivial)
+#         3   42     30     12       2    21          0   .
+#       5/9   36     18     18       1    18          0   YES
+#       7/3   36     18     18       1    18          0   YES
+#       1/3   30     30     10       2    15          0   .
+#       4/9   30      0     30       0    15          0   .
+#         4   18      0     18       0     9          0   YES
+#       2/3   12      0     12       0     6          0   .
+#         7   12      6      6       1     6          0   .
+#      13/3   12      0     12       0     6          0   .
+#      16/9    6      0      6       0     3          0   YES
+#      11/9    6      0      6       0     3          0   .
+#
+# A criterion suggested itself and died in the same table.  The two capped
+# rings of 36 points have inner degree ONE -- their own unit-distance graph is
+# a perfect matching -- which looked like the answer until D = 7 turned up with
+# degree one and no cap.
+#
+# The decisive pair is the last two.  D = 16/9 and D = 11/9 have six points,
+# zero inner edges, six components, degree zero, three antipodal pairs and no
+# adjacency to the centre: IDENTICAL on every feature measured, and opposite
+# labels.  No function of the ring's own structure can separate them.
+#
+# So the cap is not a property of the ring.  It is a property of how the ring
+# sits in the rest of the graph, which is "rigidity is global" sharpened one
+# level: there is no local criterion to look for, and searching for one is
+# searching for something that provably is not there.
+NOTHING_ABOUT_THE_RING_DECIDES_THE_CAP = {
+    "why the question is newly posable": "the calibrated universe gives "
+        "capped and uncapped rings in one graph about one centre, so the "
+        "labels are clean",
+    "at four colours, 8953 points": "5 of 12 rings capped",
+    "the criterion that died": "the two capped 36-point rings have inner "
+                               "degree one, a perfect matching -- until D = 7 "
+                               "turned up with degree one and no cap",
+    "the decisive pair": "D = 16/9 and D = 11/9: six points, zero inner "
+                         "edges, six components, degree zero, three antipodal "
+                         "pairs, no adjacency to the centre -- identical on "
+                         "every feature, opposite labels",
+    "conclusion": "no function of the ring's own structure separates capped "
+                  "from uncapped",
+    "which is": "rigidity is global, sharpened one level -- there is no local "
+                "criterion to look for",
+}
+
+
+
 
 
 
