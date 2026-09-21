@@ -9779,3 +9779,58 @@ THE_TWO_DISTANCES_ARE_FORCED_BY_A_LATTICE = {
                                             "at the best centre, the pivot "
                                             "and the origin",
 }
+
+
+# What the bite actually does, stated precisely -- and it is not what this
+# work assumed for a long time.
+#
+# A FORCED pair closes on its own, with no bite at all.  If u and v at
+# distance d carry one colour in every proper k-colouring, rotate a copy of
+# the graph about u by the angle that sends v to a point one unit from itself.
+# In the union, v and its image both carry u's colour and are adjacent, so
+# there is no k-colouring.  One rotation, one contradiction.
+#
+# A DISJUNCTION does not close that way, and the reason is worth being exact
+# about.  "Some pair of this family is monochromatic" gives no named u to
+# rotate about; and rotating about one candidate leaves the copy free to
+# satisfy the disjunction on a different pair, so nothing conflicts.
+#
+# de Grey's disjunction survives because his three antipodal pairs are an
+# ORBIT.  They are carried into one another by the symmetry of the hexagon, so
+# the rotation maps the family onto itself: whichever pair is monochromatic,
+# its image is again one of the three, and the contradiction is the same in
+# every branch.  The bite is not a general method for collapsing disjunctions.
+# It works on a symmetric one.
+#
+# That reframes what this work has been looking for.  The capped set found in
+# G is real and its disjunction is real -- some pair at sqrt3 or at 2 is
+# monochromatic in every 5-colouring -- but its ninety pairs have no symmetry
+# relating them, so no rotation acts on the family and no bite applies.  What
+# is needed is not a deeper cap or a denser set but a SYMMETRIC one: a capped
+# set that is a union of orbits under a rotation group, so that its
+# disjunction comes in orbits too.
+#
+# Which makes the carrier the thing to choose.  Gc -- G closed under the
+# order-twelve group about the point of G seeing the most unit-distance
+# neighbours -- has 11047 points in 923 genuine orbits, of sizes 1, 6 and 12,
+# and any union of them is mapped to itself by the rotation.
+THE_BITE_NEEDS_A_SYMMETRIC_DISJUNCTION = {
+    "a forced pair needs no bite": "rotate about one endpoint until the other "
+                                   "meets its image at distance 1; both carry "
+                                   "the same colour and are adjacent",
+    "a disjunction does not close": "no named endpoint to rotate about, and "
+                                    "the rotated copy may satisfy the "
+                                    "disjunction on a different pair",
+    "why de Grey's does": "his three antipodal pairs are an orbit of the "
+                          "hexagon's symmetry, so the rotation maps the "
+                          "family onto itself and every branch gives the "
+                          "same contradiction",
+    "so the bite is not general": "it collapses symmetric disjunctions, not "
+                                  "disjunctions",
+    "what the capped set in G lacks": "its ninety pairs have no symmetry "
+                                      "relating them",
+    "the target that follows": "a capped set which is a union of orbits, so "
+                               "that its disjunction comes in orbits",
+    "the carrier for it": "Gc, 11047 points in 923 orbits of sizes 1, 6 "
+                          "and 12",
+}
