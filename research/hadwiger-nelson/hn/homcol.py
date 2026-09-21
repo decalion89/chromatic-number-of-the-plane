@@ -9320,3 +9320,47 @@ SA_IS_CAPPED_AT_ITS_OWN_BITE_RADIUS = {
     "G at five colours, same scan": "1581 centres, every radius, whole graph, "
                                     "0 capped rings at any depth",
 }
+
+
+# The third level of de Grey's recursion, and the two separate walls it hits.
+#
+# His rule, read off the construction: bite a ring of radius rho about c, move
+# the centre to a point of that ring, bite a ring of radius 2*rho about it.
+# Level one is radius 2 and cosine 7/8; level two is radius 4 about (-2, 0)
+# and cosine 31/32.  Level three asks for radius 8 and cosine 127/128, whose
+# sine is sqrt(255)/128 = sqrt(3*5*17)/128.
+#
+# The first wall is the field: 17 is not a radicand of Q(sqrt3, sqrt5, sqrt7,
+# sqrt11), so the turn does not exist there.  That one is an instruction
+# rather than an obstacle -- adjoining sqrt17 makes it exact, the field has
+# dimension 32, and G rebuilds over it unchanged at 1581 points.
+#
+# The second wall does not move.  Over the extended field the radius-4 ring
+# about the pivot -- the one level two bites -- holds exactly TWO points of G,
+# and no point of G lies at distance 8 from either of them.  G reaches only
+# about 4.8 from the pivot, and a centre 4 out from there puts everything
+# within 8.8 but nothing at 8.  There is no radius-8 ring to bite.
+#
+# So the recursion stops on geometry as well as on arithmetic.  Each level
+# needs a carrier twice as wide as the last, and unions of rotations about a
+# fixed centre do not widen anything -- they fill in, they do not reach out.
+# That is a requirement on the carrier that no operation in the catalogue
+# supplies.
+THE_THIRD_LEVEL_NEEDS_A_WIDER_GRAPH_NOT_JUST_A_BIGGER_FIELD = {
+    "the rule": "bite radius rho about c; move to a point of that ring; bite "
+                "radius 2*rho about it",
+    "level 1": "radius 2, cos 7/8, sin sqrt15/8 -- Sb",
+    "level 2": "radius 4 about (-2,0), cos 31/32, sin 3*sqrt7/32 -- G",
+    "level 3 would be": "radius 8, cos 127/128, sin sqrt(3*5*17)/128",
+    "wall one, the field": "17 is not a radicand of K; adjoining sqrt17 "
+                           "removes this, dimension 32, G unchanged",
+    "wall two, the width": "the radius-4 ring about the pivot holds 2 points "
+                           "of G, and no point of G is 8 from either; G "
+                           "reaches 4.8 from the pivot",
+    "what it means": "each level needs a carrier twice as wide, and unions of "
+                     "rotations about a fixed centre fill in rather than "
+                     "reach out",
+    "so the missing operation is not a turn": "it is whatever makes the "
+                                              "carrier wider while keeping it "
+                                              "chromatically tight",
+}

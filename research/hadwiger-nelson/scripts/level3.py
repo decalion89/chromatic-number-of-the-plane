@@ -1,78 +1,108 @@
-"""One level further out: complete every unit edge into equilateral triangles.
+"""The third level of de Grey's recursion, which needs a field he did not use.
 
-Local enrichment around the pivot is exhausted -- every chord point added,
-1680 auxiliaries, pressure still 2 and the confined set still 2-degenerate.
-What that cannot see is structure beyond the first two levels.
+His construction bites twice and the radius doubles: Sa is bitten on its
+radius-2 ring by cosine 7/8, and Y is bitten on its radius-4 ring about
+(-2, 0) by cosine 31/32, with the second centre a point of the first bitten
+ring.  Written as a rule, bite radius rho about c, move to a point of that
+ring, bite radius 2*rho about it.
 
-The cheapest way further out: for every unit-distance pair u, v in the graph,
-the two points completing an equilateral triangle on uv.  They exist in de
-Grey's field because sqrt 3 does, they are one away from BOTH u and v by
-construction, and they are exactly the points a spindle would reach for.
+The third step asks for radius 8 and cosine 127/128, whose sine is
+sqrt(255)/128 = sqrt(3*5*17)/128.  That number does not exist in
+Q(sqrt3, sqrt5, sqrt7, sqrt11), which is why the recursion stops where it
+does -- not because the geometry runs out but because the field does.
 
-Then the only question that matters: does the pressure at the pivot move off
-2 at five colours?
+That is an instruction rather than an obstacle.  Adjoining sqrt17 makes the
+turn exact, and the object is small: G has 1581 points and the union has at
+most 3162.  Nothing about this is expensive; it just had to be noticed.
+
+The honest expectation is stated in advance.  A bite sharpens a disjunction,
+and G has no capped ring at five colours -- the exhaustive scan over all 1581
+centres and every radius found none -- so there is nothing here for the third
+bite to sharpen.  What the run settles is whether the field was the only thing
+in the way.
 """
-import sys, time, itertools
+import sys, time, pickle
 sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-from fractions import Fraction
-from hn import degrey
-from hn.geometry import Point
+from fractions import Fraction as Fr
+from collections import defaultdict
+from hn.field import Field
+from hn.degrey import build_G
+from hn.geometry import Point, Rotation
 from hn.graph import build_graph
-from hn.forced import ColourRelations, pressure
+from pysat.solvers import Solver
 
-g = degrey.build_G()
-pts = list(g.vertices)
-fld = pts[0].x.field
-HALF = fld.rational(Fraction(1, 2))
-RT3 = fld.sqrt(3) * HALF
-deg = g.degrees()
-p_idx = max(range(g.n), key=lambda v: deg[v])
-p = pts[p_idx]
-circle = sorted(g.adj[p_idx])
+k = int(sys.argv[1]) if len(sys.argv) > 1 else 5
+t0 = time.time()
+K17 = Field((3, 5, 7, 11, 17))
+print(f"field Q(sqrt3, sqrt5, sqrt7, sqrt11, sqrt17), dimension {K17.dim}"
+      f"  [{time.time()-t0:.0f}s]", flush=True)
+G = build_G(K17, as_graph=False)
+print(f"G over the extended field: {len(G)} points  [{time.time()-t0:.0f}s]",
+      flush=True)
+PIV = Point(K17.rational(-2), K17.zero())
+four = K17.rational(16)
+ring2 = [p for p in G if (p.x - PIV.x) * (p.x - PIV.x)
+         + (p.y - PIV.y) * (p.y - PIV.y) == four]
+print(f"the ring of radius 4 about the pivot -- de Grey's second bite -- "
+      f"holds {len(ring2)} points  [{time.time()-t0:.0f}s]", flush=True)
+if not ring2:
+    raise SystemExit("no radius-4 ring: the reading of his construction is wrong")
 
-# first the chord enrichment, as before
-have, extra = set(pts), []
-for i, j in itertools.combinations(circle, 2):
-    q = Point(pts[i].x + pts[j].x - p.x, pts[i].y + pts[j].y - p.y)
-    if q != p and q not in have:
-        have.add(q)
-        extra.append(q)
-w = build_graph(pts + extra)
-print(f"chord-enriched: {w.n} vertices, {w.m} edges", flush=True)
+sixtyfour = K17.rational(64)
+c3 = K17.rational(Fr(127, 128))
+s3 = K17.sqrt(3) * K17.sqrt(5) * K17.sqrt(17) * K17.rational(Fr(1, 128))
+assert c3 * c3 + s3 * s3 == K17.rational(1), "not a rotation"
+print(f"the third turn: cos 127/128, sin sqrt(3*5*17)/128 -- exact"
+      f"  [{time.time()-t0:.0f}s]", flush=True)
 
-# then equilateral completions of every unit edge, near the pivot only --
-# the whole graph would be 30000 points and the pivot's pressure cannot see
-# structure far away
-near = [v for v in range(w.n) if float(w.vertices[v].dist2(p)) <= 9.0]
-nearset = set(near)
-print(f"  {len(near)} vertices within 3 of the pivot", flush=True)
-t = time.time()
-new = set()
-for a in near:
-    ua = w.vertices[a]
-    for b in w.adj[a]:
-        if b <= a or b not in nearset:
-            continue
-        ub = w.vertices[b]
-        mx, my = (ua.x + ub.x) * HALF, (ua.y + ub.y) * HALF
-        dx, dy = ub.x - ua.x, ub.y - ua.y
-        for s in (1, -1):
-            q = Point(mx - dy * RT3 * fld.rational(s),
-                      my + dx * RT3 * fld.rational(s))
-            if q not in have:
-                new.add(q)
-print(f"  {len(new)} equilateral completions found  "
-      f"[{time.time()-t:.0f}s]", flush=True)
+best = None
+for i, C in enumerate(ring2):
+    on = [p for p in G if (p.x - C.x) * (p.x - C.x)
+          + (p.y - C.y) * (p.y - C.y) == sixtyfour]
+    if best is None or len(on) > best[1]:
+        best = (C, len(on), i)
+C, cnt, idx = best
+print(f"best third centre: point {idx} of that ring, at "
+      f"({float(C.x):.3f},{float(C.y):.3f}); its radius-8 ring holds {cnt} "
+      f"points  [{time.time()-t0:.0f}s]", flush=True)
+if cnt == 0:
+    print("G reaches no point 8 away from any point of the radius-4 ring, so "
+          "the third bite has nothing to stitch -- the recursion stops on "
+          "geometry as well as on the field", flush=True)
+    print("DONE", flush=True)
+    raise SystemExit(0)
 
-order = sorted(new, key=lambda q: float(q.dist2(p)))
-for keep in (0, 200, 1000, len(order)):
-    z = build_graph(pts + extra + order[:keep])
-    pi = z.index_of(p)
-    t = time.time()
-    pr = pressure(ColourRelations(z, 5), pi)
-    print(f"  +{keep:5} completions: n={z.n:6} m={z.m:7}, "
-          f"pivot degree {len(z.adj[pi]):3}, pressure k=5 = {pr}"
-          + ("   *** ABOVE 2 ***" if pr > 2 else "")
-          + f"  [{time.time()-t:.0f}s]", flush=True)
-    if keep == len(order):
-        break
+turn = Rotation(c3, s3).about(C)
+seen, P = set(), []
+for p in G:
+    for q in (p, turn(p)):
+        if q not in seen:
+            seen.add(q)
+            P.append(q)
+print(f"union: {len(P)} points  [{time.time()-t0:.0f}s]", flush=True)
+g = build_graph(P)
+E = sorted(set((min(a, b), max(a, b)) for a, b in g.edges()))
+old = set(range(len(G)))
+cross = sum(1 for a, b in E if (a in old) != (b in old))
+n = g.n
+print(f"{n} points, {len(E)} edges, {cross} cross  [{time.time()-t0:.0f}s]",
+      flush=True)
+cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
+for a, b in E:
+    for col in range(k):
+        cls.append([-(1 + a * k + col), -(1 + b * k + col)])
+for col in range(1, k):
+    cls.append([-(1 + col)])
+sv = Solver(name="cd15", bootstrap_with=cls)
+ok = sv.solve()
+sv.delete()
+if ok:
+    print(f"{k}-colourable  [{time.time()-t0:.0f}s]", flush=True)
+else:
+    print(f"*** NOT {k}-COLOURABLE -- chi > {k} ***  [{time.time()-t0:.0f}s]",
+          flush=True)
+    with open("/tmp/claude-0/-home-user-darwin-50/"
+              "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/"
+              "WITNESS_level3.pkl", "wb") as f:
+        pickle.dump(P, f)
+print("DONE", flush=True)
