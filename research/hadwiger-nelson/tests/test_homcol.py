@@ -3298,3 +3298,13 @@ def test_alternating_is_order_dependent_too():
     assert "none of these figures is the minimum" in note
     # the kept witness is the better of the two
     assert c["peeled"]["vertices"] == 63
+
+
+def test_the_disjunction_cannot_be_strengthened():
+    c = hn.homcol.THE_DISJUNCTION_IS_EXACTLY_ONE
+    assert c["at most 0"] == "impossible"      # the property holds
+    assert c["at most 1"] == "possible"        # and not one pair more
+    assert c["so the minimum is"] == 1
+    assert "exact, not sampled" in c["method"]
+    # it is the spindle failure seen from the other side
+    assert "SPINDLING_A_DISJUNCTION_DOES_NOT_WORK" in c["and it explains"]

@@ -7075,3 +7075,46 @@ SPINDLING_A_DISJUNCTION_DOES_NOT_WORK = {
                              "million",
     "so": "the objection is not just an objection -- the construction colours",
 }
+
+
+# The disjunction is exactly "at least one", and that is why the spindle fails.
+#
+# The witness says some pair of its 161 is monochromatic in every proper
+# 5-colouring.  The quantity that matters is not whether but HOW MANY: the
+# minimum, over colourings, of how many of the 161 are monochromatic at once.
+# A larger minimum is a stronger hypothesis and far easier to consume, since
+# "ten of 161" forces ten simultaneous coincidences where "one of 161" leaves
+# a rotated copy 160 ways to escape.
+#
+# Computed exactly, with an indicator per pair tied to the five same-colour
+# cases and a cardinality bound:
+#
+#     at most 0 monochromatic   impossible
+#     at most 1 monochromatic   POSSIBLE
+#
+# So the minimum is one.  There is a proper 5-colouring of the witness with
+# exactly one monochromatic pair out of 161, and the hypothesis cannot be
+# strengthened at all.
+#
+# That is the same fact as SPINDLING_A_DISJUNCTION_DOES_NOT_WORK, measured
+# from the other side.  The 161 spindle copies colour because each copy needs
+# only one coincidence and is free to choose which -- and the minimum being
+# one says that freedom is real and not an artefact of how the copies were
+# placed.
+THE_DISJUNCTION_IS_EXACTLY_ONE = {
+    "question": "the minimum over 5-colourings of how many of the 161 pairs "
+                "are monochromatic at once",
+    "at most 0": "impossible",
+    "at most 1": "possible",
+    "so the minimum is": 1,
+    "method": "one indicator per pair, tied to the five same-colour cases, "
+              "with a cardinality bound -- exact, not sampled",
+    "why it matters": "a larger minimum would be a stronger hypothesis and "
+                      "easier to consume; ten of 161 forces ten simultaneous "
+                      "coincidences, one of 161 leaves a rotated copy 160 "
+                      "ways to escape",
+    "and it explains": "SPINDLING_A_DISJUNCTION_DOES_NOT_WORK -- the 161 "
+                       "copies colour because each needs only one "
+                       "coincidence and may choose which, and this says that "
+                       "freedom is real rather than an artefact of placement",
+}
