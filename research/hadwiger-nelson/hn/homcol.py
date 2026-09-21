@@ -6253,3 +6253,38 @@ TABUCOL_SETTLES_WHAT_CDCL_COULD_NOT = {
                     "search is asymmetric, landing on satisfiable instances "
                     "and plateauing on unsatisfiable ones",
 }
+
+
+# The cost explosion is neutral, and G's class 4/9 proves it.
+#
+# Balls about the centre were used throughout as a cheap proxy: grow the
+# subgraph, watch the cost, and read a steep climb as the property coming into
+# view.  G's class 4/9 climbed 21s, 72s, 1279s, 4969s, 6893s over 1200 to 1560
+# points and every ball coloured -- and the full instance turned out to be
+# SATISFIABLE.  So a super-exponential ball curve with every ball colouring is
+# exactly what a hard satisfiable instance looks like, and says nothing about
+# which side of the line the whole graph is on.
+#
+# Sa at five with {4/9, 16/9} shows the same curve: 3s at 280 points, 98s at
+# 310, 1445s at 340, all colouring.  By itself that is now worth nothing.
+#
+# What still carries information is the ASYMMETRY ACROSS CLASSES of one graph
+# at one size -- nine of G's closable classes clear instantly and one does not
+# -- because there the graph, the point count and the solver are held fixed
+# and only the class varies.  That was always the claim; the ball curves were
+# never part of it, and are recorded here as neutral rather than supporting.
+THE_COST_EXPLOSION_IS_NEUTRAL = {
+    "G at five, class 4/9": {"ball curve": [21, 72, 1279, 4969, 6893],
+                             "every ball coloured": True,
+                             "the whole graph": "SATISFIABLE"},
+    "Sa at five, {4/9, 16/9}": {"ball curve": [3, 98, 1445],
+                                "every ball coloured": True,
+                                "the whole graph": "open"},
+    "so": "a steep ball curve with every ball colouring is what a hard "
+          "SATISFIABLE instance looks like",
+    "what still carries information": "the asymmetry across classes of one "
+                                      "graph at one size, where everything "
+                                      "but the class is held fixed",
+    "corrects": "the temptation to read the curve as evidence, not any "
+                "claim made from it -- the asymmetry was always the claim",
+}

@@ -2860,3 +2860,14 @@ def test_tabucol_settled_the_three_hour_instance():
     # and the earlier hedge is now upgraded, not contradicted
     assert "SETTLED" in hn.homcol.THE_EDGE_IS_AT_FOUR_NINTHS
     assert "satisfiable" in hn.homcol.THE_EDGE_IS_AT_FOUR_NINTHS["SETTLED"]
+
+
+def test_the_ball_curve_proved_nothing():
+    c = hn.homcol.THE_COST_EXPLOSION_IS_NEUTRAL
+    g = c["G at five, class 4/9"]
+    # the curve climbed by more than two orders of magnitude and the answer
+    # was still satisfiable, so the curve is not a signal
+    assert g["ball curve"][-1] > 100 * g["ball curve"][0]
+    assert g["every ball coloured"] is True
+    assert g["the whole graph"] == "SATISFIABLE"
+    assert "held fixed" in c["what still carries information"]
