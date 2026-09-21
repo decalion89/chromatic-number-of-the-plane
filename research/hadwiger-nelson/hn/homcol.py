@@ -6089,3 +6089,48 @@ EACH_OPERATION_AND_WHAT_IT_MOVES = {
                                      "G lacks it and every union of G lacks "
                                      "it.",
 }
+
+
+# D = 4/9 is this family's distinguished distance, at four colours and at five.
+#
+# Sorting the closable classes by how the weak-property call behaves separates
+# one of them from all the rest, and the same one every time.
+#
+#   Sa at four, D=4/9, 393 pairs      DOES NOT COLOUR -- carries it, 8s
+#   Sa u Sb at four, 786 pairs        DOES NOT COLOUR -- carries it, 8s
+#   Y at four, 779 pairs              DOES NOT COLOUR -- carries it, 8s
+#   Sa at five, 393 pairs             colours, but in 10s where the other
+#                                     thirteen classes take none
+#   Sb at five                        the same
+#   G at five, 1558 pairs             over an hour against four solvers, the
+#                                     only one of thirty-six to resist
+#
+# And build_Y deletes exactly two points from Sa u Sb: (1/3, 0) and (-1/3, 0),
+# whose squared distance is 4/9.  They are the antipodal pair of the D = 1/9
+# ring about the origin and two of the 393 pairs' endpoints.  Whether that is
+# why he deleted them is his business; what is measurable is that it costs
+# nothing -- Y still carries the property on the class afterwards.
+#
+# The distance is 2/3, and Sa's three carrying classes are 4/9, 16/9 and 4 --
+# distances 2/3, 4/3 and 2, an arithmetic progression of step 2/3.
+FOUR_NINTHS_IS_THE_FAMILYS_DISTANCE = {
+    "carries the weak property at four": {"Sa": "393 pairs, 8s",
+                                          "Sa u Sb": "786 pairs, 8s",
+                                          "Y": "779 pairs, 8s"},
+    "at five, colours but slowly": {"Sa": "10s against 0s for the other 13",
+                                    "Sb": "10s",
+                                    "G": "over an hour, four solvers, the "
+                                         "only one of 36"},
+    "the deleted pair": {"points": "(1/3, 0) and (-1/3, 0)",
+                         "squared distance": "4/9",
+                         "what they are": "the antipodal pair of the D = 1/9 "
+                                          "ring about the origin",
+                         "what the deletion costs": "nothing -- Y carries the "
+                                                    "class at four anyway"},
+    "Sa's three carrying classes": {"4/9": "distance 2/3", "16/9": "4/3",
+                                    "4": "2"},
+    "which is": "an arithmetic progression of step 2/3",
+    "caution": "solver time is not a metric.  What is stated here is that one "
+               "class behaves unlike the other thirteen or thirty-five, on "
+               "five graphs, and that it is the class that carries at four.",
+}

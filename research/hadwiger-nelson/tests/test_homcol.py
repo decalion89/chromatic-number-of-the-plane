@@ -2776,3 +2776,35 @@ def test_bites_do_not_move_density_and_closures_barely_do():
     assert abs(d["Sa"]["edges per vertex"] - d["G"]["edges per vertex"]) < 0.02
     assert d["Sa"]["carries the weak property at 4"] is True
     assert d["G"]["carries it at 5"] is False
+
+
+def test_the_deleted_pair_sits_at_the_distinguished_distance():
+    # build_Y drops (1/3, 0) and (-1/3, 0); their squared distance is 4/9
+    from fractions import Fraction as Fr
+    from hn.geometry import DEGREY_FIELD as DF, Point
+    a = Point(DF.rational(Fr(1, 3)), DF.zero())
+    b = Point(DF.rational(Fr(-1, 3)), DF.zero())
+    assert a.dist2(b) == Fr(4, 9)
+    assert a.norm2() == Fr(1, 9)          # antipodal on the D = 1/9 ring
+    c = hn.homcol.FOUR_NINTHS_IS_THE_FAMILYS_DISTANCE["the deleted pair"]
+    assert c["squared distance"] == "4/9"
+    assert "nothing" in c["what the deletion costs"]
+
+
+def test_the_deletion_is_actually_two_points():
+    from hn.degrey import build_Sa, build_Sb, build_Y
+    from hn.geometry import DEGREY_FIELD as DF
+    union = set(build_Sa(DF)) | set(build_Sb(DF))
+    assert len(union) == 793
+    assert len(build_Y(DF)) == 791
+
+
+def test_the_carrying_classes_are_an_arithmetic_progression():
+    from fractions import Fraction as Fr
+    c = hn.homcol.FOUR_NINTHS_IS_THE_FAMILYS_DISTANCE
+    # the squared radii are 4/9, 16/9, 4 -- so the distances are 2/3, 4/3, 2
+    d = sorted(Fr(k) for k in ("4/9", "16/9", "4"))
+    roots = [Fr(2, 3), Fr(4, 3), Fr(2)]
+    assert [r * r for r in roots] == d
+    assert roots[1] - roots[0] == roots[2] - roots[1] == Fr(2, 3)
+    assert set(c["Sa's three carrying classes"]) == {"4/9", "16/9", "4"}

@@ -4363,6 +4363,33 @@ closure of `G` lacks it too. So the target is not a bigger union of `G`. It is a
 five-chromatic graph carrying the weak property *on its own* — and nothing in
 this repository produces one.
 
+## `D = 4/9` is this family's distance, at four colours and at five
+
+Sorting the closable classes by how the weak-property call behaves separates one
+of them from all the rest — and the same one every time:
+
+| graph | colours | class | verdict |
+|---|---|---|---|
+| `Sa` | 4 | `4/9`, 393 pairs | **does not colour** — carries it, 8 s |
+| `Sa u Sb` | 4 | `4/9`, 786 pairs | **does not colour** — carries it, 8 s |
+| `Y` | 4 | `4/9`, 779 pairs | **does not colour** — carries it, 8 s |
+| `Sa` | 5 | `4/9`, 393 pairs | colours, in 10 s — the other thirteen classes take none |
+| `Sb` | 5 | `4/9` | the same |
+| `G` | 5 | `4/9`, 1558 pairs | over an hour against four solvers — the only one of thirty-six to resist |
+
+And `build_Y` deletes exactly two points from `Sa u Sb`: `(1/3, 0)` and
+`(-1/3, 0)`, whose squared distance is `4/9`. They are the antipodal pair of the
+`D = 1/9` ring about the origin. Whether that is *why* he deleted them is his
+business; what is measurable is that it costs nothing — `Y` still carries the
+property on that class afterwards, with 779 pairs instead of 786.
+
+The distance is `2/3`, and `Sa`'s three carrying classes are `4/9`, `16/9`, `4`
+— distances `2/3`, `4/3`, `2`, an arithmetic progression of step `2/3`.
+
+Solver time is not a metric and is not offered as one. What is stated is that
+one class behaves unlike the other thirteen, or thirty-five, on five different
+graphs — and that it is the class that carries the property at four colours.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
