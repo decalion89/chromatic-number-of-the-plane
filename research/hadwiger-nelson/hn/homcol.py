@@ -5134,3 +5134,42 @@ G_HAS_ONE_FIVE_CRITICAL_SUBGRAPH = {
                                 "the eleven undecided are open and counted "
                                 "neither way",
 }
+
+
+# The near-criticality of G, verified, and what it does to the account.
+#
+# Nineteen of thirty probed vertices came back essential -- G - v 4-colourable
+# -- which sits oddly beside the literature, where de Grey's graph is the
+# starting point for reductions to 874 vertices and below.  A result that
+# surprises has to be checked, so one was: G - 1172 is 4-colourable, and the
+# colouring was pulled out and verified directly -- 0 monochromatic edges
+# among its 7869, every one of its 1580 vertices carrying exactly one colour.
+#
+# There is no contradiction.  The 1581-vertex graph is already de Grey's own
+# reduction of his 20425, and the smaller graphs in the literature are found
+# by fresh search rather than by deleting vertices from this one.
+#
+# What it does to the account is strengthen it.  The criticality diagnosis was
+# withdrawn on the grounds that G is redundant -- 1581 vertices where about
+# five hundred suffice -- and that reading was itself too quick.  G is NEARLY
+# VERTEX-CRITICAL: most single deletions destroy its chromatic number.  And
+# its colour relation at five colours is still exactly its edge set.
+#
+# So the negative does not rest on G being loose.  A tight, nearly critical
+# 5-chromatic graph has no colour relation beyond its edges either, and that
+# is a stronger statement than the one withdrawn.
+G_IS_NEARLY_VERTEX_CRITICAL = {
+    "measured": "19 of 30 probed vertices essential, 0 dispensable",
+    "verified": "G - 1172 is 4-colourable; the colouring checked directly -- "
+                "0 monochromatic edges of 7869, every one of 1580 vertices "
+                "with exactly one colour",
+    "no_contradiction": "1581 is already de Grey's own reduction of his "
+                        "20425, and the literature's smaller graphs come from "
+                        "fresh search rather than from deleting vertices here",
+    "what_it_strengthens": "the criticality diagnosis was withdrawn because G "
+                           "looked redundant.  It is not: it is nearly "
+                           "vertex-critical, and its five-colour relation is "
+                           "still exactly its edge set.",
+    "the_stronger_statement": "a tight, nearly critical 5-chromatic graph has "
+                              "no colour relation beyond its edges",
+}

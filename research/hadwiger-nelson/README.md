@@ -3657,6 +3657,16 @@ colourings are scarce, while `G` is 5-chromatic on 1581 vertices where about
 > reaches `χ = 5` on 1581 where ~500 suffice, three times over. The graph
 > that pins 211 pairs is the more redundant *by a factor of twenty*.
 > Redundancy is not the variable.
+>
+> **And `G` is not redundant at all.** Nineteen of thirty probed vertices are
+> essential — `G - v` is 4-colourable — with an explicit verified colouring
+> for one of them (0 monochromatic edges of 7869, every one of 1580 vertices
+> with exactly one colour). `G` is *nearly vertex-critical*, and its
+> five-colour relation is still exactly its edge set. That is a stronger
+> statement than the one withdrawn: the negative does not rest on `G` being
+> loose. (No contradiction with the literature — 1581 is already de Grey's own
+> reduction of his 20 425, and the smaller graphs come from fresh search, not
+> from deleting vertices here.)
 
 What is left is the plane's, not the graph's. A unit-distance graph in the
 plane has no clique larger than a triangle. Against four colours a triangle

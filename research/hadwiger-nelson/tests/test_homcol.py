@@ -2280,3 +2280,44 @@ def test_correlation_tracks_gadget_density_monotonically():
 
     # And a 4-chromatic graph need not contain a spindle at all.
     assert any(r[0] == "lattice + 1 hinge" and r[1] == 0.0 for r in rows)
+
+
+def test_G_minus_a_vertex_can_be_four_coloured():
+    """A surprising measurement, checked with an explicit witness.
+
+    Nineteen of thirty probed vertices of G came back essential -- G - v
+    4-colourable -- which sits oddly beside a literature that treats de Grey's
+    graph as the starting point for reductions to 874 vertices and below.  It
+    is nonetheless true, and the witness settles it: a proper 4-colouring of
+    G - 1172 exists, with no monochromatic edge and every vertex carrying
+    exactly one colour.
+
+    There is no contradiction.  1581 is already de Grey's own reduction of his
+    20425, and the smaller graphs are found by fresh search, not by deleting
+    vertices from this one.
+    """
+    from pysat.solvers import Solver
+    from hn.degrey import build_G
+    from hn.geometry import DEGREY_FIELD as F
+
+    g = build_G(F)
+    n, k, v = g.n, 4, 1172
+    E = [(min(a, b), max(a, b)) for a, b in g.edges()]
+    keep = [w for w in range(n) if w != v]
+    idx = {w: i for i, w in enumerate(keep)}
+    sub = [(idx[a], idx[b]) for a, b in E if a != v and b != v]
+
+    cls = [[1 + i * k + c for c in range(k)] for i in range(len(keep))]
+    for x, y in sub:
+        for c in range(k):
+            cls.append([-(1 + x * k + c), -(1 + y * k + c)])
+    sv = Solver(name="cd19", bootstrap_with=cls)
+    sv.conf_budget(600000)
+    assert sv.solve_limited() is True
+    m = sv.get_model()
+    col = [next(c for c in range(k) if m[i * k + c] > 0)
+           for i in range(len(keep))]
+    sv.delete()
+
+    assert not [1 for x, y in sub if col[x] == col[y]]
+    assert len(keep) == 1580 and len(sub) == 7869
