@@ -4701,6 +4701,103 @@ one. But the gap between the levels finally has a figure attached:
 | `Sa` at four | 1 | 3 |
 | `G` at five | 5 | 229 |
 
+## A spindle that survives a disjunction — and its ceiling
+
+The ordinary spindle needs a *named* forced pair. Every disjunction found here
+refuses it, because each pair carries its own centre of rotation and one
+rotation cannot serve them all. Making the pairs **share an endpoint** removes
+that objection: a hub `u`, a ring about it, and a set `W` on that ring with `u`
+monochromatic with *some* point of `W` in every proper `k`-colouring. The
+rotation about `u` fixes `u`, so every rotated copy repeats the disjunction
+about the same hub over a shifted `W`, and the colour class of `u` must hold an
+**independent transversal** inside one circle.
+
+Write ring points as exponents of the rotation; two are at unit distance
+exactly when their exponents differ by one. For `W = {0, −2}` and three copies:
+
+    a0 = 0   ->  a1 in {1, -1}, both one away.            dead
+    a0 = -2  ->  a1 = 1  ->  a2 in {2, 0}, both one away.  dead
+
+Exhaustive search settles the general case: the stack closes **iff the
+separation `m` is even**, and then at exactly `m + 1` copies. The hand argument
+had claimed only `m = 2`; it checked consecutive copies and missed that the
+non-consecutive constraints bite as well.
+
+The separation is a distance, and rational for every `m` — carrying the chord
+recurrence as a rational pair keeps it exact, since one of the two parts always
+vanishes. So the hypothesis is searchable. Searched, and absent: Sa at four and
+`G` at five offer 1962 and 7800 candidates and not one carries it, and widening
+`m` from 2 to {2,4,6,8} added **no candidate at all** — the only chords either
+graph realises belong to the ring `D = 1/3`, whose rotation has order six so
+that its two-, four- and eight-step chords collapse onto the single value one.
+
+And the ceiling is hard. Over every shape inside a window of thirteen exponents
+and up to twenty-six copies — 66 shapes of width three, 220 of width four —
+**not one closes**. Only widths one and two do, and width two is barely weaker
+than the forced pair it was meant to replace.
+
+## de Grey's ring lemma is a palette cap, not an antipodal pair
+
+The six points of Sa's `D = 4` ring carry no edges among themselves — adjacent
+ones are two apart, antipodal ones four — so all 187 partitions of six things
+into at most four blocks are a priori available. Forcing the ring to each in
+turn says exactly what Sa claims, with no paraphrase in the way:
+
+| | patterns available | surviving | colours used |
+|---|---|---|---|
+| `k = 4` | 187 | **10** | one 1-block, nine 2-block |
+| `k = 5` | 202 | **202** | up to and including all five |
+
+So at four colours the ring takes **at most two colours**, and in every
+two-block pattern the minority class is a pair at chord 2 or chord 4 — never
+one of the six at chord 2√3. "Some antipodal pair is monochromatic" is a
+corollary, and a much weaker one.
+
+That explains how the bite works on so little contact. `Y` is Sa with one
+rotated copy, and the two share **one vertex and exactly six edges** — the
+matching that carries each ring point to its image, which the rotation places
+at distance one. Thirteen stacked copies share 72. Only a statement as strong
+as the cap survives that little contact.
+
+## The cap is the design target, and nothing has it at five
+
+The cap screens in one SAT call: can the ring show all `k` colours at once?
+Swept over every centre and ring of `G` at five — 3943 rings of six points or
+more — 1557 came back capped, and **every one of them is a unit ring capped at
+4**. That is not rigidity. A neighbourhood showing all five colours would leave
+its centre uncolourable, so "the unit ring is capped at `k − 1`" is nothing but
+the statement that the graph colours. The degree-60 hub is capped for that
+reason and no other; no ring at any other distance is capped at all.
+
+Beside it, two more censuses, both empty:
+
+| | result |
+|---|---|
+| forced-same pairs | 0 of 21344 closable non-edge pairs |
+| forced-**different** pairs | 0 of 39923 non-adjacent pairs at `d² < 4` |
+| apex centres | 0 — no neighbourhood forces five colours |
+
+`G` has no rigidity of any kind at five colours.
+
+Thickening does not help, and the reason is structural rather than empirical.
+Rotations about the origin commute with the sixty-degree rotation, so every
+image `ρᵗ(Sa)` is dihedrally symmetric and the stack keeps the whole structure
+while the ring grows six points a level. At four colours `Sa` alone already
+carries the gateway — the calibration reproduces de Grey exactly. At five it
+fails at every certified level, and it must: ring points are adjacent only
+between consecutive levels at the same hexagon position, so the ring plus its
+antipodal pairs is **three disjoint ladders**, bipartite at any thickness.
+
+> **A bug worth stating.** Each bite multiplies the shared denominator by
+> eight, so thirteen of them push it past `8¹³` and the int64 squared form
+> **wraps silently**. `fast_edges_complete` returned a graph with *no edges at
+> all* and the sweep went on reporting "colourable, gateway fails" for three
+> more levels — true of the empty graph and vacuous about the real one.
+> `IntBasis.overflow_headroom` existed for exactly this and no script here was
+> calling it. It is conservative, so it certifies rather than detects: levels 0
+> through 8 are certified and the rest are not reported.
+
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

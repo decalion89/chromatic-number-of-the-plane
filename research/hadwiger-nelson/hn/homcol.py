@@ -6180,6 +6180,105 @@ THE_INT64_PATH_HAS_A_CERTIFICATE = {
 }
 
 
+# Sa is irreducible for the cap, orbit by orbit.
+#
+# Peeling one vertex at a time costs a day -- the cap is an UNSAT proof at four
+# minutes a call -- and the unsatisfiable core comes back naming all 397
+# vertices, which discriminates nothing.  But Sa is a dihedral closure and the
+# cap is a statement about a ring the same group preserves, so the natural unit
+# is the ORBIT: 39 of them, thirty-odd trials a sweep, and every intermediate
+# as symmetric as Sa is.
+#
+# Not one orbit can go.  De Grey's gadget is the whole of Sa, all 397 points,
+# and that fixes the scale of its analogue: the measured factor of ten puts the
+# five-colour version at about four thousand points.
+SA_IS_ORBIT_IRREDUCIBLE_FOR_THE_CAP = {
+    "orbits": 39, "orbit sizes": {1: 1, 6: 10, 12: 28},
+    "droppable": 0,
+    "why orbits and not vertices": "a vertex-at-a-time sweep is 397 UNSAT "
+                                   "proofs at four minutes each, and the "
+                                   "core names every vertex",
+    "so the gadget is": "the whole of Sa",
+}
+
+
+# Contact can be bought, eighteen times over, and it buys nothing.
+#
+# De Grey's bite joins Sa to its image by SIX edges.  That was a structural
+# choice -- the rotation moves each hexagon point by exactly one -- not a
+# maximal one.  Sweeping all 548 rational rings the field can join, in both
+# directions, D = 5/9 and D = 5/11 give 108 crossing edges, and every rotation
+# about the origin commutes with the sixty-degree rotation so every union stays
+# dihedrally symmetric with its rings intact.
+#
+# Taking the best of them cumulatively builds the most strongly joined
+# symmetric object the family offers: 4789 points, 25518 edges, 5.33 per
+# vertex, five-colourable, and the ONLY capped ring at any stage is the unit
+# ring -- which is capped because its centre needs a colour and for no other
+# reason.  Mean degree never leaves the 10-11 band Sa already sat in.
+CONTACT_CAN_BE_BOUGHT_AND_DOES_NOT_HELP = {
+    "rotations measured": 1096, "rings the field can join": 548,
+    "crossing edges, best": {"D=5/9": 108, "D=5/11": 108, "D=15/16": 36,
+                             "D=3/5": 12, "D=4 (de Grey's)": 6},
+    "cumulative union": {"points": 4789, "edges": 25518,
+                         "edges per vertex": 5.33,
+                         "five-colourable": True,
+                         "capped rings": "the unit ring only, at every stage"},
+    "so": "de Grey chose by structure, not contact, and contact is not the "
+          "missing ingredient either",
+}
+
+
+# The field holds a larger dihedral group than the construction used.
+#
+# A rotation matrix needs BOTH its cosine and its sine in the field.  De Grey
+# closed his seed under sixty degrees -- cos 1/2, sin sqrt3/2 -- for a
+# twelve-element dihedral group.  But cos 30 = sqrt3/2 and sin 30 = 1/2 are
+# both there too, so the rotation of order TWELVE is available and the dihedral
+# group of order twenty-four with it: twice what was used, in the same field,
+# with no adjunction.
+#
+# Five-fold symmetry is NOT available, for all that cos 72 = (sqrt5 - 1)/4 sits
+# in the field: sin 72 = sqrt(10 + 2 sqrt5)/4 is quartic over Q with cyclic
+# Galois group, and a multiquadratic field contains no such element.  So
+# twenty-four is the ceiling, and it doubles every ring about the origin:
+# 60, 48, 36, 36, 24, 12, 12, 12 against 30, 24, 18, 18, 12, 6, 6, 6.
+THE_FIELD_HOLDS_A_LARGER_DIHEDRAL_GROUP = {
+    "used": "D6, order 12, rotation by 60 degrees",
+    "available": "D12, order 24, rotation by 30 degrees (cos sqrt3/2, "
+                 "sin 1/2)",
+    "not available": "any five-fold rotation -- sin 72 needs "
+                     "sqrt(10 + 2 sqrt5), quartic and cyclic, and this field "
+                     "is multiquadratic",
+    "D6 closure of the seed": {"points": 397, "edges": 1974,
+                               "rings": [30, 24, 18, 18, 12, 6, 6, 6]},
+    "D12 closure of the seed": {"points": 793, "edges": 3948,
+                                "rings": [60, 48, 36, 36, 24, 12, 12, 12]},
+    "why it matters": "the cap is what the construction rests on, and a "
+                      "twelve-point ring is a stronger thing to cap than a "
+                      "hexagon",
+}
+
+
+# The suite was one test.
+#
+# A full run took over two hours and produced about twenty-seven dots, which
+# looked like a broken harness.  It was not: 166 tests run in 246 seconds and
+# a single one -- re-deriving every distance of the 63-point witness inside a
+# rebuilt field and putting the disjunction to three solvers from scratch --
+# accounted for the rest.  It is now marked slow, which is what the marker was
+# already there for.
+THE_SUITE_WAS_ONE_TEST = {
+    "full run": "over two hours",
+    "without test_the_witness_file_verifies": "246 seconds, 166 tests",
+    "slowest of the rest": {"the stronger gate above five": "29s",
+                            "the counting threshold at the gate": "21s",
+                            "the periodic screen at five": "19s"},
+    "fix": "the existing `slow` marker, applied where it belongs",
+}
+
+
+
 THE_WEAK_PROPERTY_IS_THE_GATEWAY = {
     "weak": "some antipodal pair of ring D is monochromatic in EVERY proper "
             "k-colouring",

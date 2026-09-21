@@ -1,4 +1,5 @@
 """Homomorphism colourings: the structural screen, and what it says."""
+import pytest
 from fractions import Fraction
 from hn.degrey import build_G
 from hn.graph import build_graph
@@ -3228,6 +3229,11 @@ def test_minimal_is_not_claimed_to_be_minimum():
 
 # --- the witness file, checked from the file alone --------------------------
 
+# Marked slow, and measured rather than guessed: re-deriving every distance in
+# the field and putting the disjunction to three solvers from scratch is what
+# made a 246-second suite take over two hours.  Everything else in this file
+# runs in seconds; this one test was the whole difference.
+@pytest.mark.slow
 def test_the_witness_file_verifies():
     """Read data/witness_five.json and check every claim it makes.
 
@@ -3613,3 +3619,101 @@ def test_the_overflow_guard_catches_the_empty_graph():
     safe = _bite_stack(8)
     bs = _ft.IntBasis.covering(safe)
     assert bs.overflow_headroom(bs.rows(safe)) < 1.0
+
+
+def test_the_field_holds_the_order_twelve_rotation_and_no_five_fold():
+    """Twice the dihedral group de Grey used, and no more, in the same field.
+
+    A rotation matrix needs both its cosine and its sine.  Thirty degrees has
+    both -- sqrt3/2 and 1/2 -- so the order-twelve rotation is available and
+    doubles every ring about the origin.
+
+    Seventy-two degrees does not, for all that cos 72 = (sqrt5 - 1)/4 lies in
+    the field: sin 72 = sqrt(t) with t = (10 + 2 sqrt5)/16, and t has no square
+    root here.  The reason is short enough to check.  Let sigma negate sqrt5
+    and fix the other generators.  If s*s = t then u = s*sigma(s) satisfies
+    u*u = t*sigma(t) = 5/16, so u is one of the two square roots of 5/16,
+    namely plus or minus sqrt5/4 -- both of which sigma negates.  But u is
+    sigma-fixed by construction, so u = -u, so u = 0, contradicting u*u = 5/16.
+    """
+    from fractions import Fraction as Fr
+    from hn.geometry import Rotation, Point
+    K = _gm.DEGREY_FIELD
+    half = K.rational(Fr(1, 2))
+    rot30 = Rotation(K.sqrt(3) * half, half)
+    assert rot30.cos * rot30.cos + rot30.sin * rot30.sin == K.rational(1)
+    p = Point(K.rational(2), K.zero())
+    q = p
+    for _ in range(6):
+        q = rot30(q)
+    assert q != p                      # order is twelve, not six
+    for _ in range(6):
+        q = rot30(q)
+    assert q == p
+
+    def sigma(e):
+        """The automorphism negating sqrt5 and fixing sqrt3, sqrt7, sqrt11."""
+        return K.element([c if p % 5 else -c
+                          for c, p in zip(e.c, K._prod)])
+
+    assert sigma(K.sqrt(5)) == -K.sqrt(5)
+    for g in (3, 7, 11):
+        assert sigma(K.sqrt(g)) == K.sqrt(g)
+    t = (K.rational(10) + K.sqrt(5) * K.rational(2)) * K.rational(Fr(1, 16))
+    assert K.sqrt(5) * K.sqrt(5) == K.rational(5)
+    # cos 72 = (sqrt5 - 1)/4 IS in the field, and squares to what it should
+    cos72 = (K.sqrt(5) - K.rational(1)) * K.rational(Fr(1, 4))
+    assert cos72 * cos72 + t == K.rational(1)      # cos^2 + sin^2 = 1
+    assert t * sigma(t) == K.rational(Fr(5, 16))
+    root = K.sqrt(5) * K.rational(Fr(1, 4))
+    assert root * root == K.rational(Fr(5, 16))
+    assert sigma(root) == -root        # so no sigma-fixed u can square to it
+    assert t != sigma(t)               # and t itself is not sigma-fixed
+
+
+def test_the_larger_closure_doubles_every_ring():
+    """The order-twelve closure of the seed, ring by ring."""
+    import numpy as np
+    from fractions import Fraction as Fr
+    from collections import defaultdict
+    from hn.geometry import Rotation, Point
+    K = _gm.DEGREY_FIELD
+    half = K.rational(Fr(1, 2))
+    ZERO = Point(K.zero(), K.zero())
+
+    def closure(seed, rot, order):
+        seen, out = set(), []
+        for p in seed:
+            for base in (p, Point(p.x, -p.y)):
+                q = base
+                for _ in range(order):
+                    if q not in seen:
+                        seen.add(q)
+                        out.append(q)
+                    q = rot(q)
+        return out
+
+    def rings(P):
+        b = _ft.IntBasis.covering(P)
+        r = b.rows(P)
+        assert b.overflow_headroom(r) < 1.0
+        dm, d2 = b.dim, b.D * b.D
+        zi = P.index(ZERO)
+        d = r - r[zi]
+        sq = b._field_square(d[:, :dm]) + b._field_square(d[:, dm:])
+        ok = np.ones(len(sq), dtype=bool)
+        for j in range(1, dm):
+            ok &= sq[:, j] == 0
+        grp = defaultdict(int)
+        for off in np.nonzero(ok)[0]:
+            v = Fr(int(sq[off, 0]), d2)
+            if v:
+                grp[v] += 1
+        return sorted(grp.values(), reverse=True)[:8], len(P)
+
+    S = _dg.build_S(K)
+    six, n6 = rings(closure(S, Rotation(half, K.sqrt(3) * half), 6))
+    twelve, n12 = rings(closure(S, Rotation(K.sqrt(3) * half, half), 12))
+    assert (n6, six) == (397, [30, 24, 18, 18, 12, 6, 6, 6])
+    assert (n12, twelve) == (793, [60, 48, 36, 36, 24, 12, 12, 12])
+    assert all(b == 2 * a for a, b in zip(six, twelve))
