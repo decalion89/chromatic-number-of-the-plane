@@ -2427,3 +2427,31 @@ def test_the_fifth_colour_flattens_the_degree_curve():
     assert [r[2] for r in top] == sorted((r[2] for r in top), reverse=True)
     assert len(top) >= 4
     assert five[0] - five[-1] < 0.6
+
+
+def test_surplus_does_not_predict_but_degree_does():
+    """The last hypothesis, refuted by data already in hand.
+
+    Surplus -- how many times a graph exceeds the minimum for its own
+    chromatic number -- runs from 34 to 257 across the four-colour objects
+    measured here, and the correlation ratio goes 1.7, 24.0, 2.0, 25.4, 1.2.
+    No order.  Average degree separates them exactly: the two ratios above 20
+    are the two objects at degree 9.95, and the three below 2.1 are the three
+    at 5.6.
+
+    Which cancelled a twelve-hour measurement of Z at fifty-five times the
+    minimum, since the axis it would have placed a point on carries no signal.
+    """
+    from hn.homcol import SURPLUS_DOES_NOT_PREDICT as S
+
+    rows = S["four_colour_objects_by_surplus"]
+    assert [r[0] for r in rows] == sorted(r[0] for r in rows)
+
+    ratios = [r[1] for r in rows]
+    assert ratios != sorted(ratios) and ratios != sorted(ratios, reverse=True)
+
+    high = [r for r in rows if r[1] > 20]
+    low = [r for r in rows if r[1] < 2.1]
+    assert len(high) == 2 and len(low) == 3
+    assert all(r[2] > 9.9 for r in high)
+    assert all(r[2] < 5.7 for r in low)

@@ -4009,6 +4009,35 @@ once below it — 1.7 at degree 5.66 against 2.1 at 4.87 — where the values si
 near one and the noise is the size of the signal. The 251.4 at degree 8.97 is
 the sampler artefact recorded above, not a data point.)
 
+## Surplus does not predict either
+
+The last hypothesis standing was **surplus** — that correlation needs a graph
+many times larger than the minimum for its own chromatic number. `Sa` is 397
+points where seven suffice for `χ = 4` (57×) and scores 24; `G` is 1581 where
+~500 suffice (3×) and scores 1.1. `Z` at 55× was being measured to test it, at
+something like twelve hours.
+
+The data already in hand refute it. Ordering the four-colour objects by
+surplus:
+
+| surplus | ratio | degree |
+|---|---|---|
+| 34× | 1.7 | 5.66 |
+| 57× | **24.0** | 9.94 |
+| 103× | 2.0 | 5.60 |
+| 113× | **25.4** | 9.96 |
+| 257× | 1.2 | 5.61 |
+
+Surplus runs 34 → 257 and the ratio goes 1.7, 24.0, 2.0, 25.4, 1.2 — no order
+at all. The degree column separates them perfectly: the two ratios above 20
+are exactly the two objects at degree 9.95, the three below 2.1 exactly the
+three at 5.6.
+
+So within four colours degree predicts and surplus is irrelevant; at five
+colours degree is flat. Neither axis leads anywhere, and the `Z` measurement
+was stopped rather than spend half a day placing a point on one that carries
+no signal.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

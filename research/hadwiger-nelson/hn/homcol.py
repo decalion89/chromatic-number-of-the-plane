@@ -5389,3 +5389,48 @@ THE_FIFTH_COLOUR_FLATTENS_THE_CURVE = {
                                      "that is the lever measured to do "
                                      "nothing",
 }
+
+
+# Surplus does not predict either, and that cancels a twelve-hour measurement.
+#
+# The last hypothesis standing was surplus: that correlation needs a graph
+# many times larger than the minimum for its own chromatic number.  Sa is 397
+# points where seven suffice for chi = 4 -- fifty-seven times -- and scores 24,
+# while G is 1581 where about five hundred suffice, three times, and scores
+# 1.1.  Z at fifty-five times was being measured to test it, at something like
+# twelve hours.
+#
+# The data already in hand refute it.  Ordering the four-colour objects by
+# surplus:
+#
+#     surplus    ratio    degree
+#        34x       1.7      5.66
+#        57x      24.0      9.94
+#       103x       2.0      5.60
+#       113x      25.4      9.96
+#       257x       1.2      5.61
+#
+# Surplus runs from 34 to 257 and the ratio goes 1.7, 24.0, 2.0, 25.4, 1.2 --
+# no order at all.  The degree column separates them perfectly: the two high
+# ratios are exactly the two objects at degree 9.95, and the three low ones
+# exactly the three at 5.6.
+#
+# So within four colours degree predicts and surplus is irrelevant, and at
+# five colours degree is flat.  Measuring Z would have cost half a day to
+# place a point on an axis that carries no signal, so it was stopped.
+SURPLUS_DOES_NOT_PREDICT = {
+    "the_hypothesis": "correlation needs a graph many times the minimum for "
+                      "its own chromatic number",
+    "four_colour_objects_by_surplus": [(34, 1.7, 5.66), (57, 24.0, 9.94),
+                                       (103, 2.0, 5.60), (113, 25.4, 9.96),
+                                       (257, 1.2, 5.61)],
+    "columns": ("surplus (n / minimum for chi)", "ratio", "average degree"),
+    "verdict": "no order in surplus at all; degree separates them perfectly "
+               "-- the two ratios above 20 are exactly the two objects at "
+               "degree 9.95, the three below 2.1 exactly the three at 5.6",
+    "what_it_cancelled": "the measurement of Z at fifty-five times the "
+                         "minimum, about twelve hours, which would have "
+                         "placed a point on an axis carrying no signal",
+    "and_so": "within four colours degree predicts and surplus does not; at "
+              "five colours degree is flat.  Neither axis leads anywhere.",
+}
