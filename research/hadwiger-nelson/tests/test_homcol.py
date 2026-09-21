@@ -3848,3 +3848,77 @@ def test_the_pruning_costs_two_of_three_forced_pairs():
     assert c["Sa u rho(Sa), unpruned"]["surviving patterns"] == 3
     assert c["Y"]["antipodal pairs forced"] == 1
     assert c["Sa u rho(Sa), unpruned"]["antipodal pairs forced"] == 3
+
+
+def test_the_census_sits_at_the_ceiling_until_the_graph_is_nearly_complete():
+    """The cheap half of the no-gradient curve, which is the surprising half.
+
+    Three hundred and seven of Sa's 397 points -- 77 per cent, with more than
+    half its edges -- read the CEILING at four colours and at five: every
+    pattern of the centre and its ring survives.  The fall to ten happens
+    entirely in the last ninety vertices.  Only the ceiling readings are
+    checked here, because they are the satisfiable direction and take seconds,
+    while the fall itself is a wall of UNSAT proofs.
+    """
+    import math, random
+    import numpy as np
+    from fractions import Fraction as Fr
+    from hn.geometry import Point
+    from pysat.solvers import Solver
+    K = _gm.DEGREY_FIELD
+    P0 = _dg.build_Sa(K)
+    b = _ft.IntBasis.covering(P0)
+    r = b.rows(P0)
+    dm, d2 = b.dim, b.D * b.D
+    zi = P0.index(Point(K.zero(), K.zero()))
+    d = r - r[zi]
+    sq = b._field_square(d[:, :dm]) + b._field_square(d[:, dm:])
+    ok = np.ones(len(sq), dtype=bool)
+    for j in range(1, dm):
+        ok &= sq[:, j] == 0
+    ring = [int(o) for o in np.nonzero(ok)[0] if Fr(int(sq[o, 0]), d2) == 4]
+    assert len(ring) == 6
+    ring.sort(key=lambda i: math.atan2(float(P0[i].y), float(P0[i].x)))
+    PIN = [P0[zi]] + [P0[i] for i in ring]
+
+    def partitions(seq):
+        if not seq:
+            yield []
+            return
+        first, rest = seq[0], seq[1:]
+        for p in partitions(rest):
+            for i in range(len(p)):
+                yield p[:i] + [[first] + p[i]] + p[i + 1:]
+            yield [[first]] + p
+
+    ALL = list(partitions(list(range(7))))
+    rng = random.Random(11)
+    order = [p for p in P0 if p not in set(PIN)]
+    rng.shuffle(order)
+    P = list(PIN) + order[:300]
+    assert len(P) == 307
+    bb = _ft.IntBasis.covering(P)
+    rr = bb.rows(P)
+    assert bb.overflow_headroom(rr) < 1.0
+    E = sorted(set((min(a, c), max(a, c))
+                   for a, c in _ft.fast_edges_complete(bb, rr)))
+    assert len(E) > 1000                      # more than half of Sa's 1974
+    W = [P.index(q) for q in PIN]
+    for k, ceiling in ((4, 715), (5, 855)):
+        parts = [p for p in ALL if len(p) <= k]
+        assert len(parts) == ceiling
+        cls = [[1 + v * k + c for c in range(k)] for v in range(len(P))]
+        for a, c in E:
+            for col in range(k):
+                cls.append([-(1 + a * k + col), -(1 + c * k + col)])
+        sv = Solver(name="cd15", bootstrap_with=cls)
+        surv = sum(1 for part in parts
+                   if sv.solve(assumptions=[1 + W[e] * k + bi
+                                            for bi, blk in enumerate(part)
+                                            for e in blk]))
+        sv.delete()
+        assert surv == ceiling, (k, surv, ceiling)
+    c = _hc.THERE_IS_NO_GRADIENT
+    assert c["at four colours"][307] == c["at four colours"]["ceiling"]
+    assert c["at four colours"][397] == 10
+    assert all(v == 855 for v in c["at five colours"].values())
