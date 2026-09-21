@@ -3010,3 +3010,32 @@ def test_the_density_framing_is_marked_corrected():
     # the measurements it made are not withdrawn, only the inference
     assert "measurements stand" in c["corrects"]
     assert "SEED" in c["what it leaves"]
+
+
+def test_the_seed_is_almost_edgeless():
+    c = hn.homcol.SEED_IS_A_FUNDAMENTAL_DOMAIN["S measured"]
+    # 39 points, 18 edges, and nearly half the vertices isolated
+    assert c["isolated vertices"] > c["points"] / 3
+    assert c["unit edges"] < c["points"]
+    assert c["at irrational radius from the origin"] > c["points"] / 2
+
+
+def test_growing_from_sa_beats_the_family_on_density():
+    c = hn.homcol.SEED_IS_A_FUNDAMENTAL_DOMAIN["growing from Sa"]
+    rows = [(int(k), v) for k, v in c.items() if k.isdigit()]
+    rows.sort()
+    # density rises monotonically with every orbit added
+    for (n1, a), (n2, b) in zip(rows, rows[1:]):
+        assert n2 > n1 and b["density"] > a["density"]
+    # and it passes 5.42, the densest dihedral closure, well before 500 points
+    assert rows[-1][1]["density"] > 5.42
+    assert rows[-1][0] < 500
+    # but chi does not move, which is the point
+    assert all(v["chi"] == 4 for _, v in rows)
+
+
+def test_growing_from_nothing_was_not_an_arithmetic_problem():
+    c = hn.homcol.SEED_IS_A_FUNDAMENTAL_DOMAIN["growing from nothing"]
+    assert c["chi"] == 3
+    assert c["widening the field 4 radicals -> 6"] == "no change"
+    assert "starting point" in c["so the obstruction is"]

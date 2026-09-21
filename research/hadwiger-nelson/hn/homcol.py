@@ -6613,3 +6613,59 @@ DENSITY_WAS_NOT_THE_INGREDIENT = {
                    "lattice-like is bipartite, so density and chromatic "
                    "number pull apart",
 }
+
+
+# What de Grey's seed actually is, measured -- and a way to grow past it.
+#
+# The density programme ended with the seed, not the size, so the seed was
+# measured rather than guessed at.  S is 39 points with EIGHTEEN unit edges and
+# SEVENTEEN isolated vertices, and 25 of its 39 points sit at irrational radius
+# from the origin.  Its rational pairwise distances are concentrated at the
+# scale of a third: 38 pairs at 1/3, 21 at 1/9, 18 at 1, then 5/9, 4/9, 4/3,
+# 5/3, 7/9.
+#
+# So the seed has almost no structure of its own.  It is a FUNDAMENTAL DOMAIN,
+# and everything Sa has comes from how the twelve rotated copies interlock.
+# That is a design criterion rather than a mystery, and it can be built toward.
+#
+# GROWING FROM NOTHING FAILS.  Start from the unit orbit and the origin and add,
+# each step, the D6 orbit that creates the most unit edges.  The candidates are
+# the points at distance one from two points already present -- where two unit
+# circles meet -- and constructing one needs sqrt(D) and sqrt(4-D) both in the
+# field.  It stalls at 31 points and chi = 3, and widening the field from four
+# radicals to six changes nothing, which locates the obstruction in the
+# starting point rather than the arithmetic.
+#
+# GROWING FROM Sa WORKS.  Sa's rational distances leave thousands of
+# constructible candidates at every step -- over three thousand each time --
+# and the same greedy rule climbs steadily while the D6 symmetry holds:
+#
+#     397 pts  4.97 per vertex   chi = 4   (Sa itself)
+#     433      5.39              chi = 4
+#     457      5.55              chi = 4
+#     493      5.72              chi = 4
+#
+# past the whole de Grey family at 4.98 and past its densest dihedral closure
+# at 5.42, on a quarter of the points.  What it has not done is move chi.
+SEED_IS_A_FUNDAMENTAL_DOMAIN = {
+    "S measured": {"points": 39, "unit edges": 18, "isolated vertices": 17,
+                   "at irrational radius from the origin": 25},
+    "its rational distances": {"1/3": 38, "1/9": 21, "1": 18, "5/9": 8,
+                               "4/9": 8, "4/3": 6, "5/3": 6, "7/9": 6},
+    "so": "the seed is a fundamental domain, not an object -- Sa's structure "
+          "is in how the twelve rotated copies interlock",
+    "growing from nothing": {"stalls at": 31, "chi": 3,
+                             "widening the field 4 radicals -> 6": "no change",
+                             "so the obstruction is": "the starting point, "
+                                                      "not the arithmetic"},
+    "growing from Sa": {"candidates per step": "over 3000",
+                        "397": {"density": 4.97, "chi": 4},
+                        "433": {"density": 5.39, "chi": 4},
+                        "457": {"density": 5.55, "chi": 4},
+                        "493": {"density": 5.72, "chi": 4}},
+    "what it beats": "the whole family at 4.98 and its densest dihedral "
+                     "closure at 5.42, on a quarter of the points",
+    "what it has not done": "move chi",
+    "the target": "a small D6-symmetric 5-chromatic graph, which would be Sa "
+                  "one level up",
+}
