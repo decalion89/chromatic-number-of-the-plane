@@ -6514,6 +6514,41 @@ THE_UNPRUNED_UNION_FORCES_SIX_PAIRS = {
 }
 
 
+# Packing gadgets by translation buys nothing, and the arithmetic says why.
+#
+# The account of why five colours stalls is gadget density: Sa carries 1.45
+# Moser spindles per point and its 4-colourings are pinned, while G carries
+# about 0.001 five-colour gadgets per point and its 5-colourings are free in
+# every direction measured.  Density can in principle be bought -- a translate
+# G + t contains a copy of G, so a union of translates contains one gadget per
+# translate -- and the translations worth using are the frequent differences of
+# G's own points, which one pass over all 1581^2 differences finds at once.
+#
+# G does not overlap itself.  The best translation of 1593224 distinct ones
+# shares 224 points, fourteen per cent, so each new copy brings about 1300 NEW
+# points with it.  One gadget per 1300 points is 0.00077 per point -- the same
+# order as G's own 0.001.  The lever moves nothing because the overlap is
+# small, and no choice of translation makes it large.
+#
+# Carried out anyway, to ten copies: 13356 points, 76629 edges, 5.74 per
+# vertex, five-colourable, the solve taking 215 seconds.  Density creeps from
+# 4.98 to 5.79 and back down; the chromatic number does not move.
+PACKING_BY_TRANSLATION_DOES_NOT_RAISE_DENSITY = {
+    "distinct translations": 1593224,
+    "best overlap": "224 of 1581 points, fourteen per cent",
+    "new points per copy": "about 1300",
+    "gadgets per point bought": 0.00077,
+    "G's own": 0.001,
+    "Sa's, at four colours": 1.45,
+    "ten copies": {"points": 13356, "edges": 76629, "per vertex": 5.74,
+                   "five-colourable": True, "solve": "215 seconds"},
+    "why it fails": "one gadget per 1300 new points is the same density G "
+                    "already had; raising it needs copies that share almost "
+                    "everything, and no translation of G does",
+}
+
+
+
 
 
 
