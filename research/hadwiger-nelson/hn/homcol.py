@@ -7151,6 +7151,46 @@ RIGIDITY_IS_NOT_LOCAL = {
 }
 
 
+# The bites are EXACTLY the operations that can tighten a ring's census.
+#
+# Reflections are the other planar isometry and nothing here had tried them.
+# A mirror in a line gives a union sharing the whole line, and p meets its
+# image at distance one exactly when p lies half a unit from the mirror -- so
+# the analogue of the ring is a pair of parallel lines, and the matching can be
+# much bigger than a ring's.  Sixty mirrors of Sa, chosen for the most matched
+# points and reaching THIRTEEN against the bite's six: census ten of ten, every
+# one.  No tightening at all.
+#
+# The reason closes the search space.  To tighten the census of a set W, the
+# operation's matching must pair points of W with points of W; a matching that
+# reaches outside W says nothing about W's own patterns.  The isometries
+# carrying a circle about c to itself are exactly the rotations about c and the
+# reflections in lines through c -- and for Sa the latter are already its own
+# symmetries and add nothing.
+#
+# So the bites about the ring's centre are not merely the operations that
+# happen to have been tried.  They are the whole family, and enumerating them
+# is a complete search rather than a sample.  That is why 1930 bites about
+# other centres leave Sa's census at ten, why sixty mirrors do, and why
+# translations cannot: none of them has its matching inside the ring.
+THE_BITES_ARE_THE_WHOLE_FAMILY = {
+    "reflections tried": 60,
+    "best matching": "13 points, against the bite's 6",
+    "tightening": "none -- census ten of ten at every mirror",
+    "why": "tightening the census of W needs a matching that pairs W with "
+           "itself; the isometries carrying a circle about c to itself are "
+           "the rotations about c and the reflections in lines through c, and "
+           "for Sa the latter are already symmetries",
+    "consequence": "the bites about the ring's centre are the entire family "
+                   "of operations that can tighten that ring's census, so "
+                   "enumerating them is complete rather than a sample",
+    "and it explains": {"1930 bites about other centres": "census 10",
+                        "60 mirrors": "census 10",
+                        "translations": "no fixed point and the circle moves"},
+}
+
+
+
 # G's essentiality, at four times the sample and the same answer.
 #
 # The recorded figure was nineteen of thirty probed vertices essential -- G - v

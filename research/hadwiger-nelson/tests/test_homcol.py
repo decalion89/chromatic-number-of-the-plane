@@ -4506,3 +4506,42 @@ def test_every_entry_quoting_the_hinge_figures_points_at_the_correction():
                                   "per point": 1.45}
     assert c["true spindles"] == {"Sa": 228, "Y": 452, "G": 904,
                                   "per point": 0.57}
+
+
+def test_only_rotations_about_the_centre_keep_a_ring_matched_to_itself():
+    """The classification that makes the bite enumeration complete.
+
+    An isometry carries the circle of radius r about c to itself only if it
+    fixes c -- so it is a rotation about c or a reflection in a line through
+    c.  Anything else moves the circle, and its matching then pairs ring
+    points with points off the ring, which cannot constrain the ring's own
+    patterns.  Checked numerically on the hexagon: rotations about the centre
+    and mirrors through it preserve the point set's radii, translations and
+    off-centre mirrors do not.
+    """
+    import math
+    r = 2.0
+    hexagon = [(r * math.cos(t * math.pi / 3), r * math.sin(t * math.pi / 3))
+               for t in range(6)]
+
+    def radii(pts):
+        return sorted(round(math.hypot(x, y), 9) for x, y in pts)
+
+    base = radii(hexagon)
+    # a rotation about the centre: radii unchanged
+    a = 0.4
+    rot = [(x * math.cos(a) - y * math.sin(a),
+            x * math.sin(a) + y * math.cos(a)) for x, y in hexagon]
+    assert radii(rot) == base
+    # a mirror through the centre: radii unchanged
+    mir = [(x, -y) for x, y in hexagon]
+    assert radii(mir) == base
+    # a translation: radii change
+    tr = [(x + 0.5, y) for x, y in hexagon]
+    assert radii(tr) != base
+    # an off-centre mirror, in the line y = 1/4: radii change
+    off = [(x, 0.5 - y) for x, y in hexagon]
+    assert radii(off) != base
+    c = _hc.THE_BITES_ARE_THE_WHOLE_FAMILY
+    assert c["reflections tried"] == 60
+    assert c["tightening"].startswith("none")
