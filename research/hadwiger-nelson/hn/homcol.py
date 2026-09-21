@@ -9717,3 +9717,65 @@ G_CARRIES_A_CAPPED_SET_AT_FIVE_COLOURS = {
                                                                   "instead of "
                                                                   "40",
 }
+
+
+# Why the disjunction needs exactly two distances, and cannot be collapsed.
+#
+# The capped set S has palette 4 of 5, so its points fall into at most four
+# colour classes and one of them meets S in at least ceil(|S|/4) points.  That
+# class is independent, so the argument closes for a distance d exactly when
+# every independent subset of that size contains a pair at distance d -- which
+# is to say when the largest set independent for BOTH distance 1 and distance
+# d is smaller than |S|/4.
+#
+# Measured on the 60-point set, by exact binary search:
+#
+#   forbidding 1 alone                 alpha = 30      need <= 14
+#   forbidding 1 and sqrt3             alpha = 20      need <= 14
+#   forbidding 1 and 2                 alpha = 30      need <= 14
+#   forbidding 1, sqrt3 and 2          alpha = 10      need <= 14   CLOSES
+#
+# The pattern is not accidental, and the reason is a lattice.  The distances
+# 1, sqrt3, 2 are the first three of the triangular lattice.  Avoiding 1 alone
+# leaves the index-3 sublattice, ratio 1/3.  Avoiding 1 and sqrt3 leaves the
+# spacing-2 sublattice, ratio exactly 1/4 -- level with the bar, neither above
+# nor below.  Only distance 2 kills that sublattice, and what survives is
+# index 7, ratio 1/7, comfortably under.
+#
+# So in a lattice-like carrier two distances are forced.  And the cap itself
+# guarantees the carrier cannot escape that: palette at most 4 means S is
+# covered by four independent sets, so alpha_1(S) >= |S|/4 always.  The
+# one-distance bar can be reached but never beaten.
+#
+# What would beat it is one more step of depth.  At palette 3 the bar rises to
+# |S|/3 while the spacing-2 sublattice stays at 1/4, and sqrt3 alone closes.
+# Depth 3 is de Grey's own depth one level up -- two colours missing out of
+# the available ones, exactly as his lemma misses two of four.
+#
+# It is not in S.  The decision procedure proves the absence: no subset of S
+# of 4, 5 or 6 points reaches palette 3.  Nor does enlarging the carrier help,
+# though it could in principle, since adding points only removes colourings:
+# S keeps palette 4 in the closure at the best centre (11047 points), at the
+# pivot (13873) and at the origin (18966).
+THE_TWO_DISTANCES_ARE_FORCED_BY_A_LATTICE = {
+    "alpha on the 60-point capped set": {
+        "1 alone": 30, "1 and sqrt3": 20, "1 and 2": 30,
+        "1, sqrt3 and 2": 10, "bar": 14,
+    },
+    "why": "1, sqrt3, 2 are the first three triangular-lattice distances; "
+           "avoiding 1 and sqrt3 leaves the spacing-2 sublattice at ratio "
+           "exactly 1/4, level with the bar; only distance 2 pushes it to "
+           "index 7",
+    "and the cap cannot escape it": "palette <= 4 covers S by four "
+                                    "independent sets, so alpha_1(S) >= "
+                                    "|S|/4 always -- the one-distance bar is "
+                                    "reachable but not beatable",
+    "what would collapse it": "palette 3, where the bar is |S|/3 while the "
+                              "sublattice stays at 1/4, and sqrt3 alone "
+                              "closes",
+    "depth 3 is absent from S": "proved, not merely unfound: no 4, 5 or 6 "
+                                "points of S reach palette 3",
+    "and bigger carriers do not deepen it": "palette stays 4 in the closures "
+                                            "at the best centre, the pivot "
+                                            "and the origin",
+}
