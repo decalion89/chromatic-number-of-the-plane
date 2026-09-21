@@ -5171,6 +5171,55 @@ spindle. Every constructive strategy attempted in this work optimised something
 local — which is exactly why all of them read flat.
 
 
+## The search over operations is closed, by a theorem
+
+Rigidity is global, so the question becomes which global operations exist. That
+turns out to be answerable, not merely searchable.
+
+**The principle.** An operation can tighten the census of a set `S` only if it
+maps `S` to itself — a matching that reaches outside `S` says nothing about
+`S`'s own patterns. So the family to try is the **stabiliser** of whatever is
+being constrained, and both stabilisers here are small enough to exhaust.
+
+| constrained | stabiliser | tried | result |
+|---|---|---|---|
+| a ring about `c` | rotations about `c`, mirrors through `c` | 104 bites about the origin — **the complete family** | best census **3**, at `D = 4` alone |
+| | (confirmation) bites about every other centre | 2440 | census 10, every one |
+| | (confirmation) mirrors, up to 13 matched points vs the bite's 6 | 60 | census 10, every one |
+| a pair `{u,v}` | half-turn about the midpoint, both axis mirrors | 81 pairs, whole stabiliser | **0 forced** |
+
+**And the enumeration is complete by necessity, not by choice.** Beckman and
+Quarles (1953): *every unit-distance preserving map of `ℝⁿ` into itself, `n ≥ 2`,
+is an isometry.* So gluing a congruent copy of a unit-distance graph into the
+plane has no choice about what it is. There is no exotic transformation waiting
+to be found; "copy the graph and glue it on" is a family with exactly the
+members above.
+
+**Nor is the floor a property of the arithmetic.** The field decides which
+rings are closable and hence which bites exist at all — and `Sa`'s points lie
+in the base field, so the closure is the *same graph* in every field containing
+it, with only the operations changing:
+
+| field | closable rings (of 279) | bites | best census |
+|---|---:|---:|---:|
+| `ℚ(√3,√5,√7,√11)` | 52 | 104 | **3** |
+| `ℚ(√2,√3,√5,√7,√11)` | 80 | 160 | **3** |
+| `ℚ(√2,√3,√5,√7,√11,√13)` | 97 | 194 | **3** |
+
+Ninety operations that did not exist in de Grey's own field, and not one beats
+his `D = 4`.
+
+**So the chain reaches the floor of its own family and the floor is three of
+ten.** All 344 second bites of `Sa ∪ Sb` about the origin — where the knife
+edge means the answer can only be 3 or 0 — come back 4-colourable. De Grey's
+pruning to `Y` trades two of three forced pairs for two vertices; his spindle
+converts the one that remains. Nothing goes further, and *nothing can*.
+
+What this does **not** close is the other kind of construction: adding points
+that are the image of nothing — the seed search. That is open, and its size is
+measured: **one in 2³⁹** for a single level.
+
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
