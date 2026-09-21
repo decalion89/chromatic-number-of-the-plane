@@ -6934,3 +6934,45 @@ G_CARRIES_A_WEAK_PROPERTY_AT_FIVE = {
     "the gap, quantified": {"Sa at four": "1 class, 3 pairs",
                             "G at five": "5 classes, 229 pairs"},
 }
+# REFINEMENT: the neighbourhood lens does discriminate -- between the levels.
+#
+# NEIGHBOURHOODS_ARE_ALWAYS_BIPARTITE records that every vertex of G and every
+# candidate point has its neighbourhood forced to exactly two colours at five,
+# and reads that as the forcing being global with no local witness.  True of G
+# at five.  Stated generally it is wrong, and the four-colour measurement says
+# so:
+#
+#     Sa at FOUR colours   187 of its 397 vertices forced to 3 of 4
+#                          210 forced to 2
+#                          the hub, degree 30, forced to 3
+#     G  at FIVE colours   all 1581 forced to 2 of 5, the degree-60 hub
+#                          included
+#
+# So at four colours the forcing IS partly local, at 187 sites, and the lens
+# was never useless -- it discriminates sharply between the level where the
+# mechanism works and the level where it does not:
+#
+#     Sa at four   3 of 4 available   0.75
+#     G  at five   2 of 5 available   0.40
+#
+# Sa is one colour from rainbow at nearly half its vertices.  G is three
+# colours away at every one of them.  That is the difference between the two
+# levels, measured, and it is the same difference the class count gives from
+# the other side -- one class and three pairs at four, five classes and 229 at
+# five.
+THE_LENS_DISCRIMINATES_BETWEEN_LEVELS = {
+    "Sa at four": {"forced to 3 of 4": 187, "forced to 2": 210,
+                   "hub (degree 30)": 3, "ratio": 0.75},
+    "G at five": {"forced to 2 of 5": 1581, "hub (degree 60)": 2,
+                  "ratio": 0.40},
+    "refines": "NEIGHBOURHOODS_ARE_ALWAYS_BIPARTITE, whose reading -- the "
+               "forcing is global with no local witness -- holds for G at "
+               "five and not in general",
+    "the bipartite theorem is untouched": "chi(N(p)) = 2 always; what varies "
+                                          "is how many colours the AMBIENT "
+                                          "graph forces onto it",
+    "so": "Sa is one colour from rainbow at nearly half its vertices, G is "
+          "three colours away at all of them",
+    "agrees with": "the class count from the other side -- 1 class and 3 "
+                   "pairs at four, 5 classes and 229 pairs at five",
+}

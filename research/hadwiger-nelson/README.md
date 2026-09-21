@@ -4641,6 +4641,24 @@ five colours onto a set that is 2-chromatic on its own — and the ceiling of
 thirteen was never the binding constraint, since a five-point neighbourhood
 forced rainbow would win just as well, and nothing here is forced past two.
 
+> **Refined.** "The forcing is global with no local witness" is true of `G` at
+> five and **wrong in general**. At four colours, `Sa` has 187 of its 397
+> vertices forced to **3 of 4** — the hub included — against `G`'s 1581 forced
+> to 2 of 5:
+>
+> | | forced | available | ratio |
+> |---|---|---|---|
+> | `Sa` at four | **3** (187 vertices) | 4 | 0.75 |
+> | `G` at five | 2 (all 1581) | 5 | 0.40 |
+>
+> So the lens was never useless: it discriminates sharply between the level
+> where the mechanism works and the level where it does not. `Sa` is one colour
+> from rainbow at nearly half its vertices; `G` is three colours away at all of
+> them. The bipartite theorem is untouched — `χ(N(p)) = 2` always, and what
+> varies is how many colours the *ambient* graph forces onto it. And it agrees
+> with the class count from the other side: 1 class and 3 pairs at four, 5
+> classes and 229 pairs at five.
+
 ## G does carry a weak property at five colours — over five distances
 
 Single classes were tested and all of them colour. `Sa`'s four carrying classes

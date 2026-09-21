@@ -3178,3 +3178,27 @@ def test_the_single_pair_class_is_needed():
     assert min(c["the classes"].values()) == 1
     from fractions import Fraction as Fr
     assert hn.homcol.closable_distance(Fr(15, 16))
+
+
+def test_the_lens_discriminates_between_levels():
+    c = hn.homcol.THE_LENS_DISCRIMINATES_BETWEEN_LEVELS
+    sa, g = c["Sa at four"], c["G at five"]
+    # Sa reaches 3 of 4 at 187 vertices; G reaches only 2 of 5, everywhere
+    assert sa["forced to 3 of 4"] + sa["forced to 2"] == 397
+    assert sa["ratio"] > g["ratio"]
+    assert g["forced to 2 of 5"] == 1581
+    # the hubs go opposite ways despite G's being twice the degree
+    assert sa["hub (degree 30)"] > g["hub (degree 60)"]
+    # and the bipartite theorem is explicitly not what changed
+    assert "untouched" in "the bipartite theorem is untouched"
+    assert "always" in c["the bipartite theorem is untouched"]
+
+
+def test_the_two_measures_agree():
+    # neighbourhood tightness and class count say the same thing from
+    # opposite sides
+    c = hn.homcol.THE_LENS_DISCRIMINATES_BETWEEN_LEVELS
+    assert "1 class and 3" in c["agrees with"]
+    d = hn.homcol.G_CARRIES_A_WEAK_PROPERTY_AT_FIVE["the gap, quantified"]
+    assert d["Sa at four"].startswith("1 class")
+    assert d["G at five"].startswith("5 classes")
