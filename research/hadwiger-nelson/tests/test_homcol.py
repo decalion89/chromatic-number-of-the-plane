@@ -2745,3 +2745,23 @@ def test_the_ball_curve_is_monotone_and_steep():
     secs = [int(v.rstrip("s")) for _, v in sorted(b.items())]
     assert secs == sorted(secs)
     assert secs[-1] > 50 * secs[0]      # 21s to 6893s over 360 points
+
+
+def test_the_gap_was_double_counted():
+    c = hn.homcol.THE_GAP_IS_TEN_NOT_SEVEN_HUNDRED
+    inc = c["incidences per point"]
+    # the incidence ratio is what the recorded figure should have been
+    assert abs(inc["G (spindles)"] / inc["G (5-critical)"] - c["the gap"]) < 0.2
+    # and the recorded figure is that times the gadget size ratio
+    assert abs(c["as recorded"] / c["the gap"] - 500 / 7) < 1.0
+    # the uncorrected numbers still reproduce: 576 spindles of 7 in 397 points
+    assert abs(576 * 7 / 397 - inc["Sa"]) < 0.01
+    assert abs(2304 * 7 / 1581 - inc["G (spindles)"]) < 0.01
+
+
+def test_density_is_inherited_across_the_family():
+    d = hn.homcol.THE_GAP_IS_TEN_NOT_SEVEN_HUNDRED["edges per vertex, "
+                                                   "measured"]
+    vals = list(d.values())
+    assert max(vals) - min(vals) < 0.02      # constant to two parts in a
+    assert all(4.9 < v < 5.0 for v in vals)  # thousand, bites included

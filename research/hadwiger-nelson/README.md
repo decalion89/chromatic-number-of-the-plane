@@ -4297,6 +4297,33 @@ Solver difficulty is not a principled distance to the property, and is not
 offered as one. It is a real asymmetry across classes of the same graph at the
 same size, and it points at one class rather than the others.
 
+## A correction worth its own section: the gap is 10.8, not 700
+
+An earlier section compares `Sa`'s 1.45 spindles per point against `G`'s 0.002
+5-critical subgraphs per point and calls the gap a factor of seven hundred.
+Those are not comparable quantities. A spindle is 7 vertices and a 5-critical
+subgraph is about 500, so "gadgets per point" measures different things on the
+two sides. What a saturation argument needs is how much of the graph the gadgets
+**cover** — gadget-vertex incidences per point:
+
+| | incidences per point |
+|---|---|
+| `Sa`, 576 spindles × 7 / 397 | 10.16 |
+| `Y`, 1152 × 7 / 791 | 10.19 |
+| `G`, 2304 × 7 / 1581 | 10.20 |
+| `G`, 3 five-critical × 500 / 1581 | **0.95** |
+
+The gap is **10.8**, and `764 = 71.1 × 10.8` where `71.1 = 500/7` is the gadget
+size ratio — which the section above already accounts for separately. Counting
+it again inside the density comparison overstates the gap sixty-five fold.
+
+What does **not** change is the conclusion drawn from it. Density is inherited,
+never raised: 1.45, 1.46, 1.46 spindles per point across `Sa`, `Y`, `G`, and
+4.972, 4.979, 4.982 edges per vertex, with both bites of `G` landing at 4.987 —
+union and rotation preserve density to two parts in a thousand. Neither closes a
+gap of 10.8 any more than one of 764. Only the size of the thing to be closed
+changes, and it changes by a lot.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

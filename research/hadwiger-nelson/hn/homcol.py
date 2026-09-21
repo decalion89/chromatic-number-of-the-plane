@@ -5994,3 +5994,46 @@ THE_EDGE_IS_AT_FOUR_NINTHS = {
                "property.  It is a real asymmetry across classes of the same "
                "graph at the same size, and no more than that.",
 }
+
+
+# CORRECTION: the factor of seven hundred counts the gadget size twice.
+#
+# THE_PREDICTION_FOR_Z compares Sa's 1.45 spindles per point against G's 0.002
+# 5-critical subgraphs per point and calls the gap a factor of seven hundred.
+# Those are not comparable quantities.  A spindle is 7 vertices and a 5-critical
+# subgraph is about 500, so "gadgets per point" measures different things on
+# the two sides; what a saturation argument needs is how much of the graph the
+# gadgets COVER, which is gadget-vertex incidences per point.
+#
+#     Sa   576 spindles x 7   / 397  = 10.16 incidences per point
+#     Y   1152 spindles x 7   / 791  = 10.19
+#     G   2304 spindles x 7   / 1581 = 10.20
+#     G      3 critical x 500 / 1581 =  0.95
+#
+# The gap is 10.8, not 764, and 764 = 71.1 x 10.8 where 71.1 is 500/7 -- the
+# gadget size ratio, which THE_GADGET_IS_SEVENTY_TIMES_BIGGER already accounts
+# for separately in the same file.  Counting it again inside the density
+# comparison overstates the gap sixty-five fold.
+#
+# What does NOT change is the conclusion drawn from it.  Density is inherited,
+# not raised: 1.45, 1.46, 1.46 spindles per point across Sa, Y and G, and 4.972,
+# 4.979, 4.982 edges per vertex, with both bites of G landing at 4.987.  Union
+# and rotation preserve density exactly, so no amount of either closes a gap of
+# 10.8 any more than one of 764.  Only the size of the thing to be closed
+# changes, and it changes by a lot.
+THE_GAP_IS_TEN_NOT_SEVEN_HUNDRED = {
+    "incidences per point": {"Sa": 10.16, "Y": 10.19, "G (spindles)": 10.20,
+                             "G (5-critical)": 0.95},
+    "the gap": 10.8,
+    "as recorded": 764,
+    "the error": "764 = 71.1 x 10.8, and 71.1 = 500/7 is the gadget size "
+                 "ratio, already counted by THE_GADGET_IS_SEVENTY_TIMES_"
+                 "BIGGER",
+    "corrects": "THE_PREDICTION_FOR_Z, whose conclusion stands unchanged",
+    "edges per vertex, measured": {"Sa": 4.972, "Y": 4.979, "G": 4.982,
+                                   "G bitten at 4/9": 4.987,
+                                   "G bitten at 4": 4.987},
+    "what still holds": "density is inherited, never raised -- union and "
+                        "rotation preserve it exactly, so neither closes a "
+                        "gap of 10.8 any more than one of 764",
+}
