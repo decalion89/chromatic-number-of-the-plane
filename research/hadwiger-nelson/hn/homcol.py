@@ -7190,6 +7190,51 @@ THE_BITES_ARE_THE_WHOLE_FAMILY = {
 }
 
 
+# Growing the graph does not improve the bite either.
+#
+# The growth raised spindle density fourfold and tightened nothing on its own.
+# But the bite is not local, and the growth does thicken the rings it works on,
+# so it might give the bite more to grab.  It does not.
+#
+# Six growth steps to 597 points, then every ring the field can join about the
+# origin -- 52 of them, both directions, 104 bites.  The unbitten graph reads
+# ten of ten, as the growth always did.  The best bitten reading is THREE,
+# which is exactly what Sa's own bite gives, and it arrives at D = 4/9 rather
+# than de Grey's D = 4.
+#
+# So the growth changes which ring does the work and not how much work gets
+# done.  Combined with the classification -- the bites about a ring's centre
+# being the entire family that can tighten that ring -- the position is that
+# three of ten is where this construction stops, by every route into it.
+GROWTH_DOES_NOT_IMPROVE_THE_BITE = {
+    "grown graph": {"points": 597, "steps": 6, "census unbitten": "10 of 10"},
+    "bites tried": 104, "rings": 52,
+    "best census": 3,
+    "which ring": "D = 4/9, not de Grey's D = 4",
+    "Sa's own bite": 3,
+    "so": "the growth changes which ring does the work, not how much work "
+          "gets done",
+}
+
+
+# De Grey's bite is unique in its family, so far as the sweep has gone.
+#
+# Sa offers 2525 (centre, ring) pairs the field can join, 5050 bites counting
+# both directions.  Through the first 1980 of them, exactly ONE tightens the
+# census below ten: centre 0 -- the origin -- ring D = 4, which is de Grey's,
+# and it reads three.  Every other bite leaves all ten patterns standing.
+#
+# The sweep is the complete family by the classification, so finishing it
+# settles whether the choice was forced or merely good.
+DE_GREYS_BITE_LOOKS_UNIQUE = {
+    "bites available": 5050, "swept so far": 1980,
+    "that tighten at all": 1, "which": "centre 0, ring D = 4, census 3",
+    "all others": "census 10 of 10",
+    "why the sweep is complete": "see THE_BITES_ARE_THE_WHOLE_FAMILY",
+}
+
+
+
 
 # G's essentiality, at four times the sample and the same answer.
 #
