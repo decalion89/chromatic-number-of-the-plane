@@ -6548,6 +6548,62 @@ PACKING_BY_TRANSLATION_DOES_NOT_RAISE_DENSITY = {
 }
 
 
+# There is no gradient.  The census is a threshold, and it needs the whole
+# graph.
+#
+# Every proxy built here -- forced pairs, the gateway, the palette bound, the
+# census -- reads nothing at five colours, in every graph, at every size.  The
+# obvious reading is that the graphs are far from the target and a better
+# search would close the distance.  Peeling Sa and censusing as it shrinks says
+# otherwise.
+#
+#     points   edges      k = 4            k = 5
+#          7       0      715 of 715       855 of 855
+#         27       9      715              855
+#         57      47      715              855
+#        107     143      715              855
+#        157     288      715              855
+#        207     537      715              855
+#        257     819      715              855
+#        307    1145      715              855
+#        347    1445      577              855
+#        397    1974       10              855
+#
+# At four colours the census sits at the CEILING until 307 points -- 77 per
+# cent of Sa -- and then falls off a cliff in the last ninety vertices, 715 to
+# 577 to 10.  Nothing in the first three hundred points hints at what the last
+# ninety do.  The same vertices, censused at five, never leave the ceiling at
+# any size.
+#
+# So a reading of 855 carries no information about distance.  It is what an
+# incomplete object reads, and an object one orbit short of complete reads it
+# too -- which is exactly what orbit-irreducibility says from the other side:
+# all 39 of Sa's dihedral orbits are needed and none can go.
+#
+# The consequence for method is sharp.  Search strategies that optimise a proxy
+# -- climb the agreement, thicken the ring, buy contact, pack gadgets -- assume
+# the proxy improves as the object improves.  It does not.  There is nothing to
+# climb until the object is essentially complete, and then there is no climb
+# left to do.
+THERE_IS_NO_GRADIENT = {
+    "measured": "Sa peeled to the seven pinned points, censused at each size, "
+                "the same random order at both k",
+    "at four colours": {7: 715, 107: 715, 207: 715, 307: 715, 347: 577,
+                        397: 10, "ceiling": 715},
+    "at five colours": {7: 855, 107: 855, 207: 855, 307: 855, 347: 855,
+                        397: 855, "ceiling": 855},
+    "the cliff": "between 307 and 397 points, 77 to 100 per cent of Sa",
+    "what a ceiling reading means": "the object is incomplete -- and one orbit "
+                                    "short of complete reads the same",
+    "why it matters": "every proxy optimised here assumes it improves as the "
+                      "object improves; it does not improve at all until the "
+                      "object is essentially complete",
+    "agrees with": "SA_IS_ORBIT_IRREDUCIBLE_FOR_THE_CAP -- all 39 orbits "
+                   "needed, none droppable",
+}
+
+
+
 
 
 

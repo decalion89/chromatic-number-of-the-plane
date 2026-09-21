@@ -1,89 +1,147 @@
-"""Does breaking the symmetry raise the correlation?  An anomaly says it might.
+"""Break the symmetry and see how far below three the census goes.
 
-Thinning Sa was meant to dilute its Moser spindles and watch the correlation
-fall with them.  It mostly did -- 1.45 spindles per point gives ratio 24, 0.98
-gives 5.0, 0.70 gives 2.4 -- except at ninety per cent, where the spindle
-density FELL to 1.20 and the ratio rose to 251.  Ten times the full graph's.
+The three surviving patterns of Sa u rho(Sa) form one orbit under sixty-degree
+rotation, so any union that keeps that symmetry has three or none.  Adding an
+ASYMMETRIC point cannot add patterns -- adding vertices never does -- but it
+can kill part of the orbit, and a census of one would mean the centre and the
+three antipodal pairs are pinned up to renaming colours: strictly more forced
+structure than de Grey's construction uses.
 
-That is not an artefact: the subgraph is connected, is not 3-colourable, and
-returns twenty-four distinct colourings out of twenty-four.  Removing forty
-vertices made the colourings ten times more correlated.
-
-A mechanism suggests itself.  Sa is invariant under the twelve-element
-dihedral group, so its colourings come in large symmetry orbits and sampling
-spreads over them, which decorrelates pairs.  Deleting vertices breaks the
-symmetry and the space concentrates.  If that is right it cuts against the
-whole symmetrise-then-rotate programme -- G* was built by symmetrising, which
-would make things worse, not better.
-
-So: random subgraphs of G at five colours, many of them, and look at the
-distribution of the ratio rather than one number.
+Candidates are the points at unit distance from two points already present,
+which is where unit circles meet and the only place a new point can attach to
+more than one vertex.  A candidate is screened by testing the three patterns:
+all three satisfiable is the fast answer and means nothing happened.
 """
-import sys, time, random
+import sys, time, math, random
 sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
 import numpy as np
-from hn.degrey import build_G, build_Sa
-from hn.geometry import DEGREY_FIELD as F
-from hn.graph import build_graph
+from fractions import Fraction as Fr
+from hn.degrey import build_Sa, build_Sb
+from hn.geometry import DEGREY_FIELD as K, Point
+from hn.fast import IntBasis, fast_edges_complete
 from pysat.solvers import Solver
 
-SAMPLES = 24
+k = 4
 t0 = time.time()
+rng = random.Random(7)
+THREE = [
+    [[0, 1, 4], [2, 3, 5, 6]],
+    [[1, 2, 4, 5], [0, 3, 6]],
+    [[0, 2, 5], [1, 3, 4, 6]],
+]
+ZERO = Point(K.zero(), K.zero())
+U, seen = [], set()
+for p in build_Sa(K) + build_Sb(K):
+    if p not in seen:
+        seen.add(p)
+        U.append(p)
+print(f"Sa u Sb: {len(U)} points  [{time.time()-t0:.0f}s]", flush=True)
+
+CLASSES = [1, 3, 5, 7, 11, 15, 21, 33, 35, 55, 77, 105, 165, 231, 385, 1155]
 
 
-def ratio(pts, k):
-    g = build_graph(pts)
-    n = g.n
-    E = set((min(a, b), max(a, b)) for a, b in g.edges())
-    if n < 20:
-        return None, n
-    cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
-    for a, b in sorted(E):
-        for c in range(k):
-            cls.append([-(1 + a * k + c), -(1 + b * k + c)])
-    sv = Solver(name="g4", bootstrap_with=cls)
-    if not sv.solve():
-        sv.delete()
-        return "UNCOLOURABLE", n
-    rng, cols = random.Random(7919), []
-    for s in range(SAMPLES):
-        sv.set_phases([(1 if rng.random() < .5 else -1) * (1 + w)
-                       for w in range(n * k)])
-        sv.solve()
-        m = sv.get_model()
-        cols.append([next(c for c in range(k) if m[w * k + c] > 0)
-                     for w in range(n)])
-    sv.delete()
-    C = np.array(cols, dtype=np.int8)
-    nd = 0
-    for i in range(n - 1):
-        nd += int((C[:, i + 1:] != C[:, i:i + 1]).all(axis=0).sum())
-    nd -= len(E)
-    ch = n * (n - 1) // 2 * ((k - 1) / k) ** SAMPLES
-    return nd / max(ch, 1e-9), n
+def rsqrt(e):
+    if any(x for x in e.c[1:]):
+        return None
+    v = e.c[0]
+    if v <= 0:
+        return None
+    for rr in CLASSES:
+        q = v / rr
+        nn, dd = q.numerator, q.denominator
+        rn, rd = int(round(nn ** .5)), int(round(dd ** .5))
+        if rn * rn == nn and rd * rd == dd:
+            s = K.rational(Fr(rn, rd))
+            return s if rr == 1 else K.sqrt(rr) * s
+    return None
 
 
-G = build_G(F, as_graph=False)
-base, n0 = ratio(G, 5)
-print(f"G whole: {n0} points, ratio {base:.2f}  [{time.time()-t0:.0f}s]",
-      flush=True)
-rng = random.Random(271828)
-best = (0, None)
-for trial in range(40):
-    frac = rng.choice([0.95, 0.9, 0.85, 0.8, 0.75, 0.7])
-    idx = list(range(len(G)))
-    rng.shuffle(idx)
-    pts = [G[i] for i in sorted(idx[:int(round(frac * len(G)))])]
-    r, n = ratio(pts, 5)
-    if isinstance(r, str):
-        print(f"  trial {trial}: frac {frac}, {n} points -- {r}", flush=True)
+half = K.rational(Fr(1, 2))
+cands, cs = [], set(U)
+for _ in range(40000):
+    A, B = U[rng.randrange(len(U))], U[rng.randrange(len(U))]
+    if A == B:
         continue
-    if r and r > best[0]:
-        best = (r, (frac, n))
-        print(f"  trial {trial}: frac {frac}, {n} points, ratio {r:.1f}  "
-              f"<-- best  [{time.time()-t0:.0f}s]", flush=True)
-    elif trial % 10 == 0:
-        print(f"  trial {trial}: frac {frac}, {n} points, ratio {r:.1f}  "
-              f"[{time.time()-t0:.0f}s]", flush=True)
-print(f"G at five, 40 random subgraphs: whole {base:.2f}, best "
-      f"{best[0]:.1f} at {best[1]}  [{time.time()-t0:.0f}s]", flush=True)
+    D = A.dist2(B)
+    if not .05 < float(D) < 3.99:
+        continue
+    sD, s4 = rsqrt(D), rsqrt(K.rational(4) - D)
+    if sD is None or s4 is None:
+        continue
+    inv = K.rational(1) / sD
+    mx, my = (A.x + B.x) * half, (A.y + B.y) * half
+    nx = -(B.y - A.y) * inv * s4 * half
+    ny = (B.x - A.x) * inv * s4 * half
+    for q in (Point(mx + nx, my + ny), Point(mx - nx, my - ny)):
+        if q not in cs:
+            cs.add(q)
+            cands.append(q)
+print(f"{len(cands)} candidate points  [{time.time()-t0:.0f}s]", flush=True)
+
+
+def seven(P):
+    b = IntBasis.covering(P)
+    r = b.rows(P)
+    assert b.overflow_headroom(r) < 1.0
+    dm, d2 = b.dim, b.D * b.D
+    E = sorted(set((min(a, c), max(a, c))
+                   for a, c in fast_edges_complete(b, r)))
+    ci = P.index(ZERO)
+    key = {tuple(r[i]): i for i in range(len(P))}
+    d = r - r[ci]
+    sq = b._field_square(d[:, :dm]) + b._field_square(d[:, dm:])
+    ok = np.ones(len(sq), dtype=bool)
+    for j in range(1, dm):
+        ok &= sq[:, j] == 0
+    ring = [int(o) for o in np.nonzero(ok)[0] if Fr(int(sq[o, 0]), d2) == 4]
+    ms = set(ring)
+    pairs = [(j, key[tuple(2 * r[ci] - r[j])]) for j in ring
+             if tuple(2 * r[ci] - r[j]) in key
+             and key[tuple(2 * r[ci] - r[j])] in ms
+             and key[tuple(2 * r[ci] - r[j])] > j]
+    six = [x for pr in pairs[:3] for x in pr]
+    six.sort(key=lambda i: math.atan2(float(P[i].y), float(P[i].x)))
+    return len(P), E, [ci] + six
+
+
+# how many neighbours does each candidate have?  more contact first
+b0 = IntBasis.covering(U)
+r0 = b0.rows(U)
+scored = []
+gb = IntBasis.covering(U + cands[:3000])
+dim, D2 = gb.dim, gb.D * gb.D
+Ur = gb.rows(U)
+for q in cands[:3000]:
+    o = gb.rows([q])[0]
+    d = Ur - o
+    sq = gb._field_square(d[:, :dim]) + gb._field_square(d[:, dim:])
+    hit = sq[:, 0] == D2
+    for m in range(1, dim):
+        hit &= sq[:, m] == 0
+    scored.append((int(hit.sum()), q))
+scored.sort(key=lambda t: -t[0])
+print(f"best candidate has {scored[0][0]} neighbours; trying the top ones"
+      f"  [{time.time()-t0:.0f}s]", flush=True)
+
+for deg, q in scored[:25]:
+    V = U + [q]
+    n, E, W = seven(V)
+    cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
+    for a, c in E:
+        for col in range(k):
+            cls.append([-(1 + a * k + col), -(1 + c * k + col)])
+    sv = Solver(name="cd15", bootstrap_with=cls)
+    if not sv.solve():
+        print(f"*** adding a {deg}-neighbour point makes {n} points NOT "
+              f"4-COLOURABLE ***  [{time.time()-t0:.0f}s]", flush=True)
+        sv.delete()
+        break
+    keep = sum(1 for part in THREE
+               if sv.solve(assumptions=[1 + W[e] * k + bi
+                                        for bi, blk in enumerate(part)
+                                        for e in blk]))
+    sv.delete()
+    tag = " *** BELOW THREE ***" if keep < 3 else ""
+    print(f"  +1 point (degree {deg}): {n} pts, census {keep} of 3{tag}"
+          f"  [{time.time()-t0:.0f}s]", flush=True)
+print("DONE", flush=True)

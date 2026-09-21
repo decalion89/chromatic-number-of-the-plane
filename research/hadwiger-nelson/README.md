@@ -4865,6 +4865,39 @@ calls answer it, because survivors only ever shrink. Biting `Y` takes it to
 survive**. The chain has exactly the levels de Grey used.
 
 
+## There is no gradient
+
+Every proxy built here reads nothing at five colours, in every graph, at every
+size. The natural reading is that the graphs are far away and a better search
+would close the distance. Peeling `Sa` and censusing as it shrinks says
+otherwise.
+
+| points | edges | `k = 4` | `k = 5` |
+|---:|---:|---:|---:|
+| 7 | 0 | 715 of 715 | 855 of 855 |
+| 107 | 143 | 715 | 855 |
+| 207 | 537 | 715 | 855 |
+| 307 | 1145 | 715 | 855 |
+| 347 | 1445 | **577** | 855 |
+| 397 | 1974 | **10** | 855 |
+
+At four colours the census sits at the **ceiling** until 307 points — 77 % of
+`Sa` — and then falls off a cliff in the last ninety vertices. Nothing in the
+first three hundred points hints at what the last ninety do. The same vertices
+censused at five never leave the ceiling at all.
+
+So a reading of 855 carries no information about distance. It is what an
+incomplete object reads, and an object *one orbit short of complete* reads it
+too — which is what orbit-irreducibility says from the other side: all 39 of
+`Sa`'s dihedral orbits are needed, and none can go.
+
+The consequence for method is sharp. Every search strategy that optimises a
+proxy — climb the agreement, thicken the ring, buy contact, pack gadgets —
+assumes the proxy improves as the object improves. **It does not.** There is
+nothing to climb until the object is essentially complete, and by then there is
+no climb left to do.
+
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
