@@ -7367,6 +7367,52 @@ THE_GROWTH_GROWS_AWAY_FROM_THE_RING = {
 }
 
 
+# Test the universe, not the seed: monotonicity turns 2^n questions into one.
+#
+# Every seed search here asked whether a particular subgraph has a capped ring,
+# and the space of seeds is 2^39 at one level and worse above.  That is the
+# wrong shape of question, because the property is MONOTONE in two directions
+# at once:
+#
+#   - "ring R cannot show all k colours" survives ADDING vertices, since more
+#     vertices means fewer colourings;
+#   - and if the full point set's R CAN show all k, then so can the R of any
+#     subgraph containing it -- restrict the colouring.
+#
+# So for a ring of at least k points, testing the MAXIMAL point set answers the
+# question for every subgraph that contains that ring.  A universe that fails
+# rules out its whole subgraph lattice at once.  (Subgraphs whose ring is
+# smaller are not covered, and a ring of fewer than k points is capped
+# trivially and carries nothing.)
+#
+# Built as richly as the arithmetic allows -- every point a short unit walk
+# reaches using every unit direction the field offers, inside a disc:
+#
+#     radius   directions   points    edges   rings   capped
+#        2.6        30       1717      8292      7       0
+#        3.5        66      24003    122848     21       0
+#
+# Twenty-four thousand points, a hundred and twenty thousand edges, and the
+# whole sweep costs twenty-six seconds because "not capped" is the satisfiable
+# answer.  That is the largest object tested anywhere in this work, and the
+# negative it gives is not about it alone: it is about every subgraph of it.
+TEST_THE_UNIVERSE_NOT_THE_SEED = {
+    "why the seed search was the wrong question": "the cap is monotone, so "
+        "the maximal set answers for every subgraph containing the ring",
+    "universes tested": {"radius 2.6": {"points": 1717, "edges": 8292,
+                                        "rings": 7, "capped": 0},
+                         "radius 3.5": {"points": 24003, "edges": 122848,
+                                        "rings": 21, "capped": 0}},
+    "cost": "twenty-six seconds for the larger, since 'not capped' is the "
+            "satisfiable answer",
+    "what it rules out": "not the universe alone but every subgraph of it "
+                         "that contains one of those rings",
+    "what it does not": "subgraphs whose ring is smaller than k points, which "
+                        "are capped trivially and carry nothing",
+}
+
+
+
 
 
 

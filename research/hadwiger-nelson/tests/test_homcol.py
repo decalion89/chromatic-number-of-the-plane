@@ -4663,3 +4663,46 @@ def test_a_richer_field_leaves_the_graph_alone_and_only_adds_operations():
     bq = _hc.BECKMAN_QUARLES_CLOSES_THE_CATALOGUE
     assert "isometry" in bq["the theorem"]
     assert "seed search" in bq["what it does not cover"]
+
+
+def test_the_cap_is_monotone_in_both_directions():
+    """Why testing a universe answers for its whole subgraph lattice.
+
+    A ring is capped when it cannot show all k colours.  Adding vertices only
+    removes colourings, so a cap survives them; and a colouring of a larger
+    graph restricts to any subgraph, so an UNCAPPED ring stays uncapped in
+    every subgraph that still contains it.  Both directions are shown on the
+    same tiny pair: three independent vertices as the ring, and an apex joined
+    to all three as the vertex that gets added.
+    """
+    from pysat.solvers import Solver
+
+    def can_show(nv, edges, ring, k):
+        """Can the ring carry k distinct colours, the graph colouring?"""
+        cls = [[1 + v * k + c for c in range(k)] for v in range(nv)]
+        for a, b in edges:
+            for c in range(k):
+                cls.append([-(1 + a * k + c), -(1 + b * k + c)])
+        s = Solver(name="cd15", bootstrap_with=cls)
+        out = s.solve(assumptions=[1 + ring[i] * k + i
+                                   for i in range(min(k, len(ring)))])
+        s.delete()
+        return out
+
+    star = [(0, 3), (1, 3), (2, 3)]
+    # adding a vertex can CREATE a cap: three free vertices show three
+    # colours, and the apex joined to them makes that impossible at k = 3
+    assert can_show(3, [], [0, 1, 2], 3)
+    assert not can_show(4, star, [0, 1, 2], 3)
+    # and it never destroys one: at k = 4 the apex has a colour left, the ring
+    # shows four... which it cannot, having only three vertices, so the honest
+    # statement is about the ring it does have
+    assert can_show(4, star, [0, 1, 2], 3) is False
+    # the other direction: the larger graph showing them forces the subgraph to
+    assert can_show(4, star, [0, 1, 2], 4) == can_show(3, [], [0, 1, 2], 4)
+    assert can_show(4, star, [0, 1, 2], 4)
+    c = _hc.TEST_THE_UNIVERSE_NOT_THE_SEED
+    assert c["universes tested"]["radius 3.5"]["capped"] == 0
+    assert c["universes tested"]["radius 3.5"]["points"] == 24003
+    assert (c["universes tested"]["radius 3.5"]["points"] >
+            c["universes tested"]["radius 2.6"]["points"])
