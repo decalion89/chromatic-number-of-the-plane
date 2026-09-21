@@ -4066,3 +4066,121 @@ def test_saturation_moves_across_the_gap_and_density_does_not():
     c = _hc.SATURATION_IS_THE_DISCRIMINATOR
     assert c["rhombus memberships per point"][207] == 0.56
     assert c["rhombus memberships per point"][397] == 4.47
+
+
+def test_choosing_for_saturation_moves_the_census_off_the_ceiling():
+    """The predictive test, at the size where the two selections disagree most.
+
+    Two hundred and seven points of Sa chosen at random read the full ceiling,
+    715 of 715.  The same number chosen greedily for rhombus membership read
+    341.  Both are recomputed here; the greedy order is cheap because every
+    rhombus of Sa is enumerated once up front.
+    """
+    import math
+    import numpy as np
+    from fractions import Fraction as Fr
+    from collections import defaultdict
+    from hn.geometry import Point
+    from pysat.solvers import Solver
+    K = _gm.DEGREY_FIELD
+    P0 = _dg.build_Sa(K)
+    n0 = len(P0)
+    b = _ft.IntBasis.covering(P0)
+    r = b.rows(P0)
+    dm = b.dim
+    E0 = sorted(set((min(a, c), max(a, c))
+                    for a, c in _ft.fast_edges_complete(b, r)))
+    nb = [set() for _ in range(n0)]
+    for a, c in E0:
+        nb[a].add(c)
+        nb[c].add(a)
+    zi = P0.index(Point(K.zero(), K.zero()))
+    d = r - r[zi]
+    sq = b._field_square(d[:, :dm]) + b._field_square(d[:, dm:])
+    ok = np.ones(len(sq), dtype=bool)
+    for j in range(1, dm):
+        ok &= sq[:, j] == 0
+    d2 = b.D * b.D
+    ring = [int(o) for o in np.nonzero(ok)[0] if Fr(int(sq[o, 0]), d2) == 4]
+    ring.sort(key=lambda i: math.atan2(float(P0[i].y), float(P0[i].x)))
+    PIN = [zi] + ring
+
+    RH = []
+    for i in range(n0):
+        dv = r - r[i]
+        s = b._field_square(dv[:, :dm]) + b._field_square(dv[:, dm:])
+        good = s[:, 0] == 3 * d2
+        for m in range(1, dm):
+            good &= s[:, m] == 0
+        for j in np.nonzero(good)[0]:
+            j = int(j)
+            if j <= i:
+                continue
+            sh = sorted(nb[i] & nb[j])
+            for a in range(len(sh) - 1):
+                for c in range(a + 1, len(sh)):
+                    RH.append((i, j, sh[a], sh[c]))
+    member = defaultdict(list)
+    for idx, q in enumerate(RH):
+        for v in q:
+            member[v].append(idx)
+    chosen = set(PIN)
+    complete = set(i for i, q in enumerate(RH) if set(q) <= chosen)
+    order = []
+    while len(order) < 200:
+        best, gain = None, -1
+        for v in range(n0):
+            if v in chosen:
+                continue
+            g = sum(1 for idx in member[v] if idx not in complete
+                    and not (set(RH[idx]) - chosen - {v}))
+            if g > gain:
+                best, gain = v, g
+        chosen.add(best)
+        order.append(best)
+        for idx in member[best]:
+            if idx not in complete and set(RH[idx]) <= chosen:
+                complete.add(idx)
+
+    idxs = PIN + order
+    assert len(idxs) == 207
+    P = [P0[i] for i in idxs]
+    bb = _ft.IntBasis.covering(P)
+    rr = bb.rows(P)
+    E = sorted(set((min(a, c), max(a, c))
+                   for a, c in _ft.fast_edges_complete(bb, rr)))
+    S = set(idxs)
+    per = defaultdict(int)
+    for q in RH:
+        if set(q) <= S:
+            for v in q:
+                per[v] += 1
+    sat = sum(per.values()) / len(P)
+    assert abs(sat - 3.88) < 0.02, sat
+
+    def partitions(seq):
+        if not seq:
+            yield []
+            return
+        first, rest = seq[0], seq[1:]
+        for p in partitions(rest):
+            for i in range(len(p)):
+                yield p[:i] + [[first] + p[i]] + p[i + 1:]
+            yield [[first]] + p
+
+    k = 4
+    PARTS = [p for p in partitions(list(range(7))) if len(p) <= k]
+    cls = [[1 + v * k + c for c in range(k)] for v in range(len(P))]
+    for a, c in E:
+        for col in range(k):
+            cls.append([-(1 + a * k + col), -(1 + c * k + col)])
+    sv = Solver(name="cd15", bootstrap_with=cls)
+    assert sv.solve()
+    # the seven pinned points lead `idxs`, so they sit at positions 0..6
+    surv = sum(1 for part in PARTS
+               if sv.solve(assumptions=[1 + e * k + bi
+                                        for bi, blk in enumerate(part)
+                                        for e in blk]))
+    sv.delete()
+    assert surv == 341, surv
+    assert surv < len(PARTS)          # off the ceiling, unlike the random one
