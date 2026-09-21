@@ -3224,3 +3224,56 @@ def test_minimal_is_not_claimed_to_be_minimum():
     assert len(set(counts.values())) > 1
     assert min(counts.values()) < counts["descending distance"]
     assert "upper bounds" in c["minimal is not minimum"]
+
+
+# --- the witness file, checked from the file alone --------------------------
+
+def test_the_witness_file_verifies():
+    """Read data/witness_five.json and check every claim it makes.
+
+    This deliberately uses nothing from the search that produced it: the
+    coordinates come out of the file, the field is rebuilt from the
+    generators the file names, every distance is re-derived exactly, and the
+    colouring question is put to the solver afresh.
+    """
+    import json, os
+    from fractions import Fraction as Fr
+    from hn.field import Field
+    from hn.geometry import Point
+    from pysat.solvers import Solver
+    path = os.path.join(os.path.dirname(__file__), "..", "data",
+                        "witness_five.json")
+    doc = json.load(open(path))
+    F = Field(tuple(doc["field"]["generators"]))
+    pts = [Point(F.element([Fr(c) for c in x]), F.element([Fr(c) for c in y]))
+           for x, y in doc["points"]]
+    # every listed unit edge is at distance exactly one
+    for a, b in doc["unit_edges"]:
+        assert pts[a].dist2(pts[b]) == 1, (a, b)
+    # every forbidden pair is at the distance it claims, and closable
+    for a, b, D in doc["forbidden_pairs"]:
+        assert pts[a].dist2(pts[b]) == Fr(D), (a, b, D)
+        assert hn.homcol.closable_distance(Fr(D)), D
+    # and the graph with those pairs added does not 5-colour
+    k = 5
+    cls = [[1 + i * k + c for c in range(k)] for i in range(len(pts))]
+    for a, b in doc["unit_edges"] + [p[:2] for p in doc["forbidden_pairs"]]:
+        for c in range(k):
+            cls.append([-(1 + a * k + c), -(1 + b * k + c)])
+    sv = Solver(name="cd15", bootstrap_with=cls)
+    assert not sv.solve()
+    sv.delete()
+
+
+def test_the_witness_is_small_and_its_counts_agree():
+    import json, os
+    from collections import Counter
+    path = os.path.join(os.path.dirname(__file__), "..", "data",
+                        "witness_five.json")
+    doc = json.load(open(path))
+    assert len(doc["points"]) < 70          # against G's 1581
+    counted = Counter(D for _, _, D in doc["forbidden_pairs"])
+    assert {k: v for k, v in counted.items()} == {
+        k: v for k, v in doc["classes"].items() if v}
+    # the unit-distance graph alone is sparse; the pairs are what bite
+    assert len(doc["unit_edges"]) < 3 * len(doc["points"])
