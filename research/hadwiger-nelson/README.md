@@ -5462,5 +5462,49 @@ algebraically guaranteed, and a silent `int64` overflow that returned a graph
 with no edges while the sweep called it colourable. Those are in the record
 beside the originals, not in place of them.
 
+
+### What the second pass added
+
+The account above was written before the instrument was turned on de Grey's
+own construction rather than only pointed past it. Doing that produced three
+things.
+
+**His mechanism, derived rather than described.** An exhaustive scan of `Sa`
+— every vertex as a centre, every radius, palette bounds on the whole graph —
+returns his lemma with his numbers: the origin together with the regular
+hexagon of radius 2, `(±2, 0)` and `(±1, ±√3)`, held to **two colours out of
+four**. The bite that ring admits is `cos 7/8, sin √15/8`, which is `Sb`. The
+cap and the bite are the same ring seen twice. A decision procedure — sample
+colourings, demand the chosen set miss enough colours in each, verify exactly,
+feed the refuting colouring back — reconstructs that set from nothing but the
+graph and the question, in 175 seconds. Read as a rule, the whole construction
+is two bites whose radius doubles, `2` then `4`, with the second centre a
+point of the first bitten ring.
+
+**Two mistakes in the instrument, and one claim withdrawn.** Every five-colour
+cap test had been run on carriers that only need four colours, where a spare
+colour at every vertex makes any ring showable — those zeros were not evidence.
+Every ring scan had filtered to `D ≤ 4`, which discards de Grey's own second
+bite at `D = 16`. And a hill-climbing search over free-form sets was withdrawn
+after it failed its own calibration: a tight set is an isolated minimum, so a
+local search cannot reach one.
+
+**The gap, narrowed to one sentence.** At four colours de Grey's exact
+configuration is *abundant* — 37 found in one sweep of `Sa`'s universe, across
+five centres. At five colours nothing is there, in any carrier whose chromatic
+number matches the question, and not only the cap: the **weak disjunction**,
+which is all the bite actually consumes — *some antipodal pair of the ring is
+monochromatic in every colouring* — is absent too, across 150 biteable rings
+in `G`, 195 in the best carrier built here, and 12 in the pivot closure. So
+the shortfall at five is not that a cap is too much to ask for. The weakest
+statement the machine can run on is not there either.
+
+And the recursion stops for a reason that is not about colourings at all. The
+third level wants radius 8, whose turn needs `√17` — adjoining it costs
+nothing and makes the angle exact — but no point of `G` lies 8 from the
+radius-4 ring, because `G` only reaches 4.8 from its pivot. Every operation in
+the catalogue fills a carrier in; none reaches out. The missing operation is
+not another turn.
+
 The tests recompute the numbers rather than quoting them, so a reader who
 doubts any figure above can run it.
