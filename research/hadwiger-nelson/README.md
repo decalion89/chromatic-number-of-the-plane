@@ -5174,7 +5174,32 @@ local — which is exactly why all of them read flat.
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
-unit-distance graph is small. What it does provide is a correct, fast, fully
-certifying search whose negative results are recorded precisely enough to be worth
-something on their own — and against which any future claim, from anyone, can be
-checked in one command.
+unit-distance graph is small, and nothing here did.
+
+What it provides instead is threefold. A correct, fast, fully certifying
+search, against which any future claim can be checked in one command. A
+**positive structural account**: de Grey's bite reduced to a computed census
+and a finite elimination that fits on a page, with the consequence — all three
+antipodal pairs forced, not one — that his own presentation understates; plus
+the fact that his pruning of two vertices costs two thirds of that conclusion.
+And a **precise statement of what is missing**, arrived at by eliminating every
+alternative one at a time:
+
+> Rigidity is **global**. Density, rhombus saturation, redundancy and gadget
+> density were each measured, each correlates along a peel, and each was then
+> tested constructively and moved nothing — spindle density four times `Sa`'s
+> eliminates *not one* of its ten patterns. The only operations that have ever
+> tightened a census here are the bite and the spindle, and the bite is a
+> one-off.
+
+The negatives are recorded to the same standard as anything else: what was
+measured, at what cost, and what it does and does not license. Several of them
+are corrections to claims made earlier in this same work — the spindle count
+that was counting hinges, "saturation is the discriminator" retracted by the
+next measurement, a packing estimate whose independent-looking agreement was
+algebraically guaranteed, and a silent `int64` overflow that returned a graph
+with no edges while the sweep called it colourable. Those are in the record
+beside the originals, not in place of them.
+
+The tests recompute the numbers rather than quoting them, so a reader who
+doubts any figure above can run it.
