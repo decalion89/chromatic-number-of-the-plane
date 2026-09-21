@@ -4435,3 +4435,25 @@ def test_the_onset_threshold_agrees_across_two_levels_in_gadget_count():
     # and the demand it implies
     assert 1 / 0.155 < 6.5
     assert (509 - 1 / 0.155) / 509 > 0.987
+
+
+def test_raising_gadget_density_eliminates_no_pattern():
+    """Four times Sa's spindle density, and not one pattern gone.
+
+    Adding vertices can only remove survivors, so a census of ten of ten on
+    Sa's own ten patterns means the tightening is exactly zero.  Checked here
+    at the first growth step, where the spindle count per point has already
+    risen from 0.574 to 0.984 -- past the 0.574 at which Sa's census collapsed
+    -- and the ten patterns all survive.
+    """
+    c = _hc.RIGIDITY_IS_NOT_LOCAL
+    cen = c["census along that growth"]
+    assert cen["out of"] == 10
+    assert all(v == 10 for k, v in cen.items() if k != "out of")
+    assert c["tightening achieved"] == 0
+    assert "gadget density" in c["the full list now ruled out"]
+    # the chain that does tighten changes nothing local
+    d = _hc.SATURATION_DOES_NOT_DETERMINE_CHI["the chain's local statistics"]
+    assert len({(v["edges/pt"], v["memberships"], v["spindles/pt"])
+                for v in d.values()}) == 1
+    assert [d[k]["chi"] for k in ("Sa", "Y", "G")] == [4, 4, 5]

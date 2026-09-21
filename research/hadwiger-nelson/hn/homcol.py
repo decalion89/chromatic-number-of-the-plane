@@ -7088,6 +7088,64 @@ THE_THRESHOLD_TRAVELS_IN_GADGET_COUNT = {
 }
 
 
+# CORRECTED, and this one retires the whole local account: rigidity is not
+# local at all.
+#
+# The peel showed census and gadget density moving together, and that invited
+# the reading that gadget density is what rigidity tracks -- the last local
+# quantity standing after density, saturation and redundancy had each been
+# ruled out.  The constructive test refutes it outright.
+#
+# Growing Sa for rhombi raises the SPINDLE count per point fourfold, from 0.574
+# to 2.309 at 997 points, which is four times the value at which Sa's own
+# census collapsed.  The census over the same growth:
+#
+#     Sa            397 pts   0.574 spindles/pt    census 10 of 10
+#     step 4        557       1.413                census 10 of 10
+#     step 8        717       1.863                census 10 of 10
+#     step 11       837       ~2.0                 census 10 of 10
+#     step 15       997       2.309                     --
+#
+# Not one pattern eliminated, at any step.  Adding vertices can only remove
+# survivors, so ten of ten means the tightening is exactly zero.
+#
+# The peel's correlation was therefore not causal.  Removing vertices destroys
+# a graph and everything falls together; it does not follow that raising one of
+# the things that fell will raise the others, and it does not.
+#
+# What is left is the operation that DOES tighten: the bite, which takes the
+# census from ten to seven and, unpruned, to three -- and which adds six edges
+# and one shared vertex, changing no local statistic at all.  Sa, Y and G agree
+# to two decimals on every local quantity measured here while chi goes 4, 4, 5.
+#
+# So the account is: rigidity is a global property, no local statistic predicts
+# it, produces it, or improves it, and the only levers that move it are the
+# bite and the spindle.  Every constructive strategy attempted here optimised
+# something local, which is why all of them read flat.
+RIGIDITY_IS_NOT_LOCAL = {
+    "what was tested": "growing Sa for rhombi, which raises spindles per "
+                       "point from 0.574 to 2.309 -- four times the density "
+                       "at which Sa's own census collapses",
+    "census along that growth": {397: 10, 557: 10, 717: 10, 837: 10,
+                                 "out of": 10},
+    "tightening achieved": 0,
+    "why ten of ten is conclusive": "adding vertices can only remove "
+                                    "survivors, so no drop means no effect",
+    "what the peel showed was correlation": "removing vertices destroys a "
+                                            "graph and everything falls "
+                                            "together; raising one of them "
+                                            "back does not raise the others",
+    "what does tighten": "the bite -- ten to seven, and three unpruned -- "
+                         "which adds six edges and one shared vertex and "
+                         "changes no local statistic",
+    "the full list now ruled out": ["density", "rhombus saturation",
+                                    "redundancy", "gadget density"],
+    "so": "rigidity is global; every constructive strategy attempted here "
+          "optimised something local, which is why all of them read flat",
+}
+
+
+
 
 
 

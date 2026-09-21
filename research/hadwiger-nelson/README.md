@@ -5133,6 +5133,44 @@ points per copy and **98.7 % overlap** — now supported by two levels rather
 than assumed from one.
 
 
+## Rigidity is not local, and that retires the rest
+
+The peel showed census and gadget density moving together, which invited the
+reading that gadget density is what rigidity tracks — the last local quantity
+standing after density, saturation and redundancy had each been ruled out. The
+constructive test refutes it outright.
+
+Growing `Sa` for rhombi raises the **spindle** count per point fourfold, from
+0.574 to **2.309** at 997 points — four times the density at which `Sa`'s own
+census collapsed. The census over the same growth:
+
+| | points | spindles/pt | census |
+|---|---:|---:|---:|
+| `Sa` | 397 | 0.574 | **10 of 10** |
+| step 4 | 557 | 1.413 | **10 of 10** |
+| step 8 | 717 | 1.863 | **10 of 10** |
+| step 11 | 837 | ≈2.0 | **10 of 10** |
+| step 15 | 997 | **2.309** | — |
+
+Not one pattern eliminated, at any step. Adding vertices can only *remove*
+survivors, so ten of ten means the tightening is exactly zero.
+
+The peel's correlation was not causal. Removing vertices destroys a graph and
+everything falls together; it does not follow that raising one of the things
+that fell will raise the others — and it does not.
+
+What is left is the operation that *does* tighten: **the bite**, which takes
+the census from ten to seven and, unpruned, to three — and which adds six edges
+and one shared vertex, changing no local statistic at all. `Sa`, `Y` and `G`
+agree to two decimals on every local quantity measured here while `χ` goes
+4, 4, **5**.
+
+So: **rigidity is a global property.** No local statistic predicts it, produces
+it, or improves it, and the only levers that move it are the bite and the
+spindle. Every constructive strategy attempted in this work optimised something
+local — which is exactly why all of them read flat.
+
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
