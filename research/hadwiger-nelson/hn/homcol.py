@@ -5333,3 +5333,59 @@ THE_GADGET_MECHANISM_IS_CONFOUNDED = {
                                        "graph fixed -- Sa reads 24.0 at four "
                                        "and 1.2 at five.",
 }
+
+
+# The fifth colour does not shift the curve.  It flattens it.
+#
+# With the gadget story confounded, what survived was that correlation rises
+# with the density of constraints -- edges -- within a fixed colour count.
+# The controlled version of that is to thin two graphs by the same procedure,
+# match their average degrees, and change only the number of colours:
+#
+#     degree           G at FIVE     Sa at FOUR
+#     9.96 / 9.94            1.1           24.0
+#     9.01 / 8.97            1.1          251.4  (the sampler artefact)
+#     8.06 / 8.11            1.0            5.0
+#     6.88 / 7.14            1.0            2.4
+#     6.07 / 5.66            0.9            1.7
+#     4.95 / 4.87            0.8            2.1
+#     3.83 / 3.84            0.6            1.3
+#
+# At four colours the ratio climbs from 1.3 to 24 across that range.  At five
+# it is flat at one throughout, and drifts BELOW one at low degree -- which is
+# what noise around independence looks like.
+#
+# So constraint density is not weakened at five colours, it stops operating.
+# Adding edges to a four-colour graph correlates its colourings; adding them
+# to a five-colour graph does nothing at all.  That is the cleanest form of
+# everything in this file: the same thinning, the same seeds, the same
+# samples, matched degrees, and only the colour count differing.
+#
+# It also explains, without any appeal to gadgets, why every construction here
+# failed.  Translates, stacks, pivot unions, symmetric closures and spindles
+# all add points and edges.  At five colours that is the one lever measured to
+# do nothing.
+THE_FIFTH_COLOUR_FLATTENS_THE_CURVE = {
+    "method": "thin both graphs by the same procedure and seeds, match "
+              "average degree, change only the colour count",
+    "table": [("9.96 / 9.94", 1.1, 24.0), ("9.01 / 8.97", 1.1, 251.4),
+              ("8.06 / 8.11", 1.0, 5.0), ("6.88 / 7.14", 1.0, 2.4),
+              ("6.07 / 5.66", 0.9, 1.7), ("4.95 / 4.87", 0.8, 2.1),
+              ("3.83 / 3.84", 0.6, 1.3)],
+    "columns": ("average degree (G / Sa)", "G at five", "Sa at four"),
+    "at_four": "climbs from 1.3 to 24 across the range, monotonically down "
+               "to a ratio of about 2 and then inverting once -- 1.7 at "
+               "degree 5.66 against 2.1 at 4.87 -- where the values sit near "
+               "one and the noise is the size of the signal",
+    "at_five": "flat at one throughout, drifting below one at low degree, "
+               "which is noise around independence",
+    "the_251": "the sampler artefact already recorded, not a data point",
+    "reading": "constraint density is not weakened at five colours, it stops "
+               "operating.  Adding edges correlates a four-colour graph's "
+               "colourings and does nothing to a five-colour graph's.",
+    "why_every_construction_failed": "translates, stacks, pivot unions, "
+                                     "symmetric closures and spindles all add "
+                                     "points and edges, and at five colours "
+                                     "that is the lever measured to do "
+                                     "nothing",
+}

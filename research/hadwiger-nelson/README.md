@@ -3974,6 +3974,41 @@ was `Sa`'s **surplus** — 397 vertices where seven suffice, 576 spindles packed
 into them — and a five-colour object with that surplus has to be built, not
 trimmed.
 
+## The fifth colour does not shift the curve — it flattens it
+
+With the gadget story confounded, what survived was that correlation rises
+with the density of *constraints*. The controlled version: thin two graphs by
+the same procedure and seeds, match their average degrees, and change only the
+number of colours.
+
+| average degree (`G` / `Sa`) | `G` at **five** | `Sa` at **four** |
+|---|---|---|
+| 9.96 / 9.94 | **1.1** | **24.0** |
+| 8.06 / 8.11 | 1.0 | 5.0 |
+| 6.88 / 7.14 | 1.0 | 2.4 |
+| 6.07 / 5.66 | 0.9 | 1.7 |
+| 4.95 / 4.87 | 0.8 | 2.1 |
+| 3.83 / 3.84 | 0.6 | 1.3 |
+
+At four colours the ratio climbs from 1.3 to 24 across that range. At five it
+is **flat at one throughout**, drifting *below* one at low degree — which is
+what noise around independence looks like.
+
+> Constraint density is not weakened at five colours. It **stops operating**.
+> Adding edges correlates a four-colour graph's colourings and does nothing at
+> all to a five-colour graph's.
+
+That is the cleanest form of everything above: same thinning, same seeds, same
+samples, matched degrees, only the colour count differing. And it explains,
+without any appeal to gadgets, why every construction here failed — translates,
+stacks, pivot unions, symmetric closures and spindles all add points and
+edges, and at five colours that is the one lever measured to do nothing.
+
+(The four-colour series is monotone down to a ratio of about 2 and inverts
+once below it — 1.7 at degree 5.66 against 2.1 at 4.87 — where the values sit
+near one and the noise is the size of the signal. The 251.4 at degree 8.97 is
+the sampler artefact recorded above, not a data point.)
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

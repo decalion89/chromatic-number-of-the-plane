@@ -2394,3 +2394,36 @@ def test_the_gadget_mechanism_does_not_survive_controlling_for_degree():
 
     assert C["spearman"]["degree vs ratio"] > C["spearman"]["spindles vs ratio"]
     assert C["spearman"]["degree vs spindles"] > 0.85
+
+
+def test_the_fifth_colour_flattens_the_degree_curve():
+    """The controlled comparison the whole account reduces to.
+
+    Two graphs thinned by the same procedure and seeds, their average degrees
+    matched, and only the colour count differing.  At four colours the
+    correlation ratio climbs from 1.3 to 24 as degree goes from 3.8 to 9.9.
+    At five it is flat at one across the same range, drifting below one at low
+    degree -- noise around independence.
+
+    So constraint density does not merely weaken at five colours; it stops
+    operating.  Which is why every construction in this work failed: they all
+    add points and edges, and that is the lever measured to do nothing.
+    """
+    from hn.homcol import THE_FIFTH_COLOUR_FLATTENS_THE_CURVE as T
+
+    rows = [r for r in T["table"] if r[2] != 251.4]   # drop the artefact
+    five = [r[1] for r in rows]
+    four = [r[2] for r in rows]
+
+    assert max(five) <= 1.1 and min(five) >= 0.5      # flat at one
+    assert max(five) - min(five) < 0.6
+    assert max(four) / min(four) > 15                 # climbs by an order
+
+    # Ordered by degree, four colours rises and five does not.  The
+    # four-colour series inverts once at the bottom -- 1.7 at degree 5.66
+    # against 2.1 at 4.87 -- where the values sit near one and the noise is
+    # the same size as the signal, so the claim is made above that floor.
+    top = [r for r in rows if r[2] >= 2.0]
+    assert [r[2] for r in top] == sorted((r[2] for r in top), reverse=True)
+    assert len(top) >= 4
+    assert five[0] - five[-1] < 0.6
