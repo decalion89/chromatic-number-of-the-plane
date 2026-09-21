@@ -6830,3 +6830,52 @@ THIRTEEN_IS_AN_EXHAUSTIVE_CEILING = {
     "so": "thirteen is a ceiling over all constructible points, not an "
           "artefact of how they were sampled",
 }
+
+
+# Every neighbourhood is bipartite, which bounds the whole single-point attack.
+#
+# The placeability test is yes/no and everything answers no.  Graded, it is far
+# worse than "no": for a candidate p, the MINIMUM over proper 5-colourings of G
+# of the number of colours appearing on N(p) -- computed exactly, by
+# assumptions, since "N(p) uses at most j colours" is by colour symmetry "no
+# vertex of N(p) takes colour j or above".
+#
+#     G   400 top candidates, every one minimum 2
+#     Y   400, every one minimum 2
+#     Sa  400, six at minimum 1 and the rest at 2
+#
+# including all twenty-four candidates with thirteen neighbours.  So a blocked
+# point is not one colour away, it is three.
+#
+# THE REASON IS A THEOREM, and it is short.  N(p) lies on the unit circle about
+# p, and two of its points are adjacent exactly when they subtend 60 degrees.
+# A cycle there is a sequence of +-60 degree steps returning to its start, so
+# with a steps of +60 and b of -60 it needs 60(a - b) = 0 mod 360, that is
+# a - b = 0 mod 6.  Since a + b and a - b share parity, the cycle length a + b
+# is EVEN.  No triangles, no odd cycles: the neighbourhood of any point of the
+# plane is bipartite, so chi(N(p)) = 2 for every p, always.
+#
+# That is what the measurement is seeing.  To block p the ambient graph must
+# force five colours onto a set that is 2-chromatic on its own, and nothing in
+# this family comes close -- not at thirteen neighbours, not at any size the
+# construction reaches.  It also says the ceiling of thirteen was never the
+# binding constraint: a five-point neighbourhood forced rainbow would win, and
+# no neighbourhood is forced past two.
+NEIGHBOURHOODS_ARE_ALWAYS_BIPARTITE = {
+    "theorem": "the neighbourhood of any point in a planar unit-distance "
+               "graph is bipartite",
+    "proof": "N(p) lies on the unit circle about p and two of its points are "
+             "adjacent exactly when they subtend 60 degrees; a cycle is a "
+             "sequence of +-60 steps returning to start, needing a - b = 0 "
+             "mod 6, and a + b shares parity with a - b, so every cycle has "
+             "even length",
+    "so": "chi(N(p)) = 2 for every p, always",
+    "measured minimum colours forced on N(p)": {"G": {2: 400},
+                                                "Y": {2: 400},
+                                                "Sa": {1: 6, 2: 394}},
+    "including": "all twenty-four candidates with thirteen neighbours",
+    "so a blocked point is": "three colours away, not one",
+    "and the ceiling of thirteen": "was never the binding constraint -- a "
+                                   "five-point neighbourhood forced rainbow "
+                                   "would win, and nothing is forced past two",
+}

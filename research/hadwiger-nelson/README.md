@@ -4595,6 +4595,52 @@ measurably, while keeping de Grey's own statement intact — and whatever the
 barrier at five is, it is **not** a deficiency of the seed that better
 seed-building fixes.
 
+## Every neighbourhood is bipartite, which bounds the single-point attack
+
+The sharpest question about a new point is exact: `G + p` is not 5-colourable
+precisely when, in **every** proper 5-colouring of `G`, the neighbours of `p`
+already use all five colours. Colour symmetry collapses it to one SAT call with
+assumptions — if any colour is free on `N(p)`, colour 0 is free in some
+colouring.
+
+Asked exhaustively rather than by sampling — a point with `k` neighbours is the
+intersection of `C(k,2)` pairs of unit circles, so counting multiplicities finds
+the high-concurrence points that random pair-sampling throws away — `G` has
+34424 distinct new intersection points, the largest neighbourhood is **13**, and
+every one is placeable.
+
+> **Caught.** The first run reported a 60-neighbour point. Vertices *already in
+> the graph* appear as intersections of their own neighbours, and `G`'s hub has
+> degree 60, so it is the intersection of `C(60,2) = 1770` pairs. Such a point is
+> trivially placeable — its own colour is free — and is not a candidate at all.
+
+Graded rather than yes/no, it is far worse than "no". The minimum, over proper
+5-colourings, of the number of colours on `N(p)`:
+
+| | |
+|---|---|
+| `G`, 400 top candidates | **all minimum 2** |
+| `Y`, 400 | all minimum 2 |
+| `Sa`, 400 | six at 1, the rest at 2 |
+
+including all twenty-four candidates with thirteen neighbours. A blocked point is
+not one colour away. It is **three**.
+
+**And the reason is a theorem.** `N(p)` lies on the unit circle about `p`, and
+two of its points are adjacent exactly when they subtend 60°. A cycle there is a
+sequence of ±60° steps returning to its start, so with `a` steps of `+60` and `b`
+of `−60` it needs `60(a − b) ≡ 0 (mod 360)`, that is `6 | (a − b)`. Since `a + b`
+shares parity with `a − b`, the cycle length is **even**. No triangles, no odd
+cycles:
+
+> **The neighbourhood of any point in a planar unit-distance graph is bipartite**,
+> so `χ(N(p)) = 2` for every `p`, always.
+
+That is what the measurement sees. To block `p`, the ambient graph must force
+five colours onto a set that is 2-chromatic on its own — and the ceiling of
+thirteen was never the binding constraint, since a five-point neighbourhood
+forced rainbow would win just as well, and nothing here is forced past two.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

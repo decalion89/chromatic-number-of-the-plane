@@ -3119,3 +3119,28 @@ def test_the_hub_artefact_was_caught():
     g = c["growth barely moves it"]
     assert max(g.values()) - min(g.values()) == 1
     assert "FALL" in c["and dilutes"]
+
+
+def test_neighbourhood_cycles_are_even():
+    # the theorem, checked as arithmetic: a cycle of a steps of +60 degrees
+    # and b of -60 closes iff 6 | (a - b), and then a + b is even
+    for a in range(0, 25):
+        for b in range(0, 25):
+            if a + b == 0:
+                continue
+            closes = (a - b) % 6 == 0
+            if closes:
+                assert (a + b) % 2 == 0, (a, b)
+    # no triangle: three points pairwise 60 degrees apart on a circle would
+    # put two of them 120 apart, at distance sqrt(3), not 1
+    import math
+    assert abs(2 * math.sin(math.radians(60)) - math.sqrt(3)) < 1e-12
+
+
+def test_every_neighbourhood_measured_at_two():
+    c = hn.homcol.NEIGHBOURHOODS_ARE_ALWAYS_BIPARTITE
+    for g, d in c["measured minimum colours forced on N(p)"].items():
+        assert max(d) <= 2, g          # nothing forced past two colours
+    assert c["measured minimum colours forced on N(p)"]["G"][2] == 400
+    assert "three colours away" in c["so a blocked point is"]
+    assert "never the binding constraint" in c["and the ceiling of thirteen"]
