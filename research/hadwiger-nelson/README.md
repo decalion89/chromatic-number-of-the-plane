@@ -4420,6 +4420,43 @@ Solver time is not a metric and is not offered as one. What is stated is that
 one class behaves unlike the other thirteen, or thirty-five, on five different
 graphs — and that it is the class that carries the property at four colours.
 
+## The family is empty at five colours, and the last heuristic goes with it
+
+`Sa` carries the weak property at four colours on four closable classes —
+`4/9`, `16/9`, `4`, `16`. At five it carries **none of them, singly or
+together**: glucose found a 5-colouring of `Sa` avoiding all four at once, in
+850 s, with the colour symmetry broken 60-fold by a triangle. The two-class
+statement needs no run of its own — `{4/9, 16/9}` is a subset of the four, so a
+colouring avoiding the larger set avoids the smaller.
+
+That settles the whole family at five colours:
+
+| | |
+|---|---|
+| `Sa` | 0 of 14 classes, and 0 for all four together |
+| `Sb` | 0 of 14 |
+| `Y` | 0 of 23 |
+| `G` | 0 of 1664 `(centre, ring)` candidates; class `4/9` satisfiable |
+| `G` closed about its hub | 0 of the 35 classes reached |
+
+> **Retired.** Sixty-seven runs of the calibrated TabuCol on `Sa` with
+> `{4/9, 16/9}` — sixty at 600k moves and seven at three million — never reached
+> zero, and touched **one** conflict twenty-four times. Against a
+> known-unsatisfiable calibration that plateaus at 37, that reads as barely
+> unsatisfiable. It was a hard **satisfiable** instance.
+>
+> The same thing had already happened on `G`'s class `4/9`: three hours of CDCL,
+> a TabuCol plateau at seven, answer SAT. Twice is a pattern. **A local search
+> that does not land is not evidence of anything** — landing proves
+> satisfiability, and nothing else proves anything. Every reading here was
+> hedged as evidence rather than result, which was the right hedge; the hedge is
+> now the finding.
+
+What survives is the structural account, which never rested on a heuristic: the
+bite sharpens a weak property into a named pair rather than creating one, `Sa`
+carries one at four and `G` carries none at five, and no union, thickening or
+closure of `G` changes that.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

@@ -6288,3 +6288,54 @@ THE_COST_EXPLOSION_IS_NEUTRAL = {
     "corrects": "the temptation to read the curve as evidence, not any "
                 "claim made from it -- the asymmetry was always the claim",
 }
+
+
+# The family is empty at five colours, and the last heuristic goes with it.
+#
+# Sa carries the weak property at four on four closable classes -- 4/9, 16/9,
+# 4 and 16.  At five it carries none of them, singly or together: glucose found
+# a 5-colouring of Sa avoiding ALL FOUR at once, in 850 seconds with the colour
+# symmetry broken by a triangle.  The two-class statement needs no run of its
+# own, since {4/9, 16/9} is a subset of the four and a colouring avoiding the
+# larger set avoids the smaller.
+#
+# With that the whole family is settled at five colours:
+#
+#     Sa   0 of 14 classes, and 0 for all four together
+#     Sb   0 of 14
+#     Y    0 of 23
+#     G    0 of 1664 (centre, ring) candidates, and 4/9 satisfiable
+#     G closed about its hub   0 of the 35 classes reached
+#
+# AND THE HEURISTIC THAT POINTED THE OTHER WAY IS RETIRED.  Sixty-seven runs of
+# the calibrated TabuCol on Sa with {4/9, 16/9} -- sixty at 600k moves, seven
+# at three million -- never reached zero and touched ONE conflict twenty-four
+# times.  Against a known-unsatisfiable calibration that plateaus at 37, that
+# reads as barely unsatisfiable.  It was a hard SATISFIABLE instance.
+#
+# The same thing had already happened once, on G's class 4/9: three hours of
+# CDCL, a TabuCol plateau at seven, and the answer was SAT.  Twice is a
+# pattern.  A local search that does not land is not evidence of anything;
+# landing proves satisfiability and nothing else proves anything.  Every
+# reading here was hedged as evidence rather than result, which was the right
+# hedge, and the hedge is now the finding.
+THE_FAMILY_IS_EMPTY_AT_FIVE = {
+    "Sa at four": "carries 4 of 14 closable classes: 4/9, 16/9, 4, 16",
+    "Sa at five": "carries none -- a colouring avoiding ALL FOUR exists, "
+                  "glucose, 850s, symmetry broken 60-fold",
+    "{4/9, 16/9} at five": "satisfiable by monotonicity, being a subset",
+    "Sb at five": "0 of 14", "Y at five": "0 of 23",
+    "G at five": "0 of 1664 (centre, ring); class 4/9 satisfiable",
+    "G closed about its hub": "0 of the 35 classes reached",
+    "the retired heuristic": {
+        "what it said": "67 TabuCol runs, none reached zero, one conflict "
+                        "touched 24 times, against a plateau of 37 on a "
+                        "known-unsatisfiable calibration",
+        "what was true": "hard satisfiable",
+        "the other time": "G's class 4/9 -- three hours of CDCL, plateau at "
+                          "seven, answer SAT",
+        "the rule": "a local search that does not land is not evidence; "
+                    "landing proves satisfiability and nothing else proves "
+                    "anything",
+    },
+}

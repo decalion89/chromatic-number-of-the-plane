@@ -2871,3 +2871,22 @@ def test_the_ball_curve_proved_nothing():
     assert g["every ball coloured"] is True
     assert g["the whole graph"] == "SATISFIABLE"
     assert "held fixed" in c["what still carries information"]
+
+
+def test_the_family_is_empty_at_five():
+    c = hn.homcol.THE_FAMILY_IS_EMPTY_AT_FIVE
+    assert "carries none" in c["Sa at five"]
+    assert c["Sb at five"].startswith("0 ")
+    assert c["Y at five"].startswith("0 ")
+    # the two-class case is implied, not measured: a subset of the forbidden
+    # pairs is a weaker constraint, so the colouring found carries over
+    assert "monotonicity" in c["{4/9, 16/9} at five"]
+
+
+def test_the_local_search_plateau_was_not_evidence():
+    r = hn.homcol.THE_FAMILY_IS_EMPTY_AT_FIVE["the retired heuristic"]
+    assert r["what was true"] == "hard satisfiable"
+    assert "SAT" in r["the other time"]
+    assert "landing proves satisfiability" in r["the rule"]
+    # and it happened on both graphs, so it is a pattern and not one miss
+    assert "G's class 4/9" in r["the other time"]
