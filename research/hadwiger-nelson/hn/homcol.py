@@ -7231,6 +7231,36 @@ THE_CATALOGUE_OF_OPERATIONS_IS_COMPLETE = {
 }
 
 
+# And the second bites close the chain: nothing takes it below three.
+#
+# The three surviving patterns of Sa u Sb are one orbit under sixty degrees, so
+# any operation commuting with that rotation reads three or zero, and zero
+# means the union does not 4-colour.  Rotations about the origin all commute
+# with it, and by the classification they are the only operations that can
+# touch that ring's census at all.
+#
+# All 344 of them -- every rational ring the field can join, both directions --
+# run to completion: every one 4-colourable, so every one reads three.
+#
+# So the chain reaches the floor of its own family at Sa u Sb, and the floor is
+# three.  De Grey's pruning to Y trades two of the three forced pairs for two
+# vertices; his spindle then converts the one that remains.  Nothing in the
+# family goes further, and the family is the whole space of isometric
+# operations on a ring.
+THE_SECOND_BITES_CLOSE_THE_CHAIN = {
+    "second bites about the origin": 344,
+    "outcome": "all 4-colourable, so all read three",
+    "why three or zero": "the three patterns are one orbit under sixty "
+                         "degrees and satisfiability is constant on an orbit",
+    "why this is complete": "rotations about the ring's centre are the only "
+                            "operations that can touch its census, by "
+                            "THE_CATALOGUE_OF_OPERATIONS_IS_COMPLETE",
+    "so": "the chain reaches the floor of its own family, and the floor is "
+          "three of ten",
+}
+
+
+
 
 # Growing the graph does not improve the bite either.
 #
