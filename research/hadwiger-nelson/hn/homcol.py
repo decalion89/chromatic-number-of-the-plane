@@ -4801,6 +4801,7 @@ COUNTING_IS_NOT_CORRELATION = {
 # spindles takes roughly 500/7 times as many points: 397 x 71, about 28000.
 # Z = G* u rho_4(G*) has 27673.
 THE_GADGET_IS_SEVENTY_TIMES_BIGGER = {
+    "CORRECTED": "the spindle counts in this entry are counts of HINGES -- three of a spindle's seven vertices, with neither rhombus checked.  The true counts are 228, 452 and 904, i.e. 0.57 per point rather than 1.45; see THE_SPINDLE_COUNT_WAS_COUNTING_HINGES.  The comparisons survive because the error is a constant factor of 2.53 across the whole family, but the absolute figures do not",
     "counted": {"triangular lattice": {"points": 400, "spindles": 0,
                                        "per_point": 0.0},
                 "Sa": {"points": 397, "spindles": 576, "per_point": 1.45},
@@ -4856,6 +4857,7 @@ THE_GADGET_IS_SEVENTY_TIMES_BIGGER = {
 # what the five-colour test shows is only that no such spike occurs there --
 # forty tries, none above 1.1.
 THE_DILUTION_ANOMALY = {
+    "CORRECTED": "the spindle counts in this entry are counts of HINGES -- three of a spindle's seven vertices, with neither rhombus checked.  The true counts are 228, 452 and 904, i.e. 0.57 per point rather than 1.45; see THE_SPINDLE_COUNT_WAS_COUNTING_HINGES.  The comparisons survive because the error is a constant factor of 2.53 across the whole family, but the absolute figures do not",
     "curve": {"1.0": {"spindles_per_point": 1.45, "ratio": 24.0},
               "0.9": {"spindles_per_point": 1.20, "ratio": 251.4},
               "0.8": {"spindles_per_point": 0.98, "ratio": 5.0},
@@ -4956,6 +4958,7 @@ THE_SAMPLES_ARE_MIXED = {
 # subgraphs, which is a construction problem and not a scaling one.  Nothing
 # in this session produces one.
 THE_PREDICTION_FOR_Z = {
+    "CORRECTED": "the spindle counts in this entry are counts of HINGES -- three of a spindle's seven vertices, with neither rhombus checked.  The true counts are 228, 452 and 904, i.e. 0.57 per point rather than 1.45; see THE_SPINDLE_COUNT_WAS_COUNTING_HINGES.  The comparisons survive because the error is a constant factor of 2.53 across the whole family, but the absolute figures do not",
     "recorded": "before the measurement returned",
     "prediction": "ratio near 1, like every other five-colour graph here",
     "why": "density is not bought by size.  Sa 1.45 spindles per point, Y "
@@ -5105,6 +5108,7 @@ BOTH_ESCAPES_FROM_THE_LADDER_FAIL = {
 # NO Moser spindle at all.  Being 4-chromatic does not require one, which is
 # why the count and the chromatic number are different questions.
 CORRELATION_TRACKS_GADGET_DENSITY = {
+    "CORRECTED": "the spindle counts in this entry are counts of HINGES -- three of a spindle's seven vertices, with neither rhombus checked.  The true counts are 228, 452 and 904, i.e. 0.57 per point rather than 1.45; see THE_SPINDLE_COUNT_WAS_COUNTING_HINGES.  The comparisons survive because the error is a constant factor of 2.53 across the whole family, but the absolute figures do not",
     "table": [("triangular lattice", 0.000, 2.2),
               ("lattice + 1 hinge", 0.000, 2.0),
               ("lattice + 2 hinges", 0.007, 1.5),
@@ -5156,6 +5160,7 @@ CORRELATION_TRACKS_GADGET_DENSITY = {
 # colouring but never invent one, so every "essential" is sound; the eleven
 # undecided are genuinely open and are not counted either way.
 G_HAS_ONE_FIVE_CRITICAL_SUBGRAPH = {
+    "CORRECTED": "the spindle counts in this entry are counts of HINGES -- three of a spindle's seven vertices, with neither rhombus checked.  The true counts are 228, 452 and 904, i.e. 0.57 per point rather than 1.45; see THE_SPINDLE_COUNT_WAS_COUNTING_HINGES.  The comparisons survive because the error is a constant factor of 2.53 across the whole family, but the absolute figures do not",
     "probed": 30,
     "essential": 19,
     "dispensable": 0,
@@ -5241,6 +5246,7 @@ G_IS_NEARLY_VERTEX_CRITICAL = {
 # spindles packed into them -- and a five-colour object with the same surplus
 # would need to be built, not trimmed.
 CRITICALITY_AND_CORRELATION_RUN_OPPOSITE = {
+    "CORRECTED": "the spindle counts in this entry are counts of HINGES -- three of a spindle's seven vertices, with neither rhombus checked.  The true counts are 228, 452 and 904, i.e. 0.57 per point rather than 1.45; see THE_SPINDLE_COUNT_WAS_COUNTING_HINGES.  The comparisons survive because the error is a constant factor of 2.53 across the whole family, but the absolute figures do not",
     "measured": {"Sa at 4": {"deletions_dropping_chi": "0 of 40",
                              "correlation": 24.0},
                  "Y at 4": {"deletions_dropping_chi": "0 of 40",
@@ -6539,7 +6545,7 @@ PACKING_BY_TRANSLATION_DOES_NOT_RAISE_DENSITY = {
     "new points per copy": "about 1300",
     "gadgets per point bought": 0.00077,
     "G's own": 0.001,
-    "Sa's, at four colours": 1.45,
+    "Sa's, at four colours": 0.57,
     "ten copies": {"points": 13356, "edges": 76629, "per vertex": 5.74,
                    "five-colourable": True, "solve": "215 seconds"},
     "why it fails": "one gadget per 1300 new points is the same density G "

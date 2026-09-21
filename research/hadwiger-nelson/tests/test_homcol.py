@@ -4476,3 +4476,33 @@ def test_the_essentiality_sample_agrees_with_the_original():
     frac_n = n["essential"] / n["probed"]
     assert abs(frac_o - 0.63) < 0.01 and abs(frac_n - 0.74) < 0.01
     assert frac_n > frac_o            # a larger sample decides more, not fewer
+
+
+def test_every_entry_quoting_the_hinge_figures_points_at_the_correction():
+    """Hygiene: a reader landing on an old entry must not take the bad number.
+
+    The spindle counts of 576, 1152 and 2304 are hinge triples, not spindles.
+    Six entries were written before that was known and still quote them; each
+    now carries a CORRECTED pointer, and this test fails if a new entry
+    reintroduces the figure without one.
+    """
+    stale = []
+    for name in dir(_hc):
+        if not name.isupper():
+            continue
+        val = getattr(_hc, name)
+        if not isinstance(val, dict):
+            continue
+        if name in ("THE_SPINDLE_COUNT_WAS_COUNTING_HINGES",
+                    "THE_SCALE_THE_DESIGN_WOULD_NEED"):
+            continue            # these state the correction themselves
+        text = str(val)
+        if ("1.45" in text or "576" in text) and "CORRECTED" not in val:
+            stale.append(name)
+    assert not stale, stale
+    # and the correction itself carries both sets of numbers
+    c = _hc.THE_SPINDLE_COUNT_WAS_COUNTING_HINGES
+    assert c["hinge triples"] == {"Sa": 576, "Y": 1152, "G": 2304,
+                                  "per point": 1.45}
+    assert c["true spindles"] == {"Sa": 228, "Y": 452, "G": 904,
+                                  "per point": 0.57}
