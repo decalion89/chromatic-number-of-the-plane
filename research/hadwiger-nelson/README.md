@@ -5300,6 +5300,138 @@ nothing.
 > meaningless measurements earlier in this work.
 
 
+## Two mistakes in the instrument, and what they were hiding
+
+Both were mine, both were structural, and both were found by making the
+instrument reproduce de Grey's own construction instead of only searching
+past it.
+
+**The carrier was never measured.** Every cap test at five colours had to run
+on some graph, and which graph was never examined. de Grey's `H` is
+4-chromatic and his lemma caps a centre together with its ring at two colours
+out of four: carrier and question carry the same number. That is the
+condition, not a coincidence. A cap says the colouring has no room, and
+having no room is what chromaticity means — with five colours on a graph that
+needs four, one colour is free at every vertex and any ring can be shown all
+five by permuting inside the slack.
+
+Sa's universe, 8953 points and 47724 edges, is 4-colourable. So every
+five-colour cap test run on an Sa- or Y-seeded universe was asking a
+4-chromatic graph to have no room for a fifth colour, and would have returned
+zero whatever the geometry inside it. G-seeded universes are the only ones in
+this work that have ever been in the right regime; the 26002-point one is
+5-chromatic exactly, which is de Grey's own situation one level up.
+
+**The ring scans discarded de Grey's own bite.** Every ring scan here filtered
+to distance squared at most 4, on the reflex that a wider ring cannot have two
+adjacent points on it. For a palette bound that is harmless. For a bite it
+throws away the mechanism, because a bite does not stitch ring points to each
+other — it stitches each point to its own image under the turn, and
+`2·rho·sin(theta/2) = 1` has a solution at every radius at least 1/2.
+
+de Grey's `Sb` turns `Sa` by cosine 7/8, the bite on the ring of radius 2,
+which the filter keeps. His `G` turns `Y` by a relative `2·arcsin(1/8)`,
+cosine 31/32 — and that is the bite on the ring of radius **four**, distance
+squared 16, thrown away by every scan in this work.
+
+## de Grey's construction is two bites whose radius doubles
+
+Written out, `S -> Sa -> Y -> G` is: close under the order-twelve group once,
+then bite twice. The chromatic number does not move on the first bite — `Sa`,
+`Y` are both 4-chromatic — it moves on the second.
+
+The two bites are not independent. The first turns `Sa` about the origin on
+the ring of radius 2. The second turns `Y` about `(-2, 0)`, which is not an
+arbitrary new centre: it is a point **on that first ring**, since the origin's
+radius-2 orbit in `Sa` contains it. And the second radius is twice the first.
+
+So the step is: bite a ring of radius `rho` about `c`, move the centre to a
+point of that ring, bite a ring of radius `2·rho` about it.
+
+Whether the radius can double again is a question about the field. Since
+`sin(theta) = sqrt(4·rho² − 1) / (2·rho²)`, the quantity `4·rho² − 1` must be
+a square times one of K's radicands:
+
+| radius | `4·rho² − 1` | in `Q(sqrt3, sqrt5, sqrt7, sqrt11)`? |
+|---|---|---|
+| 2 | 15 | yes — de Grey's `Sb` |
+| 4 | 63 = 9·7 | yes — de Grey's `G` |
+| 8 | 255 = 3·5·17 | **no** — needs `sqrt17` |
+| 3 | 35 | yes, unused |
+| 5 | 99 = 9·11 | yes, unused |
+
+The obvious third level does not exist over his field. Two others do, and
+neither has been tried.
+
+## Symmetrising only works at the right centre
+
+Closing `G` under the order-twelve group about the origin gives 18966 points
+and 94548 edges. That is twelve times G's 7877 exactly, at 9.97 edges per
+vertex, which is G's own density exactly: twelve disjoint copies wearing one
+name, 5-colourable for free. `S` straddles the origin so closing it there
+fuses; `G` is `Y` turned about `(-2, 0)` and lives in the upper half plane
+around `(-2, 2)`, so closing it there does not. Y's centroid, by contrast, is
+exactly the origin.
+
+The centre `G` actually has is that pivot. It is a vertex of `G`, 129 of its
+1581 points sit at rational distance from it across 31 rings, and the twelve
+images about it are centred two apart on a circle of radius two while each has
+radius about 2.8 — so they overlap. The closure there, `Gp`, has 13873 points
+and 73782 edges, 10.64 per vertex, contains `G` so it needs five colours, and
+colours with five so it needs no more.
+
+`Gp` is the first object in this work that is tight and symmetric at the same
+time. It has 30 rings of at least six points about its pivot, twelve of them
+biteable in K — eleven being turns nobody has applied.
+
+## The cap is abundant at four and absent at five
+
+The contrast is not one of degree.
+
+At four colours, on Sa's universe, at de Grey's exact strength — a centre
+together with its ring held to two colours out of four — the scan returns one
+every couple of minutes: twenty of them, across five distinct centres, on the
+rings `D = 4/9` and `D = 16/9` and `D = 4`. His configuration is not a needle
+in a haystack.
+
+At five colours, in every carrier whose chromatic number matches the question:
+
+| carrier | points | test | capped |
+|---|---|---|---|
+| G's universe | 35132 | 579 balls, 40 centres | 0 |
+| `Ga` (origin closure) | 18966 | whole graph, every ring | 0 |
+| `Gp` (pivot closure) | 13873 | whole graph, every biteable ring | 0 |
+
+The one exception is free and carries no information: a ring at distance
+exactly 1 from its centre is capped because the centre touches all of it, so
+the ring loses the centre's colour. Centre-plus-ring is then back to `k`.
+
+Biting `Gp` on each of its wide rings genuinely stitches — `D = 4` adds 30744
+cross edges, `D = 16` adds 17712, `D = 9` adds 23496 — and every union is
+5-colourable.
+
+## Forcing is absent even at four, which leaves only the cap
+
+A forced pair needs no bite: the spindle converts it straight into another
+colour. It had never been censused broadly here because the test was run on
+whole graphs, which is expensive. But forcing travels upward exactly as
+capping does — "`u` and `v` agree in every `k`-colouring" is "the graph plus
+the edge `uv` does not colour", and adding vertices only removes colourings —
+so a ball suffices, and the census becomes cheap.
+
+Calibrated on the smallest thing that forces: a rhombus of two unit triangles
+forces its two tips to agree at three colours and not at four, and the Moser
+spindle built from two of them is not 3-colourable. On Y's universe at four
+colours, 740 ball tests around the twenty-five busiest vertices return **zero**
+forced pairs.
+
+That is the expected shape rather than a surprise. The local mechanism for
+forcing needs the neighbourhood of one endpoint to contain a `K(k−1)`, so that
+together with the other endpoint it closes a `K(k)` and leaves exactly one
+colour. Unit-distance graphs in the plane have clique number 3, so the
+mechanism is available at three colours and nowhere above it. de Grey did not
+use a forced pair, and at four colours there is none to use.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
