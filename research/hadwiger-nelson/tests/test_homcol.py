@@ -2936,13 +2936,16 @@ def test_density_climbs_with_generator_count():
             assert v2 > v1, (g1, v1, g2, v2)
 
 
-def test_the_periodic_colouring_is_a_real_proof_for_two_of_them():
+def test_the_periodic_colouring_claim_is_withdrawn():
+    # this test used to assert the claim was a proof.  It is not -- the
+    # homomorphism colours the Cayley graph on the chosen generators, not the
+    # unit-distance graph -- and the replacement asserts the withdrawal.
     c = hn.homcol.TRANSLATION_BUILT_SETS_COLOUR_PERIODICALLY
     r = c["results"]
-    # the two with a functional are proved 5-colourable outright
+    # the functionals themselves were found, and that part still stands
     assert r["rho_4 e<=1"]["phi"] == (1, 0, 0, 0)
     assert r["rho_4 e<=2"]["phi"] == (1, 0, 0, 0)
-    assert "PROOF" in c["what the first two are"]
+    assert c["what the first two are"].startswith("WITHDRAWN")
     # the two without are NOT proved anything, and the record says so
     assert r["rho_3, rho_4"]["phi"] is None
     assert r["rho_3, rho_4, rho_7"]["phi"] is None
@@ -2959,3 +2962,23 @@ def test_rank_four_is_searchable_and_rank_eight_was_searched():
         # the search is over (5^r - 1)/4 functionals up to scaling
         assert (5 ** v["rank"] - 1) % 4 == 0
     assert c["rho_3, rho_4"]["rank"] == 8       # 97656 functionals, exhausted
+
+
+def test_the_periodic_proof_was_withdrawn():
+    c = hn.homcol.THE_PERIODIC_PROOF_WAS_ONLY_ABOUT_THE_GENERATORS
+    # it failed on real points, in both configurations
+    for v in c["the counts"].values():
+        assert v["monochromatic"] > 0
+        assert v["monochromatic"] < v["exact unit edges"]
+    # and the original claim is marked withdrawn where it was made
+    orig = hn.homcol.TRANSLATION_BUILT_SETS_COLOUR_PERIODICALLY
+    assert orig["what the first two are"].startswith("WITHDRAWN")
+    assert "generators" in c["true of"]
+    assert "dense" in c["not true of"]
+
+
+def test_the_implication_runs_one_way():
+    c = hn.homcol.THE_PERIODIC_PROOF_WAS_ONLY_ABOUT_THE_GENERATORS
+    assert "proves nothing about the graph" in c["the lesson"]
+    # the measurements that stand are the ones made with the exact edge test
+    assert "exact edge test" in c["what survives"]

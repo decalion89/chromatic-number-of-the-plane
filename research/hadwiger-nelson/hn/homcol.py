@@ -6481,8 +6481,11 @@ TRANSLATION_BUILT_SETS_COLOUR_PERIODICALLY = {
                 "rho_3, rho_4": {"units": 54, "rank": 8, "phi": None},
                 "rho_3, rho_4, rho_7": {"units": 162, "rank": 8,
                                         "phi": None}},
-    "what the first two are": "a PROOF of 5-colourability, infinite set "
-                              "included",
+    "what the first two are": "WITHDRAWN -- see "
+                              "THE_PERIODIC_PROOF_WAS_ONLY_ABOUT_THE_"
+                              "GENERATORS.  The homomorphism colours the "
+                              "CAYLEY graph on the chosen generators, not the "
+                              "unit-distance graph, which has more edges.",
     "what the last two are NOT": "a proof of anything.  A periodic colouring "
                                  "need not come from a homomorphism to Z_5 -- "
                                  "any finite-index subgroup with a "
@@ -6491,4 +6494,60 @@ TRANSLATION_BUILT_SETS_COLOUR_PERIODICALLY = {
     "why it matters anyway": "it is the first structural filter anything here "
                              "has passed, and it separates two configurations "
                              "from the rest",
+}
+
+
+# CORRECTION, caught by checking it on real points: the periodic colouring is
+# only about the generators, and the unit-distance graph has more edges.
+#
+# TRANSLATION_BUILT_SETS_COLOUR_PERIODICALLY claims a homomorphism
+# phi : Z^r -> Z_5 nonzero on every unit vector colours the whole infinite
+# group, and reports that as a proof for two configurations.  A small-quotient
+# search then found phi to Z_5 x Z_5 for the other two as well, which looked
+# like it closed the entire direction.
+#
+# It does not.  The argument colours the CAYLEY GRAPH whose generators are the
+# unit vectors I PUT IN -- products w^a rho_D^e with bounded exponents.  The
+# group those generate is DENSE in the plane, so it contains infinitely many
+# other vectors of norm exactly one: longer words, and sums that happen to
+# land on the unit circle.  Every one of them is an edge of the real
+# unit-distance graph and none of them is constrained by phi.
+#
+# Checking the colouring on actual points, with the exact edge test rather
+# than the generator list, says so plainly:
+#
+#     rho_3, rho_4        4000 points, 18753 exact unit edges, 333 monochromatic
+#     rho_3, rho_4, rho_7 4000 points, 12176 exact unit edges,  28 monochromatic
+#
+# So no proof of 5-colourability was obtained for any of these groups, and the
+# translation-built direction is NOT closed by this argument.  What the SAT
+# runs measured stands -- the finite sumsets built with the exact edge test are
+# 5-colourable, up to 13579 points at 6.59 edges per vertex -- but that is a
+# measurement on finite pieces, which is what it always was.
+#
+# The lesson is the one the whole file keeps relearning: an argument about a
+# subgraph is an argument about a subgraph.  The generator edges are a
+# subgraph of the unit-distance graph, so colouring them proves nothing about
+# it, while FAILING to colour them would have proved something.  The direction
+# of the implication is the whole content.
+THE_PERIODIC_PROOF_WAS_ONLY_ABOUT_THE_GENERATORS = {
+    "claimed": "a homomorphism to a small finite abelian group 5-colours the "
+               "whole infinite group",
+    "true of": "the Cayley graph on the chosen generators",
+    "not true of": "the unit-distance graph, which has every unit vector of "
+                   "the group as a generator, and the group is dense",
+    "caught by": "colouring real points and counting monochromatic exact "
+                 "unit edges",
+    "the counts": {"rho_3, rho_4": {"points": 4000, "exact unit edges": 18753,
+                                    "monochromatic": 333},
+                   "rho_3, rho_4, rho_7": {"points": 4000,
+                                           "exact unit edges": 12176,
+                                           "monochromatic": 28}},
+    "what survives": "the SAT measurements on finite sumsets built with the "
+                     "exact edge test -- 13579 points at 6.59 edges per "
+                     "vertex, 5-colourable",
+    "what does not": "any claim that the infinite groups are 5-colourable",
+    "the lesson": "colouring a subgraph proves nothing about the graph, while "
+                  "failing to colour it would prove something.  The direction "
+                  "of the implication is the whole content.",
 }
