@@ -1,151 +1,96 @@
-"""Grow a rotationally symmetric set greedily, instead of guessing a seed.
+"""Grow the tight set, because size is where the pigeonhole starts paying.
 
-S is 39 points with eighteen unit edges and SEVENTEEN isolated vertices, and
-25 of its 39 points sit at irrational radius from the origin.  So the seed has
-almost no structure of its own -- everything in Sa comes from how the twelve
-rotated copies interlock.  That is the design criterion, and it can be built
-towards rather than guessed at.
+G carries a set of seven points whose palette is 4 out of 5: no proper
+5-colouring of G shows all five colours on them.  Four hundred and fifty
+random seven-sets, a hundred and fifty of them drawn from the very ball that
+contains it, all show five.  So the set is real and it is rare.
 
-Grow: keep a D6-symmetric point set; the candidates are the points at distance
-exactly one from TWO points already present, which are where unit-circle pairs
-meet; add the whole orbit of whichever candidate creates the most new edges;
-repeat.  Each step is the locally densest rotationally symmetric move.
+It is not yet useful.  A set of m points held to t colours forces a
+monochromatic class of size ceil(m/t), and the generic bound is ceil(m/k), so
+the constraint only buys something when ceil(m/t) > ceil(m/k).  At m = 7,
+t = 4, k = 5 both are 2, and a monochromatic pair among seven points is free.
 
-The intersection of the unit circles about A and B at squared distance D is
-(A+B)/2 +- sqrt(4-D)/2 * n, with n the unit normal to B-A.  Both sqrt(D) and
-sqrt(4-D) must lie in the field for that point to be constructible there --
-the same closability condition the spindle needs, arriving from the other
-side.
+The threshold is nearby.  Nine points at palette 4 give 3 against 2, and so
+does ten; seven points at palette 3 give 3 against 2 as well.  Either forces a
+monochromatic TRIPLE, which is a statement no colouring argument gets for
+free.
+
+So: keep the palette bound where it is and add points, one at a time, taking
+whichever addition the bound survives.  Every step is verified exactly, and
+the bound travels upward, so whatever survives here survives in every
+supergraph of G.
 """
-import sys, time
+import sys, time, pickle
 sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-from fractions import Fraction as Fr
-from collections import Counter
-from hn.field import Field
-from hn.geometry import Point, _rot60
-from hn.graph import build_graph
-from pysat.solvers import Solver
+from collections import defaultdict
+from hn.degrey import build_G
+from hn.geometry import DEGREY_FIELD as K
+from hn.fast import IntBasis, fast_edges_complete
+from hn.homcol import ring_palette_bound
 
+k = int(sys.argv[1]) if len(sys.argv) > 1 else 5
+TARGET = int(sys.argv[2]) if len(sys.argv) > 2 else 4
 t0 = time.time()
-# sqrt(D) AND sqrt(4-D) must both lie in the field for an
-# intersection to be constructible, and de Grey's four radicals
-# allow almost no pairs -- the growth stalled after three steps
-# with six candidates.  Adding sqrt(2) and sqrt(13) widens it.
-K = Field((2, 3, 5, 7, 11, 13))
-ZERO = Point(K.zero(), K.zero())
-W = _rot60(K)
-
-
-SQUARE_CLASSES = []
-for _bits in range(1 << 6):
-    _v = 1
-    for _i, _p in enumerate((2, 3, 5, 7, 11, 13)):
-        if _bits >> _i & 1:
-            _v *= _p
-    SQUARE_CLASSES.append(_v)
-SQUARE_CLASSES.sort()
-
-
-def sqrt_in_field(e):
-    """A square root of the field element e, if the field has one."""
-    if all(x == 0 for x in e.c[1:]):
-        v = e.c[0]
-        if v < 0:
-            return None
-        num, den = v.numerator, v.denominator
-        for r in SQUARE_CLASSES:
-            # v = q^2 * r  =>  sqrt(v) = q sqrt(r)
-            q2 = Fr(num, den) / r
-            if q2 <= 0:
-                continue
-            n2, d2 = q2.numerator, q2.denominator
-            rn, rd = int(round(n2 ** 0.5)), int(round(d2 ** 0.5))
-            if rn * rn == n2 and rd * rd == d2:
-                s = K.rational(Fr(rn, rd))
-                return s if r == 1 else K.sqrt(r) * s
-    return None
-
-
-def orbit(p):
-    out, q = [], p
-    for _ in range(6):
-        out.append(q)
-        out.append(Point(q.x, -q.y))
-        q = W(q)
-    return out
-
-
-def candidates(P):
-    """Points at distance one from two members of P, constructible here."""
-    out = set()
-    n = len(P)
-    for i in range(n):
-        for j in range(i + 1, n):
-            A, B = P[i], P[j]
-            D = A.dist2(B)
-            if D == 0:
-                continue
-            f = float(D)
-            if f > 4 or f < 0.05:
-                continue
-            sD = sqrt_in_field(D)
-            s4 = sqrt_in_field(K.rational(4) - D)
-            if sD is None or s4 is None:
-                continue
-            inv = K.rational(1) / sD
-            half = K.rational(Fr(1, 2))
-            mx = (A.x + B.x) * half
-            my = (A.y + B.y) * half
-            nx = -(B.y - A.y) * inv * s4 * half
-            ny = (B.x - A.x) * inv * s4 * half
-            out.add(Point(mx + nx, my + ny))
-            out.add(Point(mx - nx, my - ny))
-    return [p for p in out if p not in set(P) and float(p.norm2()) < 9]
-
-
-def edges(P):
-    g = build_graph(P)
-    return set((min(a, b), max(a, b)) for a, b in g.edges())
-
-
-def chrom(P, hi=5):
-    E = sorted(edges(P))
-    n = len(P)
-    for k in range(2, hi + 1):
-        cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
-        for a, b in E:
-            for c in range(k):
-                cls.append([-(1 + a * k + c), -(1 + b * k + c)])
-        sv = Solver(name="cd15", bootstrap_with=cls)
-        ok = sv.solve()
-        sv.delete()
-        if ok:
-            return k, len(E)
-    return f">{hi}", len(E)
-
-
-P = orbit(Point(K.one(), K.zero())) + [ZERO]
-P = list(dict.fromkeys(P))
-print(f"start: {len(P)} points (the unit orbit and the origin)"
+SC = ("/tmp/claude-0/-home-user-darwin-50/"
+      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+P = build_G(K, as_graph=False)
+b = IntBasis.covering(P)
+r = b.rows(P)
+assert b.overflow_headroom(r) < 1.0
+E = sorted(set((min(a, c), max(a, c)) for a, c in fast_edges_complete(b, r)))
+n = len(P)
+adj = defaultdict(set)
+for a, c in E:
+    adj[a].add(c)
+    adj[c].add(a)
+cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
+for a, c in E:
+    for col in range(k):
+        cls.append([-(1 + a * k + col), -(1 + c * k + col)])
+S = [7, 107, 109, 269, 406, 664, 668]
+p0 = ring_palette_bound(cls, n * k, S, k)
+print(f"starting set: {len(S)} points, palette {p0}, target <= {TARGET}"
       f"  [{time.time()-t0:.0f}s]", flush=True)
-for step in range(1, 26):
-    cand = candidates(P)
-    if not cand:
-        print("   no constructible candidates left", flush=True)
-        break
-    cur = len(edges(P))
-    best, bestgain = None, -1
-    for c in cand[:250]:
-        trial = list(dict.fromkeys(P + orbit(c)))
-        gain = len(edges(trial)) - cur
-        if gain > bestgain:
-            best, bestgain = c, gain
-    P = list(dict.fromkeys(P + orbit(best)))
-    k, m = chrom(P)
-    print(f"  step {step}: +{len(orbit(best))} -> {len(P)} pts, {m} edges, "
-          f"{m/len(P):.2f} per vertex, chi = {k}  (gain {bestgain}, "
-          f"{len(cand)} candidates)  [{time.time()-t0:.0f}s]", flush=True)
-    if k == ">5":
-        print("*** chi >= 6 ***", flush=True)
-        break
+assert p0 <= TARGET
+
+
+def gain(m, t):
+    return -(-m // t) > -(-m // k)
+
+
+cur = list(S)
+pool = set()
+for v in cur:
+    pool |= adj[v]
+    for u in adj[v]:
+        pool |= adj[u]
+        for w in adj[u]:
+            pool |= adj[w]
+pool -= set(cur)
+print(f"candidate pool: {len(pool)} points within three hops"
+      f"  [{time.time()-t0:.0f}s]", flush=True)
+stalled = False
+while not stalled:
+    stalled = True
+    order = sorted(pool)
+    for v in order:
+        t = cur + [v]
+        if ring_palette_bound(cls, n * k, t, k) <= TARGET:
+            cur = t
+            pool.discard(v)
+            klass = -(-len(cur) // TARGET)
+            note = (f"   <<< PIGEONHOLE GAIN: forces a monochromatic "
+                    f"{klass}" if gain(len(cur), TARGET) else "")
+            print(f"   grew to {len(cur)} points, palette still "
+                  f"<= {TARGET}{note}  [{time.time()-t0:.0f}s]", flush=True)
+            with open(SC + f"grown_{k}_{TARGET}.pkl", "wb") as f:
+                pickle.dump((cur, [P[i] for i in cur]), f)
+            stalled = False
+            break
+final = ring_palette_bound(cls, n * k, cur, k)
+print(f"\nmaximal at {len(cur)} points, palette {final} of {k}"
+      f"  [{time.time()-t0:.0f}s]", flush=True)
+print(f"forces a monochromatic class of size "
+      f"{-(-len(cur)//final)}; generic would be {-(-len(cur)//k)}", flush=True)
+print(f"set: {cur}", flush=True)
 print("DONE", flush=True)

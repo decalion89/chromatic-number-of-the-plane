@@ -9658,3 +9658,62 @@ THE_DECISION_PROCEDURE_FINDS_DE_GREYS_SET = {
                                                    "seconds",
     "distances inside it": "12 pairs at 2, 6 at 2*sqrt3, 3 at 4",
 }
+
+
+# The first positive statement at five colours in this work.
+#
+# Every scan here searched rings, because a ring is what a bite can turn.  The
+# restriction was never examined, and it was hiding the answer: G carries sets
+# that ARE capped at five colours, and they are not rings.
+#
+# Found by a decision procedure rather than a search -- sample colourings,
+# demand the chosen set miss a colour in each, verify exactly, feed the
+# refuting colouring back.  Seeded with 800 colourings instead of 40 it
+# returns, in 22 seconds, seven points of G on which no proper 5-colouring
+# shows all five colours:
+#
+#   7, 107, 109, 269, 406, 664, 668
+#
+# Verified independently, rebuilding G from scratch and using the exact
+# O(n^2) graph builder rather than the int64 path: G is 5-colourable, no
+# 5-colouring shows five colours on those seven, and four is achievable.  The
+# seven are pairwise non-adjacent, their distances are mostly irrational, and
+# they are not a ring, which is why every ring scan missed them.  The control
+# is flat: 450 random seven-sets, 150 of them drawn from the very ball that
+# contains the find, all show five colours.
+#
+# Greedy growth keeps the bound while adding points, and the set reaches 58
+# with palette still 4.  That is where it starts paying: a set of m points
+# held to t colours has a colour class meeting it in at least ceil(m/t)
+# points, so at 58 and 4 some class contains fifteen of them, against the
+# eleven a generic set would give.
+#
+# And a colour class is independent, which turns the pigeonhole into
+# geometry.  No independent fifteen-subset of S avoids both distance sqrt3 and
+# distance 2 -- a finite, exact satisfiability question over 58 variables, and
+# the minimal blocking list is exactly those two.  So:
+#
+#   in EVERY proper 5-colouring of G, some pair of S at distance sqrt3, or
+#   some pair of S at distance 2, is monochromatic
+#
+# Both distances are closable, so either branch spindles.  This is a
+# disjunction, not yet a forced pair -- which is the shape de Grey's result
+# had before his bite collapsed it.
+G_CARRIES_A_CAPPED_SET_AT_FIVE_COLOURS = {
+    "the seven": [7, 107, 109, 269, 406, 664, 668],
+    "palette": "4 of 5, verified on a from-scratch exact rebuild",
+    "they are not a ring": "pairwise non-adjacent, distances mostly "
+                           "irrational -- which is why every ring scan here "
+                           "missed them",
+    "control": "450 random 7-sets, 150 from the same ball, all at palette 5",
+    "grown": "58 points, palette still 4, forced colour class >= 15",
+    "the disjunction": "in every 5-colouring some pair of S at distance "
+                       "sqrt3 or at distance 2 is monochromatic",
+    "minimal blocking list": "exactly {D = 3, D = 4}, both closable",
+    "what is still missing": "collapsing two distances to one, which is what "
+                             "de Grey's bite does for his hexagon",
+    "why the decision procedure found it and the search did not": "800 seed "
+                                                                  "colourings "
+                                                                  "instead of "
+                                                                  "40",
+}
