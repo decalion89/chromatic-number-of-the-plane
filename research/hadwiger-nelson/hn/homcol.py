@@ -9473,3 +9473,48 @@ THE_NEIGHBOURHOOD_SITS_EXACTLY_AT_THE_FREE_BOUND = {
                                              "does not, so it is not what the "
                                              "cap is made of",
 }
+
+
+# The weaker target, which is what the machine actually consumes -- and it
+# fails too.
+#
+# The lemma, measured, is a palette cap: centre and ring held to two colours
+# out of four.  But the cap is not what the bite eats.  The bite needs only
+# this: in every colouring, at least one antipodal pair of the ring carries
+# one colour twice.  A cap implies it by pigeonhole and is strictly stronger,
+# so every scan in this work has been hunting the harder of the two objects.
+#
+# The weaker statement has a one-call test.  Ask for a colouring in which
+# EVERY antipodal pair of the ring is bichromatic; unsatisfiable means some
+# pair is always monochromatic, which is the disjunction.
+#
+# Calibrated on Sa at four colours it returns de Grey's lemma in its operative
+# form: centre the origin, D = 4, six ring points in three antipodal pairs,
+# and in every 4-colouring one of the three is monochromatic -- with the bite
+# cos 7/8, sin sqrt15/8, which is Sb.  It also finds a second disjunction on
+# the radius-1 ring, thirty points in fifteen pairs, whose bite is the sixty
+# degree rotation; that one is useless precisely because Sa is closed under
+# it, which is why he did not use it.
+#
+# On G at five colours: 150 biteable rings carrying antipodal pairs, 0
+# disjunctions, and every one satisfiable within six seconds in total.
+#
+# So the gap is not that the cap is too strong a thing to ask for at five.
+# The weakest statement the construction can use is not there either.
+THE_WEAK_DISJUNCTION_FAILS_AT_FIVE_TOO = {
+    "what the bite consumes": "in every colouring some antipodal pair of the "
+                              "ring is monochromatic -- weaker than a cap, "
+                              "which implies it by pigeonhole",
+    "the test": "ask for a colouring with every antipodal pair bichromatic; "
+                "unsatisfiable is the disjunction",
+    "Sa at four": {"centre": "origin", "D": 4, "pairs": 3,
+                   "bite": "cos 7/8, sin sqrt15/8 = Sb",
+                   "which is": "de Grey's lemma in operative form"},
+    "and a second at four": "the radius-1 ring, 30 points in 15 pairs, bite "
+                            "the 60 degree rotation -- useless because Sa is "
+                            "closed under it",
+    "G at five": "150 biteable antipodal rings, 0 disjunctions, all "
+                 "satisfiable in six seconds total",
+    "so the shortfall is not about strength": "the weakest usable statement "
+                                              "is absent as well",
+}
