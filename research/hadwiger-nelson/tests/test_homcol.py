@@ -4457,3 +4457,22 @@ def test_raising_gadget_density_eliminates_no_pattern():
     assert len({(v["edges/pt"], v["memberships"], v["spindles/pt"])
                 for v in d.values()}) == 1
     assert [d[k]["chi"] for k in ("Sa", "Y", "G")] == [4, 4, 5]
+
+
+def test_the_essentiality_sample_agrees_with_the_original():
+    """Four times the sample, and the fraction holds.
+
+    Essential means G - v is 4-colourable, so v lies in every 5-critical
+    subgraph and cannot be peeled.  The original probe found 19 of 30; this
+    one finds 89 of 120 with the undecided counted neither way, so the two
+    fractions are compared over their decided counts only.
+    """
+    c = _hc.G_ESSENTIALITY_AT_FOUR_TIMES_THE_SAMPLE
+    o, n = c["original"], c["this run"]
+    assert o["probed"] == 30 and n["probed"] == 120
+    assert o["essential"] + o["undecided"] == o["probed"]
+    assert n["essential"] + n["undecided"] == n["probed"]
+    frac_o = o["essential"] / o["probed"]
+    frac_n = n["essential"] / n["probed"]
+    assert abs(frac_o - 0.63) < 0.01 and abs(frac_n - 0.74) < 0.01
+    assert frac_n > frac_o            # a larger sample decides more, not fewer

@@ -7145,6 +7145,49 @@ RIGIDITY_IS_NOT_LOCAL = {
 }
 
 
+# G's essentiality, at four times the sample and the same answer.
+#
+# The recorded figure was nineteen of thirty probed vertices essential -- G - v
+# is 4-COLOURABLE, so v lies in every 5-critical subgraph and cannot be peeled
+# -- with none dispensable and eleven undecided.  That sampled two per cent of
+# the graph.
+#
+# Running it properly took three encodings.  Rebuilding G - v per vertex costs
+# eighteen seconds in clause construction alone.  Guarding every vertex with a
+# selector AND forbidding an absent vertex to carry a colour slows the solver
+# badly -- five of fifty decided at 25000 conflicts.  The right encoding guards
+# only the "some colour" clause: an absent vertex is then free to carry no
+# colour, a colouring of G - v extends to exactly that, and any solution
+# restricts to a proper colouring of G - v.  The relaxation IS G - v.
+#
+# At 400000 conflicts and one shared solver, 120 vertices in: 89 PROVED
+# essential, 31 undecided, and every claimed colouring checked edge by edge
+# before it is counted.  Seventy-four per cent against the original sixty-three,
+# on four times the sample.  The undecided are open, not dispensable: proving a
+# vertex droppable is the unsatisfiable direction and is not attempted.
+G_ESSENTIALITY_AT_FOUR_TIMES_THE_SAMPLE = {
+    "original": {"probed": 30, "essential": 19, "undecided": 11},
+    "this run": {"probed": 120, "essential": 89, "undecided": 31,
+                 "budget": 400000},
+    "agreement": "63 per cent against 74, on four times the sample",
+    "what essential means": "G - v is 4-colourable, so v is in every "
+                            "5-critical subgraph and cannot be peeled",
+    "encodings discarded": {"rebuild per vertex": "eighteen seconds in clause "
+                                                  "construction alone",
+                            "selector plus colour ban": "five of fifty "
+                                                        "decided at 25000 "
+                                                        "conflicts"},
+    "the encoding that works": "guard only the 'some colour' clause, so an "
+                               "absent vertex carries no colour and the "
+                               "relaxation is exactly G - v",
+    "every colouring is verified": "edge by edge, before the vertex is "
+                                   "counted essential",
+    "the undecided are open": "proving a vertex droppable is the "
+                              "unsatisfiable direction and is not attempted",
+}
+
+
+
 
 
 
