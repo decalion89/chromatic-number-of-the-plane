@@ -9129,3 +9129,48 @@ MINIMISING_DESTROYS_THE_RINGS = {
     "the tension": "what makes the obstruction small and checkable is exactly "
                    "what makes it unbiteable",
 }
+
+
+# Every cap test at five colours had to be run somewhere, and the choice of
+# carrier was never examined.  It should have been the first question.
+#
+# de Grey's H is 4-chromatic and its lemma caps a centre-plus-ring at two
+# colours out of four.  Carrier and question carry the same number.  That is
+# not a coincidence to note in passing, it is the condition that makes a cap
+# possible at all: with k colours available on a graph that only needs k-1,
+# one colour is free at every vertex, and a ring can be shown all k by
+# permuting inside the slack.  A cap is a statement that the colouring has no
+# room, and having no room is what chromaticity means.
+#
+# Sa and Y are 4-chromatic.  Their universes -- seed plus every unit-circle
+# intersection inside the radius -- could have been more, since adding points
+# only raises the chromatic number, and if they were, the five-colour cap
+# tests run on them were in the right regime after all.  One SAT call per
+# carrier settles it, and the answer is that they are not: Sa's universe, 8953
+# points and 47724 edges, is 4-colourable.
+#
+# So every five-colour cap test on an Sa- or Y-seeded universe was asking a
+# 4-chromatic graph to have no room for a fifth colour.  The zeros they
+# returned are not evidence about caps at five.  They are evidence that the
+# carrier was a colour too loose, and they would have come back zero whatever
+# the geometry inside them.
+#
+# G is 5-chromatic, so G-seeded universes are the only ones in this work that
+# have ever been in the right regime -- and the 26002-point one is 5-chromatic
+# exactly, which is precisely de Grey's situation one level up.
+THE_CARRIER_MUST_MATCH_THE_QUESTION = {
+    "de Grey's carrier": "H, 4-chromatic; his lemma caps centre+ring at 2 "
+                         "colours out of 4",
+    "the condition": "a cap says the colouring has no room; a carrier needing "
+                     "only k-1 colours has a free colour at every vertex",
+    "measured": {
+        "Sa universe (8953 points, 47724 edges)": "4-colourable",
+        "G universe (26002 points, 122085 edges)": "5-colourable, not 4",
+    },
+    "consequence": "five-colour cap tests on Sa- and Y-seeded universes were "
+                   "a colour too loose; their zeros are not evidence about "
+                   "caps at five",
+    "the only carriers in the right regime": "G-seeded ones",
+    "and this was not checked before": "the cap tests measured the geometry "
+                                       "and never measured the carrier",
+}
