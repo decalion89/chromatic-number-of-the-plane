@@ -4208,6 +4208,45 @@ None of them is forced yet, and every union so far is still 5-colourable. What
 has changed is that the mechanism is now measured rather than guessed at, and the
 quantity it turns on has a name and a lever.
 
+## The gateway: a weaker property, and one call to test it
+
+Everything above tests the **strong** hypothesis — a *named* pair, the same
+colour in every proper colouring — because that is what the spindling lemma
+consumes. De Grey's construction does not start there.
+
+| stage | statement | where it holds |
+|---|---|---|
+| weak | in every 4-colouring of `Sa`, at least **one of three** antipodal pairs on the `D = 4` ring is monochromatic | `Sa` **alone** — no bite, no union |
+| strong | the bite `rho_4` sharpens "one of three" to the named pair `(-2,0),(2,0)` | `Y = Sa u rho_4(Sa)` |
+| — | spindle at squared distance 16 | `G` |
+
+The weak stage costs **one SAT call**, because forbidding a pair from being
+monochromatic is exactly adding the edge. So "some antipodal pair of this ring
+is always monochromatic" is "the graph with all those antipodal edges added is
+uncolourable" — one call for the whole ring, not one per pair. `Sa` carries it
+on two rings: `D = 1` (fifteen pairs, spindle distance 4) and `D = 4` (three
+pairs, spindle distance 16, de Grey's own).
+
+Strong implies weak, so a graph failing the weak property cannot carry a forced
+pair on that ring at all. That makes it the cheap gateway every scan here should
+have started from — and it settles `G` in under a minute:
+
+| | |
+|---|---|
+| centres scanned (every vertex of `G`) | 1581 |
+| `(centre, ring)` candidates with ≥2 antipodal pairs | 1664 |
+| of those, with a closable spindle to follow | 688 |
+| **carrying the weak property at five colours** | **0** |
+| cost | 55 seconds, complete |
+
+This subsumes the negatives above rather than adding to them. The exhaustive
+closable-pair census, the bitten unions, the thickened rings — all were hunting
+the strong property, which cannot hold where the weak one does not. `G` is not
+a graph whose bite can be sharpened; it is a graph with nothing to sharpen.
+
+What it does not touch is other graphs. The weak property belongs to a graph,
+and `G` is one graph.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

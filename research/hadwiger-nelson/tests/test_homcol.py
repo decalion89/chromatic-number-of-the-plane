@@ -2648,3 +2648,55 @@ def test_the_exhaustive_census_of_G_is_recorded_complete():
     assert c["forced at five colours"] == 0
     assert c["pairs they carry"] < c["pairs at a rational squared distance"]
     assert c["closable ones"] < c["distinct rational squared distances"]
+
+
+# --- the weak property, which is the gateway --------------------------------
+
+def test_forbidding_a_pair_is_adding_the_edge():
+    # the identity the one-call test rests on: a k-colouring in which (i, j)
+    # is NOT monochromatic is exactly a proper colouring of the graph with the
+    # edge (i, j) added
+    E = [(0, 1), (0, 2), (1, 2), (1, 3), (2, 3)]
+    for k in (3, 4):
+        plus = _colour_solver(4, E + [(0, 3)], k)
+        bare = _colour_solver(4, E, k)
+        assert bare.solve()
+        # "some colouring separates them" and "the graph plus the edge
+        # colours" are the same statement
+        separable = bare.solve(
+            assumptions=hn.homcol.colour_symmetry_assumptions(0, 3, k))
+        assert separable == plus.solve()
+        plus.delete()
+        bare.delete()
+
+
+def test_weak_property_holds_on_a_triangle_of_pairs():
+    # three pairwise non-adjacent pairs that cannot all be non-monochromatic:
+    # take K5 at four colours with three edges deleted.  Adding them back is
+    # K5, which needs five colours, so at four some deleted pair is always
+    # monochromatic -- the weak property, by the one-call test.
+    K5 = [(a, b) for a in range(5) for b in range(a + 1, 5)]
+    gone = [(0, 1), (0, 2), (0, 3)]
+    rest = [e for e in K5 if e not in gone]
+    bare = _colour_solver(5, rest, 4)
+    assert bare.solve()                    # the graph itself colours
+    full = _colour_solver(5, K5, 4)
+    assert not full.solve()                # forbidding all three does not
+    bare.delete()
+    full.delete()
+
+
+def test_strong_implies_weak_so_the_gateway_subsumes():
+    c = hn.homcol.THE_WEAK_PROPERTY_IS_THE_GATEWAY
+    assert "strong => weak" in c["implies"]
+    g = hn.homcol.G_FAILS_THE_GATEWAY_EVERYWHERE
+    assert g["carrying the weak property at five colours"] == 0
+    assert g["with a closable spindle"] < g["(centre, ring) candidates"]
+
+
+def test_de_greys_ring_carries_the_weak_property_with_three_pairs():
+    c = hn.homcol.THE_WEAK_PROPERTY_IS_THE_GATEWAY["Sa at four"]
+    assert "HOLDS" in c["D=4"] and "de Grey's" in c["D=4"]
+    # and the spindle distance it names is the one the pair sits at
+    assert "16" in c["D=4"]
+    assert hn.homcol.closable_distance(Fraction(16))

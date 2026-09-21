@@ -5830,3 +5830,61 @@ THE_BITE_THREADS_THE_RING = {
                                      "origin"},
     "status": "still 5-colourable, still 0 forced, at every step measured",
 }
+
+
+# The mechanism has two stages and only the second is the strong hypothesis.
+#
+# Everything here had been testing the strong one directly: a NAMED pair, the
+# same colour in every proper colouring, which is what the spindling lemma
+# consumes.  De Grey's construction does not start there.
+#
+#   stage one, weak.  In every 4-colouring of Sa, at least ONE of the three
+#     antipodal pairs on the D = 4 ring is monochromatic.  Sa alone -- no bite,
+#     no union.  And it is ONE SAT call: forbidding a pair from being
+#     monochromatic is exactly adding the edge, so "some pair of this ring is
+#     always monochromatic" is "the graph with all those antipodal edges added
+#     is uncolourable".  One call for the whole ring, not one per pair.
+#   stage two, strong.  The bite rho_4 sharpens "one of three" to the named
+#     pair (-2, 0), (2, 0), which Y forces -- measured, UNSAT in 210 seconds.
+#   then the spindle at squared distance 16 gives G.
+#
+# Sa carries the weak property on two rings, D = 1 (fifteen pairs, spindle
+# distance 4) and D = 4 (three pairs, spindle distance 16, de Grey's).  The
+# strong property implies the weak one, so a graph failing the weak one cannot
+# have the strong one anywhere on that ring -- which makes it the cheap
+# gateway test every scan should have started from.
+THE_WEAK_PROPERTY_IS_THE_GATEWAY = {
+    "weak": "some antipodal pair of ring D is monochromatic in EVERY proper "
+            "k-colouring",
+    "how to test it": "add all those antipodal edges and ask for a colouring; "
+                      "uncolourable means the property holds",
+    "cost": "one SAT call per (centre, ring), not one per pair",
+    "Sa at four": {"D=1": "15 pairs, spindle distance 4, HOLDS",
+                   "D=4": "3 pairs, spindle distance 16, HOLDS -- de Grey's",
+                   "D=5/3, 1/3, 4/3, 5/9, 1/9, 3": "all fail"},
+    "implies": "strong => weak, so failing it rules out a forced pair on that "
+               "ring outright",
+}
+
+
+# G fails the gateway everywhere, and that is why every strong test failed.
+#
+# Scanning every vertex of G as the centre and every rational ring about it
+# carrying at least two antipodal pairs -- 1664 candidates, 688 of them with a
+# closable spindle to follow -- not one carries the weak property at five
+# colours.  Fifty-five seconds, complete over all vertex centres.
+#
+# This subsumes the negatives above rather than adding to them.  The exhaustive
+# closable-pair census, the bitten unions, the thickened rings: all were
+# hunting the strong property, which cannot hold where the weak one does not.
+G_FAILS_THE_GATEWAY_EVERYWHERE = {
+    "centres scanned": 1581,
+    "(centre, ring) candidates": 1664,
+    "with a closable spindle": 688,
+    "carrying the weak property at five colours": 0,
+    "cost": "55 seconds, complete",
+    "what it subsumes": "every strong-property negative recorded above, since "
+                        "strong implies weak",
+    "what it does not touch": "graphs other than G -- the weak property is a "
+                              "property of a graph, and G is one graph",
+}
