@@ -6661,11 +6661,62 @@ SEED_IS_A_FUNDAMENTAL_DOMAIN = {
     "growing from Sa": {"candidates per step": "over 3000",
                         "397": {"density": 4.97, "chi": 4},
                         "433": {"density": 5.39, "chi": 4},
-                        "457": {"density": 5.55, "chi": 4},
-                        "493": {"density": 5.72, "chi": 4}},
+                        "493": {"density": 5.72, "chi": 4},
+                        "607": {"density": 6.24, "chi": 4},
+                        "727": {"density": 6.43, "chi": 4},
+                        "853": {"density": 6.77, "chi": 4}},
     "what it beats": "the whole family at 4.98 and its densest dihedral "
                      "closure at 5.42, on a quarter of the points",
     "what it has not done": "move chi",
     "the target": "a small D6-symmetric 5-chromatic graph, which would be Sa "
                   "one level up",
+}
+
+
+# The grown seed carries MORE than de Grey's, which was not the expected way
+# for that to come out.
+#
+# Greedy growth from Sa, keeping the D6 symmetry, runs 397 points at 4.97
+# edges per vertex out to 853 at 6.77 -- the densest symmetric graph built
+# here, past the whole family at 4.98 and past its densest dihedral closure at
+# 5.42 -- and chi stays at 4 the whole way.  On its own that is another
+# density result and density has already been shown not to matter.
+#
+# What matters is what the growth does to the WEAK PROPERTY, and either answer
+# would have been worth having.  If growth destroyed it, that would say the
+# seed's power is fragile and hand-chosen, explaining why every "bigger and
+# denser" attempt failed.  It does not destroy it.  The grown seed at 541
+# points carries the property at four colours on FIVE closable classes where
+# Sa carries four:
+#
+#     D = 16     3 pairs    de Grey's own, the tightest statement, UNCHANGED
+#     D = 20/3 102 pairs    NEW -- Sa does not carry this class
+#     D = 16/9 228 pairs
+#     D = 4/9  513 pairs
+#     D = 4    699 pairs
+#
+# So a constructed seed beats a hand-chosen one: it keeps everything Sa has,
+# including the three-pair statement de Grey built on, and adds a class.  That
+# is the first thing in this work to improve on the seed rather than to
+# rearrange what the seed produced.
+THE_GROWN_SEED_CARRIES_MORE = {
+    "growth": {"from": "Sa, 397 points at 4.97 edges per vertex",
+               "to": "853 points at 6.77, D6 symmetry kept throughout",
+               "chi": "4 at every step"},
+    "weak property at four, Sa": {"4/9": 393, "4": 273, "16/9": 156,
+                                  "16": 3},
+    "weak property at four, grown seed (541 points)": {"16": 3, "20/3": 102,
+                                                       "16/9": 228,
+                                                       "4/9": 513, "4": 699},
+    "the new class": "20/3, which Sa does not carry",
+    "de Grey's own": "D = 16 with exactly three pairs, unchanged by the "
+                     "growth",
+    "why either answer was worth having": "destroying the property would have "
+                                          "said the seed is fragile and "
+                                          "hand-chosen, explaining every "
+                                          "failed attempt to make it bigger",
+    "what it is": "the first construction here that improves the SEED rather "
+                  "than rearranging what the seed produces",
+    "what it is not": "a five-colour result -- the property at five is a "
+                      "separate question and is being measured",
 }

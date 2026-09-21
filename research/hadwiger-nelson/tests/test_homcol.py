@@ -3027,9 +3027,12 @@ def test_growing_from_sa_beats_the_family_on_density():
     # density rises monotonically with every orbit added
     for (n1, a), (n2, b) in zip(rows, rows[1:]):
         assert n2 > n1 and b["density"] > a["density"]
-    # and it passes 5.42, the densest dihedral closure, well before 500 points
-    assert rows[-1][1]["density"] > 5.42
-    assert rows[-1][0] < 500
+    # it passes 5.42, the densest dihedral closure, before 500 points
+    early = [r for r in rows if r[0] < 500]
+    assert early and early[-1][1]["density"] > 5.42
+    # and the record now runs out to 853 points, so the last row is not
+    # the under-500 one it was when this test was written
+    assert rows[-1][0] == 853
     # but chi does not move, which is the point
     assert all(v["chi"] == 4 for _, v in rows)
 
@@ -3039,3 +3042,26 @@ def test_growing_from_nothing_was_not_an_arithmetic_problem():
     assert c["chi"] == 3
     assert c["widening the field 4 radicals -> 6"] == "no change"
     assert "starting point" in c["so the obstruction is"]
+
+
+def test_the_grown_seed_keeps_de_greys_class_and_adds_one():
+    c = hn.homcol.THE_GROWN_SEED_CARRIES_MORE
+    sa = c["weak property at four, Sa"]
+    gr = c["weak property at four, grown seed (541 points)"]
+    # everything Sa carries, the grown seed carries
+    assert set(sa) <= set(gr)
+    # de Grey's tightest statement survives at exactly three pairs
+    assert sa["16"] == gr["16"] == 3
+    # and there is one more class than Sa has
+    assert len(gr) == len(sa) + 1
+    assert c["the new class"].startswith("20/3")
+    assert "20/3" in gr
+
+
+def test_the_growth_never_moved_chi():
+    c = hn.homcol.SEED_IS_A_FUNDAMENTAL_DOMAIN["growing from Sa"]
+    rows = sorted((int(k), v) for k, v in c.items() if k.isdigit())
+    assert rows[-1][0] == 853 and rows[-1][1]["density"] > 6.7
+    assert all(v["chi"] == 4 for _, v in rows)
+    # density more than doubled its margin over the family without chi moving
+    assert rows[-1][1]["density"] - rows[0][1]["density"] > 1.5
