@@ -3898,6 +3898,32 @@ Three ways out of the ladder were tried, and all three fail:
   1.2, because the added copies carry no gadgets of their own (0.004 per
   point against `Sa`'s 1.451).
 
+## And the last piece: `G` contains one 5-critical subgraph, not thirty
+
+The mechanism needs gadgets *at density*. `Sa` carries 576 Moser spindles on
+397 points — ten memberships per point — and for 500-vertex gadgets to match
+that, a graph would need about `n/50` distinct ones: thirty-two inside `G`.
+
+It has one. If `G - v` is **4-colourable**, then `v` lies in *every* 5-critical
+subgraph, and that is the cheap side of the query, since the solver need only
+exhibit a colouring. Thirty random vertices, 400 000 conflicts each:
+
+| | count |
+|---|---|
+| essential (`G - v` is 4-colourable) | **19** |
+| dispensable (`G - v` still 5-chromatic) | **0** |
+| undecided within the budget | 11 |
+
+Nineteen proved, none refuted. So every 5-critical subgraph of `G` contains at
+least those nineteen and, by proportion, at least 63% of its 1581 vertices —
+about a thousand. The density of five-colour gadgets in `G` is therefore at
+most **0.001 per point**, against the spindle's **1.45**. A factor of fourteen
+hundred, and the account closes.
+
+(The budget is safe-sided in the direction used: it can fail to find a
+colouring but never invent one, so every "essential" verdict is sound. The
+eleven undecided are genuinely open and counted neither way.)
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
