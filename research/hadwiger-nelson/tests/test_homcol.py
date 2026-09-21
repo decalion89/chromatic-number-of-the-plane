@@ -4404,3 +4404,34 @@ def test_gadget_density_is_an_overlap_invariant():
     # and the demand: at most six new points per copy to reach the threshold
     assert 1 / 0.161 < 6.3
     assert (509 - 1 / 0.161) / 509 > 0.98
+
+
+def test_the_onset_threshold_agrees_across_two_levels_in_gadget_count():
+    """Seven per cent apart in counts, a factor of 2.5 apart in incidences.
+
+    The choice of unit changes the verdict on a 509-vertex gadget by 143, so
+    it is worth checking which unit actually travels.  The onset -- where the
+    census first leaves the ceiling -- agrees in gadget count across three and
+    four colours and does not agree in incidences.  The collapse goes the
+    other way, and the test records that too rather than hiding it.
+    """
+    c = _hc.THE_THRESHOLD_TRAVELS_IN_GADGET_COUNT
+    three, four = c["three colours"], c["four colours"]
+    on3, on4 = three["leaves the ceiling"], four["leaves the ceiling"]
+    co3, co4 = three["collapses"], four["collapses"]
+    by_count = max(on3["gadgets/pt"], on4["gadgets/pt"]) / \
+        min(on3["gadgets/pt"], on4["gadgets/pt"])
+    by_inc = max(on3["incidences/pt"], on4["incidences/pt"]) / \
+        min(on3["incidences/pt"], on4["incidences/pt"])
+    assert by_count < 1.1 < 2.0 < by_inc          # the onset travels in count
+    cco = max(co3["gadgets/pt"], co4["gadgets/pt"]) / \
+        min(co3["gadgets/pt"], co4["gadgets/pt"])
+    cin = max(co3["incidences/pt"], co4["incidences/pt"]) / \
+        min(co3["incidences/pt"], co4["incidences/pt"])
+    assert cin < cco                              # the collapse does not
+    # the incidence reading is the count times the gadget size
+    assert abs(on3["incidences/pt"] / on3["gadgets/pt"] - 3) < 0.05
+    assert abs(on4["incidences/pt"] / on4["gadgets/pt"] - 7) < 0.05
+    # and the demand it implies
+    assert 1 / 0.155 < 6.5
+    assert (509 - 1 / 0.155) / 509 > 0.987

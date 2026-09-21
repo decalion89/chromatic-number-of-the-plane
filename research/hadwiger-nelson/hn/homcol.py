@@ -7028,6 +7028,67 @@ THE_OBSTRUCTION_IS_AN_OVERLAP_INVARIANT = {
 }
 
 
+# Which unit the threshold travels in, settled by a third level.
+#
+# The overlap invariant turns everything into one number, and the number
+# depended on a choice no argument could settle: does the rigidity threshold
+# travel in GADGETS per point or in vertex INCIDENCES per point?  At four
+# colours those are 0.161 and 1.13, and carried to a 509-vertex gadget they
+# differ by 143 -- the first demanding 98.8 per cent overlap and the second
+# only Sa's own 75 per cent.
+#
+# Three colours decides it.  There the critical gadget is the TRIANGLE, three
+# vertices, and a triangular lattice patch is saturated with them.  Peeling one
+# and censusing the same seven points:
+#
+#                        gadgets/pt   incidences/pt   census
+#     k = 3, leaves the ceiling   0.150        0.450    284 of 365
+#     k = 4, leaves the ceiling   0.161        1.13     577 of 715
+#
+#     k = 3, collapses            1.092        3.277      1 of 365
+#     k = 4, collapses            0.574        4.02      10 of 715
+#
+# The ONSET travels in gadget count: 0.150 against 0.161, seven per cent apart,
+# where the incidence reading differs by a factor of 2.5.  The COLLAPSE goes
+# the other way -- 3.277 against 4.02 in incidences, 23 per cent, against a
+# factor of 1.9 in count.  Both are reported; the onset is the one that matters
+# for whether rigidity appears at all, and it is the harder verdict.
+#
+# So: about 0.155 critical subgraphs per point to get any rigidity, which for a
+# 509-vertex gadget is at most 6.5 new points per copy and 98.7 per cent
+# overlap.  Two levels agree on it rather than one assuming it.
+THE_THRESHOLD_TRAVELS_IN_GADGET_COUNT = {
+    "the open choice": "gadgets per point or vertex incidences per point; "
+                       "they differ by the gadget size, 143 at five colours",
+    "three colours": {"gadget": "triangle, 3 vertices",
+                      "leaves the ceiling": {"gadgets/pt": 0.150,
+                                             "incidences/pt": 0.450,
+                                             "census": "284 of 365"},
+                      "collapses": {"gadgets/pt": 1.092,
+                                    "incidences/pt": 3.277,
+                                    "census": "1 of 365"}},
+    "four colours": {"gadget": "Moser spindle, 7 vertices",
+                     "leaves the ceiling": {"gadgets/pt": 0.161,
+                                            "incidences/pt": 1.13,
+                                            "census": "577 of 715"},
+                     "collapses": {"gadgets/pt": 0.574,
+                                   "incidences/pt": 4.02,
+                                   "census": "10 of 715"}},
+    "the onset travels in COUNT": "0.150 against 0.161, seven per cent apart, "
+                                  "where incidences differ by 2.5",
+    "the collapse travels in INCIDENCES": "3.277 against 4.02, 23 per cent, "
+                                          "where counts differ by 1.9",
+    "which matters": "the onset, since it decides whether rigidity appears at "
+                     "all -- and it is the harder verdict",
+    "so": "about 0.155 critical subgraphs per point, which for a 509-vertex "
+          "gadget is at most 6.5 new points per copy and 98.7 per cent "
+          "overlap",
+    "caveat": "two levels, not three; the collapse thresholds disagree about "
+              "the unit and are recorded doing so",
+}
+
+
+
 
 
 

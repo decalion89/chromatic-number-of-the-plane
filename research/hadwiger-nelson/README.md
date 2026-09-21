@@ -5110,6 +5110,28 @@ So the demand is this: to reach the threshold with a 509-vertex gadget, each
 copy may contribute **at most six new points** — 98.8 % of every gadget must
 already be in the graph. `G`'s translates contribute **1336**.
 
+That demand rested on a choice no argument settles: does the threshold travel
+in **gadgets** per point (0.161) or in vertex **incidences** per point (1.13)?
+Carried to a 509-vertex gadget those differ by 143 — the first demanding 98.8 %
+overlap, the second only `Sa`'s own 75 %. A third level decides it. At three
+colours the critical gadget is the **triangle**, and a peeled lattice patch
+gives:
+
+| | gadgets/pt | incidences/pt | census |
+|---|---:|---:|---|
+| `k=3`, leaves the ceiling | **0.150** | 0.450 | 284 of 365 |
+| `k=4`, leaves the ceiling | **0.161** | 1.13 | 577 of 715 |
+| `k=3`, collapses | 1.092 | **3.277** | 1 of 365 |
+| `k=4`, collapses | 0.574 | **4.02** | 10 of 715 |
+
+The **onset** travels in gadget count — 0.150 against 0.161, seven per cent
+apart, where the incidence reading differs by a factor of 2.5. The **collapse**
+goes the other way. Both are reported; the onset is what decides whether
+rigidity appears at all, and it is the harder verdict. So ≈ **0.155 critical
+subgraphs per point**, which for a 509-vertex gadget means at most 6.5 new
+points per copy and **98.7 % overlap** — now supported by two levels rather
+than assumed from one.
+
 
 ## Honest odds
 
