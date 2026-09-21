@@ -2486,3 +2486,35 @@ def test_the_two_extrapolations_disagree_by_two_orders():
     small = T["by_forcer"]["points_needed"]
     assert 70 < big / small < 90
     assert small > 55345, "both are past anything built here"
+
+
+def test_single_distance_lattice_graphs_are_always_bipartite():
+    """The fact that disqualifies the Erdos direction, and qualifies the metric.
+
+    dx^2 + dy^2 = r forces dx + dy = r (mod 2).  For odd r exactly one of
+    dx, dy is odd, so every edge flips the parity of i + j; for r = 2 mod 4
+    both are odd, so every edge flips the parity of i; and r = 0 mod 4 is a
+    scaled copy.  A parity is a proper 2-colouring each time.
+
+    So the integer lattice at a single squared distance is bipartite however
+    large its degree -- and one of these graphs scores 26.4 on the correlation
+    ratio at five colours.  The ratio measures local correlation, not
+    proximity to forcing.
+    """
+    from hn.homcol import SINGLE_DISTANCE_LATTICES_ARE_BIPARTITE as B
+
+    for r in (25, 65, 325, 1105, 2210, 2900, 2650, 50, 98, 200):
+        lim = int(r ** 0.5) + 1
+        reps = [(dx, dy) for dx in range(-lim, lim + 1)
+                for dy in range(-lim, lim + 1)
+                if dx * dx + dy * dy == r and (dx, dy) > (0, 0)]
+        assert reps, r
+        if r % 2 == 1:
+            assert all((dx + dy) % 2 == 1 for dx, dy in reps), r
+        elif r % 4 == 2:
+            assert all(dx % 2 == 1 and dy % 2 == 1 for dx, dy in reps), r
+        else:
+            assert all(dx % 2 == 0 and dy % 2 == 0 for dx, dy in reps), r
+
+    assert set(B["checked"].values()) == {2}
+    assert B["up_to"]["degree"] > 19

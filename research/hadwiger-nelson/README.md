@@ -4063,6 +4063,39 @@ What they agree on is the only part worth having: the scale is somewhere
 between a hundred thousand and ten million points. Everything built in this
 session tops out at 55 345.
 
+## The correlation ratio is not a proximity-to-forcing metric
+
+Breaking the degree ceiling looked like the way out. `Sa`'s family tops out
+near degree 11, and Erdős's lattice — the integer grid scaled by `1/√r`, where
+two points are at distance 1 exactly when `dx² + dy² = r`, so the degree is
+`r₂(r)` and is chosen by arithmetic — reaches 17.6 easily. At five colours it
+scores **8.7, 12.7, 26.4** where `G` at comparable degree scores 1.1.
+
+They are all **2-chromatic**, and not by accident.
+
+> `dx² + dy² = r` forces `dx + dy ≡ r (mod 2)`. For **odd `r`** exactly one of
+> `dx`, `dy` is odd, so every edge flips the parity of `i + j`. For
+> **`r ≡ 2 (mod 4)`** both are odd, so every edge flips the parity of `i`. And
+> `r ≡ 0 (mod 4)` is a scaled copy. A parity is a proper 2-colouring every
+> time — **the integer lattice at a single squared distance is always
+> bipartite**, however large its degree.
+
+Confirmed on eight values of `r` up to degree 19.5 and 25 281 points: `χ = 2`
+throughout, including the four with even-parity representations that looked
+like they should break it.
+
+So a graph can score **26.4** at five colours and be incapable of forcing
+anything whatsoever. The ratio measures *local correlation*, which rises with
+degree in any graph at all; it does **not** measure proximity to forcing.
+
+> **This qualifies much of what is above.** The ladder, the degree curve and
+> the gadget table all describe that weaker quantity, and the two were run
+> together without being separated. What is unaffected is everything verified
+> rather than sampled: `G`'s colour relation at five colours is exactly its
+> edge set — all 6502 candidates put to the solver, every one free — and `Y`
+> remains the only graph here with a forced-*same* pair, which is what the
+> spindle actually needs.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

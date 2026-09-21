@@ -5532,3 +5532,60 @@ THE_FLAT_CURVE_WAS_A_FAMILY_ARTEFACT = {
                                           "any forced-same candidates: eight, "
                                           "one of them genuinely forced.",
 }
+
+
+# Every single-distance lattice graph is bipartite, and that disqualifies the
+# whole Erdos direction -- and qualifies the metric that led me into it.
+#
+# The lattice graphs scored 8.7, 12.7 and 26.4 at FIVE colours where de Grey's
+# family scores 1.1, which looked like the five-colour curve rising once the
+# degree ceiling was lifted.  They are all 2-chromatic.
+#
+# It is not an accident of the r chosen.  dx^2 + dy^2 = r gives
+# dx + dy = r (mod 2), so:
+#
+#     r odd          exactly one of dx, dy is odd, so every edge flips the
+#                    parity of i + j
+#     r = 2 mod 4    dx and dy are both odd, so every edge flips the parity
+#                    of i alone
+#     r = 0 mod 4    a scaled copy of r/4
+#
+# In every case a parity is a proper 2-colouring.  The unit-distance graph of
+# the integer lattice at a single squared distance is ALWAYS bipartite, and
+# four r values with even-parity representations -- 2210, 2900, 2890, 2650, up
+# to degree 19.5 and 25281 points -- confirm it: chi = 2 throughout.
+#
+# So a graph can score twenty-six on the correlation ratio at five colours and
+# be incapable of forcing anything whatsoever, having chromatic number two.
+# The ratio measures LOCAL correlation, which rises with degree in any graph
+# at all; it does not measure proximity to forcing.  Everything in this file
+# built on it -- the ladder, the degree curve, the gadget table -- describes
+# that weaker quantity, and the two were run together without being separated.
+#
+# What is not affected is the part that was verified rather than sampled: the
+# forced-same and forced-different counts, every candidate put to the solver.
+# G's relation at five colours being exactly its edge set is a fact about
+# forcing and stands.  Y remains the only graph here with a forced-same pair.
+SINGLE_DISTANCE_LATTICES_ARE_BIPARTITE = {
+    "proof": "dx^2 + dy^2 = r gives dx + dy = r mod 2.  r odd: one of dx, dy "
+             "is odd and every edge flips the parity of i + j.  r = 2 mod 4: "
+             "both are odd and every edge flips the parity of i.  r = 0 mod "
+             "4: a scaled copy.  A parity is a proper 2-colouring in each "
+             "case.",
+    "checked": {"25": 2, "65": 2, "325": 2, "1105": 2, "2210": 2, "2900": 2,
+                "2890": 2, "2650": 2},
+    "up_to": {"degree": 19.54, "points": 25281},
+    "what_it_disqualifies": "the Erdos direction entirely -- these graphs "
+                            "cannot force anything, having chromatic number "
+                            "two",
+    "WHAT_IT_QUALIFIES": "the correlation ratio itself.  A 2-chromatic graph "
+                         "scores 26.4 at five colours, so the ratio measures "
+                         "local correlation, which rises with degree in any "
+                         "graph, and NOT proximity to forcing.  The ladder, "
+                         "the degree curve and the gadget table all describe "
+                         "that weaker quantity.",
+    "what_stands": "everything verified rather than sampled.  G's colour "
+                   "relation at five colours is exactly its edge set -- all "
+                   "6502 candidates put to the solver, every one free -- and "
+                   "Y remains the only graph here with a forced-same pair.",
+}
