@@ -7605,6 +7605,44 @@ COST_IS_NOT_EVIDENCE_A_THIRD_TIME = {
 }
 
 
+# Cap-test on BALLS, not on the whole graph: the sound direction is the cheap
+# one.
+#
+# Screening a ring on a full universe costs minutes because the whole graph has
+# to be coloured, and it does not have to be.  A cap is "this ring cannot show
+# all k colours", and that property travels UPWARD: any colouring of a
+# supergraph restricts to a subgraph, so a ball around the ring that already
+# cannot show them proves that nothing containing it can either.
+#
+# So the search becomes local where it can be.  Take the ring, grow a ball
+# inside the universe, test there.  A positive transfers to the full graph and
+# to every supergraph of it; a negative on a ball says nothing and just means
+# growing the ball.  Each test is seconds rather than minutes.
+#
+# The gain is not only speed.  The full-graph screen could only afford one
+# centre -- the origin -- so every ring about every other vertex went unasked.
+# The ball screen runs forty centres, and at four colours it finds caps at
+# centres 25, 26, 27, 28, 29 on rings D = 4/9 and D = 16/9 that the
+# origin-only scan never reached, alongside the origin's own D = 4 and 16/9.
+#
+# It is the same asymmetry that makes racing a solver worthwhile, used on the
+# other axis: do the cheap test that can only say yes.
+CAP_TEST_ON_BALLS = {
+    "why it is sound": "a cap travels upward -- a colouring of a supergraph "
+                       "restricts, so a ball that cannot show all k colours "
+                       "proves nothing containing it can",
+    "cost": "seconds per ring against minutes for a full-graph screen",
+    "what it buys beyond speed": "the full screen could afford one centre, "
+                                 "the origin; the ball screen runs forty",
+    "calibration at four colours": "caps found at centres 25 to 29 on rings "
+                                   "D = 4/9 and D = 16/9, which an "
+                                   "origin-only scan never reached, alongside "
+                                   "the origin's own D = 4 and D = 16/9",
+    "the asymmetry": "do the cheap test that can only say yes",
+}
+
+
+
 
 
 
