@@ -7024,3 +7024,49 @@ THE_OBSTRUCTION_FITS_IN_SIXTY_THREE_VERTICES = {
                      "coordinates, the unit edges among them, and the "
                      "forbidden pairs",
 }
+
+
+# The spindle does not consume a disjunction, confirmed by building it.
+#
+# The witness says one of 161 pairs is monochromatic in every 5-colouring.
+# Turning that into chi >= 6 by argument needs the disjunction consumed, and
+# the objection to the two-copy spindle is that a rotated copy is free to have
+# a DIFFERENT pair of the list monochromatic, so no contradiction closes.
+# That was an objection, not a measurement.
+#
+# The witness is small enough to settle it by construction.  For each
+# forbidden pair (a, b) at squared distance D, take the spindle rotation for D
+# about the end a -- checked: it moves the far end by exactly 1 in all five
+# classes -- and union the witness with every one of those copies:
+#
+#     class 15/16     1 copy    125 points     5-colourable
+#     class 17/2     10 copies  621            5-colourable
+#     class 16       12 copies  771            5-colourable
+#     class 9        30 copies 1675            5-colourable
+#     class 7       108 copies 2423            5-colourable
+#     all five      161 copies 5363 points, 13716 edges, 5-COLOURABLE
+#
+# So the objection is right and now it is measured: 161 spindle copies of a
+# graph whose disjunction is irreducible still colour with five.  On G this
+# could not have been tried -- 161 copies of 1581 points is a quarter of a
+# million -- and it is the 63-point witness that makes it one SAT call.
+SPINDLING_A_DISJUNCTION_DOES_NOT_WORK = {
+    "the hypothesis": "one of 161 pairs is monochromatic in every "
+                      "5-colouring",
+    "the objection": "a rotated copy may have a different pair of the list "
+                     "monochromatic, so no contradiction closes",
+    "built anyway": {"15/16": {"copies": 1, "points": 125},
+                     "17/2": {"copies": 10, "points": 621},
+                     "16": {"copies": 12, "points": 771},
+                     "9": {"copies": 30, "points": 1675},
+                     "7": {"copies": 108, "points": 2423},
+                     "all five": {"copies": 161, "points": 5363,
+                                  "edges": 13716}},
+    "every one": "5-colourable",
+    "the rotations are right": "the far end moves by exactly 1 in all five "
+                               "classes, checked",
+    "why it was affordable": "161 copies of the 63-point witness is 5363 "
+                             "points; of G it would have been a quarter of a "
+                             "million",
+    "so": "the objection is not just an objection -- the construction colours",
+}

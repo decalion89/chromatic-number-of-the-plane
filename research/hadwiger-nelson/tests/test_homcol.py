@@ -3277,3 +3277,14 @@ def test_the_witness_is_small_and_its_counts_agree():
         k: v for k, v in doc["classes"].items() if v}
     # the unit-distance graph alone is sparse; the pairs are what bite
     assert len(doc["unit_edges"]) < 3 * len(doc["points"])
+
+
+def test_spindling_a_disjunction_was_built_and_colours():
+    c = hn.homcol.SPINDLING_A_DISJUNCTION_DOES_NOT_WORK
+    built = c["built anyway"]
+    # the copies add up across the classes
+    assert sum(v["copies"] for kk, v in built.items() if kk != "all five") \
+        == built["all five"]["copies"] == 161
+    assert c["every one"] == "5-colourable"
+    # and the rotations were checked, not assumed
+    assert "moves by exactly 1" in c["the rotations are right"]
