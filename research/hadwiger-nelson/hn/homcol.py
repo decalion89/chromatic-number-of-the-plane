@@ -7234,6 +7234,53 @@ DE_GREYS_BITE_LOOKS_UNIQUE = {
 }
 
 
+# How rare is a seed that caps?  Exactly one in 2^39, and not by sampling.
+#
+# Sa is the dihedral closure of a 39-point seed and the construction rests on
+# that closure having a capped ring.  De Grey found the seed by search, and how
+# large a search that was is the only guide to the size of one a level up.
+#
+# The first attempt at measuring it was invalid and worth recording as such.
+# It drew random seeds from the 253 points within three unit steps of the
+# origin and reported zero of four hundred -- but only FOUR of de Grey's
+# thirty-nine points lie in that set.  His seed sits at radii 0.168, 0.264,
+# 0.292, 0.333 and upward, inside the unit disc, where unit walks do not
+# reach.  A universe that cannot contain the answer measures nothing.
+#
+# Drawing instead from Sa's own points, which contain S by construction, gives
+# zero again -- and this time the reason is structural rather than a rate.  The
+# closure of a seed depends ONLY on which dihedral orbits it meets, never on
+# which representatives: any point of an orbit closes to the whole orbit.  So
+# the seed is really a choice among 2^39 orbit subsets, and the cap is monotone
+# under adding vertices, so orbit-irreducibility -- none of the 39 droppable --
+# says every proper subset fails.
+#
+# Exactly ONE of the 2^39 orbit subsets caps, and it is the full one.  De
+# Grey's seed is a transversal: 39 points meeting all 39 orbits, one each,
+# which is what calling it a fundamental domain means precisely.  A random
+# 39-subset of Sa meets between 19 and 32 orbits and never 39 in three
+# thousand draws, which is why the sampling reads zero and why the reading is
+# uninformative on its own.
+A_CAPPING_SEED_IS_ONE_IN_TWO_TO_THE_39 = {
+    "the invalid first attempt": "random seeds from the 253 points within "
+                                 "three unit steps; only 4 of de Grey's 39 "
+                                 "lie there, so zero of four hundred measured "
+                                 "the wrong space",
+    "why his seed is not there": "it sits at radii 0.168 to 0.45, inside the "
+                                 "unit disc, where unit walks do not reach",
+    "the structural answer": "a closure depends only on which of the 39 "
+                             "dihedral orbits the seed meets, and the cap is "
+                             "monotone, so orbit-irreducibility makes every "
+                             "proper orbit subset fail",
+    "so the count is": "exactly one of 2**39, the full orbit set",
+    "de Grey's seed": "a transversal -- 39 points, 39 orbits, one each",
+    "random 39-subsets of Sa": {"orbits met": "19 to 32", "all 39": "0 of 3000"},
+    "what sampling could ever have shown": "nothing, since a random subset "
+                                           "never reaches the full closure",
+}
+
+
+
 
 
 # G's essentiality, at four times the sample and the same answer.

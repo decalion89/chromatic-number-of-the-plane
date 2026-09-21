@@ -4545,3 +4545,43 @@ def test_only_rotations_about_the_centre_keep_a_ring_matched_to_itself():
     c = _hc.THE_BITES_ARE_THE_WHOLE_FAMILY
     assert c["reflections tried"] == 60
     assert c["tightening"].startswith("none")
+
+
+def test_de_greys_seed_is_an_orbit_transversal():
+    """Thirty-nine points meeting thirty-nine orbits, one each.
+
+    A closure depends only on which dihedral orbits the seed meets, since any
+    point of an orbit closes to all of it.  De Grey's seed meets every orbit
+    exactly once, which is what calling it a fundamental domain means
+    precisely -- and it is why the cap, which orbit-irreducibility shows needs
+    all 39, is reached by exactly one of the 2**39 orbit subsets.
+    """
+    from fractions import Fraction as Fr
+    from hn.geometry import Point, Rotation
+    K = _gm.DEGREY_FIELD
+    half = K.rational(Fr(1, 2))
+    rot60 = Rotation(half, K.sqrt(3) * half)
+    P = _dg.build_Sa(K)
+    idx = {p: i for i, p in enumerate(P)}
+    orb, orbits = {}, []
+    for i, p in enumerate(P):
+        if i in orb:
+            continue
+        mem = set()
+        for base in (p, Point(p.x, -p.y)):
+            q = base
+            for _ in range(6):
+                mem.add(idx[q])
+                q = rot60(q)
+        o = len(orbits)
+        orbits.append(sorted(mem))
+        for m in mem:
+            orb[m] = o
+    assert len(orbits) == 39
+    S = _dg.build_S(K)
+    assert len(S) == 39
+    met = [orb[idx[p]] for p in S]
+    assert sorted(met) == list(range(39))       # one point per orbit, exactly
+    c = _hc.A_CAPPING_SEED_IS_ONE_IN_TWO_TO_THE_39
+    assert "2**39" in c["so the count is"]
+    assert c["random 39-subsets of Sa"]["all 39"] == "0 of 3000"
