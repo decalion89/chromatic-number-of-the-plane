@@ -6354,6 +6354,50 @@ THE_CENTRE_IS_NEVER_ALONE = {
 }
 
 
+# The census as a comparable number, and the wall it draws.
+#
+# Seven points -- a centre and six ring points, three antipodal pairs -- give
+# the same 715 patterns whatever the graph, so the count can be put side by
+# side across everything built here.  It is the quantity the bite consumes,
+# and it has the gradient the palette bound and the gateway lack.
+#
+#     graph                      k = 4          k = 5
+#     Sa, 397 points             10 of 715      855 of 855
+#     D12 closure of S, 793      67 of 715      855 of 855
+#     Y, 791 (after the bite)     7 of 715      855 of 855
+#     D12 closure of Y, 2377        --          855 of 855
+#     G, 1581                       --          855 of 855
+#
+# Two readings.  The bite TIGHTENS: 10 to 7, which is the derivation showing
+# up as a number.  And doubling the symmetry group LOOSENS -- 10 to 67 -- so
+# the larger dihedral closure, which looked like the obvious unexplored
+# direction, moves away from the target rather than towards it.
+#
+# At five colours every object scores 855 of 855, with the centre alone in
+# exactly 187 of them: dead flat, identical across a 397-point graph and a
+# 2377-point one.  Nothing in this family has any joint rigidity at five.
+#
+# The cost is itself a reading: a rigid graph is EXPENSIVE to census, because
+# the eliminated patterns are the unsatisfiable calls.  Sa at four took twenty
+# seconds and Y two hundred; every census at five was instant.
+THE_CENSUS_IS_THE_COMPARABLE_NUMBER = {
+    "what is counted": "patterns of a centre and six ring points forming "
+                       "three antipodal pairs, 715 of them at four colours "
+                       "and 855 at five",
+    "at four colours": {"Sa": 10, "D12 closure of S": 67, "Y": 7},
+    "at five colours": {"Sa": 855, "D12 closure of S": 855, "Y": 855,
+                        "D12 closure of Y": 855, "G": 855,
+                        "out of": 855, "centre alone in": 187},
+    "the bite tightens": "10 -> 7, the derivation as a number",
+    "the larger group loosens": "10 -> 67, so doubling the dihedral closure "
+                                "moves away from the target",
+    "cost is a reading": "eliminated patterns are the UNSAT calls, so rigid "
+                         "graphs are slow to census and loose ones instant; "
+                         "every census at five was instant",
+}
+
+
+
 
 
 THE_WEAK_PROPERTY_IS_THE_GATEWAY = {

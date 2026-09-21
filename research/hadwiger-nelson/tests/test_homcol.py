@@ -3771,3 +3771,34 @@ def test_the_bite_is_a_finite_elimination_on_ten_shapes():
         # and then every antipodal pair is inside one class or the other
         for x, y in ANTI:
             assert (x in A) == (y in A)
+
+
+def test_the_census_numbers_are_consistent_with_each_other():
+    """The recorded census table, checked for internal agreement.
+
+    715 patterns of seven things into at most four blocks and 855 into at most
+    five are arithmetic, not measurement, so they can be recomputed; and the
+    five-colour row must be the full count, which is what "dead flat" means.
+    """
+    def partitions(seq):
+        if not seq:
+            yield []
+            return
+        first, rest = seq[0], seq[1:]
+        for p in partitions(rest):
+            for i in range(len(p)):
+                yield p[:i] + [[first] + p[i]] + p[i + 1:]
+            yield [[first]] + p
+
+    allp = list(partitions(list(range(7))))
+    assert sum(1 for p in allp if len(p) <= 4) == 715
+    assert sum(1 for p in allp if len(p) <= 5) == 855
+    # the centre is position 0; "centre alone" counts patterns with {0} a block
+    assert sum(1 for p in allp if len(p) <= 5 and [0] in p) == 187
+    c = _hc.THE_CENSUS_IS_THE_COMPARABLE_NUMBER
+    assert c["at five colours"]["out of"] == 855
+    assert c["at five colours"]["centre alone in"] == 187
+    assert all(v == 855 for k, v in c["at five colours"].items()
+               if k not in ("out of", "centre alone in"))
+    assert c["at four colours"]["Y"] < c["at four colours"]["Sa"]
+    assert c["at four colours"]["D12 closure of S"] > c["at four colours"]["Sa"]
