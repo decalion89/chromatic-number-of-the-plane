@@ -3065,3 +3065,18 @@ def test_the_growth_never_moved_chi():
     assert all(v["chi"] == 4 for _, v in rows)
     # density more than doubled its margin over the family without chi moving
     assert rows[-1][1]["density"] - rows[0][1]["density"] > 1.5
+
+
+def test_improving_the_seed_buys_nothing_at_five():
+    c = hn.homcol.THE_GROWN_SEED_CARRIES_MORE
+    # better at four
+    assert len(c["weak property at four, grown seed (541 points)"]) > len(
+        c["weak property at four, Sa"])
+    # nothing at five, by two independent methods
+    five = c["what it is not"]
+    assert "0 of the 10 smallest" in five
+    assert "LANDS on seven of the fourteen" in five
+    assert "landing proves colourable" in five
+    # and the conclusion drawn is the decoupling, not a bigger seed
+    assert "buys NOTHING at" in c["which decouples the levels"]
+    assert "not a deficiency of the seed" in c["which decouples the levels"]

@@ -6717,6 +6717,16 @@ THE_GROWN_SEED_CARRIES_MORE = {
                                           "failed attempt to make it bigger",
     "what it is": "the first construction here that improves the SEED rather "
                   "than rearranging what the seed produces",
-    "what it is not": "a five-colour result -- the property at five is a "
-                      "separate question and is being measured",
+    "what it is not": "a five-colour result.  Measured, two independent ways: "
+                      "CDCL finds 0 of the 10 smallest closable classes "
+                      "carrying the property at five, and the calibrated "
+                      "TabuCol LANDS on seven of the fourteen classes in "
+                      "under a second each -- landing proves colourable.  Sa "
+                      "carries nothing at five and so does the grown seed.",
+    "which decouples the levels": "the seed can be improved at four colours, "
+                                  "measurably and while keeping de Grey's own "
+                                  "statement intact, and it buys NOTHING at "
+                                  "five.  Whatever the barrier at five is, it "
+                                  "is not a deficiency of the seed that "
+                                  "better seed-building fixes.",
 }

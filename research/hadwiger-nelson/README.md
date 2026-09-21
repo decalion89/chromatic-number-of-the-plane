@@ -4557,6 +4557,44 @@ So what `Sa` is doing is not density. It is the **seed**: de Grey's 39 points ar
 chosen, and choosing a seed for density makes the closure worse. That is the
 honest residue of this stretch — the measurements stand, the framing does not.
 
+## The seed can be improved, and it buys nothing at five
+
+Greedy growth from `Sa`, keeping the D6 symmetry, runs 397 points at 4.97 edges
+per vertex out to **853 at 6.77** — the densest symmetric graph here, past the
+whole family at 4.98 and past its densest dihedral closure at 5.42 — with χ
+staying at 4 throughout. Density alone has already been shown not to matter, so
+the question is what growth does to the **weak property**, and either answer was
+worth having: destroying it would have said the seed's power is fragile and
+hand-chosen.
+
+It does not destroy it. The grown seed at 541 points carries the property at
+four colours on **five** closable classes where `Sa` carries four:
+
+| class | pairs | |
+|---|---|---|
+| `D = 16` | **3** | de Grey's own, the tightest statement — **unchanged** |
+| `D = 20/3` | 102 | **new** — `Sa` does not carry this class |
+| `D = 16/9` | 228 | |
+| `D = 4/9` | 513 | |
+| `D = 4` | 699 | |
+
+So a constructed seed beats a hand-chosen one, keeping everything `Sa` has
+including the three-pair statement de Grey built on. That is the first
+construction here to improve the **seed** rather than rearrange what the seed
+produces.
+
+**And it buys nothing at five.** Measured two independent ways: CDCL finds 0 of
+the 10 smallest closable classes carrying the property, and the calibrated
+TabuCol **lands** on seven of the fourteen classes in under a second each —
+landing proves colourable, which is the one direction local search can prove.
+`Sa` carries nothing at five and neither does the grown seed. The bitten grown
+seed (`rho_4`, 1081 points, 6390 edges) is 4-colourable too.
+
+Which decouples the two levels. The seed can be improved at four colours,
+measurably, while keeping de Grey's own statement intact — and whatever the
+barrier at five is, it is **not** a deficiency of the seed that better
+seed-building fixes.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
