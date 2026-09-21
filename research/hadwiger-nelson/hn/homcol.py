@@ -9277,3 +9277,46 @@ THE_CAP_IS_ABUNDANT_AT_FOUR_AND_ABSENT_AT_FIVE = {
                                          "geometry involved; centre+ring is k",
     "so the gap is not one of degree": "abundant at four, absent at five",
 }
+
+
+# de Grey's first step, derived from nothing but a scan.
+#
+# Taking Sa -- 397 points, 4-chromatic, his symmetric seed closure -- and
+# asking, for every vertex as a centre and every same-distance class about it,
+# how many colours the class can show and how many the class and its centre
+# can show between them, on the whole graph and with no radius filter:
+#
+#   centre 0, D = 4, six points, palette 2, centre+ring 2
+#
+# That is his lemma, at full strength, with the number he uses: a centre
+# together with its radius-2 hexagon takes at most TWO colours out of four.
+# The six points are the order-twelve orbit of (2, 0).  And the bite that ring
+# admits is cos 7/8, sin sqrt15/8 -- which is Sb, the rotation by 2*arcsin(1/4)
+# that turns Sa into Y.  The cap and the bite are the same ring seen twice.
+#
+# The proof is not cheap even at this size: the five other rings about the
+# origin answer in tenths of a second because they are satisfiable, and the
+# capped one takes 154 seconds of unsatisfiability on 397 points.  Which is
+# also the reason a negative from these scans is sound rather than a timeout:
+# the scans return quickly precisely when a colouring showing all k colours
+# exists, and slowly only when none does.
+#
+# The same scan on G at five colours -- all 1581 centres, every radius, whole
+# graph -- returns nothing at all.  Not a shallow cap, not one ring.
+SA_IS_CAPPED_AT_ITS_OWN_BITE_RADIUS = {
+    "Sa at four colours": {"centre": 0, "D": "4 (radius 2)", "points": 6,
+                           "ring palette": 2, "centre+ring palette": 2,
+                           "which is": "de Grey's lemma, at his own number"},
+    "the bite that ring admits": "cos 7/8, sin sqrt15/8 -- exactly Sb",
+    "so cap and bite are one ring": "the hexagon that is held to two colours "
+                                    "is the hexagon the rotation stitches",
+    "cost of the proof": "154s unsatisfiable on 397 points; the five "
+                         "uncapped rings about the same centre answer in "
+                         "tenths of a second",
+    "why that makes the negatives sound": "these scans are fast exactly when "
+                                          "a colouring exists, so a quick "
+                                          "'uncapped' is an answer, not a "
+                                          "timeout",
+    "G at five colours, same scan": "1581 centres, every radius, whole graph, "
+                                    "0 capped rings at any depth",
+}
