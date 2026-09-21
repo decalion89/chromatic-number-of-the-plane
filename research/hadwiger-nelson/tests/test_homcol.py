@@ -4334,3 +4334,27 @@ def test_no_vertex_of_Sa_is_essential_and_the_reason_is_a_count():
     assert c["Sa's zero is a proof"]["spindles"] == 228
     assert c["Sa's zero is a proof"]["busiest vertex lies in"] == 72
     assert c["essential vertices"]["G at k=4"] == "42 of 60"
+
+
+def test_the_packing_estimate_is_not_an_independent_route():
+    """The agreement was guaranteed, so it confirms nothing.
+
+    Packing density looked like a second derivation of the carrier size: 228
+    spindles of seven vertices in 397 points is four incidences per point, so
+    the same packing with 509-vertex gadgets gives 228 * 509 / 4.  But
+    228 * 509 / (228 * 7 / 397) is 509 * 397 / 7 identically -- the spindle
+    count cancels, whatever it is.  Checked symbolically here by varying it.
+    """
+    from fractions import Fraction as Fr
+
+    def packing(spindles, gadget=509, carrier=397, unit=7):
+        return Fr(spindles * gadget, 1) / Fr(spindles * unit, carrier)
+
+    base = packing(228)
+    for s in (1, 7, 228, 999, 100000):
+        assert packing(s) == base, s          # independent of the count
+    assert base == Fr(509 * 397, 7)
+    assert abs(float(base) - round(397 / 7) * 509) / float(base) < 0.05
+    c = _hc.REDUNDANCY_IS_THE_GLOBAL_QUANTITY
+    assert "NOT a second route" in "".join(c)
+    assert "cancels" in c["the size it implies is NOT a second route"]

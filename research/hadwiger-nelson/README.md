@@ -5044,6 +5044,14 @@ many *independent* `k`-chromatic subgraphs each constrain a colouring and the
 constraints accumulate into a census of ten. `G`'s five-chromaticity is used up
 exactly once, in being five-chromatic at all, and nothing is left over.
 
+> **Withdrawn, immediately.** Packing density looked like an independent
+> confirmation of the size estimate: `Sa` holds 228 spindles of seven vertices
+> in 397 points — four incidences per point — so the same packing with
+> 509-vertex gadgets needs `228 × 509 / 4 ≈ 29 000`, agreeing with
+> `397/7 × 509`. It is not independent. `228 × 509 / (228 × 7 / 397)`
+> simplifies to `509 × 397 / 7`; the spindle count cancels. One identity
+> written twice, and the agreement was guaranteed.
+
 
 ## Honest odds
 

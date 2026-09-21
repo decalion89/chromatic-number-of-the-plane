@@ -6907,6 +6907,13 @@ REDUNDANCY_IS_THE_GLOBAL_QUANTITY = {
     "and that is rigidity": "independent k-chromatic subgraphs each constrain "
                             "a colouring and their constraints accumulate; "
                             "G's is used up in being 5-chromatic at all",
+    "the size it implies is NOT a second route": "Sa packs 228 spindles of "
+        "seven vertices into 397 points, four incidences per point, and the "
+        "same packing with 509-vertex gadgets gives 228 * 509 / 4, about "
+        "29000.  That looked like independent confirmation of the ratio "
+        "estimate and is not: 228 * 509 / (228 * 7 / 397) simplifies to "
+        "509 * 397 / 7 and the spindle count cancels.  It is the same "
+        "identity written twice",
 }
 
 
