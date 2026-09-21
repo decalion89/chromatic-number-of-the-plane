@@ -26,6 +26,7 @@ k = int(sys.argv[1]) if len(sys.argv) > 1 else 5
 PKL = sys.argv[2] if len(sys.argv) > 2 else "pivG.pkl"
 CX = Fr(sys.argv[3]) if len(sys.argv) > 3 else Fr(-2)
 CY = Fr(sys.argv[4]) if len(sys.argv) > 4 else Fr(0)
+AUTO = (len(sys.argv) > 5 and sys.argv[5] == "auto")
 t0 = time.time()
 CLASSES = [1, 3, 5, 7, 11, 15, 21, 33, 35, 55, 77, 105, 165, 231, 385, 1155]
 SC = ("/tmp/claude-0/-home-user-darwin-50/"
@@ -42,8 +43,18 @@ cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
 for a, c in E:
     for col in range(k):
         cls.append([-(1 + a * k + col), -(1 + c * k + col)])
-C = Point(K.rational(CX), K.rational(CY))
-ci = next((i for i, p in enumerate(P) if p == C), None)
+deg = defaultdict(int)
+for _a, _c in E:
+    deg[_a] += 1
+    deg[_c] += 1
+if str(CX) == "0" and str(CY) == "0" and AUTO:
+    ci = max(range(n), key=lambda v: deg[v])
+    C = P[ci]
+    print(f"centre chosen by degree: vertex {ci}, degree {deg[ci]}",
+          flush=True)
+else:
+    C = Point(K.rational(CX), K.rational(CY))
+    ci = next((i for i, p in enumerate(P) if p == C), None)
 rc = b.rows([C])[0]
 dm, D2 = b.dim, b.D * b.D
 d = r - rc
