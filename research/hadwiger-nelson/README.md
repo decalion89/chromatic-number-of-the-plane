@@ -5014,6 +5014,37 @@ is that the five-colour gadget is seventy times larger than the three-colour
 one while the construction's ratio stays fixed.
 
 
+## The global quantity is redundancy
+
+The chain's local statistics do not move, so the gain is global. Asking each
+graph at its **own** number of colours says which global quantity it is —
+criticality is only meaningful at `k = χ − 1`, the colour relation only at
+`k = χ`, and asking either at the wrong `k` measures nothing. (The first
+attempt did exactly that: it asked criticality at `k = 4` on `Sa`, which *is*
+4-colourable, and reported 60 of 60 essential for the empty reason.)
+
+| | vertices essential at `k = χ − 1` |
+|---|---|
+| `Sa` (χ=4) | **0** of 60 — and *provably* zero |
+| `Y` (χ=4) | **0** of 60 — and provably zero |
+| `G` (χ=5) | **42** of 60, measured exactly |
+
+`Sa`'s zero needs no budget and no sampling. It carries 228 Moser spindles and
+its busiest vertex lies in only **72** of them, so deleting any single vertex
+leaves at least 156 intact — and a graph containing a spindle is 4-chromatic.
+`Y` likewise: 452 spindles, busiest vertex in 144, at least 308 survive.
+
+So the two ends of the chain are opposites. `Sa` and `Y` are `k`-chromatic with
+**maximal redundancy** — no vertex matters, because the property is carried
+hundreds of times over. `G` is `k`-chromatic with **none** — the property is
+carried once, by a 5-critical subgraph spanning most of the graph.
+
+That is where rigidity comes from, and it is neither density nor saturation:
+many *independent* `k`-chromatic subgraphs each constrain a colouring and the
+constraints accumulate into a census of ten. `G`'s five-chromaticity is used up
+exactly once, in being five-chromatic at all, and nothing is left over.
+
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

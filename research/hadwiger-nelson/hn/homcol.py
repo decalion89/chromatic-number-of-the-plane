@@ -6859,6 +6859,58 @@ SATURATION_DOES_NOT_DETERMINE_CHI = {
 }
 
 
+# The global quantity that moves is REDUNDANCY, and it is provable on one side.
+#
+# The chain's local statistics do not move, so the gain is global, and asking
+# each graph at its OWN number of colours says which global quantity it is.
+# Criticality is only meaningful at k = chi - 1, and the colour relation only
+# at k = chi; asking either at the wrong k measures nothing, which the first
+# attempt at this did -- it reported 60 of 60 essential for Sa at four colours,
+# where Sa is 4-colourable and every vertex is trivially "essential".
+#
+#                 vertices essential at k = chi - 1
+#     Sa  (chi=4)      0 of 60 sampled -- and PROVABLY zero
+#     Y   (chi=4)      0 of 60 sampled -- and provably zero
+#     G   (chi=5)     42 of 60 measured exactly
+#
+# Sa's zero needs no budget and no sampling.  It carries 228 Moser spindles and
+# its busiest vertex lies in only 72 of them, so deleting any single vertex
+# leaves at least 156 intact, and a graph containing a spindle is 4-chromatic.
+# Y is the same: 452 spindles, busiest vertex in 144, at least 308 survive.
+#
+# So the two ends of de Grey's chain are opposites.  Sa and Y are k-chromatic
+# with MAXIMAL redundancy -- no vertex matters, because the property is carried
+# hundreds of times over.  G is k-chromatic with NONE -- the property is
+# carried once, by a 5-critical subgraph spanning most of the graph, and most
+# single deletions destroy it.
+#
+# That is where rigidity comes from, and it is not density and not saturation:
+# many INDEPENDENT k-chromatic subgraphs each constrain a colouring, and their
+# constraints accumulate into a census of ten.  G's five-chromaticity is used
+# up exactly once in being five-chromatic, and there is nothing left over to
+# constrain anything.
+REDUNDANCY_IS_THE_GLOBAL_QUANTITY = {
+    "measured at": "k = chi - 1 for criticality, k = chi for the relation; "
+                   "at any other k the question is vacuous",
+    "the first attempt measured nothing": "criticality asked at k = 4 on Sa, "
+                                          "which is 4-colourable, returns 60 "
+                                          "of 60 essential for the empty "
+                                          "reason",
+    "essential vertices": {"Sa at k=3": "0 of 60", "Y at k=3": "0 of 60",
+                           "G at k=4": "42 of 60"},
+    "Sa's zero is a proof": {"spindles": 228, "busiest vertex lies in": 72,
+                             "surviving any deletion": "at least 156"},
+    "Y's zero is a proof": {"spindles": 452, "busiest vertex lies in": 144,
+                            "surviving any deletion": "at least 308"},
+    "so": "Sa and Y are k-chromatic hundreds of times over; G is k-chromatic "
+          "exactly once",
+    "and that is rigidity": "independent k-chromatic subgraphs each constrain "
+                            "a colouring and their constraints accumulate; "
+                            "G's is used up in being 5-chromatic at all",
+}
+
+
+
 
 
 

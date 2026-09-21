@@ -4274,3 +4274,63 @@ def test_the_chain_is_locally_identical_while_chi_rises():
     c = _hc.SATURATION_DOES_NOT_DETERMINE_CHI
     chis = [c["the chain's local statistics"][k]["chi"] for k in ("Sa", "Y", "G")]
     assert chis == [4, 4, 5]
+
+
+def test_no_vertex_of_Sa_is_essential_and_the_reason_is_a_count():
+    """Sa is 4-chromatic hundreds of times over, which needs no solver.
+
+    It carries 228 Moser spindles and its busiest vertex lies in only 72 of
+    them, so deleting any single vertex leaves at least 156 intact — and a
+    graph containing a spindle is 4-chromatic.  So no vertex is essential, by
+    counting rather than by search, and the sampled zero is not a budget
+    artefact.
+    """
+    import numpy as np
+    from collections import Counter
+    K = _gm.DEGREY_FIELD
+    P = _dg.build_Sa(K)
+    b = _ft.IntBasis.covering(P)
+    r = b.rows(P)
+    n = len(P)
+    dm, D2 = b.dim, b.D * b.D
+    E = sorted(set((min(a, c), max(a, c))
+                   for a, c in _ft.fast_edges_complete(b, r)))
+    nb = [set() for _ in range(n)]
+    for a, c in E:
+        nb[a].add(c)
+        nb[c].add(a)
+    per, total = Counter(), 0
+    for i in range(n):
+        dv = r - r[i]
+        s = b._field_square(dv[:, :dm]) + b._field_square(dv[:, dm:])
+        g = s[:, 0] == 3 * D2
+        for m in range(1, dm):
+            g &= s[:, m] == 0
+        far = [int(j) for j in np.nonzero(g)[0]]
+        for a in range(len(far) - 1):
+            for c in range(a + 1, len(far)):
+                x, y = far[a], far[c]
+                if y not in nb[x]:
+                    continue
+                sx, sy = sorted(nb[i] & nb[x]), sorted(nb[i] & nb[y])
+                if len(sx) < 2 or len(sy) < 2:
+                    continue
+                found = None
+                for p in range(len(sx) - 1):
+                    for q in range(p + 1, len(sx)):
+                        for u in range(len(sy) - 1):
+                            for v in range(u + 1, len(sy)):
+                                S = {i, x, y, sx[p], sx[q], sy[u], sy[v]}
+                                if len(S) == 7:
+                                    found = S
+                if found:
+                    total += 1
+                    for z in found:
+                        per[z] += 1
+    assert total == 228
+    assert max(per.values()) == 72
+    assert total - max(per.values()) >= 156      # survive any single deletion
+    c = _hc.REDUNDANCY_IS_THE_GLOBAL_QUANTITY
+    assert c["Sa's zero is a proof"]["spindles"] == 228
+    assert c["Sa's zero is a proof"]["busiest vertex lies in"] == 72
+    assert c["essential vertices"]["G at k=4"] == "42 of 60"
