@@ -3886,9 +3886,21 @@ colours:
 | `Y` | 1.456 | 25.4 |
 
 Monotone end to end, across a lattice, a spindled lattice and thinned copies
-of de Grey's core — three constructions sharing nothing but the count. So the
-claim that `Sa`'s correlation comes from its 576 Moser spindles is a relation
-measured over two orders of magnitude, not a story fitted to two points.
+of de Grey's core.
+
+> **Corrected — the mechanism is confounded.** Thinning removes *edges* along
+> with spindles, and average degree tracks the ratio better than spindle
+> density does: Spearman +0.782 against +0.685, with the two predictors
+> themselves correlated at +0.867. Worse, the data contain a control the first
+> reading walked past. At average degree ≈ 5.6 there are five objects whose
+> spindle density runs 0.000 → 0.534, and their ratios are 2.2, 2.0, 1.5, 1.2,
+> 1.7 — **no trend at all.** At fixed degree, spindles do nothing.
+>
+> What survives is weaker: within a fixed colour count, correlation rises with
+> the density of *constraints*, and edges are the constraints. Across colour
+> counts neither predictor works — `Sa` and `G` have average degrees 9.94 and
+> 9.96 and ratios 24.0 and 1.1. Only the ladder isolates the variable, by
+> holding the graph fixed.
 
 (An aside worth keeping: **`lattice + 1 hinge` is 4-chromatic and contains no
 Moser spindle at all.** The count and the chromatic number are different

@@ -2367,3 +2367,30 @@ def test_criticality_and_correlation_run_opposite():
     assert m["Sa at 4"]["correlation"] > 20 > m["G at 5"]["correlation"]
     assert m["Sa at 4"]["deletions_dropping_chi"].startswith("0")
     assert m["G at 5"]["deletions_dropping_chi"].startswith("19")
+
+
+def test_the_gadget_mechanism_does_not_survive_controlling_for_degree():
+    """The confound, and the control that was already in the data.
+
+    Thinning a graph removes edges along with gadgets, so a table where
+    spindle density and correlation rise together says nothing until degree is
+    held fixed.  Held fixed, the effect disappears: five objects at average
+    degree about 5.6 span spindle densities from 0.000 to 0.534 and their
+    ratios are 2.2, 2.0, 1.5, 1.2 and 1.7, with no trend.
+
+    And across colour counts neither predictor works at all -- Sa and G have
+    average degrees 9.94 and 9.96 and ratios 24.0 and 1.1.
+    """
+    from hn.homcol import THE_GADGET_MECHANISM_IS_CONFOUNDED as C
+
+    # degree, spindles/point, ratio
+    rows = [(5.61, 0.000, 2.2), (5.60, 0.000, 2.0), (5.61, 0.007, 1.5),
+            (5.61, 0.004, 1.2), (5.66, 0.534, 1.7)]
+    assert max(r[0] for r in rows) - min(r[0] for r in rows) < 0.1
+
+    by_spindles = [r[2] for r in sorted(rows, key=lambda r: r[1])]
+    assert by_spindles != sorted(by_spindles), "no trend at fixed degree"
+    assert max(by_spindles) - min(by_spindles) < 1.1
+
+    assert C["spearman"]["degree vs ratio"] > C["spearman"]["spindles vs ratio"]
+    assert C["spearman"]["degree vs spindles"] > 0.85

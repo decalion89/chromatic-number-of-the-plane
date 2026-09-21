@@ -5276,3 +5276,60 @@ LOCALITY_WAS_THE_WRONG_GUESS = {
                "thousand times scarcer than the spindle, and why scarcity "
                "should kill correlation is observed here, not explained.",
 }
+
+
+# CORRECTION: the gadget-density mechanism is confounded with average degree.
+#
+# CORRELATION_TRACKS_GADGET_DENSITY presents ten objects whose Moser-spindle
+# density and correlation ratio rise together, and calls it the mechanism.
+# The table is right and the reading is not, because thinning a graph removes
+# edges as well as spindles, and the two move together throughout:
+#
+#     object              degree   spindles/pt   ratio
+#     triangular lattice    5.61         0.000     2.2
+#     lattice + 1 hinge     5.60         0.000     2.0
+#     lattice + 2 hinges    5.61         0.007     1.5
+#     lattice + 4 hinges    5.61         0.004     1.2
+#     Sa thinned to 0.4     3.84         0.289     1.3
+#     Sa thinned to 0.6     5.66         0.534     1.7
+#     Sa thinned to 0.7     7.14         0.705     2.4
+#     Sa thinned to 0.8     8.11         0.984     5.0
+#     Sa                    9.94         1.451    24.0
+#     Y                     9.96         1.456    25.4
+#
+#     Spearman(degree, ratio)     +0.782
+#     Spearman(spindles, ratio)   +0.685
+#     Spearman(degree, spindles)  +0.867
+#
+# Average degree is the BETTER predictor of the two, and they are themselves
+# correlated at 0.867.  And the data contain a clean control that the original
+# reading walked past: at degree about 5.6 there are five objects whose spindle
+# density runs from 0.000 to 0.534, and their ratios are 2.2, 2.0, 1.5, 1.2
+# and 1.7 -- no trend at all.  At fixed degree, spindles do nothing.
+#
+# What survives is weaker and still worth having.  Within a fixed colour
+# count, correlation rises with the density of constraints, and edges are the
+# constraints; the gadget story is not separated from that by anything
+# measured here.  Across colour counts neither explains it: Sa and G have the
+# same average degree, 9.94 and 9.96, and ratios of 24.0 and 1.1.  The colour
+# count is the one variable the ladder isolates cleanly, by holding the graph
+# fixed -- Sa reads 24.0 at four and 1.2 at five.
+THE_GADGET_MECHANISM_IS_CONFOUNDED = {
+    "CORRECTS": "CORRELATION_TRACKS_GADGET_DENSITY, which read a monotone "
+                "table as a mechanism",
+    "spearman": {"degree vs ratio": 0.782, "spindles vs ratio": 0.685,
+                 "degree vs spindles": 0.867},
+    "the_control_in_the_data": "at degree about 5.6, five objects span "
+                               "spindle densities 0.000 to 0.534 and their "
+                               "ratios are 2.2, 2.0, 1.5, 1.2, 1.7 -- no "
+                               "trend",
+    "what_survives": "within a fixed colour count, correlation rises with the "
+                     "density of constraints, and edges are the constraints.  "
+                     "The gadget story is not separated from that.",
+    "what_still_holds_across_colours": "neither explains it: Sa and G have "
+                                       "average degrees 9.94 and 9.96 and "
+                                       "ratios 24.0 and 1.1.  Only the ladder "
+                                       "isolates the variable, by holding the "
+                                       "graph fixed -- Sa reads 24.0 at four "
+                                       "and 1.2 at five.",
+}
