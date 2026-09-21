@@ -6879,3 +6879,58 @@ NEIGHBOURHOODS_ARE_ALWAYS_BIPARTITE = {
                                    "five-point neighbourhood forced rainbow "
                                    "would win, and nothing is forced past two",
 }
+
+
+# G DOES carry a weak property at five colours -- over five distances, not one.
+#
+# Single classes were tested and all of them colour; the four carrying classes
+# of Sa were tested together and they colour too.  The graded question was
+# never asked of G: forbid the closable classes CUMULATIVELY and count how many
+# it takes.  Twenty-seven, added smallest first.  Minimised by dropping the
+# largest first and keeping every drop that still fails to colour, twenty-seven
+# comes down to FIVE, and they are irreducible:
+#
+#     D = 15/16     1 pair
+#     D = 16       12 pairs
+#     D = 17/2     24 pairs
+#     D = 9        48 pairs
+#     D = 7       144 pairs
+#                 ---
+#                 229 pairs, 2.9% of G's 7877 edges, mean degree 10.0 -> 10.3
+#
+# So: IN EVERY PROPER 5-COLOURING OF G, AT LEAST ONE OF THOSE 229 PAIRS IS
+# MONOCHROMATIC.  That is the first positive statement about G at five colours
+# in this work, and it is not a density artefact -- the forbidden set is under
+# three per cent of the edges and the mean degree barely moves.
+#
+# Verified rather than reported: three solvers (cadical, glucose, minisat) all
+# return UNSAT on the 229-pair formula; each of the five classes dropped in
+# turn lets the graph colour again, so every one is needed; and all 229 pairs
+# were re-derived from the exact coordinates, with all five distances closable,
+# so the statement is about the plane and not about an indexing slip.
+#
+# What it is NOT is de Grey's hypothesis.  His is ONE distance and THREE pairs,
+# which two rotated copies consume.  Five distances and 229 pairs would need a
+# multispindle over five rotation angles and 229 centres, which nothing here
+# builds.  The gap between the levels finally has a figure attached: 1 class
+# and 3 pairs at four colours, 5 classes and 229 pairs at five.
+G_CARRIES_A_WEAK_PROPERTY_AT_FIVE = {
+    "statement": "in every proper 5-colouring of G, at least one of 229 "
+                 "specific pairs is monochromatic",
+    "the classes": {"15/16": 1, "16": 12, "17/2": 24, "9": 48, "7": 144},
+    "total pairs": 229,
+    "as a fraction of G's edges": 0.029,
+    "mean degree": "10.0 -> 10.3, so not a density artefact",
+    "cumulative count before minimising": 27,
+    "irreducible": "each of the five classes dropped in turn lets G colour "
+                   "again",
+    "verified by": ["cadical UNSAT", "glucose UNSAT", "minisat UNSAT",
+                    "all 229 distances re-derived exactly",
+                    "all five distances closable"],
+    "what it is not": "de Grey's hypothesis.  His is ONE distance and THREE "
+                      "pairs, consumed by two rotated copies.  Five distances "
+                      "and 229 pairs need a multispindle over five angles and "
+                      "229 centres, which nothing here builds.",
+    "the gap, quantified": {"Sa at four": "1 class, 3 pairs",
+                            "G at five": "5 classes, 229 pairs"},
+}

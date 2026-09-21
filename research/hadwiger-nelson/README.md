@@ -4641,6 +4641,48 @@ five colours onto a set that is 2-chromatic on its own — and the ceiling of
 thirteen was never the binding constraint, since a five-point neighbourhood
 forced rainbow would win just as well, and nothing here is forced past two.
 
+## G does carry a weak property at five colours — over five distances
+
+Single classes were tested and all of them colour. `Sa`'s four carrying classes
+were tested together and they colour too. The **graded** question was never
+asked of `G`: forbid its closable distance classes *cumulatively* and count how
+many it takes. Twenty-seven, added smallest first. Minimised by dropping the
+largest first and keeping every drop that still fails to colour, twenty-seven
+comes down to **five**, and they are irreducible:
+
+| class | pairs |
+|---|---|
+| `D = 15/16` | **1** |
+| `D = 16` | 12 |
+| `D = 17/2` | 24 |
+| `D = 9` | 48 |
+| `D = 7` | 144 |
+| | **229** |
+
+> **In every proper 5-colouring of `G`, at least one of those 229 pairs is
+> monochromatic.**
+
+That is the first positive statement about `G` at five colours here, and it is
+not a density artefact: 229 pairs is **2.9%** of `G`'s 7877 edges, and the mean
+degree moves from 10.0 to 10.3.
+
+Verified rather than reported. Three solvers — cadical, glucose, minisat — all
+return UNSAT on the 229-pair formula. Each of the five classes, dropped in turn,
+lets the graph colour again, so every one is needed; `D = 15/16` contributes a
+**single pair** and is still necessary. All 229 distances were re-derived from
+the exact coordinates and all five are closable, so the statement is about the
+plane and not about an indexing slip.
+
+What it is **not** is de Grey's hypothesis. His is **one** distance and **three**
+pairs, which two rotated copies consume. Five distances and 229 pairs would need
+a multispindle over five rotation angles and 229 centres, and nothing here builds
+one. But the gap between the levels finally has a figure attached:
+
+| | classes | pairs |
+|---|---|---|
+| `Sa` at four | 1 | 3 |
+| `G` at five | 5 | 229 |
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

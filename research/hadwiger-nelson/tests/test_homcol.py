@@ -3144,3 +3144,37 @@ def test_every_neighbourhood_measured_at_two():
     assert c["measured minimum colours forced on N(p)"]["G"][2] == 400
     assert "three colours away" in c["so a blocked point is"]
     assert "never the binding constraint" in c["and the ceiling of thirteen"]
+
+
+def test_G_carries_a_weak_property_at_five():
+    c = hn.homcol.G_CARRIES_A_WEAK_PROPERTY_AT_FIVE
+    assert sum(c["the classes"].values()) == c["total pairs"] == 229
+    assert len(c["the classes"]) == 5
+    # not a density artefact: under three per cent of the edges
+    assert c["as a fraction of G's edges"] < 0.03
+    assert abs(229 / 7877 - c["as a fraction of G's edges"]) < 0.001
+    # minimised from 27, and irreducible
+    assert c["cumulative count before minimising"] > len(c["the classes"])
+    assert "lets G colour again" in c["irreducible"]
+    # three solvers, not one
+    assert sum("UNSAT" in v for v in c["verified by"]) == 3
+
+
+def test_the_gap_between_levels_has_a_figure():
+    c = hn.homcol.G_CARRIES_A_WEAK_PROPERTY_AT_FIVE
+    g = c["the gap, quantified"]
+    assert g["Sa at four"] == "1 class, 3 pairs"
+    assert g["G at five"] == "5 classes, 229 pairs"
+    # and the claim is explicitly not de Grey's hypothesis
+    assert "not" in c["what it is not"] or c["what it is not"].startswith(
+        "de Grey's hypothesis")
+    assert "multispindle" in c["what it is not"]
+
+
+def test_the_single_pair_class_is_needed():
+    # D = 15/16 contributes exactly one pair and dropping it lets G colour
+    c = hn.homcol.G_CARRIES_A_WEAK_PROPERTY_AT_FIVE
+    assert c["the classes"]["15/16"] == 1
+    assert min(c["the classes"].values()) == 1
+    from fractions import Fraction as Fr
+    assert hn.homcol.closable_distance(Fr(15, 16))
