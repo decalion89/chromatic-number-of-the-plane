@@ -2934,3 +2934,28 @@ def test_density_climbs_with_generator_count():
     for (g1, v1), (g2, v2) in zip(pts, pts[1:]):
         if g2 > g1:
             assert v2 > v1, (g1, v1, g2, v2)
+
+
+def test_the_periodic_colouring_is_a_real_proof_for_two_of_them():
+    c = hn.homcol.TRANSLATION_BUILT_SETS_COLOUR_PERIODICALLY
+    r = c["results"]
+    # the two with a functional are proved 5-colourable outright
+    assert r["rho_4 e<=1"]["phi"] == (1, 0, 0, 0)
+    assert r["rho_4 e<=2"]["phi"] == (1, 0, 0, 0)
+    assert "PROOF" in c["what the first two are"]
+    # the two without are NOT proved anything, and the record says so
+    assert r["rho_3, rho_4"]["phi"] is None
+    assert r["rho_3, rho_4, rho_7"]["phi"] is None
+    # the key is read with its key: "what the last two are NOT" -> "a proof
+    # of anything", and the caveat spells out why
+    assert c["what the last two are NOT"].startswith("a proof of anything")
+    assert "One family is ruled out, not all." in c["what the last two are NOT"]
+    assert "finite-index subgroup" in c["what the last two are NOT"]
+
+
+def test_rank_four_is_searchable_and_rank_eight_was_searched():
+    c = hn.homcol.TRANSLATION_BUILT_SETS_COLOUR_PERIODICALLY["results"]
+    for v in c.values():
+        # the search is over (5^r - 1)/4 functionals up to scaling
+        assert (5 ** v["rank"] - 1) % 4 == 0
+    assert c["rho_3, rho_4"]["rank"] == 8       # 97656 functionals, exhausted

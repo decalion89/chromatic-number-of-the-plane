@@ -6435,3 +6435,60 @@ SUMSETS_BEAT_THE_FAMILY_ON_DENSITY = {
     "generic generators give": "a hypercube, which is bipartite; the relations "
                                "are what make it interesting",
 }
+
+
+# Why every translation-built set here colours, and the two that resist.
+#
+# The k-core said it first: the 8-core of the densest ball built here is 6.63
+# edges per vertex, better than anything else, and the 12-core is EMPTY.  No
+# dense core means locally tree-like, which is a statement about the
+# construction rather than about the plane.
+#
+# The structure is this.  Every point in these constructions -- sumsets,
+# Cayley balls, confined walks -- is an integer combination of fixed vectors,
+# so the point set is a chunk of a finitely generated additive group, a copy
+# of Z^r embedded densely in the plane, and the unit-distance graph on it is a
+# subgraph of the CAYLEY GRAPH of Z^r with the group's unit vectors as
+# generators.
+#
+# A Cayley graph of Z^r is 5-colourable the moment there is a homomorphism
+# phi : Z^r -> Z_5 with phi(u) != 0 for every unit vector u -- colour each
+# point by phi of its coordinates, and adjacent points differ by a unit vector
+# so their colours differ.  That colours the WHOLE INFINITE GROUP, which is
+# stronger than any finite SAT run, and it is why these kept colouring.
+#
+#   rho_4, exponents <= 1     18 unit vectors, rank 4    phi = (1,0,0,0) works
+#   rho_4, exponents <= 2     30 unit vectors, rank 4    the same phi works
+#   rho_3, rho_4              54 unit vectors, rank 8    NO functional works
+#   rho_3, rho_4, rho_7      162 unit vectors, rank 8    NO functional works
+#
+# For the first two that is a proof of 5-colourability, infinite set included.
+# For the last two it closes the simplest escape and no more: a periodic
+# colouring need not come from a homomorphism to Z_5, it need only come from
+# SOME finite-index subgroup and a 5-colouring of the quotient.  So this rules
+# out one family of colourings, not all of them -- which is exactly why those
+# two configurations are now the ones worth pushing.
+TRANSLATION_BUILT_SETS_COLOUR_PERIODICALLY = {
+    "the tell": "the 12-core of the densest ball is empty, so it is locally "
+                "tree-like",
+    "the structure": "every such point set is a chunk of Z^r, so its "
+                     "unit-distance graph is a subgraph of a Cayley graph of "
+                     "Z^r",
+    "the colouring": "phi : Z^r -> Z_5 nonzero on every unit vector colours "
+                     "the whole infinite group",
+    "results": {"rho_4 e<=1": {"units": 18, "rank": 4, "phi": (1, 0, 0, 0)},
+                "rho_4 e<=2": {"units": 30, "rank": 4, "phi": (1, 0, 0, 0)},
+                "rho_3, rho_4": {"units": 54, "rank": 8, "phi": None},
+                "rho_3, rho_4, rho_7": {"units": 162, "rank": 8,
+                                        "phi": None}},
+    "what the first two are": "a PROOF of 5-colourability, infinite set "
+                              "included",
+    "what the last two are NOT": "a proof of anything.  A periodic colouring "
+                                 "need not come from a homomorphism to Z_5 -- "
+                                 "any finite-index subgroup with a "
+                                 "5-colourable quotient will do.  One family "
+                                 "is ruled out, not all.",
+    "why it matters anyway": "it is the first structural filter anything here "
+                             "has passed, and it separates two configurations "
+                             "from the rest",
+}
