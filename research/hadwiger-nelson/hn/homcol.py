@@ -6142,3 +6142,66 @@ FOUR_NINTHS_IS_THE_FAMILYS_DISTANCE = {
                "class behaves unlike the other thirteen or thirty-five, on "
                "five graphs, and that it is the class that carries at four.",
 }
+
+
+# A tool discarded on its calibration, and the one that replaced it.
+#
+# CDCL explodes on both sides of a phase transition, so hours without an answer
+# says the instance is hard and nothing about which way it goes.  Local search
+# is asymmetric -- it lands on satisfiable instances and plateaus on
+# unsatisfiable ones -- so it should settle these quickly.
+#
+# The first attempt picked a RANDOM conflicting vertex each step and moved it
+# to its best colour.  That is not TabuCol.  On "Sa at five with class 4/9
+# forbidden", which cadical proves satisfiable in ten seconds, it left SEVENTY
+# violations, so its readings on the open instances -- 169 conflicts on the
+# four-class case, 102 on the pair -- measured the search and not the problem.
+# They were discarded rather than reported.
+#
+# TabuCol proper evaluates every (conflicting vertex, colour) move each step
+# and takes the best non-tabu one, with tenure proportional to the current
+# conflict count.  That is the whole difference, and it calibrates:
+#
+#   Sa, nothing forbidden, k=5     colouring found in 2s      (known SAT)
+#   Sa, 4/9 forbidden, k=5         colouring found in 3s      (known SAT)
+#   Sa, 4/9 forbidden, k=4         plateaus at 37 conflicts   (known UNSAT)
+#
+# Three checks, two directions, and the UNSAT signature is a plateau well above
+# zero rather than a slow descent.  Only after that is it worth pointing at
+# anything open.
+LOCAL_SEARCH_NEEDED_CALIBRATING = {
+    "the discarded version": {"move": "random conflicting vertex, best colour",
+                              "failed on": "Sa + 4/9 at five, known SAT",
+                              "left": 70,
+                              "its readings on open instances": "discarded"},
+    "TabuCol proper": {"move": "best non-tabu over ALL conflicting vertices "
+                               "and colours",
+                       "tenure": "0.6 x conflict count, plus noise"},
+    "calibration": {"Sa, k=5, nothing forbidden": "SAT in 2s",
+                    "Sa, k=5, 4/9 forbidden": "SAT in 3s",
+                    "Sa, k=4, 4/9 forbidden": "plateau at 37, known UNSAT"},
+    "the lesson": "a search that cannot solve a known-satisfiable instance "
+                  "says nothing about an unknown one",
+}
+
+
+# No easy lower bound: the combined graphs have clique number four.
+#
+# Forbidding a distance class IS adding those pairs as edges, so the weak
+# property is just "is the combined graph k-colourable".  A clique of six would
+# answer it outright with a six-point witness and no SAT call at all.
+#
+# There is none.  Sa with all four carrying classes added has 397 points, 2799
+# edges, mean degree 14.1 and max degree 36 -- and clique number 4.  Y with the
+# same has 791 points, 5579 edges, mean degree 14.1, max 72, and clique number
+# 4 as well.  Being 6-chromatic with clique number 4 is possible and common,
+# but it is not cheap to certify, so the SAT calls stay the only route.
+THE_COMBINED_GRAPHS_HAVE_CLIQUE_NUMBER_FOUR = {
+    "Sa + {4/9, 16/9, 4, 16}": {"points": 397, "unit edges": 1974,
+                                "added": 825, "mean degree": 14.1,
+                                "max degree": 36, "clique number": 4},
+    "Y + the same": {"points": 791, "unit edges": 3938, "added": 1641,
+                     "mean degree": 14.1, "max degree": 72,
+                     "clique number": 4},
+    "so": "no six-point witness, and the SAT calls stay the only route",
+}

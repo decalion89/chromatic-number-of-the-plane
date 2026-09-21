@@ -2824,3 +2824,25 @@ def test_de_greys_class_is_the_smallest_that_carries():
     assert "3 pairs" in c["16"] and "de Grey's" in c["16"]
     sizes = {k: int(v.split()[-2]) for k, v in c.items()}
     assert min(sizes, key=sizes.get) == "16"
+
+
+def test_the_local_search_was_discarded_on_its_calibration():
+    c = hn.homcol.LOCAL_SEARCH_NEEDED_CALIBRATING
+    bad = c["the discarded version"]
+    assert bad["left"] > 0                      # on a known-satisfiable one
+    assert bad["its readings on open instances"] == "discarded"
+    cal = c["calibration"]
+    assert all("SAT in" in v for kk, v in cal.items() if "k=5" in kk)
+    assert "plateau" in cal["Sa, k=4, 4/9 forbidden"]
+
+
+def test_no_six_clique_in_the_combined_graphs():
+    c = hn.homcol.THE_COMBINED_GRAPHS_HAVE_CLIQUE_NUMBER_FOUR
+    for key in ("Sa + {4/9, 16/9, 4, 16}", "Y + the same"):
+        g = c[key]
+        assert g["clique number"] == 4 < 6
+        # degree is no obstacle -- it is fourteen, so a K6 could have fitted
+        assert g["mean degree"] > 6
+        # mean degree is recorded to one decimal, so allow for the rounding
+        assert abs(g["unit edges"] + g["added"]
+                   - g["mean degree"] * g["points"] / 2) < 0.05 * g["points"]
