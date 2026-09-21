@@ -7399,6 +7399,16 @@ THE_GROWTH_GROWS_AWAY_FROM_THE_RING = {
 # tested anywhere in this work, and the negative it gives is not about it
 # alone: it is about every subgraph of it that keeps one of those rings.
 TEST_THE_UNIVERSE_NOT_THE_SEED = {
+    "CORRECTED": "the METHOD is sound and the UNIVERSE is the wrong shape.  "
+                 "Run at FOUR colours, where a capped ring is known to exist, "
+                 "the same 24003-point universe returns 0 of 22 -- because it "
+                 "contains only 19 of Sa's 397 points.  A universe built by "
+                 "unit WALKS reaches radii 0.027 and up but not the radii "
+                 "0.168, 0.264, 0.292, 0.333 where de Grey's points sit, "
+                 "which arise as intersections of unit circles.  So the "
+                 "five-colour negative below covers every subgraph of that "
+                 "universe and does NOT cover de Grey-style constructions; "
+                 "see THE_UNIVERSE_TEST_FAILS_ITS_OWN_CALIBRATION",
     "why the seed search was the wrong question": "the cap is monotone, so "
         "the maximal set answers for every subgraph containing the ring",
     "universes tested": {"radius 2.6": {"points": 1717, "edges": 8292,
@@ -7414,6 +7424,49 @@ TEST_THE_UNIVERSE_NOT_THE_SEED = {
     "what it does not": "subgraphs whose ring is smaller than k points, which "
                         "are capped trivially and carry nothing",
 }
+
+
+# CORRECTED: the universe test fails its own calibration, and the fault is the
+# universe.
+#
+# The monotonicity argument is right and the machinery works.  What was not
+# checked before reporting it is whether the universe can contain an answer at
+# all, and it cannot.
+#
+# Run at FOUR colours, where a capped ring is known to exist -- Sa's D = 4 ring
+# is capped at two -- the same 24003-point universe returns 0 of 22 rings
+# capped.  An instrument that misses the known case says little about the
+# unknown one.
+#
+# The reason is the same one that invalidated the first seed search, and it
+# should have been checked the same way.  The universe is built by unit WALKS,
+# which reach radii 0.027, 0.028, 0.035 and upward; de Grey's points sit at
+# 0.168, 0.264, 0.292, 0.333, arising as INTERSECTIONS of unit circles, which
+# no walk produces.  Nineteen of Sa's 397 points lie in the universe.
+#
+# So what stands and what does not.  The negative at five colours is true of
+# every subgraph of a seventy-thousand-point universe that keeps one of its
+# rings -- a wide claim about a large space.  It is NOT a claim about the space
+# that matters, and the earlier phrasing that it "rules out a whole class of
+# constructions" was wrong.  The fix is to build the universe from unit-circle
+# intersections instead, which is where the points that carry caps live.
+THE_UNIVERSE_TEST_FAILS_ITS_OWN_CALIBRATION = {
+    "the method": "sound -- the cap is monotone in both directions",
+    "the universe": "wrong shape",
+    "calibration at four colours": "0 of 22 rings capped, where Sa's D = 4 "
+                                   "ring is capped at two",
+    "why": "built by unit walks, which reach radii 0.027 upward; de Grey's "
+           "points are at 0.168 to 0.45 and arise as intersections of unit "
+           "circles",
+    "Sa inside the universe": "19 of 397 points",
+    "what still stands": "the five-colour negative covers every subgraph of "
+                         "the 70021-point universe that keeps one of its 27 "
+                         "rings",
+    "what does not": "any claim that it covers de Grey-style constructions",
+    "the fix": "build the universe from unit-circle intersections, where the "
+               "points that carry caps actually live",
+}
+
 
 
 

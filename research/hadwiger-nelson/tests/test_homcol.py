@@ -4710,3 +4710,50 @@ def test_the_cap_is_monotone_in_both_directions():
     assert all(u[r]["capped"] == 0 for r in u)
     # every universe colours, so none of them is itself the answer
     assert all(u[r]["rings"] >= 7 for r in u)
+
+
+def test_the_walk_universe_does_not_contain_de_greys_points():
+    """Why the universe test failed its own calibration.
+
+    A universe built by unit walks reaches its own radii and not de Grey's:
+    his seed and its closure live at 0.168 and upward, arising as
+    intersections of unit circles, which no sum of unit vectors produces.
+    Nineteen of Sa's 397 points land in it, which is why it shows no capped
+    ring even at four colours.
+    """
+    import math
+    from collections import deque
+    from fractions import Fraction as Fr
+    from hn.field import Field, embed
+    from hn.geometry import Point, Rotation
+    K = Field((2, 3, 5, 7, 11))
+    half = K.rational(Fr(1, 2))
+    rot60 = Rotation(half, K.sqrt(3) * half)
+    ZERO = Point(K.zero(), K.zero())
+    dirs, u = [], Point(K.rational(1), K.zero())
+    for _ in range(6):
+        dirs.append(u)
+        u = rot60(u)
+    pool, seen, fr = [ZERO], {ZERO}, deque([(ZERO, 0)])
+    while fr:
+        p, d = fr.popleft()
+        if d >= 3:
+            continue
+        for v in dirs:
+            q = Point(p.x + v.x, p.y + v.y)
+            if q not in seen and float(q.x) ** 2 + float(q.y) ** 2 <= 9:
+                seen.add(q)
+                pool.append(q)
+                fr.append((q, d + 1))
+    Sa = [Point(embed(p.x, K), embed(p.y, K))
+          for p in _dg.build_Sa(_gm.DEGREY_FIELD)]
+    inside = sum(1 for p in Sa if p in seen)
+    assert inside < len(Sa) / 10, (inside, len(Sa))
+    # and the radii do not overlap where it matters
+    small_sa = {round(math.hypot(float(p.x), float(p.y)), 3) for p in Sa}
+    assert 0.333 in small_sa                       # de Grey has a point at 1/3
+    walk_radii = {round(math.hypot(float(p.x), float(p.y)), 3) for p in pool}
+    assert 0.333 not in walk_radii                 # the walk never lands there
+    c = _hc.THE_UNIVERSE_TEST_FAILS_ITS_OWN_CALIBRATION
+    assert c["calibration at four colours"].startswith("0 of 22")
+    assert c["Sa inside the universe"] == "19 of 397 points"

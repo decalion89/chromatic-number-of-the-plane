@@ -5242,6 +5242,24 @@ Seventy thousand points and three hundred and seventy thousand edges, swept in
 **105 seconds**, because "not capped" is the satisfiable answer. That is by far
 the largest object tested in this work, and its negative is not about it alone.
 
+> **Corrected by its own calibration.** The *method* is sound; the *universe*
+> is the wrong shape. Run at **four** colours — where a capped ring is known to
+> exist, `Sa`'s `D = 4` being capped at two — the same 24 003-point universe
+> returns **0 of 22**. An instrument that misses the known case says little
+> about the unknown one.
+>
+> The reason is exactly what invalidated the first seed search, and should have
+> been checked the same way: the universe is built by unit **walks**, reaching
+> radii 0.027 and upward, while de Grey's points sit at 0.168, 0.264, 0.292,
+> 0.333 — arising as **intersections of unit circles**, which no walk produces.
+> Only **19 of `Sa`'s 397 points** lie in it.
+>
+> So the five-colour negative is true of every subgraph of a 70 021-point
+> universe that keeps one of its rings — a wide claim about a large space — but
+> it is **not** a claim about the space that matters, and calling it "a whole
+> class of constructions" was wrong. The fix is to build the universe from
+> unit-circle intersections instead.
+
 
 ## Honest odds
 
