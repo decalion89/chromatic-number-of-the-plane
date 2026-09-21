@@ -9915,3 +9915,51 @@ THE_SECOND_DISTANCE_IS_CHEAP_AND_THE_HALVES_DO_NOT_MEET = {
     "why it has not closed": {"all 337 cores": "palette 5, none capped",
                               "the 60-point capped set": "two-distance chi 3"},
 }
+
+
+# The two-distance chromatic numbers, measured across every carrier here.
+#
+# A set whose {1} u D graph needs more than five colours forces a
+# monochromatic pair at one of the distances in D, in every proper 5-colouring
+# of its unit-distance graph, with no cap anywhere: the five colour classes are
+# independent for distance 1 by construction, so if they avoided D as well they
+# would 5-colour a graph that needs six.
+#
+# Fewer distances in D means a sharper conclusion, so the question is how few
+# will do.  Measured:
+#
+#   {1, sqrt3}        G 1581       chi = 5
+#   {1, sqrt3}        Gc 11047     chi = 5
+#   {1, sqrt3}        Gp 13873     chi = 5
+#   {1, sqrt3}        Ga 18966     chi = 5
+#   {1, sqrt3}        union 39144  chi = 5
+#   {1, sqrt3}        Sa universe  chi = 5
+#   {1, 2/sqrt3}      Ga 18966     chi = 5
+#   {1, sqrt3, 2}     Ga 18966     chi = 7
+#   {1, sqrt3, 2}     union 39144  chi >= 7
+#
+# One second distance tops out at five across six carriers spanning a factor
+# of twenty-five in size, including an intersection universe rather than a
+# union of rotations.  Two second distances jump straight past six to seven.
+#
+# So the unconditional form of the disjunction exists and it has two branches:
+# in every proper 5-colouring of Ga's unit-distance graph, some pair at
+# distance sqrt3 or some pair at distance 2 is monochromatic.  That is the
+# same statement the capped set gives, now with no cap required -- but over
+# 18966 points rather than 60, so over vastly more pairs, which is the wrong
+# direction for using it.  A cap buys a small pair set; the chromatic number
+# buys unconditionality.  Neither buys a single distance.
+THE_TWO_DISTANCE_CHROMATIC_NUMBERS = {
+    "one second distance": {"G": 5, "Gc": 5, "Gp": 5, "Ga": 5,
+                            "union of three": 5, "Sa universe": 5,
+                            "{1, 2/sqrt3} on Ga": 5},
+    "two second distances": {"{1, sqrt3, 2} on Ga": 7,
+                             "{1, sqrt3, 2} on the union of 39144": ">= 7"},
+    "what chi >= 6 would give": "a monochromatic pair at that one distance in "
+                                "every 5-colouring, with no cap",
+    "what chi = 7 gives": "the same two-branch disjunction the capped set "
+                          "gives, unconditionally -- but over 18966 points "
+                          "instead of 60, hence over far more pairs",
+    "the trade": "a cap buys a small pair set; the chromatic number buys "
+                 "unconditionality; neither buys a single distance",
+}
