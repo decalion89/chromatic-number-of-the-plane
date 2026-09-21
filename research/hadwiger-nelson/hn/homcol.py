@@ -5478,3 +5478,57 @@ TWO_EXTRAPOLATIONS_TO_THE_SCALE_NEEDED = {
                           "million points; everything built here tops out at "
                           "55345",
 }
+
+
+# CORRECTION: the flat five-colour curve is de Grey's family's, not the plane's.
+#
+# THE_FIFTH_COLOUR_FLATTENS_THE_CURVE reports the correlation ratio flat at one
+# across average degrees 3.8 to 10.6 at five colours, against a climb to 24 at
+# four, and reads it as the fifth colour switching constraint density off.
+# The measurement is right and the reading is too broad, because every graph in
+# it comes from de Grey's construction, whose degree ceiling is about eleven.
+#
+# Erdos's lattice lifts the ceiling and the flatness goes with it.  Scale the
+# integer grid by 1/sqrt(r) and two points are at distance 1 exactly when their
+# difference satisfies dx^2 + dy^2 = r, so the degree is r_2(r) and is chosen
+# by arithmetic:
+#
+#     r      degree    ratio at 4     ratio at 5
+#      25      9.57          43.2            8.7
+#      65     12.18         150.7           12.7
+#     325     17.64         262.5           26.4
+#
+# At degree 9.57 the lattice scores 8.7 at five colours where G, at 9.96,
+# scores 1.1.  The five-colour curve is not flat at all; it rises, just from a
+# lower base and more slowly.
+#
+# What does NOT change is the thing the spindle needs.  All of these have ZERO
+# forced-same candidates -- not one pair agrees across twenty-four colourings
+# -- and their whole ratio lives in the forced-different direction, where
+# nothing verified either (0 of 3000 checked, at r = 25 and r = 65).  The
+# spindle needs a pair forced to AGREE, and the metric used throughout this
+# file counts pairs forced to differ.  Y is still the only graph here with any
+# forced-same candidates at all: eight, of which one is genuinely forced.
+THE_FLAT_CURVE_WAS_A_FAMILY_ARTEFACT = {
+    "CORRECTS": "THE_FIFTH_COLOUR_FLATTENS_THE_CURVE, which generalised from "
+                "graphs that all come from de Grey's construction",
+    "the_ceiling": "de Grey's family tops out near degree eleven -- 9.96, "
+                   "10.64, 11.36 -- so the five-colour curve was only ever "
+                   "measured below it",
+    "erdos_lattice": {"25": {"degree": 9.57, "at4": 43.2, "at5": 8.7},
+                      "65": {"degree": 12.18, "at4": 150.7, "at5": 12.7},
+                      "325": {"degree": 17.64, "at4": 262.5, "at5": 26.4}},
+    "so": "at degree 9.57 the lattice scores 8.7 at five colours where G at "
+          "9.96 scores 1.1.  The five-colour curve rises; it starts lower and "
+          "climbs more slowly.",
+    "what_does_not_change": "zero forced-same candidates in every one of "
+                            "them, and nothing verified in the "
+                            "forced-different direction either, 0 of 3000 "
+                            "checked at r = 25 and r = 65",
+    "the_metric_was_the_wrong_direction": "the spindle needs a pair forced to "
+                                          "AGREE; the ratio used throughout "
+                                          "counts pairs forced to DIFFER.  Y "
+                                          "remains the only graph here with "
+                                          "any forced-same candidates: eight, "
+                                          "one of them genuinely forced.",
+}
