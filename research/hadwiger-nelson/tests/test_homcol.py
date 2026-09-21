@@ -4625,3 +4625,33 @@ def test_the_operation_catalogue_covers_both_stabilisers():
     # and it agrees with the floor recorded elsewhere
     assert _hc.DE_GREYS_BITE_IS_OPTIMAL_AND_THE_SEARCH_IS_COMPLETE[
         "best census"] == 3
+
+
+def test_a_richer_field_leaves_the_graph_alone_and_only_adds_operations():
+    """Embedding Sa in a bigger field changes nothing about the graph.
+
+    The points lie in the base field, so the closure has the same vertices and
+    the same unit edges however many radicals are adjoined -- which is what
+    makes the bite comparison across fields exact rather than approximate.
+    Only the set of available rotations grows.
+    """
+    from hn.field import Field, embed
+    from hn.geometry import Point
+    K0 = _gm.DEGREY_FIELD
+    K1 = Field((2, 3, 5, 7, 11))
+    assert K1.dim > K0.dim
+    P0 = _dg.build_Sa(K0)
+    P1 = [Point(embed(p.x, K1), embed(p.y, K1)) for p in P0]
+    assert len(P1) == len(P0) == 397
+    for P in (P0, P1):
+        b = _ft.IntBasis.covering(P)
+        r = b.rows(P)
+        assert b.overflow_headroom(r) < 1.0
+        e = len(set((min(a, c), max(a, c))
+                    for a, c in _ft.fast_edges_complete(b, r)))
+        assert e == 1974
+    c = _hc.THE_FLOOR_IS_NOT_A_PROPERTY_OF_THE_FIELD
+    assert c["bites and best census"]["Q(3,5,7,11)"][1] == 3
+    assert c["bites and best census"]["Q(2,3,5,7,11)"][1] == 3
+    assert (c["bites and best census"]["Q(2,3,5,7,11)"][0] >
+            c["bites and best census"]["Q(3,5,7,11)"][0])

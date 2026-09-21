@@ -7260,6 +7260,43 @@ THE_SECOND_BITES_CLOSE_THE_CHAIN = {
 }
 
 
+# The floor is not a property of the field either.
+#
+# Every negative here lives in one field, and the field is not a detail: it
+# decides which rings are closable, hence which rotations exist, hence what the
+# catalogue of operations contains at all.  Of the first 279 rational rings, de
+# Grey's field makes 52 closable; adjoining sqrt2 makes 80, and sqrt2 with
+# sqrt13 makes 97.  A richer field is not a bigger search of the same space.
+#
+# And the comparison is exact, because Sa's points lie in the base field: the
+# closure is the SAME GRAPH in every field containing it -- identical points,
+# identical unit edges, identical census of ten.  Only the operations change.
+#
+#     field                    rings closable   bites   best census
+#     Q(3,5,7,11)                    52           104         3
+#     Q(2,3,5,7,11)                  80           160         3
+#
+# Twenty-eight rings that did not exist before, fifty-six new bites, and not
+# one of them beats de Grey's D = 4.  So three of ten is a property of the
+# construction rather than of the arithmetic it was written in.
+THE_FLOOR_IS_NOT_A_PROPERTY_OF_THE_FIELD = {
+    "why the field could have mattered": "it decides which rings are "
+                                         "closable and therefore which "
+                                         "operations exist at all",
+    "rings closable of the first 279": {"Q(3,5,7,11)": 52,
+                                        "Q(2,3,5,7,11)": 80,
+                                        "Q(2,3,5,7,11,13)": 97},
+    "why the comparison is exact": "Sa's points lie in the base field, so the "
+                                   "closure is the same graph in every field "
+                                   "containing it; only the operations change",
+    "bites and best census": {"Q(3,5,7,11)": (104, 3),
+                              "Q(2,3,5,7,11)": (160, 3)},
+    "so": "three of ten is a property of the construction, not of the "
+          "arithmetic it is written in",
+}
+
+
+
 
 
 # Growing the graph does not improve the bite either.
