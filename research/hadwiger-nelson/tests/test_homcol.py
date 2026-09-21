@@ -2982,3 +2982,31 @@ def test_the_implication_runs_one_way():
     assert "proves nothing about the graph" in c["the lesson"]
     # the measurements that stand are the ones made with the exact edge test
     assert "exact edge test" in c["what survives"]
+
+
+def test_the_densest_graph_is_the_least_chromatic():
+    c = hn.homcol.DENSITY_WAS_NOT_THE_INGREDIENT
+    m = c["the measurement"]
+    densest = max(m.values(), key=lambda v: v["density"])
+    assert densest["density"] == 5.49
+    assert densest["chi"] == 3
+    # and Sa, less dense and far smaller, beats it on chromatic number
+    assert m["Sa (397)"]["chi"] > densest["chi"]
+    assert m["Sa (397)"]["density"] < densest["density"]
+    assert c["the densest is the least chromatic"] is True
+
+
+def test_the_dihedral_synthesis_stays_four_chromatic():
+    c = hn.homcol.DENSITY_WAS_NOT_THE_INGREDIENT["the synthesis also fails"]
+    rows = c["dihedral closure of a dense sumset patch"]
+    assert all(r["chi"] == 4 for r in rows)
+    # denser seeds than de Grey's, and no more chromatic for it
+    assert max(r["points"] for r in rows) > 2000
+
+
+def test_the_density_framing_is_marked_corrected():
+    c = hn.homcol.DENSITY_WAS_NOT_THE_INGREDIENT
+    assert "SUMSETS_BEAT_THE_FAMILY_ON_DENSITY" in c["corrects"]
+    # the measurements it made are not withdrawn, only the inference
+    assert "measurements stand" in c["corrects"]
+    assert "SEED" in c["what it leaves"]

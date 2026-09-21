@@ -6551,3 +6551,65 @@ THE_PERIODIC_PROOF_WAS_ONLY_ABOUT_THE_GENERATORS = {
                   "failing to colour it would prove something.  The direction "
                   "of the implication is the whole content.",
 }
+
+
+# CORRECTION: density was not the missing ingredient, and the table says so.
+#
+# "Density is what separates Sa from G" drove the whole sumset programme, and
+# it came from a real observation -- Sa and G both sit at 4.98 edges per vertex
+# and no operation in the family moves it.  The inference from that to "build
+# for density" is what was wrong, and there was already a result in this file
+# cutting against it: SINGLE_DISTANCE_LATTICES_ARE_BIPARTITE.  The densest
+# unit-distance graphs known are lattice-like, and lattice-like is 2-chromatic,
+# so pushing density pushes toward the achromatic end.
+#
+# Measured rather than argued, chromatic numbers by SAT:
+#
+#     5.49 per vertex   chi = 3   walk rho_4 e<=2, 7000 points
+#     4.98              chi = 4   Y, 791
+#     4.97              chi = 4   Sa, 397
+#     4.91              chi = 4   walk rho_3 rho_4, 7000
+#     3.57              chi = 4   walk rho_3 rho_4 rho_7, 7000
+#     2.84              chi = 3   triangular lattice, 517
+#
+# The DENSEST graph built here, at seven thousand points, is 3-chromatic --
+# below Sa, which reaches four with 397 points and less density.  Density and
+# chromatic number are decoupled, and the densest thing in the table is nearly
+# the least chromatic.
+#
+# The synthesis that was supposed to rescue it fails too.  Closing a dense
+# sumset patch under the dihedral group -- density from one direction,
+# inhomogeneity from the other, which is exactly what Sa is with a 39-point
+# seed -- gives 499, 1339 and 2587 points at 4.32 to 4.56 per vertex, and all
+# three are 4-COLOURABLE.  A denser seed than de Grey's produces a less
+# chromatic closure.
+#
+# So what Sa is doing is not density.  It is the SEED: de Grey's 39 points are
+# chosen, and choosing them for density makes the closure worse.  That is the
+# honest residue of this whole stretch.
+DENSITY_WAS_NOT_THE_INGREDIENT = {
+    "the measurement": {"walk rho_4 e<=2 (7000 pts)": {"density": 5.49,
+                                                       "chi": 3},
+                        "Y (791)": {"density": 4.98, "chi": 4},
+                        "Sa (397)": {"density": 4.97, "chi": 4},
+                        "walk rho_3,rho_4 (7000)": {"density": 4.91,
+                                                    "chi": 4},
+                        "walk rho_3,4,7 (7000)": {"density": 3.57, "chi": 4},
+                        "triangular lattice (517)": {"density": 2.84,
+                                                     "chi": 3}},
+    "the densest is the least chromatic": True,
+    "the synthesis also fails": {"dihedral closure of a dense sumset patch":
+                                 [{"points": 499, "density": 4.32, "chi": 4},
+                                  {"points": 1339, "density": 4.56, "chi": 4},
+                                  {"points": 2587, "density": 4.46,
+                                   "chi": 4}]},
+    "corrects": "SUMSETS_BEAT_THE_FAMILY_ON_DENSITY, whose measurements stand "
+                "and whose framing does not -- beating the family on density "
+                "turned out to buy nothing",
+    "what it leaves": "Sa's power is in the SEED, not the density.  De Grey's "
+                      "39 points are chosen, and choosing a seed for density "
+                      "makes the closure LESS chromatic, not more.",
+    "the tension": "the densest unit-distance graphs are lattice-like and "
+                   "lattice-like is bipartite, so density and chromatic "
+                   "number pull apart",
+}

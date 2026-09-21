@@ -1,107 +1,113 @@
-"""Blocking and folding pull against each other: measure both on real graphs.
+"""Density against chromatic number, across everything built here.
 
-A step set can block every coset colouring, or it can fold a ball into a
-high-chromatic graph, and the two want opposite things.  Blocking asks the
-edge directions to cover PG(r-1,5), which takes at least six of them spread
-through a module of rank r; folding asks for RELATIONS among those steps,
-because Z-independent steps build a tree and a tree is bipartite.  The
-quantity that governs folding is therefore the corank |S| - r of the relation
-lattice -- and blocking pushes r up while folding pushes it down.
+"Density is the missing ingredient" drove the last stretch, and it came from a
+real observation -- Sa and G sit at 4.98 edges per vertex and no operation in
+the family moves it.  But there is a result earlier in this same work that
+cuts against it: SINGLE-DISTANCE LATTICES ARE BIPARTITE.  The densest
+unit-distance graphs known are lattice-like, and lattice-like means
+2-chromatic.  So pushing density pushes toward the achromatic end, and the two
+goals are in tension rather than aligned.
 
-Each graph gets four numbers: distinct edge directions, the rank of the module
-they generate, the corank, and the chromatic number.
+That is worth measuring rather than asserting, so: for each family built here,
+the points, the edges per vertex, and the actual chromatic number computed by
+SAT -- smallest k with a proper k-colouring.  If the tension is real the table
+will show the densest graphs with the lowest chromatic numbers.
 """
-import sys
+import sys, time, itertools
 sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-from fractions import Fraction
-from math import gcd
-from hn.homcol import edge_vectors, has_homomorphism
-from hn.graph import build_graph
-from hn.geometry import Point, Rotation
+sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
+                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+import numpy as np
+from fractions import Fraction as Fr
+from collections import deque
+from hn.degrey import build_Sa, build_Y, build_G
 from hn.field import Field
-from hn import degrey
+from hn.geometry import DEGREY_FIELD as F, Point
+from hn.graph import build_graph
+from hn.fast import IntBasis, fast_edges_complete
+from quotient import units
 from pysat.solvers import Solver
 
-FLD = Field((3, 11))
+t0 = time.time()
+K = Field((3, 5, 7, 11))
+ZERO = Point(K.zero(), K.zero())
 
 
-def moser_spindle():
-    """Two unit rhombi sharing the origin, spun until the far vertices meet."""
-    h = FLD.rational(Fraction(1, 2))
-    u = Point(h, FLD.sqrt(3) * h)
-    one = Point(FLD.one(), FLD.zero())
-    rhombus = [Point(FLD.zero(), FLD.zero()), one, u, one + u]
-    rho = Rotation(FLD.rational(Fraction(5, 6)),
-                   FLD.sqrt(11) * FLD.rational(Fraction(1, 6)))
-    return rhombus + [rho(p) for p in rhombus[1:]]
-
-
-def tri_lattice(r=5):
-    """A patch of the Eisenstein lattice: the classic 3-colourable example."""
-    h = FLD.rational(Fraction(1, 2))
-    u = Point(h, FLD.sqrt(3) * h)
-    one = Point(FLD.one(), FLD.zero())
-    return [one.scaled(a) + u.scaled(b)
-            for a in range(-r, r + 1) for b in range(-r, r + 1)]
-
-
-def rank(vs):
-    """Rank over Q by fraction-free elimination."""
-    M = [list(map(Fraction, v)) for v in vs]
-    if not M:
-        return 0
-    r = 0
-    for c in range(len(M[0])):
-        p = next((i for i in range(r, len(M)) if M[i][c]), None)
-        if p is None:
-            continue
-        M[r], M[p] = M[p], M[r]
-        for i in range(len(M)):
-            if i != r and M[i][c]:
-                f = M[i][c] / M[r][c]
-                M[i] = [a - f * b for a, b in zip(M[i], M[r])]
-        r += 1
-    return r
-
-
-def directions(vs):
-    """Distinct edge directions, identifying v with -v."""
-    out = set()
-    for v in vs:
-        g = 0
-        for t in v:
-            g = gcd(g, abs(t))
-        w = tuple(t // g for t in v) if g > 1 else tuple(v)
-        out.add(min(w, tuple(-t for t in w)))
-    return sorted(out)
-
-
-def chi(g, hi=6):
+def chrom(n, E, hi=6):
     for k in range(2, hi + 1):
-        cls = [[1 + v * k + c for c in range(k)] for v in range(g.n)]
-        for a, b in g.edges():
+        cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
+        for a, b in E:
             for c in range(k):
                 cls.append([-(1 + a * k + c), -(1 + b * k + c)])
-        with Solver(name="cd19", bootstrap_with=cls) as s:
-            if s.solve():
-                return k
+        sv = Solver(name="cd15", bootstrap_with=cls)
+        ok = sv.solve()
+        sv.delete()
+        if ok:
+            return k
     return f">{hi}"
 
 
-cases = [("Moser spindle", build_graph(moser_spindle())),
-         ("triangular patch", build_graph(tri_lattice())),
-         ("de Grey S", build_graph(degrey.build_S())),
-         ("de Grey Sa", build_graph(degrey.build_Sa())),
-         ("de Grey Sb", build_graph(degrey.build_Sb())),
-         ("de Grey Y", build_graph(degrey.build_Y())),
-         ("de Grey G", degrey.build_G())]
+def from_points(P):
+    g = build_graph(P)
+    E = sorted(set((min(a, b), max(a, b)) for a, b in g.edges()))
+    return g.n, E
 
-print(f"{'graph':18} {'n':>5} {'m':>6} {'|S|':>5} {'rank':>5} "
-      f"{'corank':>7} {'chi':>4}  blocked")
-print("-" * 68)
-for name, g in cases:
-    S = directions(edge_vectors(g))
-    r = rank(S)
-    phi, _ = has_homomorphism(S, 5)
-    print(f"{name:18} {g.n:5} {g.m:6} {len(S):5} {r:5} {len(S)-r:7} "
-          f"{str(chi(g)):>4}  {'NO' if phi else 'YES'}", flush=True)
+
+def walk(U, R, cap):
+    basis = IntBasis.covering(U + [ZERO])
+    srows = basis.rows(U)
+    dim, D = basis.dim, basis.D
+    steps = np.concatenate([srows, -srows], axis=0)
+    lim = R * R * D * D
+    f = lambda V: (basis._field_square(V[:, :dim])
+                   + basis._field_square(V[:, dim:])) @ basis.sqrts
+    z = np.zeros(2 * dim, dtype=np.int64)
+    seen, out, q = {z.tobytes()}, [z], deque([0])
+    while q and len(out) < cap:
+        i = q.popleft()
+        cand = steps + out[i]
+        for w in cand[f(cand) <= lim]:
+            b = w.tobytes()
+            if b not in seen and len(out) < cap:
+                seen.add(b)
+                out.append(w)
+                q.append(len(out) - 1)
+    rows = np.array(out, dtype=np.int64)
+    E = sorted(set((min(a, b), max(a, b))
+                   for a, b in fast_edges_complete(basis, rows)))
+    return len(rows), E
+
+
+def tri(R):
+    half, rt3 = K.rational(Fr(1, 2)), K.sqrt(3) * K.rational(Fr(1, 2))
+    P = []
+    n = int(R) + 2
+    for a in range(-n, n + 1):
+        for b in range(-n, n + 1):
+            if a * a + a * b + b * b <= R * R:
+                P.append(Point(K.rational(a) + half * K.rational(b),
+                               rt3 * K.rational(b)))
+    return P
+
+
+ROWS = []
+for name, (n, E) in (
+        ("triangular lattice R=12", from_points(tri(12))),
+        ("Sa", from_points(build_Sa(F))),
+        ("Y", from_points(build_Y(F))),
+        # G is skipped: its chi = 5 needs the k=4 UNSAT proof, which is de
+        # Grey's own hard result, already reproduced and recorded here.
+
+        ("walk rho_4 e<=2, 7000", walk(units((4,), 2), 2.0, 7000)),
+        ("walk rho_3,rho_4, 7000", walk(units((3, 4), 1), 2.0, 7000)),
+        ("walk rho_3,4,7, 7000", walk(units((3, 4, 7), 1), 2.0, 7000)),
+):
+    c = chrom(n, E)
+    ROWS.append((name, n, len(E), len(E) / n, c))
+    print(f"  {name:28s} {n:6d} pts  {len(E)/n:5.2f} per vertex  chi = {c}"
+          f"  [{time.time()-t0:.0f}s]", flush=True)
+
+print("\nsorted by density:", flush=True)
+for name, n, e, d, c in sorted(ROWS, key=lambda r: -r[3]):
+    print(f"  {d:5.2f} per vertex   chi = {c}   {name} ({n} pts)", flush=True)
+print("\nDONE", flush=True)

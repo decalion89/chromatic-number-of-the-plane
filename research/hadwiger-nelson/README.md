@@ -4521,6 +4521,42 @@ Every one of them is 5-colourable, so this is a **lever, not a result**. What it
 is, is the first lever in this work that moves the quantity the structural
 account points at, rather than the size.
 
+## Corrected: density was not the missing ingredient
+
+The sumset programme above rests on an inference, and the inference is wrong.
+The observation was real — `Sa` and `G` both sit at 4.98 edges per vertex and no
+operation in the family moves it. The step from there to *build for density* is
+what fails, and there was already a result in this repository cutting against
+it: **single-distance lattices are bipartite**. The densest unit-distance graphs
+known are lattice-like, and lattice-like is 2-chromatic, so pushing density
+pushes toward the achromatic end.
+
+Measured, with chromatic numbers computed by SAT:
+
+| edges per vertex | χ | graph |
+|---|---|---|
+| **5.49** | **3** | walk `rho_4 e≤2`, 7000 points |
+| 4.98 | 4 | `Y`, 791 |
+| 4.97 | 4 | `Sa`, 397 |
+| 4.91 | 4 | walk `rho_3, rho_4`, 7000 |
+| 3.57 | 4 | walk `rho_3, rho_4, rho_7`, 7000 |
+| 2.84 | 3 | triangular lattice, 517 |
+
+The **densest** graph built here, at seven thousand points, is **3-chromatic** —
+below `Sa`, which reaches four with 397 points and less density. Density and
+chromatic number are decoupled, and the densest entry is nearly the least
+chromatic.
+
+The synthesis meant to rescue it fails too. Closing a dense sumset patch under
+the dihedral group — density from one direction, inhomogeneity from the other,
+which is exactly what `Sa` is with a 39-point seed — gives 499, 1339 and 2587
+points at 4.32 to 4.56 per vertex, and **all three are 4-colourable**. A denser
+seed than de Grey's produces a *less* chromatic closure.
+
+So what `Sa` is doing is not density. It is the **seed**: de Grey's 39 points are
+chosen, and choosing a seed for density makes the closure worse. That is the
+honest residue of this stretch — the measurements stand, the framing does not.
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic
