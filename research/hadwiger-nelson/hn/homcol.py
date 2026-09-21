@@ -7296,6 +7296,40 @@ THE_FLOOR_IS_NOT_A_PROPERTY_OF_THE_FIELD = {
 }
 
 
+# The growth cannot build a bigger carrier, because it grows away from the
+# ring.
+#
+# The carrier a five-colour construction would need is a few thousand points
+# with a ring capped below five, and the rhombus growth reaches a thousand
+# points readily -- so closing it dihedrally should give the scale.  It does
+# not, and the reason is worth recording.
+#
+# Ten growth steps take Sa to 631 points, and the dihedral closure of that adds
+# TWELVE.  The growth starts from Sa, which is already closed, and its greedy
+# additions arrive in near-orbits, so there is almost nothing left to close.
+# More telling, the rings about the origin are unchanged: the same five as Sa's
+# at the same sizes -- 18, 12, 6, 6, 6 -- because the growth adds points where
+# rhombi are dense, which is not where the origin's rings are.
+#
+# 643 points at 5.85 edges per vertex, five-colourable, and 0 of 5 rings capped.
+# So growth raises local density, leaves the census alone, leaves the bite
+# alone, and now: leaves the carrier's rings alone as well.
+THE_GROWTH_GROWS_AWAY_FROM_THE_RING = {
+    "ten steps": "Sa 397 -> 631 points",
+    "dihedral closure adds": 12,
+    "why so few": "the growth starts from a closed graph and adds in "
+                  "near-orbits",
+    "rings about the origin": "the same five as Sa, same sizes "
+                              "(18, 12, 6, 6, 6)",
+    "why unchanged": "the growth adds points where rhombi are dense, which is "
+                     "not where the origin's rings are",
+    "capped at five": "0 of 5",
+    "so": "growth raises local density, and leaves the census, the bite and "
+          "the carrier's rings all exactly where they were",
+}
+
+
+
 
 
 
