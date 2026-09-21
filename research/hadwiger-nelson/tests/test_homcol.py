@@ -3989,3 +3989,80 @@ def test_criticality_and_rigidity_are_different_thresholds():
     c = _hc.CRITICALITY_ARRIVES_LONG_BEFORE_RIGIDITY
     assert "207" in c["chi reaches four at"]
     assert c["census collapses at"].startswith("397")
+
+
+def test_saturation_moves_across_the_gap_and_density_does_not():
+    """Recount the rhombi at the two ends of the criticality-rigidity gap.
+
+    A rhombus is two points at squared distance 3 sharing two unit neighbours
+    -- the raw material a Moser spindle is assembled from -- so memberships
+    per point measure saturation.  Across the gap, from where four colours
+    become necessary to where the census collapses, density rises by about a
+    factor of two and saturation by about a factor of eight.  Both ends are
+    recomputed here from the census curve's own peel order.
+    """
+    import math, random
+    import numpy as np
+    from fractions import Fraction as Fr
+    from collections import defaultdict
+    from hn.geometry import Point
+    K = _gm.DEGREY_FIELD
+    P0 = _dg.build_Sa(K)
+    b = _ft.IntBasis.covering(P0)
+    r = b.rows(P0)
+    dm, d2 = b.dim, b.D * b.D
+    zi = P0.index(Point(K.zero(), K.zero()))
+    d = r - r[zi]
+    sq = b._field_square(d[:, :dm]) + b._field_square(d[:, dm:])
+    ok = np.ones(len(sq), dtype=bool)
+    for j in range(1, dm):
+        ok &= sq[:, j] == 0
+    ring = [int(o) for o in np.nonzero(ok)[0] if Fr(int(sq[o, 0]), d2) == 4]
+    ring.sort(key=lambda i: math.atan2(float(P0[i].y), float(P0[i].x)))
+    PIN = [P0[zi]] + [P0[i] for i in ring]
+    rng = random.Random(11)
+    order = [p for p in P0 if p not in set(PIN)]
+    rng.shuffle(order)
+
+    def measure(P):
+        bb = _ft.IntBasis.covering(P)
+        rr = bb.rows(P)
+        assert bb.overflow_headroom(rr) < 1.0
+        n = len(P)
+        E = sorted(set((min(a, c), max(a, c))
+                       for a, c in _ft.fast_edges_complete(bb, rr)))
+        nb = [set() for _ in range(n)]
+        for a, c in E:
+            nb[a].add(c)
+            nb[c].add(a)
+        dd2, DD = bb.dim, bb.D * bb.D
+        per = defaultdict(int)
+        rh = 0
+        for i in range(n):
+            dv = rr - rr[i]
+            s = bb._field_square(dv[:, :dd2]) + bb._field_square(dv[:, dd2:])
+            good = s[:, 0] == 3 * DD
+            for m in range(1, dd2):
+                good &= s[:, m] == 0
+            for j in np.nonzero(good)[0]:
+                j = int(j)
+                if j <= i:
+                    continue
+                shared = nb[i] & nb[j]
+                if len(shared) >= 2:
+                    rh += 1
+                    per[i] += 1
+                    per[j] += 1
+                    for x in shared:
+                        per[x] += 1
+        return len(E) / n, rh, sum(per.values()) / n
+
+    dens_lo, rh_lo, sat_lo = measure(list(PIN) + order[:200])   # 207 points
+    dens_hi, rh_hi, sat_hi = measure(list(PIN) + order)         # 397 points
+    assert (rh_lo, rh_hi) == (29, 444)
+    assert abs(sat_lo - 0.56) < 0.02 and abs(sat_hi - 4.47) < 0.02
+    assert 1.8 < dens_hi / dens_lo < 2.0        # density barely moves
+    assert 7.5 < sat_hi / sat_lo < 8.5          # saturation moves eightfold
+    c = _hc.SATURATION_IS_THE_DISCRIMINATOR
+    assert c["rhombus memberships per point"][207] == 0.56
+    assert c["rhombus memberships per point"][397] == 4.47
