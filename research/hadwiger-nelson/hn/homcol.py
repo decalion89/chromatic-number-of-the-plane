@@ -6730,3 +6730,50 @@ THE_GROWN_SEED_CARRIES_MORE = {
                                   "is not a deficiency of the seed that "
                                   "better seed-building fixes.",
 }
+
+
+# The exact question about a new point, and what it costs.
+#
+# Every growth rule tried here optimises something CORRELATED with chromatic
+# number -- edges, density, carrying classes -- and the correlations have now
+# broken twice.  For adding a single point there is no need for a correlate,
+# because the question is decidable directly:
+#
+#   G + p is NOT k-colourable  <=>  in EVERY proper k-colouring of G, the
+#   neighbours of p already use all k colours.
+#
+# And colour symmetry collapses it to ONE call.  If some colouring leaves a
+# colour free on N(p), permuting colours leaves colour 0 free, so asking
+# whether G has a colouring with no neighbour of p coloured 0 decides it --
+# assumptions on an already-bootstrapped solver, nothing rebuilt.  (The first
+# version looped over all five colours and broke at the first free one, which
+# is why it kept reporting "0 of 5 blocked": the count can only be 0 or 5.)
+#
+# Run over G's constructible candidates -- the points where two unit circles
+# of G meet, which is where a new point can have neighbours at all:
+#
+#     neighbours   2: 4512   3: 377   4: 509   5: 229   6: 202
+#                  7:   84   8: 114   9:  71  12:  46  13:  22
+#
+# All 768 candidates with five or more neighbours are placeable, including
+# every one of the twenty-two that see THIRTEEN vertices of G.  So G's
+# colourings are flexible enough to leave a colour free even against a
+# thirteen-point neighbourhood, and thirteen is the largest neighbourhood the
+# construction reaches.
+THE_EXACT_QUESTION_ABOUT_A_NEW_POINT = {
+    "the question": "is N(p) rainbow in every k-colouring",
+    "why one call": "colour symmetry -- if any colour is free on N(p), colour "
+                    "0 is free in some colouring",
+    "candidates on G": {2: 4512, 3: 377, 4: 509, 5: 229, 6: 202, 7: 84,
+                        8: 114, 9: 71, 12: 46, 13: 22},
+    "with >= 5 neighbours": 768,
+    "placeable": 768,
+    "largest neighbourhood reached": 13,
+    "so": "thirteen neighbours is not enough -- G's colourings leave a colour "
+          "free against all of them",
+    "what would help": "larger neighbourhoods, which need more points, since "
+                       "a candidate's neighbours beyond the two that "
+                       "construct it are concurrences of unit circles",
+    "corrects": "an earlier five-call version of the same test whose count "
+                "could only ever read 0 or 5",
+}

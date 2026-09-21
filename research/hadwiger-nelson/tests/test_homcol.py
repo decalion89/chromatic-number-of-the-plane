@@ -3080,3 +3080,21 @@ def test_improving_the_seed_buys_nothing_at_five():
     # and the conclusion drawn is the decoupling, not a bigger seed
     assert "buys NOTHING at" in c["which decouples the levels"]
     assert "not a deficiency of the seed" in c["which decouples the levels"]
+
+
+def test_the_new_point_question_is_one_call_by_symmetry():
+    c = hn.homcol.THE_EXACT_QUESTION_ABOUT_A_NEW_POINT
+    assert "colour symmetry" in c["why one call"]
+    # every candidate with enough neighbours was placeable
+    assert c["placeable"] == c["with >= 5 neighbours"] == 768
+    # and the counts add up to more than that, most being too small to try
+    assert sum(c["candidates on G"].values()) > c["with >= 5 neighbours"]
+    big = sum(v for kk, v in c["candidates on G"].items() if kk >= 5)
+    assert big == c["with >= 5 neighbours"]
+
+
+def test_thirteen_neighbours_was_not_enough():
+    c = hn.homcol.THE_EXACT_QUESTION_ABOUT_A_NEW_POINT
+    assert c["largest neighbourhood reached"] == 13
+    assert c["candidates on G"][13] == 22
+    assert "not enough" in c["so"]
