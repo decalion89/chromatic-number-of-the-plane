@@ -9174,3 +9174,106 @@ THE_CARRIER_MUST_MATCH_THE_QUESTION = {
     "and this was not checked before": "the cap tests measured the geometry "
                                        "and never measured the carrier",
 }
+
+
+# Symmetrising is de Grey's first move, and it only works at the right centre.
+#
+# S straddles the origin, so closing it under the order-twelve group there
+# makes the twelve images overlap and fuse into one dense graph, Sa.  G does
+# not straddle anything near the origin: it is Y turned about the point
+# (-2, 0), it occupies the upper half plane around (-2, 2), and closing it
+# about the origin gives twelve images standing well apart.  The union has
+# 18966 points and 94548 edges -- which is 12 x 7877, G's own edge count,
+# exactly, and 9.97 edges per vertex, G's own density, exactly.  Twelve
+# disjoint copies of G wearing one name, and 5-colourable for free.
+#
+# The centre G actually has is the pivot it was built around.  (-2, 0) is a
+# vertex of G, 129 of its 1581 points sit at rational distance from it across
+# 31 rings, and the twelve images about it are centred two apart on a circle
+# of radius two while each has radius about 2.8, so they genuinely overlap.
+# Closing G there gives 13873 points from 18972 before overlap, 73782 edges,
+# 10.64 per vertex against G's 9.96 -- and every point on a complete ring.
+THE_SYMMETRISATION_NEEDS_THE_RIGHT_CENTRE = {
+    "about the origin": {"points": 18966, "edges": 94548,
+                         "density": "9.97/v, identical to G's own",
+                         "what it is": "12 disjoint copies of G"},
+    "about the pivot (-2,0)": {"points": 13873, "edges": 73782,
+                               "density": "10.64/v",
+                               "overlap": "5099 of 18972 points coincide"},
+    "how to tell them apart": "edges per vertex; a symmetrisation that does "
+                              "not raise it has not overlapped",
+    "why the pivot": "it is a vertex of G, and G was built by turning Y "
+                     "about it",
+    "and Y's centroid is exactly the origin": "Y straddles the origin the "
+                                              "way S does; G does not",
+}
+
+
+# Every ring scan in this work filtered to distance squared at most 4, on the
+# reflex that a wider ring cannot have two adjacent points on it.  For a
+# palette bound that is harmless.  For a BITE it throws away the mechanism.
+#
+# A bite does not need points of the ring to touch each other.  It needs each
+# point to touch its own image under the turn, and 2*rho*sin(theta/2) = 1 has
+# a solution at every radius rho >= 1/2.  de Grey's own construction proves
+# it: Sb turns Sa by cosine 7/8, the bite on the ring of radius 2, which the
+# filter keeps -- but G turns Y by a relative 2*arcsin(1/8), cosine 31/32,
+# and that is the bite on the ring of radius FOUR.  Distance squared 16.
+# Thrown away by every scan here.
+#
+# The radius doubles from one level to the next, and the field decides whether
+# the next doubling exists: sin theta = sqrt(4*rho^2 - 1)/(2*rho^2), so
+# 4*rho^2 - 1 must be a square times one of K's radicands.  rho = 2 gives 15
+# and rho = 4 gives 63 = 9*7, which is exactly why de Grey's two angles are
+# available at all.  rho = 8 gives 255 = 3*5*17, and 17 is not in K, so the
+# obvious third level does not exist over his field -- it would need sqrt17.
+#
+# But the doubling is not the only way up.  rho = 3 gives 35 and rho = 5 gives
+# 99 = 9*11, both in K, and neither has ever been used.
+THE_RING_SCAN_THREW_AWAY_DE_GREYS_OWN_BITE = {
+    "the filter": "D <= 4 on every ring scan in this work",
+    "why it seemed safe": "a ring wider than that has no two adjacent points",
+    "why it is not": "a bite stitches each ring point to its own image, not "
+                     "to its neighbours, and works at any radius >= 1/2",
+    "de Grey's two bites": {"Sa -> Y": "rho = 2, cos 7/8, sin sqrt15/8",
+                            "Y -> G": "rho = 4, cos 31/32, sin 3*sqrt7/32"},
+    "the radius doubles": "2, then 4",
+    "the third doubling does not exist over K": "rho = 8 needs sqrt255 = "
+                                                "sqrt(3*5*17), and 17 is not "
+                                                "a radicand of K",
+    "what K does allow and de Grey never used": {
+        "rho = 3": "cos 17/18, sin sqrt35/18",
+        "rho = 5": "cos 49/50, sin 3*sqrt11/50",
+    },
+    "on Gp": "12 biteable rings about the pivot, 11 of them turns nobody "
+             "has applied",
+}
+
+
+# The cap is not rare at four colours.  It is everywhere.
+#
+# Measured on Sa's universe -- Sa plus every unit-circle intersection inside
+# radius 4.5, 8953 points -- at de Grey's own strength, a centre together with
+# its ring held to two colours out of four: found at the origin on the rings
+# D = 16/9 and D = 4, and then again at centres 243, 244, 245, 246 on D = 4/9
+# and D = 16/9, one after another.  Thirteen in the first 1600 seconds and
+# still arriving.  His configuration is not a needle in a haystack; a scan
+# that looks in the right place finds one every couple of minutes.
+#
+# At five colours, in every carrier whose chromatic number actually matches
+# the question, there is not one.  Not a rare one -- none.
+THE_CAP_IS_ABUNDANT_AT_FOUR_AND_ABSENT_AT_FIVE = {
+    "at four, on Sa's universe": "13+ centre+rings at de Grey's exact depth "
+                                 "of 2 out of 4, across 5 distinct centres, "
+                                 "on rings D = 4/9 and D = 16/9",
+    "at five, on G's universe (35132 points, 5-chromatic)": "579 ball tests "
+                                                            "over 40 centres, "
+                                                            "0 capped",
+    "at five, on Ga (18966 points), whole graph": "0 capped",
+    "at five, on Gp (13873 points), whole graph": "0 capped, every ring",
+    "the D = 1 ring is capped for free": "the centre touches all of it, so "
+                                         "the ring loses the centre's colour "
+                                         "and the bound is k-1 with no "
+                                         "geometry involved; centre+ring is k",
+    "so the gap is not one of degree": "abundant at four, absent at five",
+}
