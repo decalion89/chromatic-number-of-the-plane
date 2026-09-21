@@ -6603,6 +6603,50 @@ THERE_IS_NO_GRADIENT = {
 }
 
 
+# What the object would have to be, and how big.
+#
+# With no gradient to climb, searching TOWARDS the object is not a strategy;
+# the object has to be built complete and tested once.  That is what de Grey
+# did, and the shape of his design is now clear enough to scale.
+#
+# The pattern is one of ratios.  His construction rests on a graph whose census
+# falls -- Sa, 397 points -- and what makes it fall is saturation with the
+# gadget one level down, the Moser spindle, which has SEVEN points: 576 of them
+# inside Sa, 1.45 per point.  The ratio of the carrier to its gadget is 397/7,
+# about fifty-seven.
+#
+# One level up the gadget is a 5-chromatic unit-distance graph.  The smallest
+# known has 509 vertices; G, built here, has 1581.  At the same ratio the
+# carrier would need
+#
+#     509 * 57  =  about 29000 points,      or  1581 * 57 = about 90000
+#
+# which is 145000 to 450000 SAT variables.  The lower figure is at the edge of
+# what a modern solver settles and the upper is past it -- and neither can be
+# attempted without knowing WHICH graph of that size to build, since a graph of
+# that size chosen without a design simply colours.
+#
+# So the bottleneck is not solver time and not the size of the search.  It is
+# that the five-colour gadget is seventy times larger than the three-colour one
+# while the construction's ratio stays fixed, and that nothing here -- or, as
+# far as this work can tell, anywhere -- gives the seed.
+THE_SCALE_THE_DESIGN_WOULD_NEED = {
+    "the ratio": "Sa 397 points over the Moser spindle's 7, about 57",
+    "saturation": "576 spindles inside Sa, 1.45 per point",
+    "the gadget one level up": {"smallest known 5-chromatic": 509,
+                                "G, built here": 1581},
+    "carrier at the same ratio": {"from 509": "about 29000 points",
+                                  "from 1581": "about 90000 points"},
+    "SAT variables": "145000 to 450000",
+    "why size is not the bottleneck": "a graph of that size chosen without a "
+                                      "design colours; the missing thing is "
+                                      "the seed, not the compute",
+    "and there is no gradient": "so the object cannot be approached, only "
+                                "built and tested",
+}
+
+
+
 
 
 

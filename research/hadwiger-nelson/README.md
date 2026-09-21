@@ -4898,6 +4898,34 @@ nothing to climb until the object is essentially complete, and by then there is
 no climb left to do.
 
 
+## What the object would have to be, and how big
+
+With no gradient to climb, searching *towards* the object is not a strategy:
+it has to be built complete and tested once. That is what de Grey did, and the
+shape of the design is now clear enough to scale.
+
+The pattern is one of ratios. His construction rests on a graph whose census
+falls — `Sa`, 397 points — and what makes it fall is saturation with the gadget
+one level down, the **Moser spindle**, which has seven points: 576 of them
+inside `Sa`, 1.45 per point. Carrier over gadget is `397/7 ≈ 57`.
+
+One level up the gadget is a 5-chromatic unit-distance graph. The smallest
+known has **509** vertices; `G` has 1581. At the same ratio:
+
+| gadget | carrier | SAT variables |
+|---|---|---|
+| 509 (smallest known) | ≈ 29 000 points | ≈ 145 000 |
+| 1581 (`G`) | ≈ 90 000 points | ≈ 450 000 |
+
+The lower figure sits at the edge of what a modern solver settles; the upper is
+past it. But neither can be attempted, because a graph of that size chosen
+*without* a design simply colours — and nothing here gives the seed.
+
+So the bottleneck is not solver time and not the size of the search space. It
+is that the five-colour gadget is seventy times larger than the three-colour
+one while the construction's ratio stays fixed.
+
+
 ## Honest odds
 
 Polymath16 worked on this for years. The chance that this finds a 6-chromatic

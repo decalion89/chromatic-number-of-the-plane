@@ -3922,3 +3922,15 @@ def test_the_census_sits_at_the_ceiling_until_the_graph_is_nearly_complete():
     assert c["at four colours"][307] == c["at four colours"]["ceiling"]
     assert c["at four colours"][397] == 10
     assert all(v == 855 for v in c["at five colours"].values())
+
+
+def test_the_scale_arithmetic_is_what_it_claims():
+    """The ratios behind the size estimate, recomputed rather than quoted."""
+    c = _hc.THE_SCALE_THE_DESIGN_WOULD_NEED
+    assert round(397 / 7) == 57
+    assert 509 * 57 == 29013          # "about 29000"
+    assert 1581 * 57 == 90117         # "about 90000"
+    assert c["the gadget one level up"]["smallest known 5-chromatic"] == 509
+    assert c["the gadget one level up"]["G, built here"] == 1581
+    # and the saturation figure is the one the account rests on
+    assert abs(576 / 397 - 1.45) < 0.01
