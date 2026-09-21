@@ -53,7 +53,9 @@ __all__ = ["edge_vectors", "has_homomorphism", "screen", "minimum_blocking_set",
            "closing_radicand", "closable_distance", "closable_over",
            "lattice_basis", "on_lattice", "blocks_at", "saturated_at", "decay_rates", "doubly_usable_ring", "agreeing_pairs",
            "forced_same", "colour_symmetry_assumptions",
-    "width_two_spindle_separation", "independent_transversal_exists"]
+    "width_two_spindle_separation",
+    "independent_transversal_exists", "forced_different",
+    "ring_palette_bound"]
 
 
 def _coords(e) -> Tuple[Fraction, ...]:
@@ -5855,6 +5857,57 @@ THE_BITE_THREADS_THE_RING = {
 # have the strong one anywhere on that ring -- which makes it the cheap
 # gateway test every scan should have started from.
 
+def ring_palette_bound(clauses, nvars, ring, k, solver_name="cd15"):
+    """The largest number of distinct colours a set can take, over all
+    colourings.
+
+    The gateway is a yes/no question and every graph tried here answers no, so
+    it gives nothing to steer by.  This is the same question with a gradient.
+    A ring whose palette is capped below k has points forced to coincide, and
+    the cap is what de Grey's construction really rests on: Sa's hexagon takes
+    at most TWO colours in any 4-colouring, which is why six crossing edges
+    are enough to turn two copies into a forced pair.  At five colours that
+    same hexagon takes all five, and the distance between those two facts is
+    the distance to the goal.
+
+    `clauses` is the colouring formula with `nvars` variables; one indicator
+    per colour is added, true only if some ring vertex carries it, under a
+    cardinality floor.  Returns the largest floor that is still satisfiable,
+    or 0 if the formula itself does not colour.
+    """
+    from pysat.card import CardEnc, EncType
+    from pysat.solvers import Solver
+    ind = [nvars + 1 + c for c in range(k)]
+    aux = [[-ind[c]] + [1 + v * k + c for v in ring] for c in range(k)]
+    for t in range(k, 0, -1):
+        enc = CardEnc.atleast(lits=list(ind), bound=t, top_id=nvars + k,
+                              encoding=EncType.seqcounter)
+        s = Solver(name=solver_name, bootstrap_with=clauses)
+        s.append_formula(aux)
+        s.append_formula(enc.clauses)
+        ok = s.solve()
+        s.delete()
+        if ok:
+            return t
+    return 0
+
+
+def forced_different(solver, i, j, k):
+    """Must vertices i and j differ in EVERY proper k-colouring?
+
+    The dual of forced_same, and the ingredient the apex construction wants.
+    If five vertices of one unit circle are pairwise forced different then
+    their common centre has five colours in its neighbourhood in every proper
+    k-colouring and cannot be coloured at all -- the cone over them needs
+    k + 1, with no spindle and no disjunction anywhere.
+
+    One call, like its dual: a colouring that gives i and j the same colour
+    can be permuted so that colour is zero, so asking for both to be zero
+    decides it.
+    """
+    return not solver.solve(assumptions=[1 + i * k, 1 + j * k])
+
+
 def width_two_spindle_separation(d2, steps=2):
     """How far apart the two ends of a width-two hub disjunction must sit.
 
@@ -5970,10 +6023,162 @@ THE_WIDTH_TWO_SPINDLE = {
                              "rotation has order six so that its two-, four- "
                              "and eight-step chords all collapse to one.  No "
                              "other chord is a distance in either graph",
+    "CEILING: width three is free": "exhaustive over every shape inside a "
+        "window of thirteen exponents and up to twenty-six copies -- 66 "
+        "shapes of width three and 220 of width four, and NOT ONE closes.  "
+        "Only widths one and two do, so the hub construction cannot absorb a "
+        "disjunction wider than two, and width two is barely weaker than the "
+        "forced pair it was meant to replace",
+    "why width three is free": "three choices per copy leave room for a "
+        "periodic transversal: a set meeting every translate of W with no two "
+        "consecutive members exists as soon as W is wide enough, and the "
+        "recursion that halves W terminates only for widths one and two",
     "so the hypothesis must be built, not found": "rho^m(w) is constructible "
         "wherever rho is, so closing a seed under rho puts every chord in the "
         "graph by fiat; the family was simply never built for this",
 }
+
+
+# De Grey's ring lemma is a PALETTE CAP, and it is far stronger than the
+# antipodal statement everything here was chasing.
+#
+# The six points of Sa's D = 4 ring carry no edges among themselves -- adjacent
+# ones are two apart, antipodal ones four -- so a priori all 187 partitions of
+# six things into at most four blocks are available.  Forcing the ring to each
+# partition in turn and asking the solver which survive settles what Sa
+# actually says, with no paraphrase in the way:
+#
+#     k = 4:   10 of 187 survive.  One monochromatic, nine two-block.
+#     k = 5:  202 of 202 survive, fifteen of them using all five colours.
+#
+# So at four colours the ring takes AT MOST TWO COLOURS, and in each two-block
+# pattern the minority class is a PAIR -- either two adjacent ring points
+# (chord 2) or an antipodal pair (chord 4), never the six pairs at chord
+# 2sqrt3.  "Some antipodal pair is monochromatic" is a corollary of that, and a
+# much weaker one.
+#
+# This is why the bite works on almost nothing.  Y is Sa together with one
+# rotated copy, and the two share ONE vertex and exactly SIX edges -- the
+# matching each ring point to its image, which the rotation places at distance
+# one.  Six edges turn two graphs that force nothing into a graph that forces a
+# named pair, and only a statement as strong as the cap can survive that little
+# contact.
+THE_RING_LEMMA_IS_A_PALETTE_CAP = {
+    "Sa's D=4 ring at four colours": {"patterns available": 187,
+                                      "patterns surviving": 10,
+                                      "colours used": {1: 1, 2: 9},
+                                      "so the cap is": 2},
+    "the nine two-block patterns": "the minority class is always a pair at "
+                                   "chord 2 (adjacent) or chord 4 "
+                                   "(antipodal); never one of the six pairs "
+                                   "at chord 2sqrt3",
+    "Sa's D=4 ring at five colours": {"patterns available": 202,
+                                      "patterns surviving": 202,
+                                      "colours used": {1: 1, 2: 31, 3: 90,
+                                                       4: 65, 5: 15},
+                                      "so the cap is": 5},
+    "the cap implies the gateway": "every surviving pattern at four colours "
+                                   "has an antipodal pair in one block, which "
+                                   "is de Grey's weak property",
+    "and the cap is why six edges suffice": {"Y = Sa u rho(Sa)": "shares 1 "
+                                             "vertex and 6 edges",
+                                             "13 stacked copies": "72 crossing "
+                                             "edges in total"},
+    "so the design target at five is": "a ring capped at k - 2 = 3, not a "
+                                       "ring with a monochromatic pair",
+}
+
+
+# Nothing in the family has a capped ring at five, and the unit rings do not
+# count.
+#
+# The cap is cheap to screen -- one SAT call asks whether a ring can show all k
+# colours at once -- so every centre and every ring of G was swept: 3943 rings
+# of six points or more.  1557 came back capped and every single one of them is
+# a UNIT ring, capped at exactly 4.
+#
+# That is not rigidity.  A vertex's neighbourhood showing all five colours
+# would leave the vertex itself uncolourable, so "the unit ring is capped at
+# k - 1" is nothing but the statement that the graph colours.  The degree-60
+# hub is capped at 4 for that reason and no other.
+#
+# Every ring of G at any other distance shows all five colours.  Together with
+# the forced-pair census (0 of 21344) and the forced-DIFFERENT census (0 of
+# 39923 non-adjacent pairs at squared distance under 4), G has no rigidity of
+# any kind at five colours.
+G_HAS_NO_CAPPED_RING = {
+    "rings swept": 3943, "capped": 1557,
+    "capped at a distance other than 1": 0,
+    "why the unit rings are capped": "their centre needs a colour, so the cap "
+                                     "at k-1 is colourability and nothing more",
+    "the hub": "60 points on its unit ring, palette exactly 4",
+    "alongside": {"forced-same pairs": "0 of 21344 closable non-edge pairs",
+                  "forced-different pairs": "0 of 39923 non-adjacent pairs "
+                                            "at squared distance below 4",
+                  "apex centres": "0 -- no neighbourhood forces five colours"},
+}
+
+
+# Thickening the ring does not cap it, and the copies barely touch.
+#
+# Rotations about the origin COMMUTE with the sixty-degree rotation, so every
+# image rho^t(Sa) is dihedrally symmetric exactly as Sa is, and the stack
+# U_m = union of rho^t(Sa) keeps the whole structure while the D = 4 ring grows
+# by six points a level.  U_0 is Sa; U_1 is de Grey's bite, Y, give or take two
+# points.  At four colours U_0 already carries the gateway -- the calibration
+# reproduces de Grey exactly.  At five it fails at every level.
+#
+# The reason is visible in the edge count.  Nine copies of Sa share 54 crossing
+# edges between them, six per join: the stack is very nearly a disjoint union,
+# and a disjoint union colours as easily as one copy.  Thickening adds ring
+# points without adding contact.
+#
+# The ring's own structure says the same thing.  Ring points are adjacent when
+# their angles differ by the rotation's, which happens only between consecutive
+# levels at the same hexagon position, so the ring plus its antipodal pairs is
+# three disjoint ladders -- bipartite, two-colourable, no local obstruction at
+# any thickness.
+THICKENING_THE_RING_DOES_NOT_CAP_IT = {
+    "family": "U_m = union of rho^t(Sa), t = 0..m, rho the D = 4 bite",
+    "at four colours": "U_0 = Sa already carries the gateway (calibration)",
+    "at five colours, certified range": {
+        "m": "0 through 8", "points": "397 through 3565",
+        "ring": "6 through 54 points, 3 through 27 antipodal pairs",
+        "gateway": "fails at every level"},
+    "crossing edges": {"Y (two copies)": 6, "nine copies": 54},
+    "why": "the ring plus its antipodal pairs is three disjoint ladders, "
+           "bipartite at any thickness, so there is never a local obstruction "
+           "and the copies are too weakly joined to make a global one",
+}
+
+
+# The int64 path has a certificate and I was not calling it.
+#
+# Each bite multiplies the shared denominator by eight, so a stack of thirteen
+# needs 8**13 and the squared form overflows int64.  It does not raise.
+# `fast_edges_complete` returned a graph with NO EDGES AT ALL and the sweep
+# carried on reporting "colourable, gateway fails" for three more levels, which
+# is true of the empty graph and says nothing about the real one.
+#
+# `IntBasis.overflow_headroom` existed for exactly this and every script here
+# had simply never called it.  It is conservative -- it bounds the worst
+# intermediate, not the actual one, and flags m = 9 while the edge counts are
+# still right -- so it certifies rather than detects.  The honest reading is
+# that levels 0 to 8 are certified and the rest are not reported.
+THE_INT64_PATH_HAS_A_CERTIFICATE = {
+    "the failure": "silent wrap, not an exception",
+    "what it looked like": "5941 points, 0 edges, 'colourable'",
+    "where": "thirteen bite rotations, denominator 8**13",
+    "the guard": "IntBasis.overflow_headroom, ratio of the worst intermediate "
+                 "to the int64 limit; at or above 1.0 the path is unsafe",
+    "it is conservative": "flags m = 9 where the edge counts are still "
+                          "correct, so it certifies safety rather than "
+                          "detecting failure",
+    "headroom at m = 0": "3.7e-11",
+    "the lesson": "a sweep that reports on an empty graph reports nothing, "
+                  "and nothing about it looks wrong from the outside",
+}
+
 
 THE_WEAK_PROPERTY_IS_THE_GATEWAY = {
     "weak": "some antipodal pair of ring D is monochromatic in EVERY proper "

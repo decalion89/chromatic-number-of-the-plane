@@ -3448,3 +3448,168 @@ def test_a_finite_order_rotation_cannot_rescue_the_transversal():
                 cyc = cyclic((0, -m), copies, N)
                 itg = _hc.independent_transversal_exists((0, -m), copies)
                 assert not (cyc and not itg), (N, m, copies)
+
+
+def test_no_disjunction_wider_than_two_ever_closes():
+    """The hub construction's ceiling, which is what limits the lemma.
+
+    A disjunction is defeated by an independent transversal of its shifted
+    copies, and three choices per copy already leave room for one.  Exhaustive
+    over every shape in a window: widths one and two close, widths three and
+    four never do, however many copies are stacked.
+    """
+    from itertools import combinations
+    ite = _hc.independent_transversal_exists
+    L, CAP = 10, 22
+    closes = {}
+    for size in (1, 2, 3, 4):
+        closes[size] = [
+            ((0,) + rest,
+             next((c for c in range(1, CAP + 1) if not ite((0,) + rest, c)),
+                  None))
+            for rest in combinations(range(1, L + 1), size - 1)
+        ]
+    assert [w for w, c in closes[1] if c] == [(0,)]
+    assert [w for w, c in closes[2] if c] == [(0, m) for m in (2, 4, 6, 8, 10)]
+    assert all(c == w[1] + 1 for w, c in closes[2] if c)
+    assert not [w for w, c in closes[3] if c]
+    assert not [w for w, c in closes[4] if c]
+
+
+def _bite_stack(levels):
+    """Sa together with `levels` images under the D = 4 bite rotation."""
+    from hn.geometry import rotation_joining, Point
+    K = _gm.DEGREY_FIELD
+    rho = rotation_joining(4, K)
+    P = _dg.build_Sa(K)
+    cur, seen = list(P), set(P)
+    for _ in range(levels):
+        cur = [rho(p) for p in cur]
+        for q in cur:
+            if q not in seen:
+                seen.add(q)
+                P.append(q)
+    return P
+
+
+def test_the_bite_joins_two_copies_by_six_edges():
+    """Y adds almost no contact, which is why Sa's lemma must be strong.
+
+    Sa and its rotated image share one vertex -- the centre the rotation fixes
+    -- and exactly the six edges that carry each ring point to its image, one
+    apart by the rotation's definition.  Six edges turn two graphs that force
+    nothing into one that forces a named pair, so "some antipodal pair is
+    monochromatic" cannot be the whole of what Sa says.
+    """
+    import numpy as np
+    one = _bite_stack(0)
+    two = _bite_stack(1)
+    assert len(one) == 397 and len(two) == 793      # one shared vertex
+    counts = []
+    for P in (one, two):
+        b = _ft.IntBasis.covering(P)
+        r = b.rows(P)
+        assert b.overflow_headroom(r) < 1.0
+        counts.append(len(set((min(a, c), max(a, c))
+                              for a, c in _ft.fast_edges_complete(b, r))))
+    assert counts == [1974, 3954]
+    assert counts[1] - 2 * counts[0] == 6
+
+
+def test_the_thickened_ring_is_three_ladders():
+    """Thickening adds ring points without adding a local obstruction.
+
+    Ring points are at unit distance exactly when their angles differ by the
+    bite's, which happens only between consecutive levels at the same hexagon
+    position.  Adding the antipodal pairs as edges therefore gives three
+    disjoint ladders, and a ladder is bipartite however long it gets.
+    """
+    import numpy as np
+    from fractions import Fraction
+    from hn.geometry import Point
+    K = _gm.DEGREY_FIELD
+    P = _bite_stack(4)
+    b = _ft.IntBasis.covering(P)
+    r = b.rows(P)
+    assert b.overflow_headroom(r) < 1.0
+    dim, D2 = b.dim, b.D * b.D
+    zi = P.index(Point(K.zero(), K.zero()))
+    d = r - r[zi]
+    sq = b._field_square(d[:, :dim]) + b._field_square(d[:, dim:])
+    ok = np.ones(len(sq), dtype=bool)
+    for j in range(1, dim):
+        ok &= sq[:, j] == 0
+    ring = [int(o) for o in np.nonzero(ok)[0]
+            if Fraction(int(sq[o, 0]), D2) == 4]
+    assert len(ring) == 30                      # six per level, five levels
+    E = set((min(a, c), max(a, c))
+            for a, c in _ft.fast_edges_complete(b, r))
+    key = {tuple(r[i]): i for i in range(len(P))}
+    adj = {i: set() for i in ring}
+    rs = set(ring)
+    for i in ring:
+        anti = key.get(tuple(2 * r[zi] - r[i]))
+        assert anti in rs, "the ring is not closed under antipodes"
+        adj[i].add(anti)
+        adj[anti].add(i)
+    for i in ring:
+        for j in ring:
+            if i < j and (i, j) in E:
+                adj[i].add(j)
+                adj[j].add(i)
+    # three components, each a ladder: bipartite, max degree three
+    comps, seen = [], set()
+    for i in ring:
+        if i in seen:
+            continue
+        stack, comp = [i], set()
+        while stack:
+            v = stack.pop()
+            if v in comp:
+                continue
+            comp.add(v)
+            stack.extend(adj[v] - comp)
+        seen |= comp
+        comps.append(comp)
+    assert len(comps) == 3 and all(len(c) == 10 for c in comps)
+    assert max(len(adj[i]) for i in ring) <= 3
+    # bipartite by two-colouring each component
+    for comp in comps:
+        col = {}
+        root = next(iter(comp))
+        col[root] = 0
+        stack = [root]
+        while stack:
+            v = stack.pop()
+            for w in adj[v]:
+                if w not in col:
+                    col[w] = 1 - col[v]
+                    stack.append(w)
+                assert col[w] != col[v], "not bipartite"
+
+
+def test_the_overflow_guard_catches_the_empty_graph():
+    """The failure that produced three levels of meaningless measurements.
+
+    Each bite multiplies the shared denominator by eight, and the squared form
+    wraps silently rather than raising: the edge finder returned a graph with
+    NO edges and the sweep went on calling it colourable.  The headroom ratio
+    was there all along and no script was calling it.
+    """
+    broke = None
+    for lev in range(9, 17):
+        P = _bite_stack(lev)
+        b = _ft.IntBasis.covering(P)
+        r = b.rows(P)
+        edges = set((min(a, c), max(a, c))
+                    for a, c in _ft.fast_edges_complete(b, r))
+        if len(edges) < len(P):
+            broke = (lev, len(P), len(edges), b.overflow_headroom(r))
+            break
+    assert broke, "the wrap no longer reproduces; revisit the guard"
+    lev, npts, nedges, head = broke
+    assert nedges == 0 and head > 1.0, broke
+    # and the guard is conservative, so it certifies rather than detects
+    safe = _bite_stack(8)
+    bs = _ft.IntBasis.covering(safe)
+    assert bs.overflow_headroom(bs.rows(safe)) < 1.0

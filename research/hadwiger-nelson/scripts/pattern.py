@@ -1,116 +1,109 @@
-"""Is rho -> k + 1 under unioning a pattern, or a fact about Sa at four?
+"""What does Sa actually say about its hexagon?
 
-Sa unioned with a rotated copy drops rho from 7 to 5 at four colours, one
-above the floor rho >= k.  If the same happens at three colours on a different
-base graph, the pattern is about unioning rather than about Sa, and predicting
-rho -> 6 at five colours becomes an extrapolation from two points rather than
-a guess from one.
+The bite adds almost nothing.  Y is Sa together with one rotated copy, and the
+two share ONE vertex and exactly SIX edges -- the matching that sends each
+hexagon point to its image, which the rotation puts at distance one.  Six
+edges, and the union forces a named pair at four colours where neither half
+forces anything.  "One of three antipodal pairs is monochromatic" cannot do
+that: it is consistent with the two halves naming different pairs.
 
-Each base graph is unioned with rotated copies of itself, and rho is measured
-the same way throughout: UNSAT cores to get a forcing set fast, then greedy
-deletion to make it minimal.
+So Sa says more than that about its hexagon, and the exact statement is
+enumerable.  The six points of the D = 4 ring carry no edges among themselves
+-- consecutive ones are two apart, antipodal ones four -- so a priori every
+partition of six things into at most four blocks is available.  Ask the solver
+which ones actually occur: force the hexagon to each partition in turn and see
+whether Sa still colours.  What survives IS the lemma, stated exactly, with no
+paraphrase in the way.
 """
 import sys, time
 sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-from fractions import Fraction
-from hn import degrey
-from hn.field import Field
-from hn.geometry import Point, Rotation
-from hn.graph import build_graph
-from hn.forced import ColourRelations, shrink_forcing_set
+import numpy as np
+from fractions import Fraction as Fr
+from itertools import product
+from collections import defaultdict
+from hn.degrey import build_Sa
+from hn.geometry import DEGREY_FIELD as K, Point
+from hn.fast import IntBasis, fast_edges_complete
 from pysat.solvers import Solver
 
-
-def colourable(g, k):
-    cls = [[1 + v * k + c for c in range(k)] for v in range(g.n)]
-    for a, b in g.edges():
-        for c in range(k):
-            cls.append([-(1 + a * k + c), -(1 + b * k + c)])
-    with Solver(name="cd19", bootstrap_with=cls) as s:
-        return s.solve()
-
-
-def rho_upper(g, k, rounds=14):
-    # rho only means anything when proper k-colourings exist.  Without this
-    # guard a union that stops being k-colourable reports every set as
-    # "forcing" for want of a counterexample: the triangular patch returned
-    # rho = 1 at three colours, below the floor rho >= k, because two copies
-    # at the Moser angle are already 4-chromatic -- which is the spindle.
-    if not colourable(g, k):
-        return "vacuous: not k-colourable"
-    n, NV = g.n, g.n * k
-
-    def x(v, c):
-        return 1 + v * k + c
-
-    def sel(v):
-        return NV + 1 + v
-
-    cls = [[x(v, c) for c in range(k)] for v in range(n)]
-    for a, b in g.edges():
-        for c in range(k):
-            cls.append([-x(a, c), -x(b, c)])
-    for v in range(n):
-        cls.append([-sel(v), -x(v, 0)])
-    S = list(range(n))
-    for _ in range(rounds):
-        with Solver(name="cd19", bootstrap_with=cls) as s:
-            if s.solve(assumptions=[sel(v) for v in S]):
-                return None
-            core = sorted({abs(l) - NV - 1 for l in s.get_core()})
-        if len(core) >= len(S):
-            break
-        S = core
-    return len(shrink_forcing_set(ColourRelations(g, k), S))
+t0 = time.time()
+Sa = build_Sa(K)
+ZERO = Point(K.zero(), K.zero())
+b = IntBasis.covering(Sa)
+r = b.rows(Sa)
+dm, d2 = b.dim, b.D * b.D
+E = sorted(set((min(a, c), max(a, c)) for a, c in fast_edges_complete(b, r)))
+n = len(Sa)
+zi = Sa.index(ZERO)
+d = r - r[zi]
+sq = b._field_square(d[:, :dm]) + b._field_square(d[:, dm:])
+ok = np.ones(len(sq), dtype=bool)
+for j in range(1, dm):
+    ok &= sq[:, j] == 0
+ring = [int(o) for o in np.nonzero(ok)[0] if Fr(int(sq[o, 0]), d2) == 4]
+# order the hexagon by angle so that h[j] and h[j+3] are antipodal
+import math
+ang = sorted(ring, key=lambda i: math.atan2(float(Sa[i].y), float(Sa[i].x)))
+H = ang
+print(f"Sa: {n} pts, {len(E)} edges; hexagon {H}"
+      f"  [{time.time()-t0:.0f}s]", flush=True)
+for j in range(3):
+    a, c = H[j], H[j + 3]
+    assert Sa[a].x == -Sa[c].x and Sa[a].y == -Sa[c].y, "not antipodal"
+print("   antipodal pairs:", [(H[j], H[j + 3]) for j in range(3)], flush=True)
 
 
-FLD = Field((3, 11))
-HALF = FLD.rational(Fraction(1, 2))
+def partitions(seq):
+    if not seq:
+        yield []
+        return
+    first, rest = seq[0], seq[1:]
+    for p in partitions(rest):
+        for i in range(len(p)):
+            yield p[:i] + [[first] + p[i]] + p[i + 1:]
+        yield [[first]] + p
 
 
-def tri_patch(r=4):
-    u = Point(HALF, FLD.sqrt(3) * HALF)
-    one = Point(FLD.one(), FLD.zero())
-    return [one.scaled(a) + u.scaled(b)
-            for a in range(-r, r + 1) for b in range(-r, r + 1)]
+def survivors(k):
+    cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
+    for a, c in E:
+        for col in range(k):
+            cls.append([-(1 + a * k + col), -(1 + c * k + col)])
+    sv = Solver(name="cd15", bootstrap_with=cls)
+    out = []
+    for part in partitions(list(range(6))):
+        if len(part) > k:
+            continue
+        # colour symmetry: name the blocks 0, 1, 2, ... in order
+        lits = []
+        for bi, blk in enumerate(part):
+            for e in blk:
+                lits.append(1 + H[e] * k + bi)
+        if sv.solve(assumptions=lits):
+            out.append(tuple(tuple(sorted(x)) for x in part))
+    sv.delete()
+    return out
 
 
-def moser():
-    u = Point(HALF, FLD.sqrt(3) * HALF)
-    one = Point(FLD.one(), FLD.zero())
-    rh = [Point(FLD.zero(), FLD.zero()), one, u, one + u]
-    rot = Rotation(FLD.rational(Fraction(5, 6)),
-                   FLD.sqrt(11) * FLD.rational(Fraction(1, 6)))
-    return rh + [rot(p) for p in rh[1:]]
-
-
-CASES = [
-    ("triangular patch", tri_patch(), 3,
-     Rotation(FLD.rational(Fraction(5, 6)),
-              FLD.sqrt(11) * FLD.rational(Fraction(1, 6)))),
-    ("Moser spindle", moser(), 4,
-     Rotation(FLD.sqrt(33) * FLD.rational(Fraction(1, 6)),
-              FLD.sqrt(3) * FLD.rational(Fraction(1, 6)))),
-]
-
-for name, base, k, rot in CASES:
-    print(f"\n{name}, k = {k}  (floor is rho >= {k}):", flush=True)
-    cur = list(base)
-    for copies in range(1, 6):
-        if copies > 1:
-            seen, grown = set(cur), list(cur)
-            for p in cur:
-                q = rot(p)
-                if q not in seen:
-                    seen.add(q)
-                    grown.append(q)
-            cur = grown
-        g = build_graph(cur)
-        t = time.time()
-        r = rho_upper(g, k)
-        print(f"  {copies} copies: n={g.n:5} m={g.m:6}  rho = "
-              f"{r if r is not None else 'not forcing'}"
-              + (f"   <- k + 1" if r == k + 1 else "")
-              + f"  [{time.time()-t:.0f}s]", flush=True)
-        if g.n > 900:
-            break
+for k in (4, 5):
+    surv = survivors(k)
+    total = sum(1 for p in partitions(list(range(6))) if len(p) <= k)
+    anti = [(0, 3), (1, 4), (2, 5)]
+    with_mono = [p for p in surv
+                 if any(any(x in blk and y in blk for blk in p)
+                        for x, y in anti)]
+    print(f"\nk={k}: {len(surv)} of {total} hexagon patterns survive"
+          f"  [{time.time()-t0:.0f}s]", flush=True)
+    print(f"   of those, {len(with_mono)} have an antipodal pair together "
+          f"-- so the weak property holds iff that is all of them: "
+          f"{len(with_mono) == len(surv)}", flush=True)
+    byblocks = defaultdict(int)
+    for p in surv:
+        byblocks[len(p)] += 1
+    print(f"   by number of colours used on the hexagon: {dict(sorted(byblocks.items()))}",
+          flush=True)
+    for p in surv[:12]:
+        print("      ", p, flush=True)
+    if len(surv) > 12:
+        print(f"       ... and {len(surv)-12} more", flush=True)
+print("DONE", flush=True)
