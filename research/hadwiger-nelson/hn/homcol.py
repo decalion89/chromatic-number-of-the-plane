@@ -6733,6 +6733,50 @@ SATURATION_IS_THE_DISCRIMINATOR = {
 }
 
 
+# The saturation criterion predicts, which is what makes it a criterion.
+#
+# An explanation that cannot predict is worth little, so it was made to.  At
+# 207 points a RANDOM subset of Sa reads the ceiling -- saturation 0.56, census
+# 715 of 715.  Choosing the same number of points greedily for rhombus
+# membership instead should read lower, and it does:
+#
+#     points   random: sat / census      chosen: sat / census
+#        207        0.56 /  715              3.88 /  341
+#        257        1.01 /  715              4.81 /  259
+#        307        1.77 /  715              4.38 /  245
+#        347        2.47 /  577              4.55 /  174
+#        397        4.47 /   10              4.47 /   10
+#
+# At matched size, choosing for saturation cuts the census by half or more, and
+# at 207 points it moves it off a ceiling the random subset never leaves.  This
+# is the first design variable in this work that moves the quantity of
+# interest at all -- density does not, size does not, symmetry does not, and
+# contact does not.
+#
+# It is not sufficient, and the table says so.  At 257 points the chosen subset
+# has saturation 4.81, HIGHER than complete Sa's 4.47, and its census is 259
+# rather than 10.  Saturation carries the census most of the way down and the
+# collapse still needs the complete object.  So the honest statement is that
+# saturation is necessary, predictive, and alone insufficient.
+SATURATION_PREDICTS = {
+    "the test": "same sizes, subsets chosen greedily for rhombus membership "
+                "instead of at random",
+    "random": {207: (0.56, 715), 257: (1.01, 715), 307: (1.77, 715),
+               347: (2.47, 577), 397: (4.47, 10)},
+    "chosen for saturation": {207: (3.88, 341), 257: (4.81, 259),
+                              307: (4.38, 245), 347: (4.55, 174),
+                              397: (4.47, 10)},
+    "at 207 points": "the random subset never leaves the ceiling; the chosen "
+                     "one reads 341 of 715",
+    "the first variable that moves it": "density does not, size does not, "
+                                        "symmetry does not, contact does not",
+    "but not sufficient": "at 257 points the chosen subset has HIGHER "
+                          "saturation than complete Sa and a census of 259, "
+                          "so the collapse still needs the complete object",
+}
+
+
+
 
 
 

@@ -4933,7 +4933,26 @@ memberships per point and collapses near 4.5.
 `G`'s five-colour saturation is at most **0.001** gadgets per point, measured
 independently. Against a threshold of 2.5–4.5 that is a shortfall of **two to
 four thousand** — not the factor of 1400 estimated earlier from gadget sizes
-alone, and now measured on both sides rather than argued from one. That is
+alone, and now measured on both sides rather than argued from one.
+
+And it predicts, which is what makes it a criterion. At 207 points a *random*
+subset never leaves the ceiling; the same number of points chosen greedily for
+rhombus membership reads **341 of 715**:
+
+| points | random: sat / census | chosen: sat / census |
+|---:|---:|---:|
+| 207 | 0.56 / **715** | 3.88 / **341** |
+| 257 | 1.01 / 715 | 4.81 / 259 |
+| 307 | 1.77 / **715** | 4.38 / **245** |
+| 347 | 2.47 / 577 | 4.55 / 174 |
+| 397 | 4.47 / 10 | 4.47 / 10 |
+
+This is the first design variable in the whole of this work that moves the
+quantity of interest at all — density does not, size does not, symmetry does
+not, contact does not. It is also **not sufficient**, and the table says so: at
+257 points the chosen subset has *higher* saturation than complete `Sa` and a
+census of 259 rather than 10. Saturation carries the census most of the way
+down; the collapse still needs the complete object. That is
 what `G`'s readings mean: 5-chromatic puts it at the analogue of 207 points,
 not 397, and the 13 356-point unions of translates are *wide* rather than
 *tight*, which is the same place.
