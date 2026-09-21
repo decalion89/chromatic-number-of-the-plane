@@ -6459,6 +6459,62 @@ THE_BITE_IS_A_ONE_OFF = {
 }
 
 
+# The symmetric family sits on a knife edge, and nothing in it falls off.
+#
+# Sixty-degree rotation carries Sa u rho(Sa) to itself and rotates the ring by
+# one position, so it permutes the three antipodal pairs cyclically and with
+# them the three surviving patterns: they form a single orbit.  Satisfiability
+# is constant on an orbit, so a union that keeps the symmetry has THREE
+# surviving patterns or NONE.
+#
+# And none means 5-chromatic.  Adding vertices only removes survivors, so any
+# union of rotated copies of Sa has at most the union's three, every colouring
+# of the graph induces one of them, and if all three fail there is no proper
+# 4-colouring at all.  Every rotation about the origin commutes with the
+# sixty-degree one, so the whole family keeps the symmetry and the whole family
+# is on that edge.
+#
+# G is 1581 points, so a union that stops colouring below that would be a
+# smaller 5-chromatic unit-distance graph than de Grey's, assembled from his
+# own pieces.  Twenty-four chains of cumulative unions, run out to between 793
+# and 1975 points: every one colours.  The cost of asking was eighty-four
+# seconds, because "still colours" is the satisfiable answer and satisfiable
+# is the fast direction.
+THE_SYMMETRIC_FAMILY_IS_ON_A_KNIFE_EDGE = {
+    "why three or none": "sixty-degree rotation permutes the three surviving "
+                         "patterns cyclically, and satisfiability is constant "
+                         "on an orbit",
+    "why none means 5-chromatic": "every colouring induces one of the three, "
+                                  "since adding vertices only removes "
+                                  "survivors and the union has just these",
+    "chains tried": 24,
+    "points reached": "793 to 1975",
+    "stopped colouring": 0,
+    "what it would have been": "a 5-chromatic unit-distance graph smaller "
+                               "than G's 1581 points, out of G's own pieces",
+    "cost": "84 seconds -- 'still colours' is the satisfiable answer",
+}
+
+
+# Sa u rho(Sa) forces all SIX antipodal pairs, not three.
+#
+# The derivation concerns Sa's own hexagon, but the union's D = 4 ring has
+# twelve points: Sa's six and the six of the rotated copy.  Both halves are
+# images of the same argument, so both should be forced, and the solver agrees
+# -- one UNSAT proof per pair, three to twenty-seven minutes each.
+THE_UNPRUNED_UNION_FORCES_SIX_PAIRS = {
+    "ring": "12 points at squared radius 4 about the origin",
+    "antipodal pairs": 6,
+    "forced same at four colours": "(2,0); (1,sqrt3); (-1,sqrt3); "
+                                   "(1.75, 0.968...); (0.036..., 1.9996...); "
+                                   "and the sixth by the same symmetry",
+    "cost": "one UNSAT proof each, 230 to 1613 seconds",
+    "why": "the rotated copy is an image of Sa, so it carries the image of "
+           "Sa's statement, and the bite is symmetric between them",
+}
+
+
+
 
 
 
