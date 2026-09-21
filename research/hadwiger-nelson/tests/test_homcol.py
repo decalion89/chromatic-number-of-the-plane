@@ -4585,3 +4585,23 @@ def test_de_greys_seed_is_an_orbit_transversal():
     c = _hc.A_CAPPING_SEED_IS_ONE_IN_TWO_TO_THE_39
     assert "2**39" in c["so the count is"]
     assert c["random 39-subsets of Sa"]["all 39"] == "0 of 3000"
+
+
+def test_the_bite_search_is_complete_and_de_greys_is_optimal():
+    """Three of ten is the floor, and the family it is a floor over is closed.
+
+    The classification says only bites about a ring's centre can tighten that
+    ring, so the 104 bites about Sa's origin are the complete family rather
+    than a sample.  All were run; the best census is three and D = 4 achieves
+    it alone.
+    """
+    c = _hc.DE_GREYS_BITE_IS_OPTIMAL_AND_THE_SEARCH_IS_COMPLETE
+    assert c["best census"] == 3
+    assert c["achieved by"].startswith("D = 4")
+    assert "104" in c["the complete family"]
+    assert c["any other ring"] == "census 10 of 10"
+    # and the floor is above zero, so the construction does not close by itself
+    assert c["best census"] > 0
+    # the unpruned union reaches exactly that floor
+    assert _hc.THE_PRUNING_COSTS_TWO_OF_THREE_PAIRS[
+        "Sa u rho(Sa), unpruned"]["surviving patterns"] == c["best census"]

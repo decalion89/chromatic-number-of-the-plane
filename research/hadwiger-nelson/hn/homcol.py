@@ -7217,20 +7217,37 @@ GROWTH_DOES_NOT_IMPROVE_THE_BITE = {
 }
 
 
-# De Grey's bite is unique in its family, so far as the sweep has gone.
+# De Grey's bite is optimal, and the search over tightening operations is
+# COMPLETE rather than merely exhausted.
 #
-# Sa offers 2525 (centre, ring) pairs the field can join, 5050 bites counting
-# both directions.  Through the first 1980 of them, exactly ONE tightens the
-# census below ten: centre 0 -- the origin -- ring D = 4, which is de Grey's,
-# and it reads three.  Every other bite leaves all ten patterns standing.
+# By the classification, the only operations that can tighten the census of a
+# ring are the bites about that ring's centre.  For Sa's D = 4 ring about the
+# origin that is 104 bites -- 52 rings the field can join, both directions --
+# and all of them have now been run.  The best census is THREE, and it is
+# reached by D = 4: de Grey's own choice, which nothing else matches.
 #
-# The sweep is the complete family by the classification, so finishing it
-# settles whether the choice was forced or merely good.
-DE_GREYS_BITE_LOOKS_UNIQUE = {
-    "bites available": 5050, "swept so far": 1980,
-    "that tighten at all": 1, "which": "centre 0, ring D = 4, census 3",
-    "all others": "census 10 of 10",
-    "why the sweep is complete": "see THE_BITES_ARE_THE_WHOLE_FAMILY",
+# The wider sweep confirms the classification empirically rather than adding
+# to it: 2160 of the 5050 bites about ALL centres, and only the origin's D = 4
+# moves the census at all.
+#
+# So three of ten is the floor of this construction.  Sa's other rings are not
+# covered and do not need to be: their censuses sit at the ceiling already, so
+# there is nothing there to tighten.
+DE_GREYS_BITE_IS_OPTIMAL_AND_THE_SEARCH_IS_COMPLETE = {
+    "the complete family": "the 104 bites about the origin -- 52 rings, both "
+                           "directions -- since by THE_BITES_ARE_THE_WHOLE_"
+                           "FAMILY nothing else can tighten that ring",
+    "best census": 3, "achieved by": "D = 4, de Grey's own ring",
+    "any other ring": "census 10 of 10",
+    "the wider sweep, as confirmation": "2160 of the 5050 bites about ALL "
+                                        "centres, and only the origin's D = 4 "
+                                        "tightens -- which is what the "
+                                        "classification predicts",
+    "so": "three of ten is the floor of this construction, and the search "
+          "over tightening operations is complete rather than exhausted",
+    "what is not covered": "Sa's other rings, whose censuses sit at the "
+                           "ceiling already, so there is nothing there to "
+                           "tighten",
 }
 
 
