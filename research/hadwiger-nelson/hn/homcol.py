@@ -7468,6 +7468,47 @@ THE_UNIVERSE_TEST_FAILS_ITS_OWN_CALIBRATION = {
 }
 
 
+# The instrument, rebuilt and calibrated, and what it then says at five.
+#
+# The walk universe could not find a capped ring even at four colours, so its
+# five-colour silence meant nothing.  Building the universe the way the points
+# that carry caps actually arise -- as INTERSECTIONS of unit circles about
+# points already present, which is where de Grey's radii of 0.168 and 0.333
+# come from -- fixes it.
+#
+# Seeded with Sa and closed once under that generator: 397 points become 3001,
+# and at FOUR colours the instrument finds THREE capped rings where the walk
+# universe found none:
+#
+#     D = 7/3   19 points    capped
+#     D = 4     10 points    capped   <- de Grey's own
+#     D = 16/9   4 points    capped
+#
+# So it detects the known case and two besides, and the calibration passes.
+# Pointed at five colours on the same 3001 points: 0 of 7 rings capped.
+#
+# That negative means something the earlier one did not.  The universe demon-
+# strably contains capped configurations at four, so its silence at five is a
+# statement about five rather than about the universe -- and by monotonicity it
+# covers every subgraph that keeps one of those rings.
+THE_INSTRUMENT_CALIBRATED_AND_WHAT_IT_SAYS = {
+    "the fix": "build the universe from unit-circle intersections, not walks",
+    "universe": "Sa closed once under the intersection generator, 397 -> 3001",
+    "calibration at four": {"capped rings": 3,
+                            "which": ["D = 7/3, 19 points",
+                                      "D = 4, 10 points -- de Grey's",
+                                      "D = 16/9, 4 points"],
+                            "the walk universe found": 0},
+    "at five colours": "0 of 7 rings capped",
+    "why this negative counts": "the universe demonstrably contains capped "
+                                "configurations at four, so its silence at "
+                                "five is about five",
+    "coverage": "every subgraph of those 3001 points that keeps one of the "
+                "rings, by monotonicity",
+}
+
+
+
 
 
 

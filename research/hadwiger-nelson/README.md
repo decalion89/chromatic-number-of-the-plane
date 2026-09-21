@@ -5260,6 +5260,27 @@ the largest object tested in this work, and its negative is not about it alone.
 > class of constructions" was wrong. The fix is to build the universe from
 > unit-circle intersections instead.
 
+**Rebuilt the right way, the instrument calibrates.** Points that carry caps
+arise as *intersections* of unit circles about points already present — which
+is exactly where de Grey's radii of 0.168 and 0.333 come from. Seeding with
+`Sa` and closing once under that generator takes 397 points to 3 001, and at
+**four** colours it finds **three** capped rings where the walk universe found
+none:
+
+| ring | points | |
+|---|---:|---|
+| `D = 7/3` | 19 | capped |
+| `D = 4` | 10 | capped — de Grey's own |
+| `D = 16/9` | 4 | capped |
+
+It detects the known case and two besides. Pointed at **five** colours on the
+same 3 001 points: **0 of 7**.
+
+That negative means what the earlier one did not. The universe demonstrably
+*contains* capped configurations at four, so its silence at five is a statement
+about five rather than about the universe — and by monotonicity it covers every
+subgraph that keeps one of those rings.
+
 
 ## Honest odds
 
