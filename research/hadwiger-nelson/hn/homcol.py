@@ -5982,7 +5982,12 @@ THE_EDGE_IS_AT_FOUR_NINTHS = {
                                            1500: "1279s", 1540: "4969s",
                                            1560: "6893s"},
     "at 1560 points": "1548 of the 1558 pairs forbidden, and it still colours",
-    "so": "the full instance is probably satisfiable; the curve is the result",
+    "SETTLED": "satisfiable.  A calibrated TabuCol reached zero conflicts in "
+               "151 seconds where four CDCL solvers had run for over three "
+               "hours, and the colouring was verified independently against "
+               "the exact geometry: 1581 vertices, five colours, 0 of 7877 "
+               "unit edges monochromatic, 0 of 1558 pairs at 4/9 "
+               "monochromatic.  So G does NOT carry the weak property there.",
     "why 4/9 and not another": {
         "doubly usable with no adjunction": "4D-1 = 7/9 -> sqrt(7) for the "
                                             "bite, 16D-1 = 55/9 -> sqrt(55) "
@@ -6204,4 +6209,47 @@ THE_COMBINED_GRAPHS_HAVE_CLIQUE_NUMBER_FOUR = {
                      "mean degree": 14.1, "max degree": 72,
                      "clique number": 4},
     "so": "no six-point witness, and the SAT calls stay the only route",
+}
+
+
+# Local search settles what CDCL could not, twice, and the colouring checks out.
+#
+# Once calibrated, TabuCol answered two instances that conflict-driven search
+# had not.  Y at five colours with class 4/9 forbidden -- 577 seconds of
+# cadical -- fell in a few seconds.  And G at five with its 1558 pairs at 4/9
+# forbidden, which cadical, glucose, minisat and lingeling had been grinding on
+# for over three hours between them, came back SATISFIABLE: seed 2001 reached
+# zero conflicts after 375898 moves, in 151 seconds.
+#
+# A local search reports zero by maintaining its conflict count incrementally,
+# so a bug in the update would report a colouring that is not one.  The
+# colouring was therefore re-derived and checked from scratch against the exact
+# geometry rather than against the search's own bookkeeping:
+#
+#     1581 of 1581 vertices coloured, colours used {0,1,2,3,4}
+#     0 of 7877 unit edges monochromatic
+#     0 of 1558 pairs at squared distance 4/9 monochromatic
+#     0 edges whose exact distance is not 1
+#     0 pairs whose exact distance is not 4/9
+#
+# So the reading recorded earlier -- "probably satisfiable; the curve is the
+# result" -- is now settled rather than probable.  G's hardest class is hard
+# and colourable, and the asymmetry across its classes stands as an asymmetry
+# and not as a near miss.
+TABUCOL_SETTLES_WHAT_CDCL_COULD_NOT = {
+    "Y at five, class 4/9": {"cadical": "577s", "TabuCol": "seconds",
+                             "verdict": "satisfiable"},
+    "G at five, class 4/9": {"four CDCL solvers": "over three hours, no "
+                                                  "verdict",
+                             "TabuCol": "151s, seed 2001, 375898 moves",
+                             "verdict": "satisfiable"},
+    "verified independently": {"vertices": 1581, "colours": 5,
+                               "monochromatic unit edges": 0,
+                               "monochromatic 4/9 pairs": 0,
+                               "edges re-derived exactly": 7877,
+                               "pairs re-derived exactly": 1558},
+    "upgrades": "THE_EDGE_IS_AT_FOUR_NINTHS, from probable to settled",
+    "why it works": "CDCL explodes on both sides of a phase transition; local "
+                    "search is asymmetric, landing on satisfiable instances "
+                    "and plateauing on unsatisfiable ones",
 }

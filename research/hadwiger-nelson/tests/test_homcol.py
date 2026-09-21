@@ -2846,3 +2846,17 @@ def test_no_six_clique_in_the_combined_graphs():
         # mean degree is recorded to one decimal, so allow for the rounding
         assert abs(g["unit edges"] + g["added"]
                    - g["mean degree"] * g["points"] / 2) < 0.05 * g["points"]
+
+
+def test_tabucol_settled_the_three_hour_instance():
+    c = hn.homcol.TABUCOL_SETTLES_WHAT_CDCL_COULD_NOT
+    assert c["G at five, class 4/9"]["verdict"] == "satisfiable"
+    v = c["verified independently"]
+    assert v["monochromatic unit edges"] == 0
+    assert v["monochromatic 4/9 pairs"] == 0
+    # the check re-derived every edge and pair, not just the colouring
+    assert v["edges re-derived exactly"] == 7877
+    assert v["pairs re-derived exactly"] == 1558
+    # and the earlier hedge is now upgraded, not contradicted
+    assert "SETTLED" in hn.homcol.THE_EDGE_IS_AT_FOUR_NINTHS
+    assert "satisfiable" in hn.homcol.THE_EDGE_IS_AT_FOUR_NINTHS["SETTLED"]

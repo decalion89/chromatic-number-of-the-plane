@@ -4286,9 +4286,19 @@ almost certainly does too — what the curve says is where `G` stands:
 | 1540 pts | 4969 s |
 | 1560 pts | 6893 s — with **1548 of the 1558** pairs forbidden, and it still colours |
 
-So the verdict is probably negative and the reading is not the verdict. `G` is
-nowhere near the property on nine of its closable classes and right at the edge
-on one. That one is `D = 4/9`, which is **doubly usable with no adjunction at
+> **Settled, and negative.** A calibrated TabuCol reached zero conflicts in
+> **151 s** where the four CDCL solvers had run for over three hours between
+> them, and the colouring was verified from scratch against the exact geometry
+> rather than the search's own bookkeeping: 1581 of 1581 vertices, five colours,
+> **0** of 7877 unit edges monochromatic, **0** of 1558 pairs at `4/9`
+> monochromatic, and every edge and pair re-derived exactly. So `G` does **not**
+> carry the weak property there. The same tool settled `Y`'s `4/9` — 577 s of
+> cadical — in seconds. CDCL explodes on both sides of a phase transition;
+> local search is asymmetric, landing on satisfiable instances and plateauing on
+> unsatisfiable ones.
+
+So the verdict is negative and the reading is not the verdict. `G` is nowhere
+near the property on nine of its closable classes and right at the edge on one. That one is `D = 4/9`, which is **doubly usable with no adjunction at
 all** — `4D - 1 = 7/9` wants `sqrt(7)` for the bite, `16D - 1 = 55/9` wants
 `sqrt(55) = sqrt(5) sqrt(11)` for the spindle, both already in de Grey's field —
 and it is one of the three classes `Sa` carries at four.
