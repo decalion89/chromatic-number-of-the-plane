@@ -9364,3 +9364,78 @@ THE_THIRD_LEVEL_NEEDS_A_WIDER_GRAPH_NOT_JUST_A_BIGGER_FIELD = {
                                               "carrier wider while keeping it "
                                               "chromatically tight",
 }
+
+
+# Why symmetrising a graph usually does nothing, stated exactly.
+#
+# Three closures under the order-twelve group have now been built from G, and
+# their edge counts say the same thing three different ways.  About the
+# origin: 18966 points, 94548 edges, which is twelve times G's 7877 exactly.
+# About a centre eight units out: 18960 points, 94524 edges, twelve times
+# 7877 exactly again.  About the pivot: 13873 points, 73782 edges, 10.64 per
+# vertex against G's 9.96 -- the only one of the three with any cross edges
+# at all.
+#
+# The far centre was chosen because the twelve images genuinely overlap there:
+# their centres sit 4.01 apart on a circle of radius 7.75 while each copy has
+# radius about 3.  They overlap in the plane and share not one edge.
+#
+# Overlapping is not the condition.  An edge between a point and its rotated
+# image needs their distance to be exactly 1, and for a turn of theta about c
+# a point at distance rho from c moves 2*rho*sin(theta/2).  At sixty degrees
+# that is rho itself, so the closure stitches exactly the points lying at
+# distance ONE from the centre, and nothing else.  The pivot has sixty of
+# them; the far centre has none; the origin has none.
+#
+# So a symmetrisation is worth doing only where the graph already has a
+# radius-1 ring, and how much it is worth is how big that ring is.  The
+# operation does not create structure, it only exploits what the centre
+# already sees.
+THE_CLOSURE_ONLY_STITCHES_THE_RADIUS_ONE_RING = {
+    "the rule": "a turn of theta about c moves a point at distance rho by "
+                "2*rho*sin(theta/2); at sixty degrees that is rho, so only "
+                "rho = 1 lands a unit away",
+    "measured": {
+        "about the origin": "94548 = 12 x 7877, zero cross edges",
+        "about a far centre 8 out": "94524 = 12 x 7877, zero cross edges, "
+                                    "though the twelve copies overlap in the "
+                                    "plane",
+        "about the pivot": "73782 edges, 10.64/v, and the pivot has 60 points "
+                           "of the closure at distance 1",
+    },
+    "so geometric overlap is not the condition": "exact unit distance is, and "
+                                                 "that is decided by the "
+                                                 "radius-1 ring at the centre",
+    "which makes the choice of centre measurable in advance": "close where "
+                                                              "the radius-1 "
+                                                              "ring is "
+                                                              "biggest",
+}
+
+
+# de Grey's own chain, run one level up, on a carrier that has what it needs.
+#
+# Gp is G closed under the order-twelve group about its pivot: 13873 points,
+# 5-chromatic, symmetric, with twelve rings the field can bite.  Biting it on
+# the ring of radius 2 by cos 7/8 -- his Sb angle -- gives 27673 points and
+# 30744 cross edges, a real stitch rather than a disjoint union.  Taking the
+# new centre to be a point of that bitten ring and biting again at radius 4 by
+# cos 31/32 -- his G angle -- gives 55345 points and 314283 edges.
+#
+# That is his construction, both bites, in his order, on the first carrier in
+# this work that is tight and symmetric at once.  It is 5-colourable.
+#
+# Each of the eleven single bites available on Gp is 5-colourable too, cross
+# edges and all: radius 2 adds 30744, radius 4 adds 17712, radius 3 adds
+# 23496, and every union colours.
+THE_CHAIN_RUNS_AND_NOTHING_HAPPENS = {
+    "Gp bitten at radius 2 (his Sb angle)": "27673 points, 157140 edges, "
+                                            "30744 cross, 5-colourable",
+    "then at radius 4 (his G angle), centre on the first ring":
+        "55345 points, 314283 edges, 5-colourable",
+    "eleven single bites on Gp": "all stitch, all 5-colourable",
+    "why this was expected": "a bite sharpens a disjunction and Gp has no "
+                             "capped ring to sharpen -- the exhaustive scan "
+                             "found none at any centre or radius",
+    "what it rules out": "that the chain itself was the missing ingredient",
+}
