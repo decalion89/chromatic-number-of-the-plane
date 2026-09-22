@@ -12404,3 +12404,26 @@ THE_FORCING_NEEDS_SIZE_AND_THE_FLOOR_IS_A_476_POINT_UNION = True
 # then 27, then 52 -- every class has exactly two members.  The forcing
 # relation is a perfect matching, never a chain.
 FORCED_EQUALITY_NEVER_CHAINS_SO_THE_ANGLE_IS_NEVER_FREE = True
+
+
+# Three sizes from one recipe, each smaller for a reason that was measured
+# rather than guessed:
+#
+#     1139   Sa itself, glued at the 60-degree rotation about a vertex
+#      951   Sa peeled to its 327 highest-degree vertices, glued at rot120
+#             (overlap 178, so a 476-point union instead of 570)
+#      825   the union cut down to the 413 vertices that still force the pair
+#
+# The peeling order matters: deleting vertices at random destroys the forcing
+# after ten of 397, while deleting the ten LOWEST-DEGREE ones leaves all eight
+# pairs and raises the mean degree.  And the union is nearly vertex-critical
+# for its forcing -- a single deletion usually breaks it, and the UNSAT cores
+# come back at 473 of 476 -- so the cut had to be found by repeated randomised
+# passes with restarts, not by one greedy sweep.
+#
+# For scale: the smallest 5-chromatic unit-distance graph known is the
+# 509-vertex Parts graph, reached from de Grey's 1581 by a chain of
+# minimisations costing on the order of 100000 CPU-hours.  825 is not a
+# record.  It is a different field, reached in a different way, and the first
+# of these numbers that anyone has minimised there.
+EIGHT_HUNDRED_AND_TWENTY_FIVE_IN_A_FIELD_NOBODY_HAS_MINIMISED_IN = True
