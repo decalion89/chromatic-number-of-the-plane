@@ -11305,3 +11305,44 @@ pairs forced to within 4 at 44/9.  A pair forced that close at a distance
 under 2 would be a spindle away from a contradiction, and a contradiction
 there is chi_c > 4.8889 -- one ninth short of the whole problem.
 """
+
+
+CORRECTION_THE_DENOMINATOR_BUYS_NOTHING = """
+Correction, within the hour, to the note above.  Its arithmetic is right and
+its conclusion is backwards.
+
+That note observed the spindle closes only when 2k <= q, read off k <= 1 at
+q = 2 and k <= 4 at q = 9, and concluded the high-denominator ratios give
+the mechanism room.  It compared the ABSOLUTE k while the circle was growing
+underneath it.
+
+As a fraction of the circle, with r = p/q:
+
+        k/p  <=  (q/2)/p  =  1/(2r)
+
+which is about 1/9 at every ratio near 4.5, whatever the denominator.
+Spelt out:
+
+        9/2   k <= 1 of  9   =  1/9      = 0.1111
+        19/4  k <= 2 of 19   =  1/9.5    = 0.1053
+        24/5  k <= 2 of 24   =  1/12     = 0.0833
+        44/9  k <= 4 of 44   =  1/11     = 0.0909
+
+So "forced to within 4 of 44" sounds far milder than "forced to the same or
+an adjacent position", and is in fact TIGHTER.  The denominator buys nothing
+and the conclusion inverts: 9/2 is, marginally, the friendliest rung for the
+spindle rather than the one place it cannot be used.
+
+What survives from the note is the part that was actually new -- the reason
+the spindle does not transfer at all.  A forced-close pair plus an edge is
+not a contradiction on the circle, because two pairs each forced within q
+put their far ends within 2q while adjacency asks only for q.  The device
+needs forcing to HALF the adjacency threshold, everywhere, and that is a
+strictly stronger hypothesis than the forced-same it replaces.  That is a
+real obstruction and it does not depend on the ratio.
+
+Recorded because the error was of the kind this project keeps catching in
+its own instruments: a quantity compared without its denominator.  The
+five-cycle screen counted quadrilaterals; the growth believed a noisy
+estimator; this one read 4 against 1 and forgot 44 against 9.
+"""
