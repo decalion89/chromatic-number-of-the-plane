@@ -10741,3 +10741,44 @@ loss of essentially all pairwise forcing, so it is a global property of the
 colouring space rather than a local one -- which is also why no amount of
 pair-by-pair forcing analysis in this project ever found it.
 """
+
+
+THE_TARGET_HAS_A_PURELY_COMBINATORIAL_FORM = """
+The Minty-type characterisation, validated here before being used.
+
+Goddyn, Tarsi and Zhang: chi_c(G) is the minimum over orientations of the
+maximum over cycles of |C| / min(|C+|, |C-|), the two counts being the edges
+of C that agree and disagree with a traversal.  An orientation containing a
+directed cycle scores infinity and drops out, so the minimum is over acyclic
+orientations.
+
+Checked by brute force over every orientation and every cycle, against the
+values the circular-clique solver returned independently:
+
+    C_3  3      C_5  5/2      C_7  7/3      K_4  4      Moser spindle  7/2
+
+Five for five, including the spindle's 7/2, which is the one value here that
+no textbook supplies.  Two computations sharing no code agree exactly, so
+both the solver and the characterisation are doing what they claim.
+
+What it buys is a restatement of the goal with no geometry in it.  A cycle
+whose minority side has a single edge is a directed path closed by one edge
+the other way, so:
+
+    chi_c(G) >= 5  iff  every acyclic orientation of G contains a directed
+                        path of four edges whose endpoints are adjacent
+
+and chi_c(G) > 9/2 asks for a little less: in every acyclic orientation some
+cycle has fewer than 2|C|/9 edges the minority way -- a 9-cycle with two, a
+5-cycle with one, a 14-cycle with three.  This is a refinement of
+Gallai-Roy, which says only that every orientation has a directed path on
+chi(G) vertices.
+
+It also gives a fast certified upper bound where SAT chokes.  For a fixed
+orientation the maximum ratio is a min-ratio-cycle problem -- weight an edge
+1-r traversed with the orientation and 1 against, and look for a cycle of
+non-negative total weight, which Bellman-Ford settles in polynomial time.
+Local search over orientations then bounds chi_c from above on graphs far
+too large to encode as circular-clique SAT, and an upper bound at or below
+4.5 eliminates a candidate outright.
+"""
