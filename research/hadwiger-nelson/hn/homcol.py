@@ -10125,7 +10125,7 @@ THE_EXHAUSTION_IS_GLOBAL_OVER_G = {
 # both capped and locally dense are the ones that fit the hexagonal grain.
 THE_FULL_TABLE_OVER_G = {
     "sqrt3": {10: 0, 11: 0, 12: "90, all chi 3", 13: 0, 14: 0, 15: 0, 16: 0,
-              18: "240, all chi 3"},
+              18: "240, all chi 3", 20: 0, 24: "401 and counting, all chi 3"},
     "2": {12: 0},
     "2/sqrt3": {12: 0},
     "how each entry was obtained": "the solver exhausted its candidates; "
