@@ -11346,3 +11346,41 @@ its own instruments: a quantity compared without its denominator.  The
 five-cycle screen counted quadrilaterals; the growth believed a noisy
 estimator; this one read 4 against 1 and forgot 44 against 9.
 """
+
+
+WHAT_THE_CIRCULAR_FRAME_IS_FOR = """
+The synthesis, after both the result and the correction.
+
+chi_c > 5 and chi >= 6 are the same statement, so neither frame can be
+harder than the other.  What differs is what each one is good at, and the
+work above settles it fairly precisely.
+
+MEASURING is where the circular frame wins, and it wins completely.  The
+colour frame answered "5" about a hundred times and ranked nothing.  The
+circular frame separates Sa and Y (tight at 4) from the Moser spindle (loose
+at 7/2), places G at 4.5 with three independent searches agreeing, reads de
+Grey's step as worth about half a colour, tells the instruments that cannot
+reach the next rung from those that can, and turns a yes-or-no into a ladder
+of provable statements.  None of that was visible before.
+
+CONSTRUCTING is where it does not help, and the reason is now explicit.  De
+Grey's two devices both rest on forced-same pairs: the bite produces one,
+the spindle converts it into a contradiction.  Neither survives the
+translation.  A forced-same pair becomes "forced within q", which is not a
+contradiction with an edge, and making the spindle close requires forcing to
+q/2 -- half the adjacency threshold, at every ratio, as the correction
+above establishes.  That is strictly stronger than what the colour frame
+asks for, so a construction is better built where the mechanisms live.
+
+The practical division: build in colours, measure in circles.  Every
+candidate this project produced was built by colour-frame reasoning and then
+weighed on the circular scale, which is exactly the right way round, and it
+is how the density route was closed with a number instead of an opinion.
+
+It also says what would change the picture.  Not a cleverer spindle -- the
+q/2 obstruction is unconditional -- but a device that produces forced-CLOSE
+pairs directly, with slack, rather than forced-same pairs that then have to
+be converted.  Nothing here produces one, and the arc bound built to look
+for them returned nothing on the neighbourhoods it was pointed at.  That is
+the open end, stated as precisely as this pass can state it.
+"""
