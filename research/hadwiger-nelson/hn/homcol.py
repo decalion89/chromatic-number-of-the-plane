@@ -10936,3 +10936,36 @@ the ratio would be 5.  Adding points to force that, in every orientation, is
 a far better specified target than killing sampled homomorphisms, and it is
 the first growth objective in this project that names what a point must do.
 """
+
+
+THE_HOLE_AT_ONE_IS_FORCED_BY_THE_WRAP_AROUND = """
+Why the path ends never land a unit apart, with the arithmetic that makes it
+inevitable.
+
+Measured on G's map-induced orientation: exactly 42 distinct end pairs of
+directed 4-edge paths, distances ranging 0.29 to 2.39 with median 1.09, and
+ZERO in [0.99, 1.01].  Seven pairs lie within ten per cent of a unit, the
+nearest 2.8 per cent off -- twice over, the same value appearing in a
+mirrored pair.
+
+The hole is not luck.  The orientation comes from the position, so a
+directed path climbs the positions, and adjacency forces each step to be at
+least q = 2.  With p = 9 positions the highest a 4-edge path can reach is
+0 -> 2 -> 4 -> 6 -> 8, and since four steps of at least 2 already total 8,
+every directed 4-edge path has positions EXACTLY 0, 2, 4, 6, 8.  Its ends
+therefore sit at 0 and 8, whose circular distance is 1, below the threshold
+2 -- so they cannot be adjacent.  Ever.
+
+That also explains the small count.  A layering into 9 levels where every
+edge jumps at least 2 leaves very little room for long directed paths, which
+is why 600 starting vertices in a graph with 7877 arcs yield 42 end pairs
+and not thousands.
+
+So the orientation a homomorphism induces is built, by the wrap-around, to
+avoid exactly the configuration that would raise the ratio to 5.  The
+quantitative reading is that G comes within 2.8 per cent of a closure it can
+never make while a map exists -- which is the correct way round: the
+closeness is a measure of the geometry, and the impossibility is a property
+of the map.  Killing every map remains the only way through, and this says
+precisely what a map is doing to stay alive.
+"""
