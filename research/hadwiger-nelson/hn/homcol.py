@@ -10101,3 +10101,39 @@ THE_EXHAUSTION_IS_GLOBAL_OVER_G = {
                        "closable distances, no capped set has two-distance "
                        "chromatic number 5",
 }
+
+
+# The full table over G, and the sizes that survive it.
+#
+# With the minimum-degree condition -- a 5-chromatic graph has every vertex
+# joined to four others inside it -- the space of candidate capped sets is
+# small enough to exhaust, size by size, over all 1581 points:
+#
+#   at distance sqrt3:
+#     10, 11, 13, 14, 15, 16 points : no candidate exists at all
+#     12 points                     : exactly 90, every one at chi 3
+#     18 points                     : exactly 240, every one at chi 3
+#   at distance 2      : 12 points  : none
+#   at distance 2/sqrt3: 12 points  : none
+#
+# The solver runs out of candidates at every size rather than being stopped;
+# each survivor is verified capped and its chromatic number computed exactly.
+# Nothing reaches 5, so nothing feeds the reduction.
+#
+# The surviving sizes are 12 and 18, both multiples of six, which is the
+# order of the rotation G inherits from Sa through Y -- the sets that can be
+# both capped and locally dense are the ones that fit the hexagonal grain.
+THE_FULL_TABLE_OVER_G = {
+    "sqrt3": {10: 0, 11: 0, 12: "90, all chi 3", 13: 0, 14: 0, 15: 0, 16: 0,
+              18: "240, all chi 3"},
+    "2": {12: 0},
+    "2/sqrt3": {12: 0},
+    "how each entry was obtained": "the solver exhausted its candidates; "
+                                   "survivors verified capped and their "
+                                   "chromatic number computed exactly",
+    "the surviving sizes are multiples of six": "12 and 18, matching the "
+                                                "order of the rotation G "
+                                                "inherits through Y",
+    "consequence": "nothing in G feeds the reduction from the two-branch "
+                   "disjunction to a forced pair",
+}
