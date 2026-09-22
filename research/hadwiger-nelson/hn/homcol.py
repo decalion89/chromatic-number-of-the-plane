@@ -10901,3 +10901,38 @@ at both the slack and the tight ratio is out.  What is left is the Minty
 side -- the cycles that hold the graph to the rung -- and that is where to
 look next.
 """
+
+
+G_IS_HELD_AT_THE_RUNG_BY_EIGHTY_NINE_CYCLES = """
+The witnesses, and the sharpest statement of the target so far.
+
+In G's best orientation the cycles realising the score exactly are 80 cycles
+of length 9, each with precisely two edges on the minority side -- ratio
+9/2 -- plus two of length 18, which are doublings.  Their diameters run from
+1.79 to 2.72.  They are compact local configurations, not sprawling
+combinatorial ones, which means the obstruction holding G to the rung is
+small, geometric and enumerable.
+
+Work out which cycles bind.  An orientation stays at or below 9/2 only if
+every cycle has min(|C+|, |C-|) >= 2|C|/9, so a triangle and a 4-cycle are
+free, a cycle of length 5 through 9 needs at least 2 on the minority side,
+length 10 through 13 needs 3, and so on.  A cycle with just ONE edge the
+minority way is a directed path closed by a single edge back.  Hence:
+
+    chi_c(G) >= 5  iff  every acyclic orientation of G contains a directed
+                        path on five vertices whose two ends are adjacent
+
+And now Gallai-Roy, which says every orientation of a k-chromatic graph has
+a directed path on k vertices.  G is 5-chromatic, so every orientation of it
+ALREADY has a directed path on five vertices.  The entire gap between G and
+the rung above is whether some such path has its ends at distance 1.
+
+That is the whole thing, and it is local.  Not a global colouring property,
+not a density, not a rotation argument -- a question about the endpoints of
+directed 4-edge paths.  G is a unit-distance graph containing every unit
+pair among its points, so in its best orientation no directed path on five
+vertices has its ends a unit apart; if one did, the edge would be there and
+the ratio would be 5.  Adding points to force that, in every orientation, is
+a far better specified target than killing sampled homomorphisms, and it is
+the first growth objective in this project that names what a point must do.
+"""
