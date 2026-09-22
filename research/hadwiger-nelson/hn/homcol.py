@@ -10014,3 +10014,58 @@ THE_ROUTE_REDUCES_TO_TWO_EDGE_COUNTS = {
     "what told us to do that": "the sampled-colouring counter never moved, so "
                                "the cap was never the binding constraint",
 }
+
+
+# The route is closed, by enumeration rather than by giving up on it.
+#
+# What would have closed the argument is a set capped at palette 4 whose
+# {1, sqrt3} graph needs five colours: its four classes are independent for
+# distance 1, and if none held a sqrt3 pair they would 4-colour a graph
+# needing five.  Both halves were searched from both sides for hours and
+# neither produced the other.  Turning that into a proof needed one more
+# observation.
+#
+# A k-chromatic graph has minimum degree at least k-1.  So a set whose
+# two-distance graph needs five colours has every one of its points joined to
+# four others INSIDE it -- a local condition, a few clauses per vertex, where
+# the equivalent edge-count bound needs a cardinality constraint over every
+# pair in the scope and leaves the solver silent for ten minutes.
+#
+# With that, the space is small enough to exhaust.  Inside a ball of 565
+# points around the core, asking for a capped set with minimum two-distance
+# degree 4:
+#
+#    9 points: none exists      12 points: exactly 45, all with chi 3
+#   10 points: none exists      13 points: none exists
+#   11 points: none exists      14 points: none exists
+#
+# The 45 are not a sample.  The solver ran out of candidates, each was
+# verified capped exactly and its chromatic number computed exactly, and every
+# one is 3.  Repeating in a ball of 879 points returns the same 45 and the
+# same emptiness elsewhere, so the enclosure is not what is limiting it.
+#
+# A control matters here and it passes: dropping the cap and keeping the
+# degree condition alone, the same encoding proposes sets immediately.  The
+# emptiness is the cap's doing, not the encoding's.
+#
+# So in that region, at those sizes, no capped set is 5-chromatic for
+# {1, sqrt3}, and the route to a forced pair through this reduction does not
+# exist there.  The disjunction with two branches stands; what has been
+# excluded is this particular way of collapsing it to one.
+THE_CAPPED_FIVE_CHROMATIC_SET_DOES_NOT_EXIST_THERE = {
+    "what would have closed it": "capped at palette 4 and {1,sqrt3} "
+                                 "5-chromatic gives a forced pair at sqrt3",
+    "the observation that made it decidable": "a k-chromatic graph has "
+                                              "minimum degree k-1, which is "
+                                              "local and cheap where the edge "
+                                              "count is global and dear",
+    "exhausted in a 565-point ball": {9: 0, 10: 0, 11: 0,
+                                      12: "exactly 45, all chi 3",
+                                      13: 0, 14: 0},
+    "repeated in an 879-point ball": "the same 45, the same emptiness",
+    "the control": "without the cap, the same encoding proposes sets at once "
+                   "-- the emptiness comes from the cap, not the encoding",
+    "what stands": "the two-branch disjunction",
+    "what is excluded": "collapsing it to one branch by this reduction, in "
+                        "that region and at those sizes",
+}
