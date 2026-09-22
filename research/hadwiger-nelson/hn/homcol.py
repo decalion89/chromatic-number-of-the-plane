@@ -10687,3 +10687,29 @@ combinatorial structure of a finite graph.  That is not a discouragement: it
 says precisely which kind of object to look for, and it explains why the
 quantity has been passed over -- the tools that pushed chi_f cannot see it.
 """
+
+
+G_IS_FRACTIONALLY_WEAK_AND_COUNTING_CANNOT_REACH_THE_RUNG = """
+Two numbers that place the target exactly.
+
+alpha(G) >= 476 by a least-degree-first greedy pass, an independence ratio
+of at least 0.3011 on 1581 points.  De Grey's graph is 5-chromatic and
+fractionally weak: the unit-distance graphs that pushed chi_f to 3.8992
+reach a ratio near 0.2565, comfortably better, and chi_f(G) is only known to
+be at least n/alpha = 3.32 from this.  Structural chromatic strength and
+fractional strength are separate properties and G has only the first.
+
+Now the counting route to the 4.5 rung.  Mapping to K(p/q) needs p
+independent sets covering each vertex q times, so it needs a ratio of at
+least q/p; refusing K(9/2) by counting alone therefore needs a ratio below
+2/9 = 0.2222, which is to say chi_f > 4.5.  The record is 3.8992.  In the
+measurable setting the same counting gives m_1 >= 2/9, and with m_1 <= 0.2544
+that route caps out near 3.93 as well.
+
+So reaching chi_c > 9/2 by counting would mean beating the fractional
+chromatic record by more than half a colour -- harder than the rung itself.
+Every remaining route is structural.  That is worth stating plainly because
+it rules out the instrument that has the most machinery behind it, and it
+explains why chi_c has been passed over: the tools built for chi_f cannot
+see this quantity at all.
+"""
