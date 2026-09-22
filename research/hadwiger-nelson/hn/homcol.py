@@ -10069,3 +10069,35 @@ THE_CAPPED_FIVE_CHROMATIC_SET_DOES_NOT_EXIST_THERE = {
     "what is excluded": "collapsing it to one branch by this reduction, in "
                         "that region and at those sizes",
 }
+
+
+# The exhaustion, repeated over the whole of G rather than one ball.
+#
+# The first version of this was local -- a ball of 565 points around one core
+# -- which settles nothing about the rest of the graph.  Run over all 1581
+# points of G, with the same necessary condition that a 5-chromatic graph has
+# minimum degree 4 inside itself:
+#
+#   distance sqrt3:  10 points -> none      12 points -> exactly 90, all chi 3
+#                    11 points -> none      14 points -> none
+#   distance 2:      12 points -> none
+#
+# The ball had held 45 of those 90; the other half lie outside it, which is
+# exactly why the local version was not enough.  At every size the solver runs
+# out of candidates rather than being stopped, each surviving set is verified
+# capped and its chromatic number computed exactly, and none reaches 5.
+#
+# So over the whole of de Grey's graph, at sizes 10 to 14 and for the two
+# closable distances that carry the disjunction, there is no capped set whose
+# two-distance graph needs five colours.  The reduction that would turn the
+# two-branch disjunction into a forced pair has no input there.
+THE_EXHAUSTION_IS_GLOBAL_OVER_G = {
+    "scope": "all 1581 points of G, 11093 two-distance pairs at sqrt3",
+    "sqrt3": {10: 0, 11: 0, 12: "exactly 90, every one at chi 3", 14: 0},
+    "distance 2": {12: 0},
+    "why the local version was not enough": "the 565-point ball held 45 of "
+                                            "the 90; the rest lie outside it",
+    "what it settles": "over the whole of G, at those sizes and for the two "
+                       "closable distances, no capped set has two-distance "
+                       "chromatic number 5",
+}
