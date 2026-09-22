@@ -10713,3 +10713,31 @@ it rules out the instrument that has the most machinery behind it, and it
 explains why chi_c has been passed over: the tools built for chi_f cannot
 see this quantity at all.
 """
+
+
+TIGHTNESS_DOES_NOT_COME_FROM_RIGIDITY = """
+The classical explanation for tightness, tested and rejected -- and the
+rejection is the good news.
+
+A uniquely k-colourable graph has chi_c = k, which would have explained why
+Sa and Y measure tight at four.  It would also have been discouraging, since
+a uniquely 5-colourable unit-distance graph is a far harder object than a
+5-chromatic one, and it would have made the next rung require it.
+
+Sa is not uniquely 4-colourable, and not remotely.  Sampling its forcing
+structure around one 4-colouring with classes of 98, 103, 98, 98: of 100
+same-class pairs, ZERO are forced to agree; of 100 cross-class pairs, 4 are
+forced to differ.  Rigidity about 2 per cent.  The partition is nearly free,
+and the graph is tight at four anyway.
+
+So unique colourability is sufficient for chi_c = chi and nowhere near
+necessary, and a unit-distance graph can be perfectly tight while its
+colouring is almost entirely unconstrained.  The bar for the next rung is
+therefore lower than the classical route suggests: tightness at five does
+not require a uniquely 5-colourable unit-distance graph.
+
+What does produce it is still open.  Whatever makes Sa tight survives the
+loss of essentially all pairwise forcing, so it is a global property of the
+colouring space rather than a local one -- which is also why no amount of
+pair-by-pair forcing analysis in this project ever found it.
+"""
