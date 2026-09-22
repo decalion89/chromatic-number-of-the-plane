@@ -6096,3 +6096,96 @@ symmetry. Restoring it costs 6607 points rather than twelve times 951, since
 | its `D6` orbit, 6607 points | 11.19 | **13.14 %** | **0**, certified |
 
 Twenty-four explicit 5-colourings separate all 21.8 million pairs of the orbit.
+
+### What the fifth pass added: a group of our own
+
+The fourth pass ended with the interface measurement and a wall. The fifth
+begins with a question that turned out to be exactly right: *if the `D6` orbit
+does not help, is that because `D6` is not our group?*
+
+It is not. Measured, by searching for every isometry that maps a point set onto
+itself — any such map fixes the centroid, so each candidate is determined by
+where it sends one vertex, and the whole group is computable in `O(n²)`:
+
+| | isometry group |
+|---|---:|
+| `Sa` | **order 12** (`D6`) |
+| every graph built from it here | **order 1** |
+
+The glue rotation is about **one** vertex and the spindle about **one** pivot,
+and each destroys every symmetry `Sa` had. Taking the `D6` orbit of the
+finished graph afterwards imposes `Sa`'s group on an object not shaped for it,
+which is why it loosened rather than tightened.
+
+#### Never break it instead of repairing it
+
+Both operations respect conjugation — `g·rot_w·g⁻¹ = rot_{g(w)}` for `g` in the
+group, and `g(Sa) = Sa` — so gluing at **every vertex of an orbit at once**
+leaves the union invariant, and the forcing, being equivariant, arrives in
+whole orbits. The same argument lets the spindle be applied at every pivot of a
+forced orbit simultaneously.
+
+| carrier | n | mean degree | free@4 | forced pairs |
+|---|---:|---:|---:|---:|
+| `Sa` | 397 | 9.94 | 0.00 % | **0** |
+| sequential chain, 3 glues | 782 | 12.54 | 0.00 % | 52 |
+| **symmetric glue, 6 centres at once** | **1021** | **13.34** | 0.00 % | **153** |
+
+Three times the forcing at a comparable size — and a forced distance the
+sequential chain never produced: nine pairs at `d² = 64/3`, whose spindle needs
+`√759 = √3·√11·√23`, a third field.
+
+#### The first 5-chromatic graph here that carries a symmetry
+
+Spindling that forced orbit over all six of its pivots keeps the invariance:
+
+```
+n = 7141   m = 47682   mean degree 13.35   χ = 5   C6-invariant
+```
+
+The group is `C6` and not `D6`: the reflection is not in it, because the glue
+centres form a rotation orbit only. Spending **both** forced orbits at once —
+twelve spindles, still invariant, in `ℚ(√3,√11,√23,√247)` — gives
+`n = 13261`, `m = 88548`, and `χ = 5` again.
+
+What does change is the cost. Cadical, with a triangle pinned throughout:
+
+| | | |
+|---|---:|---|
+| 6607 points, symmetrised *after* the fact, no spindle | **4 s** | |
+| 7141 points, one symmetric spindle | **322 s** | 80× |
+| 13261 points, two symmetric spindles | **1718 s** | 430× |
+
+Four hundred times the work across the series for the same verdict. It is the
+only monotone signal this project has produced — and it is worth exactly what
+the earlier measurement says it is worth: `uniSa` maps in 13 seconds and
+`deepgrow`, half the size and denser, in 2853, for the same answer. **Cost is
+not evidence.** It is recorded as a direction, not a result.
+
+#### Which orbit of centres, and a correction
+
+The first symmetric carrier used the orbit of `Sa[25]` because that vertex had
+come up earlier. Ranking all 38 distinct orbits by the density they produce
+shows it is near the bottom:
+
+| orbit | centres | n | mean degree |
+|---|---:|---:|---:|
+| `Sa[265]` | 12 | 2689 | **15.92** |
+| `Sa[253]` | 12 | 2605 | 15.75 |
+| … | | | |
+| `Sa[25]` | 6 | 1021 | 13.34 |
+| the origin | 1 | — | nothing: `rot60` about it is a symmetry of `Sa` |
+
+and stacking the best orbits keeps climbing — 15.92, 16.81, 17.48, 17.75,
+18.14, **18.32** at six orbits and 6043 points — with the full group of order
+12 intact at every step.
+
+**But density is not the lever, and reading it as one was wrong.** Every one of
+those carriers, up to mean degree 18.32 — nearly double `Sa`'s 9.94 and half as
+dense again as anything the sequential chain reached — is still 4-chromatic,
+still exactly 0.00 % free, and cadical 4-colours each in **under a second**.
+Raising the degree did not make the colouring problem harder at all. What makes
+it harder is the spindle: the 7141-vertex graph, at mean degree 13.35, costs
+322 seconds where a 6607-vertex graph of the same degree costs 4. The
+constraint that matters is whether a forced pair has been spent, not how many
+edges the carrier carries.
