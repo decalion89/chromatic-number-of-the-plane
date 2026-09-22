@@ -1,154 +1,167 @@
-"""Chain the two: grow G, then ask the exact question of the grown graph.
+"""Densify where tightness is reachable, and spindle once at the end.
 
-The exact test says G's largest constructible neighbourhood is thirteen and
-every candidate with five or more neighbours is placeable.  It also says what
-would change that: bigger neighbourhoods, which need more points, because a
-candidate's neighbours beyond the two that construct it are concurrences of
-unit circles and concurrences need circles to concur.
+At four colours Sa is perfectly tight -- every vertex's closed neighbourhood
+already shows all four -- and gluing keeps it that way while RAISING the mean
+degree: Sa is 9.94, and Sa glued to its 60-degree image about a vertex is
+11.36, still at 0.00% free.  At five colours nothing is tight: G sits at 17%,
+the new Z at 11.6%, and gluing Z again does not improve it.
 
-The growth is producing exactly that -- 1581 points to 2601 and climbing, 4.98
-edges per vertex to 6.15 -- so run the test on the grown graph rather than on
-G, at each stage, and watch the largest neighbourhood.  If it climbs past
-thirteen the two lines are feeding each other; if it sticks, the ceiling is
-structural and worth knowing as one.
+So densify at four, where the carrier stays rigid, and spend the single
+spindle at the end.  Each level:
 
-Every candidate that fails is a proper five-colouring found, which is a real
-answer.  Any candidate that succeeds is a point with no colour available, and
-the graph plus that point needs six.
+    pick the glue with the largest overlap (keeps n down, degree up)
+    check it is still 4-chromatic and measure the slack
+    list the pairs forced to share a colour, and their spindle radicals
+    spindle the best one and measure the five-colour slack of the result
+
+If the five-colour slack falls as the four-colour carrier thickens, the
+programme converges on a carrier that refuses five.
 """
-import sys, time, random
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-import numpy as np
+import sys, time, random, pickle
 from fractions import Fraction as Fr
-from collections import Counter
-from hn.degrey import build_G
-from hn.geometry import DEGREY_FIELD as K, Point
-from hn.fast import IntBasis, fast_edges_complete
+from collections import defaultdict
+sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+from hn.degrey import build_Sa
+from hn.geometry import Point, rotation_joining
+from hn.field import Field
+from hn.graph import build_graph
 from pysat.solvers import Solver
 
-k = 5
-t0 = time.time()
-rng = random.Random(29)
-CLASSES = [1, 3, 5, 7, 11, 15, 21, 33, 35, 55, 77, 105, 165, 231, 385, 1155]
+LEVELS = int(sys.argv[1]) if len(sys.argv) > 1 else 4
+F = Field((3, 11, 247))
+REP = {1, 3, 11, 33, 247, 741, 2717, 8151}
 
+def sqfree(r):
+    d = 2
+    while d * d <= r:
+        while r % (d * d) == 0: r //= d * d
+        d += 1
+    return r
 
-def rsqrt(e):
-    if any(x for x in e.c[1:]):
-        return None
-    v = e.c[0]
-    if v <= 0:
-        return None
-    for r in CLASSES:
-        q = v / r
-        n2, d2 = q.numerator, q.denominator
-        rn, rd = int(round(n2 ** .5)), int(round(d2 ** .5))
-        if rn * rn == n2 and rd * rd == d2:
-            sq = K.rational(Fr(rn, rd))
-            return sq if r == 1 else K.sqrt(r) * sq
-    return None
+def radical(q):
+    if q <= Fr(1, 4): return None
+    c = Fr(1) - Fr(1, 2) / q
+    s2 = 1 - c * c
+    if s2 == 0: return 1
+    return sqfree(s2.numerator * s2.denominator)
 
+ROTS = [("rot60", rotation_joining(Fr(1), F)),
+        ("rot120", rotation_joining(Fr(1, 3), F)),
+        ("moser", rotation_joining(Fr(3), F)),
+        ("r5/9", rotation_joining(Fr(5, 9), F))]
 
-def candidates(P, tries):
-    half = K.rational(Fr(1, 2))
-    out, seen = [], set(P)
-    n = len(P)
-    for _ in range(tries):
-        A, B = P[rng.randrange(n)], P[rng.randrange(n)]
-        if A == B:
-            continue
-        D = A.dist2(B)
-        f = float(D)
-        if f > 3.99 or f < .05:
-            continue
-        sD, s4 = rsqrt(D), rsqrt(K.rational(4) - D)
-        if sD is None or s4 is None:
-            continue
-        inv = K.rational(1) / sD
-        mx, my = (A.x + B.x) * half, (A.y + B.y) * half
-        nx = -(B.y - A.y) * inv * s4 * half
-        ny = (B.x - A.x) * inv * s4 * half
-        for q in (Point(mx + nx, my + ny), Point(mx - nx, my - ny)):
-            if q not in seen:
-                seen.add(q)
-                out.append(q)
+def cnf_of(g, K):
+    X = lambda v, c: 1 + v * K + c
+    out = [[X(v, c) for c in range(K)] for v in range(g.n)]
+    for u, v in g.edges():
+        for c in range(K):
+            out.append([-X(u, c), -X(v, c)])
+    return out, X
+
+def colourings(g, K, ncol, seed=3):
+    cnf, X = cnf_of(g, K)
+    s = Solver(name="m22", bootstrap_with=cnf)
+    rng = random.Random(seed)
+    cols, tries = [], 0
+    while len(cols) < ncol and tries < ncol * 3:
+        tries += 1
+        s.set_phases([(1 if rng.random() < 1.0 / K else -1) * X(v, c)
+                      for v in range(g.n) for c in range(K)])
+        if not s.solve(): continue
+        pos = set(l for l in s.get_model() if l > 0)
+        cols.append([next(c for c in range(K) if X(v, c) in pos) for v in range(g.n)])
+    s.delete()
+    return cols, cnf, X
+
+def slack(g, K, cols):
+    if not cols: return None
+    best = 10 ** 9
+    for col in cols:
+        f = sum(1 for v in range(g.n)
+                if len({col[u] for u in g.adj[v]} | {col[v]}) < K)
+        best = min(best, f)
+    return 100.0 * best / g.n
+
+def forced(g, pts2, K, cols, cnf, X):
+    buck = defaultdict(list)
+    for v in range(g.n):
+        buck[tuple(col[v] for col in cols)].append(v)
+    cand = [(a, b) for vs in buck.values() if len(vs) > 1
+            for i, a in enumerate(vs) for b in vs[i+1:]]
+    out = []
+    for a, b in cand:
+        s = Solver(name="m22", bootstrap_with=cnf)
+        differ = s.solve(assumptions=[X(a, 0), X(b, 1)]); s.delete()
+        if not differ:
+            dd = (pts2[a] - pts2[b]).norm2()
+            out.append((a, b, dd, radical(Fr(dd.c[0])) if dd.is_rational() else None))
     return out
 
+pts = build_Sa(F)
+t0 = time.time()
+for lvl in range(LEVELS):
+    g = build_graph(pts)
+    m = sum(len(a) for a in g.adj) // 2
+    cols4, cnf4, X4 = colourings(g, 4, 24)
+    sl = slack(g, 4, cols4)
+    print(f"\n=== level {lvl}: n={g.n} m={m} deg={2.0*m/g.n:.2f} "
+          f"4-colourable={bool(cols4)} free@4={sl if sl is None else f'{sl:.2f}%'}"
+          f"   [{time.time()-t0:.0f}s]", flush=True)
+    if not cols4:
+        print("  *** the carrier itself refuses four colours ***", flush=True); break
+    fp = forced(g, pts, 4, cols4, cnf4, X4)
+    good = [f for f in fp if f[3] in REP]
+    print(f"  forced-equal pairs at 4: {len(fp)};  spindleable in this field: {len(good)}",
+          flush=True)
+    seen_d = {}
+    for f in fp:
+        seen_d.setdefault((str(f[2]), f[3]), 0)
+        seen_d[(str(f[2]), f[3])] += 1
+    for (d, r), c in sorted(seen_d.items(), key=lambda kv: -kv[1])[:6]:
+        print(f"      d^2={d:<28} radical {r:<6} x{c}", flush=True)
 
-def graph(P):
-    b = IntBasis.covering(P)
-    r = b.rows(P)
-    return b, r, sorted(set((min(a, c), max(a, c))
-                            for a, c in fast_edges_complete(b, r)))
+    # spindle the best pair and measure the five-colour slack of the result
+    if good:
+        a, b, dd, rad = good[0]
+        rot = rotation_joining(Fr(dd.c[0]), F).about(pts[a])
+        seen, Zp = set(), []
+        for p in pts:
+            for q in (p, rot(p)):
+                if q not in seen: seen.add(q); Zp.append(q)
+        gz = build_graph(Zp)
+        mz = sum(len(x) for x in gz.adj) // 2
+        c4, _, _ = colourings(gz, 4, 4)
+        c5, cnf5, X5 = colourings(gz, 5, 24)
+        s5 = slack(gz, 5, c5)
+        print(f"  -> spindled at d^2={dd} : n={gz.n} m={mz} deg={2.0*mz/gz.n:.2f} "
+              f"4-colourable={bool(c4)} free@5={s5 if s5 is None else f'{s5:.2f}%'}",
+              flush=True)
+        if not c4 and c5:
+            f5 = forced(gz, Zp, 5, c5, cnf5, X5)
+            g5 = [x for x in f5 if x[3] in REP]
+            print(f"     chi=5 graph: forced-equal pairs at FIVE = {len(f5)}, "
+                  f"spindleable = {len(g5)}", flush=True)
+            for x in g5[:6]:
+                print(f"        v{x[0]} v{x[1]} d^2={x[2]} radical {x[3]}  <<<<<<<<",
+                      flush=True)
+            pickle.dump((lvl, [(x[0], x[1], str(x[2]), x[3]) for x in f5]),
+                        open(f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/chain_{lvl}.pkl", "wb"))
 
-
-def probe(P, tag, tries=120000):
-    b, r, E = graph(P)
-    n = len(P)
-    cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
-    for a, c in E:
-        for col in range(k):
-            cls.append([-(1 + a * k + col), -(1 + c * k + col)])
-    sv = Solver(name="cd15", bootstrap_with=cls)
-    if not sv.solve():
-        print(f"  {tag}: {n} pts NOT 5-COLOURABLE", flush=True)
-        return True
-    cand = candidates(P, tries)
-    gb = IntBasis.covering(P + cand)
-    dim, D2 = gb.dim, gb.D * gb.D
-    Prows, crows = gb.rows(P), gb.rows(cand)
-    sizes, worst, placeable = Counter(), 0, 0
-    for t, o in enumerate(crows):
-        d = Prows - o
-        sq = gb._field_square(d[:, :dim]) + gb._field_square(d[:, dim:])
-        hit = sq[:, 0] == D2
-        for m in range(1, dim):
-            hit &= sq[:, m] == 0
-        nb = np.nonzero(hit)[0]
-        sizes[len(nb)] += 1
-        if len(nb) < k:
-            continue
-        worst = max(worst, len(nb))
-        if sv.solve(assumptions=[-(1 + int(v) * k) for v in nb]):
-            placeable += 1
-        else:
-            print(f"*** {tag}: a point with {len(nb)} neighbours has NO free "
-                  f"colour -- chi >= 6 ***  [{time.time()-t0:.0f}s]",
-                  flush=True)
-            return True
-    sv.delete()
-    big = {a: c for a, c in sorted(sizes.items()) if a >= 5}
-    print(f"  {tag}: {n} pts, {len(E)} edges, {len(E)/n:.2f} per vertex, "
-          f"{len(cand)} candidates; >=5 neighbours {big}; largest {worst}, "
-          f"all {placeable} placeable  [{time.time()-t0:.0f}s]", flush=True)
-    return False
-
-
-P = build_G(K, as_graph=False)
-have = set(P)
-probe(P, "G")
-BATCH = 120
-for step in range(1, 12):
-    cand = [c for c in candidates(P, 60000) if c not in have]
-    if not cand:
-        break
-    gb = IntBasis.covering(P + cand[:1500])
-    dim, D2 = gb.dim, gb.D * gb.D
-    Prows = gb.rows(P)
-    scored = []
-    for c in cand[:1500]:
-        o = gb.rows([c])[0]
-        d = Prows - o
-        sq = gb._field_square(d[:, :dim]) + gb._field_square(d[:, dim:])
-        hit = sq[:, 0] == D2
-        for m in range(1, dim):
-            hit &= sq[:, m] == 0
-        scored.append((int(hit.sum()), c))
-    scored.sort(key=lambda t: -t[0])
-    add = [c for s, c in scored[:BATCH] if s >= 3]
-    if not add:
-        break
-    P = list(dict.fromkeys(P + add))
-    have = set(P)
-    if probe(P, f"grown x{step}"):
-        break
-print("DONE", flush=True)
+    # next level: the glue with the largest overlap
+    best = None
+    for rname, rot0 in ROTS:
+        for ci in range(len(pts)):
+            rot = rot0.about(pts[ci])
+            s = set(pts)
+            ov = sum(1 for p in pts if rot(p) in s)
+            if ov == len(pts): continue
+            if best is None or ov > best[0]:
+                best = (ov, rname, ci, rot)
+    ov, rname, ci, rot = best
+    seen, nxt = set(), []
+    for p in pts:
+        for q in (p, rot(p)):
+            if q not in seen: seen.add(q); nxt.append(q)
+    print(f"  glue chosen: {rname} about v{ci}, overlap {ov}/{len(pts)} "
+          f"-> {len(nxt)} points", flush=True)
+    pts = nxt

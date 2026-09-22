@@ -12321,3 +12321,54 @@ THE_CAP_IS_NOT_NECESSARY_FOR_THE_GLUE_TO_FORCE = True
 # smaller than G.  Recorded exactly in data/five_247.json and re-derived from
 # those coordinates alone by tests/test_five_247.py.
 A_NEW_FIVE_CHROMATIC_GRAPH_IN_Q_SQRT3_SQRT11_SQRT247 = True
+
+
+# Overlap is the resource, and the sigma-argument says why.  Glue H to rho(H)
+# with shared set S0 and cross edges F.  A colouring is a pair (c, c') agreeing
+# on S0 and avoiding F.  Taking c' = sigma . c . rho^-1 satisfies every cross
+# edge at once when sigma is fixed-point-free, and the ONLY thing that can
+# block that choice is the agreement demanded on S0.  So with the copies
+# nearly disjoint nothing is ever forced, and forcing costs overlap.
+#
+# Measured, at four colours on Sa:
+#
+#     every rational rotation about a vertex   overlap 1     0 forced pairs
+#     the 60-degree rotation about a vertex    overlap 224   8 forced pairs
+#
+# and the best translations coincide with the second family, which is no
+# accident: Sa is already invariant under the 60-degree rotation about the
+# origin, so rotating about a vertex IS translating.
+FORCING_COSTS_OVERLAP_AND_THE_SIGMA_ARGUMENT_SAYS_WHY = True
+
+# Densifying where tightness is reachable.  At four colours Sa is perfectly
+# rigid -- every closed neighbourhood already shows all four -- and the glue
+# keeps it rigid while raising the mean degree and multiplying the forcing:
+#
+#     level 0  Sa   397 pts  deg  9.94  free@4 0.00%    0 forced pairs
+#     level 1       570      deg 11.36  free@4 0.00%    8
+#     level 2       679      deg 12.05  free@4 0.00%   27     (max overlap)
+#     level 2       717      deg 12.17  free@4 0.00%   32     (max degree)
+#
+# with the size growth decaying -- x1.44, then x1.19 -- because the overlap
+# available rises with each level (224/397, then 461/570).  At five colours
+# nothing is rigid: G sits at 17.1%, the spindled Z at 10.2%, and gluing Z
+# again does not improve it.  So the programme is to thicken at four and spend
+# the single spindle at the end.
+THICKEN_AT_FOUR_AND_SPEND_THE_SPINDLE_AT_THE_END = True
+
+# Three copies about one centre, which is the whole of the extra room.  If
+# |s-q|^2 = 1/3 then q and its images under the 120- and 240-degree rotations
+# about s are an equilateral triangle of side exactly 1, so
+#
+#     U = H u rot120_s(H) u rot240_s(H)
+#
+# is k-colourable only if three k-colourings of H agreeing on every shared
+# point give q three different colours.  That needs a palette of two where the
+# two-copy spindle needs a palette of one -- a strictly weaker demand, and the
+# rotation costs sqrt3, which every carrier here already has.  Four copies do
+# not exist: four points pairwise one apart are not available in the plane.
+#
+# Scanned by overlap on Sa at four and on G and Z at five, the unions are
+# colourable at every overlap reached (up to 1031 of 3417 on Z).  The route is
+# open and the carriers are not yet good enough for it.
+THREE_COPIES_NEED_A_PALETTE_OF_TWO_AND_FOUR_DO_NOT_EXIST = True
