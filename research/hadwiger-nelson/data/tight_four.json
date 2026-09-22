@@ -1050,5 +1050,22 @@
  "chromatic_number": 4,
  "circular_chromatic_number": "4",
  "vertices": 24,
- "edges": 54
+ "edges": 54,
+ "structure": {
+  "essential_vertices": "24 of 24 -- deleting any single vertex loses the refusal, so the graph is critical for tightness, not merely minimal under the procedure that found it",
+  "rhombi": 13,
+  "moser_spindle_shaped_rhombus_pairs": 9,
+  "triangles": 17,
+  "symmetry": "none -- all 24 distances from the centroid are distinct, so no rotation or reflection fixes the point set",
+  "distinct_squared_distances": 66,
+  "commonest_squared_distances": {
+   "1": 54,
+   "3": 24,
+   "0.5426": 18,
+   "2.4574": 14,
+   "0.3333": 12
+  },
+  "diameter": 3.221,
+  "mean_degree": 4.5
+ }
 }

@@ -11703,3 +11703,36 @@ would also need enough bulk around it to impose a cap, and the bulk is
 exactly what the earlier density measurements say cannot be added without
 diluting.
 """
+
+
+WHAT_THE_TIGHT_GRAPH_IS_MADE_OF = """
+The 24-point graph, characterised, since it is the only tight object in hand.
+
+    24 of 24 vertices ESSENTIAL -- deleting any one loses the refusal
+    13 rhombi (K4 minus an edge), 9 rhombus pairs shaped like Moser spindles
+    17 triangles, mean degree 4.5, diameter 3.221
+    no symmetry: all 24 distances from the centroid are distinct
+    66 distinct squared distances; 1 occurs 54 times, 3 occurs 24 times
+
+Two of those matter.
+
+CRITICAL, not merely minimal.  The graph was found by UNSAT core and then
+greedy deletion, which only guarantees minimality under the order the greed
+happened to take.  Testing every vertex separately says all 24 are needed,
+so this is genuinely critical for tightness at four colours.
+
+ASYMMETRIC.  De Grey's gadget is a regular hexagon with a centre -- the
+symmetry is the first thing one notices about it, and the rotations that
+compose it are the symmetries of the carrier.  This has none: no rotation or
+reflection fixes the point set, and every vertex sits at its own distance
+from the centroid.  Tightness here is not produced by a pretty symmetry but
+by a specific irregular lattice of constraints in which each piece is load
+bearing.
+
+That is worth stating because the instinct, and this project's earlier
+passes, reach for symmetric constructions -- rings, orbits, dihedral groups,
+symmetric closures.  The one tight object found by search rather than by
+design is not symmetric at all, and the symmetric constructions tried
+against it (all eleven 30-degree rotations, 88 admissible spindles, a
+fortyfold accumulation) moved chi_c by nothing.
+"""
