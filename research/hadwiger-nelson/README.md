@@ -5793,3 +5793,133 @@ that. What is measured is that it is nowhere near sufficient. So "find a
 carrier tight at five" is not the programme either; it would need bulk as
 well, and bulk is exactly what the density measurements say cannot be added
 without diluting.
+
+### What the fourth pass added: a grammar, and a graph that is not his
+
+The third pass ended by saying that "try another seed" is not a five-minute
+experiment but a project: reproducing a construction of de Grey's scale in a
+different field. Starting that project meant reading his design instead of
+guessing at it, and the design turned out to have a grammar nobody seems to
+have written down.
+
+#### Every construction is a word in spindle letters
+
+A rotation by `2·arcsin(1/(2r))` about a centre `c` sends **every** point at
+distance exactly `r` from `c` to a point at distance exactly `1` from itself —
+the chord is `2r·sin(t/2) = 1` by construction. Its cosine is `1 − 1/(2r²)` and
+its sine is `√(4r²−1)/(2r²)`, so the rotation is rational in `r²` together with
+one radical, `√(4r²−1)`.
+
+Call `(c, r²)` a **spindle letter**. A construction is a word in those letters,
+and the field it needs is the compositum of their radicals. `G` is a three-letter
+word:
+
+| letter | where | `4r²−1` | radical |
+|---|---|---|---|
+| `r² = 3` | inside `S` itself | 11 | `√11` |
+| `r² = 4` | about the origin | 15 | `√3·√5` |
+| `r² = 16` | about `(−2,0)` | 63 = 9·7 | `√7` |
+
+and `ℚ(√3,√5,√7,√11)` is exactly what those three radii force. It is not a
+choice; it is a consequence. His remark that the construction could not have
+been found inside `ℚ(√3,√11)` is the same statement read backwards: the letters
+at `r² = 4` and `16` are the two that leave it.
+
+The alphabet is much larger than the three letters he used. On `Sa` the circles
+whose spindle costs **no new radical at all** include `r² = 5/9` (twelve points,
+`√11`), `7/3` (nine, `√3`), `7` and `13/3` (four each, `√3`), beside `r² = 1`
+and `1/3`, which are the 60° and 120° rotations and therefore already symmetries
+— a letter that is already a symmetry of the carrier buys nothing. His own
+`r² = 4` has the **smallest** hinge in the whole list, six points, and is one of
+the two he paid a new radical for. So the hinge count is not what he was
+maximising.
+
+#### A pure hinge cannot raise the chromatic number
+
+It cannot be, and the reason is three lines. Let `H'` be a disjoint copy of `H`
+and let the only new edges be `v–v'` for `v` in some set `R`. Take any proper
+`k`-colouring `c` of `H` with `k = χ(H) ≥ 2`, and let `σ` be a fixed-point-free
+permutation of the `k` colours — a `k`-cycle will do. Then `c' = σ∘c` is proper
+on `H'`, and `c'(v) = σ(c(v)) ≠ c(v)` for **every** `v`, not merely for `v ∈ R`.
+So the glued graph is still `k`-colourable however large `R` is.
+
+Measured on de Grey's own two glues, the interfaces are:
+
+| | shared points | cross edges | of which hinge |
+|---|---|---|---|
+| `Sa ∪ ρ(Sa) = Y`, 397 + 397 | 1 | 6 | 6 |
+| `Ya ∪ Yb = G`, 791 + 791 | 1 | **1** | 0 |
+
+`G` is 1582 points joined by **a single edge and a single common vertex**. The
+six-edge hinge below it cannot have raised anything — and indeed `Y` is still
+4-colourable. The fifth colour comes from the one incidental edge.
+
+#### So `G` is a Moser spindle with `Y` as the rhombus
+
+`Ya` and `Yb` are two rotations of `Y` about `(−2,0)`, so they share that pivot;
+the one cross edge joins the two images of a single point `q` of `Y` at distance
+4 from it. For that to be a contradiction, `Y` has to satisfy
+
+> in **every** 4-colouring of `Y`, the pivot and `q` take the same colour,
+
+and the solver says it does, on both sides. Then the two copies agree at the
+pivot, hence agree at the two images of `q`, and those are one apart. That is
+the whole of it. The rhombus forces its tips equal at three colours; `Y` forces
+`(pivot, q)` equal at four.
+
+#### The glue manufactures the forcing, and `G` has none at five
+
+`Sa` has **no** forced-equal pair at four colours. Not a sample — a proof: forty
+explicit 4-colourings separate all 78 606 of its pairs, and a pair that differs
+in some colouring is not forced. `Y` has six. The glue made them out of a
+carrier that had none.
+
+The same instrument, run on `G` at five colours, separates all **1 248 990**
+pairs with forty explicit 5-colourings. So `G` has no forced-equal pair at five,
+and **cannot be spindled to six by de Grey's own step**. That is a complete
+negative result about the most natural next move, and it cost ten seconds
+because the filter is `O(colourings × solve) + O(n)` rather than `O(n²)`.
+
+#### The cap is not what does the work
+
+de Grey glues along a *capped* circle: the six points at distance 2 from the
+origin show at most 2 of 4 colours. Enumerating the colour patterns that circle
+can carry gives exactly ten classes — one monochromatic, nine with two colours —
+which is his lemma, recovered without being told it. And it is not a small
+gadget: shrinking `Sa` while keeping the lemma still needs **358 of the 397**
+vertices. It is a global property, and nothing to transplant.
+
+But gluing along circles that are **not** capped manufactures forcing just as
+well, and usually more of it. That is what reopens the route.
+
+#### A 5-chromatic graph that does not live in his field
+
+Glue `Sa` to its image under the 60° rotation about a **vertex** — the glue
+circle is that vertex's own unit circle, twenty points, uncapped, and the
+rotation costs nothing. The 570-point union has **eight** forced-equal pairs at
+four colours, all at squared distance `64/9`. Spindle one of them:
+
+```
+Z  =  1139 vertices,  6475 edges,  χ(Z) = 5
+```
+
+The spindle at `64/9` has `cos = 119/128` and `sin = 384√247 / 16384`, so `Z`
+lives in `ℚ(√3, √11, √247)` with `247 = 13·19`. And it is not a redrawing of
+anything of his: squared distances are invariant under every isometry of the
+plane, so the field they generate is an invariant of the graph rather than of
+this picture of it — and `Z` has a squared distance with a `√741 = √3·√247`
+component, which `ℚ(√3,√5,√7,√11)` cannot express. **No congruent copy of `Z`
+lies in the field `G` needs.**
+
+The 39-point seed is de Grey's. The assembly — glue at an uncapped unit circle
+about a vertex, then spindle the pair that appears — is not, and the result is
+28% smaller than `G`. It is recorded exactly in `data/five_247.json` and
+re-derived from those coordinates alone, edges included, by
+`tests/test_five_247.py`.
+
+That does not move `χ(ℝ²) ≥ 6`. What it does is show the ladder is a mechanism
+and not a coincidence: **cap or no cap, a glue manufactures forced pairs, and a
+forced pair at a spindleable distance is one rotation away from another colour.**
+The rung at six now has a single explicit requirement — a 5-chromatic carrier
+with a forced-equal pair at five colours — and an instrument that can certify
+its absence in seconds rather than assert it from a sample.

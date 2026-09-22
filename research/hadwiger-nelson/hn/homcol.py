@@ -12212,3 +12212,112 @@ its 29 forced pairs live.  Testing another seed properly means reproducing a
 construction of that scale in another field, which is a project rather than
 an afternoon, and the zeros above are not evidence against it.
 """
+
+
+# The grammar of the construction, which nobody seems to have written down.
+#
+# A rotation by 2*arcsin(1/(2r)) about a centre c sends every point at distance
+# exactly r from c to a point at distance exactly 1 from itself: the chord is
+# 2r*sin(t/2) = 1 by construction.  Its cosine is 1 - 1/(2r^2) and its sine is
+# sqrt(4r^2-1)/(2r^2), so the rotation is rational in r^2 together with one
+# radical, sqrt(4r^2 - 1).
+#
+# Call that a spindle letter (c, r^2).  A construction is then a word in those
+# letters, and the field it needs is the compositum of their radicals.  de
+# Grey's G is a three-letter word:
+#
+#     r^2 = 3     inside S itself      4*3-1  = 11        -> sqrt 11
+#     r^2 = 4     about the origin     4*4-1  = 15        -> sqrt 3 sqrt 5
+#     r^2 = 16    about (-2, 0)        4*16-1 = 63 = 9*7  -> sqrt 7
+#
+# and Q(sqrt3, sqrt5, sqrt7, sqrt11) is exactly what those three radii force --
+# not a choice, a consequence.  The remark in his paper that the construction
+# could not have been found inside Q(sqrt3, sqrt11) is the same statement read
+# backwards: the letters at r^2 = 4 and 16 are the ones that leave it.
+THE_CONSTRUCTION_IS_A_WORD_IN_SPINDLE_LETTERS = True
+
+# And the alphabet is much larger than the three letters he used.  On Sa, the
+# circles whose spindle costs no new radical at all include r^2 = 5/9 (twelve
+# points, sqrt 11), 7/3 (nine, sqrt 3), 7 and 13/3 (four each, sqrt 3), beside
+# the two that are already symmetries -- r^2 = 1 is the 60-degree rotation and
+# r^2 = 1/3 the 120-degree one, and a letter that is already a symmetry of the
+# carrier buys nothing.  His own r^2 = 4 has the SMALLEST hinge in the list,
+# six points, and is one of the two he paid a new radical for.  So the hinge
+# count is not what he was maximising, and the next constant says why it
+# cannot be.
+THE_ALPHABET_IS_LARGER_THAN_THE_THREE_LETTERS_HE_USED = True
+
+# The hinge cannot be what raises the chromatic number, for a three-line
+# reason.  Let H' be a disjoint copy of H and let the only new edges be
+# v -- v' for v in some set R.  Take any proper k-colouring c of H with
+# k = chi(H) >= 2 and let sigma be a fixed-point-free permutation of the k
+# colours -- a k-cycle will do.  Then c' = sigma . c is proper on H', and
+# c'(v) = sigma(c(v)) != c(v) for EVERY v, not merely for v in R.  So the glued
+# graph is still k-colourable however large R is.  (It is the Cartesian product
+# bound chi(H box K2) = chi(H), but the permutation argument needs no citation.)
+#
+# Measured on de Grey's own two glues, the interfaces are:
+#
+#     Sa u rho(Sa) = Y    397 + 397 points, 1 shared, 6 cross edges, all hinge
+#     Ya u Yb      = G    791 + 791 points, 1 shared, 1 cross edge, incidental
+#
+# So G is 1582 points joined by a single edge and a single common vertex.  A
+# pure hinge of six edges cannot have raised anything -- and indeed Y is still
+# 4-colourable.  The fifth colour comes from the one incidental edge.
+A_PURE_HINGE_CANNOT_RAISE_THE_CHROMATIC_NUMBER = True
+
+# What the single edge is doing.  Ya and Yb are two rotations of Y about
+# (-2, 0), so they share that pivot; the one cross edge joins the two images of
+# a single point q of Y at distance 4 from it.  For that to be a contradiction,
+# Y must satisfy
+#
+#     in EVERY 4-colouring of Y, the pivot and q take the SAME colour,
+#
+# and the solver says it does, on both sides.  Then the two copies agree at the
+# pivot, hence agree at the two images of q, and those are one apart.  That is
+# the whole of it: G is the Moser spindle with Y in the role of the rhombus,
+# the rhombus forcing its tips equal at three colours and Y forcing (pivot, q)
+# equal at four.
+G_IS_A_MOSER_SPINDLE_WITH_Y_AS_THE_RHOMBUS = True
+
+# Where the forcing comes from, which is the part that generalises.  Sa has NO
+# forced-equal pair at four colours -- not a sample, a proof: forty explicit
+# 4-colourings separate all 78606 of its pairs.  Y has six.  The glue
+# manufactured them out of a carrier that had none.
+#
+# The same scan says G has NO forced-equal pair at five colours, by the same
+# kind of proof: forty explicit 5-colourings separate all 1248990 pairs.  So G
+# cannot be spindled to six by de Grey's own step, and the question is what
+# glue would manufacture one.
+GLUING_MANUFACTURES_THE_FORCING_AND_G_HAS_NONE_AT_FIVE = True
+
+# The cap is not what does it.  de Grey glues along a capped circle -- the six
+# points at distance 2 from the origin show at most 2 of 4 colours, and the
+# pattern enumeration finds exactly ten classes there, one monochromatic and
+# nine with two colours.  That lemma is not a small gadget: shrinking Sa while
+# keeping it needs 358 of the 397 vertices, so it is a global property and
+# nothing to transplant.
+#
+# But gluing along circles that are NOT capped manufactures forcing just as
+# well, and usually more of it.  Gluing Sa to its image under the 60-degree
+# rotation about a vertex -- the glue circle is that vertex's own unit circle,
+# twenty points, uncapped, and the rotation costs nothing -- gives a 570-point
+# graph with eight forced-equal pairs, all at squared distance 64/9.
+THE_CAP_IS_NOT_NECESSARY_FOR_THE_GLUE_TO_FORCE = True
+
+# Spindling one of those eight is a 5-chromatic unit-distance graph:
+#
+#     Z = 1139 vertices, 6475 edges, chi = 5
+#
+# The spindle at squared distance 64/9 has cos 119/128 and sin 384 sqrt(247) /
+# 16384, so Z lives in Q(sqrt3, sqrt11, sqrt247) with 247 = 13*19.  And it is
+# not a redrawing of anything of de Grey's: squared distances are invariant
+# under every isometry of the plane, and Z has one with a sqrt(741) =
+# sqrt3 sqrt247 component, which Q(sqrt3,sqrt5,sqrt7,sqrt11) cannot express.
+# So no congruent copy of Z lies in the field G needs.
+#
+# The 39-point seed is his.  The assembly -- glue at an uncapped unit circle
+# about a vertex, then spindle the pair that appears -- is not, and it is 28%
+# smaller than G.  Recorded exactly in data/five_247.json and re-derived from
+# those coordinates alone by tests/test_five_247.py.
+A_NEW_FIVE_CHROMATIC_GRAPH_IN_Q_SQRT3_SQRT11_SQRT247 = True

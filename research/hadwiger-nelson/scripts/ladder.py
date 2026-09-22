@@ -1,87 +1,86 @@
-"""The decoupling, as a function of the colour count alone, on fixed graphs.
+"""The ladder: cap -> forced pair -> contradiction.
 
-Sa's correlation collapses fifteenfold between four colours and five, with the
-graph held fixed.  The obvious next question is whether that is a step or a
-slope -- and the triangular lattice answers it at the bottom end, because its
-proper 3-colouring is unique up to permuting the colours, so at three colours
-every pair of its points is constrained and the ratio should be enormous.
+G is Ya u Yb.  The measurement says those two 791-point halves share exactly
+one vertex and are joined by exactly one edge.  A single edge cannot raise the
+chromatic number of a disjoint union by itself, and neither can a shared
+vertex.  So G being 5-chromatic while Y is 4-chromatic forces a very specific
+statement about Y:
 
-Three graphs, each measured at its own chromatic number and above it, all at
-twenty-four samples so the numbers compare:
+    in EVERY 4-colouring of Y, the colour of the cross-edge endpoint p is
+    determined by the colour of the shared vertex s.
 
-    lattice patch   chi = 3   at 3, 4, 5
-    Sa              chi = 4   at 4, 5, 6
-    G               chi = 5   at 5, 6
+Then in G the two halves agree at s, hence agree at p_a and p_b -- and p_a p_b
+is an edge.  That is the whole contradiction.  It is the Moser spindle with Y
+in the role of the rhombus: the rhombus forces its two tips equal at three
+colours, Y forces (s, p) equal at four.
 
-If the ratio at k = chi falls as chi rises -- unbounded at three, twenty at
-four, one at five -- then the difficulty of chi >= 6 is not a matter of
-finding the right graph.  It is that the plane stops constraining its own
-colourings somewhere between four colours and five.
+This script finds s and p and tests that claim outright.
 """
-import sys, time, random
+import sys, time
+from fractions import Fraction as Fr
 sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-import numpy as np
-from hn.degrey import build_Sa, build_G
-from hn.geometry import DEGREY_FIELD as F, Point
+from hn.degrey import build_Y, _rot_half_pi_pm
+from hn.geometry import Point
+from hn.field import Field
 from hn.graph import build_graph
 from pysat.solvers import Solver
 
-SAMPLES = 24
-t0 = time.time()
+F = Field((3, 5, 7, 11))
+PIV = Point(F.rational(-2), F.zero())
+Y = build_Y(F)
+Ya = [_rot_half_pi_pm(F, +1).about(PIV)(p) for p in Y]
+Yb = [_rot_half_pi_pm(F, -1).about(PIV)(p) for p in Y]
+sa, sb = set(Ya), set(Yb)
+shared = sa & sb
+print(f"Y: {len(Y)} points;  Ya n Yb = {len(shared)}", flush=True)
+s = next(iter(shared))
+print(f"  shared vertex s = {s.approx()}", flush=True)
+cross = [(i, j) for i, p in enumerate(Ya) if p not in shared
+         for j, q in enumerate(Yb) if q not in shared and p.is_unit_apart(q)]
+print(f"  cross edges: {len(cross)}", flush=True)
+for i, j in cross:
+    print(f"    Ya[{i}] {Ya[i].approx()}  --  Yb[{j}] {Yb[j].approx()}", flush=True)
 
+# pull s and the cross endpoint back into Y's own coordinates
+back_a = _rot_half_pi_pm(F, +1).about(PIV).__self__ if False else None
+rota, rotb = _rot_half_pi_pm(F, +1).about(PIV), _rot_half_pi_pm(F, -1).about(PIV)
+idx = {p: i for i, p in enumerate(Y)}
+i0, j0 = cross[0]
+# Ya[i] = rota(Y[i]) because the list order is preserved
+s_in_Y_a = Y[Ya.index(s)]
+s_in_Y_b = Y[Yb.index(s)]
+p_a, p_b = Y[i0], Y[j0]
+print(f"\n  in Y's own coordinates:")
+print(f"    s  (via Ya) = {s_in_Y_a.approx()}      s (via Yb) = {s_in_Y_b.approx()}")
+print(f"    p  (via Ya) = {p_a.approx()}           p (via Yb) = {p_b.approx()}")
+print(f"    |s - p|^2 (a-side) = {(s_in_Y_a - p_a).norm2()}")
+print(f"    |s - p|^2 (b-side) = {(s_in_Y_b - p_b).norm2()}", flush=True)
 
-def lattice(side):
-    half = F.rational(1) * F.rational(1) / F.rational(2)
-    h = F.sqrt(3) / F.rational(2)
-    out = []
-    for i in range(side):
-        for j in range(side):
-            out.append(Point(F.rational(i) + F.rational(j) / F.rational(2),
-                             h * F.rational(j)))
-    return out
+g = build_graph(Y)
+n = g.n
+pos = {p: i for i, p in enumerate(g.vertices)}
+K = 4
+X = lambda v, c: 1 + v * K + c
+cnf = [[X(v, c) for c in range(K)] for v in range(n)]
+for u, v in g.edges():
+    for c in range(K):
+        cnf.append([-X(u, c), -X(v, c)])
 
+def forced_equal(u, v):
+    """Can u and v differ?  By colour permutation it is enough to test
+    c(u)=0, c(v)=1."""
+    s2 = Solver(name="cd15", bootstrap_with=cnf)
+    r = s2.solve(assumptions=[X(u, 0), X(v, 1)])
+    s2.delete(); return not r
 
-def ratio(name, pts, k):
-    g = build_graph(pts)
-    n = g.n
-    E = set((min(a, b), max(a, b)) for a, b in g.edges())
-    cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
-    for a, b in sorted(E):
-        for c in range(k):
-            cls.append([-(1 + a * k + c), -(1 + b * k + c)])
-    sv = Solver(name="g4", bootstrap_with=cls)
-    if not sv.solve():
-        print(f"  {name} at {k}: NOT {k}-colourable  "
-              f"[{time.time()-t0:.0f}s]", flush=True)
-        sv.delete()
-        return
-    rng, cols = random.Random(1123), []
-    for s in range(SAMPLES):
-        sv.set_phases([(1 if rng.random() < .5 else -1) * (1 + w)
-                       for w in range(n * k)])
-        sv.solve()
-        m = sv.get_model()
-        cols.append([next(c for c in range(k) if m[w * k + c] > 0)
-                     for w in range(n)])
-    sv.delete()
-    C = np.array(cols, dtype=np.int8)
-    nd = 0
-    for i in range(n - 1):
-        nd += int((C[:, i + 1:] != C[:, i:i + 1]).all(axis=0).sum())
-    nd -= len(E)
-    pr = n * (n - 1) // 2
-    ch = pr * ((k - 1) / k) ** SAMPLES
-    print(f"  {name} ({n} pts, {len(E)} edges) at {k} colours: {nd} "
-          f"candidates, chance {ch:.1f}, ratio {nd/max(ch,1e-9):.1f}  "
-          f"[{time.time()-t0:.0f}s]", flush=True)
+def forced_diff(u, v):
+    s2 = Solver(name="cd15", bootstrap_with=cnf)
+    r = s2.solve(assumptions=[X(u, 0), X(v, 0)])
+    s2.delete(); return not r
 
-
-L = lattice(20)
-for k in (3, 4, 5):
-    ratio("triangular lattice", L, k)
-Sa = build_Sa(F)
-for k in (4, 5, 6):
-    ratio("Sa", Sa, k)
-G = build_G(F, as_graph=False)
-for k in (5, 6):
-    ratio("G", G, k)
+for tag, su, pu in (("a-side", s_in_Y_a, p_a), ("b-side", s_in_Y_b, p_b)):
+    u, v = pos[su], pos[pu]
+    t0 = time.time()
+    fe, fd = forced_equal(u, v), forced_diff(u, v)
+    print(f"\n  {tag}: s=v{u} p=v{v}   forced EQUAL: {fe}   forced DIFFERENT: {fd}"
+          f"   [{time.time()-t0:.0f}s]", flush=True)
