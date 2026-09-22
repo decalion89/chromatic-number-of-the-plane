@@ -10227,3 +10227,38 @@ THE_CHEAP_TARGET_AND_WHAT_MAKES_THE_GROWTH_MOVE = {
     "what the numbers do": "74 kills of 200 at the first point, 20 of 200 by "
                            "the 160th -- the graph hardening",
 }
+
+
+# A disc cannot hold a distance wider than itself.
+#
+# The greedy's kill rate settled around ten per cent, so the next move was to
+# stop adding points one at a time and simply build the dense closure of a
+# small region, then measure its two-distance chromatic number directly.
+#
+# The first two attempts returned zero edges.  A disc of radius r has diameter
+# 2r, so it cannot contain any pair at a greater distance -- and radius 0.5,
+# chosen because it held a manageable 243 points, has diameter 1.0, below the
+# 1.732 the sqrt3 edges need.  Not a subtle failure: the region was
+# geometrically incapable of holding the thing being looked for.
+#
+# The reporting hid it for a moment.  The chromatic loop started counting at
+# five, since only six or more was of interest, so an edgeless graph came back
+# as "chi = 5" instead of 1.  Both are fixed: the radius is checked against
+# the distance before anything is built, and the count starts at 2.
+#
+# The real constraint is that the disc must have diameter above the second
+# distance, so radius above 0.87 for sqrt3 -- and at that size it holds most
+# of G, because G is far more concentrated than it looks: 1276 of its 1581
+# points lie within 1.3 of the centroid, and 949 within 1.0.
+A_DISC_CANNOT_HOLD_A_DISTANCE_WIDER_THAN_ITSELF = {
+    "the mistake": "asked for sqrt3 edges inside a radius-0.5 disc, whose "
+                   "diameter is 1.0",
+    "what it returned": "zero edges, reported as chi 5 because the count "
+                        "started at 5",
+    "both fixed": "the radius is checked against the distance before building "
+                  "anything, and the chromatic count starts at 2",
+    "the constraint": "radius above half the second distance -- 0.87 for "
+                      "sqrt3",
+    "and G is concentrated": "1276 of 1581 points within 1.3 of the centroid, "
+                             "949 within 1.0",
+}
