@@ -10824,3 +10824,48 @@ optimal orientation is colouring-induced is one whose slack, if any, is
 visible in its colour classes; G's slack lives somewhere a colouring cannot
 see, which is the same reason pair-by-pair forcing never found it either.
 """
+
+
+THE_NINE_SETS_ARE_INTERLEAVED_AND_THE_WHOLE_CORPUS_HAS_ROOM = """
+What a K(9/2) map of G looks like, and what the corpus looks like beside it.
+
+Extracted from G: nine position classes of sizes 69, 91, 145, 160, 168, 223,
+226, 230, 269.  Their consecutive unions are independent, every one of them,
+exactly as the cyclic-cover reading requires, and the nine sizes total 3162 =
+2 * 1581, so every point lies in exactly two.  Their densities inside G run
+from 0.189 to 0.247 and average 2/9 = 0.2222 to the last digit.  The
+reformulation is not just correct on paper.
+
+The geometry is the surprise.  All nine classes have the same centroid, about
+(-2.0, 2.0), and the same spread, about 0.7 in each coordinate.  They are not
+stripes, not translates, not a lattice pattern -- they are interleaved
+through the whole graph.  The map is combinatorial and carries no geometric
+shape to attack, which is a plain reason why adding rotated copies of things
+never aimed at anything.
+
+(One number printed alongside is worthless and is recorded so it is not
+believed later: two further maps agreed with the first on 99.9 and 99.8 per
+cent of points.  The blocking clause only mentioned every 37th vertex, so the
+solver moved two of them and returned.  That measures the clause, not the
+graph.)
+
+Screening every graph in this project by independence ratio, using a greedy
+lower bound over 30 orders, against the 2/9 = 0.2222 a K(9/2) map needs:
+
+    wide0    11047 pts  deg 10.85  ratio >= 0.2531   <- tightest
+    deepgrow  4709 pts  deg 11.88  ratio >= 0.2771
+    union3   39144 pts  deg 10.45  ratio >= 0.2787
+    pivG     13873 pts  deg 10.64  ratio >= 0.2848
+    symG     18966 pts  deg  9.97  ratio >= 0.2943
+    G         1581 pts  deg  9.96  ratio >= 0.2973
+    Sa         397 pts  deg  9.94  ratio >= 0.3023
+    uniSa     8953 pts  deg 10.66  ratio >= 0.3624
+    disc_1.0  8155 pts  deg  5.39  ratio >= 0.7313
+
+Greedy bounds alpha from below, so a high ratio eliminates a graph and a low
+one only fails to.  Every graph here sits between 0.25 and 0.30 against a
+threshold of 0.2222, and the best unit-distance graphs known reach about
+0.2565.  So none of this corpus is near the counting threshold, the corpus
+has been screened in 25 seconds rather than by hours of solver time, and
+exactly one candidate -- wide0, the densest by degree -- is worth a run.
+"""
