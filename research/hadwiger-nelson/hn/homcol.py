@@ -11622,3 +11622,44 @@ de Grey's engine has no fuel at five in any carrier reachable from here, and
 what is needed first is not a gadget but a unit-distance graph with
 chi_c = 5.
 """
+
+
+ITERATING_THE_STEP_ON_THE_TIGHT_CORE_MOVES_NOTHING = """
+The construction path the tightness synthesis suggested, run, and it stops
+at the first level.
+
+The reasoning was sound enough to be worth the run.  Caps live where a
+carrier is tight; the smallest tight carrier here is 24 points; de Grey's
+step moved chi_c from 4 on Y to 4.5 on G; doing it twice to 397 points is
+out of reach and doing it twice to 24 is not.  Three versions, all measured
+on the same scale:
+
+  ROTATION.  The field holds cos 30 = sqrt3/2 exactly, so the union of the
+  graph with all eleven rotations about the origin is available with no
+  rounding.  157 points, 456 edges -- eight times the edges -- and chi_c
+  stays at 4 the whole way.  A rotation by a pretty angle is not the step.
+
+  ONE SPINDLE.  The step picks the angle so a chosen pair lands a unit from
+  its own image: cos theta = 1 - 1/(2 d^2), which needs 1 - cos^2 to be a
+  square in the field.  88 of the 552 pairs admit one.  Every single spindle
+  tried leaves chi_c at 4.
+
+  ACCUMULATED SPINDLES.  Spindle the graph, spindle the result, and keep
+  going: 24 -> 38 -> 75 -> 145 -> 269 -> 519 -> 1037 points, 54 -> 3683
+  edges, doubling every step.  chi_c = 4 at every one of them.
+
+The comparison is what makes it a real negative rather than a tired one.  G
+has 1581 points and reaches 4.5.  This reaches 1037 points and stays at 4.
+At comparable size de Grey's construction gets half a colour further, so the
+step is not "apply spindles until something happens" -- his choice of which
+gadget to spindle and about which angles is doing work that repetition does
+not reproduce.
+
+Which is the same invariant this project measured long ago from another
+direction: the density of critical subgraphs is 1/(new points per copy) and
+does not depend on the number of copies.  Doubling the graph doubles the
+copies and the points together, so the ratio never moves.  Seen on the
+circular scale it is the same fact with a finer reading: not merely that chi
+stays at 4, but that chi_c stays at 4 exactly, with no drift at all across a
+forty-fold increase in size.
+"""
