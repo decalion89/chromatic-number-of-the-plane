@@ -10262,3 +10262,39 @@ A_DISC_CANNOT_HOLD_A_DISTANCE_WIDER_THAN_ITSELF = {
     "and G is concentrated": "1276 of 1581 points within 1.3 of the centroid, "
                              "949 within 1.0",
 }
+
+
+# Local density does not raise the chromatic number.  Extent does.
+#
+# The greedy was focused into a disc on the reasoning that a 6-chromatic graph
+# has to be dense somewhere, and spreading additions over 1581 points dilutes
+# each one.  That reasoning is half right and it was the wrong half to act on.
+#
+# Take the 949 points of G inside radius 1.0 of its centroid and close them
+# under unit-circle intersection: 7206 new points, 8155 in all, 21960 unit
+# edges.  The chromatic number of that is 4.  Not 5, and not 6 -- FOUR, both
+# with the sqrt3 edges and without.
+#
+# Two things follow.  The first is that the 949 seed points were already only
+# 4-chromatic, so G's fifth colour does not live inside radius 1.0 of its
+# centroid: its 5-chromatic structure is wider than that disc, even though the
+# disc holds sixty per cent of its points.  The second is that adding seven
+# thousand points to a region did not move the number at all.
+#
+# So density in a small region buys nothing, and the focused growth was
+# fighting the wrong battle -- which is why its kill rate settled at ten per
+# cent and stayed there.  This is the same lesson as "rigidity is not local",
+# arrived at from the other side: what a high chromatic number needs is reach.
+LOCAL_DENSITY_DOES_NOT_RAISE_CHI = {
+    "the experiment": "949 points of G within radius 1.0 of the centroid, "
+                      "closed once under unit-circle intersection",
+    "the result": "8155 points, 21960 unit edges, chi = 4 with or without "
+                  "the sqrt3 edges",
+    "so the seed was already 4-chromatic": "G's fifth colour does not live "
+                                           "inside that disc, though it holds "
+                                           "60 per cent of G's points",
+    "and 7206 new points moved nothing": "density in a small region buys no "
+                                         "chromatic number",
+    "consequence": "the focused growth was fighting the wrong battle; what a "
+                   "high chromatic number needs is reach, not local density",
+}
