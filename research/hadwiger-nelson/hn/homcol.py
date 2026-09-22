@@ -11852,3 +11852,46 @@ whole test is two assumptions and no added clauses.  The first version of
 that scan built k^2 selector variables per pair -- hundreds of thousands
 across the scan -- for a question that needs none.
 """
+
+
+THE_ERDOS_LATTICE_FAMILY_IS_CLOSED_BY_ARITHMETIC = """
+A family with no ancestor in common with the Moser spindle, explored and
+closed in a minute.
+
+Every construction in this problem descends from the same seed: points built
+by intersecting unit circles, which fixes the field and everything after.
+The seed is the one free choice, and there is another famous family of
+unit-distance configurations that nobody has crossed with this question --
+Erdos's extremal sets for the NUMBER of unit distances.  They are sections
+of Z^2 scaled by 1/sqrt(N) with edges between points differing by a vector
+of norm N, so the degree is r2(N): at N = 5*13*17*29 that is 64, against
+mean degree 10 in G.  The densest unit-distance graphs known, studied for
+counting and never for colouring.
+
+They are Cayley graphs on Z^2, so any sublattice avoiding the connection set
+colours them by cosets with as many colours as its index.  There are 21
+sublattices of index at most 5, and the question is whether some N leaves
+all of them hit.
+
+First run said yes -- twelve values, the best at degree 24 -- and it was
+wrong.  46800 = 144 * 325 and every one of its representation vectors is a
+multiple of 12, so the Cayley graph splits into 144 disjoint copies of the
+norm-325 graph and the sublattices of Z^2 are not the right object at all.
+Every one of the twelve was imprimitive in that way.
+
+Restricted to PRIMITIVE N, where the representation vectors have gcd 1:
+
+    29192 values with r2 >= 12, up to N = 400000, and ZERO defeat all
+    coset colourings with five colours.
+
+There is a reason, which is what makes this a closure rather than a failed
+search.  The index-5 sublattices correspond to the six points of the
+projective line over F_5, a vector (a,b) lying in the one for (alpha:beta)
+exactly when alpha*a + beta*b = 0 mod 5.  The norm-N vectors reduced mod 5
+lie on the conic a^2 + b^2 = N, which has too few points to meet all six
+lines.  The obstruction is arithmetic and does not care how large N gets.
+
+So the densest unit-distance graphs known are all 5-colourable, by a
+colouring anyone can write down, and the family that looked most promising
+from outside this problem is the one that closes fastest.
+"""
