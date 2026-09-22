@@ -10629,3 +10629,26 @@ unit circle can never do it.  Several centres can, because a point at
 distance 1 from two of them must dodge two windows, and that is where the
 combinatorics actually lives.
 """
+
+
+THE_ASCENT_ADDED_SEVENTY_THREE_POINTS_AND_THE_RATIO_HELD = """
+The ascent, decided properly rather than by its own score.
+
+Eight rounds of growth at the tight ratio added 73 points to G, every one of
+them chosen because it killed all 100 sampled homomorphisms to K(9/2).  The
+resulting 1654-point graph was then asked the only question that settles
+anything: does it map to K(9/2)?
+
+It maps.  chi_c is still at most 4.5.
+
+The solve took 109 seconds against 24 for G alone, so the instance is about
+four and a half times harder -- and that is worth nothing, for the same
+reason the kill rate was worth nothing.  Cost is not evidence.  What the
+test says is that 73 points chosen to block sampled homomorphisms do not
+block the ones the sampler never drew, which is what the futility of killing
+draws from an astronomical space predicts.
+
+Recorded because the growth looked, by its own numbers, like it was working:
+a hundred per cent kill rate every round for eight rounds.  The graph was
+never close.
+"""
