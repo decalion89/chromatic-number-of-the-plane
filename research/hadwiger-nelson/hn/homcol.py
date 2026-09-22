@@ -11981,3 +11981,40 @@ work than the question deserved, and the cheap argument only turned up
 because a DIFFERENT measurement -- the independence ratio -- came back at a
 number too round to be anything but structural.
 """
+
+
+THE_CLOSURE_STEP_ON_G_BUYS_NOTHING_AND_THE_RATIO_WILL_NOT_BE_SCULPTED = """
+Two closures, both decisive, both on questions this pass opened.
+
+THE STEP APPLIED TO G.  The reading that de Grey's step is worth half a
+colour -- Y at chi_c = 4, G at 4.5 -- predicted that applying it again would
+reach 5.0, where the ceiling function turns 5 into 6 on the step after.  The
+project had already built that: symG, the symmetric closure of G, 18966
+points and 94548 edges, twelve times G's size.  It had only ever been tested
+at chi, which answered "5-colourable" and therefore answered nothing.
+
+    symG maps to K(9/2), after 6816 seconds.  chi_c(symG) <= 4.5.
+
+The same value as G.  Twelve times the size and the closure buys nothing on
+the scale that can see it.  That settles the iterate-the-step programme on
+the project's real artefacts rather than on the 24-point toy, where three
+constructions had already failed to move chi_c off 4.  And the solve took
+nearly two hours to return what G returns in twenty-four seconds -- cost is
+not evidence, for the fourth time today.
+
+THE RATIO WILL NOT BE SCULPTED.  m_1 <= alpha(H)/n(H) makes a graph with
+independence ratio below 1/4 a proof of measurable chi >= 5, and removing a
+vertex from a maximum independent set lowers the ratio whenever alpha < n.
+So: sample independent sets, count which vertices appear most, remove those,
+repeat.  From fiveD's 8-core at 2101 points:
+
+    0.2742 -> 0.2736 -> 0.2724 -> 0.2722 -> 0.2746
+
+It bottoms out near 0.272 and turns back up.  Alpha falls at about a third
+of the removal rate at first and slower after, so the ratio has a floor well
+above the 0.25 needed and above the 0.2544 record.  Removing the popular
+vertices does not remove the independent sets; it reshapes them.
+
+Both results are negative and both are clean, which is the useful kind.  The
+step does not compound, and the ratio does not sculpt.
+"""
