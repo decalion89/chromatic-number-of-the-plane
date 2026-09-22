@@ -1,77 +1,111 @@
-"""Make G critical before rotating it.  That is what every negative points at.
+"""What makes a unit-distance graph TIGHT at its chromatic number?
 
-Y is nearly 4-critical: 787 of its 789 non-pair vertices are individually
-indispensable to its forcing, so its 4-colourings are scarce and six cross
-edges are enough to pin seventy-five pairs.  G is 5-chromatic with 1581
-vertices where the literature gets the same property from about five hundred,
-so it is redundant by a factor of three, its 5-colourings are plentiful, and
-nothing is pinned -- 44 distinct biting rotations about arbitrary pivots, up
-to 812 cross edges, and not one pair agrees across fourteen colourings.
+Sa and Y have chi_c = 4 exactly, where the Moser spindle is loose at 7/2.
+Tightness is what G lacks at five, and it is the whole of the remaining gap,
+so the mechanism behind it is worth seeing rather than guessing at.  Shrink
+Sa to a minimal subgraph that still refuses K(35/9) = 3.8889 -- the largest
+ratio below 4 with denominator at most 9 -- and whatever is left is the
+structure doing the work.
 
-Criticality is the missing ingredient, and an unsatisfiable core extracts it
-in one solve rather than 1581.  Gate each vertex behind a selector: the clause
-"v gets a colour" becomes "s_v implies v gets a colour", so not asserting s_v
-lets v go uncoloured, which is deletion -- the edge clauses stay satisfied by
-an uncoloured endpoint.  Solve with every selector assumed; the proof of
-unsatisfiability names a subset of them that already suffices, and that subset
-is a smaller graph with the same chromatic number.
-
-Then iterate.  The first solve is de Grey's own theorem and is slow; each one
-after it is on a smaller graph.
+Removal is by delta-debugging rather than one vertex at a time: try dropping
+a whole block, keep the drop if the graph still refuses, otherwise put it
+back and halve the block.  That turns a few hundred solver calls into a few
+dozen.
 """
-import sys, time, pickle
+import sys, time, pickle, random
 sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-from hn.degrey import build_G
+from fractions import Fraction as Fr
+from collections import defaultdict
+from hn.degrey import build_Sa, build_Y, build_G
 from hn.geometry import DEGREY_FIELD as K
-from hn.graph import build_graph
+from hn.fast import IntBasis, fast_edges_complete
 from pysat.solvers import Solver
 
-SC = ("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-      "39c59179b415/scratchpad/")
+SC = ("/tmp/claude-0/-home-user-darwin-50/"
+      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+WHICH = sys.argv[1] if len(sys.argv) > 1 else "Sa"
+R = Fr(*map(int, (sys.argv[2] if len(sys.argv) > 2 else "35/9").split("/")))
 t0 = time.time()
-k = 4
-pts = build_G(K, as_graph=False)
-g = build_graph(pts)
-keep = list(range(g.n))
-print(f"G: {g.n} points, {g.m} edges  [{time.time()-t0:.0f}s]", flush=True)
+P = {"Sa": build_Sa, "Y": build_Y,
+     "G": lambda k: build_G(k, as_graph=False)}[WHICH](K)
+b = IntBasis.covering(P)
+rows = b.rows(P)
+adj = defaultdict(set)
+for a, c in fast_edges_complete(b, rows):
+    adj[a].add(c)
+    adj[c].add(a)
+p, q = R.numerator, R.denominator
+print(f"{WHICH}: {len(P)} points, "
+      f"{sum(len(v) for v in adj.values())//2} edges; refusing "
+      f"K({p}/{q}) = {float(R):.4f}?  [{time.time()-t0:.0f}s]", flush=True)
 
-for rnd in range(12):
-    sub = g.induced(keep)
-    sub = sub.k_core(k)
-    idx = {p: i for i, p in enumerate(sub.vertices)}
-    n = sub.n
-    E = sorted((min(a, b), max(a, b)) for a, b in sub.edges())
-    cls, sel = [], []
-    for v in range(n):
-        s = 1 + n * k + v
-        sel.append(s)
-        cls.append([-s] + [1 + v * k + c for c in range(k)])
-    for a, b in E:
-        for c in range(k):
-            cls.append([-(1 + a * k + c), -(1 + b * k + c)])
-    sv = Solver(name="cd19", bootstrap_with=cls)
-    ok = sv.solve(assumptions=sel)
-    if ok:
-        print(f"  round {rnd}: {n} points is 4-COLOURABLE -- the previous "
-              f"round was already minimal for this method", flush=True)
-        sv.delete()
-        break
-    core = set(sv.get_core() or sel)
-    sv.delete()
-    kept = [v for v in range(n) if sel[v] in core]
-    print(f"  round {rnd}: {n} points, {len(E)} edges -> core of "
-          f"{len(kept)}  [{time.time()-t0:.0f}s]", flush=True)
-    pts2 = [sub.vertices[v] for v in kept]
-    g = build_graph(pts2)
-    keep = list(range(g.n))
-    with open(SC + "shrink.pkl", "wb") as fh:
-        pickle.dump([(str(p.x), str(p.y)) for p in g.vertices], fh)
-    if len(kept) == n:
-        print("  no further shrinkage from the core", flush=True)
-        break
 
-final = build_graph([p for p in g.vertices]).k_core(k)
-print(f"final: {final.n} points, {final.m} edges  [{time.time()-t0:.0f}s]",
+def refuses(keep):
+    """True when the induced subgraph has NO homomorphism to K(p/q)."""
+    ks = sorted(keep)
+    idx = {v: i for i, v in enumerate(ks)}
+    cl = [[1 + i * p + j for j in range(p)] for i in range(len(ks))]
+    for v in ks:
+        for u in adj[v]:
+            if u in idx and u > v:
+                for j in range(p):
+                    for d in range(-(q - 1), q):
+                        cl.append([-(1 + idx[v] * p + j),
+                                   -(1 + idx[u] * p + (j + d) % p)])
+    cl += [[-(1 + j)] for j in range(1, p)] + [[1]]
+    s = Solver(name="cd15", bootstrap_with=cl)
+    ok = s.solve()
+    s.delete()
+    return not ok
+
+
+keep = set(range(len(P)))
+assert refuses(keep), "carrier does not refuse this ratio"
+print(f"yes -- now shrinking  [{time.time()-t0:.0f}s]", flush=True)
+# peel first: at p/q a neighbour forbids 2q-1 positions, so a vertex with
+# fewer than p/(2q-1) neighbours can always be coloured last and cannot
+# belong to a minimal refusing subgraph.
+need = -(-p // (2 * q - 1))
+while True:
+    drop = {v for v in keep if len(adj[v] & keep) < need}
+    if not drop:
+        break
+    keep -= drop
+print(f"peeled to {len(keep)} (min degree {need})  [{time.time()-t0:.0f}s]",
       flush=True)
-with open(SC + "shrink.pkl", "wb") as fh:
-    pickle.dump([(str(p.x), str(p.y)) for p in final.vertices], fh)
+block = max(1, len(keep) // 2)
+calls = 0
+while block >= 1:
+    order = sorted(keep)
+    random.shuffle(order)
+    moved = False
+    for i in range(0, len(order), block):
+        chunk = set(order[i:i + block]) & keep
+        if not chunk:
+            continue
+        calls += 1
+        if refuses(keep - chunk):
+            keep -= chunk
+            moved = True
+            while True:
+                d = {v for v in keep if len(adj[v] & keep) < need}
+                if not d:
+                    break
+                keep -= d
+            print(f"   dropped {len(chunk)} -> {len(keep)} left "
+                  f"({calls} calls)  [{time.time()-t0:.0f}s]", flush=True)
+    if not moved or block == 1:
+        if block == 1:
+            break
+        block = max(1, block // 2)
+    else:
+        block = max(1, min(block, len(keep) // 2))
+ks = sorted(keep)
+m = sum(1 for v in ks for u in adj[v] if u in keep) // 2
+degs = sorted(len(adj[v] & keep) for v in ks)
+print(f"\nminimal refusing subgraph: {len(ks)} points, {m} edges, "
+      f"degrees {degs[0]}..{degs[-1]}, mean {2*m/len(ks):.2f}"
+      f"  [{time.time()-t0:.0f}s]", flush=True)
+pickle.dump([P[v] for v in ks],
+            open(SC + f"tight_{WHICH}_{p}_{q}.pkl", "wb"))
+print("DONE", flush=True)

@@ -10591,3 +10591,41 @@ That is a concrete reading of why the problem has stayed open where it has:
 not that the mechanism is wrong, but that the remaining distance is two
 steps of it, and each step multiplies the graph.
 """
+
+
+THE_CONE_REFUSES_EXACTLY_THE_RATIOS_BELOW_CHI_PLUS_ONE = """
+Why the most natural way upward fails, stated exactly rather than in spirit.
+
+Put a graph H entirely on the unit circle about a point v.  In any
+homomorphism to K(p/q), v takes some position and forbids the window of
+2q-1 positions around it, so H is confined to the complementary arc of
+M = p - 2q + 1 positions.  Inside an arc, circular distance equals linear
+distance: two positions there differ by at most p - 2q, and the way round
+the other side is at least 2q, so the minimum is the linear gap and the
+constraint is just |i - j| >= q.
+
+The graph on M positions with i ~ j iff |i - j| >= q is the complement of a
+unit interval graph, hence perfect, so its chromatic number equals its
+clique number, floor((M-1)/q) + 1 = floor(p/q) - 1.  Being perfect it also
+contains a clique of that size, so H maps into the arc exactly when
+chi(H) <= floor(p/q) - 1 -- no homomorphism subtleties, just the chromatic
+number.
+
+So v together with H refuses K(p/q) for every ratio in (4, 5) precisely when
+chi(H) = 4: the cone over a 4-chromatic graph on the unit circle would be
+tight at five, and 5-chromatic.
+
+And that is exactly what the plane forbids.  Two points of a unit circle at
+distance 1 from each other subtend 60 degrees, so the unit-distance graph
+carried by a unit circle is always a subgraph of a disjoint union of
+hexagons: bipartite, chi <= 2.  The criterion needs 4 and the circle can
+only ever supply 2, so the cone refuses only the ratios below 3 and gives a
+3-chromatic graph.
+
+The obstruction is not news.  Saying which ratios the cone does refuse is
+what makes it a design criterion: the ring must confine the rest of the
+graph to an arc too short for its chromatic number, and one centre with one
+unit circle can never do it.  Several centres can, because a point at
+distance 1 from two of them must dodge two windows, and that is where the
+combinatorics actually lives.
+"""
