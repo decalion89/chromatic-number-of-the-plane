@@ -11048,3 +11048,36 @@ first and deepgrow third, on a threshold that nothing can cross.  The
 5-cycle count ranks deepgrow first on a criterion derived from what actually
 holds a graph to the rung.
 """
+
+
+THE_FIVE_CYCLE_SCREEN_COUNTED_QUADRILATERALS = """
+Correction to the screen above.  Its conclusion survives; its numbers do not.
+
+That count walked a path a-x-y-c and closed it with the edge (a,c).  Those
+are four vertices.  It was counting QUADRILATERALS, then dividing by five.
+Caught by an independent enumeration on Sa which reports 714 triangles, 2712
+4-cycles and 15948 5-cycles: the old "2169 five-cycles" is exactly
+2712 * 4 / 5, and on G the old 8652 is exactly 10816 * 4 / 5.  Every figure
+in that table was a 4-cycle count wearing the wrong label.
+
+Counted properly -- four edges walked and the fifth closed, each cycle seen
+once by fixing the smallest vertex first and breaking the reflection:
+
+    deepgrow    4709 pts  27979 e   362827 five-cycles  12.968 per edge
+    uniSa       8953 pts  47724 e   581598 five-cycles  12.187 per edge
+    ascent_9_2  1654 pts   8281 e    68120 five-cycles   8.226 per edge
+    Sa           397 pts   1974 e    15948 five-cycles   8.079 per edge
+    Y            791 pts   3938 e    31802 five-cycles   8.076 per edge
+    G           1581 pts   7877 e    63604 five-cycles   8.075 per edge
+    disc_1.0    8155 pts  21960 e    39577 five-cycles   1.802 per edge
+
+The ranking is unchanged, so deepgrow was the right candidate for the wrong
+number.  Two readings sharpen rather than change.  Sa, Y and G now agree to
+8.075, 8.076, 8.079 -- three digits, not two -- so de Grey's closure
+preserves the local structure with real precision while multiplying the
+size.  And the gap to deepgrow is 61 per cent, not 52.
+
+Recorded in full because a screen that chooses what to spend hours of solver
+time on has to be audited, and this one was wrong in a way that happened not
+to matter.  Next time it might.
+"""
