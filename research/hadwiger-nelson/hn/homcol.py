@@ -11264,3 +11264,44 @@ orientation landscape around G's optimum is not a shallow basin with a
 narrow lip -- it is flat to the search at that resolution.  Which is what
 one expects if 9/2 is not a local optimum but the true value.
 """
+
+
+THE_SPINDLE_NEEDS_A_LARGE_DENOMINATOR = """
+Why de Grey's spindle has no direct circular analogue, and exactly where it
+does have one.
+
+In the colour setting the device is immediate: a pair forced to share a
+colour, plus an edge between them, is a contradiction.  On the circle it is
+not.  Suppose u,v are forced to within q of each other in every map -- the
+natural analogue of forced-same -- and spindle it, rotating about u so that
+v goes to v' with |v - v'| = 1.  Both pairs are forced close, so
+
+        |phi(v) - phi(v')| < 2q,
+
+while adjacency of v and v' only demands at least q.  The two are perfectly
+compatible.  The spindle closes nothing.
+
+The arithmetic says what would close it.  If the forcing is to within k
+rather than q, the same argument gives |phi(v) - phi(v')| < 2k against a
+demand of at least q, so the contradiction appears exactly when
+
+        2k <= q.
+
+At q = 2, the ratio 9/2 this project has been working at, that needs k <= 1:
+the pair must be forced to the SAME POSITION, with nothing to spare.  At
+q = 9, the ratio 44/9 = 4.8889, it needs only k <= 4 -- forced to within
+four of nine positions, which is a far weaker hypothesis about the geometry.
+
+So the spindle mechanism has room in the high-denominator ratios and none at
+all in the low ones.  That cuts against the obvious plan.  The instinct is
+to attack the nearest rung above G, which is 9/2 because 2 is the smallest
+denominator that clears 4 -- and 9/2 is precisely where the one device known
+to work in this problem cannot be used.  The rungs near 5, which look
+harder because they are stronger statements, are the ones where the
+machinery de Grey actually used has somewhere to stand.
+
+Worth testing rather than believing: whether G, or anything built here, has
+pairs forced to within 4 at 44/9.  A pair forced that close at a distance
+under 2 would be a spindle away from a contradiction, and a contradiction
+there is chi_c > 4.8889 -- one ninth short of the whole problem.
+"""
