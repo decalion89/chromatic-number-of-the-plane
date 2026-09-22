@@ -6029,7 +6029,7 @@ the colours:
 | `Sa` | 4 | **72** | yes — 63, 70, 72, 72 |
 | `H` = `Sa` glued | 4 | **38** | yes, flat from 200 on |
 | `G` | 5 | **653** | no — 44 % of colourings still new |
-| the 825-vertex graph | 5 | **921** | no — 61 % still new |
+| the 807-vertex graph | 5 | **921** | no — 61 % still new |
 
 At four colours the interface space closes. At five it does not close at all,
 and is already an order of magnitude larger. **And the glue halves it at four —

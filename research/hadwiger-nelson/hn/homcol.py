@@ -12412,7 +12412,7 @@ FORCED_EQUALITY_NEVER_CHAINS_SO_THE_ANGLE_IS_NEVER_FREE = True
 #     1139   Sa itself, glued at the 60-degree rotation about a vertex
 #      951   Sa peeled to its 327 highest-degree vertices, glued at rot120
 #             (overlap 178, so a 476-point union instead of 570)
-#      825   the union cut down to the 413 vertices that still force the pair
+#      807   the union cut down to the 404 vertices that still force the pair
 #
 # The peeling order matters: deleting vertices at random destroys the forcing
 # after ten of 397, while deleting the ten LOWEST-DEGREE ones leaves all eight
@@ -12423,10 +12423,10 @@ FORCED_EQUALITY_NEVER_CHAINS_SO_THE_ANGLE_IS_NEVER_FREE = True
 #
 # For scale: the smallest 5-chromatic unit-distance graph known is the
 # 509-vertex Parts graph, reached from de Grey's 1581 by a chain of
-# minimisations costing on the order of 100000 CPU-hours.  825 is not a
+# minimisations costing on the order of 100000 CPU-hours.  807 is not a
 # record.  It is a different field, reached in a different way, and the first
 # of these numbers that anyone has minimised there.
-EIGHT_HUNDRED_AND_TWENTY_FIVE_IN_A_FIELD_NOBODY_HAS_MINIMISED_IN = True
+EIGHT_HUNDRED_AND_SEVEN_IN_A_FIELD_NOBODY_HAS_MINIMISED_IN = True
 
 
 # Symmetrising the 5-chromatic carrier loosens it instead of tightening it.
@@ -12483,7 +12483,7 @@ DIVERSITY_COMES_FROM_BLOCKING_NOT_FROM_HINTS = True
 #     Sa            k=4      72 patterns    saturated (63, 70, 72, 72)
 #     H = Sa glued  k=4      38 patterns    saturated, flat from 200 on
 #     G             k=5     653 patterns    44% of colourings still new
-#     the 825       k=5     921 patterns    61% still new
+#     the 807       k=5     921 patterns    61% still new
 #
 # At four colours the interface space is small and closes; at five it does not
 # close at all and is already an order of magnitude larger.  And the glue
