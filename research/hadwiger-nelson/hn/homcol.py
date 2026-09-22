@@ -11234,3 +11234,33 @@ deepgrow's, so it maps to K(9/2) with certainty and its test could only ever
 confirm it.  The local relaxation on deepgrow was satisfiable for the same
 reason.  Neither needed a core once deepgrow answered.
 """
+
+
+THREE_SEARCHES_STOP_AT_THE_SAME_PLACE = """
+Evidence, labelled as such, that chi_c(G) is exactly 9/2.
+
+Three methods that share no machinery have now failed in the same spot.
+
+  1. Descent by rescoring.  Seeded from G's K(9/2) map, which scores 4.5003,
+     200 moves each flipping an edge of a cycle witnessing the current score
+     -- the only edges whose flip can lower it -- and rescoring by binary
+     search.  Never below 4.5.
+  2. Local repair at a fixed threshold.  Same seed, but the target is fixed
+     and the move is: find a cycle violating it, flip one of its edges.  One
+     Bellman-Ford pass per move instead of twenty-one.  Asked for 4.4950 --
+     five thousandths below the seed -- it was STUCK after 4000 flips.
+  3. Four SAT solvers on the circular-clique encoding at 22/5: cadical,
+     glucose, maple and minisat, hours each, none returning.
+
+A search that finds nothing has shown nothing, and that holds for all three.
+What makes them worth recording together is that they fail differently: one
+cannot improve a score, one cannot repair a violation, one cannot close a
+proof.  Agreement between methods with different failure modes is worth more
+than any of them alone, and it is still not a proof.
+
+The one that surprises is the second.  A threshold five thousandths below
+the seed is barely a perturbation, and 4000 repairs could not meet it.  The
+orientation landscape around G's optimum is not a shallow basin with a
+narrow lip -- it is flat to the search at that resolution.  Which is what
+one expects if 9/2 is not a local optimum but the true value.
+"""
