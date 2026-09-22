@@ -11768,3 +11768,46 @@ searches actually live -- growing 4-chromatic graphs and hoping -- is
 exactly the flat part.  An instrument that ranks the graphs at the top of
 the climb is not an instrument for making the climb.
 """
+
+
+THE_DENSE_CARRIER_BREAKS_TWO_THINGS_AND_ONE_IS_THE_SEARCH = """
+Building the strongest possible carrier, and finding two faults on the way.
+
+The reasoning: the cap is monotone downward in the carrier, so the lemma
+search should not be asking G -- 1581 points over a disc of radius 3, mean
+degree 10, the WEAKEST carrier that answers the question.  Build the densest
+patch the geometry allows instead, using the corrected intersection
+condition from earlier in this pass which nearly doubles the constructible
+points, and ask there.
+
+FAULT ONE, in the carrier.  Densifying G itself to radius 3.2 produced 7001
+points in 434 seconds and an integer-basis overflow headroom of 80.8 -- the
+coordinates the corrected condition generates have denominators far beyond
+int64, so the fast edge routine cannot be used and the patch is unusable.
+The correction that doubles the point supply also doubles the arithmetic
+depth, which was never measured when the correction was found.  A patch
+seeded from the 24-point tight core stays inside the basis: 1461 points at
+radius 3.4, mean degree 9.1.
+
+FAULT TWO, in the search, and it is the interesting one.  Run on that patch
+at four colours the cap search returned nothing in 11500 configurations,
+which contradicts monotonicity -- a denser carrier should cap MORE, not
+less.  The candidates explain it.  In Sa the ring at radius 2 about the
+anchor IS de Grey's hexagon, exactly six points.  In the dense patch the
+same ring has THIRTEEN, because densification added points at that
+distance, and a thirteen-point set spreads four colours far more easily
+than a six-point one.  The search was no longer testing his object; it was
+testing a superset that happens to share a name.
+
+So "all points at distance r" is the wrong family in a dense carrier.  The
+right one is the connected components of that ring under unit distance,
+which in Sa is the hexagon itself and in a dense patch separates the
+cycles from the scattering around them.  With that family added the control
+still recovers de Grey's cap at 2 of 4, and the dense test is worth running
+again.
+
+Worth recording because the first result looked like a clean negative --
+zero caps in the densest carrier built here -- and it was an artefact of a
+family definition that stopped meaning what it meant when the carrier
+changed underneath it.
+"""

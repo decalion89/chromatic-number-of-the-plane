@@ -33,6 +33,13 @@ SC = ("/tmp/claude-0/-home-user-darwin-50/"
 CAR = sys.argv[1] if len(sys.argv) > 1 else "Sa"
 KC = int(sys.argv[2]) if len(sys.argv) > 2 else 4
 LIM = int(sys.argv[3]) if len(sys.argv) > 3 else 4000
+# The palette cap is monotone DOWNWARD in the carrier: more
+# points mean more constraints, fewer colourings, and a maximum
+# that can only fall.  So the configurations are drawn from a
+# small neighbourhood of the anchor while the colouring runs on
+# the whole carrier -- searching G was searching the smallest
+# carrier that answers the question, which is the wrong end.
+SRC = int(sys.argv[4]) if len(sys.argv) > 4 else 10 ** 9
 t0 = time.time()
 P = ({"G": lambda k: build_G(k, as_graph=False), "Sa": build_Sa,
       "Y": build_Y}[CAR](K) if CAR in ("G", "Sa", "Y")
@@ -107,7 +114,7 @@ def palette(S):
 # The families.  Rings are de Grey's own shape and must be included or the
 # control cannot succeed; the rest are what nobody has swept.
 d2 = defaultdict(list)
-for v in range(n):
+for v in range(min(n, SRC)):
     for u in range(n):
         if u != v:
             r2 = round((xy[u][0] - xy[v][0]) ** 2
@@ -119,11 +126,40 @@ for (v, r2), ring in d2.items():
     if 3 <= len(ring) <= 14:
         fams.append((f"ring r2={r2:.3f} about {v}", ring))
         fams.append((f"centre+ring r2={r2:.3f} about {v}", [v] + ring))
-for v in range(n):
+    # In Sa the radius-2 ring IS de Grey's hexagon, six points forming a
+    # cycle of unit edges.  In a dense carrier the same ring has thirteen
+    # points, and a bigger set spreads colours more easily, so testing "the
+    # ring" stops testing his object.  Its connected components under unit
+    # distance are the shapes that matter, and in Sa the component is the
+    # hexagon itself.
+    if 4 <= len(ring) <= 20:
+        rs = set(ring)
+        seen_c, comps = set(), []
+        for u in ring:
+            if u in seen_c:
+                continue
+            comp, stack = [], [u]
+            seen_c.add(u)
+            while stack:
+                x = stack.pop()
+                comp.append(x)
+                for y in adj[x] & rs:
+                    if y not in seen_c:
+                        seen_c.add(y)
+                        stack.append(y)
+            if len(comp) >= 3:
+                comps.append(sorted(comp))
+        for ci, comp in enumerate(comps):
+            fams.append((f"ring-component {ci} r2={r2:.3f} about {v}", comp))
+            fams.append((f"centre+component {ci} r2={r2:.3f} about {v}",
+                         [v] + comp))
+for v in range(min(n, SRC)):
     if KC <= len(adj[v]) <= 16:
         fams.append((f"N({v})", sorted(adj[v])))
         fams.append((f"v{v}+N({v})", [v] + sorted(adj[v])))
 for a, c in E:
+    if a >= SRC:
+        continue
     common = sorted(adj[a] & adj[c])
     if len(common) >= KC:
         fams.append((f"N({a}) cap N({c})", common))
