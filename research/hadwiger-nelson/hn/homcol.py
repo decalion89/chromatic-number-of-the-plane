@@ -10869,3 +10869,35 @@ threshold of 0.2222, and the best unit-distance graphs known reach about
 has been screened in 25 seconds rather than by hours of solver time, and
 exactly one candidate -- wide0, the densest by degree -- is worth a run.
 """
+
+
+COUNTING_IS_STRICTLY_WEAKER_THAN_CHI_FOR_EVERY_KNOWN_GRAPH = """
+A correction to the screen in the note above, and it is not a small one.
+
+That note ranked the corpus by independence ratio against the 2/9 = 0.2222 a
+K(9/2) map needs, and called wide0 at 0.2531 "worth a solver run" on those
+grounds.  The threshold is not reachable and the reasoning does not hold.
+
+For a graph with independence ratio rho, counting proves a refusal of K(p/q)
+only when p/q < 1/rho.  With rho = 0.2531 that caps at 3.95.  But chi >= 5
+already refuses every ratio up to and including 4, so counting adds nothing
+at all.  The same holds for the best unit-distance graphs known: their ratio
+near 0.2565 caps counting at 3.898.  Which is just the old fact seen from a
+new angle -- chi_f(R^2) >= 3.8992 sits BELOW 4, so de Grey's theorem is
+strictly stronger than everything the fractional programme achieved, and the
+fractional instrument cannot contribute to any rung above 4 for any graph
+anyone has built.
+
+So the screen's real yield was the elimination and the density figures, not
+the candidate it named.  Its verdict column was measuring a threshold that
+nothing can cross.  wide0 is still the densest graph here by degree and
+therefore the most constrained, which is a reason to run it -- just not the
+reason that was given.
+
+Every remaining route to the 4.5 rung is structural.  Restated once more so
+it is not forgotten: counting is out, fractional relaxation is out,
+measurable arguments are out, unique colourability is out, and greedy growth
+at both the slack and the tight ratio is out.  What is left is the Minty
+side -- the cycles that hold the graph to the rung -- and that is where to
+look next.
+"""
