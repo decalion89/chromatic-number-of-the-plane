@@ -10137,3 +10137,45 @@ THE_FULL_TABLE_OVER_G = {
     "consequence": "nothing in G feeds the reduction from the two-branch "
                    "disjunction to a forced pair",
 }
+
+
+# Growing towards uncolourability by the right score, from a pool that does
+# not run out.
+#
+# Every universe in this work grew by volume: take all the unit-circle
+# intersections inside a radius and hope.  Thirty-five thousand points later
+# the answer was still a colouring, because most of those points constrain
+# nothing -- they sit where the colouring has room.
+#
+# There is an exact criterion instead.  A new point cannot be coloured under a
+# given colouring precisely when its neighbourhood already shows all five
+# colours, so adding it destroys exactly those sampled colourings, and the
+# point worth adding is the one that destroys the most.  It works: the first
+# point chosen this way killed 193 of 250 sampled colourings, and the rate
+# holds at 140 to 165 out of 200 as the graph grows.
+#
+# The first attempt at it was still doomed, for a reason worth recording.  Its
+# candidate pool was the first round of intersections of G, and adding every
+# one of those gives the 35132-point universe that is known to be
+# 5-colourable.  A greedy cannot do better than its pool, so the score was
+# right and the reservoir was wrong.
+#
+# The fix is to let the pool deepen: each point added is intersected against
+# the points already chosen, and those second- and later-round intersections
+# join the candidates.  What is reachable becomes the full intersection
+# closure rather than one round of it, and the greedy chooses where to dig
+# rather than which item of a fixed list to take.
+THE_SCORE_IS_SATURATION_AND_THE_POOL_MUST_DEEPEN = {
+    "the score": "a point cannot be coloured when its neighbourhood already "
+                 "shows all k colours, so it kills exactly those colourings",
+    "how well it works": "first point killed 193 of 250; the rate holds at "
+                         "140-165 of 200 as the graph grows",
+    "why the first attempt was doomed anyway": "its pool was one round of "
+                                               "intersections of G, whose "
+                                               "union is the 35132-point "
+                                               "universe and is 5-colourable",
+    "the lesson": "a greedy cannot beat its pool; the score was right and the "
+                  "reservoir was wrong",
+    "the fix": "intersect each added point against those already chosen, so "
+               "the reachable set is the whole intersection closure",
+}
