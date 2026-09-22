@@ -11663,3 +11663,43 @@ circular scale it is the same fact with a finer reading: not merely that chi
 stays at 4, but that chi_c stays at 4 exactly, with no drift at all across a
 forty-fold increase in size.
 """
+
+
+CORRECTION_TIGHTNESS_AND_THE_CAP_LIVE_IN_DIFFERENT_PLACES = """
+The synthesis above is wrong, and the truth is more interesting than the
+claim it replaces.
+
+That note read the pass's two measurements -- caps abundant at four and
+absent at five; Sa and Y tight at four while G is loose at five -- as the
+same fact, and concluded that caps live where a carrier is tight.  Two data
+points, consistent, and a tidy story.
+
+The tight cores falsify it.  Sa's tightness survives shrinking to 91 points
+and then to 24, both of which refuse every circular clique below 4 and are
+therefore tight in exactly the sense the note meant.  Run the lemma search
+on them:
+
+    Sa            397 pts   tight at 4   caps at 2 of 4 (de Grey's)
+    tight core     91 pts   tight at 4   0 caps of 2214 configurations
+    minimal core   24 pts   tight at 4   0 caps of  124 configurations
+
+So tightness does not produce caps.  The 24 points carry the whole of Sa's
+tightness -- they refuse all 92 ratios below 4 on their own -- and produce
+no cap at all, while the caps Sa does have are supplied by the other 306
+points.
+
+The two properties live in DIFFERENT PARTS of the graph.  Tightness is
+carried by a small compact core; the cap needs the bulk around it.  That is
+consistent with the monotonicity already recorded -- the cap falls as the
+carrier grows, so a 24-point carrier imposes almost nothing -- but the note
+should have drawn the consequence instead of reading a correlation off two
+points.
+
+What survives: G has no caps at five AND is not tight at five, so tightness
+may still be necessary.  Nothing here tests that, and it should not be
+asserted.  What is now measured is that it is nowhere near sufficient, so
+"find a carrier tight at five" is not the programme either; such a carrier
+would also need enough bulk around it to impose a cap, and the bulk is
+exactly what the earlier density measurements say cannot be added without
+diluting.
+"""
