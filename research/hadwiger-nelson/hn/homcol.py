@@ -11170,3 +11170,33 @@ that answers immediately has usually been asked the wrong question, and the
 right response to a suspiciously easy SAT is to audit the instance, not to
 believe it.
 """
+
+
+THE_LOCAL_RELAXATION_IS_NOT_STRONG_ENOUGH_AT_NINE = """
+The relaxation run properly, with its control, and it does not reach.
+
+Cycles of every length up to 9, the short ones taken whole and the long ones
+capped at 75000 each -- 2840 triangles, 10816 quadrilaterals, 63604
+five-cycles, and 75000 apiece at 6, 7, 8 and 9.
+
+    at 9/2 (control, must be satisfiable)   5163352 clauses   SAT in 259 s
+    at 22/5 (the question)                  9213352 clauses   SAT in 985 s
+
+Both satisfiable, so no conclusion about chi_c(G) > 22/5.  The control
+earns its place: the two instances differ only in what 9-cycles are asked
+for -- three on the minority side rather than two, which is the extra
+4050000 clauses exactly -- and the harder one takes 3.8 times as long.  So
+the 9-cycle constraint does bite; it just does not break.
+
+Worth stating what this does and does not say.  It does not say chi_c(G) <=
+22/5: a relaxation that is satisfiable says nothing at all about the
+original.  It says the witness, if there is one, is not carried by cycles of
+length at most 9 at this sample -- which is information about where to look,
+since lengths 10 through 17 demand the same minority side at both ratios and
+only 9 and 18 separate them.  Eighteen is out of reach by enumeration, so
+the practical ceiling of this method against 22/5 is the 9-cycles, and they
+are not enough.
+
+The instrument keeps its value for candidate graphs, where an UNSAT would be
+a cheap proof.  It is simply not the way to pin G.
+"""
