@@ -9963,3 +9963,54 @@ THE_TWO_DISTANCE_CHROMATIC_NUMBERS = {
     "the trade": "a cap buys a small pair set; the chromatic number buys "
                  "unconditionality; neither buys a single distance",
 }
+
+
+# The route reduced to two numbers that either meet or do not.
+#
+# A set capped at palette 4 whose {1, sqrt3} graph needs five colours forces a
+# monochromatic pair at distance sqrt3 in every 5-colouring.  Both halves have
+# been searched from both sides and neither has produced the other, so the
+# question is whether they can coexist -- and it becomes arithmetic once both
+# are measured in the same unit, which is the number of two-distance edges the
+# set carries.
+#
+# What a 5-chromatic core needs, measured by pulling cores out of a 565-point
+# ball with shuffled clause order:
+#
+#    9 points -> 19 edges       12 points -> 32
+#   10 points -> 23             13 points -> 34 to 37
+#   11 points -> 26 to 27       14 points -> 38 to 40
+#
+# What a capped set reaches: the ratchet on 13 points climbed to 24 and was
+# still climbing when it was stopped, and 2201 capped 13-sets carrying at
+# least 20 edges were enumerated, every one with two-distance chromatic
+# number 3.  Twelve thousand capped sets have now been measured across sizes
+# 9 to 13, and not one exceeds 3.
+#
+# At thirteen points the gap is ten edges and the route is hopeless there.  At
+# nine and ten the thresholds are low -- 19 and 23 -- which is where the two
+# ranges could still meet, and that is the only place left to ask.
+#
+# Enumeration is what made this measurable.  Putting both conditions in one
+# satisfiability problem was correct and useless: twenty rounds in four
+# hundred seconds, each ruling out a single candidate.  The counters showed
+# the way out -- the sampled-colouring count never moved, so every candidate
+# was genuinely capped and only the chromatic condition ever failed.  Dropping
+# that condition from the solver and testing it afterwards gives thousands of
+# capped sets a minute instead of twenty in seven.
+THE_ROUTE_REDUCES_TO_TWO_EDGE_COUNTS = {
+    "what closes the argument": "a capped set whose {1, sqrt3} graph needs 5 "
+                                "colours",
+    "edges a 5-chromatic core needs": {9: 19, 10: 23, 11: "26-27", 12: 32,
+                                       13: "34-37", 14: "38-40"},
+    "edges a capped set reaches": {13: "24 and climbing"},
+    "capped sets measured": "about 12000 across sizes 9 to 13, none with "
+                            "two-distance chromatic number above 3",
+    "where the ranges could still meet": "9 and 10 points, thresholds 19 and "
+                                         "23",
+    "the instrument": "enumerate capped sets on their own and test the "
+                      "chromatic condition afterwards; both conditions in one "
+                      "solve ruled out one candidate per twenty seconds",
+    "what told us to do that": "the sampled-colouring counter never moved, so "
+                               "the cap was never the binding constraint",
+}
