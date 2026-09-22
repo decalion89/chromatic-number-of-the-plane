@@ -11588,3 +11588,37 @@ a compact, heavily linked cluster.  Tightness is a property of a dense small
 neighbourhood, not of a long composition, which is the opposite of how the
 chromatic number is built up.
 """
+
+
+SEVENTY_FIVE_THOUSAND_CONFIGURATIONS_AND_NO_CAP_AT_FIVE = """
+The lemma search, run to a size where its silence carries weight.
+
+    Sa at four colours, control:  caps found at 2 of 4 on de Grey's ring and
+                                  on his ring with its centre, plus one he
+                                  does not mention at 3 of 4
+    G at five colours:            35500 configurations, 0 caps
+    wide0 at five colours:        40000 configurations, 0 caps
+
+75500 configurations across two carriers, with trivial caps filtered -- a
+set with a common neighbour outside it is capped for free, and the first
+version of this search reported every neighbourhood in G as a discovery --
+and with the strength of each cap measured rather than just its existence.
+
+The carriers were chosen to make the test as easy to pass as possible.  The
+palette cap is monotone DOWNWARD in the carrier: more points mean more
+constraints, fewer colourings, and a maximum that can only fall.  So wide0,
+at 11047 points, gives every configuration a better chance of being capped
+than G's 1581 do, and still nothing.
+
+And the reason is the one the tightness synthesis gives.  chi_c(G) = 4.5, so
+there is half a colour of slack at five, and half a colour is enough for
+every shape tried to spread five colours somewhere.  The cap is not missing
+because the right shape has not been guessed; it is missing because the
+carrier has room.
+
+So the search over lemmas returns the same verdict as everything else in
+this pass, and for the first time with an instrument whose control succeeds:
+de Grey's engine has no fuel at five in any carrier reachable from here, and
+what is needed first is not a gadget but a unit-distance graph with
+chi_c = 5.
+"""
