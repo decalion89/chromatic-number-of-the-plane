@@ -11081,3 +11081,43 @@ Recorded in full because a screen that chooses what to spend hours of solver
 time on has to be audited, and this one was wrong in a way that happened not
 to matter.  Next time it might.
 """
+
+
+THE_FIVE_CYCLE_GROWTH_DILUTES_AND_DEEPGROW_WAS_ALREADY_OPTIMAL = """
+The structural growth, measured exactly, and it goes the wrong way.
+
+Scoring candidates by the five-cycles they create -- no solver in the loop,
+a deterministic structural target, everything the earlier growth lacked --
+and running it from deepgrow with union3 as the pool.  An in-loop estimate
+sampling 40 vertices said the density rose from 12.97 to 15.8 per edge.
+
+Counted exactly instead:
+
+    deepgrow   4709 pts  27979 e   362827 five-cycles   12.968 per edge
+    fiveD     10709 pts  63041 e   758131 five-cycles   12.026 per edge
+    fiveF     12508 pts  72735 e   837469 five-cycles   11.514 per edge
+
+Every round LOWERED it.  The sampled estimate was noise -- it bounced
+between 7.4 and 11.5 within a single run -- and the reported rise was an
+artefact of the estimator, not a property of the graph.  Rescoring by
+five-cycles per edge rather than per point, which is the right ratio since
+each new edge is a fresh variable for the orientation to use, slowed the
+decline and did not stop it.
+
+So the pool does not contain points that concentrate the structure: adding
+anything from union3 brings edges faster than it brings overlapping
+5-cycles, and deepgrow is already a local optimum for this.
+
+Which reframes the earlier failure in its favour.  deepgrow came out of the
+blind saturation growth, the one recorded here as carrying no information
+because its kill rate decayed to nothing.  It was in fact concentrating
+5-cycles the whole time -- selecting dense neighbourhoods is selecting
+5-cycle-rich points -- and it arrived at the densest graph in this project
+by that measure, 61 per cent above G.  And it still maps to K(9/2), or at
+least nothing yet says otherwise.
+
+The lesson is not that the structural target is wrong.  It is that 5-cycle
+density alone does not cross the rung: a graph can be locally as rich as
+anything reachable here and the orientation still finds room.  What matters
+must be how the cycles interlock, not how many there are.
+"""
