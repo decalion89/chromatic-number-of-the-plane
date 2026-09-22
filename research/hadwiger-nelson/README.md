@@ -6011,3 +6011,72 @@ not saturation and not redundancy:
 So `χ(ℝ²) ≥ 6` runs through a *small* 5-chromatic unit-distance graph — which is
 an open problem in its own right, and the one place where a new construction in
 a new field is worth something. That is what `Z` is for.
+
+#### Why four works and five does not, as a number
+
+The glue forces because agreeing on the shared set pins the rest of the
+colouring. So what decides it is neither slack nor density but **how many
+distinct patterns a small set of vertices can carry** over all proper
+`k`-colourings. A carrier whose interface admits a handful of patterns leaves
+the second copy no freedom; one that admits hundreds leaves the σ-argument
+intact.
+
+Eight high-degree vertices, 1500 colourings each, counted up to permutation of
+the colours:
+
+| carrier | `k` | distinct patterns | saturated? |
+|---|---:|---:|---|
+| `Sa` | 4 | **72** | yes — 63, 70, 72, 72 |
+| `H` = `Sa` glued | 4 | **38** | yes, flat from 200 on |
+| `G` | 5 | **653** | no — 44 % of colourings still new |
+| the 825-vertex graph | 5 | **921** | no — 61 % still new |
+
+At four colours the interface space closes. At five it does not close at all,
+and is already an order of magnitude larger. **And the glue halves it at four —
+72 down to 38.** That is the mechanism itself: gluing shrinks the space of
+interface colourings until pairs have nowhere left to disagree. At five there is
+nothing to shrink.
+
+*(Two corrections this needed, both of which produced confident nonsense first.
+The encoding deliberately omits at-most-one clauses — sound for deciding
+colourability, since the edge clauses already make adjacent colour **sets**
+disjoint — but wrong for **reading** a colour off a model, where a vertex with
+three true colour variables reads as whichever is smallest. Without
+at-most-one, an eight-vertex interface reported **one** pattern over four
+hundred colourings. And blocking alone does not diversify: forbidding the last
+solution on forty random vertices lets the solver change one of them and leave
+everything else, so a fixed interface still reports one pattern — out of
+laziness, not constraint. Randomised polarity moves the whole assignment;
+blocking guarantees it moves at all.)*
+
+#### Two solver facts, so they are not paid for twice
+
+Randomised decision polarity is what makes the forced-pair filter work. On a
+tight graph, random **assumptions** are refused almost always — forty tries on
+`Y` at four colours produced nothing at all — while random **phases** steer
+minisat into a genuinely different corner every time, and that is how 78 606
+pairs of `Sa` and 1 248 990 of `G` were separated.
+
+But **cadical ignores `set_phases`.** Twenty "different" colourings of a
+6607-vertex orbit came back identical and left 4 366 463 surviving pairs, which
+is no filter at all. And **full phase randomisation actively hurts minisat on a
+large loose instance**: fifteen minutes on a 6607-vertex 5-colouring that
+cadical settled in **four seconds**, because the random hints fight the solver's
+own heuristic. Blocking a random sample of the last solution works whatever the
+solver does with hints, and took the same orbit from 4 366 463 surviving pairs
+to zero.
+
+#### Symmetry buys overlap and spends slack, and the slack is worth more
+
+Overlap is the resource, and the deficit is plain: `Sa`'s best glue reuses 56 %
+of it because `Sa` is a `D6` orbit, while the spindled 5-chromatic graphs top
+out at 39 % because the spindle rotation is about a vertex and breaks the
+symmetry. Restoring it costs 6607 points rather than twelve times 951, since
+`Sa` inside is already fixed by the group — and it **loosens**:
+
+| | mean degree | free@5 | forced pairs at 5 |
+|---|---:|---:|---:|
+| the 951-vertex graph | 10.87 | 11.46 % | 0 |
+| its `D6` orbit, 6607 points | 11.19 | **13.14 %** | **0**, certified |
+
+Twenty-four explicit 5-colourings separate all 21.8 million pairs of the orbit.
