@@ -10511,3 +10511,83 @@ at k = 5 it takes five neighbours carrying five distinct colours.  Blocking
 configurations at a low ratio are far smaller, which is why the score is
 dense there and empty at five.
 """
+
+
+THE_KILL_RATE_IS_NOT_EVIDENCE_EITHER = """
+The companion to "cost is not evidence", and it cost a core to learn.
+
+Scoring at the tight ratio made the numbers look transformed: where the old
+growth reported "best kills 7 of 250", the circular one reported "best kills
+120 of 120", and a dozen points tied for it in the same round.  That is a
+true statement about how much easier blocking is at a low ratio, and it is
+not progress.
+
+Twelve rounds and a hundred added points later the sampler was still
+returning a full 120 fresh homomorphisms every time.  Of course it was: the
+number of homomorphisms of a 1600-point graph to K(9/2) is astronomical, and
+killing the 120 that happened to be sampled leaves the space essentially
+untouched.  The kill rate measures how easy the sampled solutions are to
+block, not how few remain.
+
+So a high score is as uninformative as a long solve.  What counts is the
+same thing it has always been: an UNSAT, which is an absence proof.  The
+circular reframing earns its keep by giving a finer QUESTION -- chi_c is a
+real number where chi was an integer, and every rung of the ladder between
+4 and 5 is a separate provable statement -- not by making greedy search work.
+"""
+
+
+CHI_C_OF_THE_PLANE_IS_THE_MEASURABLE_GAP = """
+What the circular number is actually good for here.
+
+chi_c is monotone under subgraphs, so chi_c(R^2) >= chi_c(H) for any
+unit-distance H.  Every ratio p/q that a concrete H fails to map to is
+therefore a quantitative statement about the plane, proved by one UNSAT.
+Since chi(R^2) >= 5 gives only chi_c(R^2) > 4, and the fractional number --
+the quantity Polymath16 pushed, to 3.8992 -- sits below chi_c, the interval
+between them is a gap that the usual instruments do not read.
+
+The ladder is finite: with denominator at most 9 there are 28 ratios in
+(4, 5], each one a separate provable rung, and the top rung is exactly
+chi >= 6.  Failing at a rung well below 5 is not the conjecture, but it is a
+real number attached to the plane rather than another repetition of "still
+five".
+
+One structural fact shapes where the difficulty sits.  At p/q a neighbour
+forbids 2q-1 of p positions, so blocking a point takes ceil(p/(2q-1))
+neighbours.  Across every ratio in (4, 5] with q >= 2 -- 14/3, 19/4, 24/5,
+29/6, 34/7, 39/8, 44/9 -- that number is 3.  Only at 5/1 itself, where
+2q-1 = 1, does it jump to 5.  The whole local difficulty of the problem is
+concentrated in the last rung, which is a precise way of saying why
+approaching 5 from below is cheap and crossing it is not.
+"""
+
+
+SA_AND_Y_ARE_TIGHT_AT_FOUR_AND_G_IS_NOT_TIGHT_AT_FIVE = """
+Measured, and it says something about de Grey's construction that the
+integer chromatic number cannot express.
+
+chi_c(Sa) = 4 exactly.  chi_c(Y) = 4 exactly.  Neither maps to K(35/9) =
+3.8889 nor to anything below it, across all 28 ratios tried down to 3.  So
+these two unit-distance graphs sit at the CEILING of their interval: they
+are 4-chromatic and tight about it, with no circular slack at all.  (The
+Moser spindle is not like this -- it is 4-chromatic with chi_c = 7/2, half a
+colour loose.  Tightness is a property of the particular graph, and Sa and
+Y have it.)
+
+G contains Y, and G is 5-chromatic.  But G maps to K(9/2): chi_c(G) <= 4.5.
+So the graph is NOT tight at five.  Its 4-chromatic components achieve four
+exactly, and the construction built on top of them reaches five only in the
+integer sense, landing about half a colour short on the finer scale.
+
+Read as a statement about the construction: de Grey's step buys roughly half
+a colour of circular chromatic number, not a whole one.  It is enough to
+push the ceiling function from 4 to 5 because 4.5 rounds up to 5, and that
+is exactly why one application settled chi >= 5.  It is also why one more
+application would not settle chi >= 6: from 4.5 a half-colour step reaches
+5.0, which still has ceiling 5.  Two steps reach 5.5, and ceil(5.5) = 6.
+
+That is a concrete reading of why the problem has stayed open where it has:
+not that the mechanism is wrong, but that the remaining distance is two
+steps of it, and each step multiplies the graph.
+"""
