@@ -11895,3 +11895,53 @@ So the densest unit-distance graphs known are all 5-colourable, by a
 colouring anyone can write down, and the family that looked most promising
 from outside this problem is the one that closes fastest.
 """
+
+
+A_THIRD_ROUTE_TO_FIVE_AND_HOW_FAR_THIS_CORPUS_IS_FROM_IT = """
+A route to the theorem that has nothing to do with finite obstructions, and
+a measurement of exactly how short this project falls on it.
+
+The theorem chi(R^2) >= 5 is known two ways.  Falconer proved the MEASURABLE
+version in 1981, thirty-seven years before de Grey removed the measurability
+assumption with a finite graph.  There is a third route, and it is purely
+quantitative.
+
+For ANY finite unit-distance graph H, averaging a measurable
+distance-avoiding set over random isometries gives
+
+        m_1 <= alpha(H) / n(H),
+
+where m_1 is the largest density such a set can have.  Four measurable
+colour classes cover the plane only if 4*m_1 >= 1, so a single graph with
+independence ratio below 1/4 proves the measurable chromatic number is at
+least 5 -- no spindle, no obstruction, one inequality.  The published record
+is m_1 <= 0.2544.  The threshold is 0.25.  The gap is 1.7 per cent.
+
+The lever: high k-cores, which raise mean degree and should lower the ratio.
+Greedy over 25 orders on every graph here, peeling to the 8-core, produced
+
+    fiveE   8-core  2667 pts  deg 12.14  ratio 0.2287   <-- below!
+    fiveF   8-core  2371 pts             ratio 0.2290
+    fiveD   8-core  2101 pts             ratio 0.2294
+    union3  8-core  6738 pts             ratio 0.2385
+
+Four candidates under the threshold, which would have beaten the record.
+They are all artefacts, and the direction of the inequality is the reason:
+greedy bounds alpha from BELOW, so a greedy ratio under 0.25 is necessary
+and proves nothing.  Local search -- the standard (1,2) swap, drop a chosen
+vertex and add two freed neighbours -- settles it in seconds:
+
+    fiveE   greedy 0.2287  ->  local search 0.2767   (738 of 2667)
+    fiveD   greedy 0.2294  ->  local search 0.2637
+    union3  greedy 0.2385  ->  local search 0.2682
+    wide0   greedy 0.2385  ->  local search 0.2682
+
+Greedy understates alpha by up to 21 per cent on these dense cores.  Every
+candidate dies, and the honest position is
+
+        threshold 0.2500   <   record 0.2544   <   this corpus 0.2637
+
+-- above the record rather than below it.  The route is sound and well
+posed; the material does not reach.  Recorded because a greedy number on the
+wrong side of an inequality looked for several minutes like a new theorem.
+"""
