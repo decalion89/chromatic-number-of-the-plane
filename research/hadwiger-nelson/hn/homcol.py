@@ -11811,3 +11811,44 @@ zero caps in the densest carrier built here -- and it was an artefact of a
 family definition that stopped meaning what it meant when the carrier
 changed underneath it.
 """
+
+
+DE_GREYS_CAP_IS_ALREADY_OPTIMAL_FOR_ITS_SHAPE = """
+The densest honest test of his lemma, and the reason no carrier can improve
+it.
+
+Seeding the dense closure with Sa itself rather than with its tight core --
+the earlier patches contained only 5 and 2 of the gadget's 7 points, so
+their zeros meant nothing -- gives a genuine SUPERSET of Sa: 3501 points,
+15888 edges, mean degree 9.1, all seven gadget points present, no
+integer-basis overflow.  Eight and a half times Sa's size.
+
+    palette of de Grey's gadget in Sa        2 of 4
+    palette of de Grey's gadget in denseSa   2 of 4
+
+Unchanged.  And it cannot change, which is the point.  The gadget contains
+unit edges -- the hexagon's consecutive points are adjacent -- so a cap of 1
+would put two adjacent points in the same colour.  Two is the FLOOR for any
+set containing an edge, and his lemma already sits on it.  No carrier,
+however dense, can strengthen it, and the eightfold densification confirms
+that by measurement rather than by argument alone.
+
+(The patch is also still 4-colourable, which is local density failing to
+raise chi for the third time in this project, now at 3501 points and mean
+degree 9.1.)
+
+So a stronger lemma needs a different SHAPE, not a better carrier, and there
+is exactly one shape stronger: an INDEPENDENT set with a cap of 1, forced
+monochromatic in every proper colouring.  That hands over the forced pair
+directly where the bite needs a disjunction and a case analysis to extract
+one, and a forced-monochromatic set of three or more points would be
+something the construction has never had.
+
+The search for those reduces pleasantly.  "All of S takes one colour" is
+"every pair in S agrees", so forced-monochromatic sets are cliques in the
+forced-pair relation, and a forced pair is one solve: by colour permutation,
+if u and v can differ then they can differ with u at 0 and v at 1, so the
+whole test is two assumptions and no added clauses.  The first version of
+that scan built k^2 selector variables per pair -- hundreds of thousands
+across the scan -- for a question that needs none.
+"""
