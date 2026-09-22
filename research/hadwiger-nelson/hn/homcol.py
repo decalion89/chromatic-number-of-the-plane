@@ -11736,3 +11736,35 @@ design is not symmetric at all, and the symmetric constructions tried
 against it (all eleven 30-degree rotations, 88 admissible spindles, a
 fortyfold accumulation) moved chi_c by nothing.
 """
+
+
+THE_GRADIENT_HAS_A_PLATEAU_AND_IT_IS_ENORMOUS = """
+A limitation of the instrument this pass has been built on, found while
+trying to use it for the one thing it cannot do.
+
+The plan was natural: the 24-point graph is tight at four, chi_c is cheap to
+measure exactly on a graph that small -- five seconds, against minutes on
+1581 points -- so hill-climb on chi_c itself, with the exact objective
+instead of a proxy.  Every growth run in this project used a proxy because
+the objective was unaffordable; here it is affordable.
+
+It does not work, and the reason is arithmetic rather than practical.
+chi_c > 4 is equivalent to chi >= 5.  So EVERY unit-distance graph with
+chi = 4 has chi_c at most 4, whatever its size, and the smallest
+5-chromatic unit-distance graph known has 509 vertices.  Between the
+24-point tight core and any rung at all above 4 lies a gap of at least 485
+vertices across which the objective does not move by a thousandth.
+
+The gradient has a plateau, and the plateau is enormous.  chi_c separates
+graphs WITHIN the 5-chromatic class -- which is what it was wanted for, and
+it did that: Sa and Y at 4, G at 4.5, the Moser spindle at 7/2, de Grey's
+step worth half a colour.  It does not help anything climb into that class
+from below, because below it the value is pinned.
+
+Worth recording plainly against the earlier enthusiasm.  "The gradient
+exists" was true and useful.  "There is a gradient" is not the same as
+"there is a gradient everywhere", and the region where this project's
+searches actually live -- growing 4-chromatic graphs and hoping -- is
+exactly the flat part.  An instrument that ranks the graphs at the top of
+the climb is not an instrument for making the climb.
+"""
