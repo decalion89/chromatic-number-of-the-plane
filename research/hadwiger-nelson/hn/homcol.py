@@ -9952,7 +9952,8 @@ THE_SECOND_DISTANCE_IS_CHEAP_AND_THE_HALVES_DO_NOT_MEET = {
 THE_TWO_DISTANCE_CHROMATIC_NUMBERS = {
     "one second distance": {"G": 5, "Gc": 5, "Gp": 5, "Ga": 5,
                             "union of three": 5, "Sa universe": 5,
-                            "{1, 2/sqrt3} on Ga": 5},
+                            "{1, 2/sqrt3} on Ga": 5,
+                            "two copies of G joined rim to rim": 5},
     "two second distances": {"{1, sqrt3, 2} on Ga": 7,
                              "{1, sqrt3, 2} on the union of 39144": ">= 7"},
     "what chi >= 6 would give": "a monochromatic pair at that one distance in "
@@ -10337,4 +10338,34 @@ THE_FIFTH_COLOUR_RIDES_ON_TWELVE_RIM_POINTS = {
     "with the disc result": "7206 points added to a region left chi at 4, so "
                             "chromatic number is bought by reach and what "
                             "sits at the end of the reach is tip pairs",
+}
+
+
+# Joining two copies of G at the rim, where the fifth colour lives.
+#
+# Since chromatic number here is bought by reach and the reach ends in six
+# unit-distance pairs on the rim, the move that follows is to put two copies
+# of G rim to rim rather than thicken either one.  Placements were generated
+# exactly, by translating so that a chosen rim point of one copy lands a unit
+# from a chosen rim point of the other, and ranked by how many cross edges
+# they make between rim points.
+#
+# The best of them give about 3030 points, 16800 edges and 2245 crossing the
+# join -- a genuinely rich interface, not two graphs standing side by side.
+# Every one is 5-colourable, and every one has two-distance chromatic number 5
+# as well.
+#
+# So the interface is rich and transmits nothing.  That is the same shape as
+# every other negative here: the union of two objects that each fall one short
+# falls one short.
+JOINING_AT_THE_RIM_TRANSMITS_NOTHING = {
+    "why the rim": "the fifth colour rests on twelve rim points in six "
+                   "unit-distance pairs, and filling in does not help",
+    "the placements": "exact translations putting a rim point of one copy a "
+                      "unit from a rim point of the other",
+    "what they give": "about 3030 points, 16800 edges, 2245 across the join",
+    "unit chromatic number": 5,
+    "two-distance chromatic number": 5,
+    "so": "a rich interface transmits nothing; two objects one short of the "
+          "mark join into one that is one short of the mark",
 }
