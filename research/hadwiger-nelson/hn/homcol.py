@@ -10458,3 +10458,56 @@ THE_UNIVERSES_WERE_BUILT_FROM_HALF_THE_POINTS = {
     "and it is exact": "a candidate is accepted only when squaring it returns "
                        "the element",
 }
+
+
+THE_CIRCULAR_NUMBER_IS_THE_MISSING_GRADIENT = """
+Every search in this project has been steered by a yes-or-no question -- is
+this graph 5-colourable -- and the answer came back yes about a hundred
+times.  Two failures were indistinguishable: nothing said which of them had
+come closer.  That is what the earlier note meant by there being no
+gradient, and it was wrong.  There is one, and it is the circular chromatic
+number.
+
+A graph maps to the circular clique K(p/q) when its vertices sit on p points
+of a circle with adjacent ones at least q apart either way round, and chi_c
+is the least p/q admitting such a map.  It obeys chi_c <= chi and
+ceil(chi_c) = chi, so it is a real number living inside the integer.  For
+every 5-chromatic graph here chi_c lies in (4, 5], and the target is exactly
+chi_c > 5, since that forces chi >= 6.  Unlike chi, this objective moves
+under a single added point, and it is monotone: adding points can only
+raise it.  The ratios between 4 and 5 with bounded denominator form a finite
+ladder, each rung provable by one UNSAT.
+
+Measured on de Grey's G: it maps to K(9/2).  So chi_c(G) <= 4.5 -- the graph
+that settled chi >= 5 sits near the FLOOR of its interval, not the ceiling.
+There is more than half a colour of room between it and the goal, and that
+room was invisible while the only instrument was chi.
+"""
+
+
+THE_SCORE_WAS_TAKEN_AT_A_SLACK_CONSTRAINT = """
+Why every growth run here decayed to nothing, finally diagnosed.
+
+The runs scored a candidate point by how many sampled 5-colourings it kills.
+The last one ended at "killed 7 of 250" and falling, after four thousand
+points and an hour.  The score was not weak because the geometry is poor; it
+was weak because the question had slack in it.  A graph with chi_c near 4.4
+is nowhere near its 5-colouring boundary, so hardly any one point can knock
+out a 5-colouring, and the score is almost always zero -- a blind walk
+wearing the costume of a hill climb.
+
+Score at the ratio where the graph is tight instead.  If chi_c(H) = p/q then
+H maps to K(p/q) and to nothing below, so every homomorphism to K(p/q) sits
+exactly on the boundary and a point that kills one is doing real work.
+
+The contrast on G is not subtle.  At k = 5: the best of 250 candidates kills
+7 of 250 colourings.  At the ratio 9/2: the best candidate kills 120 of 120
+homomorphisms, and so do a dozen others in the same round.  Same graph, same
+pool, same code -- the only change is asking where the constraint binds.
+
+The arithmetic behind it: at p/q a neighbour forbids 2q-1 of the p positions,
+so ceil(p/(2q-1)) neighbours can block a point.  At 9/2 that is three, where
+at k = 5 it takes five neighbours carrying five distinct colours.  Blocking
+configurations at a low ratio are far smaller, which is why the score is
+dense there and empty at five.
+"""
