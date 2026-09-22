@@ -12630,3 +12630,30 @@ DENSITY_IS_NOT_THE_LEVER_THE_SPINDLE_IS = True
 # not evidence.  It is recorded because it is a direction, not because it is a
 # result.
 BOTH_ORBITS_SPENT_AT_ONCE_STILL_TAKE_FIVE = True
+
+
+# The group is worth six colourings for the price of one.
+#
+# The forced-pair filter needs many genuinely different colourings, and on the
+# 7141-vertex symmetric graph each one costs cadical minutes.  Blocking a
+# random sample diversifies far too weakly to compensate: nine colourings left
+# 5085408 of the 25493370 pairs alive, which is no filter at all.
+#
+# But the graph is C6-invariant, and if c is proper then so is c . g for every
+# g in the group -- and c . g agrees on (u,v) exactly when c agrees on
+# (g(u), g(v)).  So a pair survives the expanded family only if one colouring
+# identifies its WHOLE orbit, which is a far stronger test, and the expansion
+# costs one permutation of the vertex indices computed once.
+#
+#     9 raw colourings, blocking a sample of 200      5085408 surviving
+#     1 raw colouring  expanded by the group (6)         4470 surviving
+#     8 raw colourings expanded by the group (48)        2301 surviving
+#    24 raw colourings expanded by the group (144)       2199 surviving
+#
+# A factor of 2200 from the first expansion, for no extra solving at all.  And
+# it applies twice: forcing is equivariant, so the surviving pairs need only
+# one solver call per orbit, taking 2301 candidates down to 393
+# representatives.  Every negative is still a certificate -- each expanded
+# colouring is a genuine proper 5-colouring, so a pair that differs in one is
+# PROVED not forced.
+THE_GROUP_MULTIPLIES_THE_FILTER_FOR_FREE = True
