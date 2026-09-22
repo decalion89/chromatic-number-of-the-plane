@@ -12093,3 +12093,41 @@ Recorded because it is invisible from the mathematics: the question, the
 encoding and the graph were all correct, and the only wrong choice was a
 default that is right everywhere else in this codebase.
 """
+
+
+THE_UPPER_BOUND_NEEDS_TILES_NOT_CELLS = """
+The direction nobody has pushed, attempted, and the tool is wrong for a
+reason worth stating.
+
+The whole pass attacks the lower bound.  The UPPER bound has not moved since
+Isbell in 1950 -- seven colours by a hexagonal tiling -- and no six-colouring
+of the plane has ever been built.  Density does not forbid one: a colour
+class is a set avoiding distance 1, the densest known has density about
+0.229, and five classes covering the plane need only 0.2 each.  What is
+missing is an arrangement, not room.
+
+So: a torus, discretised into cells, with a CONSERVATIVE edge whenever some
+point of one cell is exactly a unit from some point of another.  A proper
+colouring of the cells would then be a genuine periodic colouring of the
+plane, and unsatisfiability would say nothing, since the conservative edges
+constrain more than the plane does.  The control is Isbell: seven colours
+must come out satisfiable or the model is useless.
+
+At 3 x 3 with 22 x 22 cells of side 0.136: 484 cells, 29040 edges, MEAN
+DEGREE 120.  Seven colours does not return.  The model cannot reproduce a
+tiling that has existed for seventy-five years.
+
+The reason is not coarseness and no refinement fixes it.  Avoiding distance
+1 is a measure-zero condition; a cell of diameter delta turns it into a band
+of width about 2*delta around the unit circle, so the discretised graph
+forbids an annulus where the plane forbids a curve.  Shrinking delta shrinks
+the band and explodes the cell count at the same rate, and the band never
+becomes the curve.
+
+What the upper bound needs is TILES, not cells: regions whose diameter is
+below 1 and whose same-coloured copies are separated by more than 1, which
+is exactly how the hexagonal colouring works and why it is checkable by hand.
+That is a different kind of search -- over shapes and lattices, with exact
+geometry -- and it is a project rather than an experiment.  Recorded so the
+next attempt does not start by discretising.
+"""
