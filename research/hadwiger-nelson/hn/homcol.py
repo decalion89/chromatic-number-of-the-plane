@@ -12466,3 +12466,46 @@ SYMMETRISING_THE_FIVE_CHROMATIC_CARRIER_LOOSENS_IT = True
 # sample of the last solution.  Forty vertices is enough, and it took the same
 # orbit from 4366463 surviving pairs to zero.
 DIVERSITY_COMES_FROM_BLOCKING_NOT_FROM_HINTS = True
+
+
+# The four-colour / five-colour gap, as a number.
+#
+# The glue forces because agreeing on the shared set pins the rest of the
+# colouring.  So what decides it is neither slack nor density: it is how many
+# distinct patterns a small set of vertices can carry over all proper
+# k-colourings.  A carrier whose interface admits a handful of patterns leaves
+# the second copy no freedom; one that admits hundreds leaves the
+# sigma-argument intact.
+#
+# Eight high-degree vertices, 1500 colourings each, counted up to permutation
+# of the colours:
+#
+#     Sa            k=4      72 patterns    saturated (63, 70, 72, 72)
+#     H = Sa glued  k=4      38 patterns    saturated, flat from 200 on
+#     G             k=5     653 patterns    44% of colourings still new
+#     the 825       k=5     921 patterns    61% still new
+#
+# At four colours the interface space is small and closes; at five it does not
+# close at all and is already an order of magnitude larger.  And the glue
+# HALVES it at four -- 72 down to 38 -- which is precisely the mechanism:
+# gluing shrinks the space of interface colourings until pairs have nowhere
+# left to disagree.
+THE_INTERFACE_SATURATES_AT_FOUR_AND_NEVER_AT_FIVE = True
+
+# Two corrections this measurement needed, both of which produced confident
+# nonsense first.
+#
+# The encoding deliberately omits at-most-one clauses -- the edge clauses
+# already make adjacent colour SETS disjoint, so picking any colour from each
+# set is a proper colouring.  That is fine for deciding colourability and wrong
+# for READING a colour off the model: a vertex carrying three true colour
+# variables reads as whichever is smallest, which is a function of the model
+# rather than of the colouring.  Without at-most-one, an eight-vertex interface
+# reported ONE pattern over four hundred colourings.
+#
+# And blocking alone does not diversify.  Forbidding the last solution on forty
+# random vertices lets the solver change one of them and leave everything else
+# where it was, so a fixed interface still reports one pattern -- out of
+# laziness, not constraint.  Randomised polarity moves the whole assignment and
+# blocking guarantees it moves at all; the two together give the numbers above.
+READING_A_COLOUR_OFF_A_MODEL_NEEDS_AT_MOST_ONE = True
