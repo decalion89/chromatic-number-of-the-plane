@@ -11384,3 +11384,42 @@ be converted.  Nothing here produces one, and the arc bound built to look
 for them returned nothing on the neighbourhoods it was pointed at.  That is
 the open end, stated as precisely as this pass can state it.
 """
+
+
+THE_BITE_IMPOSES_A_FLOOR_ON_THE_ARC_NOT_A_CEILING = """
+De Grey's exhaustion redone in positions, and the answer is the wrong way up.
+
+His lemma came from forcing the centre and its radius-2 hexagon to each of
+the 187 colour partitions and finding ten survivors: at most TWO colours on
+the seven points, centre never alone.  A cap.  The same exhaustion in
+positions is small enough to do completely -- seven points, nine positions,
+9^7 = 4782969 assignments, all of them checked.
+
+At K(9/2):
+
+    ring alone (hexagon)          424764 survive   arc span 2 to 7
+    ring + bite (centre joined)    14922 survive   arc span 4 to 7
+
+The bite cuts the survivors by a factor of 320, which is real work.  But
+look at what it does to the span: the minimum rises from 2 to 4.  It imposes
+a FLOOR, not a ceiling.  The seven points are forced to spread over at least
+four of the nine positions, where the colour lemma forced them to gather
+into at most two classes.
+
+The rest follows the same way.  Distinct positions used runs 3 to 7, so
+there is no cap there either.  And the antipodal ring pairs, which in
+colours come back forced-same, here have their widest member anywhere from 0
+to 4 -- no forcing at all.
+
+That is the spindle's q/2 requirement failing at its source: the device that
+produces the forced pair in colours produces a spread in positions.
+
+One caveat which is the whole of the next experiment.  This exhausts the
+gadget ALONE, and de Grey's lemma is not about the gadget alone -- seven
+points on their own are not capped at two colours either, since a hexagon
+with a centre joined to it 3-colours perfectly well.  His cap comes from the
+gadget sitting inside Sa, with the carrier doing the work.  So the honest
+statement is: the bite in isolation gives a floor rather than a ceiling in
+positions, and whether the carrier reverses that is a separate question,
+asked of the carrier.
+"""
