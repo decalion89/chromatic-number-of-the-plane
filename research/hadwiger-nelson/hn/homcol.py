@@ -12131,3 +12131,41 @@ That is a different kind of search -- over shapes and lattices, with exact
 geometry -- and it is a project rather than an experiment.  Recorded so the
 next attempt does not start by discretising.
 """
+
+
+THE_BRICK_EXISTS_AT_FOUR_AND_THE_ZERO_AT_FIVE_IS_A_SAMPLE = """
+The atom of any 6-chromatic graph, searched for, found at four colours and
+absent at five -- with a correction to how the absence was reported.
+
+A 6-critical graph has a vertex whose five neighbours take five different
+colours in every proper 5-colouring.  Those five lie on a unit circle, where
+two points are adjacent only if they subtend 60 degrees, so the circle
+carries a subgraph of disjoint hexagons: bipartite, maximum clique 2.  At
+most TWO of the five can be adjacent, so the rest must be NON-ADJACENT PAIRS
+FORCED TO DIFFER, which the carrier has to supply.  That pair is the brick,
+and finding one is a single solve.
+
+    Sa        4 colours   29 forced non-adjacent pairs   the brick exists
+    Y         4 colours    0 in this sample
+    24-core   4 colours    0 of its 220 pairs
+    denseSa   4 colours    0 in this sample
+    G         5 colours    0 in a sample of 25000 pairs
+
+Sa's pairs are all at distance exactly 1/3 -- and Y is the union LESS the
+points at (+-1/3, 0), which is de Grey's own pruning.  Removing those points
+removes the forcing, which is the same fact the earlier note recorded as
+"the pruning costs two thirds", arriving from a different direction.
+
+The correction.  Forced-different is MONOTONE in the carrier: every colouring
+of a supergraph restricts to the subgraph, so a pair forced in Sa is forced
+in anything containing Sa.  denseSa contains Sa and the scan reported 0 for
+it against Sa's 29, which is impossible.  The scan samples 400 source
+vertices out of 3501 and missed them.  So the verdict it printed -- "no
+brick, no 6-chromatic graph can live in this carrier" -- overclaimed, and
+the honest reading of every zero here is NOT FOUND IN THIS SAMPLE.
+
+That applies to G at five as well.  Twenty-five thousand pairs and none
+forced is evidence and not exhaustion, and it agrees with the 400
+neighbourhoods scanned earlier and with the 22 per cent of G's vertices that
+have a spare colour.  But it is not the theorem the wording claimed.
+"""

@@ -62,7 +62,7 @@ for name, KC in jobs:
     for a, c in E:
         for col in range(KC):
             cls.append([-(1 + a * KC + col), -(1 + c * KC + col)])
-    s = Solver(name="cd15", bootstrap_with=cls)
+    s = Solver(name="m22", bootstrap_with=cls)  # minisat: 31 ms per assumption-solve here, against 114 for glucose and worse for cadical
     if not s.solve():
         print(f"{name:16s} {KC:2d} {n:7d}   not {KC}-colourable -- skipped",
               flush=True)
@@ -93,8 +93,14 @@ for name, KC in jobs:
         if time.time() - t0 > 1500:
             break
     s.delete()
+    # Forced-different is MONOTONE in the carrier: every colouring of a
+    # supergraph restricts to one of the subgraph, so a pair forced in Sa is
+    # forced in anything containing Sa.  denseSa contains Sa and this scan
+    # reported 0 for it against Sa's 29, which is impossible and shows the
+    # verdict was overclaiming: 400 random source vertices out of 3501 simply
+    # missed them.  A zero here means NOT FOUND IN THIS SAMPLE, nothing more.
     verdict = ("the brick EXISTS here" if found else
-               "no brick -- no 6-chromatic graph can live in this carrier")
+               f"none in this sample of {len(cand)} pairs (not an exhaustion)")
     print(f"{name:16s} {KC:2d} {n:7d} {len(cand):7d} {found:7d}   {verdict}"
           f"   [{time.time()-t0:.0f}s]", flush=True)
 print("DONE", flush=True)
