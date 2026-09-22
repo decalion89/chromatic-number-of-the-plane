@@ -10652,3 +10652,38 @@ Recorded because the growth looked, by its own numbers, like it was working:
 a hundred per cent kill rate every round for eight rounds.  The graph was
 never close.
 """
+
+
+MAPPING_TO_A_CIRCULAR_CLIQUE_IS_A_CYCLIC_COVER_BY_INDEPENDENT_SETS = """
+A reformulation that says exactly which instruments can reach which rungs.
+
+H maps to K(p/q) if and only if V(H) carries p independent sets arranged in
+a cycle, with every vertex lying in exactly q cyclically consecutive ones.
+The forward direction: take the window W_i of positions i..i+q-1; any two
+positions inside it are less than q apart on the circle, hence non-adjacent
+in K(p/q), so the preimage of W_i is independent, and each vertex lies in
+exactly the q windows containing its own position.  Backwards, the index of
+the first window containing a vertex is its position.
+
+Two consequences follow immediately and they bracket the problem.
+
+NECESSARY for mapping: the p independent sets cover V with multiplicity q,
+so q*n <= p*alpha(H), that is alpha(H) >= (q/p)*n.  Refusing K(9/2) is
+therefore implied by an independence ratio below 2/9 = 0.2222.
+
+SUFFICIENT for refusing: chi_f(H) > p/q, since a cyclic q-in-p cover is in
+particular a fractional colouring of weight p/q.
+
+And that is where the density instruments stop.  The best known
+unit-distance graphs reach chi_f >= 3.8992 (Polymath16), an independence
+ratio of about 0.2565 -- far above 2/9.  In the measurable setting the same
+counting gives m_1 >= q/p for any measurable homomorphism, so with
+m_1 <= 0.2544 the density argument caps out near 3.93.
+
+So the 4.5 rung is out of reach of density, of fractional relaxations and of
+measurable arguments alike.  chi_c > 9/2 is strictly weaker than chi_f > 9/2
+and strictly stronger than chi >= 5, and it can only be settled by the
+combinatorial structure of a finite graph.  That is not a discouragement: it
+says precisely which kind of object to look for, and it explains why the
+quantity has been passed over -- the tools that pushed chi_f cannot see it.
+"""
