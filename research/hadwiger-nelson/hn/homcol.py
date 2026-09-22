@@ -10782,3 +10782,45 @@ Local search over orientations then bounds chi_c from above on graphs far
 too large to encode as circular-clique SAT, and an upper bound at or below
 4.5 eliminates a candidate outright.
 """
+
+
+G_LOOKS_TIGHT_AT_FOUR_AND_A_HALF = """
+The orientation side of the ledger, and what it says about G.
+
+A (p,q)-colouring hands over an orientation for nothing: order the vertices
+by position and orient every edge upward.  Around any cycle the linear
+differences sum to zero and each has absolute value between 1 and r-1, so
+the larger side is at most (r-1) times the smaller and |C| / min is at most
+r.  The order makes it acyclic, and vertices sharing a position are never
+adjacent, so ties cost nothing.
+
+Run on Sa from its 4-colouring: the seed scores 4.0001 and forty guided
+local moves cannot lower it -- which is right, since the solver separately
+proved Sa refuses everything below 4.
+
+Run on G from its K(9/2) map: the seed scores 4.5003, exactly the bound the
+construction promises, on 1581 points.  That is the fifth independent
+agreement between the circular-clique solver and the Minty characterisation,
+and the first at this size.
+
+Then 200 steps of local search, each flipping an edge of a cycle that
+witnesses the current score -- the only edges whose flip can lower it --
+failed to get below 4.5.  That is evidence, not proof, and it is the weak
+kind: a search that does not find something has not shown there is nothing.
+The proof has to come from the UNSAT side.  But it points the same way as
+the solver run that has been grinding on K(22/5) for half an hour, and
+together they say G is TIGHT at four and a half.
+
+If so, the picture inverts in a useful way.  G was described here as loose
+at five, which it is.  It is not loose in general -- it sits exactly on the
+4.5 rung with nothing to spare, and the growth aimed at crossing K(9/2) was
+aimed at the right rung after all.  What failed was the method of crossing
+it, not the choice of where to cross.
+
+Note also what the orientation search could NOT do: started from colourings
+instead, 25 tries on G all scored 5.0, though the truth is 4.5.  Sa's best
+orientation comes from its colouring and G's does not.  A graph whose
+optimal orientation is colouring-induced is one whose slack, if any, is
+visible in its colour classes; G's slack lives somewhere a colouring cannot
+see, which is the same reason pair-by-pair forcing never found it either.
+"""
