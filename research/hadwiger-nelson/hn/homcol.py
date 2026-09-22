@@ -10412,3 +10412,49 @@ ONE_SECOND_DISTANCE_NEVER_BUYS_A_SIXTH_COLOUR = {
                                      "instead of evaluating; the tests "
                                      "matched exact rows",
 }
+
+
+# Every universe here was built from half the points the field provides.
+#
+# The two points a unit from both A and B sit at the midpoint plus or minus
+# (1/2) * sqrt((4 - dd)/dd) times the perpendicular (-dy, dx).  One square
+# root, of the ratio.  Every universe in this work computed it as sqrt(4 - dd)
+# divided by sqrt(dd) and required BOTH to lie in the field separately --
+# strictly stronger, and it silently drops every pair whose ratio is a square
+# while neither part is.
+#
+# Measured on G, over sampled in-range pairs: the old two-root test accepts
+# 4.50 per cent, the correct one-root test accepts 8.86.  Just under twice as
+# many.  So "adding points does not change anything" -- the disc closure that
+# left chi at 4, the 35132-point universe that coloured, the saturation growth
+# whose kill rate settled at ten per cent -- was tested on roughly the thin
+# half of what was available.
+#
+# Recognising the square root is what made the correct test practical.  An
+# element t of a multiquadratic field is a square when some y has y^2 = t, and
+# numerically the conjugates of y are plus or minus the roots of the
+# conjugates of t -- but the sign pattern is a character of the Galois group,
+# not an arbitrary vector.  In this field that is sixteen patterns to try, one
+# linear solve each, against the 32768 a blind search over sign vectors costs.
+# The first attempt did the blind version and ran until it was killed.
+# Candidates are accepted only when squaring them returns t exactly, so the
+# floating point proposes and the field decides.
+THE_UNIVERSES_WERE_BUILT_FROM_HALF_THE_POINTS = {
+    "the geometry": "the intersection needs sqrt((4-dd)/dd) in the field, one "
+                    "root of the ratio",
+    "what the code required": "sqrt(dd) and sqrt(4-dd) separately, which is "
+                              "strictly stronger",
+    "measured on G": {"old two-root test": "4.50% of in-range pairs",
+                      "correct one-root test": "8.86%",
+                      "ratio": "1.97x"},
+    "what that taints": "every negative of the form 'adding points changes "
+                        "nothing' was tested on the thin half",
+    "how the correct test is made practical": "the sign pattern relating the "
+                                              "conjugates of the root to "
+                                              "those of the element is a "
+                                              "character of the Galois "
+                                              "group -- 16 patterns here, not "
+                                              "32768",
+    "and it is exact": "a candidate is accepted only when squaring it returns "
+                       "the element",
+}
