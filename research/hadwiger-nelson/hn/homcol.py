@@ -11007,3 +11007,44 @@ out; closure needs the two ends a single unit apart.  The two requirements
 pull against each other, and that -- not any shortage of cleverness about
 rotations, palettes or densities -- is what the problem is made of.
 """
+
+
+THE_RIGHT_SCREEN_IS_FIVE_CYCLES_PER_EDGE = """
+The screen the analysis asks for, replacing the one that measured an
+unreachable threshold.
+
+An orientation stays at or below 9/2 only if every 5-cycle gets at least two
+edges on its minority side -- pattern 3-2, never 4-1, since 4-1 has ratio 5.
+A lone 5-cycle always manages it.  Overlapping ones sharing edges cannot
+always, and chi_c > 9/2 is precisely the question of whether enough of them
+overlap for every acyclic orientation to fail somewhere.  So the measure of
+a candidate is its 5-cycle density, not its independence ratio.
+
+Counted, with triangles alongside:
+
+    deepgrow    4709 pts  27979 e  11254 tri  46764 five-cycles  1.671/edge
+    uniSa       8953 pts  47724 e  14974 tri  72652 five-cycles  1.522/edge
+    wide0      11047 pts  59919 e  19908 tri  79497 five-cycles  1.327/edge
+    pivG       13873 pts  73782 e  26928 tri  89184 five-cycles  1.209/edge
+    ascent_9_2  1654 pts   8281 e   2996 tri   9240 five-cycles  1.116/edge
+    Sa/Y/G      per edge 1.099, 1.099, 1.098 -- indistinguishable
+    disc_1.0    8155 pts  21960 e   3761 tri   5684 five-cycles  0.259/edge
+
+Three things fall out.  Sa, Y and G share the same 5-cycle density to three
+decimals, which is what one expects of a family built by the same closure
+and says the construction adds size without adding the structure that
+matters.  The disc universe is barren -- a quarter of a 5-cycle per edge --
+and was never a candidate.  And deepgrow, which came out of the blind
+saturation growth that produced nothing measurable at the time, carries 52
+per cent more 5-cycles per edge than G on only 4709 points, which makes it
+both the richest candidate here and a cheap one to encode.
+
+The overlap figure did not discriminate: in every dense graph above, 99 per
+cent of edges lie on five or more 5-cycles.  Density per edge is the
+signal.
+
+Worth noting against the earlier screen: independence ratio ranked wide0
+first and deepgrow third, on a threshold that nothing can cross.  The
+5-cycle count ranks deepgrow first on a criterion derived from what actually
+holds a graph to the rung.
+"""
