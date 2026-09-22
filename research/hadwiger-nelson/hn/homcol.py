@@ -10969,3 +10969,41 @@ closeness is a measure of the geometry, and the impossibility is a property
 of the map.  Killing every map remains the only way through, and this says
 precisely what a map is doing to stay alive.
 """
+
+
+WHY_THE_BOUNDARY_SITS_EXACTLY_AT_FIVE = """
+The general form of the wrap-around, which explains the boundary itself.
+
+Let H be 5-chromatic and suppose it maps to K(p/q) with p/q < 5.  Order the
+vertices by position and orient upward.  Gallai-Roy gives every orientation
+of a 5-chromatic graph a directed path on five vertices -- its own proof
+colours each vertex by the length of the longest directed path ending there,
+which is proper, so some path has chi vertices.  Adjacency forces each step
+of that path to raise the position by at least q, so after four steps the
+far end sits at position at least 4q.
+
+Now measure the two ends on the circle.  Their circular distance is
+min(4q, p - 4q) = p - 4q, and p/q < 5 means p < 5q, so
+
+        p - 4q < q.
+
+Below the adjacency threshold.  The ends of a directed 4-edge path can never
+be adjacent, at ANY ratio strictly below 5, for any graph, with no geometry
+involved.
+
+At p/q = 5 exactly, p = 5q and the distance is exactly q -- the threshold
+itself -- and closure becomes possible for the first time.
+
+So the boundary at 5 is not a convention or an artefact of the ceiling
+function.  It is the point where p - 4q reaches q, and the whole of
+chi_c > 5 is the demand that some directed 4-edge path close in every
+acyclic orientation, which is exactly what every surviving map is built to
+prevent.
+
+The tension this exposes is the real difficulty.  A graph in which EVERY
+4-edge path closes has the property outright; C_5 is such a graph, and its
+chromatic number is 3.  High chromatic number needs many vertices spread
+out; closure needs the two ends a single unit apart.  The two requirements
+pull against each other, and that -- not any shortage of cleverness about
+rotations, palettes or densities -- is what the problem is made of.
+"""
