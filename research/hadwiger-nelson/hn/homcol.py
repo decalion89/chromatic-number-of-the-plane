@@ -11470,3 +11470,48 @@ That is the end of the line for lifting de Grey's device, and it is the
 reason the earlier note's "build in colours, measure in circles" is not a
 preference but a constraint.
 """
+
+
+SEARCHING_THE_SPACE_OF_LEMMAS_INSTEAD_OF_THE_SPACE_OF_GRAPHS = """
+Every search in this project grows a graph from a seed.  De Grey did not.
+He found a seven-point configuration whose palette is capped -- the centre
+and its radius-2 ring take at most two of four colours -- and the whole
+construction is that lemma plus a way to make copies conflict.  He found it
+by insight.  Nobody has enumerated small configurations and asked each one
+for its cap, which is a search over LEMMAS rather than over graphs, and it
+turns out to be cheap: "does any proper k-colouring spread all k colours
+across S" is one solver call, and UNSAT is a cap.
+
+Two things had to be fixed before any of it meant anything.
+
+The trivial caps.  A set with a common neighbour outside it is capped for
+free -- if w is adjacent to every point of S then w needs a colour none of
+them has.  A neighbourhood is the standard case, w being the centre.  The
+first version reported every unit ring in G as a discovery, dozens of them,
+and they are the definition of a proper colouring rather than a lemma.
+Filtered now.
+
+The cap VALUE.  "Capped below k" is nearly worthless; de Grey's cap is 2 of
+4, and a cap of 4 of 5 constrains almost nothing.  The palette is now
+measured by bisection, so the strength of each lemma is reported.
+
+THE CONTROL, which decides whether the silence elsewhere means anything.
+Run on Sa at four colours over 1200 configurations drawn from 39566:
+
+    CAP 2 of 4  |S|=6  ring r2=4.000 about vertex 0
+    CAP 2 of 4  |S|=7  centre + that ring
+    CAP 3 of 4  |S|=6  ring r2=1.708 about vertex 1
+
+The first two are de Grey's lemma, with his configuration and his exact
+value, found unaided among thirty-nine thousand candidates.  The third is
+one his account does not mention -- weaker at 3 of 4, and real.
+
+THE QUESTION.  The same search on G at five colours: 157570 candidate
+configurations, and over the first 15000 tested, ZERO caps.
+
+That converts the project's earlier reading -- the cap is abundant at four
+and absent at five -- from an absence into an absence with a witness.  The
+instrument demonstrably finds caps where they exist, reports their strength,
+and refuses the trivial ones.  Its silence at five colours is evidence about
+the carrier rather than about the search.
+"""
