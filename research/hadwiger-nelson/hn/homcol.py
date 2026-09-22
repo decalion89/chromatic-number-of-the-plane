@@ -12169,3 +12169,46 @@ forced is evidence and not exhaustion, and it agrees with the 400
 neighbourhoods scanned earlier and with the 22 per cent of G's vertices that
 have a spare colour.  But it is not the theorem the wording claimed.
 """
+
+
+THE_SEED_EXPERIMENT_TESTED_THE_WRONG_THING = """
+The one stone left unturned, turned, and it was the wrong stone -- with the
+control saying so unambiguously.
+
+The concern was real.  Every carrier measured in this project descends from
+de Grey's points in one field, so "75500 configurations across two carriers"
+is one point of the space seen from several angles.  Whether the absence of
+forcing at five colours is a fact about FIVE or a fact about THIS SEED had
+never been tested.
+
+So: close a small seed under circle intersection in several fields and look
+for forced pairs.  Q(sqrt2), Q(sqrt3), Q(sqrt2,sqrt3), and then four-
+generator fields at de Grey's own richness with the generators swapped --
+(3,5,7,11), (2,3,5,7), (3,5,7,13), (2,3,5,7,11).
+
+    Q(sqrt3)            18 points
+    Q(sqrt2)             7 points
+    Q(sqrt2,sqrt3)      65 points
+    de Grey's own field 19 points     <- the control, and the verdict
+    swap 11 for 2       79 points
+    swap 11 for 13      19 points
+    five generators     79 points
+
+Nineteen points in de Grey's own field, where his Sa has 397.  The
+experiment does not test the hypothesis: a naive closure from four points is
+small in EVERY field, so the zeros say nothing about seeds.
+
+What it does establish is why the field matters at all.  Two unit circles
+about points at squared distance D meet at
+midpoint +- (1/2)sqrt((4-D)/D)*(-dy,dx), so the meeting points exist in the
+field only when (4-D)/D is a SQUARE there.  With one or two generators that
+almost never happens and the closure dies in its first round.  The
+literature's rich fields are a condition of existence, not a convention.
+
+And the real lesson is about Sa.  It is not a closure at all -- it is a
+designed assembly: hexagons at radius 2, rotations through chosen angles,
+and a deliberate pruning of the points at (+-1/3, 0), which is exactly where
+its 29 forced pairs live.  Testing another seed properly means reproducing a
+construction of that scale in another field, which is a project rather than
+an afternoon, and the zeros above are not evidence against it.
+"""
