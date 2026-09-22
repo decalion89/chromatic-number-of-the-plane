@@ -12372,3 +12372,35 @@ THICKEN_AT_FOUR_AND_SPEND_THE_SPINDLE_AT_THE_END = True
 # colourable at every overlap reached (up to 1031 of 3417 on Z).  The route is
 # open and the carriers are not yet good enough for it.
 THREE_COPIES_NEED_A_PALETTE_OF_TWO_AND_FOUR_DO_NOT_EXIST = True
+
+
+# How small the carrier has to be before the glue stops forcing.  The
+# 5-chromatic graph this produces is twice the size of the union that forces,
+# so the union is what to minimise -- and peeling the carrier and choosing the
+# glue trade against each other, since the union is 2n - overlap.
+#
+#     the 24-point graph tight at four   22 glues    NO forcing
+#     Sa peeled to 120, 180, 240         42-62 glues NO forcing
+#     Sa itself (397)                    union 570   8 forced pairs
+#     Sa peeled to 340                   union 494   8
+#     Sa peeled to 327, rot120           union 476   4     <- best
+#     Sa peeled to 312, 297, 282         nothing smaller forces
+#
+# and the 476-point union spindles to a 5-chromatic graph on 951 vertices,
+# where Sa's own gives 1139.  The peeling order is not a guess: deleting
+# vertices at random destroys the forcing after ten of 397, while deleting the
+# ten LOWEST-DEGREE ones leaves all eight pairs and raises the mean degree.
+THE_FORCING_NEEDS_SIZE_AND_THE_FLOOR_IS_A_476_POINT_UNION = True
+
+# Forced-equality never chains here, which closes a generalisation of the
+# spindle.  Forcing is transitive, so the forced pairs fall into classes, and a
+# class with three members a, b, c would give a spindle with a FREE angle: any
+# rotation about a carrying b to distance 1 from c suffices, since then
+# c(rho(b)) = c(rho(a)) = c(a) = c(c) and rho(b) ~ c.  That needs only
+# | |a-b| - |a-c| | <= 1 <= |a-b| + |a-c|, where the classical spindle needs
+# 4|a-b|^2 - 1 to be a square.  A whole extra degree of freedom.
+#
+# It is not available.  Across three levels of the chain -- 8 forced pairs,
+# then 27, then 52 -- every class has exactly two members.  The forcing
+# relation is a perfect matching, never a chain.
+FORCED_EQUALITY_NEVER_CHAINS_SO_THE_ANGLE_IS_NEVER_FREE = True

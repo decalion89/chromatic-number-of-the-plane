@@ -1,71 +1,86 @@
-"""Is the forcing local, and how small a graph does it need?
+"""Minimise the forcing subgraph, with randomised passes and kicks.
 
-Y has 791 vertices and forces (2,0),(-2,0).  Nothing says it needs all of
-them.  A smaller forcer would be a better building block than Y -- the whole
-architecture is "forcer, then spindle", so shrinking the forcer shrinks
-everything above it, and it is the object to port to another field.
+Z refuses four colours because H forces one pair to share a colour and the
+rotation puts the two images of the far endpoint one apart.  So the size of Z
+is governed by the size of the smallest subgraph that still forces the pair,
+and THAT instance -- "colour this subgraph with four colours, with c(a)=0 and
+c(b)=1" -- is heavily constrained and proves UNSAT in seconds, where "colour
+Z with four colours" takes minutes.  Minimising the ingredient is the cheap
+direction by two orders of magnitude.
 
-Two questions, cheapest first.  Does the forcing survive inside a ball around
-the segment joining the pair?  And does it survive under greedy deletion of
-whole layers?  A ball that still forces is the answer; a ball that does not
-says the forcing is genuinely spread and Y is doing all of the work.
+One greedy pass stops at the first subset minimal under single deletions,
+which is rarely small.  Each round here shuffles the deletion order, and when
+a round stops improving a handful of deleted vertices go back so the next
+round starts somewhere else.
 """
-import sys, time
+import sys, time, json, random
+from fractions import Fraction as Fr
 sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-from hn.degrey import build_Y
-from hn.geometry import DEGREY_FIELD as F, Point
+from hn.degrey import build_Sa
+from hn.geometry import rotation_joining
+from hn.field import Field
 from hn.graph import build_graph
 from pysat.solvers import Solver
 
+SEED = int(sys.argv[1]); ROUNDS = int(sys.argv[2]); KICK = int(sys.argv[3])
+K1 = Field((3, 11, 247))
+pts = build_Sa(K1)
+r1 = rotation_joining(Fr(1), K1).about(pts[25])
+seen, H = set(), []
+for p in pts:
+    for q in (p, r1(p)):
+        if q not in seen: seen.add(q); H.append(q)
+g = build_graph(H)
+n, K = g.n, 4
+A_, B_ = 157, 327
+X = lambda v, c: 1 + v * K + c
+SEL = lambda v: 1 + n * K + v
+cnf = [[-SEL(v)] + [X(v, c) for c in range(K)] for v in range(n)]
+for u, v in g.edges():
+    for c in range(K):
+        cnf.append([-X(u, c), -X(v, c)])
+cnf.append([X(A_, 0)]); cnf.append([X(B_, 1)])
+
+def forces(sub):
+    s = Solver(name="m22", bootstrap_with=cnf)
+    ok = s.solve(assumptions=[SEL(v) for v in sorted(sub)])
+    if ok:
+        s.delete(); return None
+    core = s.get_core(); s.delete()
+    return (set(l - 1 - n * K for l in core) | {A_, B_}) if core else set(sub)
+
+rng = random.Random(SEED)
+cur = set(range(n)); best = set(cur); dropped = set()
 t0 = time.time()
-Y = build_Y()
-gy = build_graph(Y)
-E = list(gy.edges())
-zs = [(float(p.x), float(p.y)) for p in Y]
-A = Point(F.rational(2), F.zero())
-B = Point(F.rational(-2), F.zero())
-ia = next(i for i, p in enumerate(Y) if p == A)
-ib = next(i for i, p in enumerate(Y) if p == B)
-print(f"Y: {len(Y)} vertices, {len(E)} edges; the pair is {ia}, {ib}  "
-      f"[{time.time()-t0:.0f}s]", flush=True)
-
-
-def forced(keep):
-    idx = {v: i for i, v in enumerate(sorted(keep))}
-    n = len(idx)
-    cls = [[1 + v * 4 + c for c in range(4)] for v in range(n)]
-    for a, b in E:
-        if a in idx and b in idx:
-            for c in range(4):
-                cls.append([-(1 + idx[a] * 4 + c), -(1 + idx[b] * 4 + c)])
-    with Solver(name="cd19", bootstrap_with=cls) as sv:
-        if not sv.solve():
-            return "not 4-colourable", n
-        sv.conf_budget(4000000)
-        r = sv.solve_limited(assumptions=[1 + idx[ia] * 4,
-                                          -(1 + idx[ib] * 4)])
-    return {False: "FORCED", True: "separable", None: "budget"}[r], n
-
-
-# distance from the segment joining the pair, which runs along the x-axis
-def dist(i):
-    x, y = zs[i]
-    cx = min(2.0, max(-2.0, x))
-    return ((x - cx) ** 2 + y * y) ** 0.5
-
-
-for r in (1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 10.0):
-    keep = {i for i in range(len(Y)) if dist(i) <= r + 1e-9}
-    if ia not in keep or ib not in keep:
-        continue
-    verdict, n = forced(keep)
-    print(f"  ball of radius {r}: {n} vertices -- {verdict}  "
-          f"[{time.time()-t0:.0f}s]", flush=True)
-    if verdict == "FORCED":
-        print(f"  *** the forcing is local: {n} vertices suffice ***",
-              flush=True)
-        import pickle
-        with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-"
-                  "a506-39c59179b415/scratchpad/minforce.pkl", "wb") as fh:
-            pickle.dump(sorted(keep), fh)
-        break
+for rd in range(ROUNDS):
+    c = forces(cur)
+    if c is not None and len(c) < len(cur):
+        dropped |= (cur - c); cur = c
+    order = list(cur); rng.shuffle(order)
+    for v in order:
+        if v in (A_, B_) or v not in cur: continue
+        trial = cur - {v}
+        c = forces(trial)
+        if c is not None:
+            dropped |= (cur - c) if len(c) < len(trial) else {v}
+            cur = c if len(c) < len(trial) else trial
+    print(f"  seed {SEED} round {rd}: {len(cur)}   [{time.time()-t0:.0f}s]", flush=True)
+    if len(cur) < len(best):
+        best = set(cur)
+        rot = rotation_joining(Fr(64, 9), K1).about(H[A_])
+        Hp = [H[v] for v in sorted(best)]
+        seen2, Zp = set(), []
+        for p in Hp:
+            for q in (p, rot(p)):
+                if q not in seen2: seen2.add(q); Zp.append(q)
+        gz = build_graph(Zp)
+        json.dump({"field_generators": list(K1.gens), "n_forcing": len(best),
+                   "n": gz.n, "seed": SEED,
+                   "points": [[[[c.numerator, c.denominator] for c in p.x.c],
+                               [[c.numerator, c.denominator] for c in p.y.c]]
+                              for p in gz.vertices]},
+                  open(f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/minf_{SEED}.json", "w"))
+        print(f"    -> H'={len(best)}, Z'={gz.n} points saved", flush=True)
+    if dropped:
+        cur = cur | set(rng.sample(sorted(dropped), min(KICK, len(dropped))))
+print(f"seed {SEED} best H' = {len(best)}   [{time.time()-t0:.0f}s]", flush=True)

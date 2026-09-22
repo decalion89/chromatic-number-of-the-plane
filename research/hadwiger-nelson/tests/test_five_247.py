@@ -35,6 +35,7 @@ from hn.geometry import Point
 from hn.graph import build_graph
 
 DATA = os.path.join(os.path.dirname(__file__), os.pardir, "data", "five_247.json")
+DATA_B = os.path.join(os.path.dirname(__file__), os.pardir, "data", "five_247_b.json")
 FIELD = Field((3, 11, 247))
 
 
@@ -135,3 +136,57 @@ def test_the_spindle_angle_needs_247():
             r //= d * d
         d += 1
     assert r == 247
+
+
+# ---------------------------------------------------------------------------
+# The smaller one.  Peeling Sa to its 327 highest-degree vertices and gluing
+# that to its 120-degree image -- overlap 178, so a union of 476 rather than
+# 570 -- still leaves four forced pairs at squared distance 64/9.  Spindling
+# one of them gives a 5-chromatic graph on 951 vertices instead of 1139.
+#
+# The peeling order matters and was measured, not guessed: deleting vertices at
+# random destroys the forcing after ten of 397, while deleting the ten lowest
+# -degree ones leaves all eight pairs intact and raises the mean degree.
+
+
+@pytest.fixture(scope="module")
+def record_b():
+    with open(DATA_B) as fh:
+        return json.load(fh)
+
+
+@pytest.fixture(scope="module")
+def points_b(record_b):
+    return [Point(FIELD.element([Fr(a, b) for a, b in x]),
+                  FIELD.element([Fr(a, b) for a, b in y]))
+            for x, y in record_b["points"]]
+
+
+def test_smaller_graph_vertex_count(record_b, points_b):
+    assert record_b["n"] == 951
+    assert len(points_b) == 951
+    assert len(set(points_b)) == 951
+
+
+def test_smaller_graph_edges_and_colourability(points_b):
+    g = build_graph(points_b)
+    assert g.n == 951
+    assert sum(len(a) for a in g.adj) // 2 == 5171
+    for u, v in g.edges():
+        assert points_b[u].dist2(points_b[v]) == 1
+    ok4, _ = is_k_colorable(g, 4, timeout=1800)
+    assert ok4 is False
+    ok5, colouring = is_k_colorable(g, 5, timeout=1800)
+    assert ok5 is True
+    for u, v in g.edges():
+        assert colouring[u] != colouring[v]
+
+
+def test_smaller_graph_also_escapes_de_greys_field(points_b):
+    carries_247 = [m for m in range(FIELD.dim)
+                   if FIELD._prod[m] % 13 == 0 or FIELD._prod[m] % 19 == 0]
+    for i in range(len(points_b)):
+        for j in range(i + 1, min(i + 40, len(points_b))):
+            if any(points_b[i].dist2(points_b[j]).c[m] != 0 for m in carries_247):
+                return
+    pytest.fail("no squared distance carries sqrt(247)")
