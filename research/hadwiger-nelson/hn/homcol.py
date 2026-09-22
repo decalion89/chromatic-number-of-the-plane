@@ -11515,3 +11515,40 @@ instrument demonstrably finds caps where they exist, reports their strength,
 and refuses the trivial ones.  Its silence at five colours is evidence about
 the carrier rather than about the search.
 """
+
+
+THE_CAP_REQUIRES_TIGHTNESS_AND_THAT_JOINS_THE_TWO_MEASUREMENTS = """
+The two main measurements of this pass turn out to be the same measurement.
+
+    the palette cap is abundant at four colours and absent at five
+    Sa and Y are tight at four (chi_c = 4 exactly); G is NOT tight at five
+    (chi_c(G) = 4.5)
+
+Those were found independently, by different instruments, on different
+questions.  They say the same thing.  A cap asserts that no proper colouring
+spreads k colours across a set -- the colouring has no room.  Tightness
+asserts that no ratio below k admits a homomorphism -- the colouring has no
+room.  The cap is the local statement and chi_c = k is the global one.
+
+So the caps live exactly where the carrier is tight, and their absence at
+five is not a failure of imagination about shapes.  It is the slack: G
+reaches five in the integer sense while sitting half a colour below it on
+the real scale, and half a colour of slack is enough for every configuration
+tried -- 20000 of them in G, with an instrument that rediscovers de Grey's
+own lemma at four with its exact value of 2 of 4 -- to spread all five
+colours somewhere.
+
+That reorders the programme.  The prerequisite for de Grey's engine one
+level up is not a cleverer gadget.  It is a CARRIER TIGHT AT FIVE.  Give the
+search a unit-distance graph with chi_c = 5 and the caps should appear in it
+the way they appear in Sa; without one, no shape will be capped, because
+there is room for every shape.
+
+One caveat that keeps the claim honest.  The link is stated for the colour
+frame only.  G IS tight at 4.5 on the circular scale, and the circular
+analogue of the cap -- the arc bound of its centre and ring -- is 9 of 9,
+no cap at all.  So tightness at a ratio does not produce a positional cap,
+which is the same inversion recorded earlier: adjacency demands separation
+on the circle and only forbids equality in colours.  Tightness buys caps in
+colours and nothing in positions.
+"""
