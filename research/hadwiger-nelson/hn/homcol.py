@@ -11200,3 +11200,37 @@ are not enough.
 The instrument keeps its value for candidate graphs, where an UNSAT would be
 a cheap proof.  It is simply not the way to pin G.
 """
+
+
+DENSITY_DOES_NOT_CROSS_THE_RUNG_AND_COST_IS_STILL_NOT_EVIDENCE = """
+The densest graph in the project, tested, and the clearest instance yet of
+the principle this work keeps rediscovering.
+
+    uniSa      8953 pts  12.187 five-cycles per edge   MAPS in      13 s
+    deepgrow   4709 pts  12.968 five-cycles per edge   MAPS in    2853 s
+
+deepgrow is the richest graph here in the structure the orientation analysis
+says matters -- 61 per cent above G -- and it has half the points of uniSa.
+Its solve took 220 times longer.  Same answer.  chi_c(deepgrow) <= 9/2.
+
+So five-cycle density does not cross the rung, which settles the reading
+opened when the growth experiment failed: what matters is not how many
+5-cycles a graph carries but how they interlock, and nothing in this corpus
+interlocks them enough.
+
+And the 220-fold difference in solve time bought exactly nothing.  Cost is
+not evidence -- written here after a long solve returned a colouring, then
+again after a hundred-per-cent kill rate returned nothing, and now after the
+hardest instance in the project returned the same verdict as the easiest.
+The three costumes were: a slow solve means a hard graph; a high kill rate
+means a tight graph; a long grind means a near miss.  None of them is a
+measurement.  Only the verdict is.
+
+Two runs were cancelled on the strength of this rather than left to finish,
+which is worth recording as the useful half of a negative result.  core.pkl
+is the 7-core of deepgrow -- 3580 points, 13.378 five-cycles per edge, the
+densest object reachable here -- and being a SUBGRAPH it has chi_c at most
+deepgrow's, so it maps to K(9/2) with certainty and its test could only ever
+confirm it.  The local relaxation on deepgrow was satisfiable for the same
+reason.  Neither needed a core once deepgrow answered.
+"""
