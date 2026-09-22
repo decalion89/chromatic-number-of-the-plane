@@ -11945,3 +11945,39 @@ candidate dies, and the honest position is
 posed; the material does not reach.  Recorded because a greedy number on the
 wrong side of an inequality looked for several minutes like a new theorem.
 """
+
+
+THE_LATTICE_FAMILY_IS_BIPARTITE_AND_THE_PROOF_IS_THREE_LINES = """
+The Erdos lattice family closed properly, and the earlier closure retired as
+overkill.
+
+Those graphs are Z^2 scaled by 1/sqrt(N) with edges between points differing
+by a vector of norm N.  The note above closed them by showing that every
+primitive N admits a sublattice of index at most 5 avoiding the connection
+set, so the graph is 5-colourable by cosets -- 29192 values checked, an
+argument about P^1(F_5), a conic and six lines.
+
+Measuring their independence ratio, to see whether they could bound m_1
+instead, returned 0.5000 for every one of them.  Half the graph independent.
+The reason is a parity argument and it closes the family far harder:
+
+    N odd:          a^2 + b^2 = N forces one of a, b even and the other odd,
+                    so a + b is odd and every connection vector flips the
+                    parity of x + y.
+    N = 2 mod 4:    a and b are both odd, so every vector flips the parity
+                    of x.
+    N = 0 mod 4:    a and b are both even, so the set is imprimitive and
+                    reduces to a smaller N.
+
+So EVERY primitive norm-N distance graph on Z^2 is BIPARTITE.  chi = 2, not
+5, and the independence ratio is exactly 1/2, which is twice the floor
+Croft's construction puts under any useful graph.
+
+The family cannot contribute to the chromatic number and cannot contribute
+to m_1.  It is finished, and the finishing takes three lines where the
+sublattice argument took a search over thirty thousand values of N.  Worth
+recording as it stands: the first closure was correct and enormously more
+work than the question deserved, and the cheap argument only turned up
+because a DIFFERENT measurement -- the independence ratio -- came back at a
+number too round to be anything but structural.
+"""
