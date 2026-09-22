@@ -23,7 +23,7 @@ radical de Grey's field does not contain.
 
 Three sizes are recorded, from the same recipe with more care taken each time:
 1139 from Sa itself, 951 from Sa peeled to its 327 highest-degree vertices, and
-807 after cutting the union down to the part that still forces.
+803 after cutting the union down to the part that still forces.
 """
 from __future__ import annotations
 
@@ -45,7 +45,7 @@ FIELD = Field((3, 11, 247))
 GRAPHS = [
     ("five_247.json", 1139, 6475),
     ("five_247_b.json", 951, 5171),
-    ("five_247_c.json", 807, 4091),
+    ("five_247_c.json", 803, 4065),
 ]
 
 

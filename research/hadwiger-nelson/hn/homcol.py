@@ -12526,3 +12526,32 @@ THE_CONTRACTION_IS_A_ONE_OFF_AT_FOUR_AND_ABSENT_AT_FIVE = True
 # laziness, not constraint.  Randomised polarity moves the whole assignment and
 # blocking guarantees it moves at all; the two together give the numbers above.
 READING_A_COLOUR_OFF_A_MODEL_NEEDS_AT_MOST_ONE = True
+
+
+# The group the construction actually has, and how to keep one.
+#
+#     Sa                                  isometry group of order 12
+#     every graph built from it here      isometry group of order 1
+#
+# because the glue rotation is about ONE vertex and the spindle about ONE
+# pivot, and each breaks every symmetry Sa had.  Taking the D6 orbit of the
+# finished graph afterwards imposes Sa's group on an object not shaped for it,
+# and it loosens: free@5 went 11.46% -> 13.14%.
+#
+# The repair is not to restore the symmetry but never to break it.  Both
+# operations respect conjugation -- g rot_w g^-1 = rot_{g(w)} for g in the
+# rotation group, and g(Sa) = Sa -- so gluing at EVERY vertex of an orbit at
+# once leaves the union invariant, and the forcing, being equivariant, then
+# arrives in whole orbits.
+#
+# It is not a small improvement.  Gluing Sa at all six vertices of one C6
+# orbit gives
+#
+#     n = 1021   m = 6810   mean degree 13.34   free@4 0.00%   153 forced pairs
+#
+# where the sequential chain, one glue at a time, reached 8 forced pairs at
+# n=570, 27 at 679 and 52 at 782.  Three times the forcing at a comparable
+# size, and the densest carrier in the project.  It also produces a forced
+# distance the sequential chain never saw: nine pairs at d^2 = 64/3, whose
+# spindle needs sqrt(759) = sqrt3 sqrt11 sqrt23 -- a third field.
+SYMMETRIC_GLUING_TRIPLES_THE_FORCING = True
