@@ -5508,3 +5508,93 @@ not another turn.
 
 The tests recompute the numbers rather than quoting them, so a reader who
 doubts any figure above can run it.
+
+
+### What the third pass added: a scale instead of a verdict
+
+Everything above asks one question — is this graph 5-colourable — and gets
+one answer, about a hundred times. Two failures were indistinguishable: no
+number said which had come closer. The third pass replaced the question.
+
+The **circular chromatic number** χ_c is the least p/q for which a graph maps
+to the circular clique K(p/q), whose vertices are p points of a circle with
+adjacency at circular distance ≥ q. It satisfies χ_f ≤ χ_c ≤ χ and
+⌈χ_c⌉ = χ, so it is a real number living inside the integer, and for every
+5-chromatic graph here it lies in (4, 5]. The target is unchanged in
+substance and sharper in form: **χ_c > 5 is exactly χ ≥ 6**.
+
+The encoder is checked against known values before any of its answers are
+believed: C₅ = 5/2, C₇ = 7/3, C₉ = 9/4, K₃ = 3, K₄ = 4, K₅ = 5, all exact.
+
+**What the scale reads on the graphs here.**
+
+| graph | χ | χ_c |
+|---|---|---|
+| Moser spindle | 4 | 7/2 = 3.5 |
+| `Sa` (397 pts) | 4 | **4 exactly** |
+| `Y` (791 pts) | 4 | **4 exactly** |
+| `G` (1581 pts) | 5 | ≤ 9/2 = 4.5 |
+
+`Sa` and `Y` refuse all 28 ratios below 4, down to 3 — they sit at the
+ceiling of their interval with no circular slack. The Moser spindle does
+not, so tightness is a property of the particular graph, not of
+unit-distance graphs in general. And `G`, which contains `Y` and is
+5-chromatic, maps to K(9/2): it is **not** tight at five. Its 4-chromatic
+components reach four exactly; the construction on top of them lands about
+half a colour short.
+
+Read as a statement about de Grey's step, it buys roughly half a colour of
+χ_c. That is enough to move ⌈·⌉ from 4 to 5, which is why one application
+settled χ ≥ 5 — and it is also why one more would not settle χ ≥ 6, since
+4.5 plus a half-step is 5.0, whose ceiling is still 5. Two steps reach 5.5,
+and ⌈5.5⌉ = 6. The reading is a reading, not a theorem; what is measured is
+the table.
+
+**Why every growth run in this project decayed.** They scored each candidate
+point by how many sampled 5-colourings it kills, on graphs with more than
+half a colour of slack at five. Almost no single point can kill a
+5-colouring of a graph that loose, so the score was nearly always zero — a
+blind walk in the costume of a hill climb. Scoring at the ratio where the
+graph is actually tight, on the same graph and the same pool: the best
+candidate kills **120 of 120** homomorphisms where the old score managed
+**7 of 250**.
+
+That is a better question, not a working search. Twelve rounds later the
+sampler still returned a full 120 fresh homomorphisms each time, because the
+number of homomorphisms of a 1600-point graph to K(9/2) is astronomical and
+killing the sampled ones leaves the space untouched. **The kill rate is no
+more evidence than the solve time was.** Only an UNSAT proves anything.
+
+**Where the difficulty actually sits.** At p/q a neighbour forbids 2q−1 of
+the p positions, so blocking a point takes ⌈p/(2q−1)⌉ neighbours. Across
+every ratio in (4, 5] with q ≥ 2 — 14/3, 19/4, 24/5, 29/6, 34/7, 39/8, 44/9
+— that number is **3**. Only at 5/1 itself, where 2q−1 = 1, does it jump to
+**5**. The whole local difficulty is concentrated in the last rung, which is
+a precise way of saying why approaching five from below is cheap and
+crossing it is not.
+
+**The cone, and exactly which ratios it refuses.** Put a graph H on the unit
+circle about a point v. Then v forbids a window of 2q−1 positions and H is
+confined to the complementary arc of p−2q+1. Inside an arc, circular
+distance equals linear distance, and the graph on M positions with i ~ j iff
+|i−j| ≥ q is the complement of a unit interval graph — hence perfect, so its
+chromatic number equals its clique number ⌊p/q⌋−1, and it contains a clique
+that size. So H maps into the arc exactly when χ(H) ≤ ⌊p/q⌋−1, and v ∪ H
+refuses every ratio in (4, 5) precisely when χ(H) = 4.
+
+What the plane forbids is supplying that H: two points of a unit circle at
+distance 1 subtend 60°, so a unit circle always carries a subgraph of
+disjoint hexagons — bipartite, χ ≤ 2. The criterion needs 4 and the circle
+gives 2. The obstruction is old; naming the exact ratios turns it into a
+design criterion, and it says where to look next: one centre can never
+confine a graph to an arc too short for its chromatic number, but three can,
+since three windows cover the circle at every ratio in (4, 5].
+
+**The milestone this opens.** Since χ_c is monotone under subgraphs,
+χ_c(ℝ²) ≥ χ_c(H) for any unit-distance H, so every ratio a concrete graph
+refuses is a quantitative statement about the plane proved by one UNSAT.
+χ ≥ 5 gives only χ_c(ℝ²) > 4, and the fractional number — the quantity
+Polymath16 pushed, to 3.8992 — sits below χ_c, so the interval between them
+is a gap the usual instruments do not read. **Is there a unit-distance graph
+with χ_c > 9/2?** It is strictly stronger than χ ≥ 5, strictly weaker than
+χ ≥ 6, and it is a finite question.
