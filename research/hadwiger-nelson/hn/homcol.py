@@ -11552,3 +11552,39 @@ which is the same inversion recorded earlier: adjacency demands separation
 on the circle and only forbids equality in colours.  Tightness buys caps in
 colours and nothing in positions.
 """
+
+
+A_TWENTY_FOUR_POINT_GRAPH_TIGHT_AT_FOUR = """
+The object the synthesis asked for, extracted and verified.
+
+If caps live where a carrier is tight, then whatever makes a unit-distance
+graph tight is the template for what is missing at five, and it is worth
+having in the smallest form available rather than buried in 397 points.
+
+Sa refuses every circular clique below 4.  Activation literals turn that
+refusal into a shrinking problem -- give each vertex a literal implying it
+takes a position, solve under assumptions, and the UNSAT core is a smaller
+vertex set -- which converged in two rounds from 397 points to 91.  Greedy
+deletion then took it to vertex-minimality under single deletions:
+
+    24 points, 54 edges, degrees 3 to 8, 17 triangles, diameter 3.221
+
+Verified, not asserted.  It is not 3-colourable and is 4-colourable, and it
+refuses ALL 92 circular cliques below 4 with denominator at most 12, so
+chi_c = chi = 4 exactly.  The exact field coordinates are in
+data/tight_four.json and tests/test_tight_four.py recomputes the edges, the
+chromatic number and the refusals from that file alone.
+
+What makes it worth keeping is the comparison.  The Moser spindle is
+4-chromatic on SEVEN points and has chi_c = 7/2 -- half a colour of slack.
+This has none.  Seventeen extra points is what tightness costs at four
+colours in this family, and the question one level up is what it costs at
+five, if anything can pay it.
+
+The shrink also says something about where the tightness lives.  Sa carries
+228 Moser spindles and the tight core keeps 17 triangles in 24 points, so it
+is not a thin chain of gadgets -- mean degree 4.5 with a diameter of 3.2 is
+a compact, heavily linked cluster.  Tightness is a property of a dense small
+neighbourhood, not of a long composition, which is the opposite of how the
+chromatic number is built up.
+"""
