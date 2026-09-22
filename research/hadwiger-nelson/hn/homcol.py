@@ -12486,11 +12486,28 @@ DIVERSITY_COMES_FROM_BLOCKING_NOT_FROM_HINTS = True
 #     the 807       k=5     921 patterns    61% still new
 #
 # At four colours the interface space is small and closes; at five it does not
-# close at all and is already an order of magnitude larger.  And the glue
-# HALVES it at four -- 72 down to 38 -- which is precisely the mechanism:
-# gluing shrinks the space of interface colourings until pairs have nowhere
-# left to disagree.
+# close at all and is an order of magnitude larger.  That contrast is the
+# finding, and it holds.
 THE_INTERFACE_SATURATES_AT_FOUR_AND_NEVER_AT_FIVE = True
+
+# CORRECTION.  Reading those two lines together -- 72 for Sa and 38 for Sa
+# glued -- as "the glue halves the interface" was wrong, because the two
+# probes are different vertex sets: each was the eight highest-degree vertices
+# of its own graph.  Pinning the SAME eight points by coordinate and gluing
+# repeatedly gives
+#
+#     Sa,  k=4      72  ->  59  ->  59  ->  59
+#     the 807, k=5  689 ->  693
+#
+# so at four the glue contracts the interface once and then plateaus, and at
+# five it does not contract at all.  There is no rate to extrapolate and no
+# depth at which this would close.  What survives is the absolute gap: 59
+# against 689, and no saturation at five however many colourings are drawn.
+#
+# The forcing still grows with depth -- 8 pairs, then 27, then 52 -- so it is
+# not this probe that it grows on.  A fixed eight-vertex window sees the
+# contrast between four and five and does not see the mechanism.
+THE_CONTRACTION_IS_A_ONE_OFF_AT_FOUR_AND_ABSENT_AT_FIVE = True
 
 # Two corrections this measurement needed, both of which produced confident
 # nonsense first.

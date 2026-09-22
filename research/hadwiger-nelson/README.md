@@ -6032,10 +6032,26 @@ the colours:
 | the 807-vertex graph | 5 | **921** | no — 61 % still new |
 
 At four colours the interface space closes. At five it does not close at all,
-and is already an order of magnitude larger. **And the glue halves it at four —
-72 down to 38.** That is the mechanism itself: gluing shrinks the space of
-interface colourings until pairs have nowhere left to disagree. At five there is
-nothing to shrink.
+and is an order of magnitude larger.
+
+**A correction, made the same day.** Reading those two rows together — 72 for
+`Sa`, 38 for `Sa` glued — as *"the glue halves the interface"* was wrong: each
+probe was the eight highest-degree vertices **of its own graph**, so they are
+different vertex sets. Pinning the same eight points by coordinate and gluing
+repeatedly gives
+
+| | depth 0 | 1 | 2 | 3 |
+|---|---:|---:|---:|---:|
+| `Sa`, `k=4` | 72 | **59** | 59 | 59 |
+| the 807, `k=5` | 689 | **693** | | |
+
+so at four the glue contracts the interface **once** and then plateaus, and at
+five it does not contract at all. There is no rate to extrapolate and no depth
+at which this would close. What survives — and it is the part that matters — is
+the absolute gap: **59 against 689**, with no saturation at five however many
+colourings are drawn. And since the forcing does keep growing with depth (8
+pairs, then 27, then 52), a fixed eight-vertex window sees the contrast between
+four and five without seeing the mechanism that produces it.
 
 *(Two corrections this needed, both of which produced confident nonsense first.
 The encoding deliberately omits at-most-one clauses — sound for deciding
