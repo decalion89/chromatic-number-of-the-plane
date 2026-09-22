@@ -5598,3 +5598,94 @@ Polymath16 pushed, to 3.8992 — sits below χ_c, so the interval between them
 is a gap the usual instruments do not read. **Is there a unit-distance graph
 with χ_c > 9/2?** It is strictly stronger than χ ≥ 5, strictly weaker than
 χ ≥ 6, and it is a finite question.
+
+#### The instruments the rung is out of reach of
+
+Four routes can be closed off with numbers rather than opinion.
+
+**Counting.** A map to K(p/q) needs p independent sets covering every vertex
+exactly q times, so it needs an independence ratio of at least q/p. Turn it
+round: a graph refuses K(p/q) by counting alone when its ratio is below q/p.
+Screening every graph in this project by a greedy lower bound takes 25
+seconds and puts all of them between 0.25 and 0.30, against the 2/9 = 0.2222
+that K(9/2) would need. More decisively, for ratio ρ counting proves a
+refusal only below 1/ρ, and the best unit-distance graphs known reach
+ρ ≈ 0.2565, capping counting at 3.898 — below 4, which χ ≥ 5 already gives.
+**For every unit-distance graph anyone has built, counting is strictly
+weaker than the chromatic number.** That is χ_f(ℝ²) ≥ 3.8992 sitting below 4,
+seen from a new angle.
+
+**Fractional and measurable arguments.** Same counting, so the same cap: a
+measurable homomorphism needs m₁ ≥ q/p, and m₁ ≤ 0.2544 caps the route near
+3.93.
+
+**Rigidity.** A uniquely k-colourable graph has χ_c = k, which would have
+explained `Sa`'s and `Y`'s tightness — and would have made the next rung
+demand a uniquely 5-colourable unit-distance graph. Measured instead:
+around one 4-colouring of `Sa`, **zero of 100** same-class pairs are forced
+to agree and 4 of 100 cross-class pairs forced to differ. Rigidity ≈ 2%
+(`Y`: 0.8%), and both are tight anyway. The classical route is not the
+mechanism, which also means the next rung does not need that object.
+
+**Greedy growth**, at the slack ratio and at the tight one alike, as above.
+
+#### The Minty side, which is what is left
+
+Goddyn, Tarsi and Zhang: **χ_c(G) = min over orientations of max over cycles
+of |C| / min(|C⁺|, |C⁻|)**. Brute force over every orientation and every
+cycle reproduces the solver's independent answers five for five — C₃ = 3,
+C₅ = 5/2, C₇ = 7/3, K₄ = 4, and the Moser spindle at 7/2, the one value no
+textbook supplies. Two computations sharing no code.
+
+A (p,q)-colouring then hands over a good orientation free: order by position
+and orient upward. Seeded that way, `Sa` scores 4.0001 and `G` scores
+**4.5003** on 1581 points — exactly the promised bound. Two hundred local
+moves, each flipping an edge of a cycle witnessing the current score,
+**could not get below 4.5**. Evidence, not proof, and of the weak kind; but
+it agrees with the UNSAT run, and together they say **`G` is tight at 4.5**.
+So the growth aimed at crossing K(9/2) was aimed at the right rung all
+along; what failed was the method of crossing.
+
+The witnesses are small. In `G`'s best orientation the cycles realising 4.5
+are **80 of length 9**, each with exactly two edges on the minority side,
+plus two of length 18 that are doublings — diameters 1.79 to 2.72. Compact,
+local, enumerable.
+
+Working out which cycles bind: triangles and 4-cycles are free, lengths 5–9
+need ≥ 2 on the minority side, 10–13 need ≥ 3. A cycle with **one** edge the
+minority way is a directed path closed by an edge back, so
+
+> **χ_c(G) ≥ 5 iff every acyclic orientation contains a directed path on
+> five vertices whose two ends are adjacent.**
+
+And Gallai–Roy says every orientation of a 5-chromatic graph already has a
+directed path on five vertices. The entire gap is whether some such path has
+its ends a unit apart.
+
+#### Why the ends never are
+
+Measured on `G`: 42 distinct end pairs of directed 4-edge paths, distances
+0.29 to 2.39, and **none in [0.99, 1.01]**; seven within 10% of a unit, the
+nearest 2.8% off. The hole is forced, by one line of arithmetic. The
+orientation comes from the position, adjacency makes each step at least
+q = 2, and with p = 9 the highest a 4-edge path reaches is 0 → 2 → 4 → 6 → 8
+— four steps of ≥ 2 already total 8, so every directed 4-edge path has
+positions **exactly** 0, 2, 4, 6, 8. Its ends sit at 0 and 8, circular
+distance 1, below the threshold. They cannot be adjacent, ever. The same
+arithmetic explains why 600 starting vertices in a graph with 7877 arcs give
+42 end pairs and not thousands.
+
+So a homomorphism's orientation is built, by the wrap-around, to avoid
+precisely the configuration that would raise the ratio to 5. `G` comes
+within 2.8% of a closure it cannot make while a map survives. Killing every
+map is still the only way through — this says exactly what a map is doing to
+stay alive.
+
+#### What the map looks like inside
+
+`G`'s nine position classes size 69 to 269; their consecutive unions are all
+independent and total 2n exactly, densities averaging 2/9 to the last digit.
+All nine share a centroid near (−2.0, 2.0) and a spread near 0.7: **not
+stripes, not translates, not a lattice — interleaved throughout.** The map
+carries no geometric shape, which is a plain reason why adding rotated
+copies of things never aimed at anything.
