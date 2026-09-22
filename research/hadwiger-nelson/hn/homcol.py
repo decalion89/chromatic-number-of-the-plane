@@ -12657,3 +12657,38 @@ BOTH_ORBITS_SPENT_AT_ONCE_STILL_TAKE_FIVE = True
 # colouring is a genuine proper 5-colouring, so a pair that differs in one is
 # PROVED not forced.
 THE_GROUP_MULTIPLIES_THE_FILTER_FOR_FREE = True
+
+
+# Minimising without breaking the symmetry.
+#
+# The spindle of the 1021-point symmetric carrier has 7141 vertices and every
+# 5-colouring of it costs cadical about five minutes, so the forced-pair test
+# at five -- the only question that matters -- needs hundreds of calls and is
+# out of reach.  Shrinking the carrier shrinks the spindle proportionally, but
+# ordinary minimisation deletes one vertex at a time and destroys the group,
+# and the group is exactly what makes the test affordable: it multiplies the
+# colourings twelvefold and divides the confirmations by twelve.
+#
+# So delete ORBITS rather than vertices.  An orbit is at most twelve points,
+# the carrier stays invariant after every deletion, and the pair being kept
+# forced is itself an orbit, so it survives whole.  The 1021-point carrier has
+# 171 rotation orbits, which is the search space.
+MINIMISE_BY_ORBITS_NOT_BY_VERTICES = True
+
+# And the question has a better shape than one call per pair.  "u and v differ"
+# is exactly what an edge imposes, so
+#
+#     are all the candidate pairs separable at once?
+#         ==  is  G + (candidates as edges)  still 5-colourable?
+#
+# A yes is a complete certificate for the whole set in one call.  A no is not a
+# forced pair -- it says only that they cannot all differ simultaneously -- so
+# the set splits and the halves are asked separately.
+#
+# On the 7141-vertex graph the whole set came back inseparable in under a
+# second, and the bisection then pays the expensive direction: a group of a
+# thousand extra edges is a hard SAT instance where UNSAT is instant.  Starting
+# from small chunks reverses that, but the base graph's own 5-colouring costs
+# 322 seconds, and no chunking can get below that floor.  The binding
+# constraint is the size of the object, not the shape of the question.
+SEPARABILITY_IS_ONE_CALL_BUT_THE_FLOOR_IS_THE_OBJECT = True
