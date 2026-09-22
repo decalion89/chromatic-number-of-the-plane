@@ -12018,3 +12018,48 @@ vertices does not remove the independent sets; it reshapes them.
 Both results are negative and both are clean, which is the useful kind.  The
 step does not compound, and the ratio does not sculpt.
 """
+
+
+THE_SLACK_MEASURED_INSTEAD_OF_INFERRED = """
+The number this pass kept inferring and never took, and it is an abyss
+rather than a margin.
+
+No solver is needed.  Take one proper colouring and count, for each vertex,
+how many of the k colours its neighbours leave available.  A vertex with a
+free colour can be recoloured where it stands; a graph where forcing lives
+has none.
+
+    carrier      k   points   vertices with a free colour   mean free
+    Sa           4      397               0.0 %               0.000
+    Y            4      791               3.5 %               0.035
+    tight core   4       24              25.0 %               0.250
+    Sa           5      397              24.7 %               0.285
+    G            5     1581              22.1 %               0.249
+    deepgrow     5     4709              22.2 %               0.253
+    union3       5    39144              18.9 %               0.209
+
+At four colours in Sa, NOT ONE vertex of 397 has a free colour.  Every point
+is pinned by its neighbours, and that is exactly the level where de Grey's
+construction works.  At five colours in G, more than a fifth of the graph
+can be recoloured on the spot.
+
+The last row is the one that hurts.  union3 has twenty-five times G's points
+and reduces the slack from 22.1 per cent to 18.9 -- three percentage points
+for a twenty-fivefold increase in size.  Whatever closes that gap, it is not
+more points.
+
+This also explains two earlier results rather than merely agreeing with
+them.  Zero non-adjacent forced-different pairs at five, across 400
+neighbourhoods of G: of course, when a fifth of the graph is free.  And two
+per cent rigidity in Sa at four despite Sa being perfectly saturated -- the
+saturation is local and the forcing is not, which is why pair-by-pair
+analysis missed what the count sees immediately.
+
+And it hands over the best-founded growth objective of the whole pass.  The
+old saturation growth scored candidates by how many sampled colourings they
+kill, an objective with no known target and no reference point.  Minimise
+the FREE FRACTION instead: no solver in the loop, a target value of zero,
+and a graph that achieves it one level down.  Necessary rather than
+sufficient -- zero free in one colouring is not zero in all -- but it is the
+first objective here whose scale is calibrated.
+"""
