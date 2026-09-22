@@ -131,3 +131,57 @@ def test_the_spindle_angle_needs_247():
             n //= d * d
         d += 1
     assert n == 247
+
+
+# ---------------------------------------------------------------------------
+# The one with a group of its own.  Every graph above has isometry group of
+# order 1, because the glue rotation is about one vertex and the spindle about
+# one pivot.  Doing both over whole orbits instead -- six glues at once, then
+# six spindles at once -- keeps the union invariant, since g rot_w g^-1 =
+# rot_{g(w)} and Sa is already fixed by the group.  The carrier that results
+# has mean degree 13.34 and 153 forced pairs where the sequential chain
+# reached 52, and its spindle is the first 5-chromatic unit-distance graph
+# here that carries a symmetry.
+
+SYM = os.path.join(HERE, os.pardir, "data", "five_symmetric.json")
+
+
+@pytest.fixture(scope="module")
+def symmetric():
+    with open(SYM) as fh:
+        d = json.load(fh)
+    pts = [Point(FIELD.element([Fr(a, b) for a, b in x]),
+                 FIELD.element([Fr(a, b) for a, b in y]))
+           for x, y in d["points"]]
+    return d, pts
+
+
+def test_symmetric_graph_size(symmetric):
+    d, pts = symmetric
+    assert d["n"] == 7141 and d["m"] == 47682
+    assert len(pts) == 7141 and len(set(pts)) == 7141
+    g = build_graph(pts)
+    assert g.n == 7141
+    assert sum(len(a) for a in g.adj) // 2 == 47682
+
+
+def test_symmetric_graph_is_c6_invariant(symmetric):
+    """The group is about the origin by construction, so checking the
+    60-degree rotation maps the set onto itself is O(n), where searching for an
+    unknown centre would be O(n^2).  The reflection is not in it: the group is
+    C6, of order 6, not D6."""
+    from hn.geometry import _rot60
+    _, pts = symmetric
+    S = set(pts)
+    r = _rot60(FIELD)
+    assert all(r(p) in S for p in pts)
+    assert all(r(r(p)) in S for p in pts)
+    assert not all(Point(p.x, -p.y) in S for p in pts)
+
+
+def test_symmetric_graph_refuses_four_colours(symmetric):
+    _, pts = symmetric
+    g = build_graph(pts)
+    for u, v in list(g.edges())[:200]:
+        assert pts[u].dist2(pts[v]) == 1
+    assert is_k_colorable(g, 4, timeout=1800)[0] is False

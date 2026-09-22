@@ -12555,3 +12555,23 @@ READING_A_COLOUR_OFF_A_MODEL_NEEDS_AT_MOST_ONE = True
 # distance the sequential chain never saw: nine pairs at d^2 = 64/3, whose
 # spindle needs sqrt(759) = sqrt3 sqrt11 sqrt23 -- a third field.
 SYMMETRIC_GLUING_TRIPLES_THE_FORCING = True
+
+
+# The first 5-chromatic graph here with a group of its own.
+#
+# Spindling the forced pair over its WHOLE orbit -- six rotations at once, one
+# about each pivot of the C6 orbit -- keeps the invariance that gluing
+# symmetrically established, for the same reason: g rot_w g^-1 = rot_{g(w)}.
+#
+#     n = 7141   m = 47682   mean degree 13.35   chi = 5   C6-invariant
+#
+# and it is by a wide margin the hardest instance the project has produced.
+# Cadical finds a 5-colouring of it in 322 seconds, against 4 seconds for a
+# 6607-vertex graph of comparable size and degree built by symmetrising a
+# finished graph instead.  Eighty times the work for the same verdict is not a
+# proof of anything, but it is the first quantitative sign that the
+# construction is approaching a boundary rather than wandering.
+#
+# The group is C6 and not D6: the reflection is not in it, because the glue
+# centres form a rotation orbit only.  Recorded in data/five_symmetric.json.
+A_FIVE_CHROMATIC_GRAPH_THAT_CARRIES_C6 = True
