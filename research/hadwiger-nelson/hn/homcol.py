@@ -11423,3 +11423,50 @@ statement is: the bite in isolation gives a floor rather than a ceiling in
 positions, and whether the carrier reverses that is a separate question,
 asked of the carrier.
 """
+
+
+DE_GREYS_LEMMA_HAS_NO_POSITIONAL_ANALOGUE = """
+The device, looked for in the right place, three ways, and it is not there.
+
+De Grey's lemma: the centre and its radius-2 ring take at most TWO of four
+colours, and the centre is never alone.  That cap is the whole engine -- it
+is what the bite sharpens into a forced pair and the spindle turns into a
+contradiction.  If the circular frame has an analogue, this is where it
+lives.
+
+    1.  The gadget alone, exhausted completely.  Seven points, nine
+        positions, all 4782969 assignments.  The hexagon alone leaves 424764
+        survivors spanning arcs of 2 to 7; adding the bite leaves 14922 --
+        a factor of 320 -- spanning 4 to 7.  The bite raises the MINIMUM
+        span from 2 to 4.  A floor, where the colour version gives a
+        ceiling.
+
+    2.  The gadget inside the carrier, bounded exactly.  The centre of G and
+        the twelve points at distance 2 from it, over ALL homomorphisms of
+        the whole 1581-point graph to K(9/2), by bisection on the width:
+
+            arc bound = 9 of 9.
+
+        They can occupy the entire circle.  Not a weak cap, not a cap that
+        needs a bigger carrier -- no cap.
+
+    3.  Forced-close pairs, searched for directly.  A spindle needs two
+        points forced to within q/2 = 1.  Of the 200 nearest non-adjacent
+        pairs in Sa, not one is forced, each ruled out by its own UNSAT.
+
+So the colour lemma says "at most 2 of 4" and the position measurement says
+"all 9 of 9".  The translation does not weaken the lemma; it INVERTS it.
+
+The mechanism is visible now, and it is not an accident of this
+configuration.  In colours, "few colours" is a restriction and adjacency
+only forbids equality, so a tightly linked set can be gathered.  In
+positions, adjacency demands SEPARATION -- at least q round the circle --
+so the very links that gather colours push positions apart.  A hexagon of
+consecutive unit pairs is the extreme case: six mutually chained points each
+forced q from the next.  The geometry that made the cap is the geometry that
+forbids the arc.
+
+That is the end of the line for lifting de Grey's device, and it is the
+reason the earlier note's "build in colours, measure in circles" is not a
+preference but a constraint.
+"""
