@@ -5689,3 +5689,107 @@ All nine share a centroid near (−2.0, 2.0) and a spread near 0.7: **not
 stripes, not translates, not a lattice — interleaved throughout.** The map
 carries no geometric shape, which is a plain reason why adding rotated
 copies of things never aimed at anything.
+
+#### Searching the space of lemmas
+
+De Grey did not grow a graph from a seed. He found a seven-point gadget with
+a provable cap — the centre and its radius-2 ring take at most **two of four**
+colours — and the construction is that lemma plus a way to make copies
+conflict. He found it by insight in 2018. Nobody has enumerated small
+configurations and asked each one for its cap, which is a search over
+**lemmas** rather than over graphs, and it turns out to cost one solver call
+each: *does any proper k-colouring spread all k colours across S?* UNSAT is a
+cap.
+
+Two things had to be fixed before it meant anything. A set with a common
+neighbour outside it is capped **for free** — if w is adjacent to all of S
+then w needs a colour none of them has — so the first version reported every
+neighbourhood in `G` as a discovery. And "capped below k" is nearly
+worthless when de Grey's cap is 2 of 4; the palette is now measured by
+bisection so each lemma's *strength* is reported.
+
+**The control decides whether the silence elsewhere counts.** On `Sa` at four
+colours, over 1200 of 39566 candidates:
+
+```
+CAP 2 of 4  |S|=6  ring r²=4.000 about vertex 0      ← de Grey's hexagon
+CAP 2 of 4  |S|=7  that ring with its centre         ← his gadget, exactly
+CAP 3 of 4  |S|=6  ring r²=1.708 about vertex 1      ← one he doesn't mention
+```
+
+Found unaided, with his configuration and his exact value.
+
+**The question.** `G` at five colours: 35500 configurations, **0 caps**.
+`wide0` at five colours: 40000 configurations, **0 caps**. The carriers were
+chosen to make it easy to pass — the cap is monotone *downward* in the
+carrier, so `wide0`'s 11047 points give every configuration a better chance
+than `G`'s 1581 — and still nothing. 75500 configurations, two carriers,
+zero caps at five.
+
+#### A 24-point graph with χ_c = χ = 4
+
+`Sa` refuses every circular clique below 4. Activation literals turn that
+into a shrinking problem — one literal per vertex implying it takes a
+position, solve under assumptions, and the UNSAT core is a smaller vertex set
+— which converged in two rounds from 397 points to 91. Greedy deletion took
+it to vertex-minimality:
+
+> **24 points, 54 edges, degrees 3–8, 17 triangles, diameter 3.221.**
+> Not 3-colourable, 4-colourable, and refusing **all 92** circular cliques
+> below 4 with denominator ≤ 12. So χ_c = χ = 4 exactly.
+
+Exact field coordinates in `data/tight_four.json`; `tests/test_tight_four.py`
+recomputes the edges, the chromatic number and the refusals from that file
+alone — 11 tests, 3.4 seconds. The Moser spindle is 4-chromatic on **seven**
+points but has χ_c = 7/2, half a colour loose. **Seventeen extra points is
+what tightness costs at four colours in this family.**
+
+Its shape says where tightness lives: 17 triangles in 24 points, mean degree
+4.5, diameter 3.2 — a compact heavily linked cluster, not a long chain of
+gadgets. That is the opposite of how the chromatic number is built up.
+
+#### Iterating the step on it moves nothing
+
+| construction | result |
+|---|---|
+| all 11 rotations by 30° (exact in the field) | 157 pts, 456 edges — **χ_c = 4** |
+| one spindle, angle set by cos θ = 1 − 1/(2d²) | 88 of 552 pairs admit one — **χ_c = 4** |
+| accumulated spindles, 24→38→75→145→269→519→1037 | 3683 edges — **χ_c = 4 throughout** |
+
+`G` reaches 4.5 with 1581 points; this reaches 1037 and stays at 4. At
+comparable size de Grey's construction gets half a colour further, so **his
+choice of gadget and angles does work that repetition does not reproduce.**
+It is the old invariant with a finer reading: gadget density is 1/(new points
+per copy) and does not depend on the count, so doubling the graph doubles
+copies and points together — and on the circular scale that shows as χ_c
+staying at *exactly* 4 with no drift across a fortyfold size increase.
+
+#### A synthesis, and its falsification
+
+Caps are abundant at four and absent at five; `Sa` and `Y` are tight at four
+and `G` is loose at five. Read as one fact, that says **caps live where the
+carrier is tight** — a cap asserts the colouring has no room, tightness
+asserts the same globally.
+
+The tight cores falsify it. Both the 91-point and the 24-point cores refuse
+every ratio below 4, so they are tight in exactly that sense:
+
+| | tight at 4 | caps at 4 |
+|---|---|---|
+| `Sa`, 397 pts | yes | **yes** (2 of 4) |
+| core, 91 pts | yes | **no** (0 of 2214) |
+| minimal core, 24 pts | yes | **no** (0 of 124) |
+
+**The two properties live in different parts of the graph.** The 24 points
+carry all of `Sa`'s tightness and produce no cap; `Sa`'s caps come from the
+other 306. A small compact core carries the tightness, the bulk around it
+carries the cap — which is consistent with the monotonicity already recorded,
+but the synthesis read a correlation off two points instead of drawing the
+consequence.
+
+What survives is weaker and honest: `G` has no caps at five *and* is not
+tight at five, so tightness may still be **necessary** — nothing here tests
+that. What is measured is that it is nowhere near sufficient. So "find a
+carrier tight at five" is not the programme either; it would need bulk as
+well, and bulk is exactly what the density measurements say cannot be added
+without diluting.
