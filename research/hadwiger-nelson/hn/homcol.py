@@ -12575,3 +12575,34 @@ SYMMETRIC_GLUING_TRIPLES_THE_FORCING = True
 # The group is C6 and not D6: the reflection is not in it, because the glue
 # centres form a rotation orbit only.  Recorded in data/five_symmetric.json.
 A_FIVE_CHROMATIC_GRAPH_THAT_CARRIES_C6 = True
+
+
+# Which orbit of glue centres to use is not a detail.  The first symmetric
+# carrier used the orbit of Sa[25] because that vertex had come up earlier;
+# ranking all 38 distinct orbits by the density they produce shows it is close
+# to the worst of them:
+#
+#     orbit of Sa[265]   12 centres   n = 2689   mean degree 15.92
+#     orbit of Sa[253]   12 centres   n = 2605   mean degree 15.75
+#     ...
+#     orbit of Sa[25]     6 centres   n = 1021   mean degree 13.34
+#     orbit of Sa[13]     6 centres   n = 2449   mean degree 12.60
+#
+# and the origin's orbit is worth nothing at all, since the 60-degree rotation
+# about it is a symmetry of Sa.  Stacking the best orbits keeps climbing:
+# 15.92, 16.81, 17.48, 17.75, 18.14, 18.32 at six orbits and 6043 points, with
+# the full group of order 12 intact at every step.
+THE_ORBIT_OF_CENTRES_IS_WORTH_RANKING = True
+
+# CORRECTION to the reading that density is the lever.  Every one of those
+# carriers, up to mean degree 18.32 -- nearly double Sa's 9.94 and half as
+# dense again as anything the sequential chain reached -- is still 4-chromatic,
+# still exactly 0.00% free, and cadical finds a 4-colouring of each in under a
+# second.  Raising the degree did not make the colouring problem harder at all.
+#
+# What does make it harder is the spindle.  The 7141-vertex symmetric spindle,
+# at mean degree 13.35, costs cadical 322 seconds at five colours where a
+# 6607-vertex graph of the same degree costs 4.  So the constraint that matters
+# is not how many edges a carrier has but whether a forced pair has been spent
+# on it, and "denser" is not a direction.
+DENSITY_IS_NOT_THE_LEVER_THE_SPINDLE_IS = True
