@@ -12427,3 +12427,42 @@ FORCED_EQUALITY_NEVER_CHAINS_SO_THE_ANGLE_IS_NEVER_FREE = True
 # record.  It is a different field, reached in a different way, and the first
 # of these numbers that anyone has minimised there.
 EIGHT_HUNDRED_AND_TWENTY_FIVE_IN_A_FIELD_NOBODY_HAS_MINIMISED_IN = True
+
+
+# Symmetrising the 5-chromatic carrier loosens it instead of tightening it.
+#
+# Overlap is the resource, and the deficit is plainly there: Sa's best glue
+# reuses 56% of it because Sa is a D6 orbit, while the spindled 5-chromatic
+# graphs top out at 39% because the spindle rotation is about a vertex and
+# breaks the symmetry.  So restore it -- take the orbit of the 951-vertex
+# graph under the same 12-element group.  It costs 6607 points rather than
+# twelve times 951, because Sa inside it is already fixed by that group.
+#
+#     the 951-vertex graph       deg 10.87   free@5 11.46%   0 forced pairs
+#     its D6 orbit (6607 pts)    deg 11.19   free@5 13.14%   0 forced pairs
+#
+# and the second line is certified the same way as the others: twenty-four
+# explicit 5-colourings separate all 21.8 million pairs.  Symmetry buys
+# overlap and spends slack, and the slack is worth more.
+SYMMETRISING_THE_FIVE_CHROMATIC_CARRIER_LOOSENS_IT = True
+
+# Two solver facts that cost real time here, recorded so they are not paid
+# for twice.
+#
+# Randomised decision polarity is what makes the forced-pair filter work: on a
+# tight graph, random ASSUMPTIONS are refused almost always -- forty tries on Y
+# at four colours produced nothing -- while random phases steer minisat into a
+# genuinely different corner every time, and that is how 78606 pairs of Sa and
+# 1248990 of G were separated.
+#
+# But cadical ignores set_phases.  Twenty "different" colourings of the D6
+# orbit came back identical and left 4366463 surviving pairs, which is no
+# filter at all.  And full phase randomisation is actively harmful to minisat
+# on a large loose instance: it spent fifteen minutes on a 6607-vertex
+# 5-colouring that cadical settled in four seconds, because the random hints
+# fight the solver's own heuristic.
+#
+# The method that works whatever the solver does with hints: block a random
+# sample of the last solution.  Forty vertices is enough, and it took the same
+# orbit from 4366463 surviving pairs to zero.
+DIVERSITY_COMES_FROM_BLOCKING_NOT_FROM_HINTS = True
