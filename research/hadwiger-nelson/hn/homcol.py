@@ -10179,3 +10179,51 @@ THE_SCORE_IS_SATURATION_AND_THE_POOL_MUST_DEEPEN = {
     "the fix": "intersect each added point against those already chosen, so "
                "the reachable set is the whole intersection closure",
 }
+
+
+# Aiming the growth at the cheap target, and three things that make it move.
+#
+# The expensive goal is a unit-distance graph needing six colours; the
+# smallest one needing five already has about five hundred vertices.  The
+# cheap goal does the same job: if the {1, sqrt3} graph has no proper
+# 5-colouring then every 5-colouring of the points leaves one of its edges
+# monochromatic, and an edge at distance 1 cannot be, so a pair at distance
+# sqrt3 is -- a forced pair at a named distance with no cap anywhere.  And the
+# scale is already measured: that graph needs five colours on NINE points
+# where a unit-distance graph needs five hundred.
+#
+# Three corrections were needed before the growth moved at all.
+#
+# The pool has to deepen.  A fixed pool of one round of intersections of G
+# sums to the 35132-point universe, which is 5-colourable, so a greedy over it
+# is bounded by something already known to fail.
+#
+# The growth has to be local.  A 6-chromatic graph is dense somewhere, and
+# spreading additions over 1581 points dilutes each one: the same greedy kills
+# 37 per cent of its colouring sample when spread and 60 to 72 per cent inside
+# a disc of radius 1.2.  Too small a disc is worse than none -- radius 0.7 ran
+# out of candidates with five neighbours after seventy points.
+#
+# And it has to add in batches.  Re-scoring after every single point is the
+# pure greedy and costs eight seconds a point; taking the best six at once
+# loses a little accuracy, since the scores shift as soon as the first is in,
+# and multiplies the rate.
+#
+# With all three, the two-distance graph's colouring sample goes from 74 kills
+# in 200 at the first point to 20 in 200 by the hundred-and-sixtieth, which is
+# the graph hardening rather than the method stalling.
+THE_CHEAP_TARGET_AND_WHAT_MAKES_THE_GROWTH_MOVE = {
+    "why the two-distance graph": "chi >= 6 there gives a forced pair at "
+                                  "sqrt3 with no cap, and it needs five "
+                                  "colours on 9 points against 500 for a "
+                                  "unit-distance graph",
+    "the pool must deepen": "one round of intersections of G sums to a "
+                            "universe already known to colour",
+    "the growth must be local": "37% of the sample killed when spread, 60-72% "
+                                "inside a disc of radius 1.2",
+    "but not too local": "radius 0.7 exhausted its candidates after 70 points",
+    "and it must batch": "one point per eight seconds re-scoring each time, "
+                         "six at once for the same cost",
+    "what the numbers do": "74 kills of 200 at the first point, 20 of 200 by "
+                           "the 160th -- the graph hardening",
+}
