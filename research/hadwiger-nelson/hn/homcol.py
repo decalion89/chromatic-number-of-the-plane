@@ -11121,3 +11121,52 @@ density alone does not cross the rung: a graph can be locally as rich as
 anything reachable here and the orientation still finds room.  What matters
 must be how the cycles interlock, not how many there are.
 """
+
+
+THE_LOCAL_RELAXATION_AND_TWO_WAYS_TO_MAKE_IT_TRIVIAL = """
+A cheap proof method for the rungs, and two enumerator faults that made it
+answer instantly and mean nothing.
+
+Minty at r = p/q asks every cycle for at least |C|q/p edges on its minority
+side.  Imposing that over ALL cycles is hopeless; imposing it over a subset
+is a relaxation, and a relaxation that comes back UNSAT proves the original
+is too.  So any collection of cycles that is unsatisfiable is a proof, and a
+cap on enumeration costs strength, never soundness.
+
+The encoding is small where the circular-clique one is not: one boolean per
+EDGE rather than one per vertex per position, and "at least k of L true" is
+the set of (L-k+1)-subsets, so no cardinality machinery.  G gives 7877
+variables against 14229, and Sa answers in six seconds.
+
+What makes it the right instrument for the pending question is a table:
+
+    length   3  4  5  6  7  8  9  10
+    at 9/2   1  1  2  2  2  2  2   3
+    at 22/5  1  1  2  2  2  2  3   3
+
+The two ratios differ in ONE place -- 9-cycles, three against two -- and the
+cycles holding G at 9/2 are exactly 9-cycles with two.  The relaxation
+presses precisely where the difference lives.
+
+Then two faults, both of which made it satisfiable in about a second:
+
+  1. A global cap on cycles, filled depth-first from the first start vertex.
+     It admitted 3 triangles, 15 quadrilaterals and 259608 nine-cycles, all
+     from a handful of vertices.  Most of the graph carried no constraint at
+     all.
+  2. A per-vertex cap, which spread the starts but let depth-first search
+     eat each budget with long cycles: 241 triangles of 2840 and 666
+     five-cycles of 63604.  The short cycles, which are the cheap and
+     binding ones, were the ones dropped.
+
+Enumerating by LENGTH fixes both -- take the short cycles whole, since they
+are few, and cap only the long ones.  The same graph at the same ratio then
+goes from solving in one second to running for minutes.  Same relaxation,
+same solver, same clause budget: the difference is entirely in which cycles
+were in it.
+
+The lesson is the one this project keeps relearning in new costumes.  A test
+that answers immediately has usually been asked the wrong question, and the
+right response to a suspiciously easy SAT is to audit the instance, not to
+believe it.
+"""
