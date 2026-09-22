@@ -10298,3 +10298,43 @@ LOCAL_DENSITY_DOES_NOT_RAISE_CHI = {
     "consequence": "the focused growth was fighting the wrong battle; what a "
                    "high chromatic number needs is reach, not local density",
 }
+
+
+# What carries G's fifth colour: twelve points on the rim, paired.
+#
+# The disc of radius 2.0 about G's centroid holds 1569 of its 1581 points and
+# is 4-colourable.  Everything that makes de Grey's graph need a fifth colour
+# therefore rests on the twelve points outside it, and they are worth looking
+# at:
+#
+#   degrees 6 and 7, against a mean of 9.96 across G
+#   six edges among the twelve -- a perfect matching, six pairs at distance 1
+#   sixty-two edges from them into the rest
+#   radii from 2.105 to 2.249, against G's extent of 2.249
+#
+# So the fifth colour is carried by six unit-distance pairs on the rim, which
+# is the shape of a spindle's tips, and six is the order of the rotation G
+# inherits from Sa through Y.  The structure is as stretched as it can be:
+# these are the outermost points there are, they are sparsely connected to
+# each other, and they hang off the body by two edges each on average more
+# than they share between themselves.
+#
+# Together with the disc result -- 7206 points added to a region without
+# moving chi off 4 -- this says plainly what the search has been getting
+# wrong.  Chromatic number here is bought by reach, not by filling in, and
+# what sits at the end of the reach is pairs of tips a unit apart.
+THE_FIFTH_COLOUR_RIDES_ON_TWELVE_RIM_POINTS = {
+    "the disc of radius 2.0": "1569 of 1581 points, 4-colourable",
+    "so the fifth colour rests on": "the twelve points outside it",
+    "their degrees": "6 and 7, against G's mean of 9.96",
+    "among themselves": "six edges on twelve points -- a perfect matching, "
+                        "six pairs at distance 1",
+    "into the rest": 62,
+    "their radii": "2.105 to 2.249, G's own extent being 2.249",
+    "what that is": "six unit-distance pairs on the rim, the shape of "
+                    "spindle tips, six being the order of the rotation G "
+                    "inherits",
+    "with the disc result": "7206 points added to a region left chi at 4, so "
+                            "chromatic number is bought by reach and what "
+                            "sits at the end of the reach is tip pairs",
+}
