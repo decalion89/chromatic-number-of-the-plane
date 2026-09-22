@@ -10369,3 +10369,46 @@ JOINING_AT_THE_RIM_TRANSMITS_NOTHING = {
     "so": "a rich interface transmits nothing; two objects one short of the "
           "mark join into one that is one short of the mark",
 }
+
+
+# Adding any one second distance to G leaves the chromatic number at five.
+#
+# The cheap target was a two-distance graph needing six colours, which would
+# force a monochromatic pair at the second distance in every 5-colouring with
+# no cap anywhere.  The reason to expect it was clique number: a unit-distance
+# graph in the plane has clique number 3, but the rhombus of two unit
+# triangles has all six of its distances in {1, sqrt3} and is a K4 -- which is
+# why that graph reaches five colours on nine points against five hundred for
+# one distance.  And the largest two-distance set in the plane, the regular
+# pentagon, is a K5 at distances 1 and the golden ratio.
+#
+# It does not happen.  Twenty-one second distances were tried on G: the nine
+# commonest with rational square, and twelve with irrational square, which is
+# where a golden-ratio-like distance would live since G's field contains
+# sqrt5.  Every one gives chromatic number exactly 5, including distances
+# carrying 6510 pairs -- thousands of extra edges absorbed without moving the
+# number at all.
+#
+# Together with the seven carriers already measured at sqrt3, that is a firm
+# ceiling: one extra distance never buys a sixth colour here.
+#
+# (The scan printed a label for each irrational distance computed by summing
+# basis coefficients rather than evaluating the field element, so those
+# printed values are meaningless.  The tests themselves matched exact integer
+# rows, so the chromatic numbers stand.)
+ONE_SECOND_DISTANCE_NEVER_BUYS_A_SIXTH_COLOUR = {
+    "why it was worth trying": "two distances lift the clique number -- the "
+                               "rhombus is a K4 in {1, sqrt3}, the regular "
+                               "pentagon a K5 in {1, phi} -- and {1, sqrt3} "
+                               "reaches 5 colours on 9 points against 500",
+    "second distances tried on G": "9 with rational square, 12 with "
+                                   "irrational square",
+    "result": "chromatic number exactly 5 for every one, including some "
+              "carrying 6510 pairs",
+    "with the carrier sweep": "7 carriers at sqrt3, all 5",
+    "the ceiling": "one extra distance never buys a sixth colour here",
+    "a label bug, not a result bug": "the printed values for the irrational "
+                                     "distances summed basis coefficients "
+                                     "instead of evaluating; the tests "
+                                     "matched exact rows",
+}
