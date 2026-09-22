@@ -12063,3 +12063,33 @@ and a graph that achieves it one level down.  Necessary rather than
 sufficient -- zero free in one colouring is not zero in all -- but it is the
 first objective here whose scale is calibrated.
 """
+
+
+THE_SOLVER_CHOICE_COST_MORE_THAN_THE_MATHEMATICS = """
+A practical finding that cost several dead scans today, measured rather than
+guessed at.
+
+Everything in this project reaches for cadical, which is the right default
+for a single hard instance -- the chromatic UNSAT proofs, the circular
+clique refusals.  The forced-pair scans are a different workload entirely:
+tens of thousands of easy solves under two assumptions each, on one
+bootstrapped instance.  Benchmarked on Sa at four colours, 735 solves:
+
+    minisat22      31 ms each
+    glucose4      114 ms each
+    cadical15     did not finish the benchmark
+
+Minisat is nearly four times faster than glucose and beyond measurement
+faster than cadical here, because the assumption interface is what matters
+and cadical restarts rather than reusing its trail.
+
+Two scans today printed nothing at all and were abandoned as "too slow" --
+the forced-monochromatic pair scan over Sa and Y, and the first atom scan
+over every carrier -- and both were the wrong solver rather than the wrong
+question.  A scan of 30000 pairs is fifteen minutes with minisat and
+effectively unbounded with cadical.
+
+Recorded because it is invisible from the mathematics: the question, the
+encoding and the graph were all correct, and the only wrong choice was a
+default that is right everywhere else in this codebase.
+"""
