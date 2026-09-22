@@ -5923,3 +5923,91 @@ forced pair at a spindleable distance is one rotation away from another colour.*
 The rung at six now has a single explicit requirement — a 5-chromatic carrier
 with a forced-equal pair at five colours — and an instrument that can certify
 its absence in seconds rather than assert it from a sample.
+
+#### The four-colour side improves without limit; the five-colour side does not move
+
+The glue is a densifier that keeps the carrier rigid, so it can be iterated.
+Each level takes the highest-overlap glue available and re-measures:
+
+| level | n | mean degree | free@4 | forced pairs at 4 | its spindle | free@5 | forced at 5 |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 0 (`Sa`) | 397 | 9.94 | 0.00% | **0** | — | — | — |
+| 1 | 570 | 11.36 | 0.00% | **8** | 1139 | 10.18% | **0** |
+| 2 | 679 | 12.05 | 0.00% | **27** | 1357 | 10.10% | **0** |
+| 3 | 782 | 12.54 | 0.00% | **52** | 1563 | 10.88% | **0** |
+| 4 | 880 | 12.86 | 0.00% | … | | | |
+
+The size growth decays — ×1.44, ×1.19, ×1.15, ×1.13 — because the available
+overlap climbs with each level (224/397, 461/570, 576/679). Mean degree rises
+monotonically, rigidity at four holds exactly, and the forcing grows roughly as
+the square of the level. **None of it reaches five.** The spindled graphs hold
+at 10–11 % slack with no trend and no forced pair, at every level.
+
+Spending all the forcing at once does not help either. `H` has eight forced
+pairs; spindling all eight simultaneously — the copies sharing the whole of
+`H`, not translated copies of a finished graph — gives 5122 vertices at mean
+degree 11.71, still 5-colourable, slack still 12–14 %. The gadget-density
+arithmetic predicts exactly that: each extra spindle costs 569 new points per
+5-chromatic copy where the measured threshold is 6.5.
+
+#### Rigidity is not the gate, and there is no gradient after all
+
+Two data points made rigidity look like the requirement: `Sa` is at 0.00 % slack
+at four and its glue forces eight pairs; `G` is at 17 % at five and its glue
+forces none. So thin `Sa` and watch. Deleting the same glue's worth of vertices
+and re-measuring:
+
+| deleted | n | free@4 | forced pairs |
+|---:|---:|---:|---:|
+| 0 | 397 | 0.00% | 8 |
+| 4 | 393 | 0.00% | 8 |
+| 5 | 392 | 0.00% | 7 |
+| 7 | 390 | 0.26% | 6 |
+| 10 | 387 | **0.00%** | **0** |
+
+**The forcing dies while the slack is still exactly zero.** Ten deletions out of
+397 — two and a half per cent — and the carrier is every bit as rigid by the
+measure that was supposed to explain it. Deleting the ten *lowest-degree*
+vertices instead leaves all eight intact and even raises the mean degree. So
+the slack is not what the glue is consuming, the 10 % at five colours is not the
+obstruction, and the gradient this pass was steering by does not exist. The
+earlier section's verdict stands after all, for a different reason than it gave.
+
+*(The first version of this experiment re-chose the best-overlap glue for each
+thinned carrier and picked near-symmetries — overlap 393 of 395, union 397 — so
+its zeros measured that choice and nothing else. The numbers above hold the
+glue fixed.)*
+
+#### Three copies, which need only a palette of two
+
+Everyone glues two copies, because the spindle is a two-copy device. If
+`|s − q|² = 1/3` then `q` and its images under the 120° and 240° rotations about
+`s` form an equilateral triangle of side exactly 1, so
+
+    U = H ∪ rot120_s(H) ∪ rot240_s(H)
+
+is `k`-colourable only if three `k`-colourings of `H`, agreeing on every shared
+point, give `q` three different colours. That demands a palette of **two** where
+the spindle demands a palette of one — strictly weaker — and `rot120` costs `√3`,
+which every carrier here already has. Four copies are not available: four points
+pairwise one apart do not exist in the plane, so three is the whole of the extra
+room.
+
+Scanned by overlap on `Sa` at four and on `G` and `Z` at five, every union is
+colourable, up to overlap 1031 of 3417 on `Z`. The route is open; the carriers
+are not good enough for it.
+
+#### What the wall actually is
+
+Putting the measurements together, the obstruction is not slack, not density,
+not saturation and not redundancy:
+
+> `Sa` is rigid at four because it packs **Moser spindles at 1.74 new points per
+> copy**. The ladder needs that kind of packing at the colour it is attacking.
+> At five the critical gadget is a 5-chromatic unit-distance graph, and the
+> smallest known has **509 vertices**, where the measured onset needs at most
+> **6.5 new points per copy**.
+
+So `χ(ℝ²) ≥ 6` runs through a *small* 5-chromatic unit-distance graph — which is
+an open problem in its own right, and the one place where a new construction in
+a new field is worth something. That is what `Z` is for.

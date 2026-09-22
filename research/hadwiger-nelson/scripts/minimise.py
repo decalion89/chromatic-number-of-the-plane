@@ -1,100 +1,87 @@
-"""Shrink the 27 classes: which of them are actually needed?
+"""Minimise a 5-chromatic unit-distance graph, with kicks.
 
-G at five colours stops colouring once twenty-seven of its closable distance
-classes are forbidden together, at mean degree 10.9 against its own 10.0 -- a
-nine per cent increase in edges, so this is not a density artefact, and it is
-the first positive statement about G at five colours in this work: in every
-proper 5-colouring, some pair at one of those distances is monochromatic.
+Pure greedy deletion stops at the first subset that is minimal under single
+deletions, which is usually far from small.  The standard escape is to perturb:
+once greedy converges, put back a random handful of deleted vertices and run
+greedy again from a different order.  Each round is cheap because the instance
+gets smaller, and a round that does not improve costs nothing but time.
 
-Twenty-seven is an artefact of the ORDER though.  They were added smallest
-first, which is arbitrary, and a smaller subset may do.  So minimise: drop each
-class in turn and keep the drop whenever the rest still fails to colour.  What
-survives is irreducible -- every class in it is needed -- and its size is the
-honest number.
-
-For scale, the same measure at four colours on Sa is ONE class, D = 16 with
-three pairs, which is exactly what de Grey built on.  The gap between the
-levels finally has a figure attached, and minimising says how big it really is.
+Accepts a starting point set from JSON (the exact field-basis vectors) so it
+can be pointed at Z, at Z' from the forcing shrink, or at any later carrier.
 """
-import sys, time
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-import numpy as np
+import sys, time, json, random
 from fractions import Fraction as Fr
-from collections import defaultdict
-from hn.degrey import build_G
-from hn.geometry import DEGREY_FIELD as K
-from hn.fast import IntBasis, fast_edges_complete
-from hn.homcol import closable_distance
+sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+from hn.field import Field
+from hn.geometry import Point
+from hn.graph import build_graph
 from pysat.solvers import Solver
 
-k = 5
+SRC = sys.argv[1]
+ROUNDS = int(sys.argv[2]) if len(sys.argv) > 2 else 12
+KICK = int(sys.argv[3]) if len(sys.argv) > 3 else 25
+OUT = sys.argv[4] if len(sys.argv) > 4 else "/home/user/darwin-50/research/hadwiger-nelson/data/five_247_min.json"
+
+d = json.load(open(SRC))
+F = Field(tuple(d["field_generators"]))
+P = [Point(F.element([Fr(a, b) for a, b in x]), F.element([Fr(a, b) for a, b in y]))
+     for x, y in d["points"]]
+K = 4
+print(f"start: {len(P)} points in Q{F.gens}", flush=True)
+
+def refuses(sub):
+    """Does the induced subgraph on `sub` refuse four colours?  Returns an
+    UNSAT core (a smaller refusing subset) or None."""
+    g = build_graph([P[i] for i in sub])
+    n = g.n
+    X = lambda v, c: 1 + v * K + c
+    A = lambda v: 1 + n * K + v
+    cnf = [[-A(v)] + [X(v, c) for c in range(K)] for v in range(n)]
+    for u, v in g.edges():
+        for c in range(K):
+            cnf.append([-X(u, c), -X(v, c)])
+    s = Solver(name="m22", bootstrap_with=cnf)
+    ok = s.solve(assumptions=[A(v) for v in range(n)])
+    if ok:
+        s.delete(); return None
+    core = s.get_core(); s.delete()
+    if not core: return list(sub)
+    keep = set(l - 1 - n * K for l in core)
+    return [sub[i] for i in sorted(keep)]
+
 t0 = time.time()
-P = build_G(K, as_graph=False)
-basis = IntBasis.covering(P)
-rows = basis.rows(P)
-dim, D2 = basis.dim, basis.D * basis.D
-n = len(P)
-E = sorted(set((min(a, b), max(a, b))
-               for a, b in fast_edges_complete(basis, rows)))
-Eset = set(E)
-byd = defaultdict(list)
-for i in range(n - 1):
-    d = rows[i + 1:] - rows[i]
-    sq = basis._field_square(d[:, :dim]) + basis._field_square(d[:, dim:])
-    rat = np.ones(len(sq), dtype=bool)
-    for m in range(1, dim):
-        rat &= sq[:, m] == 0
-    for off in np.nonzero(rat)[0]:
-        j = i + 1 + int(off)
-        if (i, j) not in Eset:
-            v = int(sq[off, 0])
-            if v:
-                byd[Fr(v, D2)].append((i, j))
-clo = sorted((d for d in byd if closable_distance(d)),
-             key=lambda d: len(byd[d]))
-
-
-def colours(classes):
-    cum = list(E)
-    for d in classes:
-        cum += byd[d]
-    cls = [[1 + v * k + c for c in range(k)] for v in range(n)]
-    for a, b in cum:
-        for c in range(k):
-            cls.append([-(1 + a * k + c), -(1 + b * k + c)])
-    sv = Solver(name="cd15", bootstrap_with=cls)
-    ok = sv.solve()
-    sv.delete()
-    return ok, len(cum)
-
-
-cur = clo[:27]
-ok, m = colours(cur)
-print(f"start: {len(cur)} classes, {m} edges, "
-      f"{'colours' if ok else 'does not colour'}  [{time.time()-t0:.0f}s]",
+cur = list(range(len(P)))
+assert refuses(cur) is not None, "the input is 4-colourable"
+best = cur[:]
+rng = random.Random(2026)
+dropped = []
+for rd in range(ROUNDS):
+    c = refuses(cur)
+    if c is not None and len(c) < len(cur):
+        dropped += [v for v in cur if v not in set(c)]
+        cur = c
+    order = cur[:]
+    rng.shuffle(order)
+    for v in order:
+        if v not in cur: continue
+        trial = [u for u in cur if u != v]
+        c = refuses(trial)
+        if c is not None:
+            dropped += [u for u in cur if u not in set(c)]
+            cur = c
+    print(f"  round {rd}: {len(cur)} vertices   [{time.time()-t0:.0f}s]", flush=True)
+    if len(cur) < len(best):
+        best = cur[:]
+        g = build_graph([P[i] for i in best])
+        json.dump({"field_generators": list(F.gens), "n": g.n, "source": SRC,
+                   "points": [[[[c.numerator, c.denominator] for c in p.x.c],
+                               [[c.numerator, c.denominator] for c in p.y.c]]
+                              for p in g.vertices]}, open(OUT, "w"))
+        print(f"    -> new best, written to {OUT}", flush=True)
+    # kick: put a handful of deleted vertices back and let greedy re-decide
+    if dropped:
+        add = rng.sample(dropped, min(KICK, len(dropped)))
+        cur = sorted(set(cur) | set(add))
+g = build_graph([P[i] for i in best])
+print(f"\nbest: n={g.n} m={sum(len(a) for a in g.adj)//2}   [{time.time()-t0:.0f}s]",
       flush=True)
-assert not ok
-
-# drop the LARGEST first: removing a big class is the biggest simplification
-order = sorted(cur, key=lambda d: -len(byd[d]))
-for d in order:
-    trial = [x for x in cur if x != d]
-    if not trial:
-        break
-    ok, m = colours(trial)
-    if not ok:
-        cur = trial
-        print(f"   dropped D={d} ({len(byd[d])} pairs) -> {len(cur)} classes, "
-              f"{m} edges, still does not colour  [{time.time()-t0:.0f}s]",
-              flush=True)
-    else:
-        print(f"   D={d} ({len(byd[d])} pairs) is NEEDED"
-              f"  [{time.time()-t0:.0f}s]", flush=True)
-ok, m = colours(cur)
-print(f"\nirreducible: {len(cur)} classes, {m} edges, mean degree "
-      f"{2*m/n:.1f}, colours {ok}", flush=True)
-print(f"   {[(str(d), len(byd[d])) for d in sorted(cur, key=lambda x: len(byd[x]))]}",
-      flush=True)
-print(f"   total pairs forbidden: {sum(len(byd[d]) for d in cur)}"
-      f"  [{time.time()-t0:.0f}s]", flush=True)
-print("DONE", flush=True)
