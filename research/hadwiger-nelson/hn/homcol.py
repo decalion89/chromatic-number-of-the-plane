@@ -12606,3 +12606,27 @@ THE_ORBIT_OF_CENTRES_IS_WORTH_RANKING = True
 # is not how many edges a carrier has but whether a forced pair has been spent
 # on it, and "denser" is not a direction.
 DENSITY_IS_NOT_THE_LEVER_THE_SPINDLE_IS = True
+
+
+# Spending both forced orbits at once.  The symmetric carrier's 153 forced
+# pairs fall in two orbits -- 144 at d^2 = 64/9, needing sqrt(247), and 9 at
+# d^2 = 64/3, needing sqrt(759) = sqrt3 sqrt11 sqrt23 -- and conjugation
+# carries each spindle to another of its own orbit, so all twelve can be
+# applied at once and the union stays invariant.  In Q(sqrt3,sqrt11,sqrt23,
+# sqrt247):
+#
+#     n = 13261   m = 88548   mean degree 13.35   C6-invariant   chi = 5
+#
+# The escalation in solver time, all with cadical and a pinned triangle:
+#
+#     6607 points, symmetrised after the fact, no spindle        4 s
+#     7141 points, one symmetric spindle                       322 s
+#    13261 points, two symmetric spindles                     1718 s
+#
+# Four hundred times the work across the series for the same verdict.  That is
+# the only monotone signal the project has found, and it is worth exactly what
+# the earlier measurement says it is worth: uniSa maps in 13 seconds and
+# deepgrow -- half the size, denser -- in 2853, for the same answer.  Cost is
+# not evidence.  It is recorded because it is a direction, not because it is a
+# result.
+BOTH_ORBITS_SPENT_AT_ONCE_STILL_TAKE_FIVE = True
