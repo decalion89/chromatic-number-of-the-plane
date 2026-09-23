@@ -13760,3 +13760,31 @@ MU_IS_AN_INSTRUMENT_NOW_AND_IT_READS_TWO_EVERYWHERE = True
 # would make all of them vacuous.  It reaches 3, on all seven, and declines to
 # reach 4 where 4 would be wrong.
 MU_REACHES_THE_CEILING_ON_THE_MOSER_SPINDLE = True
+ 
+
+# mu at FOUR is 3, and that is the honest price of the five-colour gap.
+#
+# Every mu measured at five colours here is 2, its floor.  Nobody had measured
+# it at four, on the carriers that are actually rigid there -- and the answer
+# is different:
+#
+#   graph   k   candidates scored    largest |N(p)|   mu
+#   Sa      4   768 of 26 953              13         3, abundantly
+#   (five-colour objects)               up to 15      2, without exception
+#
+# mu_4 = 3 on Sa is ONE COLOUR SHORT of a blocked point, and it is not rare:
+# dozens of candidate points reach it, at neighbourhood sizes from 8 to 13.
+# That is what "close" looks like one level down, and it prices the problem
+# properly for the first time:
+#
+#       de Grey had to push 3 -> 4, and it cost him 1581 points.
+#       Six needs 2 -> 5.
+#
+# Two things follow.  The five-colour floor of 2 is not an artefact of the
+# instrument or of five colours being harder to solve -- at four, on the same
+# instrument and the same kind of candidate points, the same measurement
+# returns 3.  And there is a concrete, much smaller target than six: a point
+# with mu_4 = 3 and thirteen neighbours needs one more colour forced onto its
+# circle, and Sa + p would then be a 5-chromatic unit-distance graph on 398
+# vertices, against a record of 509.
+MU_AT_FOUR_IS_THREE_AND_THAT_PRICES_THE_GAP = True
