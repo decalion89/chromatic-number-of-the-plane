@@ -13666,3 +13666,41 @@ BOTH_TUNINGS_GIVE_THE_GROUP_AND_THE_CHROMATIC_NUMBER = True
 # unit-distance graph, in Q(sqrt3, sqrt11, sqrt23), with no spindle -- and the
 # group is what the extra 8 159 points are for.
 THE_SIX_COPIES_BUY_THE_GROUP_NOT_THE_CONTRADICTION = True
+
+
+# The blocked point is EQUIVALENT to the answer, not merely sufficient.
+#
+# A forced pair at five is sufficient for chi(R^2) >= 6 -- one rotation closes
+# it -- but nobody knows one exists, and this project has produced none.  The
+# blocked point is equivalent, both ways:
+#
+#   (<=)  G a 5-colourable unit-distance graph, p a point whose unit circle
+#         meets G in N(p), and N(p) using all five colours in EVERY proper
+#         5-colouring of G.  Then G + p has no 5-colouring.
+#   (=>)  chi(R^2) >= 6 gives a 6-chromatic unit-distance graph; make it
+#         vertex-critical and delete any vertex p.  What remains is
+#         5-colourable and N(p) must use all five colours in every colouring,
+#         or p could be put back.
+#
+# So it is not a shortcut, it is the problem stated directly -- and it is the
+# cheapest instrument in the file.  Colour symmetry collapses "can j colours be
+# simultaneously absent from N(p)?" to forbidding colours 0..j-1, so a nested
+# chain of at most four assumption calls pins the MINIMUM of |c(N(p))| exactly.
+# A blocked point is that minimum reaching 5.
+#
+# CORRECTION to the first version of this measurement.  It asked only "can
+# colour 0 be absent?" and, on a yes, reported how many colours the resulting
+# colouring happened to use.  That number can never exceed 4, since a colour
+# had just been forbidden, so "4 of 5" was a tautology, and worse, it reads as
+# near-success when a yes means the point is PLACEABLE -- the opposite of what
+# is wanted.  Withdrawn.
+#
+# Measured properly on the densest tuned object, 2041 points at mean degree
+# 13.35, over its richest candidate neighbourhoods (11 vertices, from 126 090
+# candidates generated as in-field rotations of the vertex set):
+#
+#       minimum colours on N(p) = 2 of 5,  every one
+#
+# which is exactly what the earlier pass found on G.  A blocked point is not
+# one colour away.  It is three.
+THE_BLOCKED_POINT_IS_EQUIVALENT_AND_THE_GAP_IS_THREE = True
