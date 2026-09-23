@@ -13704,3 +13704,34 @@ THE_SIX_COPIES_BUY_THE_GROUP_NOT_THE_CONTRADICTION = True
 # which is exactly what the earlier pass found on G.  A blocked point is not
 # one colour away.  It is three.
 THE_BLOCKED_POINT_IS_EQUIVALENT_AND_THE_GAP_IS_THREE = True
+
+
+# mu is now an instrument, not a script: hn/blocked.py.
+#
+# The quantity that IS the problem deserved to be in the package rather than
+# re-derived in each experiment.  mu_k(G, p) is the minimum, over proper
+# k-colourings of G, of the number of colours on N(p) = the graph points at
+# distance exactly 1 from p, and
+#
+#       mu_5 = 5 somewhere   <=>   chi(R^2) >= 6
+#       mu_5 <= 2 always     <=>   chi(R^2) = 5      (given chi >= 5)
+#
+# Three things the module gets right that the scripts had to learn:
+#
+#   * colour symmetry turns "can j colours be absent from N(p)?" into
+#     forbidding 0..j-1, so mu is a nested chain of at most k-1 assumption
+#     calls, and the useful probe -- "is mu at most 2?" -- is ONE call;
+#   * the neighbourhood search filters on floats and decides on exact field
+#     arithmetic, which took a 126 090-candidate scan from fifteen minutes to
+#     eighteen seconds, with the float never deciding anything by itself;
+#   * mu <= |N(p)| whatever the solver says, so the overwhelming majority of
+#     candidate points -- the ones with two or three neighbours -- are settled
+#     with no solving at all.
+#
+# One warm MuSolver serves every point of a graph, since the CNF and the first
+# colouring are the expensive part and both are shared.
+#
+# Measured on every graph in data/ small enough to colour, over the richest
+# neighbourhoods of each -- up to 15 points, against the 13 of de Grey's G:
+# mu = 2, without exception.
+MU_IS_AN_INSTRUMENT_NOW_AND_IT_READS_TWO_EVERYWHERE = True
