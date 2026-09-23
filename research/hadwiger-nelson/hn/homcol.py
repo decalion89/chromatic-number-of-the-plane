@@ -14557,3 +14557,38 @@ THE_MU_BICONDITIONAL_HELD_IN_ONE_DIRECTION_ONLY = True
 # on six circles is feasible.  Whatever refutes a monochromatic sqrt3-triangle
 # at five colours is not a local certificate.
 THE_LOCAL_CERTIFICATES_FOR_RUNG_ONE_ARE_EXHAUSTED = True
+
+
+# The shrink hunt, and what it actually costs.
+#
+# Every attack downstream is priced in copies of a 5-chromatic graph, so its
+# ORDER is the one quantity that makes all of them cheaper: 803 here against a
+# published 509.  Four generations of tooling, and the reasons each was replaced:
+#
+#   * a core of the FIVE-colouring instance -- wrong question.  A 5-chromatic
+#     graph IS 5-colourable; what has to be certified is that it refuses FOUR.
+#   * a fresh CNF per removal test -- 97 s on the 6925-point carrier, because it
+#     throws away everything the solver learned.
+#   * one warm solver with selectors, answering by assumption and returning a
+#     core -- the right shape, but the cores come back nearly full (1138 of 1139,
+#     5972 of 6925) precisely because these graphs are near-critical, so the
+#     jump buys little.
+#   * escalating conflict budgets -- and the small ones were wasted.  A removal
+#     is certified by a REFUTATION, and twenty thousand conflicts never reaches
+#     one, so the cheap sweep pays two seconds a time for the essential vertices
+#     it cannot skip and proves nothing.
+#
+# The free reduction is empty as well.  A k-critical graph has minimum degree
+# k-1, so every vertex of degree <= 3 could be dropped without solving -- and
+# the 4-core of five_247 (1139), five_247_c (803), five_dense_2 (6925),
+# five_tuned_1_1 (2041), five_symmetric (7141) and five_twotune_small (4081) is
+# in every case the whole graph.  Lattice carriers have no fringe.
+#
+# So the cost structure is fixed and it is the honest number: about two seconds
+# per essential vertex, since its removal test comes back satisfiable, and about
+# forty-six per vertex actually removed, since that one needs a refutation.  A
+# single pass from 1139 is therefore five hours, and where it stops depends on
+# the order it walked -- greedy deletion lands on SOME vertex-critical subgraph,
+# and the 803 is the one a particular order found.  Beating it is a search with
+# restarts, not a computation.
+THE_SHRINK_HUNT_COSTS_FORTY_SIX_SECONDS_A_VERTEX = True
