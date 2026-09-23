@@ -6189,3 +6189,212 @@ it harder is the spindle: the 7141-vertex graph, at mean degree 13.35, costs
 322 seconds where a 6607-vertex graph of the same degree costs 4. The
 constraint that matters is whether a forced pair has been spent, not how many
 edges the carrier carries.
+
+
+## Forced pairs compose, and the composite distance is a free parameter
+
+Every construction so far took the field it was handed. The radii pick the
+radicals: `r² = 3` needs `√11`, `r² = 4` needs `√15`, `r² = 16` needs `√7`, and
+`ℚ(√3,√5,√7,√11)` is not a choice but a consequence. Composition inverts that.
+
+Let `H` force `c(v) = c(q)` in every `k`-colouring, with `|v − q| = D`, and let
+`τ` be the isometry carrying `v` to `q` whose rotational part is `R_φ`:
+
+    τ(p) = q + R_φ (p − v)
+
+`τ(H)` is a congruent copy, so it forces `c(τv) = c(τq)`, that is
+`c(q) = c(τq)`. Forcing is transitive, so `H ∪ τ(H)` forces `c(v) = c(τq)` — a
+**new** forced pair — and with `u = v − q`,
+
+    v − τ(q) = u + R_φ u,        |u + R_φ u|² = 2 D² (1 + cos φ)
+
+The composite distance sweeps **all of `[0, 2D]`** as `φ` turns, and the angle
+landing on a chosen `d` is
+
+> `cos φ = d²/(2D²) − 1`, **rational whenever `d²` and `D²` are.**
+
+Only `sin φ` carries a radical. With `D² = 64/9` and `d² = p/q`:
+
+    cos φ = (9p − 128q)/(128q)          sin φ = 3√(p(256q − 9p))/(128q)
+
+so `√(p(256q − 9p))` is the entire arithmetic cost, and **choosing `p` and `q`
+chooses the field**. Four targets, each built from the 1021-point symmetric
+carrier, with the composite distance checked as an exact field element, the
+composite forcing confirmed by the solver rather than assumed, and the result
+tested for four colours:
+
+| `d²` | radical | field | n | spindle |
+|---|---|---|---:|---|
+| 1 | `√247` | `(3,5,7,11,247)` | **2041** | **not needed** |
+| 1/3 | `√759 = 3·11·23` | `(3,5,7,11,23)` | 4061 | yes |
+| 2 | `√476 = 4·7·17` | `(3,5,7,11,17)` | 4081 | yes |
+| 4 | `√880 = 16·5·11` | de Grey's own, by another route | 4081 | yes |
+
+`d² = 1` is the case worth keeping: the composite pair lands at distance
+exactly 1, so it is an **edge**, and the chained union refuses four on its own —
+half the vertices and no second rotation. Its radical is the one the ordinary
+spindle at `64/9` already needs, so that case is a sanity check rather than a
+new field. The others are new.
+
+### And it carries density up to five
+
+This was the standing bottleneck. Stacking orbits of glue centres takes a
+4-chromatic carrier to mean degree 18.32, and every one of those carriers is
+4-coloured in under a second — density alone never bought a chromatic number.
+Meanwhile every 5-chromatic graph here topped out at 13.82, because a spindle
+adds a sparse second copy.
+
+The chain tuned to 1 is *two copies of the carrier*, so it keeps the carrier's
+degree:
+
+| carrier | n | deg | chained n | chained deg |
+|---|---:|---:|---:|---:|
+| symmetric glue | 1021 | 13.34 | 2041 | 13.35 |
+| two stacked orbits | 3463 | 16.81 | 6925 | 16.81 |
+| **ten stacked orbits** | 6235 | 18.47 | **12469** | **18.48** |
+
+A 5-chromatic unit-distance graph at mean degree 18.48, built in 27 seconds,
+and with no new radical — `cos φ = −119/128`, `sin φ = 3√247/128` is already
+the carrier's own field.
+
+## The null model was wrong twice, and the raw numbers say it better
+
+`free@k` counts the vertices with a spare colour, and a vertex of degree `d` is
+free with probability about `(k−1)(1−1/(k−1))^d` under a random neighbourhood.
+The honest null is the **average of that over the degree sequence**, not its
+value at the mean degree. The function is convex, so by Jensen the mean-degree
+version is strictly smaller whenever the degrees are spread — and every graph
+here is a union of rotated or translated copies, dense in the middle and thin
+at the rim, spread by about 4.6.
+
+Two claims made against the wrong null are withdrawn: *"the Minkowski sum with
+the hexagon is 0.8× the law, worse than random"* and *"the tuned chain is
+0.62×"*. Against the per-vertex null nothing is worse than random:
+
+| graph | n | deg | null | measured (12 colourings) | ratio |
+|---|---:|---:|---:|---:|---:|
+| `five_247_c` | 803 | 10.12 | 30.92 % | 15.73 ± 1.00 % | 0.51 |
+| `five_247_b` | 951 | 10.87 | 27.18 % | 13.62 ± 1.33 % | 0.50 |
+| `five_247` | 1139 | 11.37 | 24.38 % | 12.50 ± 0.86 % | 0.51 |
+| `five_tuned_1_1` | 2041 | 13.35 | 16.00 % | 13.86 ± 1.75 % | 0.87 |
+
+The 5-chromatic graphs beat the null by a steady factor of two; the tuned
+chain — two copies joined at a point rather than interlocked — by only 1.15.
+
+The per-vertex null also relocates the target: at mean degree 18.48 the
+mean-degree law predicts `free@5 = 0.49 %` and the per-vertex null **7.09 %**,
+and the factor of fourteen is the **boundary**. `free@5` is dominated by the
+low-degree tail — a vertex of degree 6 is free with probability 0.71 — and a
+finite unit-distance graph is a patch of the plane, so it always carries a rim.
+Stacking orbits adds rim as fast as it adds middle.
+
+### And then the per-vertex null fails too
+
+The densest object measured, 6925 points at mean degree 16.81, comes back at
+`free@5 = 16.40 %` against a per-vertex null of 9.67 % — **1.7 times more free
+than random**, which no structural mechanism can produce and which therefore
+condemns the null rather than the graph.
+
+The reason is the bipartite-neighbourhood theorem, showing up quantitatively.
+A neighbourhood is a union of paths and hexagons, and a proper colouring of a
+path uses **two** colours. So the colours on `N(v)` are not a random draw from
+`k−1` values at all: they are drawn from a structured distribution that
+strongly favours few colours, and a missing colour is far more likely than any
+independence assumption allows. Against a baseline the geometry forbids, a
+ratio means nothing.
+
+What the measurements say without a baseline is simpler and stands on its own:
+
+| graph | n | mean degree | free@5 |
+|---|---:|---:|---:|
+| `five_247_c` | 803 | 10.12 | 15.73 % |
+| `five_247_b` | 951 | 10.87 | 13.62 % |
+| `five_247` | 1139 | 11.37 | 12.50 % |
+| `five_tuned_1_1` | 2041 | 13.35 | 13.86 % |
+| `five_dense_2` | 6925 | 16.81 | 16.40 % |
+
+> **`free@5` is flat at 12–16 % across a 66 % rise in mean degree.** It does not
+> trend down; density does nothing to it. Meanwhile `Sa` reaches exactly
+> **0.00 %** at 397 points with **minimum degree 4**. Rigidity is not a
+> quantity these constructions move at all — which is what the bipartite
+> neighbourhood said in advance, since a vertex cannot be pinned locally at
+> four colours or more.
+
+The cost is worth recording too: finding a single 5-colouring of that
+6925-point graph took cadical **8921 seconds**, against 50 s for the 2041-point
+one. The instances are hard. They are also satisfiable.
+
+## Both relations are empty at five
+
+Every filter here had hunted pairs forced to **agree**, since that is what the
+spindle consumes. The bipartite neighbourhood points at the other one: a
+neighbourhood has maximum degree 2 *and no 4-cycle* — four steps of ±60° cannot
+sum to 360° — so a degree-4 vertex has at most 3 edges among the 6 pairs of its
+neighbourhood, and pinning it at five colours needs at least **3 of those pairs
+forced apart while non-adjacent**.
+
+Forced-apart also closes the problem by itself, with no rotation at all: five
+points pairwise forced apart use all five colours in every 5-colouring, and a
+sixth forced apart from all five has nothing left. Six pairwise forced apart
+cannot sit inside a 5-colourable graph, so five is the ceiling and the sixth
+point is what a construction step would have to supply.
+
+The filter is the mirror image and certifies the same way — a pair that agrees
+in any exhibited proper colouring is **proved** not forced apart:
+
+| graph | n | non-adjacent pairs | rounds to empty | survivors |
+|---|---:|---:|---:|---:|
+| `five_247_c` | 803 | 253 642 | 140 | **0** |
+| `five_247` | 1139 | 512 342 | 85 | **0** |
+
+Two seconds and seven seconds. At five colours **both relations are empty**:
+nothing is forced to agree and nothing is forced to differ.
+
+## All 25,493,370 pairs of the symmetric graph, settled
+
+The 7141-point `C6`-invariant graph has no pair forced to share a colour in
+every 5-colouring, and the statement is now complete rather than partial:
+
+| | pairs |
+|---|---:|
+| eliminated by exhibited 5-colourings, through the group-expanded filter | 25 491 171 |
+| candidates surviving | 2 199 |
+| orbit representatives, since forcing is equivariant | **376** |
+| forced | **0** |
+
+Three things had to be right. A pinned triangle is free for *deciding*
+colourability but destroys colour symmetry, so the usual shortcut — "`x = 0` and
+`y = 1` is impossible, hence they agree" — is unsound there; the test forbids
+the pair from sharing **any** colour instead. The per-pair selectors gating
+those clauses must be **assumed false** for every pair not under test, since
+left free they are unconstrained variables the solver may set true, switching
+on all 376 constraints at once — and cadical ignores `set_phases`, so
+assumptions are the only switch. That took the base solve from over twenty
+minutes to 428 s. And the 71 410 at-most-one clauses, which matter only when a
+colour is read off a model, were dropped, because nothing is read here.
+
+## A floor that cannot be lowered by deletion
+
+`data/five_247_c.json` — 803 points, `ℚ(√3,√11,√247)` — is **vertex-critical**.
+All 803 vertices checked one at a time, none removable.
+
+The check is cheap precisely because the answer is yes. Asking *"does `H − v`
+still refuse four?"* asks the solver to **refute** `H − v`, which is the slow
+direction; if `v` is essential then `H − v` is 4-colourable and a colouring
+comes back fast. Only a removable vertex costs a slow proof, and there are
+none: 803 calls in 1389 s, against 47 s for a single refutation of the whole
+graph — itself affordable only because a pinned triangle deletes the `4!`
+symmetric copies of every refutation, taking it from over five minutes to 47 s.
+
+## Two results re-derived that were already here
+
+Twice this pass a theorem was worked out from scratch that the earlier passes
+had already recorded — the bipartite neighbourhood (and with it *rigidity is
+not local*), and consuming a disjunction with a stack of rotated copies. The
+credit belongs to those sections; what the new pass adds is narrower and is
+stated as such: the consequence that local pinning needs `χ(N(v)) = k−1` and so
+exists only at `k = 3`, the absence of 4-cycles in a neighbourhood, and the
+**two-radius** form of the stack, where the options sit at different radii, the
+pigeonhole becomes a statement about two circulants at once, and one of them
+must contain an odd cycle — which is what pins one radius to `1/√3` in any
+multiquadratic field and frees the other entirely.

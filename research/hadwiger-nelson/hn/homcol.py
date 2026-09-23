@@ -13437,3 +13437,39 @@ THE_SYMMETRIC_SEVEN_THOUSAND_HAS_NO_FORCED_PAIR_AT_FIVE = True
 # with minimum degree 4 and a per-vertex null of 10.49 %, so a rim is no
 # obstacle to rigidity -- it simply has to be rigid too, and that is global.
 FREE_AT_FIVE_IS_BOUNDARY_DOMINATED = True
+
+
+# CORRECTION, again: the null model itself is forbidden by the geometry.
+#
+# The per-vertex null fixed the Jensen error, but it is still built on "the
+# colours on N(v) are an independent draw", and the bipartite-neighbourhood
+# theorem says they are not.  N(v) is a union of paths and hexagons, and a
+# proper colouring of a path uses TWO colours, so the colours on a
+# neighbourhood are drawn from a distribution that strongly favours few of
+# them -- and a missing colour is far likelier than independence allows.
+#
+# The measurement that forced this: 6925 points at mean degree 16.81 come back
+# at free@5 = 16.40 % against a per-vertex null of 9.67 %.  That is 1.7 times
+# MORE free than random, which no structural mechanism can produce.  When a
+# graph beats a null in the impossible direction, the null is wrong.
+#
+# So every ratio to a law is withdrawn -- the mean-degree one, and the
+# per-vertex one as a measure of structure.  What remains is the raw sequence,
+# which says more plainly what the ratios were groping at:
+#
+#   graph              n     mean degree    free@5
+#   five_247_c        803       10.12       15.73 %
+#   five_247_b        951       10.87       13.62 %
+#   five_247         1139       11.37       12.50 %
+#   five_tuned_1_1   2041       13.35       13.86 %
+#   five_dense_2     6925       16.81       16.40 %
+#
+# free@5 is FLAT at 12-16 % across a 66 % rise in mean degree.  No trend.
+# Density does not move it, and Sa reaches 0.00 % at 397 points with minimum
+# degree 4 -- so rigidity is not a quantity these constructions move at all,
+# which is what the bipartite neighbourhood said before any of it was measured.
+#
+# One cost worth keeping: a single 5-colouring of that 6925-point graph took
+# cadical 8921 seconds, against 50 s for the 2041-point one.  The instances are
+# hard.  They are also satisfiable.
+THE_NULL_MODEL_ITSELF_IS_FORBIDDEN_BY_THE_GEOMETRY = True
