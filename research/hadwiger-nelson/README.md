@@ -6710,9 +6710,11 @@ At `k = 5` the rotation lives in the Moser field with no new square root.
 `2e` pair can be forced *apart* only if no periodic 5-colouring keeps it alike.
 On E–I's module ℤ/4 keeps every `2e` pair alike — so neither half of a
 unit-distance version of their proof can live there. On the 803-graph's module
-the pair gate falls in all 31 directions (ℤ/10, ℤ/15) and the apart gate in 30;
-the survivor is the single `√247` edge `e = (−3/16, √247/16)`, which lies in
-`8M`, so every quotient whose 2-part has order at most 16 is blind to `2e`.
+the pair gate falls in all 31 directions (ℤ/10, ℤ/15) and the apart gate in 30
+at once; the `√247` edge `e = (−3/16, √247/16)`, which lies in `8M` so that
+every quotient with a 2-part of order at most 16 is blind to `2e`, held out
+through ℤ/4…25 — and then fell to ℤ/15 (and 30, 35, …, 60). *(Corrected: it
+was first reported here as the survivor.)*
 
 **Why one module is never enough.** Pairs no coset colouring keeps alike come in
 whole distance classes on the 803-graph (`d² = 7/3, 1/9, 4/9, 19/9, 4, …`), but
@@ -6723,3 +6725,19 @@ supplies it, so a distance-2 gadget in an *integral* module would still finish
 the proof. That gadget is what the growth runs are now hunting, along `√247`
 in the 803 module and on the blocked `803 ∪ λ(803)`, with
 `scripts/verify_gadget.py` waiting for any UNSAT.
+
+**Twisted coset colourings.** `c(p) = ψ(p) + t·⌊φ(p)/L⌋ (mod 5)`, with `ψ` an
+admissible coset colouring and `φ` any integer functional on the edge module:
+a unit step moves the level by at most one, so `c` is proper on every graph
+with the module's directions exactly when the class `{u : ψ(u) = t}` lies in the
+half-space `φ ≥ 0` — one LP, by Farkas. It is neither periodic nor a coset
+colouring, and it is what the gates could not see: it **splits** `5e` pairs and,
+with `t = −2ψ(e)`, **keeps `2e` pairs alike**. On the 803-module all 31
+directions are refuted for both; on Exoo–Ismailescu's, all 15. Built
+explicitly on the gadget search's own grown graph (2 185 points, still on the
+same 31 directions): **0 improper edges of 12 883, and `c(a) = c(b)`**. No
+distance-2 gadget and no forced `5e` pair can live on these modules at any size;
+the integral searches were stopped. What survives is a module with **no**
+admissible `ψ` — a 5 in a denominator, as in `803 ∪ λ(803)`, where the search
+continues — or one whose directions are so rich that every class positively
+spans.

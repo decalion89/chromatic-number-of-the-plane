@@ -15137,7 +15137,9 @@ WITHIN_ONE_INTEGRAL_MODULE_VIRTUAL_EDGES_NEVER_REACH_SIX = True
 #     803-graph           31            31/31             31/31
 #     E-I coordinate      15            15/15             15/15
 #
-# including the sqrt247 edge that survived every periodic quotient.  Built
+# including the sqrt247 edge, which had survived the first quotients tried
+# (Z/4 .. Z/25) -- and which Z/15 turns out to refute as well (a periodic
+# colouring through Z/15 keeps its 2e pair alike); both families agree.  Built
 # explicitly on the gadget search's own graph (803 + b, and the grown 2185-point
 # checkpoint, still on the same 31 directions): psi = (0,0,1,1,0,4,2,4), t = 4,
 # an exact rational phi, L = 206 521 -- 0 improper edges of 12 883, and
@@ -15149,3 +15151,11 @@ WITHIN_ONE_INTEGRAL_MODULE_VIRTUAL_EDGES_NEVER_REACH_SIX = True
 # class D_t positively spans; the second is the density-versus-blocking tension
 # again.  The gadget search continues only on the blocked substrate.
 TWISTED_COSET_COLOURINGS_CLOSE_THE_INTEGRAL_ROUTE = True
+
+
+# CORRECTION to THE_EXOO_ISMAILESCU_MODULE_FAILS_BOTH_GATES_IN_EVERY_DIRECTION and
+# the README: the sqrt247 edge was called the apart gate's survivor on the
+# 803-module after Z/4, 8, 10, 12, 16, 20 and 25.  Z/15 -- not in that first
+# list -- refutes it too, and so do Z/30, 35, 40, 45, 50, 55, 60.  No direction
+# of the 803-module survives the apart gate.
+THE_SQRT247_EDGE_WAS_NOT_A_SURVIVOR = True
