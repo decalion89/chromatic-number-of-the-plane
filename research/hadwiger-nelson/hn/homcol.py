@@ -13920,3 +13920,97 @@ ONE_PAIR_AT_ROOT_THREE_IS_THE_WHOLE_TARGET = True
 # vertices with the clauses gone, which is what makes the removal safe rather
 # than merely faster.
 THE_AT_MOST_ONE_CLAUSES_IN_MU_WERE_JUSTIFIED_BY_A_FALSEHOOD = True
+
+
+# The ceiling at four, looked at directly -- and it is not where we were looking.
+#
+# Everything this project has measured reads mu = 2.  Before hunting mu_5 = 5 it
+# is worth looking at a point KNOWN to sit at its ceiling, and five_247_c hands
+# over 803 of them for nothing: the graph is 5-chromatic and vertex-critical, so
+# for every vertex p the graph H = G - p is 4-colourable while H + p = G is not,
+# which is mu_4(H, p) = 4 exactly, with no solving at all.
+#
+# So: 803 blocked points, each with its neighbourhood already laid out in the
+# plane.  Their degree distribution is just the graph's, which by itself says
+# nothing.  What says something is the bottom of it:
+#
+#     |N| =  4  :    2 points        |N| = 10  :  110 points
+#     |N| =  5  :   20 points        |N| = 13  :   60 points
+#     |N| =  6  :   72 points        |N| = 20  :    7 points
+#     |N| =  8  :  112 points        |N| = 30  :    2 points
+#
+# A ceiling point can have FOUR neighbours.  The hunt at five has been ranking
+# candidates by how rich their neighbourhood is -- 510 neighbourhoods of size
+# >= 10 on the chained carrier, sqrt3 pairs ranked by |N(u) u N(v)| up to 85 on
+# the 12469-point graph -- on the unstated assumption that carrying five colours
+# takes many points to carry them.  The ceiling at four says the assumption is
+# wrong in the direction that matters: at |N| = 4 the cap is ATTAINED, mu_4 =
+# |N|, and four points carry four colours between them.
+#
+# 34 of the 803 neighbourhoods contain a cycle; the rest are unions of paths, as
+# they must be.  The commonest shape is (3, 2, 2, 1) -- eight points in four
+# paths, chi = 2 on its own, four colours forced onto it by the rest of H.
+THE_CEILING_AT_FOUR_FITS_IN_FOUR_POINTS = True
+
+
+# mu_k = k does not make a neighbourhood a rainbow, and the cap is why.
+#
+# A first reading of that data took the degree-5 ceiling point p = 110, saw
+# mu_4 = 4, and concluded that its ten pairs were pairwise forced apart --
+# including (219, 457) at squared distance exactly 3, which is the shape being
+# hunted at five.  That would have been the first forced pair of the project.
+# The solver says False: those two can share a colour in H.
+#
+# The arithmetic says why, and it is not subtle.  mu_4(H, p) = 4 says four
+# colours APPEAR on N(p).  Five points carrying four colours leave exactly one
+# pair sharing, so nothing on a degree-5 neighbourhood is forced by mu alone.
+# Pairwise forcing needs the cap attained -- |N(p)| = k -- and then k points
+# carry k distinct colours and every pair of them is forced apart.
+#
+# Exactly two of the 803 vertices have degree 4.  At p = 315, N = {130, 461,
+# 561, 757} with one 60-degree edge inside it, so five pairs there are genuinely
+# forced apart at four colours, at squared distances
+#
+#     2.124094,   0.028382,   1/3,   2.457427,   1.304951
+#
+# and 1/3 is the distance the disjunctive spindle wants.  Nothing at sqrt3.
+THE_CAP_IS_WHAT_MAKES_A_NEIGHBOURHOOD_A_RAINBOW = True
+
+
+# What one forced pair costs: all of it.
+#
+# The five genuinely forced pairs at the degree-4 ceiling point p = 315 are the
+# only ones this project has ever had in hand, so they are the only ones that
+# can be priced.  Pricing them answers the question the whole hunt turns on.
+#
+# Forcing is monotone in the vertex set -- adding vertices only adds clauses --
+# so order the vertices of H by graph distance from the pair and binary search
+# the smallest PREFIX in which the pair is still forced apart.  Ten solves per
+# pair, each small prefix a small instance.
+#
+#   (130,461)  d^2 = 2.124094   prefix  802 of 802,  radius 6
+#   (130,561)  d^2 = 1          prefix    2 of 802,  radius 0   <- the 60 deg edge
+#   (130,757)  d^2 = 0.028382   prefix  802 of 802,  radius 7
+#   (461,561)  d^2 = 1/3        prefix  802 of 802,  radius 6
+#   (461,757)  d^2 = 2.457427   prefix  802 of 802,  radius 6
+#   (561,757)  d^2 = 1.304951   prefix  802 of 802,  radius 7
+#
+# Unanimous.  Every pair that is forced for a reason -- as opposed to being an
+# edge -- needs the entire 802-vertex graph.  Not a ball of radius two, not a
+# few dozen vertices: all of it, and dropping the single farthest vertex is
+# already enough to break the forcing.
+#
+# So a forced pair is not a local object.  It exists only inside a graph that
+# is already one vertex short of (k+1)-chromatic, which at k = 4 means one
+# vertex short of de Grey's theorem and at k = 5 means one vertex short of the
+# thing being hunted.  That is the explanation for every empty forced-pair
+# search in this project, and it is not a solver failure or a search failure:
+#
+#     hunting a forced pair at five as a STEPPING STONE to a 6-chromatic
+#     graph is circular, because a forced pair at five is a symptom of
+#     having one already.
+#
+# The corollary is where the CPU should go.  de Grey did not find a 5-chromatic
+# graph by finding forced pairs at four; he built one, and the forced pairs
+# came with it.  Construction is the route; forced pairs are the receipt.
+A_FORCED_PAIR_COSTS_THE_WHOLE_NEAR_CRITICAL_GRAPH = True
