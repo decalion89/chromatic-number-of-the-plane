@@ -15175,3 +15175,14 @@ THE_SQRT247_EDGE_WAS_NOT_A_SURVIVOR = True
 # every class psi = t positively spans -- a fine lattice spanned by many
 # rotations, not a graph grown inside one.
 THE_803_MODULE_HAS_33_DIRECTIONS_AND_ALL_ARE_CLOSED = True
+
+
+# The twisted colouring, built a second time on the largest graph here.
+#
+# On the tight 4159-point graph (23 928 edges, the module's full 33
+# directions), for the distance-2 pair of highest degree (30 and 30, midpoint
+# a vertex): psi = (0,1,0,0,1,2,4,1), t = 3, an exact rational phi,
+# L = 103 260.5 -- 0 improper edges of 23 928, and c(a) = c(b).  The tightest
+# graph this project built colours that pair alike in a colouring that exists
+# on every graph of its module.
+TWISTED_COLOURING_CONFIRMED_ON_THE_TIGHT_GRAPH = True
