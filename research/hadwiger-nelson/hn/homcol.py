@@ -12791,3 +12791,49 @@ THE_RARE_ORBIT_IS_NOT_A_PROPERTY_OF_SIZE_OR_DEGREE = True
 # Sa[199] is the one to want next: two DIFFERENT rare distances on one carrier,
 # so both can be spent at once while the symmetry survives.
 THE_RAREST_ORBIT_COSTS_A_FIFTH_RADICAL = True
+
+
+# CORRECTION, and a construction it opens.
+#
+# An earlier constant here records that forced-equality never chains: across
+# three levels of the sequential chain -- 8 forced pairs, then 27, then 52 --
+# every class had exactly two members, which closed the generalisation below.
+# That is true of the sequential chain and FALSE in general.  On the symmetric
+# carrier from Sa[199] the two rare forced distances share their pivot:
+#
+#     (726, 1526) forced at d^2 = 64/3    and    (726, 2730) at d^2 = 256/9
+#
+# and all three pairs of {726, 1526, 2730} come back forced, so that is a class
+# of three.
+#
+# A class of three admits a spindle whose angle is NOT constrained to make
+# 4d^2 - 1 a square.  Any rotation about a carrying b to distance exactly 1
+# from c will do, since c(rho(b)) = c(rho(a)) = c(a) = c(c) and rho(b) ~ c.
+# With u = b - a and v = c - a,
+#
+#     |rho(u) - v|^2 = r1 + r2 - 2 <rho(u), v>
+#     <rho(u), v>    = cos t (u.v) + sin t (u x v)
+#
+# so cos t and sin t satisfy ONE LINEAR EQUATION, P cos t + Q sin t = R with
+# P = u.v, Q = u x v and R = (r1 + r2 - 1)/2, alongside cos^2 + sin^2 = 1.
+# Since P^2 + Q^2 = r1 r2 the two solutions are
+#
+#     cos t = (P R +- Q D)/(r1 r2),  sin t = (Q R -+ P D)/(r1 r2),
+#     D = sqrt(r1 r2 - R^2)
+#
+# and here r1 r2 - R^2 = 16384/27 - (439/18)^2 = 3887/324, whose root is
+# 13 sqrt23 / 18 -- a radical the 64/3 spindle already needed.  So the free
+# angle costs nothing extra, and BOTH signs are genuine rotations that place
+# rho(b) at distance exactly 1 from c.
+#
+# (The first derivation of this was wrong: it solved for the target angle
+# BETWEEN the two vectors and then rotated by that amount, which is only
+# correct if they start aligned.  The exact check caught it -- the image landed
+# at 448/9 - (439/18)sqrt3 + (13/18)sqrt23 instead of 1.)
+#
+# Spending one sign over the whole orbit of pivots gives
+#
+#     n = 21169   m = 161412   mean degree 15.25   refuses four colours
+#
+# against 39313 points for spending both rare orbits the classical way.
+A_FORCED_CLASS_OF_THREE_MAKES_THE_ANGLE_FREE = True
