@@ -13898,3 +13898,25 @@ THE_FIRST_STEP_AT_FIVE_COSTS_ONE_PAIR_AT_ROOT_THREE = True
 # nothing, and what the escape analysis asks for is the opposite of what the
 # rhombus gives.
 ONE_PAIR_AT_ROOT_THREE_IS_THE_WHOLE_TARGET = True
+
+
+# A comment that was false, and cost 53 770 clauses.
+#
+# hn/blocked.py justified its at-most-one clauses with "mu reads colours off
+# models".  It does not.  mu never looks at a model -- every question it asks
+# is whether a call is satisfiable under assumptions.  The clauses were pure
+# overhead: ten per vertex at five colours, so 53 770 of them on a 5377-vertex
+# graph, on top of an instance whose base colouring already ran past forty
+# minutes.
+#
+# Soundness without them is the same argument that let them be dropped from
+# the 7141-point settlement: the assumptions force colours 0..j-1 false on
+# N(p), so every member takes a colour >= j; the edge clauses make adjacent
+# colour SETS disjoint; picking any true colour per vertex gives a proper
+# colouring avoiding 0..j-1, and the converse is immediate.  Same answer, less
+# instance.
+#
+# The Moser-spindle positive controls still return the ceiling on all seven
+# vertices with the clauses gone, which is what makes the removal safe rather
+# than merely faster.
+THE_AT_MOST_ONE_CLAUSES_IN_MU_WERE_JUSTIFIED_BY_A_FALSEHOOD = True

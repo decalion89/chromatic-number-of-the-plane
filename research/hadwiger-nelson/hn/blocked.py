@@ -28,6 +28,11 @@ is what this module is for.
 
 Two facts shape the computation.
 
+The CNF carries no at-most-one clauses, because nothing here reads a colour
+off a model: every question is satisfiability under assumptions.  The edge
+clauses already make adjacent colour sets disjoint, so a satisfying assignment
+still yields a proper colouring by picking any true colour per vertex.
+
 **Colour symmetry.**  If some set of `j` colours can be simultaneously absent
 from `N(p)` in a proper colouring, then the colours `0..j-1` can, by permuting.
 So the whole question is a nested chain of at most `k-1` assumption calls on
@@ -99,13 +104,17 @@ class MuSolver:
         n = graph.n
         self._x = lambda v, c: 1 + v * k + c
         cnf = [[self._x(v, c) for c in range(k)] for v in range(n)]
-        # at-most-one is included: mu reads colours off models, and without it
-        # a vertex with several true colour variables reads as the smallest,
-        # which quietly biases every count towards colour 0
-        for v in range(n):
-            for a in range(k):
-                for b in range(a + 1, k):
-                    cnf.append([-self._x(v, a), -self._x(v, b)])
+        # NO at-most-one clauses.  An earlier version included them "because mu
+        # reads colours off models", which is simply false -- mu never looks at
+        # a model, only at whether a call is satisfiable.  They are unnecessary
+        # and expensive: ten per vertex at k = 5, so 53 770 extra clauses on a
+        # 5377-vertex graph, and cadical is measurably slower for them.
+        #
+        # Soundness without them.  The assumptions force colours 0..j-1 false
+        # on N(p), so every member takes some colour >= j; the edge clauses
+        # make adjacent colour SETS disjoint, so choosing any true colour per
+        # vertex yields a proper colouring avoiding 0..j-1.  The converse is
+        # immediate.  So the answer is the same, and only the cost differs.
         for x, y in graph.edges():
             for c in range(k):
                 cnf.append([-self._x(x, c), -self._x(y, c)])
