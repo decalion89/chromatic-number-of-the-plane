@@ -15070,3 +15070,43 @@ THE_SPINDLE_LADDER_PUTS_THE_PAIR_AT_K_STEPS_AND_K_BELOW_THE_LINE = True
 # forced 5e pair, not the split 2e pair.  Everything their argument needs
 # from distance 2 has to come from a richer module.
 THE_EXOO_ISMAILESCU_MODULE_FAILS_BOTH_GATES_IN_EVERY_DIRECTION = True
+
+
+# Exoo and Ismailescu's theorem, verified end to end.
+#
+# The 426-vertex K needs no big solve: it is H u lambda_A(H), lambda fixes A,
+# and |B - lambda(B)| = 1 exactly.  So K is not 5-colourable as soon as H forces
+# c(A) = c(B) -- the spindle argument -- and that was checked by three
+# unrelated solvers on the rebuilt H (a triangle pinned to 0, 1, 2, which any
+# colouring can be permuted into):
+#
+#     glucose 4    H with c(A) != c(B):  UNSAT   (44 s)
+#     minisat 22                         UNSAT   (107 s)
+#     cadical 1.9                        UNSAT   (134 s)
+#
+# and H itself is 5-colourable with c(A) = c(B) in the colouring found.  A
+# direct solve of all of K ran 40 minutes without finishing and was stopped
+# as redundant.  Every 5-colouring of the plane has a monochromatic pair at
+# distance 1 or 2.
+EXOO_ISMAILESCU_VERIFIED_BY_THE_SPINDLE_AND_THREE_SOLVERS = True
+
+
+# Which pairs a gadget could ever split -- and why no module splits enough of
+# them on its own.
+#
+# Mirror of the 5M kernel: a pair can be forced APART only if EVERY admissible
+# coset colouring already splits it, psi(u - v) != 0 for all psi.  On the
+# 803-graph 10 667 of the 314 926 non-edge pairs closer than 3 qualify, in
+# whole distance classes -- d^2 = 7/3 (all 1828), 1/9 (1024), 4/9 (868), 19/9,
+# 4 (all 502, the distance-2 pairs: psi(2e) = 2 psi(e)), 11/9, 16/9, 13/3 ...
+# and NOT 4/3, the most repulsive class, which some coset colouring keeps alike.
+#
+# And the closure principle, which is the reason for the whole shape: the SAME
+# coset colouring splits every one of those pairs at once, so adding all of
+# them to the graph as edges leaves it 5-colourable.  Inside one integral
+# multiquadratic module, gadgets for any set of distances can never combine
+# to six -- the {1, d1, ..., dk}-graph they would simulate is coloured by psi.
+# The step out has to come from a 5 in a denominator somewhere: in
+# Exoo-Ismailescu's K it is lambda, so a distance-2 gadget living in an
+# INTEGRAL module is still enough -- the union with their K is not integral.
+WITHIN_ONE_INTEGRAL_MODULE_VIRTUAL_EDGES_NEVER_REACH_SIX = True
