@@ -6741,3 +6741,13 @@ the integral searches were stopped. What survives is a module with **no**
 admissible `ψ` — a 5 in a denominator, as in `803 ∪ λ(803)`, where the search
 continues — or one whose directions are so rich that every class positively
 spans.
+
+**Credit.** Homomorphic ("coset") colourings as an obstruction are Polymath16's:
+Philip Gibbs showed in 2018 that `ℤ[ω₁,ω₃,ω₄]` and `ℤ[ω₁,ω₃,ω₄,ω₇]` have
+homomorphic 5-colourings, so no 6-chromatic unit-distance graph lies in either
+ring (summarised in A. P. Goucher's *cp4space* post "Royal Wedding and
+Polymath16"). What this package adds on top — as far as a search of the public
+record shows, which is not a guarantee — is the integrality-at-5 criterion and
+the residue-degree theorem, the escape through a 5 in a denominator and its
+identification with Exoo–Ismailescu's rotation, the `5M` kernel and the spindle
+ladder, the pair and apart gates, and the twisted coset colourings.

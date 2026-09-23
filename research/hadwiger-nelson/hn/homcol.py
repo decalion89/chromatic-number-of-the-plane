@@ -15186,3 +15186,20 @@ THE_803_MODULE_HAS_33_DIRECTIONS_AND_ALL_ARE_CLOSED = True
 # graph this project built colours that pair alike in a colouring that exists
 # on every graph of its module.
 TWISTED_COLOURING_CONFIRMED_ON_THE_TIGHT_GRAPH = True
+
+
+# Credit where it is due: homomorphic colourings are Polymath16's.
+#
+# Philip Gibbs, in the Polymath16 discussion of 2018 (summarised by A. P.
+# Goucher, cp4space.hatsya.com, "Royal Wedding and Polymath16"), coloured the
+# rings Z[w1, w3] (Moser spindle, Golomb graph) by a homomorphism to a group of
+# order four, and showed that Z[w1, w3, w4] and Z[w1, w3, w4, w7] -- home of
+# several of Heule's 5-chromatic graphs -- have homomorphic 5-colourings, so no
+# 6-chromatic unit-distance graph lies in either ring.  The coset colourings of
+# this package are the same idea.  What this package adds on top, as far as a
+# search of the public record shows (not a guarantee): the integrality-at-5
+# criterion and the residue-degree theorem, the escape through a 5 in a
+# denominator and its identification with Exoo-Ismailescu's rotation, the 5M
+# kernel and the spindle ladder, the pair and apart gates, and the twisted
+# coset colourings.
+HOMOMORPHIC_COLOURINGS_WERE_POLYMATH16S = True
