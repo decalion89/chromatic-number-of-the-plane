@@ -22,7 +22,9 @@ sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
 exec(open("/home/user/darwin-50/research/hadwiger-nelson/scripts/gate.py").read().split("def gate(g, label):")[0])
 ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
 src = sys.argv[1]
-if src == "ei":
+if src.startswith("units:"):
+    E = [tuple(v) for v in json.load(open(src[6:]))["directions"]]
+elif src == "ei":
     sols = [(a,b,c,d) for a in range(-7,8) for b in range(-4,5) for c in range(-12,13) for d in range(-3,4)
             if 3*a*a + 11*b*b + c*c + 33*d*d == 144 and a*b == -c*d]
     E = list({max(v, tuple(-x for x in v)) for v in sols})

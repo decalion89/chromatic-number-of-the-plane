@@ -15159,3 +15159,19 @@ TWISTED_COSET_COLOURINGS_CLOSE_THE_INTEGRAL_ROUTE = True
 # list -- refutes it too, and so do Z/30, 35, 40, 45, 50, 55, 60.  No direction
 # of the 803-module survives the apart gate.
 THE_SQRT247_EDGE_WAS_NOT_A_SURVIVOR = True
+
+
+# The 803-module is closed at every size, not just at the graph's 31 directions.
+#
+# Its unit vectors are the lattice points of trace norm exactly 1 (the rational
+# part of x^2 + y^2 is sum_m p_m (x_m^2 + y_m^2), a positive definite form on
+# the rank-8 module).  Exact LLL, then Fincke-Pohst: 344 664 points of trace
+# norm <= 1, of which exactly 66 are unit vectors -- 33 directions, two more
+# than the graph uses.  Every graph drawn in that module uses only those.  With
+# all 33 (960 admissible psi) the twisted coset colourings refute all 33
+# directions for the apart gate AND the pair gate.  So no unit-distance graph
+# in this module, of any size, is a distance-2 gadget or forces a 5e pair.
+# Reopening the integral route needs a module with so many unit vectors that
+# every class psi = t positively spans -- a fine lattice spanned by many
+# rotations, not a graph grown inside one.
+THE_803_MODULE_HAS_33_DIRECTIONS_AND_ALL_ARE_CLOSED = True
