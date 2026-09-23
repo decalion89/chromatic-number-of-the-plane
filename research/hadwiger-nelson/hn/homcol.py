@@ -13181,3 +13181,45 @@ TUNING_TO_ONE_MAKES_THE_SPINDLE_UNNECESSARY = True
 # minimisations costing on the order of 100 000 CPU-hours; 803 is a different
 # field and cannot be cut further vertex by vertex.
 THE_EIGHT_HUNDRED_AND_THREE_IS_VERTEX_CRITICAL = True
+
+
+# free@k is a property of a COLOURING, not of a graph, and it wobbles.
+#
+# The same 803-point graph measured 11.46 % in one pass and 14.82 % in another;
+# both are correct, because free@k counts the vertices with a spare colour in
+# whichever proper colouring the solver happened to return, and different
+# colourings differ.  The law it is compared against,
+#
+#     free@k ~ (k-1)(1 - 1/(k-1))^deg
+#
+# is an average over colourings, so a single measurement carries a few points
+# of noise and only differences of a factor should be read as real.  The claims
+# that survive that standard are the big ones: Sa at four measures exactly
+# 0.00 % against a predicted 5.2 %, which no amount of wobble explains, and the
+# 5-chromatic graphs at five sit within a factor of two of the law, which no
+# amount of wobble rescues.
+FREE_AT_K_IS_A_PROPERTY_OF_A_COLOURING_AND_WOBBLES = True
+
+
+# The tuned chain transfers the whole densification machinery to five colours.
+#
+# Until now the two were separate: the 4-chromatic carriers reach mean degree
+# 18.32 by stacking orbits of glue centres, and the 5-chromatic graphs top out
+# at 13.78, because every route to five spent a spindle and the spindle adds a
+# sparse copy rather than density.
+#
+# Tuning the composite forced pair to distance exactly 1 removes the spindle
+# altogether: the union is two copies of the CARRIER, so its mean degree is the
+# carrier's, and it refuses four because the composite pair is an edge.  Any
+# 4-chromatic carrier with a forced pair therefore becomes a 5-chromatic graph
+# at its own density.
+#
+#   carrier                  n      deg      chained n    chained deg
+#   symmetric glue         1021    13.34       2041          13.35
+#   2 stacked orbits       3463    16.81       6925          16.81
+#
+# 16.81 is a regime no 5-chromatic graph in this project had reached.  With
+# D^2 = 64/9 the tuning angle is cos phi = -119/128, sin phi = 3 sqrt247/128,
+# which is already the carrier's own field -- so the densification costs no new
+# radical either.
+THE_TUNED_CHAIN_CARRIES_DENSITY_UP_TO_FIVE = True
