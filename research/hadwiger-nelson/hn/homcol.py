@@ -13371,3 +13371,30 @@ FORCED_APART_IS_EMPTY_AT_FIVE_AS_WELL = True
 # So the largest symmetric object in the project joins G: no forced pair at
 # five, exhaustively.
 THE_SYMMETRIC_SEVEN_THOUSAND_HAS_NO_FORCED_PAIR_AT_FIVE = True
+
+
+# free@5 is boundary-dominated, which is why density never moved it.
+#
+# The tuned chain built a 5-chromatic graph at 12 469 points and mean degree
+# 18.48 -- against a previous ceiling of 13.82, and in 27 seconds.  The
+# mean-degree law predicts free@5 = 4 * 0.75^18.48 = 0.49 % there.  The
+# per-vertex null, which is the honest one, predicts 7.09 %.
+#
+# The factor of fourteen between them is the boundary.  free@5 is convex in the
+# degree and dominated by its low tail: a vertex of degree 6 is free with
+# probability 4 * 0.75^6 = 0.71, essentially always, and a finite unit-distance
+# graph is a patch of the plane, so it always has a rim of such vertices.
+# Stacking orbits adds rim as fast as it adds middle, and the mean degree
+# climbs while the null barely moves:
+#
+#   graph              n      mean deg   mean-degree law   per-vertex null
+#   five_247_c        803      10.12         21.73 %           30.92 %
+#   five_tuned_1_1   2041      13.35          8.60 %           16.00 %
+#   five_dense_10   12469      18.48          0.49 %            7.09 %
+#
+# So the programme "raise the degree until free@5 collapses" was never going to
+# work, and not because the degrees were too small: the quantity it was aiming
+# at does not respond to the mean.  Sa reaches free@4 = 0.00 % at 397 points
+# with minimum degree 4 and a per-vertex null of 10.49 %, so a rim is no
+# obstacle to rigidity -- it simply has to be rigid too, and that is global.
+FREE_AT_FIVE_IS_BOUNDARY_DOMINATED = True
