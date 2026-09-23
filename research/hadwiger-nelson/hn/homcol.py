@@ -15110,3 +15110,42 @@ EXOO_ISMAILESCU_VERIFIED_BY_THE_SPINDLE_AND_THREE_SOLVERS = True
 # Exoo-Ismailescu's K it is lambda, so a distance-2 gadget living in an
 # INTEGRAL module is still enough -- the union with their K is not integral.
 WITHIN_ONE_INTEGRAL_MODULE_VIRTUAL_EDGES_NEVER_REACH_SIX = True
+
+
+# TWISTED COSET COLOURINGS: a coset colouring with a colour shift at every level
+# of an integer functional -- and they close the integral route for good.
+#
+#     c(p) = psi(p) + t * floor(phi(p) / L)      (mod 5)
+#
+# psi : M -> Z/5 admissible, phi : M -> Z any linear functional, L at least
+# max |phi(u)| over the unit vectors.  A unit step moves the level by 0 or +-1,
+# so the colour moves by psi(u) or psi(u) +- t; c is PROPER on every graph with
+# these directions exactly when the class D_t = {u : psi(u) = t} lies in the
+# half-space phi >= 0 (then no step with phi(u) > 0 has psi(u) = -t).  By
+# Farkas that is one LP: -e not in the cone of D_t.  The colouring is neither
+# periodic nor a coset colouring -- it is what the pair gate and the apart gate
+# could not see:
+#
+#   * a 5e pair: the colour difference is 5 psi(e) + t k = t k, nonzero
+#     whenever a level boundary falls between -- SPLIT;
+#   * a 2e pair: the difference is 2 psi(e) + t sign(phi(e)), zero for
+#     t = -2 psi(e) -- KEPT ALIKE.
+#
+# Measured, every direction refuted for both:
+#
+#     module          directions   5e pair split   2e pair kept alike
+#     803-graph           31            31/31             31/31
+#     E-I coordinate      15            15/15             15/15
+#
+# including the sqrt247 edge that survived every periodic quotient.  Built
+# explicitly on the gadget search's own graph (803 + b, and the grown 2185-point
+# checkpoint, still on the same 31 directions): psi = (0,0,1,1,0,4,2,4), t = 4,
+# an exact rational phi, L = 206 521 -- 0 improper edges of 12 883, and
+# c(a) = c(b).  So no distance-2 gadget and no forced 5e pair can exist on
+# these modules at any size, and the integral gadget searches were stopped.
+#
+# What survives: a module with NO admissible psi at all -- a 5 in a denominator,
+# as in 803 u lambda(803) -- or one whose directions are so rich that every
+# class D_t positively spans; the second is the density-versus-blocking tension
+# again.  The gadget search continues only on the blocked substrate.
+TWISTED_COSET_COLOURINGS_CLOSE_THE_INTEGRAL_ROUTE = True
