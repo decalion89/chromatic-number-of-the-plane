@@ -13528,3 +13528,25 @@ NOTHING_IS_FORCED_AT_FIVE_IN_EITHER_DIRECTION = True
 # above no matter how many neighbours it has.  Adding degree adds path, not
 # palette.
 DENSITY_IS_NOT_A_WEAK_LEVER_ON_RIGIDITY_IT_IS_NO_LEVER = True
+
+
+# A test that could not pass, and read as a broken graph.
+#
+# hn.coloring.is_k_colorable returns a PAIR, (answer, colouring).  Written as
+#
+#       assert not is_k_colorable(g, 4)
+#
+# the assertion tests the truthiness of a two-element tuple, which is always
+# True, so `not` is always False and the test fails whatever the solver says.
+# It failed on both dense graphs and reported them as 4-colourable -- i.e. as
+# worthless -- when the graphs were correct and the test was not.
+#
+# The tell was that the counts passed.  n and m were asserted against the
+# stored values and matched exactly, so the rebuilt graph was the graph the
+# script had refuted; a genuine disagreement would have had to be a disagreement
+# about the SOLVER, on an instance one of them had already settled.  When a new
+# test contradicts a settled result and everything around it agrees, suspect the
+# test.
+#
+# Written properly -- answer is False, colouring is None -- both graphs pass.
+A_TUPLE_IS_ALWAYS_TRUTHY_AND_THE_TEST_WAS_THE_BUG = True
