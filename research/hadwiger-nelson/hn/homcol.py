@@ -14592,3 +14592,37 @@ THE_LOCAL_CERTIFICATES_FOR_RUNG_ONE_ARE_EXHAUSTED = True
 # and the 803 is the one a particular order found.  Beating it is a search with
 # restarts, not a computation.
 THE_SHRINK_HUNT_COSTS_FORTY_SIX_SECONDS_A_VERTEX = True
+
+
+# The sqrt2 claim was too strong, and the tuning had already built one.
+#
+# An entry above concluded that no carrier here can hold a pair at sqrt2, since
+# 2 is not Loeschian.  That argument governs distances INSIDE one Eisenstein
+# copy.  The distance tuning crosses copies, and its whole point is that
+#
+#     |u + R_phi u|^2 = 2 D^2 (1 + cos phi)
+#
+# chooses the composite distance, with cos phi rational whenever d^2 and D^2
+# are.  d^2 = 2 was one of the four tunings this project built.  Asked of every
+# graph in data/:
+#
+#     five_tuned_2_1  (4081 pts)   17 pairs at sqrt2
+#     five_tuned_4_1  (4081 pts)    8 pairs at sqrt2
+#     everything else               none
+#
+# The earlier check was run on the sigma-enrichment of the 803-graph, which has
+# none, and the conclusion was generalised past its evidence.
+#
+# Their midpoints are not vertices, but (u+v)/2 stays in the field, so adjoining
+# them is free -- and then each one centres a unit square whose diagonal is
+# already present, which is precisely what the two-copy closure wants.  What the
+# bare midpoints lack is a NEIGHBOURHOOD: degree 1 or 2, so c(h) is forbidden at
+# most two colours and escapes without effort, while the diagonal ends carry 22
+# to 31 neighbours each.
+#
+# The fix is a translation.  Move a copy of the whole graph by t = h - v0 for a
+# high-degree v0, and h becomes that vertex's image, inheriting its 31 neighbours
+# and everything that constrains them, while the diagonal keeps its own.  Built:
+# 8161 points, 55 716 edges, deg(h) = deg(v1) = deg(v2) = 31.  The field never
+# moves, since the translation is by a field vector.
+THE_TUNED_GRAPH_ALREADY_HAD_ROOT_TWO = True
