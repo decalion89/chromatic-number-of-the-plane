@@ -14107,3 +14107,88 @@ THE_SIXTY_DEGREE_GRADING_KILLS_THE_ROTATION_STACK = True
 # to refute, at a point with five neighbours, instead of 10^14 at a point with
 # thirty.
 THE_BURDEN_IS_EXPONENTIAL_SO_THE_SMALL_NEIGHBOURHOODS_ARE_THE_CHEAP_ONES = True
+
+
+# What the stack actually does to the neighbourhood: it makes it EASIER.
+#
+# Stack six copies of G rotated about p by multiples of 60 degrees.  Then
+# N_U(p) is the C6-orbit of N_G(p), and the orbit of a single point is a
+# regular hexagon, so
+#
+#     N_U(p) = h disjoint hexagons,  h = # angle classes mod 60 deg in N_G(p)
+#
+# and there are NO edges between different hexagons.  Two points a unit apart
+# are 60 degrees apart; if one sits at alpha_i + 120k and the other at
+# alpha_j + 120l then alpha_i - alpha_j = 60 (mod 120), and a hexagon rotated
+# by 60 degrees is itself, so the two hexagons coincide.  Nothing joins them.
+#
+# So the stack hands back the most 2-colourable neighbourhood there is: h
+# disjoint even cycles, burden 10 * 2^h, and every geometric obstruction
+# designed out of it.  Adding copies does not tighten the local picture, it
+# loosens it -- each new angle class is a new independent parity bit.
+#
+# The same arithmetic says what the best possible target looks like.  By the
+# grading, a 2-colouring of N(p) is a pair of colours plus one parity bit per
+# component, so the first rung costs 10 * 2^c and the cheapest point in the
+# entire problem is one whose neighbourhood is a SINGLE hexagon: c = 1, twenty
+# patterns, and blocking it says exactly
+#
+#     no 5-colouring makes both inscribed sqrt3-triangles monochromatic.
+#
+# Extra neighbours in other angle classes do not help -- they add freedom, one
+# factor of two each.  Which is the second time this pass that richness turned
+# out to be the wrong axis.
+#
+# Measured, not just argued: stacking on the 803-graph at its best centres --
+# antipodal midpoints, which are exactly in the field since (u+v)/2 is -- gives
+# |N| = 10 -> 12, two components, 3253 vertices, and at_most_two comes back
+# SAT.  Placeable.  The construction is closed from both ends now: the chain
+# argument cannot reach 60 degrees, and the structure it builds has no
+# obstruction to reach for.
+THE_STACK_BUILDS_DISJOINT_HEXAGONS_AND_THAT_IS_THE_LOOSEST_CASE = True
+
+
+# The first unconditional five-colour forcing statement here -- and the trap
+# that nearly passed for one.
+#
+# Every forcing test in this project had asked the strongest question: is THIS
+# pair monochromatic in every 5-colouring?  The pricing explains why the answer
+# was always no.  The weak question is a disjunction and had never been asked:
+#
+#     is there a distance d such that EVERY 5-colouring of H has SOME
+#     monochromatic pair at distance d ?
+#
+# It is one solve, because "no monochromatic pair at distance d" is just the
+# d-pairs added as edges:  H forces d  <=>  chi(H; {1,d}) > 5.
+#
+# Asked of the 803-graph over its sixty richest distance classes, 3500 extra
+# edges included: every one still 5-colourable.  No single distance is forced.
+#
+# Two are.  Greedy up then minimise down returns a set of size two:
+#
+#     chi(five_247_c; {1, 3/2 - sqrt33/6, 7/6 - sqrt33/6}) > 5
+#
+# so in every 5-colouring of the 803-point graph, some pair at one of those two
+# squared distances is monochromatic.  The second is exactly one of the
+# distances the escape analysis had named at the five points whose requirement
+# needed two pairs, and the two differ by exactly 1/3.
+#
+# THE TRAP.  A first pass asked instead for the fewest individual PAIRS whose
+# forbidding kills five colours, called it delta, and got ten -- which looked
+# like the graph sitting ten pairs from 6-chromatic.  It is pigeonhole.  The ten
+# pairs involve six vertices carrying five unit edges between them, so
+# forbidding the other ten completes K6, and K6 needs six colours whatever
+# graph it sits in.  The true floor is lower still: some six vertices of this
+# graph already carry nine unit edges, so six extra pairs suffice, and the same
+# is true of every unit-distance graph with a rich enough vertex.  delta
+# measures the plane's densest 6-point configuration, not the graph's strain.
+# Withdrawn.
+#
+# What saves the distance-class version is a theorem.  A TWO-distance set in
+# the plane has at most five points -- the regular pentagon -- so a {1,d}-graph
+# can never contain K6, and the single-distance test is pigeonhole-free by
+# construction.  Three distances do allow six points (the regular hexagon
+# realises 1, sqrt3, 2), so the two-class result has to be checked rather than
+# assumed, and it passes: the three-distance graph on these 803 points has
+# 8793 edges and no 6-clique at all.
+THE_EIGHT_HUNDRED_AND_THREE_FORCES_TWO_DISTANCES_AT_FIVE = True
