@@ -13864,3 +13864,37 @@ WHY_MU_FOUR_STOPS_AT_THREE_A_DISJUNCTION_TOO_WIDE = True
 # And d^2 = 3 is the rhombus distance, the one at which THREE colours force
 # equality.  At five the requirement is the opposite.
 THE_FIRST_STEP_AT_FIVE_COSTS_ONE_PAIR_AT_ROOT_THREE = True
+
+
+# The requirement is UNIFORM: one pair, at sqrt3, and that is the whole target.
+#
+# The escape analysis was run per point rather than once.  Of the thirty richest
+# candidate points of the 803-graph, each requirement computed to exhaustion:
+#
+#   25 of 30 need exactly ONE pair forced apart, and every one of those
+#      pairs sits at squared distance 3
+#    5 of 30 need two pairs, at 1/3, 7/6 +- sqrt33/6, 2/3 +- sqrt33/9, ...
+#
+# Different pairs, different points, the same distance.  So the first step --
+# mu_5 from 2 to 3 -- is not a vague requirement but a single named one, and
+# any one of twenty-five pairs will do:
+#
+#       force two points at distance sqrt3 to differ in every 5-colouring.
+#
+# Asked directly of the graphs, pair by pair, since "forced apart" is one
+# assumption call -- can they share colour 0? -- and only the d^2 = 3 pairs
+# need asking:
+#
+#   five_247_c    803 pts    1 714 pairs at sqrt3    0 forced apart
+#   five_247     1139 pts    3 138 pairs at sqrt3    0 forced apart
+#
+# None.  The target is named, uniform, cheap to test, and unmet in everything
+# built here.
+#
+# Why sqrt3 and not something else is geometry.  Two points that far apart have
+# exactly two common unit-distance neighbours, and those two are adjacent to
+# each other -- the rhombus.  At THREE colours that configuration forces the
+# pair EQUAL, which is the Moser spindle's whole mechanism.  At five it forces
+# nothing, and what the escape analysis asks for is the opposite of what the
+# rhombus gives.
+ONE_PAIR_AT_ROOT_THREE_IS_THE_WHOLE_TARGET = True
