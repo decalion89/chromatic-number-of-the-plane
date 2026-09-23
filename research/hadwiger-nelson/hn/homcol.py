@@ -12727,3 +12727,24 @@ THE_SECOND_ORBIT_GIVES_A_GRAPH_IN_Q_SQRT3_SQRT11_SQRT23 = True
 # one of the 314028 pairs outright.  So the bigger group makes the filter
 # twice as sharp -- and leaves Sa12 itself with nothing to spend.
 D12_IS_FREE_AND_SA12_HAS_NO_FORCED_PAIR = True
+
+
+# Forced orbits are not equal, and the rare ones are the strong ones.
+#
+# The symmetric carrier at 1021 points has 144 forced pairs at d^2 = 64/9 and
+# only 9 at d^2 = 64/3.  Spending each alone, over its own orbit of pivots,
+# gives two 5-chromatic graphs of the SAME size -- 7141 vertices, 47682 edges
+# against 47676 -- and cadical needs
+#
+#     322 seconds for the 64/9 one
+#    1060 seconds for the 64/3 one
+#
+# so the orbit that occurs sixteen times less often is more than three times
+# harder to colour, at identical size.  Rarity is worth more than count.
+#
+# And density destroys it.  The densest carrier -- the D12 orbit of Sa[265],
+# 2689 points at mean degree 15.92 -- has 102 forced orbits, and every single
+# one is at 64/9.  The rare distance is simply not there.  So thickening the
+# carrier does not merely fail to help: it trades the strong forcing for more
+# of the weak kind.
+RARE_FORCED_DISTANCES_ARE_THE_STRONG_ONES = True
