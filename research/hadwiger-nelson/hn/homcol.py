@@ -15030,3 +15030,43 @@ ONLY_PAIRS_IN_5M_CAN_BE_FORCED_AND_THAT_IS_DISTANCE_FIVE = True
 # that every quotient's Cayley graph is either not 5-colourable or coset-rigid
 # along e -- the same pressure that made the blocked graphs sparse.
 THE_PAIR_GATE_REFUTES_THE_UNIT_DISTANCE_SHADOW_OF_EXOO_ISMAILESCU = True
+
+
+# The spindle ladder: at k colours the forced pair sits at k steps along a unit
+# direction, and the rotation that closes it carries k's primes below the line.
+#
+# A pair u, u + k e (e a unit step) lies in kM, so every coset k-colouring
+# colours it alike -- the one place a coset colouring can never split.  The
+# rotation closing distance k is cos = 1 - 1/(2k^2), sin = sqrt(4k^2 - 1)/(2k^2),
+# with 4k^2 - 1 = (2k - 1)(2k + 1) and denominator 2k^2 -- which contains every
+# prime of k, so the closure breaks exactly the coset colourings mod k:
+#
+#     k   pair     4k^2 - 1    closing rotation              used by
+#     2   2e       15          (7 + sqrt-15)/8               de Grey's Sb
+#     4   4e       63 = 9.7    (31 + 3 sqrt-7)/32            de Grey's last step
+#                                                            ((2,0) and (-2,0))
+#     5   5e       99 = 9.11   (49 + 3 sqrt-11)/50           Exoo-Ismailescu
+#
+# de Grey's four-colour forced pair, (2, 0) and (-2, 0), is exactly 4e; his
+# closing angle 2 arcsin(1/8) is exactly the k = 4 rotation.  At k = 5 the
+# radicand is 9 . 11, so the closing rotation lives in the Moser field with no
+# new square root -- which is why Exoo and Ismailescu never had to leave
+# Q(sqrt3, sqrt11).  What the rung needs is a graph forcing u = u + 5e at five
+# colours, on a module that passes the pair gate.
+THE_SPINDLE_LADDER_PUTS_THE_PAIR_AT_K_STEPS_AND_K_BELOW_THE_LINE = True
+
+
+# And the gadget has no home in Exoo and Ismailescu's module either.
+#
+# The APART GATE is the pair gate's mirror: a unit-distance graph on M can
+# force u, u + 2e APART only if no finite quotient psi, nonzero on every unit
+# vector, carries a proper 5-colouring of its Cayley graph with
+# c(0) = c(psi(2e)).  Coset colourings mod 5 always split 2e, so only larger
+# quotients can refute a distance-2 gadget -- and on E-I's module (30 unit
+# vectors, 15 directions, rank 4) Z/4 alone refutes all fifteen: psi(e) of
+# order two sends 2e to 0, and that Cayley graph is 5-colourable.  The pair
+# gate falls to Z/10 in all fifteen directions as well.  So their module can
+# carry neither half of a unit-distance version of their proof -- not the
+# forced 5e pair, not the split 2e pair.  Everything their argument needs
+# from distance 2 has to come from a richer module.
+THE_EXOO_ISMAILESCU_MODULE_FAILS_BOTH_GATES_IN_EVERY_DIRECTION = True
