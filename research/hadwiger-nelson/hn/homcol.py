@@ -13338,3 +13338,36 @@ NEIGHBOURHOODS_ARE_BIPARTITE_SO_RIGIDITY_IS_NEVER_LOCAL = True
 # The colourings are not merely plentiful, they are unconstrained in both
 # directions.
 FORCED_APART_IS_EMPTY_AT_FIVE_AS_WELL = True
+
+
+# The 7141-point symmetric graph has NO forced pair at five.  All of them.
+#
+# 25 493 370 pairs, settled completely:
+#
+#   25 491 171   eliminated by exhibited proper 5-colourings, via the
+#                group-expanded filter (one colouring is worth twelve because
+#                c o g is proper whenever c is, and agrees on (u,v) exactly
+#                when c agrees on (g u, g v))
+#        2 199   candidates surviving, which forcing's equivariance collapses
+#                to 376 ORBIT REPRESENTATIVES
+#          376   settled by direct solver call: 0 forced
+#
+# Every elimination is a certificate.  A pair that differs in one exhibited
+# proper colouring is PROVED not forced, and the 376 that no sampled colouring
+# separated were each asked outright -- forbid them from sharing any colour and
+# see whether five colours remain possible.  All 376 remained possible.
+#
+# The run also fixed two things that had stalled it.  The base CNF pins a
+# triangle, free for deciding colourability but fatal to the usual shortcut:
+# with colour symmetry broken, "x = 0 and y = 1 is impossible" no longer means
+# x and y agree, so the test has to forbid sharing ANY colour.  And gating
+# those clauses behind a per-pair selector only works if the OTHER selectors
+# are assumed false: left unconstrained the solver may set them true, switching
+# on all 376 constraints at once, and cadical ignores set_phases so nothing
+# else can steer it.  Asserting them false took the base solve from over twenty
+# minutes to 428 s; dropping the 71 410 at-most-one clauses, which only matter
+# when a colour is read off a model, helped again.
+#
+# So the largest symmetric object in the project joins G: no forced pair at
+# five, exhaustively.
+THE_SYMMETRIC_SEVEN_THOUSAND_HAS_NO_FORCED_PAIR_AT_FIVE = True
