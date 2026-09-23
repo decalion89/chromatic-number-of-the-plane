@@ -13277,3 +13277,32 @@ THE_LAW_IS_PER_VERTEX_AND_THE_MEAN_DEGREE_VERSION_LIED = True
 # it, because the free vertices are the low-degree tail and stacking orbits
 # adds boundary as fast as it adds middle.
 SA_IS_RIGID_AT_DEGREE_FOUR_AND_THAT_IS_NOT_A_DEGREE_EFFECT = True
+
+
+# Neighbourhoods in the plane are bipartite, so rigidity is never local.
+#
+# Every neighbour of v lies on the circle of radius 1 about v, and two points
+# of a radius-1 circle are a unit apart exactly when their central angle is
+# 2 arcsin(1/2) = 60 degrees.  So inside N(v) a point can only be adjacent to
+# the two points 60 degrees away from it: the induced subgraph has MAXIMUM
+# DEGREE 2, hence is a union of paths and cycles, and a cycle must close with
+# steps of +-60 summing to a multiple of 360, which forces even length.
+# Therefore
+#
+#       chi(N(v)) <= 2   for every vertex of every unit-distance graph in R^2
+#
+# and the only local certificate for pinning a vertex -- chi(N(v)) = k-1, which
+# makes N(v) use every colour but c(v) -- is available only at k = 3.
+#
+# That settles what the whole densification programme was trying to buy.  Sa
+# reaches free@4 = 0.00 % with vertices of degree 4, and it CANNOT be doing so
+# for a local reason: no neighbourhood in the plane can force three colours.
+# Its rigidity is global, there is no gadget in it to transplant, and adding
+# degree cannot manufacture one -- which is exactly what every measurement
+# said, now with a reason instead of a trend.
+#
+# The same geometry killed the local form of the disjunction gadget: the points
+# at distance 1 from both ends of an edge are the intersection of two unit
+# circles, and there are exactly two of them, so v, q1 and q2 cannot all sit
+# there.  One fact, two dead ends.
+NEIGHBOURHOODS_ARE_BIPARTITE_SO_RIGIDITY_IS_NEVER_LOCAL = True
