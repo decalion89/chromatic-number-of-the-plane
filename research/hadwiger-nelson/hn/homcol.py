@@ -12864,3 +12864,25 @@ A_FORCED_CLASS_OF_THREE_MAKES_THE_ANGLE_FREE = True
 # of a 39313-vertex graph costs many minutes, the smaller one is the one that
 # can actually be asked.
 THREE_ROTATIONS_FROM_ONE_CLASS_AND_ONE_PIVOT_IS_ENOUGH = True
+
+
+# The classes are much larger than two, and on the SMALL carrier.
+#
+# The correction above found a class of three on the 3025-point carrier from
+# Sa[199].  Looking at the graph the forced pairs themselves form -- a vertex
+# of degree two or more in it is the pivot of a class -- the 1021-point carrier
+# from Sa[25] has
+#
+#     17 forced representatives, 204 forced pairs under the group,
+#     and 96 vertices lying in TWO OR MORE of them
+#
+# with the busiest in four, all at d^2 = 64/3.  A hub and its four forced
+# neighbours are five vertices that every 4-colouring paints the same colour,
+# so the class carries ten forced pairs, not one.
+#
+# Where the radii are equal the free angle collapses back to the classical
+# spindle -- with r1 = r2 = r the discriminant is (4r-1)/4, whose radical at
+# r = 64/3 is 759 again -- so same-radius classes give nothing the ordinary
+# spindle did not.  The novelty needs DIFFERENT radii, which is what makes the
+# Sa[199] class of three worth its cost.
+CLASSES_REACH_FIVE_AND_EQUAL_RADII_GIVE_NOTHING_NEW = True
