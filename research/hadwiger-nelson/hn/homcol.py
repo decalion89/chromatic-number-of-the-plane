@@ -13831,3 +13831,36 @@ MU_AT_FOUR_IS_THREE_AND_THAT_PRICES_THE_GAP = True
 # machinery available needs width 2.  Not a missing computation -- a missing
 # gadget, and the measurement now says how wide it would have to be.
 WHY_MU_FOUR_STOPS_AT_THREE_A_DISJUNCTION_TOO_WIDE = True
+
+
+# The exact requirement at five, and it is ONE PAIR.
+#
+# mu_5 = 2 everywhere means escapes exist: proper 5-colourings putting only two
+# colours on N(p).  Raising mu_5 to 3 means killing all of them, and the escape
+# analysis names the price exactly.
+#
+# On the 803-point graph, at a candidate point with twelve neighbours:
+#
+#   32 escapes sampled, every one with a monochromatic non-adjacent pair
+#   59 distinct pairs appear
+#   a hitting set of ONE pair meets all 32
+#   iterated to exhaustion: with that pair forced apart, NO ESCAPE SURVIVES
+#
+#       force apart (281, 655)   at d^2 = 3
+#
+# So the first step -- mu_5 from 2 to 3 -- costs a single forced-apart pair at
+# distance sqrt3.  Not a family, not a structure: one pair.  That is the most
+# concrete statement this project has produced about what is missing, and it is
+# sufficient rather than merely necessary, proved by exhaustion in two rounds.
+#
+# The honest reading of it.  Forcing u and v APART at five colours is exactly
+# the graph with u and v identified having no 5-colouring -- a contraction that
+# refuses five.  And the standard route to forcing apart runs through forcing
+# equal: if c(u) = c(w) is forced and w ~ v then c(v) != c(w) = c(u).  So the
+# requirement reduces to the thing this project has searched for exhaustively
+# and never found.  What has changed is not the difficulty but the target: one
+# pair, one distance, one statement, instead of a blind sweep.
+#
+# And d^2 = 3 is the rhombus distance, the one at which THREE colours force
+# equality.  At five the requirement is the opposite.
+THE_FIRST_STEP_AT_FIVE_COSTS_ONE_PAIR_AT_ROOT_THREE = True

@@ -82,7 +82,23 @@ with MuSolver(g, k=5, budget=6_000_000) as ms:
     print(f"    base colouring in {time.time()-t1:.0f}s "
           f"(colourable={ms.colourable})", flush=True)
     if ms.colourable:
+        # Only "is mu above 2?" matters, and that is ONE call -- forbid three
+        # colours on N(p) and see whether a colouring survives.  The full
+        # chain starts by asking whether N(p) can be monochromatic, which on a
+        # seventeen-point neighbourhood of a 6925-vertex graph is both
+        # expensive and beside the point.
         for sz, nb in scored[:60]:
+            cheap = ms.at_most_two(list(nb))
+            if cheap is True:
+                hist[2] += 1
+                if sum(hist.values()) % 5 == 0:
+                    print("      ..%d: %s   [%.0fs]"
+                          % (sum(hist.values()), dict(hist), time.time() - t0),
+                          flush=True)
+                continue
+            if cheap is None:
+                hist[-1] += 1
+                continue
             v = ms.mu(list(nb))
             hist[v] += 1
             if v is not None and v >= 3:
