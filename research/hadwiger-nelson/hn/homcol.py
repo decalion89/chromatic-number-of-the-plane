@@ -12768,3 +12768,26 @@ RARE_FORCED_DISTANCES_ARE_THE_STRONG_ONES = True
 #
 # in Q(sqrt3, sqrt11, sqrt23).
 THE_RARE_ORBIT_IS_NOT_A_PROPERTY_OF_SIZE_OR_DEGREE = True
+
+
+# Spending the rarest orbit found, and what it costs in radicals.
+#
+# The scan over the orbits of glue centres turns up rare forced distances that
+# the common one hides:
+#
+#     Sa[7]    1477 pts   1 unusual orbit of  50   at 64/3    radical 759 = 3*11*23
+#     Sa[151]  2965 pts   1 of  43                 at 64/3
+#     Sa[223]  3151 pts   3 of  63                 at 64/3
+#     Sa[199]  3025 pts   2 of 143    at BOTH 64/3 and 256/9
+#     Sa[139]  3541 pts   1 of 101                 at 256/9   radical 1015 = 5*7*29
+#
+# and 256/9 needs sqrt5, sqrt7 and sqrt29 on top of what Sa already uses, so
+# its spindle lives in Q(sqrt3, sqrt5, sqrt7, sqrt11, sqrt29) -- degree 32, and
+# a fifth radical.  Spending it over the whole orbit of pivots gives
+#
+#     n = 24781   m = 194214   mean degree 15.67   C6-invariant, refuses four
+#
+# the largest and densest object here, built from the rarest forcing found.
+# Sa[199] is the one to want next: two DIFFERENT rare distances on one carrier,
+# so both can be spent at once while the symmetry survives.
+THE_RAREST_ORBIT_COSTS_A_FIFTH_RADICAL = True
