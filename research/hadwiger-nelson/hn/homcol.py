@@ -12916,3 +12916,158 @@ CLASSES_REACH_FIVE_AND_EQUAL_RADII_GIVE_NOTHING_NEW = True
 # and that is the only configuration in this project where the free angle is a
 # genuinely new rotation.  It is why the 3025-point carrier is worth its size.
 THE_SMALL_CARRIER_ADMITS_NO_GENUINE_FREE_ANGLE = True
+
+
+# The glue manufactures forcing at four.  It manufactures nothing at five.
+#
+# The whole ladder at four was: Sa is 4-chromatic and has NO pair forced equal
+# in every 4-colouring; glue Sa to a rotated copy of itself about a vertex and
+# the union HAS them.  Spindle one and the result refuses four.
+#
+# The exact analogue one rung up had never been run, and it is cheap: take the
+# smallest 5-chromatic graph in the project, 803 points in Q(sqrt3,sqrt11,
+# sqrt247), glue it to a rotated copy of itself about a vertex, and ask for a
+# pair forced equal in every FIVE-colouring.
+#
+#   carrier                803 points, 4065 edges
+#   best glue              rot60 about a vertex, overlap 286 of 803
+#   union                  1320 points, 6958 edges, mean degree 10.54
+#   refuses four           yes (it contains the carrier)
+#   pairs at five          870 540
+#   pairs surviving        0
+#
+# Every pair separated, and the filter is a certificate, not a sample: a pair
+# that differs in one exhibited proper colouring is PROVED not forced.  So the
+# step that made the ladder work at four produces nothing at five, on the best
+# carrier this project has.
+GLUING_AT_FIVE_SEPARATES_EVERY_PAIR = True
+
+
+# free@k obeys a law, and the gap to it is the whole story.
+#
+# A vertex is free when some colour is missing from its neighbourhood.  If the
+# neighbourhood colours looked independent and uniform over the k-1 colours
+# other than its own,
+#
+#     free@k  ~  (k-1) * (1 - 1/(k-1))^deg
+#
+# Measured against that law:
+#
+#   graph           k   deg     free@k    law      ratio
+#   Sa              4   9.94    0.00 %    5.2 %    20x better (and exactly 0)
+#   five_247_c      5  10.12   14.82 %   21.7 %     1.5x
+#   Z (+) hexagon   5  13.78    9.67 %    7.6 %     0.8x  -- WORSE than random
+#
+# So Sa is structurally rigid at four and our 5-chromatic graphs are random
+# graphs that happen to refuse four.  The reason is where the chromatic number
+# lives: Sa refuses three everywhere at once, every vertex deep inside several
+# overlapping copies of the 39-point diamond, whereas Z refuses four because of
+# ONE spindle -- strip the pivot and the rest is 4-chromatic material, which at
+# five colours is slack by construction.
+#
+# The law also prices the target.  For free@5 to fall below 1/n at n ~ 5000 the
+# law needs mean degree about 35, and a unit-distance graph in the plane has
+# O(n^{1/3}) mean degree, so 35 is out of reach at any size this project can
+# solve.  Only structure can close that gap, and the measurement says
+# densifying does not supply it.
+FREE_AT_K_FOLLOWS_A_LAW_AND_ONLY_SA_BEATS_IT = True
+
+
+# Rotating a sprawling object about a point does not interlock it.
+#
+# Sa is the union of a 39-point diamond over a group of rotations about a
+# common centre, and that is what makes it rigid.  Copying the move one rung up
+# -- union the 803-point 5-chromatic graph over C3, C6, C12 and the spindle
+# group, about the origin, about its three highest-degree vertices and about
+# two of its lowest -- gives twenty objects and not one of them is tighter:
+#
+#   family            n      deg     free@5
+#   carrier          803    10.12    14.82 %
+#   C3              1843    10.73    14.98 %
+#   C6              3205    10.78    14.95 %
+#   C12             6409    10.78    14.18 %
+#   spindle 64/9    4813    10.14    15.83 %
+#
+# Four times the vertices bought 0.7 of mean degree.  The copies are laid
+# beside each other, not threaded through each other, because the carrier is
+# not compact: it is a chain of Sa, a rotated Sa and a spindled copy, so its
+# rotations barely overlap.
+#
+# Translation by a unit vector is the opposite: p and p+t are at distance
+# exactly 1, so every vertex gains an edge for every translation before any
+# coincidence.  The Minkowski sum with the 7-point hexagon takes 803 points to
+# 4273 and the mean degree from 10.12 to 13.78 -- but free@5 only reaches
+# 9.67 %, which is WORSE than the law predicts for that degree.  Density is
+# bought, rigidity is not.
+ROTATION_LAYS_COPIES_SIDE_BY_SIDE_TRANSLATION_THREADS_THEM = True
+
+
+# Three copies consume a disjunction, and ODD is the reason.
+#
+# De Grey's spindle needs a pair FORCED equal.  A weaker hypothesis closes the
+# same argument.  Suppose only that in every k-colouring of H
+#
+#       c(v) = c(q1)   OR   c(v) = c(q2)
+#
+# with |v - q1| = |v - q2| = r, and let rho be the rotation by 2*pi/3 about v.
+# In U = H u rho(H) u rho^2(H) every copy contains v, which rho fixes, so each
+# copy j yields c(v) = c(rho^j(q_i)) for some option i(j) in {1,2}.  Three
+# copies and two options: two copies take the SAME option, and their two points
+# are distinct vertices of the equilateral triangle inscribed in the circle of
+# radius r about v.  That triangle has side r*sqrt3, so at
+#
+#       r = 1/sqrt3      (squared distance 1/3)
+#
+# the two are at distance exactly 1, adjacent, and identically coloured.  U has
+# no k-colouring.
+#
+# Why three, and why only two options.  With s copies, the copies that clash on
+# option i form the circulant Cay(Z_s, +-j_i) where 2 arcsin(1/(2 r_i)) is
+# 2 pi j_i / s.  Each option's copies must be independent there, so at most
+# floor(s/2) of them, and the pigeonhole bites exactly when
+#
+#       t * floor(s/2)  <  s
+#
+# which for t = 2 means s ODD, and s = 3 is the smallest.  t = 3 never works:
+# it would need 3*floor(s/2) < s.  s = 3 also costs nothing -- cos 120 = -1/2
+# and sin 120 = sqrt3/2 live in Q(sqrt3), which every field here contains.
+# (s = 5 works too, at squared radii (5 +- sqrt5)/10, but sin 72 is
+# sqrt(10 + 2 sqrt5)/4, a nested radical a multiquadratic field cannot hold.)
+#
+# So the target drops from a forced pair to a forced pair of OPTIONS, at the
+# price of one extra copy and one specific squared distance.
+THREE_COPIES_CONSUME_A_DISJUNCTION_AND_ODD_IS_WHY = True
+
+
+# The disjunction cannot be manufactured locally, and the plane says why.
+#
+# There is a four-vertex gadget that would give it for free at four colours:
+# if x ~ y and v, q1, q2 are all adjacent to both x and y, and q1 ~ q2, then
+# c(v) avoids c(x) and c(y), leaving two colours, and c(q1), c(q2) are two
+# distinct colours also avoiding both -- so they exhaust that pair and c(v)
+# equals one of them.
+#
+# It cannot be drawn.  The points at distance 1 from both ends of an edge are
+# the intersection of two unit circles: exactly TWO points.  So v, q1, q2
+# cannot all sit there, and the gadget has no unit-distance realisation.  Any
+# disjunction in the plane has to come from a global argument, exactly like the
+# forcing it generalises.
+THE_DISJUNCTION_HAS_NO_LOCAL_UNIT_DISTANCE_GADGET = True
+
+
+# And the searches come back empty, exhaustively.
+#
+# The squared distance 1/3 is abundant -- 391 of Sa's 397 vertices have a
+# partner at it and 373 have two or more -- so the geometry is not the
+# obstacle.  Every option-pair was tested with one warm SAT call, using the
+# fact that the CNF carries no symmetry breaking: a colouring separating v from
+# both can be permuted to put c(v) = 0, so the test is the two unit
+# assumptions -X(q1,0), -X(q2,0).
+#
+#   graph          k   pivots with 2+   option-pairs   disjunctions
+#   Sa             4        373            14 919           0
+#   five_247_c     5        791            32 557           0
+#
+# Both exhaustive, both in under a minute of solving.  The weaker hypothesis is
+# not satisfied either, on the two graphs where it would have paid.
+NO_DISJUNCTION_AT_ONE_THIRD_ON_SA_OR_ON_THE_CARRIER = True
