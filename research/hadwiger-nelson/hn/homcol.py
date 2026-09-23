@@ -14454,3 +14454,42 @@ THE_HUB_ROTATION_METHOD_HAS_EXACTLY_TWO_INSTANCES = True
 #     the cheapest closure known here needs a carrier with sqrt2 in it,
 #     and this project has never built one.
 THE_UNIT_SQUARE_CLOSES_WITH_TWO_COPIES = True
+
+
+# sqrt2 is out of reach of this project's grammar, and the reason is arithmetic.
+#
+# The square closure is the cheapest known -- two copies, a rational rotation --
+# and all it needs is a vertex that is the midpoint of two graph points sqrt2
+# apart.  Not one graph here has such a pair, and the obstruction is not an
+# oversight:
+#
+#   * every carrier starts in the Eisenstein lattice, where squared distances are
+#     Loeschian, a^2 + ab + b^2, and 2 is not one of them;
+#   * the spindle rotations have cos^2 + sin^2 = 1 in the field, so they preserve
+#     norms and keep distances inside one copy Loeschian;
+#   * sigma scales by 1/sqrt3, so it divides norms by three, and 2 = 6/3 would
+#     need 6 to be Loeschian, which it is not (1, 3, 4, 7, 9, 12, 13, ...);
+#   * cross-copy distances pick up sqrt3, sqrt11, sqrt247 and land irrational.
+#
+# Measured after one sigma round on the 803-graph -- 8323 points, a far wider
+# distance spectrum than the carrier's: pairs at d^2 = 2, zero.  At d^2 = 1/2,
+# zero.  Square centres, zero.
+#
+# Translating a copy by a vector of length sqrt2 does supply them, and every
+# point of G then centres a square, but the copies barely touch: 2409 vertices
+# with 169 edges between them, for the in-field half-offsets
+# ((1+sqrt3)/4, (1-sqrt3)/4) and its five 60-degree rotations and (1/2,1/2)
+# alike.  A translate by a non-lattice vector lands nowhere near the lattice, so
+# the diagonal ends carry no constraint and one exhibited colouring frees 206 of
+# the 803 triples outright and the rest within a few dozen solves.
+#
+# So of the two closures, only the 1/sqrt3 one is native here: three copies at
+# 120 degrees, everything inside Q(sqrt3, ...), nothing to build from scratch.
+# And its requirement, like the square's, comes down to the same rung:
+#
+#     c(h) is forced onto the partners only if c(N(h)) covers the rest, and
+#     two partners cover at most two colours, so mu_5(N(h)) >= 3 is needed.
+#
+# Which is rung one of the original ladder, still unclimbed, and now known to be
+# the bottleneck of EVERY route rather than of one of them.
+THE_SQUARE_NEEDS_ROOT_TWO_AND_THE_GRAMMAR_CANNOT_MAKE_IT = True

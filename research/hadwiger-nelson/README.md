@@ -6557,3 +6557,72 @@ by inheritance, and the UNSAT core plus a greedy pass gives the narrowest
 disjunction this project has: **133 specific pairs** (76 + 57) over 65 vertices.
 Genuine, and too wide to consume — no vertex meets more than 11 of them, so no
 rotation about a point can chain the conclusions.
+
+## Closing a disjunction: the complete list, and the unit square
+
+Rotating `m` copies of a graph about a hub `h` consumes a statement
+`c(h) = c(v)` for `v ∈ S` of width `w` when every choice function forces two
+named points a unit apart. There are exactly two ways to arrange that.
+
+**By pigeonhole**, with `m > w` copies. The adversary picks which pair repeats,
+so `2r·sin(kψ/2) = 1` must hold for every `k = 1 … m−1` at once, which needs
+`sin(kψ/2)` constant. `m = 2` solves it at any radius — the ordinary spindle,
+width 1, a forced pair. `m = 3` needs `sin(ψ/2) = sin ψ`, so `ψ = 120°` and
+`r = 1/√3` exactly. `m ≥ 4` has no solution at all.
+
+**By all-pairs clash**, with `m = 2` and `w = 2`. Demand instead that all four
+cross pairs clash: `|v_s − ρv_s| = 1` forces `r₁ = r₂ = r`, the two cross
+conditions force `cos(a₂−a₁+φ) = cos(φ−a₂+a₁)` so the partners are **antipodal**
+about `h`, and substituting gives `1 + cos φ = 1 − cos φ`, hence `φ = 90°` and
+`r = 1/√2`. **That is the unit square** — `h` its centre, the partners one
+diagonal, their images the other, and the four clashing pairs are the square's
+four sides. Checked exactly on `(0,0)`, `(1,1)`, `h = (½,½)`.
+
+> If a vertex `h` of a unit-distance graph `G` centres a unit square whose
+> diagonal `{v₁,v₂}` lies in `G`, and every 5-colouring gives `c(h) = c(v₁)` or
+> `c(h) = c(v₂)`, then `G ∪ ρ₉₀(G)` has no 5-colouring.
+
+Two copies where `1/√3` needs three, and the 90° rotation is *rational*, so the
+field never grows. What it needs instead is a pair at distance `√2` — and **2 is
+not a Loeschian number**, so no triangular-lattice carrier has one. Every
+carrier here starts in the Eisenstein lattice, the spindle rotations preserve
+norms, and `σ` divides them by three (`2 = 6/3` would need 6 Loeschian, which it
+is not). Measured after one `σ` round on the 803-graph, 8 323 points: pairs at
+`d² = 2`, **zero**; at `d² = 1/2`, **zero**; square centres, **zero**. Three
+translates by a vector of length `√2` do supply them — every point of `G` then
+centres a square — but the copies barely touch: 2 409 vertices with **169** edges
+between them, for every in-field half-offset tried, and one exhibited colouring
+frees 206 of the 803 triples outright.
+
+So of the two closures only the `1/√3` one is native here. And both come down to
+the same rung: two partners cover at most two colours, so `c(h)` is forced onto
+them only if `c(N(h))` covers the other three — **`μ₅(N(h)) ≥ 3`**, rung one of
+the original ladder, now known to be the bottleneck of *every* route rather than
+of one of them.
+
+## σ, and what the centre-closure could not build
+
+`σ(x,y) = ((x − √11·y)/6, (√11·x + y)/6)` is exact over `ℚ(√3,√11)`, since
+`cos θ₀ = √3/6` and `sin θ₀ = √33/6`. Two lines of algebra give
+`|σu|² = (x²+y²)/3` and `|u − σu|² = x²+y²`: it lands every point on the circle
+of `1/√3` times its radius while moving it by *exactly its radius*. Centred
+anywhere, `σ_c(u) = c + σ(u−c)` therefore sits at `1/√3` from `c` and a unit
+from `u` — a cross-ring edge, built rather than hoped for.
+
+That is what the **centre-closure** could not do. Adjoining the centre of every
+unit triangle saturates the 803-graph at 1 851 vertices (803 → 1363 → 1781 →
+1839 → 1851, then nothing), with 10 312 pairs at `1/√3` and rings of up to 30
+points — and it never helped, because a triangular lattice has only angles that
+are multiples of 30° while `θ₀ ≈ 73.22°` is not one, so those rings had no edges
+to the neighbourhood they were meant to squeeze. All 1 851 vertices escape their
+own ring.
+
+One `σ` round on the 803-graph gives 8 323 points, 49 987 edges, rings of up to
+50 and **86 896** cross-ring triangles — thirteen times what it started with.
+Still 5-colourable, still no ring hub, and `χ(N(h) ∪ ring) = 3` — as the
+two-ring theorem requires, since every such configuration is a disjoint union of
+copies of one graph. A single ring triangle is capped at 3 for a sharper reason:
+a point of `N(h)` reaches the ring only at `φ ± θ₀`, and those two are
+`2θ₀ = 146.44°` apart, never a multiple of 120°, so it has **at most one**
+neighbour in any given triangle, keeps a list of two of its three colours, and
+`N(h)` is 2-choosable.
