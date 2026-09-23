@@ -13614,3 +13614,32 @@ TUNING_THE_ANGLE_TO_ORDER_SIX_MANUFACTURES_THE_CLASS = True
 # this project has ever produced forcing at five -- not in either direction,
 # not at any density, not under any of the three relations searched.
 THE_RECIPE_CLOSES_AT_FOUR_AND_OWES_DE_GREY_NOTHING = True
+
+
+# Both tunings at once: the group and the chromatic number, together.
+#
+# Tuning the DISTANCE moves a forced pair anywhere in [0, 2D].  Tuning the
+# ANGLE to 60 degrees gives the composition order six, so the union of its
+# copies is C6-invariant and the pivot's whole orbit takes one colour, on a
+# circle of radius R with R^2 = D^2.  Applied in that order they collide
+# usefully.
+#
+# Move the pair to squared distance 1/3 first -- cos phi1 = -125/128,
+# sin phi1 = sqrt(759)/128 -- and then tune the angle on the NEW pair.  The
+# orbit is now six points 60 degrees apart on a circle of radius 1/sqrt3, so
+# the pairs two apart are at distance 2 R sin 60 = 1 EXACTLY.  Six of the
+# fifteen orbit pairs are edges, and all fifteen are forced monochromatic.
+#
+#   orbit squared distances   {1/3: 6, 1: 6, 4/3: 3}
+#   union                     12 240 points, 81 870 edges, degree 13.38
+#   C6-invariant              yes, about a centre in none of the copies
+#   4-colourable              NO
+#
+# So the union refuses four with NO SPINDLE anywhere in the construction, and
+# it carries a group the carrier never had.  1/sqrt3 is of course the
+# circumradius of a unit equilateral triangle -- the same number the
+# disjunctive gadget needed, arrived at from the opposite direction: there it
+# was a constraint to be satisfied and could not be, here it is manufactured.
+#
+# The whole thing lives in Q(sqrt3, sqrt11, sqrt23), of dimension 8.
+BOTH_TUNINGS_GIVE_THE_GROUP_AND_THE_CHROMATIC_NUMBER = True
