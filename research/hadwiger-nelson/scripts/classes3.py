@@ -88,13 +88,19 @@ for b in BASES:
             seenp.add((min(p1, p2), max(p1, p2)))
         reps.append((x, y))
     # confirm, then look at the graph the forced pairs form
-    edges = []
+    # The orbit of a pair can have fewer than |group| members, and the same
+    # unordered pair can arrive in both orders, so the images MUST be
+    # deduplicated.  Counting them raw made one pair look like four and turned
+    # a class of two into a reported class of five.
+    eset = set()
     s2 = Solver(name="m22", bootstrap_with=cnf)
     for x, y in reps:
         if not s2.solve(assumptions=[X(x, 0), X(y, 1)]):
             for pm in maps:
-                edges.append((pm[x], pm[y]))
+                a2, b2 = pm[x], pm[y]
+                eset.add((min(a2, b2), max(a2, b2)))
     s2.delete()
+    edges = sorted(eset)
     deg = Counter()
     for x, y in edges: deg[x] += 1; deg[y] += 1
     hubs = [(v, d) for v, d in deg.items() if d >= 2]

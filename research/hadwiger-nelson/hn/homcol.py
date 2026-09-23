@@ -12886,3 +12886,33 @@ THREE_ROTATIONS_FROM_ONE_CLASS_AND_ONE_PIVOT_IS_ENOUGH = True
 # spindle did not.  The novelty needs DIFFERENT radii, which is what makes the
 # Sa[199] class of three worth its cost.
 CLASSES_REACH_FIVE_AND_EQUAL_RADII_GIVE_NOTHING_NEW = True
+
+
+# CORRECTION to the constant above, which claimed classes of five.
+#
+# It counted the group images of each confirmed pair without deduplicating.
+# The orbit of a pair can have fewer than twelve members and the same
+# unordered pair arrives in both orders, so one pair was counted four times
+# and a class of two was reported as a class of five.  Asking the solver
+# directly -- is v416 forced equal to each point at distance 64/3 from it? --
+# returns {416, 788} and nothing else.
+#
+# Deduplicated, the 1021-point carrier has 17 forced representatives, 153
+# forced pairs under the group (which matches the independent count), and 18
+# vertices in two or more of them.  So classes of three are real there, and the
+# earlier "always exactly two" is still wrong -- but they are classes of three,
+# not five.
+#
+# And none of them gives a free angle.  The only forced distances on that
+# carrier are 64/9 and 64/3, so a class of three has either
+#
+#     equal radii          -- and the free angle collapses to the classical
+#                             spindle, discriminant (4r-1)/4, radical 247 at
+#                             64/9 and 759 at 64/3
+#     64/9 with 64/3       -- and |sqrt(r1) - sqrt(r2)| = 1.952 > 1, so the
+#                             circles do not meet and there is no rotation
+#
+# On Sa[199] the radii are 64/3 and 256/9 with |sqrt(r1) - sqrt(r2)| = 0.715,
+# and that is the only configuration in this project where the free angle is a
+# genuinely new rotation.  It is why the 3025-point carrier is worth its size.
+THE_SMALL_CARRIER_ADMITS_NO_GENUINE_FREE_ANGLE = True
