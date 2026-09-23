@@ -13306,3 +13306,35 @@ SA_IS_RIGID_AT_DEGREE_FOUR_AND_THAT_IS_NOT_A_DEGREE_EFFECT = True
 # circles, and there are exactly two of them, so v, q1 and q2 cannot all sit
 # there.  One fact, two dead ends.
 NEIGHBOURHOODS_ARE_BIPARTITE_SO_RIGIDITY_IS_NEVER_LOCAL = True
+
+
+# Forced APART is empty too, and that closes the dual route.
+#
+# Every filter here had hunted pairs forced to AGREE, because that is what the
+# spindle consumes.  The bipartite-neighbourhood theorem points at the other
+# relation: if free@5 = 0 then every degree-4 vertex has its four neighbours
+# taking four distinct colours always, and since a neighbourhood has maximum
+# degree 2 and no 4-cycle -- four steps of +-60 degrees cannot sum to 360 -- at
+# most 3 of those 6 pairs are edges, so at least 3 must be forced apart without
+# being adjacent.
+#
+# The relation also closes the problem by itself, with no rotation at all: five
+# points pairwise forced apart use all five colours in every 5-colouring, and a
+# sixth forced apart from all five has nothing left.  Six pairwise forced apart
+# cannot live inside a 5-colourable graph -- that is the definition of refusing
+# five -- so five is the most that can exist and the sixth is what a
+# construction step would have to supply.
+#
+# The filter is the mirror image and just as certifying: a pair that AGREES in
+# any exhibited proper colouring is PROVED not forced apart.
+#
+#   graph          n      non-adjacent pairs   rounds to empty   survivors
+#   five_247_c    803          253 642              140              0
+#   five_247     1139          512 342               85              0
+#
+# Every non-adjacent pair of both graphs agrees in some exhibited 5-colouring,
+# in two and seven seconds.  So at five colours BOTH relations are empty on
+# these graphs: nothing is forced to agree and nothing is forced to differ.
+# The colourings are not merely plentiful, they are unconstrained in both
+# directions.
+FORCED_APART_IS_EMPTY_AT_FIVE_AS_WELL = True
