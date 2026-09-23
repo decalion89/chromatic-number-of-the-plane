@@ -14667,3 +14667,40 @@ THE_TUNED_GRAPH_ALREADY_HAD_ROOT_TWO = True
 # The first two configurations answered at_most_two instantly.  This one does
 # not, which is itself the measurement: the hexagon is finally constrained.
 BUILD_THE_GRAPH_AROUND_THE_QUESTION = True
+
+
+# The tightest 5-chromatic graph built here, and what it changes.
+#
+# Six copies of the vertex-critical 803 on one hexagon, each placed with its
+# densest vertex on a hexagon vertex -- first translated, then TURNED by i * 60
+# degrees about that vertex so that no translation of a colouring carries
+# between copies:
+#
+#                   n      edges   refuses 4   finds a 5-colouring in
+#   translated    3830    24 310      yes              ~30 s
+#   turned        4159    23 928      yes             452 s
+#   five_247_c     803     4 065      yes             < 1 s
+#
+# Turning made it fifteen times harder to colour.  Solver effort is noisy -- a
+# re-run with at-most-one clauses found the turned graph's colouring in 53 s --
+# but two orders of magnitude over the 803 is not noise, and nothing built here
+# has sat that close to the edge of six.
+#
+# Its hexagon is still 2-colourable: at_most_two came back True, after about
+# six hundred seconds, the hardest such call ever measured here and the first
+# that was not instant.  Constrained to the limit, not blocked.
+#
+# What it changes is where to look.  The pricing theorem says a forced pair's
+# certificate is the whole near-critical graph -- forced pairs live only at the
+# edge of the next chromatic number, which is why twenty-five million of them
+# came back empty from loose graphs.  This graph is the nearest thing to that
+# edge the project owns, so it is the first place a forced pair at FIVE has any
+# business existing.  And the target can be posed that way directly:
+#
+#     not a graph with no 5-colouring, but one with essentially ONE.
+#
+# In a uniquely 5-colourable unit-distance graph every non-adjacent pair is
+# forced, together or apart, and one forced-together pair at any distance in
+# (0,2) other than 1 is closed by a single spindle.  The number of 5-colourings
+# is the objective, and solver effort is its measurable shadow.
+THE_TIGHTEST_GRAPH_IS_WHERE_FORCED_PAIRS_CAN_LIVE = True
