@@ -14192,3 +14192,65 @@ THE_STACK_BUILDS_DISJOINT_HEXAGONS_AND_THAT_IS_THE_LOOSEST_CASE = True
 # assumed, and it passes: the three-distance graph on these 803 points has
 # 8793 edges and no 6-clique at all.
 THE_EIGHT_HUNDRED_AND_THREE_FORCES_TWO_DISTANCES_AT_FIVE = True
+
+
+# Niven picks the radius, and it is 1/sqrt3.
+#
+# Everything that made the single-point attack hopeless was about the UNIT
+# circle, not about neighbourhoods.  On a circle of radius r two points are a
+# unit apart at the angle theta with cos theta = 1 - 1/(2r^2); a cycle inside
+# the ring needs theta to be a rational multiple of pi, and cos theta is
+# rational there, so by Niven's theorem cos theta is 0 or +-1/2 or +-1:
+#
+#     cos theta =  1/2   theta =  60 deg   r = 1         even cycles only
+#     cos theta =  0     theta =  90 deg   r = 1/sqrt2   even cycles only
+#     cos theta = -1/2   theta = 120 deg   r = 1/sqrt3   TRIANGLES
+#     cos theta = -1     theta = 180 deg   r = 1/2        degenerate
+#
+# Exactly one radius in the plane puts an ODD cycle on a ring, and it is
+# 1/sqrt3 -- the circumradius of a unit triangle.  That is why the number has
+# turned up in every disjunction this project has built, and why the unit
+# circle is a dead end: chi(N(p)) = 2 there, always, in every graph, so a
+# 2-coloured neighbourhood exists locally whatever the rest of the graph does.
+#
+# On the 1/sqrt3 ring the local floor is THREE.  Measured, for the first time:
+#
+#     mu_5 on the 1/sqrt3 ring = 3    at all 120 richest hubs of the 803-graph
+#                               = 3    at all 120 richest hubs of the 1139
+#
+# Every mu this project has ever measured read 2.  This is the first number
+# above the floor, and the floor is what moved: the distance from a blocked
+# hub is two rungs instead of three.
+#
+# What a blocked hub would mean is the consumable shape.  If the ring about h
+# shows all five colours in every 5-colouring, then in particular h's own
+# colour is on it, so
+#
+#     every 5-colouring gives  c(h) = c(v)  for some v at distance 1/sqrt3,
+#
+# and a rotation by 120 degrees about h carries that ring to ITSELF, so every
+# rotated copy names a partner on the same ring, and two partners 120 degrees
+# apart are a unit apart.  That is the disjunctive spindle, with the ring
+# supplying the odd cycle the odd-cycle theorem demands.
+#
+# Not there yet: scanning every vertex of the 803- and 1139-point graphs, none
+# is a ring hub -- each can avoid its own 1/sqrt3 ring, rings of up to 18
+# points and 4072 internal unit edges included.
+MU_READS_THREE_ON_THE_ONE_OVER_ROOT_THREE_RING = True
+
+
+# The narrowest pigeonhole-free disjunction on the 803-graph: 133 pairs.
+#
+# Restricting every candidate pair to the two forced distance classes makes the
+# pigeonhole trap impossible by inheritance -- the three-distance graph they
+# span has no 6-clique, so neither does any subgraph -- and then the UNSAT core
+# plus a greedy pass gives a minimal set:
+#
+#     in every 5-colouring of five_247_c, one of 133 specific pairs is
+#     monochromatic:  76 at d^2 = 3/2 - sqrt33/6, 57 at d^2 = 7/6 - sqrt33/6,
+#     spread over 65 vertices.
+#
+# It is a genuine disjunction and it is too wide to consume: no vertex meets
+# more than 11 of the 133, so no rotation about a point can chain the
+# conclusions, which is the whole reason the hub shape matters.
+THE_NARROW_DISJUNCTION_IS_ONE_HUNDRED_AND_THIRTY_THREE_PAIRS = True

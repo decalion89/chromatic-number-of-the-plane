@@ -6478,3 +6478,82 @@ So the small neighbourhoods were scanned for the first time — all 802 candidat
 points of the 803-graph with `5 ≤ |N| ≤ 7`, exactly, no budget. `μ₅ = 2`
 throughout (`μ₅ = 1` at 11 of them). Still two; but the target is now a number
 instead of a hope.
+
+## Niven picks the radius, and it is 1/√3 — where μ finally reads three
+
+Everything that made the single-point attack hopeless was about the **unit
+circle**, not about neighbourhoods. On a circle of radius `r`, two points are a
+unit apart at the angle `θ` with `cos θ = 1 − 1/(2r²)`. A cycle inside that ring
+needs `θ` to be a rational multiple of `π`, and `cos θ` is rational there, so by
+**Niven's theorem** `cos θ ∈ {0, ±½, ±1}`:
+
+| `cos θ` | `θ` | `r` | cycles |
+|---|---|---|---|
+| ½ | 60° | 1 | even only — **the unit circle** |
+| 0 | 90° | 1/√2 | even only |
+| −½ | **120°** | **1/√3** | **triangles** |
+| −1 | 180° | ½ | degenerate |
+
+Exactly one radius in the plane puts an **odd cycle** on a ring, and it is
+`1/√3`, the circumradius of a unit triangle. That is why the number turns up in
+every disjunction this project has built, and it is why the unit circle is a
+dead end: `χ(N(p)) = 2` there always, in every graph, so a 2-coloured
+neighbourhood exists locally whatever the rest of the graph does.
+
+On the `1/√3` ring the local floor is **three**. Measured for the first time:
+
+| graph | hubs tested | `μ₅` on the `1/√3` ring |
+|---|---:|---|
+| `five_247_c` (803) | 120 richest | **3** at every one |
+| `five_247` (1139) | 120 richest | **3** at every one |
+
+Every `μ` this project has measured before read 2. This is the first number
+above the floor — and it is the *floor* that moved: from a blocked hub the
+distance is two rungs, not three.
+
+A blocked hub is also the **consumable** shape. If the ring about `h` shows all
+five colours in every 5-colouring then in particular `h`'s own colour is on it,
+so every 5-colouring gives `c(h) = c(v)` for some `v` at distance `1/√3` — and a
+rotation by 120° about `h` carries that ring *to itself*, so every rotated copy
+names a partner on the same ring, and two partners 120° apart are a unit apart.
+That is the disjunctive spindle with the odd cycle the odd-cycle theorem
+demands. Not there yet: scanning every vertex of the 803- and 1139-point graphs,
+none is a ring hub — each can avoid its own `1/√3` ring, rings of up to 18
+points and 4 072 internal unit edges included.
+
+## Forcing a distance, and the pigeonhole that nearly passed for one
+
+Every forcing test here had asked the strongest question — *is this pair
+monochromatic in every 5-colouring?* — and the certificate pricing says why the
+answer is always no. The weak question is a disjunction and costs one solve,
+since forbidding a distance is just adding its pairs as edges:
+
+```
+H forces d at five colours   ⟺   χ(H; {1,d}) > 5
+```
+
+No single distance is forced on the 803-graph: all sixty of its richest classes
+leave it 5-colourable, one with 3 500 extra edges. **Two are:**
+
+```
+χ( five_247_c ; { 1,  3/2 − √33/6,  7/6 − √33/6 } )  >  5
+```
+
+so every 5-colouring has a monochromatic pair at one of those two squared
+distances. The second is exactly a distance the escape analysis had named, and
+the two differ by `1/3`.
+
+A first pass asked instead for the fewest individual **pairs**, called it `δ`
+and got ten. That is pigeonhole, not strain: the ten pairs complete `K₆` on six
+vertices that already carry five unit edges, and some six vertices of this graph
+carry nine, so six pairs suffice in *any* unit-distance graph with a rich enough
+vertex. Withdrawn. The distance-class version survives because **a two-distance
+set in the plane has at most five points**, so a `{1,d}`-graph can never contain
+`K₆`; three distances can (the regular hexagon realises `1, √3, 2`), so the
+two-class result was checked — 8 793 edges, no 6-clique.
+
+Restricting every candidate pair to those two classes makes the trap impossible
+by inheritance, and the UNSAT core plus a greedy pass gives the narrowest
+disjunction this project has: **133 specific pairs** (76 + 57) over 65 vertices.
+Genuine, and too wide to consume — no vertex meets more than 11 of them, so no
+rotation about a point can chain the conclusions.
