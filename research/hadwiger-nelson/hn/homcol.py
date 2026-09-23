@@ -14742,3 +14742,37 @@ THE_TIGHTEST_GRAPH_IS_WHERE_FORCED_PAIRS_CAN_LIVE = True
 # selector first and died on the first satisfiable call -- loudly, which is the
 # right way for that mistake to fail.
 KEMPE_CHAINS_ARE_FREE_COLOURINGS_BUT_NOT_A_RIGIDITY_MEASURE = True
+
+
+# The floor and the cap: this session measured the wrong one.
+#
+# Two quantities attach to a set S of a graph's vertices, and they point in
+# opposite directions:
+#
+#     mu(S)  = min over proper colourings of |c(S)|     the FLOOR
+#     cap(S) = max over proper colourings of |c(S)|     the CAP
+#
+# mu is the blocking direction: mu_5(N(p)) = 5 is a point that cannot be added.
+# Almost everything this session built was aimed at raising a floor -- on the
+# unit circle, on the 1/sqrt3 ring, on N(h) united with partners.
+#
+# The cap is the forcing direction, and it is the mechanism that actually took
+# four to five.  The project identified it long ago and it is worth restating in
+# these terms: de Grey's Y forces its antipodal pair because, after the bite, the
+# six points of Sa's radius-2 ring can show AT MOST TWO colours in any
+# 4-colouring.  Not a floor raised to four; a cap lowered to two.  A set capped
+# low is nearly monochromatic in every colouring, and forced pairs come out of
+# it; one forced pair, one spindle, one edge -- 1581 = 2 * 791 - 1.
+#
+# And the cap is what tightness produces.  In a uniquely colourable graph every
+# set has exactly one colour set, so every cap falls to the number of colours
+# the set actually shows -- the floor and the cap meet.  Driving the number of
+# 5-colourings down, which is the reframing adopted above, drives caps down with
+# it, and a low cap on a non-unit ring is de Grey's gateway one level up.
+#
+# The earlier census on de Grey's G at five found no capped ring at any distance
+# other than 1.  The tight hexagon graph is new and two orders of magnitude
+# tighter, so the census is being rerun there: every non-unit ring of six or
+# more points within radius 3 of a vertex, screened by Kempe colourings (any
+# ring seen showing all five is uncapped) and the survivors asked directly.
+THE_CAP_NOT_THE_FLOOR_IS_THE_FORCING_DIRECTION = True
