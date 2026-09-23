@@ -185,3 +185,63 @@ def test_symmetric_graph_refuses_four_colours(symmetric):
     for u, v in list(g.edges())[:200]:
         assert pts[u].dist2(pts[v]) == 1
     assert is_k_colorable(g, 4, timeout=1800)[0] is False
+
+
+# ---------------------------------------------------------------------------
+# The other forced orbit, spent alone.  The symmetric carrier's 153 forced
+# pairs fall in two orbits; the second, at squared distance 64/3, has
+# cos 125/128 and sin sqrt(759)/128 with 759 = 3*11*23, so its spindle lives in
+# Q(sqrt3, sqrt11, sqrt23).  Same vertex count as the first and six fewer
+# edges: a different graph, not a redrawing.
+
+F23 = Field((3, 11, 23))
+SRC23 = os.path.join(HERE, os.pardir, "data", "five_23.json")
+
+
+@pytest.fixture(scope="module")
+def graph23():
+    with open(SRC23) as fh:
+        d = json.load(fh)
+    pts = [Point(F23.element([Fr(a, b) for a, b in x]),
+                 F23.element([Fr(a, b) for a, b in y]))
+           for x, y in d["points"]]
+    return d, pts
+
+
+def test_third_field_size_and_edges(graph23):
+    d, pts = graph23
+    assert tuple(d["field_generators"]) == (3, 11, 23)
+    assert d["n"] == 7141 and d["m"] == 47676
+    g = build_graph(pts)
+    assert g.n == 7141
+    assert sum(len(a) for a in g.adj) // 2 == 47676
+    for u, v in list(g.edges())[:200]:
+        assert pts[u].dist2(pts[v]) == 1
+
+
+def test_third_field_is_c6_invariant(graph23):
+    from hn.geometry import _rot60
+    _, pts = graph23
+    S = set(pts)
+    r = _rot60(F23)
+    assert all(r(p) in S for p in pts)
+
+
+def test_third_field_refuses_four_colours(graph23):
+    _, pts = graph23
+    assert is_k_colorable(build_graph(pts), 4, timeout=1800)[0] is False
+
+
+def test_the_second_spindle_angle_needs_23():
+    """cos t = 1 - (1/2)/(64/3) = 125/128, sin t = sqrt(759)/128, and
+    759 = 3*11*23, so this rotation is outside Q(sqrt3,sqrt11,sqrt247)."""
+    cos = Fr(1) - Fr(1, 2) / Fr(64, 3)
+    assert cos == Fr(125, 128)
+    r = 1 - cos * cos
+    n = r.numerator * r.denominator
+    d = 2
+    while d * d <= n:
+        while n % (d * d) == 0:
+            n //= d * d
+        d += 1
+    assert n == 759 == 3 * 11 * 23
