@@ -13223,3 +13223,57 @@ FREE_AT_K_IS_A_PROPERTY_OF_A_COLOURING_AND_WOBBLES = True
 # which is already the carrier's own field -- so the densification costs no new
 # radical either.
 THE_TUNED_CHAIN_CARRIES_DENSITY_UP_TO_FIVE = True
+
+
+# CORRECTION to the free@k comparisons above.  The law must be applied per
+# VERTEX, and applying it to the mean degree manufactured a result that cannot
+# happen.
+#
+# A vertex of degree d is free with probability about (k-1)(1-1/(k-1))^d if its
+# neighbourhood looked random, and the honest null model is the average of that
+# over the degree sequence.  The function is CONVEX in d, so by Jensen
+#
+#       mean_v f(deg v)  >=  f(mean deg)
+#
+# with equality only when every degree is equal.  Every graph here is a union
+# of rotated or translated copies, with a dense middle and a thin boundary, so
+# the degrees are spread and the mean-degree law understates the null by a
+# factor of about two.
+#
+# What that produced: "Z (+) hexagon measures 0.8x the law -- worse than
+# random" and "the tuned chain measures 0.62x".  Both are withdrawn.  Against
+# the per-vertex law:
+#
+#   graph              n     deg    sd   per-vertex law   measured   ratio
+#   five_247_c        803   10.12  3.47      30.92 %       15.73 %    0.51
+#   five_247_b        951   10.87  3.86      27.18 %       13.62 %    0.50
+#   five_247         1139   11.37  4.05      24.38 %       12.50 %    0.51
+#   five_tuned_1_1   2041   13.35  4.59      16.00 %       13.86 %    0.87
+#
+# Nothing is worse than random.  The 5-chromatic graphs beat the null by a
+# steady factor of two, and the tuned chain -- two copies joined at one point,
+# which is structurally looser than an interlocked glue -- by only 1.15.
+THE_LAW_IS_PER_VERTEX_AND_THE_MEAN_DEGREE_VERSION_LIED = True
+
+
+# And Sa's zero is not a degree effect.  That is the whole point.
+#
+#   graph      n     deg   min deg   per-vertex law   measured
+#   Sa        397    9.94     4          10.49 %       0.00 %
+#   Y         791    9.96     4          10.37 %       (six forced pairs)
+#   Sa[25]   1021   13.34     4           4.10 %
+#   Sa[265]  2689   15.92     7           2.43 %
+#
+# Sa has six vertices of degree 4 and six of degree 5, and at four colours a
+# degree-4 vertex is free unless its four neighbours show all three other
+# colours -- which the law puts at better than even odds, and which happens in
+# Sa every time, in every 4-colouring.  Its rigidity is exact structure, not a
+# probability that got large.
+#
+# So the target was misstated.  It is not "reach mean degree 35", which a
+# planar unit-distance graph cannot do, nor "reach mean degree 19", which the
+# tuned chain nearly does.  It is a structure in which even the degree-4
+# vertices are rainbow-forced -- and raising the mean degree does not produce
+# it, because the free vertices are the low-degree tail and stacking orbits
+# adds boundary as fast as it adds middle.
+SA_IS_RIGID_AT_DEGREE_FOUR_AND_THAT_IS_NOT_A_DEGREE_EFFECT = True
