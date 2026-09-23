@@ -12748,3 +12748,23 @@ D12_IS_FREE_AND_SA12_HAS_NO_FORCED_PAIR = True
 # carrier does not merely fail to help: it trades the strong forcing for more
 # of the weak kind.
 RARE_FORCED_DISTANCES_ARE_THE_STRONG_ONES = True
+
+
+# Scanning for rarity instead of for count.  The distance of a candidate pair
+# is known before any solver call, so a scan can skip every representative at
+# the common distance and pay only for the unusual ones -- which is the whole
+# of what is being looked for.  Over the distinct orbits of glue centres:
+#
+#     Sa[1]     n=1141  deg 13.58   20 reps,   0 at an unusual distance
+#     Sa[7]     n=1477  deg 14.20   50 reps,   1 at 64/3, and it IS forced
+#     Sa[19]    n=1585  deg 13.11    3 reps,   0
+#     Sa[265]   n=2689  deg 15.92  102 reps,   0
+#
+# So the rare orbit is not a property of size or of degree; it is there or it
+# is not.  Sa[7]'s is the rarest found -- one orbit in fifty -- and spending it
+# gives
+#
+#     n = 10333   m = 73422   mean degree 14.21   C6-invariant, refuses four
+#
+# in Q(sqrt3, sqrt11, sqrt23).
+THE_RARE_ORBIT_IS_NOT_A_PROPERTY_OF_SIZE_OR_DEGREE = True
