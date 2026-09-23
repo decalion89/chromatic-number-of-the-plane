@@ -1,5 +1,10 @@
 """Neighbourhoods in the plane are bipartite, so rigidity is never local.
 
+The theorem is not new in this project -- it was derived in an earlier pass
+(README, "Every neighbourhood is bipartite, which bounds the single-point
+attack"), along with the conclusion that rigidity is global.  This file checks
+it on the graphs built since, and draws two consequences that pass did not.
+
 A vertex v is FREE at k colours when some colour is missing from its
 neighbourhood, and free@k = 0 -- which Sa achieves at four -- means no vertex
 ever has a spare colour.  The obvious way to guarantee that for one vertex is

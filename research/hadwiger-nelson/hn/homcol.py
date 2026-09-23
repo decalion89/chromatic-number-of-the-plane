@@ -13281,6 +13281,15 @@ SA_IS_RIGID_AT_DEGREE_FOUR_AND_THAT_IS_NOT_A_DEGREE_EFFECT = True
 
 # Neighbourhoods in the plane are bipartite, so rigidity is never local.
 #
+# ATTRIBUTION.  The theorem itself is not new here -- it was derived earlier
+# in this project (README, "Every neighbourhood is bipartite, which bounds
+# the single-point attack"), together with the conclusion that rigidity is a
+# global property (README, "Rigidity is not local, and that retires the
+# rest").  Re-deriving it without noticing was a failure of memory, and the
+# credit belongs to the earlier pass.  What this entry adds is the two
+# consequences below, which that pass did not draw, and a test that checks
+# the statement on the graphs built since.
+#
 # Every neighbour of v lies on the circle of radius 1 about v, and two points
 # of a radius-1 circle are a unit apart exactly when their central angle is
 # 2 arcsin(1/2) = 60 degrees.  So inside N(v) a point can only be adjacent to
@@ -13305,6 +13314,18 @@ SA_IS_RIGID_AT_DEGREE_FOUR_AND_THAT_IS_NOT_A_DEGREE_EFFECT = True
 # at distance 1 from both ends of an edge are the intersection of two unit
 # circles, and there are exactly two of them, so v, q1 and q2 cannot all sit
 # there.  One fact, two dead ends.
+#
+# The two consequences that are new:
+#
+#   * Local pinning needs chi(N(v)) = k-1, so it exists only at k = 3.  At four
+#     colours and above, free@k = 0 is global by necessity, not by accident --
+#     which prices every attempt to manufacture it by adding degree at exactly
+#     zero, in advance of measuring.
+#   * A neighbourhood has no 4-cycle either: four steps of +-60 degrees cannot
+#     sum to 360.  So a degree-4 vertex has at most 3 edges among the 6 pairs of
+#     its neighbourhood, and pinning it at five colours needs at least 3 of
+#     those pairs forced APART without being adjacent -- which is what sent the
+#     search to the dual relation, where both filters then came back empty.
 NEIGHBOURHOODS_ARE_BIPARTITE_SO_RIGIDITY_IS_NEVER_LOCAL = True
 
 
