@@ -14776,3 +14776,32 @@ KEMPE_CHAINS_ARE_FREE_COLOURINGS_BUT_NOT_A_RIGIDITY_MEASURE = True
 # more points within radius 3 of a vertex, screened by Kempe colourings (any
 # ring seen showing all five is uncapped) and the survivors asked directly.
 THE_CAP_NOT_THE_FLOOR_IS_THE_FORCING_DIRECTION = True
+
+
+# Coupling on a hexagon multiplies the colouring difficulty a thousandfold --
+# measured against the control that isolates it.
+#
+# Solver seconds are a noisy shadow of how few 5-colourings a graph has (the
+# same graph took 38 s on one run and 452 s on another), so tightness is taken
+# as the median CONFLICT count over three solves, each perturbed by pinning a
+# random vertex to a random colour -- harmless by colour symmetry, and it moves
+# the search.  Then the comparison the number needs:
+#
+#                                          n     edges   conflicts (median)
+#   five_247_c                            803     4065          33
+#   six copies of it, placed far apart   4818    24390         205
+#   six copies coupled on one hexagon    3830    24310     207 370
+#
+# The second row is the control: same copies, same edges within them, nothing
+# between them -- and six times one copy's difficulty, as independence says it
+# should be.  The third row has the SAME number of edges on FEWER vertices and a
+# thousand times the conflicts.  So the difficulty is the coupling -- critical
+# copies sharing a hexagon -- not the size.  That is the first tightness lever
+# in this project measured with a control, and it is the construction the
+# reframing needs: the target is a graph with essentially one 5-colouring, and
+# this is how the number of colourings is pushed down.
+#
+# One run in three of the coupled graph took 3.27 million conflicts; the median
+# is the honest figure, and the spread is itself a sign of how close to the edge
+# the instance sits.
+COUPLING_ON_A_HEXAGON_IS_A_THOUSANDFOLD_TIGHTER = True

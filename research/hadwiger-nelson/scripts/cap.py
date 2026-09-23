@@ -99,8 +99,17 @@ alive = [r for r in alive if len({col[v] for v in r[2]}) < K]
 print(f"  Kempe-screened: {len(alive)} of {len(rings)} rings still candidates   "
       f"[{time.time()-t0:.0f}s]", flush=True)
 
-nsel = n * K + 1; capped = []
-for c0, dd, pts in alive:
+# Largest rings first: a six-point ring can fail to show five colours by
+# accident in every colouring a walk happens to visit, but a ring of twelve or
+# more that never shows five is genuinely squeezed -- and every new colouring
+# the solver returns is used at once to discard every ring it shows uncapped.
+alive.sort(key=lambda r: -len(r[2]))
+MINPTS = int(sys.argv[2]) if len(sys.argv) > 2 else 12
+alive = [r for r in alive if len(r[2]) >= MINPTS]
+print(f"  of those, {len(alive)} have {MINPTS} or more points", flush=True)
+nsel = n * K + 1; capped = []; calls = 0
+while alive:
+    c0, dd, pts = alive[0]
     sel = nsel; nsel += 1
     for c in range(K):
         s.add_clause([-sel] + [X(v, c) for v in pts])
@@ -116,9 +125,13 @@ for c0, dd, pts in alive:
               f"never show all five ***   [{time.time()-t0:.0f}s]", flush=True)
         json.dump({"graph": NAME, "capped": capped},
                   open(f"{ROOT}/data/tight_caps.json", "w"))
+        alive = alive[1:]
     else:
-        alive2 = [q for q in alive if len({c2[v] for v in q[2]}) < K]
-        # the list is walked in order; later entries already shown uncapped are
-        # skipped cheaply by the same test inside the loop
+        for _ in range(200): kempe(c2)
+        alive = [q for q in alive[1:] if len({c2[v] for v in q[2]}) < K]
+    calls += 1
+    if calls % 10 == 0:
+        print(f"    {calls} solver calls: {len(alive)} rings left   "
+              f"[{time.time()-t0:.0f}s]", flush=True)
 print(f"\n  capped non-unit rings: {len(capped)}   [{time.time()-t0:.0f}s]",
       flush=True)
