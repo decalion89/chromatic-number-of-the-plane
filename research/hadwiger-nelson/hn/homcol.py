@@ -14626,3 +14626,44 @@ THE_SHRINK_HUNT_COSTS_FORTY_SIX_SECONDS_A_VERTEX = True
 # 8161 points, 55 716 edges, deg(h) = deg(v1) = deg(v2) = 31.  The field never
 # moves, since the translation is by a field vector.
 THE_TUNED_GRAPH_ALREADY_HAD_ROOT_TWO = True
+
+
+# Build the graph around the QUESTION, not the other way round.
+#
+# Every graph in data/ is large, sparse and centred nowhere, and the hexagon
+# whose 2-colouring rung one has to refute is a vanishing part of it: six
+# vertices of degree thirty, so the two sqrt3-triangles between them exclude
+# their colours from a couple of hundred points out of four thousand.  Five per
+# cent of the graph loses one colour each and the rest absorbs it.  Enriching
+# globally grows the denominator too, which is why enrichment never moved
+# at_most_two.
+#
+# So invert it, in three steps, each fixing what the last one measured.
+#
+#   1. The densest BALL around h -- every point reachable from h by unit steps
+#      within radius 2, over all 62 unit directions the carrier realises.  8984
+#      points, and |N(h)| = 62, which by the grading is eleven components and
+#      10 * 2^11 patterns to refute.  Richness at h is the wrong axis, for the
+#      third time.
+#
+#   2. Prune the unit circle about h to a SINGLE hexagon, since a graph is a
+#      point set we choose.  One component, twenty patterns, and rung one
+#      becomes exactly "no 5-colouring makes both inscribed triangles
+#      monochromatic".  Still placeable -- and the missing question was whether
+#      the ball is even 5-chromatic.  It is not: a ball grown from unit vectors
+#      admits four colours, so every colouring has a spare in hand.
+#
+#   3. Merge in a translate of the vertex-critical 803, and the union refuses
+#      four: 7704 points, degree 9.23, |N(h)| = 6.  Still placeable, because
+#      that translate sits two units away and reaches the hexagon only through
+#      the loose ball between them.
+#
+# Which names the final shape: put the critical structure ON the hexagon.  Six
+# translates of the 803, one per hexagon vertex, each placing its densest vertex
+# exactly there.  They overlap heavily -- 4818 points collapse to 3830 -- so it
+# is one graph, every hexagon vertex has degree 30 inside a 5-critical graph of
+# its own, the burden at h is still twenty, and the whole thing refuses four.
+#
+# The first two configurations answered at_most_two instantly.  This one does
+# not, which is itself the measurement: the hexagon is finally constrained.
+BUILD_THE_GRAPH_AROUND_THE_QUESTION = True
