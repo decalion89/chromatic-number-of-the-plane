@@ -14414,3 +14414,43 @@ THE_TWO_RING_CONFIGURATION_IS_THREE_CHROMATIC_EXACTLY = True
 # vertices closed under adjoining the centre of every unit triangle, 10 312
 # pairs at 1/sqrt3, rings of up to thirty points, all 1851 tested, all escape.
 THE_HUB_ROTATION_METHOD_HAS_EXACTLY_TWO_INSTANCES = True
+
+
+# The unit square: a width-two hub disjunction closed by TWO copies.
+#
+# The entry above classified the hub-rotation method and found two instances.
+# It classified one MECHANISM -- pigeonhole -- and missed the other.  Pigeonhole
+# needs m > w copies, and because the adversary picks which pair repeats it needs
+# 2r sin(k psi/2) = 1 for every k at once, which forces the ordinary spindle
+# (m = 2, w = 1, any radius) or m = 3, psi = 120, r = 1/sqrt3 (w = 2).  But with
+# m = 2 and w = 2 one can instead demand that ALL FOUR cross pairs clash, and
+# that has its own solution.
+#
+# Writing v1, v2 for the partners and rho for the rotation by phi about h:
+# |v_s - rho v_s| = 1 forces r1 = r2 = r with 2r sin(phi/2) = 1, and the two
+# cross conditions force cos(a2 - a1 + phi) = cos(phi - a2 + a1), so the
+# partners are ANTIPODAL about h.  Substituting gives 1 + cos phi = 1 - cos phi,
+# hence phi = 90 degrees and r = 1/sqrt2.
+#
+# Which is the unit square.  h is its centre, v1 and v2 are one diagonal, rho v1
+# and rho v2 are the other, and every point of one diagonal is a unit from every
+# point of the other -- those four pairs are the square's four sides.  Checked
+# exactly on (0,0), (1,1) with h = (1/2,1/2): all four squared distances are 1.
+#
+#     if a vertex h of a unit-distance graph G centres a unit square whose
+#     diagonal {v1,v2} lies in G, and every 5-colouring gives c(h) = c(v1) or
+#     c(h) = c(v2), then G u rho_90(G) has no 5-colouring.
+#
+# Two copies, where 1/sqrt3 needs three -- and the 90-degree rotation is
+# rational, so the field never grows, where the 120-degree one needs sqrt3.
+#
+# What it needs instead is a pair at distance sqrt2, and 2 is not a Loeschian
+# number: a^2 + ab + b^2 = 2 has no integer solution, 2 being inert in the
+# Eisenstein integers with norm 4.  Every carrier in this project lives in a
+# triangular lattice, so not one of them contains a single such pair -- measured
+# earlier as zero 90-degree pairs in all four graphs scanned, which at the time
+# read as a dead end and is now a specification:
+#
+#     the cheapest closure known here needs a carrier with sqrt2 in it,
+#     and this project has never built one.
+THE_UNIT_SQUARE_CLOSES_WITH_TWO_COPIES = True
