@@ -14838,3 +14838,45 @@ COUPLING_ON_A_HEXAGON_IS_A_THOUSANDFOLD_TIGHTER = True
 # at five colours, where the ring and its images form three disjoint ladders.  It
 # has not been tried on a graph that is already tight.
 COUPLING_SATURATES_AND_ONLY_A_RING_COUPLES_ENOUGH = True
+
+
+# The lever is overlap WITH a twist -- and a generic angle destroys it.
+#
+# Six copies of the vertex-critical 803 on one hexagon, each with its densest
+# vertex on a hexagon vertex, differing only in how each copy is turned about
+# that vertex; tightness as the median conflict count over three perturbed
+# solves:
+#
+#   turn           n     shared points     edges     conflicts (median)
+#   none (803)     803         -            4065              33
+#   apart         4818         0           24390             205
+#   translate     3830       988           24310         207 370
+#   60 degrees    4159       659           23928       2 415 157
+#   Moser angle   4757        61           24579             232
+#
+# The hypothesis going in was that a generic angle -- cos 5/6, sin sqrt11/6, with
+# no alignment to the lattice -- would couple the copies hardest.  It does the
+# opposite: 232 conflicts, the same as copies that never touch.  A generic turn
+# carries each copy off the triangular lattice, so the copies stop sharing
+# points, and shared points are the only thing a coupling is made of.
+#
+# But sharing is not enough either.  Translation shares MORE points than a 60
+# degree turn and is twelve times looser.  A translated copy overlaps its
+# neighbour in the same local configuration shifted along, so the constraints it
+# adds are the ones already there.  A 60 degree turn is a symmetry of the lattice,
+# so the copies still overlap -- but each shared point sits in a DIFFERENT role in
+# the two copies, and the constraints it brings are new.
+#
+#     translation   overlap without twist   redundant
+#     Moser angle   twist without overlap   independent
+#     60 degrees    overlap with twist      the lever
+#
+# Which names the next move: the whole dihedral group of the lattice, rotations
+# and reflections, is the set of transformations that keep the overlap and supply
+# the twist.
+#
+# Biting the tight graph's richest ring -- thirty points at distance sqrt3 about
+# a vertex, closed by the Moser rotation, which is the bite's own angle and not a
+# turn of copies -- gave 8161 points and 3.27 million conflicts, still
+# 5-colourable.  A modest factor over two unbitten copies, not a jump.
+OVERLAP_WITH_A_TWIST_IS_THE_LEVER = True
