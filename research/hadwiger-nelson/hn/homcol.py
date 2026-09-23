@@ -12692,3 +12692,38 @@ MINIMISE_BY_ORBITS_NOT_BY_VERTICES = True
 # 322 seconds, and no chunking can get below that floor.  The binding
 # constraint is the size of the object, not the shape of the question.
 SEPARABILITY_IS_ONE_CALL_BUT_THE_FLOOR_IS_THE_OBJECT = True
+
+
+# The other forced orbit, spent alone: a third field.
+#
+# The symmetric carrier's 153 forced pairs fall in two orbits.  Spending the
+# first, at d^2 = 64/9, gives the 7141-vertex C6-invariant graph in
+# Q(sqrt3,sqrt11,sqrt247).  The second, nine pairs at d^2 = 64/3, has
+#
+#     cos t = 1 - (1/2)/(64/3) = 125/128,   sin t = sqrt(759)/128
+#     759 = 3 * 11 * 23
+#
+# so it lives in Q(sqrt3, sqrt11, sqrt23) -- a field this project had never
+# produced a graph in.  Spending it alone over its own orbit of pivots gives
+#
+#     n = 7141   m = 47676   mean degree 13.35   C6-invariant, not 4-colourable
+#
+# the same vertex count as the first and six fewer edges, so a genuinely
+# different graph rather than a redrawing of the same one.  Recorded in
+# data/five_23.json.
+THE_SECOND_ORBIT_GIVES_A_GRAPH_IN_Q_SQRT3_SQRT11_SQRT23 = True
+
+# A group that is not Sa's.  Every symmetric construction so far used C6 or D6,
+# which is Sa's own group of order 12.  The field already contains
+# cos 30 = sqrt3/2 with no adjunction, so the order-twelve rotation is free and
+# D12 has order 24; it was tried once by taking the D12 orbit of a FINISHED
+# graph and it loosened the census, which is exactly the mistake the symmetric
+# construction identified.  Building with it from the start:
+#
+#     Sa12 = Sa u rot30(Sa)    n = 793   mean degree 9.96   group of order 24
+#                              free@4 = 0.25%   and NO forced pair at four
+#
+# certified by eight colourings expanded twenty-four-fold, which kills every
+# one of the 314028 pairs outright.  So the bigger group makes the filter
+# twice as sharp -- and leaves Sa12 itself with nothing to spend.
+D12_IS_FREE_AND_SA12_HAS_NO_FORCED_PAIR = True
