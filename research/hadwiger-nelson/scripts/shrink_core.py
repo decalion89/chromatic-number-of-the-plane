@@ -1,119 +1,106 @@
-#!/usr/bin/env python3
-"""Push the forced-pair core below 255 vertices.
+"""Extract a small 5-chromatic subgraph by UNSAT core, not by deletion.
 
-A unit-distance graph on m vertices with a pair forced monochromatic at k=4
-spindles into a genuine 5-chromatic unit-distance graph on at most 2m-1
-vertices.  Parts' 509 is the smallest on record, so a core of 254 or fewer
-beats it.
+Everything downstream is priced in copies of a 5-chromatic graph: a forced
+pair's certificate is the whole near-critical graph, the 1/sqrt3 closure needs
+three copies of it, the square needs two.  So its ORDER is the one quantity that
+makes every other attack cheaper, and this project's best is 803 against a
+published 509.
 
-A single greedy pass reached 359, which is an upper bound and not a floor:
-greedy deletion in one fixed order leaves whatever it happened to pass over.
-This runs many randomised passes, each re-solving after every deletion, and
-keeps whatever the best pass found.
+Greedy deletion is how the 803 was found, and it costs one refutation per
+vertex -- the slow direction, minutes each on a thousand vertices.  A core costs
+one.  Give every vertex a selector s_v and make "v has a colour" conditional on
+it; an inactive vertex simply takes no colour and its edges go vacuous, so
+satisfiability is unchanged, but an UNSAT answer under all the selectors comes
+back with the subset that caused it -- a 5-chromatic subgraph, in one solve.
+Re-assuming just the core shrinks it again, and a greedy pass over what survives
+makes it vertex-critical.
+
+Colour symmetry is 120 refutations of every refutation, so a triangle is pinned
+to colours 0, 1, 2 and forced active.  That is sound for deciding colourability
+and took the 803-graph's own refutation from over five minutes to 47 seconds.
 """
-import json
-import os
-import random
-import sys
-import time
-
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-
-from pysat.formula import CNF
+import sys, time, json, random
+from fractions import Fraction as Fr
+from collections import defaultdict
+sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+from hn.field import Field
+from hn.geometry import Point
+from hn.graph import build_graph
 from pysat.solvers import Solver
 
-from hn.certify import load_certificate, save_certificate
-from hn.graph import build_graph
-
-K = int(os.environ.get("HN_K", "4"))
-PASSES = int(os.environ.get("HN_PASSES", "60"))
-TARGET = int(os.environ.get("HN_TARGET", "254"))
-OUT = os.environ.get("HN_OUT", "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
-SRC = os.environ.get("HN_SRC", os.path.join(OUT, "f4_core.json"))
-
-
-def forced_cnf(g, k, pivot, targets):
-    n = g.n
-    x = lambda v, c: 1 + v * k + c
-    a = lambda v: 1 + n * k + v
-    sel = 1 + n * k + n
-    cnf = CNF()
-    for v in range(n):
-        cnf.append([-a(v)] + [x(v, c) for c in range(k)])
-    for u, v in g.edges():
-        for c in range(k):
-            cnf.append([-a(u), -a(v), -x(u, c), -x(v, c)])
-    for q in targets:
-        for c in range(k):
-            cnf.append([-sel, -x(pivot, c), -x(q, c)])
-    return cnf, a, sel
-
-
-def main():
-    pts, doc = load_certificate(SRC)
-    g = build_graph(pts)
-    print(f"loaded {g}", flush=True)
-
-    # recover the forced pair: the pivot is the vertex whose distance-1/3 group
-    # carries the forcing, so rediscover it rather than trusting a stored index
-    from fractions import Fraction
-    best = None
-    for bp in sorted(range(g.n), key=lambda v: -len(g.adj[v]))[:40]:
-        p = g.vertices[bp]
-        tg = [j for j in range(g.n) if j != bp and p.dist2(g.vertices[j]).is_rational()
-              and p.dist2(g.vertices[j]).c[0] == Fraction(1, 3)]
-        if not tg:
-            continue
-        cnf, a, sel = forced_cnf(g, K, bp, tg)
-        s = Solver(name="cd19", bootstrap_with=cnf)
-        ok = s.solve(assumptions=[sel] + [a(v) for v in range(g.n)]) is False
-        s.delete()
-        if ok:
-            best = (bp, tg)
-            break
-    if best is None:
-        print("no forced pair recovered", flush=True)
-        return
-    pivot, targets = best
-    print(f"forced pair at pivot {pivot}, {len(targets)} targets at d2=1/3", flush=True)
-
-    cnf, a, sel = forced_cnf(g, K, pivot, targets)
-    protected = {pivot} | set(targets)
-    t0 = time.time()
-    overall = set(range(g.n))
-    rnd = random.Random(12345)
-
-    for p_ in range(PASSES):
-        s = Solver(name="cd19", bootstrap_with=cnf)
-        try:
-            core = set(overall)
-            order = [v for v in core if v not in protected]
-            rnd.shuffle(order)
-            for v in order:
-                if v not in core:
-                    continue
-                trial = core - {v}
-                if s.solve(assumptions=[sel] + [a(t) for t in trial]) is False:
-                    core = trial
-        finally:
-            s.delete()
-        if len(core) < len(overall):
-            overall = core
-            print(f"  pass {p_+1}: {len(overall)} vertices  "
-                  f"-> spindles to <= {2*len(overall)-1}  [{time.time()-t0:.0f}s]", flush=True)
-            sub = g.induced(sorted(overall))
-            save_certificate(sub, os.path.join(OUT, "f4_core_min.json"), K,
-                             f"forced monochromatic pair at k={K} on {len(overall)} vertices")
-            if len(overall) <= TARGET:
-                print(f"\n*** {len(overall)} vertices: spindles to <= {2*len(overall)-1}, "
-                      f"BELOW THE RECORD OF 509 ***", flush=True)
-                return
-        elif p_ % 10 == 9:
-            print(f"  pass {p_+1}: no improvement, still {len(overall)}  "
-                  f"[{time.time()-t0:.0f}s]", flush=True)
-    print(f"finished {PASSES} passes at {len(overall)} vertices "
-          f"(spindles to <= {2*len(overall)-1}) [{time.time()-t0:.0f}s]", flush=True)
-
-
-if __name__ == "__main__":
-    main()
+ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+# FOUR, not five.  A 5-chromatic graph IS 5-colourable -- that is what chi = 5
+# means -- so the property to certify is that it refuses FOUR, and the core to
+# extract is the one that makes the 4-colouring instance unsatisfiable.  A first
+# run asked for five, got SAT, and reported nothing to extract.
+t0 = time.time(); K = 4
+NAME = sys.argv[1] if len(sys.argv) > 1 else "five_247.json"
+SEED = int(sys.argv[2]) if len(sys.argv) > 2 else 0
+d = json.load(open(f"{ROOT}/data/{NAME}"))
+F = Field(tuple(d["field_generators"]))
+P = [Point(F.element([Fr(a, b) for a, b in x]),
+           F.element([Fr(a, b) for a, b in y])) for x, y in d["points"]]
+g = build_graph(P); n = g.n
+E = list(g.edges())
+adj = defaultdict(set)
+for x, y in E:
+    adj[x].add(y); adj[y].add(x)
+tri = None
+for u in range(n):
+    for v in sorted(adj[u]):
+        w = (adj[u] & adj[v])
+        if w:
+            tri = (u, v, min(w)); break
+    if tri: break
+print(f"{NAME} n={n} edges={len(E)}; pinned triangle {tri}   "
+      f"[{time.time()-t0:.0f}s]", flush=True)
+X = lambda v, c: 1 + v * K + c
+S = lambda v: n * K + 1 + v
+cnf = [[-S(v)] + [X(v, c) for c in range(K)] for v in range(n)]
+for x, y in E:
+    for c in range(K):
+        cnf.append([-X(x, c), -X(y, c)])
+for i, v in enumerate(tri):
+    cnf.append([X(v, i)])
+s = Solver(name="cd19", bootstrap_with=cnf)
+ass = [S(v) for v in range(n)]
+ok = s.solve(assumptions=ass)
+print(f"  whole graph 4-colourable: {ok}   [{time.time()-t0:.0f}s]", flush=True)
+if ok:
+    print("  4-colourable -- not 5-chromatic, nothing to extract", flush=True)
+    sys.exit(0)
+core = set(s.get_core() or [])
+sizes = [len(core)]
+print(f"  first core: {len(core)} vertices   [{time.time()-t0:.0f}s]", flush=True)
+for _ in range(40):
+    a2 = sorted(core)
+    if s.solve(assumptions=a2): break
+    c2 = set(s.get_core() or [])
+    if len(c2) >= len(core): break
+    core = c2; sizes.append(len(core))
+    print(f"    core -> {len(core)}   [{time.time()-t0:.0f}s]", flush=True)
+cur = sorted(core)
+random.seed(SEED); random.shuffle(cur)
+i = 0; passes = 0
+while i < len(cur):
+    trial = cur[:i] + cur[i+1:]
+    keep = set(trial)
+    if all(S(v) in keep for v in tri) and trial and not s.solve(assumptions=trial):
+        c2 = set(s.get_core() or trial)
+        cur = [a for a in trial if a in c2] or trial
+        i = 0; passes += 1
+        if passes % 25 == 0:
+            print(f"    greedy: {len(cur)} left   [{time.time()-t0:.0f}s]", flush=True)
+    else:
+        i += 1
+verts = sorted(a - (n * K + 1) for a in cur)
+sub = [(x, y) for x, y in E if x in set(verts) and y in set(verts)]
+print(f"\n  SUBGRAPH THAT REFUSES FOUR: {len(verts)} vertices, {len(sub)} edges   "
+      f"[{time.time()-t0:.0f}s]", flush=True)
+json.dump({"source": NAME, "seed": SEED, "n": len(verts),
+           "field_generators": list(F.gens),
+           "points": [[[[t.numerator, t.denominator] for t in g.vertices[v].x.c],
+                       [[t.numerator, t.denominator] for t in g.vertices[v].y.c]]
+                      for v in verts]},
+          open(f"{ROOT}/data/shrunk_{len(verts)}.json", "w"))
+print(f"  written data/shrunk_{len(verts)}.json", flush=True)

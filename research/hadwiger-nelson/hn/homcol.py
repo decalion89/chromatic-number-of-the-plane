@@ -14349,9 +14349,17 @@ THREE_IS_THE_CEILING_ON_LOCAL_STRUCTURE_AND_NIVEN_SAYS_SO = True
 #     level j odd:   two triangles,   i ~ i +- 2  (mod 6)
 #     between levels: a perfect matching  (i,j) ~ (i,j+-1)
 #
-# Computed to thirty levels, 180 vertices, 354 edges: chi = 3 throughout, and
-# the 3-colouring found has period two in j, so it tiles the whole infinite
-# graph.  Therefore
+# Computed to thirty levels, 180 vertices, 354 edges: chi = 3 throughout.  And
+# the colouring the solver returned has PERIOD TWO in j, which turns the
+# computation into a proof, since every edge joins levels differing by at most
+# one and the pattern repeats:
+#
+#     even levels (hexagon)    0 1 2 0 2 1
+#     odd levels (triangles)   2 2 1 1 0 0
+#
+# proper on the hexagon (i ~ i+-1), proper on both triangles (i ~ i+-2), and
+# differing at every i for the matching between levels.  Three from below,
+# because an odd level carries a triangle.  Therefore
 #
 #     chi( {points at distance 1 or 1/sqrt3 from h} ) = 3, always.
 #

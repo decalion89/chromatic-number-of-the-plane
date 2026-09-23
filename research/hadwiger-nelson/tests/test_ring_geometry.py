@@ -226,3 +226,24 @@ def test_the_ring_of_a_hub_is_a_union_of_triangles():
             sep = min(sep, 2 * math.pi - sep)
             adjacent = (g.vertices[a] - g.vertices[b]).norm2() == one
             assert adjacent == (abs(sep - 2 * math.pi / 3) < 1e-7)
+
+
+# ---- the two-ring theorem, upgraded from a computation to a proof ----------
+
+def test_two_ring_period_two_colouring_is_proper_forever():
+    """An explicit 3-colouring of period 2 settles the infinite configuration.
+
+    Computing chi = 3 to thirty levels leaves the infinite graph open.  The
+    colouring the solver returned has period two in j, so checking it on one
+    period checks it everywhere: every edge of the configuration joins two
+    vertices whose levels differ by at most one, and the pattern repeats.
+    """
+    even = [0, 1, 2, 0, 2, 1]        # hexagon level, i ~ i +- 1 (mod 6)
+    odd = [2, 2, 1, 1, 0, 0]         # two triangles, i ~ i +- 2 (mod 6)
+    for i in range(6):
+        assert even[i] != even[(i + 1) % 6]          # the hexagon
+        assert odd[i] != odd[(i + 2) % 6]            # the triangles
+        assert even[i] != odd[i]                     # the matching between
+    assert len(set(even)) == 3 and len(set(odd)) == 3
+    # and three is forced from below: an odd level carries a triangle
+    assert len({odd[0], odd[2], odd[4]}) == 3
