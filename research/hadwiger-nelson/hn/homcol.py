@@ -13788,3 +13788,46 @@ MU_REACHES_THE_CEILING_ON_THE_MOSER_SPINDLE = True
 # circle, and Sa + p would then be a 5-chromatic unit-distance graph on 398
 # vertices, against a record of 509.
 MU_AT_FOUR_IS_THREE_AND_THAT_PRICES_THE_GAP = True
+
+
+# Why mu_4 stops at 3, derived rather than guessed.
+#
+# Enrichment saturates mu_4 at 3 -- 42 of 600 rich points on Sa, then 150 of
+# 150 on a 2689-point carrier at mean degree 15.92 -- and never reaches 4.  The
+# escape analysis says exactly what stands in the way, in four steps, each one
+# computed:
+#
+#   1. mu_4 = 3 means escapes exist: proper 4-colourings putting only three
+#      colours on N(p).  Sampling them is one warm solver and a blocking clause
+#      per escape, and colour symmetry makes "misses a colour" just "misses
+#      colour 0".  On a 15-point neighbourhood, 200 came out in eight seconds.
+#
+#   2. Every escape carries a monochromatic non-adjacent pair inside N(p) --
+#      0 of 120 had none -- so every escape is killable, in principle, by
+#      forcing one pair apart.  Which pairs, and how load-bearing each is,
+#      is a hitting set: 91 pairs appear, and 3 of them meet all 120 escapes.
+#
+#   3. But those pairs cannot all be separated at once.  Adding the cover as
+#      clauses makes the CARRIER itself 4-uncolourable, which is not a failure
+#      of the method but a result: in every 4-colouring of the carrier, at
+#      least one of those four pairs is monochromatic.  That is a certified
+#      DISJUNCTIVE FORCING at four colours, derived from a target point rather
+#      than hunted for.
+#
+#   4. And it is the wrong shape.  The four pairs share no endpoint, and the
+#      stack of rotated copies only consumes a HUB disjunction -- c(h) = c(q)
+#      for some q in W -- because only then does one rotation repeat the same
+#      statement in every copy.  Asked for that shape directly, every one of
+#      the 15 hubs survives, with W of size 3 or 4:
+#
+#          smallest: c(495) meets one of {577, 410, 853}
+#          at squared distances 17/6 - sqrt33/6, 7/6 - sqrt33/6, and 3
+#
+#      and an earlier pass settled that the stack closes only at width two, by
+#      exhaustion over every shape of width three and four inside thirteen
+#      exponents and up to twenty-six copies.
+#
+# So mu_4 = 3 is held there by a disjunction of width 3 to 4 where the only
+# machinery available needs width 2.  Not a missing computation -- a missing
+# gadget, and the measurement now says how wide it would have to be.
+WHY_MU_FOUR_STOPS_AT_THREE_A_DISJUNCTION_TOO_WIDE = True
