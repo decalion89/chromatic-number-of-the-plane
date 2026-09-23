@@ -14805,3 +14805,36 @@ THE_CAP_NOT_THE_FLOOR_IS_THE_FORCING_DIRECTION = True
 # is the honest figure, and the spread is itself a sign of how close to the edge
 # the instance sits.
 COUPLING_ON_A_HEXAGON_IS_A_THOUSANDFOLD_TIGHTER = True
+
+
+# Coupling SATURATES -- and the reason says what global tightness needs.
+#
+# The coupling lever was measured as a thousandfold at one hexagon, so the
+# question that decides whether it reaches six is whether it compounds.  Copies
+# of the vertex-critical 803 on a patch of the triangular lattice, each with its
+# densest vertex on one lattice point and turned by index x 60 degrees, against
+# the same number of copies placed apart (one solve each, so noisy by a factor
+# of up to fifteen, as the triple on the hexagon graph showed):
+#
+#    copies    coupled conflicts    apart conflicts    ratio
+#       1              30                  30            1.0
+#       7          37 101                 239           155
+#      13          50 267                 452           111
+#
+# Were the lever multiplicative, thirteen copies would sit near 155^2, about
+# twenty-four thousand.  They sit at 111, within the noise of seven.  The first
+# coupling is a large step and further copies do not compound.
+#
+# The reason is a count of freedom against constraint.  Each new copy brings some
+# eight hundred vertices' worth of freedom and is tied to the rest only through a
+# NEIGHBOURHOOD -- its lattice point and the few vertices around it that land on
+# other copies.  The number of 5-colourings is N^m for m independent copies and a
+# constant fraction of that per coupling, so it still grows with m: freedom wins.
+#
+# For constraint to win, the coupling has to touch a positive fraction of each
+# copy, not a point.  A rotation about c by 2 arcsin(1/(2r)) does exactly that --
+# every vertex at distance r from c lands a unit from its own image, a whole ring
+# coupled at once -- and it is de Grey's bite.  That was exhausted on his family
+# at five colours, where the ring and its images form three disjoint ladders.  It
+# has not been tried on a graph that is already tight.
+COUPLING_SATURATES_AND_ONLY_A_RING_COUPLES_ENOUGH = True
