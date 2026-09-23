@@ -13004,6 +13004,24 @@ ROTATION_LAYS_COPIES_SIDE_BY_SIDE_TRANSLATION_THREADS_THEM = True
 
 # Three copies consume a disjunction, and ODD is the reason.
 #
+# ATTRIBUTION.  Consuming a disjunction with a stack of rotated copies is
+# not new here: an earlier pass built it (README, "A spindle that survives a
+# disjunction -- and its ceiling"), with a hub u, a set W on ONE ring about
+# it, and the colour class of u forced to hold an independent transversal.
+# It settled that version exhaustively -- the stack closes iff the
+# separation is even, at exactly m+1 copies, and over every shape of width
+# three or four inside thirteen exponents and up to twenty-six copies, none
+# closes.  Its conclusion, that width two is barely weaker than the forced
+# pair it replaces, is the same t = 2 ceiling reached again below.
+#
+# What is new is the two-radius version.  The earlier stack put every option
+# on ONE ring, so all clash graphs shared a single angle; allowing the
+# options DIFFERENT radii gives them different angles, and the pigeonhole
+# becomes a statement about two circulants at once.  That is what produces
+# the odd-cycle theorem -- one clash graph must contain an odd cycle, so one
+# radius must be 1/sqrt3 in any multiquadratic field -- and the six-copy
+# form in which the SECOND radius is free.
+#
 # De Grey's spindle needs a pair FORCED equal.  A weaker hypothesis closes the
 # same argument.  Suppose only that in every k-colouring of H
 #
