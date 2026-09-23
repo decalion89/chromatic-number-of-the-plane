@@ -14254,3 +14254,77 @@ MU_READS_THREE_ON_THE_ONE_OVER_ROOT_THREE_RING = True
 # more than 11 of the 133, so no rotation about a point can chain the
 # conclusions, which is the whole reason the hub shape matters.
 THE_NARROW_DISJUNCTION_IS_ONE_HUNDRED_AND_THIRTY_THREE_PAIRS = True
+
+
+# The hub's disjunction is as wide as the smallest 5-critical graph.
+#
+# Adjoin to a 5-chromatic C a new point h with no unit-distance neighbour.  Then
+# c(h) is some colour, that colour appears somewhere in C, and
+#
+#     every 5-colouring gives  c(h) = c(v)  for some v in S
+#
+# holds with S = a RAINBOW SET: a set on which every 5-colouring shows all five
+# colours.  This is mu again, for an arbitrary set rather than a unit circle, and
+# S = V always works.  The width of the disjunction -- the number of rotated
+# copies it will cost to consume -- is the minimum size of such an S, so that is
+# the number to know.
+#
+# It is settled without a single solve, by the criticality already proved here.
+# S = V - {v} is rainbow exactly when no 5-colouring uses some colour only on v,
+# that is exactly when C - v is NOT 4-colourable.  five_247_c is vertex-critical,
+# so C - v IS 4-colourable for all 803 of its vertices, so no vertex can be
+# dropped:
+#
+#     the minimal rainbow set of a vertex-critical 5-chromatic graph is the
+#     whole vertex set.
+#
+# In general the removals stop exactly at a 5-critical subgraph, and containing
+# one is sufficient: a colouring omitting a colour from S would 4-colour it.  So
+# the width of a hub disjunction is the order of the smallest 5-critical
+# unit-distance graph -- 803 here, 509 in the literature.  Five hundred copies of
+# a five-hundred-vertex graph is finite and useless.
+#
+# Which is the same wall in new clothes.  A narrow disjunction is what the
+# machinery can consume, and every route to one has now been priced: a forced
+# pair costs a near-critical graph, a rainbow set costs a critical graph, and the
+# 133-pair disjunction, narrow by comparison, is not hub-shaped.
+THE_RAINBOW_SET_OF_A_CRITICAL_GRAPH_IS_EVERYTHING = True
+
+
+# Three is the ceiling on what LOCAL structure can ever give, in any plane graph.
+#
+# On a circle of radius r the unit-distance angle theta has cos theta =
+# 1 - 1/(2r^2), and a cycle inside the ring needs theta to be a rational multiple
+# of pi, so Niven leaves r in {1, 1/sqrt2, 1/sqrt3, 1/2} with theta 60, 90, 120,
+# 180.  At r = 1/sqrt3 the angle is 120, so a coset of 120 degrees holds at most
+# three points and they are pairwise a unit apart -- a triangle -- while two
+# points in DIFFERENT cosets differ by something other than +-120 and are never
+# adjacent.  So
+#
+#     the 1/sqrt3 ring is a disjoint union of triangles, edges and points,
+#     and chi of it is exactly 3, in every graph, for every hub.
+#
+# Which is the same shape as the unit circle one rung up: there the ring is a
+# disjoint union of paths and hexagons and chi is exactly 2.  Enriching either
+# one adds components, never edges between them.  And by Niven there is no third
+# option -- 60 and 90 degrees give even cycles only, 180 is degenerate.  So:
+#
+#     3 of 5 is the most that local structure can ever supply in the plane,
+#     and the remaining two rungs are global, whatever the construction.
+#
+# What the ring still buys is the CLASH.  Take the hub statement c(h) = c(v) for
+# v in S, with S on the 1/sqrt3 ring, and rotate copies of the graph about h.
+# Copy i names the point at angle a_{v_i} + phi_i, all of colour c(h), and two of
+# them collide exactly when their angles differ by +-120.  Rotating by multiples
+# of 120 keeps each point in its own coset, so if S has ONE point per coset then
+# any two copies that pick the same coset land on different points of it and
+# clash; with more copies than cosets, two must.  That gives the design rule:
+#
+#     |S| <= 2, one point per coset, and three copies at 0, 120, 240 close it.
+#
+# Finer angles buy more copies and tolerate a wider S -- which is the disjunctive
+# spindle already recorded here, where six copies consumed a width-three
+# disjunction because two triangles and a matching have independence 2 and 3 and
+# 2 + 3 < 6.  So the target is not a forced pair and not a rainbow set: it is a
+# hub whose 1/sqrt3 partner set has width two or three.
+THREE_IS_THE_CEILING_ON_LOCAL_STRUCTURE_AND_NIVEN_SAYS_SO = True
