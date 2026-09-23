@@ -6692,3 +6692,34 @@ entirely in the 446 two-edges. The 803-graph's module fails the same way
 > no finite quotient `ψ : M → G`, nonzero on every unit vector, has a
 > 5-colouring of `Cay(G, ψ(units))` with `c(0) ≠ c(ψ(5e))` — the **pair
 > gate**, to a forced pair what blocking is to a sixth colour.
+
+**The ladder, and what it says the next rung is.** A pair `u, u + ke` (`e` a
+unit step) lies in `kM`, so every coset `k`-colouring colours it alike; the
+rotation closing distance `k` has `cos = 1 − 1/(2k²)` and denominator `2k²`,
+which carries every prime of `k`:
+
+| k | pair | `4k²−1` | closing rotation | used by |
+|---|---|---|---|---|
+| 2 | `2e` | 15 | `(7 + √−15)/8` | de Grey's `Sb` |
+| 4 | `4e` | 63 = 9·7 | `(31 + 3√−7)/32` | de Grey's last step, `(±2, 0)` |
+| 5 | `5e` | 99 = 9·11 | `(49 + 3√−11)/50` | Exoo–Ismailescu |
+
+At `k = 5` the rotation lives in the Moser field with no new square root.
+
+**The apart gate, and one surviving direction.** Mirror of the pair gate: a
+`2e` pair can be forced *apart* only if no periodic 5-colouring keeps it alike.
+On E–I's module ℤ/4 keeps every `2e` pair alike — so neither half of a
+unit-distance version of their proof can live there. On the 803-graph's module
+the pair gate falls in all 31 directions (ℤ/10, ℤ/15) and the apart gate in 30;
+the survivor is the single `√247` edge `e = (−3/16, √247/16)`, which lies in
+`8M`, so every quotient whose 2-part has order at most 16 is blind to `2e`.
+
+**Why one module is never enough.** Pairs no coset colouring keeps alike come in
+whole distance classes on the 803-graph (`d² = 7/3, 1/9, 4/9, 19/9, 4, …`), but
+the *same* coset colouring splits all of them at once: inside one integral
+multiquadratic module, gadgets for any set of distances can never combine to
+six. The step out needs a 5 in a denominator — and Exoo–Ismailescu's `K`
+supplies it, so a distance-2 gadget in an *integral* module would still finish
+the proof. That gadget is what the growth runs are now hunting, along `√247`
+in the 803 module and on the blocked `803 ∪ λ(803)`, with
+`scripts/verify_gadget.py` waiting for any UNSAT.
