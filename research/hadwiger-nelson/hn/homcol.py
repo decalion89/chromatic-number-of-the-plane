@@ -13550,3 +13550,39 @@ DENSITY_IS_NOT_A_WEAK_LEVER_ON_RIGIDITY_IT_IS_NO_LEVER = True
 #
 # Written properly -- answer is False, colouring is None -- both graphs pass.
 A_TUPLE_IS_ALWAYS_TRUTHY_AND_THE_TEST_WAS_THE_BUG = True
+
+
+# Tune the ANGLE instead of the distance, and the chain closes into a group.
+#
+# tau(p) = q + R_phi (p - v) is a rotation -- its linear part is one -- so it is
+# a rotation by phi about the point w it fixes, and tau(v) = q puts v and q on a
+# circle about w separated by phi:
+#
+#       |v - q|^2 = 2 R^2 (1 - cos phi),     R = |w - v|
+#
+# Every earlier use chose phi to place the composite DISTANCE.  Choosing it to
+# fix the ORDER gives the carrier a group it did not have.  At phi = 60 degrees,
+# which needs only sqrt3:
+#
+#   * tau^6 = id, so the union of the six copies tau^j(H) is C6-INVARIANT about
+#     w -- and w is not a vertex of the carrier, so the group is new, not a
+#     restriction of Sa's;
+#   * the forcing chains all the way round.  tau^j(H) forces (tau^j v, tau^j q)
+#     and tau^j v = tau^{j-1} q, so consecutive orbit points are forced equal
+#     and transitivity gives the whole orbit ONE colour;
+#   * R^2 = D^2/(2(1 - cos 60)) = D^2, so at D^2 = 64/9 the orbit is six points
+#     on a circle of radius 8/3 whose fifteen squared distances are exactly
+#     64/9 (six of them), 64/3 (six) and 256/9 (three).
+#
+# Measured on the 1021-point carrier: union 6006 points, mean degree 14.30,
+# tau-invariant, 4-colourable -- and all FIFTEEN pairs of the orbit confirmed
+# forced equal by direct solver call.
+#
+# That is the point.  A forced class at three different radii is what the
+# free-angle spindle needs, and it had appeared exactly once in this project,
+# by luck, on a 3025-point carrier.  This produces it from ANY forced pair at
+# 64/9, with a group attached.  Of the three radii only 64/3 with 256/9 admits
+# the free angle -- |sqrt(r1) - sqrt(r2)| = 0.715 <= 1 so the circles meet,
+# while 64/9 against either gives 1.952 and they do not -- which is exactly the
+# pair the lucky carrier had offered.
+TUNING_THE_ANGLE_TO_ORDER_SIX_MANUFACTURES_THE_CLASS = True
