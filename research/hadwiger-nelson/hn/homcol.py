@@ -13586,3 +13586,31 @@ A_TUPLE_IS_ALWAYS_TRUTHY_AND_THE_TEST_WAS_THE_BUG = True
 # while 64/9 against either gives 1.952 and they do not -- which is exactly the
 # pair the lucky carrier had offered.
 TUNING_THE_ANGLE_TO_ORDER_SIX_MANUFACTURES_THE_CLASS = True
+
+
+# The whole recipe, end to end, with nothing borrowed.
+#
+# Starting from one forced pair at 64/9 in a 1021-point carrier:
+#
+#   1. tune the composition ANGLE to 60 degrees.  tau = q + R_60(p - v) then
+#      has order six, the union of its six copies is C6-invariant about a
+#      centre that is not a vertex of anything, and the forcing chains round
+#      the orbit: six points, one colour, at squared distances 64/9, 64/3 and
+#      256/9.  6006 points, mean degree 14.30, all fifteen pairs confirmed.
+#   2. spend the FREE ANGLE on the only pair of radii whose circles meet,
+#      64/3 with 256/9.  cos t and sin t solve one linear equation beside
+#      cos^2 + sin^2 = 1, both roots explicit, and the discriminant is
+#      sqrt(16384/27 - (439/18)^2) = 13 sqrt23 / 18.
+#   3. the union with one rotated copy about the pivot: 12 011 points, mean
+#      degree 14.30, and it REFUSES FOUR.
+#
+# A 5-chromatic unit-distance graph in Q(sqrt3, sqrt11, sqrt23, sqrt247),
+# reached without a single step borrowed from de Grey's word: not his radii,
+# not his cap, not his pivot.  The only inputs are a carrier with one forced
+# pair and the two tunings.
+#
+# What it does NOT do is refuse five, and the reason is the one this whole pass
+# established: the forcing it manufactures is forcing at FOUR, and nothing in
+# this project has ever produced forcing at five -- not in either direction,
+# not at any density, not under any of the three relations searched.
+THE_RECIPE_CLOSES_AT_FOUR_AND_OWES_DE_GREY_NOTHING = True
