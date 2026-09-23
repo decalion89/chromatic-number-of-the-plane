@@ -13501,3 +13501,30 @@ THE_NULL_MODEL_ITSELF_IS_FORBIDDEN_BY_THE_GEOMETRY = True
 # differ.  The colourings are unconstrained in both directions, on every object
 # built, at every density reached.
 NOTHING_IS_FORCED_AT_FIVE_IN_EITHER_DIRECTION = True
+
+
+# free@5 is flat, and the last point nails it.
+#
+# The densest 5-chromatic graph the project can build -- 12 469 points at mean
+# degree 18.48, from ten stacked orbits chained to distance 1 -- is
+# 5-colourable, and measures free@5 = 13.80 %.  The full series:
+#
+#   graph              n      mean degree    free@5
+#   five_247_c        803       10.12        15.73 %
+#   five_247_b        951       10.87        13.62 %
+#   five_247         1139       11.37        12.50 %
+#   five_tuned_1_1   2041       13.35        13.86 %
+#   five_dense_2     6925       16.81        16.40 %
+#   five_dense_10   12469       18.48        13.80 %
+#
+# Mean degree rises by 83 %, from 10.12 to 18.48, and free@5 does not move:
+# it sits between 12.5 % and 16.4 % throughout, with no trend at all.  Sa, at
+# 397 points and mean degree 9.94, measures 0.00 %.
+#
+# So density is not a weak lever on rigidity, it is not a lever at all, and the
+# bipartite-neighbourhood theorem says why in advance: a neighbourhood is a
+# union of paths and hexagons whatever its size, a proper colouring of a path
+# uses two colours, and a vertex cannot be pinned locally at four colours or
+# above no matter how many neighbours it has.  Adding degree adds path, not
+# palette.
+DENSITY_IS_NOT_A_WEAK_LEVER_ON_RIGIDITY_IT_IS_NO_LEVER = True
