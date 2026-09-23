@@ -13071,3 +13071,113 @@ THE_DISJUNCTION_HAS_NO_LOCAL_UNIT_DISTANCE_GADGET = True
 # Both exhaustive, both in under a minute of solving.  The weaker hypothesis is
 # not satisfied either, on the two graphs where it would have paid.
 NO_DISJUNCTION_AT_ONE_THIRD_ON_SA_OR_ON_THE_CARRIER = True
+
+
+# The six-copy gadget comes back empty too, and with the second radius free.
+#
+# The three-copy form demanded both endpoints at 1/sqrt3.  The six-copy form
+# demands one, and lets the other sit anywhere above 1/2, which is the weakest
+# hypothesis this family of gadgets admits in a multiquadratic field.  Searched
+# with the conditional filter -- fix v and q1, assume c(v) = 0 and c(q1) != 0,
+# sample colourings under those assumptions, keep the vertices that take colour
+# 0 in every one, confirm each survivor with one more solve:
+#
+#   graph          k   (v,q1) at d^2=1/3   forced pairs   disjunctions
+#   Sa             4        3 264               0              0
+#   five_247_c     5        7 000               0              0
+#   Y              4       29 932 option-pairs  -              0
+#
+# All exhaustive.  So neither the strong hypothesis nor the weak one holds
+# anywhere this project can reach.
+NO_DISJUNCTION_EVEN_WITH_THE_SECOND_RADIUS_FREE = True
+
+
+# And the reason is a regime mismatch, not a failure of search.
+#
+# Every forced pair this project has ever produced sits at squared distance
+# 64/9, 64/3, 256/9 or 16 -- distance 2.67 and up.  The gadget's special radius
+# is 1/sqrt3 = 0.577.  It is aimed at a regime where forcing does not occur,
+# and no amount of solving will change that.
+#
+# Moving the radius up is blocked by arithmetic.  The special radius for an
+# s-fold gadget is 1/(2 sin(pi j / s)), which exceeds 1 only for s >= 7, and
+# s must be odd for the pigeonhole to bite.  s = 7 gives 1.152 -- squarely in
+# the regime where forcing lives -- but cos(2 pi / 7) generates the cubic field
+# Q(zeta_7)^+, so the squared distance would have to be a cubic irrational,
+# and every squared distance in a multiquadratic point set is not.  s = 5 is
+# affordable in principle (Q(zeta_5)^+ = Q(sqrt5)) but its radii are 0.851 and
+# 0.526, still below 1, and sin 72 = sqrt(10 + 2 sqrt5)/4 is a nested radical
+# no multiquadratic field holds.
+THE_GADGET_AIMS_AT_A_RADIUS_WHERE_FORCING_NEVER_HAPPENS = True
+
+
+# Forced pairs compose, and the composite distance is a free parameter.
+#
+# Let H force c(v) = c(q) with |v - q| = D, and let tau be the isometry taking
+# v to q whose rotational part is R_phi:  tau(p) = q + R_phi (p - v).  Then
+# tau(H) forces c(q) = c(tau q), so H u tau(H) forces c(v) = c(tau q), and
+# with u = v - q,
+#
+#     v - tau(q) = u + R_phi u,     |u + R_phi u|^2 = 2 D^2 (1 + cos phi)
+#
+# The composite distance sweeps all of [0, 2D] as phi turns, and the angle for
+# a chosen target is  cos phi = d^2 / (2 D^2) - 1, which is RATIONAL whenever
+# d^2 and D^2 are.  Only sin phi carries a radical.  With D^2 = 64/9 and
+# d^2 = p/q,
+#
+#     cos phi   = (9p - 128q) / (128q)
+#     sin phi   = 3 sqrt(p (256q - 9p)) / (128q)
+#
+# so sqrt(p (256q - 9p)) is the entire arithmetic cost, and choosing p and q
+# CHOOSES THE FIELD.  That inverts how every other construction here works: in
+# those the radii pick the radicals and one takes what one is given.
+#
+#   d^2     radical              field                      n      spindle?
+#   1       sqrt(247)            (3,5,7,11,247)            2041    not needed
+#   1/3     sqrt(759)=3.11.23    (3,5,7,11,23)             4061    yes
+#   2       sqrt(476)=4.7.17     (3,5,7,11,17)             4081    yes
+#   4       sqrt(880)=16.5.11    (3,5,7,11)  de Grey's     ~4000   yes
+#
+# Every one verified end to end: the composite distance checked as an exact
+# field element, the composite forcing confirmed by the solver rather than
+# assumed, and the result tested for four colours.
+FORCED_PAIRS_COMPOSE_AND_THE_DISTANCE_IS_A_PARAMETER = True
+
+
+# Tuning to 1 makes the spindle unnecessary.
+#
+# If the target is d^2 = 1 the composite pair is at distance exactly 1 -- it is
+# an EDGE -- so the chained union already has a monochromatic edge in every
+# 4-colouring and refuses four on its own.  2041 points instead of 4061, and no
+# second rotation at all.
+#
+# Its radical is sqrt(247), which is exactly what the ordinary spindle at 64/9
+# needs (4 * 64/9 - 1 = 247/9).  That is a sanity check rather than a new
+# field: tuning to 1 is that spindle wearing a different hat.  The new fields
+# are the other targets.
+TUNING_TO_ONE_MAKES_THE_SPINDLE_UNNECESSARY = True
+
+
+# The 803-point graph is vertex-critical.
+#
+# Batch removal stopped dead -- dropping the single lowest-degree vertex makes
+# it 4-colourable -- so the whole graph was checked, one vertex at a time.  All
+# 803 are essential: not one deletion leaves a graph that still refuses four.
+#
+# The check is cheap precisely because the answer is yes.  Asking "does H - v
+# still refuse four?" asks the solver to REFUTE H - v, and refutation is the
+# slow direction; if v is essential then H - v is 4-COLOURABLE and a colouring
+# is found fast.  Only a removable vertex would cost a slow proof, and there
+# are none: 803 calls in 1389 s, against 47 s for a single refutation of the
+# whole graph.
+#
+# Pinning a triangle is what makes even that single refutation affordable.
+# Deciding colourability is invariant under permuting colours, so fixing one
+# clique to 0,1,2 is free, and it deletes the 4! symmetric copies of every
+# refutation: more than five minutes without the pin, 47 s with it.
+#
+# So 803 is a floor for this object under deletion.  The record for a
+# 5-chromatic unit-distance graph is 509 (Parts), reached in de Grey's field by
+# minimisations costing on the order of 100 000 CPU-hours; 803 is a different
+# field and cannot be cut further vertex by vertex.
+THE_EIGHT_HUNDRED_AND_THREE_IS_VERTEX_CRITICAL = True
