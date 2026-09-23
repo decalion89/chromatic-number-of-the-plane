@@ -1,112 +1,100 @@
-"""Is every confined degree even?  If so the target is harder than degeneracy 3.
+"""Which angular separations actually occur inside a candidate neighbourhood?
 
-On de Grey's configuration every confined auxiliary has degree 0, 2 or 4 --
-never odd -- with 42 of 72 isolated.  If that is a property of the
-construction rather than of one angle, then a subgraph of minimum degree 3 is
-impossible outright and reaching degeneracy 3 needs minimum degree FOUR: a
-4-regular subgraph, which is a far stronger demand than the list-colouring
-bound by itself suggests.
+The rotation stack about p is the one construction whose hypothesis survives
+the rotation: if a 5-colouring of G' = union of rho^i G has |c(N_{G'}(p))| <= 2
+then each copy's restriction is an ESCAPE colouring of that copy, because
+N_{rho^i G}(p) = rho^i(N_G(p)) is a subset of N_{G'}(p).  So every copy
+contributes its own escape conclusion, and the conclusions chain.
 
-The likely cause is a symmetry.  Reflecting across the line through the pivot
-and an auxiliary maps the configuration to itself when the hexagon offsets are
-symmetric about it, pairing each neighbour with another, so degrees come in
-twos.  This checks the parity over the whole scanned space rather than
-assuming the symmetry holds everywhere.
+A conclusion "u, v monochromatic, both in N(p)" is an angular relation: u and v
+lie on the unit circle about p at separation theta, and the stack links a point
+to the point theta further round.  Starting from relations at separations S the
+colour classes are cosets of <S>, and the contradiction -- two monochromatic
+points a unit apart -- appears exactly when 60 degrees lies in <S>.
+
+Which separations are available?  A separation inside <rho> is a rational
+multiple of pi, and a monochromatic pair needs a rational squared distance in
+the relation, so by Niven's theorem theta is 60, 90, 120 or 180 degrees:
+
+    60 deg   d = 1       ADJACENT -- never monochromatic, so unusable
+    90 deg   d = sqrt2   <90> = {0,90,180,270}, no 60          on its own: no
+   120 deg   d = sqrt3   <120> = {0,120,240}, no 60            on its own: no
+   180 deg   d = 2       <180> = {0,180}, no 60                on its own: no
+
+    <120, 180> = <60>    CLOSES
+    <90, 120>  = <30>    CLOSES
+    <90, 180>  = <90>    no
+
+The escape analysis already returns a 120-degree relation, uniformly, at 25 of
+the 30 richest candidate points of the 803-graph.  So the entire remaining
+requirement is one more relation, at 90 or at 180 degrees:
+
+    every escape colouring must also have a monochromatic pair at
+    distance sqrt2, or a monochromatic ANTIPODAL pair through p.
+
+That is a statement about escape colourings, not an unconditional forced pair,
+so it does not meet the wall the certificate pricing just found.  The first
+question is whether the separations are even present: a relation at 180 degrees
+needs N(p) to contain an antipodal pair in the first place.
 """
-import sys, cmath, math, itertools, collections
+import sys, time, json, math
+from fractions import Fraction as Fr
+from itertools import combinations
+from collections import defaultdict, Counter
 sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+from hn.field import Field
+from hn.geometry import Point
+from hn.graph import build_graph
 
-W = cmath.exp(1j * math.pi / 3)
-HEX = [W ** k for k in range(6)]
-SIXTY = math.pi / 3
-
-
-def build(angles):
-    for x, y in itertools.combinations(angles, 2):
-        if min((x - y) % SIXTY, (y - x) % SIXTY) < 1e-4:
-            return None
-    hexes = [[cmath.exp(1j * a) * h for h in HEX] for a in angles]
-    aux = {}
-    for a in range(len(hexes)):
-        for b in range(a, len(hexes)):
-            for i, u in enumerate(hexes[a]):
-                for j, v in enumerate(hexes[b]):
-                    if (a, i) >= (b, j):
-                        continue
-                    s = u + v
-                    if abs(abs(s) - 1) < 1e-9 or abs(s) < 1e-9:
-                        continue
-                    k = (round(s.real, 9), round(s.imag, 9))
-                    aux.setdefault(k, set()).add((a, i))
-                    aux[k].add((b, j))
-    keys = list(aux)
-    pts = [complex(*k) for k in keys]
-    adj = {i: set() for i in range(len(pts))}
-    for i in range(len(pts)):
-        for j in range(i + 1, len(pts)):
-            if abs(abs(pts[i] - pts[j]) - 1) < 1e-7:
-                adj[i].add(j)
-                adj[j].add(i)
-    return keys, aux, adj
-
-
-def candidates(a1):
-    out = collections.Counter()
-    e1 = cmath.exp(1j * a1)
-    for i in range(6):
-        for ip in range(6):
-            if i == ip:
-                continue
-            d = HEX[i] - HEX[ip]
-            for j in range(6):
-                A = d + e1 * HEX[j]
-                m = abs(A)
-                if m > 2 or m < 1e-12:
-                    continue
-                for l in range(6):
-                    C = A * HEX[l].conjugate()
-                    base, off = cmath.phase(C), math.acos(min(1.0, m / 2))
-                    for s in (1, -1):
-                        out[round((base + s * off) % SIXTY, 6)] += 1
-    return out
-
-
-odd_seen, checked, maxdeg, best_min = 0, 0, 0, 0
-N = 300
-for n in range(N):
-    a1 = SIXTY * (n + 0.5) / N
-    c = candidates(a1)
-    usable = [(a, m) for a, m in c.most_common()
-              if min(a % SIXTY, (-a) % SIXTY) > 1e-4
-              and min((a - a1) % SIXTY, (a1 - a) % SIXTY) > 1e-4]
-    for a2, _ in usable[:4]:
-        b = build([0.0, a1, a2])
-        if b is None:
-            continue
-        keys, aux, adj = b
-        checked += 1
-        for bits in itertools.product((0, 1), repeat=3):
-            col = {(a, i): (i + bits[a]) % 2 for a in range(3) for i in range(6)}
-            conf = {i for i in range(len(keys))
-                    if {col[x] for x in aux[keys[i]]} == {0, 1}}
-            degs = [len(adj[v] & conf) for v in conf]
-            if any(d % 2 for d in degs):
-                odd_seen += 1
-            maxdeg = max([maxdeg] + degs)
-            # the largest minimum degree over any subgraph, which is the
-            # degeneracy -- reported to confirm nothing reaches 3
-            rem = {v: len(adj[v] & conf) for v in conf}
-            d = 0
-            while rem:
-                v = min(rem, key=rem.get)
-                d = max(d, rem[v])
-                for u in adj[v]:
-                    if u in rem:
-                        rem[u] -= 1
-                del rem[v]
-            best_min = max(best_min, d)
-
-print(f"{checked} configurations x 8 orientations")
-print(f"  orientations with any ODD confined degree: {odd_seen}")
-print(f"  largest confined degree seen: {maxdeg}")
-print(f"  largest degeneracy seen: {best_min}")
+ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+t0 = time.time()
+for name in ("five_247_c.json", "five_247.json", "five_tuned_1_1.json",
+             "five_dense_2.json"):
+    d = json.load(open(f"{ROOT}/data/{name}"))
+    F = Field(tuple(d["field_generators"]))
+    P = [Point(F.element([Fr(a, b) for a, b in x]),
+               F.element([Fr(a, b) for a, b in y])) for x, y in d["points"]]
+    g = build_graph(P); n = g.n
+    hx = [q.fx for q in g.vertices]; hy = [q.fy for q in g.vertices]
+    cells = defaultdict(list)
+    for i in range(n): cells[(int(hx[i] // 2), int(hy[i] // 2))].append(i)
+    # candidate points: intersections of two unit circles, collected by float key
+    cand = defaultdict(int)
+    for i in range(n):
+        cx, cy = int(hx[i] // 2), int(hy[i] // 2)
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                for j in cells.get((cx + dx, cy + dy), ()):
+                    if j <= i: continue
+                    ex, ey = hx[j] - hx[i], hy[j] - hy[i]
+                    dd = ex * ex + ey * ey
+                    if dd <= 1e-12 or dd >= 4.0: continue
+                    h = math.sqrt(max(0.0, 1.0 - dd / 4.0)); r = math.sqrt(dd)
+                    mx, my = (hx[i] + hx[j]) / 2, (hy[i] + hy[j]) / 2
+                    ux, uy = -ey / r, ex / r
+                    for s in (+1, -1):
+                        cand[(round(mx + s * h * ux, 9), round(my + s * h * uy, 9))] += 1
+    rich = sorted(cand.items(), key=lambda kv: -kv[1])[:4000]
+    tally = Counter(); withsep = Counter(); best = None
+    for (kx, ky), _ in rich:
+        nb = [i for i in range(n) if abs((hx[i]-kx)**2 + (hy[i]-ky)**2 - 1.0) < 1e-9]
+        if len(nb) < 8: continue
+        seps = Counter()
+        for u, v in combinations(nb, 2):
+            dd = (hx[u]-hx[v])**2 + (hy[u]-hy[v])**2
+            for lbl, val in (("60", 1.0), ("90", 2.0), ("120", 3.0), ("180", 4.0)):
+                if abs(dd - val) < 1e-9: seps[lbl] += 1; break
+            else: seps["other"] += 1
+        tally[len(nb)] += 1
+        for lbl in ("90", "120", "180"):
+            if seps[lbl]: withsep[lbl] += 1
+        if seps["180"] or seps["90"]:
+            if best is None or len(nb) > best[0]:
+                best = (len(nb), kx, ky, dict(seps))
+    tot = sum(tally.values())
+    print(f"\n{name}  n={n}: {tot} candidate points with |N| >= 8   "
+          f"[{time.time()-t0:.0f}s]", flush=True)
+    print(f"   with a  90 deg pair (sqrt2)    : {withsep['90']}", flush=True)
+    print(f"   with a 120 deg pair (sqrt3)    : {withsep['120']}", flush=True)
+    print(f"   with a 180 deg pair (antipodal): {withsep['180']}", flush=True)
+    if best: print(f"   richest such point: |N|={best[0]} seps={best[3]}", flush=True)

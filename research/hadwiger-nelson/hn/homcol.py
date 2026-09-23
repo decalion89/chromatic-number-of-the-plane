@@ -14014,3 +14014,96 @@ THE_CAP_IS_WHAT_MAKES_A_NEIGHBOURHOOD_A_RAINBOW = True
 # graph by finding forced pairs at four; he built one, and the forced pairs
 # came with it.  Construction is the route; forced pairs are the receipt.
 A_FORCED_PAIR_COSTS_THE_WHOLE_NEAR_CRITICAL_GRAPH = True
+
+
+# The 60-degree grading, and why the rotation stack about the target is dead.
+#
+# Inside N(p) every edge is a 60-degree step round the unit circle, so along any
+# path the angle moves by +-60 per step and the parity of the path length is the
+# parity of the angle index.  Three things follow, and none of them is about any
+# particular graph.
+#
+# A component is small.  Reading a path as a self-avoiding walk on Z/6 with +-1
+# steps, it has at most SIX points, and they all sit in one coset of 60 degrees.
+# The only cycle possible is the hexagon itself: eight +-60 steps summing to a
+# full turn revisit their start at the sixth.  So |N(p)| <= 6 * (components).
+#
+# A 2-colouring IS the parity.  Within a component the colour of a point is the
+# parity of its index, so under the escape hypothesis |c(N(p))| <= 2:
+#
+#     separation 120 deg (index 2, even)  --  MONOCHROMATIC, automatically
+#     separation  60 deg (index 1, odd)   --  apart, and they are adjacent anyway
+#     separation 180 deg (index 3, odd)   --  APART, automatically
+#
+# Checked rather than assumed: over the candidate neighbourhoods of the 803-, the
+# 2041- and the 6925-point graphs, index parity and bipartition class agree on
+# every pair in every component.  Zero violations.
+#
+# And so the rotation stack about p cannot work.  That stack is the one
+# construction whose hypothesis survives its own rotation -- if a 5-colouring of
+# G' = union of rho^i G has |c(N_{G'}(p))| <= 2 then each copy's restriction is
+# an escape colouring of that copy, because rho^i fixes p and carries N_G(p)
+# into N_{G'}(p) -- so every copy contributes its own escape conclusion and the
+# conclusions chain.  A conclusion at separation theta links a point to the one
+# theta further round; the colour classes are cosets of <theta_1, theta_2, ...>;
+# and the contradiction wanted is two monochromatic points 60 degrees apart.
+#
+#     <120>      = {0,120,240}         no 60      the two inscribed triangles
+#     <180>      = {0,180}             no 60
+#     <90>       = {0,90,180,270}      no 60
+#     <120,180>  = <60>                CLOSES
+#     <90,120>   = <30>                CLOSES
+#
+# Only 120 is ever available: the escape analysis returns a 120-degree relation
+# uniformly, at 25 of the 30 richest candidate points, and by the grading that is
+# the ONLY separation it can ever return from inside a component.  180 comes out
+# forced apart, not together.  So the stack reproduces the escape hypothesis
+# instead of contradicting it, and does so for every graph, not just for ours.
+#
+# The one opening the argument leaves is an antipodal pair split across two
+# components, where the parities are independent and the pair may be
+# monochromatic.  Those exist and are not rare -- 101 of 467 antipodal pairs in
+# the 803-graph, 2862 of 22 149 in the 6925-point one -- but a split pair is a
+# FREEDOM, not a forcing, so it feeds a disjunction rather than a chain.
+#
+# 90 degrees is closed for a different and sharper reason: d^2 = 2, and 2 is not
+# a Loeschian number -- a^2 + ab + b^2 never equals 2, since 2 is inert in the
+# Eisenstein integers and its norm is 4.  Every carrier in this project lives in
+# a triangular lattice, so no two of its points are ever sqrt2 apart, and the
+# measurement agrees: zero 90-degree pairs in all four graphs scanned.
+THE_SIXTY_DEGREE_GRADING_KILLS_THE_ROTATION_STACK = True
+
+
+# The burden, and the heuristic that was backwards.
+#
+# Blocking p means refuting every proper colouring of N(p) that uses at most
+# four of the five colours: each one is a way for p to still be placeable, and
+# the rest of the graph has to kill all of them.  That count is the burden, and
+# it is exactly computable.  Measured on the 803-graph:
+#
+#     |N| = 5    2 380 patterns
+#     |N| = 6   10 820
+#     |N| = 7   28 240
+#
+# about 4.5x per extra neighbour, and by the grading a neighbourhood of 30 is
+# five hexagons, so its burden is of order 10^14.
+#
+# The floor is |N| >= 5, since five colours need five points to sit on.  So the
+# cheapest blocked point has exactly FIVE neighbours, pairwise forced apart --
+# a rainbow -- and every mu scan in this project filtered to |N| >= 8 or >= 10,
+# on the unstated assumption that carrying five colours takes many points.
+#
+# The ceiling at four says the same thing from the other side: it is attained at
+# |N| = 4, the minimum, at two of the 803 vertices.
+#
+# So the small neighbourhoods were scanned, for the first time: all 802 candidate
+# points of the 803-graph with 5 <= |N| <= 7, exactly, no budget.
+#
+#     |N| = 5:  mu = 1 at 8 points, mu = 2 at 330
+#     |N| = 6:  mu = 1 at 2,        mu = 2 at 263
+#     |N| = 7:  mu = 1 at 1,        mu = 2 at 198
+#
+# Still two.  But the target is now a number rather than a hope: 2 380 patterns
+# to refute, at a point with five neighbours, instead of 10^14 at a point with
+# thirty.
+THE_BURDEN_IS_EXPONENTIAL_SO_THE_SMALL_NEIGHBOURHOODS_ARE_THE_CHEAP_ONES = True

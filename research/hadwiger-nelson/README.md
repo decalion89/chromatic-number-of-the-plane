@@ -6398,3 +6398,83 @@ exists only at `k = 3`, the absence of 4-cycles in a neighbourhood, and the
 pigeonhole becomes a statement about two circulants at once, and one of them
 must contain an odd cycle — which is what pins one radius to `1/√3` in any
 multiquadratic field and frees the other entirely.
+
+## What a forced pair costs, and the 60° grading that explains the wall
+
+Two measurements this pass changed what the search should be doing, and one
+theorem explains both.
+
+**A forced pair costs the whole near-critical graph.** `five_247_c` is
+5-chromatic and *vertex-critical*, so `H = G − p` is 4-colourable and
+`μ₄(H,p) = 4` for **every** one of its 803 vertices — 803 ceiling points, free
+of charge. `μ₄ = 4` alone does not make `N(p)` a rainbow: five points carrying
+four colours leave one pair sharing. Pairwise forcing needs the cap attained,
+`|N(p)| = k`, and exactly two vertices have degree 4. At `p = 315`,
+`N = {130, 461, 561, 757}` holds one 60° edge, so five pairs there are
+genuinely forced apart. Forcing is monotone in the vertex set, so binary
+searching the smallest distance-ordered **prefix** that still forces each pair
+prices it in about ten solves:
+
+| pair | `d²` | smallest prefix | radius |
+|---|---:|---:|---:|
+| (130,461) | 2.124094 | **802 of 802** | 6 |
+| (130,561) | 1 | 2 of 802 | 0 |
+| (130,757) | 0.028382 | **802 of 802** | 7 |
+| (461,561) | 1/3 | **802 of 802** | 6 |
+| (461,757) | 2.457427 | **802 of 802** | 6 |
+| (561,757) | 1.304951 | **802 of 802** | 7 |
+
+Unanimous. Only the 60° edge is local; every pair forced *for a reason* needs
+all of it, and dropping the single farthest vertex already breaks the forcing.
+So a forced pair exists only one vertex short of `(k+1)`-chromatic, and hunting
+one at five as a stepping stone to a 6-chromatic graph is circular. De Grey did
+not find a 5-chromatic graph by finding forced pairs at four; he built one, and
+the forced pairs came with it. **Construction is the route; forced pairs are the
+receipt.**
+
+**The 60° grading.** Inside `N(p)` every edge is a 60° step round the unit
+circle, so along any path the angle moves by ±60° per step and the parity of the
+path length is the parity of the angle index. A component is therefore a
+self-avoiding walk on `ℤ/6` with ±1 steps: at most **six** points, all in one
+coset of 60°, and the only possible cycle is the hexagon itself. And a
+2-colouring of `N(p)` *is* the parity:
+
+| separation | `d` | under `|c(N(p))| ≤ 2` |
+|---|---|---|
+| 60° (index 1) | 1 | apart — they are adjacent anyway |
+| 120° (index 2) | √3 | **monochromatic, automatically** |
+| 180° (index 3) | 2 | **apart, automatically** |
+
+Checked rather than assumed: over the candidate neighbourhoods of the 803-,
+2041- and 6925-point graphs, index parity and bipartition class agree on every
+pair in every component. **Zero violations.**
+
+This kills the one construction whose hypothesis survives its own rotation. If
+a 5-colouring of `G' = ⋃ρⁱG` has `|c(N_{G'}(p))| ≤ 2` then — because `ρ` fixes
+`p` and carries `N_G(p)` into `N_{G'}(p)` — each copy's restriction is an escape
+colouring *of that copy*, so every copy contributes its own escape conclusion
+and the conclusions chain. A conclusion at separation `θ` links a point to the
+one `θ` further round; the colour classes are cosets of `⟨θ₁,θ₂,…⟩`; and the
+contradiction wanted is two monochromatic points 60° apart. But
+`⟨120°⟩ = {0,120,240}` misses 60° — the classes are the two inscribed triangles
+— and by the grading, 120° is the *only* separation the hypothesis can ever
+hand over. `⟨120°,180°⟩ = ⟨60°⟩` would close, and so would `⟨90°,120°⟩ = ⟨30°⟩`;
+180° comes out forced *apart*, and 90° means `d² = 2`, which no triangular
+lattice ever realises — **2 is not a Loeschian number**, being inert in the
+Eisenstein integers with norm 4. Measured: zero 90° pairs in all four graphs
+scanned. The stack reproduces the escape hypothesis instead of contradicting it,
+for every graph, not just ours.
+
+**The burden, and a heuristic that was backwards.** Blocking `p` means refuting
+every proper colouring of `N(p)` that uses at most four colours. That count is
+exactly computable, and on the 803-graph it is 2 380 for `|N| = 5`, 10 820 for
+6, 28 240 for 7 — about 4.5× per extra neighbour, so a 30-point neighbourhood
+(five hexagons, by the grading) carries a burden of order `10¹⁴`. The floor is
+`|N| ≥ 5`. **The cheapest blocked point has exactly five neighbours**, and every
+`μ` scan here had filtered to `|N| ≥ 8` or `≥ 10`. The ceiling at four says the
+same from the other side: it is attained at `|N| = 4`, the minimum.
+
+So the small neighbourhoods were scanned for the first time — all 802 candidate
+points of the 803-graph with `5 ≤ |N| ≤ 7`, exactly, no budget. `μ₅ = 2`
+throughout (`μ₅ = 1` at 11 of them). Still two; but the target is now a number
+instead of a hope.
