@@ -14880,3 +14880,153 @@ COUPLING_SATURATES_AND_ONLY_A_RING_COUPLES_ENOUGH = True
 # turn of copies -- gave 8161 points and 3.27 million conflicts, still
 # 5-colourable.  A modest factor over two unbitten copies, not a jump.
 OVERLAP_WITH_A_TWIST_IS_THE_LEVER = True
+
+
+# The reflections buy nothing the turns had not bought.
+#
+# Twelve copies of the 803 on the hexagon -- at each vertex one copy turned by
+# i * 60 degrees and one reflected across the axis and then turned, the whole
+# dihedral group of the lattice -- give 6955 points, 39960 edges, 2681 shared
+# points and a median of 2 529 956 conflicts over three perturbed solves.  The
+# six turned copies alone were 4159 points and 2 415 157.  Sixty-seven per cent
+# more graph for five per cent more resistance: the reflections overlap the
+# turned copies almost exactly where the turns already did.
+#
+# The remaining bites of the tight graph's richest rings (three 24-point rings
+# at distance sqrt3, each closed by the Moser rotation) gave 766 079,
+# 2 539 777 and 866 514 conflicts, all 5-colourable.
+THE_REFLECTIONS_ADD_NOTHING_TO_THE_TURNS = True
+
+
+# Exoo and Ismailescu's {1,2}-graph, rebuilt from the paper and re-checked, and
+# the reduction it hands to this problem.
+#
+# arXiv 1909.13177 (Geombinatorics 2020): every 5-colouring of the plane has
+# two points of one colour at distance 1 OR 2.  Their vertices are
+# [a,b,c,d] = (a sqrt3/12 + b sqrt11/12, c/12 + d sqrt33/12) -- this package's
+# field.  Rebuilt from the 23 listed points (reflections, then the six turns
+# by 60 degrees), every count matches exactly:
+#
+#     T  57 points;  G  205 vertices, 966 unit edges, 423 two-edges
+#     H  214 / 1004 / 446, and H with A != B is NOT 5-colourable (A = B is
+#        forced), |AB|^2 = 25
+#     K = H u lambda_A(H), lambda = (49 + 3 sqrt-11)/50:  426 / 2009 / 892,
+#        |BB'|^2 = 1
+#
+# THE REDUCTION.  If one unit-distance graph H has two points u, v a distance
+# 2 apart that no 5-colouring of H colours alike, then chi(R^2) >= 6: in a
+# 5-colouring of the plane every congruent copy of H splits every 2-pair, and
+# the colouring would then be a proper colouring of the {1,2}-graph.  The
+# same holds for any d with chi(R^2; {1,d}) >= 6 (d = golden ratio, by
+# Huddleston, is the other known one).
+#
+# Measured on the 803-graph over Kempe-sampled colourings, distance 2 is
+# ATTRACTIVE, not repulsive: P(same colour) = 0.29 against 0.2 for a random
+# pair -- the tangency point of the two unit circles is the pair's only
+# common neighbour and pulls it together.  No pair of the 803-graph closer than
+# 3 is forced apart (314 926 pairs, 40 000 swaps, 11 solver calls).  The most
+# repulsive distance is 2/sqrt3 at 0.09: antipodal on a 1/sqrt3 ring.  And
+# the lattice (1/sqrt3) Z[w] with three forbidden distances {1, 2/sqrt3,
+# sqrt(7/3)} is 6-chromatic on 61 points (radius 4; three solvers agree),
+# while with any two of them it is 4-colourable.
+EXOO_ISMAILESCU_REBUILT_AND_THE_SPLIT_PAIR_REDUCTION = True
+
+
+# THE TRAP NOTE WAS THE TRAP: a denominator of five genuinely blocks.
+#
+# RESIDUE_DEGREE_THREE carries the hypothesis "edge vectors integral at 5",
+# and it is load-bearing.  The README's summary of it -- "a multiquadratic
+# unit-distance graph has a coset 5-colouring" -- dropped the hypothesis, and
+# an earlier note dismissed generators like (1 + 3 sqrt-11)/10 as a
+# bookkeeping artefact of the AMBIENT test and filtered them out.  On the
+# module the edge vectors actually generate (integer echelon basis, each edge
+# vector in that basis, then SAT) the effect is real:
+#
+#     graph                                 coset colouring mod 5
+#     803-graph                              exists (1728 of 5^8 functionals)
+#     E-I's H, unit edges only               exists
+#     E-I's K = H u lambda_A(H), unit edges  NONE -- an edge vector lies in 5M
+#     803 u lambda(803)                      NONE; also none mod 2, 3, 4, and no
+#                                            periodic 5-colouring found through
+#                                            Z/6..12, 20, 25, 50, 125
+#
+# Why: in Q(sqrt-11) the prime 5 splits into two primes that complex
+# conjugation swaps, so a unit vector can carry 5 in its denominator; lambda
+# has valuations +2 and -2 there, and (lambda + conj lambda) = 49/25 already
+# puts e/25 in the module next to e.  An edge vector in 5M is killed by every
+# map to Z/5.  So the corrected statement is:
+#
+#     a multiquadratic unit-distance graph whose edge vectors are INTEGRAL AT
+#     5 has a coset 5-colouring; one with 5 in a denominator need not.
+#
+# and the Moser field is NOT closed to a sixth colour.  The history fits: the
+# Moser rotation (5 + sqrt-11)/6 has denominator 6 and kills the coset
+# colourings mod 2 and 3; de Grey's closing rotation cos 31/32 has
+# denominator 2^5; the step to six needs 5 in a denominator (or the exotic
+# residue degree of RESIDUE_DEGREE_THREE), and Exoo and Ismailescu's
+# 6-chromatic {1,2}-graph uses exactly lambda.  As before, blocking is
+# necessary, never sufficient: a pendant copy blocks and adds no colour.
+THE_TRAP_NOTE_WAS_THE_TRAP = True
+
+
+# Only pairs in 5M can ever be forced together -- and that is distance 5.
+#
+# A coset colouring c = psi(p) gives u and v one colour iff psi(u - v) = 0.
+# Enumerating every functional on the rank-8 edge module mod 5:
+#
+#     graph         admissible psi   span of them   pairs split by some psi
+#     803               1728          all 8         all at d^2 = 5/9, 4/3, 3
+#     tight 4159         960          all 8         all at 5/9, 4/3, 3; 24 of
+#                                                   the 48 at d^2 = 25 are NOT
+#
+# The admissible functionals span the whole dual, so their common kernel is
+# exactly 5M: every pair whose difference is not five times a module element
+# is split by an explicit coset colouring, and no growth along the graph's own
+# directions can force it -- which is the one-line reason every forced-same
+# hunt at five colours here came back empty.  What survives is u - v = 5e with
+# e a unit vector of the module: distance 5.  That is where Exoo and
+# Ismailescu's forced pair sits (A - B = 5 (sqrt3/6, sqrt33/6), five times a
+# unit step), and the rotation closing distance 5 is lambda, whose denominator
+# carries 5 -- so the union escapes the coset colourings at the same stroke.
+# Their construction is not one choice among many; in this field it is the
+# only shape a forced-pair spindle to six can take.
+#
+# The tight graph's 24 surviving 5M pairs are all split by ordinary
+# 5-colourings: three solver calls (the first split 18 at once).
+ONLY_PAIRS_IN_5M_CAN_BE_FORCED_AND_THAT_IS_DISTANCE_FIVE = True
+
+
+# Exoo and Ismailescu's pair cannot be forced by unit distances alone -- and a
+# periodic colouring says so in one line.  THE PAIR GATE.
+#
+# Coset colourings mod 5 never split a 5M pair; colourings through a LARGER
+# quotient can.  E-I's coordinate module [a,b,c,d]/12 holds exactly 30 unit
+# vectors (3a^2 + 11b^2 + c^2 + 33d^2 = 144 and ab = -cd): fifteen directions,
+# rank 4, and every unit-distance graph on that module uses only those.
+# Enumerating every psi : M -> Z/n that is nonzero on all of them:
+#
+#     n     admissible psi   5-colourable Cayley graph   splits some 5e pair
+#     5          48                  48                        never
+#     10        110                  38                        yes
+#     15         41                  19                        yes
+#     25        415                  81                        yes   (also 20, 30, 40, 50)
+#
+# and their own pair: psi = (1, 5, 3, 6) into Z/10 gives a 5-colouring of
+# EVERY unit-distance graph on the module with c(A) != c(B).  Their H forces
+# A = B through its 446 two-edges and through nothing else; a targeted growth
+# that was trying to force it with unit distances alone (3846 points, each
+# splitting colouring still found in about 12 000 conflicts) was refuted
+# before it began.  The 803-graph's module fails the same way: sampled
+# functionals into Z/10, Z/20 and Z/50 split a 5e pair (Z/25: none among
+# 400 000 samples).
+#
+#     THE PAIR GATE.  A pair (A, A + 5e) can be forced together by a
+#     unit-distance graph on a module M only if no finite quotient
+#     psi : M -> G, nonzero on every unit vector of M, carries a proper
+#     5-colouring of Cay(G, psi(units)) with c(0) != c(psi(5e)).
+#
+# It is to a forced pair what blocking is to a sixth colour: necessary, cheap,
+# and the first thing to run.  Passing it needs a direction set rich enough
+# that every quotient's Cayley graph is either not 5-colourable or coset-rigid
+# along e -- the same pressure that made the blocked graphs sparse.
+THE_PAIR_GATE_REFUTES_THE_UNIT_DISTANCE_SHADOW_OF_EXOO_ISMAILESCU = True

@@ -6626,3 +6626,69 @@ a point of `N(h)` reaches the ring only at `φ ± θ₀`, and those two are
 `2θ₀ = 146.44°` apart, never a multiple of 120°, so it has **at most one**
 neighbour in any given triangle, keeps a list of two of its three colours, and
 `N(h)` is 2-choosable.
+
+## Exoo–Ismailescu rebuilt, and the denominator that the project filtered out
+
+**A reduction.** Exoo and Ismailescu (arXiv 1909.13177, *Geombinatorics* 2020)
+proved that every 5-colouring of the plane has two points of one colour at
+distance 1 **or 2**. Their 426-vertex `{1,2}`-graph lives in this package's
+field — vertices `[a,b,c,d] = (a√3/12 + b√11/12, c/12 + d√33/12)` — and
+rebuilt from the paper's 23 points every count matches: `G` 205/966/423, `H`
+214/1004/446 with its pair `A, B` (distance 5) monochromatic in every
+5-colouring (checked: `H` plus `c(A) ≠ c(B)` is UNSAT), `K = H ∪ λ_A(H)`
+426/2009/892 with `|BB'| = 1`, where `λ = (49 + 3√−11)/50`. So:
+
+> one unit-distance graph with two points at distance 2 that no 5-colouring
+> colours alike proves `χ(ℝ²) ≥ 6`
+
+— every congruent copy would split every 2-pair, and a 5-colouring of the
+plane would become a proper colouring of the `{1,2}`-graph. In the 803-graph,
+though, distance 2 is *attractive* (`P(same) = 0.29` against 0.2 at random:
+the tangency point is the pair's only common neighbour), no pair closer than 3
+is forced apart, and the most repulsive distance is `2/√3` (0.09).
+
+**A correction.** The residue-degree theorem assumes edge vectors **integral
+at 5**, and the summary above ("a multiquadratic unit-distance graph has a
+coset 5-colouring") dropped that hypothesis; an earlier note even filtered
+generators like `(1 + 3√−11)/10` out as bookkeeping. On the module the edge
+vectors actually generate, a denominator of 5 genuinely blocks: in `ℚ(√−11)`
+the prime 5 splits into two primes swapped by conjugation, `λ` has valuations
+`±2` there, and `λ + λ̄ = 49/25` puts `e/25` in the module beside `e`.
+
+| graph | coset colouring mod 5 |
+|---|---|
+| 803-graph | exists (1 728 admissible functionals) |
+| E–I's `H`, unit edges | exists |
+| E–I's `K = H ∪ λ_A(H)`, unit edges | **none** — an edge vector lies in `5M` |
+| `803 ∪ λ(803)` | **none**; none mod 2, 3, 4; no periodic 5-colouring found through ℤ/6…12, 20, 25, 50, 125 |
+
+So the Moser field is **not** closed to a sixth colour. The Moser rotation's
+denominator 6 kills the coset colourings mod 2 and 3; de Grey's closing
+rotation (`cos 31/32`) has denominator `2⁵`; the step to six needs a 5.
+
+**Where a forced pair can live.** A coset colouring colours `u, v` alike iff
+`ψ(u − v) = 0`. Enumerating all `5⁸` functionals on the rank-8 edge modules,
+the admissible ones span the whole dual in both the 803-graph and the tight
+4159-graph, so their common kernel is exactly `5M`: **every pair whose
+difference is not five times a module element is split by an explicit coset
+colouring**, and no growth along the graph's own directions can force it —
+the one-line reason every forced-same hunt at five colours here came back
+empty. What survives is `u − v = 5e`, distance 5 along a unit direction:
+precisely Exoo and Ismailescu's pair, closed by precisely their rotation `λ`,
+whose 5 in the denominator lets the union escape the coset colourings. In this
+field their construction is the only shape a forced-pair spindle to six can
+take. (The tight graph's 24 such pairs are all split by ordinary colourings.)
+
+**And a gate for pairs.** Colourings through larger quotients *can* split a
+`5M` pair. Exoo and Ismailescu's coordinate module holds exactly 30 unit
+vectors (rank 4); enumerating every `ψ : M → ℤ/n` nonzero on all of them, the
+Cayley graphs over ℤ/10, 15, 20, 25, 30, 40 and 50 all carry 5-colourings that
+split a `5e` pair — and `ψ = (1,5,3,6)` into ℤ/10 splits *their own* `A, B`,
+colouring every unit-distance graph on the module. Their forcing lives
+entirely in the 446 two-edges. The 803-graph's module fails the same way
+(ℤ/10, 20, 50). So:
+
+> a pair `(A, A+5e)` can be forced by unit distances on a module `M` only if
+> no finite quotient `ψ : M → G`, nonzero on every unit vector, has a
+> 5-colouring of `Cay(G, ψ(units))` with `c(0) ≠ c(ψ(5e))` — the **pair
+> gate**, to a forced pair what blocking is to a sixth colour.
