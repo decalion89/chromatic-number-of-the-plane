@@ -13473,3 +13473,31 @@ FREE_AT_FIVE_IS_BOUNDARY_DOMINATED = True
 # cadical 8921 seconds, against 50 s for the 2041-point one.  The instances are
 # hard.  They are also satisfiable.
 THE_NULL_MODEL_ITSELF_IS_FORBIDDEN_BY_THE_GEOMETRY = True
+
+
+# The tuned chain has no forced pair at five either, exhaustively.
+#
+# 2041 points, mean degree 13.35, 2 081 820 pairs.  The filter emptied at
+# round 17: every pair differs in one of seventeen exhibited proper
+# 5-colourings, so every one is PROVED not forced, and there was nothing left
+# to confirm.
+#
+# That completes the tally of what has been settled at five colours, all of it
+# by certificate rather than by sample:
+#
+#   graph                n       pairs tested      forced
+#   G (de Grey)        1582       1 248 990          0
+#   glue of the 803    1320         870 540          0
+#   five_symmetric     7141      25 493 370          0
+#   five_tuned_1_1     2041       2 081 820          0
+#
+# and in the dual direction, where a pair that AGREES anywhere is proved not
+# forced apart:
+#
+#   five_247_c          803    253 642 non-adj       0
+#   five_247           1139    512 342 non-adj       0
+#
+# Nothing in this project is forced to agree at five, and nothing is forced to
+# differ.  The colourings are unconstrained in both directions, on every object
+# built, at every density reached.
+NOTHING_IS_FORCED_AT_FIVE_IN_EITHER_DIRECTION = True
