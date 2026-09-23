@@ -12837,3 +12837,30 @@ THE_RAREST_ORBIT_COSTS_A_FIFTH_RADICAL = True
 #
 # against 39313 points for spending both rare orbits the classical way.
 A_FORCED_CLASS_OF_THREE_MAKES_THE_ANGLE_FREE = True
+
+
+# What the class of three is made of, and how many rotations it really gives.
+#
+# The class {a, b, c} on the Sa[199] carrier has pairwise squared distances
+#
+#     a-b = 64/3    (rare)     a-c = 256/9   (rare)     b-c = 64/9   (COMMON)
+#
+# so the common distance is the one linking the two rare ones.  That shape
+# decides how many rotations the class supports, and the answer is not six.
+# The free angle needs its two circles to meet, | r1^.5 - r2^.5 | <= 1, and
+#
+#     pivot a:  radii 64/3 and 256/9   0.715 <= 1 <= 9.952   MEETS, radical 23
+#     pivot b:  radii 64/3 and  64/9   1.952 <= 1            fails
+#     pivot c:  radii 256/9 and 64/9   2.667 <= 1            fails
+#
+# so exactly two free angles, both about a -- plus the classical spindle at
+# b-c = 64/9, whose radical 247 the project already uses.  Three independent
+# rotations from one class.
+#
+# And the symmetry is worth having only where it is affordable.  The whole
+# orbit of six pivots costs 39313 points for two rotations; ONE pivot costs
+# 12097 for all three, with the same force and no group.  Both refuse four
+# colours.  When the object then has to be tested at five, where a colouring
+# of a 39313-vertex graph costs many minutes, the smaller one is the one that
+# can actually be asked.
+THREE_ROTATIONS_FROM_ONE_CLASS_AND_ONE_PIVOT_IS_ENOUGH = True
