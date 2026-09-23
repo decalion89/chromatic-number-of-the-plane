@@ -14493,3 +14493,59 @@ THE_UNIT_SQUARE_CLOSES_WITH_TWO_COPIES = True
 # Which is rung one of the original ladder, still unclimbed, and now known to be
 # the bottleneck of EVERY route rather than of one of them.
 THE_SQUARE_NEEDS_ROOT_TWO_AND_THE_GRAMMAR_CANNOT_MAKE_IT = True
+
+
+# A biconditional that was only an implication, and what it costs the programme.
+#
+# hn/blocked.py and the pull request both stated
+#
+#     mu_5 <= 2 always   <=>   chi(R^2) = 5
+#
+# and the forward direction is fine: if mu never reaches 5 there is no blocked
+# point, so chi <= 5, and chi >= 5 is known.  The CONVERSE is false.  chi = 5
+# says every finite unit-distance graph plus a point is 5-colourable, which is
+# mu_5 <= 4 -- it says nothing against a graph with mu_5 = 3 or 4 somewhere.
+# The true biconditional is mu_5 <= 4 always <=> chi(R^2) <= 5, the
+# contrapositive of the first line.
+#
+# It matters for what the ladder means.  Rungs one and two -- mu_5 from 2 to 3,
+# and 3 to 4 -- are perfectly compatible with chi(R^2) = 5, so climbing them
+# proves nothing by itself.  They are progress in a search, not partial credit
+# towards a theorem, and only mu_5 = 5 decides anything.  Every "two rungs
+# short" in these notes should be read that way.
+THE_MU_BICONDITIONAL_HELD_IN_ONE_DIRECTION_ONLY = True
+
+
+# Local certificates for rung one, priced and exhausted.
+#
+# If the hexagon about h is 2-coloured its two inscribed sqrt3-triangles are
+# monochromatic, so refuting ONE of them is enough, and there is a purely local
+# sufficient condition: T monochromatic in gamma excludes gamma from every point
+# a unit from T, leaving A = N(a) u N(b) u N(c) with four colours, so
+# chi(G[A]) >= 5 would be a contradiction.
+#
+# A is three unit circles about a triangle of side sqrt3.  A point has two
+# neighbours on its own circle and at most two on each of the others, so the max
+# degree is 6 and Brooks allows 6 -- with two circles the degree is 4 and Brooks
+# caps chi at 4, so three is the first case where five is not excluded.
+# Measured:
+#
+#   generic orbits          chi = 2  (eight seeds, depths to 1400 vertices)
+#   triangle-seeded orbits  chi = 3  (stable to 3002 vertices, max degree 6)
+#
+# and exactly two unit triangles have one vertex on each circle, found by
+# bisection on |w - c| - 1.  Three, against the five a plain certificate needs.
+#
+# The sharper version uses BOTH triangles and remembers which colour each region
+# lost: gamma is gone from the three circles about T and delta from the three
+# about T', so the six circles about the hexagon's vertices carry a LIST problem
+# -- four colours on a point that meets one triangle's circles, three on a point
+# that meets both, and h itself, lying on all six, gets three.  Built from 17 952
+# triangle seeds: 4447 points, 13 470 edges, list sizes 3 at seven points, 4 at
+# 4368, 5 at 72.  List-colourable.
+#
+# So the local route is closed at every strength: plain chi on two circles caps
+# at 4 by Brooks and reaches 2, on three circles reaches 3, and the list version
+# on six circles is feasible.  Whatever refutes a monochromatic sqrt3-triangle
+# at five colours is not a local certificate.
+THE_LOCAL_CERTIFICATES_FOR_RUNG_ONE_ARE_EXHAUSTED = True

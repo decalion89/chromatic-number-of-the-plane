@@ -13,13 +13,21 @@ k-colouring exactly when every k-colouring of `G` already spends all k colours
 on `N(p)` -- that is, exactly when `mu_k(G, p) = k`.  So for k = 5:
 
     mu_5 = 5 somewhere   <=>   chi(R^2) >= 6
-    mu_5 <= 2 always     <=>   chi(R^2) = 5
+    mu_5 <= 4 always     <=>   chi(R^2) <= 5
 
-The second line needs the first plus `chi(R^2) >= 5`, which is known.  Both
-directions of the first are easy: a blocked point gives a 6-chromatic
+Both directions of the first are easy: a blocked point gives a 6-chromatic
 unit-distance graph by adjoining it, and conversely a vertex-critical
 6-chromatic unit-distance graph minus any vertex `p` is a 5-colourable `G` in
-which `N(p)` must carry all five colours, or `p` could be put back.
+which `N(p)` must carry all five colours, or `p` could be put back.  The second
+line is the contrapositive of the first, plus `chi(R^2) >= 5`, which is known.
+
+An earlier version of this docstring wrote the second line as `mu_5 <= 2 always
+<=> chi(R^2) = 5`, and the forward direction is fine -- 2 < 5 everywhere means
+no blocked point.  The CONVERSE is false: `chi(R^2) = 5` only says every finite
+graph plus a point is 5-colourable, which is `mu_5 <= 4`, and nothing forbids a
+graph with `mu_5 = 3` or `4` at some point.  So climbing from 2 to 3 or 4 proves
+nothing on its own; it is progress in the search, not partial credit towards a
+theorem.  Only `mu_5 = 5` decides anything.
 
 So `mu_5` is not a heuristic for the problem or a proxy for it.  It is the
 problem, restated as an integer between 1 and 5, attached to a graph and a
