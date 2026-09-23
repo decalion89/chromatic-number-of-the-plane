@@ -104,3 +104,80 @@ def test_the_cheap_probe_agrees_with_the_chain():
         nb = neighbourhood(g, Point(ZERO, ZERO))
         assert ms.at_most_two(nb) is True
         assert ms.mu(nb) <= 2
+
+
+# --- positive controls -------------------------------------------------
+#
+# Everything above shows mu coming back at its floor.  That is worthless as
+# evidence unless the instrument can also come back at the CEILING when the
+# structure is really there, so here it is made to.
+#
+# The Moser spindle is 4-chromatic and 4-vertex-critical, so deleting any
+# vertex p leaves a 3-colourable graph in which N(p) must carry all three
+# colours -- otherwise p could be put back and the spindle would be
+# 3-chromatic.  That is mu_3 = 3 = k: a blocked point, at three colours,
+# with a known answer.
+
+
+def _moser():
+    """Two rhombi hinged at the origin, their far apexes a unit apart.
+
+    A rhombus is two unit triangles sharing an edge: (0,0), (sqrt3/2, +-1/2)
+    and (sqrt3, 0), with the apexes sqrt3 apart.  Two of them, rotated against
+    each other by the angle with cos 5/6 and sin sqrt11/6, put the far apexes
+    at 6(1 - 5/6) = 1 -- which is the whole point of the construction and the
+    reason sqrt11 is in de Grey's field at all.
+    """
+    f = Field((3, 11))
+    half = f.rational(Fr(1, 2))
+    rt3 = f.sqrt(3)
+    base = [Point(f.zero(), f.zero()),
+            Point(rt3 * half, half),
+            Point(rt3 * half, -half),
+            Point(rt3, f.zero())]
+    spin = Rotation(f.rational(Fr(5, 6)), f.sqrt(11) * f.rational(Fr(1, 6)))
+    pts, seen = [], set()
+    for p in base + [spin(q) for q in base]:
+        if p not in seen:
+            seen.add(p); pts.append(p)
+    return f, pts
+
+
+def test_the_moser_spindle_is_what_it_should_be():
+    f, pts = _moser()
+    g = build_graph(pts)
+    assert g.n == 7
+    assert sum(len(a) for a in g.adj) // 2 == 11
+    one = f.rational(Fr(1))
+    assert (pts[3] - pts[6]).norm2() == one, "the two apexes must be adjacent"
+
+
+@pytest.mark.parametrize("drop", range(7))
+def test_every_deleted_vertex_of_the_spindle_is_blocked_at_three(drop):
+    """mu reaches the ceiling, on all seven vertices.
+
+    The spindle is 4-vertex-critical, so this must hold for every choice of p,
+    and if the instrument ever reported less than 3 it would be under-counting
+    -- which is the failure mode that matters, since every result at five
+    colours here is a claim that mu is SMALL.
+    """
+    _, pts = _moser()
+    p = pts[drop]
+    rest = build_graph([q for i, q in enumerate(pts) if i != drop])
+    nb = neighbourhood(rest, p)
+    assert len(nb) >= 3
+    with MuSolver(rest, k=3) as ms:
+        assert ms.colourable, "the spindle minus a vertex is 3-colourable"
+        assert ms.mu(nb) == 3
+        assert ms.at_most_two(nb) is False
+
+
+def test_the_spindle_is_not_blocked_at_four():
+    """And mu must not over-report: at four colours the same point is placeable
+    again, since the spindle itself is 4-chromatic."""
+    _, pts = _moser()
+    p = pts[3]
+    rest = build_graph([q for i, q in enumerate(pts) if i != 3])
+    nb = neighbourhood(rest, p)
+    with MuSolver(rest, k=4) as ms:
+        assert ms.mu(nb) < 4

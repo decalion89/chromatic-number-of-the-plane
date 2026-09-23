@@ -13735,3 +13735,28 @@ THE_BLOCKED_POINT_IS_EQUIVALENT_AND_THE_GAP_IS_THREE = True
 # neighbourhoods of each -- up to 15 points, against the 13 of de Grey's G:
 # mu = 2, without exception.
 MU_IS_AN_INSTRUMENT_NOW_AND_IT_READS_TWO_EVERYWHERE = True
+
+
+# The instrument reaches the ceiling, which is what makes the floor mean
+# anything.
+#
+# Every mu reported in this project is 2, and a measurement that only ever
+# returns its minimum is indistinguishable from a broken one.  So mu was put
+# against a case where the answer is a CEILING and known in advance.
+#
+# The Moser spindle is 4-chromatic and 4-vertex-critical, so deleting any
+# vertex p leaves a 3-colourable graph in which N(p) must carry all three
+# colours -- otherwise p goes back in and the spindle is 3-chromatic.  That is
+# mu_3 = 3 = k, a blocked point with a known value, and it has to come out for
+# EVERY one of the seven vertices.
+#
+#   all seven deletions        mu_3 = 3      (the ceiling, as required)
+#   the cheap probe on them    at_most_two = False
+#   the same point at k = 4    mu_4 < 4      (placeable again, as required)
+#
+# The second line matters as much as the first: under-reporting is the failure
+# mode that would matter here, because every result at five colours in this
+# project is a claim that mu is SMALL.  An instrument that could not reach 3
+# would make all of them vacuous.  It reaches 3, on all seven, and declines to
+# reach 4 where 4 would be wrong.
+MU_REACHES_THE_CEILING_ON_THE_MOSER_SPINDLE = True
