@@ -13643,3 +13643,26 @@ THE_RECIPE_CLOSES_AT_FOUR_AND_OWES_DE_GREY_NOTHING = True
 #
 # The whole thing lives in Q(sqrt3, sqrt11, sqrt23), of dimension 8.
 BOTH_TUNINGS_GIVE_THE_GROUP_AND_THE_CHROMATIC_NUMBER = True
+
+
+# Honest accounting: the six copies buy the GROUP, not the contradiction.
+#
+# The two-tuning object was presented as needing all six copies.  It does not.
+# H forces (v, tau v) and tau(H) forces (tau v, tau^2 v), so transitivity gives
+# c(v) = c(tau^2 v) with TWO copies -- and v, tau^2 v are the pair two apart on
+# the circle, at distance exactly 1.  Measured:
+#
+#   2 copies    4 081 points   27 241 edges   4-colourable NO
+#   6 copies   12 240 points   81 870 edges   4-colourable NO, and C6-invariant
+#
+# Read another way, the two-copy version IS the d^2 = 1 distance tuning applied
+# to a carrier whose forced distance is already 1/3: cos phi = d^2/(2 D^2) - 1
+# = 1/(2/3) - 1 = 1/2, which is cos 60.  The two tunings are not independent
+# there; the angle that gives order six is exactly the angle that lands the
+# composite pair on an edge.  That coincidence is what makes the object work,
+# and it is also why the extra four copies are free of logical content.
+#
+# So the six-copy object's claim is precisely: a C6-invariant 5-chromatic
+# unit-distance graph, in Q(sqrt3, sqrt11, sqrt23), with no spindle -- and the
+# group is what the extra 8 159 points are for.
+THE_SIX_COPIES_BUY_THE_GROUP_NOT_THE_CONTRADICTION = True
