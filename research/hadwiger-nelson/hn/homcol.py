@@ -14704,3 +14704,41 @@ BUILD_THE_GRAPH_AROUND_THE_QUESTION = True
 # (0,2) other than 1 is closed by a single spindle.  The number of 5-colourings
 # is the objective, and solver effort is its measurable shadow.
 THE_TIGHTEST_GRAPH_IS_WHERE_FORCED_PAIRS_CAN_LIVE = True
+
+
+# Kempe chains: a free source of colourings, and a rigidity reading that is NOT.
+#
+# The forced-pair scan on the tight hexagon graph stalled because each new
+# 5-colouring of a graph that close to the edge costs the solver minutes.  But
+# one colouring contains many: swap two colours a, b on one connected component
+# of the subgraph they induce, and every edge inside still joins a to b while
+# every edge out goes to a third colour -- a proper colouring again, for the price
+# of a breadth-first search.  It splits exactly the monochromatic pairs that
+# straddle the component.
+#
+# Twenty thousand random swaps took the 782 776 spindle-able candidates of the
+# tight graph down to 54 965 in twenty seconds, and then the elimination
+# plateaued: those pairs stay together across everything the walk reaches.  The
+# walk decides only what is worth asking; each survivor then gets the real test,
+# an assumption call asking for a colouring that splits it.  The first such call
+# came back SATISFIABLE -- that pair is not forced.
+#
+# The swapped components averaged about a thousand vertices, a quarter of the
+# graph, and that read at first as rigidity.  Calibrated, it is not.  The
+# size-biased mean Kempe component from one colouring, over every pair of
+# colours, is the same fraction everywhere:
+#
+#     five_247_c       803    21.4 %    largest 39 %
+#     five_247        1139    25.5 %    largest 39 %
+#     five_tuned_1_1  2041    23.9 %    largest 39 %
+#
+# Two-colour subgraphs of these 5-coloured carriers percolate at about a quarter
+# of the vertices regardless of how tight the graph is, so component size is a
+# property of the density, not of the constraint.  It measures nothing here.
+#
+# And a bug worth recording because the API makes it easy: after a satisfiable
+# solve, add_clause moves CaDiCaL out of its satisfied state, so a model has to
+# be read BEFORE the next clause is added.  The first version retired its
+# selector first and died on the first satisfiable call -- loudly, which is the
+# right way for that mistake to fail.
+KEMPE_CHAINS_ARE_FREE_COLOURINGS_BUT_NOT_A_RIGIDITY_MEASURE = True
