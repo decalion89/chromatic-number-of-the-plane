@@ -7493,3 +7493,71 @@ non-split primes of some candidates:
 
 Adjoining `√−7` (or `√−2`) puts `√21` in the real subfield. That is a
 non-residue unit at 11, so the place above 11 splits.
+
+## Finite planes, the field screen, and a new universe: `ℚ(√−3, √−7, √−11)`
+
+**Finite planes.** Take `q ≡ 5 mod 6`, the case that occurs next to `√−3`.
+The finite plane is `G_q = Cay(𝔽_{q²}, N₁)`, where `N₁` is the norm-one circle
+(`q + 1` points).
+
+The graph has a clean structure:
+- **Two unit steps and their difference.** Two unit steps whose difference is
+  also a unit step differ by a sixth root of unity. So `G_q` is the union of
+  `(q+1)/6` rotated triangular tori.
+- **It is Ramanujan.** Its eigenvalues are Salié-type sums. We checked
+  `|λ| ≤ 2√q` numerically for every `q < 400`.
+
+Hoffman's ratio bound then gives `χ_f(G_q) > 5`, so **`χ(G_q) ≥ 6` for every
+`q ≥ 53`**. For `q > 62` this follows from the Ramanujan bound alone; 53 and 59
+were computed.
+
+The same bound holds at every level `O/π^r`, because level-`j` eigenvalues are
+`q^{r−j}` times level-`j` sums. The Delsarte LP gives nothing more.
+
+| `q` | 2 | 5 | 11 | 17 | 23 | 29 | 41 | 47 | ≥ 53 |
+|---|---|---|---|---|---|---|---|---|---|
+| `χ(G_q)` | 4 | 4 | 5 | 6? | ≥ 7? | ≥ 6? | ≥ 6? | ? | ≥ 6 (Hoffman) |
+
+How the uncertain entries were reached:
+- **`q = 17`:** tabu search finds no 5-colouring in 2·10⁸ moves, and finds a
+  6-colouring at once. The best independent sets found have 57 points, against
+  `289/5 = 57.8`. SAT proofs are running.
+- **`q = 23`:** tabu fails at 5 and at 6 colours.
+- **`q = 29`, `q = 41`:** tabu fails at 5.
+
+A marked entry is not yet a proof.
+
+**The field screen.** `scripts/fieldscreen.py` lists the non-split places of a
+multiquadratic CM field, using Kummer theory for its local Galois groups.
+
+| field | non-split places, residue `𝔽_q` | verdict for six |
+|---|---|---|
+| Moser `ℚ(√−3, √−11)` | 2, 11, 17, 29, … | dead (2-adic: `χ = 4`) |
+| `ℚ(√−3, √−7, √−15)` | 5, 41, … | dead (`χ ≤ 4`) |
+| `ℚ(√−3, √−11, √−15)`, `ℚ(√−3, √−11, √−23)` | 11, … | dead (`χ ≤ 5`) |
+| `ℚ(√−3, √−11, √−247)` (`five_rho7`) | 11, 29, … | dead (`χ = 5`) |
+| **`ℚ(√−3, √−7, √−11)`** | **17, 41, 83, 101, …** | **open**, if `G₁₇` and `G₄₁` have `χ ≥ 6` |
+| de Grey's `ℚ(√−3, √−7, √−11, √−15)` | 41, 101, 131, … | open, if `G₄₁` has `χ ≥ 6` |
+| `ℚ(√−3, √−7, √2717)` | 59, 83, 89, … | open (Hoffman at every place) |
+| `ℚ(√−3, √−7, √−11, √−247)` | 83, 173, … | open (Hoffman at every place) |
+
+**A 5-chromatic graph in the new universe.** Take the carrier's forced pair at
+`d² = 64/9`, with the composition rule of *Forced pairs compose*. It moves to
+`d² = 16` with the rotation `cos φ = 1/8`, `sin φ = 3√7/8`, whose radical is
+`√(16(256 − 144)) = 16√7`. De Grey's `4e` rotation `(31 + 3√−7)/32` then
+spindles it.
+- It is built by `TARGETS=16 BASE=3,7,11 scripts/tune.py`.
+- Everything stays in `ℚ(√3, √7, √11)`, with complex coordinates in
+  `ℚ(√−3, √−7, √−11)`, and needs no `√5` and no `√247`.
+- `data/five_tuned_16_1_3_7_11.json` has **4 081 points and 27 242 edges**. It
+  is not 4-colourable: CaDiCaL (284 s) and kissat independently.
+
+**The first search there.**
+- **Its `λ`-closure kills the cheap colourings.** Exoo–Ismailescu's rotation lies
+  in `ℚ(√−11)`, so the closure stays inside the field. It has 378 unit vectors
+  and rank 8. Every homomorphism to `ℤ/5`, `ℤ/7`, `ℤ/10`, `ℤ/12`, `ℤ/14` or
+  `ℤ/15` that is nonzero on all units is gone. Sampling `ℤ/9`, `ℤ/11` and
+  `ℤ/13` found none that is 5-colourable.
+- **The circular gate is undecided.** SCIP finds no arc character in 30 minutes.
+- **Growth is running.** It starts from the graph together with its `λ`-image,
+  8 161 points (`data/F8_lam_kw1.json`).
