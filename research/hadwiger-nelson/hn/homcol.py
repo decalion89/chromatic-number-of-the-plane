@@ -15250,3 +15250,33 @@ HOMOMORPHIC_COLOURINGS_WERE_POLYMATH16S = True
 # It is not a proof of anything: exotic (non-periodic, non-strip) colourings
 # are not excluded, and only a finite UNSAT certificate would settle it.
 KAPPA_IS_CONGRUENT_TO_ONE_MOD_FIVE_AND_KILLS_THE_STRIPS = True
+
+
+# The twisted colourings were periodic all along -- through a NON-cyclic quotient.
+#
+# psi + t floor(phi/L) mod 5 repeats when phi moves by 5L and psi by 0, so it
+# factors through (phi mod 5L, psi) : M -> Z/5L x Z/5, which is not cyclic.
+# That is why the Z/n gates never saw them.  The product gate
+# (scripts/prodgate.py) samples chi = (phi_1 mod n_1, ..., phi_k mod n_k), often
+# with one factor an admissible psi, and asks for ANY proper 5-colouring of
+# Cay(A, chi(U)) that joins a 2e pair (apart) or splits a 5e pair (pair) --
+# not only staircases.  On five_rho7, 4000 samples each of Z/5 x Z/5 x Z/5,
+# Z/5 x Z/10, x Z/15, x Z/20, x Z/25, Z/5 x Z/5 x Z/2 and x Z/3 (and 3000
+# random Z/5 x Z/5): every quotient 5-colourable, none refutes a direction.
+# The cyclic pair gate (Z/10 ... Z/50) finished too: all 93 directions open.
+#
+# Kempe swaps of coset colourings are trivial.  In psi + k the Kempe component
+# of x in colours alpha, alpha + delta is x + L u x + p0 + L with
+# L = <p - p' : psi(p) = psi(p') = delta>, so everything hinges on the index
+# [ker psi : L] (scripts/kempegate.py).  It is 1 for every admissible psi and
+# every delta, on five_rho7 (3840 of 3840) and on five_247_c (6912 of 6912):
+# a swap only relabels a whole coset, never joins a 2e pair or splits a 5e one.
+#
+# The blocked module 803 u lambda(803) has unit vectors in 2M, 3M, 4M, 5M, 8M
+# and 15M (contents 3, 5, 8, 15) -- the 5 is the lambda denominator -- and no
+# 5-colourable periodic colouring was found through Z/n for n = 6..25, nor
+# through Z/2 x Z/2, Z/3 x Z/3, Z/4 x Z/4, Z/6 x Z/6, Z/7 x Z/7, Z/3 x Z/9,
+# Z/2^3, Z/3^3, Z/2^4 and three mixed products (samples; most are not even
+# loopless).  No colouring of the whole unit-distance graph on that module is
+# known at all; whether one exists is open, and a plain growth runs there.
+THE_TWISTED_COLOURINGS_WERE_PERIODIC_THROUGH_A_NONCYCLIC_QUOTIENT = True

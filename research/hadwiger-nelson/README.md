@@ -6833,3 +6833,58 @@ chord at that radius is 1. Likewise, any pair at distance 2 forced apart proves
   (a pair survives only if no single Kempe swap can split it, or join it);
 - it then settles the survivors with one incremental disjunctive SAT query:
   "some survivor breaks".
+
+### Every other structured colouring we could think of, on both modules
+
+**The twisted colourings were periodic after all, through a non-cyclic quotient.**
+`ψ + t⌊φ/L⌋` repeats when `φ` moves by `5L`, so it factors through
+`ℤ/5L × ℤ/5`. That quotient is not cyclic, which is why the `ℤ/n` gates never
+saw these colourings.
+
+The **product gate** (`scripts/prodgate.py`) works as follows:
+- It samples a homomorphism `χ : M → ℤ/n₁ × … × ℤ/n_k`, often with one factor
+  an admissible `ψ`.
+- It looks for **any** proper 5-colouring of `Cay(A, χ(U))` that joins a `2e`
+  pair or splits a `5e` pair, not only staircases.
+
+On `five_rho7` it drew 4 000 samples of each of:
+- `ℤ/5 × ℤ/5 × ℤ/5`;
+- `ℤ/5 × ℤ/10`, `ℤ/5 × ℤ/15`, `ℤ/5 × ℤ/20`, `ℤ/5 × ℤ/25`;
+- `ℤ/5 × ℤ/5 × ℤ/2` and `ℤ/5 × ℤ/5 × ℤ/3`.
+
+Every sampled quotient is 5-colourable, and **none refutes a direction**. The
+cyclic pair gate (`ℤ/10 … ℤ/50`) has finished too: all 93 directions are open.
+
+**Kempe swaps of coset colourings are trivial.** In `ψ + k`, take the Kempe
+component of `x` in colours `α` and `α + δ`. It is `x + L ∪ x + p₀ + L`, with
+`L = ⟨p − p′ : ψ(p) = ψ(p′) = δ⟩`. A swap can join a `2e` pair or split a `5e`
+pair only if `[ker ψ : L] > 1` (`scripts/kempegate.py`). That index is 1 for
+every admissible `ψ` and every `δ`:
+- on `five_rho7`, 3 840 of 3 840 cases;
+- on `five_247_c`, 6 912 of 6 912 cases.
+
+So a swap only relabels a whole coset.
+
+**The blocked module has no known colouring at all.** In `803 ∪ λ(803)` some
+unit vectors lie in `2M`, `3M`, `4M`, `5M`, `8M` and `15M`; the 5 is the
+denominator of `λ`. The sampled searches found no 5-colourable periodic
+colouring:
+- through `ℤ/n` for `n = 6 … 25`;
+- through `ℤ/2 × ℤ/2`, `ℤ/3 × ℤ/3`, `ℤ/4 × ℤ/4`, `ℤ/6 × ℤ/6`, `ℤ/7 × ℤ/7`,
+  `ℤ/3 × ℤ/9`, `(ℤ/2)³`, `(ℤ/3)³`, `(ℤ/2)⁴` and three mixed products.
+
+Most of these quotients are not even loopless. Whether the unit-distance graph
+on that module is 5-colourable at all is **open**; if it is not, it already
+contains a finite 6-chromatic graph. A plain growth runs there, beside the
+gadget search.
+
+**Local search first.** `scripts/grow_ls2.py` repairs the previous colouring
+with a small C tabu search (`scripts/tabucol.c`) and calls the CDCL solver only
+when that fails. The pool stores only indices, which uses a third of the
+memory.
+- **Speed:** growth runs about fifty times faster than with CDCL alone. On
+  `five_rho7` the gadget search reached 6 600 points in 36 seconds, where the
+  CDCL-only run needed 21 minutes to reach 5 900.
+- **Where the tabu search gives out:** about 6 600 points for the gadget and
+  10 200 for the forced pair. From there on every step is a CDCL call, and
+  that is where an UNSAT would show up.
