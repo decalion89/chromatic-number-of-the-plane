@@ -15532,3 +15532,14 @@ THE_CIRCULAR_GATE_COLOURS_THE_BLOCKED_MODULE_AND_REFUTES_STRONG_RIGIDITY = True
 # Exoo-Ismailescu's theorem not all of H's two-edges can be forced apart there either.  Neither
 # character extends to the lambda-closure (0 of 390 625 extensions proper, scripts/circextend.py).
 THE_EI_PAIR_CANNOT_BE_FORCED_IN_THE_RHO7_MODULE = True
+
+
+# The lambda-closure against the circular gate (in progress).
+#
+# M' = M1 + lambda M1 has at least 594 unit vectors: U1, lambda U1 and the Exoo-Ismailescu units
+# w_e = 5(1 - lambda)e (the grown graphs had used 420).  For a circular colouring phi' of M',
+# phi = phi'|M1 and phi~ = phi' o lambda must satisfy phi, phi~, 5(phi - phi~) in F(M1).  A coset
+# restriction would need phi~ and 5 phi~ both in F(M1): the MILP on {u, 5u} is infeasible.  The
+# order-280 cell (a segment of length ~0.009) does not extend: 200 samples x 390 625 extensions,
+# best slack -0.14.  Whether F(M') is empty on all 594 units is being decided.
+THE_LAMBDA_CLOSURE_ADMITS_NO_COSET_RESTRICTED_CIRCULAR_COLOURING = True

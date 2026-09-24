@@ -7263,3 +7263,33 @@ of unit vectors admits a character with all values in `[1/5, 4/5]`, then the
 plane has a homomorphic 5-colouring and `χ(ℝ²) = 5`.* A single finite set of
 unit vectors with `F = ∅` is therefore a necessary first step toward six, and a
 test that the upper bound 5 must also pass.
+
+### The `λ`-closure against the circular gate
+
+**Its unit set had been under-counted.** For every unit `e` of `M₁`,
+`w_e = 5(1 − λ)e = 5e − 5λe` is a unit vector of `M′ = M₁ + λM₁`. These are
+exactly the edges Exoo–Ismailescu's argument uses. The grown graphs had
+carried only 420 unit vectors. The module has at least **594**: 198 of `M₁`,
+198 of `λM₁` and 198 `w_e` (`scripts/lamclosure_units.py`). Among the 15 430
+grown points the missing directions add only 59 edges. Even so, the growth was
+restarted on the full set of 594 directions (`data/rho7_lamfull_kw1.json`).
+
+**What a circular colouring of `M′` would have to look like.** Let
+`φ = φ′|M₁` and `φ̃ = φ′∘λ|M₁`. The `w_e` force
+
+    χ = 5(φ − φ̃)  ∈  F(M₁)
+
+on top of `φ, φ̃ ∈ F(M₁)`.
+- **Neither restriction can be a coset colouring.** If `φ = ψ/5`, then
+  `χ ≡ −5φ̃`, so `φ̃` and `5φ̃` would both be circular colourings of `M₁`. The
+  MILP with the multiples `{u, 5u}` of every unit is **infeasible**
+  (`MULT=1,5 scripts/circgate.py`, HiGHS, 25 min). The same holds with `φ` and
+  `φ̃` exchanged.
+- **The one non-coset cell we know does not extend.** The cell of `F(M₁)` around
+  the order-280 point is a short segment in the direction `θ`: 9 vertices, and
+  every coordinate varies by at most 0.009. We tested 200 samples along it, each
+  with all 390 625 extensions to the 420-unit closure. None is proper; the best
+  slack is −0.14 (`scripts/cellsample.py`).
+
+The complete answer, whether `F(M′) = ∅` on all 594 units, is the MILP still
+running.
