@@ -56,22 +56,25 @@ def squarefree(m):
     return out, r
 
 # target d^2 -> the generators the radical needs, on top of Sa's own
-TARGETS = [Fr(1), Fr(1, 3), Fr(2), Fr(4)]
+import os
+TARGETS = [Fr(x) for x in os.environ.get("TARGETS", "1,1/3,2,4").split(",")]
+BASE = tuple(int(x) for x in os.environ.get("BASE", "3,5,7,11").split(","))
 D2 = Fr(64, 9)
 for d2 in TARGETS:
     p, q = d2.numerator, d2.denominator
     rad = p * (256 * q - 9 * p)
     sf, mult = squarefree(rad)
-    # Sa already lives in Q(sqrt3, sqrt5, sqrt7, sqrt11), so only the part of
+    # Sa lives in Q(sqrt3, sqrt11); BASE (default de Grey's (3, 5, 7, 11)) is the field
+    # we build in, and only the part of
     # the radical those four do not already supply costs a new generator.  sf
     # is squarefree, so each of 3, 5, 7, 11 divides it at most once and can be
     # divided straight out; whatever survives becomes one generator of its own
     # (it need not be prime -- Field((3, 11, 247)) is already in the project).
     extra = sf
-    for base in (3, 5, 7, 11):
+    for base in BASE:
         if extra % base == 0:
             extra //= base
-    gens = tuple(sorted({3, 5, 7, 11} | ({extra} if extra > 1 else set())))
+    gens = tuple(sorted(set(BASE) | ({extra} if extra > 1 else set())))
     print(f"\n  target d^2 = {d2}: radical sqrt({rad}) = {mult} sqrt({sf}), "
           f"field {gens}   [{time.time()-t0:.0f}s]", flush=True)
     if len(gens) > 6:
@@ -193,7 +196,7 @@ for d2 in TARGETS:
         final = g3
     if not ok:
         mm = sum(len(a) for a in final.adj) // 2
-        name = f"five_tuned_{p}_{q}.json"
+        name = f"five_tuned_{p}_{q}.json" if BASE == (3, 5, 7, 11) else f"five_tuned_{p}_{q}_{'_'.join(map(str, F.gens))}.json"
         json.dump({"field_generators": list(F.gens), "n": final.n, "m": mm,
                    "target_d2": [p, q], "radical": rad,
                    "mechanism": "composed forcing tuned, then spindled"
