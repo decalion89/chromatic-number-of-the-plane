@@ -19,7 +19,7 @@ from math import gcd
 import numpy as np
 from scipy.optimize import linprog
 sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-exec(open("/home/user/darwin-50/research/hadwiger-nelson/scripts/gate.py").read().split("def gate(g, label):")[0])
+exec(open(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)), "gate.py")).read().split("def gate(g, label):")[0])
 ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
 src = sys.argv[1]
 if src.startswith("units:"):
@@ -59,17 +59,20 @@ def halfspace(D, e):
     return res.status == 0, (res.x if res.status == 0 else None)
 MODE = sys.argv[2] if len(sys.argv) > 2 else "apart"
 dirs = [int(x) for x in sys.argv[3].split(",")] if len(sys.argv) > 3 else list(range(len(E)))
+nE = len(E)
 for k in dirs:
-    e = C[k]; hit = None; tried = 0
-    for i in range(len(ADM)):
-        s = int(VAL[i][k])
-        ts = [(-2 * s) % 5] if MODE == "apart" else [1, 2, 3, 4]
-        for t in ts:
-            D = U[VAL[i] == t]
-            tried += 1
-            feas, w = halfspace(D, e)
-            if feas: hit = (tuple(int(x) for x in ADM[i]), t); break
+    hit = None; tried = 0
+    for kk in (k, k + nE):                    # both orientations of the direction
+        e = U[kk]
+        for i in range(len(ADM)):
+            s = int(VAL[i][kk])
+            ts = [(-2 * s) % 5] if MODE == "apart" else [1, 2, 3, 4]
+            for t in ts:
+                D = U[VAL[i] == t]
+                tried += 1
+                feas, w = halfspace(D, e)
+                if feas: hit = (tuple(int(x) for x in ADM[i]), t, "+" if kk == k else "-"); break
+            if hit or tried > 8000: break
         if hit: break
-        if tried > 4000: break
     print(f"  direction {k}: {'REFUTED by a twisted colouring ' + str(hit) if hit else 'no twisted colouring found (' + str(tried) + ' LPs)'}"
           f"   [{time.time()-t0:.0f}s]", flush=True)

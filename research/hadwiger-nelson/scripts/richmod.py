@@ -13,7 +13,7 @@ from math import gcd
 import numpy as np
 from scipy.optimize import linprog
 sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-exec(open("/home/user/darwin-50/research/hadwiger-nelson/scripts/gate.py").read().split("def gate(g, label):")[0])
+exec(open(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)), "gate.py")).read().split("def gate(g, label):")[0])
 t0 = time.time()
 F = Field((3, 11)); r3, r11 = F.sqrt(3), F.sqrt(11)
 q = lambda a, b=1: F.rational(Fr(a, b))
@@ -55,14 +55,32 @@ def halfspace(D, e):
     res = linprog(np.zeros(dim), A_ub=np.vstack([-D, -e[None, :]]), b_ub=np.concatenate([np.zeros(len(D)), [-1.0]]),
                   bounds=[(-1000, 1000)] * dim, method="highs")
     return res.status == 0
+# fast: for each class (psi, t) decide first whether its dual cone is {0}
+def dual_nonzero(D):
+    for i in range(dim):
+        for sgn in (1, -1):
+            c = np.zeros(dim); c[i] = -sgn                      # maximise sgn * w_i
+            res = linprog(c, A_ub=-D, b_ub=np.zeros(len(D)), bounds=[(-1, 1)] * dim, method="highs")
+            if res.status == 0 and -res.fun > 1e-9: return True
+    return False
+live = {}
+for i in range(len(ADM)):
+    for t in (1, 2, 3, 4):
+        D = U[VAL[i] == t]
+        if dual_nonzero(D): live[(i, t)] = D
+print(f"  classes (psi, t) whose dual cone is not zero: {len(live)} of {4 * len(ADM)}   [{time.time()-t0:.0f}s]", flush=True)
 surv_apart = []; surv_pair = []
-for k in range(len(E)):
-    e = amb[k]
-    ap = any(halfspace(U[VAL[i] == (-2 * VAL[i][k]) % 5], e) for i in range(len(ADM)))
+nE = len(E)
+for k in range(nE):
+    # both orientations: the pair (a, a+2e) read from either end is the same pair
+    ap = False; pr = False
+    for kk in (k, k + nE):
+        e = U[kk]
+        ap = ap or any(halfspace(live[(i, (-2 * VAL[i][kk]) % 5)], e) for i in range(len(ADM)) if (i, (-2 * VAL[i][kk]) % 5) in live)
+        pr = pr or any(halfspace(D, e) for D in live.values())
     if not ap: surv_apart.append(k)
-    pr = any(halfspace(U[VAL[i] == t], e) for i in range(len(ADM)) for t in (1, 2, 3, 4))
     if not pr: surv_pair.append(k)
 print(f"  directions NOT refuted by any twisted colouring: apart {len(surv_apart)} of {len(E)}, pair {len(surv_pair)} of {len(E)}"
       f"   [{time.time()-t0:.0f}s]", flush=True)
 json.dump({"names": names, "EXP": EXP, "den": den, "directions": [list(v) for v in E], "surv_apart": surv_apart, "surv_pair": surv_pair},
-          open(f"/home/user/darwin-50/research/hadwiger-nelson/scripts/richmod_{'_'.join(names)}_{EXP}.json", "w"))
+          open(f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/richmod_{'_'.join(names)}_{EXP}.json", "w"))

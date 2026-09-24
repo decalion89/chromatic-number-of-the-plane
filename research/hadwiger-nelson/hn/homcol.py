@@ -15203,3 +15203,50 @@ TWISTED_COLOURING_CONFIRMED_ON_THE_TIGHT_GRAPH = True
 # kernel and the spindle ladder, the pair and apart gates, and the twisted
 # coset colourings.
 HOMOMORPHIC_COLOURINGS_WERE_POLYMATH16S = True
+
+
+# The rotation every coset colouring is blind to.
+#
+# rho7 = (1 + 4 sqrt-3)/7 = (2 + sqrt-3)/(2 - sqrt-3) is the rotation of
+# Q(sqrt-3) at the prime 7; with omega = (1 + sqrt-3)/2 it gives Polymath16's
+# omega_7 = (13 + 3 sqrt-3)/14 = omega^-1 rho7 (the chord-1 turn at radius
+# sqrt 7).  Mod 5, 1/7 = 3 and rho7 = 3(8 omega - 3) = 1 - omega = omega^-1, so
+#
+#     kappa = omega * rho7 = omega^2 * omega_7 = (-11 + 5 sqrt-3)/14
+#
+# satisfies kappa - 1 = 5 (omega - 3)/7: an irrational rotation (cos -11/14,
+# about 141.79 degrees, not a root of unity) congruent to 1 mod 5.  Every
+# homomorphism psi : M -> Z/5 therefore has psi(kappa x) = psi(x) whenever
+# (omega - 3) x / 7 lies in M.  Checked exactly on five_rho7 (the 803-type
+# graph five_247_c with its rho7 and rho7^-1 images about its densest vertex;
+# rank 8, 93 directions, 960 admissible psi): of the 186 unit vectors, 120 have
+# kappa u again a unit vector, and psi(kappa u) = psi(u) in 115 200 of 115 200
+# cases (psi, u) -- indeed kappa u - u lies in 5M for each of the 120
+# (tests/test_kappa.py).  omega and rho7 alone are not even scalar on any psi
+# (0 of 960): only the product kappa is invisible.
+#
+# Why that kills the twisted colourings.  A twisted colouring psi + t floor(phi/L)
+# needs a real functional phi >= 0 on the class D_t = {units u : psi(u) = t}.
+# If D_t were kappa-invariant (a kappa-stable module, e.g. any Z[omega, 1/7]-
+# module), the cone C* of such phi would be invariant under the rotation kappa
+# acting on every complex embedding by the same irrational angle; the Haar
+# average of the orbit of any phi in C* is 0, so C* contains the span of that
+# orbit and phi vanishes on D_t -- once D_t spans M (x) R, phi = 0.  A finite
+# module is only partly kappa-stable, so on five_rho7 this is checked instead
+# of assumed: exact rational Farkas certificates -e in cone(D_{-2 psi(e)}) for
+# all 93 directions x 960 psi x 2 orientations (178 560 of 178 560), and the LP
+# sweep over every t finds no twisted colouring in any direction.
+#
+# What is left on five_rho7.  The periodic apart gate through Z/n for n = 10,
+# 12, 15, 16, 20, 25, 30, 40, 50 (exhaustive up to 300 000 psi, sampled
+# beyond): among these n, 5-colourable quotients appear only when 5 | n (the
+# coset colourings again, ~750 per n) and none keeps a 2e pair alike -- all 93
+# directions unrefuted.  The full quotients M/qM cannot help: some unit
+# vector lies in qM for q = 2, 3, 4, 7, 8 (unit contents 3, 7, 8, 21, 56), so
+# no 2M-, 3M-, 4M-, 7M- or 8M-periodic colouring exists at all.  Every cheap
+# colouring this project knows how to build is a coset colouring here -- and
+# coset colourings split every 2e pair and join every 5M pair, exactly what a
+# gadget or a forced pair needs.  This is where the gadget search now runs.
+# It is not a proof of anything: exotic (non-periodic, non-strip) colourings
+# are not excluded, and only a finite UNSAT certificate would settle it.
+KAPPA_IS_CONGRUENT_TO_ONE_MOD_FIVE_AND_KILLS_THE_STRIPS = True

@@ -6751,3 +6751,85 @@ record shows, which is not a guarantee — is the integrality-at-5 criterion and
 the residue-degree theorem, the escape through a 5 in a denominator and its
 identification with Exoo–Ismailescu's rotation, the `5M` kernel and the spindle
 ladder, the pair and apart gates, and the twisted coset colourings.
+
+## κ, the rotation every coset colouring is blind to
+
+The last paragraph left one way to reopen an integral module: directions so
+rich that every class `{u : ψ(u) = t}` positively spans. One rotation turns
+out to supply that.
+
+`ρ₇ = (1 + 4√−3)/7 = (2 + √−3)/(2 − √−3)` is the rotation of `ℚ(√−3)` at the
+prime 7. Polymath16's `ω₇ = (13 + 3√−3)/14`, the chord-1 turn at radius `√7`,
+is `ω⁻¹ρ₇`. Mod 5 we have `1/7 = 3`, so `ρ₇ = 3(8ω − 3) = 1 − ω = ω⁻¹`. Hence
+
+    κ = ω·ρ₇ = ω²·ω₇ = (−11 + 5√−3)/14,        κ − 1 = 5·(ω − 3)/7
+
+is an irrational rotation (`cos = −11/14`, about 141.8°, not a root of unity)
+that is **congruent to 1 mod 5**. Every homomorphism `ψ : M → ℤ/5` therefore
+has `ψ(κx) = ψ(x)` whenever `(ω − 3)x/7` lies in `M`.
+
+**The check.** `five_rho7` is the graph `five_247_c` together with its `ρ₇`
+and `ρ₇⁻¹` images about its densest vertex: rank 8, 93 directions and 960
+admissible `ψ`.
+- In 120 of its 186 unit vectors `u`, `κu` is again a unit vector.
+- `ψ(κu) = ψ(u)` in all **115 200 of 115 200** cases `(ψ, u)` (`scripts/kappa_check.py`).
+  In fact `κu − u ∈ 5M` for each of the 120, whatever `ψ` is (`tests/test_kappa.py`).
+- Neither `ω` nor `ρ₇` alone is even scalar on a single `ψ`. Only the
+  product is invisible.
+
+**Why that kills the twisted colourings.** A twisted colouring needs a real
+functional `φ ≥ 0` on a class `D_t`. Suppose `D_t` were κ-invariant, as in any
+`ℤ[ω, 1/7]`-module. Then the cone of such `φ` would be invariant under a
+rotation that turns every complex embedding by an irrational angle. The Haar
+average of an orbit is 0, so the cone contains the orbit's span, and `φ`
+vanishes on `D_t`. Once `D_t` spans, `φ = 0`.
+
+A finite module is only partly κ-stable, so on `five_rho7` this is checked
+rather than assumed:
+- **Apart gate:** there are exact rational Farkas certificates
+  `−e ∈ cone(D_{−2ψ(e)})` in **all 178 560 cases** (93 directions × 960 `ψ` ×
+  2 orientations, `scripts/farkas.py`).
+- **Every `t`:** an LP sweep finds no twisted colouring in any direction, for
+  either gate. This part was checked in floating point, not with exact
+  certificates.
+
+**Everything cheap we tried is a coset colouring there.**
+- **Periodic apart gate** through `ℤ/n`, for `n = 10, 12, 15, 16, 20, 25, 30,
+  40, 50`:
+  - The search is exhaustive up to 300 000 `ψ` and sampled beyond that.
+  - 5-colourable quotients appear only for the `n` divisible by 5, about 750
+    of them each, and they are the coset colourings again.
+  - None keeps a `2e` pair alike.
+- **Full quotients `M/qM`** do not help either (`scripts/quotgate.py`,
+  `scripts/unitsinqm.py`):
+  - A unit vector lies in `qM` for `q = 2, 3, 4, 7, 8`. The unit contents are
+    3, 7, 8, 21 and 56.
+  - So no 2M-, 3M-, 4M-, 7M- or 8M-periodic colouring exists at all.
+
+Coset colourings split every `2e` pair and join every `5M` pair, which is
+exactly what a distance-2 gadget or a forced pair needs. So `five_rho7` is the
+first module here where neither route is refuted by any colouring we tried.
+That is not a proof. Exotic colourings are not excluded, and only a finite
+UNSAT certificate would settle the question.
+
+Two searches now run there:
+- the gadget, with `a, a + 2e` forced apart;
+- the forced pair, with `a, a + 5e` forced alike.
+
+**Credit, again.** `ρ₇` is Polymath16's `ω₇` up to a sixth root of unity, and
+`five_rho7` lies in their family `ℤ[ω₁, ω₇, …]`. That family has homomorphic
+5-colourings, which is why only gadgets and forced pairs are left to hunt. The
+congruence `κ ≡ 1 (mod 5)` and its use against the twisted colourings are, as
+far as we know, new here.
+
+**Any pair, not one pair.** The growth scripts ask about a single chosen pair.
+But **any** non-adjacent pair forced alike proves `χ ≥ 6`: chain translated
+copies until the gap is at least ½, then close with the spindle rotation whose
+chord at that radius is 1. Likewise, any pair at distance 2 forced apart proves
+`χ ≥ 6` through Exoo–Ismailescu.
+
+`scripts/backbone.py` asks about all pairs of a grown graph at once:
+- it filters with SAT colourings in random vertex order, plus Kempe chains
+  (a pair survives only if no single Kempe swap can split it, or join it);
+- it then settles the survivors with one incremental disjunctive SAT query:
+  "some survivor breaks".
