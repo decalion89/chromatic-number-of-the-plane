@@ -200,13 +200,14 @@ def proper(c):
     return True
 
 
-def tabucol(n, init, seed):
+def tabucol(n, init, seed, lsit=None):
+    lsit = LSIT if lsit is None else lsit
     ea, eb = EA, EB
     if MODE == "apart":
         ea = [A if x == Bi else x for x in EA]; eb = [A if x == Bi else x for x in EB]
     elif MODE == "same":
         ea = EA + [A]; eb = EB + [Bi]
-    inp = (f"{n} {len(ea)} 0 {K} {LSIT} {IT2} {seed}\n" + "\n".join(f"{a} {b}" for a, b in zip(ea, eb)) + "\n"
+    inp = (f"{n} {len(ea)} 0 {K} {lsit} {IT2} {seed}\n" + "\n".join(f"{a} {b}" for a, b in zip(ea, eb)) + "\n"
            + "\n".join(map(str, init)) + "\n")
     out = subprocess.run([TABU2], input=inp, capture_output=True, text=True).stdout.split("\n")
     ok = out[0].startswith("OK"); f = int(out[0].split()[1]); c = [int(x) for x in out[1:1 + n]]
@@ -214,7 +215,7 @@ def tabucol(n, init, seed):
     return ok, f, c
 
 
-def kissat_solve(n):
+def write_cnf(n):
     cnf = OUT + ".cnf"
     X = lambda v, c: 1 + v * K + c
     with open(cnf, "w") as fh:
@@ -224,7 +225,11 @@ def kissat_solve(n):
         elif MODE == "same": cls += [[-X(A, c), -X(Bi, c)] for c in range(K)]
         if tri: cls += [[X(v, k)] for k, v in enumerate(tri)]
         fh.write(f"p cnf {n * K} {len(cls)}\n"); fh.write("".join(" ".join(map(str, c)) + " 0\n" for c in cls))
-    kout = subprocess.run([KB, f"--time={KTIME}", cnf], capture_output=True, text=True).stdout
+    return cnf
+
+
+def kissat_parse(kout, n):
+    X = lambda v, c: 1 + v * K + c
     status = next((l for l in kout.split("\n") if l.startswith("s ")), "s UNKNOWN")
     if "UNSATISFIABLE" in status: return False, None, status
     if "SATISFIABLE" in status:
@@ -268,10 +273,21 @@ for it in range(1, 10 ** 7):
     else:
         lsfail += 1
         save("pre_cdcl")
-        r, kcol, status = kissat_solve(n)
-        how = f"KISSAT[{status}]"
-        if r: col = kcol
-        if r and not proper(col): r = None
+        cnf = write_cnf(n); kout_path = OUT + ".kissat"
+        kp = subprocess.Popen([KB, f"--time={KTIME}", cnf], stdout=open(kout_path, "w"), stderr=subprocess.DEVNULL)
+        r = None; how = None; tries = 0; best = lcol
+        while kp.poll() is None:
+            tries += 1
+            ok2, info2, lcol2 = tabucol(n, init if tries % 2 else best, 1000 * it + tries, LSIT * min(16, 2 ** tries))
+            if ok2 and proper(lcol2):
+                kp.kill(); kp.wait(); r = True; col = lcol2; how = f"LS-retry {tries}"; break
+            best = lcol2
+        if how is None:
+            kp.wait()
+            r, kcol, status = kissat_parse(open(kout_path).read(), n)
+            how = f"KISSAT[{status}] after {tries} tabu retries"
+            if r: col = kcol
+            if r and not proper(col): r = None
     if r is not True:
         save(("UNSAT_" + MODE) if r is False else "hard")
         print(f"  iter {it}: n={n} m={len(EA)}: {'UNSAT (' + MODE + ') -- a claim until verified' if r is False else 'unknown'}   [{time.time()-t0:.0f}s]", flush=True)
