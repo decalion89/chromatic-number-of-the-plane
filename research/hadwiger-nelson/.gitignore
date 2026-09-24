@@ -13,3 +13,4 @@ data/*_grow.json
 data/blk_plain.json
 data/rho7_pair2_ckpt.json
 data/*.cnf
+data/blk_plain_*.json
