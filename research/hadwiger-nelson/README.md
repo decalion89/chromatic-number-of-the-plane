@@ -7594,3 +7594,70 @@ Single-place residue gates on the 378-unit module show no local colouring:
 | 23 | 132 | not 5-colourable |
 
 These come from `scripts/ramgate.py`, which also handles ramified primes.
+
+## Blind edges, the level-2 plane at 17, and fields with no local obstruction
+
+**The growth scripts were half-blind.** `grow_kw.py` and its predecessors
+looked for edges only along their own unit set `U`. The exact graph on the same
+points can have more: unit-distance pairs along directions outside `U`, mostly
+between rotated copies of the seed.
+- In the `F8` checkpoint of 19 851 points (666 units) the exact graph has
+  143 778 edges. The growth saw 136 954.
+- The 6 824 unseen edges lie along 26 directions, and the saved colouring made
+  **6 788 of them monochromatic**. The colourings were exploiting edges the
+  growth could not see. This is where the high "translation agreement" came
+  from.
+- The exact graph is still 5-colourable: tabu repairs the colouring in 20 s.
+  Kissat's model of the 21 627-point hard instance leaves 2 exact edges
+  monochromatic, so that verdict needs a repair as well.
+
+`scripts/grow_lean.py` now finds every unit-distance pair:
+1. A KD-tree finds all pairs at float distance 1.
+2. One pair per unknown direction is checked in exact arithmetic.
+3. The direction joins `U` with its negative and conjugates, together with
+   every edge along it.
+
+On the `F8` λ-seed this recovers exactly the 6 811 missing edges, along 64
+directions. The same script keeps its candidates in sorted numpy arrays: 0.66 GB
+at 20 000 points, against 10.8 GB for the dict-based pool of `grow_kw.py` at
+32 000 points.
+
+**The level-2 plane at 17.** Every level gives an upper bound:
+`χ(Γ(F8)) ≤ χ(Cay(O/17^r, T_r))` for each `r`. We tested whether level 2 could
+be easier than level 1.
+- **The graph.** Level 2 has 83 521 vertices of degree 306.
+- **Tabu from the lift.** It starts from the best 5-colouring found for `G₁₇`
+  (34 conflicts), which becomes 167 042 conflicts at level 2. In 2.4·10⁷
+  moves it never improves on the lift.
+- **No embedding of level 1.** A lift `σ(a) = τ(a) + q·s(a)`, with `τ` the
+  Teichmüller lift, would embed `G_q` in level 2 and make the two levels
+  equivalent. The conditions on `s` form a linear system over `𝔽_q`, and it
+  is inconsistent for `q = 5, 11, 17` (rank 47 of 50, 239 of 242, 575 of 578).
+
+So level 2 is not trivially equivalent to level 1. Still, no sign of a
+5-colouring there either (`scratchpad` scripts `cay_tabu.c`, `lift_section.py`).
+
+**Fields with no local obstruction at all.** Extending `F8` by one more
+`√−d` removes the non-split places 17 and 41 for many `d`. With `d` squarefree
+and below 400, `F8(√−d)` has no non-split place of norm below 53 (and none
+ramified) for:
+
+> 1, 2, 42, 43, 59, 66, 83, 86, 87, 103, 115, 118, 127, 154, 155, 166, 174,
+> 185, 195, 203, 206, 213, 223, 230, 237, **247**, 251, 254, …
+
+In these fields Proposition B leaves no local 5-colouring at any place or
+level.
+
+`F8(i)` needs no new coordinate field, because `i` is just the vector `(0, 1)`.
+But `U ∪ iU` alone gives the Cartesian product `Γ(F8) □ Γ(F8)`, of chromatic
+number 5. Only unit vectors outside `F8 ∪ iF8`, such as `(3+4i)/5`, mix the
+two layers, and even they never close a triangle across them.
+
+**`L16 = ℚ(√−3, √−7, √−11, √−247)` holds both families.** `five_tuned_16`
+and `five_rho7` share their 402-point Moser-field carrier.
+- **The union.** It has 6 080 points and 37 474 edges. CaDiCaL needs 107 s to
+  5-colour it, far more than either graph alone.
+- **Its units.** There are 918: the `F8` λ-closure, the 134 of the 247-module,
+  and every edge direction of the seed.
+- **Growth there.** Tabu first failed at 12 284 points, where kissat needed
+  about 20 minutes (SAT). In `F8`, tabu first failed at about 22 000 points.
