@@ -64,6 +64,9 @@ CASES = [
     ("five_tuned_1_3.json", 1, 3, 759, 23, True),
     ("five_tuned_2_1.json", 2, 1, 476, 17, True),
     ("five_tuned_4_1.json", 4, 1, 880, 11, True),   # back inside de Grey's field
+    # d^2 = 16: radical 16 sqrt7, spindled by de Grey's 4e rotation -- the whole graph lives in
+    # Q(sqrt3, sqrt7, sqrt11), i.e. in the CM field Q(sqrt-3, sqrt-7, sqrt-11) (no sqrt5, no sqrt247)
+    ("five_tuned_16_1_3_7_11.json", 16, 1, 1792, 7, True),
 ]
 
 
@@ -172,3 +175,15 @@ def test_the_composite_distance_sweeps_the_whole_interval():
     assert Fr(9 * 4 * D2.numerator, 128 * D2.denominator) != 0
     far = 4 * D2
     assert 2 * D2 * (1 + 1) == far
+
+
+def test_the_d2_16_graph_lives_in_the_cm_field_q_sqrt_minus_3_minus_7_minus_11():
+    """Every point x + iy has x in span(1, sqrt21, sqrt33, sqrt77) and y in
+    span(sqrt3, sqrt7, sqrt11, sqrt231): the complex coordinate lies in Q(sqrt-3, sqrt-7, sqrt-11),
+    whose non-split places lie above 17, 41, 83, ... (scripts/fieldscreen.py)."""
+    d, field, pts = _load("five_tuned_16_1_3_7_11.json")
+    assert tuple(field.gens) == (3, 7, 11)
+    re_, im_ = {1, 21, 33, 77}, {3, 7, 11, 231}
+    for p in pts:
+        assert all(c == 0 or field._prod[i] in re_ for i, c in enumerate(p.x.c))
+        assert all(c == 0 or field._prod[i] in im_ for i, c in enumerate(p.y.c))
