@@ -173,3 +173,36 @@ The method of reducing to finite fields goes back to G. E. Moorhouse, *On the
 chromatic numbers of planes* (draft, 2010). For the finite planes, see
 Le Anh Vinh, *On chromatic number of unit-quadrance graphs*, arXiv
 math/0510092: `√q/2 ≲ χ(G_q) ≲ q/2`.
+
+## 7. Fields with no local obstruction (24 September, evening)
+
+Extending `F8 = ℚ(√−3, √−7, √−11)` by one more `√−d` can remove the non-split
+places 17 and 41. `scripts/fieldscreen.py` finds no non-split place of norm
+below 53, and none ramified, for `F8(√−d)` with squarefree `d < 400` equal to
+
+> 1, 2, 42, 43, 59, 66, 83, 86, 87, 103, 115, 118, 127, 154, 155, 166, 174,
+> 185, 195, 203, 206, 213, 223, 230, 237, 247, 251, 254, …
+
+In these fields Proposition B leaves no local 5-colouring at any place and any
+level. The case `d = 247` is `L16 = ℚ(√−3, √−7, √−11, √−247)`:
+- **Non-split places.** Below 300 there are only 83 and 173.
+- **Both 5-chromatic families.** `five_tuned_16` and `five_rho7` share their
+  402-point Moser-field carrier. Their union, 6 080 points and 37 474 edges,
+  is `data/L16_seed.json`.
+- **No circular colouring, numerically.** The seed's 471 unit directions span
+  rank 12. The best `min_u ‖φ(u)‖` found over characters `φ` is 0.024, while a
+  circular 5-colouring needs 0.2. The same search finds 0.204 at once in the
+  Moser module. The exact MILP timed out, so this is evidence, not proof.
+
+**Two more cautions.**
+- **`F8(i)` is not automatically better.** `U ∪ iU` gives the Cartesian
+  product `Γ(F8) □ Γ(F8)`, of chromatic number 5, and unit vectors mixing `F8`
+  and `iF8` never close a triangle. `L16` is a better extension:
+  `F8 ∩ ℚ(√−3, √−11, √−247)` is the whole Moser field, so the two halves
+  share triangles and spindles.
+- **Level 2 does not simply equal level 1.** A section `σ(a) = τ(a) + q·s(a)`
+  of the level-2 plane over `G_q` would have to satisfy a linear system over
+  `𝔽_q`. That system is inconsistent for `q = 5, 11, 17`, so `G_q` does not
+  embed in level 2 that way. At `q = 17`, tabu search on level 2 (83 521
+  vertices, degree 306) never improves on the lift of the best level-1
+  colouring.
