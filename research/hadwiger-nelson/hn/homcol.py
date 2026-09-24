@@ -15355,3 +15355,41 @@ EXOO_ISMAILESCU_LIVES_INSIDE_OUR_MODULES = True
 # for every admissible psi, in windows 161 levels wide: no window colouring
 # joins a 2e pair (12 functionals) or splits a 5e pair (8 functionals).
 KAPPA_GIVES_COARSE_RIGIDITY = True
+
+
+# THEOREM (rigidity propagates).  Let psi be admissible on a module M whose unit
+# classes D_t = {u : psi(u) = t}, t = 1..4, all positively span M (x) R (for
+# five_rho7 this is the 3840 exact Stiemke certificates).  If a proper
+# 5-colouring c of the unit-distance graph on M agrees with psi + k on a
+# half-space {phi < a} (phi any nonzero real functional), then c = psi + k on
+# ALL of M.
+#
+# Proof.  delta_0 = min_t max_{u in D_t} (-phi(u)) is > 0: a class that
+# positively spans has a unit with phi(u) < 0.  Induct on m: suppose c = psi + k
+# on {phi < a + m delta_0} and take x with phi(x) < a + (m+1) delta_0.  For each
+# t pick u_t in D_t with phi(u_t) <= -delta_0; then x + u_t lies in the known
+# region, so c(x + u_t) = psi(x) + t + k, and x is adjacent to all four -- the
+# only colour left for x is psi(x) + k.
+#
+# Ball version.  M is a lattice in M (x) R = R^8, so a Euclidean ball holds only
+# finitely many points of M.  The inradius of conv(D_t) about 0 has a positive
+# minimum delta_min over all (psi, t), and for R >= R_0 (a constant of the
+# module) the same induction runs outward from a ball: if c = psi + k on
+# B(z, R) n M, then c = psi + k everywhere.  Inside any convex region Q it runs
+# too, as long as the ball sits inside Q.
+#
+# So coset colourings are infectious: they cannot be put next to anything else,
+# not across a sharp wall (coarse rigidity is the case of a half-space) and not
+# across a thick one either -- a colouring that is coset on one side of ANY wall,
+# however far away, is that coset colouring everywhere.  A colouring of the rho7
+# module that is not a coset colouring must disagree with every coset colouring
+# on every ball of radius R_0: it is nowhere locally coset.  Whether such
+# colourings exist is exactly the question left -- if none does, every 5M pair
+# is forced alike and every 2e pair apart, and chi(R^2) >= 6 follows.  The
+# finite graphs built so far have colourings of that nowhere-coset kind (their
+# best coset fit is 22-30%), which is why they do not force anything.
+#
+# On the 803 module the hypothesis fails for 5248 of 6912 classes, and there the
+# twisted colourings are exactly the colourings that are one coset colouring on
+# a half-space and another beyond it.
+RIGIDITY_PROPAGATES_FROM_A_HALF_SPACE_OR_A_BALL = True

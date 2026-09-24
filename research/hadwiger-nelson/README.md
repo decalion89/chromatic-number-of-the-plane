@@ -7001,3 +7001,47 @@ The 1-D wall gate looked for the first kind (`scripts/wallgate.py`):
 - No window colouring joins a `2e` pair; 12 functionals were checked before
   the time limit.
 - None splits a `5e` pair; 8 functionals were checked.
+
+### Rigidity propagates
+
+**Theorem.** Let `ψ` be admissible on a module `M`, and suppose every class
+`D_t = {u : ψ(u) = t}`, `t = 1…4`, positively spans `M ⊗ ℝ`. (For `five_rho7`,
+that is exactly the 3 840 certificates above.) Suppose a proper 5-colouring
+`c` agrees with `ψ + k` on some half-space `{φ < a}`. Then `c = ψ + k` on **all**
+of `M`.
+
+*Proof.* Let `δ₀ = min_t max_{u ∈ D_t} (−φ(u))`. It is positive, because a class
+that positively spans contains some `u` with `φ(u) < 0`. Suppose `c` is already
+known on `{φ < a + mδ₀}`, and take `x` with `φ(x) < a + (m + 1)δ₀`. For each `t`,
+pick `u_t ∈ D_t` with `φ(u_t) ≤ −δ₀`. Then `x + u_t` lies in the known region and
+has colour `ψ(x) + t + k`. Since `x` is adjacent to all four, the only colour
+left for `x` is `ψ(x) + k`. Induct on `m`. ∎
+
+**The ball version.** `M` is a lattice in `M ⊗ ℝ = ℝ⁸`, so a ball contains only
+finitely many of its points. The inradius of `conv(D_t)` about 0 has a positive
+minimum over all `(ψ, t)`, and the same induction runs outward from any
+sufficiently large ball: if `c = ψ + k` on `B(z, R) ∩ M` with `R ≥ R₀`, then
+`c = ψ + k` everywhere.
+
+**Why it matters.** Coset colourings are **infectious**. They cannot sit next to
+anything else, across a sharp wall or a thick one: coarse rigidity is just the
+half-space case. So a 5-colouring of the `ρ₇` module that is not a coset
+colouring must be *nowhere locally coset*: it disagrees with every coset
+colouring on every ball of radius `R₀`.
+
+Whether such colourings exist is exactly the question that remains. If none
+does, every `5M` pair is forced alike and every `2e` pair is forced apart, and
+`χ(ℝ²) ≥ 6` follows by the λ-closure.
+
+On the 803 module the hypothesis fails for 5 248 of 6 912 classes. There the
+twisted colourings are precisely the colourings that are one coset colouring on
+a half-space and another beyond it.
+
+**The scale, measured.** The balls here are balls of ℝ⁸, so they hold about
+`r⁸` points. We coloured the complete combinatorial 2-ball of `five_rho7`
+(every point two unit steps from a vertex: 17 305 points, 68 796 edges) by tabu
+search (`scripts/ball2.py`). Its best coset fit is 22.8%, which is chance.
+
+So nothing near that size is rigid. The propagation needs balls much larger
+than anything a solver can hold, which is why every finite graph so far has
+nowhere-coset colourings and forces nothing.
