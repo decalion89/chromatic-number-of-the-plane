@@ -15543,3 +15543,19 @@ THE_EI_PAIR_CANNOT_BE_FORCED_IN_THE_RHO7_MODULE = True
 # order-280 cell (a segment of length ~0.009) does not extend: 200 samples x 390 625 extensions,
 # best slack -0.14.  Whether F(M') is empty on all 594 units is being decided.
 THE_LAMBDA_CLOSURE_ADMITS_NO_COSET_RESTRICTED_CIRCULAR_COLOURING = True
+
+
+# The local criterion, and the Moser field is 4-colourable (hn/adelic.py, notes/rigidity.md sec. 8).
+#
+# F_k(M) is a finite union of rational polytopes, so a nonempty one holds a finite-order (adelic)
+# character.  If a place v of K+ does not split in the CM field K, every unit vector of K is a unit
+# of the compact local torus, and a character frac_p(L(z)) that keeps ||.|| >= 1/k there colours
+# the unit-distance graph on all of K.  In the Moser field Q(sqrt-3, sqrt-11), 2 does not split
+# (K_v = Q_2(omega)); the norm-one units are the sixth roots of unity mod 4 and
+# phi(alpha + beta omega) = frac_2((alpha + 2 beta)/4) is 1/4, 1/2 or 3/4 on all of them: chi = 4.
+# At an odd unramified non-split place with residue field F_p a local k-colouring exists only for
+# p in {3, 7} (k = 4), {3, 5, 7, 19} (k = 5), {3, 5, 7, 11, 17, 19} (k = 6) (p < 10^5 by computer,
+# Weil beyond).  five_rho7's field Q(sqrt-3, sqrt-11, sqrt-247) splits 2, 3, 5, 7, 13, 19 and has
+# no single place that 5-colours it.  SCIP in relation space (scripts/circrel.py) gives kappa = 1/4
+# exactly for every Moser-field unit set tried (rot_1110, rot_2110, E-I's H and its closure).
+THE_MOSER_FIELD_IS_FOUR_COLOURABLE_THROUGH_A_TWO_ADIC_CHARACTER = True

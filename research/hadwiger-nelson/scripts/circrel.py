@@ -104,7 +104,27 @@ cons = [LinearConstraint(A, lb=0, ub=0), LinearConstraint(Bt1, lb=lo, ub=np.inf)
 lb = np.concatenate([np.full(n, lo), zlo, [0.0]]); ub = np.concatenate([np.full(n, hi), zhi, [0.5]])
 integ = np.concatenate([np.zeros(n), np.ones(nrel), [0]])
 cobj = np.zeros(nv); cobj[-1] = -1.0
-res = milp(cobj, constraints=cons, integrality=integ, bounds=Bounds(lb, ub), options={"time_limit": TLIM})
+SOLVER = os.environ.get("SOLVER", "HIGHS")
+if SOLVER == "HIGHS":
+    res = milp(cobj, constraints=cons, integrality=integ, bounds=Bounds(lb, ub), options={"time_limit": TLIM})
+else:
+    # an independent branch and bound (SCIP or CBC through OR-Tools) on the same model, as a cross-check
+    from types import SimpleNamespace
+    from ortools.linear_solver import pywraplp
+    so = pywraplp.Solver.CreateSolver(SOLVER)
+    so.SetTimeLimit(int(TLIM * 1000))
+    tv = [so.NumVar(lo, hi, f"t{j}") for j in range(n)]
+    zv = [so.IntVar(float(zlo[q]), float(zhi[q]), f"z{q}") for q in range(nrel)]
+    sv = so.NumVar(0.0, 0.5, "s")
+    for q, rel in enumerate(rels):
+        so.Add(sum(int(v2) * tv[k2] for k2, v2 in rel) == zv[q])
+    for j in range(n):
+        so.Add(tv[j] - sv >= lo); so.Add(tv[j] + sv <= hi)
+    so.Maximize(sv)
+    st = so.Solve()
+    code = {pywraplp.Solver.OPTIMAL: 0, pywraplp.Solver.FEASIBLE: 1, pywraplp.Solver.INFEASIBLE: 2}.get(st, 4)
+    xs = np.array([v.solution_value() for v in tv] + [0.0] * nrel + [sv.solution_value()]) if code in (0, 1) else None
+    res = SimpleNamespace(status=code, message=f"{SOLVER} status {st}", x=xs)
 print(f"  relation-space MILP: status {res.status}: {res.message}   [{time.time()-t0:.0f}s]", flush=True)
 if res.status == 2:
     print(f"  ==> INFEASIBLE: no circular {KC}-colouring along these units (the relations used are genuine, so this is a relaxation)")

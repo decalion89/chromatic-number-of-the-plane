@@ -7311,3 +7311,107 @@ refuting nothing. That gate **sampled** homomorphisms `M → ℤ/n`, and there a
 `20⁸ ≈ 2.6·10¹⁰` of them for `n = 20`. Its verdicts for `n ≥ 10` are therefore
 withdrawn as evidence. Solver-based gates (MILP, CP-SAT) replace sampling from
 here on.
+
+## The gate in relation space, and the local criterion
+
+**An exact, fast form of the circular gate.** Take as unknowns the values
+`t_u = frac(φ(u)) ∈ [1/k, 1 − 1/k]`, one per direction. A vector `t` comes from
+a character exactly when `Σ a_u t_u ∈ ℤ` for every integer relation
+`Σ a_u u = 0`, and it suffices to impose this on a basis of the relation
+lattice. `scripts/circrel.py` computes that basis by LLL (python-flint, on
+`[I | W·D]`). On the `λ`-closure of `five_rho7` it has 289 relations, all with
+coefficients in `{−1, 0, 1}` and at most 20 terms. The MILP then has small
+integer ranges only. With `SOLVER=SCIP` it runs through OR-Tools' SCIP, an
+independent branch and bound.
+
+It maximises the least slack, so it returns `κ(U) = max_φ min_u ‖φ(u)‖` exactly,
+the lonely-runner constant of the unit set:
+
+| unit set | rank | directions | `κ` (SCIP, optimal) |
+|---|---|---|---|
+| E–I's `H` (unit edges) | 4 | 9 | 1/4 |
+| its `λ`-closure | 4 | 27 | 1/4 |
+| rotation words `ω, σ, λ, ρ₇` (`rot_1110`) | 4 | 81 | 1/4 (34 s) |
+| rotation words, `σ^{±2}` (`rot_2110`) | 4 | 135 | 1/4 (74 s) |
+
+**Why always 1/4: the Moser field is 4-colourable.** Circular colourings are
+*adelic*. The feasible region `F(M)` is a finite union of polytopes with
+rational vertices, so if it is nonempty it contains a character of finite
+order `N`. Such a character is a sum of `p`-adic pieces, one for each prime
+`p | N`. One place can already colour a whole field:
+
+> **Local criterion.** Let `K` be a CM field, so that `z z̄ = 1` for its unit
+> vectors, and let `v` be a place of the real subfield `K⁺` that does not split
+> in `K`. The norm-one group `T(K⁺_v)` is then compact, so every unit vector of
+> `K` is a `v`-adic unit. If some additive `φ(z) = frac_p(L(z))`, with `L` a
+> `ℚ_p`-linear form on `K_v`, keeps `‖φ‖ ≥ 1/k` on all of `T(K⁺_v)`, then
+> `⌊k·φ(z)⌋` properly `k`-colours the unit-distance graph on **all of `K`**.
+
+**Theorem.** The unit-distance graph on the Moser field `ℚ(√−3, √−11)` has
+chromatic number exactly 4.
+
+The proof takes three steps.
+- **The field sits in a 2-adic field where 2 does not split.** Since
+  `33 ≡ 1 mod 8`, `√33` is a 2-adic integer. The field therefore embeds in
+  `ℚ₂(ω)`, the unramified quadratic extension, and 2 does not split there.
+- **The unit vectors fall into six classes.** Its norm-one units are, mod 4,
+  exactly the six sixth roots of unity.
+- **One character separates them.** `φ(α + βω) = frac₂((α + 2β)/4)` takes only
+  the values 1/4, 1/2 and 3/4 on them.
+
+The Moser spindle gives the lower bound.
+
+`hn/adelic.py` and `scripts/moser2adic.py` check this exactly, at both places
+above 2:
+- 1 236 unit vectors, words in `σ`, `λ`, `ρ₇` and `ω`;
+- all 1 004 unit edges of Exoo–Ismailescu's `H`, with none monochromatic;
+- `tests/test_moser_field.py`.
+
+**No 5-chromatic unit-distance graph lives in the Moser field**, whatever its
+size. The project's 5-chromatic graphs needed `√247`, and de Grey's needed
+`√−15`. That is now forced.
+
+**The denominator principle, explained.** A unit vector with `p` in its
+denominator can exist only where a place above `p` splits, because a
+non-split place has a compact torus. So:
+
+| field | effect |
+|---|---|
+| `ℚ(√−3)` | 3 ramifies and does not split: `x mod √−3` 3-colours it |
+| Moser field | 2 does not split: the 2-adic 4-colouring |
+| `+ √−15` (de Grey's `2e` rotation, denominator 8) | 2 now splits, and the 4-colouring dies |
+| `+ λ` (Exoo–Ismailescu, denominator 25) | 5 splits: no field-wide coset colouring mod 5 |
+
+**Which places could colour.** At an odd place with residue field `𝔽_p`,
+unramified and non-split, the character reduces to `Tr(ȳu)/p` on the `p + 1`
+norm-one residues. Deeper levels always smear a full coset of `(1/p)ℤ` across
+the forbidden arc: the tangent lines `ū√d·𝔽_p` take `(p + 1)/2` distinct
+values, so no single kernel contains them all. The traces met by the norm
+class `n` are the `c` with `c² − 4n` a non-residue or 0. That leaves a finite
+list:
+
+| `k` | residue primes `p` with a local `k`-colouring |
+|---|---|
+| 4 | 3, 7 |
+| 5 | 3, 5, 7, 19 |
+| 6 | 3, 5, 7, 11, 17, 19 |
+
+The primes up to `10⁵` were checked by computer. Beyond that the Weil bound
+excludes the rest.
+
+**The field of `five_rho7` passes the local test for six.** In
+`K = ℚ(√−3, √−11, √−247)`:
+- 2 splits (because of `τ = (119 + 3√−247)/128`), and so do 3, 5, 7, 13 and 19.
+- The non-split places lie above 11 (residue field `𝔽₁₁`) and above the primes
+  with `(−3/p) = (−11/p) = (−247/p) = −1` (29, …).
+- None of these is 3, 5, 7 or 19.
+
+So no single place 5-colours `K`, and the universe of the search is not
+excluded by this test. The criterion is only sufficient, though. A finite
+module can still be coloured by characters that combine several places, split
+places among them, as the order-280 and order-20 colourings of `five_rho7` do.
+Deciding that is the relation-space MILP's job, now running on the 594 units of
+the `λ`-closure (HiGHS at `k = 5, 6`, SCIP at `k = 5`).
+
+Related prior work: G. E. Moorhouse, *On the chromatic numbers of planes*
+(draft, 2010), studies `χ(K²)` over fields by reducing to finite fields.
