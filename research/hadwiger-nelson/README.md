@@ -6835,7 +6835,13 @@ Two searches now run there:
 `five_rho7` lies in their family `ℤ[ω₁, ω₇, …]`. That family has homomorphic
 5-colourings, which is why only gadgets and forced pairs are left to hunt. The
 congruence `κ ≡ 1 (mod 5)` and its use against the twisted colourings are, as
-far as we know, new here.
+far as we know, new here. Polymath16's third thread
+(D. Mixon's blog, 2018-05-01, "Is 6-chromatic within reach?") asked whether
+`ℤ[ω₁,ω₃,ω₄]` admits a homomorphic 5-colouring. We found no discussion in the
+public record of whether *every* 5-colouring of such a ring must be
+homomorphic, and none of strip colourings or of rotations `≡ 1 (mod 5)`. The
+rigidity theorems below are, to our knowledge, new. That is a search result,
+not a guarantee.
 
 **Any pair, not one pair.** The growth scripts ask about a single chosen pair.
 But **any** non-adjacent pair forced alike proves `χ ≥ 6`: chain translated
