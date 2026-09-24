@@ -7661,3 +7661,61 @@ and `five_rho7` share their 402-point Moser-field carrier.
   and every edge direction of the seed.
 - **Growth there.** Tabu first failed at 12 284 points, where kissat needed
   about 20 minutes (SAT). In `F8`, tabu first failed at about 22 000 points.
+
+## Two-step distances, and the repulsive distance `2/√3`
+
+**Where Exoo–Ismailescu's route stalls.** A unit-distance graph `H` with a
+pair at distance `d` split by every 5-colouring, together with a finite
+`{1, d}`-graph `W` that is not 5-colourable, gives `χ(ℝ²) ≥ 6`: put a copy of
+`H` on every `d`-edge of `W`. `W` is known for four values of `d`:
+
+| `d` | who |
+|---|---|
+| `(1+√5)/2` | Huddleston; 31 vertices (Parts, [arXiv 2010.12656](https://arxiv.org/abs/2010.12656)) |
+| `2` | Exoo–Ismailescu ([arXiv 1909.13177](https://arxiv.org/abs/1909.13177)) |
+| `√3`, `(√3+1)/√2` | Ágoston–Pálvölgyi |
+
+**All four are two-step distances** `|u + v|`, with `u, v` unit vectors, at
+turning angles 72°, 0°, 60° and 30°. Two points at such a distance share a
+unit neighbour, so 5-colourings colour them alike more often than chance. The
+gadget `H` asks for the opposite, and that is why it has never been found. In
+the L16 seed (6 080 points, 10 random 5-colourings):
+
+| `d²` | `d` | pairs | `P(same)` |
+|---|---|---|---|
+| **4/3** | **1.1547** | 17 138 | **0.079** |
+| **16/3** | 2.3094 | 2 667 | **0.085** |
+| **7** | 2.6458 | 4 398 | **0.090** |
+| **28/3** | 3.0551 | 1 345 | **0.098** |
+| 52/3, 19 | 4.16, 4.36 | 172, 146 | 0.121 |
+| 9 | 3 | 1 490 | 0.141 |
+| 19/3 | 2.5166 | 3 579 | 0.187 |
+| 7/3 | 1.5275 | 21 580 | 0.241 |
+| 3 | `√3` | 20 837 | 0.292 |
+| 4 | 2 | 8 850 | 0.339 |
+
+`2/√3` is the most repulsive distance. At `2/√3`, 5 202 pairs are split, with
+both ends in one Kempe component, in 12 of 12 tabu colourings; at distance 2,
+only 347 are. In L16, `2/√3` is **not** a two-step distance: `|1 + e^{iθ}|² = 4/3`
+needs `cos θ = −1/3`, hence `√−2`, which L16 lacks. So these pairs have no common
+neighbour.
+
+**The witness side for `2/√3`.** None is known.
+- The lattice `ℤ[ω]/√−3` with `{1, 2/√3}` forbidden is 5-colourable,
+  periodically mod 6.
+- The L16 seed's `{1, 2/√3}`-graph (54 612 edges) is 5-colourable (kissat,
+  23 s).
+- Minkowski sums in `ℚ(√−2, √−3)`, where the triangle `(1, 1, 2/√3)` exists,
+  are 5-colourable up to 931 points.
+
+**Several forbidden distances.** With more than one extra distance, the
+lattice becomes a small witness:
+- with `{1, 2/√3, √(19/3)}` forbidden, a 127-point patch is not 5-colourable;
+- with `{1, 2/√3, √(7/3)}` forbidden, a 61-point patch is not 5-colourable.
+
+A `W` with several distances needs one gadget per distance. So the search now
+targets gadgets at the repulsive distances. It runs in four cloud workers,
+following `notes/worker_jobs.md` and checked by `scripts/verify_pair.py`:
+- two workers grow gadgets for eight `2/√3` pairs;
+- one searches for a `{1, 2/√3}` witness;
+- one maps the repulsion spectrum across the project's graphs.
