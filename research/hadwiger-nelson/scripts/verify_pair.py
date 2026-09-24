@@ -1,16 +1,20 @@
 """Independent check of a claimed obstruction, before a word is said about it.
 
 Three kinds of claim, all rebuilt from the saved exact coordinates:
-  udg   the unit-distance graph on the points is not 5-colourable        (chi(R^2) >= 6)
-  same  the unit-distance graph plus c(A) = c(B) is not 5-colourable      (A, B forced apart)
-  two   the {1, d}-graph (edges at distance 1 and d) is not 5-colourable  (chi(R^2, {1, d}) >= 6)
+  udg    the unit-distance graph on the points is not 5-colourable        (chi(R^2) >= 6)
+  apart  the unit-distance graph plus c(A) = c(B) is not 5-colourable     (A, B forced APART)
+  same   the unit-distance graph plus c(A) != c(B) is not 5-colourable    (A, B forced SAME: a spindle
+         rotation about A that moves B by 1 then gives chi(R^2) >= 6 directly, when |AB| >= 1/2)
+  two    the {1, d}-graph (edges at distance 1 and d) is not 5-colourable (chi(R^2, {1, d}) >= 6)
+The kinds name the conclusion, as grow_lean.py's MODE does: MODE=apart growth is checked with kind apart,
+MODE=same growth with kind same.
 
 Every edge is re-derived from the exact field arithmetic, never from floats: a float KD-tree only
 proposes pairs, and each is kept only if |p - q|^2 equals 1 (or d^2) exactly. No colour is pinned, so a
 wrong pin cannot manufacture UNSAT. Three unrelated pysat solvers must agree, and if kissat and
 drat-trim are given, kissat's DRAT proof is checked too.
 
-usage: verify_pair.py <graph.json> udg|same|two [--d2 a/b] [--kissat PATH --drat-trim PATH]
+usage: verify_pair.py <graph.json> udg|apart|same|two [--d2 a/b] [--kissat PATH --drat-trim PATH]
 """
 import sys, json, time, argparse, subprocess, os
 from fractions import Fraction as Fr
@@ -22,7 +26,7 @@ from hn.geometry import Point
 from pysat.solvers import Solver
 
 ap = argparse.ArgumentParser()
-ap.add_argument("graph"); ap.add_argument("kind", choices=["udg", "same", "two"])
+ap.add_argument("graph"); ap.add_argument("kind", choices=["udg", "apart", "same", "two"])
 ap.add_argument("--d2", default=None); ap.add_argument("--kissat", default=None); ap.add_argument("--drat-trim", default=None)
 a = ap.parse_args()
 t0 = time.time(); K = 5
@@ -55,10 +59,14 @@ X = lambda v, c: 1 + v * K + c
 cnf = [[X(v, c) for c in range(K)] for v in range(n)]
 for i, j in E:
     for c in range(K): cnf.append([-X(i, c), -X(j, c)])
+if a.kind == "apart":
+    A, B = d["A"], d["B"]
+    print(f"  pair A={A}, B={B}: d^2 = {V[A].dist2(V[B])}; imposing c(A) = c(B) (UNSAT = forced apart)", flush=True)
+    for c in range(K): cnf += [[-X(A, c), X(B, c)], [X(A, c), -X(B, c)]]
 if a.kind == "same":
     A, B = d["A"], d["B"]
-    print(f"  pair A={A}, B={B}: d^2 = {V[A].dist2(V[B])}; imposing c(A) = c(B)", flush=True)
-    for c in range(K): cnf += [[-X(A, c), X(B, c)], [X(A, c), -X(B, c)]]
+    print(f"  pair A={A}, B={B}: d^2 = {V[A].dist2(V[B])}; imposing c(A) != c(B) (UNSAT = forced same)", flush=True)
+    for c in range(K): cnf.append([-X(A, c), -X(B, c)])
 verdicts = {}
 for name in ("cd19", "g4", "m22"):
     s = Solver(name=name, bootstrap_with=cnf); r = s.solve(); s.delete()

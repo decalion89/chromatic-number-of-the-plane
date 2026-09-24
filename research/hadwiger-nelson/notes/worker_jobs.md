@@ -69,8 +69,14 @@ For (W), a field with `√−2` and `√−3` is richer. There the isosceles tri
 - `sh scripts/worker_setup.sh` installs the python packages, builds kissat,
   drat-trim and tabu2, and prints `KISSAT=…`.
 - `scripts/grow_lean.py IN OUT [R] [near_weight]` is the colouring-guided growth.
-  - env `MODE=plain|same`; `same` imposes `c(A) = c(B)` for the JSON's `A, B`,
-    so UNSAT means they are forced apart.
+  - env `MODE=plain|apart|same`. **The mode names the goal, not the constraint.**
+    - `MODE=apart` imposes `c(A) = c(B)` for the JSON's `A, B`. UNSAT means
+      they are forced **apart**: the gadget (H). Use it at repulsive
+      distances such as `2/√3`.
+    - `MODE=same` imposes `c(A) ≠ c(B)`. UNSAT means they are forced
+      **same**. That alone gives `χ(ℝ²) ≥ 6`, with no witness needed: rotate a
+      copy about `A` so that `B` moves by exactly 1. Use it at attractive
+      distances.
   - env `DIST2=4/3 DIST2_GEN=3` adds the second distance `2/√3`, and grows a
     `{1, 2/√3}`-graph.
   - env `KISSAT`, `KTIME`.
@@ -80,7 +86,8 @@ For (W), a field with `√−2` and `√−3` is richer. There the isosceles tri
     rotated about `x` so that `y` moves by 1 or `d`, gives a witness (W)
     (Parts' route).
   - env `APART_D2=4/3` tests pairs at `2/√3` for being forced apart.
-- `scripts/verify_pair.py graph.json udg|same|two [--d2 4/3] --kissat K --drat-trim D`
+- `scripts/verify_pair.py graph.json udg|apart|same|two [--d2 4/3] --kissat K --drat-trim D`
+  checks a claim; the kind matches the growth's `MODE`. It
   rebuilds everything exactly, pins nothing, and asks three pysat solvers,
   plus kissat with a DRAT proof checked by drat-trim.
 
