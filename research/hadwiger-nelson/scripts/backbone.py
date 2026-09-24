@@ -139,6 +139,9 @@ for r in range(1, ROUNDS + 1):
         filt(col)
     print(f"  round {r}: same {len(SI)}, apart {len(AI)}   [{time.time()-t0:.0f}s]", flush=True)
     if len(SI) == 0 and len(AI) == 0: break
+# the survivors themselves, for gadget seeds (MODE=same on an apart survivor)
+json.dump({"same": [[int(a), int(b)] for a, b in zip(SI, SJ)], "apart": [[int(a), int(b)] for a, b in zip(AI, AJ)]},
+          open(sys.argv[1].replace(".json", "") + ".survivors.json", "w"))
 # ---- exact phase: incremental "some survivor breaks"
 def exact(kind, I, J):
     I, J = list(map(int, I)), list(map(int, J))
