@@ -7293,3 +7293,21 @@ on top of `φ, φ̃ ∈ F(M₁)`.
 
 The complete answer, whether `F(M′) = ∅` on all 594 units, is the MILP still
 running.
+
+**A second non-coset colouring, and a correction to the old cyclic gates.** At
+`Q = 280`, CP-SAT (`scripts/circsat.py`, the circular gate as a pure integer
+model, `φ = y/Q`) found in 47 seconds
+
+    φ₂₀ = (3/10, 13/20, 3/5, 1/20, 1/5, 3/4, 0, 1/4),
+
+a character of order 20. The exact check shows:
+- every unit lies in `[1/5, 4/5]`;
+- the 12 226-point skeleton graph is coloured with 0 monochromatic edges;
+- `frac(φ₂₀(5e)) = 1/4`, so it too splits Exoo–Ismailescu's pair on every
+  translate.
+
+It is periodic through `ℤ/20`, a quotient the old cyclic pair gate reported as
+refuting nothing. That gate **sampled** homomorphisms `M → ℤ/n`, and there are
+`20⁸ ≈ 2.6·10¹⁰` of them for `n = 20`. Its verdicts for `n ≥ 10` are therefore
+withdrawn as evidence. Solver-based gates (MILP, CP-SAT) replace sampling from
+here on.
