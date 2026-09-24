@@ -15280,3 +15280,36 @@ KAPPA_IS_CONGRUENT_TO_ONE_MOD_FIVE_AND_KILLS_THE_STRIPS = True
 # loopless).  No colouring of the whole unit-distance graph on that module is
 # known at all; whether one exists is open, and a plain growth runs there.
 THE_TWISTED_COLOURINGS_WERE_PERIODIC_THROUGH_A_NONCYCLIC_QUOTIENT = True
+
+
+# Exoo-Ismailescu's graph lives inside our modules.
+#
+# Their 30 unit vectors, turned by 150 degrees, are unit vectors of five_247_c,
+# hence of five_rho7 and of the blocked 803 u lambda(803) (all 30 of 30, checked
+# numerically, then the placed graph checked exactly).  So their H (214 points,
+# 1004 unit edges, 446 two-edges), turned by 150 degrees and put with A at
+# five_rho7's densest vertex, lies in five_rho7's module, and
+# K = H u lambda_A(H) lies in five_rho7 u lambda(five_rho7) (426 points,
+# |BB'|^2 = 1, 892 two-edges).  Re-verified in place: H with its two-edges and
+# c(A) != c(B) is UNSAT for cadical, glucose and minisat (36 s, 89 s, 201 s).
+#
+# Why it matters: on five_rho7 no colouring we can build splits a 5e pair or
+# joins a 2e pair, so E-I's forced pair (A, A + 5e) is an open target there.  A
+# unit-distance graph in five_rho7 forcing c(A) = c(B) would close, with lambda,
+# into a 6-chromatic unit-distance graph.  The growth (scripts/grow_kw.py) now
+# starts from five_rho7 u H and aims at the two-edges each colouring leaves
+# ALIKE: a two-phase tabu search finds a proper colouring with c(A) != c(B) and
+# then as few alike two-edges as it can without breaking a unit edge; rainbow
+# points are inserted next to those.  That minimum is a progress measure (it can
+# only rise as the graph grows): 26, 39, 47, 50 at 2 606, 2 806, 3 006, 3 206
+# points.  An upper bound from local search, not an exact minimum.
+#
+# Two sobering measurements.  (1) Finite-scale rigidity is invisible: tabu
+# colourings of five_rho7 (2 403 points) match the best coset colouring on 24%
+# of the vertices, of the vertex-critical 803-graph on 27-30%, of a grown
+# 10 141-point gadget graph on 22% -- chance level is about 20-25%.  (2) The
+# greedy growth, pointed at a problem whose answer is known (E-I's two-distance
+# forcing, 214 points), had not found it at 344 points when a single SAT call
+# needed 2.4 million conflicts.  Structure beats greed; the skeleton is the
+# attempt to give the growth some.
+EXOO_ISMAILESCU_LIVES_INSIDE_OUR_MODULES = True

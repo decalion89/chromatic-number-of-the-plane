@@ -1,87 +1,36 @@
-"""How rigid is ONE copy?  That is the quantity, and it was never cross edges.
-
-Z4 = Sa u rho(Sa) has 793 points and 3954 edges.  Two separate copies of Sa
-would have 3948.  So de Grey's forcing at four colours is produced by SIX
-cross edges -- and the translate unions built here carried 1552 of them, the
-stacks 4306, and forced nothing.  Counting cross edges was measuring the wrong
-thing from the start, with the anatomy of Y already written down.
-
-So the quantity to look at is how constrained a single copy is before
-anything is glued to it: how many pairs of its points take the same colour in
-every proper colouring.  The guess written here first was that six edges can
-only close a structure that is nearly closed already.
-
-The measurement says otherwise, and flatly.  Sa at four colours has ZERO pairs
-that agree in every sampled colouring -- it is completely free -- and Sa u
-rho(Sa), six edges later, has seventy-five, thirty-five of them at a closable
-distance, including all six antipodal pairs of the ring.  Nothing was nearly
-closed.  Forcing does not accumulate; it arrives.
-"""
-import sys, time, random
+"""Rigidity at finite scale: colour a graph by tabu search (several seeds) and measure the best
+coset fit R = max_{psi, relabelling} #{x : pi(c(x)) = psi(x)} / n.  R = 1 for a coset colouring,
+about 0.2 for an unstructured one.  Units are taken from the module file given (e.g. five_rho7.json)."""
+import sys, json, itertools, subprocess
 from fractions import Fraction as Fr
+from math import gcd
+import numpy as np
 sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-from hn.degrey import build_G, build_Sa, build_Y, build_graph
-from hn.geometry import DEGREY_FIELD as F, Point, _rot60
-from hn.homcol import agreeing_pairs, closable_distance
-from pysat.solvers import Solver
-
-t0 = time.time()
-
-
-def rigidity(name, pts, k, samples=14):
-    g = build_graph(pts)
-    E = sorted((min(a, b), max(a, b)) for a, b in g.edges())
-    n = len(pts)
-    cls = [[1 + w * k + c for c in range(k)] for w in range(n)]
-    for a, b in E:
-        for c in range(k):
-            cls.append([-(1 + a * k + c), -(1 + b * k + c)])
-    sv = Solver(name="g4", bootstrap_with=cls)
-    if not sv.solve():
-        print(f"  {name}: NOT {k}-colourable  [{time.time()-t0:.0f}s]",
-              flush=True)
-        sv.delete()
-        return
-    rng, cols = random.Random(2357), []
-    for s in range(samples):
-        sv.set_phases([(1 if rng.random() < .5 else -1) * (1 + v)
-                       for v in range(n * k)])
-        sv.solve()
-        m = sv.get_model()
-        cols.append([next(c for c in range(k) if m[w * k + c] > 0)
-                     for w in range(n)])
-    sv.delete()
-    pairs = agreeing_pairs(cols, colours=k)
-    close = 0
-    for i, j in pairs:
-        v = float((pts[i].x - pts[j].x) ** 2 + (pts[i].y - pts[j].y) ** 2)
-        D = Fr(round(v * 55440), 55440)
-        if abs(float(D) - v) < 1e-9 and D >= Fr(1, 4) and closable_distance(D):
-            close += 1
-    print(f"  {name}: {n} points, {len(E)} edges, {k} colours -- "
-          f"{len(pairs)} pairs agree in all {samples} samples, {close} of "
-          f"them at a closable distance; that is {len(pairs)/n:.3f} per "
-          f"point  [{time.time()-t0:.0f}s]", flush=True)
-
-
-rigidity("Sa at four", build_Sa(F), 4)
-rigidity("Y at four", build_Y(F), 4)
-rigidity("Sa at five", build_Sa(F), 5)
-rigidity("G at five", build_G(F, as_graph=False), 5)
-
-PIV = Point(F.rational(-2), F.zero())
-rot = _rot60(F).about(PIV)
-G = build_G(F, as_graph=False)
-Gs, seen = [], set()
-for refl in (False, True):
-    for j in range(6):
-        for p in G:
-            q = p
-            for _ in range(j):
-                q = rot(q)
-            if refl:
-                q = Point(q.x, -q.y)
-            if q not in seen:
-                seen.add(q)
-                Gs.append(q)
-rigidity("G* at five", Gs, 5)
+exec(open("/home/user/darwin-50/research/hadwiger-nelson/scripts/gate.py").read().split("def gate(g, label):")[0])
+d = json.load(open(sys.argv[1])); seeds = int(sys.argv[2]) if len(sys.argv) > 2 else 3
+F = Field(tuple(d["field_generators"]))
+mk = lambda xy: Point(F.element([Fr(a, b) for a, b in xy[0]]), F.element([Fr(a, b) for a, b in xy[1]]))
+V = [mk(xy) for xy in d["points"]]
+g = build_graph(V); EA, EB = zip(*g.edges()); n = len(V)
+Ev = sorted({tuple((V[b] - V[a]).x.c) + tuple((V[b] - V[a]).y.c) for a, b in g.edges()})
+raw = [tuple((p - V[0]).x.c) + tuple((p - V[0]).y.c) for p in V]
+den = 1
+for v in Ev + raw:
+    for x in v: den = den * Fr(x).denominator // gcd(den, Fr(x).denominator)
+E = sorted({max(w, tuple(-x for x in w)) for w in (tuple(int(Fr(x) * den) for x in v) for v in Ev)})
+B = echelon(E); r = len(B); Cu = [coords(B, e) for e in E]
+co = np.array([[int(t) % 5 for t in coords(B, tuple(int(Fr(x) * den) for x in v))] for v in raw], dtype=np.int64)
+adm = [psi for psi in itertools.product(range(5), repeat=r) if all(sum(a * b for a, b in zip(psi, c)) % 5 for c in Cu)]
+PV = [(co @ np.array(psi, dtype=np.int64)) % 5 for psi in adm]
+perms = list(itertools.permutations(range(5)))
+print(f"{sys.argv[1]}: n={n} m={len(EA)} rank {r}, {len(adm)} admissible psi", flush=True)
+for sd in range(1, seeds + 1):
+    inp = f"{n} {len(EA)} 5 50000000 {sd}\n" + "\n".join(f"{a} {b}" for a, b in zip(EA, EB)) + "\n" + "\n".join(["-1"] * n) + "\n"
+    out = subprocess.run([__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)), "tabucol")], input=inp, capture_output=True, text=True).stdout.split("\n")
+    if not out[0].startswith("OK"): print(f"  seed {sd}: tabu {out[0]}"); continue
+    colv = np.array([int(x) for x in out[1:1 + n]], dtype=np.int64)
+    best = 0
+    for pv in PV:
+        T = np.zeros((5, 5), dtype=np.int64); np.add.at(T, (colv, pv), 1)
+        best = max(best, max(sum(T[c][p[c]] for c in range(5)) for p in perms))
+    print(f"  seed {sd}: tabu {out[0]}; best coset fit R = {best}/{n} = {best/n:.3f}", flush=True)

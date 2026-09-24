@@ -6888,3 +6888,56 @@ memory.
 - **Where the tabu search gives out:** about 6 600 points for the gadget and
   10 200 for the forced pair. From there on every step is a CDCL call, and
   that is where an UNSAT would show up.
+
+## Exoo–Ismailescu's graph lives inside our modules
+
+Their 30 unit vectors, turned by 150°, are all unit vectors of `five_247_c`,
+and therefore also of `five_rho7` and of the blocked `803 ∪ λ(803)`.
+
+- **`H` inside `five_rho7`.** Their `H` (214 points, 1 004 unit edges, 446
+  two-edges) is turned by 150° and placed with `A` at `five_rho7`'s densest
+  vertex. It then lies in `five_rho7`'s module (`scripts/mk_kseed.py`).
+- **`K` inside the λ-closure.** `K = H ∪ λ_A(H)` lies in
+  `five_rho7 ∪ λ(five_rho7)`: 426 points, `|BB′|² = 1`, 892 two-edges.
+- **Re-verified in place.** `H` with its two-edges and `c(A) ≠ c(B)` is UNSAT
+  for cadical, glucose and minisat.
+
+On `five_rho7` no colouring we tried splits a `5e` pair, so E–I's pair
+`A, A + 5e` is an open target there. A unit-distance graph in `five_rho7`
+forcing `c(A) = c(B)` would close with `λ` into a **6-chromatic unit-distance
+graph**.
+
+**The skeleton search** (`scripts/grow_kw.py`) starts from `five_rho7 ∪ H`. A
+two-phase tabu search (`scripts/tabu2.c`) looks for a colouring:
+1. First it finds a proper colouring with `c(A) ≠ c(B)`.
+2. Then, without breaking a unit edge, it reduces the number of **alike**
+   two-edges as far as it can.
+
+Rainbow points are inserted next to the alike two-edges that remain. The count
+of alike two-edges is a progress measure. Its true minimum can only rise as the
+graph grows; the tabu search gives an upper bound, not the exact minimum.
+
+| points | alike two-edges |
+|---|---|
+| 2 606 | 26 |
+| 2 806 | 39 |
+| 3 006 | 47 |
+| 3 206 | 50 |
+
+**Two sobering measurements.**
+- **Finite-scale rigidity is invisible.** Colour a graph by tabu search and
+  compare it with the best coset colouring (`scripts/rigid.py`,
+  `scripts/cosetfit.py`). The share of matching vertices is near chance, which
+  is about 20–25%:
+  - `five_rho7`: 24%;
+  - the vertex-critical 803-graph: 27–30%;
+  - a grown gadget graph of 10 141 points: 22%.
+
+  So the coset colourings may be the only structured colourings of the infinite
+  module graph, but finite graphs of these sizes do not feel them at all.
+- **Greed is weak.** Pointed at a problem whose answer is known (E–I's
+  two-distance forcing, 214 points), the greedy growth had not found it by 344
+  points. At that size a single SAT call already needed 2.4 million conflicts.
+
+  Structure beats greed, and the skeleton search is the attempt to give the
+  growth some.
