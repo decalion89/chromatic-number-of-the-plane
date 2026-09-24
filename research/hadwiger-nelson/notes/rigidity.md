@@ -363,3 +363,51 @@ non-split place below 83.
 - Passing every local test does not make a field 6-chromatic. Whether a
   local–global principle holds for these chromatic numbers is open. The
   archimedean place carries `χ(ℝ²)` itself.
+
+## 10. Finite planes and the choice of field
+
+**The finite plane** `G_q = Cay(𝔽_{q²}, N₁)`, with `N₁` the `q + 1` norm-one
+elements, is what reduction at a non-split place with residue field `𝔽_q`
+lands in (Proposition 10). Next to `√−3`, `q ≡ 5 mod 6` or `q = 2`.
+
+Its structure:
+- **Triangles.** A triangle `0, u, v` of unit steps has `u v̄` a primitive sixth
+  root of unity. So every edge lies in exactly two triangles, there is no `K₄`,
+  and `G_q` is the union of `(q + 1)/6` rotated triangular tori
+  `Cay(𝔽_q[ω], ρ^j μ₆)`.
+- **Eigenvalues.** They are `λ(n) = Σ_c (1 − η(c² − 4n)) e(c/q)`, which depend
+  only on `n = N(y)`. These are Salié-type sums, and `|λ| ≤ 2√q`. The graph is
+  Ramanujan, which was checked for all `q < 400`.
+
+**Proposition 12.** For every prime `q ≥ 53`, `χ(G_q) ≥ 6`, and the same holds
+for every deeper quotient `Cay(O_v/π^r, T mod π^r)`.
+
+*Proof.* By Hoffman, `χ_f ≥ 1 + (q+1)/|λ_min| ≥ 1 + (q+1)/(2√q)`. This exceeds
+5 for `q > 62`; for `q = 53` and `59` it was computed. A level-`j` character
+contributes `q^{r−j}` times its level-`j` sum. A primitive level-`j` character
+sums to 0 on every fibre except the one or two norm-one points whose tangent
+line lies in its kernel, so its sum has modulus at most `2q^{j−1}`. Hence the
+ratio `d/|λ_min|` is the same at every level. ∎
+
+LP methods stop there. The Delsarte bound equals the Hoffman bound, and the
+triangle inequalities `f(x) + f(y) − f(x − y) ≤ 1` hardly move it.
+
+Below 53 the numbers are these:
+
+| `q` | `χ(G_q)` | evidence |
+|---|---|---|
+| 5 | 4 | SAT |
+| 11 | 5 | SAT |
+| 17, 29, 41 | ≥ 6? | tabu finds no 5-colouring; SAT proofs running |
+| 23 | ≥ 7? | tabu fails at 6 |
+
+The best independent sets found are 57 points for `q = 17`, against
+`289/5 = 57.8`, and 210 for `q = 41`, against `336.2`. So `α < q²/5`, which
+would settle `χ ≥ 6` fractionally, is within reach of SAT.
+
+**Consequence for the search.** `ℚ(√−3, √−7, √−11)` splits 2, 3, 5, 7 and 11,
+and its non-split places lie above 17, 41, 83, 101, …. It contains a
+5-chromatic graph, `data/five_tuned_16_1_3_7_11.json`. It is the smallest
+field that is not excluded by a single place, provided `χ(G₁₇), χ(G₄₁) ≥ 6`.
+`ℚ(√−3, √−7, √2717)` and `ℚ(√−3, √−7, √−11, √−247)` pass unconditionally, but
+have no Moser spindle and rank 16 respectively.
