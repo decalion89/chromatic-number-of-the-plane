@@ -7561,3 +7561,36 @@ spindles it.
 - **The circular gate is undecided.** SCIP finds no arc character in 30 minutes.
 - **Growth is running.** It starts from the graph together with its `λ`-image,
   8 161 points (`data/F8_lam_kw1.json`).
+
+**Two searches now run there.**
+- **A plain search for a non-5-colourable graph.** The first `λ`-closure put
+  5-denominators at only one of the two places above 5. At the other place
+  every unit vector was integral, which left room for a 5-adic periodic
+  colouring. Tabu search did not find one at level `5³` in 50 minutes, but
+  the module is now closed under `λ̄` as well: 666 unit vectors, with both
+  places above 5 non-integral. The run starts again from 12 241 points. The
+  first run reached 27 614 points in the old module. There each hard step took
+  kissat 8–30 minutes, and the translation agreement of its colourings was
+  0.45–0.53, against 0.87 in the dead field.
+- **A search for a distance-2 gadget.** Exoo and Ismailescu's theorem turns
+  any unit-distance graph in which two points at distance 2 always get
+  different colours into `χ ≥ 6`. The 2-edges of their `{1,2}`-graph lie in
+  the Moser field, and so does every rotation needed to put a copy of the
+  gadget on each of them, so the whole construction stays in
+  `ℚ(√−3, √−7, √−11)`.
+
+  The search imposes `c(A) = c(B)` for a pair at distance 2
+  (`MODE=same grow_kw.py`). An UNSAT answer would be that gadget, and it would
+  go through `verify6`-style checks before any claim.
+
+Single-place residue gates on the 378-unit module show no local colouring:
+
+| `p` | residues of the unit vectors | Cayley graph |
+|---|---|---|
+| 7 | 48, all of `𝔽₄₉*` | not 5-colourable |
+| 11 | 54 | not 5-colourable |
+| 13 | 84 | not 5-colourable |
+| 19 | 120 | not 5-colourable |
+| 23 | 132 | not 5-colourable |
+
+These come from `scripts/ramgate.py`, which also handles ramified primes.
