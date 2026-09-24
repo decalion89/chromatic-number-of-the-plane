@@ -28,6 +28,17 @@ d = json.load(open(sys.argv[1])); ROUNDS = int(sys.argv[2]) if len(sys.argv) > 2
 F = Field(tuple(d["field_generators"]))
 V = [Point(F.element([Fr(a, b) for a, b in x]), F.element([Fr(a, b) for a, b in y])) for x, y in d["points"]]
 G = build_graph(V); n = G.n; E = list(G.edges())
+# DIST2 = "a/b": also forbid distance sqrt(a/b) -- the graph becomes a {1, d}-graph, and a forced SAME pair
+# in it spindles to a {1, d}-graph that is not 5-colourable (Parts' route to chi(R^2, {1, d}) >= 6)
+import os
+if os.environ.get("DIST2"):
+    from scipy.spatial import cKDTree
+    D2 = Fr(os.environ["DIST2"]); D2E = F.element([D2] + [Fr(0)] * (F.dim - 1))
+    _p = np.array([[q.fx, q.fy] for q in V]); _pr = cKDTree(_p).query_pairs(float(D2) ** 0.5 + 1e-7, output_type="ndarray")
+    _dd = ((_p[_pr[:, 0]] - _p[_pr[:, 1]]) ** 2).sum(1); _pr = _pr[np.abs(_dd - float(D2)) < 1e-7]
+    E2 = [(int(a), int(b)) for a, b in _pr if V[a].dist2(V[b]) == D2E]
+    E = E + E2
+    print(f"  second distance d^2 = {D2}: {len(E2)} more edges", flush=True)
 adj = [set() for _ in range(n)]
 for a, b in E: adj[a].add(b); adj[b].add(a)
 fx = np.array([p.fx for p in V]); fy = np.array([p.fy for p in V])
@@ -87,6 +98,8 @@ def kempe_swap(col, rng):
             if w not in seen and col[w] in (a, b): seen.add(w); st.append(w)
     for v in seen: col[v] = b if col[v] == a else a
     return col
+# the 'apart' distance: 2 by default (Exoo-Ismailescu); APART_D2 = a/b tests pairs at distance sqrt(a/b)
+APD = Fr(os.environ.get("APART_D2", "4")); APF = float(APD); APE = F.element([APD] + [Fr(0)] * (F.dim - 1))
 # ---- candidates from the first colouring
 col = random_colouring(0)
 d2 = lambda I, J: (fx[I] - fx[J]) ** 2 + (fy[I] - fy[J]) ** 2
@@ -98,8 +111,8 @@ SI = np.concatenate(SI); SJ = np.concatenate(SJ)      # same-coloured pairs (nev
 AI, AJ = [], []
 for a in range(n):
     dd = (fx - fx[a]) ** 2 + (fy - fy[a]) ** 2
-    for b in np.nonzero(np.abs(dd - 4.0) < 1e-9)[0]:
-        if b > a and V[a].dist2(V[b]) == 4: AI.append(a); AJ.append(b)
+    for b in np.nonzero(np.abs(dd - APF) < 1e-9)[0]:
+        if b > a and V[a].dist2(V[b]) == APE: AI.append(a); AJ.append(b)
 AI = np.array(AI, dtype=np.int64); AJ = np.array(AJ, dtype=np.int64)
 print(f"  same candidates {len(SI)}; distance-2 pairs {len(AI)}   [{time.time()-t0:.0f}s]", flush=True)
 def filt(col):

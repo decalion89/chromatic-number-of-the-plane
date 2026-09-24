@@ -46,6 +46,24 @@ F = Field(tuple(d["field_generators"]))
 mk = lambda xy: Point(F.element([Fr(a, b) for a, b in xy[0]]), F.element([Fr(a, b) for a, b in xy[1]]))
 V = [mk(xy) for xy in d["points"]]
 U = [mk(xy) for xy in d["units"]]
+# DIST2 = "a/b" (with DIST2_GEN = m, sqrt(D2) = r*sqrt(m), r rational): also forbid distance sqrt(D2).
+# The graph is then a {1, sqrt(D2)}-graph, not a unit-distance graph: a witness for chi(R^2, {1, d}) >= 6.
+D2 = Fr(os.environ["DIST2"]) if os.environ.get("DIST2") else None
+if D2 is not None and not d.get("dist2"):
+    m_ = int(os.environ.get("DIST2_GEN", "1")); r2 = D2 / m_
+    from math import isqrt
+    rn, rd = isqrt(r2.numerator), isqrt(r2.denominator)
+    assert rn * rn == r2.numerator and rd * rd == r2.denominator, "D2 / DIST2_GEN must be a rational square"
+    sc = [Fr(0)] * F.dim
+    sc[next(i for i in range(F.dim) if F._prod[i] == m_)] = Fr(rn, rd)
+    S_ = F.element(sc)
+    base_units = list(U)
+    for u in base_units:
+        for z in (Point(S_ * u.x, S_ * u.y), Point(-(S_ * u.y), S_ * u.x)):
+            U.append(z)
+    print(f"second distance: d^2 = {D2}, {len(U) - len(base_units)} steps of that length added", flush=True)
+elif d.get("dist2"):
+    D2 = Fr(d["dist2"])
 A, Bi = d.get("A"), d.get("B")
 nU = len(U)
 Ux = np.array([u.fx for u in U]); Uy = np.array([u.fy for u in U])
@@ -135,6 +153,10 @@ from scipy.spatial import cKDTree
 ukey = lambda q: (tuple(q.x.c), tuple(q.y.c))
 UK = set(ukey(u) for u in U)
 ONE = F.rational(1)
+LEN2 = F.element([D2] + [Fr(0)] * (F.dim - 1)) if D2 is not None else None
+
+
+RQ = max(1.0, float(D2) ** 0.5 if D2 is not None else 1.0) + 1e-7
 
 
 def discover(only=None):
@@ -144,13 +166,14 @@ def discover(only=None):
     global Ux, Uy, nU
     pts = np.column_stack([np.array(Vx), np.array(Vy)]); tree = cKDTree(pts)
     if only is None:
-        pr = tree.query_pairs(1 + 1e-7, output_type="ndarray")
+        pr = tree.query_pairs(RQ, output_type="ndarray")
     else:
-        lst = tree.query_ball_point(pts[only], 1 + 1e-7)
+        lst = tree.query_ball_point(pts[only], RQ)
         pr = np.array([(i, j) for i, js in zip(only, lst) for j in js if j != i], dtype=np.int64).reshape(-1, 2)
     if len(pr) == 0: return 0
     dx = pts[pr[:, 1], 0] - pts[pr[:, 0], 0]; dy = pts[pr[:, 1], 1] - pts[pr[:, 0], 1]
-    keep = np.abs(np.hypot(dx, dy) - 1) < 1e-7
+    hd = np.hypot(dx, dy)
+    keep = (np.abs(hd - 1) < 1e-7) | ((np.abs(hd - float(D2) ** 0.5) < 1e-7) if D2 is not None else False)
     pr, dx, dy = pr[keep], dx[keep], dy[keep]
     dk = hkey(dx, dy); known = np.isin(dk, np.array(sorted(set(hkey(Ux, Uy).tolist())), dtype=np.int64))
     pr, dk = pr[~known], dk[~known]
@@ -159,7 +182,7 @@ def discover(only=None):
     for (i, j), k in zip(pr, dk):
         if int(k) in seenk: continue
         seenk.add(int(k)); w = V[int(j)] - V[int(i)]
-        if w.norm2() != ONE: continue                           # a float coincidence, not a unit
+        if w.norm2() != ONE and (D2 is None or w.norm2() != LEN2): continue   # a float coincidence
         for z in (w, -w, Point(w.x, -w.y), Point(-w.x, w.y)):
             if ukey(z) not in UK: UK.add(ukey(z)); U.append(z); fresh.append(len(U) - 1)
     if not fresh: return 0
@@ -188,7 +211,7 @@ def save(tag):
     json.dump({"field_generators": list(F.gens), "A": A, "B": Bi, "status": tag, "mode": MODE,
                "colouring": col[:len(V)] if len(col) == len(V) else None,
                "colouring_prefix": None if len(col) == len(V) else col[:len(V)], "units": [ser(u) for u in U],
-               "two_edges": [], "points": [ser(q) for q in V]}, open(OUT, "w"))
+               "two_edges": [], "dist2": str(D2) if D2 is not None else None, "points": [ser(q) for q in V]}, open(OUT, "w"))
 
 
 tri = next(((a, b, c) for a, b in zip(EA, EB) for c in sorted(adj[a] & adj[b])), None)
