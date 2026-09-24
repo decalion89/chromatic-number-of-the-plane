@@ -129,17 +129,23 @@ coset fit of 22–30%, which is chance level.
 
 ## 5. Periodic colourings, invariant measures, and what rigidity would imply
 
-**Ideal-periodic colourings.** The `five_rho7` module is a ℤ[ω]-module. Its 186
-edge directions turned by 60° give 12 more unit vectors of the module, 198 in
-all, and every admissible `ψ` stays admissible on them. For `α ∈ ℤ[ω]` with
-`5 ∤ N(α)`, an `αM`-periodic 5-colouring is never a coset colouring. By kissat,
-`Cay(M/αM, U)` is **not** 5-colourable for:
-- `α = 3 + ω` and `4 − ω` (norm 13, 28 561 vertices);
-- `α = 3 + 2ω` and `2 + 3ω` (norm 19, 130 321 vertices).
+**Ideal-periodic colourings: a negative that says little.** The `five_rho7`
+module is a ℤ[ω]-module with at least 198 unit vectors. For `α ∈ {3 + ω, 4 − ω}`
+(norm 13) and `α ∈ {3 + 2ω, 2 + 3ω}` (norm 19), `Cay(M/αM, U)` is not
+5-colourable. The same holds for the λ-closure. The pair queries on
+`M/(ker ψ ∩ αM)` are UNSAT too. **All of these are folding artifacts.**
+- The torus core has 15 vertices and 75 edges, and 53 of its edges do not lift
+  to the module.
+- The pair is already forced on a radius-1 torus ball.
 
-The same four fail on the λ-closure (`scripts/idealquot.py`). In the family
-`ψ + k(x mod (3 + ω)M)`, no `k` splits a `5e` pair (`scripts/twistquot.py`).
-On Exoo–Ismailescu's module the norm-13 quotient colours and splits their pair.
+A periodic test means something only when the period is long compared with the
+unit steps.
+
+**Circular colourings (§6) do mean something, and one exists.** `five_rho7` has
+a non-coset 5-colouring `c = ⌊5·frac(φ)⌋`. Here `φ` is a character of order 280
+with every unit value in `[1/5, 4/5]`. So *nowhere-locally-coset colourings
+exist*, and the strong rigidity conjecture is false. The colouring still
+colours Exoo–Ismailescu's pair alike.
 
 **Theorem 2 (measures suffice).** Let `M′ = M₁ + λM₁`, and let `e` be a unit of
 `M₁` with `|5e − 5λe| = 1`. Suppose every `M₁`-invariant probability measure on
@@ -171,3 +177,26 @@ So a proof of rigidity cannot be purely local or fractional. Independent sets
 alone cannot give it either: Croft's tortoise, restricted to a generic coset,
 is an independent set of `G(M, U)` of density 0.229 > 1/5. Whatever proof
 exists must use the partition into five classes.
+
+## 6. The circular gate
+
+For `φ ∈ Hom(M, ℝ/ℤ)`, `c(x) = ⌊5·frac(φ(x))⌋` is proper iff
+`frac(φ(u)) ∈ [1/5, 4/5]` for every unit `u`. Coset colourings are the points
+`φ = ψ/5`.
+
+**Proposition 4 (necessary condition for six).** If the feasible region
+`F(M) = {φ : frac(φ(U)) ⊂ [1/5, 4/5]}` is nonempty, every unit-distance graph
+with edges in `M` is 5-colourable. By compactness of the dual of the discrete
+group ℝ², and because characters extend from subgroups: if `F(span U′) ≠ ∅`
+for every finite set `U′` of unit vectors, then `χ(ℝ²) = 5`.
+
+**Results** (MILP `scripts/circgate.py`, exact check `scripts/circverify.py`):
+- **`803 ∪ λ(803)`:** slack 387/31250 > 0. The 46 496-point grown graph is
+  coloured without a monochromatic edge. The blocked module is dead.
+- **`five_rho7`:** a non-coset `φ` of order 280, with `φ(5e) ∈ ℤ` on the E–I
+  pair.
+- **The 803-graph at 4 colours:** infeasible. This is the sanity check.
+
+**Open, and now the right question.** Is there a module, rich enough to hold
+Exoo–Ismailescu's configuration, with `F(M) = ∅`? And does any circular colouring
+of `five_rho7` split the E–I pair?

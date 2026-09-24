@@ -97,10 +97,18 @@ A certificate never asks you to trust this code. It asks you to run `drat-trim`.
   - **rigidity propagates:** a colouring that is a coset colouring on a
     half-space, or on a large enough ball, is that coset colouring everywhere.
 
-  So the question `χ(ℝ²) ≥ 6` on this module reduces exactly to whether a
-  *nowhere-locally-coset* 5-colouring exists. Exoo–Ismailescu's graph sits
-  inside the module, turned by 150°. See *κ, the rotation every coset
-  colouring is blind to* and the sections after it.
+  Exoo–Ismailescu's graph sits inside the module, turned by 150°. See *κ, the
+  rotation every coset colouring is blind to* and the sections after it.
+  *Update:* nowhere-locally-coset colourings **do** exist there. A circular
+  colouring through a character of order 280 is one, so the strong rigidity
+  conjecture is false. It still colours Exoo–Ismailescu's pair alike. See
+  *The circular gate*.
+- ✅ **The circular gate.** Colourings `⌊5·frac(φ(x))⌋` through a real
+  character `φ` generalise coset colourings, and a MILP finds them.
+  - They 5-colour the blocked module `803 ∪ λ(803)`: exact check on a
+    46 496-point graph. That search was futile from the start.
+  - A 6-chromatic unit-distance graph needs a module with no such colouring.
+  - If every finite set of unit vectors has such a colouring, then `χ(ℝ²) = 5`.
 
 ## Pressure, and why every k = 5 search was dead on arrival
 
@@ -7096,30 +7104,24 @@ test), so the module holds at least **198** unit vectors. All 960 admissible
 the trace form has minimum about 0.0003, so Fincke–Pohst would visit about 10¹²
 lattice points.
 
-**No colouring periodic through a small ideal.** Because the module is a
-ℤ[ω]-module, `αM` is a period lattice for every `α = a + bω`, of index `N(α)⁴`.
-When `5 ∤ N(α)`, a 5-colouring of `Cay(M/αM, U)` would be an `αM`-periodic
-colouring of the whole module graph. Such a colouring is never a coset
-colouring, since `α` acts invertibly on `M/5M`. `scripts/idealquot.py` builds
-the quotient through the Smith form and asks kissat:
+**Periodic through a small ideal, and why it proves little.** Because the
+module is a ℤ[ω]-module, `αM` is a period lattice for every `α = a + bω`, of
+index `N(α)⁴`, and `scripts/idealquot.py` asks kissat for a 5-colouring of
+`Cay(M/αM, U)`. For `α = 3 + ω, 4 − ω` (norm 13) and `3 + 2ω, 2 + 3ω` (norm 19)
+there is none, on `five_rho7` and on its `λ`-closure. **But the reason is
+trivial.**
+- The UNSAT core of the norm-13 torus has **15 vertices and 75 edges**
+  (`scripts/torecore.py`). It is a small, dense graph that exists only because
+  the short period folds far-apart points of the module together. It does not
+  lift back to the module: 53 of its 75 edges wrap around the torus.
+- The pair queries on `M/(ker ψ ∩ αM)` (`scripts/idealquot2.py`, 30 queries
+  UNSAT) are artifacts in the same way. The split of `(0, 5e)` is already
+  impossible on the radius-1 torus ball around the pair, about 385 vertices.
+- The twisted-ideal family (`scripts/twistquot.py`) and the earlier small
+  cyclic and product gates are exposed to the same folding.
 
-| module | α | N(α) | vertices | directions | 5-colourable |
-|---|---|---|---|---|---|
-| `five_rho7` (198 units) | 3 + ω, 4 − ω | 13 | 28 561 | 66 | **no** (both) |
-| `five_rho7` | 3 + 2ω, 2 + 3ω | 19 | 130 321 | 99 | **no** (both) |
-| `ρ₇`-module ∪ its `λ`-image (420 units) | 3 + ω, 4 − ω, 3 + 2ω, 2 + 3ω | 13, 19 | up to 130 321 | up to 192 | **no** (all four) |
-| E–I's `H` (calibration) | 3 + ω | 13 | 169 | 9 | yes; it splits every `5e` pair |
-
-**Nor through an ideal twisted by a coset colouring.** A richer family is
-`c(x) = ψ(x) + k(x mod αM)`, with `ψ` admissible and `k` any function on the
-finite group `M/αM`. Taking `k` constant gives back the coset colourings, and
-any other `k` that splits a `5e` pair would be a genuinely new colouring. We
-ran `scripts/twistquot.py` on `five_rho7` with `α = 3 + ω`:
-- 14 of the 960 admissible `ψ`, sampled at random;
-- for each, the `5e` pair of every second unit vector, 99 queries per `ψ`.
-
-For none of them does any `k` split the pair. On E–I's module the same family
-splits their pair at once.
+These tests say little about rigidity. A periodic test only means something
+when the period is long compared with the unit steps.
 
 **Unbiased colourings do not feel the rigidity.** `scripts/ballr.py` builds the
 complete combinatorial 2-ball in exact lattice coordinates (17 305 points) and
@@ -7184,3 +7186,68 @@ period (`scripts/periodfind.py`, `scripts/quot2d.py`).
   conjugate planes.
 
 The colouring is strongly organised, but not along anything we can name.
+
+
+## The circular gate: colourings through a real character
+
+A **circular colouring** is `c(x) = ⌊5·frac(φ(x))⌋`, for a character
+`φ ∈ Hom(M, ℝ/ℤ)`. It is proper exactly when `frac(φ(u)) ∈ [1/5, 4/5]` for
+every unit vector `u`: a shift by at least a fifth, and at most four fifths,
+always changes the fifth of the circle a point lies in, even at the boundary.
+
+Coset colourings are the special case `φ = ψ/5`. So the **feasible region**
+
+    F(M) = { φ ∈ Hom(M, ℝ/ℤ) = T^r : frac(φ(u)) ∈ [1/5, 4/5] for all u ∈ U }
+
+contains every coset colouring as a 5-torsion point. By the Stiemke
+certificates those points are isolated, but `F(M)` can have other points.
+- A point of `F(M)` with rational coordinates gives a periodic colouring
+  through a cyclic quotient `ℤ/q`.
+- An interior point gives irrational `φ` nearby, and so quasi-periodic
+  colourings.
+
+`scripts/circgate.py` maximises the least slack
+`s = min_u dist(frac(φ(u)), outside [1/5, 4/5])` as a MILP (HiGHS). Its
+variables are `φ`, one integer `n_u` per direction, and `s`.
+`scripts/circverify.py` then re-checks a solution in exact rational
+arithmetic: first on all unit vectors, then on every edge of a grown graph.
+
+| module | result |
+|---|---|
+| the 803-graph, **4** colours (sanity) | infeasible, as it must be for a 5-chromatic graph |
+| E–I's `H` | `φ` of order 4, slack 0.05, and it splits their pair |
+| blocked `803 ∪ λ(803)` (144 units) | **slack 387/31250 > 0**. The graph grown there, 46 496 points and 453 731 edges, is coloured with **0** monochromatic edges |
+| `five_rho7` (198 units) | **a non-coset `φ` of order 280**, slack 0. It colours the 12 226-point skeleton graph with 0 monochromatic edges, and `φ(5e) = 96`, so it colours Exoo–Ismailescu's pair **alike** |
+
+Explicitly, in the LLL basis of `circgate.py`,
+
+    φ = (11/20, 9/20, 39/56, 9/140, 1/5, 3/4, 69/280, 0).
+
+`5φ` is not integral, so this is not a coset colouring: it is periodic through
+`ℤ/280`, a modulus the cyclic gates, which stopped at 50, never reached.
+
+**What this changes.**
+1. **The blocked module was never a candidate.** A circular colouring 5-colours
+   every graph along its directions. This is why its growth ran out of pressure,
+   and why its colouring agreed with itself under small translations.
+2. **The rigidity conjecture, in its strong form, is false.** `five_rho7` has a
+   5-colouring that is not a coset colouring. The propagation theorem stands:
+   this colouring is nowhere locally coset, exactly as the theorem requires.
+3. **But the Exoo–Ismailescu pair survives it.** The route through `λ` needs
+   only that 5-colourings colour `(A, A + 5e)` alike, and the order-280 colouring
+   does. Two MILPs are now running. One asks whether any circular colouring of
+   `five_rho7` splits that pair. The other asks whether the `λ`-closure has any
+   circular colouring at all.
+
+**A necessary condition, stronger than blocking.** Every unit-distance graph
+whose edge module `M` has `F(M) ≠ ∅` is 5-colourable. So a 6-chromatic graph
+needs a module with **no homomorphic circular 5-colouring**. No such module has
+been found yet.
+
+By compactness, the condition also bears on the other side of the problem. The
+characters of the plane, seen as a discrete group, form a compact group, and
+characters of a subgroup extend to the whole group. So: *if every finite set
+of unit vectors admits a character with all values in `[1/5, 4/5]`, then the
+plane has a homomorphic 5-colouring and `χ(ℝ²) = 5`.* A single finite set of
+unit vectors with `F = ∅` is therefore a necessary first step toward six, and a
+test that the upper bound 5 must also pass.

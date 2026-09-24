@@ -15480,6 +15480,11 @@ THE_BLOCKED_GROWTH_REACHED_32312_POINTS_AND_STILL_COLOURS = True
 # psi(x) + k(x mod (3+w)M) splits no 5e pair: 14 random psi of 960, 99 unit
 # vectors each (scripts/twistquot.py).
 NO_COLOURING_PERIODIC_THROUGH_A_SMALL_IDEAL = True
+# Correction (same day): these results are artifacts of the short period.  The UNSAT core of the
+# norm-13 torus has 15 vertices and 75 edges and does not lift to the module (53 of its 75 edges
+# wrap), and the ker(psi) cap alpha*M pair queries are already UNSAT on the radius-1 torus ball
+# around the pair (about 385 vertices).  They say little about rigidity.
+THE_IDEAL_QUOTIENT_RESULTS_ARE_FOLDING_ARTIFACTS = True
 
 
 # The E-I closure needs only invariant measures.
@@ -15497,3 +15502,20 @@ NO_COLOURING_PERIODIC_THROUGH_A_SMALL_IDEAL = True
 # Unbiased tabu colourings of the complete 2-ball colour the 5M pairs alike 25.6%
 # of the time, exactly like every other pair (scripts/ballr.py).
 THE_EI_CLOSURE_NEEDS_ONLY_INVARIANT_MEASURES = True
+
+
+# The circular gate: colourings through a real character.
+#
+# c(x) = floor(5 frac(phi(x))), phi in Hom(M, R/Z), is proper iff frac(phi(u)) lies in [1/5, 4/5]
+# for every unit u.  Coset colourings are the 5-torsion points phi = psi/5.  MILP search
+# (scripts/circgate.py), exact re-check (scripts/circverify.py):
+#   * the blocked module 803 u lambda(803) has phi with exact slack 387/31250; it colours the
+#     46 496-point grown graph (453 731 edges) with no monochromatic edge.  The blocked module was
+#     never a candidate for a 6-chromatic graph along its directions;
+#   * five_rho7 has a NON-COSET phi of order 280 (5 phi is not integral), slack 0, colouring the
+#     12 226-point skeleton graph properly: the strong rigidity conjecture is false.  It colours
+#     Exoo-Ismailescu's pair alike (phi(5e) = 96), so the lambda route is not yet refuted;
+#   * sanity: the 5-chromatic 803-graph admits no circular 4-colouring (infeasible).
+# A 6-chromatic unit-distance graph needs an edge module with no homomorphic circular
+# 5-colouring; by compactness, if every finite set of unit vectors admitted one, chi(R^2) = 5.
+THE_CIRCULAR_GATE_COLOURS_THE_BLOCKED_MODULE_AND_REFUTES_STRONG_RIGIDITY = True
