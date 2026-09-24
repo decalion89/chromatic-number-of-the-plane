@@ -15426,3 +15426,19 @@ THE_RIGIDITY_SCALE_IS_NINE_STEPS_IN_EIGHT_DIMENSIONS = True
 # known, exact or approximate; the plain growth there is the most direct shot at
 # a 6-chromatic graph this project has.
 THE_BLOCKED_MODULE_CANNOT_BE_REPAIRED = True
+
+
+# No cheap 'physical' colouring for the 803 directions either.
+#
+# A colouring f of the PLANE that is proper only along a module's unit
+# directions pulls back to the module (c(x) = f(position of x)) and has nothing
+# to do with coset colourings -- if one existed with 5 colours it would refute
+# rigidity outright.  The torus gate (scripts/torusgate.py) looks for pixelated
+# periodic ones: f constant on the cells of an h-grid of a hexagonal torus of
+# side P, every cell meeting C + v coloured differently from C, for every unit v.
+# Validated: with 7 colours the 31 directions of the 803 module colour at
+# P = 2.2 (the hexagon colouring), not at P = 2.6.  With 6 colours and with 5,
+# every torus tried fails for those 31 directions (P = 1.4 ... 3.2, h = 0.1;
+# a few 6-colour instances timed out).  Pixelation at 0.1 is coarse, so this is
+# a screen, not a proof.
+NO_PIXELATED_PERIODIC_FIVE_COLOURING_OF_THE_803_DIRECTIONS = True
