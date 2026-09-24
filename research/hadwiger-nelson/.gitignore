@@ -15,3 +15,4 @@ data/rho7_pair2_ckpt.json
 data/*.cnf
 data/*.kissat
 data/blk_plain_*.json
+*.drat
