@@ -15313,3 +15313,45 @@ THE_TWISTED_COLOURINGS_WERE_PERIODIC_THROUGH_A_NONCYCLIC_QUOTIENT = True
 # needed 2.4 million conflicts.  Structure beats greed; the skeleton is the
 # attempt to give the growth some.
 EXOO_ISMAILESCU_LIVES_INSIDE_OUR_MODULES = True
+
+
+# Coarse rigidity of the rho7 module, exactly.
+#
+# A twisted colouring psi + t floor(phi/L) needs a functional phi != 0 with
+# phi >= 0 on the class D_t = {units u : psi(u) = t}.  By Stiemke's lemma there
+# is none iff D_t spans M (x) R and has a strictly positive linear dependency.
+# scripts/stiemke.py finds one by LP, rounds all but a basis of the
+# coefficients, solves the basis EXACTLY, and checks the identity
+# sum_u lambda_u u = 0 (every lambda_u > 0) in the field coordinates:
+#
+#     five_rho7   (rank 8, 93 directions, 960 psi):   3840 of 3840 (psi, t) certified
+#     five_247_c  (rank 8, 31 directions, 1728 psi):  1664 of 6912 -- 5248 have a half-space
+#
+# So on five_rho7 no twisted colouring exists at all (exact now, not only the
+# LP sweep), and rho7 is exactly what makes the difference.
+#
+# THEOREM (coarse rigidity).  Call a 5-colouring of the unit-distance graph on
+# five_rho7's module coarse if M (x) R = R^8 is cut into polyhedral cells whose
+# faces are all much larger than a unit step, and on each cell P the colouring
+# is psi_P + k_P with psi_P admissible.  Every coarse colouring is a coset
+# colouring.  Proof: across a facet F (normal n) between cells P and Q,
+#   * if psi_Q != psi_P, their difference is constant on the lattice points
+#     near F only if F is rational, F = {phi = 0} for a primitive integer
+#     functional phi, and psi_Q - psi_P = lambda phi; a unit u with phi(u) = s
+#     then crosses from level -j to s - j for j = 1..s, changing the colour by
+#     psi_P(u) + delta + lambda (s - j) -- all residues once s >= 5, so some j
+#     is a conflict; and every nonzero integer functional takes a value >= 7
+#     on some unit (Fincke-Pohst on the LLL-reduced value lattice: none has
+#     |phi(u)| <= 6 on all 186 units);
+#   * so psi_Q = psi_P = psi and the colour jumps by delta = k_Q - k_P != 0;
+#     a unit u in D_{-delta} with <n, u> > 0 crossing F is then a conflict,
+#     and one exists because D_{-delta} positively spans (the certificates).
+# Hence no facet carries a jump, and one (psi, k) covers everything.
+#
+# What it does NOT say: a colouring may still be non-coset if its interfaces
+# are thick (a slab where the colouring is nothing like psi + k) or if it has
+# no large-scale structure at all.  The 1-D wall gate looked for the first kind
+# along the 24 shortest integer functionals (values up to 14 on the units),
+# for every admissible psi, in windows 161 levels wide: no window colouring
+# joins a 2e pair (12 functionals) or splits a 5e pair (8 functionals).
+KAPPA_GIVES_COARSE_RIGIDITY = True

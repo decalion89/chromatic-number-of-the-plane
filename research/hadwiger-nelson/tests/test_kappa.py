@@ -96,3 +96,50 @@ def test_kappa_is_invisible_mod_5_on_five_rho7():
                                        if any(c % 5 for c in coords([a - b for a, b in zip(vec(w), vec(u))]))))
     assert moved["kappa"] == (120, 0)          # every kappa u - u lies in 5M
     assert moved["omega"][1] > 0 and moved["rho7"][1] > 0
+
+
+def test_stiemke_certificates_on_five_rho7_sample():
+    """For a few admissible psi and every t, the class D_t has an exact strictly positive
+    dependency (so no twisted colouring), recomputed here as in scripts/stiemke.py."""
+    import itertools
+    import numpy as np
+    from scipy.optimize import linprog
+    d = json.load(open(f"{ROOT}/data/five_rho7.json"))
+    F = Field(tuple(d["field_generators"]))
+    P = [Point(F.element([Fr(a, b) for a, b in x]), F.element([Fr(a, b) for a, b in y]))
+         for x, y in d["points"]]
+    g = build_graph(P)
+    units = list({u: 1 for a, b in g.edges() for u in (P[b] - P[a], P[a] - P[b])})
+    vec, coords, rank = _module(units)
+    Cm5 = [[c % 5 for c in coords(vec(u))] for u in units]
+    raw = [vec(u) for u in units]                          # small integer field coordinates
+    adm = [psi for psi in itertools.product(range(5), repeat=rank)
+           if all(sum(a * b for a, b in zip(psi, c)) % 5 for c in Cm5)]
+    assert len(adm) == 960
+    for psi in adm[:: 240]:                                # four psi, all t
+        val = [sum(a * b for a, b in zip(psi, c)) % 5 for c in Cm5]
+        for t in range(1, 5):
+            D = [raw[k] for k in range(len(units)) if val[k] == t]
+            A = np.array(D, dtype=float).T
+            res = linprog(np.zeros(len(D)), A_eq=A, b_eq=np.zeros(len(raw[0])),
+                          bounds=[(1.0, None)] * len(D), method="highs")
+            assert res.status == 0
+            lam = res.x
+            # exact: fix all but a basis, solve the basis with Fractions, check positivity
+            import sympy
+            order = sorted(range(len(D)), key=lambda q: -lam[q])
+            basis = []
+            for q in order:
+                if sympy.Matrix([D[j] for j in basis + [q]]).rank() > len(basis):
+                    basis.append(q)
+                if len(basis) == rank:
+                    break
+            rest = [q for q in range(len(D)) if q not in basis]
+            lr = {q: Fr(float(lam[q])).limit_denominator(10 ** 6) for q in rest}
+            rhs = sympy.Matrix([-sum(lr[q] * D[q][c] for q in rest) for c in range(len(raw[0]))])
+            Mb = sympy.Matrix([[D[q][c] for q in basis] for c in range(len(raw[0]))])
+            sol, params = Mb.gauss_jordan_solve(rhs)
+            assert not params
+            full = {**lr, **{q: Fr(str(v)) for q, v in zip(basis, list(sol))}}
+            assert all(v > 0 for v in full.values())
+            assert all(sum(full[q] * D[q][c] for q in range(len(D))) == 0 for c in range(len(raw[0])))

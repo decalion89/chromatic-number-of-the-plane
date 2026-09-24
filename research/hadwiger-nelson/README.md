@@ -6941,3 +6941,63 @@ graph grows; the tabu search gives an upper bound, not the exact minimum.
 
   Structure beats greed, and the skeleton search is the attempt to give the
   growth some.
+
+### Coarse rigidity, exactly
+
+A twisted colouring needs a functional `φ ≠ 0` with `φ ≥ 0` on a class
+`D_t = {u : ψ(u) = t}`. **Stiemke's lemma** says no such `φ` exists iff `D_t`
+spans and has a strictly positive linear dependency.
+
+`scripts/stiemke.py` finds such a dependency and proves it exactly:
+1. An LP finds one.
+2. All coefficients but a basis are rounded to rationals.
+3. The basis coefficients are then solved **exactly**.
+4. The identity `Σ λ_u u = 0`, with every `λ_u > 0`, is checked in the field
+   coordinates.
+
+| module | admissible `ψ` | `(ψ, t)` with an exact certificate |
+|---|---|---|
+| `five_rho7` (93 directions) | 960 | **3 840 of 3 840** |
+| `five_247_c` (31 directions) | 1 728 | 1 664 of 6 912; the other 5 248 lie in a half-space |
+
+So on `five_rho7` there is no twisted colouring at all, now exactly and not only
+by the LP sweep. `ρ₇` is precisely what makes the difference.
+
+**Theorem (coarse rigidity).** Call a 5-colouring of the unit-distance graph on
+`five_rho7`'s module *coarse* if two things hold:
+- `M ⊗ ℝ = ℝ⁸` is cut into polyhedral cells whose faces are all much larger
+  than a unit step;
+- on each cell `P` the colouring is `ψ_P + k_P`, with `ψ_P` admissible.
+
+Then every coarse colouring is a coset colouring.
+
+*Proof.* Look at a facet `F` between two cells.
+1. Suppose `ψ_P` and `ψ_Q` differ. Their difference can be constant along the
+   lattice points next to `F` only when:
+   - `F` is rational, `F = {φ = 0}`, and
+   - `ψ_Q − ψ_P = λφ`.
+
+   In that case take a unit `u` with `φ(u) = s`. Crossing from level `−j` to
+   level `s − j` changes the colour by `ψ_P(u) + δ + λ(s − j)`. Once `s ≥ 5`
+   this runs through every residue, so some `j` gives a conflict. And every
+   nonzero integer functional takes a value of at least 7 on some unit: none has
+   `|φ(u)| ≤ 6` on all 186 units (Fincke–Pohst on the LLL-reduced value
+   lattice).
+2. So `ψ_P = ψ_Q`, and the colour jumps by some `δ ≠ 0`. Then any unit of
+   `D_{−δ}` that crosses `F` is a conflict. Such a unit exists because
+   `D_{−δ}` positively spans (the certificates).
+
+Hence no facet carries a jump, and a single `(ψ, k)` covers the whole module. ∎
+
+**What it does not say.** A colouring can still fail to be a coset colouring in
+two ways:
+- its interfaces are *thick*, a slab where the colouring looks nothing like
+  `ψ + k`;
+- it has no large-scale structure at all.
+
+The 1-D wall gate looked for the first kind (`scripts/wallgate.py`):
+- It searched along the 24 shortest integer functionals, with values up to 14
+  on the units, for every admissible `ψ`, in windows 161 levels wide.
+- No window colouring joins a `2e` pair; 12 functionals were checked before
+  the time limit.
+- None splits a `5e` pair; 8 functionals were checked.
