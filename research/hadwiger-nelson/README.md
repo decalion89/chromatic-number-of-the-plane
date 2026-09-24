@@ -87,6 +87,21 @@ A certificate never asks you to trust this code. It asks you to run `drat-trim`.
   it is always 3-choosable, which is what kills k = 5. The mechanism falls on
   the wrong side of that gap by exactly one.
 
+- ✅ **A module where coset colourings are provably rigid at every large
+  scale.** `ρ₇ = (1+4√−3)/7` and `ω` combine into `κ = ωρ₇ ≡ 1 (mod 5)`, an
+  irrational rotation that every coset colouring is blind to. On the 803-type
+  graph together with its `ρ₇`-images, **3 840 of 3 840** exact Stiemke
+  certificates show that every colour class positively spans. From that:
+  - **no twisted colouring** exists;
+  - every coarse colouring is a coset colouring;
+  - **rigidity propagates:** a colouring that is a coset colouring on a
+    half-space, or on a large enough ball, is that coset colouring everywhere.
+
+  So the question `χ(ℝ²) ≥ 6` on this module reduces exactly to whether a
+  *nowhere-locally-coset* 5-colouring exists. Exoo–Ismailescu's graph sits
+  inside the module, turned by 150°. See *κ, the rotation every coset
+  colouring is blind to* and the sections after it.
+
 ## Pressure, and why every k = 5 search was dead on arrival
 
 Write **pressure(p)** for the least number of colours N(p) can be squeezed into,
