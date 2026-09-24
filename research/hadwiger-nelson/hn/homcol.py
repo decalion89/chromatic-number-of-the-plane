@@ -15411,3 +15411,18 @@ RIGIDITY_PROPAGATES_FROM_A_HALF_SPACE_OR_A_BALL = True
 # The rigidity is real but lives far beyond what a solver can hold; a finite
 # gadget in this module, if one exists, has to come from a cheaper mechanism.
 THE_RIGIDITY_SCALE_IS_NINE_STEPS_IN_EIGHT_DIMENSIONS = True
+
+
+# The blocked module cannot even be repaired.
+#
+# 803 u lambda(803) contains the 803 module with index 5^8 = 390 625, and five of
+# its 67 unit directions lie in 5M (contents 5 and 15), so every psi : M -> Z/5
+# vanishes on them.  One might hope for 'nearly admissible' psi -- zero ONLY on
+# those five -- and repair them with a small second coordinate chi : M -> Z/m
+# that is nonzero there (a colouring through Z/5 x Z/m).  There is none: no psi
+# of the 390 625 is nonzero on all 62 other directions (scripts/nearadm.py),
+# and no chi mod 2 or mod 3 is nonzero on the five.  Together with the empty
+# periodic gates, no colouring of the whole unit-distance graph on this module is
+# known, exact or approximate; the plain growth there is the most direct shot at
+# a 6-chromatic graph this project has.
+THE_BLOCKED_MODULE_CANNOT_BE_REPAIRED = True
