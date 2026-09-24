@@ -105,6 +105,7 @@ def proper(col):
 print(f"{IN}: n={len(V)} m={len(EA)}, {len(U)} directions, pool {len(pool)}; mode {MODE}, solver {SOLVER}"
       + (f", pair {A},{Bi} at d^2 = {V[A].dist2(V[Bi])}" if A is not None else "") + f"   [{time.time()-t0:.0f}s]", flush=True)
 last = 0; lsfail = 0
+if d.get("colouring") and len(d["colouring"]) == len(V): col = list(d["colouring"])   # resume from the saved colouring
 for it in range(1, 10 ** 7):
     n = len(V)
     init = col + [-1] * (n - len(col))
@@ -116,10 +117,30 @@ for it in range(1, 10 ** 7):
         try: s.set_phases([X(v, c) if lcol[v] == c else -X(v, c) for v in range(n) for c in range(K)])
         except Exception: pass
         save("pre_cdcl")                      # the exact instance CDCL is about to decide
-        s.conf_budget(BUDGET)
-        r = s.solve_limited(); st = s.accum_stats(); conf = st.get("conflicts", 0) - last; last = st.get("conflicts", 0)
-        how = f"CDCL[LS best {info}]"
-        if r is True:
+        if os.environ.get("FALLBACK") == "kissat":
+            # external kissat on the exact clause set (hard edges + MODE constraint + pinned triangle)
+            cnf = OUT + ".cnf"; KB = os.environ.get("KISSAT", "kissat")
+            cls = [[X(v, c) for c in range(K)] for v in range(n)] + [[-X(a, c), -X(b, c)] for a, b in zip(EA, EB) for c in range(K)]
+            if MODE == "apart": cls += [[-X(A, c), X(Bi, c)] for c in range(K)] + [[X(A, c), -X(Bi, c)] for c in range(K)]
+            elif MODE == "same": cls += [[-X(A, c), -X(Bi, c)] for c in range(K)]
+            if tri: cls += [[X(v, k)] for k, v in enumerate(tri)]
+            with open(cnf, "w") as fh:
+                fh.write(f"p cnf {n * K} {len(cls)}\n"); fh.write("".join(" ".join(map(str, c)) + " 0\n" for c in cls))
+            kout = subprocess.run([KB, f"--time={int(os.environ.get('KTIME', '7200'))}", cnf], capture_output=True, text=True).stdout
+            status = next((l for l in kout.split("\n") if l.startswith("s ")), "s UNKNOWN")
+            conf = -1
+            if "UNSATISFIABLE" in status: r = False
+            elif "SATISFIABLE" in status:
+                pos = {int(x) for l in kout.split("\n") if l.startswith("v") for x in l.split()[1:] if int(x) > 0}
+                col = [next((c for c in range(K) if X(v, c) in pos), 0) for v in range(n)]
+                r = True if proper(col) else None
+            else: r = None
+            how = f"KISSAT[{status}]"
+        else:
+            s.conf_budget(BUDGET)
+            r = s.solve_limited(); st = s.accum_stats(); conf = st.get("conflicts", 0) - last; last = st.get("conflicts", 0)
+        if not os.environ.get("FALLBACK") == "kissat": how = f"CDCL[LS best {info}]"
+        if r is True and not os.environ.get("FALLBACK") == "kissat":
             mdl = s.get_model(); col = [next(c for c in range(K) if mdl[X(v, c) - 1] > 0) for v in range(n)]
     if r is not True:
         save(("UNSAT_" + MODE) if r is False else "hard")
@@ -127,7 +148,7 @@ for it in range(1, 10 ** 7):
         break
     rb = sorted(((0.25 * len(e[2]) - WN * near(kk), kk) for kk, e in pool.items()
                  if len(e[2]) >= 5 and len({col[j] for j in e[2]}) == K), reverse=True)
-    if it % 10 == 1 or not rb or how.startswith("CDCL"):
+    if it % 10 == 1 or not rb or how.startswith(("CDCL", "KISSAT")):
         print(f"  iter {it}: n={n} m={len(EA)} {how} conflicts {conf}; {len(rb)} rainbow; LS fails so far {lsfail}   [{time.time()-t0:.0f}s]", flush=True)
     if it % 10 == 0: save("checkpoint")
     pick = [kk for _, kk in rb[:R]]
