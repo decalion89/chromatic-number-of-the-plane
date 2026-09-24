@@ -7719,3 +7719,32 @@ following `notes/worker_jobs.md` and checked by `scripts/verify_pair.py`:
 - two workers grow gadgets for eight `2/√3` pairs;
 - one searches for a `{1, 2/√3}` witness;
 - one maps the repulsion spectrum across the project's graphs.
+
+**The witness side with several distances (24 September, evening).** Put the
+repulsive distances together.
+- **What the lattice alone gives.** `ℤ[ω]/√−3` forbids the distances
+  `√(n/3)`. No single extra distance makes it 6-chromatic. With two or three
+  extra distances it is often not 5-colourable (`scripts/lattice_witness.py`;
+  16 such sets use only distances with `P(same) ≤ 0.141` in the L16 seed).
+- **A verified witness.** `data/W_lattice_16_21_28_61.json` is a vertex-critical
+  72-point lattice graph, with edges at `1, 4/√3, √7, √(28/3), √(61/3)`, that is
+  not 5-colourable. CaDiCaL, Glucose, MiniSat and kissat agree, and drat-trim
+  verifies kissat's DRAT proof.
+- **What it would finish.** One unit-distance gadget per distance would give
+  `χ(ℝ²) ≥ 6`, and the four distances are repulsive (0.085, 0.090, 0.098, 0.133).
+
+**A cascade instead of four gadgets.** Once a unit-distance gadget forces
+`2/√3` apart, every 5-colouring of the plane avoids `{1, 2/√3}`. A
+`{1, 2/√3}`-graph can then act as the gadget for the next distance. It is far
+denser, so forcing is easier. For example, the lattice with
+`{1, 2/√3, √(7/3)}` forbidden is not 5-colourable on 61 points. So one
+unit-distance gadget plus one two-distance gadget at `√(7/3)` would do.
+
+**The L16 module has no cheap colourings.**
+- **No local ones.** There are no non-split places below 53.
+- **No circular ones, numerically.** Its units give 471 directions in rank 12.
+  - The largest `min_u ‖φ(u)‖` found over characters `φ` is 0.024, against the
+    0.2 a circular 5-colouring needs (4 000 restarts of coordinate ascent).
+  - The same search finds 0.204 at once for the Moser module, which is
+    4-colourable.
+  - The exact MILP ran out of time, so this is evidence, not proof.
