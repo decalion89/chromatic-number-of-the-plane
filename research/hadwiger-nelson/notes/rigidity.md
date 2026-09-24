@@ -306,3 +306,60 @@ Proposition 7 applies with `k = 4`. The Moser spindle lies in `K`. ∎
   prime exceed what any character of bounded level can absorb. That is what
   the `λ`-closure does at 5, and what rotation words in `τ`, `ρ₇`, `λ` do at
   2, 7 and 5.
+
+## 9. Reduction at a non-split place: the field of `five_rho7` is 5-colourable
+
+**Proposition 10.** Let `v` be a finite place of `K⁺` that does not split in the
+CM field `K`.
+1. **Unramified, residue field `𝔽_q`.** Every unit vector reduces into the
+   norm-one group `N₁ ⊂ 𝔽_{q²}`, which has order `q + 1`. Fix a representative
+   of each coset of `O_v` in `K_v`, and set `g(z) = (z − rep(z)) mod π`. Then
+   `g(z + u) = g(z) + ū`. Any proper colouring of `Cay(𝔽_{q²}, N₁)`, composed
+   with `g`, is a proper colouring of the unit-distance graph on `K`. So
+   `χ(K) ≤ χ(Cay(𝔽_{q²}, N₁))`.
+2. **Ramified.** The norm-one residues are `±1`, and `χ(K) ≤ 3`.
+
+Arcs of the circle (§8) are the special case where the colouring of the finite
+plane comes from a single linear form. General colourings of the finite plane
+are strictly stronger. At `q = 11` no arc works, yet `χ = 5`.
+
+**Theorem 11.** `χ(ℚ(√−3, √−11, √−247)) = 5`.
+
+*Proof.* Above 11, `K⁺_v = ℚ₁₁(√33)`, with `√741 ∈ ℚ₁₁` because `741 ≡ 4` is a
+square mod 11. `K_v = K⁺_v(√−3)` is unramified over `K⁺_v`, because −3 is a
+non-residue mod 11, so the place does not split. `Cay(𝔽₁₂₁, N₁)` is
+5-colourable (SAT). The graph `five_rho7` gives the lower bound. ∎
+
+The colouring was checked exactly on every grown graph of the project in this
+field, up to 32 312 points and 282 909 edges (`scripts/reduce11.py`). On a
+finitely generated module it is periodic through a finite 11-group. That is a
+quotient the periodic gates never tried: they used Eisenstein ideals and
+sampled cyclic groups.
+
+**Corollary (where six can live).** A field hosting a 6-chromatic unit-distance
+graph needs two things:
+- **no ramified non-split place at all;**
+- **every unramified non-split place has `χ(Cay(𝔽_{q²}, N₁)) ≥ 6`**, or better
+  still, `χ ≥ 6` for the local plane `K_v` itself.
+
+With `√−3` in `K`, non-split residue fields have `q ≡ 5 mod 6` or `q = 2`.
+Computed so far:
+
+| `q` | `χ(Cay(𝔽_{q²}, N₁))` |
+|---|---|
+| 2 | 4 |
+| 5 | 4 |
+| 11 | 5 |
+
+So the places above 2, 5 and 11 must split. `ℚ(√−3, √−11, √−247)` fails at 11.
+Adjoining `√−7` (de Grey's `4e` rotation) or `√−2` puts `√21` or `√6` in the
+real subfield, which splits 11. `ℚ(√−3, √−7, √−11, √−247)` then has no
+non-split place below 83.
+
+**Caveats.**
+- These are upper bounds from single places.
+- Deeper levels `O_v/π^r` and products over several places can only lower
+  them.
+- Passing every local test does not make a field 6-chromatic. Whether a
+  local–global principle holds for these chromatic numbers is open. The
+  archimedean place carries `χ(ℝ²)` itself.

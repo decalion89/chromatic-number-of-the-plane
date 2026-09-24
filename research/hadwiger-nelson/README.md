@@ -7415,3 +7415,81 @@ the `λ`-closure (HiGHS at `k = 5, 6`, SCIP at `k = 5`).
 
 Related prior work: G. E. Moorhouse, *On the chromatic numbers of planes*
 (draft, 2010), studies `χ(K²)` over fields by reducing to finite fields.
+
+## The field of `five_rho7` is 5-colourable: reduction at 11
+
+**The result.** Every unit-distance graph with vertices in
+`K = ℚ(√−3, √−11, √−247)` is 5-colourable, however large. That is the field of
+the 803-graph, of `five_rho7`, of the blocked module and of the `λ`-closure. So
+**no search in this field could ever have found six**, and every growth run
+there was bound to colour.
+
+**Why.** Characters were the wrong family to look at. The right family is
+*reduction at a place*.
+
+The place above 11 does not split:
+- `K⁺_v = ℚ₁₁(√33)`, which is ramified, with uniformiser `π = √33`;
+- `K_v = K⁺_v(√−3)`, which is unramified over it, because −3 is a non-residue
+  mod 11.
+
+So every unit vector `u` of `K` is a `v`-adic unit of relative norm 1. It
+reduces to the norm-one group `N₁` of `𝔽₁₂₁` (12 elements).
+
+Every point `z ∈ K` has a residue `g(z) ∈ 𝔽₁₂₁`, taken relative to its coset of
+`O_v`, and `g(z + u) = g(z) + ū`. So any colouring of the **finite plane**
+`Cay(𝔽₁₂₁, N₁)`, 121 points of degree 12, colours the whole field. Its
+chromatic number is **5** (SAT; 4 is UNSAT).
+
+In coordinates: write `z = α + β√−3` with `α = a + bπ` and `β = c + dπ`. The
+residue is `(units digit₁₁(a), units digit₁₁(c))`, where
+`a = a₀ + a₂√741` and `c = b₀ + b₂√741/3`, with `√741 ∈ ℤ₁₁`.
+
+`hn/adelic.py` (`reduce11`, `finite_plane_11_colouring`) and
+`scripts/reduce11.py` check it exactly, at both places above 11:
+
+| graph | points | edges | directions | monochromatic |
+|---|---|---|---|---|
+| `five_rho7` | 2 403 | 12 223 | 186 | 0 |
+| 803-graph | 803 | 4 065 | 62 | 0 |
+| `λ`-closure growth (`rho7_lamfull_kw1`) | 15 630 | 119 788 | 594 | 0 |
+| blocked growth | 32 312 | 282 909 | 134 | 0 |
+| `λK` growth | 15 930 | 122 336 | 392 | 0 |
+| `ρ₇`/`H` growth | 15 942 | 134 255 | 186 | 0 |
+
+In each case every unit vector reduces into `N₁`.
+
+**What the old gates missed.** On a finitely generated module this colouring
+is periodic through a finite 11-group. The periodic gates tried Eisenstein
+ideals (`ℤ[ω]`, norm 13) and sampled cyclic quotients. The circular gate tried
+arcs of the circle. None of them tried the residue field of the one prime that
+does not split.
+
+**The general rule.** Take any place `v` of `K⁺` that does not split in `K`:
+- **Unramified, residue field `𝔽_q`:** `χ(K) ≤ χ(Cay(𝔽_{q²}, N₁))`, the
+  unit-distance graph of the finite plane.
+- **Ramified:** the norm-one residues are `±1`, so `χ(K) ≤ 3`. A field that
+  holds a Moser spindle has no such place.
+- **In a field containing `√−3`:** a non-split place has `(−3/q) = −1`, so
+  `q ≡ 5 mod 6` or `q = 2`.
+
+| `q` | 2 | 5 | 11 | 17 | 23 | 29 |
+|---|---|---|---|---|---|---|
+| `χ(Cay(𝔽_{q²}, N₁))` | 4 | 4 | **5** | … | … | … |
+
+The row for `q = 3`, 7 and 13, which cannot occur next to `√−3`, gives 3, 4 and
+(not needed). The last three columns are being computed.
+
+**What a field for six must look like.** It must contain `√−3`, and every
+place above 2, 5 and 11 must split, as must any other `q` whose finite plane is
+5-colourable. It can have no ramified non-split place. The unramified
+non-split primes of some candidates:
+
+| field | ramified | unramified non-split `p < 400` |
+|---|---|---|
+| Moser `ℚ(√−3, √−11)` | 3, 11 (**11 does not split**) | **2**, 17, 29, 41, … |
+| `ℚ(√−3, √−11, √−247)` | 3, 11, 13, 19 (**11 does not split**) | 29, 83, 107, … |
+| `+ √−7` (de Grey's `4e` rotation) | 3, 7, 11, 13, 19 (all split) | 83, 173 |
+| `+ √−7, √−15` | 3, 5, 7, 11, 13, 19 | none |
+
+Adjoining `√−7` (or `√−2`) puts `√21` in the real subfield. That is a
+non-residue unit at 11, so the place above 11 splits.

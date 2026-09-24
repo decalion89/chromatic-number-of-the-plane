@@ -15559,3 +15559,15 @@ THE_LAMBDA_CLOSURE_ADMITS_NO_COSET_RESTRICTED_CIRCULAR_COLOURING = True
 # no single place that 5-colours it.  SCIP in relation space (scripts/circrel.py) gives kappa = 1/4
 # exactly for every Moser-field unit set tried (rot_1110, rot_2110, E-I's H and its closure).
 THE_MOSER_FIELD_IS_FOUR_COLOURABLE_THROUGH_A_TWO_ADIC_CHARACTER = True
+
+
+# Reduction at a non-split place: the field of five_rho7 is 5-colourable (notes/rigidity.md sec. 9).
+#
+# Above 11, K+_v = Q_11(sqrt33) and K_v = K+_v(sqrt-3) is unramified over it, so the place does not
+# split in K = Q(sqrt-3, sqrt-11, sqrt-247).  Every unit vector reduces into the 12-element norm-one
+# group N1 of F_121, every point to a residue relative to its coset of O_v, and a 5-colouring of the
+# finite plane Cay(F_121, N1) (chi = 5) colours the unit-distance graph on all of K.  Checked exactly
+# at both places above 11 on five_rho7, the 803-graph, the blocked 32 312-point growth and the
+# lambda-closure growths (scripts/reduce11.py): no graph in this field is 6-chromatic.  In general
+# chi(K) <= chi(Cay(F_{q^2}, N1)) at an unramified non-split place, and <= 3 at a ramified one.
+THE_FIELD_OF_FIVE_RHO7_IS_FIVE_COLOURABLE_BY_REDUCTION_AT_ELEVEN = True
