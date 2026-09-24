@@ -126,3 +126,48 @@ coset fit of 22–30%, which is chance level.
 
   Its grown subgraphs of 31 000 points still have 5-colourings, but tabu search
   from a random start no longer finds them.
+
+## 5. Periodic colourings, invariant measures, and what rigidity would imply
+
+**Ideal-periodic colourings.** The `five_rho7` module is a ℤ[ω]-module. Its 186
+edge directions turned by 60° give 12 more unit vectors of the module, 198 in
+all, and every admissible `ψ` stays admissible on them. For `α ∈ ℤ[ω]` with
+`5 ∤ N(α)`, an `αM`-periodic 5-colouring is never a coset colouring. By kissat,
+`Cay(M/αM, U)` is **not** 5-colourable for:
+- `α = 3 + ω` and `4 − ω` (norm 13, 28 561 vertices);
+- `α = 3 + 2ω` and `2 + 3ω` (norm 19, 130 321 vertices).
+
+The same four fail on the λ-closure (`scripts/idealquot.py`). In the family
+`ψ + k(x mod (3 + ω)M)`, no `k` splits a `5e` pair (`scripts/twistquot.py`).
+On Exoo–Ismailescu's module the norm-13 quotient colours and splits their pair.
+
+**Theorem 2 (measures suffice).** Let `M′ = M₁ + λM₁`, and let `e` be a unit of
+`M₁` with `|5e − 5λe| = 1`. Suppose every `M₁`-invariant probability measure on
+proper 5-colourings of `G(M₁)` has `c(0) = c(5e)` almost surely. Then `G(M′)`
+is not 5-colourable.
+
+*Proof.*
+1. A colouring of `G(M′)`, averaged over Følner boxes of `M′`, gives an
+   `M′`-invariant measure `ν`.
+2. Restricted to `M₁`, `ν` gives `c(0) = c(5e)` almost surely.
+3. Pushed forward by `c ↦ c(λ·)`, which carries translation by `m` to
+   translation by `λm`, it gives `c(0) = c(5λe)` almost surely.
+4. So `c(5e) = c(5λe)` almost surely, across a unit edge. ∎
+
+**Proposition 3 (rigidity is at least as hard as a measurable question).**
+Suppose every proper 5-colouring of `G(M, U)` colours `x` and `x + m` apart for
+all `m ∈ u₀ + 5M`, for some unit `u₀`. Coset colourings do this. Then no
+Lebesgue-measurable 5-colouring of the plane is proper along the directions
+`U`. Consequently, the rigidity of any module of rank > 2 with finitely many unit
+directions implies that the measurable chromatic number of the plane is at
+least 6, which is open.
+
+*Proof.* Rank > 2 makes `5M` dense in the plane, so `u₀ + 5M` contains vectors
+`mⱼ → 0`. For almost every `y`, the colouring `m ↦ f(y + m)` of `G(M, U)` is
+proper, hence `f(y + mⱼ) ≠ f(y)` for every `j`. But
+`‖f(· + mⱼ) − f‖_{L¹(B)} → 0` on every ball `B`. ∎
+
+So a proof of rigidity cannot be purely local or fractional. Independent sets
+alone cannot give it either: Croft's tortoise, restricted to a generic coset,
+is an independent set of `G(M, U)` of density 0.229 > 1/5. Whatever proof
+exists must use the partition into five classes.
