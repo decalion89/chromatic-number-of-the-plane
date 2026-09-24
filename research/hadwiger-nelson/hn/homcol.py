@@ -15519,3 +15519,16 @@ THE_EI_CLOSURE_NEEDS_ONLY_INVARIANT_MEASURES = True
 # A 6-chromatic unit-distance graph needs an edge module with no homomorphic circular
 # 5-colouring; by compactness, if every finite set of unit vectors admitted one, chi(R^2) = 5.
 THE_CIRCULAR_GATE_COLOURS_THE_BLOCKED_MODULE_AND_REFUTES_STRONG_RIGIDITY = True
+
+
+# The Exoo-Ismailescu pair cannot be forced inside the rho7 module.
+#
+# The order-280 circular colouring of five_rho7 is not isolated: the units tight at it have rank
+# 7 and the local cone contains theta = (0, 0, -1, 1, 0, 0, 1, -1).  The character
+#     phi' = (11/20, 9/20, 2911/4200, 71/1050, 1/5, 3/4, 1049/4200, -1/300)
+# keeps all 198 units in [1/5, 4/5] (exact), colours the 12 226-point skeleton graph with no
+# monochromatic edge and has frac(phi'(5e)) = 7/20: it colours A and A + 5e differently on EVERY
+# translate.  So no finite unit-distance graph in the module forces the pair, and by
+# Exoo-Ismailescu's theorem not all of H's two-edges can be forced apart there either.  Neither
+# character extends to the lambda-closure (0 of 390 625 extensions proper, scripts/circextend.py).
+THE_EI_PAIR_CANNOT_BE_FORCED_IN_THE_RHO7_MODULE = True

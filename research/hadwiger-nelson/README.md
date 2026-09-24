@@ -7233,11 +7233,23 @@ Explicitly, in the LLL basis of `circgate.py`,
 2. **The rigidity conjecture, in its strong form, is false.** `five_rho7` has a
    5-colouring that is not a coset colouring. The propagation theorem stands:
    this colouring is nowhere locally coset, exactly as the theorem requires.
-3. **But the Exoo–Ismailescu pair survives it.** The route through `λ` needs
-   only that 5-colourings colour `(A, A + 5e)` alike, and the order-280 colouring
-   does. Two MILPs are now running. One asks whether any circular colouring of
-   `five_rho7` splits that pair. The other asks whether the `λ`-closure has any
-   circular colouring at all.
+3. **And the Exoo–Ismailescu pair does not survive a small move.** The order-280
+   colouring colours `(A, A + 5e)` alike. It is not isolated in `F(M)`, though:
+   the units tight at it have rank 7, and the local cone contains
+   `θ = (0, 0, −1, 1, 0, 0, 1, −1)`. The moved character
+
+       φ′ = φ + θ/300 = (11/20, 9/20, 2911/4200, 71/1050, 1/5, 3/4, 1049/4200, −1/300)
+
+   keeps every one of the 198 units in `[1/5, 4/5]`, with exact slack 0. It
+   colours the 12 226-point skeleton graph (`five_rho7 ∪ H`, grown) with **0**
+   monochromatic edges, and `φ′(5e) = 1927/20`, so `frac = 7/20`. It therefore
+   gives **`c(A) ≠ c(B)` on every translate of the pair.**
+   - **No unit-distance graph inside the `ρ₇` module can force Exoo–Ismailescu's
+     pair.** The skeleton search there was futile, and it has been stopped.
+   - The measure hypothesis of the closure theorem fails too.
+   - Neither the order-280 character nor `φ′` extends to the `λ`-closure: none of
+     the 390 625 extensions is proper (`scripts/circextend.py`). Whether the
+     `λ`-closure has any circular colouring at all is the MILP still running.
 
 **A necessary condition, stronger than blocking.** Every unit-distance graph
 whose edge module `M` has `F(M) ≠ ∅` is 5-colourable. So a 6-chromatic graph
