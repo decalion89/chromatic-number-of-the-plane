@@ -21,7 +21,7 @@ MODE plain | apart (c(A) = c(B) imposed) | same (c(A) != c(B) imposed).
 Any UNSAT is a claim until verify6 / verify_gadget re-check it exactly.
 
 usage: grow_lean.py <in.json> <out.json> [R] [near_weight]
-env: MODE, KISSAT, KTIME, LSIT, IT2, TABU2
+env: MODE, KISSAT, KTIME, LSIT, IT2 (soft-edge phase; default 400000 with a skeleton, else 0), TABU2
 """
 import sys, time, json, os, subprocess
 from fractions import Fraction as Fr
@@ -39,7 +39,7 @@ _here = os.path.dirname(os.path.abspath(__file__))
 TABU2 = os.environ.get("TABU2", os.path.join(_here, "tabu2"))
 if not os.path.exists(TABU2):
     subprocess.run(["gcc", "-O2", "-o", TABU2, os.path.join(_here, "tabu2.c")], check=True)
-LSIT = int(os.environ.get("LSIT", "3000000")); IT2 = int(os.environ.get("IT2", "0"))
+LSIT = int(os.environ.get("LSIT", "3000000")); IT2 = int(os.environ.get("IT2", "-1"))
 
 d = json.load(open(IN))
 F = Field(tuple(d["field_generators"]))
@@ -65,6 +65,11 @@ if D2 is not None and not d.get("dist2"):
 elif d.get("dist2"):
     D2 = Fr(d["dist2"])
 A, Bi = d.get("A"), d.get("B")
+# soft "skeleton" edges (JSON "two_edges": vertex pairs, e.g. the non-unit edges of a {1, d_1, ...}-witness W placed
+# among the points). Tabu phase 2 keeps as few of them alike as it can, and growth is steered towards the alike ones.
+# Every 5-colouring of the unit-distance graph leaves at least one W-edge alike, so killing them one by one drives
+# the graph itself towards UNSAT (Exoo-Ismailescu's skeleton idea, here with repulsive distances).
+SOFT = [tuple(map(int, e)) for e in (d.get("two_edges") or [])]
 nU = len(U)
 Ux = np.array([u.fx for u in U]); Uy = np.array([u.fy for u in U])
 Vx = [p.fx for p in V]; Vy = [p.fy for p in V]
@@ -211,7 +216,7 @@ def save(tag):
     json.dump({"field_generators": list(F.gens), "A": A, "B": Bi, "status": tag, "mode": MODE,
                "colouring": col[:len(V)] if len(col) == len(V) else None,
                "colouring_prefix": None if len(col) == len(V) else col[:len(V)], "units": [ser(u) for u in U],
-               "two_edges": [], "dist2": str(D2) if D2 is not None else None, "points": [ser(q) for q in V]}, open(OUT, "w"))
+               "two_edges": [list(e) for e in SOFT], "dist2": str(D2) if D2 is not None else None, "points": [ser(q) for q in V]}, open(OUT, "w"))
 
 
 tri = next(((a, b, c) for a, b in zip(EA, EB) for c in sorted(adj[a] & adj[b])), None)
@@ -231,8 +236,9 @@ def tabucol(n, init, seed, lsit=None):
         ea = [A if x == Bi else x for x in EA]; eb = [A if x == Bi else x for x in EB]
     elif MODE == "same":
         ea = EA + [A]; eb = EB + [Bi]
-    inp = (f"{n} {len(ea)} 0 {K} {lsit} {IT2} {seed}\n" + "\n".join(f"{a} {b}" for a, b in zip(ea, eb)) + "\n"
-           + "\n".join(map(str, init)) + "\n")
+    it2 = IT2 if IT2 >= 0 else (400000 if SOFT else 0)
+    inp = (f"{n} {len(ea)} {len(SOFT)} {K} {lsit} {it2} {seed}\n" + "\n".join(f"{a} {b}" for a, b in zip(ea, eb)) + "\n"
+           + "".join(f"{a} {b}\n" for a, b in SOFT) + "\n".join(map(str, init)) + "\n")
     out = subprocess.run([TABU2], input=inp, capture_output=True, text=True).stdout.split("\n")
     ok = out[0].startswith("OK"); f = int(out[0].split()[1]); c = [int(x) for x in out[1:1 + n]]
     if MODE == "apart": c[Bi] = c[A]
@@ -316,13 +322,20 @@ for it in range(1, 10 ** 7):
         save(("UNSAT_" + MODE) if r is False else "hard")
         print(f"  iter {it}: n={n} m={len(EA)}: {'UNSAT (' + MODE + ') -- a claim until verified' if r is False else 'unknown'}   [{time.time()-t0:.0f}s]", flush=True)
         break
+    alike = [(a, b) for a, b in SOFT if col[a] == col[b]]
+    if SOFT:
+        cen = np.array(sorted({v for e in alike for v in e})) if alike else np.zeros(0, dtype=np.int64)
+        if len(cen):
+            ctree = cKDTree(np.column_stack([np.array(Vx)[cen], np.array(Vy)[cen]]))
+            near = lambda x, y: ctree.query(np.column_stack([np.atleast_1d(x), np.atleast_1d(y)]))[0]
     sel = np.nonzero(ccnt >= 4)[0]
     mask, deg, px, py = neighbour_colours(sel) if len(sel) else (np.zeros(0, dtype=np.int64),) * 4
     rb = sel[(mask == full) & (deg >= 5)] if len(sel) else sel
     score_rb = 0.25 * ccnt[rb] - WN * near(np.array([Vx[b] for b in cbase[rb]]) + Ux[cunit[rb]],
                                          np.array([Vy[b] for b in cbase[rb]]) + Uy[cunit[rb]]) if len(rb) else np.zeros(0)
     if it % 10 == 1 or len(rb) < R or how.startswith("KISSAT"):
-        print(f"  iter {it}: n={n} m={len(EA)} {how}; {len(rb)} rainbow, pool {len(ck)}   [{time.time()-t0:.0f}s]", flush=True)
+        print(f"  iter {it}: n={n} m={len(EA)} {how}; {len(rb)} rainbow, pool {len(ck)}"
+              + (f"; skeleton edges alike {len(alike)}/{len(SOFT)}" if SOFT else "") + f"   [{time.time()-t0:.0f}s]", flush=True)
     if it % 10 == 0: save("checkpoint")
     pick = list(rb[np.argsort(-score_rb)][:R])
     if len(pick) < R and len(sel):
