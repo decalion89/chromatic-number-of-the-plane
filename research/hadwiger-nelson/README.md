@@ -7085,3 +7085,102 @@ by 0.258, not by 1/5.
 
 The rigidity is real, but it acts far beyond what a solver can hold. A finite
 gadget in this module, if one exists, has to come from a cheaper mechanism.
+
+## Periodic through an ideal, and the weakest hypothesis that suffices
+
+**The module is a ℤ[ω]-module, with more unit vectors than the graph uses.** The
+186 edge directions of `five_rho7` are not closed under the 60° turn. Turning
+them adds 12 more unit vectors, and all 12 lie in the module (exact lattice
+test), so the module holds at least **198** unit vectors. All 960 admissible
+`ψ` stay nonzero on the new ones. Enumerating every unit vector is out of reach:
+the trace form has minimum about 0.0003, so Fincke–Pohst would visit about 10¹²
+lattice points.
+
+**No colouring periodic through a small ideal.** Because the module is a
+ℤ[ω]-module, `αM` is a period lattice for every `α = a + bω`, of index `N(α)⁴`.
+When `5 ∤ N(α)`, a 5-colouring of `Cay(M/αM, U)` would be an `αM`-periodic
+colouring of the whole module graph. Such a colouring is never a coset
+colouring, since `α` acts invertibly on `M/5M`. `scripts/idealquot.py` builds
+the quotient through the Smith form and asks kissat:
+
+| module | α | N(α) | vertices | directions | 5-colourable |
+|---|---|---|---|---|---|
+| `five_rho7` (198 units) | 3 + ω, 4 − ω | 13 | 28 561 | 66 | **no** (both) |
+| `five_rho7` | 3 + 2ω, 2 + 3ω | 19 | 130 321 | 99 | **no** (both) |
+| `ρ₇`-module ∪ its `λ`-image (420 units) | 3 + ω, 4 − ω, 3 + 2ω, 2 + 3ω | 13, 19 | up to 130 321 | up to 192 | **no** (all four) |
+| E–I's `H` (calibration) | 3 + ω | 13 | 169 | 9 | yes; it splits every `5e` pair |
+
+**Nor through an ideal twisted by a coset colouring.** A richer family is
+`c(x) = ψ(x) + k(x mod αM)`, with `ψ` admissible and `k` any function on the
+finite group `M/αM`. Taking `k` constant gives back the coset colourings, and
+any other `k` that splits a `5e` pair would be a genuinely new colouring. We
+ran `scripts/twistquot.py` on `five_rho7` with `α = 3 + ω`:
+- 14 of the 960 admissible `ψ`, sampled at random;
+- for each, the `5e` pair of every second unit vector, 99 queries per `ψ`.
+
+For none of them does any `k` split the pair. On E–I's module the same family
+splits their pair at once.
+
+**Unbiased colourings do not feel the rigidity.** `scripts/ballr.py` builds the
+complete combinatorial 2-ball in exact lattice coordinates (17 305 points) and
+colours it by tabu search. For each of the 181 centres with nearly all their
+neighbours present, it compares pairs `x + u, x + v`. The pairs with
+`u − v ∈ 5M`, which every coset colouring colours alike, are alike **25.6%** of
+the time. All other pairs are alike **25.6%** of the time. The grown skeleton
+graphs of 3 k to 12 k points are worse still: their colourings split the `5M`
+pairs more often than chance (15% alike against 30%), because the growth's own
+colouring search is built to split things.
+
+**The hypothesis can be weakened to one about measures.** Here is the precise
+statement that would finish the proof. Let `M₁` be the `ρ₇`-module, `e` one of
+its unit directions, and `λ` Exoo–Ismailescu's rotation, with `|5e − 5λe| = 1`.
+
+> **Theorem.** Suppose every `M₁`-translation-invariant probability measure on
+> proper 5-colourings of `Γ(M₁)` satisfies `c(0) = c(5e)` almost surely. Then
+> `Γ(M₁ + λM₁)` is not 5-colourable, and so `χ(ℝ²) ≥ 6`.
+
+*Proof.*
+1. Let `c` be a 5-colouring of `Γ(M′)`, where `M′ = M₁ + λM₁`. Averaging its
+   translates over Følner boxes of `M′ ≅ ℤ⁸` gives an `M′`-invariant measure
+   `ν` on proper colourings.
+2. Restricted to `M₁`, `ν` is `M₁`-invariant, so `c(0) = c(5e)` holds
+   `ν`-almost surely.
+3. Pushed forward by `c ↦ (y ↦ c(λy))`, `ν` is again `M₁`-invariant. A
+   translation by `m` becomes a translation by `λm ∈ M′`. So
+   `c(0) = c(5λe)` also holds `ν`-almost surely.
+4. Hence `c(5e) = c(5λe)` holds `ν`-almost surely. But `5e − 5λe` is a unit
+   vector of `M′`, so no proper colouring does this. ∎
+
+So even colourings that are not coset colourings are harmless, provided they
+split `5e` pairs only on a set of density zero.
+
+**Why this is hard, measured against a known open problem.** Suppose that
+every 5-colouring of `Γ(M)` splits every pair `x, x + m` with `m ∈ u₀ + 5M`.
+Coset colourings do exactly this. Then no *measurable* 5-colouring `f` of the
+plane can be proper along the finitely many unit directions of `M`.
+
+*Proof.*
+1. The coset `u₀ + 5M` is dense in the plane, so it contains vectors `mⱼ → 0`.
+2. For almost every offset `y`, `m ↦ f(y + m)` is a proper colouring of
+   `Γ(M)`, so `f(y + mⱼ) ≠ f(y)`.
+3. Continuity of translation in `L¹` says the opposite, on a set of full
+   measure. ∎
+
+So the rigidity of any finite-direction module would already imply that the
+**measurable** chromatic number of the plane is at least 6, which is open.
+Conversely, a measurable 5-colouring along a module's directions would refute
+its rigidity. The torus gate searched for pixelated ones along the 803
+directions and found none.
+
+**The blocked growth's colouring, looked at directly.** The plain growth on
+`803 ∪ λ(803)` ran out of rainbow points: the colouring extends to every
+candidate point without a conflict. We checked whether that colouring hides a
+period (`scripts/periodfind.py`, `scripts/quot2d.py`).
+- Of 1 890 translations `u ± v`, `ku`, the best leaves colours unchanged
+  **87%** of the time. The median is 46%, against about 20% by chance.
+- The 42 best translations span a rank-6 lattice `N`. But `N` contains 60 unit
+  vectors, so no colouring factors through `M/N`.
+- The colour classes show no regions in the plane, nor in any of the three
+  conjugate planes.
+
+The colouring is strongly organised, but not along anything we can name.

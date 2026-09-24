@@ -15464,3 +15464,36 @@ NO_PIXELATED_PERIODIC_FIVE_COLOURING_OF_THE_803_DIRECTIONS = True
 # kissat in about 4 and 20 minutes.  All three growths continue with kissat as
 # the fallback; nothing here is a 6-chromatic graph.
 THE_BLOCKED_GROWTH_REACHED_32312_POINTS_AND_STILL_COLOURS = True
+
+
+# The rho7 module has colourings periodic through no small ideal.
+#
+# five_rho7's module is a Z[omega]-module: its 186 edge directions, turned by 60
+# degrees, give 12 more unit vectors that all lie in the module (198 in all; all
+# 960 admissible psi stay admissible).  So alpha*M is a period lattice for every
+# alpha in Z[omega], of index N(alpha)^4, and when 5 does not divide N(alpha) a
+# 5-colouring of Cay(M / alpha M, U) would be a non-coset colouring of the whole
+# module graph.  kissat: none for alpha = 3+w, 4-w (norm 13, 28 561 vertices) or
+# 3+2w, 2+3w (norm 19, 130 321 vertices), on five_rho7 and on the lambda-closed
+# rho7 module (420 units).  On E-I's module the norm-13 quotient colours and
+# splits every 5e pair (scripts/idealquot.py).  The twisted family
+# psi(x) + k(x mod (3+w)M) splits no 5e pair: 14 random psi of 960, 99 unit
+# vectors each (scripts/twistquot.py).
+NO_COLOURING_PERIODIC_THROUGH_A_SMALL_IDEAL = True
+
+
+# The E-I closure needs only invariant measures.
+#
+# If every M1-invariant probability measure on 5-colourings of Gamma(M1) has
+# c(0) = c(5e) almost surely, then Gamma(M1 + lambda M1) is not 5-colourable:
+# average a colouring over Folner boxes, restrict to M1 and to lambda M1 (the
+# rotation carries translations by m to translations by lambda m), and
+# c(5e) = c(5 lambda e) would hold almost surely across a unit edge.  Colourings
+# that split 5e pairs on a density-zero set are therefore harmless.  In the other
+# direction, a module whose 5-colourings all split x, x + m for m in u0 + 5M (as
+# coset colourings do) admits no measurable 5-colouring of the plane along its
+# directions (u0 + 5M is dense, and translation is continuous in L^1), so such
+# rigidity would already give measurable chromatic number >= 6, an open problem.
+# Unbiased tabu colourings of the complete 2-ball colour the 5M pairs alike 25.6%
+# of the time, exactly like every other pair (scripts/ballr.py).
+THE_EI_CLOSURE_NEEDS_ONLY_INVARIANT_MEASURES = True
