@@ -56,6 +56,11 @@ G0 = [[Fr(sum(w * p * q for w, p, q in zip(wt, B[i], B[j]))) for j in range(r)] 
 _, T = lll_exact(G0)
 Ti = sympy.Matrix(T).inv()
 CU = np.array([[int(x) for x in (sympy.Matrix([c]) * Ti)] for c in C0], dtype=np.int64)
+# optional: also require the multiples k*u (MULT="1,5" asks for phi and 5*phi both circular colourings)
+MULT = [int(x) for x in os.environ.get("MULT", "1").split(",")]
+if MULT != [1]:
+    CU = np.vstack([k * CU for k in MULT])
+    print(f"  requiring the multiples {MULT} of every unit: {len(CU)} vectors", flush=True)
 # one representative per +-pair
 reps, seenr = [], set()
 for i in range(len(CU)):
