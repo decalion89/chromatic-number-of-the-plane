@@ -115,6 +115,7 @@ for it in range(1, 10 ** 7):
         lsfail += 1
         try: s.set_phases([X(v, c) if lcol[v] == c else -X(v, c) for v in range(n) for c in range(K)])
         except Exception: pass
+        save("pre_cdcl")                      # the exact instance CDCL is about to decide
         s.conf_budget(BUDGET)
         r = s.solve_limited(); st = s.accum_stats(); conf = st.get("conflicts", 0) - last; last = st.get("conflicts", 0)
         how = f"CDCL[LS best {info}]"
@@ -151,7 +152,11 @@ for it in range(1, 10 ** 7):
                 if kx not in have: pick.append(kx); have.add(kx)
         if it % 10 == 1 or not rb: print(f"    {len(tight)} tight pool points, {len(pairs)} conflicting tight pairs", flush=True)
     if not pick:
-        save("pool_exhausted"); print("  pool exhausted for this colouring (no rainbow, no conflicting tight pair)", flush=True); break
+        # densify: the richest pool points, nearest first among equals
+        pick = [kk for _, kk in sorted(((len(e[2]) - WN * near(kk), kk) for kk, e in pool.items()), reverse=True)[:R]]
+        if it % 10 == 1: print(f"    no rainbow and no conflicting tight pair: densifying with the {len(pick)} richest pool points", flush=True)
+    if not pick:
+        save("pool_exhausted"); print("  pool exhausted", flush=True); break
     for kk in pick:
         i, k, nb = pool.pop(kk)
         p = V[i] + U[k]; v = len(V)

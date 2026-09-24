@@ -28,6 +28,8 @@ MODE = os.environ.get("MODE", "plain"); SOLVER = os.environ.get("SOLVER", "cadic
 BUDGET = int(os.environ.get("BUDGET", "200000000")); LSIT = int(os.environ.get("LSIT", "3000000"))
 _here = os.path.dirname(os.path.abspath(__file__))
 TABU = os.environ.get("TABU", os.path.join(_here, "tabucol"))
+if not os.path.exists(TABU):          # build the tabu search from scripts/tabucol.c on first use
+    subprocess.run(["gcc", "-O2", "-o", TABU, os.path.join(_here, "tabucol.c")], check=True)
 d = json.load(open(IN))
 F = Field(tuple(d["field_generators"]))
 mk = lambda xy: Point(F.element([Fr(a, b) for a, b in xy[0]]), F.element([Fr(a, b) for a, b in xy[1]]))
@@ -93,9 +95,8 @@ if not TWO and A is None:
     cx = sum(Vfx) / len(V); cy = sum(Vfy) / len(V)
     near = lambda kk: ((kk[0] - cx) ** 2 + (kk[1] - cy) ** 2) ** 0.5
 TABU2 = os.environ.get("TABU2", os.path.join(_here, "tabu2"))
-for _b in ("tabucol", "tabu2"):            # build the C searches from scripts/*.c on first use
-    if not os.path.exists(os.path.join(_here, _b)):
-        subprocess.run(["gcc", "-O2", "-o", os.path.join(_here, _b), os.path.join(_here, _b + ".c")], check=True)
+if not os.path.exists(TABU2):
+    subprocess.run(["gcc", "-O2", "-o", TABU2, os.path.join(_here, "tabu2.c")], check=True)
 IT2 = int(os.environ.get("IT2", "300000"))
 def tabucol(n, init, seed):
     """two-phase tabu search: a proper colouring (MODE constraint included), then as few alike
@@ -129,6 +130,7 @@ for it in range(1, 10 ** 7):
         lsfail += 1
         try: s.set_phases([X(v, c) if lcol[v] == c else -X(v, c) for v in range(n) for c in range(K)])
         except Exception: pass
+        save("pre_cdcl")                      # the exact instance CDCL is about to decide
         s.conf_budget(BUDGET)
         r = s.solve_limited(); st = s.accum_stats(); conf = st.get("conflicts", 0) - last; last = st.get("conflicts", 0)
         how = f"CDCL[LS best {info}]"

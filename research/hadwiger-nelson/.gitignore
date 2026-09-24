@@ -3,3 +3,11 @@ __pycache__/
 .pytest_cache/
 scripts/tabucol
 scripts/tabu2
+# transient checkpoints of running growth searches (committed under a final name when a run ends)
+data/*_ls.json
+data/*_ls2.json
+data/*_inc.json
+data/*_kw.json
+data/*_grow.json
+data/blk_plain.json
+data/rho7_pair2_ckpt.json
