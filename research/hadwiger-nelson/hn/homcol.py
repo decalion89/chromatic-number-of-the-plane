@@ -15442,3 +15442,25 @@ THE_BLOCKED_MODULE_CANNOT_BE_REPAIRED = True
 # a few 6-colour instances timed out).  Pixelation at 0.1 is coarse, so this is
 # a screen, not a proof.
 NO_PIXELATED_PERIODIC_FIVE_COLOURING_OF_THE_803_DIRECTIONS = True
+
+
+# The hardest graph this project has coloured: 32 312 points of the blocked module.
+#
+# The plain growth on 803 u lambda(803) (no coset, no nearly-coset, no periodic
+# colouring known) reached 32 312 points and 282 909 unit edges.  There:
+#   * tabu search from a random start fails at 100 million moves (best 121 and
+#     146 conflicts, two seeds) -- at 14 513 points it still succeeded after 3.5
+#     to 44 million moves;
+#   * the growth's own repair failed too, and the instance went to CaDiCaL and
+#     kissat in parallel: kissat found a 5-colouring after about 86 minutes
+#     (data/blocked_32312_coloured.json carries it; every unit step re-checked);
+#   * that colouring is unstructured: on the two large sheets (cosets of the 803
+#     module, 13 124 and 7 543 points) its best coset fit is 21% and 22%, chance
+#     level -- no hidden 'coset per sheet' family;
+#   * and the tension is not local: graph balls of radius 1, 2, 3 around the
+#     last insertions (192, 1 872, 8 614 vertices) are all 5-colourable.
+# Meanwhile E-I's skeleton inside the rho7 module (8 086 points, c(A) != c(B))
+# and the full K in rho7 u lambda(rho7) (13 430 points) were decided SAT by
+# kissat in about 4 and 20 minutes.  All three growths continue with kissat as
+# the fallback; nothing here is a 6-chromatic graph.
+THE_BLOCKED_GROWTH_REACHED_32312_POINTS_AND_STILL_COLOURS = True
