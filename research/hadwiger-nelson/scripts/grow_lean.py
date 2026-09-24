@@ -12,6 +12,11 @@ coordinates, with the base vertex, unit index and neighbour count per candidate.
 Neighbour colours are recomputed on demand, and only for candidates with at
 least 4 neighbours.
 
+Every unit-distance pair is found, not only those along U: a KD-tree finds pairs at
+float distance 1, one pair per unknown direction is checked exactly, and each new
+direction joins U with its negative and conjugates.  (Without this the colourings
+exploited unseen edges: 6 788 monochromatic true edges at 19 851 points in F8.)
+
 MODE plain | apart (c(A) = c(B) imposed) | same (c(A) != c(B) imposed).
 Any UNSAT is a claim until verify6 / verify_gadget re-check it exactly.
 
@@ -91,14 +96,15 @@ ck = np.zeros(0, dtype=np.int64); cbase = np.zeros(0, dtype=np.int32); cunit = n
 ccnt = np.zeros(0, dtype=np.int16)
 
 
-def feed(idxs):
-    """add the neighbour candidates of the vertices idxs to the pool"""
+def feed(idxs, units=None):
+    """add the neighbour candidates of the vertices idxs (along the given unit indices, default all) to the pool"""
     global ck, cbase, cunit, ccnt
     if len(idxs) == 0:
         return
+    units = np.arange(nU) if units is None else np.asarray(units)
     bx = np.array([Vx[i] for i in idxs]); by = np.array([Vy[i] for i in idxs])
-    keys = hkey(bx[:, None] + Ux[None, :], by[:, None] + Uy[None, :]).ravel()
-    base = np.repeat(np.array(idxs, dtype=np.int32), nU); unit = np.tile(np.arange(nU, dtype=np.int16), len(idxs))
+    keys = hkey(bx[:, None] + Ux[None, units], by[:, None] + Uy[None, units]).ravel()
+    base = np.repeat(np.array(idxs, dtype=np.int32), len(units)); unit = np.tile(units.astype(np.int16), len(idxs))
     isv = vlookup(keys) >= 0
     keys, base, unit = keys[~isv], base[~isv], unit[~isv]
     uk, first, cnt = np.unique(keys, return_index=True, return_counts=True)
@@ -125,8 +131,54 @@ def remove_candidates(keys):
     ck, cbase, cunit, ccnt = ck[keep], cbase[keep], cunit[keep], ccnt[keep]
 
 
+from scipy.spatial import cKDTree
+ukey = lambda q: (tuple(q.x.c), tuple(q.y.c))
+UK = set(ukey(u) for u in U)
+ONE = F.rational(1)
+
+
+def discover(only=None):
+    """Find unit-distance pairs whose direction is not in U (float KD-tree, then an exact check of one
+    pair per direction), add those directions with their negatives and conjugates to U, add every edge
+    along them, and extend the pool.  Returns the number of new directions."""
+    global Ux, Uy, nU
+    pts = np.column_stack([np.array(Vx), np.array(Vy)]); tree = cKDTree(pts)
+    if only is None:
+        pr = tree.query_pairs(1 + 1e-7, output_type="ndarray")
+    else:
+        lst = tree.query_ball_point(pts[only], 1 + 1e-7)
+        pr = np.array([(i, j) for i, js in zip(only, lst) for j in js if j != i], dtype=np.int64).reshape(-1, 2)
+    if len(pr) == 0: return 0
+    dx = pts[pr[:, 1], 0] - pts[pr[:, 0], 0]; dy = pts[pr[:, 1], 1] - pts[pr[:, 0], 1]
+    keep = np.abs(np.hypot(dx, dy) - 1) < 1e-7
+    pr, dx, dy = pr[keep], dx[keep], dy[keep]
+    dk = hkey(dx, dy); known = np.isin(dk, np.array(sorted(set(hkey(Ux, Uy).tolist())), dtype=np.int64))
+    pr, dk = pr[~known], dk[~known]
+    fresh = []
+    seenk = set()
+    for (i, j), k in zip(pr, dk):
+        if int(k) in seenk: continue
+        seenk.add(int(k)); w = V[int(j)] - V[int(i)]
+        if w.norm2() != ONE: continue                           # a float coincidence, not a unit
+        for z in (w, -w, Point(w.x, -w.y), Point(-w.x, w.y)):
+            if ukey(z) not in UK: UK.add(ukey(z)); U.append(z); fresh.append(len(U) - 1)
+    if not fresh: return 0
+    Ux = np.array([u.fx for u in U]); Uy = np.array([u.fy for u in U]); nU = len(U)
+    for v in range(len(V)):                                    # every edge along the new directions
+        nb = vlookup(hkey(Vx[v] + Ux[fresh], Vy[v] + Uy[fresh]))
+        for j in nb[nb > v]:
+            j = int(j)
+            if j not in adj[v]:
+                adj[v].add(j); adj[j].add(v); EA.append(v); EB.append(j)
+    for _s in range(0, len(V), 4000):
+        feed(list(range(_s, min(len(V), _s + 4000))), fresh)
+    return len(fresh)
+
+
 for _s in range(0, len(V), 4000):
     feed(list(range(_s, min(len(V), _s + 4000))))
+_m0 = len(EA); _nd = discover()
+print(f"discovery: {_nd} new unit directions, {len(EA) - _m0} edges along them", flush=True)
 
 ser = lambda q: [[[t.numerator, t.denominator] for t in q.x.c], [[t.numerator, t.denominator] for t in q.y.c]]
 col = list(d["colouring"]) if d.get("colouring") and len(d["colouring"]) == len(V) else []
@@ -275,4 +327,6 @@ for it in range(1, 10 ** 7):
             j = int(j)
             if j != v and j not in adj[v]:
                 adj[v].add(j); adj[j].add(v); EA.append(v); EB.append(j)
+    _m0 = len(EA); _nd = discover(newidx)
+    if _nd: print(f"    discovery: {_nd} new unit directions ({nU} now), {len(EA) - _m0} edges along them", flush=True)
     feed(newidx)
