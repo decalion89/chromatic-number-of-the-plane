@@ -7045,3 +7045,22 @@ search (`scripts/ball2.py`). Its best coset fit is 22.8%, which is chance.
 So nothing near that size is rigid. The propagation needs balls much larger
 than anything a solver can hold, which is why every finite graph so far has
 nowhere-coset colourings and forces nothing.
+
+**How far away is that?** The propagation step needs a unit of every class
+pointing back by at least the inradius of `conv(D_t)`.
+
+In the trace form every unit has the same length, so `U` sits on a sphere in
+ℝ⁸. On 160 sampled classes (qhull), that inradius is:
+- 0.057 of the unit radius at worst;
+- 0.092 at the median.
+
+So the induction needs a starting ball of about **nine unit steps**. A ball of
+ℝ⁸ that large holds astronomically many lattice points; the module even
+contains vectors as short as `u/56`.
+
+Hoffman's bound gives no shortcut. The mod-5 quotient `Cay(F₅⁸, U)` has least
+eigenvalue −64.58, not `−d/4 = −46.5`, so it only bounds the independence ratio
+by 0.258, not by 1/5.
+
+The rigidity is real, but it acts far beyond what a solver can hold. A finite
+gadget in this module, if one exists, has to come from a cheaper mechanism.

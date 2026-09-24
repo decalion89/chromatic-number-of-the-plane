@@ -15393,3 +15393,21 @@ KAPPA_GIVES_COARSE_RIGIDITY = True
 # twisted colourings are exactly the colourings that are one coset colouring on
 # a half-space and another beyond it.
 RIGIDITY_PROPAGATES_FROM_A_HALF_SPACE_OR_A_BALL = True
+
+
+# The scale at which the rho7 rigidity acts, measured.
+#
+# In the trace form (sum over the eight conjugates of |x|^2) every unit vector of
+# five_rho7 has the same length, so U sits on a sphere of R^8.  The propagation
+# step needs, for every direction, a unit of each class pointing back by at
+# least delta = the inradius of conv(D_t) about 0.  Measured on 160 (psi, t)
+# (qhull): the inradius is 0.057 of the unit radius at worst, 0.092 at the
+# median.  From a ball of radius R the induction goes through once
+# R > |u|^2 / (2 delta), i.e. about nine unit steps -- a ball of R^8 of that
+# radius holds astronomically many lattice points (M even has vectors u/56).
+# Hoffman's bound does not shortcut it either: the mod-5 quotient Cayley graph
+# Cay(F_5^8, U) has least eigenvalue -64.58 (at non-admissible psi), not
+# -d/4 = -46.5, so its independence ratio is only bounded by 0.258, not 1/5.
+# The rigidity is real but lives far beyond what a solver can hold; a finite
+# gadget in this module, if one exists, has to come from a cheaper mechanism.
+THE_RIGIDITY_SCALE_IS_NINE_STEPS_IN_EIGHT_DIMENSIONS = True
