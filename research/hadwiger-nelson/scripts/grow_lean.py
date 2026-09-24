@@ -181,12 +181,13 @@ _m0 = len(EA); _nd = discover()
 print(f"discovery: {_nd} new unit directions, {len(EA) - _m0} edges along them", flush=True)
 
 ser = lambda q: [[[t.numerator, t.denominator] for t in q.x.c], [[t.numerator, t.denominator] for t in q.y.c]]
-col = list(d["colouring"]) if d.get("colouring") and len(d["colouring"]) == len(V) else []
+col = list(d["colouring"]) if d.get("colouring") and len(d["colouring"]) == len(V) else list(d.get("colouring_prefix") or [])[:len(V)]
 
 
 def save(tag):
     json.dump({"field_generators": list(F.gens), "A": A, "B": Bi, "status": tag, "mode": MODE,
-               "colouring": col[:len(V)] if len(col) == len(V) else None, "units": [ser(u) for u in U],
+               "colouring": col[:len(V)] if len(col) == len(V) else None,
+               "colouring_prefix": None if len(col) == len(V) else col[:len(V)], "units": [ser(u) for u in U],
                "two_edges": [], "points": [ser(q) for q in V]}, open(OUT, "w"))
 
 
