@@ -1,0 +1,175 @@
+# Colouring the plane over a number field through one prime
+
+A self-contained account of the arithmetic found on 24 September 2026. It does
+not prove `χ(ℝ²) ≥ 6`. It explains why the searches for six in the field of
+`five_rho7` could never succeed, and it says which fields are still in play.
+Proofs of the finite-field facts are computer proofs (SAT, exact arithmetic).
+Each one names the script that reproduces it.
+
+## 1. Setting
+
+Identify the plane with `ℂ`. A finite unit-distance graph can be moved so that
+its vertices lie in a number field `K ⊂ ℂ` that is stable under complex
+conjugation, with real subfield `L = K ∩ ℝ`. All the project's graphs live in
+CM fields `K = ℚ(√−d₁, …, √−dₙ)`.
+
+The **unit vectors of `K`** form the torus
+`T(K) = {u ∈ K : u ū = 1}`. The **unit-distance graph `Γ(K)`** has vertex set
+`K`, and `z ~ w` iff `z − w ∈ T(K)`. Every finite unit-distance graph with
+vertices in `K` is a subgraph of `Γ(K)`, and `χ(ℝ²) = sup_K χ(Γ(K))`.
+
+## 2. Reduction at a place that does not split
+
+Let `v` be a finite place of `L`, and suppose `v` does not split in `K`: `K_v`
+is a field, quadratic over `L_v`. Then the local torus
+`T(L_v) = {u ∈ K_v : u ū = 1}` is compact, so every unit vector of `K` is a
+`v`-adic unit.
+
+**Proposition A.**
+1. **Unramified case.** If `K_v/L_v` is unramified and `L_v` has residue field
+   `𝔽_q`, let `N₁ ⊂ 𝔽_{q²}` be the `q + 1` elements of norm 1, and
+   `G_q = Cay(𝔽_{q²}, N₁)` the *finite plane*. Then `χ(Γ(K)) ≤ χ(G_q)`.
+2. **Ramified case.** If `K_v/L_v` is ramified, `χ(Γ(K)) ≤ 3`.
+
+*Proof.*
+- **A residue map.** Fix a representative of each coset of `O_v` in `K_v`.
+  For `z ∈ K`, let `g(z)` be the residue of `z − rep(z)`. It lies in
+  `O_v/πO_v = 𝔽_{q²}`.
+- **Unit steps become unit steps.** If `u` is a unit vector, `z + u` lies in
+  the same coset as `z`, so `g(z + u) = g(z) + ū`. The residue `ū` lies in
+  `N₁`, because the norm reduces to the norm.
+- **Pull back a colouring.** Composing `g` with a proper colouring of `G_q`
+  therefore colours `Γ(K)` properly.
+- **Ramified case.** The norm-one residues are `±1`. The same argument lands in
+  `Cay(𝔽_q, {±1})`, a union of cycles. ∎
+
+**Arcs are the linear case.** Circular colourings `⌊k·frac(φ(z))⌋`, with `φ`
+additive, are exactly the colourings of `G_q` that come from a single linear
+form. General colourings of `G_q` are stronger. At `q = 11` no arc works, yet
+`χ(G₁₁) = 5`.
+
+## 3. Consequences
+
+**Theorem 1 (the Moser field).** `χ(Γ(ℚ(√−3, √−11))) = 4`.
+
+*Proof.*
+- **2 does not split.** `33 ≡ 1 (mod 8)`, so `√33 ∈ ℚ₂`. The field embeds in
+  `ℚ₂(ω)`, which is unramified over `ℚ₂`, so 2 does not split.
+- **Six classes of unit vectors.** The norm-one units of `ℤ₂[ω]` are, mod 4,
+  exactly the six sixth roots of unity.
+- **One character separates them.** `φ(α + βω) = frac₂((α + 2β)/4)` takes only
+  the values 1/4, 1/2 and 3/4 on those units.
+- **Lower bound.** The Moser spindle lies in the field. ∎
+
+Checked in `hn/adelic.py`, `scripts/moser2adic.py` and
+`tests/test_moser_field.py`.
+
+**Theorem 2 (the field of `five_rho7`).**
+`χ(Γ(ℚ(√−3, √−11, √−247))) = 5`.
+
+*Proof.*
+- **11 does not split.** Above 11, `L_v = ℚ₁₁(√33)` (`√741 ∈ ℚ₁₁`), and
+  `K_v = L_v(√−3)` is unramified over `L_v` because −3 is a non-residue mod 11.
+  So 11 does not split.
+- **Upper bound.** `χ(G₁₁) = 5`: SAT, and 4 colours are UNSAT.
+- **Lower bound.** `five_rho7` lies in the field. ∎
+
+The pulled-back colouring is checked exactly, at both places above 11, on every
+graph the project grew in this field: up to 32 312 points and 282 909 edges, all
+with 0 monochromatic edges (`scripts/reduce11.py`, `tests/test_reduce11.py`).
+So no search in this field could reach six.
+
+**The denominator principle.** A unit vector with `p` in its denominator exists
+only if some place above `p` splits. Each rung of the known constructions
+therefore had to add a rotation with a new prime in its denominator.
+
+## 4. Finite planes
+
+For `q ≡ 5 (mod 6)`, the case that occurs next to `√−3`, `G_q` has this
+structure:
+- **Triangles.** Every edge lies in exactly two triangles, there is no `K₄`,
+  and `G_q` is the union of `(q+1)/6` rotated triangular tori.
+- **Eigenvalues.** They are `λ(n) = Σ_c (1 − η(c² − 4n)) e(c/q)`, with `η` the
+  quadratic character.
+- **Ramanujan.** The graph satisfies `|λ| ≤ 2√q`; this was checked for every
+  `q < 400`.
+
+**Proposition B.** For every prime `q ≥ 53`, `χ(G_q) ≥ 6`. The same bound holds
+for the deeper quotients `Cay(O_v/π^r, T mod π^r)`.
+
+*Proof.* Hoffman gives `χ_f ≥ 1 + (q+1)/|λ_min|`. This exceeds 5 for `q > 62`
+by the Ramanujan bound, and was computed for `q = 53, 59`. The deeper levels
+have the same ratio: a primitive level-`j` character sums to at most `2q^{j−1}`
+in modulus. ∎
+
+The Delsarte LP gives the same bound as Hoffman, and adding the triangle
+inequalities changes almost nothing. Below 53, therefore, only combinatorial
+proofs help.
+
+| `q` | `χ(G_q)` | evidence |
+|---|---|---|
+| 2 | 4 | the 2-adic analysis above |
+| 5 | 4 | SAT |
+| 11 | 5 | SAT |
+| 17 | 6? | tabu finds a 6-colouring at once and no 5-colouring. Independent sets of 57 points are found easily, never 58. Since `5·57 < 289`, `α = 57` would prove `χ ≥ 6`. The SAT proof is running |
+| 23 | ≥ 7? | tabu fails at 6 |
+| 29, 41 | ≥ 6? | tabu fails at 5. For `q = 41` the best independent set found has 210 points, against 336 needed |
+| ≥ 53 | ≥ 6 | Proposition B |
+
+## 5. Which fields can hold a 6-chromatic graph
+
+A `k`-chromatic graph can live only in fields with no non-split place of
+local chromatic number below `k`. So the rungs demand:
+- **For five:** 2 and 5 split. The Moser field fails at 2, and
+  `ℚ(√−3, √−7, √−15)` fails at 5.
+- **For six:** 2, 5 and 11 split, together with every `q < 53` whose finite
+  plane is 5-colourable.
+
+`scripts/fieldscreen.py` lists the non-split places of any multiquadratic CM
+field:
+
+| field | first non-split places | status for six |
+|---|---|---|
+| `ℚ(√−3, √−11, √−247)` | 11, 29 | dead (Theorem 2) |
+| `ℚ(√−3, √−11, √−23)` | 11, 17 | dead (`χ ≤ 5`) |
+| `ℚ(√−3, √−7, √−11)` | 17, 41, 83, 101 | open if `χ(G₁₇), χ(G₄₁) ≥ 6` |
+| de Grey's `ℚ(√−3, √−7, √−11, √−15)` | 41, 101, 131 | open if `χ(G₄₁) ≥ 6` |
+| `ℚ(√−3, √−7, √2717)` | 59, 83, 89 | open |
+| `ℚ(√−3, √−7, √−11, √−247)` | 83, 173 | open |
+
+**A 5-chromatic graph in `ℚ(√−3, √−7, √−11)`.**
+1. Take the carrier's forced pair at `d² = 64/9`.
+2. Compose it to `d² = 16` with the rotation `cos = 1/8`, `sin = 3√7/8`.
+3. Spindle the result with `(31 + 3√−7)/32`.
+
+It needs no `√5` and no `√247`. The graph is
+`data/five_tuned_16_1_3_7_11.json`: 4 081 points and 27 242 edges, not
+4-colourable by CaDiCaL or by kissat.
+
+The field has rotations with every small prime in a denominator: 2, 3, 5, 7 and
+11. The Exoo–Ismailescu `λ`-closure of the graph (378 unit vectors, rank 8)
+kills every cyclic periodic colouring tried. Growth is running there. It has
+passed 23 000 points, and kissat now needs 10–25 minutes per hard step.
+
+## 6. A question
+
+Is `χ(Γ(K))` the minimum, over the non-split places, of the local chromatic
+numbers, whenever that minimum is at most `χ(ℝ²)`?
+
+It holds in every case computed:
+
+| field | `χ(Γ(K))` | where the minimum is attained |
+|---|---|---|
+| `ℚ(i)` | 2 | at 2 |
+| `ℚ(√−3)` | 3 | at 3 |
+| Moser | 4 | at 2 |
+| `ℚ(√−3, √−11, √−247)` | 5 | at 11 |
+| `ℚ(√−3, √−11, √−23)` | 5 | at 11 |
+
+If it held in general, `ℚ(√−3, √−7, √−11)` would be 6-chromatic once
+`χ(G₁₇) = 6` and `χ(G₄₁) ≥ 6`, and then `χ(ℝ²) ≥ 6`. We do not claim this.
+
+The method of reducing to finite fields goes back to G. E. Moorhouse, *On the
+chromatic numbers of planes* (draft, 2010). For the finite planes, see
+Le Anh Vinh, *On chromatic number of unit-quadrance graphs*, arXiv
+math/0510092: `√q/2 ≲ χ(G_q) ≲ q/2`.
