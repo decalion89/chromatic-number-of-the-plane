@@ -1,7 +1,7 @@
 """The plane over Q(sqrt2, sqrt3) is 4-colourable and holds a 4-chromatic graph, so its chromatic number is 4.
 
-Voronov (Polymath16, thread 17, July 2021) wrote that chi(Q(i, sqrt3, sqrt11)) = 4 "seems likely, and the
-same is true in case (2, 3)", but that nobody had proved it. The first case had in fact been proved by K. G. Fischer
+Voronov (Polymath16, thread 17, July 2021) wrote: "it seems likely that chi(Q(i, sqrt3, sqrt11)) = 4, and the
+same is true in case (2, 3). But as far as I know, nobody has proved this yet." The first case had in fact been proved by K. G. Fischer
 (Congr. Numer. 104 (1994)); see tests/test_q311.py. Fischer's hypotheses exclude case (2, 3).
 Here L = Q(sqrt2, sqrt3) has one place over 2, totally ramified with residue field F_2; i is not in L_v,
 so the place does not split in K = L(i), and K_w = L_v(w) has residue field F_4. Every unit vector is a
