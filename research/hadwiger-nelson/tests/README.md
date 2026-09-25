@@ -15,8 +15,8 @@ python3 -m pytest -q tests/test_q23.py     # one file
 The tests marked `slow` include a 4-colourability solve of de Grey's 1581-vertex graph
 (`test_degrey.py`, with a 30-minute solver limit).
 
-GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 28 files marked CI
-on every push to `main`, on every pull request, and on manual dispatch: 346 tests, which took 80
+GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 29 files marked CI
+on every push to `main`, on every pull request, and on manual dispatch: 353 tests, which took 80
 seconds in a local run. The DRAT test in `test_certify.py` is skipped there, because the
 workflow does not install drat-trim. The other eight files (269 tests) are run locally; without their
 two tests marked `slow` they took 32 minutes in a local run, 20 of them in one test of
@@ -24,6 +24,7 @@ two tests marked `slow` they took 32 minutes in a local run, 20 of them in one t
 
 | file | CI | what it checks |
 |---|:---:|---|
+| `test_biquadratic_bounds.py` | ✓ | Local upper bounds for the planes over ℚ(√a, √b) (`notes/local_colourings.md` §13): χ(G_q) = 3, 4, 5 for q = 3, 7, 11, χ(G₄) = 4 and χ(G₁₉) = 5 (a linear 5-colouring; no 4-colouring); a ramified place above 2 makes the plane over ℚ(√2, √5) bipartite; the bounds for ℚ(√3, √q), q < 60, agree with Theorem 4; the first non-split places of ℚ(√3, √29) and ℚ(√5, √7) lie above 23 and 19. |
 | `test_certify.py` | ✓ | The certificate checker in `hn/certify.py` accepts a proper colouring and rejects a monochromatic unit pair, a colour outside the palette and a claimed lower bound on a colourable graph; its DRAT test runs only when drat-trim is on the `PATH`. |
 | `test_cyclotomic.py` | ✓ | Unit steps in ℤ[ζₙ]: they are the roots of unity, ℚ(ζ₅) alone has no unit triangle while ℚ(ζ₁₅) has one, a Gauss sum gives the spindle's radical, and the Moser spindle lies in a cyclotomic field. |
 | `test_degrey.py` |  | De Grey's graph rebuilt from his 39-point set S has 39, 397 and 1581 vertices at the three stages and 7877 edges, and (marked `slow`) no proper 4-colouring. |
