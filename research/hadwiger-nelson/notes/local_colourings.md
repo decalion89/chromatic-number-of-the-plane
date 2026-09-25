@@ -603,7 +603,7 @@ nothing about `χ(L²)`.
 §9 colours a module through a split place when all its generators are
 integral there. The argument needs only the edge vectors.
 
-**Proposition B.** Let `w` be a place of `K = L(i)` over a place `v` of `L`
+**Proposition C.** Let `w` be a place of `K = L(i)` over a place `v` of `L`
 that splits in `K`, with residue field `𝔽_q`, and let
 `H_q = Cay(𝔽_q², {(t, 1/t) : t ∈ 𝔽_q^×})`. If every edge vector of a
 unit-distance graph `G` over `L` is a unit at `w`, then `χ(G) ≤ χ(H_q)`.
@@ -648,7 +648,7 @@ it (tested).
 
 **Why the growths over `ℚ(√3, √5)` stopped at four.** Every unit set used
 before this section (`ζ^a τ^b`, and the four-rhombus units below) consisted of
-units above 2. Proposition B 4-colours every graph they can build, so no
+units above 2. Proposition C 4-colours every graph they can build, so no
 amount of growth could have produced five.
 
 **The known 5-chromatic graphs agree.** The coordinate fields of de Grey's
