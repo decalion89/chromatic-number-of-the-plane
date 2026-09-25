@@ -726,7 +726,10 @@ pairs.
 - **Bound 5.** 28 fields remain, such as `ℚ(√5, √7)`, whose first non-split
   place lies above 19. There the local plane `G₁₉` is itself triangle-free and
   5-chromatic, so the local picture does not rule out a triangle-free
-  5-chromatic graph over `ℚ(√5, √7)`.
+  5-chromatic graph over `ℚ(√5, √7)`. That plane does have odd cycles. With
+  `τ = (2 + i√5)/3` and `σ = (1 + i√35)/6`, `1 + 2 Re σ = 2 Re τ`, so the unit
+  steps `1, σ̄, −τ, σ, −τ̄` close up into a 5-cycle. Hence
+  `3 ≤ χ(ℚ(√5, √7)²) ≤ 5`.
 - **No small place.** For the other 17, such as `ℚ(√2, √31)`, `ℚ(√2, √47)` and
   `ℚ(√7, √41)`, the first non-split places lie above 23, 31, 43 or 59, where
   `χ(G_q)` is not known.
