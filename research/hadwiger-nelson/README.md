@@ -51,15 +51,17 @@ Both are written up in a three-page note,
 [`docs/note/planes-4-chromatic.pdf`](docs/note/planes-4-chromatic.pdf).
 
 **On χ(ℚ(√3, √11)²) = 4.** K. G. Fischer proved it in 1994 (*A planar
-geometric graph of chromatic number four*, Congr. Numer. 104, 73–79), for all
-ℚ(√p, √q) with p ≡ 3, q ≡ 11 (mod 16) and pq ≡ 1 (mod 32). His result seems to
-have been overlooked:
+geometric graph of chromatic number four*, Congr. Numer. 104, 73–79). He
+proved that ℚ(√p, √q)² has an additive 4-colouring for all p ≡ 3, q ≡ 11
+(mod 16) with pq ≡ 1 (mod 32); for ℚ(√3, √11) the Moser spindle gives the
+lower bound. His result seems to have been overlooked:
 - Moorhouse (2010) left the value undetermined.
 - Madore (2015) proved 4 ≤ χ ≤ 5.
 - Exoo and Ismailescu (2018) asked whether a 5-chromatic unit-distance graph
   embeds in this plane.
-- Voronov (Polymath16, 2021) conjectured χ = 4 for this plane and for the plane
-  over ℚ(√2, √3), and noted that neither was proved.
+- Voronov (Polymath16, 2021) wrote that χ = 4 "seems likely" for this plane and
+  for the plane over ℚ(√2, √3), "but as far as I know, nobody has proved this
+  yet".
 
 Fischer's hypotheses exclude ℚ(√2, √3), and we have not found that case in the
 literature. We found Fischer's paper only after the first version of the note
@@ -68,15 +70,17 @@ had been sent to two mathematicians; the note now credits it.
 The proof reduces z = x + iy modulo a place of ℚ(√3, √11) above 2 (there are
 two), which is inert in ℚ(i, √3, √11). Every unit vector becomes a nonzero
 element of 𝔽₄, so the residue is a proper 4-colouring. In the coordinates
-α = x + y/√3, β = 2y/√3 the proof is Madore's reduction argument (Prop. 3.2);
-in the coordinates (x, y) that argument fails at 2.
+α = x + y/√3, β = 2y/√3 the proof is Madore's reduction argument (Prop. 3.2,
+which his ¶6.6 states for any quadratic form); in the coordinates (x, y) that
+argument fails at 2.
 
 Fischer's colouring is additive, with values in ℤ/4. Speyer used reduction
 modulo 2 in Polymath16 (thread 2, April 2018) to 4-colour the Moser ring. The
 passage from a ring to the whole field by cosets is Madore's and Moorhouse's.
-Our contribution is the short criterion — the places over 2 are inert in
-L(i), so the reduction covers every unit vector of the plane — and the case
-ℚ(√2, √3). None of this has been refereed.
+Our contribution is the choice of coordinates, which lets Madore's argument
+work at the places over 2 (they are inert in L(i), so the reduction covers
+every unit vector of the plane), and the case ℚ(√2, √3). None of this has
+been refereed.
 
 <p align="center">
   <img src="docs/figures/plane_q311.svg" width="560"
@@ -203,10 +207,15 @@ preprint-level claims. Corrections are welcome.
   unit-distance graphs in the plane* (the 509-vertex graph);
   [arXiv:2010.12665](https://arxiv.org/abs/2010.12665)
 - K. G. Fischer, *Additive K-colorable extensions of the rational plane*,
-  Discrete Math. 82 (1990) 181–195; and *A planar geometric graph of chromatic
-  number four*, Congr. Numer. 104 (1994) 73–79 (Zbl 0836.05030)
+  Discrete Math. 82 (1990) 181–195; *The connected components of the graph
+  ℚ(√N₁, …, √N_d)²*, Congr. Numer. 72 (1990) 213–221 (Zbl 0733.05048); and
+  *A planar geometric graph of chromatic number four*, Congr. Numer. 104 (1994)
+  73–79 (Zbl 0836.05030)
 - P. D. Johnson Jr., *Two-colorings of real quadratic extensions of ℚ² that
   forbid many distances*, Congr. Numer. 60 (1987) 51–58
+- P. D. Johnson Jr., *Problems posed in or arising from "Colorings of metric
+  spaces": status report*, Geombinatorics 9 (2000) 170–179 (a survey we have
+  not seen)
 - M. S. Payne, *Unit distance graphs with ambiguous chromatic number*,
   Electron. J. Combin. 16 (2009), Note 31;
   [arXiv:0707.1177](https://arxiv.org/abs/0707.1177) (summarises Johnson's and
