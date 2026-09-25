@@ -1,5 +1,9 @@
 # Research in combinatorial geometry: the Hadwiger–Nelson problem
 
+[![tests](https://github.com/decalion89/darwin-50/actions/workflows/tests.yml/badge.svg)](https://github.com/decalion89/darwin-50/actions/workflows/tests.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
+
 This repository holds an ongoing computational and arithmetic attack on the
 **Hadwiger–Nelson problem**. The problem asks for the chromatic number χ(ℝ²) of
 the plane: the least number of colours such that no two points at distance
@@ -36,9 +40,10 @@ research/
     hn/                Python library: exact number fields, unit-distance graphs,
                        SAT colouring, certificates, local (adelic) colourings
     tests/             pytest suite
-    scripts/           maintained tools; scripts/experiments/ keeps one-off runs
-    data/              graphs and witnesses in exact coordinates
-    certificates/      colourings and DRAT verification logs
+    scripts/           maintained tools, indexed in scripts/README.md;
+                       scripts/experiments/ keeps the one-off runs
+    data/              graphs and witnesses in exact coordinates (data/README.md)
+    certificates/      colourings and DRAT verification logs (certificates/README.md)
     notes/             technical notes and literature comparison
     docs/              the chronological research log
 ```
@@ -52,6 +57,24 @@ certified by a DRAT proof that `drat-trim` checks.
 This is AI-assisted research, carried out with Claude (Anthropic) through
 Claude Code under the direction of the repository owner. No result here has been
 peer reviewed.
+
+## Citing
+
+GitHub's "Cite this repository" button uses [`CITATION.cff`](CITATION.cff). Please cite the
+original papers listed in the research README as well.
+
+## Reporting an error
+
+Corrections are welcome. If a claim here fails to reproduce, open an issue naming:
+- the file;
+- the command you ran;
+- what you saw.
+
+Every graph can be rebuilt with `research/hadwiger-nelson/scripts/verify_pair.py`.
+
+## License
+
+Code, data and text are released under the [MIT License](LICENSE).
 
 ## Resumen en español
 

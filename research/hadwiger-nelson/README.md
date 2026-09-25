@@ -112,10 +112,12 @@ hn/             the library: exact fields, geometry, graphs, SAT colouring,
                 certificates, local (adelic) colourings
 tests/          pytest suite (about 590 tests; one slow de Grey solve)
 scripts/        maintained tools: verification, growth, gates, field screens
+                (indexed in scripts/README.md)
 scripts/experiments/
                 726 one-off exploratory scripts, kept as a record
-data/           graphs and witnesses with exact coordinates (JSON)
+data/           graphs and witnesses with exact coordinates (JSON; data/README.md)
 certificates/   colourings, DRAT verification logs, non-colourability claims
+                (certificates/README.md)
 notes/          technical notes: local colourings, rigidity, literature, jobs
 docs/research-log.md
                 the full chronological log, including corrections
@@ -130,6 +132,9 @@ python3 -m pytest -q                         # the full suite takes hours
 python3 -m pytest -q tests/test_q311.py      # the ℚ(√3, √11) theorem, seconds
 sh scripts/worker_setup.sh                   # kissat and drat-trim, for the searches
 ```
+
+GitHub Actions (`.github/workflows/tests.yml`) runs the fast part of the suite on every
+push and pull request: about 330 tests, in under two minutes.
 
 `scripts/verify_pair.py` rebuilds a witness or gadget from its JSON file,
 re-derives every edge exactly and runs the solvers. It should be the first step

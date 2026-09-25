@@ -163,7 +163,7 @@ def test_the_residue_colouring_is_proper_on_unit_distance_graphs():
 
 def test_a_chain_of_three_rhombi_needs_four_colours():
     d = json.load(open(os.path.join(ROOT, "data", "chain23.json")))
-    pts = [Point(F.element([Fr(c) for c in x]), F.element([Fr(c) for c in y])) for x, y in d["points"]]
+    pts = [Point(F.element([Fr(a, b) for a, b in x]), F.element([Fr(a, b) for a, b in y])) for x, y in d["points"]]
     g = build_graph(pts)
     assert (g.n, g.m) == (10, 16)
     # O, sqrt3 u1, sqrt3 (u1 + u2), sqrt3 (u1 + u2 + u3) are the chain's joints; the last is at distance 1.

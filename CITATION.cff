@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this code, data or these results, please cite them as below."
+title: "The Hadwiger–Nelson problem: an exact, certificate-driven attack"
+abstract: >-
+  Exact-arithmetic tools, data and machine-checked certificates for the
+  Hadwiger–Nelson problem on the chromatic number of the plane. Includes proofs
+  that the planes over Q(sqrt3, sqrt11) and Q(sqrt2, sqrt3) are 4-chromatic,
+  reproductions of chi(R^2) >= 4 and >= 5 with DRAT certificates, and
+  two-distance witnesses for the route to chi(R^2) >= 6. AI-assisted research;
+  not peer reviewed.
+type: software
+authors:
+  - alias: decalion89
+repository-code: "https://github.com/decalion89/darwin-50"
+license: MIT
+date-released: "2026-09-25"
+keywords:
+  - Hadwiger–Nelson problem
+  - chromatic number of the plane
+  - unit-distance graphs
+  - graph colouring
+  - SAT solving
+  - DRAT proofs
+  - algebraic number theory
+  - p-adic fields
