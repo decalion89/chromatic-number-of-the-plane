@@ -8112,7 +8112,7 @@ sends a unit step `u` to `ρ(u) ≠ 0`, so it is a proper 4-colouring of every
 graph those units can build. The two runs targeting pairs at `d² = 7/3` and
 `d = 2` were stopped: they could not succeed.
 
-In general (`notes/local_colourings.md` §12, Proposition B), a split place with
+In general (`notes/local_colourings.md` §12, Proposition C), a split place with
 residue field `𝔽_q` colours the graph of the edges that are units there with
 `χ(H_q)` colours. Here `χ(H₄) = 4` and `χ(H₉) = 3` (`tests/test_split_places.py`).
 So over `ℚ(√3, √5)` a 4-chromatic graph needs an edge vector that is not a unit
