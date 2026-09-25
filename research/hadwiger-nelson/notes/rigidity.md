@@ -394,11 +394,10 @@ for every deeper quotient `Cay(O_v/π^r, T mod π^r)`.
 *Proof.* By Hoffman, `χ_f ≥ 1 + (q+1)/|λ_min| ≥ 1 + (q+1)/(2√q)`. This exceeds
 5 for `q > 62`; for `q = 53, 59` and 61 it was computed
 (`scripts/finite_hoffman.py --inert`; the first version of this proof omitted
-61). A level-`j` character
-contributes `q^{r−j}` times its level-`j` sum. A primitive level-`j` character
-sums to 0 on every fibre except the one or two norm-one points whose tangent
-line lies in its kernel, so its sum has modulus at most `2q^{j−1}`. Hence the
-ratio `d/|λ_min|` is the same at every level. ∎
+61). A level-`j` character contributes `q^{r−j}` times its level-`j` sum. A
+primitive level-`j` character sums to 0 on every fibre except the one or two
+norm-one points whose tangent line lies in its kernel, so its sum has modulus
+at most `2q^{j−1}`. Hence the ratio `d/|λ_min|` is the same at every level. ∎
 
 LP methods stop there. The Delsarte bound equals the Hoffman bound, and the
 triangle inequalities `f(x) + f(y) − f(x − y) ≤ 1` hardly move it.
@@ -417,7 +416,8 @@ The best independent sets found are 57 points for `q = 17`, against
 `289/5 = 57.8`, and 213 for `q = 41`, against `336.2`. SAT did not settle
 `α < q²/5`; for `q = 29, 41` and 47 Schrijver's three-point bound does
 (`notes/local_colourings.md` §14). For `q = 17` it gives only 63.33, and for
-`q = 23` 107.04, against the 105 that six colours need.
+`q = 23` 107.04, where proving `χ ≥ 6` needs 105 (numerical values, not
+certified).
 
 **Consequence for the search.** `ℚ(√−3, √−7, √−11)` splits 2, 3, 5, 7 and 11,
 and its non-split places lie above 17, 41, 83, 101, …. It contains a
@@ -467,5 +467,6 @@ in every case computed:
 | `ℚ(√−3, √−11, √−23)` | 5 | at 11 |
 
 If it held in general, `ℚ(√−3, √−7, √−11)` would be 6-chromatic as soon as
-`χ(G₁₇) = 6` (`χ(G₄₁) ≥ 6` is now proved), and then `χ(ℝ²) ≥ 6`. Nothing here
-proves that; the growth run is the experiment.
+`χ(G₁₇) = 6` (`χ(G₄₁) ≥ 6` is now proved, `notes/local_colourings.md` §14),
+and then `χ(ℝ²) ≥ 6`. Nothing here proves that; the growth run is the
+experiment.
