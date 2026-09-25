@@ -10,6 +10,11 @@ the plane: the least number of colours such that no two points at distance
 exactly 1 share a colour. Since 2018 it has been known that χ(ℝ²) ∈ {5, 6, 7}.
 The goal here is the lower bound **χ(ℝ²) ≥ 6**.
 
+<p align="center">
+  <img src="research/hadwiger-nelson/docs/figures/plane_q311.svg" width="640"
+       alt="A unit-distance graph on 163 points of the plane over Q(sqrt3, sqrt11), properly coloured with four colours">
+</p>
+
 **→ [`research/hadwiger-nelson/`](research/hadwiger-nelson/README.md)**: results,
 code, data, certificates and the full research log.
 
