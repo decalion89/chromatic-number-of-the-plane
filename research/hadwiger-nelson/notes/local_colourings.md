@@ -20,24 +20,27 @@ vertices in `K` is a subgraph of `Γ(K)`, and `χ(ℝ²) = sup_K χ(Γ(K))`.
 
 ## 2. Reduction at a place that does not split
 
-Let `v` be a finite place of `L`, and suppose `v` does not split in `K`: `K_v`
-is a field, quadratic over `L_v`. Then the local torus
-`T(L_v) = {u ∈ K_v : u ū = 1}` is compact, so every unit vector of `K` is a
-`v`-adic unit.
+Let `v` be a finite place of `L`, and suppose `v` does not split in `K`: a
+single place `w` of `K` lies above `v`, and `K_w` is a field, quadratic over
+`L_v`. The decomposition group of `w` is all of `Gal(K/L)`, so the non-trivial
+automorphism of `K_w/L_v` is complex conjugation and `N_{K_w/L_v}(u) = u ū`.
+Hence the local torus `T(L_v) = {u ∈ K_w : u ū = 1}` is compact, and every
+unit vector of `K` is a `w`-adic unit.
 
 **Proposition A.**
-1. **Unramified case.** If `K_v/L_v` is unramified and `L_v` has residue field
+1. **Unramified case.** If `K_w/L_v` is unramified and `L_v` has residue field
    `𝔽_q`, let `N₁ ⊂ 𝔽_{q²}` be the `q + 1` elements of norm 1, and
    `G_q = Cay(𝔽_{q²}, N₁)` the *finite plane*. Then `χ(Γ(K)) ≤ χ(G_q)`.
-2. **Ramified case.** If `K_v/L_v` is ramified, `χ(Γ(K)) ≤ 3`.
+2. **Ramified case.** If `K_w/L_v` is ramified, `χ(Γ(K)) ≤ 3`.
 
 *Proof.*
-- **A residue map.** Fix a representative of each coset of `O_v` in `K_v`.
-  For `z ∈ K`, let `g(z)` be the residue of `z − rep(z)`. It lies in
-  `O_v/πO_v = 𝔽_{q²}`.
+- **A residue map.** Let `O_w` be the ring of integers of `K_w`, `π` a
+  uniformiser and `ρ : O_w → O_w/πO_w` the residue map. Fix a representative
+  `rep(z)` of each coset `z + O_w`, and put `g(z) = ρ(z − rep(z))`. In the
+  unramified case it lies in `O_w/πO_w = 𝔽_{q²}`.
 - **Unit steps become unit steps.** If `u` is a unit vector, `z + u` lies in
-  the same coset as `z`, so `g(z + u) = g(z) + ū`. The residue `ū` lies in
-  `N₁`, because the norm reduces to the norm.
+  the same coset as `z`, so `g(z + u) = g(z) + ρ(u)`. The residue `ρ(u)` lies
+  in `N₁`, because the norm reduces to the norm.
 - **Pull back a colouring.** Composing `g` with a proper colouring of `G_q`
   therefore colours `Γ(K)` properly.
 - **Ramified case.** The norm-one residues are `±1`. The same argument lands in
@@ -69,7 +72,7 @@ Checked in `hn/adelic.py`, `scripts/moser2adic.py` and
 
 *Proof.*
 - **11 does not split.** Above 11, `L_v = ℚ₁₁(√33)` (`√741 ∈ ℚ₁₁`), and
-  `K_v = L_v(√−3)` is unramified over `L_v` because −3 is a non-residue mod 11.
+  `K_w = L_v(√−3)` is unramified over `L_v` because −3 is a non-residue mod 11.
   So 11 does not split.
 - **Upper bound.** `χ(G₁₁) = 5`: SAT, and 4 colours are UNSAT.
 - **Lower bound.** `five_rho7` lies in the field. ∎
@@ -79,9 +82,12 @@ graph the project grew in this field: up to 32 312 points and 282 909 edges, all
 with 0 monochromatic edges (`scripts/reduce11.py`, `tests/test_reduce11.py`).
 So no search in this field could reach six.
 
-**The denominator principle.** A unit vector with `p` in its denominator exists
-only if some place above `p` splits. Each rung of the known constructions
-therefore had to add a rotation with a new prime in its denominator.
+**The denominator principle.** If a unit vector of `K` is not integral at
+some place of `K` above a prime `p`, then some place of `L` above `p` splits in
+`K`. Integrality is meant in `K`, not coordinatewise: `ω = (−1/2, √3/2)` has 2
+in the denominators of its coordinates, yet it is an algebraic integer. Each
+rung of the known constructions therefore had to add a rotation that is not
+integral at a place over a new prime.
 
 ## 4. Finite planes
 
@@ -95,7 +101,7 @@ structure:
   `q < 400`.
 
 **Proposition B.** For every prime `q ≥ 53`, `χ(G_q) ≥ 6`. The same bound holds
-for the deeper quotients `Cay(O_v/π^r, T mod π^r)`.
+for the deeper quotients `Cay(O_w/π^r, T mod π^r)`.
 
 *Proof.* Hoffman gives `χ_f ≥ 1 + (q+1)/|λ_min|`. This exceeds 5 for `q > 62`
 by the Ramanujan bound, and was computed for `q = 53, 59`. The deeper levels
@@ -241,7 +247,7 @@ unit vectors are the `u ∈ K` with `u ū = 1`. Apply Proposition A.1 at a place
   In it `√3` is a unit and `√3 − 1` is a uniformiser, of norm −2.
 - **Inert, not split.** `i ∈ L_v` would need `−1` or `−3` to be a square in
   `ℚ₂`. Neither is, since both are `≢ 1 (mod 8)`. So
-  `K_v = ℚ₂(√3)(i) = ℚ₂(√3)(√−3)`. This is unramified over `L_v`, because
+  `K_w = ℚ₂(√3)(i) = ℚ₂(√3)(√−3)`. This is unramified over `L_v`, because
   `ℚ₂(√−3)` is the unramified quadratic extension of `ℚ₂`.
 - **The local ring.** `O_w = ℤ₂[√3][ω]` has residue field `𝔽₄`. Here
   `N₁ = 𝔽₄^×`, so `G₂ = Cay(𝔽₄, 𝔽₄^×) = K₄`, and `χ(Γ(K)) ≤ 4`.
@@ -258,9 +264,12 @@ Colour `z` by `((a + b) mod 2, (c + d) mod 2)`, where each letter means the
 units digit of the 2-adic integer part. This is `hn.adelic.q311_colour`.
 
 **Checks.** `tests/test_q311.py` verifies:
+- the decomposition `2 = P₁²P₂²` with residue fields `𝔽₂`, independently with
+  sympy's `prime_decomp`;
 - 810 unit vectors are 2-adic units with nonzero residue, at both places. The
   rotations include `(3 + 4i)/5` and `(√33 + 4i)/7`, which lie outside the
   Moser field.
+- So are 300 random unit vectors of the form `t/t̄` (Hilbert 90).
 - The colouring is proper on random unit steps, on the Moser spindle, and on
   Exoo–Ismailescu's 214-point graph (1 004 edges).
 - On 638 further points and 3 012 edges (`data/ei_rho7.json`) there are no
@@ -274,45 +283,52 @@ anisotropic modulo `𝔪` or `𝔪²`. At a place over 2 with `√3` this fails,
 - They are integral in `O_w`, which is strictly larger than `O_v[i]`.
 
 Reducing `z = x + iy` in `O_w` — the Hermitian form of the argument — sees the
-`ω` that the coordinates hide. At odd places the two versions agree, since
-`O_w = O_v[i]` there.
+`ω` that the coordinates hide. In the coordinates `α = x + y/√3`,
+`β = 2y/√3` of `z = α + βω`, the squared distance is `α² − αβ + β²`, which is
+anisotropic modulo `𝔪`. Theorem 3 is Madore's Prop. 3.2 with this form in
+place of `x² + y²`; his proof applies verbatim. At odd places the two versions
+agree, since `O_w = O_v[i]` there.
 
-**Who came closest.** The 2-adic reduction itself is not new.
-- In [Polymath16, thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/)
-  (3 May 2018), David Speyer 4-coloured the *Moser ring* this way. That ring is
-  the set of elements of `ℚ(√−3, √−11)` integral over `ℤ[1/3]`. He used
-  `R/2ᵏR ≅ ℤ[ω]/2ᵏ × ℤ[ω]/2ᵏ`, with colours in `ℤ[ω]/2 = 𝔽₄`.
-- Philip Gibbs and Tamás Hubai then found that all such colourings have
-  period 8.
-- Dúcz ([arXiv 2606.12325](https://arxiv.org/abs/2606.12325), 2026)
-  4-coloured the Moser lattice and ring again.
+**Who came closest.** The ingredients are not new.
+- **The reduction.** In
+  [Polymath16, thread 2](https://dustingmixon.wordpress.com/2018/04/22/polymath16-second-thread-what-does-it-take-to-be-5-chromatic/#comment-4013)
+  (25 April 2018), David Speyer 4-coloured the *Moser ring*
+  `R = O_K[1/3]`, `K = ℚ(√−3, √−11)`. He observed `R/2R ≅ 𝔽₄ × 𝔽₄`, and that
+  either projection is a proper 4-colouring. In
+  [thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/)
+  (3 May 2018) he gave 8-periodic variants. Philip Gibbs then reported
+  (9 May 2018) that a computer search by Tamás Hubai found that all
+  4-colourings of the ring have period 8.
+- **The cosets.** Extending a colouring from a ring to the whole field by
+  cosets is Madore's Prop. 3.2 and Moorhouse's Lemma 4.2.
+- **The integrality.** Unit vectors are integral at a place that does not
+  split because the norm-one torus is compact there, a standard fact.
+- Dúcz ([arXiv 2606.12325](https://arxiv.org/abs/2606.12325), 2026) gave
+  geometric 4-colourings of the Moser lattice and ring.
 
-None of them treats the whole plane. That takes two further steps:
-- **Every unit vector.** The place of `L` over 2 must be inert in
-  `L(i) = ℚ(i, √3, √11)`, a field of degree 8 that contains the Moser field.
-  Then every unit vector of the plane is a 2-adic unit, not only those of the
-  ring.
-- **Denominators of 2.** Colour cosets of `O_w` by residues relative to a
-  fixed representative.
-
-Theorem 3 is Speyer's colouring carried to the whole plane.
+What was missing is one check: the places of `L` over 2 are inert in
+`L(i) = ℚ(i, √3, √11)`, a field of degree 8 that contains the Moser field.
+Then every unit vector of the plane is a 2-adic unit, not only those of the
+ring, and Speyer's colouring extends to the whole plane. For an expert in local
+fields this is a short observation. Its interest is that it settles questions
+asked in print.
 
 **Parts' paradox, resolved.**
 - Exoo–Ismailescu's `G₄₀` forces a pair at distance 8/3 alike in every
-  4-colouring.
+  4-colouring *with no monochromatic pair at distance `√(11/3)`*.
 - In [Polymath16, thread 13](https://dustingmixon.wordpress.com/2019/07/08/polymath16-thirteenth-thread-bumping-the-deadline/)
   (July 2019), Parts chained such pairs to get alike pairs at every distance
   `8/9ⁿ`, which sum to 1. He called this a "funny proof" that the field needs
   five colours, and asked why the colour is lost in the limit.
 - Pálvölgyi pointed out that colour need not pass to the limit.
-- The colouring above makes the point concrete. Every pair at distance
-  `8/9ⁿ` is alike, because `(8/9ⁿ)u ∈ 8·O_w`. Every pair at `√(11/3)` is
-  apart, because `√33/3` is a 2-adic unit. The colouring is continuous for the
-  2-adic topology, not the real one.
+- The colouring above satisfies the hypothesis and makes the point concrete.
+  Every pair at `√(11/3)` is apart, because `√33/3` is a 2-adic unit. Every
+  pair at distance `8/9ⁿ` is alike, because `(8/9ⁿ)u ∈ 8·O_w`. The colouring is
+  continuous for the 2-adic topology, not the real one.
 
 **Corollaries for real fields `F`.** Proposition A at a place `v | 2` gives:
 - **Ramified.** If `v` ramifies in `F(i)`, then `χ(F²) = 2`. The norm-one
-  residues are `ū² = 1`, so `ū = 1`, and any `𝔽₂`-linear form with
+  residues satisfy `ρ(u)² = 1`, so `ρ(u) = 1`, and any `𝔽₂`-linear form with
   `λ(1) = 1` 2-colours the plane. This recovers `χ(ℚ²) = 2` (Woodall).
   It also recovers Moorhouse's Theorems 7.1, 8.4 and 8.5, and Madore's
   Prop. 3.9.
@@ -336,9 +352,11 @@ Theorem 3 is Speyer's colouring carried to the whole plane.
   `−1` is a square in every completion over 2. There `√5` or `√247` supplies
   `i`, since `5 ≡ −3` and `247 ≡ −1 (mod 8)`.
 
-We found no proof of Theorem 3 in any paper, in any thread of Polymath16, or by
-web search. The closest work is Speyer's colouring of the Moser ring, above.
-Nothing here has been refereed.
+We found no proof of Theorem 3 in any paper, in Polymath16 threads 1–18, on the
+main page of the Polymath16 wiki, or by web search. The wiki's "Algebraic
+formulation" page could not be retrieved. The closest work is Speyer's
+colouring of the Moser ring, above. An independent check (25 September) found
+no mathematical error. Nothing here has been refereed.
 
 ## 9. Split places colour modules (25 September)
 
@@ -395,9 +413,14 @@ Moser's `σ` from `L16`'s unit set would reopen the places over 7 or 3, and
 
 ## 10. The plane over `ℚ(√2, √3)`: `χ = 4` (25 September)
 
-Voronov, in [Polymath16, thread 17](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/),
-conjectured `χ = 4` for two fields: `ℚ(i, √3, √11)`, which is Theorem 3, and
-"case (2, 3)", that is `ℚ(i, √2, √3)`. The same argument settles the second.
+Voronov, in [Polymath16, thread 17](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/#comment-29291)
+(18 July 2021), conjectured `χ = 4` for two fields: `ℚ(i, √3, √11)`, which is
+Theorem 3, and "case (2, 3)", that is `ℚ(i, √2, √3) = ℚ(ζ₂₄)`. On 30 July
+([comment 29476](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/#comment-29476))
+he suggested colouring `ℤ[ζ₂₄, 1/3]` through a homomorphism to `(ℤ/4)[ζ₂₄]`,
+a ring with `2¹⁶` elements, and added: "Perhaps there is a simpler way." The
+argument of Theorem 3 is that simpler way: reduction modulo the place over 2,
+into `𝔽₄`.
 
 **Theorem 4.** `χ(ℚ(√2, √3)²) = 4`.
 
@@ -421,7 +444,25 @@ squares.
 Concretely, `z = x + iy = a + bω` with `a = x + y/√3` and `b = 2y/√3`, since
 `i = (2ω + 1)/√3`.
 
-*Lower bound.* A chain of three unit rhombi from `O` along
+**Choosing `rep(z)`.** `O_w = ℤ₂[ζ₂₄]` has the `ℤ₂`-basis `1, ζ, …, ζ⁷`
+(`ζ = ζ₂₄`, with `ρ(ζ) = ρ(ω)²` since `ζ⁸ = ω`), and 2-adic fractional parts of the coordinates
+in this basis give a representative. The basis `1, √2, √3, √6` of `L` does
+not do this job: it is not a `ℤ₂`-basis of `O_v`, because `(√2 + √6)/2` is
+integral (its square is `2 + √3`). Fractional parts in that basis are not
+constant on cosets of `O_w`, and do not give a colouring.
+`hn.adelic.q23_colour` avoids the choice: it colours the component of a base
+point `z₀` by the residues of `a(z) − a(z₀)` and `b(z) − b(z₀)`, which are
+integral there.
+
+*Lower bound.* A 4-chromatic graph over `ℚ(√2, √3)` is already implicit in
+Voronov, Neopryatnaya and Dergachev
+([arXiv 2106.11824](https://arxiv.org/abs/2106.11824)). Their second series of
+5-chromatic graphs starts from the 4-chromatic 10-vertex graph `L₁₀,₂` and the
+unit vectors `ζ₂₄` and `(√6 + i√3)/3`. Already their set `M₂ = M₁ + M₁`
+(2 593 points, 11 448 unit edges) has no proper 3-colouring
+(`tests/test_q23.py`).
+
+A shorter explicit example is a chain of three unit rhombi from `O` along
 `u₁ = (1, 0)`, `u₂ = (0, 1)` and `u₃ = (−2/3 − √2/6, −2/3 + √2/6)`.
 - Each rhombus forces its two tips alike in any 3-colouring.
 - `|u₁ + u₂ + u₃|² = 1/3`, so the last tip `√3(u₁ + u₂ + u₃)` is at distance
@@ -436,12 +477,14 @@ The graph (`data/chain23.json`) has 10 vertices and 16 edges.
   `certificates/chain23_drat_trim_verification.txt`.
 
 **Checks.** `tests/test_q23.py` verifies:
-- the square-class facts above;
+- the square-class facts above, and `2 = P⁴` independently with sympy's
+  `prime_decomp`;
 - that 312 listed unit vectors, and 300 random ones of the form `t/t̄`
   (Hilbert 90), are units with nonzero residue;
 - that the colouring is proper on a 2 089-point ball of 24th roots of unity
   and on a 3 134-point graph mixing six families of unit vectors;
-- the lower bound.
+- the lower bound, for the rhombus chain and for the set `M₂` of Voronov,
+  Neopryatnaya and Dergachev.
 
 **What else uses this.** The criterion is general:
 - **Upper bound.** A real field `L` with a place over 2 that does not split
@@ -449,4 +492,5 @@ The graph (`data/chain23.json`) has 10 vertices and 16 edges.
 - **Lower bound.** `√3 ∈ L` gives triangles and rhombi. A three-rhombus
   chain closing in `L` then gives `χ(L²) = 4`.
 
-We found no proof of Theorem 4 in the literature.
+The lower bound was known, as above. We found no proof of the upper bound in
+the literature.

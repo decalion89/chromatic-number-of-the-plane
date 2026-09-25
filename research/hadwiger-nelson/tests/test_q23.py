@@ -13,6 +13,8 @@ import random
 from fractions import Fraction as Fr
 
 from pysat.solvers import Solver
+from sympy import QQ, Poly, minimal_polynomial, sqrt, symbols
+from sympy.polys.numberfields.primes import prime_decomp
 
 from hn.adelic import q23_ab, q23_colour, q23_valuation
 from hn.field import Field
@@ -120,6 +122,13 @@ def test_one_place_over_2_totally_ramified_and_not_split_in_K():
     assert _mul(minus_one, three) == five
 
 
+def test_sympy_finds_one_totally_ramified_place_over_2():
+    # An independent check of the local facts: in L = Q(sqrt2, sqrt3), 2 = P^4 with residue field F_2.
+    x = symbols("x")
+    T = Poly(minimal_polynomial(sqrt(2) + sqrt(3), x), x, domain=QQ)
+    assert [(P.e, P.f) for P in prime_decomp(2, T)] == [(4, 1)]
+
+
 def test_the_valuation_is_the_2_adic_valuation_of_the_norm():
     assert q23_valuation(S2) == 2 and q23_valuation(S3 - ONE) == 2
     assert q23_valuation(S3) == 0 and q23_valuation(_q(2)) == 4
@@ -159,6 +168,23 @@ def test_the_residue_colouring_is_proper_on_unit_distance_graphs():
     units = _unit_vectors()[::4]
     mixed = build_graph({Point(ZERO, ZERO)} | set(units) | {u + v for u in units for v in units})
     assert mixed.m > 2000 and _proper(mixed)
+
+
+def test_voronov_neopryatnaya_dergachev_series_2_needs_four_colours():
+    """Voronov, Neopryatnaya and Dergachev (arXiv 2106.11824, Series 2) build 5-chromatic graphs from the
+    4-chromatic graph L_{10,2} and the unit vectors zeta24 and (sqrt6 + i sqrt3)/3. Already their set
+    M_2 = M_1 + M_1 (t = 1) lies in Q(sqrt2, sqrt3)^2 and has no 3-colouring, so the lower bound
+    chi(Q(sqrt2, sqrt3)^2) >= 4 was known. The residue colouring 4-colours it."""
+    phi1 = Rotation(S6 * _q(Fr(1, 3)), S3 * _q(Fr(1, 3)))
+    units = []
+    for p in _roots():
+        units += [p, phi1(p), phi1.inverse()(p)]
+    m1 = {Point(ZERO, ZERO)} | set(units)
+    assert len(m1) == 73
+    g = build_graph({a + b for a in m1 for b in m1})
+    assert (g.n, g.m) == (2593, 11448)
+    assert not _colourable(g, 3)
+    assert _proper(g)
 
 
 def test_a_chain_of_three_rhombi_needs_four_colours():

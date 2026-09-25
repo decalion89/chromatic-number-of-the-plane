@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The planes over Q(√3, √11) and Q(√2, √3) are 4-chromatic</title>
+<style>
+  @page { size: A4; margin: 16mm 19mm 16mm 19mm; }
+  :root { --ink: #111; --muted: #555; --rule: #bbb; --box: #f6f6f4; }
+  html { background: #fff; }
+  body { font-family: "DejaVu Serif", Georgia, serif; font-size: 10pt; line-height: 1.38; color: var(--ink); margin: 0; }
+  h1 { font-size: 16pt; text-align: center; margin: 0 0 6pt 0; line-height: 1.25; font-weight: bold; }
+  .author { text-align: center; font-size: 11pt; margin-bottom: 2pt; }
+  .date { text-align: center; color: var(--muted); font-size: 9.5pt; margin-bottom: 12pt; }
+  .abstract { margin: 0 8mm 12pt 8mm; font-size: 9.8pt; }
+  .abstract b { font-variant: small-caps; }
+  h2 { font-size: 11.5pt; margin: 11pt 0 4pt 0; break-after: avoid; page-break-after: avoid; }
+  p { margin: 0 0 6pt 0; text-align: justify; hyphens: auto; }
+  .thm { background: var(--box); border-left: 3px solid #444; padding: 5pt 8pt; margin: 6pt 0; break-inside: avoid; }
+  .thm p { margin: 0 0 3pt 0; }
+  .lbl { font-weight: bold; }
+  .proof-end { float: right; }
+  .eq { text-align: center; margin: 6pt 0; font-size: 11pt; }
+  ul, ol { margin: 0 0 6pt 0; padding-left: 18pt; }
+  li { margin-bottom: 2pt; }
+  ol.proof { break-inside: avoid; page-break-inside: avoid; }
+  .refs li { font-size: 9.2pt; margin-bottom: 2pt; }
+  .small { font-size: 9.2pt; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<h1>The planes over ℚ(√3,&nbsp;√11) and ℚ(√2,&nbsp;√3) are 4‑chromatic</h1>
+<div class="author">Sergi Galán<sup>*</sup></div>
+<div class="date">September 2026 — draft for independent verification</div>
+
+<div class="abstract">
+<b>Abstract.</b> For a subfield <i>F</i> ⊂ ℝ let χ(<i>F</i><sup>2</sup>) be the chromatic number of the graph on
+<i>F</i><sup>2</sup> joining points at Euclidean distance 1. We show that χ(ℚ(√3,&nbsp;√11)<sup>2</sup>)&nbsp;=&nbsp;4,
+answering a question left open by Moorhouse (2010), Madore (2015) and Exoo–Ismailescu (2018), and that
+χ(ℚ(√2,&nbsp;√3)<sup>2</sup>)&nbsp;=&nbsp;4. Voronov conjectured both values in Polymath16 (2021).
+The upper bounds come from Madore’s reduction argument, run in other coordinates. With
+α = <i>x</i> + <i>y</i>/√3 and β = 2<i>y</i>/√3 the squared distance becomes α² − αβ + β², a form that is
+anisotropic modulo any prime above 2 with residue field 𝔽<sub>2</sub>. Speyer used reduction modulo 2 in
+these coordinates in 2018 to 4-colour the Moser ring. The observation here is that, over these two
+fields, it colours the whole plane.
+</div>
+
+<h2>1. Introduction</h2>
+<p>The Hadwiger–Nelson problem asks for χ(ℝ<sup>2</sup>). Since de Grey [1] and Exoo–Ismailescu [3] it is
+known that χ(ℝ<sup>2</sup>) ∈ {5,&nbsp;6,&nbsp;7}; see Soifer [10] for the history. For a subfield <i>F</i> ⊂ ℝ one has
+χ(<i>F</i><sup>2</sup>) ≤ χ(ℝ<sup>2</sup>). Known values include:</p>
+<ul>
+<li>χ(ℚ<sup>2</sup>) = 2 (Woodall [12]);</li>
+<li>χ(ℚ(√2)<sup>2</sup>) = 2, χ(ℚ(√3)<sup>2</sup>) = 3 and χ(ℚ(√7)<sup>2</sup>) = 3 (Madore [5]);</li>
+<li>4 ≤ χ(ℚ(√3,&nbsp;√11)<sup>2</sup>) ≤ 5 (Madore [5], Prop. 4.6).</li>
+</ul>
+<p>The field ℚ(√3,&nbsp;√11) is the smallest whose plane contains a Moser spindle. Moorhouse [6] noted
+that its exact value was undetermined, and Exoo and Ismailescu [3] asked whether a 5-chromatic
+unit-distance graph embeds in ℚ[√3,&nbsp;√11]<sup>2</sup>. In Polymath16, Voronov wrote that
+χ(ℚ(<i>i</i>,&nbsp;√3,&nbsp;√11)) = 4 “seems likely, and the same is true in case (2, 3)”, but that nobody
+had proved it [9]. Case (2, 3) is the field ℚ(<i>i</i>,&nbsp;√2,&nbsp;√3) = ℚ(ζ<sub>24</sub>). For it he suggested a
+colouring through a homomorphism ℤ[ζ<sub>24</sub>,&nbsp;1/3] → (ℤ/4)[ζ<sub>24</sub>], adding “Perhaps there is a
+simpler way” [9].</p>
+
+<div class="thm"><p><span class="lbl">Theorem 1.</span>
+χ(ℚ(√3,&nbsp;√11)<sup>2</sup>) = χ(ℚ(√2,&nbsp;√3)<sup>2</sup>) = 4. In particular, no 5-chromatic
+unit-distance graph has all its coordinates in ℚ(√3,&nbsp;√11), or all in ℚ(√2,&nbsp;√3).</p></div>
+
+<p>The upper bounds are instances of the following criterion.</p>
+
+<div class="thm"><p><span class="lbl">Theorem 2.</span>
+Let <i>L</i> ⊂ ℝ be a number field containing √3, and suppose some prime <i>P</i> of <i>L</i> above 2 has
+residue field <i>O<sub>L</sub></i>/<i>P</i> ≅ 𝔽<sub>2</sub>. Then χ(<i>L</i><sup>2</sup>) ≤ 4.</p></div>
+
+<p>Theorem 2 is Madore’s Proposition 3.2 [5] with the form α² − αβ + β² in place of <i>x</i>² + <i>y</i>²; his
+proof applies verbatim (compare Moorhouse [6], Lemma 4.2 and Theorem 7.1). In the coordinates (<i>x</i>,&nbsp;<i>y</i>) the
+argument fails at 2: the form <i>x</i>² + <i>y</i>² ≡ (<i>x</i> + <i>y</i>)² is isotropic modulo 2, and unit vectors
+such as (1/2,&nbsp;√3/2) are not even integral at 2. Since √3 ∈ <i>L</i>, we have <i>L</i>(<i>i</i>) = <i>L</i>(ω) with
+ω = <i>e</i><sup>2π<i>i</i>/3</sup>, and the hypothesis on <i>P</i> implies that <i>P</i> is inert in <i>L</i>(<i>i</i>).</p>
+
+<h2>2. The identity and the lemma</h2>
+<p>Put <i>Q</i>(α,&nbsp;β) = α² − αβ + β². For <i>x</i>, <i>y</i> ∈ <i>L</i> set</p>
+<p class="eq">α = <i>x</i> + <i>y</i>/√3,&nbsp;&nbsp;&nbsp;&nbsp;β = 2<i>y</i>/√3,&nbsp;&nbsp;&nbsp;&nbsp;so that&nbsp;&nbsp;&nbsp;&nbsp;<i>x</i>² + <i>y</i>² = <i>Q</i>(α,&nbsp;β).</p>
+<p>The identity is a direct expansion. Equivalently, <i>x</i> + <i>iy</i> = α + βω, and <i>Q</i> is the norm form
+of ℚ(ω). The map (<i>x</i>,&nbsp;<i>y</i>) ↦ (α,&nbsp;β) is <i>L</i>-linear and bijective.</p>
+
+<div class="thm"><p><span class="lbl">Lemma.</span>
+Let <i>v</i> be the normalised valuation of <i>L</i> at a prime <i>P</i> above 2 with residue field 𝔽<sub>2</sub>.
+Then for all (α,&nbsp;β) ≠ (0,&nbsp;0) in <i>L</i><sup>2</sup>,&nbsp;&nbsp; <i>v</i>(<i>Q</i>(α,&nbsp;β)) = 2&nbsp;min(<i>v</i>(α),&nbsp;<i>v</i>(β)).</p></div>
+
+<p><i>Proof.</i> Let <i>k</i> = min(<i>v</i>(α), <i>v</i>(β)) and let π be a uniformiser. Write α = π<sup><i>k</i></sup>α′,
+β = π<sup><i>k</i></sup>β′, with α′, β′ integral at <i>P</i> and not both in <i>P</i>. Then
+<i>Q</i>(α,&nbsp;β) = π<sup>2<i>k</i></sup><i>Q</i>(α′,&nbsp;β′). Modulo <i>P</i>, <i>Q</i>(α′,&nbsp;β′) reduces to
+<i>s</i>² + <i>st</i> + <i>t</i>² with (<i>s</i>,&nbsp;<i>t</i>) ∈ 𝔽<sub>2</sub><sup>2</sup> ∖ {0}, since signs do not matter in
+characteristic 2. This value is 1 for every such (<i>s</i>,&nbsp;<i>t</i>), because <i>u</i>² + <i>u</i> + 1 has no root in
+𝔽<sub>2</sub>. Hence <i>v</i>(<i>Q</i>(α′,&nbsp;β′)) = 0.<span class="proof-end">∎</span></p>
+
+<h2>3. Proof of Theorem 2</h2>
+<p>Let <i>O<sub>P</sub></i> = {<i>c</i> ∈ <i>L</i> : <i>v</i>(<i>c</i>) ≥ 0} and let ρ : <i>O<sub>P</sub></i> → 𝔽<sub>2</sub> be reduction
+modulo <i>P</i>. Fix a set of representatives of the cosets <i>L</i>/<i>O<sub>P</sub></i>, and write <i>r</i>(<i>c</i>) for the
+representative of <i>c</i> + <i>O<sub>P</sub></i>. Since <i>L</i> is countable, no choice principle is needed. Colour
+(<i>x</i>,&nbsp;<i>y</i>) ∈ <i>L</i><sup>2</sup> by</p>
+<p class="eq"><i>c</i>(<i>x</i>,&nbsp;<i>y</i>) = ( ρ(α − <i>r</i>(α)),&nbsp; ρ(β − <i>r</i>(β)) ) ∈ 𝔽<sub>2</sub><sup>2</sup>,</p>
+<p>which uses four colours. Suppose (<i>x</i>,&nbsp;<i>y</i>) and (<i>x</i>′,&nbsp;<i>y</i>′) are at distance 1, and let
+Δα, Δβ be the differences of their α- and β-coordinates.</p>
+<ol>
+<li>By linearity, <i>Q</i>(Δα,&nbsp;Δβ) = 1.</li>
+<li>By the Lemma, min(<i>v</i>(Δα),&nbsp;<i>v</i>(Δβ)) = 0. So Δα and Δβ lie in <i>O<sub>P</sub></i> and are not both in <i>P</i>.</li>
+<li>Hence <i>r</i>(α) = <i>r</i>(α′) and <i>r</i>(β) = <i>r</i>(β′).</li>
+<li>So the two colours differ by (ρ(Δα),&nbsp;ρ(Δβ)) ≠ (0,&nbsp;0).<span class="proof-end">∎</span></li>
+</ol>
+
+<h2>4. Proof of Theorem 1</h2>
+<p><i>Upper bounds.</i> Both fields satisfy the hypotheses of Theorem 2.</p>
+<ul>
+<li><b>ℚ(√3,&nbsp;√11).</b> The prime 2 ramifies in ℚ(√3) and ℚ(√11) (3, 11 ≡ 3 mod 4) and splits in ℚ(√33)
+(33 ≡ 1 mod 8). So 2 = <i>P</i><sub>1</sub>²<i>P</i><sub>2</sub>², and both primes have residue field 𝔽<sub>2</sub>.</li>
+<li><b>ℚ(√2,&nbsp;√3).</b> The prime 2 ramifies in all three quadratic subfields, so 2 = <i>P</i><sup>4</sup> with residue field 𝔽<sub>2</sub>.</li>
+</ul>
+<p>Both decompositions were also confirmed with PARI/GP and with sympy.</p>
+<p><i>Lower bounds.</i> For ℚ(√3,&nbsp;√11) the Moser spindle suffices. Take the unit rhombus with vertices
+<i>O</i>, (1,&nbsp;0), (1/2,&nbsp;√3/2), (3/2,&nbsp;√3/2), together with its image under the rotation with
+cos θ = 5/6, sin θ = √11/6. The two far tips are then at distance 1.</p>
+<p>For ℚ(√2,&nbsp;√3), a 4-chromatic graph is already implicit in Voronov, Neopryatnaya and Dergachev [11]:
+their second series of 5-chromatic graphs is built from the 4-chromatic 10-vertex graph <i>L</i><sub>10,2</sub>
+and the unit vectors ζ<sub>24</sub> and (√6 + <i>i</i>√3)/3, all with coordinates in ℚ(√2,&nbsp;√3). For completeness,
+here is a short explicit example. Take the unit
+vectors</p>
+<p class="eq"><i>u</i><sub>1</sub> = (1,&nbsp;0),&nbsp;&nbsp; <i>u</i><sub>2</sub> = (0,&nbsp;1),&nbsp;&nbsp;
+<i>u</i><sub>3</sub> = (−2/3 − √2/6,&nbsp; −2/3 + √2/6),</p>
+<p>for which |<i>u</i><sub>1</sub> + <i>u</i><sub>2</sub> + <i>u</i><sub>3</sub>|² = 1/3.</p>
+<p>Let <i>P</i><sub>0</sub> = <i>O</i> and <i>P</i><sub><i>k</i></sub> = √3(<i>u</i><sub>1</sub> + ⋯ + <i>u</i><sub><i>k</i></sub>). Join
+<i>P</i><sub><i>k</i>−1</sub> and <i>P</i><sub><i>k</i></sub> by the unit rhombus whose middle vertices are
+(<i>P</i><sub><i>k</i>−1</sub> + <i>P</i><sub><i>k</i></sub>)/2 ± <i>u</i><sub><i>k</i></sub><sup>⊥</sup>/2. The result has 10 vertices and 16 edges.</p>
+<ol class="proof">
+<li>In any 3-colouring, the two middle vertices of each rhombus take two distinct colours, and its two tips both take the third. So each rhombus forces its tips alike, and <i>P</i><sub>0</sub> and <i>P</i><sub>3</sub> share a colour.</li>
+<li>But |<i>P</i><sub>0</sub><i>P</i><sub>3</sub>| = 1, a contradiction.<span class="proof-end">∎</span></li>
+</ol>
+
+<h2>5. Remarks</h2>
+<ol>
+<li><b>Prior work.</b> Reduction modulo 2 in the coordinates α + βω goes back to Speyer [7]. In April 2018
+he 4-coloured the Moser ring <i>R</i> = <i>O<sub>K</sub></i>[1/3], <i>K</i> = ℚ(√−3,&nbsp;√−11), through
+<i>R</i>/2<i>R</i> ≅ 𝔽<sub>4</sub> × 𝔽<sub>4</sub>. A computer search by Hubai, reported by Gibbs, then found that all
+its 4-colourings have period 8 [8], and Dúcz [2] has recently given geometric 4-colourings of the Moser
+lattice and ring. The ingredients of Theorem 2 are standard. The passage from a ring to the whole field
+by cosets is Madore’s and Moorhouse’s, and the integrality of unit vectors is the compactness of the
+norm-one torus at a place that does not split. What seems to have been missed is that the form
+α² − αβ + β² makes the argument work at 2. With it, Speyer’s colouring extends to every point and every
+unit vector of the plane over ℚ(√3,&nbsp;√11), and the same construction works over ℚ(√2,&nbsp;√3).</li>
+<li><b>Consistency check.</b> The criterion must fail for fields that contain 5-chromatic graphs, and it
+does. In ℚ(√3,&nbsp;√11,&nbsp;√247), the field of Exoo–Ismailescu, and in ℚ(√3,&nbsp;√5,&nbsp;√11), the field of
+Heule [4], every prime above 2 has residue field containing 𝔽<sub>4</sub>, where <i>u</i>² + <i>u</i> + 1 has roots.</li>
+</ol>
+
+<h2>6. Verification and provenance</h2>
+<ul>
+<li><b>Upper bounds.</b> Besides the proof, the colourings were tested by computer on random unit
+vectors <i>t</i>/<i>t̄</i> of each field and on unit-distance graphs with up to about 12&nbsp;000 vertices, with
+no monochromatic edge. A second check, with separate code, its own 2-adic model and PARI/GP for the
+prime decompositions, gave the same results.</li>
+<li><b>Lower bounds.</b> Both graphs can be checked by hand. An exhaustive computer search also
+confirms that neither has a proper 3-colouring.</li>
+<li><b>Code and data.</b> Available from the author on request.</li>
+</ul>
+<p class="small"><sup>*</sup> These results were obtained with the assistance of an AI system (Claude, by
+Anthropic), which carried out the computations and the checks and helped to draft this note. No
+mathematician has checked the note yet. The author is not a professional mathematician and submits it
+for independent verification.</p>
+
+<h2>References</h2>
+<ol class="refs">
+<li>A. D. N. J. de Grey, The chromatic number of the plane is at least 5, <i>Geombinatorics</i> 28 (2018); arXiv:1804.02385.</li>
+<li>Á. Dúcz, A note on geometric colorings of the Moser lattice, arXiv:2606.12325 (2026).</li>
+<li>G. Exoo, D. Ismailescu, The chromatic number of the plane is at least 5: a new proof, <i>Discrete Comput. Geom.</i> 64 (2020); arXiv:1805.00157.</li>
+<li>M. J. H. Heule, Computing small unit-distance graphs with chromatic number 5, arXiv:1805.12181 (2018).</li>
+<li>D. A. Madore, The Hadwiger–Nelson problem over certain fields, arXiv:1509.07023 (2015).</li>
+<li>G. E. Moorhouse, On the chromatic numbers of planes, preprint (2010).</li>
+<li>Polymath16, second thread (2018), comments 4013–4014 by D. Speyer, 25 April 2018; dustingmixon.wordpress.com.</li>
+<li>Polymath16, third thread (2018), comments by D. Speyer (3 May 2018) and P. Gibbs (9 May 2018).</li>
+<li>Polymath16, seventeenth thread (2021), comments by V. Voronov, 18 and 30 July 2021.</li>
+<li>A. Soifer, <i>The New Mathematical Coloring Book</i>, Springer, 2024.</li>
+<li>V. A. Voronov, A. M. Neopryatnaya, E. A. Dergachev, Constructing 5-chromatic unit distance graphs embedded in the Euclidean plane and two-dimensional spheres, arXiv:2106.11824 (2021).</li>
+<li>D. R. Woodall, Distances realized by sets covering the plane, <i>J. Combin. Theory Ser. A</i> 14 (1973).</li>
+</ol>
+
+</body>
+</html>
