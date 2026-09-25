@@ -31,7 +31,8 @@ The route is **not ours**.
 | Unions of paths as a construction | Haugland (Moser-spindle-free, 2 131 vertices) | [arXiv 2608.04542](https://arxiv.org/abs/2608.04542) |
 | Reduction of `F²` modulo a prime, for number fields `F`, and extension from a ring to the whole field by cosets | Moorhouse (Lemma 4.2, Lemma 8.2); Madore (Prop. 3.2, 3.8, 6.6) | [Moorhouse 2010](https://www.ericmoorhouse.org/pub/chromatic.pdf), [arXiv 1509.07023](https://arxiv.org/abs/1509.07023) |
 | `χ(ℚ(√N)²) = 2` for `N ≡ 1, 2 (mod 4)` | Johnson (1987) | Congr. Numer. 60, 51–58; see [Payne](https://arxiv.org/abs/0707.1177) |
-| `χ(ℚ(√N)²) ≤ 3` for `N ≡ 0, 1 (mod 3)`, `≤ 4` for `N ≡ 3 (mod 8)` | Fischer (1990) | Discrete Math. 82, 181–195; see [Payne](https://arxiv.org/abs/0707.1177) |
+| `χ(ℚ(√N)²) ≤ 3` for `N ≡ 0, 1 (mod 3)`, `≤ 4` for `N ≡ 3 (mod 8)` (Thms 9, 10; the second is a reduction at 2 into `ℤ/4`); colouring the plane through the component of the origin (Thm 1) | Fischer (1990) | Discrete Math. 82, 181–195 (read in full); see also [Payne](https://arxiv.org/abs/0707.1177) |
+| No additive `k`-colouring of `ℚ(√N)²` for `k ≤ 6` when `N ≡ −1 (mod 24)`, for example `N = 47`, because `1/2` and `1/3` are sums of unit vectors | Fischer (1990), Thm 10(ii) | Discrete Math. 82, 181–195 |
 | **`χ(ℚ(√3, √11)²) = 4`**; more generally an additive 4-colouring of `ℚ(√p, √q)²` for `p ≡ 3`, `q ≡ 11 (mod 16)`, `pq ≡ 1 (mod 32)` | Fischer (1994) | Congr. Numer. 104, 73–79; [Zbl 0836.05030](https://zbmath.org/?q=an:0836.05030) |
 | The connected component of the origin in `ℚ(√N₁, …, √N_d)²` | Fischer (1990) | Congr. Numer. 72, 213–221; [Zbl 0733.05048](https://zbmath.org/?q=an:0733.05048) |
 | A survey, as of 2000, of problems on colourings of `ℚⁿ` and its algebraic extensions | Johnson (2000); we have not seen it | Geombinatorics 9, 170–179; [Zbl 0974.05029](https://zbmath.org/?q=an:0974.05029) |
@@ -66,6 +67,9 @@ The route is **not ours**.
    - Voronov, Polymath16 thread 17 (July 2021): "it seems likely that
      `χ(Q(i, √3, √11)) = 4` ... But as far as I know, nobody has proved this
      yet."
+
+   We have since read Fischer's 1990 paper in full. It treats `ℚᵈ` and the
+   quadratic fields `ℚ(√N)` only, and says nothing about `ℚ(√2, √3)`.
 
    Earlier, Fischer (*Additive K-colorable extensions of the rational plane*,
    Discrete Math. 82 (1990)) had shown `χ(ℚ(√N)²) ≤ 3` for `N ≡ 0, 1 (mod 3)`
