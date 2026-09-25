@@ -7959,3 +7959,50 @@ chain closes at distance 1. The graph has 10 vertices and 16 edges.
 
 See `notes/local_colourings.md` §10, `tests/test_q23.py` and
 `certificates/chain23_no3coloring.json`.
+
+
+## Correction: `χ(ℚ(√3, √11)²) = 4` is Fischer's theorem (1994) (25 September)
+
+A literature search for the quadratic field `ℚ(√47)` turned up two papers of
+K. G. Fischer that none of Moorhouse, Madore, Exoo–Ismailescu or Polymath16
+cites:
+- *A planar geometric graph of chromatic number four*, Congr. Numer. 104
+  (1994) 73–79 (Zbl 0836.05030). It proves `χ(ℚ(√p, √q)²) = 4` for squarefree
+  coprime `p ≡ 3`, `q ≡ 11 (mod 16)` with `pq ≡ 1 (mod 32)`, by an additive
+  colouring into `ℤ/4`, and concludes `χ(ℚ(√3, √11)²) = 4`.
+- *Additive K-colorable extensions of the rational plane*, Discrete Math. 82
+  (1990) 181–195. As summarised by Payne (arXiv 0707.1177), it proves
+  `χ(ℚ(√N)²) ≤ 4` for `N ≡ 3 (mod 8)`.
+
+So the entry "An open question closed" above claims too much: the question was
+open in the later literature, but Fischer had answered it. What remains ours,
+as far as we know, is `χ(ℚ(√2, √3)²) = 4` (Fischer's hypotheses exclude it) and
+the short criterion behind both proofs. We have read only the zbMATH summaries
+of Fischer's papers. The note, the READMEs and `notes/literature.md` now credit
+Fischer, and the two mathematicians who received the first version of the note
+are being told.
+
+## The plane over `ℚ(√47)`: first experiments (25 September)
+
+Moorhouse's classes `d ≡ 47, 143, 167 (mod 168)` are the real quadratic fields
+where no bound below 5 is known; the smallest is `ℚ(√47)`, with
+`3 ≤ χ ≤ 5` (Fischer 1990 or Moorhouse Thm 8.6 below, reduction at 11 above).
+At 2 the place splits in `ℚ(i, √47)`, since `ℚ₂(√47) = ℚ₂(i)`, so no 2-adic
+colouring exists.
+- **Odd cycles.** Unit vectors of height at most 244 give an odd cycle of
+  length 13 (CP-SAT; lower bound 11). With only the axes and the
+  `ℚ(√−47)` vectors `(±23 ± i√47)/24`, the shortest odd cycle is longer than 37.
+- **Balls are 3-colourable.** With the 48 unit vectors of height at most 40,
+  the ball of radius 5 in the Cayley graph (2 248 121 points, 10 439 472 edges)
+  is 3-colourable; with the 28 vectors of heights 1, 5 and 40, so is the ball of
+  radius 6 (751 073 points).
+- **No periodic 3-colouring.** For the 48-vector module `M ≅ ℤ⁴`, no coset
+  3-colouring exists, and `Cay(M/pM, U)` is not 3-colourable for
+  `p = 8, 9, 11, 16, 17, 18, 19, 22, 23, 24, 25, 27`; for the other `p ≤ 27`
+  some unit vector lies in `pM`. So a 3-colouring of the module, if one exists,
+  has no period lattice of exponent at most 27.
+- **Cores wrap around.** The smallest non-3-colourable core of `Cay(M/8M, U)`
+  has 7 vertices, but 4 of its 12 edges do not lift to `M`.
+
+The prototype scripts for these experiments are not yet in the repository.
+Whether `χ(ℚ(√47)²)` is 3 or 4 (or 5) remains open.
