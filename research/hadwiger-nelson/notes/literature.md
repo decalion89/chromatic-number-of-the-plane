@@ -58,6 +58,9 @@ The route is **not ours**.
    - Madore (2015), who proved `4 ≤ χ ≤ 5`;
    - Exoo–Ismailescu (2018), who asked whether a 5-chromatic unit-distance
      graph embeds in this plane;
+   - Cranston–Rabern ([arXiv 1501.01647](https://arxiv.org/abs/1501.01647),
+     Combinatorica 2017), who cite Fischer (1990) and ask for the fractional and
+     the ordinary chromatic number of this plane;
    - Polymath16, thread 3 (2018), and Parts' "funny proof" in thread 13
      (2019);
    - Voronov, Polymath16 thread 17 (July 2021): "it seems likely that
