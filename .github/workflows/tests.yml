@@ -33,7 +33,7 @@ jobs:
         run: >-
           python -m pytest -q
           tests/test_q23.py tests/test_q311.py tests/test_q35.py tests/test_q3q.py tests/test_split_places.py
-          tests/test_biquadratic_bounds.py tests/test_finite_planes.py
+          tests/test_biquadratic_bounds.py tests/test_finite_planes.py tests/test_threepoint.py
           tests/test_moser_field.py tests/test_reduce11.py
           tests/test_field.py tests/test_geometry.py tests/test_graph_coloring.py tests/test_certify.py
           tests/test_density.py tests/test_quadext.py tests/test_spindle.py tests/test_transfer.py

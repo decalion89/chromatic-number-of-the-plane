@@ -7,8 +7,9 @@ abstract: >-
   short proof that the planes over Q(sqrt2, sqrt3) and Q(sqrt3, sqrt11) are
   4-chromatic (the latter a theorem of K. G. Fischer, 1994), with a
   three-page note, reproductions of chi(R^2) >= 4 and
-  >= 5 with DRAT certificates, and multi-distance witnesses for the route to
-  chi(R^2) >= 6. AI-assisted research; not peer reviewed.
+  >= 5 with DRAT certificates, multi-distance witnesses for the route to
+  chi(R^2) >= 6, and certified three-point bounds showing that several finite
+  planes need six colours. AI-assisted research; not peer reviewed.
 type: software
 authors:
   - given-names: Sergi
