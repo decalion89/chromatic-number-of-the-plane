@@ -549,6 +549,16 @@ possible to do it without `√3` (and without triangle)?"
 113, and a 271-vertex chain of 90 rhombi for `q = 17`. PARI/GP recomputes the
 decompositions of 2 and 3 for every prime `q < 75`.
 
+**More square roots.** The proof of the first two parts works for every
+multiquadratic field `L = ℚ(√3, √q₁, …, √q_k)`. Write `q'_j` for `q_j` with any
+factor 3 removed.
+- If every `q'_j ≡ 1 (mod 3)`, then 3 splits in every quadratic subfield prime
+  to 3, a prime of `L` above 3 has residue field `𝔽₃`, and `χ(L²) = 3`. For
+  example `χ(ℚ(√3, √7, √13, √19)²) = 3`.
+- Otherwise some `q'_j ≡ 2 (mod 3)`, `ℚ(√−q'_j) ⊂ L(i)`, and `χ(L²) ≥ 4`.
+
+PARI/GP confirms the residue degrees above 2 and 3 for nine such fields.
+
 So the answer to Voronov's first question is no for every `ℚ(√3, √q)` outside
 the class `q ≡ 5, 23 (mod 24)`. Fischer's family meets these fields only at
 `q ≡ 11 (mod 32)`, and for `q ≠ 11` it gives the upper bound alone.
@@ -559,6 +569,15 @@ ring `C₀` that contains `ω = e^{iπ/3}`, so `(1 + ω)/3 = Σ uₖ` with unit
 vectors `uₖ`. The unit rhombus whose long diagonal is `√3 uₖ` forces its tips
 alike in every 3-colouring. Chaining these rhombi joins `0` to
 `√3(1 + ω)/3 = e^{iπ/6}`, a unit vector.
+
+The same chain works at any number of colours. Suppose a finite graph `G` in
+`L²` has two vertices `A`, `B` that share a colour in every `k`-colouring, and
+`w/(B − A)` is a sum of unit vectors `u_j` for some unit vector `w`. Chain the
+copies of `G` turned by the `u_j`, each starting where the previous one's image
+of `B` lies. They join a point to a point at unit distance `w`, so
+`χ(L²) > k`. In `ℝ²` two copies always suffice: this is spindling. Inside a
+fixed field the chain needs no spindle rotation, only this arithmetic
+condition; the rhombus is the case `k = 3`, `B − A = √3`.
 
 **The plane over `ℚ(√3, √5)`.** Here the generator is explicit.
 `τ = (2 + i√5)/3` is a unit vector, so

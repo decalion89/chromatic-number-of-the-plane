@@ -8092,3 +8092,12 @@ The search for a 5-chromatic graph over `ℚ(√3, √5)` goes on. The growths a
 four colours stay easy. Their colourings are not periodic at the places over
 7, 13 or 17, and no degree-1 place up to 61 four-colours the module of the
 chain seed.
+
+## More square roots (25 September)
+
+The dichotomy of Theorem 4 holds for every multiquadratic `L ∋ √3`: `χ(L²) = 3`
+when every other generator, with any factor 3 removed, is `≡ 1 (mod 3)`, and
+`χ(L²) ≥ 4` as soon as one is `≡ 2 (mod 3)` (the subfield `ℚ(√−q)` of `L(i)`
+supplies `1/3`). PARI/GP gives residue degree 1 above 3 for `ℚ(√3, √7)`,
+`ℚ(√3, √7, √13)` and `ℚ(√3, √7, √13, √19)`, and 2 for six fields with a
+generator `≡ 2 (mod 3)`. `notes/local_colourings.md` §11.
