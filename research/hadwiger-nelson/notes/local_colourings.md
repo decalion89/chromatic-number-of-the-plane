@@ -97,16 +97,20 @@ structure:
   and `G_q` is the union of `(q+1)/6` rotated triangular tori.
 - **Eigenvalues.** They are `λ(n) = Σ_c (1 − η(c² − 4n)) e(c/q)`, with `η` the
   quadratic character.
-- **Ramanujan.** The graph satisfies `|λ| ≤ 2√q`; this was checked for every
-  `q < 400`.
+- **Ramanujan.** Every non-trivial eigenvalue satisfies `|λ| ≤ 2√q`. Parametrise
+  `N₁` by `ℙ¹(𝔽_q)`; then `λ` is an exponential sum `Σ ψ(f(t))` of a rational
+  function with two simple, conjugate poles, and Weil's bound gives `2√q`. The
+  bound was also checked numerically for every `q < 400`.
 
 **Proposition B.** For every prime `q ≥ 53`, `χ(G_q) ≥ 6`. The same bound holds
-for the deeper quotients `Cay(O_w/π^r, T mod π^r)`.
+for the deeper quotients `Cay(O_w/π^r, T mod π^r)`, given the character-sum
+estimate sketched in the proof.
 
 *Proof.* Hoffman gives `χ_f ≥ 1 + (q+1)/|λ_min|`. This exceeds 5 for `q > 62`
-by the Ramanujan bound, and was computed for `q = 53, 59`. The deeper levels
-have the same ratio: a primitive level-`j` character sums to at most `2q^{j−1}`
-in modulus. ∎
+by the Ramanujan bound, and was computed for `q = 53, 59`. For the deeper
+levels we use that a primitive level-`j` character sums to at most `2q^{j−1}`
+in modulus: a stationary-phase argument, sketched in `notes/rigidity.md` §10
+and checked numerically for small `q` and `j`. ∎
 
 The Delsarte LP gives the same bound as Hoffman, and adding the triangle
 inequalities changes almost nothing. Below 53, therefore, only combinatorial
@@ -136,8 +140,8 @@ field:
 
 | field | first non-split places | status for six |
 |---|---|---|
-| `ℚ(√−3, √−11, √−247)` | 11, 29 | dead (Theorem 2) |
-| `ℚ(√−3, √−11, √−23)` | 11, 17 | dead (`χ ≤ 5`) |
+| `ℚ(√−3, √−11, √−247)` | 11, 29 | excluded (Theorem 2) |
+| `ℚ(√−3, √−11, √−23)` | 11, 17 | excluded (`χ ≤ 5`) |
 | `ℚ(√−3, √−7, √−11)` | 17, 41, 83, 101 | open if `χ(G₁₇), χ(G₄₁) ≥ 6` |
 | de Grey's `ℚ(√−3, √−7, √−11, √−15)` | 41, 101, 131 | open if `χ(G₄₁) ≥ 6` |
 | `ℚ(√−3, √−7, √2717)` | 59, 83, 89 | open |
@@ -154,7 +158,7 @@ It needs no `√5` and no `√247`. The graph is
 
 The field has rotations with every small prime in a denominator: 2, 3, 5, 7 and
 11. The Exoo–Ismailescu `λ`-closure of the graph (378 unit vectors, rank 8)
-kills every cyclic periodic colouring tried. Growth is running there. It has
+admits none of the cyclic periodic colourings tried. Growth is running there. It has
 passed 23 000 points, and kissat now needs 10–25 minutes per hard step.
 
 ## 6. A question
@@ -182,7 +186,7 @@ chromatic numbers of planes* (draft, 2010). For the finite planes, see
 Le Anh Vinh, *On chromatic number of unit-quadrance graphs*, arXiv
 math/0510092: `√q/2 ≲ χ(G_q) ≲ q/2`.
 
-## 7. Fields with no local obstruction (24 September, evening)
+## 7. Fields with no local obstruction
 
 Extending `F8 = ℚ(√−3, √−7, √−11)` by one more `√−d` can remove the non-split
 places 17 and 41. `scripts/fieldscreen.py` finds no non-split place of norm
@@ -215,7 +219,7 @@ level. The case `d = 247` is `L16 = ℚ(√−3, √−7, √−11, √−247)`:
   vertices, degree 306) never improves on the lift of the best level-1
   colouring.
 
-## 8. The plane over `ℚ(√3, √11)`: `χ = 4` (25 September)
+## 8. The plane over `ℚ(√3, √11)`: `χ = 4`
 
 This section answers a question that was open in print. It is not a step
 towards `χ(ℝ²) ≥ 6`.
@@ -275,7 +279,7 @@ units digit of the 2-adic integer part. This is `hn.adelic.q311_colour`.
 - On 638 further points and 3 012 edges (`data/ei_rho7.json`) there are no
   monochromatic edges, at either place.
 
-**Why it was missed.** Moorhouse (Lemma 8.2, Lemma 8.4) and Madore
+**Coordinates versus the Hermitian form.** Moorhouse (Lemma 8.2, Lemma 8.4) and Madore
 (Prop. 3.2, 3.8) reduce the *coordinates* `(x, y)`. That needs `x² + y²` to be
 anisotropic modulo `𝔪` or `𝔪²`. At a place over 2 with `√3` this fails, since
 `1² + 1² ≡ 0 (mod 𝔪²)`.
@@ -289,7 +293,7 @@ anisotropic modulo `𝔪`. Theorem 3 is Madore's Prop. 3.2 with this form in
 place of `x² + y²`; his proof applies verbatim. At odd places the two versions
 agree, since `O_w = O_v[i]` there.
 
-**Who came closest.** The ingredients are not new.
+**Prior work.** The ingredients are not new.
 - **The reduction.** In
   [Polymath16, thread 2](https://dustingmixon.wordpress.com/2018/04/22/polymath16-second-thread-what-does-it-take-to-be-5-chromatic/#comment-4013)
   (25 April 2018), David Speyer 4-coloured the *Moser ring*
@@ -313,7 +317,7 @@ ring, and Speyer's colouring extends to the whole plane. For an expert in local
 fields this is a short observation. Its interest is that it settles questions
 asked in print.
 
-**Parts' paradox, resolved.**
+**Parts' question about limits.**
 - Exoo–Ismailescu's `G₄₀` forces a pair at distance 8/3 alike in every
   4-colouring *with no monochromatic pair at distance `√(11/3)`*.
 - In [Polymath16, thread 13](https://dustingmixon.wordpress.com/2019/07/08/polymath16-thirteenth-thread-bumping-the-deadline/)
@@ -352,13 +356,15 @@ asked in print.
   `−1` is a square in every completion over 2. There `√5` or `√247` supplies
   `i`, since `5 ≡ −3` and `247 ≡ −1 (mod 8)`.
 
-We found no proof of Theorem 3 in any paper, in Polymath16 threads 1–18, on the
-main page of the Polymath16 wiki, or by web search. The wiki's "Algebraic
-formulation" page could not be retrieved. The closest work is Speyer's
-colouring of the Moser ring, above. An independent check (25 September) found
-no mathematical error. Nothing here has been refereed.
+We found no proof of Theorem 3 in any paper, in Polymath16 threads 1–18, in the
+Polymath16 wiki, or by web search. The wiki page
+[Algebraic formulation of Hadwiger–Nelson problem](https://web.archive.org/web/20210412075722/https://asone.ai/polymath/index.php?title=Algebraic_formulation_of_Hadwiger-Nelson_problem)
+colours rings such as the Moser ring, not whole planes. The closest work is
+Speyer's colouring of the Moser ring, above. A second review, carried out
+independently with AI assistance on 25 September, found no mathematical error.
+No mathematician has checked this yet, and nothing here has been refereed.
 
-## 9. Split places colour modules (25 September)
+## 9. Split places colour modules
 
 §5 screens whole fields, and there only non-split places matter. At a split
 place `w` the local torus is not compact, so unit vectors of `K` can have any
@@ -375,7 +381,7 @@ of `M` is integral at `w`.
 - **The split finite plane.** At a split place with residue field `𝔽_q`,
   the target is `H_q = Cay(𝔽_q², {(a, 1/a)})`.
 
-So a module is dead for `k` colours as soon as one integral place has a
+So a module is `k`-colourable as soon as one integral place has a
 `k`-colourable finite plane.
 
 **Chromatic numbers of `H_q`.**
@@ -402,16 +408,16 @@ the growth units, the edge unit vectors and the component representatives.
     `𝔽_{p²}²`, which is safe by Hoffman;
   - the only small split place of degree 1 is at 37, and tabu finds no
     5-colouring of its image `H₃₇`.
-- **`F8` growth** (822 units): 3 and 5 are killed. At 7 no unit has 7 in a
+- **`F8` growth** (822 units): 3 and 5 are excluded. At 7 no unit has 7 in a
   denominator; the place is ramified with residue field `𝔽₄₉`, and tabu finds
   no 5-colouring of `H₄₉`.
 
-So neither search is doomed by a reduction mod a prime, as far as tabu can
+So neither search is ruled out by a reduction mod a prime, as far as tabu can
 tell. What the gate does rule out: adding a rotation that removes `ρ₇` or
 Moser's `σ` from `L16`'s unit set would reopen the places over 7 or 3, and
 `H₇` or `H₃` would colour the module with 4 or 3 colours.
 
-## 10. The plane over `ℚ(√2, √3)`: `χ = 4` (25 September)
+## 10. The plane over `ℚ(√2, √3)`: `χ = 4`
 
 Voronov, in [Polymath16, thread 17](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/#comment-29291)
 (18 July 2021), conjectured `χ = 4` for two fields: `ℚ(i, √3, √11)`, which is

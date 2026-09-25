@@ -3,8 +3,10 @@
 This note compares the project with the published record. Sources are:
 - the papers below;
 - all 18 Polymath16 threads;
-- the main page of the Polymath16 wiki (its "Algebraic formulation" page could
-  not be retrieved);
+- the Polymath16 wiki, including its page
+  [Algebraic formulation of Hadwiger–Nelson problem](https://web.archive.org/web/20210412075722/https://asone.ai/polymath/index.php?title=Algebraic_formulation_of_Hadwiger-Nelson_problem),
+  which colours rings such as the Moser ring (4 colours through `ℤ₄[ω]`, all
+  4-colourings of period 8) but not whole planes;
 - the public repositories of the 2026 search efforts.
 
 "New" means only that none of these sources has it. Nothing here has been
@@ -33,7 +35,7 @@ The route is **not ours**.
 | A 4-chromatic unit-distance graph over `ℚ(√2, √3)` | Voronov–Neopryatnaya–Dergachev (`L₁₀,₂` and its Minkowski sums) | [arXiv 2106.11824](https://arxiv.org/abs/2106.11824) |
 | A lattice-like graph with no 5-colouring and bichromatic origin would give six | Frankl–Hubai–Pálvölgyi (Thm 27) | [arXiv 1912.02604](https://arxiv.org/abs/1912.02604) |
 | A 6-chromatic unit-distance graph has at least 42 vertices | de Grey–Parts | [arXiv 2303.14714](https://arxiv.org/abs/2303.14714) |
-| Large negative searches for six (2026) | Adler (`zeta42`); the Math Market bounty | [keithadler/zeta42](https://github.com/keithadler/zeta42), [math-market/chromatic-plane](https://github.com/math-market/chromatic-plane) |
+| Large negative searches for six (2026) | Adler (`zeta42`); the `math-market/chromatic-plane` public repository | [keithadler/zeta42](https://github.com/keithadler/zeta42), [math-market/chromatic-plane](https://github.com/math-market/chromatic-plane) |
 
 ## What we found nowhere else
 
@@ -52,7 +54,7 @@ The route is **not ours**.
    over 2. See `notes/local_colourings.md` §8, `hn/adelic.py` and
    `tests/test_q311.py`.
 
-   **The idea is not new; the theorem is.**
+   **The idea is not new. We have not found the theorem in the literature.**
    - David Speyer used the same 2-adic reduction in
      [Polymath16, thread 2](https://dustingmixon.wordpress.com/2018/04/22/polymath16-second-thread-what-does-it-take-to-be-5-chromatic/#comment-4013)
      (25 April 2018) to 4-colour the Moser ring: `R/2R ≅ 𝔽₄ × 𝔽₄`. A computer
@@ -68,9 +70,9 @@ The route is **not ours**.
    through `(ℤ/4)[ζ₂₄]` and asked for a simpler one, and the lower bound was
    already implicit in Voronov–Neopryatnaya–Dergachev.
 
-   What is new is one observation: the places over 2 are inert in `L(i)`, so
-   the reduction applies to every unit vector of the plane. For an expert in
-   local fields this is a short step.
+   What we have not found elsewhere is one observation: the places over 2 are
+   inert in `L(i)`, so the reduction applies to every unit vector of the plane.
+   For an expert in local fields this is a short step.
 
    By-products:
    - `χ(ℚ(√d)²) ≤ 4` for `d ≡ 3 (mod 8)`, which extends Moorhouse's Theorem 8.1;
@@ -86,16 +88,16 @@ The route is **not ours**.
    `L16`.
 
    Dúcz ([arXiv 2606.12325](https://arxiv.org/abs/2606.12325)) 4-coloured the
-   Moser *lattice* and *ring*. Our Theorem 1 covers the whole field
-   `ℚ(√−3, √−11)`, and Theorem 3 the plane over `ℚ(√3, √11)`, which contains
-   it.
+   Moser *lattice* and *ring*. Theorem 1 of `notes/local_colourings.md` covers
+   the whole field `ℚ(√−3, √−11)`, and its Theorem 3 the plane over
+   `ℚ(√3, √11)`, which contains it.
 3. **Repulsion spectra at five colours, and the two-step explanation.** Every
    known witness distance is `|u + v|` for unit vectors `u, v`. Such pairs share
    a unit neighbour, and 5-colourings colour them alike 30–40% of the time.
    `2/√3` is the most repulsive distance measured, at 8%, and it is not a
    two-step distance in `L16`.
 4. **A sparse 72-point lattice witness** for
-   `{1, 4/√3, √7, √(28/3), √(61/3)}`, verified by three solvers and DRAT.
+   `{1, 4/√3, √7, √(28/3), √(61/3)}`, verified by four solvers and DRAT.
 5. **Methods:**
    - rainbow growth at five colours;
    - `MODE` growth toward a forced pair;
@@ -107,6 +109,6 @@ The route is **not ours**.
 The strategy for six is the known one. The new pieces are:
 - the choice of distance;
 - the arithmetic that says which fields can hold six;
-- a first by-product theorem.
+- two by-product theorems, χ(ℚ(√3, √11)²) = χ(ℚ(√2, √3)²) = 4.
 
-That theorem is modest, but it answers questions that were asked in print.
+They are modest, but they answer questions that were asked in print.
