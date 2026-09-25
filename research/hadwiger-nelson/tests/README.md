@@ -2,7 +2,8 @@
 
 The tests check the project's constructions and results in exact arithmetic, recomputing each graph
 from its stored coordinates. They cover field arithmetic, graph construction, colourings, forced
-pairs, the local colourings, and the two theorems χ(ℚ(√3, √11)²) = 4 and χ(ℚ(√2, √3)²) = 4.
+pairs, the local colourings, and the two theorems χ(ℚ(√3, √11)²) = 4, first proved by K. G. Fischer
+(1994), and χ(ℚ(√2, √3)²) = 4.
 
 ```sh
 cd research/hadwiger-nelson
@@ -17,7 +18,9 @@ The tests marked `slow` include a 4-colourability solve of de Grey's 1581-vertex
 GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 25 files marked CI
 on every push to `main`, on every pull request, and on manual dispatch: 332 tests, which took 80
 seconds in a local run. The DRAT test in `test_certify.py` is skipped there, because the
-workflow does not install drat-trim. The other eight files are run locally.
+workflow does not install drat-trim. The other eight files (269 tests) are run locally; without their
+two tests marked `slow` they took 32 minutes in a local run, 20 of them in one test of
+`test_two_tunings.py`.
 
 | file | CI | what it checks |
 |---|:---:|---|
@@ -43,7 +46,7 @@ workflow does not install drat-trim. The other eight files are run locally.
 | `test_neighbourhoods_are_bipartite.py` | ✓ | The unit neighbours of any vertex induce a bipartite graph (paths and hexagons), since two points on a unit circle are at distance 1 exactly when they subtend 60° at its centre, so no vertex is pinned by its neighbourhood at four colours. |
 | `test_order_six_tuning.py` |  | Tuning the angle of the composite isometry to 60° gives it order 6, so the union of six copies of the carrier is C₆-invariant and the orbit of the pivot is forced monochromatic. |
 | `test_q23.py` | ✓ | χ(ℚ(√2, √3)²) = 4: the plane has a proper 4-colouring by 2-adic residues and contains a 10-vertex chain of three unit rhombi with no proper 3-colouring (details below). |
-| `test_q311.py` | ✓ | χ(ℚ(√3, √11)²) = 4: the plane has a proper 4-colouring by 2-adic residues and contains the Moser spindle, which has no proper 3-colouring (details below). |
+| `test_q311.py` | ✓ | χ(ℚ(√3, √11)²) = 4, a theorem of K. G. Fischer (1994), by a short proof: the plane has a proper 4-colouring by 2-adic residues and contains the Moser spindle, which has no proper 3-colouring (details below). |
 | `test_quadext.py` | ✓ | Arithmetic in ℚ(ζ₁₅, √−7, √−11), built as a tower of quadratic extensions of ℚ(ζ₁₅), which contains de Grey's rotations and ζ₁₅. |
 | `test_reduce11.py` | ✓ | The unit-distance graph on the field ℚ(√−3, √−11, √−247), viewed in ℂ, is 5-colourable: reduction at a place above 11 maps it to the Cayley graph of 𝔽₁₂₁ on its 12 elements of norm one, which is 5- but not 4-colourable, and this colours the 803-vertex graph `five_247_c.json` properly at both places above 11. |
 | `test_ring_geometry.py` | ✓ | Six facts behind the ring constructions, recomputed: the 90° rotation about the centre of a unit square moves one diagonal onto the other at distance 1, the map σ satisfies \|σu\|² = \|u\|²/3 and \|u − σu\| = \|u\|, the two-ring configuration is 3-chromatic, within each component of a neighbourhood in `five_247_c.json` two neighbours lie on the same side of the bipartition exactly when the angle between them is an even multiple of 60°, 2 is not of the form a² + ab + b², and that graph has exactly two vertices of degree 4. |
@@ -57,7 +60,8 @@ workflow does not install drat-trim. The other eight files are run locally.
 
 ## The two theorems
 
-`test_q311.py`, for χ(ℚ(√3, √11)²) = 4:
+`test_q311.py`, for χ(ℚ(√3, √11)²) = 4 (K. G. Fischer, Congr. Numer. 104 (1994) 73–79), checks a
+short proof by 2-adic residues:
 - the local facts: ℚ(√3, √11) has two places over 2, each with completion ℚ₂(√3) and inert in
   ℚ(√3, √11, i), whose completions have residue field 𝔽₄; sympy's `prime_decomp` confirms that
   2 = 𝔭₁²𝔭₂² with residue degree 1;
@@ -69,7 +73,7 @@ workflow does not install drat-trim. The other eight files are run locally.
 - on random samples, it gives pairs at distance 8/9ⁿ (n ≤ 3) the same colour and pairs at distance
   √(11/3) different colours.
 
-`test_q23.py`, for χ(ℚ(√2, √3)²) = 4:
+`test_q23.py`, for χ(ℚ(√2, √3)²) = 4, a case that Fischer's hypotheses exclude, checks:
 - the local facts: ℚ(√2, √3) has one place over 2, totally ramified with residue field 𝔽₂ and not
   split in ℚ(√2, √3, i), whose completion has residue field 𝔽₄; sympy's `prime_decomp` confirms
   that 2 = 𝔭⁴;
