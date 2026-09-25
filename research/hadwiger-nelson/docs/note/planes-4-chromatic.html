@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <title>A short proof that the planes over Q(√3, √11) and Q(√2, √3) are 4-chromatic</title>
 <style>
-  @page { size: A4; margin: 14mm 18mm 14mm 18mm; }
+  @page { size: A4; margin: 13mm 17mm 13mm 17mm; }
   :root { --ink: #111; --muted: #555; --rule: #bbb; --box: #f6f6f4; }
   html { background: #fff; }
-  body { font-family: "DejaVu Serif", Georgia, serif; font-size: 9.8pt; line-height: 1.34; color: var(--ink); margin: 0; }
+  body { font-family: "DejaVu Serif", Georgia, serif; font-size: 9.7pt; line-height: 1.32; color: var(--ink); margin: 0; }
   h1 { font-size: 16pt; text-align: center; margin: 0 0 6pt 0; line-height: 1.25; font-weight: bold; }
   .author { text-align: center; font-size: 11pt; margin-bottom: 2pt; }
   .date { text-align: center; color: var(--muted); font-size: 9.5pt; margin-bottom: 12pt; }
@@ -23,7 +23,7 @@
   ul, ol { margin: 0 0 6pt 0; padding-left: 18pt; }
   li { margin-bottom: 2pt; }
   ol.proof { break-inside: avoid; page-break-inside: avoid; }
-  .refs li { font-size: 8.9pt; margin-bottom: 1pt; }
+  .refs li { font-size: 8.7pt; margin-bottom: 0.5pt; }
   .small { font-size: 9.2pt; color: var(--muted); }
 </style>
 </head>
@@ -39,29 +39,29 @@
 χ(ℚ(√3,&nbsp;√11)<sup>2</sup>)&nbsp;=&nbsp;4. His result seems to have been overlooked: Moorhouse (2010),
 Madore (2015), Exoo–Ismailescu (2018) and Voronov (2021) all treat the value as unknown. We give a short
 proof of a criterion that covers this field and also gives χ(ℚ(√2,&nbsp;√3)<sup>2</sup>)&nbsp;=&nbsp;4, the second case
-conjectured by Voronov, which we have not found in the literature. The criterion is Madore’s reduction
-argument run in other coordinates. With α = <i>x</i> + <i>y</i>/√3 and β = 2<i>y</i>/√3 the squared distance
+conjectured by Voronov, which we have not found in the literature. The criterion is a case of Madore’s reduction
+argument for quadratic forms, in other coordinates. With α = <i>x</i> + <i>y</i>/√3 and β = 2<i>y</i>/√3 the squared distance
 becomes α² − αβ + β², a form that is anisotropic modulo any prime above 2 with residue field 𝔽<sub>2</sub>.
 </div>
 
 <h2>1. Introduction</h2>
 <p>The Hadwiger–Nelson problem asks for χ(ℝ<sup>2</sup>). Since de Grey [1] and Exoo–Ismailescu [3] it is
-known that χ(ℝ<sup>2</sup>) ∈ {5,&nbsp;6,&nbsp;7}; see Soifer [14] for the history. For a subfield <i>F</i> ⊂ ℝ one has
+known that χ(ℝ<sup>2</sup>) ∈ {5,&nbsp;6,&nbsp;7}; see Soifer [16] for the history. For a subfield <i>F</i> ⊂ ℝ one has
 χ(<i>F</i><sup>2</sup>) ≤ χ(ℝ<sup>2</sup>). For quadratic fields ℚ(√<i>N</i>), with <i>N</i> squarefree:</p>
 <ul>
-<li>χ(ℚ<sup>2</sup>) = 2 (Woodall [16]), and χ(ℚ(√<i>N</i>)<sup>2</sup>) = 2 for <i>N</i> ≡ 1, 2 (mod 4) (Johnson [7]);</li>
-<li>χ(ℚ(√<i>N</i>)<sup>2</sup>) ≤ 3 for <i>N</i> ≡ 0, 1 (mod 3), and ≤ 4 for <i>N</i> ≡ 3 (mod 8) (Fischer [4]; see Payne [10]);</li>
-<li>later and independently, Moorhouse [9] and Madore [8] proved further bounds by reduction modulo a prime.</li>
+<li>χ(ℚ<sup>2</sup>) = 2 (Woodall [18]), and χ(ℚ(√<i>N</i>)<sup>2</sup>) = 2 for <i>N</i> ≡ 1, 2 (mod 4) (Johnson [8]);</li>
+<li>χ(ℚ(√<i>N</i>)<sup>2</sup>) ≤ 3 for <i>N</i> ≡ 0, 1 (mod 3), and ≤ 4 for <i>N</i> ≡ 3 (mod 8) (Fischer [4]; see Payne [12]);</li>
+<li>later, Moorhouse [11] and Madore [10] proved further bounds by reduction modulo a prime.</li>
 </ul>
-<p>The field ℚ(√3,&nbsp;√11) is the smallest whose plane contains a Moser spindle. Fischer [5] proved that
-χ(ℚ(√<i>p</i>,&nbsp;√<i>q</i>)<sup>2</sup>) = 4 for squarefree coprime <i>p</i> ≡ 3 (mod 16) and <i>q</i> ≡ 11 (mod 16) with
-<i>pq</i> ≡ 1 (mod 32), in particular for ℚ(√3,&nbsp;√11), by an additive colouring with values in ℤ/4. This
-seems to have been overlooked. Moorhouse [9] noted that the exact value was undetermined, Madore [8]
+<p>The field ℚ(√3,&nbsp;√11) is the smallest whose plane contains a Moser spindle. Fischer [6] proved that the
+plane over ℚ(√<i>p</i>,&nbsp;√<i>q</i>) has an additive 4-colouring, with values in ℤ/4, for squarefree coprime
+<i>p</i> ≡ 3 (mod 16) and <i>q</i> ≡ 11 (mod 16) with <i>pq</i> ≡ 1 (mod 32); for ℚ(√3,&nbsp;√11) the Moser spindle
+gives the lower bound, so χ(ℚ(√3,&nbsp;√11)<sup>2</sup>) = 4. This seems to have been overlooked. Moorhouse [11] noted that the exact value was undetermined, Madore [10]
 proved 4 ≤ χ ≤ 5, Exoo and Ismailescu [3] asked whether a 5-chromatic unit-distance graph embeds in
-ℚ[√3,&nbsp;√11]<sup>2</sup>, and in Polymath16 Voronov wrote that χ(ℚ(<i>i</i>,&nbsp;√3,&nbsp;√11)) = 4 “seems likely, and
-the same is true in case (2, 3)”, but that nobody had proved it [13]. Case (2, 3) is the field
+ℚ[√3,&nbsp;√11]<sup>2</sup>, and in Polymath16 Voronov wrote: “it seems likely that χ(ℚ(<i>i</i>,&nbsp;√3,&nbsp;√11)) = 4, and the same is
+true in case (2, 3). But as far as I know, nobody has proved this yet” [15]. Case (2, 3) is the field
 ℚ(<i>i</i>,&nbsp;√2,&nbsp;√3) = ℚ(ζ<sub>24</sub>), which Fischer’s hypotheses exclude. For it Voronov suggested a colouring
-through a homomorphism ℤ[ζ<sub>24</sub>,&nbsp;1/3] → (ℤ/4)[ζ<sub>24</sub>], adding “Perhaps there is a simpler way” [13].</p>
+through a homomorphism ℤ[ζ<sub>24</sub>,&nbsp;1/3] → (ℤ/4)[ζ<sub>24</sub>], adding “Perhaps there is a simpler way” [15].</p>
 
 <div class="thm"><p><span class="lbl">Theorem 1.</span>
 χ(ℚ(√2,&nbsp;√3)<sup>2</sup>) = 4. The same argument gives a short proof of Fischer’s theorem
@@ -73,8 +73,9 @@ through a homomorphism ℤ[ζ<sub>24</sub>,&nbsp;1/3] → (ℤ/4)[ζ<sub>24</sub
 Let <i>L</i> ⊂ ℝ be a number field containing √3, and suppose some prime <i>P</i> of <i>L</i> above 2 has
 residue field <i>O<sub>L</sub></i>/<i>P</i> ≅ 𝔽<sub>2</sub>. Then χ(<i>L</i><sup>2</sup>) ≤ 4.</p></div>
 
-<p>Theorem 2 is Madore’s Proposition 3.2 [8] with the form α² − αβ + β² in place of <i>x</i>² + <i>y</i>²; his
-proof applies verbatim (compare Moorhouse [9], Lemma 4.2 and Theorem 7.1). In the coordinates (<i>x</i>,&nbsp;<i>y</i>) the
+<p>Theorem 2 is the case <i>q</i> = α² − αβ + β², with residue field 𝔽<sub>2</sub>, of Madore’s ¶6.6 [10], which
+extends his Proposition 3.2 to any quadratic form; we include the short proof for completeness (compare
+Moorhouse [11], Lemma 4.2 and Theorem 7.1). In the coordinates (<i>x</i>,&nbsp;<i>y</i>) the
 argument fails at 2: the form <i>x</i>² + <i>y</i>² ≡ (<i>x</i> + <i>y</i>)² is isotropic modulo 2, and unit vectors
 such as (1/2,&nbsp;√3/2) are not even integral at 2. Since √3 ∈ <i>L</i>, we have <i>L</i>(<i>i</i>) = <i>L</i>(ω) with
 ω = <i>e</i><sup>2π<i>i</i>/3</sup>, and the hypothesis on <i>P</i> implies that <i>P</i> is inert in <i>L</i>(<i>i</i>).</p>
@@ -120,7 +121,7 @@ representative of <i>c</i> + <i>O<sub>P</sub></i>. Since <i>L</i> is countable, 
 </ul>
 <p>Both decompositions were also confirmed with PARI/GP and with sympy.</p>
 <p><i>Lower bounds.</i> For ℚ(√2,&nbsp;√3), a 4-chromatic graph is already implicit in Voronov, Neopryatnaya and
-Dergachev [15]: their second series of 5-chromatic graphs is built from the 4-chromatic 10-vertex graph
+Dergachev [17]: their second series of 5-chromatic graphs is built from the 4-chromatic 10-vertex graph
 <i>L</i><sub>10,2</sub> and the unit vectors ζ<sub>24</sub> and (√6 + <i>i</i>√3)/3, all with coordinates in ℚ(√2,&nbsp;√3).
 For completeness, here is a short explicit example. Take the unit vectors</p>
 <p class="eq"><i>u</i><sub>1</sub> = (1,&nbsp;0),&nbsp;&nbsp; <i>u</i><sub>2</sub> = (0,&nbsp;1),&nbsp;&nbsp;
@@ -138,19 +139,21 @@ For completeness, here is a short explicit example. Take the unit vectors</p>
 
 <h2>5. Remarks</h2>
 <ol>
-<li><b>Prior work.</b> Fischer’s additive colourings [4, 5] came first: his 4-colouring of
-ℚ(√<i>p</i>,&nbsp;√<i>q</i>)<sup>2</sup> is a homomorphism from the additive group generated by the unit vectors to ℤ/4
-[5]. Speyer [11] used reduction modulo 2 in the coordinates α + βω in 2018 to 4-colour the Moser
-ring <i>R</i> = <i>O<sub>K</sub></i>[1/3], <i>K</i> = ℚ(√−3,&nbsp;√−11), through <i>R</i>/2<i>R</i> ≅ 𝔽<sub>4</sub> × 𝔽<sub>4</sub>; a
-computer search by Hubai, reported by Gibbs, found that all its 4-colourings have period 8 [12], and Dúcz [2]
-has recently given geometric 4-colourings of the Moser lattice and ring. The passage from a ring to the
-whole field by cosets is Madore’s and Moorhouse’s [8, 9], and the integrality of unit vectors is the
-compactness of the norm-one torus at a place that does not split. The contribution of this note is the
-short proof of Theorem 2, which reduces the question to the decomposition of 2 in <i>L</i>, and the case
+<li><b>Prior work.</b> Fischer’s additive colourings [4, 6] came first: his 4-colouring of
+ℚ(√<i>p</i>,&nbsp;√<i>q</i>)<sup>2</sup> comes from a homomorphism to ℤ/4 from the additive group generated by the unit
+vectors [6], and he also described the connected component of the origin in the plane over
+ℚ(√<i>N</i><sub>1</sub>,&nbsp;…,&nbsp;√<i>N<sub>d</sub></i>) [5]. Moorhouse [11, Lemma 4.2] and Madore [10, Prop. 3.2] pass from
+such a component, or from a local ring, to the whole plane by cosets. Speyer [13] 4-coloured the Moser ring
+<i>R</i> = <i>O<sub>K</sub></i>[1/3], <i>K</i> = ℚ(√−3,&nbsp;√−11), in 2018 by reduction modulo 2: <i>R</i>/2<i>R</i> ≅ 𝔽<sub>4</sub> × 𝔽<sub>4</sub>, and
+either projection to 𝔽<sub>4</sub> is a 4-colouring. On <i>R</i> the colouring of §3 is one of these projections, written
+in the coordinates α + βω. An analysis and computer search by Hubai, reported by Gibbs, found that all
+4-colourings of <i>R</i> have period 8 [14], and Dúcz [2] has recently given geometric 4-colourings of the Moser
+lattice and ring. The contribution of this note is the choice of coordinates, which lets Madore’s ¶6.6
+work at primes above 2 and reduces the question to the decomposition of 2 in <i>L</i>, and the case
 ℚ(√2,&nbsp;√3).</li>
 <li><b>Consistency check.</b> The criterion must fail for fields that contain 5-chromatic graphs, and it
 does. In ℚ(√3,&nbsp;√11,&nbsp;√247), the field of Exoo–Ismailescu, and in ℚ(√3,&nbsp;√5,&nbsp;√11), the field of
-Heule [6], every prime above 2 has residue field containing 𝔽<sub>4</sub>, where <i>u</i>² + <i>u</i> + 1 has roots.</li>
+Heule [7], every prime above 2 has residue field containing 𝔽<sub>4</sub>, where <i>u</i>² + <i>u</i> + 1 has roots.</li>
 </ol>
 
 <h2>6. Verification and provenance</h2>
@@ -161,8 +164,8 @@ no monochromatic edge. A second check, with separate code, its own 2-adic model 
 prime decompositions, gave the same results.</li>
 <li><b>Lower bounds.</b> Both graphs can be checked by hand. An exhaustive computer search also
 confirms that neither has a proper 3-colouring.</li>
-<li><b>Literature.</b> We have read the summaries of Fischer’s papers [4, 5] in zbMATH and the account
-of [4] in Payne [10], but not their full texts.</li>
+<li><b>Literature.</b> We have read the zbMATH entries for [5] and [6] and Payne’s account [12] of [4],
+but not the full texts of Fischer’s papers, nor Johnson’s survey [9] of problems in this area.</li>
 <li><b>Code and data.</b> Available from the author on request.</li>
 </ul>
 <p class="small"><sup>*</sup> These results were obtained with the assistance of an AI system (Claude, by
@@ -176,9 +179,11 @@ for independent verification.</p>
 <li>Á. Dúcz, A note on geometric colorings of the Moser lattice, arXiv:2606.12325 (2026).</li>
 <li>G. Exoo, D. Ismailescu, The chromatic number of the plane is at least 5: a new proof, <i>Discrete Comput. Geom.</i> 64 (2020); arXiv:1805.00157.</li>
 <li>K. G. Fischer, Additive <i>K</i>-colorable extensions of the rational plane, <i>Discrete Math.</i> 82 (1990) 181–195.</li>
+<li>K. G. Fischer, The connected components of the graph ℚ(√<i>N</i><sub>1</sub>,&nbsp;…,&nbsp;√<i>N<sub>d</sub></i>)<sup>2</sup>, <i>Congr. Numer.</i> 72 (1990) 213–221 (Zbl 0733.05048).</li>
 <li>K. G. Fischer, A planar geometric graph of chromatic number four, <i>Congr. Numer.</i> 104 (1994) 73–79 (Zbl 0836.05030).</li>
 <li>M. J. H. Heule, Computing small unit-distance graphs with chromatic number 5, arXiv:1805.12181 (2018).</li>
 <li>P. D. Johnson Jr., Two-colorings of real quadratic extensions of ℚ<sup>2</sup> that forbid many distances, <i>Congr. Numer.</i> 60 (1987) 51–58.</li>
+<li>P. D. Johnson Jr., Problems posed in or arising from “Colorings of metric spaces”: status report, <i>Geombinatorics</i> 9 (2000) 170–179.</li>
 <li>D. A. Madore, The Hadwiger–Nelson problem over certain fields, arXiv:1509.07023 (2015).</li>
 <li>G. E. Moorhouse, On the chromatic numbers of planes, preprint (2010).</li>
 <li>M. S. Payne, Unit distance graphs with ambiguous chromatic number, <i>Electron. J. Combin.</i> 16 (2009), Note 31; arXiv:0707.1177.</li>
