@@ -70,9 +70,10 @@ deleted, leaving 31 vertices, with the pressure still 3.
    colouring the three vertices of a triangle receive distinct colours, and a permutation of the
    colours makes them 0, 1 and 2.
 5. For the two pressure certificates (k = 4), add the unit clauses ¬x(v, 2) and ¬x(v, 3) for every
-   unit neighbour v of the pivot, vertex 0. The claim is that this formula is unsatisfiable; by the
-   same symmetry, a 4-colouring that uses at most two colours on those neighbours can be permuted
-   to use only colours 0 and 1.
+   unit neighbour v of the pivot, vertex 0: 188 variables and 583 clauses for
+   `pressure3_witness_47.json`, 508 variables and 2 275 clauses for `three_hexagon_pressure3.json`.
+   The claim is that this formula is unsatisfiable; by the same symmetry, a 4-colouring that uses at
+   most two colours on those neighbours can be permuted to use only colours 0 and 1.
 6. Run a DRAT-producing solver such as kissat on the formula, and check its proof with drat-trim.
 
 `scripts/worker_setup.sh` installs kissat and drat-trim.
