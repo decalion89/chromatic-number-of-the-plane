@@ -55,7 +55,7 @@ rebuilt from the coordinates and decided by independent SAT solvers. It is then
 certified by a DRAT proof that `drat-trim` checks.
 
 This is AI-assisted research, carried out with Claude (Anthropic) through
-Claude Code under the direction of the repository owner. No result here has been
+Claude Code under the direction of Sergi Galán. No result here has been
 peer reviewed.
 
 ## Citing

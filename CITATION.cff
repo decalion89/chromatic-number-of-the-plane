@@ -10,7 +10,9 @@ abstract: >-
   not peer reviewed.
 type: software
 authors:
-  - alias: decalion89
+  - given-names: Sergi
+    family-names: Galán
+    alias: decalion89
 repository-code: "https://github.com/decalion89/darwin-50"
 license: MIT
 date-released: "2026-09-25"
