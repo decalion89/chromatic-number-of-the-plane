@@ -193,7 +193,9 @@ sh scripts/worker_setup.sh                   # kissat and drat-trim, for the sea
 The certificates in `data/threepoint/` were produced with Python 3.11.15,
 numpy 2.4.6, scipy 1.17.1, cvxopt 1.3.3 (DSDP) and clarabel 0.11.1; checking
 them needs only numpy, scipy and mpmath 1.3.0 (installed with sympy).
-`data/threepoint/SHA256SUMS` fixes their contents.
+`data/threepoint/SHA256SUMS` fixes their contents. `requirements-lock.txt`
+lists the exact versions of every package used for the results, and
+`scripts/worker_setup.sh` builds the pinned kissat and drat-trim.
 
 GitHub Actions (`.github/workflows/tests.yml`) runs the fast part of the suite on
 pushes to `main` and on pull requests: 371 tests in 31 files, in about two
