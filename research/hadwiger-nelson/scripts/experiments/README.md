@@ -1,6 +1,6 @@
 # Exploratory scripts
 
-These 730 scripts are the one-off experiments behind the research log
+These 731 scripts are the one-off experiments behind the research log
 ([`../../docs/research-log.md`](../../docs/research-log.md)). They are kept as a
 record of what was tried, not as maintained tools. The maintained tools are in
 [`../`](../).
