@@ -1,8 +1,9 @@
 """The plane over Q(sqrt3, sqrt11) is 4-colourable, so its chromatic number is exactly 4 (hn/adelic.py).
 
-Moorhouse (2010) left chi(Q(sqrt3, sqrt11)^2) open, Madore (arXiv 1509.07023) proved 4 <= chi <= 5, and
+This is a theorem of K. G. Fischer (Congr. Numer. 104 (1994) 73-79), overlooked by later work: Moorhouse
+(2010) left chi(Q(sqrt3, sqrt11)^2) open, Madore (arXiv 1509.07023) proved 4 <= chi <= 5, and
 Exoo-Ismailescu (arXiv 1805.00157) asked whether a 5-chromatic unit-distance graph embeds in this plane.
-It does not. Write L = Q(sqrt3, sqrt11) and K = L(i). The two places of L over 2 have completion
+The tests check our short proof. Write L = Q(sqrt3, sqrt11) and K = L(i). The two places of L over 2 have completion
 Q_2(sqrt3) and are inert in K. So every unit vector is a unit of O_w = Z_2[sqrt3][w], with a nonzero
 residue in F_4, and the residue of z - rep(z) is a proper 4-colouring. The Moser spindle gives the
 lower bound.
