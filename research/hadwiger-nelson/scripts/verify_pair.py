@@ -6,6 +6,8 @@ Three kinds of claim, all rebuilt from the saved exact coordinates:
   same   the unit-distance graph plus c(A) != c(B) is not 5-colourable    (A, B forced SAME: a spindle
          rotation about A that moves B by 1 then gives chi(R^2) >= 6 directly, when |AB| >= 1/2)
   two    the {1, d}-graph (edges at distance 1 and d) is not 5-colourable (chi(R^2, {1, d}) >= 6)
+  two-apart, two-same   as apart / same, but on the {1, d}-graph (a gadget or forced pair for the
+         cascade: with a unit-distance gadget for d they become unit-distance statements)
 The kinds name the conclusion, as grow_lean.py's MODE does: MODE=apart growth is checked with kind apart,
 MODE=same growth with kind same.
 
@@ -26,7 +28,7 @@ from hn.geometry import Point
 from pysat.solvers import Solver
 
 ap = argparse.ArgumentParser()
-ap.add_argument("graph"); ap.add_argument("kind", choices=["udg", "apart", "same", "two"])
+ap.add_argument("graph"); ap.add_argument("kind", choices=["udg", "apart", "same", "two", "two-apart", "two-same"])
 ap.add_argument("--d2", default=None); ap.add_argument("--kissat", default=None); ap.add_argument("--drat-trim", default=None)
 a = ap.parse_args()
 t0 = time.time(); K = 5
@@ -50,7 +52,7 @@ def exact_pairs(dist2):
 
 E = exact_pairs(Fr(1))
 print(f"  exact unit edges: {len(E)}", flush=True)
-if a.kind == "two":
+if a.kind.startswith("two"):
     D2 = Fr(a.d2 or d.get("dist2"))
     E2 = exact_pairs(D2)
     print(f"  exact edges at d^2 = {D2}: {len(E2)}", flush=True)
@@ -59,11 +61,11 @@ X = lambda v, c: 1 + v * K + c
 cnf = [[X(v, c) for c in range(K)] for v in range(n)]
 for i, j in E:
     for c in range(K): cnf.append([-X(i, c), -X(j, c)])
-if a.kind == "apart":
+if a.kind in ("apart", "two-apart"):
     A, B = d["A"], d["B"]
     print(f"  pair A={A}, B={B}: d^2 = {V[A].dist2(V[B])}; imposing c(A) = c(B) (UNSAT = forced apart)", flush=True)
     for c in range(K): cnf += [[-X(A, c), X(B, c)], [X(A, c), -X(B, c)]]
-if a.kind == "same":
+if a.kind in ("same", "two-same"):
     A, B = d["A"], d["B"]
     print(f"  pair A={A}, B={B}: d^2 = {V[A].dist2(V[B])}; imposing c(A) != c(B) (UNSAT = forced same)", flush=True)
     for c in range(K): cnf.append([-X(A, c), -X(B, c)])

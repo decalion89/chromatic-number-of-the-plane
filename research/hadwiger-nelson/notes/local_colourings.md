@@ -314,3 +314,56 @@ Reducing `z = x + iy` in `O_w` — the Hermitian form of the argument — sees t
 
 We found this in no paper, in no thread of Polymath16, and by no web search. It
 has not been refereed.
+
+## 9. Split places colour modules (25 September)
+
+§5 screens whole fields, and there only non-split places matter. At a split
+place `w` the local torus is not compact, so unit vectors of `K` can have any
+valuation there.
+
+A search, however, never uses the whole field. It works in the module `M`
+spanned by a finite unit set and the starting points. Suppose every generator
+of `M` is integral at `w`.
+- **A homomorphism.** Reduction mod `w` is a homomorphism of groups
+  `M → 𝔽²`, and it sends every unit vector to the circle `a² + b² = 1`.
+- **Every edge is covered.** So every unit-distance graph with vertices in
+  `M` maps to `Cay(A, A ∩ circle)`, where `A` is the image of `M`. This
+  includes edges that the search has not found yet.
+- **The split finite plane.** At a split place with residue field `𝔽_q`,
+  the target is `H_q = Cay(𝔽_q², {(a, 1/a)})`.
+
+So a module is dead for `k` colours as soon as one integral place has a
+`k`-colourable finite plane.
+
+**Chromatic numbers of `H_q`.**
+
+| `q` | 2 | 3 | 5 | 7 | 11 | 13 | 17 | 19 | 29 | 37 | 49 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| `χ(H_q)` | 2 | 3 | 3 | 4 | 4 | **5** | ? | ? | ? | ? | ? |
+| tabu at 5 colours (best conflicts) | | | | | | | 2 | 4 | 222 | 1 290 | 4 581 |
+
+- **Where the entries come from.** The exact values are from SAT.
+- **Hoffman.** The eigenvalues are Kloosterman sums, of modulus at most
+  `2√q` (Weil). So `χ(H_q) ≥ 1 + (q − 1)/(2√q)`, which is above 5 once
+  `q ≥ 67`.
+- **Split places of degree 2.** For every `p ≥ 11`, `H_{p²}` has
+  `χ ≥ 7`.
+
+**The two growth modules pass.** `scripts/module_gate.py` checks integrality
+at each place exactly, with `p`-adic arithmetic; a coordinate can carry `p` in
+its denominator and still be integral at one place over `p`. It then reduces
+the growth units, the edge unit vectors and the component representatives.
+- **`L16` seed** (918 growth units):
+  - every place over 3, 5 and 7 has a non-integral generator;
+  - at 11, 13, 17, 19, 23, 29 and 31, and at 41–61, the image is
+    `𝔽_{p²}²`, which is safe by Hoffman;
+  - the only small split place of degree 1 is at 37, and tabu finds no
+    5-colouring of its image `H₃₇`.
+- **`F8` growth** (822 units): 3 and 5 are killed. At 7 no unit has 7 in a
+  denominator; the place is ramified with residue field `𝔽₄₉`, and tabu finds
+  no 5-colouring of `H₄₉`.
+
+So neither search is doomed by a reduction mod a prime, as far as tabu can
+tell. What the gate does rule out: adding a rotation that removes `ρ₇` or
+Moser's `σ` from `L16`'s unit set would reopen the places over 7 or 3, and
+`H₇` or `H₃` would colour the module with 4 or 3 colours.
