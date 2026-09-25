@@ -7,14 +7,16 @@ valuations +2 and -2 there -- and it is exactly Exoo-Ismailescu's rotation.
 Screen: E-I's H (integral) and K = H u lambda_A(H), unit edges only; the
 803-graph, and the 803-graph with a lambda-rotated copy.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, time
 from fractions import Fraction as Fr
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from hn.field import Field
 from hn.geometry import Point
 from hn.graph import build_graph
 from hn.homcol import screen
-exec(open("/home/user/darwin-50/research/hadwiger-nelson/scripts/ei_rebuild.py").read().split("E1, E2 = graph(V)")[0])
+exec(open(HN_DIR + "/scripts/ei_rebuild.py").read().split("E1, E2 = graph(V)")[0])
 extra = [(-2,0,0,-6),(8,0,0,4),(-4,-6,-6,-4),(-4,6,6,-4),(-3,-3,-3,-5),(-4,0,-12,4),
          (-4,0,12,4),(7,-3,3,3),(7,3,-3,3)]
 A = P(*extra[0])
@@ -27,7 +29,7 @@ VK = list(dict.fromkeys(VH + [rot_about(A, p) for p in VH]))
 for name, pts in (("E-I H, unit edges", VH), ("E-I K = H u lambda(H), unit edges", VK)):
     g = build_graph(pts); r = screen(g, 5)
     print(f"  {name}: n={g.n} m={g.m}, {r['edge_vectors']} edge vectors dim {r['dimension']}: {r['verdict']}", flush=True)
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+ROOT = HN_DIR
 d = json.load(open(f"{ROOT}/data/five_247_c.json"))
 F2 = Field(tuple(d["field_generators"]))
 P2 = [Point(F2.element([Fr(a, b) for a, b in x]), F2.element([Fr(a, b) for a, b in y])) for x, y in d["points"]]

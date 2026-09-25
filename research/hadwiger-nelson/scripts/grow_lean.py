@@ -23,10 +23,12 @@ Any UNSAT is a claim until verify6 / verify_gadget re-check it exactly.
 usage: grow_lean.py <in.json> <out.json> [R] [near_weight]
 env: MODE, KISSAT, KTIME, LSIT, IT2 (soft-edge phase; default 400000 with a skeleton, else 0), TABU2
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, time, json, os, subprocess
 from fractions import Fraction as Fr
 import numpy as np
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from hn.field import Field
 from hn.geometry import Point
 t0 = time.time(); K = 5

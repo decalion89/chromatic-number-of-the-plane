@@ -12,11 +12,13 @@ dropped and the same quotient is asked again for the rest.
 
 usage: prodgate.py <module.json> <apart|pair> <samples> <n_1,n_2,...> [adm]
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, random, itertools, time
 from fractions import Fraction as Fr
 exec(open(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)), "gate.py")).read().split("def gate(g, label):")[0])
 from pysat.solvers import Solver
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+ROOT = HN_DIR
 name, MODE, NS = sys.argv[1], sys.argv[2], int(sys.argv[3])
 MODS = [int(x) for x in sys.argv[4].split(",")]; ADM = len(sys.argv) > 5 and sys.argv[5] == "adm"
 d = json.load(open(f"{ROOT}/data/{name}"))

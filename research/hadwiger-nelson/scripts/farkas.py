@@ -6,14 +6,16 @@ Farkas it does not exist iff -e is a nonnegative combination of D_t.  Find the
 combination by LP, rationalise it, and check the identity EXACTLY on the
 integer vectors -- so the negative claim rests on arithmetic, not on the solver.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, itertools, time
 from fractions import Fraction as Fr
 from math import gcd
 import numpy as np
 from scipy.optimize import linprog
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 exec(open(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)), "gate.py")).read().split("def gate(g, label):")[0])
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+ROOT = HN_DIR
 d = json.load(open(f"{ROOT}/data/{sys.argv[1]}")); dirs = [int(x) for x in sys.argv[2].split(",")]
 F = Field(tuple(d["field_generators"]))
 P = [Point(F.element([Fr(a, b) for a, b in x]), F.element([Fr(a, b) for a, b in y])) for x, y in d["points"]]

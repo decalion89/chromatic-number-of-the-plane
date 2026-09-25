@@ -13,8 +13,10 @@ class whose necessity only appeared later.  And the pairs re-derived from the
 exact geometry, so that "distance 15/16" means what it says and the obstruction
 is about the plane rather than about an indexing slip.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, time
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 import numpy as np
 from fractions import Fraction as Fr
 from collections import defaultdict

@@ -6,14 +6,16 @@ c(x) = f(position of x) properly colours the whole unit-distance graph of the mo
 has nothing to do with any coset colouring.  A 5-colouring here would refute rigidity outright.
 usage: torusgate.py <module.json> <P> <G (cells per side)> [K]
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, math, time
 from fractions import Fraction as Fr
 from pysat.solvers import Solver
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from hn.field import Field
 from hn.geometry import Point
 from hn.graph import build_graph
-d = json.load(open(f"/home/user/darwin-50/research/hadwiger-nelson/data/{sys.argv[1]}"))
+d = json.load(open(f"{HN_DIR}/data/{sys.argv[1]}"))
 P_ = float(sys.argv[2]); G = int(sys.argv[3]); K = int(sys.argv[4]) if len(sys.argv) > 4 else 5
 F = Field(tuple(d["field_generators"]))
 pts = [Point(F.element([Fr(a, b) for a, b in x]), F.element([Fr(a, b) for a, b in y])) for x, y in d["points"]]

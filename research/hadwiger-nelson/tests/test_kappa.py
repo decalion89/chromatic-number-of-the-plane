@@ -7,6 +7,7 @@ whose kappa-image is again a unit vector has kappa u - u in 5M, so no
 homomorphism M -> Z/5 can tell u from kappa u -- while omega and rho7 alone
 move some unit off its class.
 """
+import os
 import json
 from fractions import Fraction as Fr
 from math import gcd
@@ -15,7 +16,7 @@ from hn.field import Field
 from hn.geometry import Point, Rotation
 from hn.graph import build_graph
 
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def _module(units):

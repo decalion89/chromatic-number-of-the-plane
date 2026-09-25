@@ -3,6 +3,7 @@
 The place of K+ above 11 does not split in K, every unit vector reduces into the norm-one group N1
 (12 elements) of F_121, and a 5-colouring of the finite plane Cay(F_121, N1) pulls back to the
 whole field (hn/adelic.py, notes/rigidity.md section 9)."""
+import os
 import json
 from fractions import Fraction as Fr
 
@@ -11,7 +12,7 @@ from hn.field import Field
 from hn.geometry import Point
 from hn.graph import build_graph
 
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def test_the_finite_plane_over_F11_is_5_but_not_4_colourable():

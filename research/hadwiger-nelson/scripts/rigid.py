@@ -1,12 +1,14 @@
 """Rigidity at finite scale: colour a graph by tabu search (several seeds) and measure the best
 coset fit R = max_{psi, relabelling} #{x : pi(c(x)) = psi(x)} / n.  R = 1 for a coset colouring,
 about 0.2 for an unstructured one.  Units are taken from the module file given (e.g. five_rho7.json)."""
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, itertools, subprocess
 from fractions import Fraction as Fr
 from math import gcd
 import numpy as np
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-exec(open("/home/user/darwin-50/research/hadwiger-nelson/scripts/gate.py").read().split("def gate(g, label):")[0])
+sys.path.insert(0, HN_DIR)
+exec(open(HN_DIR + "/scripts/gate.py").read().split("def gate(g, label):")[0])
 d = json.load(open(sys.argv[1])); seeds = int(sys.argv[2]) if len(sys.argv) > 2 else 3
 F = Field(tuple(d["field_generators"]))
 mk = lambda xy: Point(F.element([Fr(a, b) for a, b in xy[0]]), F.element([Fr(a, b) for a, b in xy[1]]))

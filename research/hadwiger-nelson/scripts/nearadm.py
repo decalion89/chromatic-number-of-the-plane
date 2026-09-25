@@ -2,12 +2,14 @@
 'nearly admissible' psi (zero exactly on those) and repair them with a small second coordinate
 chi : M -> Z/m that is nonzero there: any proper 5-colouring of Cay(Z/5 x Z/m, (psi, chi)(U))
 would be a periodic colouring of the whole blocked module -- and would end the plain search."""
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, itertools, time
 from fractions import Fraction as Fr
 import numpy as np
 from pysat.solvers import Solver
 exec(open(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)), "gate.py")).read().split("def gate(g, label):")[0])
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+ROOT = HN_DIR
 name = sys.argv[1]; MS = [int(x) for x in sys.argv[2].split(",")]
 d = json.load(open(f"{ROOT}/data/{name}")); F = Field(tuple(d["field_generators"]))
 P = [Point(F.element([Fr(a, b) for a, b in x]), F.element([Fr(a, b) for a, b in y])) for x, y in d["points"]]

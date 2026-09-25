@@ -19,8 +19,10 @@ Every round of (a) that succeeds and (b) that answers costs seconds. The loop
 ends at a real verdict either way, and the cheap end is the one that would
 rule de Grey's G out for a core of three.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, time
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from pysat.card import CardEnc, EncType
 from pysat.formula import IDPool
 from pysat.solvers import Solver

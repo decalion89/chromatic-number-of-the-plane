@@ -13,8 +13,10 @@ not land.
 
 A landing rules a class out, fast.  A plateau rules nothing in.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, time
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
                    "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
 import numpy as np

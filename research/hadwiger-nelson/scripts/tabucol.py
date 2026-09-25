@@ -18,8 +18,10 @@ Calibration first, on three instances whose answers are known:
 A search that solves the first two and plateaus on the third is calibrated.
 Only then are the open instances worth running through it.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, time
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 import numpy as np
 from fractions import Fraction as Fr
 from hn.degrey import build_Sa, build_Y, build_G

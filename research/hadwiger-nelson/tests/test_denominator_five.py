@@ -6,6 +6,7 @@ coset colourings while the integral 803-graph does not; the common kernel of
 the 803-graph's coset colourings being exactly 5M; and the 61-point lattice
 graph with three forbidden distances.
 """
+import os
 import itertools
 import json
 from fractions import Fraction as Fr
@@ -19,7 +20,7 @@ from hn.geometry import Point
 from hn.graph import build_graph
 from hn.homcol import has_homomorphism
 
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 F = Field((3, 11))
 R3, R11 = F.sqrt(3), F.sqrt(11)
 S = [(0,0,0,0),(0,0,0,-4),(0,0,-6,-2),(0,0,-6,2),(-6,0,0,-2),(-4,0,0,0),(-4,0,-6,-2),

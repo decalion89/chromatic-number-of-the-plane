@@ -16,8 +16,10 @@ Tabu on (vertex, colour) for a few iterations stops it cycling.
 Run on the instances CDCL has not answered: Sa at five with all four carrying
 classes, and with the pair {4/9, 16/9}, and G at five with 4/9 alone.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, time
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 import numpy as np
 from fractions import Fraction as Fr
 from collections import defaultdict

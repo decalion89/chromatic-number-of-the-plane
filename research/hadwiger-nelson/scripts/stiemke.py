@@ -11,12 +11,14 @@ Then: every coarse colouring psi + f (f constant on cells much larger than a
 unit step) is a coset colouring, since a facet with jump delta would need
 D_{-delta} in a half-space.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, itertools, time
 from fractions import Fraction as Fr
 import numpy as np
 from scipy.optimize import linprog
 exec(open(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)), "gate.py")).read().split("def gate(g, label):")[0])
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+ROOT = HN_DIR
 d = json.load(open(f"{ROOT}/data/{sys.argv[1]}"))
 F = Field(tuple(d["field_generators"]))
 P = [Point(F.element([Fr(a, b) for a, b in x]), F.element([Fr(a, b) for a, b in y])) for x, y in d["points"]]

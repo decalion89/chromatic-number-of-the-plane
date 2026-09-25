@@ -22,15 +22,17 @@ each model, and without them a vertex with three true colour variables reads
 as the smallest, which quietly biases every vertex towards colour 0 and
 inflates free@k.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, time, random, statistics
 from fractions import Fraction as Fr
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from hn.field import Field
 from hn.geometry import Point
 from hn.graph import build_graph
 from pysat.solvers import Solver
 
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+ROOT = HN_DIR
 t0 = time.time()
 # The tuned graphs first: they are the ones at the new degrees, and the
 # question they answer is the one that matters.

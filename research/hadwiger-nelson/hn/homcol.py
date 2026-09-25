@@ -13005,7 +13005,7 @@ ROTATION_LAYS_COPIES_SIDE_BY_SIDE_TRANSLATION_THREADS_THEM = True
 # Three copies consume a disjunction, and ODD is the reason.
 #
 # ATTRIBUTION.  Consuming a disjunction with a stack of rotated copies is
-# not new here: an earlier pass built it (README, "A spindle that survives a
+# not new here: an earlier pass built it (docs/research-log.md, "A spindle that survives a
 # disjunction -- and its ceiling"), with a hub u, a set W on ONE ring about
 # it, and the colour class of u forced to hold an independent transversal.
 # It settled that version exhaustively -- the stack closes iff the
@@ -13300,9 +13300,9 @@ SA_IS_RIGID_AT_DEGREE_FOUR_AND_THAT_IS_NOT_A_DEGREE_EFFECT = True
 # Neighbourhoods in the plane are bipartite, so rigidity is never local.
 #
 # ATTRIBUTION.  The theorem itself is not new here -- it was derived earlier
-# in this project (README, "Every neighbourhood is bipartite, which bounds
+# in this project (docs/research-log.md, "Every neighbourhood is bipartite, which bounds
 # the single-point attack"), together with the conclusion that rigidity is a
-# global property (README, "Rigidity is not local, and that retires the
+# global property (docs/research-log.md, "Rigidity is not local, and that retires the
 # rest").  Re-deriving it without noticing was a failure of memory, and the
 # credit belongs to the earlier pass.  What this entry adds is the two
 # consequences below, which that pass did not draw, and a test that checks
@@ -14935,7 +14935,7 @@ EXOO_ISMAILESCU_REBUILT_AND_THE_SPLIT_PAIR_REDUCTION = True
 # THE TRAP NOTE WAS THE TRAP: a denominator of five genuinely blocks.
 #
 # RESIDUE_DEGREE_THREE carries the hypothesis "edge vectors integral at 5",
-# and it is load-bearing.  The README's summary of it -- "a multiquadratic
+# and it is load-bearing.  The research log's summary of it -- "a multiquadratic
 # unit-distance graph has a coset 5-colouring" -- dropped the hypothesis, and
 # an earlier note dismissed generators like (1 + 3 sqrt-11)/10 as a
 # bookkeeping artefact of the AMBIENT test and filtered them out.  On the
@@ -15154,7 +15154,7 @@ TWISTED_COSET_COLOURINGS_CLOSE_THE_INTEGRAL_ROUTE = True
 
 
 # CORRECTION to THE_EXOO_ISMAILESCU_MODULE_FAILS_BOTH_GATES_IN_EVERY_DIRECTION and
-# the README: the sqrt247 edge was called the apart gate's survivor on the
+# the research log: the sqrt247 edge was called the apart gate's survivor on the
 # 803-module after Z/4, 8, 10, 12, 16, 20 and 25.  Z/15 -- not in that first
 # list -- refutes it too, and so do Z/30, 35, 40, 45, 50, 55, 60.  No direction
 # of the 803-module survives the apart gate.

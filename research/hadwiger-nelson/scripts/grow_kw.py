@@ -13,9 +13,11 @@ Any UNSAT is a claim until verify6 / verify_gadget re-check it exactly.
 
 usage: grow_ls2.py <in.json> <out.json> [R] [near_weight]   (env MODE, SOLVER, BUDGET, LSIT)
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, time, json, os, subprocess
 from fractions import Fraction as Fr
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from hn.field import Field
 from hn.geometry import Point
 from hn.graph import build_graph

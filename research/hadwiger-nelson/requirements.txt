@@ -1,3 +1,7 @@
 python-sat>=1.8
 numpy>=1.24
+scipy>=1.10
+sympy>=1.12
 pytest>=7.0
+# Optional, for the circular-gate tools scripts/circrel.py and scripts/circsat.py:
+# ortools, python-flint

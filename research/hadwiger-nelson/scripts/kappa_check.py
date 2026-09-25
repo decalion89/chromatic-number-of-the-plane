@@ -1,11 +1,13 @@
 """kappa = omega * rho7 = (-11 + 5 sqrt(-3)) / 14 is congruent to 1 mod 5 in Z[omega, 1/7].
 Check on the module: for every admissible psi and every unit u with kappa^k u also a unit
 of the module (k = +-1, and also rho7, omega alone), compare psi(kappa u) with psi(u)."""
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, itertools
 from fractions import Fraction as Fr
 exec(open(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)), "gate.py")).read().split("def gate(g, label):")[0])
 from hn.geometry import Rotation
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+ROOT = HN_DIR
 d = json.load(open(f"{ROOT}/data/{sys.argv[1]}"))
 F = Field(tuple(d["field_generators"]))
 P = [Point(F.element([Fr(a, b) for a, b in x]), F.element([Fr(a, b) for a, b in y])) for x, y in d["points"]]

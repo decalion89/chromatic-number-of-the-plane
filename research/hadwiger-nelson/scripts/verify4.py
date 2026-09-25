@@ -15,8 +15,10 @@ at three colours forces its apexes to agree -- a constrained pair that is not
 an edge -- while K4 at four colours has no non-edges at all, so criticality by
 itself guarantees nothing.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, time, random
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 import numpy as np
 from hn.degrey import build_Sa
 from hn.geometry import DEGREY_FIELD as F

@@ -9,8 +9,10 @@ minimality by putting each vertex back.
 Also checks the thing that makes rho meaningful at all -- that the union is
 still 4-colourable, so the question is not vacuous.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, time
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from fractions import Fraction
 from hn import degrey
 from hn.geometry import Rotation

@@ -7,9 +7,11 @@
    the union G u lambda_A(G), rebuilt exactly, must be UNSAT for plain 5-colouring
    with two solvers -- that union is the 6-chromatic unit-distance graph.
 Nothing is claimed unless every step agrees."""
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, time
 from fractions import Fraction as Fr
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from hn.field import Field
 from hn.geometry import Point, Rotation
 from hn.graph import build_graph

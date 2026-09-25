@@ -7,9 +7,11 @@ Claims to check: G 205 vertices / 966 unit / 423 two-edges; H 214 / 1004 / 446
 with A,B (distance 5) the same colour in every 5-colouring; K = H u rot_A(H)
 (cos 49/50) 426 / 2009 / 892 and not 5-colourable.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, itertools, time
 from fractions import Fraction as Fr
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from hn.field import Field
 from hn.geometry import Point
 from pysat.solvers import Solver
@@ -92,5 +94,5 @@ json.dump({"field_generators": [3, 11],
            "points": [[[[t.numerator, t.denominator] for t in p.x.c],
                        [[t.numerator, t.denominator] for t in p.y.c]] for p in VK],
            "unit_edges": E1k, "two_edges": E2k},
-          open("/home/user/darwin-50/research/hadwiger-nelson/data/exoo_ismailescu_K426.json", "w"))
+          open(HN_DIR + "/data/exoo_ismailescu_K426.json", "w"))
 print("written data/exoo_ismailescu_K426.json")

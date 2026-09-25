@@ -5,10 +5,12 @@ module M the edge vectors span) when M is not saturated.  So: integer echelon
 basis of M, each edge vector in that basis, then has_homomorphism at n = 2..5,
 and periodic_screen at n = 6..12.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, time
 from fractions import Fraction as Fr
 from math import gcd
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from hn.field import Field
 from hn.geometry import Point
 from hn.graph import build_graph
@@ -106,9 +108,9 @@ def gate(g, label):
         print(f"    Z/{n}: {'periodic 5-colouring FOUND' if r.get('colourable') else 'no periodic 5-colouring (' + ('exhausted' if r.get('exhausted') else 'rounds out') + ')'}   [{time.time()-t0:.0f}s]", flush=True)
 
 if __name__ == "__main__":
-    exec(open("/home/user/darwin-50/research/hadwiger-nelson/scripts/screen_lambda.py").read().split("for name, pts in")[0])
+    exec(open(HN_DIR + "/scripts/screen_lambda.py").read().split("for name, pts in")[0])
     gate(build_graph(VK), "E-I K, unit edges")
-    ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+    ROOT = HN_DIR
     d = json.load(open(f"{ROOT}/data/five_247_c.json"))
     F2 = Field(tuple(d["field_generators"]))
     P2 = [Point(F2.element([Fr(a, b) for a, b in x]), F2.element([Fr(a, b) for a, b in y])) for x, y in d["points"]]

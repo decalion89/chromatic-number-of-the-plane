@@ -15,10 +15,12 @@ query "some survivor breaks"; UNSAT means every survivor is forced.
 
 usage: backbone.py <graph.json> [rounds]
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, time, random
 import numpy as np
 from fractions import Fraction as Fr
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from hn.field import Field
 from hn.geometry import Point
 from hn.graph import build_graph

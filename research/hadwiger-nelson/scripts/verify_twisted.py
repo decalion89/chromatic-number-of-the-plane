@@ -5,13 +5,15 @@ w on the ambient coordinates with <w,u> >= 0 on D_t and <w,e> > 0; then colours
 every vertex by c(p) = psi(p) + t * floor((phi(p) - phi0) / L) with the level
 boundary placed between a and b, and checks every edge exactly and c(a) = c(b).
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, itertools, time
 from fractions import Fraction as Fr
 from math import gcd, floor
 import numpy as np
 from scipy.optimize import linprog
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-exec(open("/home/user/darwin-50/research/hadwiger-nelson/scripts/gate.py").read().split("def gate(g, label):")[0])
+sys.path.insert(0, HN_DIR)
+exec(open(HN_DIR + "/scripts/gate.py").read().split("def gate(g, label):")[0])
 path = sys.argv[1]
 d = json.load(open(path))
 F = Field(tuple(d["field_generators"]))

@@ -1,12 +1,14 @@
 """How close is a grown graph's colouring to a coset colouring, and where are the defects?
 For every admissible psi, the best relabelling pi of the 5 colours maximises #{x : pi(c(x)) = psi(x)};
 report the best fit, then where the mismatched vertices sit (distance from the pair)."""
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, itertools, math
 from fractions import Fraction as Fr
 from math import gcd
 import numpy as np
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-exec(open("/home/user/darwin-50/research/hadwiger-nelson/scripts/gate.py").read().split("def gate(g, label):")[0])
+sys.path.insert(0, HN_DIR)
+exec(open(HN_DIR + "/scripts/gate.py").read().split("def gate(g, label):")[0])
 d = json.load(open(sys.argv[1])); col = d.get("colouring")
 assert col, "checkpoint has no colouring"
 F = Field(tuple(d["field_generators"]))

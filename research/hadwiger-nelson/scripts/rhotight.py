@@ -17,8 +17,10 @@ S has to avoid all of them, and the class it returns is genuinely new.
 Same two questions, same cheap side -- no B-set hits F means rho > B -- but
 now each round costs one shrink and buys a class that moves the family.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, time
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from pysat.card import CardEnc, EncType
 from pysat.formula import IDPool
 from pysat.solvers import Solver

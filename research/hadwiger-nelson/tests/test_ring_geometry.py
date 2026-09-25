@@ -6,6 +6,7 @@ two-ring configuration's chromatic number, the 60-degree grading inside a real
 neighbourhood, the absence of sqrt2 from an Eisenstein carrier, and the pair of
 degree-4 ceiling points that priced a forced pair.
 """
+import os
 import json
 import math
 from fractions import Fraction as Fr
@@ -17,7 +18,7 @@ from hn.field import Field
 from hn.geometry import Point
 from hn.graph import build_graph
 
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def _chi(n, edges, cap=6):

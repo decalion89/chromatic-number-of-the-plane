@@ -20,9 +20,11 @@ The control comes first and decides whether any of it is believable: run at
 k = 4 and the search must rediscover his gadget unaided.  If it cannot find
 the lemma that is known to be there, its silence at k = 5 means nothing.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, time, math, pickle, itertools
 from collections import defaultdict
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from hn.degrey import build_G, build_Sa, build_Y
 from hn.geometry import DEGREY_FIELD as K
 from hn.fast import IntBasis, fast_edges_complete

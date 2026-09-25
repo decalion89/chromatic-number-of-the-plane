@@ -10,8 +10,10 @@ from scratch -- every unit edge bichromatic, every 4/9 pair bichromatic, five
 colours used at most, all 1581 vertices assigned -- against the EXACT geometry
 rather than against the search's own bookkeeping.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, time
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 import numpy as np
 from fractions import Fraction as Fr
 from hn.degrey import build_G

@@ -1,14 +1,16 @@
 """The complete combinatorial 2-ball of five_rho7: O + u + v for all unit vectors u, v.
 Colour it by tabu search and measure the best coset fit R.  Does rigidity show up in a
 graph that contains EVERY point within two unit steps of a vertex?"""
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, itertools, subprocess, time
 from fractions import Fraction as Fr
 from math import gcd
 import numpy as np
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-exec(open("/home/user/darwin-50/research/hadwiger-nelson/scripts/gate.py").read().split("def gate(g, label):")[0])
+sys.path.insert(0, HN_DIR)
+exec(open(HN_DIR + "/scripts/gate.py").read().split("def gate(g, label):")[0])
 t0 = time.time()
-d = json.load(open("/home/user/darwin-50/research/hadwiger-nelson/data/five_rho7.json"))
+d = json.load(open(HN_DIR + "/data/five_rho7.json"))
 F = Field(tuple(d["field_generators"]))
 P = [Point(F.element([Fr(a, b) for a, b in x]), F.element([Fr(a, b) for a, b in y])) for x, y in d["points"]]
 g = build_graph(P)

@@ -8,11 +8,13 @@ of the whole unit-distance graph on M.  Its consequences are automatic:
 For other q (and to see what is left) the colouring is tested pair by pair.
 The cyclic Z/n gate only sees quotients M -> Z/n; this one sees all of M/qM.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, itertools, time, os
 from fractions import Fraction as Fr
 exec(open(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)), "gate.py")).read().split("def gate(g, label):")[0])
 from pysat.solvers import Solver
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+ROOT = HN_DIR
 name = sys.argv[1]; QS = [int(x) for x in sys.argv[2:]]
 d = json.load(open(f"{ROOT}/data/{name}"))
 F = Field(tuple(d["field_generators"]))

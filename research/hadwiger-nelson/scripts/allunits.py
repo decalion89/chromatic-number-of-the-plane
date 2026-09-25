@@ -6,13 +6,15 @@ T(m) = sum_sigma |sigma(m)|^2 equals the field degree.  T is a positive
 definite form on M: LLL-reduce it, enumerate every lattice point with
 T <= degree (Fincke-Pohst), and keep those with |m|^2 = 1 exactly.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, math, itertools, time
 from fractions import Fraction as Fr
 from math import gcd
 import numpy as np
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
-exec(open("/home/user/darwin-50/research/hadwiger-nelson/scripts/gate.py").read().split("def gate(g, label):")[0])
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+sys.path.insert(0, HN_DIR)
+exec(open(HN_DIR + "/scripts/gate.py").read().split("def gate(g, label):")[0])
+ROOT = HN_DIR
 NAME = sys.argv[1]; t0 = time.time()
 d = json.load(open(NAME if NAME.startswith("/") else f"{ROOT}/data/{NAME}"))
 F = Field(tuple(d["field_generators"]))
@@ -96,4 +98,4 @@ for zz in sols:
         units.add(max(tuple(vec), tuple(-t for t in vec)))
 print(f"  unit vectors of the module: {2 * len(units)} ({len(units)} directions) against the graph's {len(E)}   [{time.time()-t0:.0f}s]", flush=True)
 json.dump({"source": NAME, "den": den, "directions": [list(u) for u in sorted(units)]},
-          open("/home/user/darwin-50/research/hadwiger-nelson/scripts/allunits_" + NAME.split("/")[-1], "w"))
+          open(HN_DIR + "/scripts/allunits_" + NAME.split("/")[-1], "w"))

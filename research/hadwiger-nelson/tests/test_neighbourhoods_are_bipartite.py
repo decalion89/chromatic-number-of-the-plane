@@ -1,7 +1,7 @@
 """Neighbourhoods in the plane are bipartite, so rigidity is never local.
 
 The theorem is not new in this project -- it was derived in an earlier pass
-(README, "Every neighbourhood is bipartite, which bounds the single-point
+(docs/research-log.md, "Every neighbourhood is bipartite, which bounds the single-point
 attack"), along with the conclusion that rigidity is global.  This file checks
 it on the graphs built since, and draws two consequences that pass did not.
 

@@ -15,12 +15,14 @@ as a periodic colouring (Z/N x Z/5) before it counts.
 
 usage: wallgate.py <module.json> <apart|pair> <B> [L]
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, itertools, time
 from fractions import Fraction as Fr
 import numpy as np
 exec(open(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)), "gate.py")).read().split("def gate(g, label):")[0])
 from pysat.solvers import Solver
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+ROOT = HN_DIR
 name, MODE, BND = sys.argv[1], sys.argv[2], int(sys.argv[3]); L = int(sys.argv[4]) if len(sys.argv) > 4 else 40
 d = json.load(open(f"{ROOT}/data/{name}"))
 F = Field(tuple(d["field_generators"]))
@@ -30,7 +32,7 @@ B = echelon(E); C = np.array([coords(B, v) for v in E], dtype=object); r = len(B
 t0 = time.time()
 # ---- functionals with |phi(u)| <= BND on every unit.  The echelon coordinates are huge, so
 # LLL-reduce the value lattice {(phi(u))_u : phi in Z^r} first (exact, sympy), then Fincke-Pohst.
-src = open("/home/user/darwin-50/research/hadwiger-nelson/scripts/allunits.py").read()
+src = open(HN_DIR + "/scripts/allunits.py").read()
 exec(src[src.index("def lll_exact"):src.index("Gr, Ur = lll_exact(G)")])
 G0 = [[Fr(sum(int(C[k][i]) * int(C[k][j]) for k in range(nd))) for j in range(r)] for i in range(r)]
 _, Tm = lll_exact(G0)                                                  # rows: new functionals in old coordinates

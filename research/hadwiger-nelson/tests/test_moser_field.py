@@ -4,6 +4,7 @@
 norm-one unit of Z_2[omega], and phi(alpha + beta omega) = frac_2((alpha + 2 beta)/4) is 1/4, 1/2 or
 3/4 on all of them.  With the Moser spindle inside the field, its chromatic number is exactly 4.
 """
+import os
 import itertools
 import json
 from fractions import Fraction as Fr
@@ -13,7 +14,7 @@ from hn.field import Field
 from hn.geometry import Point, Rotation
 from hn.graph import build_graph
 
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WINDOW = {Fr(1, 4), Fr(1, 2), Fr(3, 4)}
 
 

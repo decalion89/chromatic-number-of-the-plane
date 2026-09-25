@@ -1,7 +1,9 @@
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json
 from fractions import Fraction as Fr
 exec(open(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)), "gate.py")).read().split("def gate(g, label):")[0])
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+ROOT = HN_DIR
 for name in sys.argv[1:]:
     d = json.load(open(f"{ROOT}/data/{name}"))
     F = Field(tuple(d["field_generators"]))

@@ -32,18 +32,20 @@ Each case is built, its composite distance checked exactly, its forcing
 confirmed by the solver rather than assumed, and the result tested for four
 colours.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, time, json, random
 from fractions import Fraction as Fr
 from collections import defaultdict
 from math import isqrt
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from hn.field import Field
 from hn.degrey import build_Sa
 from hn.geometry import Point, Rotation, rotation_joining, _rot60
 from hn.graph import build_graph
 from pysat.solvers import Solver
 
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+ROOT = HN_DIR
 t0 = time.time()
 
 def squarefree(m):

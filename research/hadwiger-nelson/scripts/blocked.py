@@ -33,16 +33,18 @@ Reported graded rather than yes/no: the MINIMUM number of colours the solver
 can leave on N(p).  A blocked point is that minimum reaching 5.  On G the
 earlier pass found every candidate sitting at 2.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, json, time
 from fractions import Fraction as Fr
 from collections import defaultdict
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from hn.field import Field
 from hn.geometry import Point, Rotation, _rot60
 from hn.graph import build_graph
 from pysat.solvers import Solver
 
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+ROOT = HN_DIR
 t0 = time.time()
 K = 5
 FILES = ["five_tuned_1_1.json", "five_twotune_small.json", "five_247_c.json"]

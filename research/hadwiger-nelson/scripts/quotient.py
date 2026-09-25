@@ -15,8 +15,10 @@ finite sample.
 If no m works, the (rho_3, rho_4) group has survived a much larger family than
 the first test, and is worth the expensive experiments.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, time, itertools
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 import numpy as np
 from fractions import Fraction as Fr
 from hn.field import Field

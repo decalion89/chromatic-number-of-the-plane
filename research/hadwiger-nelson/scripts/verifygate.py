@@ -14,8 +14,10 @@ finding one by sampling is not expected; what the sample rules out is a coding
 error that made every functional fail trivially -- if some direction reduced
 to zero mod 5 the answer would be "blocked" for the wrong reason.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, time, pickle, random
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from hn.homcol import has_homomorphism, _rank_mod
 
 t0 = time.time()

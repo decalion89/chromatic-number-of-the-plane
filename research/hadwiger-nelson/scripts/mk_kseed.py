@@ -5,13 +5,15 @@ and of the blocked module).  So their graph H, turned by 150 degrees and put at 
 five_rho7, lies in five_rho7's module, and K = H u lambda_A(H) lies in five_rho7 u lambda_O(five_rho7).
 Writes: data/K_rot.json (K alone, with its 892 two-edges listed) and
         data/rho7_lambda_K.json (five_rho7 u lambda_O(five_rho7) u K, A = O)."""
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import json, sys
 from fractions import Fraction as Fr
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from hn.field import Field
 from hn.geometry import Point, Rotation
 from hn.graph import build_graph
-ROOT = "/home/user/darwin-50/research/hadwiger-nelson"
+ROOT = HN_DIR
 d7 = json.load(open(f"{ROOT}/data/five_rho7.json")); F = Field(tuple(d7["field_generators"]))
 mk = lambda xy: Point(F.element([Fr(a, b) for a, b in xy[0]]), F.element([Fr(a, b) for a, b in xy[1]]))
 P7 = [mk(xy) for xy in d7["points"]]

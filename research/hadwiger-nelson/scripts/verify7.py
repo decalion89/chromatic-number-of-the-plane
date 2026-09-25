@@ -11,8 +11,10 @@ colour symmetry it is enough to ask for one: is there a proper 4-colouring of
 Sa in which colour 0 appears nowhere on S?  A direct CNF, built here rather
 than through ColourRelations, answers it.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from hn import degrey
 from hn.graph import build_graph
 from hn.forced import ColourRelations, forcing_set, shrink_forcing_set

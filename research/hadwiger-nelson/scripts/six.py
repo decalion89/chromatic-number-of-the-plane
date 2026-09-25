@@ -17,10 +17,12 @@ Most queries are satisfiable and cheap; a pair that is really forced makes
 the solver prove unsatisfiability, so hard ones are flagged by a conflict
 budget rather than run to the end, and revisited without a budget.
 """
+import os
+HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, time
 from fractions import Fraction as Fr
 from itertools import combinations
-sys.path.insert(0, "/home/user/darwin-50/research/hadwiger-nelson")
+sys.path.insert(0, HN_DIR)
 from hn.degrey import build_G
 from hn.geometry import DEGREY_FIELD
 from pysat.solvers import Solver
