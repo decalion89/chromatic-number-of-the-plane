@@ -4,5 +4,8 @@
 records every experiment, result, dead end, correction and withdrawn claim, in the order they
 happened.
 
-Read it to see how a result was reached or why an approach was abandoned. For what is established,
+[`figures/`](figures/) holds the SVG figures used in the READMEs. `scripts/make_figures.py` regenerates
+them from the data.
+
+Read the log to see how a result was reached or why an approach was abandoned. For what is established,
 start with the project [README](../README.md) and the [notes](../notes/).

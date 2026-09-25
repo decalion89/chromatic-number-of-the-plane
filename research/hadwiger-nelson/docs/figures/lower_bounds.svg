@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 730 392" width="730" height="392" role="img" aria-label="The Moser spindle and the 10-vertex rhombus chain, each 4-coloured" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+<rect width="730" height="392" rx="10" fill="#fcfcfb"/>
+<text x="180.0" y="22.0" text-anchor="middle" font-size="13" font-weight="600" fill="#0b0b0b">Four colours are needed: ℚ(√3, √11)</text>
+<text x="180.0" y="38.0" text-anchor="middle" font-size="11" fill="#52514e">the Moser spindle, 7 vertices</text>
+<line x1="59.46" y1="320.00" x2="227.11" y2="320.00" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="59.46" y1="320.00" x2="143.29" y2="174.81" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="59.46" y1="320.00" x2="199.17" y2="227.33" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="59.46" y1="320.00" x2="49.06" y2="152.67" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="227.11" y1="320.00" x2="143.29" y2="174.81" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="227.11" y1="320.00" x2="310.94" y2="174.81" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="143.29" y1="174.81" x2="310.94" y2="174.81" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="310.94" y1="174.81" x2="188.77" y2="60.00" stroke="#52514e" stroke-width="2" stroke-dasharray="5 3"/>
+<line x1="199.17" y1="227.33" x2="49.06" y2="152.67" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="199.17" y1="227.33" x2="188.77" y2="60.00" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="49.06" y1="152.67" x2="188.77" y2="60.00" stroke="#c9c8c1" stroke-width="1"/>
+<circle cx="59.46" cy="320.00" r="6.00" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<rect x="221.71" y="314.60" width="10.80" height="10.80" rx="1" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<polygon points="143.29,167.31 150.79,174.81 143.29,182.31 135.79,174.81" fill="#4a3aa7" stroke="#fcfcfb" stroke-width="1.5"/>
+<polygon points="310.94,167.31 318.06,180.06 303.81,180.06" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"/>
+<polygon points="199.17,219.83 206.30,232.58 192.05,232.58" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"/>
+<rect x="43.66" y="147.27" width="10.80" height="10.80" rx="1" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<polygon points="188.77,52.50 196.27,60.00 188.77,67.50 181.27,60.00" fill="#4a3aa7" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="319.9" y="178.8" font-size="12" font-style="italic" fill="#0b0b0b">A</text>
+<text x="197.8" y="64.0" font-size="12" font-style="italic" fill="#0b0b0b">B</text>
+<text x="550.0" y="22.0" text-anchor="middle" font-size="13" font-weight="600" fill="#0b0b0b">Four colours are needed: ℚ(√2, √3)</text>
+<text x="550.0" y="38.0" text-anchor="middle" font-size="11" fill="#52514e">a chain of three unit rhombi, 10 vertices</text>
+<line x1="424.39" y1="263.72" x2="443.42" y2="152.79" stroke="#52514e" stroke-width="2" stroke-dasharray="5 3"/>
+<line x1="424.39" y1="263.72" x2="521.86" y2="207.45" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="424.39" y1="263.72" x2="521.86" y2="320.00" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="619.34" y1="263.72" x2="521.86" y2="207.45" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="619.34" y1="263.72" x2="521.86" y2="320.00" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="619.34" y1="263.72" x2="563.06" y2="166.25" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="619.34" y1="263.72" x2="675.61" y2="166.25" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="619.34" y1="68.77" x2="555.63" y2="161.56" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="619.34" y1="68.77" x2="507.12" y2="60.00" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="619.34" y1="68.77" x2="563.06" y2="166.25" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="619.34" y1="68.77" x2="675.61" y2="166.25" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="443.42" y1="152.79" x2="507.12" y2="60.00" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="443.42" y1="152.79" x2="555.63" y2="161.56" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="521.86" y1="207.45" x2="521.86" y2="320.00" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="563.06" y1="166.25" x2="675.61" y2="166.25" stroke="#c9c8c1" stroke-width="1"/>
+<line x1="555.63" y1="161.56" x2="507.12" y2="60.00" stroke="#c9c8c1" stroke-width="1"/>
+<circle cx="424.39" cy="263.72" r="6.00" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<rect x="613.94" y="258.32" width="10.80" height="10.80" rx="1" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="619.34" cy="68.77" r="6.00" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<rect x="438.02" y="147.39" width="10.80" height="10.80" rx="1" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<polygon points="521.86,199.95 528.99,212.70 514.74,212.70" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"/>
+<polygon points="521.86,312.50 529.36,320.00 521.86,327.50 514.36,320.00" fill="#4a3aa7" stroke="#fcfcfb" stroke-width="1.5"/>
+<polygon points="563.06,158.75 570.56,166.25 563.06,173.75 555.56,166.25" fill="#4a3aa7" stroke="#fcfcfb" stroke-width="1.5"/>
+<polygon points="675.61,158.75 682.74,171.50 668.49,171.50" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"/>
+<polygon points="555.63,154.06 562.76,166.81 548.51,166.81" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"/>
+<polygon points="507.12,52.50 514.62,60.00 507.12,67.50 499.62,60.00" fill="#4a3aa7" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="402.4" y="268.7" font-size="12" font-style="italic" fill="#0b0b0b">P₀</text>
+<text x="421.4" y="152.8" font-size="12" font-style="italic" fill="#0b0b0b">P₃</text>
+<text x="365" y="352" text-anchor="middle" font-size="11" fill="#52514e">Dashed: an edge whose two ends every 3-colouring forces to share a colour, so three colours cannot suffice.</text>
+<text x="150" y="376" font-size="11" fill="#52514e">colour = residue pair (ρ(α), ρ(β)):</text>
+<circle cx="346.00" cy="372.00" r="5.00" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="355" y="376" font-size="11" fill="#0b0b0b">(0, 0)</text>
+<rect x="403.50" y="367.50" width="9.00" height="9.00" rx="1" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="417" y="376" font-size="11" fill="#0b0b0b">(1, 0)</text>
+<polygon points="470.00,365.75 475.94,376.38 464.06,376.38" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="479" y="376" font-size="11" fill="#0b0b0b">(0, 1)</text>
+<polygon points="532.00,365.75 538.25,372.00 532.00,378.25 525.75,372.00" fill="#4a3aa7" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="541" y="376" font-size="11" fill="#0b0b0b">(1, 1)</text>
+</svg>
