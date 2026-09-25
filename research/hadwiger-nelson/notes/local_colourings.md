@@ -597,3 +597,94 @@ Glucose; `scripts/experiments/level_plane.py`).
 growths over `ℚ(√3, √5)` of up to 83 000 points stayed 3-colourable. The chain
 reaches radius about 3.5, and those graphs stayed near the origin, so they said
 nothing about `χ(L²)`.
+
+## 12. Split places see the integral edges: five over `ℚ(√3, √5)` needs 2 and 3
+
+§9 colours a module through a split place when all its generators are
+integral there. The argument needs only the edge vectors.
+
+**Proposition B.** Let `w` be a place of `K = L(i)` over a place `v` of `L`
+that splits in `K`, with residue field `𝔽_q`, and let
+`H_q = Cay(𝔽_q², {(t, 1/t) : t ∈ 𝔽_q^×})`. If every edge vector of a
+unit-distance graph `G` over `L` is a unit at `w`, then `χ(G) ≤ χ(H_q)`.
+
+*Proof.*
+- **Units at `w` are units at `w̄`.** A unit vector has `u ū = 1`, so
+  `v_w(u) = −v_{w̄}(u)`.
+- **A residue map.** Let `R` be the ring of elements integral at `w` and `w̄`,
+  and `ρ` the reduction at `w`. Fix a representative `rep(z)` of each coset
+  `z + R`, and put `g(z) = (ρ(z − rep z), ρ(z̄ − conj(rep z)))`.
+- **Unit steps become edges of `H_q`.** An edge `z, z + u` stays in one coset,
+  and `g` moves by `(ρ(u), ρ(ū)) = (ρ(u), ρ(u)^{−1})`. ∎
+
+The points need not be integral. §9 is the case where they are.
+
+**More values of `χ(H_q)`** (SAT; `tests/test_split_places.py`):
+
+| `q` | 4 | 8 | 9 | 16 |
+|---|---|---|---|---|
+| `χ(H_q)` | 4 | 4 | **3** | 4 |
+
+`χ(H₁₃) = 5` is certified there by a linear colouring:
+`(a, b) ↦ c(a + 2b mod 13)`, where `c` colours the circulant on
+`{t + 2/t} = {2, 3, 5, 8, 10, 11}`.
+
+**Over `ℚ(√3, √5)`.** Both 2 and 3 split in `K = ℚ(i, √3, √5)`.
+- **At 2.** `−15 ≡ 1 (mod 8)`, so `i ∈ ℚ₂(√15)`. The local field is
+  `ℚ₂(√3, √5)`, with residue field `𝔽₄`.
+- **At 3.** `−5 ≡ 1 (mod 3)`, so `i ∈ ℚ₃(√5)`. The residue field is `𝔽₉`.
+
+Since `χ(H₉) = 3` and `χ(H₄) = 4`:
+- a unit-distance graph over `ℚ(√3, √5)` with no proper 3-colouring has an
+  edge vector that is not a unit above 3. In `chain35.json` it is
+  `τ = (2 + i√5)/3`.
+- one with no proper 4-colouring also has an edge vector that is not a unit
+  above 2, such as `(1 + i√15)/4` (valuations `±2`) or de Grey's
+  `(7 + i√15)/8` (`±4`).
+
+The first bound is attained. `chain35.json` has no 3-colouring, all its edge
+vectors are units above 2, and `z ↦ z mod w₂ ∈ 𝔽₄` is a proper 4-colouring of
+it (tested).
+
+**Why the growths over `ℚ(√3, √5)` stopped at four.** Every unit set used
+before this section (`ζ^a τ^b`, and the four-rhombus units below) consisted of
+units above 2. Proposition B 4-colours every graph they can build, so no
+amount of growth could have produced five.
+
+**The known 5-chromatic graphs agree.** The coordinate fields of de Grey's
+graph `ℚ(√3, √5, √7, √11)`, of Voronov–Neopryatnaya–Dergachev's
+`ℚ(√2, √3, √5)` and of Exoo–Ismailescu's `ℚ(√3, √11, √247)` all have local
+field `ℚ₂(√3, √5)` or a field containing it with residue field `𝔽₄`, and there
+2 splits in `K`. So for every place `w` above 2, each of these graphs has an
+edge vector that is not a unit at `w`. Their spindle rotations are the natural
+candidates: `(7 + i√15)/8`, and `(119 + 3i√247)/128` for Exoo–Ismailescu.
+
+**A shorter chain.** `1/√3` is a sum of four unit vectors of `K`:
+
+    c₁ = (−(√3 + √15) + i(√15 − √3))/6,   c₂ = ((√15 − √3) + i(√3 + √15))/6,
+    c₃ = ((2√3 − √5) − i(2 + √15))/6,     c₄ = ((2√3 + √5) + i(2 − √15))/6.
+
+So there is a chain of four unit rhombi, 13 vertices, with no proper
+3-colouring. Three do not come out of a search over small heights: three unit
+vectors summing to `1/√3` are an `L`-point on a curve of genus 1.
+
+**Finer 2-adic levels.** With units that are not units above 2, reduce at
+`w^A w̄^B` after scaling by a power of the uniformiser
+(`scripts/experiments/split_gate_q35.py`; the unit sets come from
+`scripts/experiments/units_q35.py`). A proper 4-colouring of the finite quotient
+4-colours every graph with those edge vectors, and colourability passes to
+finer levels.
+
+| unit set (with `ζ`-turns and products) | levels tried at 2 | 4-colourable? |
+|---|---|---|
+| `τ` | `A = B = 1` | yes (the image is `K₄`) |
+| `τ, (1 + i√15)/4` | `3, 3` / `4, 4` | no / **yes** |
+| `o₁ = ((√5 − √3) − i(√3 + √5))/4` (valuation `±1`) | `2, 2` | yes |
+| `o₁, (1 + i√15)/4` | `4, 4`; `5, 4`; `5, 5` (1 048 576 points) | no (kissat) |
+
+With `τ` added to the last set (252 units), the reductions at 3 (level `3, 2`)
+and at 5 (`1, 1`, `2, 1` and `2, 2`, 390 625 points) have no proper 4-colouring
+either, and 11 never gives a 4-colouring. So none of the quotients tried at 2,
+3, 5 and 11 4-colours that module; finer levels at 3 and 5, and the other
+primes, were not tried. It is the first unit set over `ℚ(√3, √5)` that no
+reduction we ran 4-colours. A colouring-guided search inside it is running.

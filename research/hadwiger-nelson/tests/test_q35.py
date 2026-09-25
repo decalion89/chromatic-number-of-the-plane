@@ -74,3 +74,28 @@ def test_the_chain_has_no_proper_3_colouring():
 def test_eleven_splits_completely():
     assert pow(3, 5, 11) == 1 and pow(5, 5, 11) == 1                # 3 and 5 are squares mod 11
     assert 11 % 4 == 3                                              # -1 is not a square in F_11
+
+
+def test_a_chain_of_four_rhombi():
+    """1/sqrt3 = c1 + c2 + c3 + c4 for four unit vectors of Q(i, sqrt3, sqrt5), so four unit rhombi with
+    long diagonals sqrt3 c_k join 0 to 1: 13 vertices and no proper 3-colouring (notes section 12)."""
+    S15 = S3 * S5
+    c = [Point(-(S3 * r(Fr(1, 6))) - S15 * r(Fr(1, 6)), -(S3 * r(Fr(1, 6))) + S15 * r(Fr(1, 6))),
+         Point(-(S3 * r(Fr(1, 6))) + S15 * r(Fr(1, 6)), S3 * r(Fr(1, 6)) + S15 * r(Fr(1, 6))),
+         Point(S3 * r(Fr(1, 3)) - S5 * r(Fr(1, 6)), r(Fr(-1, 3)) - S15 * r(Fr(1, 6))),
+         Point(S3 * r(Fr(1, 3)) + S5 * r(Fr(1, 6)), r(Fr(1, 3)) - S15 * r(Fr(1, 6)))]
+    for u in c:
+        assert u.x * u.x + u.y * u.y == F.one()
+    assert sum((u.x for u in c), F.zero()) == S3 * r(Fr(1, 3)) and sum((u.y for u in c), F.zero()) == F.zero()
+    z = Point(S3 * r(Fr(1, 2)), r(Fr(1, 2)))
+    zb = Point(z.x, -z.y)
+    tip = Point(F.zero(), F.zero())
+    pts = [tip]
+    for u in c:
+        pts += [Point(tip.x + mul(u, z).x, tip.y + mul(u, z).y), Point(tip.x + mul(u, zb).x, tip.y + mul(u, zb).y)]
+        tip = Point(tip.x + S3 * u.x, tip.y + S3 * u.y)
+        pts.append(tip)
+    assert tip == Point(r(1), r(0))
+    assert len(set(pts)) == 13
+    E = exact_edges(pts)
+    assert not colourable(len(pts), E, 3) and colourable(len(pts), E, 4)

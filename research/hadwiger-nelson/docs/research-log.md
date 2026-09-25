@@ -8101,3 +8101,44 @@ when every other generator, with any factor 3 removed, is `≡ 1 (mod 3)`, and
 supplies `1/3`). PARI/GP gives residue degree 1 above 3 for `ℚ(√3, √7)`,
 `ℚ(√3, √7, √13)` and `ℚ(√3, √7, √13, √19)`, and 2 for six fields with a
 generator `≡ 2 (mod 3)`. `notes/local_colourings.md` §11.
+
+## The prime 2 was the wall (25 September)
+
+The growths over `ℚ(√3, √5)` stayed 4-colourable up to 112 000 points, and the
+module gate found no periodic colouring at the odd primes it checked. The gate
+never looks at 2, and 2 is the answer. It splits in `ℚ(i, √3, √5)` with residue field `𝔽₄`.
+The unit vectors `ζ^a τ^b` are all units there. Reduction `z ↦ z mod w₂ ∈ 𝔽₄`
+sends a unit step `u` to `ρ(u) ≠ 0`, so it is a proper 4-colouring of every
+graph those units can build. The two runs targeting pairs at `d² = 7/3` and
+`d = 2` were stopped: they could not succeed.
+
+In general (`notes/local_colourings.md` §12, Proposition B), a split place with
+residue field `𝔽_q` colours the graph of the edges that are units there with
+`χ(H_q)` colours. Here `χ(H₄) = 4` and `χ(H₉) = 3` (`tests/test_split_places.py`).
+So over `ℚ(√3, √5)` a 4-chromatic graph needs an edge vector that is not a unit
+above 3, and a 5-chromatic one also needs one that is not a unit above 2.
+The same holds in de Grey's, Voronov–Neopryatnaya–Dergachev's and
+Exoo–Ismailescu's fields, where 2 splits with residue field `𝔽₄`. That is why
+their spindle rotations carry a power of 2 in the denominator.
+
+Other findings of the day:
+- `1/√3` is a sum of four unit vectors of `ℚ(i, √3, √5)`, which gives a
+  13-vertex chain of four rhombi with no proper 3-colouring
+  (`tests/test_q35.py`). Three would mean a point on a genus-1 curve; none has
+  small height.
+- A split-place gate with deep units (`scripts/experiments/split_gate_q35.py`)
+  scales by a power of the uniformiser and reduces at `w^A w̄^B`. Results:
+  - `ζ, τ, (1 + i√15)/4`: 4-colourable at 2 at the second level.
+  - `ζ, o₁, (1 + i√15)/4`: no 4-colouring at 2 up to 1 048 576 points (kissat).
+    Here `o₁` has odd valuation above 2.
+  - With `τ` added (252 units), none at 3 (59 049 points) or at 5 (up to
+    390 625 points) either.
+- The Voronov–Neopryatnaya–Dergachev construction `M₃ ∪ ψM₃` does not transfer
+  directly. From `ζ, τ` the set `M₃` is 3-colourable. With
+  `(1 + i√15)/4` added, `M₂` (5 833 points) is 4-chromatic, containing a
+  19-vertex 4-chromatic subgraph of radius 2. But `M₂ ∪ (7 + i√15)/8 · M₂` is
+  still 4-colourable.
+
+A colouring-guided growth at four colours inside the 252-unit module is running.
+Unlike every earlier run, its colourings are tight: about a thousand rainbow
+candidates at each step, and tabu gives way to kissat from 13 000 points on.
