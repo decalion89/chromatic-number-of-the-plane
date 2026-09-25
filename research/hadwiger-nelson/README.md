@@ -41,15 +41,13 @@ below, with their evidence.
 | statement | status | where |
 |---|---|---|
 | **χ(ℚ(√3, √11)²) = 4.** No 5-chromatic unit-distance graph has coordinates in ℚ(√3, √11). | Proved; short proof; unit tests. | `notes/local_colourings.md` §8, `hn/adelic.py`, `tests/test_q311.py` |
-| **χ(ℚ(√2, √3)²) = 4.** The same argument settles Voronov's second case. | Proved; 10-vertex lower-bound graph with a DRAT certificate; unit tests. | `notes/local_colourings.md` §10, `tests/test_q23.py`, `certificates/chain23_no3coloring.json` |
+| **χ(ℚ(√2, √3)²) = 4.** The same argument settles Voronov's second case. | Proved; unit tests. The lower bound was already implicit in Voronov–Neopryatnaya–Dergachev; a 10-vertex rhombus chain gives a short one. | `notes/local_colourings.md` §10, `tests/test_q23.py`, `certificates/chain23_no3coloring.json` |
 | χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, as whole complex fields | Proved. Upper bounds by reduction at the primes 2 and 11; lower bounds from the Moser spindle and Exoo–Ismailescu's graph. | `notes/rigidity.md`, `notes/local_colourings.md` |
 | Necessary local conditions for a field to hold a 6-chromatic unit-distance graph | Proved | `notes/local_colourings.md` §5–§9, `scripts/fieldscreen.py` |
 | Rigidity of coset colourings on the ρ₇ module | 3 840 exact Stiemke certificates | research log, "κ, the rotation every coset colouring is blind to" |
 
-<p align="center">
-  <img src="docs/figures/plane_q311.svg" width="600"
-       alt="A piece of the plane over Q(sqrt3, sqrt11), 4-coloured by the 2-adic colouring">
-</p>
+The two theorems are written up in a three-page note,
+[`docs/note/planes-4-chromatic.pdf`](docs/note/planes-4-chromatic.pdf).
 
 **On χ(ℚ(√3, √11)²) = 4.** The question was open in print:
 - Moorhouse (2010) left the value undetermined.
@@ -59,19 +57,33 @@ below, with their evidence.
 - Voronov (Polymath16, 2021) conjectured χ = 4 for this plane and for the plane
   over ℚ(√2, √3), and noted that neither was proved. Both now are.
 
-The proof reduces z = x + iy modulo the place of ℚ(√3, √11) above 2, which is
-inert in ℚ(i, √3, √11). Every unit vector becomes a nonzero element of 𝔽₄, so
-the residue is a proper 4-colouring.
+The proof reduces z = x + iy modulo a place of ℚ(√3, √11) above 2 (there are
+two), which is inert in ℚ(i, √3, √11). Every unit vector becomes a nonzero
+element of 𝔽₄, so the residue is a proper 4-colouring. In the coordinates
+α = x + y/√3, β = 2y/√3 the proof is Madore's reduction argument (Prop. 3.2);
+in the coordinates (x, y) that argument fails at 2.
 
-The 2-adic idea is David Speyer's: he used it in Polymath16 (2018) to
-4-colour the Moser ring. The step here is its extension to the whole plane.
-
-This result has not been refereed.
+The reduction modulo 2 is David Speyer's: he used it in Polymath16 (thread 2,
+April 2018) to 4-colour the Moser ring. The passage from a ring to the whole
+field by cosets is Madore's and Moorhouse's. What is new is the observation that
+the places over 2 are inert, so that the reduction covers every unit vector of
+the plane. This result has not been refereed.
 
 <p align="center">
-  <img src="docs/figures/lower_bounds.svg" width="640"
+  <img src="docs/figures/plane_q311.svg" width="560"
+       alt="A piece of the plane over Q(sqrt3, sqrt11), 4-coloured by the 2-adic colouring">
+</p>
+<p align="center"><sub><b>Figure 1.</b> 163 points of the plane over ℚ(√3, √11) and their 594
+unit-distance edges. Each point is coloured by the residue pair (ρ(α), ρ(β)) ∈ 𝔽₂²;
+no edge joins two points of the same colour.</sub></p>
+
+<p align="center">
+  <img src="docs/figures/lower_bounds.svg" width="600"
        alt="The Moser spindle and the 10-vertex chain of unit rhombi, each needing four colours">
 </p>
+<p align="center"><sub><b>Figure 2.</b> The two lower bounds: the Moser spindle over ℚ(√3, √11) and a
+chain of three unit rhombi over ℚ(√2, √3). In a 3-colouring the dashed edge would join two
+points of the same colour.</sub></p>
 
 ### Computations, all independently verified
 
@@ -179,11 +191,15 @@ preprint-level claims. Corrections are welcome.
   [pdf](https://www.ericmoorhouse.org/pub/chromatic.pdf)
 - D. A. Madore, *The Hadwiger–Nelson problem over certain fields*;
   [arXiv:1509.07023](https://arxiv.org/abs/1509.07023)
-- Polymath16 threads,
-  [3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/)
-  (Speyer's 2-adic colourings of the Moser ring) and
+- Polymath16 threads
+  [2](https://dustingmixon.wordpress.com/2018/04/22/polymath16-second-thread-what-does-it-take-to-be-5-chromatic/)
+  and [3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/)
+  (Speyer's 2-adic colourings of the Moser ring), and
   [17](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/)
   (Voronov's conjecture)
+- V. A. Voronov, A. M. Neopryatnaya, E. A. Dergachev, *Constructing
+  5-chromatic unit distance graphs embedded in the Euclidean plane and
+  two-dimensional spheres*; [arXiv:2106.11824](https://arxiv.org/abs/2106.11824)
 - Á. Dúcz, *A note on geometric colorings of the Moser lattice*;
   [arXiv:2606.12325](https://arxiv.org/abs/2606.12325)
 
