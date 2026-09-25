@@ -92,8 +92,23 @@ requests.
 
 ## Citing
 
-Use GitHub's "Cite this repository" button, which reads
-[`CITATION.cff`](CITATION.cff), or:
+Cite a tagged release, so that the reader finds the version you read; the
+changes between releases are in [`CHANGELOG.md`](CHANGELOG.md). For the
+repository as a whole, use GitHub's "Cite this repository" button, which reads
+[`CITATION.cff`](CITATION.cff):
+
+```bibtex
+@software{galan2026hn,
+  author  = {Gal{\'a}n, Sergi},
+  title   = {The {H}adwiger--{N}elson problem over number fields},
+  version = {1.0.0},
+  year    = {2026},
+  url     = {https://github.com/decalion89/darwin-50/releases/tag/v1.0.0},
+  note    = {AI-assisted research; not peer reviewed}
+}
+```
+
+For the note on the two 4-chromatic planes:
 
 ```bibtex
 @misc{galan2026planes,
@@ -117,8 +132,11 @@ peer reviewed yet.
 
 ## Reporting an error
 
-Corrections are welcome. If a claim fails to reproduce, please open an issue
-giving the file, the command you ran, and what you saw.
+Corrections are welcome. Please open an issue with one of the two templates:
+*Mathematical error* (a statement, proof or table entry that is wrong or
+unsupported) or *Result does not reproduce* (the command you ran and what you
+saw). Corrections are recorded in the research log and in the changelog, not
+edited away.
 
 ## License
 
@@ -140,4 +158,6 @@ pasado desapercibido; los trabajos posteriores lo daban por abierto. La prueba
 cambia de coordenadas para que el argumento de reducción de Madore funcione
 módulo 2. Está explicada en una
 [nota de tres páginas](research/hadwiger-nelson/docs/note/planes-4-chromatic.pdf).
-Es un trabajo hecho con ayuda de IA y todavía no ha sido revisado por pares.
+También se demuestra, con certificados verificados por un programa
+independiente, que siete planos finitos necesitan seis colores. Es un trabajo
+hecho con ayuda de IA y todavía no ha sido revisado por pares.

@@ -17,8 +17,8 @@ authors:
     alias: decalion89
 repository-code: "https://github.com/decalion89/darwin-50"
 license: MIT
-version: "0.1"
-date-released: "2026-09-25"
+version: "1.0.0"
+date-released: "2026-09-26"
 keywords:
   - Hadwiger–Nelson problem
   - chromatic number of the plane
