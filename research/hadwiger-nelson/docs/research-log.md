@@ -8183,3 +8183,59 @@ Also recorded today:
   4-colourable, but CaDiCaL needs 172 s to find the colouring.
 - The four-colour growth in the 252-unit module reached 13 708 points. From
   then on each step needs kissat for up to half an hour.
+
+## Finite planes: Moorhouse's table continued (25 September)
+
+For `q ≡ 1 (mod 4)` the substitution `(a, b) = (x + iy, x − iy)` makes the
+hyperbola graph `H_q` of Proposition C the unit-distance graph of `𝔽_q²`, the
+graph of Moorhouse's Table 6.1 (`notes/local_colourings.md` §12). This gives:
+- **`χ(𝔽₁₃²) = 5`**, settling Moorhouse's "5 or 6". The value `χ(H₁₃) = 5` was
+  already certified.
+- **`χ(𝔽₁₇²) ≤ 6`**, from Moorhouse's "5, 6 or 7". The colouring is
+  `(x, y) ↦ ⌊((3x + 6y) mod 17)/3⌋`: the line `αx + βy = r` meets the unit
+  circle exactly when `α² + β² − r²` is a square, and `45 − r²` is not a
+  square for `r = 0, 1, 2`.
+
+The same *interval colourings*, with `m` consecutive parallel lines per colour,
+extend Vinh's pairs of lines. They are optimal for `q = 7, 13, 19`, and give
+the upper bounds of the continued table.
+
+| `q` | 19 | 23 | 29 | 31 | 37 | 41 | 43 |
+|---|---|---|---|---|---|---|---|
+| `χ(𝔽_q²)` | 5 | 5–8 | 5–6 | 5–8 | 5–8 | 5–7 | 5–8 |
+
+The lower bounds come from SAT: no 4-colouring for `q = 23, 29, 31, 37, 41, 43`.
+
+**Five colours for `𝔽₁₇²`.** Still open. What was tried:
+- **Local search.** Tabu search and a hybrid evolutionary search stop at exactly
+  two monochromatic edges, and never reach one in 5·10⁷ moves. In all 28 such
+  colourings the two edges touch a common isotropic line `x ± 4y = c`, which
+  two random edges do with probability about 0.4.
+- **Plain CDCL.** kissat, kissat on a satsuma lex-leader version and CP-SAT
+  ran for 25 to 50 minutes each without an answer; kissat on the hard cube
+  below is still running.
+- **Cube and conquer.** With one edge pinned and value precedence on the other
+  colours, `march_cu` returns 8614 cubes, and `drat-trim` checks that they cover
+  every case. They are almost all degenerate cases, where a colour first
+  appears late, and the first 7000 fall within 13 seconds each. The last cube
+  only asks that colour 2 appear among the first 23 vertices, and it is as hard
+  as the whole problem.
+  Cubing the plain CNF on colour variables alone gives cubes of depth 12 or 16
+  that each take minutes.
+- **Symmetric colourings.** No 5-colouring satisfies `c(gx) = π(c(x))` for a
+  rotation `g` of order 4, 8 or 16 about a point and any colour permutation `π`
+  whose order divides that of `g` (SAT). For the half-turn only `π = 1` was
+  checked, and reflections were not checked.
+
+**The plane over `ℚ(√5, √7)`.** It contains a unit 5-cycle,
+`1 + s̄ − t + s − t̄ = 0` with `t = (2 + i√5)/3` and `s = (1 + i√35)/6`, so
+`3 ≤ χ ≤ 5`. The Minkowski ball `U + U + U` of radius 1.5 for the 130 unit
+vectors of height at most 60 (187 003 points) is 3-colourable. A three-colour
+growth from `U + U` (8 581 points) found candidate points seeing all three
+colours only in its first 19 steps; after that none, up to 50 000 points. So a
+4-chromatic graph over this field, if there is one, is not found by local
+growth from these units.
+
+**Also.** `H_q` is the hyperbola graph `HG(𝔽_q)` of Bardestani and
+Mallahi-Karai (arXiv 1507.05300), which appears inside the graph of every
+isotropic quadratic form.
