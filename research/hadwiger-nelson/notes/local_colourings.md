@@ -631,7 +631,29 @@ The points need not be integral. §9 is the case where they are.
 
 `χ(H₁₃) = 5` is certified there by a linear colouring:
 `(a, b) ↦ c(a + 2b mod 13)`, where `c` colours the circulant on
-`{t + 2/t} = {2, 3, 5, 8, 10, 11}`.
+`{t + 2/t} = {2, 3, 5, 8, 10, 11}`. For `q ≡ 1 (mod 4)` the substitution
+`(a, b) = (x + iy, x − iy)` turns the circle `x² + y² = 1` into the hyperbola
+`ab = 1`, so `H_q` is the unit-distance graph of `𝔽_q²`. The value therefore
+settles the entry "5 or 6" for `𝔽₁₃²` in Moorhouse's Table 6.1.
+
+**`𝔽₁₇²` needs at most six colours.** Moorhouse's entry is "5, 6 or 7".
+- **The lines.** The line `αx + βy = r` meets the circle `x² + y² = 1`
+  exactly when `α² + β² − r²` is a square (the discriminant of the
+  intersection is `β²(α² + β² − r²)`).
+- **Three lines per colour.** For `(α, β) = (3, 6)`, the values
+  `45 − r² ≡ 11, 10, 7` (`r = 0, 1, 2`) are not squares mod 17. So `3x + 6y`
+  never takes the values `0, ±1, ±2` on a unit vector, and each block of three
+  consecutive lines `3x + 6y ∈ {3j, 3j + 1, 3j + 2}` is independent.
+- **The colouring.** `(x, y) ↦ ⌊((3x + 6y) mod 17)/3⌋` is a proper
+  6-colouring (tested).
+
+The entry becomes "5 or 6". This is Vinh's colouring by pairs of parallel lines
+with longer blocks: if `N, N − 1, N − 4, …, N − (m − 1)²` are all non-squares,
+then `χ(𝔽_q²) ≤ ⌈q/m⌉`. Linear colourings `(x, y) ↦ c(αx + βy)` cannot do
+better for `q = 17`: every admissible circulant needs six colours (SAT).
+Whether five colours suffice is open. Tabu search stops at two monochromatic
+edges. For comparison, a random graph with 289 vertices and 2312 edges has on
+average `5^289 (4/5)^2312 ≈ e^{−51}` proper 5-colourings.
 
 **Over `ℚ(√3, √5)`.** Both 2 and 3 split in `K = ℚ(i, √3, √5)`.
 - **At 2.** `−15 ≡ 1 (mod 8)`, so `i ∈ ℚ₂(√15)`. The local field is
@@ -723,7 +745,10 @@ pairs.
 - **Bound 5.** 28 fields remain, such as `ℚ(√5, √7)`, whose first non-split
   place lies above 19. There the local plane `G₁₉` is itself triangle-free and
   5-chromatic, so the local picture does not rule out a triangle-free
-  5-chromatic graph over `ℚ(√5, √7)`.
+  5-chromatic graph over `ℚ(√5, √7)`. That plane does have odd cycles. With
+  `τ = (2 + i√5)/3` and `σ = (1 + i√35)/6`, `1 + 2 Re σ = 2 Re τ`, so the unit
+  steps `1, σ̄, −τ, σ, −τ̄` close up into a 5-cycle. Hence
+  `3 ≤ χ(ℚ(√5, √7)²) ≤ 5`.
 - **No small place.** For the other 17, such as `ℚ(√2, √31)`, `ℚ(√2, √47)` and
   `ℚ(√7, √41)`, the first non-split places lie above 23, 31, 43 or 59, where
   `χ(G_q)` is not known.

@@ -112,3 +112,26 @@ def test_a_field_without_sqrt3_that_only_19_bounds():
     places = screen([1, 5, 7], 200)
     assert places[0][:3] == (19, "unramified", 19)
     assert local_bound(5, 7) == (5, (19, "unramified", 19))
+
+
+def test_a_unit_five_cycle_over_q5_7():
+    """1 + conj(s) - t + s - conj(t) = 0 for t = (2 + i sqrt5)/3 and s = (1 + i sqrt35)/6, since
+    1 + 2 Re(s) = 2 Re(t) = 4/3: a closed walk of five unit steps, an odd cycle, so 3 <= chi(Q(sqrt5, sqrt7)^2) <= 5."""
+    from fractions import Fraction as Fr
+    from hn.field import Field
+    from hn.geometry import Point
+    F = Field((5, 7)); r = F.rational
+    s5, s35 = F.sqrt(5), F.sqrt(5) * F.sqrt(7)
+    t = Point(r(Fr(2, 3)), s5 * r(Fr(1, 3)))
+    s = Point(r(Fr(1, 6)), s35 * r(Fr(1, 6)))
+    steps = [Point(r(1), r(0)), Point(s.x, -s.y), Point(-t.x, -t.y), s, Point(-t.x, t.y)]
+    for u in steps:
+        assert u.x * u.x + u.y * u.y == F.one()
+    p = Point(r(Fr(-4, 3)), r(0)); pts = []
+    for u in steps:
+        pts.append(p); p = Point(p.x + u.x, p.y + u.y)
+    assert p == pts[0] and len(set(pts)) == 5
+    for i in range(5):
+        for j in range(i + 1, 5):
+            dx, dy = pts[i].x - pts[j].x, pts[i].y - pts[j].y
+            assert (dx * dx + dy * dy == F.one()) == (j - i in (1, 4))    # exactly the cycle's edges

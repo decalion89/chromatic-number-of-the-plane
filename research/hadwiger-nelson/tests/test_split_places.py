@@ -132,6 +132,21 @@ def test_h13_is_5_chromatic():
     assert colouring(len(V), E, 4) is None
 
 
+def test_the_f17_plane_has_an_interval_6_colouring():
+    """Moorhouse's Table 6.1 gives 5, 6 or 7 for F_17^2 ((x - x')^2 + (y - y')^2 = 1).  The line 3x + 6y = r
+    meets the unit circle iff 45 - r^2 is a square, and 11, 10, 7 are not squares mod 17, so on the circle
+    3x + 6y avoids 0, +-1 and +-2.  Blocks of three consecutive parallel lines are therefore independent:
+    (x, y) -> floor(((3x + 6y) mod 17) / 3) is a proper 6-colouring."""
+    q = 17
+    squares = {t * t % q for t in range(q)}
+    assert all((45 - r * r) % q not in squares for r in range(3))
+    U = [(a, b) for a in range(q) for b in range(q) if (a * a + b * b) % q == 1]
+    assert len(U) == 16 and not {(3 * a + 6 * b) % q for a, b in U} & {0, 1, 2, 15, 16}
+    c = lambda x, y: (3 * x + 6 * y) % q // 3
+    assert {c(x, y) for x in range(q) for y in range(q)} == set(range(6))
+    assert all(c(x, y) != c((x + a) % q, (y + b) % q) for x in range(q) for y in range(q) for a, b in U)
+
+
 # ---- reduction of z = x + i y, (x, y) in L^2, on the integral basis of L(i) ----------------------
 # images of 1, sqrt3, sqrt5, sqrt15 and of i, i sqrt3, i sqrt5, i sqrt15 on the basis zeta^j phi^f,
 # indexed j + 4 f; zeta^4 = zeta^2 - 1, phi^2 = phi + 1, i = zeta^3, sqrt3 = 2 zeta - zeta^3,
