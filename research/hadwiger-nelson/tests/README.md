@@ -15,11 +15,11 @@ python3 -m pytest -q tests/test_q23.py     # one file
 The tests marked `slow` include a 4-colourability solve of de Grey's 1581-vertex graph
 (`test_degrey.py`, with a 30-minute solver limit).
 
-GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 29 files marked CI
-on every push to `main`, on every pull request, and on manual dispatch: 355 tests, which took 80
+GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 30 files marked CI
+on every push to `main`, on every pull request, and on manual dispatch: 359 tests, which took 80
 seconds in a local run. The DRAT test in `test_certify.py` is skipped there, because the
-workflow does not install drat-trim. The other eight files (269 tests) are run locally; without their
-two tests marked `slow` they took 32 minutes in a local run, 20 of them in one test of
+workflow does not install drat-trim. The other nine files (273 tests) are run locally; without their
+six tests marked `slow` they took 32 minutes in a local run, 20 of them in one test of
 `test_two_tunings.py`.
 
 | file | CI | what it checks |
@@ -34,6 +34,8 @@ two tests marked `slow` they took 32 minutes in a local run, 20 of them in one t
 | `test_disjunctive_spindle.py` | ✓ | The three- and six-copy disjunctive spindles, which need only c(v) = c(q₁) or c(v) = c(q₂) instead of a forced pair, checked in exact arithmetic and by an exhaustive sweep over the choices of the copies. |
 | `test_fast_agrees.py` | ✓ | The vectorised integer arithmetic of `hn/fast.py` agrees with exact rational arithmetic on points, unit vectors, walks and edge sets. |
 | `test_field.py` | ✓ | Exact arithmetic in multiquadratic fields: admissible generators, products of radicals, inverses through the Galois conjugates, exact equality and hashing. |
+| `test_finite_planes.py` | ✓ | Bounds for Moorhouse's table of χ(𝔽_q²) (`notes/local_colourings.md` §12): interval colourings, with m consecutive parallel lines ax + by = r per colour when a² + b² − r² is a non-square for r < m, for q = 7, 13, 17, 19, 23, 29, 31, 37, 41, 43 (optimal for 7, 13, 19); a linear 8-colouring of 𝔽₄₃²; no 4-colouring of 𝔽₂₃² or 𝔽₃₇². |
+| `test_finite_planes_slow.py` |  | No 4-colouring of 𝔽₂₉², 𝔽₃₁², 𝔽₄₁² or 𝔽₄₃² (marked `slow`; 15 s to 8 minutes each). |
 | `test_five_247.py` |  | The 5-chromatic unit-distance graphs over ℚ(√3, √11, √247) and ℚ(√3, √11, √23) in `data/`: edge counts recomputed exactly, chromatic number 5, C₆-invariance of the symmetric graphs, and the radicals that the spindle angles need. |
 | `test_forced.py` | ✓ | Forced colour relations on graphs with known answers: pairs forced alike or different, cores, and the pressure at a vertex p (the least number of colours a k-colouring uses on the unit neighbours of p), including `certificates/pressure3_witness_47.json`. |
 | `test_geometry.py` | ✓ | Exact rotations: the 60° rotation, the Moser spindle's angle arccos(5/6), rotations about a pivot, and de Grey's rotations, which need ℚ(√3, √5, √7, √11). |
