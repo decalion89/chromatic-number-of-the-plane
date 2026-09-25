@@ -34,10 +34,10 @@ Moser spindle (Moorhouse, 2010).
   and we have not found its value in the literature.
 - **Proof idea.** Change coordinates to α = x + y/√3, β = 2y/√3. The squared
   distance becomes α² − αβ + β². This form is anisotropic modulo a prime above
-  2 with residue field 𝔽₂, so Madore's reduction argument applies. Reducing
-  (α, β) modulo that prime gives a proper 4-colouring of the whole plane. Speyer
-  used reduction modulo 2 in these coordinates in 2018 to 4-colour the Moser
-  ring.
+  2 with residue field 𝔽₂, so Madore's reduction argument, which he stated for
+  any quadratic form, applies. Reducing (α, β) modulo that prime gives a proper
+  4-colouring of the whole plane. Speyer used reduction modulo 2 in 2018 to
+  4-colour the Moser ring; on that ring our colouring is one of his.
 - **Status.** Proved. The colourings were also tested by computer on finite
   graphs with up to about 12 000 vertices. Not yet refereed.
 
