@@ -91,9 +91,9 @@ output directory (`HN_OUT` overrides it), as an import path, or as the location 
 | `cellsample.py` | Samples the polytope of characters around a known circular colouring of M₁ and tests each sample's extensions to M′ with `circextend.py`. |
 | `kempegate.py` | Decides exactly, through the index of a sublattice of ker ψ, whether a Kempe swap of a coset colouring can join a pair a, a + 2e or split a pair a, a + 5e. |
 | `prodgate.py` | Searches for 5-colourings periodic through non-cyclic quotients ℤ/n₁ × … × ℤ/n_k of a module that refute a distance-2 gadget or a forced pair a, a + 5e along some direction e. |
-| `quotgate.py` | 5-colours the Cayley graph of M/qM on the unit vectors, which gives a qM-periodic colouring of the unit-distance graph on M, and reports which pairs a, a + 2e and a, a + 5e it settles. |
+| `quotgate.py` | Looks for a 5-colouring of the Cayley graph of M/qM on the unit vectors, which gives a qM-periodic colouring of the unit-distance graph on M, and reports which pairs a, a + 2e and a, a + 5e such a colouring settles. |
 | `quotient.py` | Looks for periodic 5-colourings, through the quotients (ℤ/m)^r, of the group of unit vectors generated in ℚ(√3, √5, √7, √11) by the 60° rotation and spindle rotations. |
-| `idealquot.py` | 5-colours the Cayley graph of M/αM on the unit vectors for α = a + bω in ℤ[ω], which gives an αM-periodic colouring of the module that is not a coset colouring when N(α) is prime to 5. |
+| `idealquot.py` | Looks for a 5-colouring of the Cayley graph of M/αM on the unit vectors, for α = a + bω in ℤ[ω], which gives an αM-periodic colouring of the module that is not a coset colouring when N(α) is prime to 5. |
 | `idealquot2.py` | Searches for colourings periodic under ker ψ ∩ αM and asks whether they can split a pair a, a + 5e. |
 | `twistquot.py` | Searches for twisted periodic colourings ψ(x) + k(x mod αM) for an ideal α of ℤ[ω]. |
 | `torusgate.py` | Searches for a 5-colouring of the plane, periodic under (Pℤ)² and constant on the cells of a grid on the torus, that is proper along the module's unit directions, with a conservative cell test so that any solution colours the whole module. |
@@ -101,8 +101,8 @@ output directory (`HN_OUT` overrides it), as an import path, or as the location 
 | `wallgate.py` | Searches for one-dimensional colourings c(x) = G(φ(x), ψ(x)), with φ an integer functional and ψ: M → ℤ/5, that refute a distance-2 gadget or a forced pair a, a + 5e. |
 | `nearadm.py` | For a blocked module, completes nearly admissible maps ψ (zero exactly on the unit vectors in 5M) with a second coordinate χ: M → ℤ/m and asks whether the Cayley graph of ℤ/5 × ℤ/m on (ψ, χ)(U) is 5-colourable. |
 | `screen_lambda.py` | Tests whether Exoo–Ismailescu's rotation λ = (49 + 3√−11)/50, which is not integral at 5, escapes coset colourings, on H, K = H ∪ λ_A(H), the 803-vertex graph and its union with a λ-rotated copy. |
-| `stiemke.py` | Proves that a module has no twisted colouring by exact Stiemke certificates: for each admissible ψ and each t, a strictly positive integer relation among the unit vectors of the class D_t. |
-| `farkas.py` | Proves that no twisted colouring keeps a given pair a, a + 2e alike by exact Farkas certificates expressing −e as a nonnegative combination of the class D_t. |
+| `stiemke.py` | Seeks exact Stiemke certificates that a module has no twisted colouring: for each admissible ψ and each t, a strictly positive integer relation among the unit vectors of the class D_t. |
+| `farkas.py` | Seeks exact Farkas certificates that no twisted colouring keeps a given pair a, a + 2e alike, each expressing −e as a nonnegative combination of the class D_t. |
 | `kappa_check.py` | Checks on a module that every admissible ψ satisfies ψ(κu) = ψ(u) whenever u and κu are both unit vectors, where κ = ωρ₇ = (−11 + 5√−3)/14 ≡ 1 mod 5. |
 | `cosetfit.py` | Measures how close a grown graph's colouring is to a coset colouring, the best agreement over admissible ψ and relabellings of the colours, and where the mismatched vertices lie. |
 | `periodfind.py` | Measures, for many small lattice vectors t, how often a grown colouring satisfies c(x + t) = π(c(x)) for the best relabelling π, to detect a hidden period. |
@@ -124,7 +124,7 @@ output directory (`HN_OUT` overrides it), as an import path, or as the location 
 | `lamclosure_units.py` | Writes a module file with the unit vectors of the λ-closure M′ = M₁ + λM₁ that need no search (U₁, λU₁ and the Exoo–Ismailescu units 5(1 − λ)e), for `circgate.py` and `circextend.py`. |
 | `rotunits.py` | Writes a module file with the unit vectors R·(1, 0) for words R in the rotations ω, σ, λ, ρ₇, κ and optionally τ, for the circular gates. |
 | `unitsinqm.py` | Reports, for graphs in `data/`, the rank of the module spanned by the edge vectors, the moduli q for which some unit vector lies in qM, and the content of each unit vector. |
-| `tune.py` | Builds 5-chromatic graphs whose field is a parameter, by composing a forced pair with a rotated copy of its carrier so that it lands at a chosen squared distance, and writes `data/five_tuned_*.json` when the result has no proper 4-colouring. |
+| `tune.py` | Builds unit-distance graphs whose field is a parameter, by composing a forced pair with a rotated copy of its carrier so that it lands at a chosen squared distance, and writes `data/five_tuned_*.json` when the result has no proper 4-colouring. |
 
 ## Measurements on balls and growth curves
 
