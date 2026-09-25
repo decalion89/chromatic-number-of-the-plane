@@ -144,7 +144,7 @@ in checking any claim made here.
 
 This is AI-assisted research. The code, the experiments and most of the
 writing were produced with Claude (Anthropic), through Claude Code, under the
-direction of the repository owner.
+direction of Sergi Galán.
 
 Every computational claim is machine-checked as described above. The
 mathematical arguments are backed by tests wherever that is possible. **None
