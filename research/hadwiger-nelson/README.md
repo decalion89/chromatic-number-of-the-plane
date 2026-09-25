@@ -46,6 +46,7 @@ below, with their evidence.
 | **χ(ℚ(√3, √11)²) = 4.** A theorem of K. G. Fischer (1994); a short new proof. | Fischer's theorem; our proof is not yet refereed; unit tests. | `notes/local_colourings.md` §8, `hn/adelic.py`, `tests/test_q311.py` |
 | χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, as whole complex fields | Proved. Upper bounds by reduction at the primes 2 and 11; lower bounds from the Moser spindle and the 5-chromatic graph `five_rho7`. Not yet refereed. | `notes/local_colourings.md` §3, `notes/rigidity.md` |
 | Necessary local conditions for a field to hold a 6-chromatic unit-distance graph | Proved (not yet refereed) | `notes/local_colourings.md` §5–§9, `scripts/fieldscreen.py` |
+| **Six colours for finite planes.** χ ≥ 6 for 𝔽₃₇², 𝔽₄₁², 𝔽₄₃², 𝔽₄₇² and the anisotropic planes G₂₉, G₃₇, G₄₁. Hence χ(G_q) ≥ 6 for every prime q ≥ 29 except 31, and χ(𝔽_q²) ≥ 6 for q = 37, 41, 43, 47, 59 and every prime q ≥ 67; χ(𝔽₄₁²) ∈ {6, 7}. | Computer proof, not refereed: Schrijver's three-point bound gives α < q²/5, and each dual certificate is checked in interval and exact rational arithmetic; for large q, Hoffman's bound with Weil's estimate or the exact spectrum. | `notes/local_colourings.md` §14, `data/threepoint/`, `scripts/threepoint_verify.py` |
 
 Both are written up in a three-page note,
 [`docs/note/planes-4-chromatic.pdf`](docs/note/planes-4-chromatic.pdf).
@@ -148,12 +149,13 @@ Each folder has its own README describing what is in it.
 ```
 hn/             the library: exact fields, geometry, graphs, SAT colouring,
                 certificates, local (adelic) colourings
-tests/          pytest suite (632 tests; 9 marked slow)
+tests/          pytest suite (653 tests; 17 marked slow)
 scripts/        maintained tools: verification, growth, gates, field screens
                 (indexed in scripts/README.md)
 scripts/experiments/
-                732 one-off exploratory scripts, kept as a record
-data/           graphs and witnesses with exact coordinates (JSON; data/README.md)
+                733 one-off exploratory scripts, kept as a record
+data/           graphs and witnesses with exact coordinates (JSON), and the
+                three-point certificates (data/README.md)
 certificates/   colourings, DRAT verification logs, non-colourability claims
                 (certificates/README.md)
 notes/          technical notes: local colourings, rigidity, literature, jobs
@@ -171,8 +173,25 @@ python3 -m pytest -q tests/test_q311.py      # the ℚ(√3, √11) theorem, sec
 sh scripts/worker_setup.sh                   # kissat and drat-trim, for the searches
 ```
 
+**Checking one result.** From `research/hadwiger-nelson`:
+
+| result | command | time |
+|---|---|---|
+| χ(ℚ(√2, √3)²) = 4 | `python3 -m pytest -q tests/test_q23.py` | seconds |
+| χ(ℚ(√3, √11)²) = 4 | `python3 -m pytest -q tests/test_q311.py` | seconds |
+| four and five colours suffice for the fields ℚ(√−3, √−11) and ℚ(√−3, √−11, √−247) | `python3 -m pytest -q tests/test_moser_field.py tests/test_reduce11.py` | seconds |
+| six colours for a finite plane, e.g. 𝔽₄₇² | `python3 scripts/threepoint_verify.py data/threepoint/std47.npz` | 3 minutes |
+| all eight three-point certificates | `python3 -m pytest -q tests/test_threepoint_certificates.py` | 15 minutes |
+| spectral bounds for large q | `python3 scripts/finite_hoffman.py 59 71` and `python3 scripts/finite_hoffman.py --inert 53 59 61` | seconds |
+| de Grey's graph needs five colours | `python3 -m pytest -q tests/test_degrey.py` | 30 minutes |
+
+The certificates in `data/threepoint/` were produced with Python 3.11.15,
+numpy 2.4.6, scipy 1.17.1, cvxopt 1.3.3 (DSDP) and clarabel 0.11.1; checking
+them needs only numpy, scipy and mpmath 1.3.0 (installed with sympy).
+`data/threepoint/SHA256SUMS` fixes their contents.
+
 GitHub Actions (`.github/workflows/tests.yml`) runs the fast part of the suite on
-pushes to `main` and on pull requests: 359 tests in 30 files, in under two
+pushes to `main` and on pull requests: 371 tests in 31 files, in about two
 minutes.
 
 `scripts/verify_pair.py` rebuilds a unit-distance witness or gadget from its
