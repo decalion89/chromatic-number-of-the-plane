@@ -107,6 +107,8 @@ None has succeeded yet.
 
 ## Layout
 
+Each folder has its own README describing what is in it.
+
 ```
 hn/             the library: exact fields, geometry, graphs, SAT colouring,
                 certificates, local (adelic) colourings
