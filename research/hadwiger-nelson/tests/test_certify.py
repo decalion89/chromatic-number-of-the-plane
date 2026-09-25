@@ -77,6 +77,21 @@ def test_drat_proof_verifies_the_four_chromatic_lower_bound(tmp_path):
     assert "VERIFIED" in msg
 
 
+def test_chain23_certificate_is_read_and_verified():
+    """The lower bound of chi(Q(sqrt2, sqrt3)^2) = 4, from its stored file.
+
+    The file stores coefficients as [numerator, denominator] pairs.
+    """
+    path = os.path.join(os.path.dirname(__file__), "..", "certificates",
+                        "chain23_no3coloring.json")
+    pts, doc = load_certificate(path)
+    assert len(pts) == doc["n"] == 10
+    assert len(exact_edges(pts)) == doc["m"] == 16
+    ok, msg = verify_certificate(path, drat_trim=DRAT)
+    assert ok, msg
+    assert ("VERIFIED" in msg) if DRAT else ("UNSAT" in msg)
+
+
 def test_dimacs_encoding_has_the_expected_shape(tmp_path):
     g = moser_spindle()
     path = str(tmp_path / "g.cnf")
