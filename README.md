@@ -53,6 +53,7 @@ Moser spindle (Moorhouse, 2010).
 | χ(ℝ²) ≥ 5: de Grey's 1581-vertex graph, rebuilt from its 39-point seed, has no 4-colouring (with the colours of one triangle fixed, which loses no generality) | DRAT proof of 13.1 M lemmas, checked by `drat-trim` |
 | χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, for the whole complex fields | proofs in the notes, with unit tests |
 | Multi-distance graphs with no 5-colouring: 187 points (edges at three distances) and 72 points (five distances) | four SAT solvers agree; DRAT proofs checked by `drat-trim` (recorded in the research log) |
+| Finite planes that need six colours: 𝔽₃₇², 𝔽₄₁², 𝔽₄₃² and 𝔽₄₇² (Moorhouse's planes x² + y²; his table stops at q = 17, and the notes continue it), and the anisotropic planes G₂₉, G₃₇, G₄₁, which are the local planes of number fields | Schrijver's three-point bound gives α < q²/5; each dual certificate is checked in interval and exact rational arithmetic ([`notes/local_colourings.md`](research/hadwiger-nelson/notes/local_colourings.md) §14) |
 
 **χ(ℝ²) ≥ 6 has not been proved.** The 187-point graph would prove it if a
 *gadget* existed: a unit-distance graph in which two points at one of its

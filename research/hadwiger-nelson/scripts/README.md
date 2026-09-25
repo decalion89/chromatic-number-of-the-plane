@@ -1,6 +1,6 @@
 # Scripts: the maintained tools
 
-The 85 scripts here are the project's maintained tools; the 728 one-off experiments behind the
+The 88 scripts here are the project's maintained tools; the 733 one-off experiments behind the
 research log are in [`experiments/`](experiments/). Run every tool from `research/hadwiger-nelson/`:
 each finds the `hn` package from its own location.
 
@@ -125,6 +125,14 @@ output directory (`HN_OUT` overrides it), as an import path, or as the location 
 | `rotunits.py` | Writes a module file with the unit vectors R·(1, 0) for words R in the rotations ω, σ, λ, ρ₇, κ and optionally τ, for the circular gates. |
 | `unitsinqm.py` | Reports, for graphs in `data/`, the rank of the module spanned by the edge vectors, the moduli q for which some unit vector lies in qM, and the content of each unit vector. |
 | `tune.py` | Builds unit-distance graphs whose field is a parameter, by composing a forced pair with a rotated copy of its carrier so that it lands at a chosen squared distance, and writes `data/five_tuned_*.json` when the result has no proper 4-colouring. |
+
+## Finite planes: lower bounds
+
+| script | what it does |
+|---|---|
+| `finite_hoffman.py` | Computes every eigenvalue of the unit-distance graph of 𝔽_q² (with `--inert`, of the anisotropic plane G_q) in interval arithmetic and the resulting Hoffman bound on α and χ, and for 𝔽_q² the best interval colouring (m consecutive parallel lines per colour). |
+| `threepoint.py` | Builds and solves Schrijver's three-point bound for the independence number of a finite plane (`std`: x² + y²; `inert`: the anisotropic plane G_q), block-diagonalised by the rotation group, optionally with localizing matrices of a unit edge, a unit triangle or a unit pentagon; the default solver is DSDP for the primal, with the dual found on the null spaces of the blocks, and `--save` writes the dual as a certificate. |
+| `threepoint_verify.py` | Checks a saved certificate rigorously: rebuilds the blocks in interval arithmetic, proves the dual matrices positive definite by an exact rational LDLᵀ, and bounds α using 0 ≤ g, z ≤ 1 (`data/threepoint/`). |
 
 ## Measurements on balls and growth curves
 

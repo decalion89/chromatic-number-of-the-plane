@@ -5,3 +5,6 @@ sympy>=1.12
 pytest>=7.0
 # Optional, for the circular-gate tools scripts/circrel.py and scripts/circsat.py:
 # ortools, python-flint
+# Optional, for solving the three-point programmes (scripts/threepoint.py): cvxopt (its DSDP interface) and
+# clarabel.  Checking their certificates (scripts/threepoint_verify.py) needs only numpy, scipy and mpmath,
+# which sympy installs.

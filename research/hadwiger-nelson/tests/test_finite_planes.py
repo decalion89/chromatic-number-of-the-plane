@@ -9,7 +9,9 @@ for r = 0, 1, ..., m - 1, then a x + b y takes none of the values 0, +-1, ..., +
 Vinh's colouring by pairs of parallel lines.
 
 **Lower bounds.** No proper 4-colouring (SAT, with a triangle or an edge pinned); the slower cases are in
-tests/test_finite_planes_slow.py.
+tests/test_finite_planes_slow.py.  Six and seven colours from Hoffman's ratio bound, with every eigenvalue in
+interval arithmetic (section 14), here; six colours from the three-point bound in
+tests/test_threepoint_certificates.py.
 """
 import sys, os
 sys.path.insert(0, os.path.dirname(__file__))
@@ -18,7 +20,8 @@ from test_biquadratic_bounds import colourable
 
 # q: (a, b, m); the colouring uses ceil(q / m) colours
 INTERVAL = {7: (2, 3, 2), 13: (3, 6, 3), 17: (3, 6, 3), 19: (4, 5, 4), 23: (3, 5, 3), 29: (5, 9, 5),
-            31: (4, 13, 4), 37: (5, 6, 5), 41: (6, 19, 6), 43: (5, 8, 5)}
+            31: (4, 13, 4), 37: (5, 6, 5), 41: (6, 19, 6), 43: (5, 8, 5), 47: (5, 22, 5), 53: (5, 13, 5),
+            59: (6, 16, 6), 61: (6, 27, 6)}
 
 
 def plane(q):
@@ -71,3 +74,23 @@ def test_the_planes_over_23_and_37_need_five_colours():
     for q in (23, 37):
         U, E = plane(q)
         assert not colourable(q * q, E, 4, pin=pinned_triangle(q, E)), q
+
+
+def test_the_spectral_bound_gives_six_and_seven_colours():
+    """Hoffman's ratio bound with every eigenvalue in interval arithmetic (scripts/finite_hoffman.py; section 14):
+    alpha(F_q^2) < q^2/5 for q = 59, and < q^2/6 for q = 71, 97, 101."""
+    sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'scripts'))
+    from finite_hoffman import hoffman
+    for q, k in [(59, 6), (71, 7), (97, 7), (101, 7)]:
+        d, lmin, amax = hoffman(q)
+        assert (k - 1) * amax < q * q, q          # so chi >= q^2 / alpha > k - 1
+
+
+def test_proposition_b_where_weil_does_not_reach():
+    """chi(G_q) >= 6 for the anisotropic planes G_q (x^2 - n y^2, n a non-square) with q = 53, 59, 61: Weil's
+    bound gives it only for q > 62 (notes/local_colourings.md, sections 4 and 14)"""
+    sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'scripts'))
+    from finite_hoffman import hoffman
+    for q in (53, 59, 61):
+        d, lmin, amax = hoffman(q, 'inert')
+        assert d == q + 1 and 5 * amax < q * q, q
