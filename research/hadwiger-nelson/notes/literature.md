@@ -32,8 +32,10 @@ The route is **not ours**.
 | Reduction of `F²` modulo a prime, for number fields `F`, and extension from a ring to the whole field by cosets | Moorhouse (Lemma 4.2, Lemma 8.2); Madore (Prop. 3.2, 3.8, 6.6) | [Moorhouse 2010](https://www.ericmoorhouse.org/pub/chromatic.pdf), [arXiv 1509.07023](https://arxiv.org/abs/1509.07023) |
 | `χ(ℚ(√N)²) = 2` for `N ≡ 1, 2 (mod 4)` | Johnson (1987) | Congr. Numer. 60, 51–58; see [Payne](https://arxiv.org/abs/0707.1177) |
 | `χ(ℚ(√N)²) ≤ 3` for `N ≡ 0, 1 (mod 3)`, `≤ 4` for `N ≡ 3 (mod 8)` | Fischer (1990) | Discrete Math. 82, 181–195; see [Payne](https://arxiv.org/abs/0707.1177) |
-| **`χ(ℚ(√3, √11)²) = 4`**, and more generally `χ(ℚ(√p, √q)²) = 4` for `p ≡ 3`, `q ≡ 11 (mod 16)`, `pq ≡ 1 (mod 32)` | Fischer (1994) | Congr. Numer. 104, 73–79; [Zbl 0836.05030](https://zbmath.org/?q=an:0836.05030) |
-| 2-adic 4-colourings of the Moser ring, with colours in `𝔽₄` | Speyer (thread 2, April 2018); Hubai's search, reported by Gibbs: all have period 8 (thread 3); Dúcz (2026) | [thread 2](https://dustingmixon.wordpress.com/2018/04/22/polymath16-second-thread-what-does-it-take-to-be-5-chromatic/#comment-4013), [thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/), [arXiv 2606.12325](https://arxiv.org/abs/2606.12325) |
+| **`χ(ℚ(√3, √11)²) = 4`**; more generally an additive 4-colouring of `ℚ(√p, √q)²` for `p ≡ 3`, `q ≡ 11 (mod 16)`, `pq ≡ 1 (mod 32)` | Fischer (1994) | Congr. Numer. 104, 73–79; [Zbl 0836.05030](https://zbmath.org/?q=an:0836.05030) |
+| The connected component of the origin in `ℚ(√N₁, …, √N_d)²` | Fischer (1990) | Congr. Numer. 72, 213–221; [Zbl 0733.05048](https://zbmath.org/?q=an:0733.05048) |
+| A survey, as of 2000, of problems on colourings of `ℚⁿ` and its algebraic extensions | Johnson (2000); we have not seen it | Geombinatorics 9, 170–179; [Zbl 0974.05029](https://zbmath.org/?q=an:0974.05029) |
+| 2-adic 4-colourings of the Moser ring, with colours in `𝔽₄` | Speyer (thread 2, April 2018); Hubai's analysis and computer search, reported by Gibbs: all have period 8 (thread 3); Dúcz (2026) | [thread 2](https://dustingmixon.wordpress.com/2018/04/22/polymath16-second-thread-what-does-it-take-to-be-5-chromatic/#comment-4013), [thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/), [arXiv 2606.12325](https://arxiv.org/abs/2606.12325) |
 | A colouring of `ℤ[ζ₂₄, 1/3]` through `(ℤ/4)[ζ₂₄]`, proposed for the plane over `ℚ(√2, √3)` | Voronov (thread 17, 30 July 2021), who asked for "a simpler way" | [comment 29476](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/#comment-29476) |
 | A 4-chromatic unit-distance graph over `ℚ(√2, √3)` | Voronov–Neopryatnaya–Dergachev (`L₁₀,₂` and its Minkowski sums) | [arXiv 2106.11824](https://arxiv.org/abs/2106.11824) |
 | A lattice-like graph with no 5-colouring and bichromatic origin would give six | Frankl–Hubai–Pálvölgyi (Thm 27) | [arXiv 1912.02604](https://arxiv.org/abs/1912.02604) |
@@ -46,10 +48,12 @@ The route is **not ours**.
 
    **`χ(ℚ(√3, √11)²) = 4` is not new.** K. G. Fischer proved it in 1994
    (*A planar geometric graph of chromatic number four*, Congr. Numer. 104,
-   73–79; Zbl 0836.05030), for every `ℚ(√p, √q)` with `p ≡ 3`, `q ≡ 11 (mod 16)`
-   and `pq ≡ 1 (mod 32)`, by an additive colouring with values in `ℤ/4`. We
-   found this only after the note had been sent out; we have read the zbMATH
-   summary, not the paper. The result seems to have been overlooked by:
+   73–79; Zbl 0836.05030). He proved that `ℚ(√p, √q)²` has an additive 4-colouring, with values in
+   `ℤ/4`, for every `p ≡ 3`, `q ≡ 11 (mod 16)` with `pq ≡ 1 (mod 32)`; for
+   `ℚ(√3, √11)` the Moser spindle gives the lower bound. We found this only
+   after the note had been sent out; we have read the zbMATH summary, not the
+   paper. Johnson's 2000 survey (Geombinatorics 9, 170–179) may record further
+   results; we have not seen it. The result seems to have been overlooked by:
    - Moorhouse (2010): "We have not determined the exact value";
    - Madore (2015), who proved `4 ≤ χ ≤ 5`;
    - Exoo–Ismailescu (2018), who asked whether a 5-chromatic unit-distance
@@ -72,15 +76,16 @@ The route is **not ours**.
      through `(ℤ/4)[ζ₂₄]` and asked for a simpler one; the lower bound was
      already implicit in Voronov–Neopryatnaya–Dergachev.
    - The criterion behind both proofs: if `√3 ∈ L` and some prime of `L` above 2
-     has residue field `𝔽₂`, then `χ(L²) ≤ 4`. It is Madore's Prop. 3.2 in the
-     coordinates `α = x + y/√3`, `β = 2y/√3`, where the squared distance is the
-     form `α² − αβ + β²`, anisotropic modulo such a prime. For an expert in
+     has residue field `𝔽₂`, then `χ(L²) ≤ 4`. It is the case of this form of Madore's ¶6.6,
+     his Prop. 3.2 for any quadratic form, in the coordinates `α = x + y/√3`,
+     `β = 2y/√3`, where the squared distance is the form `α² − αβ + β²`,
+     anisotropic modulo such a prime. For an expert in
      local fields this is a short step.
 
    Related work: Speyer used the same 2-adic reduction in
    [Polymath16, thread 2](https://dustingmixon.wordpress.com/2018/04/22/polymath16-second-thread-what-does-it-take-to-be-5-chromatic/#comment-4013)
-   (25 April 2018) to 4-colour the Moser ring; Hubai's search, reported by
-   Gibbs in thread 3, found that all its 4-colourings have period 8; Madore's
+   (25 April 2018) to 4-colour the Moser ring; Hubai's analysis and computer search, reported
+   by Gibbs in thread 3, found that all its 4-colourings have period 8; Madore's
    Prop. 3.2 and Moorhouse's Lemma 4.2 pass from a ring to the whole field by
    cosets; Dúcz (2026) gave geometric 4-colourings of the Moser lattice and ring.
 

@@ -227,9 +227,11 @@ as open. This section gives a short proof. It is not a step towards
 
 **History.**
 - Fischer, *A planar geometric graph of chromatic number four*, Congr. Numer.
-  104 (1994) 73–79 ([Zbl 0836.05030](https://zbmath.org/?q=an:0836.05030)), proved `χ(ℚ(√p, √q)²) = 4` for
-  squarefree coprime `p ≡ 3`, `q ≡ 11 (mod 16)` with `pq ≡ 1 (mod 32)`, in
-  particular for `ℚ(√3, √11)`, by an additive colouring with values in `ℤ/4`.
+  104 (1994) 73–79 ([Zbl 0836.05030](https://zbmath.org/?q=an:0836.05030)), proved that
+  `ℚ(√p, √q)²` has an additive 4-colouring, with values in `ℤ/4`, for
+  squarefree coprime `p ≡ 3`, `q ≡ 11 (mod 16)` with `pq ≡ 1 (mod 32)`, and
+  concluded
+  `χ(ℚ(√3, √11)²) = 4`.
   We found this only after writing this section; we have read the zbMATH
   summary, not the paper. None of the works below cites it.
 - Moorhouse ([draft, 2010](https://www.ericmoorhouse.org/pub/chromatic.pdf))
@@ -240,7 +242,7 @@ as open. This section gives a short proof. It is not a step towards
   `χ(𝔽₁₁²) ≤ 5`.
 - Exoo and Ismailescu ([arXiv 1805.00157](https://arxiv.org/abs/1805.00157),
   DCG 2020) asked whether a 5-chromatic unit-distance graph embeds in
-  `ℚ[√3, √11]²`. So did Mixon and Ismailescu in
+  `ℚ[√3, √11]²`. So did Ismailescu, recalling a question of Mixon, in
   [Polymath16, thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/).
 - Voronov, in [Polymath16, thread 17](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/)
   (18 July 2021): "it seems likely that `χ(Q(i, √3, √11)) = 4` ... But as far
@@ -296,8 +298,8 @@ anisotropic modulo `𝔪` or `𝔪²`. At a place over 2 with `√3` this fails,
 Reducing `z = x + iy` in `O_w` — the Hermitian form of the argument — sees the
 `ω` that the coordinates hide. In the coordinates `α = x + y/√3`,
 `β = 2y/√3` of `z = α + βω`, the squared distance is `α² − αβ + β²`, which is
-anisotropic modulo `𝔪`. Theorem 3 is Madore's Prop. 3.2 with this form in
-place of `x² + y²`; his proof applies verbatim. At odd places the two versions
+anisotropic modulo `𝔪`. Theorem 3 is the case of this form of Madore's ¶6.6,
+which states his Prop. 3.2 for any quadratic form. At odd places the two versions
 agree, since `O_w = O_v[i]` there.
 
 **Prior work.** The ingredients are not new.
@@ -308,8 +310,8 @@ agree, since `O_w = O_v[i]` there.
   either projection is a proper 4-colouring. In
   [thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/)
   (3 May 2018) he gave 8-periodic variants. Philip Gibbs then reported
-  (9 May 2018) that a computer search by Tamás Hubai found that all
-  4-colourings of the ring have period 8.
+  (9 May 2018) that an analysis and computer search by Tamás Hubai found
+  that all 4-colourings of the ring have period 8.
 - **The cosets.** Extending a colouring from a ring to the whole field by
   cosets is Madore's Prop. 3.2 and Moorhouse's Lemma 4.2.
 - **The integrality.** Unit vectors are integral at a place that does not
