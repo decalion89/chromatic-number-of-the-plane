@@ -152,7 +152,7 @@ tests/          pytest suite (615 tests; 5 marked slow)
 scripts/        maintained tools: verification, growth, gates, field screens
                 (indexed in scripts/README.md)
 scripts/experiments/
-                730 one-off exploratory scripts, kept as a record
+                731 one-off exploratory scripts, kept as a record
 data/           graphs and witnesses with exact coordinates (JSON; data/README.md)
 certificates/   colourings, DRAT verification logs, non-colourability claims
                 (certificates/README.md)
