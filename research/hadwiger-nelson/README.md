@@ -172,7 +172,7 @@ sh scripts/worker_setup.sh                   # kissat and drat-trim, for the sea
 ```
 
 GitHub Actions (`.github/workflows/tests.yml`) runs the fast part of the suite on
-pushes to `main` and on pull requests: 336 tests in 26 files, in under two
+pushes to `main` and on pull requests: 339 tests in 27 files, in under two
 minutes.
 
 `scripts/verify_pair.py` rebuilds a unit-distance witness or gadget from its

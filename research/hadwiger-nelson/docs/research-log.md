@@ -8070,3 +8070,25 @@ read. It treats `ℚᵈ` and the quadratic fields `ℚ(√N)`; it says nothing a
   near the origin; the chain reaches radius about 3.5.
 - A four-colour growth from the twelve turns of the chain about the origin is
   running.
+
+## The planes over `ℚ(√3, √q)` (25 September)
+
+The lemma behind the `ℚ(√3, √5)` chain works for every squarefree `q ≡ 2 (mod 3)`.
+There 3 splits in `ℚ(√−q) ⊂ ℚ(√3, √q)(i)`. A generator `α` of the `h`-th
+power of a prime above 3 has norm `3^h`, and `Tr(α²)` is prime to 3, so
+`α/ᾱ + ᾱ/α` has exact denominator `3^h`. Hence `1/3` is a sum of unit vectors,
+and the rhombus chain shows `χ ≥ 4`. With reduction at 3 and Theorem 2:
+- `χ(ℚ(√3, √q)²) = 3` for `q ≡ 1 (mod 3)`;
+- `= 4` for `q` even or `q ≡ 1, 3 (mod 8)`: for primes, `q = 2` or
+  `q ≡ 11, 17 (mod 24)`;
+- `≥ 4` for `q ≡ 5, 23 (mod 24)`, the only open class.
+
+`tests/test_q3q.py` checks the generators for `q ≤ 113`, and for `q = 17` a
+chain of 90 rhombi built from `(8 + i√17)/9`, which has no proper 3-colouring.
+For `q = 17` the value 4 is new as far as we know; Fischer's family covers
+`q ≡ 11 (mod 32)`, and states the lower bound only for `q = 11`.
+
+The search for a 5-chromatic graph over `ℚ(√3, √5)` goes on. The growths at
+four colours stay easy. Their colourings are not periodic at the places over
+7, 13 or 17, and no degree-1 place up to 61 four-colours the module of the
+chain seed.

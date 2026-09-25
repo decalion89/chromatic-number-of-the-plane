@@ -522,18 +522,36 @@ In [Polymath16, thread 17](https://dustingmixon.wordpress.com/2021/02/01/polymat
 of the graph lie in an extension formed by two roots of prime numbers? Is it
 possible to do it without `√3` (and without triangle)?"
 
-**With `√3`.** Let `q ≠ 3` be prime and `L = ℚ(√3, √q)`.
-- `q ≡ 1 (mod 3)`: 3 splits in `ℚ(√q)`, so a prime of `L` above 3 has residue
-  field `𝔽₃`. Madore's Cor. 3.4 gives `χ(L²) ≤ χ(𝔽₃²) = 3`, and triangles give
-  `χ(L²) = 3`.
-- `q = 2`, or `q ≡ 2 (mod 3)` and `q ≡ 1, 3 (mod 8)`: a prime of `L` above 2
-  has residue field `𝔽₂`, and Theorem 2 of the note gives `χ(L²) ≤ 4`.
-- `q ≡ 5, 23 (mod 24)`: neither applies. The first cases are
-  `q = 5, 23, 29, 47, 53, 71`.
+**With `√3`.** Let `q > 1` be squarefree and prime to 3, and `L = ℚ(√3, √q)`.
 
-PARI/GP recomputes these decompositions for every prime `q < 75`. So the
-answer to the first question is no for every `ℚ(√3, √q)` outside the last
-class.
+**Theorem 4.**
+- If `q ≡ 1 (mod 3)`, then `χ(L²) = 3`.
+- If `q ≡ 2 (mod 3)`, then `χ(L²) ≥ 4`, with equality when `q` is even or
+  `q ≡ 1, 3 (mod 8)`. For prime `q` this means `q = 2` or `q ≡ 11, 17 (mod 24)`.
+- If `q ≡ 5, 23 (mod 24)`, then `χ(L²) ≥ 4`, and the upper bound is open.
+  The first cases are `q = 5, 23, 29, 47, 53, 71`.
+
+*Proof.*
+- **`q ≡ 1 (mod 3)`.** 3 splits in `ℚ(√q)`, so a prime of `L` above 3 has
+  residue field `𝔽₃`. Madore's Cor. 3.4 gives `χ(L²) ≤ χ(𝔽₃²) = 3`, and
+  triangles give `χ(L²) ≥ 3`.
+- **Upper bound 4.** If `q` is even or `q ≡ 1, 3 (mod 8)`, a prime of `L`
+  above 2 has residue field `𝔽₂`, and Theorem 2 of the note gives `χ(L²) ≤ 4`.
+- **Lower bound 4.** If `q ≡ 2 (mod 3)`, then 3 splits in `ℚ(√−q)`, a subfield
+  of `L(i)`. Let `h` be its class number and `α` a generator of the `h`-th
+  power of a prime above 3. Then `N(α) = 3^h`, and 3 does not divide
+  `Tr(α²)`: otherwise that prime would divide `ᾱ`. So
+  `α/ᾱ + ᾱ/α = Tr(α²)/3^h` is a sum of two unit vectors with exact denominator
+  `3^h`, and `1/3` is a sum of unit vectors. The lemma below gives
+  `χ(L²) ≥ 4`. ∎
+
+`tests/test_q3q.py` checks the generator `α` for every `q ≡ 2 (mod 3)` up to
+113, and a 271-vertex chain of 90 rhombi for `q = 17`. PARI/GP recomputes the
+decompositions of 2 and 3 for every prime `q < 75`.
+
+So the answer to Voronov's first question is no for every `ℚ(√3, √q)` outside
+the class `q ≡ 5, 23 (mod 24)`. Fischer's family meets these fields only at
+`q ≡ 11 (mod 32)`, and for `q ≠ 11` it gives the upper bound alone.
 
 **A lemma for the lower bound.** If `√3 ∈ L` and `1/3` is a sum of unit vectors
 of `L(i)`, then `L²` has no proper 3-colouring. The sums of unit vectors form a
@@ -542,7 +560,8 @@ vectors `uₖ`. The unit rhombus whose long diagonal is `√3 uₖ` forces its t
 alike in every 3-colouring. Chaining these rhombi joins `0` to
 `√3(1 + ω)/3 = e^{iπ/6}`, a unit vector.
 
-**The plane over `ℚ(√3, √5)`.** `τ = (2 + i√5)/3` is a unit vector, so
+**The plane over `ℚ(√3, √5)`.** Here the generator is explicit.
+`τ = (2 + i√5)/3` is a unit vector, so
 `1/3 = τ + τ̄ − 1` and
 `(1 + ω)/3 = τ + τ̄ − 1 + ωτ + ωτ̄ − ω`. The chain of the six rhombi is
 `data/chain35.json`: 19 vertices, 31 edges, no proper 3-colouring
