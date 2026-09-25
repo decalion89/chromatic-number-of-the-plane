@@ -42,22 +42,28 @@ below, with their evidence.
 
 | statement | status | where |
 |---|---|---|
-| **χ(ℚ(√3, √11)²) = 4.** No 5-chromatic unit-distance graph has coordinates in ℚ(√3, √11). | Proved (short proof, not yet refereed); unit tests. | `notes/local_colourings.md` §8, `hn/adelic.py`, `tests/test_q311.py` |
-| **χ(ℚ(√2, √3)²) = 4.** The same argument settles Voronov's second case. | Proved (not yet refereed); unit tests. The lower bound was already implicit in Voronov–Neopryatnaya–Dergachev; a 10-vertex rhombus chain gives a short one. | `notes/local_colourings.md` §10, `tests/test_q23.py`, `certificates/chain23_no3coloring.json` |
+| **χ(ℚ(√2, √3)²) = 4.** Voronov's second case; not found in the literature. | Proved (not yet refereed); unit tests. The lower bound was already implicit in Voronov–Neopryatnaya–Dergachev; a 10-vertex rhombus chain gives a short one. | `notes/local_colourings.md` §10, `tests/test_q23.py`, `certificates/chain23_no3coloring.json` |
+| **χ(ℚ(√3, √11)²) = 4.** A theorem of K. G. Fischer (1994); a short new proof. | Fischer's theorem; our proof is not yet refereed; unit tests. | `notes/local_colourings.md` §8, `hn/adelic.py`, `tests/test_q311.py` |
 | χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, as whole complex fields | Proved. Upper bounds by reduction at the primes 2 and 11; lower bounds from the Moser spindle and the 5-chromatic graph `five_rho7`. Not yet refereed. | `notes/local_colourings.md` §3, `notes/rigidity.md` |
 | Necessary local conditions for a field to hold a 6-chromatic unit-distance graph | Proved (not yet refereed) | `notes/local_colourings.md` §5–§9, `scripts/fieldscreen.py` |
 
-The two theorems are written up in a three-page note,
+Both are written up in a three-page note,
 [`docs/note/planes-4-chromatic.pdf`](docs/note/planes-4-chromatic.pdf).
 
-**On χ(ℚ(√3, √11)²) = 4.** The question was open in print:
+**On χ(ℚ(√3, √11)²) = 4.** K. G. Fischer proved it in 1994 (*A planar
+geometric graph of chromatic number four*, Congr. Numer. 104, 73–79), for all
+ℚ(√p, √q) with p ≡ 3, q ≡ 11 (mod 16) and pq ≡ 1 (mod 32). His result seems to
+have been overlooked:
 - Moorhouse (2010) left the value undetermined.
 - Madore (2015) proved 4 ≤ χ ≤ 5.
 - Exoo and Ismailescu (2018) asked whether a 5-chromatic unit-distance graph
   embeds in this plane.
 - Voronov (Polymath16, 2021) conjectured χ = 4 for this plane and for the plane
-  over ℚ(√2, √3), and noted that neither was proved. Proofs are given here
-  (not yet refereed).
+  over ℚ(√2, √3), and noted that neither was proved.
+
+Fischer's hypotheses exclude ℚ(√2, √3), and we have not found that case in the
+literature. We found Fischer's paper only after the first version of the note
+had been sent to two mathematicians; the note now credits it.
 
 The proof reduces z = x + iy modulo a place of ℚ(√3, √11) above 2 (there are
 two), which is inert in ℚ(i, √3, √11). Every unit vector becomes a nonzero
@@ -65,12 +71,12 @@ element of 𝔽₄, so the residue is a proper 4-colouring. In the coordinates
 α = x + y/√3, β = 2y/√3 the proof is Madore's reduction argument (Prop. 3.2);
 in the coordinates (x, y) that argument fails at 2.
 
-The reduction modulo 2 is David Speyer's: he used it in Polymath16 (thread 2,
-April 2018) to 4-colour the Moser ring. The passage from a ring to the whole
-field by cosets is Madore's and Moorhouse's. The step we have not found in the
-literature is the observation that the places over 2 are inert, so that the
-reduction covers every unit vector of the plane. This result has not been
-refereed.
+Fischer's colouring is additive, with values in ℤ/4. Speyer used reduction
+modulo 2 in Polymath16 (thread 2, April 2018) to 4-colour the Moser ring. The
+passage from a ring to the whole field by cosets is Madore's and Moorhouse's.
+Our contribution is the short criterion — the places over 2 are inert in
+L(i), so the reduction covers every unit vector of the plane — and the case
+ℚ(√2, √3). None of this has been refereed.
 
 <p align="center">
   <img src="docs/figures/plane_q311.svg" width="560"
@@ -196,6 +202,15 @@ preprint-level claims. Corrections are welcome.
 - J. Parts, *Graph minimization, focusing on the example of 5-chromatic
   unit-distance graphs in the plane* (the 509-vertex graph);
   [arXiv:2010.12665](https://arxiv.org/abs/2010.12665)
+- K. G. Fischer, *Additive K-colorable extensions of the rational plane*,
+  Discrete Math. 82 (1990) 181–195; and *A planar geometric graph of chromatic
+  number four*, Congr. Numer. 104 (1994) 73–79 (Zbl 0836.05030)
+- P. D. Johnson Jr., *Two-colorings of real quadratic extensions of ℚ² that
+  forbid many distances*, Congr. Numer. 60 (1987) 51–58
+- M. S. Payne, *Unit distance graphs with ambiguous chromatic number*,
+  Electron. J. Combin. 16 (2009), Note 31;
+  [arXiv:0707.1177](https://arxiv.org/abs/0707.1177) (summarises Johnson's and
+  Fischer's results on quadratic fields)
 - G. E. Moorhouse, *On the chromatic numbers of planes* (draft, 2010);
   [pdf](https://www.ericmoorhouse.org/pub/chromatic.pdf)
 - D. A. Madore, *The Hadwiger–Nelson problem over certain fields*;
