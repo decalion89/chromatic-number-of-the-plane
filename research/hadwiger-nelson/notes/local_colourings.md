@@ -124,9 +124,9 @@ proofs help.
 | 5 | 4 | SAT |
 | 7 | 4 | SAT (Moorhouse) |
 | 11 | 5 | SAT |
-| 17 | 6? | tabu finds a 6-colouring at once and no 5-colouring. Independent sets of 57 points are found easily, never 58. Since `5·57 < 289`, `α = 57` would prove `χ ≥ 6`. The SAT proof is running |
+| 17 | 6? | tabu finds a 6-colouring at once and no 5-colouring. Independent sets of 57 points are found easily, never 58. Since `5·57 < 289`, `α = 57` would prove `χ ≥ 6`. SAT runs on the 5-colouring have not finished, and `α ≥ 58` is undecided |
 | 19 | 5 | SAT; triangle-free, with the linear 5-colouring `(a, b) ↦ c(a + b mod 19)` (§13) |
-| 23 | ≥ 7? | tabu fails at 6 |
+| 23 | 5–8, likely ≥ 7 | no 4-colouring (SAT); an interval 8-colouring (§12); tabu finds no 7-colouring, and independent sets of 87 points, against `529/6 ≈ 88.2` |
 | 29, 41 | ≥ 6? | tabu fails at 5. For `q = 41` the best independent set found has 210 points, against 336 needed |
 | ≥ 53 | ≥ 6 | Proposition B |
 
@@ -649,11 +649,56 @@ settles the entry "5 or 6" for `𝔽₁₃²` in Moorhouse's Table 6.1.
 
 The entry becomes "5 or 6". This is Vinh's colouring by pairs of parallel lines
 with longer blocks: if `N, N − 1, N − 4, …, N − (m − 1)²` are all non-squares,
-then `χ(𝔽_q²) ≤ ⌈q/m⌉`. Linear colourings `(x, y) ↦ c(αx + βy)` cannot do
-better for `q = 17`: every admissible circulant needs six colours (SAT).
+then `χ(𝔽_q²) ≤ ⌈q/m⌉`. By the Weil bound such an `N` exists once
+`2^m (m + 1) < √q`. So the colouring gives `χ(𝔽_q²) ≤ (2 + o(1)) q / log₂ q`,
+against `q (1/2 + o(1))` for pairs of lines. General theorems give the same
+order: Molloy's bound for triangle-free graphs when `q ≡ ±7 (mod 12)`, and
+Alon–Krivelevich–Sudakov's for locally sparse graphs otherwise. Linear
+colourings `(x, y) ↦ c(αx + βy)` cannot do better for `q = 17`: every
+admissible circulant needs six colours (SAT).
 Whether five colours suffice is open. Tabu search stops at two monochromatic
 edges. For comparison, a random graph with 289 vertices and 2312 edges has on
 average `5^289 (4/5)^2312 ≈ e^{−51}` proper 5-colourings.
+
+Two observations on five colours, neither a proof:
+- **The two bad edges share an isotropic line.** Tabu search and a hybrid
+  evolutionary search always stop at exactly two monochromatic edges. In all
+  28 such colourings sampled, the two edges have endpoints on a common
+  isotropic line `x + 4y = c` or `x − 4y = c`. For two random edges this
+  happens with probability about 0.4, so the pattern is structural. It never
+  reached one monochromatic edge in 5·10⁷ moves.
+- **Cube and conquer isolates the hard case.** Pin one edge and break the
+  symmetry of the other three colours by value precedence (colour `c + 1`
+  first appears after colour `c`). `march_cu` then splits the CNF into 8614
+  cubes, and the cubes provably cover every case (`drat-trim` checks the
+  proof). Almost all cubes are degenerate cases, where some colour first
+  appears late. The first 7000 were each refuted within 13 seconds, 1706 of
+  them also with DRAT proofs checked by `drat-trim`. The last cube says only
+  that colour 2 appears among the first 23 vertices, and it is as hard as the
+  whole problem.
+
+`H_q` is the *hyperbola graph* `HG(𝔽_q)` of Bardestani and Mallahi-Karai
+([arXiv 1507.05300](https://arxiv.org/abs/1507.05300)). They show that its
+Borel chromatic number over `ℝ` and `ℚ_p` is infinite, and that it sits inside
+the graph of every isotropic quadratic form.
+
+**Moorhouse's table, continued** (`tests/test_finite_planes.py`, and
+`tests/test_finite_planes_slow.py` for 29, 31, 41 and 43):
+
+| `q` | 19 | 23 | 29 | 31 | 37 | 41 | 43 |
+|---|---|---|---|---|---|---|---|
+| `χ(𝔽_q²)` | 5 | 5–8 | 5–6 | 5–8 | 5–8 | 5–7 | 5–8 |
+
+- **Upper bounds.** Interval colourings with `m = 4, 3, 5, 4, 5, 6` lines per
+  colour for `q = 19, …, 41`. For `q = 43` the linear colouring
+  `(x, y) ↦ c(x + y mod 43)` with a circulant 8-colouring `c` does better than
+  intervals (9).
+- **Lower bounds.** There is no 4-colouring for `q = 23, 29, 31, 37, 41, 43`
+  (SAT, with a unit triangle pinned where there is one).
+- **Optimal cases.** The interval colourings are optimal for `q = 7, 13, 19`.
+- **`q = 23`.** Tabu finds no 7-colouring (six monochromatic edges at best), and
+  its largest independent sets have 87 points. Since `529/87 > 6`, an
+  independence number of 87 would give `χ ≥ 7`.
 
 **Over `ℚ(√3, √5)`.** Both 2 and 3 split in `K = ℚ(i, √3, √5)`.
 - **At 2.** `−15 ≡ 1 (mod 8)`, so `i ∈ ℚ₂(√15)`. The local field is
@@ -749,14 +794,32 @@ pairs.
   `τ = (2 + i√5)/3` and `σ = (1 + i√35)/6`, `1 + 2 Re σ = 2 Re τ`, so the unit
   steps `1, σ̄, −τ, σ, −τ̄` close up into a 5-cycle. Hence
   `3 ≤ χ(ℚ(√5, √7)²) ≤ 5`.
+- **Where a fourth colour must come from.** The places above 3 split in `K`.
+  Since `√7 ∈ ℚ₃`, the local field is `ℚ₃(√5)`, the unramified quadratic
+  extension. It contains `i`, and its residue field is `𝔽₉`.
+  Since `χ(H₉) = 3`, Proposition C 3-colours every graph over `ℚ(√5, √7)` whose
+  edge vectors are units above 3. So a 4-chromatic graph needs an edge vector
+  like `τ`, which is not a unit above 3, as over `ℚ(√3, √5)` (§12).
+- **Is it 3?** No 3-colouring can be additive. Since `τ + τ̄ = 4/3`, the
+  number `1/3 = τ + τ̄ − 1` is a sum of unit vectors, and a homomorphism to
+  `ℤ/3` would send the unit vector `1 = 3 · (1/3)` to 0. Yet the experiments
+  find no obstruction:
+  - the ball `U + U + U` of radius 1.5 for the 130 unit vectors of height at
+    most 60 (187 003 points) is 3-colourable;
+  - a colouring-guided growth with three colours stops finding points that see
+    all three colours after 19 steps (research log).
+
+  A 3-colouring would answer the Question of §11 in the negative. Every
+  non-split place lies above a prime `q ≥ 19`, where Hoffman's bound gives
+  `χ(G_q) ≥ 1 + (q + 1)/(2√q) > 3`, and the place above 19 gives exactly 5.
 - **No small place.** For the other 17, such as `ℚ(√2, √31)`, `ℚ(√2, √47)` and
   `ℚ(√7, √41)`, the first non-split places lie above 23, 31, 43 or 59, where
   `χ(G_q)` is not known.
 
 **With `√3` the table reproduces Theorem 4.** It gives bound 3 exactly for
 `q ≡ 1 (mod 3)`, and bound 4 exactly for `q = 2` and `q ≡ 11, 17 (mod 24)`. It
-adds one fact: the first non-split place of `ℚ(√3, √29)` lies above 23, and tabu
-finds no 6-colouring of `G₂₃` (§4). So the local arguments available give no
+adds one fact: the first non-split place of `ℚ(√3, √29)` lies above 23, where
+`5 ≤ χ(G₂₃) ≤ 8` and tabu finds no 7-colouring (§4, §12). So the local arguments available give no
 bound below `χ(G₂₃)`, although the field has triangles. Among the fields
 `ℚ(√3, √q)` with `q` a prime below 60 it is the only one without a non-split
 place at `q ≤ 19`, which makes it a candidate for §5's screen for six.
