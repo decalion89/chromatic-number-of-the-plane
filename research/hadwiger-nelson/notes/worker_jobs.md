@@ -1,7 +1,8 @@
-# Worker jobs: the Exoo–Ismailescu route at a repulsive distance
+# Search jobs for χ(ℝ²) ≥ 6: the Exoo–Ismailescu route at a repulsive distance
 
-A self-contained brief for helper sessions. Nothing here proves `χ(ℝ²) ≥ 6`.
-It says what would, and how to check it.
+A working note on the parallel searches of September 2026. It is a status
+record, not a result: nothing here proves `χ(ℝ²) ≥ 6`. It says what would, and
+how to check it.
 
 ## The reduction
 
@@ -26,7 +27,7 @@ unit-distance graph, and it is not 5-colourable, so `χ(ℝ²) ≥ 6`.
 | `2` | Exoo–Ismailescu | 426 vertices ([arXiv 1909.13177](https://arxiv.org/abs/1909.13177)) |
 | `√3`, `(√3+1)/√2` | Ágoston–Pálvölgyi | Polymath16 |
 
-**Why no one finished.** Every known `d` is a *two-step* distance
+**Why the known witnesses are hard to complete.** Every known `d` is a *two-step* distance
 `|u + v|`, with `u, v` unit vectors. Two points at such a distance share a unit
 neighbour (the middle point), so 5-colourings tend to colour them **alike**.
 - In our L16 seed, `P(same)` near distance 2 is 0.3–0.4.
@@ -118,16 +119,16 @@ Place `σ(H)` on the edges at `σ(d)`.
 - **Verdict.** Not 5-colourable. CaDiCaL, Glucose, MiniSat and kissat agree,
   and drat-trim verifies the proof.
 - **Cost.** It needs one gadget, at 0.7366 or 1.5676 (equivalent by Galois).
-  That distance is two-step, and `P(same) ≈ 0.21` in the L16 seed: middling.
+  That distance is two-step, and `P(same) ≈ 0.21` in the L16 seed, which is intermediate.
 
 **The repulsive orbit `(14 ∓ 2√33)/3`** (`d = 0.9149`, `2.9149`).
 - It has `P(same) = 0.079` and `0.086` in the L16 seed, as repulsive as `2/√3`.
 - On Moser balls of up to 3 313 points it is 5-colourable, even together with
   `4/3` and the orbit `(14/3 ∓ 5√33/9)`.
 - On the 18 524-point L16 growth graph (`data/L16_kw2.json`) with its 147 113
-  unit edges plus the 57 194 orbit edges, tabu fails with 366 conflicts, and
-  kissat is deciding.
+  unit edges plus the 57 194 orbit edges, tabu fails with 366 conflicts; the
+  kissat run was undecided on 25 September 2026.
 
 If that graph refuses five colours, a single unit-distance gadget at 0.9149 in
-L16 would finish `χ(ℝ²) ≥ 6`. That is the repulsion worker's `L16 @ (14−2√33)/3`
-growth.
+L16 would finish `χ(ℝ²) ≥ 6`. That is the goal of the search job
+`L16 @ (14−2√33)/3`.

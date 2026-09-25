@@ -80,14 +80,22 @@ def _coord_doc(e):
     return [str(c) for c in e.c]
 
 
+def _rational(s):
+    """A rational stored as a decimal string ("-1/2") or as a pair [num, den]."""
+    if isinstance(s, (list, tuple)):
+        num, den = s
+        return Fraction(int(num), int(den))
+    return Fraction(s)
+
+
 def _coord_from_doc(field, d):
     if isinstance(field, RealQuadExt):
         return RealExtElement(
             field,
-            field.base.element([Fraction(s) for s in d["a"]]),
-            field.base.element([Fraction(s) for s in d["b"]]),
+            field.base.element([_rational(s) for s in d["a"]]),
+            field.base.element([_rational(s) for s in d["b"]]),
         )
-    return field.element([Fraction(s) for s in d])
+    return field.element([_rational(s) for s in d])
 
 
 def save_certificate(

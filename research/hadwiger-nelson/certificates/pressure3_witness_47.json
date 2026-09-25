@@ -1,5 +1,5 @@
 {
- "claim": "the minimal subgraph of de Grey Sa keeping pressure 3 at its pivot: no 4-colouring squeezes the 30-point circle into two colours",
+ "claim": "a subgraph of de Grey Sa keeping pressure 3 at its pivot, minimal among those that keep its 30 unit neighbours: no 4-colouring squeezes the 30-point circle into two colours",
  "k": 4,
  "kind": "multiquadratic",
  "field_generators": [

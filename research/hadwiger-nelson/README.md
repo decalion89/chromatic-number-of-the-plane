@@ -1,4 +1,6 @@
-# The Hadwiger–Nelson problem: an exact, certificate-driven attack
+# The Hadwiger–Nelson problem over number fields
+
+Project page: results, evidence, methods and references.
 
 How many colours does the plane need so that no two points at distance exactly 1
 share a colour? The answer, χ(ℝ²), has been known since 2018 to lie in
@@ -40,34 +42,45 @@ below, with their evidence.
 
 | statement | status | where |
 |---|---|---|
-| **χ(ℚ(√3, √11)²) = 4.** No 5-chromatic unit-distance graph has coordinates in ℚ(√3, √11). | Proved; short proof; unit tests. | `notes/local_colourings.md` §8, `hn/adelic.py`, `tests/test_q311.py` |
-| **χ(ℚ(√2, √3)²) = 4.** The same argument settles Voronov's second case. | Proved; unit tests. The lower bound was already implicit in Voronov–Neopryatnaya–Dergachev; a 10-vertex rhombus chain gives a short one. | `notes/local_colourings.md` §10, `tests/test_q23.py`, `certificates/chain23_no3coloring.json` |
-| χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, as whole complex fields | Proved. Upper bounds by reduction at the primes 2 and 11; lower bounds from the Moser spindle and Exoo–Ismailescu's graph. | `notes/rigidity.md`, `notes/local_colourings.md` |
-| Necessary local conditions for a field to hold a 6-chromatic unit-distance graph | Proved | `notes/local_colourings.md` §5–§9, `scripts/fieldscreen.py` |
-| Rigidity of coset colourings on the ρ₇ module | 3 840 exact Stiemke certificates | research log, "κ, the rotation every coset colouring is blind to" |
+| **χ(ℚ(√2, √3)²) = 4.** Voronov's second case; not found in the literature. | Proved (not yet refereed); unit tests. The lower bound was already implicit in Voronov–Neopryatnaya–Dergachev; a 10-vertex rhombus chain gives a short one. | `notes/local_colourings.md` §10, `tests/test_q23.py`, `certificates/chain23_no3coloring.json` |
+| **χ(ℚ(√3, √11)²) = 4.** A theorem of K. G. Fischer (1994); a short new proof. | Fischer's theorem; our proof is not yet refereed; unit tests. | `notes/local_colourings.md` §8, `hn/adelic.py`, `tests/test_q311.py` |
+| χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, as whole complex fields | Proved. Upper bounds by reduction at the primes 2 and 11; lower bounds from the Moser spindle and the 5-chromatic graph `five_rho7`. Not yet refereed. | `notes/local_colourings.md` §3, `notes/rigidity.md` |
+| Necessary local conditions for a field to hold a 6-chromatic unit-distance graph | Proved (not yet refereed) | `notes/local_colourings.md` §5–§9, `scripts/fieldscreen.py` |
 
-The two theorems are written up in a three-page note,
+Both are written up in a three-page note,
 [`docs/note/planes-4-chromatic.pdf`](docs/note/planes-4-chromatic.pdf).
 
-**On χ(ℚ(√3, √11)²) = 4.** The question was open in print:
+**On χ(ℚ(√3, √11)²) = 4.** K. G. Fischer proved it in 1994 (*A planar
+geometric graph of chromatic number four*, Congr. Numer. 104, 73–79). He
+proved that ℚ(√p, √q)² has an additive 4-colouring for all p ≡ 3, q ≡ 11
+(mod 16) with pq ≡ 1 (mod 32); for ℚ(√3, √11) the Moser spindle gives the
+lower bound. His result seems to have been overlooked:
 - Moorhouse (2010) left the value undetermined.
 - Madore (2015) proved 4 ≤ χ ≤ 5.
 - Exoo and Ismailescu (2018) asked whether a 5-chromatic unit-distance graph
   embeds in this plane.
-- Voronov (Polymath16, 2021) conjectured χ = 4 for this plane and for the plane
-  over ℚ(√2, √3), and noted that neither was proved. Both now are.
+- Voronov (Polymath16, 2021) wrote that χ = 4 "seems likely" for this plane and
+  for the plane over ℚ(√2, √3), "but as far as I know, nobody has proved this
+  yet".
+
+Fischer's hypotheses exclude ℚ(√2, √3), and we have not found that case in the
+literature. We found Fischer's paper only after the first version of the note
+had been sent to two mathematicians; the note now credits it.
 
 The proof reduces z = x + iy modulo a place of ℚ(√3, √11) above 2 (there are
 two), which is inert in ℚ(i, √3, √11). Every unit vector becomes a nonzero
 element of 𝔽₄, so the residue is a proper 4-colouring. In the coordinates
-α = x + y/√3, β = 2y/√3 the proof is Madore's reduction argument (Prop. 3.2);
-in the coordinates (x, y) that argument fails at 2.
+α = x + y/√3, β = 2y/√3 the proof is Madore's reduction argument (Prop. 3.2,
+which his ¶6.6 states for any quadratic form); in the coordinates (x, y) that
+argument fails at 2.
 
-The reduction modulo 2 is David Speyer's: he used it in Polymath16 (thread 2,
-April 2018) to 4-colour the Moser ring. The passage from a ring to the whole
-field by cosets is Madore's and Moorhouse's. What is new is the observation that
-the places over 2 are inert, so that the reduction covers every unit vector of
-the plane. This result has not been refereed.
+Fischer's colouring is additive, with values in ℤ/4. Speyer used reduction
+modulo 2 in Polymath16 (thread 2, April 2018) to 4-colour the Moser ring. The
+passage from a ring to the whole field by cosets is Madore's and Moorhouse's.
+Our contribution is the choice of coordinates, which lets Madore's argument
+work at the places over 2 (they are inert in L(i), so the reduction covers
+every unit vector of the plane), and the case ℚ(√2, √3). None of this has
+been refereed.
 
 <p align="center">
   <img src="docs/figures/plane_q311.svg" width="560"
@@ -85,16 +98,17 @@ no edge joins two points of the same colour.</sub></p>
 chain of three unit rhombi over ℚ(√2, √3). In a 3-colouring the dashed edge would join two
 points of the same colour.</sub></p>
 
-### Computations, all independently verified
+### Computations, machine-checked
 
 | object | property | evidence |
 |---|---|---|
 | Moser spindle | no 3-colouring | `certificates/moser_spindle_no3coloring.json`, drat-trim |
 | de Grey's 1581-vertex graph, rebuilt from his 39-point seed | no 4-colouring with one triangle pinned to 0, 1, 2 | `certificates/degrey_1581_no4coloring.json`, kissat plus drat-trim (13.1 M lemmas) |
-| 19 vertices, 33 edges, vertex-critical | no 3-colouring; its forced pair is forced only jointly | `certificates/genuine_pair_19_no3coloring.json`, drat-trim |
+| 19 vertices, 33 edges, vertex-critical | no 3-colouring. Unlike the Moser spindle, its obstruction combines two constraints, neither of which is forced on its own (research log) | `certificates/genuine_pair_19_no3coloring.json`, drat-trim |
 | `data/five_247.json`, 1139 vertices, and `data/five_247_c.json`, 803 vertices, vertex-critical | 5-chromatic, in ℚ(√3, √11, √247). Not a record: Parts' 509 stands. | `tests/test_five_247.py`, research log |
-| `data/W_moser_orbit_9_33.json`, 187 points | not 5-colourable with edges at 1 and at one Galois orbit of distances. Proves χ ≥ 6 once one gadget exists for that orbit. | four solvers plus drat-trim |
-| `data/W_lattice_16_21_28_61.json`, 72 points | not 5-colourable with edges at 1, 4/√3, √7, √(28/3), √(61/3) | four solvers plus drat-trim |
+| `data/W_moser_orbit_9_33.json`, 187 points | not 5-colourable with edges at 1 and at one Galois orbit of two distances. It would prove χ(ℝ²) ≥ 6 if a unit-distance gadget existed for that orbit. | four solvers plus drat-trim (research log) |
+| `data/W_lattice_16_21_28_61.json`, 72 points | not 5-colourable with edges at 1, 4/√3, √7, √(28/3), √(61/3) | four solvers plus drat-trim (research log) |
+| Coset colourings of the ρ₇ module | none is proper: 3 840 exact linear-programming (Stiemke) certificates | research log, "κ, the rotation every coset colouring is blind to" |
 
 ### What is closed, and why
 
@@ -108,7 +122,7 @@ reason for each:
 See "What has been ruled out so far", "The search over operations is closed, by
 a theorem" and "Why every known construction stops at five".
 
-## The route to six being searched now
+## The route to six searched in September 2026
 
 The route is Exoo and Ismailescu's two-step reduction, which Polymath16 calls
 "virtual edges":
@@ -117,15 +131,15 @@ The route is Exoo and Ismailescu's two-step reduction, which Polymath16 calls
 2. a **gadget** for each `d`: a unit-distance graph in which two points at
    distance `d` always get different colours.
 
-Two observations are new here:
+Two observations that we have not found in the literature:
 - **Repulsive distances.** Some distances, such as 2/√3, are coloured alike
   unusually rarely, so they are the natural gadget targets.
 - **Galois orbits.** A Galois automorphism of the field maps gadgets to
   gadgets, so one gadget serves a whole orbit of distances. The 187-point
   witness above needs a single gadget.
 
-The gadget searches run as parallel jobs, described in `notes/worker_jobs.md`.
-None has succeeded yet.
+The gadget searches ran as parallel jobs from 23 September 2026, described in
+`notes/worker_jobs.md`. None had succeeded by 25 September.
 
 ## Layout
 
@@ -134,7 +148,7 @@ Each folder has its own README describing what is in it.
 ```
 hn/             the library: exact fields, geometry, graphs, SAT colouring,
                 certificates, local (adelic) colourings
-tests/          pytest suite (about 590 tests; one slow de Grey solve)
+tests/          pytest suite (601 tests; 5 marked slow)
 scripts/        maintained tools: verification, growth, gates, field screens
                 (indexed in scripts/README.md)
 scripts/experiments/
@@ -157,12 +171,14 @@ python3 -m pytest -q tests/test_q311.py      # the ℚ(√3, √11) theorem, sec
 sh scripts/worker_setup.sh                   # kissat and drat-trim, for the searches
 ```
 
-GitHub Actions (`.github/workflows/tests.yml`) runs the fast part of the suite on every
-push and pull request: about 330 tests, in under two minutes.
+GitHub Actions (`.github/workflows/tests.yml`) runs the fast part of the suite on
+pushes to `main` and on pull requests: 333 tests in 25 files, in under two
+minutes.
 
-`scripts/verify_pair.py` rebuilds a witness or gadget from its JSON file,
-re-derives every edge exactly and runs the solvers. It should be the first step
-in checking any claim made here.
+`scripts/verify_pair.py` rebuilds a unit-distance witness or gadget from its
+JSON file, re-derives every edge exactly and runs the solvers. The two
+multi-distance witnesses have their own checkers, listed in
+`scripts/README.md`.
 
 ## How this work was produced
 
@@ -187,6 +203,23 @@ preprint-level claims. Corrections are welcome.
   5*; [arXiv:1805.12181](https://arxiv.org/abs/1805.12181)
 - J. Parts, *The chromatic number of the plane is at least 5: a human-verifiable
   proof*; [arXiv:2010.12661](https://arxiv.org/abs/2010.12661)
+- J. Parts, *Graph minimization, focusing on the example of 5-chromatic
+  unit-distance graphs in the plane* (the 509-vertex graph);
+  [arXiv:2010.12665](https://arxiv.org/abs/2010.12665)
+- K. G. Fischer, *Additive K-colorable extensions of the rational plane*,
+  Discrete Math. 82 (1990) 181–195; *The connected components of the graph
+  ℚ(√N₁, …, √N_d)²*, Congr. Numer. 72 (1990) 213–221 (Zbl 0733.05048); and
+  *A planar geometric graph of chromatic number four*, Congr. Numer. 104 (1994)
+  73–79 (Zbl 0836.05030)
+- P. D. Johnson Jr., *Two-colorings of real quadratic extensions of ℚ² that
+  forbid many distances*, Congr. Numer. 60 (1987) 51–58
+- P. D. Johnson Jr., *Problems posed in or arising from "Colorings of metric
+  spaces": status report*, Geombinatorics 9 (2000) 170–179 (a survey we have
+  not seen)
+- M. S. Payne, *Unit distance graphs with ambiguous chromatic number*,
+  Electron. J. Combin. 16 (2009), Note 31;
+  [arXiv:0707.1177](https://arxiv.org/abs/0707.1177) (summarises Johnson's and
+  Fischer's results on quadratic fields)
 - G. E. Moorhouse, *On the chromatic numbers of planes* (draft, 2010);
   [pdf](https://www.ericmoorhouse.org/pub/chromatic.pdf)
 - D. A. Madore, *The Hadwiger–Nelson problem over certain fields*;
@@ -196,7 +229,9 @@ preprint-level claims. Corrections are welcome.
   and [3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/)
   (Speyer's 2-adic colourings of the Moser ring), and
   [17](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/)
-  (Voronov's conjecture)
+  (Voronov's conjecture), and the Polymath16 wiki page
+  [Algebraic formulation of Hadwiger–Nelson problem](https://web.archive.org/web/20210412075722/https://asone.ai/polymath/index.php?title=Algebraic_formulation_of_Hadwiger-Nelson_problem)
+  (colourings of rings such as the Moser ring)
 - V. A. Voronov, A. M. Neopryatnaya, E. A. Dergachev, *Constructing
   5-chromatic unit distance graphs embedded in the Euclidean plane and
   two-dimensional spheres*; [arXiv:2106.11824](https://arxiv.org/abs/2106.11824)
