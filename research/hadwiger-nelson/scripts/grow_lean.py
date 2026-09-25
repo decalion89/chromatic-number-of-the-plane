@@ -64,6 +64,14 @@ if D2 is not None and not d.get("dist2"):
     print(f"second distance: d^2 = {D2}, {len(U) - len(base_units)} steps of that length added", flush=True)
 elif d.get("dist2"):
     D2 = Fr(d["dist2"])
+# "dist2_exact" (JSON): extra squared distances given exactly (coefficient lists), e.g. a whole Galois orbit, with
+# their step vectors in "units2". Edges at all of them are hard constraints, so the graph is a {1, d_1, ...}-graph:
+# with one unit-distance gadget per Galois orbit it becomes a unit-distance statement (notes/worker_jobs.md).
+EXTRA = [F.element([Fr(a, b) for a, b in c]) for c in (d.get("dist2_exact") or [])]
+U2 = [mk(xy) for xy in (d.get("units2") or [])]
+if EXTRA:
+    U.extend(U2)
+    print(f"extra distances {[round(float(t) ** 0.5, 5) for t in EXTRA]}: {len(U2)} steps added", flush=True)
 A, Bi = d.get("A"), d.get("B")
 # soft "skeleton" edges (JSON "two_edges": vertex pairs, e.g. the non-unit edges of a {1, d_1, ...}-witness W placed
 # among the points). Tabu phase 2 keeps as few of them alike as it can, and growth is steered towards the alike ones.
@@ -161,7 +169,7 @@ ONE = F.rational(1)
 LEN2 = F.element([D2] + [Fr(0)] * (F.dim - 1)) if D2 is not None else None
 
 
-RQ = max(1.0, float(D2) ** 0.5 if D2 is not None else 1.0) + 1e-7
+RQ = max([1.0] + ([float(D2) ** 0.5] if D2 is not None else []) + [float(t) ** 0.5 for t in EXTRA]) + 1e-7
 
 
 def discover(only=None):
@@ -179,6 +187,7 @@ def discover(only=None):
     dx = pts[pr[:, 1], 0] - pts[pr[:, 0], 0]; dy = pts[pr[:, 1], 1] - pts[pr[:, 0], 1]
     hd = np.hypot(dx, dy)
     keep = (np.abs(hd - 1) < 1e-7) | ((np.abs(hd - float(D2) ** 0.5) < 1e-7) if D2 is not None else False)
+    for t_ in EXTRA: keep |= np.abs(hd - float(t_) ** 0.5) < 1e-7
     pr, dx, dy = pr[keep], dx[keep], dy[keep]
     dk = hkey(dx, dy); known = np.isin(dk, np.array(sorted(set(hkey(Ux, Uy).tolist())), dtype=np.int64))
     pr, dk = pr[~known], dk[~known]
@@ -187,7 +196,8 @@ def discover(only=None):
     for (i, j), k in zip(pr, dk):
         if int(k) in seenk: continue
         seenk.add(int(k)); w = V[int(j)] - V[int(i)]
-        if w.norm2() != ONE and (D2 is None or w.norm2() != LEN2): continue   # a float coincidence
+        nw_ = w.norm2()
+        if nw_ != ONE and (D2 is None or nw_ != LEN2) and not any(nw_ == t_ for t_ in EXTRA): continue   # a float coincidence
         for z in (w, -w, Point(w.x, -w.y), Point(-w.x, w.y)):
             if ukey(z) not in UK: UK.add(ukey(z)); U.append(z); fresh.append(len(U) - 1)
     if not fresh: return 0
@@ -216,7 +226,9 @@ def save(tag):
     json.dump({"field_generators": list(F.gens), "A": A, "B": Bi, "status": tag, "mode": MODE,
                "colouring": col[:len(V)] if len(col) == len(V) else None,
                "colouring_prefix": None if len(col) == len(V) else col[:len(V)], "units": [ser(u) for u in U],
-               "two_edges": [list(e) for e in SOFT], "dist2": str(D2) if D2 is not None else None, "points": [ser(q) for q in V]}, open(OUT, "w"))
+               "two_edges": [list(e) for e in SOFT], "dist2": str(D2) if D2 is not None else None,
+               "dist2_exact": [[[t.numerator, t.denominator] for t in e.c] for e in EXTRA], "units2": [],
+               "points": [ser(q) for q in V]}, open(OUT, "w"))
 
 
 tri = next(((a, b, c) for a, b in zip(EA, EB) for c in sorted(adj[a] & adj[b])), None)
