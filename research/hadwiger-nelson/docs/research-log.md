@@ -4,6 +4,18 @@
 > results, dead ends, corrections and retractions, in the order they happened. It was the
 > project README until 25 September 2026. For a summary of what is established, see
 > [`../README.md`](../README.md). Paths below are relative to `research/hadwiger-nelson/`.
+>
+> **Corrections.** Claims that later turned out wrong are kept where they were made. A
+> correction made on the spot is marked **Corrected**, **Withdrawn** or **Retraction**, and
+> the early ones are collected in "Corrections to my own claims, kept rather than edited
+> away". These sections correct claims made further back: "A correction worth its own
+> section: the gap is 10.8, not 700"; "Corrected: density was not the missing ingredient";
+> "Two mistakes in the instrument, and what they were hiding"; "The null model was wrong
+> twice, and the raw numbers say it better"; "Exoo–Ismailescu rebuilt, and the denominator
+> that the project filtered out" (the multiquadratic claim of "Why every known
+> construction stops at five"); and "The circular gate: colourings through a real
+> character" (the sampled cyclic gates). The state of every result is given by the README
+> and the notes, not by this log.
 
 **How many colours does the plane need, so that no two points at distance exactly 1
 share a colour?**
@@ -13,7 +25,7 @@ Posed around 1950. Still open. The answer, written χ(ℝ²), is known only to l
 
 | bound | value | who, when | how |
 |---|---|---|---|
-| lower | ≥ 4 | Nelson, 1950 | the 7-vertex Moser spindle |
+| lower | ≥ 4 | Nelson, 1950; L. and W. Moser, 1961 | the 7-vertex Moser spindle |
 | lower | ≥ 5 | Aubrey de Grey, 2018 | a 1581-vertex unit-distance graph with no 4-colouring |
 | lower | ≥ 5 | Jaan Parts, 2020 | the same, down to 509 vertices |
 | upper | ≤ 7 | Isbell, 1950 | a hexagonal tiling of diameter just under 1 |
@@ -2593,6 +2605,12 @@ five chords.
 
 > **Corollary. A 6-chromatic unit-distance graph must use a rotation whose
 > chord is irrational.**
+
+> **Corrected later**, in "Exoo–Ismailescu rebuilt, and the denominator that
+> the project filtered out": the residue-degree theorem behind both statements
+> needs edge vectors integral at 5, which this summary dropped. An edge vector
+> with 5 in its denominator can block every coset 5-colouring, so neither the
+> claim nor the corollary holds as written.
 
 That is the whole explanation of the barrier at five. Rational chords are what
 one naturally reaches for — they are the rotations carrying a lattice point to
@@ -6905,6 +6923,8 @@ On `five_rho7` it drew 4 000 samples of each of:
 
 Every sampled quotient is 5-colourable, and **none refutes a direction**. The
 cyclic pair gate (`ℤ/10 … ℤ/50`) has finished too: all 93 directions are open.
+*(That gate sampled homomorphisms; its verdicts for `n ≥ 10` are withdrawn as
+evidence in "The circular gate: colourings through a real character", below.)*
 
 **Kempe swaps of coset colourings are trivial.** In `ψ + k`, take the Kempe
 component of `x` in colours `α` and `α + δ`. It is `x + L ∪ x + p₀ + L`, with
