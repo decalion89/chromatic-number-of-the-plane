@@ -41,6 +41,7 @@ below, with their evidence.
 | statement | status | where |
 |---|---|---|
 | **χ(ℚ(√3, √11)²) = 4.** No 5-chromatic unit-distance graph has coordinates in ℚ(√3, √11). | Proved; short proof; unit tests. | `notes/local_colourings.md` §8, `hn/adelic.py`, `tests/test_q311.py` |
+| **χ(ℚ(√2, √3)²) = 4.** The same argument settles Voronov's second case. | Proved; 10-vertex lower-bound graph with a DRAT certificate; unit tests. | `notes/local_colourings.md` §10, `tests/test_q23.py`, `certificates/chain23_no3coloring.json` |
 | χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, as whole complex fields | Proved. Upper bounds by reduction at the primes 2 and 11; lower bounds from the Moser spindle and Exoo–Ismailescu's graph. | `notes/rigidity.md`, `notes/local_colourings.md` |
 | Necessary local conditions for a field to hold a 6-chromatic unit-distance graph | Proved | `notes/local_colourings.md` §5–§9, `scripts/fieldscreen.py` |
 | Rigidity of coset colourings on the ρ₇ module | 3 840 exact Stiemke certificates | research log, "κ, the rotation every coset colouring is blind to" |
@@ -50,7 +51,8 @@ below, with their evidence.
 - Madore (2015) proved 4 ≤ χ ≤ 5.
 - Exoo and Ismailescu (2018) asked whether a 5-chromatic unit-distance graph
   embeds in this plane.
-- Voronov (Polymath16, 2021) conjectured χ = 4 and noted that it was unproved.
+- Voronov (Polymath16, 2021) conjectured χ = 4 for this plane and for the plane
+  over ℚ(√2, √3), and noted that neither was proved. Both now are.
 
 The proof reduces z = x + iy modulo the place of ℚ(√3, √11) above 2, which is
 inert in ℚ(i, √3, √11). Every unit vector becomes a nonzero element of 𝔽₄, so

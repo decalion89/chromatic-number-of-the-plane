@@ -56,6 +56,9 @@ The route is **not ours**.
    - Gibbs and Hubai found that all such colourings have period 8.
    - Dúcz (2026) 4-coloured the Moser lattice and ring.
 
+   The same argument gives `χ(ℚ(√2, √3)²) = 4`, Voronov's second case
+   (`notes/local_colourings.md` §10).
+
    What is new is the step to the whole plane: every unit vector of
    `ℚ(i, √3, √11)` is a 2-adic unit, because the place over 2 is inert, and
    denominators of 2 are handled by cosets.

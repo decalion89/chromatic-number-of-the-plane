@@ -222,3 +222,59 @@ def q311_colour(p, place=1, K=64):
     (a + b) + (c + d) w with a, b, c, d the units digits."""
     a, b, c, d = ((v >> K) & 1 for v in q311_coordinates(p, place, K))
     return ((a + b) & 1) + 2 * ((c + d) & 1)
+
+
+# ---------------------------------------------------------------------------------------------
+# The plane Q(sqrt2, sqrt3)^2 is 4-colourable too, so its chromatic number is 4.
+#
+# L = Q(sqrt2, sqrt3) has a single place v over 2: in Q_2* / squares, 2, 3 = -5 and 6 = -10 generate a
+# group of order 4, so L_v = Q_2(sqrt2, sqrt3) has degree 4. That group misses 5 = -3, the class of
+# the unramified quadratic extension, so v is totally ramified with residue field F_2, and
+# v(c) = v_2(N_{L/Q}(c)). It also misses -1, so i is not in L_v and v does not split in K = L(i).
+# K_w contains sqrt-3 = i sqrt3, so K_w = L_v(w) with w = (-1 + sqrt-3)/2: unramified over L_v, with
+# residue field F_4 and O_w = O_v + O_v w. With i = (2w + 1)/sqrt3, z = x + iy = a + b w where
+# a = x + y/sqrt3 and b = 2y/sqrt3. A unit vector u (u ubar = 1) has |u|_w = 1, so its a and b are
+# integral and not both in the maximal ideal: its residue in F_4 = F_2[w] is nonzero. Colouring z by
+# the residue of z - rep(z) is therefore proper. Voronov (Polymath16, 2021) conjectured
+# chi(Q(i, sqrt2, sqrt3)) = 4 together with the case Q(i, sqrt3, sqrt11) above.
+
+def q23_norm(c):
+    """N_{L/Q}(c) for c in Q(sqrt2, sqrt3), coefficients on the basis 1, sqrt2, sqrt3, sqrt6."""
+    F = c.field
+    p, q, r, s = c.c
+    conj = [F.element([p, e2 * q, e3 * r, e2 * e3 * s]) for e2, e3 in ((-1, 1), (1, -1), (-1, -1))]
+    n = c * conj[0] * conj[1] * conj[2]
+    assert all(x == 0 for x in n.c[1:])
+    return n.c[0]
+
+
+def q23_valuation(c):
+    """The valuation of c at the place of Q(sqrt2, sqrt3) over 2, normalised so a uniformiser has 1."""
+    q = Fr(q23_norm(c))
+    if q == 0:
+        return None
+    k, n, d = 0, q.numerator, q.denominator
+    while n % 2 == 0:
+        n //= 2
+        k += 1
+    while d % 2 == 0:
+        d //= 2
+        k -= 1
+    return k
+
+
+def q23_ab(p):
+    """z = x + iy written as a + b w, w = (-1 + sqrt-3)/2: a = x + y sqrt3/3, b = 2 y sqrt3/3."""
+    F = p.x.field
+    s3 = F.sqrt(3)
+    return p.x + p.y * s3 * F.rational(Fr(1, 3)), p.y * s3 * F.rational(Fr(2, 3))
+
+
+def q23_colour(p, base):
+    """The colour 0..3 of p relative to a base point of its connected component: the residue in F_4 of
+    z - z_base, whose a and b are integral when p and base are joined by unit steps."""
+    a, b = q23_ab(p)
+    a0, b0 = q23_ab(base)
+    va, vb = q23_valuation(a - a0), q23_valuation(b - b0)
+    assert (va is None or va >= 0) and (vb is None or vb >= 0), "not in the same coset of O_w"
+    return (1 if va == 0 else 0) + 2 * (1 if vb == 0 else 0)
