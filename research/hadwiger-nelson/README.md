@@ -46,6 +46,11 @@ below, with their evidence.
 | Necessary local conditions for a field to hold a 6-chromatic unit-distance graph | Proved | `notes/local_colourings.md` §5–§9, `scripts/fieldscreen.py` |
 | Rigidity of coset colourings on the ρ₇ module | 3 840 exact Stiemke certificates | research log, "κ, the rotation every coset colouring is blind to" |
 
+<p align="center">
+  <img src="docs/figures/plane_q311.svg" width="600"
+       alt="A piece of the plane over Q(sqrt3, sqrt11), 4-coloured by the 2-adic colouring">
+</p>
+
 **On χ(ℚ(√3, √11)²) = 4.** The question was open in print:
 - Moorhouse (2010) left the value undetermined.
 - Madore (2015) proved 4 ≤ χ ≤ 5.
@@ -62,6 +67,11 @@ The 2-adic idea is David Speyer's: he used it in Polymath16 (2018) to
 4-colour the Moser ring. The step here is its extension to the whole plane.
 
 This result has not been refereed.
+
+<p align="center">
+  <img src="docs/figures/lower_bounds.svg" width="640"
+       alt="The Moser spindle and the 10-vertex chain of unit rhombi, each needing four colours">
+</p>
 
 ### Computations, all independently verified
 
