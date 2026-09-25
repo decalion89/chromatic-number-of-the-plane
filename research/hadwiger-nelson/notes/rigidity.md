@@ -392,7 +392,9 @@ Its structure:
 for every deeper quotient `Cay(O_v/π^r, T mod π^r)`.
 
 *Proof.* By Hoffman, `χ_f ≥ 1 + (q+1)/|λ_min| ≥ 1 + (q+1)/(2√q)`. This exceeds
-5 for `q > 62`; for `q = 53` and `59` it was computed. A level-`j` character
+5 for `q > 62`; for `q = 53, 59` and 61 it was computed
+(`scripts/finite_hoffman.py --inert`; the first version of this proof omitted
+61). A level-`j` character
 contributes `q^{r−j}` times its level-`j` sum. A primitive level-`j` character
 sums to 0 on every fibre except the one or two norm-one points whose tangent
 line lies in its kernel, so its sum has modulus at most `2q^{j−1}`. Hence the
@@ -407,17 +409,21 @@ Below 53 the numbers are these:
 |---|---|---|
 | 5 | 4 | SAT |
 | 11 | 5 | SAT |
-| 17, 29, 41 | ≥ 6? | tabu finds no 5-colouring; SAT proofs running |
+| 17 | ≥ 6? | tabu finds no 5-colouring |
 | 23 | ≥ 7? | tabu fails at 6 |
+| 29, 41, 47 | ≥ 6 | three-point bound, `α < q²/5` (`notes/local_colourings.md` §14) |
 
 The best independent sets found are 57 points for `q = 17`, against
-`289/5 = 57.8`, and 210 for `q = 41`, against `336.2`. So `α < q²/5`, which
-would settle `χ ≥ 6` fractionally, is within reach of SAT.
+`289/5 = 57.8`, and 213 for `q = 41`, against `336.2`. SAT did not settle
+`α < q²/5`; for `q = 29, 41` and 47 Schrijver's three-point bound does
+(`notes/local_colourings.md` §14). For `q = 17` it gives only 63.33, and for
+`q = 23` 107.04, against the 105 that six colours need.
 
 **Consequence for the search.** `ℚ(√−3, √−7, √−11)` splits 2, 3, 5, 7 and 11,
 and its non-split places lie above 17, 41, 83, 101, …. It contains a
 5-chromatic graph, `data/five_tuned_16_1_3_7_11.json`. It is the smallest
-field that is not excluded by a single place, provided `χ(G₁₇), χ(G₄₁) ≥ 6`.
+field that is not excluded by a single place, provided `χ(G₁₇) ≥ 6`
+(`χ(G₄₁) ≥ 6` is proved in `notes/local_colourings.md` §14).
 `ℚ(√−3, √−7, √2717)` and `ℚ(√−3, √−7, √−11, √−247)` pass unconditionally, but
 have no Moser spindle and rank 16 respectively.
 
@@ -461,5 +467,5 @@ in every case computed:
 | `ℚ(√−3, √−11, √−23)` | 5 | at 11 |
 
 If it held in general, `ℚ(√−3, √−7, √−11)` would be 6-chromatic as soon as
-`χ(G₁₇) = 6` and `χ(G₄₁) ≥ 6`, and then `χ(ℝ²) ≥ 6`. Nothing here proves
-that; the growth run is the experiment.
+`χ(G₁₇) = 6` (`χ(G₄₁) ≥ 6` is now proved), and then `χ(ℝ²) ≥ 6`. Nothing here
+proves that; the growth run is the experiment.

@@ -107,14 +107,15 @@ for the deeper quotients `Cay(O_w/π^r, T mod π^r)`, given the character-sum
 estimate sketched in the proof.
 
 *Proof.* Hoffman gives `χ_f ≥ 1 + (q+1)/|λ_min|`. This exceeds 5 for `q > 62`
-by the Ramanujan bound, and was computed for `q = 53, 59`. For the deeper
+by the Ramanujan bound, and was computed for `q = 53, 59, 61` (§14; the first
+version of this proof omitted 61). For the deeper
 levels we use that a primitive level-`j` character sums to at most `2q^{j−1}`
 in modulus: a stationary-phase argument, sketched in `notes/rigidity.md` §10
 and checked numerically for small `q` and `j`. ∎
 
 The Delsarte LP gives the same bound as Hoffman, and adding the triangle
-inequalities changes almost nothing. Below 53, therefore, only combinatorial
-proofs help.
+inequalities changes almost nothing. Below 53 the three-point bound of §14
+goes further: it proves `χ(G_q) ≥ 6` for `q = 29, 37, 41, 43, 47`.
 
 | `q` | `χ(G_q)` | evidence |
 |---|---|---|
@@ -124,10 +125,16 @@ proofs help.
 | 5 | 4 | SAT |
 | 7 | 4 | SAT (Moorhouse) |
 | 11 | 5 | SAT |
-| 17 | 6? | tabu finds a 6-colouring at once and no 5-colouring. Independent sets of 57 points are found easily, never 58. Since `5·57 < 289`, `α = 57` would prove `χ ≥ 6`. SAT runs on the 5-colouring have not finished, and `α ≥ 58` is undecided |
+| 13 | 5–6 | a 6-colouring (SAT); the three-point bound gives `α ≤ 42.64`, so no 4-colouring. Tabu search and CaDiCaL find no 5-colouring; independent sets of 36 points exist, above `169/5`, so bounding `α` cannot decide it |
+| 17 | 6? | tabu finds a 6-colouring at once and no 5-colouring. Independent sets of 57 points are found easily, never 58. Since `5·57 < 289`, `α = 57` would prove `χ ≥ 6`. SAT runs on the 5-colouring have not finished, and `α ≥ 58` is undecided; the three-point bound of §14 gives only `α ≤ 63.33` |
 | 19 | 5 | SAT; triangle-free, with the linear 5-colouring `(a, b) ↦ c(a + b mod 19)` (§13) |
-| 23 | 5–8, likely ≥ 7 | no 4-colouring (SAT); an interval 8-colouring (§12); tabu finds no 7-colouring, and independent sets of 87 points, against `529/6 ≈ 88.2` |
-| 29, 41 | ≥ 6? | tabu fails at 5. For `q = 41` the best independent set found has 210 points, against 336 needed |
+| 23 | 5–8, likely ≥ 7 | no 4-colouring (SAT); an interval 8-colouring (§12); tabu finds no 7-colouring, and independent sets of 87 points, against `529/6 ≈ 88.2`; the three-point bound of §14 gives `α ≤ 107.04`, and six colours need `α ≤ 105` |
+| 29 | ≥ 6 | three-point bound: `α ≤ 163.25 < 841/5` (§14) |
+| 31 | 5–8 | `G₃₁ = 𝔽₃₁²` (§12); the three-point bound gives only `α ≤ 200.89`, against `961/5 = 192.2` |
+| 37 | ≥ 6 | three-point bound: `α ≤ 263.64 < 1369/5` (§14) |
+| 41 | ≥ 6 | three-point bound: `α ≤ 300.73 < 1681/5` (§14); local search finds 213 |
+| 43 | ≥ 6 | `G₄₃ = 𝔽₄₃²`; three-point bound: `α ≤ 347.79 < 1849/5` (§14) |
+| 47 | ≥ 6 | `G₄₇ = 𝔽₄₇²`; three-point bound: `α ≤ 371.42 < 2209/5` (§14) |
 | ≥ 53 | ≥ 6 | Proposition B |
 
 ## 5. Which fields can hold a 6-chromatic graph
@@ -146,8 +153,8 @@ field:
 |---|---|---|
 | `ℚ(√−3, √−11, √−247)` | 11, 29 | excluded (Theorem 2) |
 | `ℚ(√−3, √−11, √−23)` | 11, 17 | excluded (`χ ≤ 5`) |
-| `ℚ(√−3, √−7, √−11)` | 17, 41, 83, 101 | open if `χ(G₁₇), χ(G₄₁) ≥ 6` |
-| de Grey's `ℚ(√−3, √−7, √−11, √−15)` | 41, 101, 131 | open if `χ(G₄₁) ≥ 6` |
+| `ℚ(√−3, √−7, √−11)` | 17, 41, 83, 101 | open if `χ(G₁₇) ≥ 6` (`χ(G₄₁) ≥ 6`, §14) |
+| de Grey's `ℚ(√−3, √−7, √−11, √−15)` | 41, 101, 131 | open: no local obstruction (`χ(G₄₁) ≥ 6`, §14) |
 | `ℚ(√−3, √−7, √2717)` | 59, 83, 89 | open |
 | `ℚ(√−3, √−7, √−11, √−247)` | 83, 173 | open |
 
@@ -183,7 +190,8 @@ It holds in every case computed:
 | `ℚ(√−3, √−11, √−23)` | 5 | at 11 |
 
 If it held in general, `ℚ(√−3, √−7, √−11)` would be 6-chromatic once
-`χ(G₁₇) = 6` and `χ(G₄₁) ≥ 6`, and then `χ(ℝ²) ≥ 6`. We do not claim this.
+`χ(G₁₇) = 6` (`χ(G₄₁) ≥ 6` is proved in §14), and then `χ(ℝ²) ≥ 6`. We do not
+claim this.
 
 The method of reducing to finite fields goes back to G. E. Moorhouse, *On the
 chromatic numbers of planes* (draft, 2010). For the finite planes, see
@@ -682,19 +690,25 @@ Two observations on five colours, neither a proof:
 Borel chromatic number over `ℝ` and `ℚ_p` is infinite, and that it sits inside
 the graph of every isotropic quadratic form.
 
-**Moorhouse's table, continued** (`tests/test_finite_planes.py`, and
-`tests/test_finite_planes_slow.py` for 29, 31, 41 and 43):
+**Moorhouse's table, continued** (`tests/test_finite_planes.py`,
+`tests/test_finite_planes_slow.py` for 29, 31, 41 and 43, and
+`tests/test_threepoint_certificates.py` for the sixth colour):
 
-| `q` | 19 | 23 | 29 | 31 | 37 | 41 | 43 |
-|---|---|---|---|---|---|---|---|
-| `χ(𝔽_q²)` | 5 | 5–8 | 5–6 | 5–8 | 5–8 | 5–7 | 5–8 |
+| `q` | 19 | 23 | 29 | 31 | 37 | 41 | 43 | 47 | 53 | 59 | 61 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| `χ(𝔽_q²)` | 5 | 5–8 | 5–6 | 5–8 | 6–8 | 6–7 | 6–8 | 6–10 | 5–11 | 6–10 | 5–11 |
 
 - **Upper bounds.** Interval colourings with `m = 4, 3, 5, 4, 5, 6` lines per
-  colour for `q = 19, …, 41`. For `q = 43` the linear colouring
-  `(x, y) ↦ c(x + y mod 43)` with a circulant 8-colouring `c` does better than
-  intervals (9).
+  colour for `q = 19, …, 41`, and `m = 5, 5, 6, 6` for `q = 47, …, 61`. For
+  `q = 43` the linear colouring `(x, y) ↦ c(x + y mod 43)` with a circulant
+  8-colouring `c` does better than intervals (9). Otherwise no linear colouring
+  `(x, y) ↦ c(αx + βy)` beats the intervals: for `q ≤ 47` the circulant
+  `{αx + βy : x² + y² = 1}` has independence number `α_c` with
+  `⌈q/α_c⌉` equal to the interval count.
 - **Lower bounds.** There is no 4-colouring for `q = 23, 29, 31, 37, 41, 43`
-  (SAT, with a unit triangle pinned where there is one).
+  (SAT, with a unit triangle pinned where there is one), nor for `q ≥ 47`
+  (Hoffman's bound). Six colours are needed for `q = 37, 41, 43, 47` (the
+  three-point bound) and for `q = 59` (Hoffman's bound), §14.
 - **Optimal cases.** The interval colourings are optimal for `q = 7, 13, 19`.
 - **`q = 23`.** Tabu finds no 7-colouring (six monochromatic edges at best), and
   its largest independent sets have 87 points. Since `529/87 > 6`, an
@@ -813,8 +827,9 @@ pairs.
   non-split place lies above a prime `q ≥ 19`, where Hoffman's bound gives
   `χ(G_q) ≥ 1 + (q + 1)/(2√q) > 3`, and the place above 19 gives exactly 5.
 - **No small place.** For the other 17, such as `ℚ(√2, √31)`, `ℚ(√2, √47)` and
-  `ℚ(√7, √41)`, the first non-split places lie above 23, 31, 43 or 59, where
-  `χ(G_q)` is not known.
+  `ℚ(√7, √41)`, the first non-split places lie above 23, 31, 43 or 59. There
+  `χ(G₄₃) ≥ 6` and `χ(G₅₉) ≥ 6` (§14, §4), while `χ(G₂₃)` and `χ(G₃₁)` lie
+  between 5 and 8.
 
 **With `√3` the table reproduces Theorem 4.** It gives bound 3 exactly for
 `q ≡ 1 (mod 3)`, and bound 4 exactly for `q = 2` and `q ≡ 11, 17 (mod 24)`. It
@@ -823,3 +838,120 @@ adds one fact: the first non-split place of `ℚ(√3, √29)` lies above 23, wh
 bound below `χ(G₂₃)`, although the field has triangles. Among the fields
 `ℚ(√3, √q)` with `q` a prime below 60 it is the only one without a non-split
 place at `q ≤ 19`, which makes it a candidate for §5's screen for six.
+
+## 14. Six colours for most finite planes
+
+§4 and §12 left the lower bound at 5 for most finite planes beyond `q = 19`.
+Both kinds of plane are vertex-transitive, so `χ ≥ χ_f = q²/α`, and
+`α < q²/5` gives `χ ≥ 6`. Local search finds independent sets of only
+`0.13–0.17 q²` for `23 ≤ q ≤ 43`, which suggests six colours, but SAT does not
+prove it: kissat ran 40 minutes on `𝔽₂₉²` with five colours without an answer.
+An upper bound on `α` does. Here `𝔽_q²` is the plane of Moorhouse's table (`x² + y²`), and `G_q`
+the anisotropic plane of §4; they coincide for `q ≡ 3 (mod 4)`.
+
+**The spectral bound.** The eigenvalues are `λ_ξ = Σ_u cos(2π ξ·u/q)` over the
+`q ∓ 1` unit vectors, and Hoffman's ratio bound gives
+`α ≤ n (−λ_min)/(d − λ_min)`. This is Vinh's method
+([arXiv math/0510092](https://arxiv.org/abs/math/0510092)); the thresholds
+below follow from it.
+- **Weil.** Every eigenvalue has `|λ| ≤ 2√q`: a Kloosterman sum for
+  `q ≡ 1 (mod 4)`, the sum of §4 for `q ≡ 3`. Hence
+  `χ(𝔽_q²) ≥ 1 + (q ∓ 1)/(2√q)`, which exceeds 5 for every `q ≥ 67` and 6 for
+  every `q ≥ 103`.
+- **Exact spectra**, in interval arithmetic (`scripts/finite_hoffman.py`):
+  `χ(𝔽_q²) ≥ 6` for `q = 59`, and `χ ≥ 7` for `q = 71, 97, 101`. For the
+  anisotropic planes the same computation gives `χ_f(G_q) > 5` for
+  `q = 53, 59, 61`, the cases of Proposition B below Weil's threshold
+  (`χ_f(G₆₁) ≥ 5.20`; the first version of its proof omitted 61).
+- **Where it stops.** For `q ≤ 53` and `q = 61` the ratio bound for `𝔽_q²`
+  stays above `q²/5` (`0.2111 q²` at `q = 47`, `0.2036 q²` at `q = 61`). The
+  Delsarte linear programme on the circles `x² + y² = r` gives exactly the same
+  numbers, and conditional constraints from unit triangles, Moser spindles and
+  rigid templates move it by under 2%.
+
+**The three-point bound.** Translate an independent set `S` by a random vector
+and turn it about the origin by a random isometry; let `v` be the indicator of
+the moved set and `x₀` its value at the origin. Let `g(w)` be the probability
+that `w` lies in the moved set given that `0` does, and `z(a, b)` the
+probability that `a` and `b` both do. Then:
+- `g` depends only on the circle of `w`, `g(0) = 1`, and `|S| = Σ_w g(w)`;
+- `z(a, b)` depends only on the triangle `{0, a, b}` up to isometry and
+  relabelling, and vanishes when a side is a unit vector;
+- `M₁ = [z(a, b)]` and `M₀ = [g(b − a) − z(a, b)]` (`a, b ≠ 0`) are positive
+  semidefinite: up to the factor `n/|S|` they are the averages of `x₀ vvᵀ` and
+  `(1 − x₀) vvᵀ`;
+- `0 ≤ z ≤ g` on each side, `1 − g(a) − g(b) + z(a, b) ≥ 0`, and the Delsarte
+  inequalities hold.
+
+Maximising `Σ_w g(w)` under these constraints is Schrijver's three-point bound
+for codes (IEEE Trans. Inform. Theory 51, 2005), moved to the finite plane.
+Both matrices commute with the rotation group, cyclic of order `q ∓ 1`. In the
+eigenbasis of a rotation, made real by a reflection, each splits into
+`(q ∓ 1)/2 + 1` real blocks of size about `q` (`scripts/threepoint.py`). The
+variables are the triangle classes: 4 429 for `𝔽₃₇²`, 8 625 for `𝔽₄₇²`.
+
+Where the plain bound falls short, more constraints can be added: conditional
+triangle inequalities, and the localizing matrices of `1 − x₀ − x_e`,
+`1 − x₀ − x_e − x_f` and `2 − Σ_t x_t` for a unit edge, a unit triangle and a
+unit 5-cycle. A target `K₀` enters through the corners of these matrices,
+which are valid when `|S| ≥ K₀`; a bound below `K₀` then proves `α < K₀`.
+
+**Results.** Each bound below is proved by a dual solution stored in
+`data/threepoint/`, which `scripts/threepoint_verify.py` checks:
+
+| plane | `n = q²` | bound on `α` | `n/5` | so |
+|---|---|---|---|---|
+| `G₂₉` | 841 | 163.25 | 168.2 | `χ ≥ 6` |
+| `𝔽₃₇²` | 1 369 | 259.90 | 273.8 | `χ ≥ 6` |
+| `G₃₇` | 1 369 | 263.64 | 273.8 | `χ ≥ 6` |
+| `𝔽₄₁²` | 1 681 | 327.68 | 336.2 | `χ ≥ 6` |
+| `G₄₁` | 1 681 | 300.73 | 336.2 | `χ ≥ 6` |
+| `𝔽₄₃² = G₄₃` | 1 849 | 347.79 | 369.8 | `χ ≥ 6` |
+| `𝔽₄₇² = G₄₇` | 2 209 | 371.42 | 441.8 | `χ ≥ 6` |
+
+The same programme gives `α(G₁₃) ≤ 42.64` (`inert13.npz`), so `χ(G₁₃) ≥ 5`.
+With Proposition B and the spectral bound:
+- **`χ(G_q) ≥ 6` for every prime `q ≥ 29` except `q = 31`**;
+- **`χ(𝔽_q²) ≥ 6` for `q = 37, 41, 43, 47, 59` and every prime `q ≥ 67`.**
+  With the colourings of §12, `χ(𝔽₄₁²) ∈ {6, 7}` and `χ(𝔽₃₇²), χ(𝔽₄₃²) ∈
+  {6, 7, 8}`.
+
+**Checks.**
+- **Blocks.** For `q ≤ 13` the blocks equal the compressions of the explicit
+  `n × n` matrices by an orthonormal basis (`tests/test_threepoint.py`), so
+  they are positive semidefinite exactly when the matrices are. The same holds
+  for the localizing blocks.
+- **Feasibility.** Independent sets for `q = 11, 13` satisfy every constraint,
+  with objective `|S|` (the same test), and so did an independent set of 57
+  points in `G₁₇` (checked once, not part of the tests).
+- **Sharpness.** For `q = 7` and 11 the bound is 14.09 and 29.18, against
+  `α = 14` and 28.
+- **Certificates.** DSDP solves the primal. The dual is then found on the null
+  spaces of the blocks at the optimum, where the dual matrices must live. The
+  verifier rebuilds the blocks in interval arithmetic, clips each dual matrix
+  to its positive part, shifts it by `10⁻⁹` of its largest eigenvalue, proves
+  it positive definite by an exact rational `LDLᵀ`, and bounds the rest using
+  `0 ≤ g, z ≤ 1`. `tests/test_threepoint_certificates.py` runs it on every
+  stored certificate (marked `slow`: up to four minutes each).
+
+**What is left.**
+- **`G₂₃ = 𝔽₂₃²`.** The plain bound is 108.55. With every constraint above and
+  the target 106 it is 107.04, and six colours need `α ≤ 105`. The triangle's
+  localizing matrix gives almost all of the gain (107.07 on its own).
+- **`G₃₁ = 𝔽₃₁²`.** 200.89, against `961/5 = 192.2`.
+- **`𝔽₂₉²`.** 184.77, against 168.2; `G₂₉` is done.
+- **`G₁₇`.** 64.56, and 63.33 with the conditional triangles and the
+  localizing matrices, against 57.8. So `χ(G₁₇)` stays open, and with it the
+  place above 17 of `ℚ(√−3, √−7, √−11)` (§5).
+- **`𝔽₅₃²` and `𝔽₆₁²`.** The programmes have 12 827 and about 19 000 triangle
+  variables, against 8 625 at `q = 47`, where DSDP already used 6 GB. They have
+  not been run.
+- **Colourings.** Using that the five classes form a colouring, not just that
+  each is independent, adds a positive semidefinite block (the standard
+  representation of the symmetric group on the other four colours) and the
+  inequality "three colours on a triangle" `1 − g(a) − g(b) − g(b − a) +
+  2z(a, b) ≥ 0`. They move the bound by less than 0.01 for `G₁₇` and `𝔽₂₃²`
+  (research log; `scripts/experiments/threepoint_colouring.py`).
+
+So over the prime fields, `χ(G_q) ≥ 6` is open only for `q = 13, 17, 23, 31`;
+for `q = 2, 3, 5, 7, 11, 19` five colours or fewer suffice (§4).
