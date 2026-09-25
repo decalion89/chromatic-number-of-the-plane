@@ -636,6 +636,25 @@ The points need not be integral. §9 is the case where they are.
 `ab = 1`, so `H_q` is the unit-distance graph of `𝔽_q²`. The value therefore
 settles the entry "5 or 6" for `𝔽₁₃²` in Moorhouse's Table 6.1.
 
+**`𝔽₁₇²` needs at most six colours.** Moorhouse's entry is "5, 6 or 7".
+- **The lines.** The line `αx + βy = r` meets the circle `x² + y² = 1`
+  exactly when `α² + β² − r²` is a square (the discriminant of the
+  intersection is `β²(α² + β² − r²)`).
+- **Three lines per colour.** For `(α, β) = (3, 6)`, the values
+  `45 − r² ≡ 11, 10, 7` (`r = 0, 1, 2`) are not squares mod 17. So `3x + 6y`
+  never takes the values `0, ±1, ±2` on a unit vector, and each block of three
+  consecutive lines `3x + 6y ∈ {3j, 3j + 1, 3j + 2}` is independent.
+- **The colouring.** `(x, y) ↦ ⌊((3x + 6y) mod 17)/3⌋` is a proper
+  6-colouring (tested).
+
+The entry becomes "5 or 6". This is Vinh's colouring by pairs of parallel lines
+with longer blocks: if `N, N − 1, N − 4, …, N − (m − 1)²` are all non-squares,
+then `χ(𝔽_q²) ≤ ⌈q/m⌉`. Linear colourings `(x, y) ↦ c(αx + βy)` cannot do
+better for `q = 17`: every admissible circulant needs six colours (SAT).
+Whether five colours suffice is open. Tabu search stops at two monochromatic
+edges. For comparison, a random graph with 289 vertices and 2312 edges has on
+average `5^289 (4/5)^2312 ≈ e^{−51}` proper 5-colourings.
+
 **Over `ℚ(√3, √5)`.** Both 2 and 3 split in `K = ℚ(i, √3, √5)`.
 - **At 2.** `−15 ≡ 1 (mod 8)`, so `i ∈ ℚ₂(√15)`. The local field is
   `ℚ₂(√3, √5)`, with residue field `𝔽₄`.
