@@ -33,6 +33,8 @@ code, data, certificates and the full research log.
 
 ## Repository layout
 
+Every folder has a README describing its contents.
+
 ```
 research/
   hadwiger-nelson/

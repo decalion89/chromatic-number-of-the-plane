@@ -1,3 +1,4 @@
+# Python caches and local virtual environments
 __pycache__/
 *.py[cod]
 .pytest_cache/

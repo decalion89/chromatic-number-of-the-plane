@@ -1,3 +1,4 @@
+# Runs the fast part of research/hadwiger-nelson/tests on every push to main and every pull request.
 name: tests
 
 on:
