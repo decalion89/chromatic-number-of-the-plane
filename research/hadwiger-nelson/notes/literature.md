@@ -84,7 +84,8 @@ The route is **not ours**.
      through `(ℤ/4)[ζ₂₄]` and asked for a simpler one; the lower bound was
      already implicit in Voronov–Neopryatnaya–Dergachev.
    - A partial answer to Voronov's question on two square roots of primes:
-     `χ(ℚ(√3, √q)²) ≤ 4` unless `q ≡ 5, 23 (mod 24)`, and
+     `χ(ℚ(√3, √q)²)` is 3 for `q ≡ 1 (mod 3)` and 4 for `q = 2` or
+     `q ≡ 11, 17 (mod 24)`, and at least 4 otherwise; and
      `4 ≤ χ(ℚ(√3, √5)²) ≤ 5` (`notes/local_colourings.md` §11).
    - The criterion behind both proofs: if `√3 ∈ L` and some prime of `L` above 2
      has residue field `𝔽₂`, then `χ(L²) ≤ 4`. It is the case of this form of Madore's ¶6.6,
