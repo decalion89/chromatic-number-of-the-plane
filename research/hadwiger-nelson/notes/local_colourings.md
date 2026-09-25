@@ -164,6 +164,7 @@ It holds in every case computed:
 | `ℚ(√−3)` | 3 | at 3 |
 | Moser | 4 | at 2 |
 | `ℚ(i, √3, √11)`, i.e. the plane `ℚ(√3, √11)²` | 4 | at 2 (§8) |
+| `ℚ(i, √2, √3)`, i.e. the plane `ℚ(√2, √3)²` | 4 | at 2 (§10) |
 | `ℚ(√−3, √−11, √−247)` | 5 | at 11 |
 | `ℚ(√−3, √−11, √−23)` | 5 | at 11 |
 
@@ -391,3 +392,61 @@ So neither search is doomed by a reduction mod a prime, as far as tabu can
 tell. What the gate does rule out: adding a rotation that removes `ρ₇` or
 Moser's `σ` from `L16`'s unit set would reopen the places over 7 or 3, and
 `H₇` or `H₃` would colour the module with 4 or 3 colours.
+
+## 10. The plane over `ℚ(√2, √3)`: `χ = 4` (25 September)
+
+Voronov, in [Polymath16, thread 17](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/),
+conjectured `χ = 4` for two fields: `ℚ(i, √3, √11)`, which is Theorem 3, and
+"case (2, 3)", that is `ℚ(i, √2, √3)`. The same argument settles the second.
+
+**Theorem 4.** `χ(ℚ(√2, √3)²) = 4`.
+
+*Upper bound.* Let `L = ℚ(√2, √3)` and `K = L(i)`. Work in `ℚ₂*` modulo
+squares.
+1. **One place over 2.** The classes of 2, 3 and 6 (`3 ≡ −5`, `6 ≡ −10`)
+   generate a group of order 4. So `L_v = ℚ₂(√2, √3)` has degree 4, and `L`
+   has a single place over 2.
+2. **Totally ramified.** The group misses 5 (≡ −3), the class of the
+   unramified quadratic extension. So `v` is totally ramified with residue
+   field `𝔽₂`, and `v(c) = v₂(N_{L/ℚ}(c))`.
+3. **Not split.** The group misses −1, so `i ∉ L_v` and `v` does not split in
+   `K`.
+4. **Residue field 𝔽₄.** `K_w` contains `√−3 = i√3`, so `K_w = L_v(ω)`. This
+   is unramified over `L_v`, with residue field `𝔽₄` and
+   `O_w = O_v + O_v ω`.
+5. **The colouring.** A unit vector `u` has `u ū = 1`, so `|u|_w = 1`: it is a
+   `w`-adic unit, with nonzero residue. The residue of `z − rep(z)` is a
+   proper 4-colouring.
+
+Concretely, `z = x + iy = a + bω` with `a = x + y/√3` and `b = 2y/√3`, since
+`i = (2ω + 1)/√3`.
+
+*Lower bound.* A chain of three unit rhombi from `O` along
+`u₁ = (1, 0)`, `u₂ = (0, 1)` and `u₃ = (−2/3 − √2/6, −2/3 + √2/6)`.
+- Each rhombus forces its two tips alike in any 3-colouring.
+- `|u₁ + u₂ + u₃|² = 1/3`, so the last tip `√3(u₁ + u₂ + u₃)` is at distance
+  1 from `O`.
+
+This is the closing condition of the three-rhombus chain in the research log.
+
+The graph (`data/chain23.json`) has 10 vertices and 16 edges.
+- Three pysat solvers report no 3-colouring.
+- drat-trim verifies kissat's proof:
+  `certificates/chain23_no3coloring.json` and
+  `certificates/chain23_drat_trim_verification.txt`.
+
+**Checks.** `tests/test_q23.py` verifies:
+- the square-class facts above;
+- that 312 listed unit vectors, and 300 random ones of the form `t/t̄`
+  (Hilbert 90), are units with nonzero residue;
+- that the colouring is proper on a 2 089-point ball of 24th roots of unity
+  and on a 3 134-point graph mixing six families of unit vectors;
+- the lower bound.
+
+**What else uses this.** The criterion is general:
+- **Upper bound.** A real field `L` with a place over 2 that does not split
+  in `L(i)`, and whose extension has residue field `𝔽₄`, has `χ(L²) ≤ 4`.
+- **Lower bound.** `√3 ∈ L` gives triangles and rhombi. A three-rhombus
+  chain closing in `L` then gives `χ(L²) = 4`.
+
+We found no proof of Theorem 4 in the literature.

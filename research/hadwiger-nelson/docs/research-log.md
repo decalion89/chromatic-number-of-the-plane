@@ -7938,3 +7938,24 @@ So an orbit is repulsive or attractive as a whole.
 - **`g0737`.** Grow a unit-distance gadget at 0.7366 or 1.5676, which would
   complete the verified 187-point witness.
 
+
+## Voronov's second case: the plane over `ℚ(√2, √3)` is 4-chromatic (25 September)
+
+In Polymath16 thread 17, Voronov named two cases: `χ(ℚ(i, √3, √11)) = 4` and
+"case (2, 3)". The 2-adic argument settles the second as well.
+
+**Upper bound.** `ℚ(√2, √3)` has a single place over 2.
+- It is totally ramified, with residue field `𝔽₂`.
+- `i` is not in the completion, so the place does not split in `ℚ(i, √2, √3)`.
+- The extension contains `√−3`, so it is unramified, with residue field `𝔽₄`.
+
+So every unit vector reduces to a nonzero element of `𝔽₄`.
+
+**Lower bound.** A chain of three unit rhombi along `(1, 0)`, `(0, 1)` and
+`(−2/3 − √2/6, −2/3 + √2/6)`. Their sum has squared length exactly 1/3, so the
+chain closes at distance 1. The graph has 10 vertices and 16 edges.
+- Three solvers find no 3-colouring.
+- drat-trim verifies kissat's proof.
+
+See `notes/local_colourings.md` §10, `tests/test_q23.py` and
+`certificates/chain23_no3coloring.json`.

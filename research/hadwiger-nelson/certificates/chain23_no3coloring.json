@@ -1,0 +1,411 @@
+{
+ "claim": "chi(Q(sqrt2, sqrt3)^2) >= 4: this unit-distance graph has no proper 3-colouring",
+ "k": 3,
+ "field_generators": [
+  2,
+  3
+ ],
+ "basis": [
+  "1",
+  "sqrt(2)",
+  "sqrt(3)",
+  "sqrt(6)"
+ ],
+ "n": 10,
+ "m": 16,
+ "vertices": [
+  {
+   "x": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ]
+   ],
+   "y": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ]
+   ]
+  },
+  {
+   "x": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     1
+    ]
+   ],
+   "y": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ]
+   ]
+  },
+  {
+   "x": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     1
+    ]
+   ],
+   "y": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     1
+    ]
+   ]
+  },
+  {
+   "x": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     -1,
+     6
+    ]
+   ],
+   "y": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     6
+    ]
+   ]
+  },
+  {
+   "x": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     0,
+     1
+    ]
+   ],
+   "y": [
+    [
+     1,
+     2
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ]
+   ]
+  },
+  {
+   "x": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     0,
+     1
+    ]
+   ],
+   "y": [
+    [
+     -1,
+     2
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ]
+   ]
+  },
+  {
+   "x": [
+    [
+     -1,
+     2
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     1
+    ]
+   ],
+   "y": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     0,
+     1
+    ]
+   ]
+  },
+  {
+   "x": [
+    [
+     1,
+     2
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     1
+    ]
+   ],
+   "y": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     0,
+     1
+    ]
+   ]
+  },
+  {
+   "x": [
+    [
+     1,
+     3
+    ],
+    [
+     -1,
+     12
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     -1,
+     12
+    ]
+   ],
+   "y": [
+    [
+     -1,
+     3
+    ],
+    [
+     -1,
+     12
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     1,
+     12
+    ]
+   ]
+  },
+  {
+   "x": [
+    [
+     -1,
+     3
+    ],
+    [
+     1,
+     12
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     -1,
+     12
+    ]
+   ],
+   "y": [
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     12
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     1,
+     12
+    ]
+   ]
+  }
+ ],
+ "coloring": null,
+ "notes": {
+  "mechanism": "a chain of three unit rhombi O -> sqrt3 u1 -> sqrt3 (u1+u2) -> sqrt3 (u1+u2+u3); each rhombus forces its tips alike in a 3-colouring, and the last tip is at distance 1 from O",
+  "unit_vectors": [
+   "u1 = (1, 0)",
+   "u2 = (0, 1)",
+   "u3 = (-2/3 - sqrt2/6, -2/3 + sqrt2/6)"
+  ],
+  "closing_condition": "|u1 + u2 + u3|^2 = 1/3",
+  "upper_bound": "chi(Q(sqrt2, sqrt3)^2) <= 4 by the 2-adic residue colouring (hn/adelic.py, tests/test_q23.py), so the chromatic number is exactly 4",
+  "verification": "three pysat solvers (CaDiCaL, Glucose, MiniSat) report UNSAT; kissat's DRAT proof is checked by drat-trim (chain23_drat_trim_verification.txt); no colour is pinned",
+  "coordinates": "each coordinate is a list of [numerator, denominator] pairs on the basis 1, sqrt2, sqrt3, sqrt6"
+ }
+}
