@@ -40,6 +40,9 @@ TABU2 = os.environ.get("TABU2", os.path.join(_here, "tabu2"))
 if not os.path.exists(TABU2):
     subprocess.run(["gcc", "-O2", "-o", TABU2, os.path.join(_here, "tabu2.c")], check=True)
 LSIT = int(os.environ.get("LSIT", "3000000")); IT2 = int(os.environ.get("IT2", "-1"))
+# MULTICOL = k > 1: at each step also find k-1 further colourings (tabu from col with a fraction PERTURB of
+# vertices reset at random) and prefer candidates that are rainbow in many of them
+MULTICOL = int(os.environ.get("MULTICOL", "1")); PERTURB = float(os.environ.get("PERTURB", "0.5"))
 
 d = json.load(open(IN))
 F = Field(tuple(d["field_generators"]))
@@ -280,19 +283,26 @@ def kissat_parse(kout, n):
     return None, None, status
 
 
-def neighbour_colours(sel):
+def neighbour_colours(sel, extra=()):
     """for candidates sel (indices into the pool): bitmask of colours among graph neighbours, and a
-    count of neighbours (in chunks, to bound memory)"""
+    count of neighbours (in chunks, to bound memory). With extra colourings (MULTICOL), also the number
+    of them in which each candidate is rainbow."""
     colarr = np.array(col + [0], dtype=np.int64)
+    xarrs = [np.array(list(c_) + [0], dtype=np.int64) for c_ in extra]
     Vxa = np.array(Vx); Vya = np.array(Vy)
-    masks, degs = [], []
+    masks, degs, rbx = [], [], []
     for s0 in range(0, len(sel), 8000):
         ss = sel[s0:s0 + 8000]
         px = Vxa[cbase[ss]] + Ux[cunit[ss]]; py = Vya[cbase[ss]] + Uy[cunit[ss]]
         nb = vlookup(hkey(px[:, None] + Ux[None, :], py[:, None] + Uy[None, :]))      # m x nU
         bits = np.where(nb >= 0, np.left_shift(1, colarr[nb]), 0)
         masks.append(np.bitwise_or.reduce(bits, axis=1)); degs.append((nb >= 0).sum(axis=1))
-    return np.concatenate(masks), np.concatenate(degs), None, None
+        cnt = np.zeros(len(ss), dtype=np.int64)
+        for xa in xarrs:
+            bx_ = np.where(nb >= 0, np.left_shift(1, xa[nb]), 0)
+            cnt += (np.bitwise_or.reduce(bx_, axis=1) == (1 << K) - 1)
+        rbx.append(cnt)
+    return np.concatenate(masks), np.concatenate(degs), np.concatenate(rbx), None
 
 
 if A is not None:
@@ -341,12 +351,25 @@ for it in range(1, 10 ** 7):
             ctree = cKDTree(np.column_stack([np.array(Vx)[cen], np.array(Vy)[cen]]))
             near = lambda x, y: ctree.query(np.column_stack([np.atleast_1d(x), np.atleast_1d(y)]))[0]
     sel = np.nonzero(ccnt >= 4)[0]
-    mask, deg, px, py = neighbour_colours(sel) if len(sel) else (np.zeros(0, dtype=np.int64),) * 4
-    rb = sel[(mask == full) & (deg >= 5)] if len(sel) else sel
+    extra_cols = []
+    if MULTICOL > 1:
+        # diverse extra colourings (tabu from a perturbed copy of col): prefer candidates rainbow in many of them
+        rng_ = np.random.default_rng(it)
+        for j_ in range(MULTICOL - 1):
+            init_ = np.array(col[:n]); fl_ = rng_.random(n) < PERTURB; init_[fl_] = rng_.integers(0, K, int(fl_.sum()))
+            okx, _, cx = tabucol(n, list(init_), 7919 * it + j_)
+            if okx and proper(cx): extra_cols.append(cx)
+    mask, deg, rbx, py = neighbour_colours(sel, extra_cols) if len(sel) else (np.zeros(0, dtype=np.int64),) * 4
+    rbsel = (mask == full) & (deg >= 5)
+    if extra_cols: rbsel = rbsel | ((rbx >= 1) & (deg >= 5))
+    rb = sel[rbsel] if len(sel) else sel
     score_rb = 0.25 * ccnt[rb] - WN * near(np.array([Vx[b] for b in cbase[rb]]) + Ux[cunit[rb]],
                                          np.array([Vy[b] for b in cbase[rb]]) + Uy[cunit[rb]]) if len(rb) else np.zeros(0)
+    if extra_cols and len(rb):
+        score_rb = score_rb + 100.0 * (rbx[rbsel] + (mask[rbsel] == full))
     if it % 10 == 1 or len(rb) < R or how.startswith("KISSAT"):
         print(f"  iter {it}: n={n} m={len(EA)} {how}; {len(rb)} rainbow, pool {len(ck)}"
+              + (f"; multi {len(extra_cols)} extra, rainbow in all {int(((rbx[rbsel] + (mask[rbsel] == full)) == len(extra_cols) + 1).sum()) if len(rb) else 0}" if MULTICOL > 1 else "")
               + (f"; skeleton edges alike {len(alike)}/{len(SOFT)}" if SOFT else "") + f"   [{time.time()-t0:.0f}s]", flush=True)
     if it % 10 == 0: save("checkpoint")
     pick = list(rb[np.argsort(-score_rb)][:R])
