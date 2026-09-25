@@ -10,7 +10,7 @@ indexed.
 
 Four formats occur.
 
-**Graphs with coordinates in a multiquadratic field** (65 files) have the keys
+**Graphs with coordinates in a multiquadratic field** (65 files) have the keys:
 - `field_generators`: `[a, b, …]`, meaning that the coordinates lie in ℚ(√a, √b, …);
 - `points`: a list of points `[x, y]`, each coordinate a list of `[numerator, denominator]` pairs on
   the basis of square-free products of the generators, in the order `hn.field.Field(field_generators)`
@@ -108,7 +108,7 @@ The tests and `scripts/verify_pair.py` read the first format. `scripts/orbit_wit
 | `W_lattice_16_21_28_61.json` | 72 | ℤ[ω]/√−3 | A vertex-critical graph on 72 points of ℤ[ω]/√−3 with 553 edges at distances 1, 4/√3, √7, √(28/3) and √(61/3) and no proper 5-colouring, rebuilt by `scripts/lattice_witness.py 3,16,21,28,61 5`. |
 | `W_moser_orbit_9_33.json` | 187 | ℚ(√3, √11) | A vertex-critical graph on 187 points with 508 edges at distance 1 and 495 at the Galois orbit d² = (9 ∓ √33)/6 (d ≈ 0.7366, 1.5676) and no proper 5-colouring, checked by `scripts/orbit_witness_test.py` with orbit `9_1`. |
 | `blocked_32312_coloured.json` | 32 312 | ℚ(√3, √11, √247) | Plain growth from `g2e_blocked_seed.json` to 32 312 points with a 5-colouring found by kissat, proper on the 282 909 edges along the file's 134 unit vectors but with 43 monochromatic pairs among the 223 further unit-distance pairs in other directions. |
-| `blocking_requirements.json` | — | — | For a point p with 15 unit neighbours next to the 2 689-vertex carrier obtained by gluing `Sa` at the 12-point orbit of Sa[265], four pairs of those neighbours, with their squared distances, such that each of the 66 4-colourings found in three rounds that use only three colours on the neighbours makes one of the pairs monochromatic (`experiments/fullcover.py`). |
+| `blocking_requirements.json` | — | — | For a point p with 15 unit neighbours next to the 2 689-vertex carrier obtained by gluing `Sa` at the 12-point orbit of Sa[265], four pairs of those neighbours, with their squared distances, such that each 4-colouring found in three rounds (66 in all) that uses only three colours on the neighbours makes one of the pairs monochromatic (`experiments/fullcover.py`). |
 | `chain23.json` | 10 | ℚ(√2, √3) | A chain of three unit rhombi (10 vertices, 16 edges) with no proper 3-colouring, the lower bound in χ(ℚ(√2, √3)²) = 4 (`tests/test_q23.py`, `certificates/chain23_no3coloring.json`). |
 | `closure_five_247_c.json` | 1 851 | ℚ(√3, √11, √247) | The closure of `five_247_c.json` under adding the centre of every unit triangle, reached after four rounds. |
 | `coset_unsplit_five_247_c.json` | — | — | The pairs of `five_247_c.json` at squared distance 5/9, 4/3, 3 or 25 that no coset 5-colouring splits: there are none (`experiments/cosetfilter.py`). |
