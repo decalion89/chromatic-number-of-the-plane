@@ -1,4 +1,4 @@
-# Certificates
+# Certificates: machine-checked claims
 
 Each certificate states one claim and holds everything needed to recheck it from scratch:
 - the exact vertex coordinates;
