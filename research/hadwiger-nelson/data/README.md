@@ -48,6 +48,16 @@ a point of `witness_five.json` is `[x, y]` with 16 strings each. `claim` states 
 or in the table below, by the vertex indices of that graph; `mu5_menu.json` is a list of such
 records.
 
+**Three-point certificates** (`threepoint/*.npz`, numpy archives, not indexed below) bound the
+independence number `α` of a finite plane, and so its chromatic number from below
+(`notes/local_colourings.md` §14): `χ ≥ 6` for seven planes, and `χ(G₁₃) ≥ 5` from `inert13.npz`.
+Each holds `meta` (JSON: the plane `q`, `kind` = `std` for x² + y² or `inert` for the anisotropic
+plane, the options and the orbit data of `scripts/threepoint.py`), `z` (the dual solution:
+multipliers of the linear constraints, then each psd block in upper-triangle svec form) and `value`
+(the bound it gives). `scripts/threepoint_verify.py` checks one rigorously;
+`tests/test_threepoint_certificates.py` lists what each one proves and checks them all.
+`threepoint/SHA256SUMS` fixes their contents (`sha256sum -c SHA256SUMS` in that folder).
+
 The tests and `scripts/verify_pair.py` read the first format. `scripts/orbit_witness_test.py` checks
 `W_moser_orbit_9_33.json`, and `scripts/lattice_witness.py` rebuilds `W_lattice_16_21_28_61.json`.
 
