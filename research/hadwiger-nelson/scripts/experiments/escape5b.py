@@ -64,16 +64,25 @@ while rounds < 30:
                   flush=True)
         s.delete(); break
     got = []
+    status = None
     for _ in range(80):
         s.conf_budget(4_000_000)
-        if s.solve_limited(assumptions=[-X(u, c) for u in NB
-                                        for c in (0, 1, 2)]) is not True:
+        status = s.solve_limited(assumptions=[-X(u, c) for u in NB
+                                              for c in (0, 1, 2)])
+        if status is not True:
             break
         pos = set(l for l in s.get_model() if l > 0)
         got.append({u: next(c for c in range(K) if X(u, c) in pos) for u in NB})
         s.add_clause([-X(u, got[-1][u]) for u in NB])
     s.delete()
     total += len(got)
+    if not got and status is None:
+        # solve_limited returns None when the conflict budget runs out:
+        # that decides nothing, so it must not be reported as "no escape".
+        print("  round %d: UNDECIDED -- the solver ran out of its conflict "
+              "budget before finding an escape or proving that none exists."
+              % rounds, flush=True)
+        break
     if not got:
         print("", flush=True)
         print("  round %d: NO ESCAPE SURVIVES.  Forcing these %d pair(s) apart "
