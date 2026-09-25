@@ -6,7 +6,7 @@ abstract: >-
   Hadwiger–Nelson problem on the chromatic number of the plane. Includes a
   proof that the planes over Q(sqrt3, sqrt11) and Q(sqrt2, sqrt3) are
   4-chromatic, with a three-page note, reproductions of chi(R^2) >= 4 and
-  >= 5 with DRAT certificates, and two-distance witnesses for the route to
+  >= 5 with DRAT certificates, and multi-distance witnesses for the route to
   chi(R^2) >= 6. AI-assisted research; not peer reviewed.
 type: software
 authors:
@@ -15,6 +15,7 @@ authors:
     alias: decalion89
 repository-code: "https://github.com/decalion89/darwin-50"
 license: MIT
+version: "0.1"
 date-released: "2026-09-25"
 keywords:
   - Hadwiger–Nelson problem

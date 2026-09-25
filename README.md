@@ -11,16 +11,19 @@ the least number of colours such that no two points at distance exactly 1 share
 a colour. It is known that 5 ≤ χ(ℝ²) ≤ 7. This repository studies the problem
 through exact arithmetic:
 - every point has algebraic coordinates, so "distance 1" is decided exactly;
-- every claim that a graph cannot be coloured comes with a proof certificate
-  checked by an independent program.
+- claims that a graph cannot be coloured are decided by several SAT solvers,
+  and the main ones are certified by DRAT proofs checked by an independent
+  program (`drat-trim`). The evidence for each claim is stated with it.
+
+**Status (September 2026):** proved, not yet refereed; AI-assisted.
 
 ## Main result
 
 > **Theorem.** χ(ℚ(√3, √11)²) = χ(ℚ(√2, √3)²) = 4.
 
-The plane with coordinates in ℚ(√3, √11) can be coloured with four colours.
-That field is the smallest one whose plane contains a Moser spindle. The same
-holds for the plane over ℚ(√2, √3).
+Both planes can be coloured with four colours, and both contain unit-distance
+graphs that need four. ℚ(√3, √11) is the smallest field whose plane contains a
+Moser spindle (Moorhouse, 2010).
 
 - **Background.** Madore (2015) proved 4 ≤ χ(ℚ(√3, √11)²) ≤ 5. Moorhouse
   (2010) and Exoo–Ismailescu (2018) left the value open. Voronov (Polymath16,
@@ -31,7 +34,8 @@ holds for the plane over ℚ(√2, √3).
   (α, β) modulo that prime gives a proper 4-colouring of the whole plane. Speyer
   used reduction modulo 2 in these coordinates in 2018 to 4-colour the Moser
   ring.
-- **Status.** Proved, and checked by computer. Not yet refereed.
+- **Status.** Proved. The colourings were also tested by computer on finite
+  graphs with up to about 12 000 vertices. Not yet refereed.
 
 **Read:** [the three-page note (PDF)](research/hadwiger-nelson/docs/note/planes-4-chromatic.pdf) ·
 [full details](research/hadwiger-nelson/notes/local_colourings.md) (§8 and §10) ·
@@ -42,11 +46,13 @@ holds for the plane over ℚ(√2, √3).
 | result | evidence |
 |---|---|
 | χ(ℝ²) ≥ 4: the Moser spindle has no 3-colouring | DRAT proof, checked by `drat-trim` |
-| χ(ℝ²) ≥ 5: de Grey's 1581-vertex graph, rebuilt from its 39-point seed, has no 4-colouring | DRAT proof of 13.1 M lemmas, checked by `drat-trim` |
+| χ(ℝ²) ≥ 5: de Grey's 1581-vertex graph, rebuilt from its 39-point seed, has no 4-colouring (with the colours of one triangle fixed, which loses no generality) | DRAT proof of 13.1 M lemmas, checked by `drat-trim` |
 | χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, for the whole complex fields | proofs in the notes, with unit tests |
-| Two-distance graphs with no 5-colouring: 187 points and 72 points. The first needs a single unit-distance gadget to prove χ(ℝ²) ≥ 6 | four SAT solvers, and DRAT proofs checked by `drat-trim` |
+| Multi-distance graphs with no 5-colouring: 187 points (edges at three distances) and 72 points (five distances) | four SAT solvers agree; DRAT proofs checked by `drat-trim` (recorded in the research log) |
 
-**χ(ℝ²) ≥ 6 has not been proved.** The search for the missing gadget is
+**χ(ℝ²) ≥ 6 has not been proved.** The 187-point graph would prove it if a
+*gadget* existed: a unit-distance graph in which two points at one of its
+distances always receive different colours. The search for such a gadget is
 described in the [project page](research/hadwiger-nelson/README.md).
 
 ## Repository layout
@@ -72,15 +78,30 @@ python3 -m pip install -r requirements.txt
 python3 -m pytest -q tests/test_q311.py tests/test_q23.py   # the two theorems, in seconds
 ```
 
-`scripts/verify_pair.py` rebuilds any graph from its data file, recomputes every
-edge exactly and runs the solvers. GitHub Actions runs the fast part of the test
-suite on every push and pull request.
+`scripts/verify_pair.py` rebuilds a unit-distance graph or gadget from its data
+file, recomputes every edge exactly and runs the solvers; the multi-distance
+witnesses have their own checkers, listed in
+[`scripts/README.md`](research/hadwiger-nelson/scripts/README.md). GitHub
+Actions runs the fast part of the test suite on pushes to `main` and on pull
+requests.
 
 ## Citing
 
 Use GitHub's "Cite this repository" button, which reads
-[`CITATION.cff`](CITATION.cff). Please also cite the original papers listed in
-the project page.
+[`CITATION.cff`](CITATION.cff), or:
+
+```bibtex
+@misc{galan2026planes,
+  author = {Gal{\'a}n, Sergi},
+  title  = {The planes over {$\mathbb{Q}(\sqrt{3},\sqrt{11})$} and
+            {$\mathbb{Q}(\sqrt{2},\sqrt{3})$} are 4-chromatic},
+  year   = {2026},
+  note   = {Preprint, not refereed. AI-assisted},
+  url    = {https://github.com/decalion89/darwin-50}
+}
+```
+
+Please also cite the original papers listed in the project page.
 
 ## How this work was done
 
@@ -102,8 +123,9 @@ Code, data and text are released under the [MIT License](LICENSE).
 
 Este repositorio estudia el problema de Hadwiger–Nelson: el número cromático del
 plano, que se sabe que está entre 5 y 7. Se trabaja con aritmética exacta en
-cuerpos de números. Toda afirmación de que un grafo no se puede colorear va
-acompañada de un certificado verificado por un programa independiente.
+cuerpos de números. Las afirmaciones de que un grafo no se puede colorear se
+deciden con varios SAT solvers, y las principales van acompañadas de una prueba
+DRAT verificada por un programa independiente.
 
 Resultado principal: los planos con coordenadas en ℚ(√3, √11) y en ℚ(√2, √3)
 tienen número cromático exactamente 4. Lo primero era una pregunta abierta
