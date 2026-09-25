@@ -33,6 +33,11 @@ below, with their evidence.
   - an exact rebuild;
   - agreement between independent solvers;
   - a verified DRAT proof, with no hidden symmetry breaking.
+
+  Lower bounds from semidefinite or spectral bounds (the finite planes) need
+  instead a stored dual certificate, checked by a program independent of the
+  solver, in interval arithmetic with an exact rational positive-definiteness
+  test.
 - **Corrections stay visible.** Withdrawn claims are kept, with the reason, in
   the research log.
 
@@ -46,7 +51,7 @@ below, with their evidence.
 | **χ(ℚ(√3, √11)²) = 4.** A theorem of K. G. Fischer (1994); a short new proof. | Fischer's theorem; our proof is not yet refereed; unit tests. | `notes/local_colourings.md` §8, `hn/adelic.py`, `tests/test_q311.py` |
 | χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, as whole complex fields | Proved. Upper bounds by reduction at the primes 2 and 11; lower bounds from the Moser spindle and the 5-chromatic graph `five_rho7`. Not yet refereed. | `notes/local_colourings.md` §3, `notes/rigidity.md` |
 | Necessary local conditions for a field to hold a 6-chromatic unit-distance graph | Proved (not yet refereed) | `notes/local_colourings.md` §5–§9, `scripts/fieldscreen.py` |
-| **Six colours for finite planes.** χ ≥ 6 for 𝔽₃₇², 𝔽₄₁², 𝔽₄₃², 𝔽₄₇² and the anisotropic planes G₂₉, G₃₇, G₄₁. Hence χ(G_q) ≥ 6 for every prime q ≥ 29 except 31, and χ(𝔽_q²) ≥ 6 for q = 37, 41, 43, 47, 59 and every prime q ≥ 67; χ(𝔽₄₁²) ∈ {6, 7}. | Computer proof, not refereed: Schrijver's three-point bound gives α < q²/5, and each dual certificate is checked in interval and exact rational arithmetic; for large q, Hoffman's bound with Weil's estimate or the exact spectrum. | `notes/local_colourings.md` §14, `data/threepoint/`, `scripts/threepoint_verify.py` |
+| **Six colours for finite planes.** χ ≥ 6 for 𝔽₃₇², 𝔽₄₁², 𝔽₄₃², 𝔽₄₇² and the anisotropic planes G₂₉, G₃₇, G₄₁. With Proposition B and Hoffman's bound, χ(G_q) ≥ 6 for every prime q ≥ 29 except 31, and χ(𝔽_q²) ≥ 6 for q = 37, 41, 43, 47, 59 and every prime q ≥ 67; χ(𝔽₄₁²) ∈ {6, 7}. | Computer proof, not refereed: Schrijver's three-point bound gives α < q²/5, and each dual certificate is checked in interval and exact rational arithmetic; for large q, Hoffman's bound with Weil's estimate or the exact spectrum. | `notes/local_colourings.md` §14, `data/threepoint/`, `scripts/threepoint_verify.py` |
 
 Both are written up in a three-page note,
 [`docs/note/planes-4-chromatic.pdf`](docs/note/planes-4-chromatic.pdf).
