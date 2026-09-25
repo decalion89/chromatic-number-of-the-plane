@@ -54,7 +54,7 @@ independence number `α` of a finite plane, and so its chromatic number from bel
 Each holds `meta` (JSON: the plane `q`, `kind` = `std` for x² + y² or `inert` for the anisotropic
 plane, the options and the orbit data of `scripts/threepoint.py`), `z` (the dual solution:
 multipliers of the linear constraints, then each psd block in upper-triangle svec form) and `value`
-(the bound it gives). `scripts/threepoint_verify.py` checks one rigorously;
+(the solver's floating-point bound; the verifier's rigorous bound differs from it by less than 10⁻⁴). `scripts/threepoint_verify.py` checks one rigorously;
 `tests/test_threepoint_certificates.py` lists what each one proves and checks them all.
 `threepoint/SHA256SUMS` fixes their contents (`sha256sum -c SHA256SUMS` in that folder).
 
