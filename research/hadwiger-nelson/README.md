@@ -64,6 +64,19 @@ A certificate never asks you to trust this code. It asks you to run `drat-trim`.
 
 - ❌ χ(ℝ²) ≥ 6 — the actual goal. Not found.
 
+- ✅ **An open question from the literature, closed: `χ(ℚ(√3, √11)²) = 4`.**
+  `ℚ(√3, √11)` is the smallest field whose plane holds a Moser spindle, and
+  the question of its chromatic number had stood since 2010.
+  - Moorhouse (2010) left the value undetermined.
+  - Madore (2015) proved `4 ≤ χ ≤ 5`.
+  - Exoo–Ismailescu (2018) and Polymath16 asked whether a 5-chromatic
+    unit-distance graph embeds there.
+
+  It does not. At a place over 2 the field is inert in `ℚ(i, √3, √11)`, so
+  every unit vector reduces to a nonzero element of `𝔽₄`, and that residue is
+  a 4-colouring of the whole plane. See
+  *An open question closed* below and `tests/test_q311.py`.
+
 - ✅ A **19-vertex, 33-edge graph with no 3-colouring**, drat-trim verified and
   **vertex-critical** — `certificates/genuine_pair_19_no3coloring.json`. Not a
   record; the Moser spindle reaches χ ≥ 4 on seven. What is new is that its
@@ -7748,3 +7761,97 @@ unit-distance gadget plus one two-distance gadget at `√(7/3)` would do.
   - The same search finds 0.204 at once for the Moser module, which is
     4-colourable.
   - The exact MILP ran out of time, so this is evidence, not proof.
+
+## An open question closed: the plane over `ℚ(√3, √11)` is 4-chromatic (25 September)
+
+This is a by-product of the arithmetic built for six, and not a step towards
+six. It settles a question that was open in print.
+
+**Theorem.** `χ(ℚ(√3, √11)²) = 4`. So no 5-chromatic unit-distance graph has
+all its coordinates in `ℚ(√3, √11)`.
+
+**The question, as it stood.**
+- `ℚ(√3, √11)` is the smallest field whose plane contains a Moser spindle
+  (Moorhouse 2010, Prop. 1.4). So `χ ≥ 4`, and Moorhouse wrote: "We have not
+  determined the exact value of `χ(K²)` in this case."
+- Madore ([arXiv 1509.07023](https://arxiv.org/abs/1509.07023), Prop. 4.6)
+  proved `4 ≤ χ ≤ 5` by reducing at a place over 11.
+- Exoo–Ismailescu ([arXiv 1805.00157](https://arxiv.org/abs/1805.00157), DCG
+  2020): "One interesting question is whether there exists a 5-chromatic unit
+  distance graph which can be embedded in `ℚ[√3, √11] × ℚ[√3, √11]`."
+- Polymath16, [thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/):
+  "it would be nice to decide if the chromatic number of this subfield is 5."
+
+**The proof.** Identify the plane with `K = ℚ(i, √3, √11)`. A unit vector is
+then a `u ∈ K` with `u ū = 1`.
+1. **The completion over 2.** `√33` is 2-adic, since `33 ≡ 1 (mod 8)`. So
+   `ℚ(√3, √11)` has two places over 2, each with completion `ℚ₂(√3)`.
+2. **The place is inert.** Neither `−1` nor `−3` is a square in `ℚ₂`, so `i`
+   is not in `ℚ₂(√3)`. Adjoining it gives `ℚ₂(√3)(√−3)`, which is unramified.
+3. **Unit vectors reduce to nonzero residues.** The local ring is
+   `ℤ₂[√3][ω]`, with residue field `𝔽₄`. Every unit vector is a unit of it,
+   with a nonzero residue.
+4. **The colouring.** Colour `z` by the residue of `z` minus its 2-adic
+   fractional part. A unit step adds a nonzero element of `𝔽₄`, so the
+   colouring is proper, with four colours.
+
+This is `hn.adelic.q311_colour`.
+
+**Checks.** `tests/test_q311.py` verifies:
+- 810 unit vectors, including `(3 + 4i)/5` and `(√33 + 4i)/7`, all reduce to
+  nonzero residues at both places;
+- the colouring is proper on random unit steps, on the Moser spindle, and on
+  Exoo–Ismailescu's 214-point graph;
+- on 3 012 further edges (`data/ei_rho7.json`) it has no monochromatic edge.
+
+**Why Moorhouse and Madore stopped short.** They reduce the coordinates
+`(x, y)`, which needs `x² + y²` to be anisotropic modulo `𝔪` or `𝔪²`.
+- Over 2 with `√3` present that fails, since `1 + 1 ≡ 0 (mod 𝔪²)`.
+- A unit vector like `(−1/2, √3/2)` has non-integral coordinates, yet it is
+  integral in `ℤ₂[√3][ω]`.
+
+Reducing `z = x + iy` instead — the Hermitian form, `notes/local_colourings.md`
+§2 — sees the `ω` that the coordinates hide.
+
+**A paradox from Polymath16, explained.**
+- In [thread 13](https://dustingmixon.wordpress.com/2019/07/08/polymath16-thirteenth-thread-bumping-the-deadline/)
+  Parts chained Exoo–Ismailescu's forced alike pairs at distance 8/3 into
+  alike pairs at every distance `8/9ⁿ`, whose sum is 1. He offered this as a
+  "funny proof" that this field needs five colours, and asked why the colour
+  is lost in the limit.
+- In the colouring above, every pair at distance `8/9ⁿ` is indeed alike,
+  since `(8/9ⁿ)u` is divisible by 8 in `ℤ₂[√3][ω]`. The colouring is still
+  proper.
+- It is continuous for the 2-adic topology, not for the real one, which is
+  where the limit was taken.
+
+**By-products** (`notes/local_colourings.md` §8):
+- `χ(ℚ(√d)²) ≤ 4` for `d ≡ 3 (mod 8)`. This extends Moorhouse's Theorem 8.1,
+  which excluded `d ≡ 47, 59, 83 (mod 84)`, to `d ≡ 59, 83, 131 (mod 168)`.
+- A real field `F` with `χ(F²) ≥ 5` needs `−1` to be a square in its
+  completions over 2 (for small residue fields). It also needs no place with
+  residue field `𝔽₃` or `𝔽₇`.
+
+We found this result in no paper, no Polymath16 thread and no web search. It
+has not been refereed.
+
+## Where this work stands in the literature
+
+`notes/literature.md` compares the project with the published record, with
+links. In short:
+- **The route to six is known.** It is Exoo–Ismailescu's: a two-distance
+  witness plus a unit-distance gadget, which Polymath16 calls "virtual edges".
+- **Known witnesses.** Witnesses exist for `φ`, `2`, `√3` and
+  `(√6 + √2)/2`. Colouring-guided growth at four colours is Heule's and
+  Parts'.
+- **Known reduction.** Reduction of field planes modulo a prime is Moorhouse's
+  and Madore's.
+- **Not found anywhere else:**
+  - the Hermitian reduction over 2, and the theorem above;
+  - the CM whole-field results, with their thresholds for six;
+  - the repulsion spectra, and the two-step explanation of why every known
+    witness distance is attractive;
+  - `2/√3` as the gadget distance;
+  - the 72-point multi-distance witness;
+  - skeleton and `MODE` growth.
+

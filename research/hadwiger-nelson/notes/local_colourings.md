@@ -163,6 +163,7 @@ It holds in every case computed:
 | `ℚ(i)` | 2 | at 2 |
 | `ℚ(√−3)` | 3 | at 3 |
 | Moser | 4 | at 2 |
+| `ℚ(i, √3, √11)`, i.e. the plane `ℚ(√3, √11)²` | 4 | at 2 (§8) |
 | `ℚ(√−3, √−11, √−247)` | 5 | at 11 |
 | `ℚ(√−3, √−11, √−23)` | 5 | at 11 |
 
@@ -206,3 +207,110 @@ level. The case `d = 247` is `L16 = ℚ(√−3, √−7, √−11, √−247)`:
   embed in level 2 that way. At `q = 17`, tabu search on level 2 (83 521
   vertices, degree 306) never improves on the lift of the best level-1
   colouring.
+
+## 8. The plane over `ℚ(√3, √11)`: `χ = 4` (25 September)
+
+This section answers a question that was open in print. It is not a step
+towards `χ(ℝ²) ≥ 6`.
+
+**The question.**
+- Moorhouse ([draft, 2010](https://www.ericmoorhouse.org/pub/chromatic.pdf))
+  noted that `ℚ(√3, √11)` is the smallest field whose plane contains a Moser
+  spindle, so `χ ≥ 4`. He wrote: "We have not determined the exact value."
+- Madore ([arXiv 1509.07023](https://arxiv.org/abs/1509.07023), Prop. 4.6)
+  proved `4 ≤ χ(ℚ(√3, √11)²) ≤ 5`, reducing at a place over 11 and using
+  `χ(𝔽₁₁²) ≤ 5`.
+- Exoo and Ismailescu ([arXiv 1805.00157](https://arxiv.org/abs/1805.00157),
+  DCG 2020) asked whether a 5-chromatic unit-distance graph embeds in
+  `ℚ[√3, √11]²`. So did Mixon and Ismailescu in
+  [Polymath16, thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/).
+
+**Theorem 3.** `χ(ℚ(√3, √11)²) = 4`. So no 5-chromatic unit-distance graph
+has all its coordinates in `ℚ(√3, √11)`.
+
+*Proof.* Let `L = ℚ(√3, √11)`. The plane `L²` is the field `K = L(i)`, and
+unit vectors are the `u ∈ K` with `u ū = 1`. Apply Proposition A.1 at a place
+`v` of `L` over 2.
+- **The completion.** `33 ≡ 1 (mod 8)`, so `√33 ∈ ℚ₂`, and 2 splits in
+  `ℚ(√33)`. Hence `L` has two places over 2, each with completion
+  `L_v = ℚ₂(√3)`. This field is ramified over `ℚ₂` with residue field `𝔽₂`.
+  In it `√3` is a unit and `√3 − 1` is a uniformiser, of norm −2.
+- **Inert, not split.** `i ∈ L_v` would need `−1` or `−3` to be a square in
+  `ℚ₂`. Neither is, since both are `≢ 1 (mod 8)`. So
+  `K_v = ℚ₂(√3)(i) = ℚ₂(√3)(√−3)`. This is unramified over `L_v`, because
+  `ℚ₂(√−3)` is the unramified quadratic extension of `ℚ₂`.
+- **The local ring.** `O_w = ℤ₂[√3][ω]` has residue field `𝔽₄`. Here
+  `N₁ = 𝔽₄^×`, so `G₂ = Cay(𝔽₄, 𝔽₄^×) = K₄`, and `χ(Γ(K)) ≤ 4`.
+- **Lower bound.** The Moser spindle lies in `L²` (Moorhouse, Prop. 1.4). ∎
+
+**Explicitly.** Write `z = x + iy` on the `ℤ₂`-basis `1, √3, ω, √3ω` of
+`O_w`, using `√11 = (s/3)√3` with `s² = 33` and `i = (1 + 2ω)√3/3`. Then
+`z = a + b√3 + cω + d√3ω` with:
+- `a = x_a + y_b`, `b = x_b + y_a/3`, `c = 2y_b`, `d = 2y_a/3`;
+- `x = x_a + x_b√3`, where `x_a = x₁ + x₃₃s` and `x_b = x₃ + x₁₁s/3`, and
+  likewise for `y`.
+
+Colour `z` by `((a + b) mod 2, (c + d) mod 2)`, where each letter means the
+units digit of the 2-adic integer part. This is `hn.adelic.q311_colour`.
+
+**Checks.** `tests/test_q311.py` verifies:
+- 810 unit vectors are 2-adic units with nonzero residue, at both places. The
+  rotations include `(3 + 4i)/5` and `(√33 + 4i)/7`, which lie outside the
+  Moser field.
+- The colouring is proper on random unit steps, on the Moser spindle, and on
+  Exoo–Ismailescu's 214-point graph (1 004 edges).
+- On 638 further points and 3 012 edges (`data/ei_rho7.json`) there are no
+  monochromatic edges, at either place.
+
+**Why it was missed.** Moorhouse (Lemma 8.2, Lemma 8.4) and Madore
+(Prop. 3.2, 3.8) reduce the *coordinates* `(x, y)`. That needs `x² + y²` to be
+anisotropic modulo `𝔪` or `𝔪²`. At a place over 2 with `√3` this fails, since
+`1² + 1² ≡ 0 (mod 𝔪²)`.
+- Unit vectors such as `(−1/2, √3/2) = ω` have non-integral coordinates.
+- They are integral in `O_w`, which is strictly larger than `O_v[i]`.
+
+Reducing `z = x + iy` in `O_w` — the Hermitian form of the argument — sees the
+`ω` that the coordinates hide. At odd places the two versions agree, since
+`O_w = O_v[i]` there.
+
+**Parts' paradox, resolved.**
+- Exoo–Ismailescu's `G₄₀` forces a pair at distance 8/3 alike in every
+  4-colouring.
+- In [Polymath16, thread 13](https://dustingmixon.wordpress.com/2019/07/08/polymath16-thirteenth-thread-bumping-the-deadline/)
+  (July 2019), Parts chained such pairs to get alike pairs at every distance
+  `8/9ⁿ`, which sum to 1. He called this a "funny proof" that the field needs
+  five colours, and asked why the colour is lost in the limit.
+- Pálvölgyi pointed out that colour need not pass to the limit.
+- The colouring above makes the point concrete. Every pair at distance
+  `8/9ⁿ` is alike, because `(8/9ⁿ)u ∈ 8·O_w`. Every pair at `√(11/3)` is
+  apart, because `√33/3` is a 2-adic unit. The colouring is continuous for the
+  2-adic topology, not the real one.
+
+**Corollaries for real fields `F`.** Proposition A at a place `v | 2` gives:
+- **Ramified.** If `v` ramifies in `F(i)`, then `χ(F²) = 2`. The norm-one
+  residues are `ū² = 1`, so `ū = 1`, and any `𝔽₂`-linear form with
+  `λ(1) = 1` 2-colours the plane. This recovers `χ(ℚ²) = 2` (Woodall).
+  It also recovers Moorhouse's Theorems 7.1, 8.4 and 8.5, and Madore's
+  Prop. 3.9.
+- **Inert, residue field `𝔽₂`.** Then `χ(F²) ≤ 4`. For quadratic fields this
+  happens exactly when `d ≡ 3 (mod 8)`. That extends Moorhouse's Theorem 8.1,
+  which excluded `d ≡ 47, 59, 83 (mod 84)`, to `d ≡ 59, 83, 131 (mod 168)`.
+  - For example, `3 ≤ χ(ℚ(√59)²) ≤ 4`. Reduction at 11 gave only 5
+    (`59 ≡ 2² (mod 11)`).
+  - The classes left open are `d ≡ 47, 143, 167 (mod 168)`.
+- **Inert, larger residue fields.** The finite plane at an inert place over 2
+  with residue field `𝔽_{2^f}` is `Cay(𝔽_{4^f}, μ_{2^f+1})`. SAT gives
+  chromatic number 4 for `f = 1, 2, 3`. For `f = 2` it is the Clebsch graph.
+- **A necessary condition for five.** Suppose a real field `F` has
+  `χ(F²) ≥ 5`. Then:
+  - no place of `F` over 2 ramifies in `F(i)`;
+  - no place over 2 with residue field `𝔽₂`, `𝔽₄` or `𝔽₈` is inert in `F(i)`;
+  - `F` has no place with residue field `𝔽₃` or `𝔽₇`, since `χ(𝔽₃²) = 3`
+    and `χ(𝔽₇²) = 4`.
+
+  Heule's `ℚ(√3, √5, √11)` and Exoo–Ismailescu's `ℚ(√3, √11, √247)` pass at 2:
+  `−1` is a square in every completion over 2. There `√5` or `√247` supplies
+  `i`, since `5 ≡ −3` and `247 ≡ −1 (mod 8)`.
+
+We found this in no paper, in no thread of Polymath16, and by no web search. It
+has not been refereed.

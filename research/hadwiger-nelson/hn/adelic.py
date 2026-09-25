@@ -163,3 +163,62 @@ def finite_plane_11_colouring():
         assert s.solve()
         m = set(l for l in s.get_model() if l > 0)
     return {v: next(c for c in range(k) if var(i, c) in m) for i, v in enumerate(V)}, N1
+
+
+# ---------------------------------------------------------------------------------------------
+# The plane Q(sqrt3, sqrt11)^2 is 4-colourable, so its chromatic number is 4 (the Moser spindle).
+#
+# A point (x, y) with x, y in L = Q(sqrt3, sqrt11) is z = x + iy in K = L(i) = Q(i, sqrt3, sqrt11).
+# Above 2, sqrt33 is a 2-adic integer s (33 = 1 mod 8), so L has two places over 2. At each, the
+# completion is Q_2(sqrt3): ramified over Q_2, residue field F_2, uniformiser 1 + sqrt3, and sqrt3 is a
+# unit with sqrt3 = 1 mod (1 + sqrt3). Neither -1 nor -3 is a square in Q_2, so i is not in Q_2(sqrt3),
+# and K_w = Q_2(sqrt3)(i) = Q_2(sqrt3)(sqrt-3) is the unramified quadratic extension: the place is
+# INERT in K/L, with O_w = Z_2[sqrt3][w] (w = (-1 + sqrt-3)/2) and residue field F_4.
+# A unit vector u (u ubar = 1) therefore has |u|_w = 1, so u is in O_w^x and its residue is one of
+# the three nonzero elements of F_4. Colour z by the residue of z - rep(z), where rep(z) is the
+# 2-adic fractional part of z's coordinates on the Z_2-basis 1, sqrt3, w, sqrt3 w of O_w: adding u
+# adds its (nonzero) residue, so the colouring is proper with the 4 colours of F_4.
+# (Moorhouse 2010 left this field open; Madore, arXiv 1509.07023, proved 4 <= chi <= 5.)
+
+def _two_adic_scaled(r0, r1, s, K, N):
+    """(r0 + r1 s) * 2^K mod 2^N as an integer, for rationals r0, r1 whose 2-adic valuation is >= -K."""
+    tot = 0
+    for r, m in ((Fr(r0), 1), (Fr(r1), s)):
+        if r == 0:
+            continue
+        n, d = r.numerator, r.denominator
+        k = 0
+        while d % 2 == 0:
+            d //= 2
+            k += 1
+        assert k <= K, "denominator too 2-divisible for the chosen scale"
+        tot += n * m * (1 << (K - k)) * pow(d, -1, 1 << N)
+    return tot % (1 << N)
+
+
+def q311_coordinates(p, place=1, K=64):
+    """z = x + iy on the Z_2-basis 1, sqrt3, w, sqrt3 w of O_w, at the place sqrt33 -> place * s.
+
+    Returns four integers c_j = coefficient_j * 2^K mod 2^PRECISION. The coefficient is a 2-adic
+    integer iff c_j = 0 mod 2^K, and its units digit is bit K of c_j."""
+    F = p.x.field
+    X = dict(zip(F._prod, p.x.c)); Y = dict(zip(F._prod, p.y.c))
+    assert all(q in (1, 3, 11, 33) for q, v in list(X.items()) + list(Y.items()) if v), "not in Q(sqrt3, sqrt11)"
+    s = place * _S
+    # sqrt11 = sqrt33 / sqrt3 = (s / 3) sqrt3, so x = xa + xb sqrt3 with xa = x1 + x33 s, xb = x3 + x11 s / 3
+    xa = (Fr(X.get(1, 0)), Fr(X.get(33, 0))); xb = (Fr(X.get(3, 0)), Fr(X.get(11, 0)) / 3)
+    ya = (Fr(Y.get(1, 0)), Fr(Y.get(33, 0))); yb = (Fr(Y.get(3, 0)), Fr(Y.get(11, 0)) / 3)
+    # i = sqrt-3 / sqrt3 = (1 + 2w) sqrt3 / 3, so z = (xa + yb) + (xb + ya/3) sqrt3 + (2 yb) w + (2 ya/3) sqrt3 w
+    coeffs = [(xa[0] + yb[0], xa[1] + yb[1]), (xb[0] + ya[0] / 3, xb[1] + ya[1] / 3),
+              (2 * yb[0], 2 * yb[1]), (2 * ya[0] / 3, 2 * ya[1] / 3)]
+    return [_two_adic_scaled(r0, r1, s, K, PRECISION) for r0, r1 in coeffs]
+
+
+def q311_colour(p, place=1, K=64):
+    """The colour 0..3 of a point of Q(sqrt3, sqrt11)^2: the residue in F_4 = F_2[w] of z - rep(z).
+
+    Coordinates are on the basis 1, sqrt3, sqrt11, sqrt33 (hn.field.Field((3, 11)) or a subfield of
+    a larger Field). sqrt3 = 1 mod (1 + sqrt3), so the residue of a + b sqrt3 + c w + d sqrt3 w is
+    (a + b) + (c + d) w with a, b, c, d the units digits."""
+    a, b, c, d = ((v >> K) & 1 for v in q311_coordinates(p, place, K))
+    return ((a + b) & 1) + 2 * ((c + d) & 1)
