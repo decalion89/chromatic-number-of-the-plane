@@ -15,8 +15,8 @@ python3 -m pytest -q tests/test_q23.py     # one file
 The tests marked `slow` include a 4-colourability solve of de Grey's 1581-vertex graph
 (`test_degrey.py`, with a 30-minute solver limit).
 
-GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 26 files marked CI
-on every push to `main`, on every pull request, and on manual dispatch: 336 tests, which took 80
+GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 27 files marked CI
+on every push to `main`, on every pull request, and on manual dispatch: 339 tests, which took 80
 seconds in a local run. The DRAT test in `test_certify.py` is skipped there, because the
 workflow does not install drat-trim. The other eight files (269 tests) are run locally; without their
 two tests marked `slow` they took 32 minutes in a local run, 20 of them in one test of
@@ -48,6 +48,7 @@ two tests marked `slow` they took 32 minutes in a local run, 20 of them in one t
 | `test_q23.py` | ✓ | χ(ℚ(√2, √3)²) = 4: the plane has a proper 4-colouring by 2-adic residues and contains a 10-vertex chain of three unit rhombi with no proper 3-colouring (details below). |
 | `test_q311.py` | ✓ | χ(ℚ(√3, √11)²) = 4, a theorem of K. G. Fischer (1994), by a short proof: the plane has a proper 4-colouring by 2-adic residues and contains the Moser spindle, which has no proper 3-colouring (details below). |
 | `test_q35.py` | ✓ | The plane over ℚ(√3, √5) has no proper 3-colouring: 1/3 is a sum of unit vectors, and a chain of six unit rhombi (`data/chain35.json`, 19 vertices, 31 exact edges) joins the origin to a unit vector. 11 splits completely, which gives χ ≤ 5. |
+| `test_q3q.py` | ✓ | The planes over ℚ(√3, √q): for every q ≡ 2 (mod 3) up to 113, a generator α of norm 3^h in ℚ(√−q) makes 1/3 a sum of unit vectors, so χ ≥ 4; for q = 17, a chain of 90 rhombi (271 vertices) has no proper 3-colouring. |
 | `test_quadext.py` | ✓ | Arithmetic in ℚ(ζ₁₅, √−7, √−11), built as a tower of quadratic extensions of ℚ(ζ₁₅), which contains de Grey's rotations and ζ₁₅. |
 | `test_reduce11.py` | ✓ | The unit-distance graph on the field ℚ(√−3, √−11, √−247), viewed in ℂ, is 5-colourable: reduction at a place above 11 maps it to the Cayley graph of 𝔽₁₂₁ on its 12 elements of norm one, which is 5- but not 4-colourable, and this colours the 803-vertex graph `five_247_c.json` properly at both places above 11. |
 | `test_ring_geometry.py` | ✓ | Six facts behind the ring constructions, recomputed: the 90° rotation about the centre of a unit square moves one diagonal onto the other at distance 1, the map σ satisfies \|σu\|² = \|u\|²/3 and \|u − σu\| = \|u\|, the two-ring configuration is 3-chromatic, within each component of a neighbourhood in `five_247_c.json` two neighbours lie on the same side of the bipartition exactly when the angle between them is an even multiple of 60°, 2 is not of the form a² + ab + b², and that graph has exactly two vertices of degree 4. |
