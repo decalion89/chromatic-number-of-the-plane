@@ -16,7 +16,7 @@ The tests marked `slow` include a 4-colourability solve of de Grey's 1581-vertex
 (`test_degrey.py`, with a 30-minute solver limit).
 
 GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 29 files marked CI
-on every push to `main`, on every pull request, and on manual dispatch: 354 tests, which took 80
+on every push to `main`, on every pull request, and on manual dispatch: 355 tests, which took 80
 seconds in a local run. The DRAT test in `test_certify.py` is skipped there, because the
 workflow does not install drat-trim. The other eight files (269 tests) are run locally; without their
 two tests marked `slow` they took 32 minutes in a local run, 20 of them in one test of
