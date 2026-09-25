@@ -570,6 +570,15 @@ vectors `uₖ`. The unit rhombus whose long diagonal is `√3 uₖ` forces its t
 alike in every 3-colouring. Chaining these rhombi joins `0` to
 `√3(1 + ω)/3 = e^{iπ/6}`, a unit vector.
 
+The same chain works at any number of colours. Suppose a finite graph `G` in
+`L²` has two vertices `A`, `B` that share a colour in every `k`-colouring, and
+`w/(B − A)` is a sum of unit vectors `u_j` for some unit vector `w`. Chain the
+copies of `G` turned by the `u_j`, each starting where the previous one's image
+of `B` lies. They join a point to a point at unit distance `w`, so
+`χ(L²) > k`. In `ℝ²` two copies always suffice: this is spindling. Inside a
+fixed field the chain needs no spindle rotation, only this arithmetic
+condition; the rhombus is the case `k = 3`, `B − A = √3`.
+
 **The plane over `ℚ(√3, √5)`.** Here the generator is explicit.
 `τ = (2 + i√5)/3` is a unit vector, so
 `1/3 = τ + τ̄ − 1` and
