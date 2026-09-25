@@ -1,4 +1,4 @@
-# Maintained tools
+# Scripts: the maintained tools
 
 The 84 scripts here are the project's working tools. The 726 one-off experiments behind the
 research log are in [`experiments/`](experiments/). Run every tool from `research/hadwiger-nelson/`:
