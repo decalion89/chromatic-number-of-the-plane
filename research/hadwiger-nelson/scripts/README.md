@@ -74,7 +74,7 @@ output directory (`HN_OUT` overrides it), as an import path, or as the location 
 | `tabucol.py` | A Python TabuCol, calibrated on three instances with known answers (`Sa` at five colours with and without the class 4/9 forbidden, and `Sa` at four colours with 4/9 forbidden) before it is run on open instances. |
 | `tabu.py` | An earlier tabu search that recolours a random conflicting vertex, run on `Sa`, Y and G with forbidden pairs; it stalled on a satisfiable calibration instance, and `tabucol.py` replaces it. |
 | `tabuSaP.py` | Runs the calibrated TabuCol at five colours on each closable distance class of a grown seed of `Sa`, smallest first. |
-| `worker_setup.sh` | Installs the Python packages, builds kissat and drat-trim under `$TOOLS` (default `~/hn-tools`) and compiles `tabu2`; it can be run more than once. |
+| `worker_setup.sh` | Installs the Python packages, builds kissat (rel-4.0.4) and drat-trim (a pinned commit) under `$TOOLS` (default `~/hn-tools`) and compiles `tabu2`; it can be run more than once. |
 
 ## Gates: periodic, circular and local colourings that rule a search out
 
