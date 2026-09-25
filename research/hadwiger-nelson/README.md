@@ -148,11 +148,11 @@ Each folder has its own README describing what is in it.
 ```
 hn/             the library: exact fields, geometry, graphs, SAT colouring,
                 certificates, local (adelic) colourings
-tests/          pytest suite (615 tests; 5 marked slow)
+tests/          pytest suite (622 tests; 5 marked slow)
 scripts/        maintained tools: verification, growth, gates, field screens
                 (indexed in scripts/README.md)
 scripts/experiments/
-                730 one-off exploratory scripts, kept as a record
+                732 one-off exploratory scripts, kept as a record
 data/           graphs and witnesses with exact coordinates (JSON; data/README.md)
 certificates/   colourings, DRAT verification logs, non-colourability claims
                 (certificates/README.md)
@@ -172,7 +172,7 @@ sh scripts/worker_setup.sh                   # kissat and drat-trim, for the sea
 ```
 
 GitHub Actions (`.github/workflows/tests.yml`) runs the fast part of the suite on
-pushes to `main` and on pull requests: 346 tests in 28 files, in under two
+pushes to `main` and on pull requests: 353 tests in 29 files, in under two
 minutes.
 
 `scripts/verify_pair.py` rebuilds a unit-distance witness or gadget from its

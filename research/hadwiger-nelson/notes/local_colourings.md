@@ -119,9 +119,13 @@ proofs help.
 | `q` | `χ(G_q)` | evidence |
 |---|---|---|
 | 2 | 4 | the 2-adic analysis above |
+| 3 | 3 | SAT (Moorhouse) |
+| 4 | 4 | SAT: `Cay(𝔽₁₆, μ₅)` (`tests/test_biquadratic_bounds.py`) |
 | 5 | 4 | SAT |
+| 7 | 4 | SAT (Moorhouse) |
 | 11 | 5 | SAT |
 | 17 | 6? | tabu finds a 6-colouring at once and no 5-colouring. Independent sets of 57 points are found easily, never 58. Since `5·57 < 289`, `α = 57` would prove `χ ≥ 6`. The SAT proof is running |
+| 19 | 5 | SAT; triangle-free, with the linear 5-colouring `(a, b) ↦ c(a + b mod 19)` (§13) |
 | 23 | ≥ 7? | tabu fails at 6 |
 | 29, 41 | ≥ 6? | tabu fails at 5. For `q = 41` the best independent set found has 210 points, against 336 needed |
 | ≥ 53 | ≥ 6 | Proposition B |
@@ -603,7 +607,7 @@ nothing about `χ(L²)`.
 §9 colours a module through a split place when all its generators are
 integral there. The argument needs only the edge vectors.
 
-**Proposition B.** Let `w` be a place of `K = L(i)` over a place `v` of `L`
+**Proposition C.** Let `w` be a place of `K = L(i)` over a place `v` of `L`
 that splits in `K`, with residue field `𝔽_q`, and let
 `H_q = Cay(𝔽_q², {(t, 1/t) : t ∈ 𝔽_q^×})`. If every edge vector of a
 unit-distance graph `G` over `L` is a unit at `w`, then `χ(G) ≤ χ(H_q)`.
@@ -648,7 +652,7 @@ it (tested).
 
 **Why the growths over `ℚ(√3, √5)` stopped at four.** Every unit set used
 before this section (`ζ^a τ^b`, and the four-rhombus units below) consisted of
-units above 2. Proposition B 4-colours every graph they can build, so no
+units above 2. Proposition C 4-colours every graph they can build, so no
 amount of growth could have produced five.
 
 **The known 5-chromatic graphs agree.** The coordinate fields of de Grey's
@@ -688,3 +692,46 @@ either, and 11 never gives a 4-colouring. So none of the quotients tried at 2,
 3, 5 and 11 4-colours that module; finer levels at 3 and 5, and the other
 primes, were not tried. It is the first unit set over `ℚ(√3, √5)` that no
 reduction we ran 4-colours. A colouring-guided search inside it is running.
+
+## 13. Two square roots without `√3`: the local bounds
+
+Voronov's second question asks for a 5-chromatic graph over two square roots
+of primes without `√3`, so without triangles. Proposition A, applied at the
+places of `L = ℚ(√a, √b)` that do not split in `K = L(i)`, answers it for most
+pairs.
+- **Ramified above 2.** The residues of the unit vectors are `±1 = 1`, the
+  target is a perfect matching, and `χ(L²) ≤ 2`. Moorhouse's Lemma 8.4 is the
+  quadratic case, `χ(ℚ(√d)²) = 2` for `d ≡ 1 (mod 4)`.
+- **Unramified with residue field `𝔽_q`.** Then `χ(L²) ≤ χ(G_q)`, with
+  `χ(G_q) = 4, 4, 3, 4, 5, 5` for `q = 2, 4, 3, 7, 11, 19` (the table in §4).
+
+`G₁₉` is new here. It has no triangle, needs five colours, and has the linear
+5-colouring `(a, b) ↦ c(a + b mod 19)`, since `{a + b : a² + b² = 1}` avoids 0.
+
+**Pairs of primes below 60**, places below 200
+(`scripts/experiments/classify_biquadratic.py`; spot checks in
+`tests/test_biquadratic_bounds.py`):
+
+| local bound | 2 | 3 | 4 | 5 | none from `q ≤ 19` |
+|---|---|---|---|---|---|
+| fields without `√3` (120) | 28 | 14 | 33 | 28 | 17 |
+| fields with `√3` (16) | 0 | 6 | 5 | 4 | 1 |
+
+- **Most fields are settled.** 75 of the 120 fields without `√3` have
+  `χ ≤ 4`, so they cannot answer Voronov's second question. For 28 of them
+  the plane is even bipartite, for example `ℚ(√2, √5)` and `ℚ(√5, √13)`.
+- **Bound 5.** 28 fields remain, such as `ℚ(√5, √7)`, whose first non-split
+  place lies above 19. There the local plane `G₁₉` is itself triangle-free and
+  5-chromatic, so the local picture does not rule out a triangle-free
+  5-chromatic graph over `ℚ(√5, √7)`.
+- **No small place.** For the other 17, such as `ℚ(√2, √31)`, `ℚ(√2, √47)` and
+  `ℚ(√7, √41)`, the first non-split places lie above 23, 31, 43 or 59, where
+  `χ(G_q)` is not known.
+
+**With `√3` the table reproduces Theorem 4.** It gives bound 3 exactly for
+`q ≡ 1 (mod 3)`, and bound 4 exactly for `q = 2` and `q ≡ 11, 17 (mod 24)`. It
+adds one fact: the first non-split place of `ℚ(√3, √29)` lies above 23, and tabu
+finds no 6-colouring of `G₂₃` (§4). So the local arguments available give no
+bound below `χ(G₂₃)`, although the field has triangles. Among the fields
+`ℚ(√3, √q)` with `q` a prime below 60 it is the only one without a non-split
+place at `q ≤ 19`, which makes it a candidate for §5's screen for six.

@@ -15,8 +15,8 @@ python3 -m pytest -q tests/test_q23.py     # one file
 The tests marked `slow` include a 4-colourability solve of de Grey's 1581-vertex graph
 (`test_degrey.py`, with a 30-minute solver limit).
 
-GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 28 files marked CI
-on every push to `main`, on every pull request, and on manual dispatch: 346 tests, which took 80
+GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 29 files marked CI
+on every push to `main`, on every pull request, and on manual dispatch: 353 tests, which took 80
 seconds in a local run. The DRAT test in `test_certify.py` is skipped there, because the
 workflow does not install drat-trim. The other eight files (269 tests) are run locally; without their
 two tests marked `slow` they took 32 minutes in a local run, 20 of them in one test of
@@ -24,6 +24,7 @@ two tests marked `slow` they took 32 minutes in a local run, 20 of them in one t
 
 | file | CI | what it checks |
 |---|:---:|---|
+| `test_biquadratic_bounds.py` | ✓ | Local upper bounds for the planes over ℚ(√a, √b) (`notes/local_colourings.md` §13): χ(G_q) = 3, 4, 5 for q = 3, 7, 11, χ(G₄) = 4 and χ(G₁₉) = 5 (a linear 5-colouring; no 4-colouring); a ramified place above 2 makes the plane over ℚ(√2, √5) bipartite; the bounds for ℚ(√3, √q), q < 60, agree with Theorem 4; the first non-split places of ℚ(√3, √29) and ℚ(√5, √7) lie above 23 and 19. |
 | `test_certify.py` | ✓ | The certificate checker in `hn/certify.py` accepts a proper colouring and rejects a monochromatic unit pair, a colour outside the palette and a claimed lower bound on a colourable graph; its DRAT test runs only when drat-trim is on the `PATH`. |
 | `test_cyclotomic.py` | ✓ | Unit steps in ℤ[ζₙ]: they are the roots of unity, ℚ(ζ₅) alone has no unit triangle while ℚ(ζ₁₅) has one, a Gauss sum gives the spindle's radical, and the Moser spindle lies in a cyclotomic field. |
 | `test_degrey.py` |  | De Grey's graph rebuilt from his 39-point set S has 39, 397 and 1581 vertices at the three stages and 7877 edges, and (marked `slow`) no proper 4-colouring. |
@@ -49,7 +50,7 @@ two tests marked `slow` they took 32 minutes in a local run, 20 of them in one t
 | `test_q311.py` | ✓ | χ(ℚ(√3, √11)²) = 4, a theorem of K. G. Fischer (1994), by a short proof: the plane has a proper 4-colouring by 2-adic residues and contains the Moser spindle, which has no proper 3-colouring (details below). |
 | `test_q35.py` | ✓ | The plane over ℚ(√3, √5) has no proper 3-colouring: 1/3 is a sum of unit vectors, and a chain of six unit rhombi (`data/chain35.json`, 19 vertices, 31 exact edges) joins the origin to a unit vector. 11 splits completely, which gives χ ≤ 5. A chain of four rhombi (13 vertices) built from four unit vectors summing to 1/√3 has no proper 3-colouring either. |
 | `test_q3q.py` | ✓ | The planes over ℚ(√3, √q): for every q ≡ 2 (mod 3) up to 113, a generator α of norm 3^h in ℚ(√−q) makes 1/3 a sum of unit vectors, so χ ≥ 4; for q = 17, a chain of 90 rhombi (271 vertices) has no proper 3-colouring. |
-| `test_split_places.py` | ✓ | Proposition B of `notes/local_colourings.md` §12: the hyperbola graphs H_q = Cay(𝔽_q², {(t, 1/t)}) have χ = 2, 3, 4, 3, 4, 4, 3, 4, 5, 4 for q = 2, 3, 4, 5, 7, 8, 9, 11, 13, 16 (an explicit 5-colouring for q = 13); over ℚ(√3, √5), reduction at the prime above 2 is a proper 4-colouring of `chain35.json`, whose edge vectors are units there, one of its edge vectors is not a unit above 3, and reduction above 3 followed by a 3-colouring of H₉ 3-colours a graph whose edge vectors are units above 3. |
+| `test_split_places.py` | ✓ | Proposition C of `notes/local_colourings.md` §12: the hyperbola graphs H_q = Cay(𝔽_q², {(t, 1/t)}) have χ = 2, 3, 4, 3, 4, 4, 3, 4, 5, 4 for q = 2, 3, 4, 5, 7, 8, 9, 11, 13, 16 (an explicit 5-colouring for q = 13); over ℚ(√3, √5), reduction at the prime above 2 is a proper 4-colouring of `chain35.json`, whose edge vectors are units there, one of its edge vectors is not a unit above 3, and reduction above 3 followed by a 3-colouring of H₉ 3-colours a graph whose edge vectors are units above 3. |
 | `test_quadext.py` | ✓ | Arithmetic in ℚ(ζ₁₅, √−7, √−11), built as a tower of quadratic extensions of ℚ(ζ₁₅), which contains de Grey's rotations and ζ₁₅. |
 | `test_reduce11.py` | ✓ | The unit-distance graph on the field ℚ(√−3, √−11, √−247), viewed in ℂ, is 5-colourable: reduction at a place above 11 maps it to the Cayley graph of 𝔽₁₂₁ on its 12 elements of norm one, which is 5- but not 4-colourable, and this colours the 803-vertex graph `five_247_c.json` properly at both places above 11. |
 | `test_ring_geometry.py` | ✓ | Six facts behind the ring constructions, recomputed: the 90° rotation about the centre of a unit square moves one diagonal onto the other at distance 1, the map σ satisfies \|σu\|² = \|u\|²/3 and \|u − σu\| = \|u\|, the two-ring configuration is 3-chromatic, within each component of a neighbourhood in `five_247_c.json` two neighbours lie on the same side of the bipartition exactly when the angle between them is an even multiple of 60°, 2 is not of the form a² + ab + b², and that graph has exactly two vertices of degree 4. |

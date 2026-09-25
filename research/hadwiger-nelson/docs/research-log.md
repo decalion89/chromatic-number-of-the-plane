@@ -8112,7 +8112,7 @@ sends a unit step `u` to `ρ(u) ≠ 0`, so it is a proper 4-colouring of every
 graph those units can build. The two runs targeting pairs at `d² = 7/3` and
 `d = 2` were stopped: they could not succeed.
 
-In general (`notes/local_colourings.md` §12, Proposition B), a split place with
+In general (`notes/local_colourings.md` §12, Proposition C), a split place with
 residue field `𝔽_q` colours the graph of the edges that are units there with
 `χ(H_q)` colours. Here `χ(H₄) = 4` and `χ(H₉) = 3` (`tests/test_split_places.py`).
 So over `ℚ(√3, √5)` a 4-chromatic graph needs an edge vector that is not a unit
@@ -8142,3 +8142,44 @@ Other findings of the day:
 A colouring-guided growth at four colours inside the 252-unit module is running.
 Unlike every earlier run, its colourings are tight: about a thousand rainbow
 candidates at each step, and tabu gives way to kissat from 13 000 points on.
+
+## Two square roots without `√3` (25 September)
+
+Proposition A, run over every pair of primes `a < b < 60`, settles most of
+Voronov's second question locally (`notes/local_colourings.md` §13). The input
+is the non-split places of `K = ℚ(i, √a, √b)` below 200.
+- **A ramified place above 2** makes the plane bipartite. The residues `±1`
+  coincide in characteristic 2.
+- **An unramified place with residue field `𝔽_q`** gives `χ(G_q)`.
+
+Of the 120 fields without `√3`:
+- 28 are bipartite, 14 are at most 3-chromatic and 33 at most 4-chromatic;
+- 28 are bounded by 5, through `G₁₁` or through `G₁₉`;
+- 17 have no non-split place with `q ≤ 19`.
+
+New finite-plane values:
+- **`χ(G₁₉) = 5`.** The plane has no triangle and a linear 5-colouring. So
+  `ℚ(√5, √7)`, bounded only above 19, is locally consistent with a
+  triangle-free 5-chromatic graph.
+- **`χ(G₄) = 4`.**
+
+With `√3`, the table reproduces Theorem 4. The one exception is `ℚ(√3, √29)`,
+whose first non-split place is above 23.
+
+Also recorded today:
+- The four-rhombus units are square roots of `τ` up to roots of unity:
+  `c₁ c₂ = −τ`, `c₂ = ζ⁹ c₁`, and `c₃ = conj(ζτ)`. They have odd valuation
+  above 3, as `τ` has even valuation there.
+- A pool of 2 954 small unit vectors was sorted by depth above 2 and 3.
+  - The 15 204 units of depth at most 1 above 2 have no periodic 4-colouring at
+    the levels `(2, 2)`, `(3, 3)` or `(4, 4)` above 2. At `(3, 3)` they meet
+    every residue class. The 36 units `ζ^a o₁^{±1}` alone are 4-colourable at
+    `(2, 2)`, so richness matters.
+  - The 15 300 units of depth at most 2 above 2 and at most 1 above 3 have no
+    periodic 4-colouring at 2 up to `(4, 4)`, at 3 at `(2, 2)`, or at 5 up to
+    `(2, 1)`.
+- The Voronov–Neopryatnaya–Dergachev shape `M₃ ∪ (7 + i√15)/8 · M₃`, built
+  from `ζ`, `c₁` and `τ`, has 42 913 points and 588 new edges. It is still
+  4-colourable, but CaDiCaL needs 172 s to find the colouring.
+- The four-colour growth in the 252-unit module reached 13 708 points. From
+  then on each step needs kissat for up to half an hour.
