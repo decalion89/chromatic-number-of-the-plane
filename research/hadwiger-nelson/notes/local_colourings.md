@@ -549,6 +549,16 @@ possible to do it without `√3` (and without triangle)?"
 113, and a 271-vertex chain of 90 rhombi for `q = 17`. PARI/GP recomputes the
 decompositions of 2 and 3 for every prime `q < 75`.
 
+**More square roots.** The proof of the first two parts works for every
+multiquadratic field `L = ℚ(√3, √q₁, …, √q_k)`. Write `q'_j` for `q_j` with any
+factor 3 removed.
+- If every `q'_j ≡ 1 (mod 3)`, then 3 splits in every quadratic subfield prime
+  to 3, a prime of `L` above 3 has residue field `𝔽₃`, and `χ(L²) = 3`. For
+  example `χ(ℚ(√3, √7, √13, √19)²) = 3`.
+- Otherwise some `q'_j ≡ 2 (mod 3)`, `ℚ(√−q'_j) ⊂ L(i)`, and `χ(L²) ≥ 4`.
+
+PARI/GP confirms the residue degrees above 2 and 3 for nine such fields.
+
 So the answer to Voronov's first question is no for every `ℚ(√3, √q)` outside
 the class `q ≡ 5, 23 (mod 24)`. Fischer's family meets these fields only at
 `q ≡ 11 (mod 32)`, and for `q ≠ 11` it gives the upper bound alone.
