@@ -15,12 +15,13 @@ python3 -m pytest -q tests/test_q23.py     # one file
 The tests marked `slow` include a 4-colourability solve of de Grey's 1581-vertex graph
 (`test_degrey.py`, with a 30-minute solver limit).
 
-GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 30 files marked CI
-on every push to `main`, on every pull request, and on manual dispatch: 359 tests, which took 80
-seconds in a local run. The DRAT test in `test_certify.py` is skipped there, because the
-workflow does not install drat-trim. The other nine files (273 tests) are run locally; without their
-six tests marked `slow` they took 32 minutes in a local run, 20 of them in one test of
-`test_two_tunings.py`.
+GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 31 files marked CI
+on every push to `main`, on every pull request, and on manual dispatch: 371 tests, which took two
+minutes in a local run. The DRAT test in `test_certify.py` is skipped there, because the
+workflow does not install drat-trim. The other ten files (282 tests) are run locally; without their
+14 tests marked `slow` they took 32 minutes in a local run, 20 of them in one test of
+`test_two_tunings.py`. The eight slow tests of `test_threepoint_certificates.py` take about 15
+minutes together.
 
 | file | CI | what it checks |
 |---|:---:|---|
@@ -34,7 +35,9 @@ six tests marked `slow` they took 32 minutes in a local run, 20 of them in one t
 | `test_disjunctive_spindle.py` | ✓ | The three- and six-copy disjunctive spindles, which need only c(v) = c(q₁) or c(v) = c(q₂) instead of a forced pair, checked in exact arithmetic and by an exhaustive sweep over the choices of the copies. |
 | `test_fast_agrees.py` | ✓ | The vectorised integer arithmetic of `hn/fast.py` agrees with exact rational arithmetic on points, unit vectors, walks and edge sets. |
 | `test_field.py` | ✓ | Exact arithmetic in multiquadratic fields: admissible generators, products of radicals, inverses through the Galois conjugates, exact equality and hashing. |
-| `test_finite_planes.py` | ✓ | Bounds for Moorhouse's table of χ(𝔽_q²) (`notes/local_colourings.md` §12): interval colourings, with m consecutive parallel lines ax + by = r per colour when a² + b² − r² is a non-square for r < m, for q = 7, 13, 17, 19, 23, 29, 31, 37, 41, 43 (optimal for 7, 13, 19); a linear 8-colouring of 𝔽₄₃²; no 4-colouring of 𝔽₂₃² or 𝔽₃₇². |
+| `test_finite_planes.py` | ✓ | Bounds for Moorhouse's table of χ(𝔽_q²) (`notes/local_colourings.md` §12): interval colourings, with m consecutive parallel lines ax + by = r per colour when a² + b² − r² is a non-square for r < m, for q = 7, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61 (optimal for 7, 13, 19); a linear 8-colouring of 𝔽₄₃²; no 4-colouring of 𝔽₂₃² or 𝔽₃₇². Hoffman's bound with every eigenvalue in interval arithmetic (§14): χ(𝔽₅₉²) ≥ 6, χ ≥ 7 for q = 71, 97, 101, and χ(G_q) ≥ 6 for the anisotropic planes with q = 53, 59, 61, the cases of Proposition B below Weil's threshold. |
+| `test_threepoint.py` | ✓ | The three-point bound of `scripts/threepoint.py` (§14), without a solver: for q ≤ 13 the rotation blocks and the localizing blocks are compressions of the explicit matrices by an orthonormal basis, so they are positive semidefinite exactly when the matrices are; real independent sets of 𝔽₁₁² and 𝔽₁₃² satisfy every constraint, with objective \|S\|; the stored certificates match `data/threepoint/SHA256SUMS`. |
+| `test_threepoint_certificates.py` |  | Each certificate in `data/threepoint/` proves the lower bound on χ listed in the file (χ ≥ 6 for 𝔽₃₇², 𝔽₄₁², 𝔽₄₃², 𝔽₄₇², G₂₉, G₃₇, G₄₁; χ(G₁₃) ≥ 5), checked by `scripts/threepoint_verify.py` in interval and exact rational arithmetic (marked `slow`: up to four minutes each). |
 | `test_finite_planes_slow.py` |  | No 4-colouring of 𝔽₂₉², 𝔽₃₁², 𝔽₄₁² or 𝔽₄₃² (marked `slow`; 15 s to 8 minutes each). |
 | `test_five_247.py` |  | The 5-chromatic unit-distance graphs over ℚ(√3, √11, √247) and ℚ(√3, √11, √23) in `data/`: edge counts recomputed exactly, chromatic number 5, C₆-invariance of the symmetric graphs, and the radicals that the spindle angles need. |
 | `test_forced.py` | ✓ | Forced colour relations on graphs with known answers: pairs forced alike or different, cores, and the pressure at a vertex p (the least number of colours a k-colouring uses on the unit neighbours of p), including `certificates/pressure3_witness_47.json`. |
