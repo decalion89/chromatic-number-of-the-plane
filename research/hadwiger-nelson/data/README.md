@@ -1,7 +1,7 @@
 # Data: graphs and witnesses in exact coordinates
 
 Every graph here is stored with exact coordinates, so every distance can be recomputed exactly. The
-table at the end lists each of the 84 JSON files tracked in this directory once. Growth runs also write
+table at the end lists each of the 85 JSON files tracked in this directory once. Growth runs also write
 transient checkpoints and solver files here (`*_kw<n>.json`, `*_ls<n>.json`, `*_inc.json`,
 `*_grow.json`, `blk_plain*.json`, `*.cnf`, `*.kissat`); `.gitignore` excludes them, and they are not
 indexed.
@@ -70,6 +70,7 @@ The tests and `scripts/verify_pair.py` read the first format. `scripts/orbit_wit
 | file | what it is |
 |---|---|
 | `chain23.json` | 10 vertices with no proper 3-colouring: the lower bound in χ(ℚ(√2, √3)²) = 4 (`notes/local_colourings.md` §10). |
+| `chain35.json` | 19 vertices with no proper 3-colouring: the lower bound in 4 ≤ χ(ℚ(√3, √5)²) ≤ 5 (`notes/local_colourings.md` §11). |
 | `W_moser_orbit_9_33.json` | 187 points with no proper 5-colouring when edges are placed at distance 1 and at the Galois orbit d² = (9 ∓ √33)/6: a witness that needs one gadget. |
 | `W_lattice_16_21_28_61.json` | 72 lattice points with no proper 5-colouring when edges are placed at 1, 4/√3, √7, √(28/3) and √(61/3). |
 | `five_247.json` | 1 139 vertices, 5-chromatic, in ℚ(√3, √11, √247). |
@@ -110,6 +111,7 @@ The tests and `scripts/verify_pair.py` read the first format. `scripts/orbit_wit
 | `blocked_32312_coloured.json` | 32 312 | ℚ(√3, √11, √247) | Plain growth from `g2e_blocked_seed.json` to 32 312 points with a 5-colouring found by kissat, proper on the 282 909 edges along the file's 134 unit vectors but with 43 monochromatic pairs among the 223 further unit-distance pairs in other directions. |
 | `blocking_requirements.json` | — | — | For a point p with 15 unit neighbours next to the 2 689-vertex carrier obtained by gluing `Sa` at the 12-point orbit of Sa[265], four pairs of those neighbours, with their squared distances, such that each 4-colouring found in three rounds (66 in all) that uses only three colours on the neighbours makes one of the pairs monochromatic (`experiments/fullcover.py`). |
 | `chain23.json` | 10 | ℚ(√2, √3) | A chain of three unit rhombi (10 vertices, 16 edges) with no proper 3-colouring, the lower bound in χ(ℚ(√2, √3)²) = 4 (`tests/test_q23.py`, `certificates/chain23_no3coloring.json`). |
+| `chain35.json` | 19 | ℚ(√3, √5) | A chain of six unit rhombi (19 vertices, 31 edges) joining the origin to the unit vector e^{iπ/6}, with no proper 3-colouring, the lower bound in 4 ≤ χ(ℚ(√3, √5)²) ≤ 5 (`tests/test_q35.py`, `scripts/experiments/chain35.py`). |
 | `closure_five_247_c.json` | 1 851 | ℚ(√3, √11, √247) | The closure of `five_247_c.json` under adding the centre of every unit triangle, reached after four rounds. |
 | `coset_unsplit_five_247_c.json` | — | — | The pairs of `five_247_c.json` at squared distance 5/9, 4/3, 3 or 25 that no coset 5-colouring splits: there are none (`experiments/cosetfilter.py`). |
 | `coset_unsplit_tight_hexagon_4159.json` | — | — | The 24 pairs of `tight_hexagon_4159.json` at squared distance 5/9, 4/3, 3 or 25 that no coset 5-colouring splits, all at distance 5 (`experiments/cosetfilter.py`). |
