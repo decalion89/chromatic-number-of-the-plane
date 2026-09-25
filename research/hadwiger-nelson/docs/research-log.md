@@ -8239,3 +8239,99 @@ growth from these units.
 **Also.** `H_q` is the hyperbola graph `HG(𝔽_q)` of Bardestani and
 Mallahi-Karai (arXiv 1507.05300), which appears inside the graph of every
 isotropic quadratic form.
+
+## Finite planes: six colours from the three-point bound (25 September)
+
+The lower bounds of Moorhouse's table stopped at 5 because SAT cannot see the
+obstruction: `α(𝔽_q²)` is far below `q²/5` (local search finds `0.13–0.17 q²`
+for `23 ≤ q ≤ 43`), but that `α` is small is a counting fact that CDCL does
+not find. kissat ran 40 minutes on `𝔽₂₉²` with five colours, and 30 on `𝔽₂₃²`
+with six, without an answer. Both kinds of plane are vertex-transitive, so
+`χ ≥ q²/α`, and it is enough to bound `α` (`notes/local_colourings.md` §14).
+
+**What did not work.**
+- **Hoffman and Delsarte.** The ratio bound is `0.21–0.25 q²` for
+  `23 ≤ q ≤ 53`; the Delsarte linear programme on the circles gives the same
+  numbers.
+- **Local configurations.** Conditional constraints from unit triangles,
+  Moser spindles and rigid templates, over all placements, lower the linear
+  programme by at most 2%.
+- **Local ratios.** A subgraph needs about half the plane before its
+  independence ratio falls below 1/5.
+- **CP-SAT on `α`.** Its bound for `𝔽₂₃²` stayed at 163 after 10 minutes.
+
+**The three-point bound.** Schrijver's semidefinite bound for codes, moved to
+the plane: the pair frequencies `g` and triangle frequencies `z` of a
+recentred, randomly turned independent set satisfy two positive semidefinite
+conditions (`M₁ = [z(a, b)]`, `M₀ = [g(b − a) − z(a, b)]`) and linear ones. The
+rotation group splits both matrices into real blocks of size about `q`
+(`scripts/threepoint.py`).
+- **Sharp for small `q`.** `q = 7`: 14.09 (`α = 14`); `q = 11`: 29.18 (28);
+  `q = 13`: 42.31 (39 found).
+- **Solvers.** Clarabel needs about 2 GB per thousand triangle classes and was
+  killed at `q = 37`; cvxopt's interior point takes five minutes an iteration
+  there; SCS stalls. DSDP solves the primal of `q = 37` in six minutes, but its
+  dual is poor: the certificate built from it gave 726, and 276 after an LP
+  polish, where the optimum is 108.5 (at `q = 23`). The dual is therefore
+  recomputed on the null spaces of the blocks at DSDP's optimum, a small
+  semidefinite programme. `scripts/threepoint_verify.py` checks it in interval
+  arithmetic, with an exact rational `LDLᵀ` for each dual matrix.
+
+**Results, certified** (`data/threepoint/`):
+
+| plane | `n` | `α ≤` | `n/5` |
+|---|---|---|---|
+| `G₂₉` | 841 | 163.25 | 168.2 |
+| `𝔽₃₇²` | 1 369 | 259.90 | 273.8 |
+| `G₃₇` | 1 369 | 263.64 | 273.8 |
+| `𝔽₄₁²` | 1 681 | 327.68 | 336.2 |
+| `G₄₁` | 1 681 | 300.73 | 336.2 |
+| `𝔽₄₃² = G₄₃` | 1 849 | 347.79 | 369.8 |
+| `𝔽₄₇² = G₄₇` | 2 209 | 371.42 | 441.8 |
+
+So `χ ≥ 6` for all seven. With the colourings of §12, `χ(𝔽₄₁²) ∈ {6, 7}`.
+With Proposition B, `χ(G_q) ≥ 6` for every prime `q ≥ 29` except 31.
+
+**Spectral bounds for large `q`** (interval arithmetic,
+`scripts/finite_hoffman.py`): `χ(𝔽_q²) ≥ 6` for `q = 59` and, by Weil, every
+`q ≥ 67`; `χ ≥ 7` for `q = 71, 97, 101` and every `q ≥ 103`.
+
+**A correction.** The proof of Proposition B (`χ(G_q) ≥ 6` for `q ≥ 53`) said
+that Weil's bound covers `q > 62` and that 53 and 59 were computed. It did not
+mention 61, which Weil's bound does not reach. The computation gives
+`χ_f(G₆₁) ≥ 5.20`, so the statement stands; the proofs in both notes now name
+61, and `tests/test_finite_planes.py` checks the three cases.
+
+**Not yet.**
+- **`𝔽₂₃² = G₂₃`.** The plain bound is 108.55. With the localizing matrices of
+  a unit edge and a unit triangle, the conditional triangle inequalities and
+  the target 106 in the corners, it is 107.04; six colours need `α ≤ 105`.
+  Almost all of the gain comes from the triangle's localizing matrix (107.07
+  with it alone; 108.39 with the edge's, 108.47 with the triangle
+  inequalities, 108.55 with the target alone). A unit pentagon adds nothing.
+- **`G₃₁ = 𝔽₃₁²`:** 200.89 against 192.2. **`𝔽₂₉²`:** 184.77 against 168.2.
+- **`G₁₇`:** 64.56, and 63.33 with the localizing matrices, against 57.8.
+- **Colourings instead of independent sets.** A 5-colouring says more than
+  that each class is independent: recentred at a random point, with the other
+  four colours in random order, the colour indicators have a component on the
+  standard representation of `S₄`, which gives
+  `[3 p_ABB(a, b) − p_ABC(a, b)] ⪰ 0`, and `p_ABC ≥ 0` on every triangle.
+  (`p_ABB`: the other two vertices share a second colour; `p_ABC`: three
+  colours.) A real 5-colouring of `𝔽₁₃²` satisfies every constraint, but the
+  bound moves by less than 0.01 for `G₁₇` and `𝔽₂₃²`. Outside the
+  rotation-invariant block the new condition reads `4 M₀ ⪰ M₁`, which the
+  optimum of the plain programme already nearly satisfies
+  (`scripts/experiments/threepoint_colouring.py`).
+- **Larger `q`.** `𝔽₅₃²` has 12 827 triangle variables and `𝔽₆₁²` about
+  19 000, against 8 625 at `q = 47`, where DSDP used 6 GB; not run. Seven
+  colours for `𝔽₄₇²` would need the bound below 369 instead of 371.42; the
+  triangle's localizing matrix might give it, but its blocks there have sizes
+  up to about 740.
+
+**`G₁₃`.** The anisotropic plane over `𝔽₁₃` was missing from the table of §4.
+It is 6-colourable (SAT; the best linear colouring needs 7). No 5-colouring
+turned up: tabu search stops at six monochromatic edges in six runs of
+`2·10⁷` moves, and CaDiCaL ran 25 minutes without an answer. Independent sets
+of 36 points exist, above `169/5`, so the bound on `α` cannot decide it.
+kissat is running on the 5-colouring problem with one edge pinned and value
+precedence on the other colours, writing a DRAT proof.
