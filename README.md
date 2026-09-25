@@ -19,15 +19,19 @@ through exact arithmetic:
 
 ## Main result
 
-> **Theorem.** χ(ℚ(√3, √11)²) = χ(ℚ(√2, √3)²) = 4.
+> **Theorem.** χ(ℚ(√2, √3)²) = 4. The same argument gives a short proof of
+> K. G. Fischer's theorem χ(ℚ(√3, √11)²) = 4 (1994).
 
 Both planes can be coloured with four colours, and both contain unit-distance
 graphs that need four. ℚ(√3, √11) is the smallest field whose plane contains a
 Moser spindle (Moorhouse, 2010).
 
-- **Background.** Madore (2015) proved 4 ≤ χ(ℚ(√3, √11)²) ≤ 5. Moorhouse
-  (2010) and Exoo–Ismailescu (2018) left the value open. Voronov (Polymath16,
-  2021) conjectured both values.
+- **Background.** Fischer proved χ(ℚ(√3, √11)²) = 4 in 1994 (*Congressus
+  Numerantium* 104). His result seems to have been overlooked: Moorhouse (2010),
+  Madore (2015, who proved 4 ≤ χ ≤ 5), Exoo–Ismailescu (2018) and Voronov
+  (Polymath16, 2021) all treat the value as unknown. Voronov also conjectured
+  χ = 4 for the plane over ℚ(√2, √3). Fischer's hypotheses exclude that field,
+  and we have not found its value in the literature.
 - **Proof idea.** Change coordinates to α = x + y/√3, β = 2y/√3. The squared
   distance becomes α² − αβ + β². This form is anisotropic modulo a prime above
   2 with residue field 𝔽₂, so Madore's reduction argument applies. Reducing
@@ -93,8 +97,8 @@ Use GitHub's "Cite this repository" button, which reads
 ```bibtex
 @misc{galan2026planes,
   author = {Gal{\'a}n, Sergi},
-  title  = {The planes over {$\mathbb{Q}(\sqrt{3},\sqrt{11})$} and
-            {$\mathbb{Q}(\sqrt{2},\sqrt{3})$} are 4-chromatic},
+  title  = {A short proof that the planes over {$\mathbb{Q}(\sqrt{3},\sqrt{11})$}
+            and {$\mathbb{Q}(\sqrt{2},\sqrt{3})$} are 4-chromatic},
   year   = {2026},
   note   = {Preprint, not refereed. AI-assisted},
   url    = {https://github.com/decalion89/darwin-50}
@@ -127,10 +131,12 @@ cuerpos de números. Las afirmaciones de que un grafo no se puede colorear se
 deciden con varios SAT solvers, y las principales van acompañadas de una prueba
 DRAT verificada por un programa independiente.
 
-Resultado principal: los planos con coordenadas en ℚ(√3, √11) y en ℚ(√2, √3)
-tienen número cromático exactamente 4. Lo primero era una pregunta abierta
-desde 2010, y Voronov conjeturó ambos casos en 2021. La prueba cambia de
-coordenadas para que el argumento de reducción de Madore funcione módulo 2, y
-extiende a todo el plano un coloreado de Speyer (2018). Está explicada en una
+Resultado principal: el plano con coordenadas en ℚ(√2, √3) tiene número
+cromático exactamente 4, como conjeturó Voronov en 2021. El mismo argumento da
+una prueba corta de un teorema de K. G. Fischer (1994): el plano sobre
+ℚ(√3, √11) también tiene número cromático 4. El resultado de Fischer había
+pasado desapercibido; los trabajos posteriores lo daban por abierto. La prueba
+cambia de coordenadas para que el argumento de reducción de Madore funcione
+módulo 2. Está explicada en una
 [nota de tres páginas](research/hadwiger-nelson/docs/note/planes-4-chromatic.pdf).
 Es un trabajo hecho con ayuda de IA y todavía no ha sido revisado por pares.
