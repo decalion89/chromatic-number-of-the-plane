@@ -13,6 +13,9 @@ import os
 import random
 from fractions import Fraction as Fr
 
+from sympy import QQ, Poly, minimal_polynomial, sqrt, symbols
+from sympy.polys.numberfields.primes import prime_decomp
+
 from hn.adelic import PRECISION, q311_colour, q311_coordinates
 from hn.field import Field
 from hn.geometry import Point, Rotation
@@ -36,6 +39,13 @@ def test_the_places_over_2_are_inert_with_residue_field_f4():
     assert all((x * x + x + 1) % 2 for x in (0, 1))
     # sqrt3 is a unit (norm -3), and sqrt3 - 1 has norm -2: a uniformiser, so sqrt3 = 1 mod it.
     assert (1 - 3) == -2 and (-3) % 2 == 1
+
+
+def test_sympy_finds_two_places_over_2_with_residue_field_f2():
+    # An independent check of the local facts: in L = Q(sqrt3, sqrt11), 2 = P1^2 P2^2 with residue fields F_2.
+    x = symbols("x")
+    T = Poly(minimal_polynomial(sqrt(3) + sqrt(11), x), x, domain=QQ)
+    assert sorted((P.e, P.f) for P in prime_decomp(2, T)) == [(2, 1), (2, 1)]
 
 
 def _field_and_units():
@@ -72,6 +82,29 @@ def test_every_unit_vector_is_a_2_adic_unit_with_nonzero_residue():
             assert all(v % (1 << K_SCALE) == 0 for v in co), "a unit vector must be 2-adically integral"
             a, b, c, d = ((v >> K_SCALE) & 1 for v in co)
             assert ((a + b) & 1, (c + d) & 1) != (0, 0), "its residue in F_4 must be nonzero"
+
+
+def test_random_unit_vectors_are_2_adic_units_with_nonzero_residue():
+    # Hilbert 90: every unit vector of K = L(i) is t / tbar, i.e. ((a^2 - b^2), 2ab) / (a^2 + b^2).
+    F = Field((3, 11))
+    basis = (F.one(), F.sqrt(3), F.sqrt(11), F.sqrt(33))
+    rng = random.Random(90)
+    tested = 0
+    while tested < 300:
+        a = sum((F.rational(Fr(rng.randint(-9, 9), rng.randint(1, 12))) * e for e in basis), F.zero())
+        b = sum((F.rational(Fr(rng.randint(-9, 9), rng.randint(1, 12))) * e for e in basis), F.zero())
+        d = a * a + b * b
+        if d == F.zero():
+            continue
+        inv = F.one() / d
+        u = Point((a * a - b * b) * inv, F.rational(2) * a * b * inv)
+        assert u.x * u.x + u.y * u.y == F.one()
+        for place in (1, -1):
+            co = q311_coordinates(u, place, K_SCALE)
+            assert all(v % (1 << K_SCALE) == 0 for v in co), "a unit vector must be 2-adically integral"
+            a0, b0, c0, d0 = ((v >> K_SCALE) & 1 for v in co)
+            assert ((a0 + b0) & 1, (c0 + d0) & 1) != (0, 0), "its residue in F_4 must be nonzero"
+        tested += 1
 
 
 def test_the_colouring_is_proper_on_random_unit_steps():
@@ -119,11 +152,11 @@ def test_exoo_ismailescu_H_is_properly_coloured():
 
 
 def test_pairs_at_8_over_3_are_alike_and_at_sqrt_11_over_3_apart():
-    """Exoo-Ismailescu force a pair at distance 8/3 alike in every 4-colouring of their G_40, and Parts
-    (Polymath16, July 2019) chained such pairs into alike pairs at every distance 8/9^n, which sum to 1.
-    His limit argument is not a proof: the colouring here makes EVERY pair at distance 8/9^n alike,
-    since (8/9^n) u lies in 8 O_w, and it is still proper. Pairs at sqrt(11/3) = sqrt33/3, a 2-adic
-    unit, are always apart, consistent with E-I's Claim 3.1."""
+    """Exoo-Ismailescu's G_40 forces a pair at distance 8/3 alike in every 4-colouring with no
+    monochromatic pair at distance sqrt(11/3), and Parts (Polymath16, July 2019) chained such pairs into
+    alike pairs at every distance 8/9^n, which sum to 1. His limit argument is not a proof. The colouring
+    here has no monochromatic pair at sqrt(11/3) = sqrt33/3, a 2-adic unit, so E-I's hypothesis holds;
+    it makes EVERY pair at distance 8/9^n alike, since (8/9^n) u lies in 8 O_w, and it is still proper."""
     F, units = _field_and_units()
     units = sorted(units, key=lambda p: (p.fx, p.fy))
     rng = random.Random(83)

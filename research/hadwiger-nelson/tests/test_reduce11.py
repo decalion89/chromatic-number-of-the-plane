@@ -1,6 +1,6 @@
 """The unit-distance graph on Q(sqrt-3, sqrt-11, sqrt-247) is 5-colourable by reduction at 11.
 
-The place of K+ above 11 does not split in K, every unit vector reduces into the norm-one group N1
+No place of K+ above 11 splits in K, so every unit vector reduces into the norm-one group N1
 (12 elements) of F_121, and a 5-colouring of the finite plane Cay(F_121, N1) pulls back to the
 whole field (hn/adelic.py, notes/rigidity.md section 9)."""
 import os
