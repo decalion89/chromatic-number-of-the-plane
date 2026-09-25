@@ -27,6 +27,7 @@ The route is **not ours**.
 | Colouring-guided growth and minimisation, at 4 colours | Heule; Parts | [arXiv 1805.12181](https://arxiv.org/abs/1805.12181), [1907.00929](https://arxiv.org/abs/1907.00929), [2010.12665](https://arxiv.org/abs/2010.12665) |
 | Unions of paths as a construction | Haugland (Moser-spindle-free, 2 131 vertices) | [arXiv 2608.04542](https://arxiv.org/abs/2608.04542) |
 | Reduction of `F²` modulo a prime, for number fields `F` | Moorhouse (Lemma 8.2); Madore (Prop. 3.2, 3.8, 6.6) | [Moorhouse 2010](https://www.ericmoorhouse.org/pub/chromatic.pdf), [arXiv 1509.07023](https://arxiv.org/abs/1509.07023) |
+| 2-adic 4-colourings of the Moser ring, with colours in `𝔽₄` | Speyer; Gibbs and Hubai (all have period 8); Dúcz (2026) | [Polymath16 thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/), [arXiv 2606.12325](https://arxiv.org/abs/2606.12325) |
 | A lattice-like graph with no 5-colouring and bichromatic origin would give six | Frankl–Hubai–Pálvölgyi (Thm 27) | [arXiv 1912.02604](https://arxiv.org/abs/1912.02604) |
 | A 6-chromatic unit-distance graph has at least 42 vertices | de Grey–Parts | [arXiv 2303.14714](https://arxiv.org/abs/2303.14714) |
 | Large negative searches for six (2026) | Adler (`zeta42`); the Math Market bounty | [keithadler/zeta42](https://github.com/keithadler/zeta42), [math-market/chromatic-plane](https://github.com/math-market/chromatic-plane) |
@@ -39,15 +40,32 @@ The route is **not ours**.
    - Exoo–Ismailescu (2018), who asked whether a 5-chromatic unit-distance
      graph embeds in this plane;
    - Polymath16, thread 3 (2018), and Parts' "funny proof" in thread 13
-     (2019).
+     (2019);
+   - Voronov, Polymath16 thread 17 (July 2021): "it seems likely that
+     `χ(Q(i, √3, √11)) = 4` ... But as far as I know, nobody has proved this
+     yet."
 
    The proof is the Hermitian form of the local reduction at an inert place
    over 2. See `notes/local_colourings.md` §8, `hn/adelic.py` and
-   `tests/test_q311.py`. By-products:
+   `tests/test_q311.py`.
+
+   **The idea is not new; the theorem is.**
+   - David Speyer used the same 2-adic reduction in
+     [Polymath16, thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/)
+     (May 2018) to 4-colour the Moser ring, with colours in `ℤ[ω]/2 = 𝔽₄`.
+   - Gibbs and Hubai found that all such colourings have period 8.
+   - Dúcz (2026) 4-coloured the Moser lattice and ring.
+
+   What is new is the step to the whole plane: every unit vector of
+   `ℚ(i, √3, √11)` is a 2-adic unit, because the place over 2 is inert, and
+   denominators of 2 are handled by cosets.
+
+   By-products:
    - `χ(ℚ(√d)²) ≤ 4` for `d ≡ 3 (mod 8)`, which extends Moorhouse's Theorem 8.1;
    - a necessary condition at 2, 3 and 7 for a real field to be 5-chromatic.
 2. **Whole-field chromatic numbers of CM fields.**
-   - `χ(ℚ(√−3, √−11)) = 4`, the Moser field;
+   - `χ(ℚ(√−3, √−11)) = 4`, the Moser field. This is Speyer's colouring of
+     the Moser ring, extended to the whole field;
    - `χ(ℚ(√−3, √−11, √−247)) = 5`, at the place over 11.
 
    Consequently no search in the second field can reach six. The finite

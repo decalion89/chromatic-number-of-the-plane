@@ -224,6 +224,9 @@ towards `χ(ℝ²) ≥ 6`.
   DCG 2020) asked whether a 5-chromatic unit-distance graph embeds in
   `ℚ[√3, √11]²`. So did Mixon and Ismailescu in
   [Polymath16, thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/).
+- Voronov, in [Polymath16, thread 17](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/)
+  (18 July 2021): "it seems likely that `χ(Q(i, √3, √11)) = 4` ... But as far
+  as I know, nobody has proved this yet."
 
 **Theorem 3.** `χ(ℚ(√3, √11)²) = 4`. So no 5-chromatic unit-distance graph
 has all its coordinates in `ℚ(√3, √11)`.
@@ -273,6 +276,26 @@ Reducing `z = x + iy` in `O_w` — the Hermitian form of the argument — sees t
 `ω` that the coordinates hide. At odd places the two versions agree, since
 `O_w = O_v[i]` there.
 
+**Who came closest.** The 2-adic reduction itself is not new.
+- In [Polymath16, thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/)
+  (3 May 2018), David Speyer 4-coloured the *Moser ring* this way. That ring is
+  the set of elements of `ℚ(√−3, √−11)` integral over `ℤ[1/3]`. He used
+  `R/2ᵏR ≅ ℤ[ω]/2ᵏ × ℤ[ω]/2ᵏ`, with colours in `ℤ[ω]/2 = 𝔽₄`.
+- Philip Gibbs and Tamás Hubai then found that all such colourings have
+  period 8.
+- Dúcz ([arXiv 2606.12325](https://arxiv.org/abs/2606.12325), 2026)
+  4-coloured the Moser lattice and ring again.
+
+None of them treats the whole plane. That takes two further steps:
+- **Every unit vector.** The place of `L` over 2 must be inert in
+  `L(i) = ℚ(i, √3, √11)`, a field of degree 8 that contains the Moser field.
+  Then every unit vector of the plane is a 2-adic unit, not only those of the
+  ring.
+- **Denominators of 2.** Colour cosets of `O_w` by residues relative to a
+  fixed representative.
+
+Theorem 3 is Speyer's colouring carried to the whole plane.
+
 **Parts' paradox, resolved.**
 - Exoo–Ismailescu's `G₄₀` forces a pair at distance 8/3 alike in every
   4-colouring.
@@ -312,8 +335,9 @@ Reducing `z = x + iy` in `O_w` — the Hermitian form of the argument — sees t
   `−1` is a square in every completion over 2. There `√5` or `√247` supplies
   `i`, since `5 ≡ −3` and `247 ≡ −1 (mod 8)`.
 
-We found this in no paper, in no thread of Polymath16, and by no web search. It
-has not been refereed.
+We found no proof of Theorem 3 in any paper, in any thread of Polymath16, or by
+web search. The closest work is Speyer's colouring of the Moser ring, above.
+Nothing here has been refereed.
 
 ## 9. Split places colour modules (25 September)
 

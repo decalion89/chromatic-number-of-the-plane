@@ -71,11 +71,15 @@ A certificate never asks you to trust this code. It asks you to run `drat-trim`.
   - Madore (2015) proved `4 ≤ χ ≤ 5`.
   - Exoo–Ismailescu (2018) and Polymath16 asked whether a 5-chromatic
     unit-distance graph embeds there.
+  - Voronov (Polymath16, 2021) conjectured `χ = 4` and noted that nobody had
+    proved it.
 
   It does not. At a place over 2 the field is inert in `ℚ(i, √3, √11)`, so
   every unit vector reduces to a nonzero element of `𝔽₄`, and that residue is
-  a 4-colouring of the whole plane. See
-  *An open question closed* below and `tests/test_q311.py`.
+  a 4-colouring of the whole plane. The 2-adic idea is Speyer's: in Polymath16
+  (2018) he used it to colour the Moser ring. What is new is the extension to
+  the whole plane. See *An open question closed* below and
+  `tests/test_q311.py`.
 
 - ✅ A **19-vertex, 33-edge graph with no 3-colouring**, drat-trim verified and
   **vertex-critical** — `certificates/genuine_pair_19_no3coloring.json`. Not a
@@ -7781,6 +7785,9 @@ all its coordinates in `ℚ(√3, √11)`.
   distance graph which can be embedded in `ℚ[√3, √11] × ℚ[√3, √11]`."
 - Polymath16, [thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/):
   "it would be nice to decide if the chromatic number of this subfield is 5."
+- Voronov, in Polymath16 [thread 17](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/)
+  (July 2021): "it seems likely that `χ(Q(i, √3, √11)) = 4` ... But as far as
+  I know, nobody has proved this yet."
 
 **The proof.** Identify the plane with `K = ℚ(i, √3, √11)`. A unit vector is
 then a `u ∈ K` with `u ū = 1`.
@@ -7813,6 +7820,18 @@ This is `hn.adelic.q311_colour`.
 Reducing `z = x + iy` instead — the Hermitian form, `notes/local_colourings.md`
 §2 — sees the `ω` that the coordinates hide.
 
+**Who came closest.** The 2-adic idea is not ours.
+- In thread 3 (May 2018) David Speyer 4-coloured the *Moser ring*, the
+  elements of `ℚ(√−3, √−11)` integral over `ℤ[1/3]`. He used exactly this
+  reduction, with colours in `ℤ[ω]/2 = 𝔽₄`.
+- Gibbs and Hubai found that all such colourings have period 8.
+- Dúcz ([arXiv 2606.12325](https://arxiv.org/abs/2606.12325)) 4-coloured the
+  Moser lattice and ring in 2026.
+
+What is ours is the step from the ring to the whole plane. The place over 2
+is inert in `ℚ(i, √3, √11)`, so every unit vector of the plane is a 2-adic
+unit, not only those of the ring. Denominators of 2 are handled by cosets.
+
 **A paradox from Polymath16, explained.**
 - In [thread 13](https://dustingmixon.wordpress.com/2019/07/08/polymath16-thirteenth-thread-bumping-the-deadline/)
   Parts chained Exoo–Ismailescu's forced alike pairs at distance 8/3 into
@@ -7832,8 +7851,9 @@ Reducing `z = x + iy` instead — the Hermitian form, `notes/local_colourings.md
   completions over 2 (for small residue fields). It also needs no place with
   residue field `𝔽₃` or `𝔽₇`.
 
-We found this result in no paper, no Polymath16 thread and no web search. It
-has not been refereed.
+We found no proof of this theorem in any paper, Polymath16 thread or web
+search; the closest is Speyer's colouring of the Moser ring. It has not been
+refereed.
 
 ## Where this work stands in the literature
 
@@ -7846,8 +7866,10 @@ links. In short:
   Parts'.
 - **Known reduction.** Reduction of field planes modulo a prime is Moorhouse's
   and Madore's.
+- **Known 2-adic colourings.** Speyer 4-coloured the Moser ring by the
+  Hermitian reduction over 2 (Polymath16, thread 3).
 - **Not found anywhere else:**
-  - the Hermitian reduction over 2, and the theorem above;
+  - the theorem above, which carries that reduction to the whole plane;
   - the CM whole-field results, with their thresholds for six;
   - the repulsion spectra, and the two-step explanation of why every known
     witness distance is attractive;
