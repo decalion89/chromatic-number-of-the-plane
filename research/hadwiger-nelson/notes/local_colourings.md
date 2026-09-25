@@ -221,10 +221,17 @@ level. The case `d = 247` is `L16 = ℚ(√−3, √−7, √−11, √−247)`:
 
 ## 8. The plane over `ℚ(√3, √11)`: `χ = 4`
 
-This section answers a question that was open in print. It is not a step
-towards `χ(ℝ²) ≥ 6`.
+Theorem 3 below is a theorem of K. G. Fischer (1994), which later work treated
+as open. This section gives a short proof. It is not a step towards
+`χ(ℝ²) ≥ 6`.
 
-**The question.**
+**History.**
+- Fischer, *A planar geometric graph of chromatic number four*, Congr. Numer.
+  104 (1994) 73–79 ([Zbl 0836.05030](https://zbmath.org/?q=an:0836.05030)), proved `χ(ℚ(√p, √q)²) = 4` for
+  squarefree coprime `p ≡ 3`, `q ≡ 11 (mod 16)` with `pq ≡ 1 (mod 32)`, in
+  particular for `ℚ(√3, √11)`, by an additive colouring with values in `ℤ/4`.
+  We found this only after writing this section; we have read the zbMATH
+  summary, not the paper. None of the works below cites it.
 - Moorhouse ([draft, 2010](https://www.ericmoorhouse.org/pub/chromatic.pdf))
   noted that `ℚ(√3, √11)` is the smallest field whose plane contains a Moser
   spindle, so `χ ≥ 4`. He wrote: "We have not determined the exact value."
@@ -239,8 +246,8 @@ towards `χ(ℝ²) ≥ 6`.
   (18 July 2021): "it seems likely that `χ(Q(i, √3, √11)) = 4` ... But as far
   as I know, nobody has proved this yet."
 
-**Theorem 3.** `χ(ℚ(√3, √11)²) = 4`. So no 5-chromatic unit-distance graph
-has all its coordinates in `ℚ(√3, √11)`.
+**Theorem 3 (Fischer, 1994).** `χ(ℚ(√3, √11)²) = 4`. So no 5-chromatic
+unit-distance graph has all its coordinates in `ℚ(√3, √11)`.
 
 *Proof.* Let `L = ℚ(√3, √11)`. The plane `L²` is the field `K = L(i)`, and
 unit vectors are the `u ∈ K` with `u ū = 1`. Apply Proposition A.1 at a place
@@ -337,8 +344,10 @@ asked in print.
   It also recovers Moorhouse's Theorems 7.1, 8.4 and 8.5, and Madore's
   Prop. 3.9.
 - **Inert, residue field `𝔽₂`.** Then `χ(F²) ≤ 4`. For quadratic fields this
-  happens exactly when `d ≡ 3 (mod 8)`. That extends Moorhouse's Theorem 8.1,
-  which excluded `d ≡ 47, 59, 83 (mod 84)`, to `d ≡ 59, 83, 131 (mod 168)`.
+  happens exactly when `d ≡ 3 (mod 8)`, a bound already proved by Fischer
+  (Discrete Math. 82 (1990); see Payne, arXiv 0707.1177). Together with
+  Moorhouse's Theorem 8.1, which excluded `d ≡ 47, 59, 83 (mod 84)`, it covers
+  `d ≡ 59, 83, 131 (mod 168)`.
   - For example, `3 ≤ χ(ℚ(√59)²) ≤ 4`. Reduction at 11 gave only 5
     (`59 ≡ 2² (mod 11)`).
   - The classes left open are `d ≡ 47, 143, 167 (mod 168)`.
@@ -356,8 +365,10 @@ asked in print.
   `−1` is a square in every completion over 2. There `√5` or `√247` supplies
   `i`, since `5 ≡ −3` and `247 ≡ −1 (mod 8)`.
 
-We found no proof of Theorem 3 in any paper, in Polymath16 threads 1–18, in the
-Polymath16 wiki, or by web search. The wiki page
+Theorem 3 is Fischer's (1994); the proof above is a short alternative. Before
+finding Fischer's paper we had searched Polymath16 threads 1–18, the Polymath16
+wiki and the web without finding a proof, which shows how completely the result
+had been overlooked. The wiki page
 [Algebraic formulation of Hadwiger–Nelson problem](https://web.archive.org/web/20210412075722/https://asone.ai/polymath/index.php?title=Algebraic_formulation_of_Hadwiger-Nelson_problem)
 colours rings such as the Moser ring, not whole planes. The closest work is
 Speyer's colouring of the Moser ring, above. A second review, carried out
@@ -499,4 +510,5 @@ The graph (`data/chain23.json`) has 10 vertices and 16 edges.
   chain closing in `L` then gives `χ(L²) = 4`.
 
 The lower bound was known, as above. We found no proof of the upper bound in
-the literature.
+the literature: Fischer's 1994 hypotheses (`p ≡ 3`, `q ≡ 11 (mod 16)`,
+`pq ≡ 1 (mod 32)`) exclude this field.
