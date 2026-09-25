@@ -1,8 +1,8 @@
 """Command line entry points.
 
-    python -m hn.cli verify   CERT [--drat-trim PATH]
-    python -m hn.cli spindle  --k K [--m-max M] [--steps S] [--radius R]
-    python -m hn.cli demo
+    python -m hn.cli verify  CERT [--drat-trim PATH]
+    python -m hn.cli demo    [--out DIR]
+    python -m hn.cli degrey  [--out DIR] [--timeout SECONDS]
 """
 
 from __future__ import annotations
@@ -65,9 +65,6 @@ def main(argv=None) -> int:
     return args.func(args)
 
 
-if __name__ == "__main__":
-    sys.exit(main())
-
 
 def cmd_degrey(args) -> int:
     """Rebuild de Grey's 1581-vertex graph and certify chi(R^2) >= 5."""
@@ -94,3 +91,7 @@ def cmd_degrey(args) -> int:
     )
     print(f"  wrote {p}")
     return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
