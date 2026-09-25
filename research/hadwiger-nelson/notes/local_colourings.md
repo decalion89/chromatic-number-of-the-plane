@@ -514,3 +514,48 @@ The graph (`data/chain23.json`) has 10 vertices and 16 edges.
 The lower bound was known, as above. We found no proof of the upper bound in
 the literature: Fischer's 1994 hypotheses (`p ≡ 3`, `q ≡ 11 (mod 16)`,
 `pq ≡ 1 (mod 32)`) exclude this field.
+
+## 11. Two square roots: Voronov's question
+
+In [Polymath16, thread 17](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/#comment-29283)
+(17 July 2021) Voronov asked: "can we get a chromatic number 5 if the vertices
+of the graph lie in an extension formed by two roots of prime numbers? Is it
+possible to do it without `√3` (and without triangle)?"
+
+**With `√3`.** Let `q ≠ 3` be prime and `L = ℚ(√3, √q)`.
+- `q ≡ 1 (mod 3)`: 3 splits in `ℚ(√q)`, so a prime of `L` above 3 has residue
+  field `𝔽₃`. Madore's Cor. 3.4 gives `χ(L²) ≤ χ(𝔽₃²) = 3`, and triangles give
+  `χ(L²) = 3`.
+- `q = 2`, or `q ≡ 2 (mod 3)` and `q ≡ 1, 3 (mod 8)`: a prime of `L` above 2
+  has residue field `𝔽₂`, and Theorem 2 of the note gives `χ(L²) ≤ 4`.
+- `q ≡ 5, 23 (mod 24)`: neither applies. The first cases are
+  `q = 5, 23, 29, 47, 53, 71`.
+
+PARI/GP recomputes these decompositions for every prime `q < 75`. So the
+answer to the first question is no for every `ℚ(√3, √q)` outside the last
+class.
+
+**A lemma for the lower bound.** If `√3 ∈ L` and `1/3` is a sum of unit vectors
+of `L(i)`, then `L²` has no proper 3-colouring. The sums of unit vectors form a
+ring `C₀` that contains `ω = e^{iπ/3}`, so `(1 + ω)/3 = Σ uₖ` with unit
+vectors `uₖ`. The unit rhombus whose long diagonal is `√3 uₖ` forces its tips
+alike in every 3-colouring. Chaining these rhombi joins `0` to
+`√3(1 + ω)/3 = e^{iπ/6}`, a unit vector.
+
+**The plane over `ℚ(√3, √5)`.** `τ = (2 + i√5)/3` is a unit vector, so
+`1/3 = τ + τ̄ − 1` and
+`(1 + ω)/3 = τ + τ̄ − 1 + ωτ + ωτ̄ − ω`. The chain of the six rhombi is
+`data/chain35.json`: 19 vertices, 31 edges, no proper 3-colouring
+(`tests/test_q35.py`). Since 3 and 5 are squares modulo 11, 11 splits
+completely, and reduction at a place over 11 gives `χ ≤ χ(𝔽₁₁²) = 5`. So
+`4 ≤ χ(ℚ(√3, √5)²) ≤ 5`, and whether it is 5 is the smallest open case of
+Voronov's first question.
+
+Reducing modulo 121 instead of 11 does not help: `Cay((ℤ/121)², U₂)`, with the
+132 unit vectors modulo 121, has no proper 4-colouring (kissat, CaDiCaL and
+Glucose; `scripts/experiments/level_plane.py`).
+
+**A caution about local evidence.** Minkowski balls and colouring-guided
+growths over `ℚ(√3, √5)` of up to 83 000 points stayed 3-colourable. The chain
+reaches radius about 3.5, and those graphs stayed near the origin, so they said
+nothing about `χ(L²)`.
