@@ -631,7 +631,10 @@ The points need not be integral. §9 is the case where they are.
 
 `χ(H₁₃) = 5` is certified there by a linear colouring:
 `(a, b) ↦ c(a + 2b mod 13)`, where `c` colours the circulant on
-`{t + 2/t} = {2, 3, 5, 8, 10, 11}`.
+`{t + 2/t} = {2, 3, 5, 8, 10, 11}`. For `q ≡ 1 (mod 4)` the substitution
+`(a, b) = (x + iy, x − iy)` turns the circle `x² + y² = 1` into the hyperbola
+`ab = 1`, so `H_q` is the unit-distance graph of `𝔽_q²`. The value therefore
+settles the entry "5 or 6" for `𝔽₁₃²` in Moorhouse's Table 6.1.
 
 **Over `ℚ(√3, √5)`.** Both 2 and 3 split in `K = ℚ(i, √3, √5)`.
 - **At 2.** `−15 ≡ 1 (mod 8)`, so `i ∈ ℚ₂(√15)`. The local field is
