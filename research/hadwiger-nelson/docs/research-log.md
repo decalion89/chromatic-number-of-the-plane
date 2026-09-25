@@ -7967,9 +7967,9 @@ A literature search for the quadratic field `ℚ(√47)` turned up two papers of
 K. G. Fischer that none of Moorhouse, Madore, Exoo–Ismailescu or Polymath16
 cites:
 - *A planar geometric graph of chromatic number four*, Congr. Numer. 104
-  (1994) 73–79 (Zbl 0836.05030). It proves `χ(ℚ(√p, √q)²) = 4` for squarefree
-  coprime `p ≡ 3`, `q ≡ 11 (mod 16)` with `pq ≡ 1 (mod 32)`, by an additive
-  colouring into `ℤ/4`, and concludes `χ(ℚ(√3, √11)²) = 4`.
+  (1994) 73–79 (Zbl 0836.05030). It proves that `ℚ(√p, √q)²` has an additive
+  4-colouring, into `ℤ/4`, for squarefree coprime `p ≡ 3`, `q ≡ 11 (mod 16)` with
+  `pq ≡ 1 (mod 32)`, and concludes `χ(ℚ(√3, √11)²) = 4`.
 - *Additive K-colorable extensions of the rational plane*, Discrete Math. 82
   (1990) 181–195. As summarised by Payne (arXiv 0707.1177), it proves
   `χ(ℚ(√N)²) ≤ 4` for `N ≡ 3 (mod 8)`.
@@ -8006,3 +8006,24 @@ colouring exists.
 
 The prototype scripts for these experiments are not yet in the repository.
 Whether `χ(ℚ(√47)²)` is 3 or 4 (or 5) remains open.
+
+## Source check of the note (25 September)
+
+Before the correction was sent, every statement in the note about other work
+was checked against the source itself: the zbMATH entries for Fischer (1990,
+1994) and Johnson (1987); the papers of Payne, Moorhouse, Madore,
+Exoo–Ismailescu, Heule, Dúcz and Voronov–Neopryatnaya–Dergachev; and the
+Polymath16 comments of Speyer, Gibbs and Voronov. The prime decompositions
+were recomputed with PARI/GP, and the tests of both theorems pass. Changes:
+- Fischer (1994) *proves the existence* of an additive 4-colouring; the note
+  said "constructed".
+- Madore's ¶6.6 already states his Prop. 3.2 for any quadratic form, so
+  Theorem 2 is a case of it. The note now says so, and describes its own
+  contribution as the choice of coordinates.
+- Speyer coloured the Moser ring by projecting `R/2R ≅ 𝔽₄ × 𝔽₄`; the
+  coordinates `α + βω` are ours. Gibbs reported Hubai's "analysis and computer
+  search". Voronov is now quoted word for word.
+- Two related works are now cited: Fischer on the connected components of
+  `ℚ(√N₁, …, √N_d)²` (Congr. Numer. 72, 1990) and Johnson's status report
+  (Geombinatorics 9, 2000). We have not seen the report, nor the full texts
+  of Fischer's papers; the abstract of Fischer (1990) is not available online.
