@@ -15,7 +15,7 @@ authors:
   - given-names: Sergi
     family-names: Galán
     alias: decalion89
-repository-code: "https://github.com/decalion89/darwin-50"
+repository-code: "https://github.com/decalion89/chromatic-number-of-the-plane"
 license: MIT
 version: "1.0.0"
 date-released: "2026-09-26"

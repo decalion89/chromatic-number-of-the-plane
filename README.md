@@ -2,7 +2,7 @@
 
 **Sergi Galán** · research repository, 2026
 
-[![tests](https://github.com/decalion89/darwin-50/actions/workflows/tests.yml/badge.svg)](https://github.com/decalion89/darwin-50/actions/workflows/tests.yml)
+[![tests](https://github.com/decalion89/chromatic-number-of-the-plane/actions/workflows/tests.yml/badge.svg)](https://github.com/decalion89/chromatic-number-of-the-plane/actions/workflows/tests.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
 
@@ -103,7 +103,7 @@ repository as a whole, use GitHub's "Cite this repository" button, which reads
   title   = {The {H}adwiger--{N}elson problem over number fields},
   version = {1.0.0},
   year    = {2026},
-  url     = {https://github.com/decalion89/darwin-50/releases/tag/v1.0.0},
+  url     = {https://github.com/decalion89/chromatic-number-of-the-plane/releases/tag/v1.0.0},
   note    = {AI-assisted research; not peer reviewed}
 }
 ```
@@ -117,7 +117,7 @@ For the note on the two 4-chromatic planes:
             and {$\mathbb{Q}(\sqrt{2},\sqrt{3})$} are 4-chromatic},
   year   = {2026},
   note   = {Preprint, not refereed. AI-assisted},
-  url    = {https://github.com/decalion89/darwin-50}
+  url    = {https://github.com/decalion89/chromatic-number-of-the-plane}
 }
 ```
 

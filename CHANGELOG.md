@@ -48,4 +48,4 @@ First versioned release. None of the results below has been refereed.
   Weil's bound does not reach. The statement holds (χ_f(G₆₁) ≥ 5.20); the
   proof and a test now cover it.
 
-[1.0.0]: https://github.com/decalion89/darwin-50/releases/tag/v1.0.0
+[1.0.0]: https://github.com/decalion89/chromatic-number-of-the-plane/releases/tag/v1.0.0
