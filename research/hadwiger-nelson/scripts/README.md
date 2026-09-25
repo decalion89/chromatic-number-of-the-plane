@@ -1,6 +1,6 @@
 # Scripts: the maintained tools
 
-The 84 scripts here are the project's working tools. The 726 one-off experiments behind the
+The 85 scripts here are the project's working tools. The 726 one-off experiments behind the
 research log are in [`experiments/`](experiments/). Run every tool from `research/hadwiger-nelson/`:
 each finds the `hn` package from its own location.
 
@@ -125,3 +125,9 @@ each finds the `hn` package from its own location.
 | `ball2.py` | The complete combinatorial 2-ball of five_rho7: O + u + v for all unit vectors u, v. Colour it by tabu search and measure the best coset fit R.  Does rigidity show up in a graph that contains EVERY point within two unit steps of a vertex? |
 | `ballr.py` | Combinatorial r-balls of five_rho7 in exact lattice coordinates, and what their colourings do on the unit circles at the centre. |
 | `freecurve.py` | free@5 against mean degree, averaged instead of sampled once. |
+
+## Figures
+
+| script | what it does |
+|---|---|
+| `make_figures.py` | Draw the README figures in `docs/figures/` from exact data. It first asserts that every colouring shown is proper. |
