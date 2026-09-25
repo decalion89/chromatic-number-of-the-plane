@@ -9,8 +9,8 @@ representation of the symmetric group of the other k - 1 colours:
     M2 = [(k - 2) p_ABB(a, b) - p_ABC(a, b)] >= 0,   p_ABB = g(b - a) - z,   p_ABC = 1 - g(a) - g(b) - g(b - a) + 2 z,
 and p_ABC >= 0 on every triangle.  A maximum below n / k proves chi >= k + 1.
 
-Result: the new constraints change the bound by less than 0.01 (G_17: 64.56 -> 64.54; F_23^2: 108.55 ->
-108.54, and 107.04 with the localizing matrices either way).  A real 5-colouring of F_13^2 satisfies every
+Result: the new constraints change the bound by about 0.01 at most (G_17: 64.556 -> 64.545; F_23^2:
+108.547 -> 108.542, and 107.04 with the localizing matrices either way).  A real 5-colouring of F_13^2 satisfies every
 constraint (checked).  Not maintained, and scripts/threepoint_verify.py does not read its --colour output.
 
 The original docstring follows.

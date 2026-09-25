@@ -22,22 +22,24 @@ matrices of 1 - x_0 - x_e - x_f for a unit triangle {0, e, f}, of 1 - x_0 - x_e 
 empty-set rows, whose corner k/delta - |T| (delta = |S|/n) is replaced by k n/K0 - |T|: valid for every S
 with |S| >= K0.  A bound below K0 then proves alpha < K0.
 
-**Symmetry.**  Both matrices commute with the rotation group SO(Q), cyclic of order N = q -/+ 1.  In the
-basis of the omega^k-eigenvectors of a rotation, made real by a reflection (J = reflection o conjugation),
-they split into N/2 + 1 real blocks of size about q.  The localizing matrices split by the characters of
+**Symmetry.**  Both matrices commute with the rotation group SO(Q), cyclic of order N, the number of unit
+vectors (q -/+ 1 for 'std', q + 1 for 'inert').  In the basis of the omega^k-eigenvectors of a rotation,
+made real by a reflection (J = reflection o conjugation), they split into N/2 + 1 real blocks of size about
+q.  The localizing matrices split by the characters of
 the Klein group of the edge and of the symmetric group of the triangle.
 
 **Solvers.**  The default ('dsdp') solves the primal with DSDP (through cvxopt), which is accurate in the
 primal but not in the dual, and then finds the dual on the null spaces of the blocks at the optimum: each
 psd multiplier is U W U^T, with U a basis of the null space of its block and W >= 0 small, and with the
-multipliers of the active linear constraints this is a small semidefinite programme (Clarabel).  dual_lp,
-used for three of the stored certificates, restricts W to nonnegative combinations of rank-one directions
-and solves a linear programme instead.  'clarabel' and 'cvxopt' solve the whole programme at once (Clarabel
-needs about 2 GB per thousand triangle variables; cvxopt is slow beyond q = 37).
-scripts/threepoint_verify.py checks the saved dual rigorously.
+multipliers of the active linear constraints this is a small semidefinite programme (Clarabel).  With
+--dual lp, as for three of the stored certificates (std37, std41, inert41), dual_lp restricts W to
+nonnegative combinations of rank-one directions and solves a linear programme instead.  'clarabel' and
+'cvxopt' solve the whole programme at once (Clarabel needs about 2 GB per thousand triangle variables;
+cvxopt is slow beyond q = 37).  scripts/threepoint_verify.py checks the saved dual rigorously.
 
-usage: python3 scripts/threepoint.py q std|inert [--solver dsdp|clarabel|cvxopt] [--tri] [--trilocal]
-                                                  [--edge] [--test K0] [--save certificate.npz]
+usage: python3 scripts/threepoint.py q std|inert [--solver dsdp|clarabel|cvxopt] [--dual nullsdp|lp]
+                                                  [--tri] [--trilocal] [--edge] [--pentagon] [--test K0]
+                                                  [--save certificate.npz] [--verbose]
 """
 import sys, time, json, argparse, itertools
 import numpy as np
@@ -677,19 +679,23 @@ def dual_nullsdp(D, v, tol=1e-5, verbose=True, active_tol=1e-5):
     return 1 + sol.obj_val, np.concatenate(parts)
 
 
-def solve_dsdp_lp(D, verbose=False, tol=1e-5):
-    """primal by DSDP, dual by a small semidefinite programme on the null spaces of the blocks"""
+def solve_dsdp_lp(D, verbose=False, tol=1e-5, dual='nullsdp'):
+    """primal by DSDP; dual by a small semidefinite programme on the null spaces of the blocks (dual =
+    'nullsdp', the default) or by the linear programme of dual_lp (dual = 'lp')"""
     v, val, st, Xs = solve_primal_dsdp(D)
     if verbose: print(f"DSDP: value {val:.6f} ({st})", flush=True)
     best = None
     for t in (tol, tol * 10, tol * 100):
-        bound, z = dual_nullsdp(D, v, tol=t, verbose=verbose)
+        if dual == 'lp':
+            bound, z = dual_lp(D, v, tol=t, verbose=verbose, Xs=Xs)
+        else:
+            bound, z = dual_nullsdp(D, v, tol=t, verbose=verbose)
         if best is None or bound < best[0]:
             best = (bound, z)
         if bound < val + 1e-3 * max(1.0, val):
             break
     bound, z = best
-    return bound, z, f"DSDP {st}; dual on the null spaces"
+    return bound, z, f"DSDP {st}; " + ("dual by LP" if dual == 'lp' else "dual on the null spaces")
 
 
 if __name__ == '__main__':
@@ -699,11 +705,14 @@ if __name__ == '__main__':
     ap.add_argument('--tri', action='store_true'); ap.add_argument('--trilocal', action='store_true')
     ap.add_argument('--edge', action='store_true'); ap.add_argument('--test', type=int, default=None)
     ap.add_argument('--pentagon', action='store_true')
+    ap.add_argument('--dual', default='nullsdp', choices=['nullsdp', 'lp'])
     ap.add_argument('--save', default=None); ap.add_argument('--verbose', action='store_true')
     a = ap.parse_args()
     D = build(a.q, a.kind, K0=a.test, tri=a.tri, trilocal=a.trilocal, edge=a.edge, pentagon=a.pentagon)
-    solve = {'dsdp': solve_dsdp_lp, 'clarabel': solve_clarabel, 'cvxopt': solve_cvxopt}[a.solver]
-    val, z, status = solve(D, verbose=a.verbose)
+    if a.solver == 'dsdp':
+        val, z, status = solve_dsdp_lp(D, verbose=a.verbose, dual=a.dual)
+    else:
+        val, z, status = {'clarabel': solve_clarabel, 'cvxopt': solve_cvxopt}[a.solver](D, verbose=a.verbose)
     n = a.q * a.q
     print(f"{a.kind}{a.q}: three-point bound alpha <= {val:.4f} ({val / n:.4f} n); n/5 = {n / 5:.1f}, "
           f"n/6 = {n / 6:.1f}; {status} [{time.time() - D['t0']:.0f}s]", flush=True)
