@@ -7855,3 +7855,59 @@ links. In short:
   - the 72-point multi-distance witness;
   - skeleton and `MODE` growth.
 
+## Galois conjugation carries gadgets: a witness that needs one gadget (25 September)
+
+**The observation.** Let `K` be a CM field, as all of ours are, and `σ` any
+automorphism of `K`.
+- **A graph automorphism.** Complex conjugation commutes with `σ`. So if
+  `u ū = 1` then `σ(u) · conj σ(u) = σ(u ū) = 1`: `σ` maps unit vectors to unit
+  vectors. It is therefore an automorphism of the unit-distance graph `Γ(K)`,
+  although it moves points wildly in the real plane.
+- **It carries gadgets.** Let `H ⊂ K` be a unit-distance graph in which a pair
+  at squared distance `d²` is split in every 5-colouring. Then `σ(H)` does the
+  same for `σ(d²)`, which is again positive.
+
+**What it changes.** In the Exoo–Ismailescu route a witness `W` needs one gadget
+per non-unit distance. With Galois it needs one per Galois orbit of distances.
+We found nothing like this in the literature or in Polymath16.
+
+**A verified witness of the new kind.** `data/W_moser_orbit_9_33.json`:
+- **Size.** 187 points in `ℚ(√−3, √−11)`, vertex-critical.
+- **Edges.** 508 at distance 1, and 495 at the orbit `d² = (9 ∓ √33)/6`
+  (`d = 0.7366` and `1.5676`).
+- **Verdict.** Not 5-colourable. CaDiCaL, Glucose, MiniSat and kissat agree,
+  and drat-trim verifies the proof.
+- **Cost.** It needs one gadget, at 0.7366 or equivalently at 1.5676.
+
+**Repulsion is Galois-invariant, as it must be.** Across 16–24 tabu colourings
+of the L16 seed, conjugate distances have almost the same `P(same)`:
+
+| orbit | `P(same)` |
+|---|---|
+| `(9 ∓ √33)/6` | 0.205 / 0.212 |
+| `(14 ∓ 2√33)/3` | 0.079 / 0.086 |
+| `(7 ∓ √33)/2` | 0.133 / 0.132 |
+| `(31/6 ∓ 5√33/18)` | 0.135 / 0.139 |
+
+So an orbit is repulsive or attractive as a whole.
+
+**The tension that remains.**
+- **The witness side.** A witness needs distances that constrain colourings,
+  that is, attractive ones. The only orbit that makes a 865-point Moser ball
+  refuse five colours is the two-step orbit `(9 ∓ √33)/6`.
+- **The gadget side.** A gadget is easiest at a repulsive distance.
+
+**Four cloud searches follow from this.**
+- **`orbitw`.** Does the 18 524-point L16 growth graph (`data/L16_kw2.json`)
+  refuse five colours once the edges of the repulsive orbit `(14 ∓ 2√33)/3`
+  (`d = 0.9149`, `2.9149`) are added?
+  - tabu fails with 366 conflicts, against 108 without them;
+  - kissat is running for 12 hours.
+- **`w0915`.** Grow a witness directly as a `{1, 0.9149, 2.9149}`-graph.
+  `scripts/grow_lean.py` now accepts exact extra distances, via the JSON keys
+  `dist2_exact` and `units2`.
+- **`g0915`.** Grow a unit-distance gadget at 0.9149 or 2.9149, on four
+  target pairs.
+- **`g0737`.** Grow a unit-distance gadget at 0.7366 or 1.5676, which would
+  complete the verified 187-point witness.
+
