@@ -1,4 +1,4 @@
-# Data
+# Data: graphs and witnesses in exact coordinates
 
 Every graph here is stored with **exact** coordinates, so every distance can be recomputed exactly.
 
