@@ -1,6 +1,6 @@
 # Scripts: the maintained tools
 
-The 85 scripts here are the project's maintained tools; the 726 one-off experiments behind the
+The 85 scripts here are the project's maintained tools; the 728 one-off experiments behind the
 research log are in [`experiments/`](experiments/). Run every tool from `research/hadwiger-nelson/`:
 each finds the `hn` package from its own location.
 
@@ -47,7 +47,7 @@ output directory (`HN_OUT` overrides it), as an import path, or as the location 
 
 | script | what it does |
 |---|---|
-| `grow_lean.py` | The growth loop of `grow_kw.py` with the candidate pool held in numpy arrays (about ten times less memory) and with every unit-distance pair found, including pairs along unit vectors not yet known; modes `plain`, `apart` and `same`. |
+| `grow_lean.py` | The growth loop of `grow_kw.py` with the candidate pool held in numpy arrays (about ten times less memory) and with every unit-distance pair found, including pairs along unit vectors not yet known; modes `plain`, `apart` and `same`; the number of colours is `K` (5 by default). |
 | `grow_kw.py` | The growth loop of `grow_ls2.py` extended to seeds with extra-distance pairs (`two_edges`): it colours with `tabu2`, keeping unit edges proper while minimising the alike extra pairs, and grows near the pairs that stay alike. |
 | `grow_ls2.py` | Colouring-guided growth: repairs a 5-colouring of the enlarged graph with `tabucol` (then an incremental CDCL solver or kissat), and adds the candidate points whose unit neighbours carry all five colours. |
 | `asym_grow.py` | Grows unit-distance graphs by attaching points one at a time at distance 1 from random vertices, without symmetrising, and measures the forced core as it grows. |

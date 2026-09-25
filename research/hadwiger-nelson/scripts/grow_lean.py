@@ -21,7 +21,7 @@ MODE plain | apart (c(A) = c(B) imposed) | same (c(A) != c(B) imposed).
 Any UNSAT is a claim until verify6 / verify_gadget re-check it exactly.
 
 usage: grow_lean.py <in.json> <out.json> [R] [near_weight]
-env: MODE, KISSAT, KTIME, LSIT, IT2 (soft-edge phase; default 400000 with a skeleton, else 0), TABU2
+env: K (colours, default 5), MODE, KISSAT, KTIME, LSIT, IT2 (soft-edge phase; default 400000 with a skeleton, else 0), TABU2
 """
 import os
 HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,7 +31,7 @@ import numpy as np
 sys.path.insert(0, HN_DIR)
 from hn.field import Field
 from hn.geometry import Point
-t0 = time.time(); K = 5
+t0 = time.time(); K = int(os.environ.get("K", "5"))  # colours; 5 in the search for six
 IN, OUT = sys.argv[1], sys.argv[2]
 R = int(sys.argv[3]) if len(sys.argv) > 3 else 40
 WN = float(sys.argv[4]) if len(sys.argv) > 4 else 1.0
