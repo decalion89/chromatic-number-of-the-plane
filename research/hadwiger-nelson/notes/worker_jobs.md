@@ -93,3 +93,41 @@ For (W), a field with `√−2` and `√−3` is richer. There the isosceles tri
 
 **Rule: an UNSAT is a claim, never a result, until `verify_pair.py` agrees
 with all solvers and DRAT.**
+
+## Galois conjugation: one gadget covers a whole orbit of distances (25 September)
+
+In a CM field `K` (all of ours are), complex conjugation commutes with every
+automorphism `σ` of `K`.
+- **A graph automorphism.** If `u ū = 1` then `σ(u) · conj(σ(u)) = σ(u ū) = 1`,
+  so `σ` maps unit vectors to unit vectors. It is therefore an automorphism of
+  the unit-distance graph `Γ(K)`, although it is not an isometry of the real
+  plane.
+- **It carries gadgets.** A unit-distance gadget `H ⊂ K` that forces a pair at
+  squared distance `d²` apart gives the gadget `σ(H)`, which forces a pair at
+  `σ(d²)` apart. `σ(d²)` is again positive, because `N(z) = z z̄` is totally
+  positive.
+
+**Consequence for the Exoo–Ismailescu route.** A witness `W` may use edges at 1
+and at any distances in one Galois orbit, and it still needs only one gadget.
+Place `σ(H)` on the edges at `σ(d)`.
+
+**A verified witness of this kind.** `data/W_moser_orbit_9_33.json`:
+- **Size.** 187 points in `ℚ(√−3, √−11)`, vertex-critical.
+- **Edges.** 508 at distance 1, 243 at `d² = (9 − √33)/6` (`d = 0.7366`) and
+  252 at the conjugate `(9 + √33)/6` (`d = 1.5676`).
+- **Verdict.** Not 5-colourable. CaDiCaL, Glucose, MiniSat and kissat agree,
+  and drat-trim verifies the proof.
+- **Cost.** It needs one gadget, at 0.7366 or 1.5676 (equivalent by Galois).
+  That distance is two-step, and `P(same) ≈ 0.21` in the L16 seed: middling.
+
+**The repulsive orbit `(14 ∓ 2√33)/3`** (`d = 0.9149`, `2.9149`).
+- It has `P(same) = 0.079` and `0.086` in the L16 seed, as repulsive as `2/√3`.
+- On Moser balls of up to 3 313 points it is 5-colourable, even together with
+  `4/3` and the orbit `(14/3 ∓ 5√33/9)`.
+- On the 18 524-point L16 growth graph (`data/L16_kw2.json`) with its 147 113
+  unit edges plus the 57 194 orbit edges, tabu fails with 366 conflicts, and
+  kissat is deciding.
+
+If that graph refuses five colours, a single unit-distance gadget at 0.9149 in
+L16 would finish `χ(ℝ²) ≥ 6`. That is the repulsion worker's `L16 @ (14−2√33)/3`
+growth.
