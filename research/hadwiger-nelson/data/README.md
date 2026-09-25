@@ -1,7 +1,7 @@
 # Data: graphs and witnesses in exact coordinates
 
 Every graph here is stored with exact coordinates, so every distance can be recomputed exactly. The
-table at the end lists each of the 84 JSON files of this directory once. Growth runs also write
+table at the end lists each of the 84 JSON files tracked in this directory once. Growth runs also write
 transient checkpoints and solver files here (`*_kw<n>.json`, `*_ls<n>.json`, `*_inc.json`,
 `*_grow.json`, `blk_plain*.json`, `*.cnf`, `*.kissat`); `.gitignore` excludes them, and they are not
 indexed.
@@ -10,7 +10,7 @@ indexed.
 
 Four formats occur.
 
-**Graphs with coordinates in a multiquadratic field** (65 files) have two keys:
+**Graphs with coordinates in a multiquadratic field** (65 files) have the keys
 - `field_generators`: `[a, b, …]`, meaning that the coordinates lie in ℚ(√a, √b, …);
 - `points`: a list of points `[x, y]`, each coordinate a list of `[numerator, denominator]` pairs on
   the basis of square-free products of the generators, in the order `hn.field.Field(field_generators)`
@@ -86,7 +86,7 @@ The tests and `scripts/verify_pair.py` read the first format. `scripts/orbit_wit
 | file | points | field | description |
 |---|---:|---|---|
 | `K_rot.json` | 426 | ℚ(√3, √11, √247) | Exoo–Ismailescu's graph K = H ∪ λ_A(H), with H turned by 150° onto the unit vectors of `five_rho7.json` and A at its densest vertex; `two_edges` lists its 892 pairs at distance 2 (written by `scripts/mk_kseed.py`). |
-| `L16_W0915_seed.json` | 6 080 | ℚ(√3, √7, √11, √247) | `L16_seed.json` with extra edges at the Galois orbit d² = (14 ∓ 2√33)/3 (d ≈ 0.9149, 2.9149), a seed for plain growth towards a witness that, by Galois conjugation, would need a single unit-distance gadget, at d ≈ 0.9149. |
+| `L16_W0915_seed.json` | 6 080 | ℚ(√3, √7, √11, √247) | `L16_seed.json` with extra edges at the Galois orbit d² = (14 ∓ 2√33)/3 (d ≈ 0.9149, 2.9149), given by `units2` and `dist2_exact`, a seed for plain growth towards a witness that, by Galois conjugation, would need a single unit-distance gadget, at d ≈ 0.9149. |
 | `L16_apart43_rank.json` | — | — | 200 pairs of `L16_seed.json` at distance 2/√3, each with the count 12 over 12 sampled 5-colourings, ranked as targets for `MODE=apart` growth. |
 | `L16_apart43_survivors.json` | — | — | 1 600 pairs of `L16_seed.json` at distance 2/√3 kept as candidates for being forced apart, and the 12 of them chosen as targets for `MODE=apart` growth. |
 | `L16_g0737_1021_1317_seed.json` | 6 080 | ℚ(√3, √7, √11, √247) | `L16_seed.json` with the target pair A = 1021, B = 1317 at d² = (9 − √33)/6 (d ≈ 0.7366), in the Galois orbit of `W_moser_orbit_9_33.json`, for `MODE=apart` growth towards a gadget. |
@@ -108,7 +108,7 @@ The tests and `scripts/verify_pair.py` read the first format. `scripts/orbit_wit
 | `W_lattice_16_21_28_61.json` | 72 | ℤ[ω]/√−3 | A vertex-critical graph on 72 points of ℤ[ω]/√−3 with 553 edges at distances 1, 4/√3, √7, √(28/3) and √(61/3) and no proper 5-colouring, rebuilt by `scripts/lattice_witness.py 3,16,21,28,61 5`. |
 | `W_moser_orbit_9_33.json` | 187 | ℚ(√3, √11) | A vertex-critical graph on 187 points with 508 edges at distance 1 and 495 at the Galois orbit d² = (9 ∓ √33)/6 (d ≈ 0.7366, 1.5676) and no proper 5-colouring, checked by `scripts/orbit_witness_test.py` with orbit `9_1`. |
 | `blocked_32312_coloured.json` | 32 312 | ℚ(√3, √11, √247) | Plain growth from `g2e_blocked_seed.json` to 32 312 points with a 5-colouring found by kissat, proper on the 282 909 edges along the file's 134 unit vectors but with 43 monochromatic pairs among the 223 further unit-distance pairs in other directions. |
-| `blocking_requirements.json` | — | — | For a point p with 15 unit neighbours next to the 2 689-vertex carrier obtained by gluing `Sa` at the 12-point orbit of Sa[265], four pairs of those neighbours, with their squared distances, that meet the 66 4-colourings found (in three rounds) that use only three colours on them (`experiments/fullcover.py`). |
+| `blocking_requirements.json` | — | — | For a point p with 15 unit neighbours next to the 2 689-vertex carrier obtained by gluing `Sa` at the 12-point orbit of Sa[265], four pairs of those neighbours, with their squared distances, such that each of the 66 4-colourings found in three rounds that use only three colours on the neighbours makes one of the pairs monochromatic (`experiments/fullcover.py`). |
 | `chain23.json` | 10 | ℚ(√2, √3) | A chain of three unit rhombi (10 vertices, 16 edges) with no proper 3-colouring, the lower bound in χ(ℚ(√2, √3)²) = 4 (`tests/test_q23.py`, `certificates/chain23_no3coloring.json`). |
 | `closure_five_247_c.json` | 1 851 | ℚ(√3, √11, √247) | The closure of `five_247_c.json` under adding the centre of every unit triangle, reached after four rounds. |
 | `coset_unsplit_five_247_c.json` | — | — | The pairs of `five_247_c.json` at squared distance 5/9, 4/3, 3 or 25 that no coset 5-colouring splits: there are none (`experiments/cosetfilter.py`). |
@@ -118,7 +118,7 @@ The tests and `scripts/verify_pair.py` read the first format. `scripts/orbit_wit
 | `disc_1113.json` | 1 113 | ℚ(√3, √11, √247) | The smallest disc about the centroid of `five_247.json` whose points still have no proper 4-colouring (`experiments/disc.py`). |
 | `ei_H214.json` | 214 | ℚ(√3, √11) | Exoo–Ismailescu's graph H as a point set (1 004 unit edges), with their pair A, B at distance 5, which is alike in every 5-colouring that has no monochromatic pair at distance 1 or 2. |
 | `ei_rho7.json` | 638 | ℚ(√3, √11) | Exoo–Ismailescu's H with its images under ρ₇ and ρ₇⁻¹ about A (3 012 unit edges), on which the 2-adic 4-colouring of ℚ(√3, √11)² is proper (`notes/local_colourings.md`). |
-| `escape5_five_247_c.json` | — | — | For a point p with 12 unit neighbours in `five_247_c.json`, 32 sampled 5-colourings that use only two colours on them, all met by the single pair (281, 655) at squared distance 3 (`experiments/escape5.py`). |
+| `escape5_five_247_c.json` | — | — | For a point p outside `five_247_c.json` with 12 unit neighbours in it, 32 sampled 5-colourings that use only two colours on them, each of which makes the pair (281, 655) at squared distance 3 monochromatic (`experiments/escape5.py`). |
 | `five_23.json` | 7 141 | ℚ(√3, √11, √23) | `Sa` glued at the D₆-orbit of Sa[25] and spindled at squared distance 64/3 over the C₆-orbit of a pivot (sine √759/128, 759 = 3·11·23), with no proper 4-colouring (`tests/test_five_247.py`). |
 | `five_23_v7.json` | 10 333 | ℚ(√3, √11, √23) | A larger graph built by the recipe of `five_23.json`, with no proper 4-colouring. |
 | `five_247.json` | 1 139 | ℚ(√3, √11, √247) | A 5-chromatic graph: `Sa` glued to its 60° turn about the vertex Sa[25], then spindled, by a rotation through 2 arcsin(3/16), at a pair at distance 8/3 that is alike in every 4-colouring (`tests/test_five_247.py`). |
@@ -153,12 +153,12 @@ The tests and `scripts/verify_pair.py` read the first format. `scripts/orbit_wit
 | `hub_disjunction.json` | — | — | For the carrier and point of `blocking_requirements.json`, a hub disjunction: in each sampled 4-colouring with only three colours on the point's unit neighbours, the neighbour 495 shares its colour with one of three vertices W, at the listed squared distances (`experiments/hubdisj.py`). |
 | `hunt_811.json` | 811 | ℚ(√3, √11, √247) | A subgraph of `five_247.json` with no proper 4-colouring, found by vertex deletion (seed 1). |
 | `idealquot_ei_H214_3_1.json` | — | — | A proper 5-colouring of the Cayley graph of M/αM ≅ (ℤ/13)² on the unit vectors, for α = 3 + ω and M the module of `ei_H214.json` (`scripts/idealquot.py`). |
-| `mu5_menu.json` | — | — | For 30 candidate points p of `five_247_c.json`, the pairs that must be forced apart to raise μ₅(p) above 2, with \|N(p)\| and the squared distances of the pairs (`experiments/requirements.py`). |
-| `mu5_requirement.json` | — | — | The cover of `escape5_five_247_c.json` iterated until the solver, limited to 4 million conflicts per call, found no further 5-colouring with two colours on the 12 neighbours: the pair (281, 655) at squared distance 3 (`experiments/escape5b.py`). |
+| `mu5_menu.json` | — | — | For 30 candidate points p outside `five_247_c.json` (images of its vertices under 60° and 30° rotations), the pairs of unit neighbours that must be forced apart to raise μ₅(p) above 2, with the size of N(p) and the squared distances of the pairs (`experiments/requirements.py`). |
+| `mu5_requirement.json` | — | — | The search of `escape5_five_247_c.json` iterated: once the pair (281, 655) at squared distance 3 is required to differ, the solver, limited to 4 million conflicts per call, found no further 5-colouring with only two colours on the 12 neighbours (`experiments/escape5b.py`). |
 | `narrow_disjunction.json` | — | — | A minimal set of 133 pairs of `five_247_c.json` at squared distances (9 − √33)/6 and (7 − √33)/6, one of which is monochromatic in every 5-colouring (`experiments/narrow.py`). |
 | `order6_carrier.json` | 6 006 | ℚ(√3, √11, √247) | A 4-colourable carrier in which the composite isometry τ is a rotation of order 6, with a six-point orbit that is monochromatic in every 4-colouring, at squared distances 64/9, 64/3 and 256/9 from one another (`tests/test_order_six_tuning.py`). |
 | `rarest_v139.json` | 24 781 | ℚ(√3, √5, √7, √11, √29) | A graph with no proper 4-colouring, spindled over six pivots at the rare forced squared distance 256/9 of the glue centre Sa[139], which needs √1015 = √(5·7·29) (`experiments/rarest.py`). |
-| `rarest_v199.json` | 39 313 | ℚ(√3, √5, √7, √11, √23, √29) | A graph built on the glue centre Sa[199] from its rare forced squared distances 64/3 and 256/9, in a field that adds √5, √7 and √29. |
+| `rarest_v199.json` | 39 313 | ℚ(√3, √5, √7, √11, √23, √29) | A graph with no proper 4-colouring built on the glue centre Sa[199] from its rare forced squared distances 64/3 and 256/9, in a field that adds √5, √7 and √29. |
 | `rho7_H.json` | 2 606 | ℚ(√3, √11, √247) | `five_rho7.json` with Exoo–Ismailescu's H, turned by 150° with A at the densest vertex; `two_edges` lists H's 446 pairs at distance 2. |
 | `rho7_lambda_K.json` | 5 210 | ℚ(√3, √11, √247) | `five_rho7.json` ∪ λ_O(`five_rho7.json`) ∪ K with O = A, where K is Exoo–Ismailescu's graph turned onto the module; `two_edges` lists K's 892 pairs at distance 2 (written by `scripts/mk_kseed.py`). |
 | `rho7_pair2_seed.json` | 4 981 | ℚ(√3, √11, √247) | `five_rho7.json` with a pair a, a + 2e along a unit edge e, the half-turn about their midpoint and both unit circles filled: a seed for a distance-2 gadget. |
