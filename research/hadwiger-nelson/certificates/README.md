@@ -50,7 +50,8 @@ be deleted, leaving 31 vertices, with the pressure still 3.
 
 Most logs belong to a certificate above. Four record checks of files in `data/`: the two
 multi-distance witnesses, the forced pair of Exoo and Ismailescu's graph H, and every graph there
-said to have no proper 4-colouring (`data_no4_checks.txt`).
+said to have no proper 4-colouring (`data_no4_checks.txt`). One records part A of
+`scripts/g17_alpha.py`, a step towards α(G₁₇) ≤ 57 (`g17_part_a_checks.txt`).
 
 | file | what it records |
 |---|---|
@@ -60,6 +61,7 @@ said to have no proper 4-colouring (`data_no4_checks.txt`).
 | `degrey_1581_cnf_head.txt` | The first 14 and the last 14 lines of that formula: the header, the first 13 vertex clauses, the last two edge clauses and the 12 unit clauses that pin the triangle. |
 | `ei_H214_forced_pair_drat_trim_verification.txt` | kissat and drat-trim on the formula of `tests/test_denominator_five.py` for `data/ei_H214.json`, Exoo and Ismailescu's graph H with edges at distances 1 and 2 and its pair A, B at distance 5 required to differ, one triangle pinned: unsatisfiable, so A and B share a colour in every such 5-colouring; `s VERIFIED` with 436 214 of 570 197 lemmas in the core. |
 | `five_247_c_drat_trim_verification.txt` | kissat and drat-trim on the 17 063-clause formula of `five_247_c_no4coloring.json`, rebuilt from the certificate: `s VERIFIED`, with 1 455 257 of 4 006 246 lemmas in the core, in 463 s; the file gives the SHA-256 of the formula and of the proof. |
+| `g17_part_a_checks.txt` | `scripts/g17_alpha.py`, part A: for each of the seven circles N = c of G₁₇ with no unit distance inside, the formula saying that 39 vertices of the region adjacent to none of {0} + C_c are independent; kissat finds all seven unsatisfiable and drat-trim verifies all seven DRAT proofs, so no independent set of 58 points contains a point together with its whole circle. Each line gives the SHA-256 of the formula, which `tests/test_g17.py` recomputes. |
 | `genuine_pair_19_drat_trim_verification.txt` | kissat (with `--no-binary`) and drat-trim on the 118-clause formula of `genuine_pair_19_no3coloring.json`, rebuilt from the certificate: `s VERIFIED`, with 50 of 91 lemmas in the core. |
 | `moser_spindle_drat_trim_verification.txt` | kissat (with `--no-binary`) and drat-trim on the 40-clause formula of `moser_spindle_no3coloring.json`, rebuilt from the certificate: `s VERIFIED`, with 12 of 26 lemmas in the core. |
 | `pressure3_witness_47_drat_trim_verification.txt` | kissat (with `--no-binary`) and drat-trim on the 583-clause formula of step 5 for `pressure3_witness_47.json`: `s VERIFIED`, with 301 of 895 lemmas in the core. |

@@ -1,0 +1,19 @@
+# scripts/g17_alpha.py (part A), run on 26 September 2026 with kissat 4.0.4 and drat-trim (commit
+# 2e3b2dc0ecf938addbd779d42877b6ed69d9a985), one core each, on a machine running other solvers:
+#   HN_OUT=<dir> python3 scripts/g17_alpha.py --kissat kissat --drat-trim drat-trim
+# G_17 = Cay(F_17^2, {x^2 - 3y^2 = 1}). For each circle C_c = {N = c} with no unit distance inside
+# (c = 4, 5, 9, 11, 12, 14, 15), the formula A_c says that 39 vertices of the region R_c form an
+# independent set; R_c is the set of vertices adjacent to none of the 19 points of {0} + C_c, and the
+# cardinality constraint is the totalizer described in the script. kissat solves A_c with a binary
+# DRAT proof, and drat-trim checks the proof against the formula. Each line gives the circle, the size
+# of R_c, the header and SHA-256 of the formula, kissat's verdict, drat-trim's verdict with the lemmas
+# in its core, and the times.
+# Result: all 7 formulas are unsatisfiable and all 7 proofs are VERIFIED. So no independent set of 58
+# points of G_17 contains a point together with its whole circle (the script's docstring, part A).
+A_4: region of 90 vertices, at least 39 of them; p cnf 619 3461, sha256 79ed362d0b4aff52ac65455d098faa1073f807b8e1e40819fc4382aada74fe5f; kissat UNSAT in 3 s; drat-trim VERIFIED, 65262 of 115824 lemmas in core in 3 s
+A_5: region of 108 vertices, at least 39 of them; p cnf 745 4487, sha256 e4184eafa97a2b7a133f492923936b8d6c55f1b17c654557c3d2a3b8b8643f0d; kissat UNSAT in 22 s; drat-trim VERIFIED, 424525 of 660683 lemmas in core in 27 s
+A_9: region of 90 vertices, at least 39 of them; p cnf 619 3551, sha256 f66d413b2dfd7f03aa7e929aad52dc1d26c390480cd26756b2680dfd0b68e3f6; kissat UNSAT in 1 s; drat-trim VERIFIED, 15109 of 26746 lemmas in core in 0 s
+A_11: region of 90 vertices, at least 39 of them; p cnf 619 3560, sha256 511626741a8023ceca4fbb5f769aebbbb35a1003cccde2e1e167f70707e3c034; kissat UNSAT in 1 s; drat-trim VERIFIED, 17984 of 34370 lemmas in core in 1 s
+A_12: region of 108 vertices, at least 39 of them; p cnf 745 4379, sha256 0e3a2230a9eda4c2989d0556e4108af14f657623dfab313c8ee0de9360829f60; kissat UNSAT in 128 s; drat-trim VERIFIED, 2174911 of 3266072 lemmas in core in 215 s
+A_14: region of 90 vertices, at least 39 of them; p cnf 619 3560, sha256 d2c142b180a3298b1faa869bc71a4a96f9103f9b5de9beea55dca079d21b891e; kissat UNSAT in 0 s; drat-trim VERIFIED, 13536 of 23859 lemmas in core in 0 s
+A_15: region of 90 vertices, at least 39 of them; p cnf 619 3533, sha256 cecff7db70cbf87dfbf0647dd46a738324a9cb62ac1a5ab4e909f51f4a62efaf; kissat UNSAT in 1 s; drat-trim VERIFIED, 19620 of 35933 lemmas in core in 1 s
