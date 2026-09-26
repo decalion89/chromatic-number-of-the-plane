@@ -527,7 +527,7 @@ def cegar_core(rel: "ColourRelations", p: int, key=None,
 #   its circle of 30, which splits into FIVE hexagons -- the 60-degree orbits,
 #     as the bipartiteness argument above requires, each with exactly two
 #     alternating 2-colourings, so five independent orientation bits;
-#   sixteen further points, at d^2 = 1/3, (7 +- sqrt33)/6 and (3 +- sqrt33)/6,
+#   sixteen further points, at d^2 = 1/3, (7 +- sqrt33)/6 and (9 +- sqrt33)/6,
 #     each adjacent to exactly two circle points -- and in all sixteen cases
 #     the two lie in DIFFERENT hexagons, so each one reads the relative
 #     orientation of a pair of them.

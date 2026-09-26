@@ -3,6 +3,9 @@
     python -m hn.cli verify  CERT [--drat-trim PATH]
     python -m hn.cli demo    [--out DIR]
     python -m hn.cli degrey  [--out DIR] [--timeout SECONDS]
+
+`demo` and `degrey` write their certificate to DIR, by default the directory in the environment
+variable HN_OUT (or /tmp/hn), so that they never overwrite the stored certificates.
 """
 
 from __future__ import annotations
@@ -21,10 +24,19 @@ from .graph import build_graph
 
 
 def cmd_verify(args) -> int:
+    """Exit status 0: verified (a colouring checked on the exact edges, or a DRAT proof checked by
+    drat-trim). 1: rejected. 2: the solver finds no colouring, but drat-trim was not found, so the
+    proof was not checked."""
     checker = args.drat_trim or shutil.which("drat-trim")
     ok, msg = verify_certificate(args.certificate, drat_trim=checker)
-    print(("VERIFIED: " if ok else "REJECTED: ") + msg)
-    return 0 if ok else 1
+    if not ok:
+        print("REJECTED: " + msg)
+        return 1
+    if msg.startswith("UNSAT"):
+        print(msg)
+        return 2
+    print(msg if msg.startswith("VERIFIED: ") else "VERIFIED: " + msg)
+    return 0
 
 
 def cmd_demo(args) -> int:
@@ -35,7 +47,7 @@ def cmd_demo(args) -> int:
     print(f"  chi = {chromatic_number(g)[0]}  (expected 4)")
     core = find_uncolorable_core(g, 3, verbose=False)
     print(f"  minimal non-3-colourable subgraph: {core}")
-    out = args.out or "certificates"
+    out = args.out or os.environ.get("HN_OUT", "/tmp/hn")
     os.makedirs(out, exist_ok=True)
     p = os.path.join(out, "moser_spindle_no3coloring.json")
     save_certificate(g, p, 3, "chi(R^2) >= 4: this unit-distance graph has no proper 3-colouring")
@@ -81,7 +93,7 @@ def cmd_degrey(args) -> int:
     if sat is not False:
         print("  reconstruction did NOT reproduce the result")
         return 1
-    out = args.out or "certificates"
+    out = args.out or os.environ.get("HN_OUT", "/tmp/hn")
     os.makedirs(out, exist_ok=True)
     p = os.path.join(out, "degrey_1581_no4coloring.json")
     save_certificate(
