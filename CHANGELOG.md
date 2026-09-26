@@ -12,6 +12,14 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- `scripts/g17_alpha.py`, towards α(G₁₇) ≤ 57, which would give χ(G₁₇) ≥ 6:
+  - the 57-point rosette found by kissat;
+  - part A: no independent set of 58 points contains a point together with its
+    whole circle, with the DRAT-checked log `certificates/g17_part_a_checks.txt`;
+  - `tests/test_g17.py` (in CI) and `tests/test_g17_slow.py`.
+
+  The remaining case, part B, is open (research log, "`α(G₁₇)`: the best sets
+  are rosettes").
 - The Zenodo DOIs: 10.5281/zenodo.22976636 for version 1.0.0 and
   10.5281/zenodo.22976635 for all versions. They are in `CITATION.cff` and in
   the README, as a badge and in the BibTeX entry.

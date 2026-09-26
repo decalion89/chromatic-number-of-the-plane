@@ -1,6 +1,6 @@
 # Scripts: the maintained tools
 
-The 90 scripts here are the project's maintained tools; the 733 one-off experiments behind the
+The 91 scripts here are the project's maintained tools; the 733 one-off experiments behind the
 research log are in [`experiments/`](experiments/). Run every tool from `research/hadwiger-nelson/`:
 each finds the `hn` package from its own location.
 
@@ -18,8 +18,8 @@ The C programs `tabucol` and `tabu2` are compiled from `tabucol.c` and `tabu2.c`
 the binaries are not in the repository. Intermediate files go to a working directory given by the
 environment variable `HN_OUT` (default `/tmp/hn`):
 - `asym_grow.py`, `ei_rebuild.py`, `gadget.py`, `measure_fk.py`, `search_disjunction.py` and
-  `search_forced.py` write their output there, and `check_no4.py` and `orbit_witness_test.py` their
-  formulas and proofs;
+  `search_forced.py` write their output there, and `check_no4.py`, `g17_alpha.py` and
+  `orbit_witness_test.py` their formulas and proofs;
 - `gadget.py` reads a carrier pickle from it when one is named, and `verifygate.py` reads the
   `gate.pkl` that `experiments/gate12.py` writes there, or a path given as its argument.
 
@@ -140,6 +140,7 @@ result to the path in `OUT`, by default under `/tmp`.
 |---|---|
 | `finite_hoffman.py` | Computes every eigenvalue of the unit-distance graph of 𝔽_q² (with `--inert`, of the anisotropic plane G_q) in interval arithmetic and the resulting Hoffman bound on α and χ, and for 𝔽_q² the best interval colouring (m consecutive parallel lines per colour). |
 | `threepoint.py` | Builds and solves Schrijver's three-point bound for the independence number of a finite plane (`std`: x² + y²; `inert`: the anisotropic plane G_q), block-diagonalised by the rotation group, optionally with localizing matrices of a unit edge, a unit triangle or a unit pentagon; the default solver is DSDP for the primal, with the dual found on the null spaces of the blocks, and `--save` writes the dual as a certificate. |
+| `g17_alpha.py` | Independent sets of the anisotropic plane G₁₇ (`α ≤ 57` would give χ(G₁₇) ≥ 6): holds the 57-point rosette found by kissat, runs part A (no independent set of 58 points contains a point with its whole circle N = c; kissat and drat-trim on one formula per circle, log in `certificates/g17_part_a_checks.txt`) and writes the formula of part B, the open case, with `--write-b`. |
 | `threepoint_verify.py` | Checks a saved certificate rigorously: rebuilds the blocks in interval arithmetic, proves the dual matrices positive definite by an exact rational LDLᵀ, and bounds α using 0 ≤ g, z ≤ 1 (`data/threepoint/`). |
 
 ## Measurements on balls and growth curves

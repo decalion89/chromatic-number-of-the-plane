@@ -17,11 +17,11 @@ The tests marked `slow` include a 4-colourability solve of de Grey's 1581-vertex
 limit; `hn.coloring` enforces it for CaDiCaL, which ignores pysat's interrupt, by running the
 solver in a separate process.
 
-GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 33 files marked CI
-on every push to `main`, on every pull request, and on manual dispatch: 383 tests, which took two
+GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 34 files marked CI
+on every push to `main`, on every pull request, and on manual dispatch: 389 tests, which took two
 minutes in a local run. The DRAT test in `test_certify.py` is skipped there, because the
-workflow does not install drat-trim. The other ten files (282 tests) are run locally; without their
-14 tests marked `slow` they took 32 minutes in a local run, 20 of them in one test of
+workflow does not install drat-trim. The other eleven files (283 tests) are run locally; without their
+15 tests marked `slow` they took 32 minutes in a local run, 20 of them in one test of
 `test_two_tunings.py`. The eight slow tests of `test_threepoint_certificates.py` take about 15
 minutes together.
 
@@ -43,6 +43,8 @@ minutes together.
 | `test_finite_planes_slow.py` |  | No 4-colouring of 𝔽₂₉², 𝔽₃₁², 𝔽₄₁² or 𝔽₄₃² (marked `slow`; 15 s to 8 minutes each). |
 | `test_five_247.py` |  | The 5-chromatic unit-distance graphs over ℚ(√3, √11, √247) and ℚ(√3, √11, √23) in `data/`: edge counts recomputed exactly, chromatic number 5, C₆-invariance of the symmetric graphs, and the radicals that the spindle angles need. |
 | `test_forced.py` | ✓ | Forced colour relations on graphs with known answers: pairs forced alike or different, cores, and the pressure at a vertex p (the least number of colours a k-colouring uses on the unit neighbours of p), including `certificates/pressure3_witness_47.json`. |
+| `test_g17.py` | ✓ | The anisotropic plane G₁₇ of `scripts/g17_alpha.py`: 289 vertices of degree 18, and rotations, reflections and translations are automorphisms; its independent circles are N = 4, 5, 9, 11, 12, 14, 15, with regions of 90 or 108 vertices; the 57-point rosette is independent, contains 0 and the whole circle N = 12, and breaks exactly one clause of the part-B formula; the totalizer is exact on every assignment of up to 8 literals; the part-A formulas are, byte for byte, those whose DRAT proofs `certificates/g17_part_a_checks.txt` records as verified. |
+| `test_g17_slow.py` |  | The seven part-A formulas are unsatisfiable, solved again by CaDiCaL (marked `slow`; about six minutes on a loaded machine). |
 | `test_geometry.py` | ✓ | Exact rotations: the 60° rotation, the Moser spindle's angle arccos(5/6), rotations about a pivot, and de Grey's rotations, which need ℚ(√3, √5, √7, √11). |
 | `test_graph_coloring.py` | ✓ | Graph construction, reductions and colouring against known values: the Moser spindle is 4-chromatic, the triangular lattice is 3-chromatic, and the forced pair of a unit rhombus is found and spindled. |
 | `test_homcol.py` |  | Homomorphism (coset) colourings of unit-distance graphs and the blocking screen built on them, on the project's graphs and fields (197 tests). |
