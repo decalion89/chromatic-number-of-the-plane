@@ -8427,7 +8427,12 @@ What had to change:
   1805.00157 and 1805.06055), not stated in 1909.13177. Cranston–Rabern had
   also asked about `ℚ(√3, √11)`.
 - **Code.** `scripts/tabucol.py` and `scripts/quotient.py` ran their whole
-  experiment when imported; they no longer do. The maintained scripts write to
+  experiment when imported; they no longer do. The time limits of
+  `hn.coloring` never stopped CaDiCaL, the default solver: pysat's interrupt
+  does not reach it (Glucose and MapleChrono stop at once). A limited solve now
+  runs CaDiCaL in a separate process. The full test suite had waited hours on
+  de Grey's graph under a nominal 30-minute limit; its slow tests now have a
+  four-hour limit that holds. The maintained scripts write to
   `HN_OUT` (default `/tmp/hn`) instead of this session's scratch directory, and
   the exploratory scripts name `/tmp/hn` too (a rewrite checked to change no
   other part of their syntax trees).
