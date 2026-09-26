@@ -8536,8 +8536,8 @@ did not finish, so the search was cut down first.
   - The other ten gave no answer in 60 s. Cut again, recursively, they produced
     hard cubes faster than they closed: 2 056 refuted leaves and 2 151 open
     cubes when the run was paused.
-  - kissat runs on the whole formula (three hours so far) and on the ten hard
-    cubes have not finished.
+  - kissat has run on the whole formula for two and a half hours without an
+    answer. Runs on each of the ten hard cubes have started.
 - **What the rosette suggests.** Suppose every independent set of 57 points
   contained a point together with its whole circle. A 58-point set contains
   57-point ones, so part A would give `α(G₁₇) = 57` at once. The smaller planes
