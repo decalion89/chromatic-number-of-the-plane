@@ -8482,3 +8482,13 @@ What had to change:
   been checked; it now prints the solver's `UNSAT` and exits with status 2.
   `hn.cli demo` and `degrey`, `scripts/ei_rebuild.py` and
   `scripts/orbit_witness_test.py` no longer write into the repository.
+
+## The four-colour growth in `ℚ(√3, √5)`: its hard step is 4-colourable (26 September)
+
+The growth in `ℚ(√3, √5)` of 25 September (`MODE=same`) tries to make the
+vertices 0 and 10 585, at squared distance 3, alike in every 4-colouring. At
+14 148 points and 51 727 edges its solver calls ran out of time, and the step
+was left undecided. kissat, given eight hours on it, found in about five hours
+a 4-colouring in which the two vertices differ. The colouring is proper on all
+51 727 edges, recomputed exactly. The pair is not forced at this size, and
+`4 ≤ χ(ℚ(√3, √5)²) ≤ 5` stands.
