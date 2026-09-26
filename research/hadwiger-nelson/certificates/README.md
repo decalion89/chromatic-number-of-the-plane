@@ -48,9 +48,14 @@ be deleted, leaving 31 vertices, with the pressure still 3.
 
 ## Verification logs
 
+Most logs belong to a certificate above. Four record checks of files in `data/`: the two
+multi-distance witnesses, the forced pair of Exoo and Ismailescu's graph H, and every graph there
+said to have no proper 4-colouring (`data_no4_checks.txt`).
+
 | file | what it records |
 |---|---|
 | `chain23_drat_trim_verification.txt` | kissat (with `--no-binary`) and drat-trim on the 58-clause formula of `chain23_no3coloring.json`: `s VERIFIED`, with 18 of 37 lemmas in the core. |
+| `data_no4_checks.txt` | `scripts/check_no4.py` on the 27 graphs of `data/` described as having no proper 4-colouring, from 803 to 39 313 vertices: each rebuilt from its coordinates, with one triangle pinned; kissat finds every formula unsatisfiable and drat-trim verifies all 27 DRAT proofs. Each line gives the SHA-256 of the formula. |
 | `degrey_1581_drat_trim_verification.txt` | drat-trim on the 33 101-clause formula with the pinned triangle and a binary DRAT proof of 1 319 558 301 bytes: `s VERIFIED`, with 2 016 499 of 13 140 458 lemmas in the core, in 522 s. |
 | `degrey_1581_cnf_head.txt` | The first 14 and the last 14 lines of that formula: the header, the first 13 vertex clauses, the last two edge clauses and the 12 unit clauses that pin the triangle. |
 | `ei_H214_forced_pair_drat_trim_verification.txt` | kissat and drat-trim on the formula of `tests/test_denominator_five.py` for `data/ei_H214.json`, Exoo and Ismailescu's graph H with edges at distances 1 and 2 and its pair A, B at distance 5 required to differ, one triangle pinned: unsatisfiable, so A and B share a colour in every such 5-colouring; `s VERIFIED` with 436 214 of 570 197 lemmas in the core. |
