@@ -1,6 +1,6 @@
 # Scripts: the maintained tools
 
-The 88 scripts here are the project's maintained tools; the 733 one-off experiments behind the
+The 89 scripts here are the project's maintained tools; the 733 one-off experiments behind the
 research log are in [`experiments/`](experiments/). Run every tool from `research/hadwiger-nelson/`:
 each finds the `hn` package from its own location.
 
@@ -15,10 +15,13 @@ each finds the `hn` package from its own location.
 - `worker_setup.sh` installs the Python packages, kissat, drat-trim and `tabu2` on a fresh machine.
 
 The C programs `tabucol` and `tabu2` are compiled from `tabucol.c` and `tabu2.c` with `gcc -O2`;
-the binaries are not in the repository. Eight scripts (`asym_grow.py`, `gadget.py`, `measure_fk.py`,
-`search_disjunction.py`, `search_forced.py`, `tabuSaP.py`, `verifygate.py`, `verifyquot.py`) refer to
-a temporary directory of the session that wrote them (`/tmp/claude-0/…/scratchpad`), as a default
-output directory (`HN_OUT` overrides it), as an import path, or as the location of an input file.
+the binaries are not in the repository. Intermediate files go to a working directory given by the
+environment variable `HN_OUT` (default `/tmp/hn`). `asym_grow.py`, `gadget.py`, `measure_fk.py`,
+`search_disjunction.py` and `search_forced.py` write their output there, and `gadget.py` reads a
+carrier pickle from it when one is named; `verifygate.py` reads the `gate.pkl` that
+`experiments/gate12.py` writes there, or a path given as its argument. `idealquot.py` and
+`idealquot2.py` write their CNF file to the path in `CNF`, and `torecore.py` its result to the path in
+`OUT`, by default under `/tmp`.
 
 ## Verification
 
@@ -117,6 +120,7 @@ output directory (`HN_OUT` overrides it), as an import path, or as the location 
 | `fieldtypes.py` | Decides, for each splitting type of 5 in a CM field of given degree, whether blocking is possible (every hyperplane of O/5 meets the norm-one group), which settles every field of that degree at once. |
 | `field24.py` | Implements arithmetic in ℚ(ζ₂₁, √−11), the smallest field with unit triangles, blocking and a Moser spindle, and checks the spindle there. |
 | `reduce11.py` | Colours unit-distance graphs in ℚ(√−3, √−11, √−247) by reduction at the places above 11 onto the 12-element norm-one group of 𝔽₁₂₁, checking every unit vector and edge exactly. |
+| `decompositions.gp` | PARI/GP: prints the decomposition of 2 and of 3 (ramification indices and residue degrees) in the fields of `notes/local_colourings.md` §8, §10 and §11; run `gp -q scripts/decompositions.gp`, and `tests/test_decompositions.py` checks the output. |
 | `moser2adic.py` | Checks in exact rational arithmetic the 2-adic 4-colouring of the plane over ℚ(√−3, √−11) on every unit vector and edge of the given files. |
 | `msqrt.py` | Computes square roots in a multiquadratic field exactly, by recursion on the generators. |
 | `sqrtK.py` | Computes square roots in a multiquadratic field from sign patterns that are characters of the Galois group, accepting a root only when its square is exact. |

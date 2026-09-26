@@ -30,8 +30,8 @@ from hn.geometry import DEGREY_FIELD as K
 from hn.fast import IntBasis, fast_edges_complete
 from pysat.solvers import Solver
 
-SC = ("/tmp/claude-0/-home-user-darwin-50/"
-      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC = os.environ.get("HN_OUT", "/tmp/hn")       # working directory for input and output
+os.makedirs(SC, exist_ok=True)
 CAR = sys.argv[1] if len(sys.argv) > 1 else "Sa"
 KC = int(sys.argv[2]) if len(sys.argv) > 2 else 4
 LIM = int(sys.argv[3]) if len(sys.argv) > 3 else 4000
@@ -45,7 +45,7 @@ SRC = int(sys.argv[4]) if len(sys.argv) > 4 else 10 ** 9
 t0 = time.time()
 P = ({"G": lambda k: build_G(k, as_graph=False), "Sa": build_Sa,
       "Y": build_Y}[CAR](K) if CAR in ("G", "Sa", "Y")
-     else pickle.load(open(SC + CAR, "rb")))
+     else pickle.load(open(os.path.join(SC, CAR), "rb")))
 b = IntBasis.covering(P)
 rows = b.rows(P)
 E = sorted(set((min(a, c), max(a, c)) for a, c in fast_edges_complete(b, rows)))
@@ -189,5 +189,5 @@ if hits:
     for pal, sz, name, S in hits[:12]:
         print(f"   cap {pal} of {KC}, |S|={sz:3d}  {name}", flush=True)
     pickle.dump([(nm, S) for _, _, nm, S in hits],
-                open(SC + f"caps_{CAR}_{KC}.pkl", "wb"))
+                open(os.path.join(SC, f"caps_{CAR}_{KC}.pkl"), "wb"))
 print("DONE", flush=True)

@@ -16,7 +16,9 @@ At the level of the whole field only non-split places give such colourings
 (notes/local_colourings.md). For a finitely generated module, split places do too, until a unit that
 is not integral at w is added.
 
-Only primes unramified in F are examined. Ramified primes are reported and skipped.
+Primes unramified in F are examined directly. At a prime that ramifies in exactly one generator,
+ramified_place() writes each coordinate as A + B sqrt(d_r), with A, B in the unramified part, and
+reduces that; any other ramified prime is reported and skipped.
 
 usage: module_gate.py graph.json [pmax] [k] [maxsize]
 """

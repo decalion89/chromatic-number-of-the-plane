@@ -144,25 +144,26 @@ def quotient_colours(ints, r, m):
     return (ok, n, len(E))
 
 
-for rots, emax in (((3, 4), 1), ((3, 4, 7), 1), ((4,), 1)):
-    U = units(rots, emax)
-    r, ints = coords(U)
-    print(f"\nrotations {rots}: {len(U)} unit vectors, group rank {r}"
-          f"  [{time.time()-t0:.0f}s]", flush=True)
-    for m in (2, 3, 4, 5, 6, 7):
-        res = quotient_colours(ints, r, m)
-        if res is None:
-            print(f"   m={m}: a generator vanishes mod {m}, no good",
-                  flush=True)
-            continue
-        if res == "too big":
-            print(f"   m={m}: {m**r} cosets, too big  "
-                  f"[{time.time()-t0:.0f}s]", flush=True)
-            continue
-        ok, n, e = res
-        print(f"   m={m}: quotient has {n} cosets, {e} edges -> "
-              f"{'5-COLOURABLE, so the whole group is' if ok else 'not 5-colourable'}"
+if __name__ == "__main__":
+    for rots, emax in (((3, 4), 1), ((3, 4, 7), 1), ((4,), 1)):
+        U = units(rots, emax)
+        r, ints = coords(U)
+        print(f"\nrotations {rots}: {len(U)} unit vectors, group rank {r}"
               f"  [{time.time()-t0:.0f}s]", flush=True)
-        if ok:
-            break
-print("\nDONE", flush=True)
+        for m in (2, 3, 4, 5, 6, 7):
+            res = quotient_colours(ints, r, m)
+            if res is None:
+                print(f"   m={m}: a generator vanishes mod {m}, no good",
+                      flush=True)
+                continue
+            if res == "too big":
+                print(f"   m={m}: {m**r} cosets, too big  "
+                      f"[{time.time()-t0:.0f}s]", flush=True)
+                continue
+            ok, n, e = res
+            print(f"   m={m}: quotient has {n} cosets, {e} edges -> "
+                  f"{'5-COLOURABLE, so the whole group is' if ok else 'not 5-colourable'}"
+                  f"  [{time.time()-t0:.0f}s]", flush=True)
+            if ok:
+                break
+    print("\nDONE", flush=True)

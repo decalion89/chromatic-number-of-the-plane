@@ -27,7 +27,8 @@ from hn.spindle import ForcedPairFinder, spindle_union
 
 K = int(os.environ.get("HN_K", "4"))
 CAP = int(os.environ.get("HN_CAP", "90000"))
-OUT = os.environ.get("HN_OUT", "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+OUT = os.environ.get("HN_OUT", "/tmp/hn")      # working directory for the output
+os.makedirs(OUT, exist_ok=True)
 
 
 def spindleable_pairs(basis, rows, pivot, max_per_distance=3):

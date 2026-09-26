@@ -21,8 +21,9 @@ sys.path.insert(0, HN_DIR)
 from hn.homcol import has_homomorphism, _rank_mod
 
 t0 = time.time()
-with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/gate.pkl", "rb") as fh:
+GATE = (sys.argv[1] if len(sys.argv) > 1       # written by experiments/gate12.py
+        else os.path.join(os.environ.get("HN_OUT", "/tmp/hn"), "gate.pkl"))
+with open(GATE, "rb") as fh:
     k, iv = pickle.load(fh)
 d = len(iv[0])
 print(f"{k} rotations, {len(iv)} directions, dim {d}  "

@@ -111,16 +111,17 @@ def run(label, P, classes, k, seeds=3, expect=None):
     return lo
 
 
-Sa, Y = build_Sa(F), build_Y(F)
-print("-- calibration --", flush=True)
-run("Sa, nothing forbidden, k=5", Sa, set(), 5, expect="SAT")
-run("Sa, 4/9 forbidden, k=5", Sa, {Fr(4, 9)}, 5, expect="SAT")
-run("Sa, 4/9 forbidden, k=4", Sa, {Fr(4, 9)}, 4, expect="UNSAT")
-print("\n-- the open instances --", flush=True)
-FOUR = {Fr(4, 9), Fr(16, 9), Fr(4), Fr(16)}
-run("Sa, all four classes, k=5", Sa, FOUR, 5)
-run("Sa, {4/9,16/9}, k=5", Sa, {Fr(4, 9), Fr(16, 9)}, 5)
-run("Y, all four classes, k=5", Y, FOUR, 5)
-run("Y, 4/9, k=5", Y, {Fr(4, 9)}, 5)
-run("G, 4/9, k=5", build_G(F, as_graph=False), {Fr(4, 9)}, 5)
-print("DONE", flush=True)
+if __name__ == "__main__":
+    Sa, Y = build_Sa(F), build_Y(F)
+    print("-- calibration --", flush=True)
+    run("Sa, nothing forbidden, k=5", Sa, set(), 5, expect="SAT")
+    run("Sa, 4/9 forbidden, k=5", Sa, {Fr(4, 9)}, 5, expect="SAT")
+    run("Sa, 4/9 forbidden, k=4", Sa, {Fr(4, 9)}, 4, expect="UNSAT")
+    print("\n-- the open instances --", flush=True)
+    FOUR = {Fr(4, 9), Fr(16, 9), Fr(4), Fr(16)}
+    run("Sa, all four classes, k=5", Sa, FOUR, 5)
+    run("Sa, {4/9,16/9}, k=5", Sa, {Fr(4, 9), Fr(16, 9)}, 5)
+    run("Y, all four classes, k=5", Y, FOUR, 5)
+    run("Y, 4/9, k=5", Y, {Fr(4, 9)}, 5)
+    run("G, 4/9, k=5", build_G(F, as_graph=False), {Fr(4, 9)}, 5)
+    print("DONE", flush=True)

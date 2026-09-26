@@ -30,7 +30,8 @@ from hn.spindle import local_ball
 K = int(os.environ.get("HN_K", "4"))
 RADIUS = float(os.environ.get("HN_RADIUS", "3.0"))
 PIVOTS = int(os.environ.get("HN_PIVOTS", "25"))
-OUT = os.environ.get("HN_OUT", "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+OUT = os.environ.get("HN_OUT", "/tmp/hn")      # working directory for the output
+os.makedirs(OUT, exist_ok=True)
 
 
 def build(g, k, pivot, targets):
