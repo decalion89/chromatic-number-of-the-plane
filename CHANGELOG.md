@@ -11,6 +11,13 @@ including every retracted claim, is the research log,
 
 ## [Unreleased]
 
+### Changed
+- `hn.coloring`: a solve with no vertex subset, as in `is_k_colorable`, passes
+  the vertex selectors as unit clauses instead of one assumption per vertex.
+  CaDiCaL was 1.7 to 5.4 times faster on four 5-chromatic graphs of `data/` at
+  k = 4. The core returned for such a solve is the whole vertex set, so
+  `find_uncolorable_core` now names the subset for its first core.
+
 ## [1.0.0] - 2026-09-26
 
 First versioned release. None of the results below has been refereed.

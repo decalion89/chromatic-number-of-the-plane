@@ -36,7 +36,11 @@ def test_a_time_limit_gives_the_same_answers():
     assert is_k_colorable(g, 3, timeout=60)[0] is False
     ok, colouring = is_k_colorable(g, 4, timeout=60)
     assert ok is True and all(colouring[u] != colouring[v] for u, v in g.edges())
-    assert ColoringInstance(g, 3).solve(timeout=60)[2] == ColoringInstance(g, 3).solve()[2]
+    everyone = range(g.n)
+    assert (ColoringInstance(g, 3).solve(subset=everyone, timeout=60)[2]
+            == ColoringInstance(g, 3).solve(subset=everyone)[2])
+    # with no subset the selectors are unit clauses, and the core is the whole vertex set
+    assert ColoringInstance(g, 3).solve(timeout=60)[2] == ColoringInstance(g, 3).solve()[2] == list(everyone)
 
 
 def test_a_time_limit_stops_cadical():
