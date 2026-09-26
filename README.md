@@ -137,7 +137,8 @@ Corrections are welcome. Please open an issue with one of the two templates:
 *Mathematical error* (a statement, proof or table entry that is wrong or
 unsupported) or *Result does not reproduce* (the command you ran and what you
 saw). Corrections are recorded in the research log and in the changelog, not
-edited away.
+edited away. [`CONTRIBUTING.md`](CONTRIBUTING.md) says what a pull request
+needs.
 
 ## License
 

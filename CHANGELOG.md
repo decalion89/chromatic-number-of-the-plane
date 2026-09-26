@@ -11,6 +11,10 @@ including every retracted claim, is the research log,
 
 ## [Unreleased]
 
+### Added
+- `CONTRIBUTING.md`: how to report an error or a result that does not
+  reproduce, and what a pull request needs. A pull request template.
+
 ### Changed
 - `hn.coloring`: a solve with no vertex subset, as in `is_k_colorable`, passes
   the vertex selectors as unit clauses instead of one assumption per vertex.
