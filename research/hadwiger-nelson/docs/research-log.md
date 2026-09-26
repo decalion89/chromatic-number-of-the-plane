@@ -8492,3 +8492,56 @@ was left undecided. kissat, given eight hours on it, found in about five hours
 a 4-colouring in which the two vertices differ. The colouring is proper on all
 51 727 edges, recomputed exactly. The pair is not forced at this size, and
 `4 ≤ χ(ℚ(√3, √5)²) ≤ 5` stands.
+
+## `α(G₁₇)`: the best sets are rosettes (26 September)
+
+`χ(G₁₇) ≥ 6` would follow from `α(G₁₇) ≤ 57`, since `5 · 57 < 289`. The place
+above 17 would then no longer exclude six colours for `ℚ(√−3, √−7, √−11)` at
+level 1 (`notes/local_colourings.md` §5). Plain SAT on "58 independent points"
+did not finish, so the search was cut down first.
+
+- **Symmetry.** `Aut(G₁₇)` has order 10 404 = 289 · 36, the affine orthogonal
+  group, counted by individualisation and refinement. Lex-leader clauses help:
+  - there is one for every group element, on the first positions of a vertex
+    order that starts with 0 and one whole circle;
+  - they keep a formula satisfiable if it was;
+  - on `G₁₁` they bring the proof of `α ≤ 28` from 91 s to about 8 s; longer
+    prefixes are slower.
+- **Symmetric sets.** No independent set of 58 points is invariant under a
+  rotation of order 3. The involution `z ↦ −z` and the two kinds of reflection
+  were left undecided after ten minutes each.
+- **The rosette.** Two kissat runs found 57-point sets, one with symmetry
+  breaking and one without. Both lie in the same orbit (stabiliser of order 2).
+  The set is a *rosette*:
+  - a point `u`;
+  - the whole circle `N(z − u) = 12`, 18 points with no unit distance among
+    them;
+  - 38 points on the circles `N = 3, 4, 5, 6, 9, 14` around `u`.
+
+  It is `ROSETTE` in `scripts/g17_alpha.py`.
+- **Part A.** An independent set that contains a point and its whole circle
+  `N = c` has at most 57 points.
+  - Only the seven circles with no unit distance inside can occur
+    (`c = 4, 5, 9, 11, 12, 14, 15`).
+  - The other points then lie among the 90 or 108 vertices adjacent to none of
+    the 19, and at most 38 of those are independent.
+  - kissat and drat-trim verify all seven cases
+    (`certificates/g17_part_a_checks.txt`). For `c = 12` the 38 are reached, by
+    the rosette.
+- **Part B, open.** What remains is an independent set of 58 points containing
+  no point together with its whole circle. `g17_alpha.py --write-b` writes it
+  with vertex 0 pinned: 2 206 variables, 21 363 clauses.
+  - march_cu cut it into 280 cubes, and 270 of them are refuted in under a
+    minute each.
+  - The other ten gave no answer in 60 s. Cut again, recursively, they produced
+    hard cubes faster than they closed: 2 056 refuted leaves and 2 151 open
+    cubes when the run was paused.
+  - kissat runs on the whole formula (three hours so far) and on the ten hard
+    cubes have not finished.
+- **What the rosette suggests.** Suppose every independent set of 57 points
+  contained a point together with its whole circle. A 58-point set contains
+  57-point ones, so part A would give `α(G₁₇) = 57` at once. The smaller planes
+  behave differently: the largest sets found in `G₁₁` (28 points) and `G₁₃` (36
+  points) contain no whole circle.
+
+`χ(G₁₇)` stays 5 or 6.
