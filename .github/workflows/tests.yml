@@ -27,12 +27,16 @@ jobs:
           cache-dependency-path: research/hadwiger-nelson/requirements.txt
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
+      # PARI/GP recomputes the prime decompositions (tests/test_decompositions.py).
+      - name: Install PARI/GP
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends pari-gp
       # The full suite takes hours (it re-solves de Grey's graph); CI runs the files that finish
       # in seconds, which cover the field arithmetic, the local colourings and both theorems.
       - name: Run the fast tests
         run: >-
           python -m pytest -q
           tests/test_q23.py tests/test_q311.py tests/test_q35.py tests/test_q3q.py tests/test_split_places.py
+          tests/test_decompositions.py tests/test_cli.py
           tests/test_biquadratic_bounds.py tests/test_finite_planes.py tests/test_threepoint.py
           tests/test_moser_field.py tests/test_reduce11.py
           tests/test_field.py tests/test_geometry.py tests/test_graph_coloring.py tests/test_certify.py
