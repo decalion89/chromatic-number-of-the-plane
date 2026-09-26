@@ -167,7 +167,7 @@ Each folder has its own README describing what is in it.
 ```
 hn/             the library: exact fields, geometry, graphs, SAT colouring,
                 certificates, local (adelic) colourings
-tests/          pytest suite (665 tests; 17 marked slow)
+tests/          pytest suite (672 tests; 18 marked slow)
 scripts/        maintained tools: verification, growth, gates, field screens
                 (indexed in scripts/README.md)
 scripts/experiments/
@@ -213,7 +213,7 @@ drat-trim.
 
 GitHub Actions (`.github/workflows/tests.yml`, at the root of the repository)
 runs the fast part of the suite on
-pushes to `main` and on pull requests: 383 tests in 33 files, in about two
+pushes to `main` and on pull requests: 389 tests in 34 files, in about two
 minutes.
 
 `scripts/verify_pair.py` rebuilds a unit-distance witness or gadget from its
