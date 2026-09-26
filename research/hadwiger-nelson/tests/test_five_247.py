@@ -80,8 +80,8 @@ def test_vertices_and_edges_recomputed_exactly(loaded, name, n, m):
 def test_chromatic_number_is_five(loaded, name, n, m):
     _, pts = loaded[name]
     g = build_graph(pts)
-    assert is_k_colorable(g, 4, timeout=1800)[0] is False
-    ok, colouring = is_k_colorable(g, 5, timeout=1800)
+    assert is_k_colorable(g, 4, timeout=4 * 3600)[0] is False
+    ok, colouring = is_k_colorable(g, 5, timeout=4 * 3600)
     assert ok is True
     for u, v in g.edges():
         assert colouring[u] != colouring[v]
@@ -184,7 +184,7 @@ def test_symmetric_graph_refuses_four_colours(symmetric):
     g = build_graph(pts)
     for u, v in list(g.edges())[:200]:
         assert pts[u].dist2(pts[v]) == 1
-    assert is_k_colorable(g, 4, timeout=1800)[0] is False
+    assert is_k_colorable(g, 4, timeout=4 * 3600)[0] is False
 
 
 # ---------------------------------------------------------------------------
@@ -229,7 +229,7 @@ def test_third_field_is_c6_invariant(graph23):
 
 def test_third_field_refuses_four_colours(graph23):
     _, pts = graph23
-    assert is_k_colorable(build_graph(pts), 4, timeout=1800)[0] is False
+    assert is_k_colorable(build_graph(pts), 4, timeout=4 * 3600)[0] is False
 
 
 def test_the_second_spindle_angle_needs_23():

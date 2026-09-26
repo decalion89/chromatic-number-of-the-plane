@@ -59,7 +59,8 @@ def test_G_is_a_unit_distance_graph_of_the_published_size():
 
 @pytest.mark.slow
 def test_G_is_not_four_colourable():
-    """chi(R^2) >= 5, reproduced from the published recipe."""
+    """chi(R^2) >= 5, reproduced from the published recipe. CaDiCaL can take hours here; the limit is four
+    hours, and an answer of None (no answer within it) fails the test rather than passing it."""
     from hn.coloring import is_k_colorable
 
-    assert is_k_colorable(build_G(), 4, timeout=1800)[0] is False
+    assert is_k_colorable(build_G(), 4, timeout=4 * 3600)[0] is False

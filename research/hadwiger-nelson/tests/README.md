@@ -13,10 +13,12 @@ python3 -m pytest -q tests/test_q23.py     # one file
 ```
 
 The tests marked `slow` include a 4-colourability solve of de Grey's 1581-vertex graph
-(`test_degrey.py`, with a 30-minute solver limit).
+(`test_degrey.py`), which can take CaDiCaL hours. Every solver call in the tests has a four-hour
+limit; `hn.coloring` enforces it for CaDiCaL, which ignores pysat's interrupt, by running the
+solver in a separate process.
 
 GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 33 files marked CI
-on every push to `main`, on every pull request, and on manual dispatch: 380 tests, which took two
+on every push to `main`, on every pull request, and on manual dispatch: 382 tests, which took two
 minutes in a local run. The DRAT test in `test_certify.py` is skipped there, because the
 workflow does not install drat-trim. The other ten files (282 tests) are run locally; without their
 14 tests marked `slow` they took 32 minutes in a local run, 20 of them in one test of

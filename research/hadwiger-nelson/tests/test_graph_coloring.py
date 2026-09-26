@@ -30,6 +30,29 @@ def test_moser_spindle_is_four_chromatic():
     assert chromatic_number(g)[0] == 4
 
 
+def test_a_time_limit_gives_the_same_answers():
+    # With a limit, CaDiCaL runs in a separate process (pysat's interrupt does not stop it).
+    g = moser_spindle()
+    assert is_k_colorable(g, 3, timeout=60)[0] is False
+    ok, colouring = is_k_colorable(g, 4, timeout=60)
+    assert ok is True and all(colouring[u] != colouring[v] for u, v in g.edges())
+    assert ColoringInstance(g, 3).solve(timeout=60)[2] == ColoringInstance(g, 3).solve()[2]
+
+
+def test_a_time_limit_stops_cadical():
+    import json, time
+    from fractions import Fraction as Fr
+    from hn.field import Field
+    from hn.geometry import Point
+    d = json.load(open(os.path.join(os.path.dirname(__file__), "..", "data", "five_247_c.json")))
+    K = Field(tuple(d["field_generators"]))
+    g = build_graph([Point(K.element([Fr(a, b) for a, b in x]), K.element([Fr(a, b) for a, b in y]))
+                     for x, y in d["points"]])
+    t = time.time()
+    assert is_k_colorable(g, 4, timeout=2)[0] is None     # CaDiCaL needs minutes for this refutation
+    assert time.time() - t < 60
+
+
 def test_triangular_lattice_is_three_chromatic():
     g = build_graph(hex_ball(4))
     assert chromatic_number(g)[0] == 3

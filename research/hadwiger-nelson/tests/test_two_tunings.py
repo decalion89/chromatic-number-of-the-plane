@@ -119,6 +119,6 @@ def test_it_refuses_four(stored):
     monochromatic."""
     _, pts = stored
     g = build_graph(pts)
-    answer, colouring = is_k_colorable(g, 4, timeout=1800)
+    answer, colouring = is_k_colorable(g, 4, timeout=4 * 3600)
     assert answer is False
     assert colouring is None
