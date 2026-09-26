@@ -13,10 +13,11 @@
 > "Two mistakes in the instrument, and what they were hiding"; "The null model was wrong
 > twice, and the raw numbers say it better"; "Exoo–Ismailescu rebuilt, and the denominator
 > that the project filtered out" (the multiquadratic claim of "Why every known
-> construction stops at five"); and "The circular gate: colourings through a real
+> construction stops at five"); "The circular gate: colourings through a real
 > character" (the sampled cyclic gates); "Correction: `χ(ℚ(√3, √11)²) = 4` is Fischer's
 > theorem (1994)" (the status entry below and "An open question closed"); and "Pre-release
-> audit (26 September)" (the whole-field results, the local colourings and the note). The
+> audit (26 September)" (the whole-field results, the local colourings, the note, and the
+> descriptions of the data and certificates). The
 > state of every result is given by the README and the notes, not by this log.
 
 **How many colours does the plane need, so that no two points at distance exactly 1
@@ -80,6 +81,9 @@ A certificate never asks you to trust this code. It asks you to run `drat-trim`.
   so permuting them to read 0, 1, 2 loses nothing. Standard, and still not
   something drat-trim checked. The plain unbroken formula removes even that step
   and was still solving.
+
+  > **Later.** That run was stopped after 110 minutes, on 19 September, to free
+  > a core, without a verdict. The unpinned formula is unsolved here.
 
 - ❌ χ(ℝ²) ≥ 6 — the actual goal. Not found.
 
@@ -254,6 +258,10 @@ pivot's neighbourhood still refuses to be squeezed into two colours, and
   adjacent to exactly two circle points — and in all sixteen cases those two lie
   in **different** hexagons, so each one reads the relative orientation of a pair
   of them.
+
+  > **Corrected later** (pre-release audit, 26 September). The last pair is
+  > (9 ± √33)/6; (3 − √33)/6 is negative. Exactly: 1/3 and (7 − √33)/6 five
+  > times each, (7 + √33)/6, (9 − √33)/6 and (9 + √33)/6 twice each.
 
 Squeeze the circle into two colours. Every one of the sixteen that sees two
 differently-coloured circle points is barred from both, so it is confined to the
@@ -8321,6 +8329,10 @@ So `χ ≥ 6` for all seven. With the colourings of `notes/local_colourings.md`
 `q ≥ 29` except 31. The same programme gives `α(G₁₃) ≤ 42.64`, so
 `χ(G₁₃) ≥ 5` (`data/threepoint/inert13.npz`).
 
+> **Corrected later** (pre-release audit, 26 September). The step needs
+> integrality: `169/42.64 < 4`, but `α` is an integer, so `α(G₁₃) ≤ 42` and
+> `χ(G₁₃) ≥ 169/42 > 4`. The test floors the bound in the same way.
+
 **Spectral bounds for large `q`** (interval arithmetic,
 `scripts/finite_hoffman.py`): `χ(𝔽_q²) ≥ 6` for `q = 59` and, by Weil, every
 prime `q ≥ 67`; `χ ≥ 7` for `q = 71, 97, 101` and every prime `q ≥ 103`.
@@ -8436,3 +8448,37 @@ What had to change:
   `HN_OUT` (default `/tmp/hn`) instead of this session's scratch directory, and
   the exploratory scripts name `/tmp/hn` too (a rewrite checked to change no
   other part of their syntax trees).
+- **Certificates and data.** The review of the certificates and data rebuilt
+  them from their coordinates, and every mathematical claim it could check
+  holds. What was wrong was in the descriptions:
+  - `certificates/five_247_c_no4coloring.json` and the certificates README
+    called `five_247_c` a subgraph of `five_247.json`; only 317 of its 803
+    points lie there;
+  - `five_247_b.json` was built from `Sa` cut to 327 vertices, not 340: that
+    peel, glued to its 120° image with overlap 178, reproduces the file's
+    476-point union exactly;
+  - the sixteen further points of `pressure3_witness_47.json` lie at
+    (9 ± √33)/6, not (3 ± √33)/6 ("The machine that makes pressure, taken
+    apart");
+  - `five_tuned_16` and `five_rho7` share 404 points, 402 of them the carrier
+    they both contain, so their union has 4 081 + 2 403 − 404 = 6 080 points;
+  - the kissat run on de Grey's formula without the pinned triangle was
+    stopped after 110 minutes without a verdict (Status);
+  - `α(G₁₃) ≤ 42.64` gives `χ(G₁₃) ≥ 5` only because `α` is an integer:
+    `α ≤ 42 < 169/4`;
+  - in nine data files the coordinates generate a smaller field than
+    `field_generators` names; the index now gives the field of the
+    coordinates.
+- **Checks added.** `scripts/check_no4.py` rebuilds each of the 27 graphs in
+  `data/` said to have no proper 4-colouring, pins one triangle, and has
+  drat-trim check kissat's DRAT proof: all 27 are verified
+  (`certificates/data_no4_checks.txt`). drat-trim logs are now stored for the
+  Moser spindle, the 19-vertex graph, the two pressure certificates, the two
+  multi-distance witnesses and the forced pair of Exoo–Ismailescu's graph H.
+- **Code, found by the full test run.** `scripts/six.py` shadowed the `six`
+  package whenever a test put `scripts/` first on the import path, and two
+  tests failed; it is now `scripts/degrey_forced_pair.py`. `hn.cli verify`
+  printed `VERIFIED` even when drat-trim was missing and the proof had not
+  been checked; it now prints the solver's `UNSAT` and exits with status 2.
+  `hn.cli demo` and `degrey`, `scripts/ei_rebuild.py` and
+  `scripts/orbit_witness_test.py` no longer write into the repository.
