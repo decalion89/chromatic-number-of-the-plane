@@ -4,6 +4,21 @@
 > results, dead ends, corrections and retractions, in the order they happened. It was the
 > project README until 25 September 2026. For a summary of what is established, see
 > [`../README.md`](../README.md). Paths below are relative to `research/hadwiger-nelson/`.
+>
+> **Corrections.** Claims that later turned out wrong are kept where they were made. A
+> correction made on the spot is marked **Corrected**, **Withdrawn** or **Retraction**, and
+> the early ones are collected in "Corrections to my own claims, kept rather than edited
+> away". These sections correct claims made further back: "A correction worth its own
+> section: the gap is 10.8, not 700"; "Corrected: density was not the missing ingredient";
+> "Two mistakes in the instrument, and what they were hiding"; "The null model was wrong
+> twice, and the raw numbers say it better"; "Exoo–Ismailescu rebuilt, and the denominator
+> that the project filtered out" (the multiquadratic claim of "Why every known
+> construction stops at five"); "The circular gate: colourings through a real
+> character" (the sampled cyclic gates); "Correction: `χ(ℚ(√3, √11)²) = 4` is Fischer's
+> theorem (1994)" (the status entry below and "An open question closed"); and "Pre-release
+> audit (26 September)" (the whole-field results, the local colourings, the note, and the
+> descriptions of the data and certificates). The
+> state of every result is given by the README and the notes, not by this log.
 
 **How many colours does the plane need, so that no two points at distance exactly 1
 share a colour?**
@@ -13,7 +28,7 @@ Posed around 1950. Still open. The answer, written χ(ℝ²), is known only to l
 
 | bound | value | who, when | how |
 |---|---|---|---|
-| lower | ≥ 4 | Nelson, 1950 | the 7-vertex Moser spindle |
+| lower | ≥ 4 | Nelson, 1950; L. and W. Moser, 1961 | the 7-vertex Moser spindle |
 | lower | ≥ 5 | Aubrey de Grey, 2018 | a 1581-vertex unit-distance graph with no 4-colouring |
 | lower | ≥ 5 | Jaan Parts, 2020 | the same, down to 509 vertices |
 | upper | ≤ 7 | Isbell, 1950 | a hexagonal tiling of diameter just under 1 |
@@ -67,6 +82,9 @@ A certificate never asks you to trust this code. It asks you to run `drat-trim`.
   something drat-trim checked. The plain unbroken formula removes even that step
   and was still solving.
 
+  > **Later.** That run was stopped after 110 minutes, on 19 September, to free
+  > a core, without a verdict. The unpinned formula is unsolved here.
+
 - ❌ χ(ℝ²) ≥ 6 — the actual goal. Not found.
 
 - ✅ **An open question from the literature, closed: `χ(ℚ(√3, √11)²) = 4`.**
@@ -76,8 +94,8 @@ A certificate never asks you to trust this code. It asks you to run `drat-trim`.
   - Madore (2015) proved `4 ≤ χ ≤ 5`.
   - Exoo–Ismailescu (2018) and Polymath16 asked whether a 5-chromatic
     unit-distance graph embeds there.
-  - Voronov (Polymath16, 2021) conjectured `χ = 4` and noted that nobody had
-    proved it.
+  - Voronov (Polymath16, 2021) wrote that `χ = 4` "seems likely" and that
+    nobody had proved it.
 
   It does not. At a place over 2 the field is inert in `ℚ(i, √3, √11)`, so
   every unit vector reduces to a nonzero element of `𝔽₄`, and that residue is
@@ -85,6 +103,10 @@ A certificate never asks you to trust this code. It asks you to run `drat-trim`.
   (2018) he used it to colour the Moser ring. What is new is the extension to
   the whole plane. See *An open question closed* below and
   `tests/test_q311.py`.
+
+  > **Corrected later.** K. G. Fischer had proved `χ(ℚ(√3, √11)²) = 4` in 1994;
+  > see "Correction: `χ(ℚ(√3, √11)²) = 4` is Fischer's theorem (1994)". The
+  > proof here is a short alternative.
 
 - ✅ A **19-vertex, 33-edge graph with no 3-colouring**, drat-trim verified and
   **vertex-critical** — `certificates/genuine_pair_19_no3coloring.json`. Not a
@@ -236,6 +258,10 @@ pivot's neighbourhood still refuses to be squeezed into two colours, and
   adjacent to exactly two circle points — and in all sixteen cases those two lie
   in **different** hexagons, so each one reads the relative orientation of a pair
   of them.
+
+  > **Corrected later** (pre-release audit, 26 September). The last pair is
+  > (9 ± √33)/6; (3 − √33)/6 is negative. Exactly: 1/3 and (7 − √33)/6 five
+  > times each, (7 + √33)/6, (9 − √33)/6 and (9 + √33)/6 twice each.
 
 Squeeze the circle into two colours. Every one of the sixteen that sees two
 differently-coloured circle points is barred from both, so it is confined to the
@@ -2184,7 +2210,7 @@ residue degree `f`, with `sigma` either fixing the prime (`f` even, `sigma` the
 involution `Frob^{f/2}`) or swapping a conjugate pair. Every type of degree 2,
 4, 6 and 8 was decided by exhaustion over `A`:
 
-| orbit | `|N|` | hyperplanes missing | blocks |
+| orbit | `\|N\|` | hyperplanes missing | blocks |
 |---|---|---|---|
 | fixed `f=2` | 6 | 3 | no |
 | fixed `f=4` | 26 | 13 | no |
@@ -2593,6 +2619,12 @@ five chords.
 
 > **Corollary. A 6-chromatic unit-distance graph must use a rotation whose
 > chord is irrational.**
+
+> **Corrected later**, in "Exoo–Ismailescu rebuilt, and the denominator that
+> the project filtered out": the residue-degree theorem behind both statements
+> needs edge vectors integral at 5, which this summary dropped. An edge vector
+> with 5 in its denominator can block every coset 5-colouring, so neither the
+> claim nor the corollary holds as written.
 
 That is the whole explanation of the barrier at five. Rational chords are what
 one naturally reaches for — they are the rotations carrying a lattice point to
@@ -6484,7 +6516,7 @@ self-avoiding walk on `ℤ/6` with ±1 steps: at most **six** points, all in one
 coset of 60°, and the only possible cycle is the hexagon itself. And a
 2-colouring of `N(p)` *is* the parity:
 
-| separation | `d` | under `|c(N(p))| ≤ 2` |
+| separation | `d` | under `\|c(N(p))\| ≤ 2` |
 |---|---|---|
 | 60° (index 1) | 1 | apart — they are adjacent anyway |
 | 120° (index 2) | √3 | **monochromatic, automatically** |
@@ -6905,6 +6937,8 @@ On `five_rho7` it drew 4 000 samples of each of:
 
 Every sampled quotient is 5-colourable, and **none refutes a direction**. The
 cyclic pair gate (`ℤ/10 … ℤ/50`) has finished too: all 93 directions are open.
+*(That gate sampled homomorphisms; its verdicts for `n ≥ 10` are withdrawn as
+evidence in "The circular gate: colourings through a real character", below.)*
 
 **Kempe swaps of coset colourings are trivial.** In `ψ + k`, take the Kempe
 component of `x` in colours `α` and `α + δ`. It is `x + L ∪ x + p₀ + L`, with
@@ -8095,7 +8129,7 @@ chain seed.
 
 ## More square roots (25 September)
 
-The dichotomy of Theorem 4 holds for every multiquadratic `L ∋ √3`: `χ(L²) = 3`
+The dichotomy of Theorem 5 (of `notes/local_colourings.md` §11) holds for every multiquadratic `L ∋ √3`: `χ(L²) = 3`
 when every other generator, with any factor 3 removed, is `≡ 1 (mod 3)`, and
 `χ(L²) ≥ 4` as soon as one is `≡ 2 (mod 3)` (the subfield `ℚ(√−q)` of `L(i)`
 supplies `1/3`). PARI/GP gives residue degree 1 above 3 for `ℚ(√3, √7)`,
@@ -8163,7 +8197,7 @@ New finite-plane values:
   triangle-free 5-chromatic graph.
 - **`χ(G₄) = 4`.**
 
-With `√3`, the table reproduces Theorem 4. The one exception is `ℚ(√3, √29)`,
+With `√3`, the table reproduces Theorem 5 (§11). The one exception is `ℚ(√3, √29)`,
 whose first non-split place is above 23.
 
 Also recorded today:
@@ -8295,6 +8329,10 @@ So `χ ≥ 6` for all seven. With the colourings of `notes/local_colourings.md`
 `q ≥ 29` except 31. The same programme gives `α(G₁₃) ≤ 42.64`, so
 `χ(G₁₃) ≥ 5` (`data/threepoint/inert13.npz`).
 
+> **Corrected later** (pre-release audit, 26 September). The step needs
+> integrality: `169/42.64 < 4`, but `α` is an integer, so `α(G₁₃) ≤ 42` and
+> `χ(G₁₃) ≥ 169/42 > 4`. The test floors the bound in the same way.
+
 **Spectral bounds for large `q`** (interval arithmetic,
 `scripts/finite_hoffman.py`): `χ(𝔽_q²) ≥ 6` for `q = 59` and, by Weil, every
 prime `q ≥ 67`; `χ ≥ 7` for `q = 71, 97, 101` and every prime `q ≥ 103`.
@@ -8345,3 +8383,102 @@ precedence on the other colours. Its DRAT proof grew by 1.4 MB a second, too
 fast to keep, so it runs without one; an answer of "unsatisfiable" would have
 to be re-proved by cube and conquer with a checked proof per cube. Split into
 1 024 cubes by `march_cu`, each cube takes kissat more than two minutes.
+
+## Pre-release audit (26 September)
+
+Before release 1.0.0, five independent reviews read the repository: the two
+theorems and the note; the local colourings and `notes/rigidity.md`; the
+certificates and data; the literature and attributions; and the consistency of
+the documentation. A sixth check went back to the primary sources for every
+new bibliographic claim. The mathematics of both theorems of the note stands.
+What had to change:
+- **Two results were not new.** `χ(ℚ(√−3, √−11)) = 4` follows from Fischer's
+  theorem, since that field lies in `ℚ(i, √3, √11)`, the plane over
+  `ℚ(√3, √11)`. For `χ(ℚ(√−3, √−11, √−247)) = 5`, Madore's argument for
+  `ℚ(√3, √11)` (his Cor. 3.4, Lemma 4.5, Prop. 4.6) gives the upper bound at a
+  place over 11, and Exoo–Ismailescu's graph lies in the field after a quarter
+  turn. The entries "The gate in relation space, and the local criterion" and
+  "The field of `five_rho7` is 5-colourable: reduction at 11" state them
+  without that earlier work; the notes and READMEs now credit it.
+- **The note overstated its checks.** It said the colourings had been tested
+  on graphs of up to about 12 000 vertices, and that a second check had used
+  PARI/GP; the repository recorded neither. The largest tested graph has 3 134
+  vertices. `scripts/decompositions.gp` now recomputes the prime decompositions
+  with PARI/GP, checked by `tests/test_decompositions.py`, and
+  `tests/test_q311.py` now also checks `data/ei_rho7.json` and the inertness
+  of the places over 2 in `ℚ(i, √3, √11)`.
+- **A certificate.** The 803-vertex graph `five_247_c` has no 4-colouring:
+  kissat's DRAT proof of the plain formula, 4 006 246 lemmas, checked by
+  drat-trim in 463 s (`certificates/five_247_c_no4coloring.json`).
+- **Local colourings.** In `notes/local_colourings.md` and `notes/rigidity.md`:
+  - the Question of §6 was asked for a minimum of at most `χ(ℝ²)`, which made
+    the step from `ℚ(√−3, √−7, √−11)` to `χ(ℝ²) ≥ 6` circular; it is now asked
+    for a minimum of at most 6;
+  - the three-point bounds at 17 and 41 are for the finite planes, level 1;
+    the deeper levels map onto them and may need fewer colours, so "no local
+    obstruction" holds only at level 1 there;
+  - next to `√−3`, a non-split place can also have residue field `𝔽₃` (for
+    example in `ℚ(i, √3)`) or `𝔽₈`; the claim "`q ≡ 5 mod 6` or `q = 2`" in
+    "The field of `five_rho7` is 5-colourable: reduction at 11" was wrong;
+  - the eigenvalues of `G_q` are Kloosterman sums, `λ(n) = −Kl(1, n; q)`, not
+    Salié-type sums;
+  - in "Blind edges, the level-2 plane at 17, and fields with no local
+    obstruction", the list of `d` misses 21, 33 and 77 (the same field as
+    `d = 1`); `Γ(F8) □ Γ(F8)` has the chromatic number of `Γ(F8)`, not 5; the
+    places of `L16` over 3 and 7 have residue fields `𝔽₉` and `𝔽₄₉`, so the
+    targets there are `H₉` and `H₄₉`; and the `L16` seed has 918 unit vectors,
+    459 directions, not 471;
+  - `chain35.json` reaches distance `√7` from its start, not 3.5;
+  - `χ(G₁₇)` is 5 or 6: SAT finds no 4-colouring and a 6-colouring.
+- **Attributions.** Reduction modulo a prime goes back to Woodall (1973) and
+  Fischer (1990), and extension by cosets to Fischer's Theorem 1 (1990). The
+  spectra of the finite planes are Medrano–Myers–Stark–Terras's (1996), and
+  Galois symmetry between distances is Tao's (Polymath16, thread 7). Ismailescu
+  had a 103-vertex graph with edges at 1 and `2/√3` and no 4-colouring (thread
+  3). The reduction to two-distance witnesses is Exoo–Ismailescu's (arXiv
+  1805.00157 and 1805.06055), not stated in 1909.13177. Cranston–Rabern had
+  also asked about `ℚ(√3, √11)`.
+- **Code.** `scripts/tabucol.py` and `scripts/quotient.py` ran their whole
+  experiment when imported; they no longer do. The time limits of
+  `hn.coloring` never stopped CaDiCaL, the default solver: pysat's interrupt
+  does not reach it (Glucose and MapleChrono stop at once). A limited solve now
+  runs CaDiCaL in a separate process. The full test suite had waited hours on
+  de Grey's graph under a nominal 30-minute limit; its slow tests now have a
+  four-hour limit that holds. The maintained scripts write to
+  `HN_OUT` (default `/tmp/hn`) instead of this session's scratch directory, and
+  the exploratory scripts name `/tmp/hn` too (a rewrite checked to change no
+  other part of their syntax trees).
+- **Certificates and data.** The review of the certificates and data rebuilt
+  them from their coordinates, and every mathematical claim it could check
+  holds. What was wrong was in the descriptions:
+  - `certificates/five_247_c_no4coloring.json` and the certificates README
+    called `five_247_c` a subgraph of `five_247.json`; only 317 of its 803
+    points lie there;
+  - `five_247_b.json` was built from `Sa` cut to 327 vertices, not 340: that
+    peel, glued to its 120° image with overlap 178, reproduces the file's
+    476-point union exactly;
+  - the sixteen further points of `pressure3_witness_47.json` lie at
+    (9 ± √33)/6, not (3 ± √33)/6 ("The machine that makes pressure, taken
+    apart");
+  - `five_tuned_16` and `five_rho7` share 404 points, 402 of them the carrier
+    they both contain, so their union has 4 081 + 2 403 − 404 = 6 080 points;
+  - the kissat run on de Grey's formula without the pinned triangle was
+    stopped after 110 minutes without a verdict (Status);
+  - `α(G₁₃) ≤ 42.64` gives `χ(G₁₃) ≥ 5` only because `α` is an integer:
+    `α ≤ 42 < 169/4`;
+  - in nine data files the coordinates generate a smaller field than
+    `field_generators` names; the index now gives the field of the
+    coordinates.
+- **Checks added.** `scripts/check_no4.py` rebuilds each of the 27 graphs in
+  `data/` said to have no proper 4-colouring, pins one triangle, and has
+  drat-trim check kissat's DRAT proof: all 27 are verified
+  (`certificates/data_no4_checks.txt`). drat-trim logs are now stored for the
+  Moser spindle, the 19-vertex graph, the two pressure certificates, the two
+  multi-distance witnesses and the forced pair of Exoo–Ismailescu's graph H.
+- **Code, found by the full test run.** `scripts/six.py` shadowed the `six`
+  package whenever a test put `scripts/` first on the import path, and two
+  tests failed; it is now `scripts/degrey_forced_pair.py`. `hn.cli verify`
+  printed `VERIFIED` even when drat-trim was missing and the proof had not
+  been checked; it now prints the solver's `UNSAT` and exits with status 2.
+  `hn.cli demo` and `degrey`, `scripts/ei_rebuild.py` and
+  `scripts/orbit_witness_test.py` no longer write into the repository.

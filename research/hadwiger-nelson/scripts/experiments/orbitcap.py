@@ -41,8 +41,7 @@ NORB = int(sys.argv[2]) if len(sys.argv) > 2 else 3
 TARGET = int(sys.argv[3]) if len(sys.argv) > 3 else 4
 SEEDN = int(sys.argv[4]) if len(sys.argv) > 4 else 300
 t0 = time.time()
-SC = ("/tmp/claude-0/-home-user-darwin-50/"
-      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 P = pickle.load(open(SC + "wide0.pkl", "rb"))
 b = IntBasis.covering(P)
 r = b.rows(P)

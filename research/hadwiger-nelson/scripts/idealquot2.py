@@ -17,7 +17,6 @@ import numpy as np
 import sympy
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
-sys.path = [p for p in sys.path if "scratchpad" not in p]
 exec(open(os.path.join(HERE, "gate.py")).read().split("def gate(g, label):")[0])
 t0 = time.time()
 path, a, b = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])

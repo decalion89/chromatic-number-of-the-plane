@@ -1,0 +1,19 @@
+# data/W_lattice_16_21_28_61.json, 5-colourability. The point (a, b) is (a + b w)/sqrt(-3) with
+# w = e^{2 pi i/3}, so two points at difference (a, b) are at squared distance (a^2 - ab + b^2)/3. The
+# edges were recomputed from the points as the pairs whose difference has norm a^2 - ab + b^2 in
+# forbidden_norms = {3, 16, 21, 28, 61}: 553 edges, the same as the file's `edges`. CNF: 5 variables per
+# vertex, one at-least-one clause per vertex, 5 conflict clauses per edge in lexicographic order, no
+# colour pinned (360 variables, 2837 clauses; sha256
+# e1111ad43cb16876cb7eded95763b477b0f23e54d43d5020e3978daaeda07fbd).
+# kissat 4.0.4 and drat-trim (commit 2e3b2dc0ecf938addbd779d42877b6ed69d9a985), 26 September 2026.
+$ kissat --no-binary W_lattice.cnf W_lattice.drat
+s UNSATISFIABLE
+$ drat-trim W_lattice.cnf W_lattice.drat
+c parsing input formula with 360 variables and 2837 clauses
+c finished parsing
+c detected empty clause; start verification via backward checking
+c 2837 of 2837 clauses in core
+c 415477 of 575631 lemmas in core using 20930165 resolution steps
+c 1765 RAT lemmas in core; 381293 redundant literals in core lemmas
+s VERIFIED
+c verification time: 31.797 seconds

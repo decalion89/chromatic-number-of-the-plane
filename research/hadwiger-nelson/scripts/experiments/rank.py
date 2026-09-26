@@ -15,16 +15,14 @@ import os
 HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import sys, time, pickle, glob, os
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from fractions import Fraction as Fr
 from hn.degrey import build_G
 from hn.geometry import DEGREY_FIELD as K
 from hn.fast import IntBasis, fast_edges_complete
 from pysat.solvers import Solver
 
-SC = ("/tmp/claude-0/-home-user-darwin-50/"
-      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 RATIOS = [Fr(*map(int, r.split("/"))) for r in sys.argv[1].split(",")]
 MAXN = int(sys.argv[2]) if len(sys.argv) > 2 else 3000
 t0 = time.time()

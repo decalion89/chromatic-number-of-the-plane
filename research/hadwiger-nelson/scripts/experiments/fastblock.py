@@ -4,14 +4,12 @@ import sys, time, pickle
 from fractions import Fraction as Fr
 from math import gcd
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-src = open("/tmp/claude-0/-home-user-darwin-50/"
-           "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/"
+src = open("/tmp/hn/"
            "degreyfield.py").read()
 exec(src[:src.index("t0 = time.time()\nrh = ")])
 from hn.homcol import blocks_at, has_homomorphism, on_lattice
 t0 = time.time()
-with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/kneck.pkl", "rb") as fh:
+with open("/tmp/hn/kneck.pkl", "rb") as fh:
     ws = pickle.load(fh)
 ONE_PLUS = kadd(K1, Z6)
 

@@ -19,8 +19,7 @@ many of those land on rim points, since those are the constrained ones.
 import os
 HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import sys, time, pickle
-SC_PATH = ("/tmp/claude-0/-home-user-darwin-50/"
-           "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC_PATH = ("/tmp/hn/")
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
 import numpy as np
 from fractions import Fraction as Fr

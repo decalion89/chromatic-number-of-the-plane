@@ -55,6 +55,9 @@ def screen(ds, bound=400):
 
 if __name__ == "__main__":
     ds = [int(x) for x in sys.argv[1].split(",")]
+    if any(d <= 0 for d in ds):
+        sys.exit("each d_i must be a positive integer, for the field Q(sqrt-d_1, ..., sqrt-d_n); write a "
+                 "real generator sqrt(m) as sqrt-(3m) next to sqrt-3, for example")
     bound = int(sys.argv[2]) if len(sys.argv) > 2 else 400
     res = screen(ds, bound)
     print(f"K = Q({', '.join('sqrt-%d' % d for d in ds)}): non-split places of K+ below {bound}:")

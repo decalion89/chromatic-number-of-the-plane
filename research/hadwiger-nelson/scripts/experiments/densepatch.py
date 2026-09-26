@@ -28,14 +28,12 @@ HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 import sys, time, pickle
 from fractions import Fraction as Fr
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from hn.geometry import DEGREY_FIELD as K, Point
 from hn.fast import IntBasis, fast_edges_complete
 from sqrtK import Roots
 
-SC = ("/tmp/claude-0/-home-user-darwin-50/"
-      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 RAD = float(sys.argv[1]) if len(sys.argv) > 1 else 1.6
 CAP = int(sys.argv[2]) if len(sys.argv) > 2 else 2500
 ROUNDS = int(sys.argv[3]) if len(sys.argv) > 3 else 3

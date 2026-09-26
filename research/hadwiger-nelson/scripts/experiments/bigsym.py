@@ -108,4 +108,4 @@ print(f"  FORCED {tot} pairs: {dict(sorted(byd.items(), key=lambda kv: -kv[1])[:
       f"   [{time.time()-t0:.0f}s]", flush=True)
 json.dump({"n": n, "m": m, "centres": len(centres), "senses": len(rots),
            "free4": 100.0 * free / n, "forced": tot, "by_distance": dict(byd)},
-          open(f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/bigsym_{'-'.join(map(str,BASES))}_{'D6' if FULL else 'C6'}.json", "w"))
+          open(f"/tmp/hn/bigsym_{'-'.join(map(str,BASES))}_{'D6' if FULL else 'C6'}.json", "w"))

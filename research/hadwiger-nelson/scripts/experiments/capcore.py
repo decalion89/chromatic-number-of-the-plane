@@ -96,4 +96,4 @@ sub = g.induced(sorted(core))
 print(f"  induced: n={sub.n}, m={sum(len(a) for a in sub.adj)//2}", flush=True)
 pickle.dump({"triple": list(triple), "core": sorted(core),
              "pts": [pts[i].approx() for i in sorted(core)]},
-            open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/antirainbow4.pkl", "wb"))
+            open("/tmp/hn/antirainbow4.pkl", "wb"))

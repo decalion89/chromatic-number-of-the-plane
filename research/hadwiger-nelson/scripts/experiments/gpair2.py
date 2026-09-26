@@ -18,8 +18,7 @@ HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 import sys, time, pickle, glob
 from fractions import Fraction as Fr
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from msqrt import madd, msub, mmul
 from hn.degrey import build_G
 from hn.geometry import DEGREY_FIELD as F
@@ -62,8 +61,7 @@ def cmul(z, w):
 # and pivot 0 is already being scanned by the other run.
 ORDER = [791, 421, 422, 28, 24, 23, 25, 26, 27]
 for pvname in ORDER:
-    path = ("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-            "39c59179b415/scratchpad/gpivot_%d.pkl" % pvname)
+    path = ("/tmp/hn/gpivot_%d.pkl" % pvname)
     with open(path, "rb") as fh:
         pv, ROT = pickle.load(fh)
     o = P0[pv]
@@ -123,8 +121,7 @@ for pvname in ORDER:
         if not sv.solve():
             print(f"  *** rotation {ri}: {n} points, {len(E)} edges NOT "
                   f"5-COLOURABLE ***  [{time.time()-t0:.0f}s]", flush=True)
-            with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-"
-                      "a506-39c59179b415/scratchpad/gsix.pkl", "wb") as fh:
+            with open("/tmp/hn/gsix.pkl", "wb") as fh:
                 pickle.dump((pv, ri, allp, E), fh)
             sys.exit(0)
         cand = []
@@ -155,8 +152,7 @@ for pvname in ORDER:
               f"{len(cand)} pairs, {len(hits)} FORCED, {len(hard)} rerun  "
               f"[{time.time()-t0:.0f}s]", flush=True)
         if hits:
-            with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-"
-                      "a506-39c59179b415/scratchpad/gforced.pkl", "wb") as fh:
+            with open("/tmp/hn/gforced.pkl", "wb") as fh:
                 pickle.dump((pv, ri, allp, E, hits), fh)
             print("  *** FORCED PAIR AT FIVE COLOURS -- SPINDLE IT ***",
                   flush=True)

@@ -35,7 +35,7 @@ ROUNDS = int(os.environ.get("HN_ROUNDS", "40"))
 BUDGET = int(os.environ.get("HN_BUDGET", "40000"))
 CONFLICTS = int(os.environ.get("HN_CONFLICTS", "200000"))
 SAVE = os.environ.get("HN_SAVE")
-OUT = os.environ.get("HN_OUT", "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+OUT = os.environ.get("HN_OUT", "/tmp/hn")
 
 
 def groups_for(g, pivot):

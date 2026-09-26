@@ -20,8 +20,7 @@ from hn.geometry import DEGREY_FIELD as K
 from hn.fast import IntBasis, fast_edges_complete
 from pysat.solvers import Solver
 
-SC = ("/tmp/claude-0/-home-user-darwin-50/"
-      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 R = Fr(35, 9)
 t0 = time.time()
 P = pickle.load(open(SC + "tight_Sa_35_9.pkl", "rb"))

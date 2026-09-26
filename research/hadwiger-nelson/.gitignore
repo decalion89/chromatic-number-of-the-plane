@@ -9,6 +9,7 @@ data/*_ls[0-9]*.json
 data/*_inc.json
 data/*_kw.json
 data/*_kw[0-9]*.json
+!data/L16_kw2.json
 data/*_grow.json
 data/blk_plain.json
 data/rho7_pair2_ckpt.json

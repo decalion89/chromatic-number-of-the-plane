@@ -1,6 +1,6 @@
 # Scripts: the maintained tools
 
-The 88 scripts here are the project's maintained tools; the 733 one-off experiments behind the
+The 90 scripts here are the project's maintained tools; the 733 one-off experiments behind the
 research log are in [`experiments/`](experiments/). Run every tool from `research/hadwiger-nelson/`:
 each finds the `hn` package from its own location.
 
@@ -15,19 +15,26 @@ each finds the `hn` package from its own location.
 - `worker_setup.sh` installs the Python packages, kissat, drat-trim and `tabu2` on a fresh machine.
 
 The C programs `tabucol` and `tabu2` are compiled from `tabucol.c` and `tabu2.c` with `gcc -O2`;
-the binaries are not in the repository. Eight scripts (`asym_grow.py`, `gadget.py`, `measure_fk.py`,
-`search_disjunction.py`, `search_forced.py`, `tabuSaP.py`, `verifygate.py`, `verifyquot.py`) refer to
-a temporary directory of the session that wrote them (`/tmp/claude-0/…/scratchpad`), as a default
-output directory (`HN_OUT` overrides it), as an import path, or as the location of an input file.
+the binaries are not in the repository. Intermediate files go to a working directory given by the
+environment variable `HN_OUT` (default `/tmp/hn`):
+- `asym_grow.py`, `ei_rebuild.py`, `gadget.py`, `measure_fk.py`, `search_disjunction.py` and
+  `search_forced.py` write their output there, and `check_no4.py` and `orbit_witness_test.py` their
+  formulas and proofs;
+- `gadget.py` reads a carrier pickle from it when one is named, and `verifygate.py` reads the
+  `gate.pkl` that `experiments/gate12.py` writes there, or a path given as its argument.
+
+`idealquot.py` and `idealquot2.py` write their CNF file to the path in `CNF`, and `torecore.py` its
+result to the path in `OUT`, by default under `/tmp`.
 
 ## Verification
 
 | script | what it does |
 |---|---|
 | `verify_pair.py` | Rebuilds a graph from its JSON file, rederives every edge in exact arithmetic and asks three pysat solvers (and kissat with drat-trim, when given) whether its unit-distance graph, or its graph with edges at 1 and at one rational distance d, is 5-colourable, optionally testing whether a target pair A, B is forced apart or alike; it cannot read `data/W_moser_orbit_9_33.json` (irrational extra distances) or `data/W_lattice_16_21_28_61.json` (lattice coordinates, no `field_generators`), which `orbit_witness_test.py` and `lattice_witness.py` check. |
+| `check_no4.py` | Rechecks every graph of `data/` described as having no proper 4-colouring: rebuilds it from the exact coordinates, pins one triangle, runs kissat and checks its DRAT proof with drat-trim; the log of its run is `certificates/data_no4_checks.txt`. |
 | `verify6.py` | Rechecks a claimed 6-chromatic unit-distance graph: rederives every edge exactly, confirms that no edge has another length, solves 5-colourability with no colour pinned using more than one solver, and extracts a vertex-critical core. |
 | `verify_gadget.py` | Rechecks a claimed distance-2 gadget (a unit-distance graph with vertices a, b at distance 2 that differ in every proper 5-colouring): rederives the edges and \|ab\|² = 4 exactly, merges a and b, and asks three solvers whether the merged graph is 5-colourable. |
-| `orbit_witness_test.py` | Tests whether a graph with its unit edges and the edges at one or more Galois orbits of distances (`14_2`, `14_5`, `9_1`, `43`) is 5-colourable, by `tabucol` and then kissat; with orbit `9_1` it checks `data/W_moser_orbit_9_33.json`. |
+| `orbit_witness_test.py` | Tests whether a graph with its unit edges and the edges at one or more Galois orbits of distances (`14_2`, `14_5`, `9_1`, `43`) is 5-colourable, by `tabucol` and then kissat, whose DRAT proof it checks with drat-trim when given its path; with orbit `9_1` it checks `data/W_moser_orbit_9_33.json` (`certificates/W_moser_orbit_9_33_drat_trim_verification.txt`). |
 | `lattice_witness.py` | Builds the graph on the points of ℤ[ω]/√−3 within a radius R whose edges are the pairs at given norms (squared distance N/3), asks three pysat solvers whether it is 5-colourable, shrinks it to a vertex-critical core and checks that core with kissat and drat-trim; `lattice_witness.py 3,16,21,28,61 5 out.json` reproduces `data/W_lattice_16_21_28_61.json`. |
 | `verify_forced_same.py` | Rechecks from exact coordinates that a pair A, B at distance 5 is alike in every proper 5-colouring (two solvers), and that the union of the graph with its image under the rotation λ = (49 + 3√−11)/50 about A is not 5-colourable. |
 | `verify_twisted.py` | Constructs a twisted coset colouring c(p) = ψ(p) + t·⌊(φ(p) − φ₀)/L⌋ on a saved graph and checks exactly that it is proper and colours the target pair alike. |
@@ -41,7 +48,7 @@ output directory (`HN_OUT` overrides it), as an import path, or as the location 
 | `verify5.py` | Checks with a newly built formula that a set of five vertices of `Sa` ∪ rot(`Sa`) (619 vertices) is rainbow-forcing at four colours, that is, every proper 4-colouring uses all four colours on it, that the set is minimal, and that the union is 4-colourable. |
 | `verify7.py` | Checks with a direct formula that a set of seven vertices of de Grey's `Sa`, which induces only five edges, is rainbow-forcing at four colours, and that it is minimal. |
 | `verifySa.py` | Checks against the exact geometry a 5-colouring of de Grey's `Sa`, found by Glucose, in which every pair at squared distance 4/9, 16/9, 4 or 16 is bichromatic. |
-| `ei_rebuild.py` | Rebuilds Exoo and Ismailescu's graphs G, H and K (arXiv:1909.13177) in ℚ(√3, √11) and rechecks their sizes, the pair of H at distance 5 that is alike in every 5-colouring, and that K with edges at distances 1 and 2 has no proper 5-colouring. |
+| `ei_rebuild.py` | Rebuilds Exoo and Ismailescu's graphs G, H and K (arXiv:1909.13177) in ℚ(√3, √11) and rechecks their sizes, the pair of H at distance 5 that is alike in every 5-colouring, and that K with edges at distances 1 and 2 has no proper 5-colouring; it writes K, with its edges, to `exoo_ismailescu_K426.json` in `HN_OUT`. |
 
 ## Growth and search for obstructions
 
@@ -57,7 +64,7 @@ output directory (`HN_OUT` overrides it), as an import path, or as the location 
 | `search_forced.py` | Builds a ball of unit-vector walks in ℚ(√3, √11), searches it for a pair at a distance a spindle rotation can close that is monochromatic in every k-colouring (k set by `HN_K`), and spindles that pair. |
 | `search_disjunction.py` | Searches for a forced disjunction, a pivot p and a set Q of vertices at one distance such that every k-colouring gives p the colour of some element of Q, and shrinks Q to a minimal forcing subset. |
 | `gadget.py` | Enumerates small vertex sets S of a carrier graph (de Grey's `Sa` by default) and asks, one SAT call each, whether every k-colouring uses fewer than k colours on S, with a control run at k = 4 that must rediscover de Grey's gadget. |
-| `six.py` | Asks whether de Grey's graph G has a pair, at a distance that a rotation of his field can close, that is monochromatic in every 5-colouring. |
+| `degrey_forced_pair.py` | Asks whether de Grey's graph G has a pair, at a distance that a rotation of his field can close, that is monochromatic in every 5-colouring. |
 | `measure_fk.py` | Measures f(4), the size of the smallest unit-distance configuration with a pair monochromatic in every 4-colouring, starting from balls around the centre of de Grey's graph. |
 | `is63.py` | Decides whether ρ(G, 5) ≤ 63 for de Grey's graph G, ρ being the size of a smallest rainbow-forcing set, by alternating a cardinality-constrained hitting-set query with a search for a colour class that escapes the set. |
 | `rhotight.py` | The decision loop of `is63.py`, with the hitting set shrunk to a minimal one before each search for an escaping colour class. |
@@ -74,7 +81,7 @@ output directory (`HN_OUT` overrides it), as an import path, or as the location 
 | `tabucol.py` | A Python TabuCol, calibrated on three instances with known answers (`Sa` at five colours with and without the class 4/9 forbidden, and `Sa` at four colours with 4/9 forbidden) before it is run on open instances. |
 | `tabu.py` | An earlier tabu search that recolours a random conflicting vertex, run on `Sa`, Y and G with forbidden pairs; it stalled on a satisfiable calibration instance, and `tabucol.py` replaces it. |
 | `tabuSaP.py` | Runs the calibrated TabuCol at five colours on each closable distance class of a grown seed of `Sa`, smallest first. |
-| `worker_setup.sh` | Installs the Python packages, builds kissat and drat-trim under `$TOOLS` (default `~/hn-tools`) and compiles `tabu2`; it can be run more than once. |
+| `worker_setup.sh` | Installs the Python packages, builds kissat (rel-4.0.4) and drat-trim (a pinned commit) under `$TOOLS` (default `~/hn-tools`) and compiles `tabu2`; it can be run more than once. |
 
 ## Gates: periodic, circular and local colourings that rule a search out
 
@@ -117,6 +124,7 @@ output directory (`HN_OUT` overrides it), as an import path, or as the location 
 | `fieldtypes.py` | Decides, for each splitting type of 5 in a CM field of given degree, whether blocking is possible (every hyperplane of O/5 meets the norm-one group), which settles every field of that degree at once. |
 | `field24.py` | Implements arithmetic in ℚ(ζ₂₁, √−11), the smallest field with unit triangles, blocking and a Moser spindle, and checks the spindle there. |
 | `reduce11.py` | Colours unit-distance graphs in ℚ(√−3, √−11, √−247) by reduction at the places above 11 onto the 12-element norm-one group of 𝔽₁₂₁, checking every unit vector and edge exactly. |
+| `decompositions.gp` | PARI/GP: prints the decomposition of 2 and of 3 (ramification indices and residue degrees) in the fields of `notes/local_colourings.md` §8, §10 and §11; run `gp -q scripts/decompositions.gp`, and `tests/test_decompositions.py` checks the output. |
 | `moser2adic.py` | Checks in exact rational arithmetic the 2-adic 4-colouring of the plane over ℚ(√−3, √−11) on every unit vector and edge of the given files. |
 | `msqrt.py` | Computes square roots in a multiquadratic field exactly, by recursion on the generators. |
 | `sqrtK.py` | Computes square roots in a multiquadratic field from sign patterns that are characters of the Galois group, accepting a root only when its square is exact. |

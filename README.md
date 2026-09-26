@@ -2,7 +2,7 @@
 
 **Sergi Galán** · research repository, 2026
 
-[![tests](https://github.com/decalion89/darwin-50/actions/workflows/tests.yml/badge.svg)](https://github.com/decalion89/darwin-50/actions/workflows/tests.yml)
+[![tests](https://github.com/decalion89/chromatic-number-of-the-plane/actions/workflows/tests.yml/badge.svg)](https://github.com/decalion89/chromatic-number-of-the-plane/actions/workflows/tests.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
 
@@ -28,18 +28,19 @@ Moser spindle (Moorhouse, 2010).
 
 - **Background.** Fischer proved χ(ℚ(√3, √11)²) = 4 in 1994 (*Congressus
   Numerantium* 104). His result seems to have been overlooked: Moorhouse (2010),
-  Madore (2015, who proved 4 ≤ χ ≤ 5), Exoo–Ismailescu (2018) and Voronov
-  (Polymath16, 2021) all treat the value as unknown. Voronov also conjectured
-  χ = 4 for the plane over ℚ(√2, √3). Fischer's hypotheses exclude that field,
-  and we have not found its value in the literature.
+  Madore (2015, who proved 4 ≤ χ ≤ 5), Cranston–Rabern (2017), Exoo–Ismailescu
+  (2018) and Voronov (Polymath16, 2021) all treat the value as unknown. Voronov
+  also thought χ = 4 likely for the plane over ℚ(√2, √3). Fischer's hypotheses
+  exclude that field, and we have not found its value in the literature.
 - **Proof idea.** Change coordinates to α = x + y/√3, β = 2y/√3. The squared
   distance becomes α² − αβ + β². This form is anisotropic modulo a prime above
   2 with residue field 𝔽₂, so Madore's reduction argument, which he stated for
-  any quadratic form, applies. Reducing (α, β) modulo that prime gives a proper
-  4-colouring of the whole plane. Speyer used reduction modulo 2 in 2018 to
+  any quadratic form, applies. Reducing (α, β) modulo that prime, after
+  subtracting fixed coset representatives, gives a proper 4-colouring of the
+  whole plane. Speyer used reduction modulo 2 in 2018 to
   4-colour the Moser ring; on that ring our colouring is one of his.
 - **Status.** Proved. The colourings were also tested by computer on finite
-  graphs with up to about 12 000 vertices. Not yet refereed.
+  unit-distance graphs with up to 3 134 vertices. Not yet refereed.
 
 **Read:** [the three-page note (PDF)](research/hadwiger-nelson/docs/note/planes-4-chromatic.pdf) ·
 [full details](research/hadwiger-nelson/notes/local_colourings.md) (§8 and §10) ·
@@ -51,7 +52,7 @@ Moser spindle (Moorhouse, 2010).
 |---|---|
 | χ(ℝ²) ≥ 4: the Moser spindle has no 3-colouring | DRAT proof, checked by `drat-trim` |
 | χ(ℝ²) ≥ 5: de Grey's 1581-vertex graph, rebuilt from its 39-point seed, has no 4-colouring (with the colours of one triangle fixed, which loses no generality) | DRAT proof of 13.1 M lemmas, checked by `drat-trim` |
-| χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, for the whole complex fields | proofs in the notes, with unit tests |
+| χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, for the whole complex fields. Both follow from earlier work (Fischer; Madore and Exoo–Ismailescu); the notes give short local proofs | proofs in the notes, with unit tests; a DRAT proof, checked by `drat-trim`, that the 803-vertex graph behind the second lower bound has no 4-colouring |
 | Multi-distance graphs with no 5-colouring: 187 points (edges at three distances) and 72 points (five distances) | four SAT solvers agree; DRAT proofs checked by `drat-trim` (recorded in the research log) |
 | Finite planes that need six colours: 𝔽₃₇², 𝔽₄₁², 𝔽₄₃² and 𝔽₄₇² (Moorhouse's planes x² + y²; his table stops at q = 17, and the notes continue it), and the anisotropic planes G₂₉, G₃₇, G₄₁, which are the local planes of number fields | Schrijver's three-point bound gives α < q²/5; each dual certificate is checked in interval and exact rational arithmetic ([`notes/local_colourings.md`](research/hadwiger-nelson/notes/local_colourings.md) §14) |
 
@@ -73,7 +74,7 @@ described in the [project page](research/hadwiger-nelson/README.md).
 | [`research/hadwiger-nelson/tests/`](research/hadwiger-nelson/tests/) | test suite |
 | [`research/hadwiger-nelson/scripts/`](research/hadwiger-nelson/scripts/) | verification, search and figure tools |
 
-Every folder has a README describing its contents.
+Every folder of the project has a README describing its contents.
 
 ## Reproducing
 
@@ -92,8 +93,23 @@ requests.
 
 ## Citing
 
-Use GitHub's "Cite this repository" button, which reads
-[`CITATION.cff`](CITATION.cff), or:
+Cite a tagged release, so that the reader finds the version you read; the
+changes between releases are in [`CHANGELOG.md`](CHANGELOG.md). For the
+repository as a whole, use GitHub's "Cite this repository" button, which reads
+[`CITATION.cff`](CITATION.cff):
+
+```bibtex
+@software{galan2026hn,
+  author  = {Gal{\'a}n, Sergi},
+  title   = {The {H}adwiger--{N}elson problem over number fields},
+  version = {1.0.0},
+  year    = {2026},
+  url     = {https://github.com/decalion89/chromatic-number-of-the-plane/releases/tag/v1.0.0},
+  note    = {AI-assisted research; not peer reviewed}
+}
+```
+
+For the note on the two 4-chromatic planes:
 
 ```bibtex
 @misc{galan2026planes,
@@ -102,7 +118,7 @@ Use GitHub's "Cite this repository" button, which reads
             and {$\mathbb{Q}(\sqrt{2},\sqrt{3})$} are 4-chromatic},
   year   = {2026},
   note   = {Preprint, not refereed. AI-assisted},
-  url    = {https://github.com/decalion89/darwin-50}
+  url    = {https://github.com/decalion89/chromatic-number-of-the-plane}
 }
 ```
 
@@ -117,8 +133,11 @@ peer reviewed yet.
 
 ## Reporting an error
 
-Corrections are welcome. If a claim fails to reproduce, please open an issue
-giving the file, the command you ran, and what you saw.
+Corrections are welcome. Please open an issue with one of the two templates:
+*Mathematical error* (a statement, proof or table entry that is wrong or
+unsupported) or *Result does not reproduce* (the command you ran and what you
+saw). Corrections are recorded in the research log and in the changelog, not
+edited away.
 
 ## License
 
@@ -129,15 +148,17 @@ Code, data and text are released under the [MIT License](LICENSE).
 Este repositorio estudia el problema de Hadwiger–Nelson: el número cromático del
 plano, que se sabe que está entre 5 y 7. Se trabaja con aritmética exacta en
 cuerpos de números. Las afirmaciones de que un grafo no se puede colorear se
-deciden con varios SAT solvers, y las principales van acompañadas de una prueba
-DRAT verificada por un programa independiente.
+deciden con varios resolutores SAT, y las principales van acompañadas de una
+prueba DRAT verificada por un programa independiente.
 
 Resultado principal: el plano con coordenadas en ℚ(√2, √3) tiene número
-cromático exactamente 4, como conjeturó Voronov en 2021. El mismo argumento da
+cromático exactamente 4, como Voronov consideraba probable en 2021. El mismo argumento da
 una prueba corta de un teorema de K. G. Fischer (1994): el plano sobre
 ℚ(√3, √11) también tiene número cromático 4. El resultado de Fischer había
 pasado desapercibido; los trabajos posteriores lo daban por abierto. La prueba
 cambia de coordenadas para que el argumento de reducción de Madore funcione
 módulo 2. Está explicada en una
 [nota de tres páginas](research/hadwiger-nelson/docs/note/planes-4-chromatic.pdf).
-Es un trabajo hecho con ayuda de IA y todavía no ha sido revisado por pares.
+También se demuestra, con certificados verificados por un programa
+independiente, que siete planos finitos necesitan seis colores. Es un trabajo
+hecho con ayuda de IA y todavía no ha sido revisado por pares.

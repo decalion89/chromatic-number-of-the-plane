@@ -32,7 +32,7 @@ MAXD2 = Fraction(os.environ.get("HN_MAXD2", "40"))
 SAMPLE = int(os.environ.get("HN_SAMPLE", "25"))
 ROUNDS = int(os.environ.get("HN_ROUNDS", "8"))
 FANOUT = int(os.environ.get("HN_FANOUT", "5"))
-OUT = os.environ.get("HN_OUT", "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+OUT = os.environ.get("HN_OUT", "/tmp/hn")
 
 
 def groups_for(g, pivot):

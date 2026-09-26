@@ -38,8 +38,7 @@ PIVOTS = int(os.environ.get("HN_PIVOTS", "0"))          # 0 = every pivot
 BUDGET = int(os.environ.get("HN_BUDGET", "2000"))
 CORE = os.environ.get(
     "HN_CORE",
-    "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415"
-    "/scratchpad/f4_core.json")
+    "/tmp/hn/f4_core.json")
 
 
 def shrink(st, core, budget):

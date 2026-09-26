@@ -1,3 +1,4 @@
+# Minimum versions. requirements-lock.txt lists the exact versions used for the results.
 python-sat>=1.8.dev1  # PyPI only publishes .dev releases of python-sat
 numpy>=1.24
 scipy>=1.10

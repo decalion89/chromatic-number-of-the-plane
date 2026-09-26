@@ -71,8 +71,7 @@ E = sorted(set((min(a, c), max(a, c)) for a, c in fast_edges_complete(b, r)))
 print(f"{n} points, {len(E)} edges ({2*len(E)/n:.2f}/v; G itself has "
       f"{2*7877/1581:.2f}/v, Gp has 10.64/v)  [{time.time()-t0:.0f}s]",
       flush=True)
-with open(f"/tmp/claude-0/-home-user-darwin-50/"
-          f"aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/wide{OFF}.pkl",
+with open(f"/tmp/hn/wide{OFF}.pkl",
           "wb") as f:
     pickle.dump(P, f)
 

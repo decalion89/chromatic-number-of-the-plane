@@ -2,8 +2,7 @@ import os
 HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import sys, time
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-exec(open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/fastblock.py").read()
+exec(open("/tmp/hn/fastblock.py").read()
      .split('print(f"necklace')[0])
 from hn.homcol import saturated_at, _rank_q, _rank_mod, has_homomorphism
 t1 = time.time()

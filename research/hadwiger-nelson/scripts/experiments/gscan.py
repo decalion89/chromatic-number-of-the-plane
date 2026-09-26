@@ -16,8 +16,7 @@ HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 import sys, time, pickle
 from fractions import Fraction as Fr
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from msqrt import madd, msub, mmul
 from hn.degrey import build_G
 from hn.geometry import DEGREY_FIELD as F
@@ -31,8 +30,7 @@ pts = build_G(F, as_graph=False)
 P = [(tuple(Fr(c) for c in p.x.c), tuple(Fr(c) for c in p.y.c)) for p in pts]
 zf = [(float(p.x), float(p.y)) for p in pts]
 ONE = (Fr(1),) + (Fr(0),) * (DIM - 1)
-with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/gsolve.pkl", "rb") as fh:
+with open("/tmp/hn/gsolve.pkl", "rb") as fh:
     ROT = pickle.load(fh)
 print(f"G: {len(P)} points, {len(ROT)} biting rotations  "
       f"[{time.time()-t0:.0f}s]", flush=True)
@@ -111,8 +109,7 @@ for ri, u in enumerate(ROT):
         print(f"  *** rotation {ri}: {len(allp)} points, {len(E)} edges, "
               f"{cross} cross -- NOT 5-COLOURABLE ***  "
               f"[{time.time()-t0:.0f}s]", flush=True)
-        with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-"
-                  "a506-39c59179b415/scratchpad/gsix.pkl", "wb") as fh:
+        with open("/tmp/hn/gsix.pkl", "wb") as fh:
             pickle.dump((ri, allp, E), fh)
         break
     if ri % 10 == 0:
@@ -123,6 +120,5 @@ for ri, u in enumerate(ROT):
 rows.sort(reverse=True)
 print(f"\ncross-edge counts, best first: {[r[0] for r in rows[:15]]}  "
       f"[{time.time()-t0:.0f}s]", flush=True)
-with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/gscan.pkl", "wb") as fh:
+with open("/tmp/hn/gscan.pkl", "wb") as fh:
     pickle.dump(rows, fh)

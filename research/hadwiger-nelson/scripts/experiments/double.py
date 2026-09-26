@@ -54,7 +54,7 @@ gU = build_graph(U)
 print(f"symmetric carrier: n={gU.n} m={sum(len(a) for a in gU.adj)//2}"
       f"   [{time.time()-t0:.0f}s]", flush=True)
 
-CACHE = "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/forced1021.json"
+CACHE = "/tmp/hn/forced1021.json"
 import os
 K = 4
 X = lambda v, c: 1 + v * K + c

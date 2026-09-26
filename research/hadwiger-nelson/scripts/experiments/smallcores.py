@@ -17,8 +17,7 @@ import os
 HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import sys, time, pickle, random
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from fractions import Fraction as Fr
 from collections import defaultdict
 from hn.degrey import build_G
@@ -34,8 +33,7 @@ TRIES = int(sys.argv[3]) if len(sys.argv) > 3 else 4000
 MAXSZ = int(sys.argv[4]) if len(sys.argv) > 4 else 12
 HOPS = int(sys.argv[5]) if len(sys.argv) > 5 else 2
 t0 = time.time()
-SC = ("/tmp/claude-0/-home-user-darwin-50/"
-      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 P = build_G(K, as_graph=False)
 b = IntBasis.covering(P)
 r = b.rows(P)

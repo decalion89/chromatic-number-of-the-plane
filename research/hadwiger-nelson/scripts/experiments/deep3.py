@@ -18,8 +18,7 @@ HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 import sys, time, pickle, random
 from fractions import Fraction as Fr
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from msqrt import madd, msub, mmul
 from hn.degrey import build_G
 from hn.geometry import DEGREY_FIELD as F
@@ -52,8 +51,7 @@ def norm2(z):
     return madd(mmul(z[0], z[0], GENS), mmul(z[1], z[1], GENS))
 
 
-with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/gtrans.pkl", "rb") as fh:
+with open("/tmp/hn/gtrans.pkl", "rb") as fh:
     TR = pickle.load(fh)
 random.seed(20260920)
 
@@ -113,8 +111,7 @@ for depth in (3, 4):
           f"[{time.time()-t0:.0f}s]", flush=True)
     if not five:
         print("  *** SIX COLOURS ***", flush=True)
-        with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-"
-                  "a506-39c59179b415/scratchpad/deep_six.pkl", "wb") as fh:
+        with open("/tmp/hn/deep_six.pkl", "wb") as fh:
             pickle.dump((depth, allp, E), fh)
         break
     cand = []
@@ -146,8 +143,7 @@ for depth in (3, 4):
             hits.append((i, j))
             print(f"  *** FORCED PAIR AT FIVE COLOURS: {i},{j} ***  "
                   f"[{time.time()-t0:.0f}s]", flush=True)
-            with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-"
-                      "5848-a506-39c59179b415/scratchpad/deep_forced.pkl",
+            with open("/tmp/hn/deep_forced.pkl",
                       "wb") as fh:
                 pickle.dump((depth, allp, E, (i, j)), fh)
             break

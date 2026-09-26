@@ -34,8 +34,7 @@ DSQ = Fr(sys.argv[2]) if len(sys.argv) > 2 else Fr(3)
 TRIES = int(sys.argv[3]) if len(sys.argv) > 3 else 300
 CARRIER = sys.argv[4] if len(sys.argv) > 4 else "G"
 t0 = time.time()
-SC = ("/tmp/claude-0/-home-user-darwin-50/"
-      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 P = (build_G(K, as_graph=False) if CARRIER == "G"
      else pickle.load(open(SC + CARRIER, "rb")))
 b = IntBasis.covering(P)

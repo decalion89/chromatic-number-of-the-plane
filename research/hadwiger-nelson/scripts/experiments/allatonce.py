@@ -32,7 +32,7 @@ P = [Point(F.element([Fr(a, b) for a, b in x]), F.element([Fr(a, b) for a, b in 
      for x, y in d["points"]]
 g = build_graph(P); n = g.n; K = 5
 cand = [tuple(x) for x in json.load(open(
-    "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/cand7141.json"))]
+    "/tmp/hn/cand7141.json"))]
 print(f"n={n}, {len(cand)} candidate pairs", flush=True)
 X = lambda v, c: 1 + v * K + c
 base = [[X(v, c) for c in range(K)] for v in range(n)]
@@ -84,4 +84,4 @@ while todo:
     todo.append(grp[:h]); todo.append(grp[h:])
 print(f"\nproved separable: {proved} of {len(cand)};  forced: {len(stuck)}"
       f"   [{time.time()-t0:.0f}s]", flush=True)
-json.dump(stuck, open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/forced_allatonce.json", "w"))
+json.dump(stuck, open("/tmp/hn/forced_allatonce.json", "w"))

@@ -18,8 +18,7 @@ HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 import sys, time, pickle
 from fractions import Fraction as Fr
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-src = open("/tmp/claude-0/-home-user-darwin-50/"
-           "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/"
+src = open("/tmp/hn/"
            "degreyfield.py").read()
 exec(src[:src.index("t0 = time.time()\nrh = ")])
 from hn.degrey import S_POINTS
@@ -48,8 +47,7 @@ for z in [to_k(x, y) for x, y in S_POINTS]:
                 Sa.append(w)
             w = kmul(Z6, w)
 saset = set(Sa)
-with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/ksolve.pkl", "rb") as fh:
+with open("/tmp/hn/ksolve.pkl", "rb") as fh:
     raw = pickle.load(fh)
 ROT = [tuple(tuple(v[3 * i:3 * i + 3]) for i in range(4)) for v in raw]
 print(f"Sa {len(Sa)} points, {len(ROT)} solved rotations  "
@@ -111,8 +109,7 @@ for cross, shared, ri, pts, zs, E in built:
     if not sv.solve():
         print(f"  *** rotation {ri}: {n} pts {len(E)} edges NOT 4-COLOURABLE "
               f"*** [{time.time()-t0:.0f}s]", flush=True)
-        with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-"
-                  "a506-39c59179b415/scratchpad/kchi5.pkl", "wb") as fh:
+        with open("/tmp/hn/kchi5.pkl", "wb") as fh:
             pickle.dump(([flat(q) for q in pts], E), fh)
         break
     hits, hard, seenc = [], [], 0
@@ -146,7 +143,6 @@ for cross, shared, ri, pts, zs, E in built:
           f"{shared} shared, {seenc} pairs, {len(hits)} forced, {len(hard)} "
           f"hard  [{time.time()-t0:.0f}s]", flush=True)
     if hits:
-        with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-"
-                  "a506-39c59179b415/scratchpad/kforced.pkl", "wb") as fh:
+        with open("/tmp/hn/kforced.pkl", "wb") as fh:
             pickle.dump((ri, [flat(q) for q in pts], E, hits), fh)
         break

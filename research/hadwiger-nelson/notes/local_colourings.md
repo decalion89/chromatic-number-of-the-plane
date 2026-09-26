@@ -8,10 +8,11 @@ Each one names the script that reproduces it.
 
 ## 1. Setting
 
-Identify the plane with `ℂ`. A finite unit-distance graph can be moved so that
-its vertices lie in a number field `K ⊂ ℂ` that is stable under complex
-conjugation, with real subfield `L = K ∩ ℝ`. All the project's graphs live in
-CM fields `K = ℚ(√−d₁, …, √−dₙ)`.
+Identify the plane with `ℂ`. Every finite unit-distance graph has an embedding,
+not necessarily congruent to a given one, with its vertices in a number field
+`K ⊂ ℂ` that is stable under complex conjugation, with real subfield
+`L = K ∩ ℝ`. Most of the project's graphs live
+in CM fields `K = ℚ(√−d₁, …, √−dₙ)`.
 
 The **unit vectors of `K`** form the torus
 `T(K) = {u ∈ K : u ū = 1}`. The **unit-distance graph `Γ(K)`** has vertex set
@@ -46,41 +47,68 @@ unit vector of `K` is a `w`-adic unit.
 - **Ramified case.** The norm-one residues are `±1`. The same argument lands in
   `Cay(𝔽_q, {±1})`, a union of cycles. ∎
 
-**Arcs are the linear case.** Circular colourings `⌊k·frac(φ(z))⌋`, with `φ`
-additive, are exactly the colourings of `G_q` that come from a single linear
-form. General colourings of `G_q` are stronger. At `q = 11` no arc works, yet
+**Arcs are a linear case.** A circular colouring `⌊k·frac(φ(z))⌋` whose
+additive `φ` factors through the residue map at `w` colours `G_q` through one
+linear form `λ : 𝔽_{q²} → 𝔽_q`, each colour an arc of consecutive values of
+`λ`. General colourings of `G_q` are stronger. At `q = 11` no arc works, yet
 `χ(G₁₁) = 5`.
 
 ## 3. Consequences
 
 **Theorem 1 (the Moser field).** `χ(Γ(ℚ(√−3, √−11))) = 4`.
 
-*Proof.*
-- **2 does not split.** `33 ≡ 1 (mod 8)`, so `√33 ∈ ℚ₂`. The field embeds in
-  `ℚ₂(ω)`, which is unramified over `ℚ₂`, so 2 does not split.
+*Proof.* Here `L = ℚ(√33)`, and `ω = e^{2πi/3}`. (`hn/adelic.py` writes
+elements on `1, ζ₆` with `ζ₆ = (1 + √−3)/2` instead; the formula for `φ` below
+works in both conventions.)
+- **The places over 2 do not split in `K`.** `33 ≡ 1 (mod 8)`, so `√33 ∈ ℚ₂`:
+  2 splits in `L`, and both places have completion `ℚ₂`. Above either of
+  them `K` embeds in `ℚ₂(ω)`, which is unramified over `ℚ₂`, so neither place
+  splits in `K`.
 - **Six classes of unit vectors.** The norm-one units of `ℤ₂[ω]` are, mod 4,
   exactly the six sixth roots of unity.
-- **One character separates them.** `φ(α + βω) = frac₂((α + 2β)/4)` takes only
-  the values 1/4, 1/2 and 3/4 on those units.
+- **One character separates them.** `φ(α + βω) = frac₂((α + 2β)/4)`, an
+  additive map from `ℚ₂(ω)` to `ℚ₂/ℤ₂`, takes only the values 1/4, 1/2 and
+  3/4 on those units. So `c(z) = ⌊4φ(z)⌋` is a proper 4-colouring of `Γ(K)`: a
+  unit step adds `k/4` to `φ`, with `k ∈ {1, 2, 3}`, and so adds `k` to `c`
+  modulo 4.
 - **Lower bound.** The Moser spindle lies in the field. ∎
 
 Checked in `hn/adelic.py`, `scripts/moser2adic.py` and
 `tests/test_moser_field.py`.
 
+Theorem 1 also follows from Fischer's theorem (Theorem 3 below). The field
+lies in `ℚ(i, √3, √11)`, the plane over `ℚ(√3, √11)`, since
+`a + b√−3 + c√−11 + d√33 = (a + d√33) + i(b√3 + c√11)`. The proof above is a
+local one.
+
 **Theorem 2 (the field of `five_rho7`).**
 `χ(Γ(ℚ(√−3, √−11, √−247))) = 5`.
 
 *Proof.*
-- **11 does not split.** Above 11, `L_v = ℚ₁₁(√33)` (`√741 ∈ ℚ₁₁`), and
-  `K_w = L_v(√−3)` is unramified over `L_v` because −3 is a non-residue mod 11.
-  So 11 does not split.
-- **Upper bound.** `χ(G₁₁) = 5`: SAT, and 4 colours are UNSAT.
-- **Lower bound.** `five_rho7` lies in the field. ∎
+- **The places over 11 do not split in `K`.** Above 11, `L_v = ℚ₁₁(√33)`
+  (`√741 ∈ ℚ₁₁`), and `K_w = L_v(√−3)` is unramified over `L_v` because −3 is
+  a non-residue mod 11. So no place of `L` over 11 splits in `K`.
+- **Upper bound.** Proposition A.1 with `χ(G₁₁) = 5`: SAT, and 4 colours are
+  UNSAT.
+- **Lower bound.** `five_rho7` lies in the field; so does its 803-vertex
+  subgraph `five_247_c`, whose lack of a 4-colouring is certified by a DRAT
+  proof (`certificates/five_247_c_no4coloring.json`). ∎
 
 The pulled-back colouring is checked exactly, at both places above 11, on every
 graph the project grew in this field: up to 32 312 points and 282 909 edges, all
 with 0 monochromatic edges (`scripts/reduce11.py`, `tests/test_reduce11.py`).
 So no search in this field could reach six.
+
+Both bounds of Theorem 2 also follow from earlier work. `K` lies in the plane
+over `F = ℚ(√3, √11, √247)`. Since `3 ≡ 5²` and `247 ≡ 4² (mod 11)`, a place of
+`F` over 11 has residue field `𝔽₁₁`, so Madore's Cor. 3.4 and Lemma 4.5
+([arXiv 1509.07023](https://arxiv.org/abs/1509.07023)) give `χ(F²) ≤ 5`, by the
+argument of his Prop. 4.6 for `ℚ(√3, √11)`. Exoo and Ismailescu's 5-chromatic
+graph ([arXiv 1805.00157](https://arxiv.org/abs/1805.00157)) lies in `F²`, and a
+quarter turn moves it into `K`: its building blocks have coordinates
+`((a√3 + b√11)/36, (c + d√33)/36)`, and its rotations, such as
+`(119 + 3√−247)/128`, lie in `K`. What the proof above adds is the local
+form of the argument.
 
 **The denominator principle.** If a unit vector of `K` is not integral at
 some place of `K` above a prime `p`, then some place of `L` above `p` splits in
@@ -91,8 +119,8 @@ integral at a place over a new prime.
 
 ## 4. Finite planes
 
-For `q ≡ 5 (mod 6)`, the case that occurs next to `√−3`, `G_q` has this
-structure:
+For `q ≡ 5 (mod 6)` (next to `√−3`, every non-split place over a prime
+`p > 3` has such a residue field), `G_q` has this structure:
 - **Triangles.** Every edge lies in exactly two triangles, there is no `K₄`,
   and `G_q` is the union of `(q+1)/6` rotated triangular tori.
 - **Eigenvalues.** They are `λ(n) = Σ_c (1 − η(c² − 4n)) e(c/q)`, with `η` the
@@ -100,7 +128,11 @@ structure:
 - **Ramanujan.** Every non-trivial eigenvalue satisfies `|λ| ≤ 2√q`. Parametrise
   `N₁` by `ℙ¹(𝔽_q)`; then `λ` is an exponential sum `Σ ψ(f(t))` of a rational
   function with two simple, conjugate poles, and Weil's bound gives `2√q`. The
-  bound was also checked numerically for every `q < 400`.
+  bound was also checked numerically for every `q < 400`. For the finite
+  Euclidean planes these spectral facts go back to Medrano, Myers, Stark and
+  Terras (*Finite analogues of Euclidean space*, J. Comput. Appl. Math. 68
+  (1996) 221–238), who expressed the eigenvalues through Gauss and Kloosterman
+  sums and bounded them with Weil's estimate.
 
 **Proposition B.** For every prime `q ≥ 53`, `χ(G_q) ≥ 6`. The same bound holds
 for the deeper quotients `Cay(O_w/π^r, T mod π^r)`, given the character-sum
@@ -125,8 +157,8 @@ goes further: it proves `χ(G_q) ≥ 6` for `q = 29, 37, 41, 43, 47`.
 | 5 | 4 | SAT |
 | 7 | 4 | SAT (Moorhouse) |
 | 11 | 5 | SAT |
-| 13 | 5–6 | a 6-colouring (SAT); the three-point bound gives `α ≤ 42.64` (§14, certified), so no 4-colouring. Tabu search finds no 5-colouring, and CaDiCaL ran 25 minutes without an answer; independent sets of 36 points exist, above `169/5`, so bounding `α` cannot decide it |
-| 17 | 6? | tabu finds a 6-colouring at once and no 5-colouring. Independent sets of 57 points are found easily, never 58. Since `5·57 < 289`, `α = 57` would prove `χ ≥ 6`. SAT runs on the 5-colouring have not finished, and `α ≥ 58` is undecided; the three-point bound of §14 gives only `α ≤ 63.33` (numerically, not certified) |
+| 13 | 5–6 | a 6-colouring (SAT); the three-point bound gives `α ≤ 42.64` (§14, certified), so `α ≤ 42 < 169/4` and there is no 4-colouring. Tabu search finds no 5-colouring, and CaDiCaL ran 25 minutes without an answer; independent sets of 36 points exist, above `169/5`, so bounding `α` cannot decide it |
+| 17 | 5–6 | no 4-colouring and a 6-colouring (SAT); tabu finds no 5-colouring. Independent sets of 57 points are found easily, never 58. Since `5·57 < 289`, `α = 57` would prove `χ ≥ 6`. SAT runs on the 5-colouring have not finished, and `α ≥ 58` is undecided; the three-point bound of §14 gives only `α ≤ 63.33` (numerically, not certified) |
 | 19 | 5 | SAT; triangle-free, with the linear 5-colouring `(a, b) ↦ c(a + b mod 19)` (§13) |
 | 23 | 5–8, likely ≥ 7 | no 4-colouring (SAT); an interval 8-colouring (§12); tabu finds no 7-colouring, and independent sets of 87 points, against `529/6 ≈ 88.2`; the three-point bound of §14 gives `α ≤ 107.04` (numerically, not certified), and proving `χ ≥ 6` this way needs `α ≤ 105` |
 | 29 | ≥ 6 | three-point bound: `α ≤ 163.25 < 841/5` (§14) |
@@ -140,12 +172,17 @@ goes further: it proves `χ(G_q) ≥ 6` for `q = 29, 37, 41, 43, 47`.
 ## 5. Which fields can hold a 6-chromatic graph
 
 A `k`-chromatic graph can live only in fields with no non-split place of
-local chromatic number below `k`. So the rungs demand:
-- **For five:** 2 and 5 split. The Moser field fails at 2, and
-  `ℚ(√−3, √−7, √−15)` fails at 5.
-- **For six:** 2, 5 and 11 split, together with every `q < 53` whose finite
-  plane is 5-colourable. By §14 no prime `q` from 29 to 52 other than 31 is
-  such.
+local chromatic number below `k`; the local chromatic number is at most 3 at a
+ramified place, and at most `χ(G_q)` at an unramified one. Next to `√−3`, a
+non-split place has residue field `𝔽_q` with `q ≡ 2 (mod 3)` or `q` a power
+of 3 (`notes/rigidity.md` §9). So the rungs demand:
+- **For five:** no ramified non-split place, and no non-split place with
+  residue field `𝔽₂`, `𝔽₃`, `𝔽₅` or `𝔽₈` (local chromatic number at most 4).
+  The Moser field fails at 2, and `ℚ(√−3, √−7, √−15)` fails at 5.
+- **For six:** also none with residue field `𝔽₁₁`, nor any `𝔽_q`, `q < 53`,
+  whose finite plane is 5-colourable at some level. By §14 no prime `q` from
+  29 to 52 other than 31 has a 5-colourable plane at level 1; the deeper
+  levels below 53 are open.
 
 `scripts/fieldscreen.py` lists the non-split places of any multiquadratic CM
 field:
@@ -154,8 +191,8 @@ field:
 |---|---|---|
 | `ℚ(√−3, √−11, √−247)` | 11, 29 | excluded (Theorem 2) |
 | `ℚ(√−3, √−11, √−23)` | 11, 17 | excluded (`χ ≤ 5`) |
-| `ℚ(√−3, √−7, √−11)` | 17, 41, 83, 101 | open if `χ(G₁₇) ≥ 6` (`χ(G₄₁) ≥ 6`, §14) |
-| de Grey's `ℚ(√−3, √−7, √−11, √−15)` | 41, 101, 131 | open: no local obstruction (`χ(G₄₁) ≥ 6`, §14) |
+| `ℚ(√−3, √−7, √−11)` | 17, 41, 83, 101 | no obstruction at level 1 if `χ(G₁₇) ≥ 6` (`χ(G₄₁) ≥ 6`, §14); deeper levels at 17 and 41 open |
+| de Grey's `ℚ(√−3, √−7, √−11, √−15)` | 41, 101, 131 | no obstruction at level 1 (`χ(G₄₁) ≥ 6`, §14); deeper levels at 41 open |
 | `ℚ(√−3, √−7, √2717)` | 59, 83, 89 | open |
 | `ℚ(√−3, √−7, √−11, √−247)` | 83, 173 | open |
 
@@ -166,17 +203,21 @@ field:
 
 It needs no `√5` and no `√247`. The graph is
 `data/five_tuned_16_1_3_7_11.json`: 4 081 points and 27 242 edges, not
-4-colourable by CaDiCaL or by kissat.
+4-colourable: CaDiCaL and kissat agree, and drat-trim checks kissat's DRAT
+proof (`certificates/data_no4_checks.txt`).
 
 The field has rotations with every small prime in a denominator: 2, 3, 5, 7 and
 11. The Exoo–Ismailescu `λ`-closure of the graph (378 unit vectors, rank 8)
-admits none of the cyclic periodic colourings tried. Growth is running there. It has
-passed 23 000 points, and kissat now needs 10–25 minutes per hard step.
+admits none of the cyclic periodic colourings tried. A growth run there reached
+27 614 points, with kissat taking 8–30 minutes per hard step; the growth
+scripts were later found to miss edges outside their own unit set (research
+log, "Blind edges, the level-2 plane at 17, and fields with no local
+obstruction").
 
 ## 6. A question
 
 Is `χ(Γ(K))` the minimum, over the non-split places, of the local chromatic
-numbers, whenever that minimum is at most `χ(ℝ²)`?
+numbers, whenever that minimum is at most 6?
 
 It holds in every case computed:
 
@@ -190,14 +231,19 @@ It holds in every case computed:
 | `ℚ(√−3, √−11, √−247)` | 5 | at 11 |
 | `ℚ(√−3, √−11, √−23)` | 5 | at 11 |
 
-If it held in general, `ℚ(√−3, √−7, √−11)` would be 6-chromatic once
-`χ(G₁₇) = 6` (`χ(G₄₁) ≥ 6` is proved in §14), and then `χ(ℝ²) ≥ 6`. We do not
-claim this.
+If it held in general, `ℚ(√−3, √−7, √−11)` would be 6-chromatic as soon as its
+local planes at 17 and 41 need six colours at every level (so far `χ(G₄₁) ≥ 6`
+is proved at level 1, §14, and `χ(G₁₇)` is 5 or 6), and then `χ(ℝ²) ≥ 6`. We
+do not claim this.
 
-The method of reducing to finite fields goes back to G. E. Moorhouse, *On the
-chromatic numbers of planes* (draft, 2010). For the finite planes, see
-Le Anh Vinh, *On chromatic number of unit-quadrance graphs*, arXiv
-math/0510092: `√q/2 ≲ χ(G_q) ≲ q/2`.
+Reduction to a finite field goes back to Woodall (1973), who proved
+`χ(ℚ²) = 2` by reducing modulo 2, and to Fischer (1990), who coloured
+`ℚ(√N)²` through homomorphisms to `ℤ/3` and `ℤ/4`. G. E. Moorhouse, *On the
+chromatic numbers of planes* (draft, 2010), and Madore (2015) developed it for
+number fields. For the planes `𝔽_q²` with the form `x² + y²` (which is `G_q`
+when `q ≡ 3 (mod 4)`), see Le Anh Vinh, *On chromatic number of
+unit-quadrance graphs (finite Euclidean graphs)*, arXiv math/0510092:
+`√q/2 ≲ χ ≲ q/2`.
 
 ## 7. Fields with no local obstruction
 
@@ -205,24 +251,28 @@ Extending `F8 = ℚ(√−3, √−7, √−11)` by one more `√−d` can remov
 places 17 and 41. `scripts/fieldscreen.py` finds no non-split place of norm
 below 53, and none ramified, for `F8(√−d)` with squarefree `d < 400` equal to
 
-> 1, 2, 42, 43, 59, 66, 83, 86, 87, 103, 115, 118, 127, 154, 155, 166, 174,
-> 185, 195, 203, 206, 213, 223, 230, 237, 247, 251, 254, …
+> 1, 2, 21, 33, 42, 43, 59, 66, 77, 83, 86, 87, 103, 115, 118, 127, 154, 155,
+> 166, 174, 185, 195, 203, 206, 213, 223, 230, 237, 247, 251, 254, 271, …
 
-In these fields Proposition B leaves no local 5-colouring at any place and any
-level. The case `d = 247` is `L16 = ℚ(√−3, √−7, √−11, √−247)`:
+Values of `d` whose ratio is 21, 33 or 77 give the same field: 1, 21, 33 and 77
+give `F8(i)`, and 2, 42, 66 and 154 give `F8(√−2)`. In these fields
+Proposition B leaves no local 5-colouring at any place and any level, given
+the estimate sketched in its proof. The case `d = 247` is `L16 = ℚ(√−3, √−7, √−11, √−247)`:
 - **Non-split places.** Below 300 there are only 83 and 173.
-- **Both 5-chromatic families.** `five_tuned_16` and `five_rho7` share their
-  402-point Moser-field carrier. Their union, 6 080 points and 37 474 edges,
-  is `data/L16_seed.json`.
-- **No circular colouring, numerically.** The seed's 471 unit directions span
-  rank 12. The best `min_u ‖φ(u)‖` found over characters `φ` is 0.024, while a
+- **Both 5-chromatic families.** `five_tuned_16` and `five_rho7` both contain
+  the same 402-point carrier in the Moser field, and share 404 points in all.
+  Their union, 6 080 = 4 081 + 2 403 − 404 points and 37 474 edges, is
+  `data/L16_seed.json`.
+- **No circular colouring, numerically.** The seed's 918 unit vectors
+  (459 directions) span rank 12. The best `min_u ‖φ(u)‖` found over characters `φ` is 0.024, while a
   circular 5-colouring needs 0.2. The same search finds 0.204 at once in the
   Moser module. The exact MILP timed out, so this is evidence, not proof.
 
 **Two more cautions.**
 - **`F8(i)` is not automatically better.** `U ∪ iU` gives the Cartesian
-  product `Γ(F8) □ Γ(F8)`, of chromatic number 5, and unit vectors mixing `F8`
-  and `iF8` never close a triangle. `L16` is a better extension:
+  product `Γ(F8) □ Γ(F8)`, whose chromatic number is that of `Γ(F8)`, and no
+  triangle has edges in both `U` and `iU`, since `F8` does not contain
+  `e^{iπ/6}`. `L16` is a better extension:
   `F8 ∩ ℚ(√−3, √−11, √−247)` is the whole Moser field, so the two halves
   share triangles and spindles.
 - **Level 2 does not simply equal level 1.** A section `σ(a) = τ(a) + q·s(a)`
@@ -249,7 +299,7 @@ as open. This section gives a short proof. It is not a step towards
   summary, not the paper. None of the works below cites it.
 - Moorhouse ([draft, 2010](https://www.ericmoorhouse.org/pub/chromatic.pdf))
   noted that `ℚ(√3, √11)` is the smallest field whose plane contains a Moser
-  spindle, so `χ ≥ 4`. He wrote: "We have not determined the exact value."
+  spindle, so `χ ≥ 4`. He wrote: "We have not determined the exact value …"
 - Madore ([arXiv 1509.07023](https://arxiv.org/abs/1509.07023), Prop. 4.6)
   proved `4 ≤ χ(ℚ(√3, √11)²) ≤ 5`, reducing at a place over 11 and using
   `χ(𝔽₁₁²) ≤ 5`.
@@ -297,7 +347,8 @@ units digit of the 2-adic integer part. This is `hn.adelic.q311_colour`.
   Moser field.
 - So are 300 random unit vectors of the form `t/t̄` (Hilbert 90).
 - The colouring is proper on random unit steps, on the Moser spindle, and on
-  Exoo–Ismailescu's 214-point graph (1 004 edges).
+  Exoo–Ismailescu's 214-point graph `H` (1 004 edges;
+  [arXiv 1909.13177](https://arxiv.org/abs/1909.13177), Claim 2.2).
 - On 638 further points and 3 012 edges (`data/ei_rho7.json`) there are no
   monochromatic edges, at either place.
 
@@ -325,28 +376,31 @@ agree, since `O_w = O_v[i]` there.
   (3 May 2018) he gave 8-periodic variants. Philip Gibbs then reported
   (9 May 2018) that an analysis and computer search by Tamás Hubai found
   that all 4-colourings of the ring have period 8.
-- **The cosets.** Extending a colouring from a ring to the whole field by
-  cosets is Madore's Prop. 3.2 and Moorhouse's Lemma 4.2.
+- **The cosets.** Extending a colouring from a subgroup or a ring to the
+  whole field by cosets is Fischer's (1990, Thm 1, through the component of
+  the origin), Moorhouse's Lemma 4.2 and Madore's Prop. 3.2.
 - **The integrality.** Unit vectors are integral at a place that does not
   split because the norm-one torus is compact there, a standard fact.
 - Dúcz ([arXiv 2606.12325](https://arxiv.org/abs/2606.12325), 2026) gave
   geometric 4-colourings of the Moser lattice and ring.
 
-What was missing is one check: the places of `L` over 2 are inert in
-`L(i) = ℚ(i, √3, √11)`, a field of degree 8 that contains the Moser field.
-Then every unit vector of the plane is a 2-adic unit, not only those of the
-ring, and Speyer's colouring extends to the whole plane. For an expert in local
-fields this is a short observation. Its interest is that it settles questions
-asked in print.
+What the proof uses beyond these is one check: the places of `L` over 2 are
+inert in `L(i) = ℚ(i, √3, √11)`, a field of degree 8 that contains the Moser
+field. Then every unit vector of the plane is a 2-adic unit, not only those of
+the ring, and Speyer's colouring extends to the whole plane. For an expert in
+local fields this is a short observation. Fischer had settled the question in
+1994; the observation gives a short proof, and it also covers `ℚ(√2, √3)`
+(§10), which Fischer's hypotheses exclude.
 
 **Parts' question about limits.**
 - Exoo–Ismailescu's `G₄₀` forces a pair at distance 8/3 alike in every
   4-colouring *with no monochromatic pair at distance `√(11/3)`*.
 - In [Polymath16, thread 13](https://dustingmixon.wordpress.com/2019/07/08/polymath16-thirteenth-thread-bumping-the-deadline/)
-  (July 2019), Parts chained such pairs to get alike pairs at every distance
-  `8/9ⁿ`, which sum to 1. He called this a "funny proof" that the field needs
-  five colours, and asked why the colour is lost in the limit.
-- Pálvölgyi pointed out that colour need not pass to the limit.
+  (25 July 2019), Parts chained such pairs to get alike pairs at every
+  distance `8/9ⁿ`, which sum to 1, and called this a "funny proof" that the
+  field needs five colours.
+- Pálvölgyi replied (26 July) that colour need not pass to the limit, and
+  Parts then asked (27 July) why it is lost.
 - The colouring above satisfies the hypothesis and makes the point concrete.
   Every pair at `√(11/3)` is apart, because `√33/3` is a 2-adic unit. Every
   pair at distance `8/9ⁿ` is alike, because `(8/9ⁿ)u ∈ 8·O_w`. The colouring is
@@ -356,8 +410,8 @@ asked in print.
 - **Ramified.** If `v` ramifies in `F(i)`, then `χ(F²) = 2`. The norm-one
   residues satisfy `ρ(u)² = 1`, so `ρ(u) = 1`, and any `𝔽₂`-linear form with
   `λ(1) = 1` 2-colours the plane. This recovers `χ(ℚ²) = 2` (Woodall).
-  It also recovers Moorhouse's Theorems 7.1, 8.4 and 8.5, and Madore's
-  Prop. 3.9.
+  It also recovers Moorhouse's Theorem 7.1, Lemma 8.4 and Theorem 8.5, and
+  Madore's Prop. 3.9.
 - **Inert, residue field `𝔽₂`.** Then `χ(F²) ≤ 4`. For quadratic fields this
   happens exactly when `d ≡ 3 (mod 8)`, a bound already proved by Fischer
   (Discrete Math. 82 (1990); see Payne, arXiv 0707.1177). Together with
@@ -382,8 +436,9 @@ asked in print.
 
 Theorem 3 is Fischer's (1994); the proof above is a short alternative. Before
 finding Fischer's paper we had searched Polymath16 threads 1–18, the Polymath16
-wiki and the web without finding a proof, which shows how completely the result
-had been overlooked. The wiki page
+wiki and the web without finding a proof. That the result was overlooked is
+shown by the later work listed under **History**, which treats the value as
+open. The wiki page
 [Algebraic formulation of Hadwiger–Nelson problem](https://web.archive.org/web/20210412075722/https://asone.ai/polymath/index.php?title=Algebraic_formulation_of_Hadwiger-Nelson_problem)
 colours rings such as the Moser ring, not whole planes. The closest work is
 Speyer's colouring of the Moser ring, above. A second review, carried out
@@ -404,8 +459,10 @@ of `M` is integral at `w`.
 - **Every edge is covered.** So every unit-distance graph with vertices in
   `M` maps to `Cay(A, A ∩ circle)`, where `A` is the image of `M`. This
   includes edges that the search has not found yet.
-- **The split finite plane.** At a split place with residue field `𝔽_q`,
-  the target is `H_q = Cay(𝔽_q², {(a, 1/a)})`.
+- **The split finite plane.** At a split place over an odd prime, with
+  residue field `𝔽_q`, the target is `H_q = Cay(𝔽_q², {(a, 1/a)})`. Over 2
+  the circle degenerates to the line `a + b = 1`; Proposition C (§12), which
+  reduces `z` and `z̄` instead of the coordinates, gives `H_q` there too.
 
 So a module is `k`-colourable as soon as one integral place has a
 `k`-colourable finite plane.
@@ -414,10 +471,14 @@ So a module is `k`-colourable as soon as one integral place has a
 
 | `q` | 2 | 3 | 5 | 7 | 11 | 13 | 17 | 19 | 29 | 37 | 49 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| `χ(H_q)` | 2 | 3 | 3 | 4 | 4 | **5** | ? | ? | ? | ? | ? |
+| `χ(H_q)` | 2 | 3 | 3 | 4 | 4 | **5** | 5–6 | ≥ 5 | 5–6 | 6–8 | ≥ 5 |
 | tabu at 5 colours (best conflicts) | | | | | | | 2 | 4 | 222 | 1 290 | 4 581 |
 
-- **Where the entries come from.** The exact values are from SAT.
+- **Where the entries come from.** The exact values are from SAT. For
+  `q ≡ 1 (mod 4)`, `H_q ≅ 𝔽_q²` (§12), so the entries for 17, 29 and 37 are
+  those of `𝔽_q²` in §12 and §14. SAT finds no 4-colouring of `H₁₇` or `H₁₉`.
+  `H₄₉` needs at least five colours because the 5-chromatic `five_tuned_16`,
+  which has no 7 in any denominator, maps into it at a place over 7.
 - **Hoffman.** The eigenvalues are Kloosterman sums, of modulus at most
   `2√q` (Weil). So `χ(H_q) ≥ 1 + (q − 1)/(2√q)`, which is above 5 once
   `q ≥ 67`.
@@ -432,22 +493,25 @@ the growth units, the edge unit vectors and the component representatives.
   - every place over 3, 5 and 7 has a non-integral generator;
   - at 11, 13, 17, 19, 23, 29 and 31, and at 41–61, the image is
     `𝔽_{p²}²`, which is safe by Hoffman;
-  - the only small split place of degree 1 is at 37, and tabu finds no
-    5-colouring of its image `H₃₇`.
+  - the only small split place of degree 1 is at 37; its image is all of
+    `H₃₇ ≅ 𝔽₃₇²`, which needs six colours (§14).
 - **`F8` growth** (822 units): 3 and 5 are excluded. At 7 no unit has 7 in a
   denominator; the place is ramified with residue field `𝔽₄₉`, and tabu finds
   no 5-colouring of `H₄₉`.
 
-So neither search is ruled out by a reduction mod a prime, as far as tabu can
-tell. What the gate does rule out: adding a rotation that removes `ρ₇` or
-Moser's `σ` from `L16`'s unit set would reopen the places over 7 or 3, and
-`H₇` or `H₃` would colour the module with 4 or 3 colours.
+So neither search is ruled out by a reduction mod a prime: at 37 this is
+proved, and at 49 it holds as far as tabu can tell. What the gate does rule out is a unit set without Moser's `σ`: the
+places of `L16` over 3, with residue field `𝔽₉`, would become integral, and
+`H₉` 3-colours. Without `ρ₇` the places over 7 would become integral too, but
+their residue field is `𝔽₄₉`, and `H₄₉` needs at least five colours: the
+5-chromatic `five_tuned_16`, which has no 7 in any denominator, maps into it.
 
 ## 10. The plane over `ℚ(√2, √3)`: `χ = 4`
 
 Voronov, in [Polymath16, thread 17](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/#comment-29291)
-(18 July 2021), conjectured `χ = 4` for two fields: `ℚ(i, √3, √11)`, which is
-Theorem 3, and "case (2, 3)", that is `ℚ(i, √2, √3) = ℚ(ζ₂₄)`. On 30 July
+(18 July 2021), wrote that `χ = 4` "seems likely" for two fields:
+`ℚ(i, √3, √11)`, which is Theorem 3, and "case (2, 3)", that is
+`ℚ(i, √2, √3) = ℚ(ζ₂₄)`. On 30 July
 ([comment 29476](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/#comment-29476))
 he suggested colouring `ℤ[ζ₂₄, 1/3]` through a homomorphism to `(ℤ/4)[ζ₂₄]`,
 a ring with `2¹⁶` elements, and added: "Perhaps there is a simpler way." The
@@ -522,11 +586,12 @@ The graph (`data/chain23.json`) has 10 vertices and 16 edges.
 - **Upper bound.** A real field `L` with a place over 2 that does not split
   in `L(i)`, and whose extension has residue field `𝔽₄`, has `χ(L²) ≤ 4`.
 - **Lower bound.** `√3 ∈ L` gives triangles and rhombi. A three-rhombus
-  chain closing in `L` then gives `χ(L²) = 4`.
+  chain closing in `L` then gives `χ(L²) ≥ 4`, so `χ(L²) = 4` when the upper
+  bound holds too.
 
 The lower bound was known, as above. We found no proof of the upper bound in
-the literature: Fischer's 1994 hypotheses (`p ≡ 3`, `q ≡ 11 (mod 16)`,
-`pq ≡ 1 (mod 32)`) exclude this field.
+the literature: Fischer's 1994 hypotheses (squarefree, coprime `p ≡ 3`,
+`q ≡ 11 (mod 16)`, `pq ≡ 1 (mod 32)`) exclude this field.
 
 ## 11. Two square roots: Voronov's question
 
@@ -537,7 +602,7 @@ possible to do it without `√3` (and without triangle)?"
 
 **With `√3`.** Let `q > 1` be squarefree and prime to 3, and `L = ℚ(√3, √q)`.
 
-**Theorem 4.**
+**Theorem 5.**
 - If `q ≡ 1 (mod 3)`, then `χ(L²) = 3`.
 - If `q ≡ 2 (mod 3)`, then `χ(L²) ≥ 4`, with equality when `q` is even or
   `q ≡ 1, 3 (mod 8)`. For prime `q` this means `q = 2` or `q ≡ 11, 17 (mod 24)`.
@@ -549,7 +614,8 @@ possible to do it without `√3` (and without triangle)?"
   residue field `𝔽₃`. Madore's Cor. 3.4 gives `χ(L²) ≤ χ(𝔽₃²) = 3`, and
   triangles give `χ(L²) ≥ 3`.
 - **Upper bound 4.** If `q` is even or `q ≡ 1, 3 (mod 8)`, a prime of `L`
-  above 2 has residue field `𝔽₂`, and Theorem 2 of the note gives `χ(L²) ≤ 4`.
+  above 2 has residue field `𝔽₂`, and the criterion of §8 (Theorem 2 of the
+  note `docs/note/planes-4-chromatic.pdf`) gives `χ(L²) ≤ 4`.
 - **Lower bound 4.** If `q ≡ 2 (mod 3)`, then 3 splits in `ℚ(√−q)`, a subfield
   of `L(i)`. Let `h` be its class number and `α` a generator of the `h`-th
   power of a prime above 3. Then `N(α) = 3^h`, and 3 does not divide
@@ -560,7 +626,8 @@ possible to do it without `√3` (and without triangle)?"
 
 `tests/test_q3q.py` checks the generator `α` for every `q ≡ 2 (mod 3)` up to
 113, and a 271-vertex chain of 90 rhombi for `q = 17`. PARI/GP recomputes the
-decompositions of 2 and 3 for every prime `q < 75`.
+decompositions of 2 and 3 for every prime `q < 75` (`scripts/decompositions.gp`,
+checked by `tests/test_decompositions.py`).
 
 **More square roots.** The proof of the first two parts works for every
 multiquadratic field `L = ℚ(√3, √q₁, …, √q_k)`. Write `q'_j` for `q_j` with any
@@ -570,7 +637,8 @@ factor 3 removed.
   example `χ(ℚ(√3, √7, √13, √19)²) = 3`.
 - Otherwise some `q'_j ≡ 2 (mod 3)`, `ℚ(√−q'_j) ⊂ L(i)`, and `χ(L²) ≥ 4`.
 
-PARI/GP confirms the residue degrees above 2 and 3 for nine such fields.
+PARI/GP confirms the residue degree above 3 for nine such fields, listed in
+`scripts/decompositions.gp`.
 
 So the answer to Voronov's first question is no for every `ℚ(√3, √q)` outside
 the class `q ≡ 5, 23 (mod 24)`. Fischer's family meets these fields only at
@@ -578,10 +646,10 @@ the class `q ≡ 5, 23 (mod 24)`. Fischer's family meets these fields only at
 
 **A lemma for the lower bound.** If `√3 ∈ L` and `1/3` is a sum of unit vectors
 of `L(i)`, then `L²` has no proper 3-colouring. The sums of unit vectors form a
-ring `C₀` that contains `ω = e^{iπ/3}`, so `(1 + ω)/3 = Σ uₖ` with unit
+ring `C₀` that contains `ζ₆ = e^{iπ/3}`, so `(1 + ζ₆)/3 = Σ uₖ` with unit
 vectors `uₖ`. The unit rhombus whose long diagonal is `√3 uₖ` forces its tips
 alike in every 3-colouring. Chaining these rhombi joins `0` to
-`√3(1 + ω)/3 = e^{iπ/6}`, a unit vector.
+`√3(1 + ζ₆)/3 = e^{iπ/6}`, a unit vector.
 
 The same chain works at any number of colours. Suppose a finite graph `G` in
 `L²` has two vertices `A`, `B` that share a colour in every `k`-colouring, and
@@ -595,7 +663,7 @@ condition; the rhombus is the case `k = 3`, `B − A = √3`.
 **The plane over `ℚ(√3, √5)`.** Here the generator is explicit.
 `τ = (2 + i√5)/3` is a unit vector, so
 `1/3 = τ + τ̄ − 1` and
-`(1 + ω)/3 = τ + τ̄ − 1 + ωτ + ωτ̄ − ω`. The chain of the six rhombi is
+`(1 + ζ₆)/3 = τ + τ̄ − 1 + ζ₆τ + ζ₆τ̄ − ζ₆`. The chain of the six rhombi is
 `data/chain35.json`: 19 vertices, 31 edges, no proper 3-colouring
 (`tests/test_q35.py`). Since 3 and 5 are squares modulo 11, 11 splits
 completely, and reduction at a place over 11 gives `χ ≤ χ(𝔽₁₁²) = 5`. So
@@ -608,8 +676,8 @@ Glucose; `scripts/experiments/level_plane.py`).
 
 **A caution about local evidence.** Minkowski balls and colouring-guided
 growths over `ℚ(√3, √5)` of up to 83 000 points stayed 3-colourable. The chain
-reaches radius about 3.5, and those graphs stayed near the origin, so they said
-nothing about `χ(L²)`.
+reaches distance `√7 ≈ 2.65` from its start, and those graphs stayed nearer the
+origin, so they said nothing about `χ(L²)`.
 
 ## 12. Split places see the integral edges: five over `ℚ(√3, √5)` needs 2 and 3
 
@@ -636,7 +704,7 @@ The points need not be integral. §9 is the case where they are.
 
 | `q` | 4 | 8 | 9 | 16 |
 |---|---|---|---|---|
-| `χ(H_q)` | 4 | 4 | **3** | 4 |
+| `χ(H_q)` | 4 | 4 | 3 | 4 |
 
 `χ(H₁₃) = 5` is certified there by a linear colouring:
 `(a, b) ↦ c(a + 2b mod 13)`, where `c` colours the circulant on
@@ -687,9 +755,11 @@ Two observations on five colours, neither a proof:
   whole problem.
 
 `H_q` is the *hyperbola graph* `HG(𝔽_q)` of Bardestani and Mallahi-Karai
-([arXiv 1507.05300](https://arxiv.org/abs/1507.05300)). They show that its
-Borel chromatic number over `ℝ` and `ℚ_p` is infinite, and that it sits inside
-the graph of every isotropic quadratic form.
+([arXiv 1507.05300](https://arxiv.org/abs/1507.05300)), who define `HG(F)` for
+every field `F`. They show that `HG(ℝ)` and `HG(ℚ_p)` have infinite Borel
+chromatic number, and that in characteristic other than 2 `HG(F)` sits inside
+the graph of every isotropic quadratic form over `F`. Since `H₉ ≅ 𝔽₉²`,
+`χ(H₉) = 3` is Moorhouse's value for `𝔽₉²`.
 
 **Moorhouse's table, continued** (`tests/test_finite_planes.py`,
 `tests/test_finite_planes_slow.py` for 29, 31, 41 and 43, and
@@ -728,9 +798,9 @@ Since `χ(H₉) = 3` and `χ(H₄) = 4`:
   above 2, such as `(1 + i√15)/4` (valuations `±2`) or de Grey's
   `(7 + i√15)/8` (`±4`).
 
-The first bound is attained. `chain35.json` has no 3-colouring, all its edge
-vectors are units above 2, and `z ↦ z mod w₂ ∈ 𝔽₄` is a proper 4-colouring of
-it (tested).
+The bound from `χ(H₄) = 4` is attained: `chain35.json` has no 3-colouring,
+all its edge vectors are units above 2, and `z ↦ z mod w₂ ∈ 𝔽₄` is a proper
+4-colouring of it (tested).
 
 **Why the growths over `ℚ(√3, √5)` stopped at four.** Every unit set used
 before this section (`ζ^a τ^b`, and the four-rhombus units below) consisted of
@@ -824,7 +894,7 @@ pairs.
   - a colouring-guided growth with three colours stops finding points that see
     all three colours after 19 steps (research log).
 
-  A 3-colouring would answer the Question of §11 in the negative. Every
+  A 3-colouring would answer the Question of §6 in the negative. Every
   non-split place lies above a prime `q ≥ 19`, where Hoffman's bound gives
   `χ(G_q) ≥ 1 + (q + 1)/(2√q) > 3`, and the place above 19 gives exactly 5.
 - **No small place.** For the other 17, such as `ℚ(√2, √31)`, `ℚ(√2, √47)` and
@@ -832,7 +902,7 @@ pairs.
   `χ(G₄₃) ≥ 6` and `χ(G₅₉) ≥ 6` (§14, §4), while `χ(G₂₃)` and `χ(G₃₁)` lie
   between 5 and 8.
 
-**With `√3` the table reproduces Theorem 4.** It gives bound 3 exactly for
+**With `√3` the table reproduces Theorem 5.** It gives bound 3 exactly for
 `q ≡ 1 (mod 3)`, and bound 4 exactly for `q = 2` and `q ≡ 11, 17 (mod 24)`. It
 adds one fact: the first non-split place of `ℚ(√3, √29)` lies above 23, where
 `5 ≤ χ(G₂₃) ≤ 8` and tabu finds no 7-colouring (§4, §12). So the local arguments available give no
@@ -854,8 +924,8 @@ anisotropic plane of §4; they coincide for `q ≡ 3 (mod 4)`.
 **The spectral bound.** The eigenvalues are `λ_ξ = Σ_u cos(2π ξ·u/q)` over the
 `q ∓ 1` unit vectors, and Hoffman's ratio bound gives
 `α ≤ n (−λ_min)/(d − λ_min)`. This is Vinh's method
-([arXiv math/0510092](https://arxiv.org/abs/math/0510092)); the thresholds
-below follow from it.
+([arXiv math/0510092](https://arxiv.org/abs/math/0510092)), with the spectra
+of Medrano–Myers–Stark–Terras (§4); the thresholds below follow from it.
 - **Weil.** Every non-trivial eigenvalue has `|λ| ≤ 2√q`: a Kloosterman sum
   for `q ≡ 1 (mod 4)`, the sum of §4 for `q ≡ 3`. Hence
   `χ(𝔽_q²) ≥ 1 + (q ∓ 1)/(2√q)`, which exceeds 5 for every prime `q ≥ 67` and
@@ -913,7 +983,8 @@ which are valid when `|S| ≥ K₀`; a bound below `K₀` then proves `α < K₀
 | `𝔽₄₃² = G₄₃` | 1 849 | 347.79 | 369.8 | `χ ≥ 6` |
 | `𝔽₄₇² = G₄₇` | 2 209 | 371.42 | 441.8 | `χ ≥ 6` |
 
-The same programme gives `α(G₁₃) ≤ 42.64` (`inert13.npz`), so `χ(G₁₃) ≥ 5`.
+The same programme gives `α(G₁₃) ≤ 42.64` (`inert13.npz`). This is above
+`169/4 = 42.25`, but `α` is an integer, so `α(G₁₃) ≤ 42` and `χ(G₁₃) ≥ 169/42 > 4`.
 Each file's `value` is the solver's floating-point bound; the verifier's
 rigorous bound differs from it by less than `10⁻⁴` and lies below every number
 quoted here.

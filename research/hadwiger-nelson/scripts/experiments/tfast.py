@@ -23,8 +23,7 @@ HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 import sys, time, pickle, random
 from fractions import Fraction as Fr
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from msqrt import madd, msub, mmul
 from hn.degrey import build_G
 from hn.geometry import DEGREY_FIELD as F
@@ -36,8 +35,7 @@ GENS = (3, 5, 7, 11)
 DIM = 16
 SAMPLES = 120
 STALL = 25
-SC = ("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-      "39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 random.seed(20260920)
 t0 = time.time()
 pts = build_G(F, as_graph=False)

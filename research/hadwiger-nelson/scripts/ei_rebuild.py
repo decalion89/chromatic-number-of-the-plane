@@ -90,9 +90,11 @@ for name in ("cd19", "g4", "m22"):
 cl, X = cnf_of(len(VK), E1k)
 s = Solver(name="cd19", bootstrap_with=cl)
 print("K with unit edges only 5-colourable:", s.solve())
+OUT = os.environ.get("HN_OUT", "/tmp/hn")
+os.makedirs(OUT, exist_ok=True)
 json.dump({"field_generators": [3, 11],
            "points": [[[[t.numerator, t.denominator] for t in p.x.c],
                        [[t.numerator, t.denominator] for t in p.y.c]] for p in VK],
            "unit_edges": E1k, "two_edges": E2k},
-          open(HN_DIR + "/data/exoo_ismailescu_K426.json", "w"))
-print("written data/exoo_ismailescu_K426.json")
+          open(os.path.join(OUT, "exoo_ismailescu_K426.json"), "w"))
+print("written", os.path.join(OUT, "exoo_ismailescu_K426.json"))

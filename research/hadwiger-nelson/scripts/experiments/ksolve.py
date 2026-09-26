@@ -30,8 +30,7 @@ import sys, time
 from fractions import Fraction as Fr
 from math import isqrt
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-src = open("/tmp/claude-0/-home-user-darwin-50/"
-           "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/"
+src = open("/tmp/hn/"
            "degreyfield.py").read()
 exec(src[:src.index("t0 = time.time()\nrh = ")])
 from hn.degrey import S_POINTS
@@ -275,6 +274,5 @@ for qi, q in enumerate(reps):
 print(f"\n{len(found)} rotations of K put a point of Sa one away from an "
       f"image of Sa, from {tried} pairs  [{time.time()-t0:.0f}s]", flush=True)
 import pickle
-with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/ksolve.pkl", "wb") as fh:
+with open("/tmp/hn/ksolve.pkl", "wb") as fh:
     pickle.dump([flat(u) for u in found.values()], fh)

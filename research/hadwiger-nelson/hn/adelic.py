@@ -178,7 +178,9 @@ def finite_plane_11_colouring():
 # the three nonzero elements of F_4. Colour z by the residue of z - rep(z), where rep(z) is the
 # 2-adic fractional part of z's coordinates on the Z_2-basis 1, sqrt3, w, sqrt3 w of O_w: adding u
 # adds its (nonzero) residue, so the colouring is proper with the 4 colours of F_4.
-# (Moorhouse 2010 left this field open; Madore, arXiv 1509.07023, proved 4 <= chi <= 5.)
+# This is a theorem of K. G. Fischer (Congr. Numer. 104 (1994) 73-79), through an additive colouring
+# with values in Z/4; the residue colouring here is a short alternative proof. (Moorhouse 2010 left the
+# value undetermined, and Madore, arXiv 1509.07023, proved 4 <= chi <= 5, without citing Fischer.)
 
 def _two_adic_scaled(r0, r1, s, K, N):
     """(r0 + r1 s) * 2^K mod 2^N as an integer, for rationals r0, r1 whose 2-adic valuation is >= -K."""
@@ -235,8 +237,8 @@ def q311_colour(p, place=1, K=64):
 # residue field F_4 and O_w = O_v + O_v w. With i = (2w + 1)/sqrt3, z = x + iy = a + b w where
 # a = x + y/sqrt3 and b = 2y/sqrt3. A unit vector u (u ubar = 1) has |u|_w = 1, so its a and b are
 # integral and not both in the maximal ideal: its residue in F_4 = F_2[w] is nonzero. Colouring z by
-# the residue of z - rep(z) is therefore proper. Voronov (Polymath16, 2021) conjectured
-# chi(Q(i, sqrt2, sqrt3)) = 4 together with the case Q(i, sqrt3, sqrt11) above.
+# the residue of z - rep(z) is therefore proper. Voronov (Polymath16, 2021) thought
+# chi(Q(i, sqrt2, sqrt3)) = 4 likely, together with the case Q(i, sqrt3, sqrt11) above.
 
 def q23_norm(c):
     """N_{L/Q}(c) for c in Q(sqrt2, sqrt3), coefficients on the basis 1, sqrt2, sqrt3, sqrt6."""

@@ -144,8 +144,7 @@ for ci in best[:6]:
     big = sorted(((c, str(D)) for D, c in g.items()), reverse=True)[:5]
     print(f"   centre {ci} (deg {deg[ci]}): rings {big}", flush=True)
 import pickle
-with open(f"/tmp/claude-0/-home-user-darwin-50/"
-          f"aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/"
+with open(f"/tmp/hn/"
           f"peeled_{SEED}_{k}.pkl", "wb") as f:
     pickle.dump([P[i] for i in sub], f)
 print("DONE", flush=True)

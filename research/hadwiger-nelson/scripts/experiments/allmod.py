@@ -14,10 +14,8 @@ import os
 HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import sys, time
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
-exec(open("/tmp/claude-0/-home-user-darwin-50/"
-          "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/orbblock.py")
+sys.path.insert(0, "/tmp/hn")
+exec(open("/tmp/hn/orbblock.py")
      .read().split("phi, _ = has_homomorphism(iv, 5)")[0])
 from hn.homcol import has_homomorphism
 

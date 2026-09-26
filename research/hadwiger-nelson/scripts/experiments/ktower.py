@@ -30,8 +30,7 @@ import sys, time
 from fractions import Fraction as Fr
 from math import isqrt
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-src = open("/tmp/claude-0/-home-user-darwin-50/"
-           "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/"
+src = open("/tmp/hn/"
            "degreyfield.py").read()
 exec(src[:src.index("t0 = time.time()\nrh = ")])
 from hn.degrey import S_POINTS
@@ -227,8 +226,7 @@ for z in [to_k(x, y) for x, y in S_POINTS]:
                 seenp.add(w)
                 Sa.append(w)
             w = kmul(Z6, w)
-with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/ksolve.pkl", "rb") as fh:
+with open("/tmp/hn/ksolve.pkl", "rb") as fh:
     raw = pickle.load(fh)
 ROT = [tuple(tuple(v[3 * i:3 * i + 3]) for i in range(4)) for v in raw]
 
@@ -301,6 +299,5 @@ for qi in range(0, len(U1), step):
               f"  [{time.time()-t0:.0f}s]", flush=True)
 print(f"\n{len(found)} rotations bite U1, from {tried} pairs  "
       f"[{time.time()-t0:.0f}s]", flush=True)
-with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/ktower.pkl", "wb") as fh:
+with open("/tmp/hn/ktower.pkl", "wb") as fh:
     pickle.dump(([flat(q) for q in U1], [flat(u) for u in found.values()]), fh)

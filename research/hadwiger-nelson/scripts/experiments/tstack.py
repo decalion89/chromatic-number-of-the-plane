@@ -16,8 +16,7 @@ HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 import sys, time, pickle
 from fractions import Fraction as Fr
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from msqrt import madd, msub, mmul
 from hn.degrey import build_G
 from hn.geometry import DEGREY_FIELD as F
@@ -50,8 +49,7 @@ def norm2(z):
     return madd(mmul(z[0], z[0], GENS), mmul(z[1], z[1], GENS))
 
 
-with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/gtrans.pkl", "rb") as fh:
+with open("/tmp/hn/gtrans.pkl", "rb") as fh:
     TR = pickle.load(fh)
 print(f"G: {len(P)} points; stacking translates, sampled counts "
       f"{[c for c, _ in TR[:6]]}  [{time.time()-t0:.0f}s]", flush=True)
@@ -108,8 +106,7 @@ for depth in (1, 2, 3, 4, 5):
         print(f"  *** depth {depth}: {n} points, {len(E)} edges, "
               f"{len(E)-inside} cross -- NOT 5-COLOURABLE ***  "
               f"[{time.time()-t0:.0f}s]", flush=True)
-        with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-"
-                  "a506-39c59179b415/scratchpad/tsix.pkl", "wb") as fh:
+        with open("/tmp/hn/tsix.pkl", "wb") as fh:
             pickle.dump((depth, allp, E), fh)
         break
     print(f"  depth {depth}: {n} points, {len(E)} edges "
@@ -151,8 +148,7 @@ for depth in (1, 2, 3, 4, 5):
           f"unforced band: 157 to 35365)  [{time.time()-t0:.0f}s]",
           flush=True)
     if hits:
-        with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-"
-                  "a506-39c59179b415/scratchpad/tforced.pkl", "wb") as fh:
+        with open("/tmp/hn/tforced.pkl", "wb") as fh:
             pickle.dump((depth, allp, E, hits), fh)
         print("  *** FORCED PAIR AT FIVE COLOURS -- SPINDLE IT ***",
               flush=True)

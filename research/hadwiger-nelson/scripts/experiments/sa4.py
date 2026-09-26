@@ -76,7 +76,6 @@ if forced:
     for d, c in dist.most_common(12):
         print(f"    {d}   x{c}", flush=True)
     import pickle
-    with open("/tmp/claude-0/-home-user-darwin-50/"
-              "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/saforced.pkl",
+    with open("/tmp/hn/saforced.pkl",
               "wb") as fh:
         pickle.dump(forced, fh)

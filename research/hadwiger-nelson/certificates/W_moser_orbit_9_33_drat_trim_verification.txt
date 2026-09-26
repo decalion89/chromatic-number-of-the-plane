@@ -1,0 +1,15 @@
+# data/W_moser_orbit_9_33.json, 5-colourability with edges at distance 1 and at the Galois orbit
+# d^2 = (9 -+ sqrt33)/6. The edges are recomputed exactly from the coordinates; the CNF has 5 variables
+# per vertex, one at-least-one clause per vertex and 5 conflict clauses per edge (unit edges first,
+# then each distance of the orbit, each in lexicographic order), no colour pinned.
+# kissat 4.0.4 and drat-trim (commit 2e3b2dc0ecf938addbd779d42877b6ed69d9a985), 26 September 2026.
+$ python3 scripts/orbit_witness_test.py data/W_moser_orbit_9_33.json 9_1 3600 kissat "" drat-trim
+data/W_moser_orbit_9_33.json: 187 points, 508 unit edges
+  + 243 edges at d^2 = 3/2 + -1/6*sqrt(33) (d = 0.7366)
+  + 252 edges at d^2 = 3/2 + 1/6*sqrt(33) (d = 1.5676)
+  tabu: FAIL 1  [8s]
+  CNF: 935 variables, 5202 clauses, sha256 1c4572e3cce339b8d3e3253740bf1a2f90054ff2beb8a07fd0817b59bf9cc89a
+  kissat: s UNSATISFIABLE [11s]
+  drat-trim: c 52186 of 79301 lemmas in core using 2723667 resolution steps [13s]
+  drat-trim: c 2517 RAT lemmas in core; 29365 redundant literals in core lemmas [13s]
+  drat-trim: s VERIFIED [13s]

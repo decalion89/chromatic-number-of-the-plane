@@ -14,7 +14,8 @@ refereed.
 
 ## The strategy for six, and who had it
 
-The main route is the Exoo–Ismailescu two-step reduction:
+The main route is the reduction of Exoo and Ismailescu, which Polymath16 calls
+clamping onto a virtual edge:
 - a two-distance witness `W` with `χ(ℝ², {1, d}) ≥ 6`;
 - a unit-distance gadget `H` that forces a pair at distance `d` apart.
 
@@ -22,24 +23,28 @@ The route is **not ours**.
 
 | ingredient | who had it | where |
 |---|---|---|
-| The reduction `W + H ⇒ χ(ℝ²) ≥ 6` | Exoo–Ismailescu; Polymath16 ("virtual edges", "clamping") | [arXiv 1909.13177](https://arxiv.org/abs/1909.13177), [thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/) |
+| The reduction `W + H ⇒ χ(ℝ²) ≥ 6` | Exoo–Ismailescu, who proved five this way with `d = √(11/3)` and stated the step to six as their Conjecture 8.1; Polymath16 ("virtual edges", "clamping"; de Grey's definitions in thread 3, comment 4172) | [arXiv 1805.00157](https://arxiv.org/abs/1805.00157), [arXiv 1805.06055](https://arxiv.org/abs/1805.06055), [thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/#comment-4172) |
 | `W` for `d = φ` (31 vertices) | Huddleston; Parts | [arXiv 2010.12656](https://arxiv.org/abs/2010.12656) |
 | `W` for `d = 2` | Exoo–Ismailescu | [arXiv 1909.13177](https://arxiv.org/abs/1909.13177) |
 | `W` for `d = √3` (33 vertices) and `(√6 + √2)/2` (117 vertices) | Ágoston–Pálvölgyi (Polymath16); De Neve et al. | [Monthly 2025](https://doi.org/10.1080/00029890.2025.2559554) |
-| The range of `d` with `χ(ℝ², {1, d}) ≥ 6` | Ágoston | [arXiv 2601.07828](https://arxiv.org/abs/2601.07828) |
+| Which sets of distances `d` are the range of a two-distance graph (the semialgebraic sets with positive lower and upper bounds) | Ágoston | [arXiv 2601.07828](https://arxiv.org/abs/2601.07828) |
 | Colouring-guided growth and minimisation, at 4 colours | Heule; Parts | [arXiv 1805.12181](https://arxiv.org/abs/1805.12181), [1907.00929](https://arxiv.org/abs/1907.00929), [2010.12665](https://arxiv.org/abs/2010.12665) |
 | Unions of paths as a construction | Haugland (Moser-spindle-free, 2 131 vertices) | [arXiv 2608.04542](https://arxiv.org/abs/2608.04542) |
-| Reduction of `F²` modulo a prime, for number fields `F`, and extension from a ring to the whole field by cosets | Moorhouse (Lemma 4.2, Lemma 8.2); Madore (Prop. 3.2, 3.8, 6.6) | [Moorhouse 2010](https://www.ericmoorhouse.org/pub/chromatic.pdf), [arXiv 1509.07023](https://arxiv.org/abs/1509.07023) |
+| Reduction of `F²` modulo a prime, for number fields `F`, and extension from a subgroup or a ring to the whole field by cosets | Woodall (`ℚ²` modulo 2); Fischer (1990, Thm 1: cosets of the component of the origin); Moorhouse (Lemma 4.2, Lemma 8.2); Madore (Cor. 3.4, Prop. 3.2, 3.8, ¶6.6) | [Moorhouse 2010](https://www.ericmoorhouse.org/pub/chromatic.pdf), [arXiv 1509.07023](https://arxiv.org/abs/1509.07023) |
 | `χ(ℚ(√N)²) = 2` for `N ≡ 1, 2 (mod 4)` | Johnson (1987) | Congr. Numer. 60, 51–58; see [Payne](https://arxiv.org/abs/0707.1177) |
 | `χ(ℚ(√N)²) ≤ 3` for `N ≡ 0, 1 (mod 3)`, `≤ 4` for `N ≡ 3 (mod 8)` (Thms 9, 10; the second is a reduction at 2 into `ℤ/4`); colouring the plane through the component of the origin (Thm 1) | Fischer (1990) | Discrete Math. 82, 181–195 (read in full); see also [Payne](https://arxiv.org/abs/0707.1177) |
 | No additive `k`-colouring of `ℚ(√N)²` for `k ≤ 6` when `N ≡ −1 (mod 24)`, for example `N = 47`, because `1/2` and `1/3` are sums of unit vectors | Fischer (1990), Thm 10(ii) | Discrete Math. 82, 181–195 |
-| **`χ(ℚ(√3, √11)²) = 4`**; more generally an additive 4-colouring of `ℚ(√p, √q)²` for `p ≡ 3`, `q ≡ 11 (mod 16)`, `pq ≡ 1 (mod 32)` | Fischer (1994) | Congr. Numer. 104, 73–79; [Zbl 0836.05030](https://zbmath.org/?q=an:0836.05030) |
+| **`χ(ℚ(√3, √11)²) = 4`**; more generally an additive 4-colouring of `ℚ(√p, √q)²` for squarefree, relatively prime `p ≡ 3`, `q ≡ 11 (mod 16)` with `pq ≡ 1 (mod 32)` | Fischer (1994) | Congr. Numer. 104, 73–79; [Zbl 0836.05030](https://zbmath.org/?q=an:0836.05030) |
 | The connected component of the origin in `ℚ(√N₁, …, √N_d)²` | Fischer (1990) | Congr. Numer. 72, 213–221; [Zbl 0733.05048](https://zbmath.org/?q=an:0733.05048) |
 | A survey, as of 2000, of problems on colourings of `ℚⁿ` and its algebraic extensions | Johnson (2000); we have not seen it | Geombinatorics 9, 170–179; [Zbl 0974.05029](https://zbmath.org/?q=an:0974.05029) |
 | 2-adic 4-colourings of the Moser ring, with colours in `𝔽₄` | Speyer (thread 2, April 2018); Hubai's analysis and computer search, reported by Gibbs: all have period 8 (thread 3); Dúcz (2026) | [thread 2](https://dustingmixon.wordpress.com/2018/04/22/polymath16-second-thread-what-does-it-take-to-be-5-chromatic/#comment-4013), [thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/), [arXiv 2606.12325](https://arxiv.org/abs/2606.12325) |
 | A colouring of `ℤ[ζ₂₄, 1/3]` through `(ℤ/4)[ζ₂₄]`, proposed for the plane over `ℚ(√2, √3)` | Voronov (thread 17, 30 July 2021), who asked for "a simpler way" | [comment 29476](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/#comment-29476) |
 | A 4-chromatic unit-distance graph over `ℚ(√2, √3)` | Voronov–Neopryatnaya–Dergachev (`L₁₀,₂` and its Minkowski sums) | [arXiv 2106.11824](https://arxiv.org/abs/2106.11824) |
 | The question whether a field generated by two square roots of primes can carry a 5-chromatic unit-distance graph | Voronov (thread 17, 17 July 2021) | [comment 29283](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/#comment-29283) |
+| A Galois automorphism that preserves unit distance maps one distance to another, so what holds for one distance holds for its conjugates (Tao used it to equate the densities `p_{d₁}` and `p_{d₂}` of two distances) | Tao (thread 7, comment 4893, 19 June 2018) | [comment 4893](https://dustingmixon.wordpress.com/2018/06/16/polymath16-seventh-thread-upper-bounds/#comment-4893) |
+| A 103-vertex graph with edges at 1 and `2/√3` and no 4-colouring | Ismailescu (thread 3, comment 4161) | [comment 4161](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/#comment-4161) |
+| The eigenvalues of the finite Euclidean graphs, through Gauss and Kloosterman sums, and Weil's bound for them | Medrano–Myers–Stark–Terras | J. Comput. Appl. Math. 68 (1996) 221–238, [doi](https://doi.org/10.1016/0377-0427(95)00261-8) |
+| The three-point semidefinite bound | Schrijver | IEEE Trans. Inform. Theory 51 (2005) 2859–2866 |
 | A lattice-like graph with no 5-colouring and bichromatic origin would give six | Frankl–Hubai–Pálvölgyi (Thm 27) | [arXiv 1912.02604](https://arxiv.org/abs/1912.02604) |
 | A 6-chromatic unit-distance graph has at least 42 vertices | de Grey–Parts | [arXiv 2303.14714](https://arxiv.org/abs/2303.14714) |
 | Large negative searches for six (2026) | Adler (`zeta42`); the `math-market/chromatic-plane` public repository | [keithadler/zeta42](https://github.com/keithadler/zeta42), [math-market/chromatic-plane](https://github.com/math-market/chromatic-plane) |
@@ -51,12 +56,13 @@ The route is **not ours**.
    **`χ(ℚ(√3, √11)²) = 4` is not new.** K. G. Fischer proved it in 1994
    (*A planar geometric graph of chromatic number four*, Congr. Numer. 104,
    73–79; Zbl 0836.05030). He proved that `ℚ(√p, √q)²` has an additive 4-colouring, with values in
-   `ℤ/4`, for every `p ≡ 3`, `q ≡ 11 (mod 16)` with `pq ≡ 1 (mod 32)`; for
-   `ℚ(√3, √11)` the Moser spindle gives the lower bound. We found this only
+   `ℤ/4`, for squarefree, relatively prime `p ≡ 3`, `q ≡ 11 (mod 16)` with
+   `pq ≡ 1 (mod 32)`. zbMATH's summary adds that the plane contains finite
+   graphs which require four colours; the Moser spindle is one. We found this only
    after the note had been sent out; we have read the zbMATH summary, not the
    paper. Johnson's 2000 survey (Geombinatorics 9, 170–179) may record further
    results; we have not seen it. The result seems to have been overlooked by:
-   - Moorhouse (2010): "We have not determined the exact value";
+   - Moorhouse (2010): "We have not determined the exact value …";
    - Madore (2015), who proved `4 ≤ χ ≤ 5`;
    - Exoo–Ismailescu (2018), who asked whether a 5-chromatic unit-distance
      graph embeds in this plane;
@@ -86,7 +92,8 @@ The route is **not ours**.
    - A partial answer to Voronov's question on two square roots of primes:
      `χ(ℚ(√3, √q)²)` is 3 for `q ≡ 1 (mod 3)` and 4 for `q = 2` or
      `q ≡ 11, 17 (mod 24)`, and at least 4 otherwise; and
-     `4 ≤ χ(ℚ(√3, √5)²) ≤ 5` (`notes/local_colourings.md` §11).
+     `4 ≤ χ(ℚ(√3, √5)²) ≤ 5` (`notes/local_colourings.md` §11). For
+     `q ≡ 11 (mod 32)` the upper bound 4 is also a case of Fischer (1994).
    - The criterion behind both proofs: if `√3 ∈ L` and some prime of `L` above 2
      has residue field `𝔽₂`, then `χ(L²) ≤ 4`. It is the case of this form of Madore's ¶6.6,
      his Prop. 3.2 for any quadratic form, in the coordinates `α = x + y/√3`,
@@ -97,31 +104,34 @@ The route is **not ours**.
    Related work: Speyer used the same 2-adic reduction in
    [Polymath16, thread 2](https://dustingmixon.wordpress.com/2018/04/22/polymath16-second-thread-what-does-it-take-to-be-5-chromatic/#comment-4013)
    (25 April 2018) to 4-colour the Moser ring; Hubai's analysis and computer search, reported
-   by Gibbs in thread 3, found that all its 4-colourings have period 8; Madore's
-   Prop. 3.2 and Moorhouse's Lemma 4.2 pass from a ring to the whole field by
-   cosets; Dúcz (2026) gave geometric 4-colourings of the Moser lattice and ring.
+   by Gibbs in thread 3, found that all its 4-colourings have period 8;
+   Fischer's Thm 1 (1990), Moorhouse's Lemma 4.2 and Madore's Prop. 3.2 pass
+   from a subgroup or a ring to the whole field by cosets; Dúcz (2026) gave
+   geometric 4-colourings of the Moser lattice and ring.
 
    By-product: a necessary condition at 2, 3 and 7 for a real field to be
    5-chromatic.
-2. **Whole-field chromatic numbers of CM fields.**
-   - `χ(ℚ(√−3, √−11)) = 4`, the Moser field. This is Speyer's colouring of
-     the Moser ring, extended to the whole field;
-   - `χ(ℚ(√−3, √−11, √−247)) = 5`, at the place over 11.
+2. **Whole-field chromatic numbers of two CM fields: known, with local proofs.**
+   - `χ(ℚ(√−3, √−11)) = 4`, the Moser field. The field lies in the plane over
+     `ℚ(√3, √11)`, so this follows from Fischer (1994). Our proof extends
+     Speyer's colouring of the Moser ring to the whole field.
+   - `χ(ℚ(√−3, √−11, √−247)) = 5`, at the place over 11. The upper bound
+     follows from Madore's Cor. 3.4 and Lemma 4.5, by the argument of his
+     Prop. 4.6; Exoo–Ismailescu's 5-chromatic graph lies in this field after
+     a quarter turn (`notes/local_colourings.md` §3).
 
-   Consequently no search in the second field can reach six. The finite
-   planes `G_q` satisfy `χ(G_q) ≥ 6` for `q ≥ 53` (Hoffman), and
-   `scripts/fieldscreen.py` lists fields with no small non-split place, such as
-   `L16`.
+   What is ours is the local form of the argument and its consequence: no
+   search in the second field can reach six. `scripts/fieldscreen.py` lists
+   fields with no small non-split place, such as `L16`.
 
    Dúcz ([arXiv 2606.12325](https://arxiv.org/abs/2606.12325)) 4-coloured the
-   Moser *lattice* and *ring*. Theorem 1 of `notes/local_colourings.md` covers
-   the whole field `ℚ(√−3, √−11)`, and its Theorem 3 the plane over
-   `ℚ(√3, √11)`, which contains it.
+   Moser *lattice* and *ring*.
 3. **Repulsion spectra at five colours, and the two-step explanation.** Every
    known witness distance is `|u + v|` for unit vectors `u, v`. Such pairs share
    a unit neighbour, and 5-colourings colour them alike 30–40% of the time.
    `2/√3` is the most repulsive distance measured, at 8%, and it is not a
-   two-step distance in `L16`.
+   two-step distance in `L16`. Ismailescu had already found a 103-vertex graph
+   with edges at 1 and `2/√3` and no 4-colouring (thread 3, comment 4161).
 4. **A sparse 72-point lattice witness** for
    `{1, 4/√3, √7, √(28/3), √(61/3)}`, verified by four solvers and DRAT.
 5. **Methods:**
@@ -129,13 +139,23 @@ The route is **not ours**.
    - `MODE` growth toward a forced pair;
    - skeleton growth around a witness;
    - Kempe backbones.
+6. **Six colours for finite planes** (`notes/local_colourings.md` §14):
+   `χ ≥ 6` for `𝔽₃₇²`, `𝔽₄₁²`, `𝔽₄₃²`, `𝔽₄₇²` and the anisotropic planes
+   `G₂₉`, `G₃₇`, `G₄₁`, from Schrijver's three-point bound with checked dual
+   certificates. Moorhouse's table stops at `q = 17`. We found no earlier bound
+   of six for these planes, and no earlier use of the three-point bound for
+   finite unit-distance graphs. For large `q` Hoffman's bound gives six, with
+   the spectra of Medrano–Myers–Stark–Terras.
 
 ## What this means
 
 The strategy for six is the known one. The new pieces are:
 - the choice of distance;
-- the arithmetic that says which fields can hold six;
+- the arithmetic that rules fields out for six;
 - the theorem χ(ℚ(√2, √3)²) = 4, and a short proof of Fischer's
-  χ(ℚ(√3, √11)²) = 4 (1994), which later work had treated as open.
+  χ(ℚ(√3, √11)²) = 4 (1994), which later work had treated as open;
+- lower bounds of six for finite planes, from the three-point bound.
 
-Both are modest. The first answers a question asked in print.
+All are modest. Voronov raised the case ℚ(√2, √3) in a Polymath16 comment.
+The questions about ℚ(√3, √11) asked in print, by Exoo–Ismailescu and by
+Cranston–Rabern, had been settled by Fischer.

@@ -21,8 +21,7 @@ import sys, time, pickle
 from collections import Counter
 from fractions import Fraction as Fr
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from msqrt import madd, msub, mmul
 from hn.degrey import build_G
 from hn.geometry import DEGREY_FIELD as F
@@ -111,8 +110,7 @@ print(f"{len(exact)} of {len(want)} recovered exactly  "
       f"[{time.time()-t0:.0f}s]", flush=True)
 out = [(hist[k], exact[k]) for k in cands if k in exact]
 out.sort(key=lambda t: -t[0])
-with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/gtrans.pkl", "wb") as fh:
+with open("/tmp/hn/gtrans.pkl", "wb") as fh:
     pickle.dump(out, fh)
 print(f"saved {len(out)} translates, best sampled count {out[0][0]}  "
       f"[{time.time()-t0:.0f}s]", flush=True)

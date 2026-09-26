@@ -57,7 +57,5 @@ for take in (0, 200, 600, 1200, len(ranked)):
           f"[{time.time()-t0:.0f}s]", flush=True)
     if t >= 3:
         import pickle
-        pickle.dump(pts + extra, open("/tmp/claude-0/-home-user-darwin-50/"
-                                      "aceaa9ec-f432-5848-a506-39c59179b415/"
-                                      "scratchpad/pressure3_k5.pkl", "wb"))
+        pickle.dump(pts + extra, open("/tmp/hn/pressure3_k5.pkl", "wb"))
         break

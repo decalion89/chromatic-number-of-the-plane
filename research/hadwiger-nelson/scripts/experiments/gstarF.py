@@ -15,16 +15,14 @@ import os
 HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import sys, time, pickle
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from fractions import Fraction as Fr
 from hn.degrey import build_G
 from hn.geometry import DEGREY_FIELD as F, Point, _rot60, rotation_joining
 from hn.graph import build_graph
 from bigfilter import sample_colourings, survivors, forced_among
 
-SC = ("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-      "39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 RINGS = [Fr(4), Fr(31, 3), Fr(17, 2), Fr(7), Fr(20, 3), Fr(13, 3), Fr(7, 3),
          Fr(3, 2), Fr(16)]
 t0 = time.time()

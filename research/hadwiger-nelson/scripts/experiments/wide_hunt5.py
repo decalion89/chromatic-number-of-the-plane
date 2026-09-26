@@ -33,7 +33,7 @@ from hn.spindle import (SeparationTest, local_ball, spindle_union_auto,
 K = int(os.environ.get("HN_K", "5"))
 SCAN = int(os.environ.get("HN_SCAN", "14"))
 CAP = int(os.environ.get("HN_CAP", "45000"))
-OUT = os.environ.get("HN_OUT", "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+OUT = os.environ.get("HN_OUT", "/tmp/hn")
 
 
 def smallest_core(g, scan=SCAN):

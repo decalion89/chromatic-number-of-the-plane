@@ -28,7 +28,7 @@ from hn.spindle import SeparationTest, spindle_union, triple_spindle_union
 
 K = int(os.environ.get("HN_K", "5"))
 MAXD2 = Fraction(os.environ.get("HN_MAXD2", "40"))
-OUT = os.environ.get("HN_OUT", "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+OUT = os.environ.get("HN_OUT", "/tmp/hn")
 ALLOWED = {1, 3, 5, 7, 11, 15, 21, 33, 35, 55, 77, 105, 165, 231, 385, 1155}
 
 

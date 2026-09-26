@@ -15,8 +15,7 @@ HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 import sys, time, pickle, glob
 from fractions import Fraction as Fr
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from msqrt import madd, msub, mmul
 from hn.degrey import build_G
 from hn.geometry import DEGREY_FIELD as F
@@ -55,8 +54,7 @@ def cmul(z, w):
             madd(mmul(z[0], w[1], GENS), mmul(z[1], w[0], GENS)))
 
 
-paths = sorted(glob.glob("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-"
-                         "5848-a506-39c59179b415/scratchpad/gpivot_*.pkl"))
+paths = sorted(glob.glob("/tmp/hn/gpivot_*.pkl"))
 with open(paths[0], "rb") as fh:
     pv, ROT = pickle.load(fh)
 o = P0[pv]
@@ -126,8 +124,7 @@ for depth in (1, 2, 3, 4, 5, 6):
           f"[{time.time()-t0:.0f}s]", flush=True)
     if not five:
         print("  *** SIX COLOURS ***", flush=True)
-        with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-"
-                  "a506-39c59179b415/scratchpad/gsix.pkl", "wb") as fh:
+        with open("/tmp/hn/gsix.pkl", "wb") as fh:
             pickle.dump((pv, depth, allp, E), fh)
         break
     cand = []
@@ -170,8 +167,7 @@ for depth in (1, 2, 3, 4, 5, 6):
           f"{conf()} conflicts in total, dearest {dear} "
           f"(G alone: 6410 and 29)  [{time.time()-t0:.0f}s]", flush=True)
     if hits:
-        with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-"
-                  "a506-39c59179b415/scratchpad/gforced.pkl", "wb") as fh:
+        with open("/tmp/hn/gforced.pkl", "wb") as fh:
             pickle.dump((pv, depth, allp, E, hits), fh)
         print("  *** FORCED PAIR AT FIVE COLOURS -- SPINDLE IT ***",
               flush=True)

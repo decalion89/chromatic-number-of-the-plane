@@ -15,8 +15,6 @@ import os
 HN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys, time, itertools, random
 sys.path.insert(0, HN_DIR)
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
 import numpy as np
 from fractions import Fraction as Fr
 from collections import deque

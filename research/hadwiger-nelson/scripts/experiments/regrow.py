@@ -18,8 +18,7 @@ import sys, time
 from fractions import Fraction as Fr
 from math import gcd
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-src = open("/tmp/claude-0/-home-user-darwin-50/"
-           "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/"
+src = open("/tmp/hn/"
            "degreyfield.py").read()
 exec(src[:src.index("t0 = time.time()\nrh = ")])
 from hn.homcol import (has_homomorphism, blocks_at, saturated_at,
@@ -208,8 +207,7 @@ def orbits_of(seq):
 # blocks at 2, 3 and 5, losing n = 4.  The gate was never at risk -- the
 # direction matrix has rank 12 mod 5 -- so what is wanted is the one missing
 # modulus, and the sharpened gate is met in full by a 4-critical graph.
-with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/kneck.pkl", "rb") as fh:
+with open("/tmp/hn/kneck.pkl", "rb") as fh:
     ws = pickle.load(fh)
 print(f"resuming from {len(ws)} rhombi  [{time.time()-t0:.0f}s]", flush=True)
 PART = parts_of(ws)
@@ -233,8 +231,7 @@ while rounds < 200:
     if blocks == [2, 3, 4, 5]:
         print("  *** NECKLACE BLOCKING AT 2, 3, 4 AND 5 OVER K ***",
               flush=True)
-        with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-"
-                  "a506-39c59179b415/scratchpad/kneck4.pkl", "wb") as fh:
+        with open("/tmp/hn/kneck4.pkl", "wb") as fh:
             pickle.dump(ws, fh)
         break
     grew = False

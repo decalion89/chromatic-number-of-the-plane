@@ -24,7 +24,7 @@ pos = {p: i for i, p in enumerate(g.vertices)}
 rot = _rot60(F)
 perm = [pos[rot(g.vertices[v])] for v in range(n)]
 cand = [tuple(x) for x in json.load(open(
-    "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/cand7141.json"))]
+    "/tmp/hn/cand7141.json"))]
 seen, reps = set(), []
 for a, b in cand:
     key = (min(a, b), max(a, b))
@@ -55,4 +55,4 @@ for i, (a, b) in enumerate(reps):
 s.delete()
 print(f"\n{len(forced)} forced orbits of {len(reps)}   [{time.time()-t0:.0f}s]",
       flush=True)
-json.dump(forced, open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/forced7141.json", "w"))
+json.dump(forced, open("/tmp/hn/forced7141.json", "w"))

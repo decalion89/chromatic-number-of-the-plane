@@ -96,7 +96,6 @@ if best:
     d, ns, S = best
     print(f"\nsmallest blocking denominator bound: {d}  ({ns} directions)")
     import json
-    json.dump([list(v) for v in S], open("/tmp/claude-0/-home-user-darwin-50/"
-              "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/blocking.json", "w"))
+    json.dump([list(v) for v in S], open("/tmp/hn/blocking.json", "w"))
 else:
     print("\nno bound in this box blocks")

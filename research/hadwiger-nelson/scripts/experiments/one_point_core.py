@@ -28,7 +28,7 @@ from hn.forced import (ColourRelations, cegar_core, is_core, minimise_core,
 from hn.graph import build_graph
 from hn.mixed import circle_intersections
 
-SC = "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad"
+SC = "/tmp/hn"
 g = build_G()
 field = g.vertices[0].x.field
 one = field.rational(1)

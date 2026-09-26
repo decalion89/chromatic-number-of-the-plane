@@ -19,8 +19,7 @@ from pysat.solvers import Solver
 from pysat.card import CardEnc, EncType
 from pysat.formula import IDPool
 
-SC = ("/tmp/claude-0/-home-user-darwin-50/"
-      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 CAR = sys.argv[1]
 t0 = time.time()
 P = (build_G(K, as_graph=False) if CAR == "G"

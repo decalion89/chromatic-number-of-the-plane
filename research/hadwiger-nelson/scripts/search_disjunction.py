@@ -36,7 +36,8 @@ from hn.spindle import SeparationTest, spindle_union, triple_spindle_union
 K = int(os.environ.get("HN_K", "4"))
 CAP = int(os.environ.get("HN_CAP", "60000"))
 NPIVOTS = int(os.environ.get("HN_PIVOTS", "6"))
-OUT = os.environ.get("HN_OUT", "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+OUT = os.environ.get("HN_OUT", "/tmp/hn")      # working directory for the output
+os.makedirs(OUT, exist_ok=True)
 
 
 def spindleable_distances(basis, rows, pivot, max_d2=40.0):

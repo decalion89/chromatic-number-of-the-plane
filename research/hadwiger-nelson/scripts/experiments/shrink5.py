@@ -100,8 +100,7 @@ ke = [(a, c) for a, c in E if a in keep and c in keep]
 print(f"\n5-critical core of G: {len(kept)} points, {len(ke)} edges "
       f"({2*len(ke)/max(len(kept),1):.2f}/v), down from {n}"
       f"  [{time.time()-t0:.0f}s]", flush=True)
-with open("/tmp/claude-0/-home-user-darwin-50/"
-          "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/Gcore.pkl",
+with open("/tmp/hn/Gcore.pkl",
           "wb") as f:
     pickle.dump([P[i] for i in kept], f)
 print("DONE", flush=True)

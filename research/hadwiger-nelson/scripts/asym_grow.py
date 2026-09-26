@@ -38,7 +38,8 @@ K = int(os.environ.get("HN_K", "5"))
 TRIALS = int(os.environ.get("HN_TRIALS", "40"))
 TARGET_N = int(os.environ.get("HN_N", "900"))
 SEED = int(os.environ.get("HN_SEED", "1"))
-OUT = os.environ.get("HN_OUT", "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+OUT = os.environ.get("HN_OUT", "/tmp/hn")      # working directory for the output
+os.makedirs(OUT, exist_ok=True)
 
 
 def smallest_core(g, scan=10):

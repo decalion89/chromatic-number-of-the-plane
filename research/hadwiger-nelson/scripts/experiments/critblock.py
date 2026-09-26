@@ -25,8 +25,7 @@ import sys, itertools, time
 from fractions import Fraction
 from math import gcd
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from field24 import (K, D, e_zero, e_of, e_add, e_sub, e_mul, e_norm2,
                      ONE, Z6, RHO)
 from hn.homcol import has_homomorphism

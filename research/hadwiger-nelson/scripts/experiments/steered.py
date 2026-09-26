@@ -400,8 +400,7 @@ def dirs_of(ws):
 # any new orbit at all.
 import pickle
 try:
-    with open("/tmp/claude-0/-home-user-darwin-50/"
-              "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/orbs.pkl",
+    with open("/tmp/hn/orbs.pkl",
               "rb") as fh:
         TARGET = set(pickle.load(fh))
     print(f"steering towards {len(TARGET)} blocking orbits", flush=True)
@@ -475,8 +474,7 @@ while rounds < 60:
           + f"  [{time.time()-t0:.0f}s]", flush=True)
     if phi is None:
         import pickle
-        with open("/tmp/claude-0/-home-user-darwin-50/"
-                  "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/ws.pkl",
+        with open("/tmp/hn/ws.pkl",
                   "wb") as fh:
             pickle.dump(ws, fh)
         uniq, E = build(ws)

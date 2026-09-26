@@ -62,4 +62,4 @@ d2 = collections.Counter(str(pv.dist2(g.vertices[v])) for v in extra)
 print(f"  the {len(extra)} non-circle vertices sit at d^2 "
       f"{dict(sorted(d2.items(), key=lambda kv: -kv[1])[:8])}", flush=True)
 import pickle
-pickle.dump(sorted(cur), open(f"{SC if False else '/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad'}/witness.pkl", "wb"))
+pickle.dump(sorted(cur), open(f"{SC if False else '/tmp/hn'}/witness.pkl", "wb"))

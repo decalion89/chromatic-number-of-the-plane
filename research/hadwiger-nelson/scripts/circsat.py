@@ -9,7 +9,7 @@ usage: python3 circsat.py <module.json> <Q> [k] [seconds] [workers]"""
 import sys, os, time
 import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path = [p for p in sys.path if os.path.abspath(p or ".") != HERE]   # scripts/six.py shadows the real six
+sys.path = [p for p in sys.path if os.path.abspath(p or ".") != HERE]   # no script here may shadow an installed package
 from ortools.sat.python import cp_model
 t0 = time.time()
 src = open(os.path.join(HERE, "circgate.py")).read()

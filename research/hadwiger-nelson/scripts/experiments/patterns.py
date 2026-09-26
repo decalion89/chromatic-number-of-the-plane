@@ -94,4 +94,4 @@ if __name__ == "__main__":
     forced = [(i, j) for i in range(m) for j in range(i+1, m) if not agree[i][j]]
     print(f"  pairs of the circle FORCED to differ: {len(forced)} of {m*(m-1)//2}")
     pickle.dump({"which":which,"k":k,"d2":str(d2),"R":R,"patterns":pat,
-                 "complete":complete}, open(f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/pat_{which}_{k}_{d2.numerator}_{d2.denominator}.pkl","wb"))
+                 "complete":complete}, open(f"/tmp/hn/pat_{which}_{k}_{d2.numerator}_{d2.denominator}.pkl","wb"))

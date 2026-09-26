@@ -87,8 +87,8 @@ def test_ramified_above_2_gives_a_bipartite_plane():
     assert local_bound(5, 13)[0] == 2
 
 
-def test_the_bounds_with_sqrt3_match_theorem_4():
-    """Q(sqrt3, sqrt q), q < 60 prime: bound 3 iff q = 1 (mod 3), bound 4 iff q = 2 or q = 11, 17 (mod 24),
+def test_the_bounds_with_sqrt3_match_theorem_5():
+    """Theorem 5 of notes/local_colourings.md, section 11. Q(sqrt3, sqrt q), q < 60 prime: bound 3 iff q = 1 (mod 3), bound 4 iff q = 2 or q = 11, 17 (mod 24),
     and nothing below 5 for q = 5, 23 (mod 24)."""
     for q in [2, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59]:
         bd, _ = local_bound(3, q)

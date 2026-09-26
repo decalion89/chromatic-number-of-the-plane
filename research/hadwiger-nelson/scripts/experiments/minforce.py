@@ -81,7 +81,7 @@ for rd in range(ROUNDS):
                    "points": [[[[c.numerator, c.denominator] for c in p.x.c],
                                [[c.numerator, c.denominator] for c in p.y.c]]
                               for p in gz.vertices]},
-                  open(f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/minf_{SEED}.json", "w"))
+                  open(f"/tmp/hn/minf_{SEED}.json", "w"))
         print(f"    -> H'={len(best)}, Z'={gz.n} points saved", flush=True)
     if dropped:
         cur = cur | set(rng.sample(sorted(dropped), min(KICK, len(dropped))))

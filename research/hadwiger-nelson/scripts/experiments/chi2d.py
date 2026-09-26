@@ -13,7 +13,7 @@ import os
 HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import sys, time, pickle
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+sys.path.insert(0, "/tmp/hn/")
 import numpy as np
 from fractions import Fraction as Fr
 from hn.geometry import DEGREY_FIELD as K
@@ -24,8 +24,7 @@ PKL = sys.argv[1] if len(sys.argv) > 1 else "symG.pkl"
 DSQ = Fr(sys.argv[2]) if len(sys.argv) > 2 else Fr(3)
 KK = int(sys.argv[3]) if len(sys.argv) > 3 else 5
 t0 = time.time()
-SC = ("/tmp/claude-0/-home-user-darwin-50/"
-      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 P = pickle.load(open(SC + PKL, "rb"))
 b = IntBasis.covering(P)
 r = b.rows(P)

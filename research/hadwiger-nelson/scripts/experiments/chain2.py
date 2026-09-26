@@ -149,7 +149,7 @@ def triple_scan(pts, K, howmany, tag):
               flush=True)
         if not ok:
             pickle.dump((tag, K, si), open(
-                f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/TRIPHIT_{tag}_{K}_{si}.pkl", "wb"))
+                f"/tmp/hn/TRIPHIT_{tag}_{K}_{si}.pkl", "wb"))
             return True
     return False
 
@@ -194,11 +194,11 @@ for lvl in range(LEVELS):
                 print(f"        v{x[0]} v{x[1]} d^2={x[2]} radical {x[3]}", flush=True)
             if f5:
                 pickle.dump((lvl, [(x[0], x[1], str(x[2]), x[3]) for x in f5]),
-                            open(f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/FIVE_{lvl}.pkl", "wb"))
+                            open(f"/tmp/hn/FIVE_{lvl}.pkl", "wb"))
             triple_scan(Zp, 5, NTRIPLE, f"Z{lvl}")
         if not c5:
             print("  *** SIX COLOURS *** the spindled graph refuses five", flush=True)
-            pickle.dump(lvl, open(f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/SIX_{lvl}.pkl", "wb"))
+            pickle.dump(lvl, open(f"/tmp/hn/SIX_{lvl}.pkl", "wb"))
             break
     glues = best_glues(pts, 40)
     ov, name, f = glues[0]

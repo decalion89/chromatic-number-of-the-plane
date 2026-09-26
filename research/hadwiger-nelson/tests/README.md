@@ -13,10 +13,12 @@ python3 -m pytest -q tests/test_q23.py     # one file
 ```
 
 The tests marked `slow` include a 4-colourability solve of de Grey's 1581-vertex graph
-(`test_degrey.py`, with a 30-minute solver limit).
+(`test_degrey.py`), which can take CaDiCaL hours. Every solver call in the tests has a four-hour
+limit; `hn.coloring` enforces it for CaDiCaL, which ignores pysat's interrupt, by running the
+solver in a separate process.
 
-GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 31 files marked CI
-on every push to `main`, on every pull request, and on manual dispatch: 371 tests, which took two
+GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 33 files marked CI
+on every push to `main`, on every pull request, and on manual dispatch: 383 tests, which took two
 minutes in a local run. The DRAT test in `test_certify.py` is skipped there, because the
 workflow does not install drat-trim. The other ten files (282 tests) are run locally; without their
 14 tests marked `slow` they took 32 minutes in a local run, 20 of them in one test of
@@ -25,9 +27,11 @@ minutes together.
 
 | file | CI | what it checks |
 |---|:---:|---|
-| `test_biquadratic_bounds.py` | ✓ | Local upper bounds for the planes over ℚ(√a, √b) (`notes/local_colourings.md` §13): χ(G_q) = 3, 4, 5 for q = 3, 7, 11, χ(G₄) = 4 and χ(G₁₉) = 5 (a linear 5-colouring; no 4-colouring); a ramified place above 2 makes the plane over ℚ(√2, √5) bipartite; the bounds for ℚ(√3, √q), q < 60, agree with Theorem 4; the first non-split places of ℚ(√3, √29) and ℚ(√5, √7) lie above 23 and 19; a unit 5-cycle over ℚ(√5, √7) gives χ ≥ 3 there. |
+| `test_biquadratic_bounds.py` | ✓ | Local upper bounds for the planes over ℚ(√a, √b) (`notes/local_colourings.md` §13): χ(G_q) = 3, 4, 5 for q = 3, 7, 11, χ(G₄) = 4 and χ(G₁₉) = 5 (a linear 5-colouring; no 4-colouring); a ramified place above 2 makes the plane over ℚ(√2, √5) bipartite; the bounds for ℚ(√3, √q), q < 60, agree with Theorem 5 (§11); the first non-split places of ℚ(√3, √29) and ℚ(√5, √7) lie above 23 and 19; a unit 5-cycle over ℚ(√5, √7) gives χ ≥ 3 there. |
 | `test_certify.py` | ✓ | The certificate checker in `hn/certify.py` accepts a proper colouring and rejects a monochromatic unit pair, a colour outside the palette and a claimed lower bound on a colourable graph; its DRAT test runs only when drat-trim is on the `PATH`. |
+| `test_cli.py` | ✓ | The command line `python3 -m hn.cli`: `verify` accepts both Moser spindle certificates, reports a solver's `UNSAT` without calling it verified when drat-trim is missing, and rejects a tampered colouring; `demo` writes a certificate that verifies, by default to `HN_OUT`. |
 | `test_cyclotomic.py` | ✓ | Unit steps in ℤ[ζₙ]: they are the roots of unity, ℚ(ζ₅) alone has no unit triangle while ℚ(ζ₁₅) has one, a Gauss sum gives the spindle's radical, and the Moser spindle lies in a cyclotomic field. |
+| `test_decompositions.py` | ✓ | The decompositions of 2 and 3 recomputed with PARI/GP (`scripts/decompositions.gp`): the places over 2 of ℚ(√3, √11) and ℚ(√2, √3) and their inertness in L(i); for ℚ(√3, √q), q < 75 prime, a place over 2 with residue field 𝔽₂ exactly when q = 2 or q ≡ 1, 3 (mod 8), and one over 3 with residue field 𝔽₃ exactly when q ≡ 1 (mod 3); nine fields with more square roots. Skipped when gp is not installed. |
 | `test_degrey.py` |  | De Grey's graph rebuilt from his 39-point set S has 39, 397 and 1581 vertices at the three stages and 7877 edges, and (marked `slow`) no proper 4-colouring. |
 | `test_denominator_five.py` |  | Exoo–Ismailescu's graph rebuilt from their 23 points, the arithmetic of their rotation λ, the fact that a denominator of 5 blocks coset colourings while the integral 803-vertex graph admits them, and a 61-point graph on the Eisenstein lattice with edges at squared lengths 3, 4 and 7 that is 6-chromatic. |
 | `test_dense_family.py` |  | The dense 5-chromatic graphs `five_dense_2.json` and `five_dense_10.json`, recomputed from their coordinates: the tuning angle, the vertex and edge counts, their structure as two copies of one carrier, and the absence of a proper 4-colouring. |
@@ -36,8 +40,6 @@ minutes together.
 | `test_fast_agrees.py` | ✓ | The vectorised integer arithmetic of `hn/fast.py` agrees with exact rational arithmetic on points, unit vectors, walks and edge sets. |
 | `test_field.py` | ✓ | Exact arithmetic in multiquadratic fields: admissible generators, products of radicals, inverses through the Galois conjugates, exact equality and hashing. |
 | `test_finite_planes.py` | ✓ | Bounds for Moorhouse's table of χ(𝔽_q²) (`notes/local_colourings.md` §12): interval colourings, with m consecutive parallel lines ax + by = r per colour when a² + b² − r² is a non-square for r < m, for q = 7, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61 (optimal for 7, 13, 19); a linear 8-colouring of 𝔽₄₃²; no 4-colouring of 𝔽₂₃² or 𝔽₃₇². Hoffman's bound with every eigenvalue in interval arithmetic (§14): χ(𝔽₅₉²) ≥ 6, χ ≥ 7 for q = 71, 97, 101, and χ(G_q) ≥ 6 for the anisotropic planes with q = 53, 59, 61, the cases of Proposition B below Weil's threshold. |
-| `test_threepoint.py` | ✓ | The three-point bound of `scripts/threepoint.py` (§14), without a solver: for q ≤ 13 the rotation blocks and the localizing blocks are compressions of the explicit matrices by an orthonormal basis, so they are positive semidefinite exactly when the matrices are; real independent sets of 𝔽₁₁² and 𝔽₁₃² satisfy every constraint, with objective \|S\|; the stored certificates match `data/threepoint/SHA256SUMS`. |
-| `test_threepoint_certificates.py` |  | Each certificate in `data/threepoint/` proves the lower bound on χ listed in the file (χ ≥ 6 for 𝔽₃₇², 𝔽₄₁², 𝔽₄₃², 𝔽₄₇², G₂₉, G₃₇, G₄₁; χ(G₁₃) ≥ 5), checked by `scripts/threepoint_verify.py` in interval and exact rational arithmetic (marked `slow`: up to four minutes each). |
 | `test_finite_planes_slow.py` |  | No 4-colouring of 𝔽₂₉², 𝔽₃₁², 𝔽₄₁² or 𝔽₄₃² (marked `slow`; 15 s to 8 minutes each). |
 | `test_five_247.py` |  | The 5-chromatic unit-distance graphs over ℚ(√3, √11, √247) and ℚ(√3, √11, √23) in `data/`: edge counts recomputed exactly, chromatic number 5, C₆-invariance of the symmetric graphs, and the radicals that the spindle angles need. |
 | `test_forced.py` | ✓ | Forced colour relations on graphs with known answers: pairs forced alike or different, cores, and the pressure at a vertex p (the least number of colours a k-colouring uses on the unit neighbours of p), including `certificates/pressure3_witness_47.json`. |
@@ -55,12 +57,14 @@ minutes together.
 | `test_q311.py` | ✓ | χ(ℚ(√3, √11)²) = 4, a theorem of K. G. Fischer (1994), by a short proof: the plane has a proper 4-colouring by 2-adic residues and contains the Moser spindle, which has no proper 3-colouring (details below). |
 | `test_q35.py` | ✓ | The plane over ℚ(√3, √5) has no proper 3-colouring: 1/3 is a sum of unit vectors, and a chain of six unit rhombi (`data/chain35.json`, 19 vertices, 31 exact edges) joins the origin to a unit vector. 11 splits completely, which gives χ ≤ 5. A chain of four rhombi (13 vertices) built from four unit vectors summing to 1/√3 has no proper 3-colouring either. |
 | `test_q3q.py` | ✓ | The planes over ℚ(√3, √q): for every q ≡ 2 (mod 3) up to 113, a generator α of norm 3^h in ℚ(√−q) makes 1/3 a sum of unit vectors, so χ ≥ 4; for q = 17, a chain of 90 rhombi (271 vertices) has no proper 3-colouring. |
-| `test_split_places.py` | ✓ | Proposition C of `notes/local_colourings.md` §12: the hyperbola graphs H_q = Cay(𝔽_q², {(t, 1/t)}) have χ = 2, 3, 4, 3, 4, 4, 3, 4, 5, 4 for q = 2, 3, 4, 5, 7, 8, 9, 11, 13, 16 (an explicit 5-colouring for q = 13); over ℚ(√3, √5), reduction at the prime above 2 is a proper 4-colouring of `chain35.json`, whose edge vectors are units there, one of its edge vectors is not a unit above 3, and reduction above 3 followed by a 3-colouring of H₉ 3-colours a graph whose edge vectors are units above 3. |
 | `test_quadext.py` | ✓ | Arithmetic in ℚ(ζ₁₅, √−7, √−11), built as a tower of quadratic extensions of ℚ(ζ₁₅), which contains de Grey's rotations and ζ₁₅. |
 | `test_reduce11.py` | ✓ | The unit-distance graph on the field ℚ(√−3, √−11, √−247), viewed in ℂ, is 5-colourable: reduction at a place above 11 maps it to the Cayley graph of 𝔽₁₂₁ on its 12 elements of norm one, which is 5- but not 4-colourable, and this colours the 803-vertex graph `five_247_c.json` properly at both places above 11. |
 | `test_ring_geometry.py` | ✓ | Six facts behind the ring constructions, recomputed: the 90° rotation about the centre of a unit square moves one diagonal onto the other at distance 1, the map σ satisfies \|σu\|² = \|u\|²/3 and \|u − σu\| = \|u\|, the two-ring configuration is 3-chromatic, within each component of a neighbourhood in `five_247_c.json` two neighbours lie on the same side of the bipartition exactly when the angle between them is an even multiple of 60°, 2 is not of the form a² + ab + b², and that graph has exactly two vertices of degree 4. |
 | `test_slack.py` | ✓ | With slack s = k − 3: unit-distance graphs have clique number 3, a pair forced alike under k colours needs at least k + 1 vertices, a unit rhombus attains this at k = 3, and at k = 4 neither the rhombus nor the Moser spindle forces a pair. |
 | `test_spindle.py` | ✓ | The spindle constructions (two-copy, triple and local), separation tests and cores, on cases whose answers are known. |
+| `test_split_places.py` | ✓ | Proposition C of `notes/local_colourings.md` §12: the hyperbola graphs H_q = Cay(𝔽_q², {(t, 1/t)}) have χ = 2, 3, 4, 3, 4, 4, 3, 4, 5, 4 for q = 2, 3, 4, 5, 7, 8, 9, 11, 13, 16 (an explicit 5-colouring for q = 13); over ℚ(√3, √5), reduction at the prime above 2 is a proper 4-colouring of `chain35.json`, whose edge vectors are units there, one of its edge vectors is not a unit above 3, and reduction above 3 followed by a 3-colouring of H₉ 3-colours a graph whose edge vectors are units above 3. |
+| `test_threepoint.py` | ✓ | The three-point bound of `scripts/threepoint.py` (§14), without a solver: for q ≤ 13 the rotation blocks and the localizing blocks are compressions of the explicit matrices by an orthonormal basis, so they are positive semidefinite exactly when the matrices are; real independent sets of 𝔽₁₁² and 𝔽₁₃² satisfy every constraint, with objective \|S\|; the stored certificates match `data/threepoint/SHA256SUMS`. |
+| `test_threepoint_certificates.py` |  | Each certificate in `data/threepoint/` proves the lower bound on χ listed in the file (χ ≥ 6 for 𝔽₃₇², 𝔽₄₁², 𝔽₄₃², 𝔽₄₇², G₂₉, G₃₇, G₄₁; χ(G₁₃) ≥ 5), checked by `scripts/threepoint_verify.py` in interval and exact rational arithmetic (marked `slow`: up to four minutes each). |
 | `test_tight_four.py` | ✓ | The 24-point graph of `data/tight_four.json` is 4-chromatic and has circular chromatic number exactly 4. |
 | `test_transfer.py` | ✓ | The transfer-matrix construction, which glues copies of a graph along congruent sets of points, on the Moser spindle. |
 | `test_transversal.py` | ✓ | Blocking by rotated copies of targets at one distance: rotation orders over a multiquadratic field divide 24, the triangle is the only odd cycle available, the capacity bounds that follow, and the counting certificate. |
@@ -73,23 +77,25 @@ minutes together.
 short proof by 2-adic residues:
 - the local facts: ℚ(√3, √11) has two places over 2, each with completion ℚ₂(√3) and inert in
   ℚ(√3, √11, i), whose completions have residue field 𝔽₄; sympy's `prime_decomp` confirms that
-  2 = 𝔭₁²𝔭₂² with residue degree 1;
+  2 = 𝔭₁²𝔭₂² with residue degree 1, and, through the subfield ℚ(√−3, √−11), that both places are
+  inert in ℚ(√3, √11, i);
 - 810 unit vectors generated by rotations, and 300 random unit vectors
   ((a² − b²)/(a² + b²), 2ab/(a² + b²)), a form that every unit vector takes by Hilbert 90, are
   2-adic units with nonzero residue in 𝔽₄ at both places;
 - the colouring is proper on 300 random unit steps, on the Moser spindle (which has no proper
-  3-colouring, the lower bound) and on Exoo–Ismailescu's 214-point graph H (`data/ei_H214.json`);
+  3-colouring, the lower bound), on Exoo–Ismailescu's 214-point graph H (`data/ei_H214.json`) and
+  on H with its images under ρ₇ and ρ₇⁻¹ (`data/ei_rho7.json`, 638 points and 3 012 edges);
 - on random samples, it gives pairs at distance 8/9ⁿ (n ≤ 3) the same colour and pairs at distance
   √(11/3) different colours.
 
 `test_q23.py`, for χ(ℚ(√2, √3)²) = 4, a case that Fischer's hypotheses exclude, checks:
 - the local facts: ℚ(√2, √3) has one place over 2, totally ramified with residue field 𝔽₂ and not
   split in ℚ(√2, √3, i), whose completion has residue field 𝔽₄; sympy's `prime_decomp` confirms
-  that 2 = 𝔭⁴;
+  that 2 = 𝔭⁴ in ℚ(√2, √3), and 2 = 𝔓⁴ with residue field 𝔽₄ in ℚ(√2, √3, i) = ℚ(ζ₂₄);
 - 312 listed unit vectors, and 300 random unit vectors of the Hilbert 90 form above, have nonzero
   residue;
 - the colouring is proper on the 2 089 sums of at most three 24th roots of unity and on a graph of
-  sums of two listed unit vectors;
+  3 134 sums of two listed unit vectors;
 - the set M₂ = M₁ + M₁ of Voronov, Neopryatnaya and Dergachev (arXiv:2106.11824, Series 2), with
   2 593 points and 11 448 edges, has no proper 3-colouring and is 4-coloured by the residue
   colouring;

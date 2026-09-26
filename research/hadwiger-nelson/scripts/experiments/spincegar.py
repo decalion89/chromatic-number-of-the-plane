@@ -18,8 +18,7 @@ import sys, time
 from fractions import Fraction as Fr
 from math import gcd
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-src = open("/tmp/claude-0/-home-user-darwin-50/"
-           "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/"
+src = open("/tmp/hn/"
            "degreyfield.py").read()
 exec(src[:src.index("t0 = time.time()\nrh = ")])
 from hn.homcol import has_homomorphism
@@ -171,7 +170,7 @@ for rnd in range(1, 200):
         if blocks == [2, 3, 4, 5]:
             print("  *** BLOCKS AT 2, 3, 4 AND 5 ***", flush=True)
             import pickle
-            with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/rotpick.pkl", "wb") as fh:
+            with open("/tmp/hn/rotpick.pkl", "wb") as fh:
                 pickle.dump(chosen, fh)
             break
         mod = next(n for n in (2, 3, 4) if n not in blocks)

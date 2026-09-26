@@ -18,8 +18,7 @@ import sys, time
 from fractions import Fraction as Fr
 from collections import Counter
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-src = open("/tmp/claude-0/-home-user-darwin-50/"
-           "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/"
+src = open("/tmp/hn/"
            "degreyfield.py").read()
 exec(src[:src.index("t0 = time.time()\nrh = ")])
 from hn.degrey import S_POINTS
@@ -167,8 +166,7 @@ for D in (Fr(3), Fr(7)):
             tag, info = scan(pts, zs, f"D={D} p={pi_} r={sz}")
             if tag:
                 import pickle
-                with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432"
-                          "-5848-a506-39c59179b415/scratchpad/kforced.pkl",
+                with open("/tmp/hn/kforced.pkl",
                           "wb") as fh:
                     pickle.dump((tag, [flat(q) for q in pts]), fh)
                 sys.exit(0)

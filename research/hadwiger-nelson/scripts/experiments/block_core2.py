@@ -40,8 +40,7 @@ MIN_DEG = int(os.environ.get("HN_MINDEG", "4"))
 LIMIT = int(os.environ.get("HN_LIMIT", "2500"))
 OUT = os.environ.get(
     "HN_OUT",
-    "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415"
-    "/scratchpad")
+    "/tmp/hn")
 
 
 def minimal_core(g, k, bp):

@@ -30,8 +30,7 @@ from hn.degrey import build_G
 from hn.graph import build_graph
 from hn.geometry import DEGREY_FIELD as F
 from hn.homcol import (edge_vectors, has_homomorphism, _rank_mod)
-exec(open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/hnfcheck.py").read()
+exec(open("/tmp/hn/hnfcheck.py").read()
      .split('print("re-checking')[0].split("t0 = time.time()")[1])
 
 t0 = time.time()
@@ -230,8 +229,7 @@ for k in [16, 14, 13, 12, 11]:
         print(f"  *** BLOCKS AT THE GATE with {k} rotations: {why} ***  "
               f"[{time.time()-t0:.0f}s]", flush=True)
         import pickle
-        with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-"
-                  "a506-39c59179b415/scratchpad/gate.pkl", "wb") as fh:
+        with open("/tmp/hn/gate.pkl", "wb") as fh:
             pickle.dump((k, iv), fh)
         break
     print(f"  an escape exists  [{time.time()-t0:.0f}s]", flush=True)

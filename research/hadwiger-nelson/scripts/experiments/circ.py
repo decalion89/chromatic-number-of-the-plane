@@ -25,8 +25,7 @@ import os
 HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import sys, time, pickle
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from fractions import Fraction as Fr
 from hn.degrey import build_G, build_Sa, build_Y
 from hn.geometry import DEGREY_FIELD as K
@@ -37,8 +36,7 @@ from pysat.solvers import Solver
 SEED = sys.argv[1] if len(sys.argv) > 1 else "G"
 EXTRA = sys.argv[2] if len(sys.argv) > 2 else ""
 t0 = time.time()
-SC = ("/tmp/claude-0/-home-user-darwin-50/"
-      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 if SEED.endswith(".pkl"):
     P = pickle.load(open(SC + SEED, "rb"))
 else:

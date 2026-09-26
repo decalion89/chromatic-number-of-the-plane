@@ -28,7 +28,7 @@ from hn.forced import ColourRelations
 from hn.geometry import Point, Rotation
 from hn.graph import build_graph
 
-SC = "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad"
+SC = "/tmp/hn"
 g = build_G()
 f = DEGREY_FIELD
 rot60 = Rotation(f.rational(Fr(1, 2)), f.sqrt(3) * f.rational(Fr(1, 2)))

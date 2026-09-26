@@ -133,4 +133,4 @@ for (d2, R), (name, c) in order[SKIP:SKIP + LIMIT]:
         print(f"        v{x[0]} v{x[1]}  d^2={x[2]}  radical {x[3]}", flush=True)
 
 print(f"\n{len(hits)} circles produced a spindleable forced pair", flush=True)
-pickle.dump(hits, open(f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/glue2_{WHICH}_{K}_{SKIP}.pkl", "wb"))
+pickle.dump(hits, open(f"/tmp/hn/glue2_{WHICH}_{K}_{SKIP}.pkl", "wb"))
