@@ -167,7 +167,7 @@ Each folder has its own README describing what is in it.
 ```
 hn/             the library: exact fields, geometry, graphs, SAT colouring,
                 certificates, local (adelic) colourings
-tests/          pytest suite (662 tests; 17 marked slow)
+tests/          pytest suite (664 tests; 17 marked slow)
 scripts/        maintained tools: verification, growth, gates, field screens
                 (indexed in scripts/README.md)
 scripts/experiments/
@@ -201,7 +201,7 @@ sh scripts/worker_setup.sh                   # kissat and drat-trim, for the sea
 | six colours for a finite plane, e.g. 𝔽₄₇²: it prints the rigorous bound α ≤ 371.41…, below 47²/5 = 441.8, so χ ≥ 6 | `python3 scripts/threepoint_verify.py data/threepoint/std47.npz` | 3–5 minutes |
 | all eight three-point certificates | `python3 -m pytest -q tests/test_threepoint_certificates.py` | 15 minutes |
 | spectral bounds for large q | `python3 scripts/finite_hoffman.py 59 71` and `python3 scripts/finite_hoffman.py --inert 53 59 61` | seconds |
-| de Grey's graph needs five colours | `python3 -m pytest -q tests/test_degrey.py` | 30 minutes |
+| de Grey's graph needs five colours | `python3 -m pytest -q tests/test_degrey.py` | hours (the solver limit is four) |
 
 The certificates in `data/threepoint/` were produced with Python 3.11.15,
 numpy 2.4.6, scipy 1.17.1, cvxopt 1.3.3 (DSDP) and clarabel 0.11.1; checking
@@ -213,7 +213,7 @@ drat-trim.
 
 GitHub Actions (`.github/workflows/tests.yml`, at the root of the repository)
 runs the fast part of the suite on
-pushes to `main` and on pull requests: 380 tests in 33 files, in about two
+pushes to `main` and on pull requests: 382 tests in 33 files, in about two
 minutes.
 
 `scripts/verify_pair.py` rebuilds a unit-distance witness or gadget from its
