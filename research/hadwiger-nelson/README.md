@@ -117,12 +117,12 @@ points of the same colour.</sub></p>
 
 | object | property | evidence |
 |---|---|---|
-| Moser spindle | no 3-colouring | `certificates/moser_spindle_no3coloring.json`, drat-trim |
+| Moser spindle | no 3-colouring | `certificates/moser_spindle_no3coloring.json`, drat-trim (`certificates/moser_spindle_drat_trim_verification.txt`) |
 | de Grey's 1581-vertex graph, rebuilt from his 39-point seed | no 4-colouring with one triangle pinned to 0, 1, 2 | `certificates/degrey_1581_no4coloring.json`, kissat plus drat-trim (13.1 M lemmas) |
-| 19 vertices, 33 edges, vertex-critical | no 3-colouring. Unlike the Moser spindle, its obstruction combines two constraints, neither of which is forced on its own (research log) | `certificates/genuine_pair_19_no3coloring.json`, drat-trim |
-| `data/five_247.json`, 1139 vertices, and `data/five_247_c.json`, 803 vertices, vertex-critical | 5-chromatic, in ℚ(√3, √11, √247). Not a record: Parts' 509 stands. | `tests/test_five_247.py`, research log |
-| `data/W_moser_orbit_9_33.json`, 187 points | not 5-colourable with edges at 1 and at one Galois orbit of two distances. It would prove χ(ℝ²) ≥ 6 if a unit-distance gadget existed for that orbit. | four solvers plus drat-trim (research log) |
-| `data/W_lattice_16_21_28_61.json`, 72 points | not 5-colourable with edges at 1, 4/√3, √7, √(28/3), √(61/3) | four solvers plus drat-trim (research log) |
+| 19 vertices, 33 edges, vertex-critical | no 3-colouring. Unlike the Moser spindle, its obstruction combines two constraints, neither of which is forced on its own (research log) | `certificates/genuine_pair_19_no3coloring.json`, drat-trim (`certificates/genuine_pair_19_drat_trim_verification.txt`) |
+| `data/five_247_c.json`, 803 vertices, vertex-critical, and `data/five_247.json`, 1 139 vertices, not vertex-critical | 5-chromatic, in ℚ(√3, √11, √247). Not a record: Parts' 509 stands. | `certificates/five_247_c_no4coloring.json`, drat-trim; both graphs in `certificates/data_no4_checks.txt`, kissat plus drat-trim; `tests/test_five_247.py` |
+| `data/W_moser_orbit_9_33.json`, 187 points | not 5-colourable with edges at 1 and at one Galois orbit of two distances. It would prove χ(ℝ²) ≥ 6 if a unit-distance gadget existed for that orbit. | `certificates/W_moser_orbit_9_33_drat_trim_verification.txt`, kissat plus drat-trim; four solvers (research log) |
+| `data/W_lattice_16_21_28_61.json`, 72 points | not 5-colourable with edges at 1, 4/√3, √7, √(28/3), √(61/3) | `certificates/W_lattice_16_21_28_61_drat_trim_verification.txt`, kissat plus drat-trim; four solvers (research log) |
 | Twisted colourings of the module of `five_rho7` | none is proper: 3 840 exact linear-programming (Stiemke) certificates, one for each of the 960 × 4 pairs (ψ, t) | `notes/rigidity.md` §2, `scripts/stiemke.py`; research log, "Coarse rigidity, exactly" |
 
 ### What is closed, and why
@@ -167,7 +167,7 @@ Each folder has its own README describing what is in it.
 ```
 hn/             the library: exact fields, geometry, graphs, SAT colouring,
                 certificates, local (adelic) colourings
-tests/          pytest suite (664 tests; 17 marked slow)
+tests/          pytest suite (665 tests; 17 marked slow)
 scripts/        maintained tools: verification, growth, gates, field screens
                 (indexed in scripts/README.md)
 scripts/experiments/
@@ -213,7 +213,7 @@ drat-trim.
 
 GitHub Actions (`.github/workflows/tests.yml`, at the root of the repository)
 runs the fast part of the suite on
-pushes to `main` and on pull requests: 382 tests in 33 files, in about two
+pushes to `main` and on pull requests: 383 tests in 33 files, in about two
 minutes.
 
 `scripts/verify_pair.py` rebuilds a unit-distance witness or gadget from its
