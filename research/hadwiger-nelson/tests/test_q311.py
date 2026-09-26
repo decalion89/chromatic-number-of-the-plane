@@ -39,14 +39,30 @@ def test_the_places_over_2_are_inert_with_residue_field_f4():
     # extension. Its residue field is F_2[w] with w^2 + w + 1 = 0, irreducible over F_2.
     assert all((x * x + x + 1) % 2 for x in (0, 1))
     # sqrt3 is a unit (norm -3), and sqrt3 - 1 has norm -2: a uniformiser, so sqrt3 = 1 mod it.
-    assert (1 - 3) == -2 and (-3) % 2 == 1
+    x = symbols("x")
+    assert minimal_polynomial(sqrt(3), x) == x**2 - 3
+    assert minimal_polynomial(sqrt(3) - 1, x) == x**2 + 2*x - 2
+
+
+def _decomposition_of_2(a):
+    x = symbols("x")
+    T = Poly(minimal_polynomial(a, x), x, domain=QQ)
+    return sorted((P.e, P.f) for P in prime_decomp(2, T))
 
 
 def test_sympy_finds_two_places_over_2_with_residue_field_f2():
     # An independent check of the local facts: in L = Q(sqrt3, sqrt11), 2 = P1^2 P2^2 with residue fields F_2.
-    x = symbols("x")
-    T = Poly(minimal_polynomial(sqrt(3) + sqrt(11), x), x, domain=QQ)
-    assert sorted((P.e, P.f) for P in prime_decomp(2, T)) == [(2, 1), (2, 1)]
+    assert _decomposition_of_2(sqrt(3) + sqrt(11)) == [(2, 1), (2, 1)]
+
+
+def test_sympy_finds_both_places_inert_in_K():
+    """sympy's prime_decomp fails on the degree-8 field K = Q(i, sqrt3, sqrt11) itself, so use two quartic
+    subfields. In L = Q(sqrt3, sqrt11), e = 2 and g = 2; in M = Q(sqrt-3, sqrt-11), 2 is unramified with
+    residue field F_4, so f = 2. K contains L and M, so in K the ramification index, the residue degree
+    and the number of places over 2 are all at least 2. Their product is 8, so all three equal 2: each
+    place of L over 2 is inert in K, with residue field F_4."""
+    assert _decomposition_of_2(sqrt(3) + sqrt(11)) == [(2, 1), (2, 1)]
+    assert _decomposition_of_2(sqrt(-3) + sqrt(-11)) == [(1, 2), (1, 2)]
 
 
 def _field_and_units():
@@ -139,17 +155,31 @@ def test_the_moser_spindle_needs_four_and_gets_four():
         assert all(col[i] != col[j] for i, j in E)
 
 
-def test_exoo_ismailescu_H_is_properly_coloured():
-    d = json.load(open(os.path.join(ROOT, "data", "ei_H214.json")))
+def _load(name):
+    d = json.load(open(os.path.join(ROOT, "data", name)))
     Fe = Field(tuple(d["field_generators"]))
-    P = [Point(Fe.element([Fr(x, y) for x, y in xy[0]]), Fe.element([Fr(x, y) for x, y in xy[1]]))
-         for xy in d["points"]]
+    return [Point(Fe.element([Fr(x, y) for x, y in xy[0]]), Fe.element([Fr(x, y) for x, y in xy[1]]))
+            for xy in d["points"]]
+
+
+def test_exoo_ismailescu_H_is_properly_coloured():
+    P = _load("ei_H214.json")
     g = build_graph(P)
     assert g.m == 1004
     for place in (1, -1):
         col = [q311_colour(p, place) for p in P]
         assert all(col[i] != col[j] for i, j in g.edges())
         assert len(set(col)) == 4
+
+
+def test_exoo_ismailescu_H_with_its_rho7_images_is_properly_coloured():
+    # data/ei_rho7.json: H with its images under rho7 and rho7^-1 about A.
+    P = _load("ei_rho7.json")
+    g = build_graph(P)
+    assert (g.n, g.m) == (638, 3012)
+    for place in (1, -1):
+        col = [q311_colour(p, place) for p in P]
+        assert all(col[i] != col[j] for i, j in g.edges())
 
 
 def test_pairs_at_8_over_3_are_alike_and_at_sqrt_11_over_3_apart():

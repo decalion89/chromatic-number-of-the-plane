@@ -14,7 +14,7 @@ import random
 from fractions import Fraction as Fr
 
 from pysat.solvers import Solver
-from sympy import QQ, Poly, minimal_polynomial, sqrt, symbols
+from sympy import QQ, Poly, cyclotomic_poly, minimal_polynomial, sqrt, symbols
 from sympy.polys.numberfields.primes import prime_decomp
 
 from hn.adelic import q23_ab, q23_colour, q23_valuation
@@ -128,6 +128,13 @@ def test_sympy_finds_one_totally_ramified_place_over_2():
     x = symbols("x")
     T = Poly(minimal_polynomial(sqrt(2) + sqrt(3), x), x, domain=QQ)
     assert [(P.e, P.f) for P in prime_decomp(2, T)] == [(4, 1)]
+
+
+def test_sympy_finds_the_place_inert_in_K():
+    # K = L(i) = Q(zeta24): 2 = P^4 with residue field F_4, so the place of L over 2 is inert in K.
+    x = symbols("x")
+    T = Poly(cyclotomic_poly(24, x), x, domain=QQ)
+    assert [(P.e, P.f) for P in prime_decomp(2, T)] == [(4, 2)]
 
 
 def test_the_valuation_is_the_2_adic_valuation_of_the_norm():
