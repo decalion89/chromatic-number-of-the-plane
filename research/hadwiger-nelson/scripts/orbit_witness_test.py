@@ -7,9 +7,12 @@ A Galois automorphism of the CM field maps a unit-distance gadget at d^2 to one 
   9_1:  (9 -+ sqrt33)/6      d = 0.7366, 1.5676   (two-step, P(same) ~ 0.21)
   43:   4/3                  d = 2/sqrt3          (P(same) ~ 0.08)
   none: unit edges only
-Join several with '+', e.g. 14_2+43. Writes the CNF next to the scratch directory and runs tabu, then kissat.
-usage: orbit_witness_test.py graph.json orbits ktime [kissat] [workdir]"""
-import sys, json, time, subprocess
+Join several with '+', e.g. 14_2+43. Runs tabu, then kissat on the CNF, which it writes to workdir
+(default, or when given as "": the directory in HN_OUT, or /tmp/hn), with the unit edges first and then each distance of the
+orbit, each in lexicographic order. Given drat-trim as well, kissat writes a DRAT proof, drat-trim checks
+it, and the proof is deleted.
+usage: orbit_witness_test.py graph.json orbits ktime [kissat] [workdir] [drat-trim]"""
+import sys, json, time, subprocess, hashlib
 from fractions import Fraction as Fr
 import numpy as np
 from scipy.spatial import cKDTree
@@ -19,7 +22,9 @@ from hn.field import Field
 from hn.geometry import Point
 path, oname, KT = sys.argv[1], sys.argv[2], int(sys.argv[3])
 KISSAT = sys.argv[4] if len(sys.argv) > 4 else "kissat"
-WORK = sys.argv[5] if len(sys.argv) > 5 else "."
+WORK = sys.argv[5] if len(sys.argv) > 5 and sys.argv[5] else os.environ.get("HN_OUT", "/tmp/hn")
+DRAT_TRIM = sys.argv[6] if len(sys.argv) > 6 else None
+os.makedirs(WORK, exist_ok=True)
 d = json.load(open(path)); F = Field(tuple(d["field_generators"]))
 P = [Point(F.element([Fr(a, b) for a, b in x]), F.element([Fr(a, b) for a, b in y])) for x, y in d["points"]]
 n = len(P); xy = np.array([[p.fx, p.fy] for p in P]); tree = cKDTree(xy)
@@ -32,7 +37,7 @@ def pairs_at(t):
     r = float(t) ** .5
     pr = tree.query_pairs(r + 1e-6, output_type="ndarray")
     dd = ((xy[pr[:, 0]] - xy[pr[:, 1]]) ** 2).sum(1); pr = pr[np.abs(dd - r * r) < 1e-6]
-    return [(int(i), int(j)) for i, j in pr if P[i].dist2(P[j]) == t]
+    return sorted((int(i), int(j)) for i, j in pr if P[i].dist2(P[j]) == t)
 E = pairs_at(q(1)); print(f"{path}: {n} points, {len(E)} unit edges", flush=True)
 for part in oname.split("+"):
     for t in ORB[part]:
@@ -43,8 +48,19 @@ out = subprocess.run([os.path.join(os.path.dirname(os.path.abspath(__file__)), "
 print(f"  tabu: {out[0]} {out[1]}  [{time.time()-t0:.0f}s]", flush=True)
 if out[0] != "OK":
     cnf = os.path.join(WORK, os.path.basename(path).replace(".json", "") + f"_{oname}.cnf"); X = lambda v, c: 1 + v * 5 + c
+    cl = [[X(v, c) for c in range(5)] for v in range(n)] + [[-X(i, c), -X(j, c)] for i, j in E for c in range(5)]
+    text = f"p cnf {n*5} {len(cl)}\n" + "".join(" ".join(map(str, c_)) + " 0\n" for c_ in cl)
     with open(cnf, "w") as fh:
-        cl = [[X(v, c) for c in range(5)] for v in range(n)] + [[-X(i, c), -X(j, c)] for i, j in E for c in range(5)]
-        fh.write(f"p cnf {n*5} {len(cl)}\n" + "".join(" ".join(map(str, c_)) + " 0\n" for c_ in cl))
-    ko = subprocess.run([KISSAT, f"--time={KT}", "-n", cnf], capture_output=True, text=True).stdout
-    print("  kissat:", next((l for l in ko.split("\n") if l.startswith("s ")), "s UNKNOWN"), f"[{time.time()-t0:.0f}s]", flush=True)
+        fh.write(text)
+    print(f"  CNF: {n*5} variables, {len(cl)} clauses, sha256 {hashlib.sha256(text.encode()).hexdigest()}", flush=True)
+    proof = cnf[:-4] + ".drat"
+    ko = subprocess.run([KISSAT, f"--time={KT}", "-n", cnf] + ([proof] if DRAT_TRIM else []), capture_output=True, text=True).stdout
+    verdict = next((l for l in ko.split("\n") if l.startswith("s ")), "s UNKNOWN")
+    print("  kissat:", verdict, f"[{time.time()-t0:.0f}s]", flush=True)
+    if DRAT_TRIM and verdict == "s UNSATISFIABLE":
+        dt = subprocess.run([DRAT_TRIM, cnf, proof, "-t", "200000"], capture_output=True, text=True)
+        for l in (dt.stdout + dt.stderr).split("\n"):
+            if l.startswith("s ") or "lemmas in core" in l:
+                print("  drat-trim:", l.strip(), f"[{time.time()-t0:.0f}s]", flush=True)
+    if os.path.exists(proof):
+        os.remove(proof)
