@@ -1,0 +1,24 @@
+Certificate: five_247_c_no4coloring.json (803 vertices, 4065 unit-distance edges, over Q(sqrt3, sqrt11, sqrt247))
+Claim: the graph has no proper 4-colouring.
+
+Formula: rebuilt from the certificate alone, as in certificates/README.md, step 3: the edges recomputed
+exactly by hn.certify.exact_edges, then hn.certify.write_dimacs with k = 4 (vertex clauses first, then
+the edge clauses in lexicographic order of (u, v), u < v). No colour is pinned.
+  p cnf 3212 17063
+  sha256 of the CNF file: 73b0db69463cb476aa40bff8ef49052096b609d11de9cb7f8f19d104a686ea90
+
+Solver: kissat 4.0.4, "kissat five_247_c_k4.cnf five_247_c_k4.drat" -> s UNSATISFIABLE (exit 20).
+Binary DRAT proof: 401 710 673 bytes (sha256 24d2b4b4a5cc7df5d0d0791310c6997a651445e6d85290dcaae407611cbfb05a); not stored, since kissat regenerates it.
+
+Checker: drat-trim (commit 2e3b2dc0ecf938addbd779d42877b6ed69d9a985), run on 26 September 2026:
+$ drat-trim five_247_c_k4.cnf five_247_c_k4.drat -t 50000
+c turning on binary mode checking
+c parsing input formula with 3212 variables and 17063 clauses
+c finished parsing, read 401710673 bytes from proof file
+c detected empty clause; start verification via backward checking
+c 17063 of 17063 clauses in core
+c 1455257 of 4006246 lemmas in core using 113651082 resolution steps
+c 0 RAT lemmas in core; 1960335 redundant literals in core lemmas
+s VERIFIED
+c verification time: 463.364 seconds
+drat-trim exit 0 after 464 s wall

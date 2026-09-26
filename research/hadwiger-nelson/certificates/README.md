@@ -4,12 +4,12 @@ Each certificate is a JSON file that states one claim about a finite unit-distan
 the exact coordinates of its vertices, so that every edge can be recomputed. A claim that a graph
 has no proper k-colouring is checked by a SAT solver on a formula rebuilt from the coordinates; a
 claim that a colouring exists is checked from a stored colouring. The DRAT proofs are not stored,
-since a solver regenerates them; the logs of three drat-trim checks are kept here.
+since a solver regenerates them; the logs of four drat-trim checks are kept here.
 
 Every claim can be rechecked without this repository's code, by the recipe below. The repository's
 own checker is `python3 -m hn.cli verify <file> [--drat-trim PATH]`, which calls
-`hn.certify.verify_certificate`; it checks four of the eight certificates completely, and the table
-says what it does on the other four.
+`hn.certify.verify_certificate`; it checks six of the nine certificates completely, and the table
+says what it does on the other three.
 
 ## Format
 
@@ -37,6 +37,7 @@ says what it does on the other four.
 | `pressure3_witness_47.json` | In the 47-vertex subgraph of de Grey's `Sa` formed by the pivot (vertex 0), its 30 unit neighbours and 16 further points, every proper 4-colouring uses at least three colours on the 30 neighbours (pressure 3 at the pivot). | SAT solver UNSAT, measured with `hn/forced.py` and tested in `tests/test_forced.py`; no DRAT proof and no colouring are stored. | Rejected: a file with no colouring is read as a claim that the graph has no proper k-colouring, and this graph is 4-colourable. |
 | `three_hexagon_pressure3.json` | In a 127-vertex, 528-edge graph over ℚ(√3, √11), formed by the pivot (vertex 0), three hexagons on its unit circle at angles 0, θ/2 and θ with cos θ = 5/6, and every sum u + v of points u, v in different hexagons, every proper 4-colouring uses at least three colours on the pivot's 18 unit neighbours. | SAT solver UNSAT, measured with `hn/forced.py` and tested in `tests/test_mixed.py`, which rebuilds the same 127 points; no DRAT proof is stored. The stored proper 4-colouring uses exactly three colours on the 18 neighbours, so the pressure is exactly 3. | Accepted, but it checks only that the stored colouring is proper, not the pressure claim. |
 | `chain23_no3coloring.json` | A chain of three unit rhombi (10 vertices, 16 edges over ℚ(√2, √3), the graph of `data/chain23.json`) has no proper 3-colouring, so χ(ℚ(√2, √3)²) ≥ 4. | Three pysat solvers (CaDiCaL, Glucose, MiniSat) UNSAT; kissat's DRAT proof of the 30-variable, 58-clause formula, with no colour pinned, checked by drat-trim (`chain23_drat_trim_verification.txt`). | Handled: Glucose UNSAT, then drat-trim when it is installed. The file stores coefficients as `[numerator, denominator]` pairs, which the loader reads as well as decimal strings. |
+| `five_247_c_no4coloring.json` | The vertex-critical 803-vertex subgraph `five_247_c` of `data/five_247.json` (4 065 edges, over ℚ(√3, √11, √247)) has no proper 4-colouring. It lies in the plane over ℚ(√−3, √−11, √−247) as well, so both planes need five colours. | kissat 4.0.4 UNSAT on the plain 3 212-variable, 17 063-clause formula, with no colour pinned; its DRAT proof, checked by drat-trim (`five_247_c_drat_trim_verification.txt`). | Handled: it runs Glucose, then drat-trim when it is installed. |
 
 The claim in `pressure3_witness_47.json` calls the subgraph minimal among those that keep the 30
 unit neighbours of the pivot: deleting any one of the 16 further points lowers the pressure to 2.
@@ -50,6 +51,7 @@ be deleted, leaving 31 vertices, with the pressure still 3.
 | `chain23_drat_trim_verification.txt` | kissat (with `--no-binary`) and drat-trim on the 58-clause formula of `chain23_no3coloring.json`: `s VERIFIED`, with 18 of 37 lemmas in the core. |
 | `degrey_1581_drat_trim_verification.txt` | drat-trim on the 33 101-clause formula with the pinned triangle and a binary DRAT proof of 1 319 558 301 bytes: `s VERIFIED`, with 2 016 499 of 13 140 458 lemmas in the core, in 522 s. |
 | `degrey_1581_cnf_head.txt` | The first 14 and the last 14 lines of that formula: the header, the first 13 vertex clauses, the last two edge clauses and the 12 unit clauses that pin the triangle. |
+| `five_247_c_drat_trim_verification.txt` | kissat and drat-trim on the 17 063-clause formula of `five_247_c_no4coloring.json`, rebuilt from the certificate: `s VERIFIED`, with 1 455 257 of 4 006 246 lemmas in the core, in 463 s; the file gives the SHA-256 of the formula and of the proof. |
 | `two_orbit_409_drat_trim_verification.txt` | The output of `hn.cli verify` on `two_orbit_409_no3coloring.json` (drat-trim verified the proof of the 3 595-clause formula), with the construction and the pigeonhole argument for why six copies suffice; the script it names is now `scripts/experiments/validate_k3.py`. |
 
 ## Checking a certificate without this repository's code
