@@ -18,7 +18,7 @@ limit; `hn.coloring` enforces it for CaDiCaL, which ignores pysat's interrupt, b
 solver in a separate process.
 
 GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 33 files marked CI
-on every push to `main`, on every pull request, and on manual dispatch: 382 tests, which took two
+on every push to `main`, on every pull request, and on manual dispatch: 383 tests, which took two
 minutes in a local run. The DRAT test in `test_certify.py` is skipped there, because the
 workflow does not install drat-trim. The other ten files (282 tests) are run locally; without their
 14 tests marked `slow` they took 32 minutes in a local run, 20 of them in one test of
@@ -29,7 +29,7 @@ minutes together.
 |---|:---:|---|
 | `test_biquadratic_bounds.py` | ✓ | Local upper bounds for the planes over ℚ(√a, √b) (`notes/local_colourings.md` §13): χ(G_q) = 3, 4, 5 for q = 3, 7, 11, χ(G₄) = 4 and χ(G₁₉) = 5 (a linear 5-colouring; no 4-colouring); a ramified place above 2 makes the plane over ℚ(√2, √5) bipartite; the bounds for ℚ(√3, √q), q < 60, agree with Theorem 5 (§11); the first non-split places of ℚ(√3, √29) and ℚ(√5, √7) lie above 23 and 19; a unit 5-cycle over ℚ(√5, √7) gives χ ≥ 3 there. |
 | `test_certify.py` | ✓ | The certificate checker in `hn/certify.py` accepts a proper colouring and rejects a monochromatic unit pair, a colour outside the palette and a claimed lower bound on a colourable graph; its DRAT test runs only when drat-trim is on the `PATH`. |
-| `test_cli.py` | ✓ | The command line `python3 -m hn.cli`: `verify` accepts both Moser spindle certificates and rejects a tampered colouring, and `demo` writes a certificate that verifies. |
+| `test_cli.py` | ✓ | The command line `python3 -m hn.cli`: `verify` accepts both Moser spindle certificates, reports a solver's `UNSAT` without calling it verified when drat-trim is missing, and rejects a tampered colouring; `demo` writes a certificate that verifies, by default to `HN_OUT`. |
 | `test_cyclotomic.py` | ✓ | Unit steps in ℤ[ζₙ]: they are the roots of unity, ℚ(ζ₅) alone has no unit triangle while ℚ(ζ₁₅) has one, a Gauss sum gives the spindle's radical, and the Moser spindle lies in a cyclotomic field. |
 | `test_decompositions.py` | ✓ | The decompositions of 2 and 3 recomputed with PARI/GP (`scripts/decompositions.gp`): the places over 2 of ℚ(√3, √11) and ℚ(√2, √3) and their inertness in L(i); for ℚ(√3, √q), q < 75 prime, a place over 2 with residue field 𝔽₂ exactly when q = 2 or q ≡ 1, 3 (mod 8), and one over 3 with residue field 𝔽₃ exactly when q ≡ 1 (mod 3); nine fields with more square roots. Skipped when gp is not installed. |
 | `test_degrey.py` |  | De Grey's graph rebuilt from his 39-point set S has 39, 397 and 1581 vertices at the three stages and 7877 edges, and (marked `slow`) no proper 4-colouring. |

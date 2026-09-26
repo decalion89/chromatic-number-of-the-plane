@@ -12,7 +12,7 @@ import numpy as np
 import pytest
 
 HERE = os.path.dirname(__file__)
-sys.path.append(os.path.join(HERE, '..', 'scripts'))   # appended: scripts/six.py must not shadow the six package
+sys.path.append(os.path.join(HERE, '..', 'scripts'))   # appended, so that no script can shadow an installed package
 
 from threepoint import build          # noqa: E402
 
