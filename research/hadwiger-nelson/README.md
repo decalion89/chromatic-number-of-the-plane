@@ -32,12 +32,16 @@ below, with their evidence.
 - **Nothing is announced unverified.** A claim of non-colourability needs:
   - an exact rebuild;
   - agreement between independent solvers;
-  - a verified DRAT proof, with no hidden symmetry breaking.
+  - for the claims that a result rests on, a verified DRAT proof, with no
+    hidden symmetry breaking. Smaller claims that rest on solvers alone are
+    marked as such ("SAT", or the solvers named).
 
-  Lower bounds from semidefinite or spectral bounds (the finite planes) need
-  instead a stored dual certificate, checked by a program independent of the
-  solver, in interval arithmetic with an exact rational positive-definiteness
-  test.
+  A lower bound from the semidefinite three-point bound (the finite planes)
+  needs instead a stored dual certificate, checked by a program independent of
+  the solver, in interval arithmetic with an exact rational
+  positive-definiteness test. Spectral (Hoffman) bounds need no certificate:
+  `scripts/finite_hoffman.py` recomputes every eigenvalue in interval
+  arithmetic.
 - **Corrections stay visible.** Withdrawn claims are kept, with the reason, in
   the research log.
 
@@ -49,24 +53,26 @@ below, with their evidence.
 |---|---|---|
 | **χ(ℚ(√2, √3)²) = 4.** Voronov's second case; not found in the literature. | Proved (not yet refereed); unit tests. The lower bound was already implicit in Voronov–Neopryatnaya–Dergachev; a 10-vertex rhombus chain gives a short one. | `notes/local_colourings.md` §10, `tests/test_q23.py`, `certificates/chain23_no3coloring.json` |
 | **χ(ℚ(√3, √11)²) = 4.** A theorem of K. G. Fischer (1994); a short new proof. | Fischer's theorem; our proof is not yet refereed; unit tests. | `notes/local_colourings.md` §8, `hn/adelic.py`, `tests/test_q311.py` |
-| χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, as whole complex fields | Proved. Upper bounds by reduction at the primes 2 and 11; lower bounds from the Moser spindle and the 5-chromatic graph `five_rho7`. Not yet refereed. | `notes/local_colourings.md` §3, `notes/rigidity.md` |
+| χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, as whole complex fields | Known: the first follows from Fischer's theorem, the second from Madore's reduction at 11 and Exoo–Ismailescu's graph. Our local proofs reduce at the primes 2 and 11; the lower bounds come from the Moser spindle and from `five_247_c`, certified by DRAT. Not yet refereed. | `notes/local_colourings.md` §3, `notes/rigidity.md`, `certificates/five_247_c_no4coloring.json` |
 | Necessary local conditions for a field to hold a 6-chromatic unit-distance graph | Proved (not yet refereed) | `notes/local_colourings.md` §5–§9, `scripts/fieldscreen.py` |
 | **Six colours for finite planes.** χ ≥ 6 for 𝔽₃₇², 𝔽₄₁², 𝔽₄₃², 𝔽₄₇² and the anisotropic planes G₂₉, G₃₇, G₄₁. With Proposition B and Hoffman's bound, χ(G_q) ≥ 6 for every prime q ≥ 29 except 31, and χ(𝔽_q²) ≥ 6 for q = 37, 41, 43, 47, 59 and every prime q ≥ 67; χ(𝔽₄₁²) ∈ {6, 7}. | Computer proof, not refereed: Schrijver's three-point bound gives α < q²/5, and each dual certificate is checked in interval and exact rational arithmetic; for large q, Hoffman's bound with Weil's estimate or the exact spectrum. | `notes/local_colourings.md` §14, `data/threepoint/`, `scripts/threepoint_verify.py` |
 
-Both are written up in a three-page note,
+The first two are written up in a three-page note,
 [`docs/note/planes-4-chromatic.pdf`](docs/note/planes-4-chromatic.pdf).
 
 **On χ(ℚ(√3, √11)²) = 4.** K. G. Fischer proved it in 1994 (*A planar
 geometric graph of chromatic number four*, Congr. Numer. 104, 73–79). He
-proved that ℚ(√p, √q)² has an additive 4-colouring for all p ≡ 3, q ≡ 11
-(mod 16) with pq ≡ 1 (mod 32); for ℚ(√3, √11) the Moser spindle gives the
-lower bound. His result seems to have been overlooked:
+proved that ℚ(√p, √q)² has an additive 4-colouring for squarefree, relatively
+prime p ≡ 3, q ≡ 11 (mod 16) with pq ≡ 1 (mod 32); for ℚ(√3, √11) the Moser
+spindle gives the lower bound. His result seems to have been overlooked:
 - Moorhouse (2010) left the value undetermined.
 - Madore (2015) proved 4 ≤ χ ≤ 5.
 - Exoo and Ismailescu (2018) asked whether a 5-chromatic unit-distance graph
   embeds in this plane.
+- Cranston and Rabern (Combinatorica, 2017) asked for its fractional and its
+  ordinary chromatic number.
 - Voronov (Polymath16, 2021) wrote that χ = 4 "seems likely" for this plane and
-  for the plane over ℚ(√2, √3), "but as far as I know, nobody has proved this
+  for the plane over ℚ(√2, √3), "[b]ut as far as I know, nobody has proved this
   yet".
 
 Fischer's hypotheses exclude ℚ(√2, √3), and we have not found that case in the
@@ -75,14 +81,17 @@ had been sent to two mathematicians; the note now credits it.
 
 The proof reduces z = x + iy modulo a place of ℚ(√3, √11) above 2 (there are
 two), which is inert in ℚ(i, √3, √11). Every unit vector becomes a nonzero
-element of 𝔽₄, so the residue is a proper 4-colouring. In the coordinates
+element of 𝔽₄, so the residue of z − rep(z), where rep(z) is a fixed
+representative of the coset of z modulo the local ring, is a proper
+4-colouring. In the coordinates
 α = x + y/√3, β = 2y/√3 the proof is Madore's reduction argument (Prop. 3.2,
 which his ¶6.6 states for any quadratic form); in the coordinates (x, y) that
 argument fails at 2.
 
 Fischer's colouring is additive, with values in ℤ/4. Speyer used reduction
 modulo 2 in Polymath16 (thread 2, April 2018) to 4-colour the Moser ring. The
-passage from a ring to the whole field by cosets is Madore's and Moorhouse's.
+passage from a subgroup or a ring to the whole field by cosets is Fischer's
+(1990, Thm 1), Moorhouse's and Madore's.
 Our contribution is the choice of coordinates, which lets Madore's argument
 work at the places over 2 (they are inert in L(i), so the reduction covers
 every unit vector of the plane), and the case ℚ(√2, √3). None of this has
@@ -114,7 +123,7 @@ points of the same colour.</sub></p>
 | `data/five_247.json`, 1139 vertices, and `data/five_247_c.json`, 803 vertices, vertex-critical | 5-chromatic, in ℚ(√3, √11, √247). Not a record: Parts' 509 stands. | `tests/test_five_247.py`, research log |
 | `data/W_moser_orbit_9_33.json`, 187 points | not 5-colourable with edges at 1 and at one Galois orbit of two distances. It would prove χ(ℝ²) ≥ 6 if a unit-distance gadget existed for that orbit. | four solvers plus drat-trim (research log) |
 | `data/W_lattice_16_21_28_61.json`, 72 points | not 5-colourable with edges at 1, 4/√3, √7, √(28/3), √(61/3) | four solvers plus drat-trim (research log) |
-| Coset colourings of the ρ₇ module | none is proper: 3 840 exact linear-programming (Stiemke) certificates | research log, "κ, the rotation every coset colouring is blind to" |
+| Twisted colourings of the module of `five_rho7` | none is proper: 3 840 exact linear-programming (Stiemke) certificates, one for each of the 960 × 4 pairs (ψ, t) | `notes/rigidity.md` §2, `scripts/stiemke.py`; research log, "Coarse rigidity, exactly" |
 
 ### What is closed, and why
 
@@ -130,18 +139,22 @@ a theorem" and "Why every known construction stops at five".
 
 ## The route to six searched in September 2026
 
-The route is Exoo and Ismailescu's two-step reduction, which Polymath16 calls
-"virtual edges":
+The route is the reduction of Exoo and Ismailescu, which Polymath16 calls
+clamping onto "virtual edges":
 1. a **witness**: a graph with edges at 1 and at some distances `d` that has
    no 5-colouring;
 2. a **gadget** for each `d`: a unit-distance graph in which two points at
    distance `d` always get different colours.
 
-Two observations that we have not found in the literature:
+Two observations that guided the search:
 - **Repulsive distances.** Some distances, such as 2/√3, are coloured alike
-  unusually rarely, so they are the natural gadget targets.
-- **Galois orbits.** A Galois automorphism of the field maps gadgets to
-  gadgets, so one gadget serves a whole orbit of distances. The 187-point
+  unusually rarely in 5-colourings, so they are the natural gadget targets.
+  We have not found this measurement in the literature. For four colours,
+  Ismailescu found a 103-vertex graph with edges at 1 and 2/√3 and no
+  4-colouring (Polymath16, thread 3).
+- **Galois orbits.** A Galois automorphism that preserves unit distance maps
+  gadgets to gadgets, so one gadget serves a whole orbit of distances. The
+  principle is Tao's (Polymath16, thread 7, comment 4893). The 187-point
   witness above needs a single gadget.
 
 The gadget searches ran as parallel jobs from 23 September 2026, described in
@@ -154,7 +167,7 @@ Each folder has its own README describing what is in it.
 ```
 hn/             the library: exact fields, geometry, graphs, SAT colouring,
                 certificates, local (adelic) colourings
-tests/          pytest suite (653 tests; 17 marked slow)
+tests/          pytest suite (662 tests; 17 marked slow)
 scripts/        maintained tools: verification, growth, gates, field screens
                 (indexed in scripts/README.md)
 scripts/experiments/
@@ -185,7 +198,7 @@ sh scripts/worker_setup.sh                   # kissat and drat-trim, for the sea
 | χ(ℚ(√2, √3)²) = 4 | `python3 -m pytest -q tests/test_q23.py` | seconds |
 | χ(ℚ(√3, √11)²) = 4 | `python3 -m pytest -q tests/test_q311.py` | seconds |
 | four and five colours suffice for the fields ℚ(√−3, √−11) and ℚ(√−3, √−11, √−247) | `python3 -m pytest -q tests/test_moser_field.py tests/test_reduce11.py` | seconds |
-| six colours for a finite plane, e.g. 𝔽₄₇² | `python3 scripts/threepoint_verify.py data/threepoint/std47.npz` | 3 minutes |
+| six colours for a finite plane, e.g. 𝔽₄₇²: it prints the rigorous bound α ≤ 371.41…, below 47²/5 = 441.8, so χ ≥ 6 | `python3 scripts/threepoint_verify.py data/threepoint/std47.npz` | 3–5 minutes |
 | all eight three-point certificates | `python3 -m pytest -q tests/test_threepoint_certificates.py` | 15 minutes |
 | spectral bounds for large q | `python3 scripts/finite_hoffman.py 59 71` and `python3 scripts/finite_hoffman.py --inert 53 59 61` | seconds |
 | de Grey's graph needs five colours | `python3 -m pytest -q tests/test_degrey.py` | 30 minutes |
@@ -194,11 +207,13 @@ The certificates in `data/threepoint/` were produced with Python 3.11.15,
 numpy 2.4.6, scipy 1.17.1, cvxopt 1.3.3 (DSDP) and clarabel 0.11.1; checking
 them needs only numpy, scipy and mpmath 1.3.0 (installed with sympy).
 `data/threepoint/SHA256SUMS` fixes their contents. `requirements-lock.txt`
-lists the exact versions of every package used for the results, and
-`scripts/worker_setup.sh` builds the pinned kissat and drat-trim.
+lists the exact versions of the Python packages used for the results and of
+their dependencies, and `scripts/worker_setup.sh` builds the pinned kissat and
+drat-trim.
 
-GitHub Actions (`.github/workflows/tests.yml`) runs the fast part of the suite on
-pushes to `main` and on pull requests: 371 tests in 31 files, in about two
+GitHub Actions (`.github/workflows/tests.yml`, at the root of the repository)
+runs the fast part of the suite on
+pushes to `main` and on pull requests: 380 tests in 33 files, in about two
 minutes.
 
 `scripts/verify_pair.py` rebuilds a unit-distance witness or gadget from its
@@ -220,20 +235,25 @@ preprint-level claims. Corrections are welcome.
 ## References
 
 - A. D. N. J. de Grey, *The chromatic number of the plane is at least 5*,
-  Geombinatorics 28 (2018); [arXiv:1804.02385](https://arxiv.org/abs/1804.02385)
+  Geombinatorics 28(1) (2018) 18–31; [arXiv:1804.02385](https://arxiv.org/abs/1804.02385)
 - G. Exoo, D. Ismailescu, *The chromatic number of the plane is at least 5: a
-  new proof*, DCG 64 (2020); [arXiv:1805.00157](https://arxiv.org/abs/1805.00157)
+  new proof*, Discrete Comput. Geom. 64(1) (2020) 216–226;
+  [arXiv:1805.00157](https://arxiv.org/abs/1805.00157)
+- G. Exoo, D. Ismailescu, *The Hadwiger–Nelson problem with two forbidden
+  distances*; [arXiv:1805.06055](https://arxiv.org/abs/1805.06055)
 - G. Exoo, D. Ismailescu, *A 6-chromatic two-distance graph in the plane*;
   [arXiv:1909.13177](https://arxiv.org/abs/1909.13177)
 - M. J. H. Heule, *Computing small unit-distance graphs with chromatic number
-  5*; [arXiv:1805.12181](https://arxiv.org/abs/1805.12181)
+  5*, Geombinatorics 28(1) (2018) 32–50; [arXiv:1805.12181](https://arxiv.org/abs/1805.12181)
+- D. W. Cranston, L. Rabern, *The fractional chromatic number of the plane*,
+  Combinatorica 37(5) (2017) 837–861; [arXiv:1501.01647](https://arxiv.org/abs/1501.01647)
 - J. Parts, *The chromatic number of the plane is at least 5: a human-verifiable
   proof*; [arXiv:2010.12661](https://arxiv.org/abs/2010.12661)
 - J. Parts, *Graph minimization, focusing on the example of 5-chromatic
   unit-distance graphs in the plane* (the 509-vertex graph);
   [arXiv:2010.12665](https://arxiv.org/abs/2010.12665)
 - K. G. Fischer, *Additive K-colorable extensions of the rational plane*,
-  Discrete Math. 82 (1990) 181–195; *The connected components of the graph
+  Discrete Math. 82(2) (1990) 181–195; *The connected components of the graph
   ℚ(√N₁, …, √N_d)²*, Congr. Numer. 72 (1990) 213–221 (Zbl 0733.05048); and
   *A planar geometric graph of chromatic number four*, Congr. Numer. 104 (1994)
   73–79 (Zbl 0836.05030)
@@ -250,17 +270,25 @@ preprint-level claims. Corrections are welcome.
   [pdf](https://www.ericmoorhouse.org/pub/chromatic.pdf)
 - D. A. Madore, *The Hadwiger–Nelson problem over certain fields*;
   [arXiv:1509.07023](https://arxiv.org/abs/1509.07023)
+- A. Medrano, P. Myers, H. M. Stark, A. Terras, *Finite analogues of Euclidean
+  space*, J. Comput. Appl. Math. 68 (1996) 221–238
+  ([doi](https://doi.org/10.1016/0377-0427(95)00261-8))
+- A. Schrijver, *New code upper bounds from the Terwilliger algebra and
+  semidefinite programming*, IEEE Trans. Inform. Theory 51 (2005) 2859–2866
 - Polymath16 threads
   [2](https://dustingmixon.wordpress.com/2018/04/22/polymath16-second-thread-what-does-it-take-to-be-5-chromatic/)
   and [3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/)
-  (Speyer's 2-adic colourings of the Moser ring), and
+  (Speyer's 2-adic colourings of the Moser ring),
+  [7](https://dustingmixon.wordpress.com/2018/06/16/polymath16-seventh-thread-upper-bounds/)
+  (Tao on Galois symmetry) and
   [17](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/)
-  (Voronov's conjecture), and the Polymath16 wiki page
+  (Voronov's questions), and the Polymath16 wiki page
   [Algebraic formulation of Hadwiger–Nelson problem](https://web.archive.org/web/20210412075722/https://asone.ai/polymath/index.php?title=Algebraic_formulation_of_Hadwiger-Nelson_problem)
   (colourings of rings such as the Moser ring)
 - V. A. Voronov, A. M. Neopryatnaya, E. A. Dergachev, *Constructing
   5-chromatic unit distance graphs embedded in the Euclidean plane and
-  two-dimensional spheres*; [arXiv:2106.11824](https://arxiv.org/abs/2106.11824)
+  two-dimensional spheres*, Discrete Math. 345(12) (2022) 113106;
+  [arXiv:2106.11824](https://arxiv.org/abs/2106.11824)
 - Á. Dúcz, *A note on geometric colorings of the Moser lattice*;
   [arXiv:2606.12325](https://arxiv.org/abs/2606.12325)
 
