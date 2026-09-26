@@ -16,6 +16,14 @@ authors:
     family-names: Galán
     alias: decalion89
 repository-code: "https://github.com/decalion89/chromatic-number-of-the-plane"
+doi: 10.5281/zenodo.22976635
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.22976635
+    description: "All versions; resolves to the latest release"
+  - type: doi
+    value: 10.5281/zenodo.22976636
+    description: "Version 1.0.0"
 license: MIT
 version: "1.0.0"
 date-released: "2026-09-26"

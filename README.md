@@ -3,6 +3,7 @@
 **Sergi Galán** · research repository, 2026
 
 [![tests](https://github.com/decalion89/chromatic-number-of-the-plane/actions/workflows/tests.yml/badge.svg)](https://github.com/decalion89/chromatic-number-of-the-plane/actions/workflows/tests.yml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22976635.svg)](https://doi.org/10.5281/zenodo.22976635)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
 
@@ -94,9 +95,12 @@ requests.
 ## Citing
 
 Cite a tagged release, so that the reader finds the version you read; the
-changes between releases are in [`CHANGELOG.md`](CHANGELOG.md). For the
-repository as a whole, use GitHub's "Cite this repository" button, which reads
-[`CITATION.cff`](CITATION.cff):
+changes between releases are in [`CHANGELOG.md`](CHANGELOG.md). Zenodo archives
+each release with its own DOI: version 1.0.0 is
+[10.5281/zenodo.22976636](https://doi.org/10.5281/zenodo.22976636), and
+[10.5281/zenodo.22976635](https://doi.org/10.5281/zenodo.22976635) always
+resolves to the latest version. For the repository as a whole, use GitHub's
+"Cite this repository" button, which reads [`CITATION.cff`](CITATION.cff):
 
 ```bibtex
 @software{galan2026hn,
@@ -104,6 +108,7 @@ repository as a whole, use GitHub's "Cite this repository" button, which reads
   title   = {The {H}adwiger--{N}elson problem over number fields},
   version = {1.0.0},
   year    = {2026},
+  doi     = {10.5281/zenodo.22976636},
   url     = {https://github.com/decalion89/chromatic-number-of-the-plane/releases/tag/v1.0.0},
   note    = {AI-assisted research; not peer reviewed}
 }

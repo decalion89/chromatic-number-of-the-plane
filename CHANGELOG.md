@@ -12,6 +12,9 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- The Zenodo DOIs: 10.5281/zenodo.22976636 for version 1.0.0 and
+  10.5281/zenodo.22976635 for all versions. They are in `CITATION.cff` and in
+  the README, as a badge and in the BibTeX entry.
 - `CONTRIBUTING.md`: how to report an error or a result that does not
   reproduce, and what a pull request needs. A pull request template.
 
