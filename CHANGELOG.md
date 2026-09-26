@@ -41,7 +41,7 @@ First versioned release. None of the results below has been refereed.
   733 exploratory ones, kept as a record.
 - Graphs and witnesses in exact coordinates; colourings, DRAT logs and
   three-point certificates with their checkers.
-- 662 tests; GitHub Actions runs 380 of them on pushes to `main` and on pull
+- 664 tests; GitHub Actions runs 382 of them on pushes to `main` and on pull
   requests.
 - `requirements-lock.txt`: the exact environment in which the results were
   produced.
@@ -60,6 +60,10 @@ Corrections made before this release:
   12 000 vertices, and that a second check had used PARI/GP; neither was
   recorded in the repository. The tested graphs have up to 3 134 vertices,
   and the PARI/GP check is now a script with a test.
+- Solver time limits in `hn.coloring` did not stop CaDiCaL, the default
+  solver, because pysat's interrupt does not reach it; a limited solve now runs
+  it in a separate process. The slow tests' limits are four hours, and the
+  documentation no longer promises a 30-minute solve of de Grey's graph.
 
 [Unreleased]: https://github.com/decalion89/chromatic-number-of-the-plane/compare/v1.0.0...HEAD
 [1.0.0]: https://github.com/decalion89/chromatic-number-of-the-plane/releases/tag/v1.0.0
