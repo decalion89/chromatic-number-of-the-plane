@@ -18,6 +18,7 @@ vertices that is already non-k-colourable.
 
 from __future__ import annotations
 
+import multiprocessing
 import threading
 import time
 from typing import Dict, Iterable, List, Optional, Sequence, Set, Tuple
@@ -30,6 +31,12 @@ from .graph import UnitDistanceGraph
 __all__ = ["ColoringInstance", "is_k_colorable", "find_uncolorable_core", "chromatic_number"]
 
 DEFAULT_SOLVER = "cd19"  # CaDiCaL 1.9.5
+
+
+def _ignores_interrupt(solver: str) -> bool:
+    """pysat's interrupt() does not stop CaDiCaL (checked with 1.5.3 and 1.9.5 in python-sat 1.9.dev15),
+    while Glucose and MapleChrono stop at once. A time limit for CaDiCaL needs a separate process."""
+    return solver.startswith("cd") or solver.startswith("cadical")
 
 
 class ColoringInstance:
@@ -95,6 +102,8 @@ class ColoringInstance:
         """
         verts = list(range(self.nv)) if subset is None else sorted(set(subset))
         assumptions = [self.a(v) for v in verts]
+        if timeout and _ignores_interrupt(solver):
+            return self._solve_in_child(assumptions, timeout, solver, with_proof)
         # forbid the excluded vertices so their variables cannot carry weight
         s = Solver(name=solver, bootstrap_with=self.cnf, with_proof=with_proof)
         timer = None
@@ -119,6 +128,41 @@ class ColoringInstance:
             if timer:
                 timer.cancel()
             s.delete()
+
+    def _solve_in_child(self, assumptions, timeout, solver, with_proof):
+        """The same solve in a forked process, terminated after `timeout` seconds."""
+        ctx = multiprocessing.get_context("fork")
+        recv_end, send_end = ctx.Pipe(duplex=False)
+
+        def work():
+            s = Solver(name=solver, bootstrap_with=self.cnf, with_proof=with_proof)
+            res = s.solve(assumptions=assumptions)
+            if res:
+                out = (True, s.get_model(), None, None)
+            else:
+                out = (False, None, s.get_core() or assumptions, s.get_proof() if with_proof else None)
+            s.delete()
+            send_end.send(out)
+
+        proc = ctx.Process(target=work, daemon=True)
+        proc.start()
+        send_end.close()
+        try:
+            if not recv_end.poll(timeout):
+                return None, None, None, None
+            try:
+                res, model, core_lits, proof = recv_end.recv()
+            except EOFError:
+                raise RuntimeError(f"the {solver} process ended without an answer (exit code {proc.exitcode})")
+        finally:
+            if proc.is_alive():
+                proc.terminate()
+            proc.join()
+            recv_end.close()
+        if res:
+            return True, self.decode(model), None, None
+        core = sorted(l - 1 - self.nv * self.k for l in core_lits)
+        return False, None, core, proof
 
 
 def is_k_colorable(
