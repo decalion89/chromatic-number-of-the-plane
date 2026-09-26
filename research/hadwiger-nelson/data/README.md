@@ -4,13 +4,13 @@ Every graph here is stored with exact coordinates, so every distance can be reco
 table at the end lists each of the 85 JSON files tracked in this directory once. Growth runs also write
 transient checkpoints and solver files here (`*_kw<n>.json`, `*_ls<n>.json`, `*_inc.json`,
 `*_grow.json`, `blk_plain*.json`, `*.cnf`, `*.kissat`); `.gitignore` excludes them, and they are not
-indexed.
+indexed. The one exception is `L16_kw2.json`, a checkpoint kept as data and indexed below.
 
 ## Formats
 
 Four formats occur.
 
-**Graphs with coordinates in a multiquadratic field** (65 files) have the keys:
+**Graphs with coordinates in a multiquadratic field** (66 files) have the keys:
 - `field_generators`: `[a, b, …]`, meaning that the coordinates lie in ℚ(√a, √b, …);
 - `points`: a list of points `[x, y]`, each coordinate a list of `[numerator, denominator]` pairs on
   the basis of square-free products of the generators, in the order `hn.field.Field(field_generators)`
@@ -53,8 +53,9 @@ independence number `α` of a finite plane, and so its chromatic number from bel
 (`notes/local_colourings.md` §14): `χ ≥ 6` for seven planes, and `χ(G₁₃) ≥ 5` from `inert13.npz`.
 Each holds `meta` (JSON: the plane `q`, `kind` = `std` for x² + y² or `inert` for the anisotropic
 plane, the options and the orbit data of `scripts/threepoint.py`), `z` (the dual solution:
-multipliers of the linear constraints, then each psd block in upper-triangle svec form) and `value`
-(the solver's floating-point bound; the verifier's rigorous bound differs from it by less than 10⁻⁴). `scripts/threepoint_verify.py` checks one rigorously;
+multipliers of the linear constraints, then each psd block in upper-triangle svec form), `value`
+(the solver's floating-point bound; the verifier's rigorous bound differs from it by less than 10⁻⁴)
+and `status` (the solver's final status). `scripts/threepoint_verify.py` checks one rigorously;
 `tests/test_threepoint_certificates.py` lists what each one proves and checks them all.
 `threepoint/SHA256SUMS` fixes their contents (`sha256sum -c SHA256SUMS` in that folder).
 
@@ -119,28 +120,28 @@ The tests and `scripts/verify_pair.py` read the first format. `scripts/orbit_wit
 | `W_lattice_16_21_28_61.json` | 72 | ℤ[ω]/√−3 | A vertex-critical graph on 72 points of ℤ[ω]/√−3 with 553 edges at distances 1, 4/√3, √7, √(28/3) and √(61/3) and no proper 5-colouring, rebuilt by `scripts/lattice_witness.py 3,16,21,28,61 5`. |
 | `W_moser_orbit_9_33.json` | 187 | ℚ(√3, √11) | A vertex-critical graph on 187 points with 508 edges at distance 1 and 495 at the Galois orbit d² = (9 ∓ √33)/6 (d ≈ 0.7366, 1.5676) and no proper 5-colouring, checked by `scripts/orbit_witness_test.py` with orbit `9_1`. |
 | `blocked_32312_coloured.json` | 32 312 | ℚ(√3, √11, √247) | Plain growth from `g2e_blocked_seed.json` to 32 312 points with a 5-colouring found by kissat, proper on the 282 909 edges along the file's 134 unit vectors but with 43 monochromatic pairs among the 223 further unit-distance pairs in other directions. |
-| `blocking_requirements.json` | — | — | For a point p with 15 unit neighbours next to the 2 689-vertex carrier obtained by gluing `Sa` at the 12-point orbit of Sa[265], four pairs of those neighbours, with their squared distances, such that each 4-colouring found in three rounds (66 in all) that uses only three colours on the neighbours makes one of the pairs monochromatic (`experiments/fullcover.py`). |
+| `blocking_requirements.json` | — | — | For a point p with 15 unit neighbours next to the 2 689-vertex carrier obtained by gluing `Sa` at the 12-point orbit of Sa[265], four pairs of those neighbours, with their squared distances, such that each 4-colouring found in three rounds (66 in all) that uses only three colours on the neighbours makes one of the pairs monochromatic (`scripts/experiments/fullcover.py`). |
 | `chain23.json` | 10 | ℚ(√2, √3) | A chain of three unit rhombi (10 vertices, 16 edges) with no proper 3-colouring, the lower bound in χ(ℚ(√2, √3)²) = 4 (`tests/test_q23.py`, `certificates/chain23_no3coloring.json`). |
 | `chain35.json` | 19 | ℚ(√3, √5) | A chain of six unit rhombi (19 vertices, 31 edges) joining the origin to the unit vector e^{iπ/6}, with no proper 3-colouring, the lower bound in 4 ≤ χ(ℚ(√3, √5)²) ≤ 5 (`tests/test_q35.py`, `scripts/experiments/chain35.py`). |
 | `closure_five_247_c.json` | 1 851 | ℚ(√3, √11, √247) | The closure of `five_247_c.json` under adding the centre of every unit triangle, reached after four rounds. |
-| `coset_unsplit_five_247_c.json` | — | — | The pairs of `five_247_c.json` at squared distance 5/9, 4/3, 3 or 25 that no coset 5-colouring splits: there are none (`experiments/cosetfilter.py`). |
-| `coset_unsplit_tight_hexagon_4159.json` | — | — | The 24 pairs of `tight_hexagon_4159.json` at squared distance 5/9, 4/3, 3 or 25 that no coset 5-colouring splits, all at distance 5 (`experiments/cosetfilter.py`). |
-| `deficiency_five_247_c.json` | — | — | Ten non-unit pairs of `five_247_c.json` whose addition as edges leaves no proper 5-colouring, so that at most ten such pairs are needed (δ ≤ 10; `experiments/deficiency.py`). |
-| `disc_1099.json` | 1 099 | ℚ(√3, √11, √247) | The smallest disc about vertex 788 of `five_247.json` whose points still have no proper 4-colouring (`experiments/disc.py`). |
-| `disc_1113.json` | 1 113 | ℚ(√3, √11, √247) | The smallest disc about the centroid of `five_247.json` whose points still have no proper 4-colouring (`experiments/disc.py`). |
+| `coset_unsplit_five_247_c.json` | — | — | The pairs of `five_247_c.json` at squared distance 5/9, 4/3, 3 or 25 that no coset 5-colouring splits: there are none (`scripts/experiments/cosetfilter.py`). |
+| `coset_unsplit_tight_hexagon_4159.json` | — | — | The 24 pairs of `tight_hexagon_4159.json` at squared distance 5/9, 4/3, 3 or 25 that no coset 5-colouring splits, all at distance 5 (`scripts/experiments/cosetfilter.py`). |
+| `deficiency_five_247_c.json` | — | — | Ten non-unit pairs of `five_247_c.json` whose addition as edges leaves no proper 5-colouring, so that at most ten such pairs are needed (δ ≤ 10; `scripts/experiments/deficiency.py`). |
+| `disc_1099.json` | 1 099 | ℚ(√3, √11, √247) | The smallest disc about vertex 788 of `five_247.json` whose points still have no proper 4-colouring (`scripts/experiments/disc.py`). |
+| `disc_1113.json` | 1 113 | ℚ(√3, √11, √247) | The smallest disc about the centroid of `five_247.json` whose points still have no proper 4-colouring (`scripts/experiments/disc.py`). |
 | `ei_H214.json` | 214 | ℚ(√3, √11) | Exoo–Ismailescu's graph H as a point set (1 004 unit edges), with their pair A, B at distance 5, which is alike in every 5-colouring that has no monochromatic pair at distance 1 or 2. |
 | `ei_rho7.json` | 638 | ℚ(√3, √11) | Exoo–Ismailescu's H with its images under ρ₇ and ρ₇⁻¹ about A (3 012 unit edges), on which the 2-adic 4-colouring of ℚ(√3, √11)² is proper (`notes/local_colourings.md`). |
-| `escape5_five_247_c.json` | — | — | For a point p outside `five_247_c.json` with 12 unit neighbours in it, 32 sampled 5-colourings that use only two colours on them, each of which makes the pair (281, 655) at squared distance 3 monochromatic (`experiments/escape5.py`). |
+| `escape5_five_247_c.json` | — | — | For a point p outside `five_247_c.json` with 12 unit neighbours in it, 32 sampled 5-colourings that use only two colours on them, each of which makes the pair (281, 655) at squared distance 3 monochromatic (`scripts/experiments/escape5.py`). |
 | `five_23.json` | 7 141 | ℚ(√3, √11, √23) | `Sa` glued at the D₆-orbit of Sa[25] and spindled at squared distance 64/3 over the C₆-orbit of a pivot (sine √759/128, 759 = 3·11·23), with no proper 4-colouring (`tests/test_five_247.py`). |
 | `five_23_v7.json` | 10 333 | ℚ(√3, √11, √23) | A larger graph built by the recipe of `five_23.json`, with no proper 4-colouring. |
 | `five_247.json` | 1 139 | ℚ(√3, √11, √247) | A 5-chromatic graph: `Sa` glued to its 60° turn about the vertex Sa[25], then spindled, by a rotation through 2 arcsin(3/16), at a pair at distance 8/3 that is alike in every 4-colouring (`tests/test_five_247.py`). |
 | `five_247_b.json` | 951 | ℚ(√3, √11, √247) | A 5-chromatic graph: `Sa` cut to its 340 highest-degree vertices, glued to its 120° image (overlap 178) and spindled at a forced pair at distance 8/3 (`tests/test_five_247.py`). |
 | `five_247_c.json` | 803 | ℚ(√3, √11, √247) | A 5-chromatic, vertex-critical graph with 4 065 edges: `Sa` cut to its 327 highest-degree vertices, glued to its 120° image about a vertex, cut to the part that still forces, and spindled at distance 8/3 (`tests/test_five_247.py`). |
-| `five_247_c_critical.json` | — | — | The check that `five_247_c.json` is vertex-critical, that is, deleting any vertex leaves a 4-colourable graph, with its ten slowest solver calls (`experiments/critical803.py`). |
-| `five_247_c_lambda.json` | 1 605 | ℚ(√3, √11, √247) | `five_247_c.json` with its image under Exoo–Ismailescu's rotation λ = (49 + 3√−11)/50 about its densest vertex, a substrate whose edge module blocks coset colourings modulo 2, 3, 4 and 5 (`experiments/mk_lambda.py`). |
+| `five_247_c_critical.json` | — | — | The check that `five_247_c.json` is vertex-critical, that is, deleting any vertex leaves a 4-colourable graph, with its ten slowest solver calls (`scripts/experiments/critical803.py`). |
+| `five_247_c_lambda.json` | 1 605 | ℚ(√3, √11, √247) | `five_247_c.json` with its image under Exoo–Ismailescu's rotation λ = (49 + 3√−11)/50 about its densest vertex, a substrate whose edge module blocks coset colourings modulo 2, 3, 4 and 5 (`scripts/experiments/mk_lambda.py`). |
 | `five_dense_10.json` | 12 469 | ℚ(√3, √11, √247) | A dense graph (mean degree 18.48) with no proper 4-colouring: ten stacked orbits of glue centres, with the composite forced pair tuned to distance 1 (`tests/test_dense_family.py`). |
 | `five_dense_2.json` | 6 925 | ℚ(√3, √11, √247) | The construction of `five_dense_10.json` with two stacked orbits (mean degree 16.81; `tests/test_dense_family.py`). |
-| `five_order6_free.json` | 12 011 | ℚ(√3, √11, √23, √247) | A graph with no proper 4-colouring: an order-6 carrier as in `order6_carrier.json` with its images under a rotation about each point of the forced orbit, through the free angle that brings one orbit point to distance 1 from another, which needs √23 (`experiments/freeorder6.py`). |
+| `five_order6_free.json` | 12 011 | ℚ(√3, √11, √23, √247) | A graph with no proper 4-colouring: an order-6 carrier as in `order6_carrier.json` with its images under a rotation about each point of the forced orbit, through the free angle that brings one orbit point to distance 1 from another, which needs √23 (`scripts/experiments/freeorder6.py`). |
 | `five_rho7.json` | 2 403 | ℚ(√3, √11, √247) | `five_247_c.json` with its images under ρ₇ = (1 + 4√−3)/7 and ρ₇⁻¹ about its densest vertex; `notes/rigidity.md` studies the coset colourings of its module. |
 | `five_symmetric.json` | 7 141 | ℚ(√3, √11, √247) | A C₆-invariant graph with no proper 4-colouring: `Sa` glued at all six points of the C₆-orbit of Sa[25] and spindled at distance 8/3 over the whole orbit (`tests/test_five_247.py`). |
 | `five_tuned_16_1_3_7_11.json` | 4 081 | ℚ(√3, √7, √11) | A graph of the tuned family (a forced pair at distance 8/3 composed with a turned copy of its carrier so that it lands at a chosen squared distance, here 16, then spindled), with no proper 4-colouring; its radical √1792 = 16√7 keeps it in ℚ(√3, √7, √11) (`tests/test_tuned_family.py`). |
@@ -150,9 +151,9 @@ The tests and `scripts/verify_pair.py` read the first format. `scripts/orbit_wit
 | `five_tuned_4_1.json` | 4 081 | ℚ(√3, √5, √7, √11) | The tuned family with target squared distance 4, then spindled (radical √880 = 4√55), inside de Grey's field ℚ(√3, √5, √7, √11). |
 | `five_twotune.json` | 12 240 | ℚ(√3, √11, √23) | The forced distance tuned to 1/√3 and then the angle to 60°: six copies whose pivot orbit has six pairs at distance 1, with no proper 4-colouring (`tests/test_two_tunings.py`). |
 | `five_twotune_small.json` | 4 081 | ℚ(√3, √11, √23) | The construction of `five_twotune.json` with two copies instead of six, already without a proper 4-colouring. |
-| `forced_certificates.json` | — | — | For the four unit neighbours of vertex 315 of `five_247_c.json`, the smallest ball about each pair, in the graph with vertex 315 deleted, in which the pair differs in every 4-colouring: the whole 802-vertex graph for every non-adjacent pair (`experiments/ball4.py`). |
-| `forcing_set_five_247_c.json` | — | — | Two squared distances, (9 − √33)/6 and (7 − √33)/6 with 2 540 and 2 188 pairs, whose pairs added as edges leave `five_247_c.json` without a proper 5-colouring, a minimal such set of distances (`experiments/multidist.py`). |
-| `free_angle.json` | 21 169 | ℚ(√3, √11, √23) | A graph with no proper 4-colouring from the free-angle spindle: in a carrier built on Sa[199] the vertices 726, 1526 and 2730 are alike in every 4-colouring (at squared distances 64/3 and 256/9 from 726), and a rotation about each point of the orbit of 726 brings 1526 to distance 1 from 2730 (`experiments/freeangle.py`). |
+| `forced_certificates.json` | — | — | For the four unit neighbours of vertex 315 of `five_247_c.json`, the smallest ball about each pair, in the graph with vertex 315 deleted, in which the pair differs in every 4-colouring: the whole 802-vertex graph for every non-adjacent pair (`scripts/experiments/ball4.py`). |
+| `forcing_set_five_247_c.json` | — | — | Two squared distances, (9 − √33)/6 and (7 − √33)/6 with 2 540 and 2 188 pairs, whose pairs added as edges leave `five_247_c.json` without a proper 5-colouring, a minimal such set of distances (`scripts/experiments/multidist.py`). |
+| `free_angle.json` | 21 169 | ℚ(√3, √11, √23) | A graph with no proper 4-colouring from the free-angle spindle: in a carrier built on Sa[199] the vertices 726, 1526 and 2730 are alike in every 4-colouring (at squared distances 64/3 and 256/9 from 726), and a rotation about each point of the orbit of 726 brings 1526 to distance 1 from 2730 (`scripts/experiments/freeangle.py`). |
 | `free_angle_both.json` | 39 313 | ℚ(√3, √11, √23) | The construction of `free_angle.json` with both roots of the rotation equation, with no proper 4-colouring. |
 | `g2e_base.json` | 804 | ℚ(√3, √11, √247) | `five_247_c.json` with the point b = a + 2e added, where a, a + e is its only edge along e = (−3/16, √247/16): the pair A = a, B = b at distance 2. |
 | `g2e_blocked_ckpt.json` | 4 425 | ℚ(√3, √11, √247) | A checkpoint of the distance-2 gadget growth from `g2e_blocked_seed.json`. |
@@ -162,22 +163,22 @@ The tests and `scripts/verify_pair.py` read the first format. `scripts/orbit_wit
 | `g2e_sym_ckpt.json` | 2 185 | ℚ(√3, √11, √247) | A checkpoint of the distance-2 gadget growth from `g2e_sym_seed.json`. |
 | `g2e_sym_seed.json` | 1 705 | ℚ(√3, √11, √247) | `five_247_c.json` with a pair a, b = a + 2e along its √247 edge e, the half-turn about their midpoint and both unit circles filled along every edge direction. |
 | `g2e_v2_ckpt.json` | 1 684 | ℚ(√3, √11, √247) | A checkpoint of the distance-2 gadget growth from `g2e_base.json`. |
-| `hub_disjunction.json` | — | — | For the carrier and point of `blocking_requirements.json`, a hub disjunction: in each sampled 4-colouring with only three colours on the point's unit neighbours, the neighbour 495 shares its colour with one of three vertices W, at the listed squared distances (`experiments/hubdisj.py`). |
+| `hub_disjunction.json` | — | — | For the carrier and point of `blocking_requirements.json`, a hub disjunction: in each sampled 4-colouring with only three colours on the point's unit neighbours, the neighbour 495 shares its colour with one of three vertices W, at the listed squared distances (`scripts/experiments/hubdisj.py`). |
 | `hunt_811.json` | 811 | ℚ(√3, √11, √247) | A subgraph of `five_247.json` with no proper 4-colouring, found by vertex deletion (seed 1). |
 | `idealquot_ei_H214_3_1.json` | — | — | A proper 5-colouring of the Cayley graph of M/αM ≅ (ℤ/13)² on the unit vectors, for α = 3 + ω and M the module of `ei_H214.json` (`scripts/idealquot.py`). |
-| `mu5_menu.json` | — | — | For 30 candidate points p outside `five_247_c.json` (images of its vertices under 60° and 30° rotations), the pairs of unit neighbours that must be forced apart to raise μ₅(p) above 2, with the size of N(p) and the squared distances of the pairs (`experiments/requirements.py`). |
-| `mu5_requirement.json` | — | — | The search of `escape5_five_247_c.json` iterated: once the pair (281, 655) at squared distance 3 is required to differ, the solver, limited to 4 million conflicts per call, found no further 5-colouring with only two colours on the 12 neighbours (`experiments/escape5b.py`). |
-| `narrow_disjunction.json` | — | — | A minimal set of 133 pairs of `five_247_c.json` at squared distances (9 − √33)/6 and (7 − √33)/6, one of which is monochromatic in every 5-colouring (`experiments/narrow.py`). |
+| `mu5_menu.json` | — | — | For 30 candidate points p outside `five_247_c.json` (images of its vertices under 60° and 30° rotations), the pairs of unit neighbours that must be forced apart to raise μ₅(p) above 2, with the size of N(p) and the squared distances of the pairs (`scripts/experiments/requirements.py`). |
+| `mu5_requirement.json` | — | — | The search of `escape5_five_247_c.json` iterated: once the pair (281, 655) at squared distance 3 is required to differ, the solver, limited to 4 million conflicts per call, found no further 5-colouring with only two colours on the 12 neighbours (`scripts/experiments/escape5b.py`). |
+| `narrow_disjunction.json` | — | — | A minimal set of 133 pairs of `five_247_c.json` at squared distances (9 − √33)/6 and (7 − √33)/6, one of which is monochromatic in every 5-colouring (`scripts/experiments/narrow.py`). |
 | `order6_carrier.json` | 6 006 | ℚ(√3, √11, √247) | A 4-colourable carrier in which the composite isometry τ is a rotation of order 6, with a six-point orbit that is monochromatic in every 4-colouring, at squared distances 64/9, 64/3 and 256/9 from one another (`tests/test_order_six_tuning.py`). |
-| `rarest_v139.json` | 24 781 | ℚ(√3, √5, √7, √11, √29) | A graph with no proper 4-colouring, spindled over six pivots at the rare forced squared distance 256/9 of the glue centre Sa[139], which needs √1015 = √(5·7·29) (`experiments/rarest.py`). |
+| `rarest_v139.json` | 24 781 | ℚ(√3, √5, √7, √11, √29) | A graph with no proper 4-colouring, spindled over six pivots at the rare forced squared distance 256/9 of the glue centre Sa[139], which needs √1015 = √(5·7·29) (`scripts/experiments/rarest.py`). |
 | `rarest_v199.json` | 39 313 | ℚ(√3, √5, √7, √11, √23, √29) | A graph with no proper 4-colouring built on the glue centre Sa[199] from its rare forced squared distances 64/3 and 256/9, in a field that adds √5, √7 and √29. |
 | `rho7_H.json` | 2 606 | ℚ(√3, √11, √247) | `five_rho7.json` with Exoo–Ismailescu's H, turned by 150° with A at the densest vertex; `two_edges` lists H's 446 pairs at distance 2. |
 | `rho7_lambda_K.json` | 5 210 | ℚ(√3, √11, √247) | `five_rho7.json` ∪ λ_O(`five_rho7.json`) ∪ K with O = A, where K is Exoo–Ismailescu's graph turned onto the module; `two_edges` lists K's 892 pairs at distance 2 (written by `scripts/mk_kseed.py`). |
 | `rho7_pair2_seed.json` | 4 981 | ℚ(√3, √11, √247) | `five_rho7.json` with a pair a, a + 2e along a unit edge e, the half-turn about their midpoint and both unit circles filled: a seed for a distance-2 gadget. |
 | `rho7_pair5_ckpt.json` | 6 878 | ℚ(√3, √11, √247) | A checkpoint of the growth from `rho7_pair5_seed.json`. |
 | `rho7_pair5_seed.json` | 4 998 | ℚ(√3, √11, √247) | The seed of `rho7_pair2_seed.json` with the pair a, a + 5e at distance 5 instead. |
-| `shrunk_1135.json` | 1 135 | ℚ(√3, √11, √247) | A subgraph of `five_247.json` with no proper 4-colouring, extracted from an unsatisfiable core (seed 0; `experiments/shrink_core.py`). |
+| `shrunk_1135.json` | 1 135 | ℚ(√3, √11, √247) | A subgraph of `five_247.json` with no proper 4-colouring, extracted from an unsatisfiable core (seed 0; `scripts/experiments/shrink_core.py`). |
 | `tight_four.json` | 24 | ℚ(√3, √5, √7, √11) | A unit-distance graph with 54 edges whose chromatic number and circular chromatic number are both 4 (`tests/test_tight_four.py`). |
 | `tight_hexagon_4159.json` | 4 159 | ℚ(√3, √11, √247) | Six copies of `five_247_c.json` with their densest vertices on the vertices of a hexagon, each turned by a different multiple of 60°, with no proper 4-colouring. |
-| `two_distance_five_247_c.json` | — | — | No squared distance among the 60 most frequent in `five_247_c.json` is forced at five colours: with the pairs at any one of them added as edges, the graph stays 5-colourable (`experiments/twodist.py`). |
+| `two_distance_five_247_c.json` | — | — | No squared distance among the 60 most frequent in `five_247_c.json` is forced at five colours: with the pairs at any one of them added as edges, the graph stays 5-colourable (`scripts/experiments/twodist.py`). |
 | `witness_five.json` | 63 | ℚ(√3, √5, √7, √11) | 63 points with 119 unit edges and 161 listed pairs at squared distances 15/16, 16, 17/2, 9 and 7, such that no proper 5-colouring makes every listed pair bichromatic (`tests/test_homcol.py`). |
