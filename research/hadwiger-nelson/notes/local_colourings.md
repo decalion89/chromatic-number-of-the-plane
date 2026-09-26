@@ -157,7 +157,7 @@ goes further: it proves `χ(G_q) ≥ 6` for `q = 29, 37, 41, 43, 47`.
 | 5 | 4 | SAT |
 | 7 | 4 | SAT (Moorhouse) |
 | 11 | 5 | SAT |
-| 13 | 5–6 | a 6-colouring (SAT); the three-point bound gives `α ≤ 42.64` (§14, certified), so no 4-colouring. Tabu search finds no 5-colouring, and CaDiCaL ran 25 minutes without an answer; independent sets of 36 points exist, above `169/5`, so bounding `α` cannot decide it |
+| 13 | 5–6 | a 6-colouring (SAT); the three-point bound gives `α ≤ 42.64` (§14, certified), so `α ≤ 42 < 169/4` and there is no 4-colouring. Tabu search finds no 5-colouring, and CaDiCaL ran 25 minutes without an answer; independent sets of 36 points exist, above `169/5`, so bounding `α` cannot decide it |
 | 17 | 5–6 | no 4-colouring and a 6-colouring (SAT); tabu finds no 5-colouring. Independent sets of 57 points are found easily, never 58. Since `5·57 < 289`, `α = 57` would prove `χ ≥ 6`. SAT runs on the 5-colouring have not finished, and `α ≥ 58` is undecided; the three-point bound of §14 gives only `α ≤ 63.33` (numerically, not certified) |
 | 19 | 5 | SAT; triangle-free, with the linear 5-colouring `(a, b) ↦ c(a + b mod 19)` (§13) |
 | 23 | 5–8, likely ≥ 7 | no 4-colouring (SAT); an interval 8-colouring (§12); tabu finds no 7-colouring, and independent sets of 87 points, against `529/6 ≈ 88.2`; the three-point bound of §14 gives `α ≤ 107.04` (numerically, not certified), and proving `χ ≥ 6` this way needs `α ≤ 105` |
@@ -203,7 +203,8 @@ field:
 
 It needs no `√5` and no `√247`. The graph is
 `data/five_tuned_16_1_3_7_11.json`: 4 081 points and 27 242 edges, not
-4-colourable by CaDiCaL or by kissat (no DRAT proof is stored).
+4-colourable: CaDiCaL and kissat agree, and drat-trim checks kissat's DRAT
+proof (`certificates/data_no4_checks.txt`).
 
 The field has rotations with every small prime in a denominator: 2, 3, 5, 7 and
 11. The Exoo–Ismailescu `λ`-closure of the graph (378 unit vectors, rank 8)
@@ -258,9 +259,10 @@ give `F8(i)`, and 2, 42, 66 and 154 give `F8(√−2)`. In these fields
 Proposition B leaves no local 5-colouring at any place and any level, given
 the estimate sketched in its proof. The case `d = 247` is `L16 = ℚ(√−3, √−7, √−11, √−247)`:
 - **Non-split places.** Below 300 there are only 83 and 173.
-- **Both 5-chromatic families.** `five_tuned_16` and `five_rho7` share their
-  402-point Moser-field carrier. Their union, 6 080 points and 37 474 edges,
-  is `data/L16_seed.json`.
+- **Both 5-chromatic families.** `five_tuned_16` and `five_rho7` both contain
+  the same 402-point carrier in the Moser field, and share 404 points in all.
+  Their union, 6 080 = 4 081 + 2 403 − 404 points and 37 474 edges, is
+  `data/L16_seed.json`.
 - **No circular colouring, numerically.** The seed's 918 unit vectors
   (459 directions) span rank 12. The best `min_u ‖φ(u)‖` found over characters `φ` is 0.024, while a
   circular 5-colouring needs 0.2. The same search finds 0.204 at once in the
@@ -981,7 +983,8 @@ which are valid when `|S| ≥ K₀`; a bound below `K₀` then proves `α < K₀
 | `𝔽₄₃² = G₄₃` | 1 849 | 347.79 | 369.8 | `χ ≥ 6` |
 | `𝔽₄₇² = G₄₇` | 2 209 | 371.42 | 441.8 | `χ ≥ 6` |
 
-The same programme gives `α(G₁₃) ≤ 42.64` (`inert13.npz`), so `χ(G₁₃) ≥ 5`.
+The same programme gives `α(G₁₃) ≤ 42.64` (`inert13.npz`). This is above
+`169/4 = 42.25`, but `α` is an integer, so `α(G₁₃) ≤ 42` and `χ(G₁₃) ≥ 169/42 > 4`.
 Each file's `value` is the solver's floating-point bound; the verifier's
 rigorous bound differs from it by less than `10⁻⁴` and lies below every number
 quoted here.
