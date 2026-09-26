@@ -14,8 +14,10 @@
 > twice, and the raw numbers say it better"; "Exoo–Ismailescu rebuilt, and the denominator
 > that the project filtered out" (the multiquadratic claim of "Why every known
 > construction stops at five"); and "The circular gate: colourings through a real
-> character" (the sampled cyclic gates). The state of every result is given by the README
-> and the notes, not by this log.
+> character" (the sampled cyclic gates); "Correction: `χ(ℚ(√3, √11)²) = 4` is Fischer's
+> theorem (1994)" (the status entry below and "An open question closed"); and "Pre-release
+> audit (26 September)" (the whole-field results, the local colourings and the note). The
+> state of every result is given by the README and the notes, not by this log.
 
 **How many colours does the plane need, so that no two points at distance exactly 1
 share a colour?**
@@ -88,8 +90,8 @@ A certificate never asks you to trust this code. It asks you to run `drat-trim`.
   - Madore (2015) proved `4 ≤ χ ≤ 5`.
   - Exoo–Ismailescu (2018) and Polymath16 asked whether a 5-chromatic
     unit-distance graph embeds there.
-  - Voronov (Polymath16, 2021) conjectured `χ = 4` and noted that nobody had
-    proved it.
+  - Voronov (Polymath16, 2021) wrote that `χ = 4` "seems likely" and that
+    nobody had proved it.
 
   It does not. At a place over 2 the field is inert in `ℚ(i, √3, √11)`, so
   every unit vector reduces to a nonzero element of `𝔽₄`, and that residue is
@@ -97,6 +99,10 @@ A certificate never asks you to trust this code. It asks you to run `drat-trim`.
   (2018) he used it to colour the Moser ring. What is new is the extension to
   the whole plane. See *An open question closed* below and
   `tests/test_q311.py`.
+
+  > **Corrected later.** K. G. Fischer had proved `χ(ℚ(√3, √11)²) = 4` in 1994;
+  > see "Correction: `χ(ℚ(√3, √11)²) = 4` is Fischer's theorem (1994)". The
+  > proof here is a short alternative.
 
 - ✅ A **19-vertex, 33-edge graph with no 3-colouring**, drat-trim verified and
   **vertex-critical** — `certificates/genuine_pair_19_no3coloring.json`. Not a
@@ -2196,7 +2202,7 @@ residue degree `f`, with `sigma` either fixing the prime (`f` even, `sigma` the
 involution `Frob^{f/2}`) or swapping a conjugate pair. Every type of degree 2,
 4, 6 and 8 was decided by exhaustion over `A`:
 
-| orbit | `|N|` | hyperplanes missing | blocks |
+| orbit | `\|N\|` | hyperplanes missing | blocks |
 |---|---|---|---|
 | fixed `f=2` | 6 | 3 | no |
 | fixed `f=4` | 26 | 13 | no |
@@ -6502,7 +6508,7 @@ self-avoiding walk on `ℤ/6` with ±1 steps: at most **six** points, all in one
 coset of 60°, and the only possible cycle is the hexagon itself. And a
 2-colouring of `N(p)` *is* the parity:
 
-| separation | `d` | under `|c(N(p))| ≤ 2` |
+| separation | `d` | under `\|c(N(p))\| ≤ 2` |
 |---|---|---|
 | 60° (index 1) | 1 | apart — they are adjacent anyway |
 | 120° (index 2) | √3 | **monochromatic, automatically** |
@@ -8115,7 +8121,7 @@ chain seed.
 
 ## More square roots (25 September)
 
-The dichotomy of Theorem 4 holds for every multiquadratic `L ∋ √3`: `χ(L²) = 3`
+The dichotomy of Theorem 5 (of `notes/local_colourings.md` §11) holds for every multiquadratic `L ∋ √3`: `χ(L²) = 3`
 when every other generator, with any factor 3 removed, is `≡ 1 (mod 3)`, and
 `χ(L²) ≥ 4` as soon as one is `≡ 2 (mod 3)` (the subfield `ℚ(√−q)` of `L(i)`
 supplies `1/3`). PARI/GP gives residue degree 1 above 3 for `ℚ(√3, √7)`,
@@ -8183,7 +8189,7 @@ New finite-plane values:
   triangle-free 5-chromatic graph.
 - **`χ(G₄) = 4`.**
 
-With `√3`, the table reproduces Theorem 4. The one exception is `ℚ(√3, √29)`,
+With `√3`, the table reproduces Theorem 5 (§11). The one exception is `ℚ(√3, √29)`,
 whose first non-split place is above 23.
 
 Also recorded today:
@@ -8365,3 +8371,63 @@ precedence on the other colours. Its DRAT proof grew by 1.4 MB a second, too
 fast to keep, so it runs without one; an answer of "unsatisfiable" would have
 to be re-proved by cube and conquer with a checked proof per cube. Split into
 1 024 cubes by `march_cu`, each cube takes kissat more than two minutes.
+
+## Pre-release audit (26 September)
+
+Before release 1.0.0, five independent reviews read the repository: the two
+theorems and the note; the local colourings and `notes/rigidity.md`; the
+certificates and data; the literature and attributions; and the consistency of
+the documentation. A sixth check went back to the primary sources for every
+new bibliographic claim. The mathematics of both theorems of the note stands.
+What had to change:
+- **Two results were not new.** `χ(ℚ(√−3, √−11)) = 4` follows from Fischer's
+  theorem, since that field lies in `ℚ(i, √3, √11)`, the plane over
+  `ℚ(√3, √11)`. For `χ(ℚ(√−3, √−11, √−247)) = 5`, Madore's argument for
+  `ℚ(√3, √11)` (his Cor. 3.4, Lemma 4.5, Prop. 4.6) gives the upper bound at a
+  place over 11, and Exoo–Ismailescu's graph lies in the field after a quarter
+  turn. The entries "The gate in relation space, and the local criterion" and
+  "The field of `five_rho7` is 5-colourable: reduction at 11" state them
+  without that earlier work; the notes and READMEs now credit it.
+- **The note overstated its checks.** It said the colourings had been tested
+  on graphs of up to about 12 000 vertices, and that a second check had used
+  PARI/GP; the repository recorded neither. The largest tested graph has 3 134
+  vertices. `scripts/decompositions.gp` now recomputes the prime decompositions
+  with PARI/GP, checked by `tests/test_decompositions.py`, and
+  `tests/test_q311.py` now also checks `data/ei_rho7.json` and the inertness
+  of the places over 2 in `ℚ(i, √3, √11)`.
+- **A certificate.** The 803-vertex graph `five_247_c` has no 4-colouring:
+  kissat's DRAT proof of the plain formula, 4 006 246 lemmas, checked by
+  drat-trim in 463 s (`certificates/five_247_c_no4coloring.json`).
+- **Local colourings.** In `notes/local_colourings.md` and `notes/rigidity.md`:
+  - the Question of §6 was asked for a minimum of at most `χ(ℝ²)`, which made
+    the step from `ℚ(√−3, √−7, √−11)` to `χ(ℝ²) ≥ 6` circular; it is now asked
+    for a minimum of at most 6;
+  - the three-point bounds at 17 and 41 are for the finite planes, level 1;
+    the deeper levels map onto them and may need fewer colours, so "no local
+    obstruction" holds only at level 1 there;
+  - next to `√−3`, a non-split place can also have residue field `𝔽₃` (for
+    example in `ℚ(i, √3)`) or `𝔽₈`; the claim "`q ≡ 5 mod 6` or `q = 2`" in
+    "The field of `five_rho7` is 5-colourable: reduction at 11" was wrong;
+  - the eigenvalues of `G_q` are Kloosterman sums, `λ(n) = −Kl(1, n; q)`, not
+    Salié-type sums;
+  - in "Blind edges, the level-2 plane at 17, and fields with no local
+    obstruction", the list of `d` misses 21, 33 and 77 (the same field as
+    `d = 1`); `Γ(F8) □ Γ(F8)` has the chromatic number of `Γ(F8)`, not 5; the
+    places of `L16` over 3 and 7 have residue fields `𝔽₉` and `𝔽₄₉`, so the
+    targets there are `H₉` and `H₄₉`; and the `L16` seed has 918 unit vectors,
+    459 directions, not 471;
+  - `chain35.json` reaches distance `√7` from its start, not 3.5;
+  - `χ(G₁₇)` is 5 or 6: SAT finds no 4-colouring and a 6-colouring.
+- **Attributions.** Reduction modulo a prime goes back to Woodall (1973) and
+  Fischer (1990), and extension by cosets to Fischer's Theorem 1 (1990). The
+  spectra of the finite planes are Medrano–Myers–Stark–Terras's (1996), and
+  Galois symmetry between distances is Tao's (Polymath16, thread 7). Ismailescu
+  had a 103-vertex graph with edges at 1 and `2/√3` and no 4-colouring (thread
+  3). The reduction to two-distance witnesses is Exoo–Ismailescu's (arXiv
+  1805.00157 and 1805.06055), not stated in 1909.13177. Cranston–Rabern had
+  also asked about `ℚ(√3, √11)`.
+- **Code.** `scripts/tabucol.py` and `scripts/quotient.py` ran their whole
+  experiment when imported; they no longer do. The maintained scripts write to
+  `HN_OUT` (default `/tmp/hn`) instead of this session's scratch directory, and
+  the exploratory scripts name `/tmp/hn` too (a rewrite checked to change no
+  other part of their syntax trees).
