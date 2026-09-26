@@ -155,7 +155,6 @@ for i, a in enumerate(V0):
 print(f"{len(found)} chains, {sum(1 for f in found if f[2])} leaving the "
       f"subfield  [{time.time()-t0:.0f}s]", flush=True)
 import pickle
-with open("/tmp/claude-0/-home-user-darwin-50/"
-          "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/chains.pkl",
+with open("/tmp/hn/chains.pkl",
           "wb") as fh:
     pickle.dump(found, fh)

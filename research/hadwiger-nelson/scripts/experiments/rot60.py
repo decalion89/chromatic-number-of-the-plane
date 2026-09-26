@@ -119,7 +119,7 @@ for vi in range(LO, min(HI, n0)):
         for x in conf[:8]:
             print(f"      v{x[0]} v{x[1]}  d^2={x[2]}  spindle radical {x[3]}", flush=True)
         pickle.dump((vi, conf), open(
-            f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/rot60_{WHICH}_{K}_{vi}.pkl", "wb"))
+            f"/tmp/hn/rot60_{WHICH}_{K}_{vi}.pkl", "wb"))
     elif vi % 25 == 0:
         print(f"  v{vi}: n={n} shared={2*n0-n} cand={len(cand)} FORCED=0"
               f"   [{time.time()-t0:.0f}s]", flush=True)

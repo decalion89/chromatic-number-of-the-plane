@@ -18,8 +18,7 @@ import sys, pickle, time
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
 from hn.homcol import periodic_screen
 
-with open("/tmp/claude-0/-home-user-darwin-50/"
-          "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/aim4dirs.pkl",
+with open("/tmp/hn/aim4dirs.pkl",
           "rb") as fh:
     dirs = [tuple(d) for d in pickle.load(fh)]
 print(f"{len(dirs)} directions of the four-modulus necklace, dimension {len(dirs[0])}", flush=True)

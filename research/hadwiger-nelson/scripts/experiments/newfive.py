@@ -90,4 +90,4 @@ if ok is False:
     print(f"\n  *** chi(Z) = 5 : a 5-chromatic unit-distance graph on {gZ.n} "
           f"vertices in Q(sqrt3,sqrt11,sqrt247) ***", flush=True)
     json.dump({"n": gZ.n, "field": list(K1.gens)},
-              open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/newfive.json", "w"))
+              open("/tmp/hn/newfive.json", "w"))

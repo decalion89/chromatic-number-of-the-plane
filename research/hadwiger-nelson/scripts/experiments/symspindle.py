@@ -139,7 +139,7 @@ print(f"  4-colourable: {bool(c4)}", flush=True)
 c5, cnf5, X5 = colourings(gV, 5, 20)
 if not c5:
     print("  *** IT REFUSES FIVE COLOURS ***", flush=True)
-    json.dump({"n": gV.n}, open(f"{'/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad'}/SIXSYM.json", "w"))
+    json.dump({"n": gV.n}, open(f"{'/tmp/hn'}/SIXSYM.json", "w"))
     sys.exit()
 free5 = min(sum(1 for v in range(gV.n)
                 if len({col[u] for u in gV.adj[v]} | {col[v]}) < 5) for col in c5)
@@ -153,5 +153,5 @@ json.dump({"field_generators": list(F.gens), "n": gV.n, "from_vertex": VI,
            "points": [[[[c.numerator, c.denominator] for c in p.x.c],
                        [[c.numerator, c.denominator] for c in p.y.c]]
                       for p in gV.vertices]},
-          open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/symspindle.json", "w"))
+          open("/tmp/hn/symspindle.json", "w"))
 print(f"  saved   [{time.time()-t0:.0f}s]", flush=True)

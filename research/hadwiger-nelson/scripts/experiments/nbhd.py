@@ -32,8 +32,7 @@ from hn.homcol import ring_palette_bound
 SEED = sys.argv[1] if len(sys.argv) > 1 else "G"
 k = int(sys.argv[2]) if len(sys.argv) > 2 else 5
 t0 = time.time()
-SC = ("/tmp/claude-0/-home-user-darwin-50/"
-      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 if SEED.endswith(".pkl"):
     P = pickle.load(open(SC + SEED, "rb"))
 else:

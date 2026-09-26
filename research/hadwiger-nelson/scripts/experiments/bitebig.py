@@ -26,8 +26,7 @@ from pysat.solvers import Solver
 
 k = int(sys.argv[1]) if len(sys.argv) > 1 else 5
 t0 = time.time()
-SC = ("/tmp/claude-0/-home-user-darwin-50/"
-      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 Gp = pickle.load(open(SC + "pivG.pkl", "rb"))
 PIV = Point(K.rational(-2), K.zero())
 print(f"Gp: {len(Gp)} points  [{time.time()-t0:.0f}s]", flush=True)

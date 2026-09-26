@@ -120,7 +120,7 @@ for rank, (ov, kind, arg, rot) in enumerate(cands[:TOP]):
         print(f"  !! rank{rank} {kind} overlap={ov}: n={n} NOT {K}-COLOURABLE "
               f"<<<<<<<<<<<<", flush=True)
         pickle.dump((WHICH, K, kind, rank), open(
-            f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/OHIT_{WHICH}_{K}_{rank}.pkl", "wb"))
+            f"/tmp/hn/OHIT_{WHICH}_{K}_{rank}.pkl", "wb"))
         continue
     pos0 = set(l for l in s.get_model() if l > 0)
     cols = [[next(c for c in range(K) if X(v, c) in pos0) for v in range(n)]]
@@ -156,4 +156,4 @@ for rank, (ov, kind, arg, rot) in enumerate(cands[:TOP]):
         print(f"        v{x[0]} v{x[1]} d^2={x[2]} radical {x[3]}", flush=True)
     if good:
         pickle.dump((WHICH, K, kind, rank, conf), open(
-            f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/OFEQ_{WHICH}_{K}_{rank}.pkl", "wb"))
+            f"/tmp/hn/OFEQ_{WHICH}_{K}_{rank}.pkl", "wb"))

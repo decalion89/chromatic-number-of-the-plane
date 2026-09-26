@@ -16,8 +16,7 @@ import sys, time
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
 from hn.homcol import (has_homomorphism, denominator_29_directions,
                        edge_vectors)
-exec(open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/hnfcheck.py").read()
+exec(open("/tmp/hn/hnfcheck.py").read()
      .split('print("re-checking')[0].split("t0 = time.time()")[1])
 
 t0 = time.time()

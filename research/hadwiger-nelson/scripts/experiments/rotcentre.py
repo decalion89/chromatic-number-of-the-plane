@@ -56,5 +56,5 @@ for key, k in cnt.most_common(12):
     print(f"   centre ({key[0]/SC:+.5f}, {key[1]/SC:+.5f})  folds {k} points",
           flush=True)
 pickle.dump([(k, key, rep[key]) for key, k in cnt.most_common(30)],
-            open(f"{SC if False else '/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad'}/rotcentres.pkl", "wb"))
+            open(f"{SC if False else '/tmp/hn'}/rotcentres.pkl", "wb"))
 print("saved top 30", flush=True)

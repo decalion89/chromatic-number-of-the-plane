@@ -24,8 +24,7 @@ from hn.geometry import DEGREY_FIELD as K, Point, _rot60, rotation_joining
 from hn.graph import build_graph
 from pysat.solvers import Solver
 
-SC = ("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-      "39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 K17 = Field((3, 5, 7, 11, 17))
 ONE17 = K17.rational(1)
 t0 = time.time()

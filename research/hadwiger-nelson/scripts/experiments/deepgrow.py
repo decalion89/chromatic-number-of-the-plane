@@ -37,8 +37,7 @@ STEPS = int(sys.argv[3]) if len(sys.argv) > 3 else 3000
 POOLCAP = int(sys.argv[4]) if len(sys.argv) > 4 else 3000
 t0 = time.time()
 CLASSES = [1, 3, 5, 7, 11, 15, 21, 33, 35, 55, 77, 105, 165, 231, 385, 1155]
-SC = ("/tmp/claude-0/-home-user-darwin-50/"
-      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 half = K.rational(Fr(1, 2))
 
 

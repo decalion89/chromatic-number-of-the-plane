@@ -20,7 +20,7 @@ from hn.geometry import Point
 from hn.graph import build_graph
 from hn.mixed import circle_intersections, three_hexagon_gadget
 
-SC = "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad"
+SC = "/tmp/hn"
 field, pivot, pts = three_hexagon_gadget()
 one = field.rational(1)
 g0 = build_graph(pts)

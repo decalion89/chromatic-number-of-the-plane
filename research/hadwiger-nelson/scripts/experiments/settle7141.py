@@ -34,7 +34,7 @@ from hn.graph import build_graph
 from pysat.solvers import Solver
 
 ROOT = HN_DIR
-SCR = "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad"
+SCR = "/tmp/hn"
 t0 = time.time()
 d = json.load(open(f"{ROOT}/data/five_symmetric.json"))
 F = Field(tuple(d["field_generators"]))

@@ -147,7 +147,7 @@ for lvl in range(LEVELS):
                 print(f"        v{x[0]} v{x[1]} d^2={x[2]} radical {x[3]}  <<<<<<<<",
                       flush=True)
             pickle.dump((lvl, [(x[0], x[1], str(x[2]), x[3]) for x in f5]),
-                        open(f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/chain_{lvl}.pkl", "wb"))
+                        open(f"/tmp/hn/chain_{lvl}.pkl", "wb"))
 
     # next level: the glue with the largest overlap
     best = None

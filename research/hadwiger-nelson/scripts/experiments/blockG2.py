@@ -21,8 +21,7 @@ from hn.degrey import build_G
 from hn.geometry import DEGREY_FIELD as F
 from hn.homcol import has_homomorphism
 from pysat.solvers import Solver
-exec(open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/hnfcheck.py").read()
+exec(open("/tmp/hn/hnfcheck.py").read()
      .split("print(\"re-checking")[0].split("t0 = time.time()")[1])
 
 t0 = time.time()
@@ -193,6 +192,5 @@ for name, VV in (("Z^d", ints), ("the lattice", red)):
     bl = [n for n in (2, 3, 4, 5) if has_homomorphism(VV, n)[0] is None]
     print(f"  over {name}: blocks at {bl}  [{time.time()-t0:.0f}s]",
           flush=True)
-with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/blockG.pkl", "wb") as fh:
+with open("/tmp/hn/blockG.pkl", "wb") as fh:
     pickle.dump({"points": len(allp), "edges": E, "dirs": red}, fh)

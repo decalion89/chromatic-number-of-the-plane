@@ -13,8 +13,7 @@ from fractions import Fraction as Fr
 from math import gcd
 from collections import Counter
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-src = open("/tmp/claude-0/-home-user-darwin-50/"
-           "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/"
+src = open("/tmp/hn/"
            "kneck2.py").read()
 head = src[:src.index("pairsum = {}")]
 exec(head)
@@ -47,5 +46,5 @@ for u in short:
     orb.add(best)
 print(f"  they fall into {len(orb)} zeta_6-orbits", flush=True)
 print(f"  the 44 steps of the built necklace have heights "
-      f"{sorted(Counter(height(u) for u in __import__('pickle').load(open('/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/kneck.pkl','rb'))).items())}",
+      f"{sorted(Counter(height(u) for u in __import__('pickle').load(open('/tmp/hn/kneck.pkl','rb'))).items())}",
       flush=True)

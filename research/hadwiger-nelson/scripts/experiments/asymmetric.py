@@ -39,7 +39,7 @@ FANOUT = int(os.environ.get("HN_FANOUT", "6"))
 BUDGET = int(os.environ.get("HN_BUDGET", "30000"))
 SCAN = int(os.environ.get("HN_SCAN", "12"))   # pivots examined per candidate
 SAVE = os.environ.get("HN_SAVE", "asym")
-OUT = os.environ.get("HN_OUT", "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+OUT = os.environ.get("HN_OUT", "/tmp/hn")
 SRC = os.environ.get("HN_SRC", os.path.join(OUT, "f4_core.json"))
 
 

@@ -33,7 +33,7 @@ from hn.degrey import build_G
 K = int(os.environ.get("HN_K", "4"))
 PASSES = int(os.environ.get("HN_PASSES", "40"))
 RECORD = int(os.environ.get("HN_RECORD", "509"))
-OUT = os.environ.get("HN_OUT", "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+OUT = os.environ.get("HN_OUT", "/tmp/hn")
 
 
 def main():

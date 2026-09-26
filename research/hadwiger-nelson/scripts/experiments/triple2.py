@@ -83,5 +83,5 @@ for ov, si, nn in ranked[:TOP]:
           flush=True)
     if not ok:
         pickle.dump((WHICH, K, si), open(
-            f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/TRIPHIT_{WHICH}_{K}_{si}.pkl", "wb"))
+            f"/tmp/hn/TRIPHIT_{WHICH}_{K}_{si}.pkl", "wb"))
         break

@@ -114,4 +114,4 @@ print(f"\n{len(found)} forced-equal pairs at {K} colours in {which}", flush=True
 ok = [f for f in found if f[3] is not None and f[3] > 0]
 print(f"  of which spindleable in this field: {len(ok)}", flush=True)
 for f in ok[:20]: print("   ", f, flush=True)
-pickle.dump(found, open(f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/feq_{which}_{K}.pkl", "wb"))
+pickle.dump(found, open(f"/tmp/hn/feq_{which}_{K}.pkl", "wb"))

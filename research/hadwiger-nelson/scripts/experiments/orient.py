@@ -25,8 +25,7 @@ from hn.degrey import build_G, build_Sa, build_Y
 from hn.geometry import DEGREY_FIELD as K
 from hn.fast import IntBasis, fast_edges_complete
 
-SC = ("/tmp/claude-0/-home-user-darwin-50/"
-      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 CAR = sys.argv[1]
 TRIES = int(sys.argv[2]) if len(sys.argv) > 2 else 40
 t0 = time.time()

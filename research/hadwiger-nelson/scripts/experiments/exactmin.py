@@ -16,8 +16,7 @@ from pysat.examples.rc2 import RC2
 from hn.homcol import has_homomorphism
 
 S = [tuple(v) for v in json.load(open(
-    "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415"
-    "/scratchpad/blocking.json"))]
+    "/tmp/hn/blocking.json"))]
 D = 6
 pts = [v for v in itertools.product(range(5), repeat=D)
        if any(v) and next(x for x in v if x) == 1]
@@ -51,5 +50,4 @@ print("independent SAT screen: "
 for d in chosen:
     print("   ", d)
 json.dump([list(d) for d in chosen], open(
-    "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415"
-    "/scratchpad/minblock.json", "w"))
+    "/tmp/hn/minblock.json", "w"))

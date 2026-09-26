@@ -19,8 +19,7 @@ from hn.degrey import build_G, build_Sa, build_Y
 from hn.geometry import DEGREY_FIELD as K
 from hn.fast import IntBasis, fast_edges_complete
 
-SC = ("/tmp/claude-0/-home-user-darwin-50/"
-      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 t0 = time.time()
 cands = [("G", build_G(K, as_graph=False)), ("Sa", build_Sa(K)),
          ("Y", build_Y(K))]

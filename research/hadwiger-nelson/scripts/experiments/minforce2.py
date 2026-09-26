@@ -79,7 +79,7 @@ for rd in range(ROUNDS):
                    "points": [[[[c.numerator, c.denominator] for c in p.x.c],
                                [[c.numerator, c.denominator] for c in p.y.c]]
                               for p in Z]},
-                  open(f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/mf2_{SEED}.json", "w"))
+                  open(f"/tmp/hn/mf2_{SEED}.json", "w"))
     if dropped:
         cur = cur | set(rng.sample(sorted(dropped), min(KICK, len(dropped))))
 sz, _ = spindle_size(best)

@@ -14,8 +14,7 @@ HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 import sys, time, pickle
 from fractions import Fraction as Fr
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from msqrt import madd, msub, mmul
 from hn.degrey import build_G
 from hn.geometry import DEGREY_FIELD as F
@@ -54,8 +53,7 @@ def cmul(z, w):
 
 
 import glob
-for path in sorted(glob.glob("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-"
-                             "f432-5848-a506-39c59179b415/scratchpad/"
+for path in sorted(glob.glob("/tmp/hn/"
                              "gpivot_*.pkl")):
     with open(path, "rb") as fh:
         pv, ROT = pickle.load(fh)
@@ -110,7 +108,6 @@ for path in sorted(glob.glob("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-"
               f"[{time.time()-t0:.0f}s]", flush=True)
         if not five:
             print("  *** SIX COLOURS ***", flush=True)
-            with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-"
-                      "a506-39c59179b415/scratchpad/gsix.pkl", "wb") as fh:
+            with open("/tmp/hn/gsix.pkl", "wb") as fh:
                 pickle.dump((pv, ri, allp, E), fh)
             sys.exit(0)

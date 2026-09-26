@@ -85,4 +85,4 @@ for k in range(nE):
 print(f"  directions NOT refuted by any twisted colouring: apart {len(surv_apart)} of {len(E)}, pair {len(surv_pair)} of {len(E)}"
       f"   [{time.time()-t0:.0f}s]", flush=True)
 json.dump({"names": names, "EXP": EXP, "den": den, "directions": [list(v) for v in E], "surv_apart": surv_apart, "surv_pair": surv_pair},
-          open(f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/richmod_{'_'.join(names)}_{EXP}.json", "w"))
+          open(f"/tmp/hn/richmod_{'_'.join(names)}_{EXP}.json", "w"))

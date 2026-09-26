@@ -40,7 +40,7 @@ BUDGET = int(os.environ.get("HN_BUDGET", "40000"))
 LOCAL = float(os.environ.get("HN_LOCAL", "0"))   # >0 rotates only a ball
 WORKERS = int(os.environ.get("HN_WORKERS", "4"))
 SPREAD = os.environ.get("HN_SPREAD", "") not in ("", "0")
-OUT = os.environ.get("HN_OUT", "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+OUT = os.environ.get("HN_OUT", "/tmp/hn")
 SRC = os.environ.get("HN_SRC", os.path.join(OUT, "f4_core.json"))
 THIRD = Fraction(1, 3)
 

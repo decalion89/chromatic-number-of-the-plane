@@ -17,8 +17,7 @@ from fractions import Fraction
 from hn import degrey
 from hn.geometry import Rotation
 from hn.graph import build_graph
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from is63 import decide
 
 FLD = degrey.DEGREY_FIELD

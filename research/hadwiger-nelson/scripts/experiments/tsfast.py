@@ -18,8 +18,7 @@ HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 import sys, time, pickle
 from fractions import Fraction as Fr
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 import random
 from msqrt import madd, msub, mmul
 from hn.degrey import build_G
@@ -32,8 +31,7 @@ GENS = (3, 5, 7, 11)
 DIM = 16
 DEPTH = 8
 MARKS = (1, 2, 3, 5, 10, 20, 40)
-SC = ("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-      "39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 random.seed(11235)
 t0 = time.time()
 pts = build_G(F, as_graph=False)

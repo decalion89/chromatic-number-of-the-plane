@@ -22,8 +22,7 @@ from hn.degrey import build_G
 from hn.geometry import DEGREY_FIELD as K
 from hn.fast import IntBasis, fast_edges_complete
 
-SC = ("/tmp/claude-0/-home-user-darwin-50/"
-      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 POOL, SEED = sys.argv[1], sys.argv[2]
 STEPS = int(sys.argv[3]) if len(sys.argv) > 3 else 400
 CAND = int(sys.argv[4]) if len(sys.argv) > 4 else 400

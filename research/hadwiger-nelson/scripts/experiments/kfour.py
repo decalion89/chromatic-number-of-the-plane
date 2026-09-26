@@ -21,8 +21,7 @@ HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 import sys, time, pickle
 from fractions import Fraction as Fr
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-src = open("/tmp/claude-0/-home-user-darwin-50/"
-           "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/"
+src = open("/tmp/hn/"
            "degreyfield.py").read()
 exec(src[:src.index("t0 = time.time()\nrh = ")])
 from hn.degrey import S_POINTS
@@ -51,8 +50,7 @@ for z in [to_k(x, y) for x, y in S_POINTS]:
 P2, M2 = krat(2), krat(-2)
 assert P2 in seenp and M2 in seenp, "(2,0) and (-2,0) must be in Sa"
 assert knorm2(ksub(P2, M2)) == krat(16)
-with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/ksolve.pkl", "rb") as fh:
+with open("/tmp/hn/ksolve.pkl", "rb") as fh:
     raw = pickle.load(fh)
 ROT = [tuple(tuple(v[3 * i:3 * i + 3]) for i in range(4)) for v in raw]
 print(f"Sa {len(Sa)} points, {len(ROT)} rotations; testing the pair "
@@ -102,8 +100,7 @@ for ri, u in enumerate(ROT):
     print(f"  rotation {ri}: {n} pts, {len(E)} edges -- (2,0),(-2,0) {tag}  "
           f"[{time.time()-t0:.0f}s]", flush=True)
     if r is False:
-        with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-"
-                  "a506-39c59179b415/scratchpad/kfour.pkl", "wb") as fh:
+        with open("/tmp/hn/kfour.pkl", "wb") as fh:
             pickle.dump((ri, [flat(q) for q in pts], E, a, b), fh)
         print("  *** spindle it over K(sqrt-15) ***", flush=True)
         break

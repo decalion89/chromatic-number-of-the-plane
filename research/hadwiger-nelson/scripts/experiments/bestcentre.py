@@ -116,8 +116,7 @@ for R in RADII:
           f"({float(top.x):.4f},{float(top.y):.4f}), that centre is a vertex: "
           f"{inG}; {bt or 'not biteable in K'}  [{time.time()-t0:.0f}s]",
           flush=True)
-    with open(f"/tmp/claude-0/-home-user-darwin-50/"
-              f"aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/"
+    with open(f"/tmp/hn/"
               f"centres_{SEED}_{R}.pkl".replace("/", "_"), "wb") as f:
         pickle.dump(sorted(((t, i) for i, (C, t) in enumerate(cnt.items())),
                            reverse=True)[:50], f)

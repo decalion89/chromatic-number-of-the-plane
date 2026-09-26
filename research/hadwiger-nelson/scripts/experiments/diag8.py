@@ -16,8 +16,7 @@ import sys, pickle
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
 from hn.homcol import periodic_screen, cayley_chromatic
 
-with open("/tmp/claude-0/-home-user-darwin-50/"
-          "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/neckdirs.pkl",
+with open("/tmp/hn/neckdirs.pkl",
           "rb") as fh:
     dirs = [tuple(d) for d in pickle.load(fh)]
 print(f"{len(dirs)} directions", flush=True)

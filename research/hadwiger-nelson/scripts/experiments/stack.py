@@ -24,7 +24,7 @@ from hn.forced import ColourRelations, min_colours_on
 from hn.geometry import Point
 from hn.graph import build_graph
 
-SC = "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad"
+SC = "/tmp/hn"
 g = build_G()
 top = pickle.load(open(f"{SC}/topvecs.pkl", "rb"))
 vecs, seen = [], set()

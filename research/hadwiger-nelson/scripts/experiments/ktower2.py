@@ -16,8 +16,7 @@ HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 import sys, time, pickle
 from fractions import Fraction as Fr
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-src = open("/tmp/claude-0/-home-user-darwin-50/"
-           "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/"
+src = open("/tmp/hn/"
            "degreyfield.py").read()
 exec(src[:src.index("t0 = time.time()\nrh = ")])
 from hn.homcol import closable_over
@@ -25,8 +24,7 @@ from pysat.solvers import Solver
 
 t0 = time.time()
 KCL = (1, -3, -11, 33)
-with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/ktower.pkl", "rb") as fh:
+with open("/tmp/hn/ktower.pkl", "rb") as fh:
     rawU, rawR = pickle.load(fh)
 
 
@@ -97,8 +95,7 @@ for ri, u in enumerate(ROT):
         if not sv.solve():
             print(f"  *** rotation {ri}: {n} pts NOT 4-COLOURABLE ***",
                   flush=True)
-            with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-"
-                      "a506-39c59179b415/scratchpad/kchi5.pkl", "wb") as fh:
+            with open("/tmp/hn/kchi5.pkl", "wb") as fh:
                 pickle.dump(([flat(q) for q in pts], E), fh)
             break
         sv.conf_budget(400000)
@@ -109,8 +106,7 @@ for ri, u in enumerate(ROT):
         print(f"  *** rotation {ri}: {n} pts, {len(E)} edges -- "
               f"(2,0),(-2,0) {tag} ***  [{time.time()-t0:.0f}s]", flush=True)
         if r is False:
-            with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-"
-                      "a506-39c59179b415/scratchpad/ktower2.pkl", "wb") as fh:
+            with open("/tmp/hn/ktower2.pkl", "wb") as fh:
                 pickle.dump((ri, [flat(q) for q in pts], E, a, b), fh)
             break
     if len(results) % 25 == 0:

@@ -150,7 +150,7 @@ for lvl in range(LEVELS):
         hist.append((lvl, g.n, 2.0*m/g.n, len(fp), gz.n, 2.0*mz/gz.n, sl5))
         if not c5:
             print("  *** SIX COLOURS ***", flush=True)
-            pickle.dump((RULE, lvl), open(f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/SIX_{RULE}_{lvl}.pkl", "wb")); break
+            pickle.dump((RULE, lvl), open(f"/tmp/hn/SIX_{RULE}_{lvl}.pkl", "wb")); break
         if not c4:
             f5 = forced(gz, Zp, c5, cnf5, X5)
             print(f"     forced pairs at FIVE: {len(f5)}"
@@ -159,7 +159,7 @@ for lvl in range(LEVELS):
                 print(f"        v{x[0]} v{x[1]} d^2={x[2]} radical {x[3]}", flush=True)
             if f5:
                 pickle.dump((RULE, lvl, [(x[0], x[1], str(x[2]), x[3]) for x in f5]),
-                            open(f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/FIVE_{RULE}_{lvl}.pkl", "wb"))
+                            open(f"/tmp/hn/FIVE_{RULE}_{lvl}.pkl", "wb"))
     cand = candidates(pts, 60)
     if RULE == "overlap":
         ov, name, f = cand[0]

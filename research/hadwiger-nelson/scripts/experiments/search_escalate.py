@@ -28,7 +28,7 @@ from hn.spindle import SeparationTest, spindle_union_auto
 K = int(os.environ.get("HN_K", "5"))
 MAXD2 = Fraction(os.environ.get("HN_MAXD2", "40"))
 NPIVOTS = int(os.environ.get("HN_PIVOTS", "120"))
-OUT = os.environ.get("HN_OUT", "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+OUT = os.environ.get("HN_OUT", "/tmp/hn")
 
 
 def groups_for(g, pivot):

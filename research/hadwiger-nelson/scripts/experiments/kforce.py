@@ -22,8 +22,7 @@ HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 import sys, time
 from fractions import Fraction as Fr
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-src = open("/tmp/claude-0/-home-user-darwin-50/"
-           "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/"
+src = open("/tmp/hn/"
            "degreyfield.py").read()
 exec(src[:src.index("t0 = time.time()\nrh = ")])
 from pysat.solvers import Solver

@@ -25,8 +25,7 @@ HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 import sys, time, pickle
 from fractions import Fraction as Fr
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from msqrt import madd, msub, mmul
 from hn.degrey import build_G
 from hn.geometry import DEGREY_FIELD as F
@@ -59,8 +58,7 @@ def norm2(z):
     return madd(mmul(z[0], z[0], GENS), mmul(z[1], z[1], GENS))
 
 
-with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/gtrans.pkl", "rb") as fh:
+with open("/tmp/hn/gtrans.pkl", "rb") as fh:
     TR = pickle.load(fh)
 print(f"G: {len(P)} points; {len(TR)} translates, sampled counts "
       f"{[c for c, _ in TR[:8]]}  [{time.time()-t0:.0f}s]", flush=True)
@@ -116,6 +114,5 @@ print(f"\ntop cross-edge counts: {[c for c, _, _, _ in census[:20]]}  "
       f"[{time.time()-t0:.0f}s]", flush=True)
 print(f"  best: {census[0][0]} cross, {census[0][1]} shared, "
       f"{census[0][2]} points, translate {census[0][3]}", flush=True)
-with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-          "39c59179b415/scratchpad/tcensus.pkl", "wb") as fh:
+with open("/tmp/hn/tcensus.pkl", "wb") as fh:
     pickle.dump([(c, TR[i][1]) for c, _, _, i in census], fh)

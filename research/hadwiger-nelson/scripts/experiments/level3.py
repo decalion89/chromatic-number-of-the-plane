@@ -103,8 +103,7 @@ if ok:
 else:
     print(f"*** NOT {k}-COLOURABLE -- chi > {k} ***  [{time.time()-t0:.0f}s]",
           flush=True)
-    with open("/tmp/claude-0/-home-user-darwin-50/"
-              "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/"
+    with open("/tmp/hn/"
               "WITNESS_level3.pkl", "wb") as f:
         pickle.dump(P, f)
 print("DONE", flush=True)

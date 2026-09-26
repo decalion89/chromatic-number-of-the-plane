@@ -88,4 +88,4 @@ cand = [(a, b) for vs in buck.values() if len(vs) > 1
 print(f"\n  {len(raw)} raw colourings, {len(eff)} effective, "
       f"{len(cand)} candidate pairs   [{time.time()-t0:.0f}s]", flush=True)
 json.dump([[int(a), int(b)] for a, b in cand[:500000]],
-          open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/cand7141.json", "w"))
+          open("/tmp/hn/cand7141.json", "w"))

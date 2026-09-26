@@ -50,8 +50,7 @@ RADIUS = int(os.environ.get("HN_RADIUS", "5"))
 GENS = tuple(int(x) for x in os.environ.get("HN_GENS", "3,5,7,11").split(","))
 OUT = os.environ.get(
     "HN_OUT",
-    "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415"
-    "/scratchpad")
+    "/tmp/hn")
 THIRD = Fraction(1, 3)
 
 

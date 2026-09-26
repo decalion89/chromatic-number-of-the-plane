@@ -400,8 +400,7 @@ def dirs_of(ws):
 # any new orbit at all.
 import pickle
 try:
-    with open("/tmp/claude-0/-home-user-darwin-50/"
-              "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/orbs.pkl",
+    with open("/tmp/hn/orbs.pkl",
               "rb") as fh:
         TARGET = set(pickle.load(fh))
     print(f"steering towards {len(TARGET)} blocking orbits", flush=True)
@@ -482,8 +481,7 @@ while rounds < 60:
           + f"  [{time.time()-t0:.0f}s]", flush=True)
     if phi is None:
         import pickle
-        with open("/tmp/claude-0/-home-user-darwin-50/"
-                  "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/"
+        with open("/tmp/hn/"
                   "neckdirs.pkl", "wb") as fh:
             pickle.dump([list(map(int, d)) for d in dd], fh)
         print(f"  saved {len(dd)} necklace directions", flush=True)
@@ -532,12 +530,10 @@ while rounds < 60:
         for i2, j2 in forced[:20]:
             d2 = k_norm2(k_sub(uniq[j2], uniq[i2]))
             print(f"    pair ({i2},{j2}) at squared distance {d2}", flush=True)
-        with open("/tmp/claude-0/-home-user-darwin-50/"
-                  "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/"
+        with open("/tmp/hn/"
                   "forced4.pkl", "wb") as fh:
             pickle.dump(forced, fh)
-        with open("/tmp/claude-0/-home-user-darwin-50/"
-                  "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/ws.pkl",
+        with open("/tmp/hn/ws.pkl",
                   "wb") as fh:
             pickle.dump(ws, fh)
         uniq, E = build(ws)

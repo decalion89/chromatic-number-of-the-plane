@@ -17,8 +17,7 @@ HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 import sys, time, pickle
 from fractions import Fraction as Fr
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from msqrt import madd, msub, mscal, mmul, minv, msqrt
 from hn.degrey import build_G
 from hn.geometry import DEGREY_FIELD as F
@@ -118,7 +117,7 @@ for pv in pivots:
           f"{sym} of them symmetries, {len(real)} genuine; multiplicities "
           f"{top}  [{time.time()-t0:.0f}s]", flush=True)
     if top and top[0] >= 8:
-        with open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/gpivot_%d.pkl" % pv, "wb") as fh:
+        with open("/tmp/hn/gpivot_%d.pkl" % pv, "wb") as fh:
             pickle.dump((pv, [u for u, m in real.items()
                               if m >= top[0] // 2]), fh)
 best_overall.sort(reverse=True)

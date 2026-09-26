@@ -30,8 +30,7 @@ K = int(os.environ.get("HN_K", "4"))
 PIVOTS = int(os.environ.get("HN_PIVOTS", "40"))
 OUT = os.environ.get(
     "HN_OUT",
-    "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415"
-    "/scratchpad/maximal4.json")
+    "/tmp/hn/maximal4.json")
 
 
 def peel_to_colourable(g, k):

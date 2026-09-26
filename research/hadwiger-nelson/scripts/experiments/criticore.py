@@ -13,16 +13,14 @@ import sys, time, itertools
 from fractions import Fraction
 from math import gcd
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from field24 import (K, D, Ext, e_zero, e_of, e_add, e_sub, e_mul,
                      e_conj, e_norm2, ONE, S11, Z6, RHO)
 from hn.homcol import has_homomorphism
 from pysat.solvers import Solver
 import cmath
 
-exec(open("/tmp/claude-0/-home-user-darwin-50/"
-          "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/loadbearing.py")
+exec(open("/tmp/hn/loadbearing.py")
      .read().split("t0 = time.time()")[0].split('print(f"{len(blk)}')[0]
      + "\npass\n")
 

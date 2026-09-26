@@ -29,8 +29,7 @@ k = int(sys.argv[1]) if len(sys.argv) > 1 else 5
 NC = int(sys.argv[2]) if len(sys.argv) > 2 else 6
 PKL = sys.argv[3] if len(sys.argv) > 3 else "symG.pkl"
 t0 = time.time()
-with open(f"/tmp/claude-0/-home-user-darwin-50/"
-          f"aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/{PKL}", "rb") as f:
+with open(f"/tmp/hn/{PKL}", "rb") as f:
     P = pickle.load(f)
 b = IntBasis.covering(P)
 r = b.rows(P)

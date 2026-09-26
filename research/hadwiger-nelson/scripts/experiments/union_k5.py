@@ -38,8 +38,7 @@ PIVOTS = int(os.environ.get("HN_PIVOTS", "0"))
 ANGLE = Fraction(os.environ.get("HN_ANGLE", "1/3"))
 OUT = os.environ.get(
     "HN_OUT",
-    "/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415"
-    "/scratchpad")
+    "/tmp/hn")
 THIRD = Fraction(1, 3)
 
 

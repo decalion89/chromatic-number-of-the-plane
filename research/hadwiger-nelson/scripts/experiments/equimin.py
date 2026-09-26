@@ -160,5 +160,5 @@ json.dump({"field_generators": list(F.gens), "n": gw.n, "m": mw,
            "points": [[[[c.numerator, c.denominator] for c in p.x.c],
                        [[c.numerator, c.denominator] for c in p.y.c]]
                       for p in gw.vertices]},
-          open(f"/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/equimin_{VI}_{SEED}.json", "w"))
+          open(f"/tmp/hn/equimin_{VI}_{SEED}.json", "w"))
 print("  saved", flush=True)

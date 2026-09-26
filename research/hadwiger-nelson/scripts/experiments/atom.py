@@ -31,8 +31,7 @@ from hn.geometry import DEGREY_FIELD as K
 from hn.fast import IntBasis, fast_edges_complete
 from pysat.solvers import Solver
 
-SC = ("/tmp/claude-0/-home-user-darwin-50/"
-      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 BUDGET = int(sys.argv[1]) if len(sys.argv) > 1 else 40000
 t0 = time.time()
 jobs = [("Sa", 4), ("Y", 4), ("tightmin.pkl", 4), ("denseSa.pkl", 4),

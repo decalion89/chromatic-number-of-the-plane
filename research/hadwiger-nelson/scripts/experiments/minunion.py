@@ -100,7 +100,7 @@ for drop in (0, 20, 40, 57, 70, 85, 100, 115, 130, 150):
                        "points": [[[[c.numerator, c.denominator] for c in p.x.c],
                                    [[c.numerator, c.denominator] for c in p.y.c]]
                                   for p in U]},
-                      open("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/bestunion.json", "w"))
+                      open("/tmp/hn/bestunion.json", "w"))
             break
     print(f"  peel {drop}: n={n0}, {tried} glues tried, best union so far {best}"
           f"   [{time.time()-t0:.0f}s]", flush=True)

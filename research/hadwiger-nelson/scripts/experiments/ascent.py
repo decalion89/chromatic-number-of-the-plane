@@ -23,8 +23,7 @@ import os
 HN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import sys, time, pickle, random
 sys.path[:0] = [HN_DIR, os.path.join(HN_DIR, "scripts")]
-sys.path.insert(0, "/tmp/claude-0/-home-user-darwin-50/"
-                   "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad")
+sys.path.insert(0, "/tmp/hn")
 from fractions import Fraction as Fr
 from collections import defaultdict
 from hn.degrey import build_G
@@ -32,8 +31,7 @@ from hn.geometry import DEGREY_FIELD as K
 from hn.fast import IntBasis, fast_edges_complete
 from pysat.solvers import Solver
 
-SC = ("/tmp/claude-0/-home-user-darwin-50/"
-      "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 UNIV = sys.argv[1]                       # pkl holding the candidate pool
 START = sys.argv[2]                      # "G" or a pkl for the seed
 RATIO = Fr(*map(int, sys.argv[3].split("/")))

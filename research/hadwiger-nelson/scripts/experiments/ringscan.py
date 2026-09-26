@@ -30,8 +30,7 @@ from hn.graph import build_graph
 from hn.homcol import closable_distance, agreeing_pairs
 from pysat.solvers import Solver
 
-SC = ("/tmp/claude-0/-home-user-darwin-50/aceaa9ec-f432-5848-a506-"
-      "39c59179b415/scratchpad/")
+SC = ("/tmp/hn/")
 ONE = K.rational(1)
 t0 = time.time()
 PIV = Point(K.rational(-2), K.zero())

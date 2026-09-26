@@ -30,8 +30,7 @@ from pysat.solvers import Solver
 
 k = int(sys.argv[1]) if len(sys.argv) > 1 else 5
 t0 = time.time()
-with open("/tmp/claude-0/-home-user-darwin-50/"
-          "aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/symG.pkl",
+with open("/tmp/hn/symG.pkl",
           "rb") as f:
     Ga = pickle.load(f)
 print(f"Ga: {len(Ga)} points  [{time.time()-t0:.0f}s]", flush=True)
@@ -82,8 +81,7 @@ for name, D, c, s in BITES:
           f"{'%d-colourable' % k if ok else '*** NOT %d-COLOURABLE ***' % k}"
           f"  [{time.time()-t0:.0f}s]", flush=True)
     if not ok:
-        with open(f"/tmp/claude-0/-home-user-darwin-50/"
-                  f"aceaa9ec-f432-5848-a506-39c59179b415/scratchpad/"
+        with open(f"/tmp/hn/"
                   f"WITNESS_{str(D).replace('/','_')}.pkl", "wb") as f:
             pickle.dump(P, f)
         print("   witness written", flush=True)
