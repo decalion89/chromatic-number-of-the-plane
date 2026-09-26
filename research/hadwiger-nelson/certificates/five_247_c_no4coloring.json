@@ -17689,7 +17689,7 @@
  ],
  "coloring": null,
  "notes": {
-  "source": "data/five_247_c.json (same points, same order): the vertex-critical 803-vertex subgraph of data/five_247.json",
+  "source": "data/five_247_c.json (same points, same order): the vertex-critical 803-vertex graph five_247_c, built from Sa peeled to 327 vertices, glued to its 120-degree image, cut to the part that still forces and spindled (the recipe is in that file)",
   "field": "coordinates in Q(sqrt3, sqrt11, sqrt247), the field of Exoo and Ismailescu's 5-chromatic graph",
   "formula": "the plain encoding of certificates/README.md, step 3: 3 212 variables and 803 + 4 * 4065 = 17 063 clauses, no colour pinned",
   "checked": "kissat 4.0.4 UNSAT with a DRAT proof, checked by drat-trim (five_247_c_drat_trim_verification.txt); Glucose and CaDiCaL also report UNSAT"

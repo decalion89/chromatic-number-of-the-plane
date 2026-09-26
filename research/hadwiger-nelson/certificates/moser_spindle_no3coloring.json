@@ -114,5 +114,9 @@
   }
  ],
  "coloring": null,
- "notes": {}
+ "notes": {
+  "source": "the Moser spindle (L. and W. Moser, 1961): two unit rhombi with a common vertex, the second turned about it until the far tips are at distance 1; written by python3 -m hn.cli demo",
+  "field": "coordinates in Q(sqrt3, sqrt11)",
+  "checked": "kissat 4.0.4 UNSAT on the plain 21-variable, 40-clause formula, with its DRAT proof checked by drat-trim (moser_spindle_drat_trim_verification.txt); python3 -m hn.cli verify checks it with Glucose and drat-trim"
+ }
 }

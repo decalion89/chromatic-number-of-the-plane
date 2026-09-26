@@ -1,0 +1,22 @@
+# data/ei_H214.json: Exoo and Ismailescu's graph H (arXiv:1909.13177), 214 points, with the pair A = 205,
+# B = 206 at distance 5. Claim: in every 5-colouring with no monochromatic pair at distance 1 or 2, A and
+# B share a colour. The formula is the one of tests/test_denominator_five.py, built from the paper's
+# coordinates (the same points as the data file, in the same order): 5 variables per vertex, one
+# at-least-one clause per vertex, 5 conflict clauses for each of the 1 004 pairs at distance 1 and 446
+# at distance 2, 5 clauses saying that A and B differ, and 3 unit clauses pinning the triangle
+# (0, 25, 129) to colours 0, 1, 2 (sound: its vertices get distinct colours, and colours can be
+# permuted). 1 070 variables, 7 472 clauses; sha256
+# 3c726155ee8900d7fb9ec7fc1e942935687c4943ab2846a5c50d5a6402ab5ccd.
+# kissat 4.0.4 and drat-trim (commit 2e3b2dc0ecf938addbd779d42877b6ed69d9a985), 26 September 2026.
+$ kissat ei_forced.cnf ei_forced.drat
+s UNSATISFIABLE
+$ drat-trim ei_forced.cnf ei_forced.drat -t 20000
+c turning on binary mode checking
+c parsing input formula with 1070 variables and 7472 clauses
+c finished parsing, read 39791834 bytes from proof file
+c detected empty clause; start verification via backward checking
+c 5939 of 7472 clauses in core
+c 436214 of 570197 lemmas in core using 21101996 resolution steps
+c 3265 RAT lemmas in core; 281524 redundant literals in core lemmas
+s VERIFIED
+c verification time: 41.070 seconds

@@ -5742,5 +5742,10 @@
   }
  ],
  "coloring": null,
- "notes": {}
+ "notes": {
+  "source": "six copies of a 91-vertex graph (a hexagonal ball of radius 3 and the centres of its unit triangles) under two orbits of the 120-degree rotation about a pivot; the construction is described in two_orbit_409_drat_trim_verification.txt",
+  "field": "coordinates in Q(sqrt3, sqrt11)",
+  "checked": "Glucose UNSAT and drat-trim on its DRAT proof of the 3 595-clause formula, through python3 -m hn.cli verify (two_orbit_409_drat_trim_verification.txt)",
+  "caveat": "the pair the construction blocks is already forced by the classical rhombus argument, so the block is not needed for this conclusion"
+ }
 }

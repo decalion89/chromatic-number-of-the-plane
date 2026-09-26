@@ -1,0 +1,15 @@
+# moser_spindle_no3coloring.json, 3-colourability. CNF rebuilt from the certificate as in README.md,
+# step 3: 3 variables per vertex, one at-least-one clause per vertex, 3 conflict clauses per edge, no
+# colour pinned (21 variables, 40 clauses; sha256 662e279487637b8092a81203b4986e5d7e989fced5464cec073115d644bbbf58).
+# kissat 4.0.4 and drat-trim (commit 2e3b2dc0ecf938addbd779d42877b6ed69d9a985), 26 September 2026.
+$ kissat --no-binary moser_spindle.cnf moser_spindle.drat
+s UNSATISFIABLE
+$ drat-trim moser_spindle.cnf moser_spindle.drat
+c parsing input formula with 21 variables and 40 clauses
+c finished parsing
+c detected empty clause; start verification via backward checking
+c 40 of 40 clauses in core
+c 12 of 26 lemmas in core using 111 resolution steps
+c 0 RAT lemmas in core; 0 redundant literals in core lemmas
+s VERIFIED
+c verification time: 0.121 seconds

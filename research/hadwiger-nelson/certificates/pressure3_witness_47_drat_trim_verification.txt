@@ -1,0 +1,18 @@
+# pressure3_witness_47.json, pressure 3 at the pivot at four colours. CNF rebuilt from the certificate
+# as in README.md, steps 3 and 5: 4 variables per vertex, one at-least-one clause per vertex, 4 conflict
+# clauses per edge, then the unit clauses -x(v, 2) and -x(v, 3) for the 30 unit neighbours v of vertex 0,
+# in increasing order (188 variables, 583 clauses; sha256
+# ea88b1d88eb1f860014b8f98205352383e61bd79966c877249e80f1f1ad2299d). Unsatisfiable means that no proper
+# 4-colouring uses only colours 0 and 1 on those neighbours, so none uses only two colours there.
+# kissat 4.0.4 and drat-trim (commit 2e3b2dc0ecf938addbd779d42877b6ed69d9a985), 26 September 2026.
+$ kissat --no-binary pressure3_witness_47.cnf pressure3_witness_47.drat
+s UNSATISFIABLE
+$ drat-trim pressure3_witness_47.cnf pressure3_witness_47.drat
+c parsing input formula with 188 variables and 583 clauses
+c finished parsing
+c detected empty clause; start verification via backward checking
+c 221 of 583 clauses in core
+c 301 of 895 lemmas in core using 1048 resolution steps
+c 32 RAT lemmas in core; 0 redundant literals in core lemmas
+s VERIFIED
+c verification time: 0.049 seconds

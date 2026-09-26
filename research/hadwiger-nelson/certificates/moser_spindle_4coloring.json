@@ -122,5 +122,8 @@
   2,
   3
  ],
- "notes": {}
+ "notes": {
+  "source": "the Moser spindle, with the vertices of moser_spindle_no3coloring.json in the same order",
+  "checked": "the stored colouring is proper on all 11 edges, recomputed exactly (python3 -m hn.cli verify)"
+ }
 }

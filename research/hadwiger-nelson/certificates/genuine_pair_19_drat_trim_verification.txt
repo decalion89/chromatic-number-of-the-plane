@@ -1,0 +1,16 @@
+# genuine_pair_19_no3coloring.json, 3-colourability. CNF rebuilt from the certificate as in README.md,
+# step 3: the edges recomputed exactly in K(sqrt v), 3 variables per vertex, one at-least-one clause per
+# vertex, 3 conflict clauses per edge, no colour pinned (57 variables, 118 clauses; sha256
+# b4849bc219106cb174a1f08863ef1b08b979b2d464b163f1d316c61fb65a2a9a).
+# kissat 4.0.4 and drat-trim (commit 2e3b2dc0ecf938addbd779d42877b6ed69d9a985), 26 September 2026.
+$ kissat --no-binary genuine_pair_19_no3coloring.cnf genuine_pair_19_no3coloring.drat
+s UNSATISFIABLE
+$ drat-trim genuine_pair_19_no3coloring.cnf genuine_pair_19_no3coloring.drat
+c parsing input formula with 57 variables and 118 clauses
+c finished parsing
+c detected empty clause; start verification via backward checking
+c 118 of 118 clauses in core
+c 50 of 91 lemmas in core using 700 resolution steps
+c 0 RAT lemmas in core; 0 redundant literals in core lemmas
+s VERIFIED
+c verification time: 0.059 seconds
