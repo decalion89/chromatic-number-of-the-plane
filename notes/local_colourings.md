@@ -17,7 +17,10 @@ in CM fields `K = ℚ(√−d₁, …, √−dₙ)`.
 The **unit vectors of `K`** form the torus
 `T(K) = {u ∈ K : u ū = 1}`. The **unit-distance graph `Γ(K)`** has vertex set
 `K`, and `z ~ w` iff `z − w ∈ T(K)`. Every finite unit-distance graph with
-vertices in `K` is a subgraph of `Γ(K)`, and `χ(ℝ²) = sup_K χ(Γ(K))`.
+vertices in `K` is a subgraph of `Γ(K)`, and `χ(ℝ²) = sup_K χ(Γ(K))` by the
+compactness theorem of de Bruijn and Erdős (*A colour problem for infinite graphs
+and a problem in the theory of relations*, Indag. Math. 13 (1951) 371–373; cf.
+[Moorhouse](https://www.ericmoorhouse.org/pub/chromatic.pdf), Thm 1.2).
 
 ## 2. Reduction at a place that does not split
 
@@ -28,7 +31,7 @@ automorphism of `K_w/L_v` is complex conjugation and `N_{K_w/L_v}(u) = u ū`.
 Hence the local torus `T(L_v) = {u ∈ K_w : u ū = 1}` is compact, and every
 unit vector of `K` is a `w`-adic unit.
 
-**Proposition A.**
+**Proposition A (cf. [Madore](https://arxiv.org/abs/1509.07023), Prop. 3.2, ¶6.6).**
 1. **Unramified case.** If `K_w/L_v` is unramified and `L_v` has residue field
    `𝔽_q`, let `N₁ ⊂ 𝔽_{q²}` be the `q + 1` elements of norm 1, and
    `G_q = Cay(𝔽_{q²}, N₁)` the *finite plane*. Then `χ(Γ(K)) ≤ χ(G_q)`.
@@ -127,7 +130,8 @@ For `q ≡ 5 (mod 6)` (next to `√−3`, every non-split place over a prime
   quadratic character.
 - **Ramanujan.** Every non-trivial eigenvalue satisfies `|λ| ≤ 2√q`. Parametrise
   `N₁` by `ℙ¹(𝔽_q)`; then `λ` is an exponential sum `Σ ψ(f(t))` of a rational
-  function with two simple, conjugate poles, and Weil's bound gives `2√q`. The
+  function with two simple, conjugate poles, and Weil's bound (A. Weil, *On some
+  exponential sums*, Proc. Natl. Acad. Sci. USA 34 (1948) 204–207) gives `2√q`. The
   bound was also checked numerically for every `q < 400`. For the finite
   Euclidean planes these spectral facts go back to Medrano, Myers, Stark and
   Terras (*Finite analogues of Euclidean space*, J. Comput. Appl. Math. 68
@@ -138,14 +142,17 @@ For `q ≡ 5 (mod 6)` (next to `√−3`, every non-split place over a prime
 for the deeper quotients `Cay(O_w/π^r, T mod π^r)`, given the character-sum
 estimate sketched in the proof.
 
-*Proof.* Hoffman gives `χ_f ≥ 1 + (q+1)/|λ_min|`. This exceeds 5 for `q > 62`
+*Proof.* Hoffman's bound (A. J. Hoffman, *On eigenvalues and colorings of graphs*,
+in *Graph Theory and its Applications* (B. Harris, ed.), Academic Press, 1970,
+79–91), in the ratio form of §14, gives `χ_f ≥ 1 + (q+1)/|λ_min|`. This exceeds 5 for `q > 62`
 by the Ramanujan bound, and was computed for `q = 53, 59, 61` (§14; the first
 version of this proof omitted 61). For the deeper levels we use that a
 primitive level-`j` character sums to at most `2q^{j−1}` in modulus: a
 stationary-phase argument, sketched in `notes/rigidity.md` §10 and checked
 numerically for small `q` and `j`. ∎
 
-The Delsarte LP gives the same bound as Hoffman, and adding the triangle
+The Delsarte LP (P. Delsarte, *An algebraic approach to the association schemes of
+coding theory*, Philips Res. Rep. Suppl. 10 (1973)) gives the same bound as Hoffman, and adding the triangle
 inequalities changes almost nothing. Below 53 the three-point bound of §14
 goes further: it proves `χ(G_q) ≥ 6` for `q = 29, 37, 41, 43, 47`.
 
@@ -352,7 +359,9 @@ units digit of the 2-adic integer part. This is `hn.adelic.q311_colour`.
 - On 638 further points and 3 012 edges (`data/ei_rho7.json`) there are no
   monochromatic edges, at either place.
 
-**Formal proof.** `lean/Q311.lean` proves `χ = 4` in Lean 4 with Mathlib, with only Lean's standard axioms
+**Formal proof.** `lean/Q311.lean` proves `χ = 4` in Lean 4 (L. de Moura and S. Ullrich, *The Lean 4 theorem prover and
+programming language*, CADE-28, LNCS 12699 (2021) 625–635) with Mathlib (The mathlib Community, *The Lean mathematical
+library*, CPP 2020, 367–381), with only Lean's standard axioms
 ([`lean/README.md`](../lean/README.md)). There the place over 2 is a valuation subring given by Chevalley's
 extension theorem, and its residue field is shown to be `𝔽₂` with `π = √3 − 1` and a Hensel-type argument for
 `(1 + √33)/2`, whichever of the two places it is.
@@ -485,7 +494,7 @@ So a module is `k`-colourable as soon as one integral place has a
   `H₄₉` needs at least five colours because the 5-chromatic `five_tuned_16`,
   which has no 7 in any denominator, maps into it at a place over 7.
 - **Hoffman.** The eigenvalues are Kloosterman sums, of modulus at most
-  `2√q` (Weil). So `χ(H_q) ≥ 1 + (q − 1)/(2√q)`, which is above 5 once
+  `2√q` (Weil, 1948, §4). So `χ(H_q) ≥ 1 + (q − 1)/(2√q)` (Hoffman, 1970, §4), which is above 5 once
   `q ≥ 67`.
 - **Split places of degree 2.** For every `p ≥ 11`, `H_{p²}` has
   `χ ≥ 7`.
@@ -587,7 +596,7 @@ The graph (`data/chain23.json`) has 10 vertices and 16 edges.
 - the lower bound, for the rhombus chain and for the set `M₂` of Voronov,
   Neopryatnaya and Dergachev.
 
-**Formal proof.** `lean/Q23.lean` proves `χ = 4` in Lean 4 with Mathlib, with only Lean's standard axioms
+**Formal proof.** `lean/Q23.lean` proves `χ = 4` in Lean 4 with Mathlib (references in §8), with only Lean's standard axioms
 ([`lean/README.md`](../lean/README.md)). The place over 2 is a valuation subring given by Chevalley's extension
 theorem; the uniformiser `π = (√2 + √6)/2 − 1`, a root of the 2-Eisenstein polynomial
 `X⁴ + 4X³ + 2X² − 4X − 2`, shows that its residue field is `𝔽₂`.
@@ -736,11 +745,15 @@ settles the entry "5 or 6" for `𝔽₁₃²` in Moorhouse's Table 6.1.
 
 The entry becomes "5 or 6". This is Vinh's colouring by pairs of parallel lines
 with longer blocks: if `N, N − 1, N − 4, …, N − (m − 1)²` are all non-squares,
-then `χ(𝔽_q²) ≤ ⌈q/m⌉`. By the Weil bound such an `N` exists once
+then `χ(𝔽_q²) ≤ ⌈q/m⌉`. By the Weil bound (1948, §4) such an `N` exists once
 `2^m (m + 1) < √q`. So the colouring gives `χ(𝔽_q²) ≤ (2 + o(1)) q / log₂ q`,
 against `q (1/2 + o(1))` for pairs of lines. General theorems give the same
-order: Molloy's bound for triangle-free graphs when `q ≡ ±7 (mod 12)`, and
-Alon–Krivelevich–Sudakov's for locally sparse graphs otherwise. Linear
+order: Molloy's bound for triangle-free graphs (M. Molloy, *The list chromatic
+number of graphs with small clique number*, J. Combin. Theory Ser. B 134 (2019)
+264–284) when `q ≡ ±7 (mod 12)`, and
+Alon–Krivelevich–Sudakov's for locally sparse graphs (N. Alon, M. Krivelevich,
+B. Sudakov, *Coloring graphs with sparse neighborhoods*, J. Combin. Theory
+Ser. B 77 (1999) 73–82) otherwise. Linear
 colourings `(x, y) ↦ c(αx + βy)` cannot do better for `q = 17`: every
 admissible circulant needs six colours (SAT).
 Whether five colours suffice is open. Tabu search stops at two monochromatic
@@ -756,7 +769,11 @@ Two observations on five colours, neither a proof:
   reached one monochromatic edge in 5·10⁷ moves.
 - **Cube and conquer isolates the hard case.** Pin one edge and break the
   symmetry of the other three colours by value precedence (colour `c + 1`
-  first appears after colour `c`). `march_cu` then splits the CNF into 8614
+  first appears after colour `c`; Y. C. Law and J. H. M. Lee, *Global
+  constraints for integer and set value precedence*, CP 2004, LNCS 3258,
+  362–376). `march_cu` (M. J. H. Heule, O. Kullmann, S. Wieringa, A. Biere,
+  *Cube and conquer: guiding CDCL SAT solvers by lookaheads*, HVC 2011,
+  LNCS 7261 (2012) 50–65) then splits the CNF into 8614
   cubes, and the cubes provably cover every case (`drat-trim` checks the
   proof). Almost all cubes are degenerate cases, where some colour first
   appears late. The first 7000 were each refuted within 13 seconds, 1706 of
@@ -933,10 +950,13 @@ anisotropic plane of §4; they coincide for `q ≡ 3 (mod 4)`.
 
 **The spectral bound.** The eigenvalues are `λ_ξ = Σ_u cos(2π ξ·u/q)` over the
 `q ∓ 1` unit vectors, and Hoffman's ratio bound gives
-`α ≤ n (−λ_min)/(d − λ_min)`. This is Vinh's method
+`α ≤ n (−λ_min)/(d − λ_min)` (Hoffman, 1970, §4; in this form, W. H. Haemers,
+*Hoffman's ratio bound*, Linear Algebra Appl. 617 (2021) 215–219). This is Vinh's method
 ([arXiv math/0510092](https://arxiv.org/abs/math/0510092)), with the spectra
-of Medrano–Myers–Stark–Terras (§4); the thresholds below follow from it.
-- **Weil.** Every non-trivial eigenvalue has `|λ| ≤ 2√q`: a Kloosterman sum
+of Medrano–Myers–Stark–Terras (§4) and, for the anisotropic planes `G_q`, of
+Bannai, Shimabukuro and Tanaka (*Finite Euclidean graphs and Ramanujan graphs*,
+Discrete Math. 309 (2009) 6126–6134); the thresholds below follow from it.
+- **Weil.** Every non-trivial eigenvalue has `|λ| ≤ 2√q` (Weil, 1948, §4): a Kloosterman sum
   for `q ≡ 1 (mod 4)`, the sum of §4 for `q ≡ 3`. Hence
   `χ(𝔽_q²) ≥ 1 + (q ∓ 1)/(2√q)`, which exceeds 5 for every prime `q ≥ 67` and
   6 for every prime `q ≥ 103`.
@@ -947,9 +967,14 @@ of Medrano–Myers–Stark–Terras (§4); the thresholds below follow from it.
   (`χ_f(G₆₁) ≥ 5.20`; the first version of its proof omitted 61).
 - **Where it stops.** For `q ≤ 53` and `q = 61` the ratio bound for `𝔽_q²`
   stays above `q²/5` (`0.2111 q²` at `q = 47`, `0.2036 q²` at `q = 61`). The
-  Delsarte linear programme on the circles `x² + y² = r` gives exactly the same
+  Delsarte linear programme (Delsarte, 1973, §4) on the circles `x² + y² = r` gives exactly the same
   numbers, and conditional constraints from unit triangles, Moser spindles and
-  rigid templates move it by under 2%.
+  rigid templates move it by under 2%. Linear-programming bounds with triangle
+  constraints were used earlier for planar sets avoiding unit distance, by
+  Keleti, Matolcsi, de Oliveira Filho and Ruzsa (*Better bounds for planar sets
+  avoiding unit distances*, Discrete Comput. Geom. 55 (2016) 642–661) and by
+  DeCorte, de Oliveira Filho and Vallentin (*Complete positivity and
+  distance-avoiding sets*, Math. Program. 191 (2022) 487–558).
 
 **The three-point bound.** Translate an independent set `S` by a random vector
 and turn it about the origin by a random isometry; let `v` be the indicator of

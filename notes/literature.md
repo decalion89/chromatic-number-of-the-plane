@@ -23,26 +23,26 @@ The route is **not ours**.
 
 | ingredient | who had it | where |
 |---|---|---|
-| The reduction `W + H ⇒ χ(ℝ²) ≥ 6` | Exoo–Ismailescu, who proved five this way with `d = √(11/3)` and stated the step to six as their Conjecture 8.1; Polymath16 ("virtual edges", "clamping"; de Grey's definitions in thread 3, comment 4172) | [arXiv 1805.00157](https://arxiv.org/abs/1805.00157), [arXiv 1805.06055](https://arxiv.org/abs/1805.06055), [thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/#comment-4172) |
-| `W` for `d = φ` (31 vertices) | Huddleston; Parts | [arXiv 2010.12656](https://arxiv.org/abs/2010.12656) |
+| The reduction `W + H ⇒ χ(ℝ²) ≥ 6` | Exoo–Ismailescu, who proved five this way with `d = √(11/3)` (arXiv 1805.00157) and stated the step to six as Conjecture 8.1 of arXiv 1805.06055; Polymath16 ("virtual edges", "clamping"; de Grey's definitions in thread 3, comment 4172) | [arXiv 1805.00157](https://arxiv.org/abs/1805.00157), [arXiv 1805.06055](https://arxiv.org/abs/1805.06055), [thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/#comment-4172) |
+| `W` for `d = φ` (31 vertices) | Huddleston; Parts | Owings–Tetiva–Huddleston, *Coloring the plane* (Problem 11236), Amer. Math. Monthly 115(2) (2008) 170–172, [JSTOR](https://www.jstor.org/stable/27642435); [arXiv 2010.12656](https://arxiv.org/abs/2010.12656) |
 | `W` for `d = 2` | Exoo–Ismailescu | [arXiv 1909.13177](https://arxiv.org/abs/1909.13177) |
-| `W` for `d = √3` (33 vertices) and `(√6 + √2)/2` (117 vertices) | Ágoston–Pálvölgyi (Polymath16); De Neve et al. | [Monthly 2025](https://doi.org/10.1080/00029890.2025.2559554) |
+| `W` for `d = √3` (33 vertices) and `(√6 + √2)/2` (117 vertices) | Polymath16, thread 14, comment 24460 (21 October 2019); De Neve et al. | [comment 24460](https://dustingmixon.wordpress.com/2019/08/05/polymath16-fourteenth-thread-automated-graph-minimization/#comment-24460); Amer. Math. Monthly 132(10) (2025) 1007–1022, [doi](https://doi.org/10.1080/00029890.2025.2559554) |
 | Which sets of distances `d` are the range of a two-distance graph (the semialgebraic sets with positive lower and upper bounds) | Ágoston | [arXiv 2601.07828](https://arxiv.org/abs/2601.07828) |
 | Colouring-guided growth and minimisation, at 4 colours | Heule; Parts | [arXiv 1805.12181](https://arxiv.org/abs/1805.12181), [1907.00929](https://arxiv.org/abs/1907.00929), [2010.12665](https://arxiv.org/abs/2010.12665) |
 | Unions of paths as a construction | Haugland (Moser-spindle-free, 2 131 vertices) | [arXiv 2608.04542](https://arxiv.org/abs/2608.04542) |
-| Reduction of `F²` modulo a prime, for number fields `F`, and extension from a subgroup or a ring to the whole field by cosets | Woodall (`ℚ²` modulo 2); Fischer (1990, Thm 1: cosets of the component of the origin); Moorhouse (Lemma 4.2, Lemma 8.2); Madore (Cor. 3.4, Prop. 3.2, 3.8, ¶6.6) | [Moorhouse 2010](https://www.ericmoorhouse.org/pub/chromatic.pdf), [arXiv 1509.07023](https://arxiv.org/abs/1509.07023) |
+| Reduction of `F²` modulo a prime, for number fields `F`, and extension from a subgroup or a ring to the whole field by cosets | Woodall (`ℚ²` modulo 2); Fischer (1990, Thm 1: cosets of the component of the origin); Moorhouse (Lemma 4.2, Lemma 8.2); Madore (Cor. 3.4, Prop. 3.2, 3.8, ¶6.6) | Woodall: J. Combin. Theory Ser. A 14 (1973) 187–200; [Moorhouse 2010](https://www.ericmoorhouse.org/pub/chromatic.pdf), [arXiv 1509.07023](https://arxiv.org/abs/1509.07023) |
 | `χ(ℚ(√N)²) = 2` for `N ≡ 1, 2 (mod 4)` | Johnson (1987) | Congr. Numer. 60, 51–58; see [Payne](https://arxiv.org/abs/0707.1177) |
 | `χ(ℚ(√N)²) ≤ 3` for `N ≡ 0, 1 (mod 3)`, `≤ 4` for `N ≡ 3 (mod 8)` (Thms 9, 10; the second is a reduction at 2 into `ℤ/4`); colouring the plane through the component of the origin (Thm 1) | Fischer (1990) | Discrete Math. 82, 181–195 (read in full); see also [Payne](https://arxiv.org/abs/0707.1177) |
 | No additive `k`-colouring of `ℚ(√N)²` for `k ≤ 6` when `N ≡ −1 (mod 24)`, for example `N = 47`, because `1/2` and `1/3` are sums of unit vectors | Fischer (1990), Thm 10(ii) | Discrete Math. 82, 181–195 |
 | **`χ(ℚ(√3, √11)²) = 4`**; more generally an additive 4-colouring of `ℚ(√p, √q)²` for squarefree, relatively prime `p ≡ 3`, `q ≡ 11 (mod 16)` with `pq ≡ 1 (mod 32)` | Fischer (1994) | Congr. Numer. 104, 73–79; [Zbl 0836.05030](https://zbmath.org/?q=an:0836.05030) |
 | The connected component of the origin in `ℚ(√N₁, …, √N_d)²` | Fischer (1990) | Congr. Numer. 72, 213–221; [Zbl 0733.05048](https://zbmath.org/?q=an:0733.05048) |
-| A survey, as of 2000, of problems on colourings of `ℚⁿ` and its algebraic extensions | Johnson (2000); we have not seen it | Geombinatorics 9, 170–179; [Zbl 0974.05029](https://zbmath.org/?q=an:0974.05029) |
+| A survey, as of 2000, of problems on colourings of `ℚⁿ` and its algebraic extensions, posed in or arising from Benda–Perles, *Colorings of metric spaces* | Johnson (2000); we have not seen it | Geombinatorics 9(4), 170–179; [Zbl 0974.05029](https://zbmath.org/?q=an:0974.05029); Benda–Perles: Geombinatorics 9(3), 113–126, [Zbl 0951.05037](https://zbmath.org/?q=an:0951.05037) |
 | 2-adic 4-colourings of the Moser ring, with colours in `𝔽₄` | Speyer (thread 2, April 2018); Hubai's analysis and computer search, reported by Gibbs: all have period 8 (thread 3); Dúcz (2026) | [thread 2](https://dustingmixon.wordpress.com/2018/04/22/polymath16-second-thread-what-does-it-take-to-be-5-chromatic/#comment-4013), [thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/), [arXiv 2606.12325](https://arxiv.org/abs/2606.12325) |
 | A colouring of `ℤ[ζ₂₄, 1/3]` through `(ℤ/4)[ζ₂₄]`, proposed for the plane over `ℚ(√2, √3)` | Voronov (thread 17, 30 July 2021), who asked for "a simpler way" | [comment 29476](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/#comment-29476) |
 | A 4-chromatic unit-distance graph over `ℚ(√2, √3)` | Voronov–Neopryatnaya–Dergachev (`L₁₀,₂` and its Minkowski sums) | [arXiv 2106.11824](https://arxiv.org/abs/2106.11824) |
 | The question whether a field generated by two square roots of primes can carry a 5-chromatic unit-distance graph | Voronov (thread 17, 17 July 2021) | [comment 29283](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/#comment-29283) |
 | A Galois automorphism that preserves unit distance maps one distance to another, so what holds for one distance holds for its conjugates (Tao used it to equate the densities `p_{d₁}` and `p_{d₂}` of two distances) | Tao (thread 7, comment 4893, 19 June 2018) | [comment 4893](https://dustingmixon.wordpress.com/2018/06/16/polymath16-seventh-thread-upper-bounds/#comment-4893) |
-| A 103-vertex graph with edges at 1 and `2/√3` and no 4-colouring | Ismailescu (thread 3, comment 4161) | [comment 4161](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/#comment-4161) |
+| A 103-vertex graph with edges at 1 and `2/√3` and no 4-colouring | Exoo and Ismailescu (Polymath16, thread 3, comment 4161) | [comment 4161](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/#comment-4161) |
 | The eigenvalues of the finite Euclidean graphs, through Gauss and Kloosterman sums, and Weil's bound for them | Medrano–Myers–Stark–Terras | J. Comput. Appl. Math. 68 (1996) 221–238, [doi](https://doi.org/10.1016/0377-0427(95)00261-8) |
 | The three-point semidefinite bound | Schrijver | IEEE Trans. Inform. Theory 51 (2005) 2859–2866 |
 | A lattice-like graph with no 5-colouring and bichromatic origin would give six | Frankl–Hubai–Pálvölgyi (Thm 27) | [arXiv 1912.02604](https://arxiv.org/abs/1912.02604) |
@@ -60,7 +60,7 @@ The route is **not ours**.
    `pq ≡ 1 (mod 32)`. zbMATH's summary adds that the plane contains finite
    graphs which require four colours; the Moser spindle is one. We found this only
    after the note had been sent out; we have read the zbMATH summary, not the
-   paper. Johnson's 2000 survey (Geombinatorics 9, 170–179) may record further
+   paper. Johnson's 2000 survey (Geombinatorics 9(4), 170–179), on the problems of Benda and Perles (*Colorings of metric spaces*, Geombinatorics 9(3), 113–126), may record further
    results; we have not seen it. The result seems to have been overlooked by:
    - Moorhouse (2010): "We have not determined the exact value …";
    - Madore (2015), who proved `4 ≤ χ ≤ 5`;
@@ -130,8 +130,11 @@ The route is **not ours**.
    known witness distance is `|u + v|` for unit vectors `u, v`. Such pairs share
    a unit neighbour, and 5-colourings colour them alike 30–40% of the time.
    `2/√3` is the most repulsive distance measured, at 8%, and it is not a
-   two-step distance in `L16`. Ismailescu had already found a 103-vertex graph
-   with edges at 1 and `2/√3` and no 4-colouring (thread 3, comment 4161).
+   two-step distance in `L16`. Exoo and Ismailescu had already found a 103-vertex graph
+   with edges at 1 and `2/√3` and no 4-colouring (Polymath16, thread 3, comment 4161).
+   The quantity measured, the probability that two points at distance `d` get the
+   same colour, is the `p_d` of Polymath16's probabilistic formulation (Tao, thread 7,
+   comment 4893; Ágoston, [arXiv 2112.07665](https://arxiv.org/abs/2112.07665)).
 4. **A sparse 72-point lattice witness** for
    `{1, 4/√3, √7, √(28/3), √(61/3)}`, verified by four solvers and DRAT.
 5. **Methods:**
@@ -145,7 +148,12 @@ The route is **not ours**.
    certificates. Moorhouse's table stops at `q = 17`. We found no earlier bound
    of six for these planes, and no earlier use of the three-point bound for
    finite unit-distance graphs. For large `q` Hoffman's bound gives six, with
-   the spectra of Medrano–Myers–Stark–Terras.
+   the spectra of Medrano–Myers–Stark–Terras and, for the anisotropic planes, of
+   Bannai–Shimabukuro–Tanaka (Discrete Math. 309 (2009) 6126–6134).
+   Linear-programming bounds strengthened by triangle constraints were used
+   earlier for planar sets avoiding unit distance: Keleti–Matolcsi–de Oliveira
+   Filho–Ruzsa (Discrete Comput. Geom. 55 (2016) 642–661) and DeCorte–de Oliveira
+   Filho–Vallentin (Math. Program. 191 (2022) 487–558).
 
 ## What this means
 

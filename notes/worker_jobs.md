@@ -23,9 +23,9 @@ unit-distance graph, and it is not 5-colourable, so `χ(ℝ²) ≥ 6`.
 
 | `d` | who | size |
 |---|---|---|
-| `(1+√5)/2` | Huddleston; Parts | 31 vertices ([arXiv 2010.12656](https://arxiv.org/abs/2010.12656)) |
+| `(1+√5)/2` | Huddleston (J. Owings, M. Tetiva, M. Huddleston, *Coloring the plane* (Problem 11236), [Amer. Math. Monthly 115(2) (2008) 170–172](https://www.jstor.org/stable/27642435)); Parts | 31 vertices ([arXiv 2010.12656](https://arxiv.org/abs/2010.12656)) |
 | `2` | Exoo–Ismailescu | 426 vertices ([arXiv 1909.13177](https://arxiv.org/abs/1909.13177)) |
-| `√3`, `(√3+1)/√2` | Ágoston–Pálvölgyi | Polymath16 |
+| `√3`, `(√3+1)/√2` | [Polymath16, thread 14, comment 24460](https://dustingmixon.wordpress.com/2019/08/05/polymath16-fourteenth-thread-automated-graph-minimization/#comment-24460) (21 October 2019); J. De Neve, F. Vanden Kerchove, D. Colle, W. Tavernier, M. Pickavet | 33 and 117 vertices (*On the chromatic number of the plane with two forbidden distances*, [Amer. Math. Monthly 132(10) (2025) 1007–1022](https://doi.org/10.1080/00029890.2025.2559554)) |
 
 **Why the known witnesses are hard to complete.** Every known `d` is a *two-step* distance
 `|u + v|`, with `u, v` unit vectors. Two points at such a distance share a unit

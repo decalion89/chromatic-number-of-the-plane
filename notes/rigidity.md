@@ -46,7 +46,8 @@ multiplication by a power of `ω`. `κ` is the one attached to the prime 7.
 A *twisted colouring* is `c = ψ + t·⌊φ/L⌋`, with `φ` a real functional and `L`
 large. It is proper exactly when `φ ≥ 0` on `D_t`.
 
-**Lemma 2 (Stiemke).** The following are equivalent:
+**Lemma 2 (Stiemke).** The following are equivalent (E. Stiemke, *Über positive
+Lösungen homogener linearer Gleichungen*, Math. Ann. 76 (1915) 340–342):
 - there is no `φ ≠ 0` with `φ ≥ 0` on `D_t`;
 - `D_t` spans `M ⊗ ℝ` and admits a linear dependency `Σ λ_u u = 0` with every
   `λ_u > 0`.
@@ -170,7 +171,9 @@ all `m ∈ u₀ + 5M`, for some unit `u₀`. Coset colourings do this. Then no
 Lebesgue-measurable 5-colouring of the plane is proper along the directions
 `U`. Consequently, the rigidity of any module that is dense in the plane, with
 finitely many unit directions, implies that the measurable chromatic number of
-the plane is at least 6, which is open.
+the plane is at least 6, which is open (it is at least 5: K. J. Falconer, *The
+realization of distances in measurable subsets covering ℝⁿ*, J. Combin. Theory
+Ser. A 31 (1981) 184–189).
 
 *Proof.* `M` is dense in the plane, so `5M` is too, and `u₀ + 5M` contains vectors
 `mⱼ → 0`. For almost every `y`, the colouring `m ↦ f(y + m)` of `G(M, U)` is
@@ -178,7 +181,8 @@ proper, hence `f(y + mⱼ) ≠ f(y)` for every `j`. But
 `‖f(· + mⱼ) − f‖_{L¹(B)} → 0` on every ball `B`. ∎
 
 So a proof of rigidity cannot be purely local or fractional. Independent sets
-alone cannot give it either: Croft's tortoise, restricted to a generic coset,
+alone cannot give it either: Croft's tortoise (H. T. Croft, *Incidence
+incidents*, Eureka 30 (1967) 22–26), restricted to a generic coset,
 is an independent set of `G(M, U)` of density 0.229 > 1/5. Whatever proof
 exists must use the partition into five classes.
 
@@ -287,7 +291,8 @@ residue field `𝔽_p`. Let `r` be minimal with `φ(p^r O) = 0`.
 
 The places that admit a local 5-colouring are therefore `p ∈ {3, 5, 7, 19}`.
 For 4 colours they are `{3, 7}`, and for 6 colours `{3, 5, 7, 11, 17, 19}`.
-This was checked for `p < 10⁵`, and the Weil bound on
+This was checked for `p < 10⁵`, and the Weil bound (A. Weil, *On some exponential
+sums*, Proc. Natl. Acad. Sci. USA 34 (1948) 204–207) on
 `Σ_{c < p/k} (c² − 4n / p)` handles larger `p`.
 
 **Theorem 9 (the Moser field).** The unit-distance graph on `ℚ(√−3, √−11)` has
@@ -318,7 +323,7 @@ Proposition 7 applies with `k = 4`. The Moser spindle lies in `K`. ∎
 
 ## 9. Reduction at a non-split place: the field of `five_rho7` is 5-colourable
 
-**Proposition 10.** Let `v` be a finite place of `K⁺` that does not split in the
+**Proposition 10 (cf. [Madore](https://arxiv.org/abs/1509.07023), Prop. 3.2, ¶6.6).** Let `v` be a finite place of `K⁺` that does not split in the
 CM field `K`.
 1. **Unramified, residue field `𝔽_q`.** Every unit vector reduces into the
    norm-one group `N₁ ⊂ 𝔽_{q²}`, which has order `q + 1`. Fix a representative
@@ -391,7 +396,7 @@ Its structure, for `q ≡ 5 (mod 6)`:
   `Cay(𝔽_q[ω], ρ^j μ₆)`.
 - **Eigenvalues.** They are `λ(n) = Σ_c (1 − η(c² − 4n)) e(c/q)`, which depend
   only on `n = N(y)`. They are Kloosterman sums, `λ(n) = −Kl(1, n; q)`, and `|λ| ≤ 2√q` by Weil's
-  bound (`notes/local_colourings.md` §4). The bound was also checked for all
+  bound (1948, §8 above; `notes/local_colourings.md` §4). The bound was also checked for all
   `q < 400`. For the finite Euclidean planes these spectral facts go back to
   Medrano, Myers, Stark and Terras (J. Comput. Appl. Math. 68, 1996).
 
@@ -399,7 +404,10 @@ Its structure, for `q ≡ 5 (mod 6)`:
 character-sum estimate sketched in the proof, the same holds for every deeper
 quotient `Cay(O_v/π^r, T mod π^r)`.
 
-*Proof.* By Hoffman, `χ_f ≥ 1 + (q+1)/|λ_min| ≥ 1 + (q+1)/(2√q)`. This exceeds
+*Proof.* By Hoffman (A. J. Hoffman, *On eigenvalues and colorings of graphs*, in
+*Graph Theory and its Applications* (B. Harris, ed.), Academic Press, 1970, 79–91;
+for the ratio form, W. H. Haemers, *Hoffman's ratio bound*, Linear Algebra Appl.
+617 (2021) 215–219), `χ_f ≥ 1 + (q+1)/|λ_min| ≥ 1 + (q+1)/(2√q)`. This exceeds
 5 for `q > 62`; for `q = 53, 59` and 61 it was computed
 (`scripts/finite_hoffman.py --inert`; the first version of this proof omitted
 61). A level-`j` character contributes `q^{r−j}` times its level-`j` sum. A
@@ -409,7 +417,9 @@ sum has modulus at most `2q^{j−1}`. Hence the ratio `d/|λ_min|` is the same a
 every level. This stationary-phase step is sketched, not written out, and was
 checked numerically for small `q` and `j`. ∎
 
-LP methods stop there. The Delsarte bound equals the Hoffman bound, and the
+LP methods stop there. The Delsarte bound (P. Delsarte, *An algebraic approach to
+the association schemes of coding theory*, Philips Res. Rep. Suppl. 10 (1973))
+equals the Hoffman bound, and the
 triangle inequalities `f(x) + f(y) − f(x − y) ≤ 1` hardly move it.
 
 Below 53 the numbers are these:
