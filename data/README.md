@@ -92,7 +92,7 @@ The tests and `scripts/verify_pair.py` read the first format. `scripts/orbit_wit
 | `five_247_c.json` | 803 vertices, 5-chromatic and vertex-critical, in ℚ(√3, √11, √247). |
 | `five_tuned_16_1_3_7_11.json` | 4 081 vertices with no proper 4-colouring, in ℚ(√3, √7, √11): neither √5 nor √247 is needed. |
 | `five_rho7.json` | `five_247_c.json` with its images under ρ₇ and ρ₇⁻¹: the module studied in `notes/rigidity.md`. |
-| `ei_H214.json`, `ei_rho7.json`, `K_rot.json` | Exoo–Ismailescu's graphs, rebuilt from their paper and turned onto the project's modules. |
+| `ei_H214.json`, `ei_rho7.json`, `K_rot.json` | Exoo–Ismailescu's graphs, rebuilt from their paper (arXiv:1909.13177) and turned onto the project's modules. |
 | `L16_seed.json` | 6 080 points: the starting graph of the searches in L16. |
 | `L16_kw2.json` | 18 524 points: the largest growth from `L16_seed.json` kept. |
 | `tight_four.json`, `witness_five.json` | Small graphs with a stated claim: circular chromatic number 4, and 161 pairs one of which is monochromatic in every proper 5-colouring. |

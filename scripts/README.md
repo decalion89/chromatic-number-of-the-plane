@@ -76,7 +76,7 @@ result to the path in `OUT`, by default under `/tmp`.
 
 | script | what it does |
 |---|---|
-| `tabucol.c` | k-colouring by tabu search (Hertz–de Werra, with the incremental tables of Galinier–Hao), reading the graph on standard input. |
+| `tabucol.c` | k-colouring by tabu search (A. Hertz and D. de Werra, *Using tabu search techniques for graph coloring*, Computing 39 (1987) 345–351, with the incremental tables of P. Galinier and J.-K. Hao, *Hybrid evolutionary algorithms for graph coloring*, J. Comb. Optim. 3 (1999) 379–397), reading the graph on standard input. |
 | `tabu2.c` | Tabu search for a proper k-colouring on hard edges that then minimises the number of alike soft pairs without breaking a hard edge. |
 | `tabucol.py` | A Python TabuCol, calibrated on three instances with known answers (`Sa` at five colours with and without the class 4/9 forbidden, and `Sa` at four colours with 4/9 forbidden) before it is run on open instances. |
 | `tabu.py` | An earlier tabu search that recolours a random conflicting vertex, run on `Sa`, Y and G with forbidden pairs; it stalled on a satisfiable calibration instance, and `tabucol.py` replaces it. |
@@ -128,7 +128,7 @@ result to the path in `OUT`, by default under `/tmp`.
 | `moser2adic.py` | Checks in exact rational arithmetic the 2-adic 4-colouring of the plane over ℚ(√−3, √−11) on every unit vector and edge of the given files. |
 | `msqrt.py` | Computes square roots in a multiquadratic field exactly, by recursion on the generators. |
 | `sqrtK.py` | Computes square roots in a multiquadratic field from sign patterns that are characters of the Galois group, accepting a root only when its square is exact. |
-| `allunits.py` | Finds every unit vector of an edge module, not only those the graph uses, by Fincke–Pohst enumeration under the trace form. |
+| `allunits.py` | Finds every unit vector of an edge module, not only those the graph uses, by Fincke–Pohst enumeration (U. Fincke and M. Pohst, *Improved methods for calculating vectors of short length in a lattice, including a complexity analysis*, Math. Comp. 44 (1985) 463–471) under the trace form. |
 | `lamclosure_units.py` | Writes a module file with the unit vectors of the λ-closure M′ = M₁ + λM₁ that need no search (U₁, λU₁ and the Exoo–Ismailescu units 5(1 − λ)e), for `circgate.py` and `circextend.py`. |
 | `rotunits.py` | Writes a module file with the unit vectors R·(1, 0) for words R in the rotations ω, σ, λ, ρ₇, κ and optionally τ, for the circular gates. |
 | `unitsinqm.py` | Reports, for graphs in `data/`, the rank of the module spanned by the edge vectors, the moduli q for which some unit vector lies in qM, and the content of each unit vector. |
