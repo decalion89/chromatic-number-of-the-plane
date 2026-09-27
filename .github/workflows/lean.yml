@@ -1,0 +1,35 @@
+# Checks the formal proofs in research/hadwiger-nelson/lean on every push to main and every pull request: builds
+# them against Mathlib, compares their axioms with lean/axioms.expected, and replays each file in Lean's kernel
+# with leanchecker.
+name: lean
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lean:
+    name: Lean proofs
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: research/hadwiger-nelson/lean
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lean, fetch Mathlib's prebuilt files, build every proof
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: research/hadwiger-nelson/lean
+          auto-config: false
+          build: true
+          use-mathlib-cache: true
+      - name: Compare the axioms with axioms.expected
+        run: lake env lean PrintAxioms.lean > axioms.txt && diff axioms.expected axioms.txt
+      - name: Replay each file in the kernel
+        run: for m in LocalColouring Q23 Q311; do lake env leanchecker -v "$m"; done

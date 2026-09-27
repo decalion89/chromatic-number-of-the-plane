@@ -1,16 +1,19 @@
 # The note
 
-[`planes-4-chromatic.pdf`](planes-4-chromatic.pdf) is a three-page note proving χ(ℚ(√2, √3)²) = 4
-and giving a short proof of K. G. Fischer's theorem χ(ℚ(√3, √11)²) = 4 (1994).
-[`planes-4-chromatic.html`](planes-4-chromatic.html) is its source. The PDF is rendered with headless
-Chromium, run in this folder:
+[`planes-4-chromatic.pdf`](planes-4-chromatic.pdf) is a four-page note proving χ(ℚ(√2, √3)²) = 4
+and giving a short proof of K. G. Fischer's theorem χ(ℚ(√3, √11)²) = 4 (1994). Both theorems are also
+proved in Lean 4 ([`lean/`](../../lean/)).
+[`planes-4-chromatic.tex`](planes-4-chromatic.tex) is its LaTeX source (`amsart`). To rebuild the PDF, run
+in this folder, with TeX Live:
 
 ```sh
-chromium --headless --no-pdf-header-footer --print-to-pdf=planes-4-chromatic.pdf planes-4-chromatic.html
+pdflatex planes-4-chromatic.tex && pdflatex planes-4-chromatic.tex && pdflatex planes-4-chromatic.tex
 ```
 
-Chromium does not write an author into the PDF; version 4 has it added afterwards with `pypdf`
-(`PdfWriter.add_metadata`).
+Figure 1 is drawn with TikZ from decimal coordinates; its exact coordinates are those of
+[`data/chain23.json`](../../data/chain23.json), and `lean/Q23.lean` proves that its 16 edges have length 1.
+Versions 1 to 4 were written in HTML and printed to PDF with headless Chromium; version 5 is the first in
+LaTeX, and adds the formal proofs.
 
 The fuller account, with the checks behind each step, is
 [`notes/local_colourings.md`](../../notes/local_colourings.md) §8 and §10; the tests are

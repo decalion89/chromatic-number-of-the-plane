@@ -17,3 +17,8 @@ data/*.cnf
 data/*.kissat
 data/blk_plain_*.json
 *.drat
+# Lean: the build, and what the checks write (lean/README.md)
+lean/.lake/
+lean/export/
+lean/axioms.txt
+lean/build.log
