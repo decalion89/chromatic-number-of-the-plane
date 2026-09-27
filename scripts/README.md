@@ -1,6 +1,6 @@
 # Scripts: the maintained tools
 
-The 92 scripts here are the project's maintained tools; the 733 one-off experiments behind the
+The 92 scripts here are the project's maintained tools; the 734 one-off experiments behind the
 research log are in [`experiments/`](experiments/). Run every tool from the root of the
 repository: each finds the `hn` package from its own location.
 

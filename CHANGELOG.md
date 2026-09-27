@@ -58,6 +58,13 @@ including every retracted claim, is the research log,
 
   The research log lists every fix under "Citation audit (27 September)".
 
+- **A wrong remark in the research log.** It said that the largest
+  independent sets found in G₁₃ contain no point together with a whole circle;
+  11 of the 15 known orbits of 36-point sets do. The log now says so under the
+  remark, with the counts for G₁₁ and G₁₃ and the script that checks them
+  (`scripts/experiments/largest_sets_whole_circles.py`). No result depended on
+  the remark.
+
 ## [1.1.0] - 2026-09-27
 
 None of the results below has been refereed.

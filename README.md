@@ -252,7 +252,7 @@ GitHub Actions runs the fast part of the suite, 395 tests in 35 files
 | [`notes/`](notes/README.md) | technical notes: local colourings, rigidity, the literature, the search jobs |
 | [`data/`](data/README.md) | graphs and witnesses in exact coordinates (JSON), and the three-point certificates |
 | [`certificates/`](certificates/README.md) | colourings, DRAT verification logs and non-colourability claims |
-| [`scripts/`](scripts/README.md) | maintained tools: verification, search, figures; `scripts/experiments/` keeps the 733 one-off experiments behind the research log |
+| [`scripts/`](scripts/README.md) | maintained tools: verification, search, figures; `scripts/experiments/` keeps the 734 one-off experiments behind the research log |
 | [`tests/`](tests/README.md) | the test suite: 684 tests, 24 of them marked slow |
 | [`docs/`](docs/README.md) | the research log, the full chronological record, and the figures |
 
