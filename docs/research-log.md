@@ -8699,7 +8699,9 @@ plan checked the case split and the encodings before the run.
   several cloud machines. The proofs (22 GB) were deleted after the checks.
 - **The checks.** The share's log was checked on another machine: the five
   formulas written again by the code have the SHA-256 of the logs, the cube
-  file is a cover, and every leaf formula has a VERIFIED line. cake_lpr then
+  file is a cover, and every leaf formula has a VERIFIED line. An audit that reads
+  the five formulas alone (`scripts/g13/g13_audit.py`) found every clause as
+  intended, and every chain on an automorphism. cake_lpr then
   refuted again the four small formulas, the cover formula and 40 leaves
   chosen at random. So `α(G₁₃) = 36` (`notes/g13.md`), and since `G₁₃` is
   vertex-transitive, `χ_f(G₁₃) = 169/36`.
