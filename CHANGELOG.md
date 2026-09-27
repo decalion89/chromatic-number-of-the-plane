@@ -7,7 +7,7 @@ data formats.
 
 Mathematical corrections are listed in each version. The full record,
 including every retracted claim, is the research log,
-[`research/hadwiger-nelson/docs/research-log.md`](research/hadwiger-nelson/docs/research-log.md).
+[`docs/research-log.md`](docs/research-log.md).
 
 ## [Unreleased]
 
@@ -26,6 +26,14 @@ including every retracted claim, is the research log,
   and in the README's BibTeX entry.
 
 ### Changed
+- **Layout.** The project moved from `research/hadwiger-nelson/` to the root of
+  the repository, and the note to `papers/planes-4-chromatic/`, where each paper
+  has its own folder. Commands now run from the root. Release 1.1.0, and
+  version 5 of the note, which cites it, keep the old paths.
+- **One front page.** The README merges the former front page and project page.
+  Each result has a status (proved, formally verified, computer proof, known),
+  the evidence behind it and where to read it; one table gives the command that
+  checks each result.
 - `python-flint` is now a requirement: the independent checker multiplies
   integer matrices with FLINT.
 
