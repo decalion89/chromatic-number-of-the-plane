@@ -9,9 +9,10 @@ for r = 0, 1, ..., m - 1, then a x + b y takes none of the values 0, +-1, ..., +
 Vinh's colouring by pairs of parallel lines.
 
 **Lower bounds.** No proper 4-colouring (SAT, with a triangle or an edge pinned); the slower cases are in
-tests/test_finite_planes_slow.py.  Six and seven colours from Hoffman's ratio bound, with every eigenvalue in
-interval arithmetic (section 14), here; six colours from the three-point bound in
-tests/test_threepoint_certificates.py.
+tests/test_finite_planes_slow.py.  Five colours for q = 23 and 31, and six and seven colours for larger q, from
+Hoffman's ratio bound, with every eigenvalue in interval arithmetic (section 14), here; six colours from the
+three-point bound in tests/test_threepoint_certificates.py.  Linear colourings of F_17^2 need six colours: every
+admissible circulant has independence number at most 3 (an exhaustive search, here).
 """
 import sys, os
 sys.path.insert(0, os.path.dirname(__file__))
@@ -74,6 +75,47 @@ def test_the_planes_over_23_and_37_need_five_colours():
     for q in (23, 37):
         U, E = plane(q)
         assert not colourable(q * q, E, 4, pin=pinned_triangle(q, E)), q
+
+
+def test_the_spectral_bound_gives_five_colours_for_23_and_31():
+    """alpha(F_q^2) < q^2/4 for q = 23 and 31 (131 and 240 against 132.25 and 240.25), so no 4-colouring,
+    without a solver (scripts/finite_hoffman.py --inert 23 31; for q = 3 mod 4 the form x^2 + y^2 is anisotropic)"""
+    sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'scripts'))
+    from finite_hoffman import hoffman
+    for q in (23, 31):
+        d, lmin, amax = hoffman(q)
+        assert d == q + 1 and 4 * amax < q * q, q
+
+
+def independence_number_circulant(q, S):
+    """the independence number of Cay(Z/q, S), by exhaustive branch and bound (0 in the set, by symmetry)"""
+    nb = [sum(1 << ((v + s) % q) for s in S) for v in range(q)]
+    best = [1]
+
+    def grow(cand, size):
+        if not cand:
+            best[0] = max(best[0], size)
+            return
+        if size + bin(cand).count("1") <= best[0]:
+            return
+        v = (cand & -cand).bit_length() - 1
+        grow(cand & ~nb[v] & ~(1 << v), size + 1)
+        grow(cand & ~(1 << v), size)
+
+    grow(((1 << q) - 1) & ~nb[0] & ~1, 1)
+    return best[0]
+
+
+def test_linear_colourings_of_f17_need_six():
+    """(x, y) -> c(a x + b y) is proper exactly when c colours the circulant on S = {a x + b y : x^2 + y^2 = 1},
+    which must avoid 0.  For q = 17 there are nine such S, each of independence number at most 3, so each
+    circulant needs ceil(17/3) = 6 colours (notes/local_colourings.md, section 12)"""
+    q = 17
+    U, _ = plane(q)
+    circulants = {frozenset((a * x + b * y) % q for x, y in U) for a in range(q) for b in range(q) if (a, b) != (0, 0)}
+    admissible = [S for S in circulants if 0 not in S]
+    assert len(admissible) == 9
+    assert max(independence_number_circulant(q, S) for S in admissible) == 3
 
 
 def test_the_spectral_bound_gives_six_and_seven_colours():

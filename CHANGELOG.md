@@ -65,6 +65,14 @@ including every retracted claim, is the research log,
   (`scripts/experiments/largest_sets_whole_circles.py`). No result depended on
   the remark.
 
+- **Statuses that said too little.** No 4-colouring of 𝔽₂₃² and 𝔽₃₁²,
+  `χ(G₅) ≥ 4` and `χ(G₃) ≥ 3` follow from Hoffman's bound in interval
+  arithmetic, and linear colourings of 𝔽₁₇² need six colours by an exhaustive
+  count; the notes gave SAT for all of them. A conditional in
+  `notes/local_colourings.md` §6 and `notes/rigidity.md` §11 now states the
+  character-sum estimate it needs. `tests/test_finite_planes.py` checks the new
+  statements.
+
 ## [1.1.0] - 2026-09-27
 
 None of the results below has been refereed.
