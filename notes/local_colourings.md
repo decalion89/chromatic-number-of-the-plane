@@ -159,12 +159,12 @@ goes further: it proves `χ(G_q) ≥ 6` for `q = 29, 37, 41, 43, 47`.
 | `q` | `χ(G_q)` | evidence |
 |---|---|---|
 | 2 | 4 | the 2-adic analysis above |
-| 3 | 3 | Hoffman's bound, `α ≤ 3` (`scripts/finite_hoffman.py --inert 3`), and a 3-colouring (SAT; Moorhouse) |
-| 4 | 4 | `Cay(𝔽₁₆, μ₅)` is the Clebsch graph, whose independence number is 5 `< 16/3`; a 4-colouring (SAT, `tests/test_biquadratic_bounds.py`) |
-| 5 | 4 | Hoffman's bound, `α ≤ 7 < 25/3` (`scripts/finite_hoffman.py --inert 5`), and a 4-colouring (SAT) |
-| 7 | 4 | SAT (Moorhouse) |
+| 3 | 3 | Hoffman's bound, `α ≤ 3` (`scripts/finite_hoffman.py --inert 3`), and a 3-colouring (found by SAT, stored in `data/small_plane_colourings.json`; Moorhouse) |
+| 4 | 4 | `Cay(𝔽₁₆, μ₅)` is the Clebsch graph, whose independence number is 5 `< 16/3`; a 4-colouring (found by SAT, stored) |
+| 5 | 4 | Hoffman's bound, `α ≤ 7 < 25/3` (`scripts/finite_hoffman.py --inert 5`), and a 4-colouring (found by SAT, stored) |
+| 7 | 4 | no 3-colouring (SAT; Moorhouse); a 4-colouring (stored), and the interval colouring of §12 |
 | 11 | 5 | SAT |
-| 13 | 5–6 | a 6-colouring (SAT); the three-point bound gives `α ≤ 42.64` (§14, certified), so `α ≤ 42 < 169/4` and there is no 4-colouring. Tabu search finds no 5-colouring, and CaDiCaL ran 25 minutes without an answer; independent sets of 36 points exist, above `169/5`, so bounding `α` cannot decide it |
+| 13 | 5–6 | a 6-colouring (found by SAT, stored); the three-point bound gives `α ≤ 42.64` (§14, certified), so `α ≤ 42 < 169/4` and there is no 4-colouring. Tabu search finds no 5-colouring, and CaDiCaL ran 25 minutes without an answer; independent sets of 36 points exist, above `169/5`, so bounding `α` cannot decide it |
 | 17 | 5–6 | no 4-colouring and a 6-colouring (SAT); tabu finds no 5-colouring. Independent sets of 57 points are found easily, never 58. Since `5·57 < 289`, `α = 57` would prove `χ ≥ 6`. Two kissat runs found 57-point sets in the same orbit: *rosettes*, made of a point, its whole circle `N = 12` and 38 points on six other circles around it. No independent set of 58 points contains a point together with its whole circle (DRAT, `scripts/g17_alpha.py`, part A); the other case is open. SAT runs on the 5-colouring have not finished; the three-point bound of §14 gives only `α ≤ 63.33` (numerically, not certified) |
 | 19 | 5 | SAT; triangle-free, with the linear 5-colouring `(a, b) ↦ c(a + b mod 19)` (§13) |
 | 23 | 5–8, likely ≥ 7 | no 4-colouring (Hoffman's bound, `α ≤ 131 < 529/4`, `scripts/finite_hoffman.py --inert 23`); an interval 8-colouring (§12); tabu finds no 7-colouring, and independent sets of 87 points, against `529/6 ≈ 88.2`; the three-point bound of §14 gives `α ≤ 107.04` (numerically, not certified), and proving `χ ≥ 6` this way needs `α ≤ 105` |
@@ -441,7 +441,8 @@ local fields this is a short observation. Fischer had settled the question in
   with residue field `𝔽_{2^f}` is `Cay(𝔽_{4^f}, μ_{2^f+1})`. Its chromatic
   number is 4 for `f = 1, 2, 3`: it is `K₄` for `f = 1` and the Clebsch graph
   for `f = 2`; for `f = 3` it contains `K₄` (the subfield `𝔽₄`, since
-  `μ₃ ⊂ μ₉`), and SAT finds a 4-colouring.
+  `μ₃ ⊂ μ₉`). The 4-colourings for `f = 2, 3` were found by SAT and are stored
+  in `data/small_plane_colourings.json`.
 - **A necessary condition for five.** Suppose a real field `F` has
   `χ(F²) ≥ 5`. Then:
   - no place of `F` over 2 ramifies in `F(i)`;
@@ -493,7 +494,9 @@ So a module is `k`-colourable as soon as one integral place has a
 | `χ(H_q)` | 2 | 3 | 3 | 4 | 4 | **5** | 5–6 | ≥ 5 | 5–6 | 6–8 | ≥ 5 |
 | tabu at 5 colours (best conflicts) | | | | | | | 2 | 4 | 222 | 1 290 | 4 581 |
 
-- **Where the entries come from.** The exact values are from SAT. For
+- **Where the entries come from.** The exact values are from SAT; the colourings
+  for `q ≤ 11` are stored in `data/small_plane_colourings.json` and checked on
+  every edge (`tests/test_small_plane_colourings.py`). For
   `q ≡ 1 (mod 4)`, `H_q ≅ 𝔽_q²` (§12), so the entries for 17, 29 and 37 are
   those of `𝔽_q²` in §12 and §14. SAT finds no 4-colouring of `H₁₇` or `H₁₉`.
   `H₄₉` needs at least five colours because the 5-chromatic `five_tuned_16`,
@@ -724,7 +727,8 @@ unit-distance graph `G` over `L` is a unit at `w`, then `χ(G) ≤ χ(H_q)`.
 
 The points need not be integral. §9 is the case where they are.
 
-**More values of `χ(H_q)`** (SAT; `tests/test_split_places.py`):
+**More values of `χ(H_q)`** (SAT; `tests/test_split_places.py`; the colourings are
+stored and checked in `tests/test_small_plane_colourings.py`):
 
 | `q` | 4 | 8 | 9 | 16 |
 |---|---|---|---|---|

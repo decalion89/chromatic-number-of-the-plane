@@ -8666,3 +8666,11 @@ out.
   `notes/local_colourings.md` §6 and `notes/rigidity.md` §11 now say so.
 
 `tests/test_finite_planes.py` checks the first and the fourth item.
+
+The same review noted that several upper bounds rest on colourings that a SAT
+solver finds and nothing stores: those of `G₃`, `G₄`, `G₅`, `G₇`, `G₈` and `G₁₃`,
+and of `H_q` for `q ≤ 16` other than 13. They are now in
+`data/small_plane_colourings.json`, and `tests/test_small_plane_colourings.py`
+rebuilds each graph and checks each colouring on every edge, with the lower
+bounds that need no solver (an odd cycle in `G₃`, the Clebsch graph's
+independence number 5, Hoffman's bound for `G₅`, `K₄` in `G₈`).

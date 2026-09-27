@@ -16,8 +16,8 @@ The tests marked `slow` include a 4-colourability solve of de Grey's 1581-vertex
 limit; `hn.coloring` enforces it for CaDiCaL, which ignores pysat's interrupt, by running the
 solver in a separate process.
 
-GitHub Actions (`.github/workflows/tests.yml`) runs the 35 files marked CI on every push to
-`main`, on every pull request, and on manual dispatch: 397 tests. It skips the DRAT test in
+GitHub Actions (`.github/workflows/tests.yml`) runs the 36 files marked CI on every push to
+`main`, on every pull request, and on manual dispatch: 414 tests. It skips the DRAT test in
 `test_certify.py`, because the workflow does not install drat-trim, and leaves out the six slow tests
 of `test_threepoint_indep.py`. The other eleven files (283 tests) are run locally; without their
 15 tests marked `slow` they took 32 minutes in a local run, 20 of them in one test of
@@ -63,6 +63,7 @@ minutes together.
 | `test_ring_geometry.py` | ✓ | Six facts behind the ring constructions, recomputed: the 90° rotation about the centre of a unit square moves one diagonal onto the other at distance 1, the map σ satisfies \|σu\|² = \|u\|²/3 and \|u − σu\| = \|u\|, the two-ring configuration is 3-chromatic, within each component of a neighbourhood in `five_247_c.json` two neighbours lie on the same side of the bipartition exactly when the angle between them is an even multiple of 60°, 2 is not of the form a² + ab + b², and that graph has exactly two vertices of degree 4. |
 | `test_slack.py` | ✓ | With slack s = k − 3: unit-distance graphs have clique number 3, a pair forced alike under k colours needs at least k + 1 vertices, a unit rhombus attains this at k = 3, and at k = 4 neither the rhombus nor the Moser spindle forces a pair. |
 | `test_spindle.py` | ✓ | The spindle constructions (two-copy, triple and local), separation tests and cores, on cases whose answers are known. |
+| `test_small_plane_colourings.py` | ✓ | The colourings behind the upper bounds for the small finite planes, stored in `data/small_plane_colourings.json`: G_q for q = 3, 4, 5, 7, 8, 13 and H_q for q ≤ 16, q ≠ 13, each rebuilt and checked on every edge. Also the lower bounds that need no solver: G₃ has an odd cycle, G₄ is the Clebsch graph (independence number 5), Hoffman's bound for G₅, and K₄ in G₈. |
 | `test_split_places.py` | ✓ | Proposition C of `notes/local_colourings.md` §12: the hyperbola graphs H_q = Cay(𝔽_q², {(t, 1/t)}) have χ = 2, 3, 4, 3, 4, 4, 3, 4, 5, 4 for q = 2, 3, 4, 5, 7, 8, 9, 11, 13, 16 (an explicit 5-colouring for q = 13); over ℚ(√3, √5), reduction at the prime above 2 is a proper 4-colouring of `chain35.json`, whose edge vectors are units there, one of its edge vectors is not a unit above 3, and reduction above 3 followed by a 3-colouring of H₉ 3-colours a graph whose edge vectors are units above 3. |
 | `test_threepoint.py` | ✓ | The three-point bound of `scripts/threepoint.py` (§14), without a solver: for q ≤ 13 the rotation blocks and the localizing blocks are compressions of the explicit matrices by an orthonormal basis, so they are positive semidefinite exactly when the matrices are; real independent sets of 𝔽₁₁² and 𝔽₁₃² satisfy every constraint, with objective \|S\|; the stored certificates match `data/threepoint/SHA256SUMS`. |
 | `test_threepoint_certificates.py` |  | Each certificate in `data/threepoint/` proves the lower bound on χ listed in the file (χ ≥ 6 for 𝔽₃₇², 𝔽₄₁², 𝔽₄₃², 𝔽₄₇², G₂₉, G₃₇, G₄₁; χ(G₁₃) ≥ 5), checked by `scripts/threepoint_verify.py` in interval and exact rational arithmetic (marked `slow`: up to four minutes each). |
