@@ -8553,6 +8553,17 @@ did not finish, so the search was cut down first.
   behave differently: the largest sets found in `G₁₁` (28 points) and `G₁₃` (36
   points) contain no whole circle.
 
+  > **Corrected later** (27 September). For `G₁₃` this is wrong. A search found
+  > independent sets of 36 points in 15 orbits under its 4 732 automorphisms,
+  > and 11 of them contain a point together with a whole circle: two the circle
+  > N = 7, and nine both circles N = 9 and N = 11. The other four contain none.
+  > (We do not claim that these are all the orbits.) For `G₁₁` it holds: its
+  > independent sets of 28 points, the largest, fall into three orbits (a
+  > complete enumeration by a SAT solver, without a proof certificate), and none
+  > contains a point with a whole circle. So in neither plane does every largest
+  > set found contain one. `scripts/experiments/largest_sets_whole_circles.py`
+  > checks both.
+
 `χ(G₁₇)` stays 5 or 6.
 
 ## Formal proofs of the two theorems (27 September)
