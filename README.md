@@ -57,9 +57,12 @@ Both planes can be coloured with four colours, and both contain unit-distance gr
 [full details](notes/local_colourings.md) (§8 and §10) ·
 [comparison with the literature](notes/literature.md)
 
-**Check:** `python3 -m pytest -q tests/test_q23.py tests/test_q311.py` (seconds) ·
-`cd lean && lake exe cache get && lake build && lake env lean PrintAxioms.lean` (minutes, with
-[elan](https://github.com/leanprover/elan))
+**Check:**
+
+```sh
+python3 -m pytest -q tests/test_q23.py tests/test_q311.py                        # seconds
+cd lean && lake exe cache get && lake build && lake env lean PrintAxioms.lean   # minutes; needs elan
+```
 
 <details>
 <summary><b>What was known, and what is new</b></summary>
@@ -125,17 +128,17 @@ None of these results has been refereed. Each has one or more of these statuses:
 
 | result | status | evidence |
 |---|---|---|
-| **χ(ℚ(√2, √3)²) = 4.** Voronov's second case; not found in the literature. | Proved; formally verified | [the note](papers/planes-4-chromatic/planes-4-chromatic.pdf), [`lean/Q23.lean`](lean/Q23.lean), [`notes/local_colourings.md`](notes/local_colourings.md) §10, `tests/test_q23.py`. The lower bound was already implicit in Voronov–Neopryatnaya–Dergachev; a 10-vertex chain of unit rhombi gives a short one (`certificates/chain23_no3coloring.json`). |
-| **χ(ℚ(√3, √11)²) = 4**, K. G. Fischer's theorem (1994). | Known; our short proof is proved and formally verified | [the note](papers/planes-4-chromatic/planes-4-chromatic.pdf), [`lean/Q311.lean`](lean/Q311.lean), [`notes/local_colourings.md`](notes/local_colourings.md) §8, `hn/adelic.py`, `tests/test_q311.py` |
-| χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, as whole complex fields | Known: the first follows from Fischer's theorem, the second from Madore's reduction at 11 and Exoo–Ismailescu's graph. Our local proofs, at the primes 2 and 11, are proved; the lower bound graph `five_247_c` is a computer proof | [`notes/local_colourings.md`](notes/local_colourings.md) §3, [`notes/rigidity.md`](notes/rigidity.md), `certificates/five_247_c_no4coloring.json` |
+| **χ(ℚ(√2, √3)²) = 4.** Voronov's second case; not found in the literature. | Proved; formally verified | [The note](papers/planes-4-chromatic/planes-4-chromatic.pdf), [`lean/Q23.lean`](lean/Q23.lean), [`notes/local_colourings.md`](notes/local_colourings.md) §10, `tests/test_q23.py`. The lower bound was already implicit in Voronov–Neopryatnaya–Dergachev; a 10-vertex chain of unit rhombi gives a short one (`certificates/chain23_no3coloring.json`). |
+| **χ(ℚ(√3, √11)²) = 4**, K. G. Fischer's theorem (1994) | Known; a new short proof, proved and formally verified | [The note](papers/planes-4-chromatic/planes-4-chromatic.pdf), [`lean/Q311.lean`](lean/Q311.lean), [`notes/local_colourings.md`](notes/local_colourings.md) §8, `hn/adelic.py`, `tests/test_q311.py` |
+| χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, for the whole complex fields | Known; new local proofs | The first follows from Fischer's theorem, the second from Madore's reduction at 11 and Exoo–Ismailescu's graph. Our proofs reduce at the primes 2 and 11 ([`notes/local_colourings.md`](notes/local_colourings.md) §3, [`notes/rigidity.md`](notes/rigidity.md)); the lower bound graph `five_247_c` has a DRAT proof (`certificates/five_247_c_no4coloring.json`). |
 | Necessary local conditions for a field to hold a 6-chromatic unit-distance graph | Proved | [`notes/local_colourings.md`](notes/local_colourings.md) §5–§9, `scripts/fieldscreen.py` |
-| **Six colours for finite planes.** χ ≥ 6 for 𝔽₃₇², 𝔽₄₁², 𝔽₄₃², 𝔽₄₇² (Moorhouse's planes x² + y²; his table stops at q = 17) and the anisotropic planes G₂₉, G₃₇, G₄₁, which are local planes of number fields. With Proposition B and Hoffman's bound, χ(G_q) ≥ 6 for every prime q ≥ 29 except 31, and χ(𝔽_q²) ≥ 6 for q = 37, 41, 43, 47, 59 and every prime q ≥ 67; χ(𝔽₄₁²) ∈ {6, 7}. | Computer proof: Schrijver's three-point bound gives α < q²/5, and each dual certificate is checked in interval and exact rational arithmetic, and again by an independent checker. For large q, proved: Hoffman's bound with Weil's estimate or the exact spectrum. | [`notes/local_colourings.md`](notes/local_colourings.md) §14, [`data/threepoint/`](data/threepoint/README.md), `scripts/threepoint_verify.py`, `scripts/threepoint_verify_indep.py` |
-| χ(ℝ²) ≥ 4: the Moser spindle has no 3-colouring | Known (L. and W. Moser, 1961); computer proof | `certificates/moser_spindle_no3coloring.json`, checked by drat-trim |
-| χ(ℝ²) ≥ 5: de Grey's 1581-vertex graph, rebuilt from his 39-point seed, has no 4-colouring | Known (de Grey, 2018); computer proof: a DRAT proof of 13.1 M lemmas, checked by drat-trim, for the formula with the colours of one triangle fixed, which loses no generality | `certificates/degrey_1581_no4coloring.json` |
-| Two 5-chromatic unit-distance graphs in ℚ(√3, √11, √247): `five_247_c`, 803 vertices and vertex-critical, and `five_247`, 1 139 vertices. Not a record: Parts' 509 stands. | Computer proof | `certificates/five_247_c_no4coloring.json`, `certificates/data_no4_checks.txt`, `tests/test_five_247.py` |
-| A vertex-critical unit-distance graph with 19 vertices and 33 edges and no 3-colouring. Unlike the Moser spindle, its obstruction combines two constraints, neither of which is forced on its own. | Computer proof | `certificates/genuine_pair_19_no3coloring.json` |
-| Two multi-distance graphs with no 5-colouring: 187 points with edges at 1 and at one Galois orbit of two distances (`data/W_moser_orbit_9_33.json`), and 72 points with edges at 1, 4/√3, √7, √(28/3), √(61/3) (`data/W_lattice_16_21_28_61.json`) | Computer proof, by kissat and drat-trim; four solvers agree | the two drat-trim logs in [`certificates/`](certificates/README.md); the research log |
-| No twisted colouring of the module of `five_rho7` is proper | Computer proof: 3 840 exact linear-programming (Stiemke) certificates, one for each of the 960 × 4 pairs (ψ, t) | [`notes/rigidity.md`](notes/rigidity.md) §2, `scripts/stiemke.py` |
+| **Six colours for finite planes.** χ(G_q) ≥ 6 for every prime q ≥ 29 except 31, and χ(𝔽_q²) ≥ 6 for q = 37, 41, 43, 47, 59 and every prime q ≥ 67; χ(𝔽₄₁²) ∈ {6, 7}. Here 𝔽_q² is the plane x² + y² (Moorhouse's table stops at q = 17), and G_q the anisotropic plane, a local plane of number fields. | Computer proof; proved for large q | For 𝔽₃₇², 𝔽₄₁², 𝔽₄₃², 𝔽₄₇², G₂₉, G₃₇ and G₄₁, Schrijver's three-point bound gives α < q²/5, and each dual certificate is checked in interval and exact rational arithmetic, and again by an independent checker. The other cases follow from Proposition B and Hoffman's bound, with Weil's estimate or the exact spectrum. [`notes/local_colourings.md`](notes/local_colourings.md) §14, [`data/threepoint/`](data/threepoint/README.md), `scripts/threepoint_verify.py`, `scripts/threepoint_verify_indep.py` |
+| χ(ℝ²) ≥ 4: the Moser spindle has no 3-colouring | Known; computer proof | L. and W. Moser (1961). `certificates/moser_spindle_no3coloring.json`, checked by drat-trim. |
+| χ(ℝ²) ≥ 5: de Grey's 1581-vertex graph, rebuilt from his 39-point seed, has no 4-colouring | Known; computer proof | De Grey (2018). A DRAT proof of 13.1 M lemmas, checked by drat-trim, for the formula with the colours of one triangle fixed, which loses no generality: `certificates/degrey_1581_no4coloring.json`. |
+| Two 5-chromatic unit-distance graphs in ℚ(√3, √11, √247): `five_247_c`, 803 vertices and vertex-critical, and `five_247`, 1 139 vertices. Not a record: Parts' 509 stands. | Computer proof | DRAT proofs checked by drat-trim: `certificates/five_247_c_no4coloring.json`, `certificates/data_no4_checks.txt`; `tests/test_five_247.py` |
+| A vertex-critical unit-distance graph with 19 vertices and 33 edges and no 3-colouring. Unlike the Moser spindle, its obstruction combines two constraints, neither of which is forced on its own. | Computer proof | A DRAT proof checked by drat-trim: `certificates/genuine_pair_19_no3coloring.json` |
+| Two multi-distance graphs with no 5-colouring: 187 points with edges at 1 and at one Galois orbit of two distances, and 72 points with edges at 1, 4/√3, √7, √(28/3), √(61/3) | Computer proof | Kissat and drat-trim; four solvers agree. `data/W_moser_orbit_9_33.json`, `data/W_lattice_16_21_28_61.json`, their drat-trim logs in [`certificates/`](certificates/README.md), and the research log |
+| No twisted colouring of the module of `five_rho7` is proper | Computer proof | 3 840 exact linear-programming (Stiemke) certificates, one for each of the 960 × 4 pairs (ψ, t): [`notes/rigidity.md`](notes/rigidity.md) §2, `scripts/stiemke.py` |
 
 **In progress.** G₁₇, the anisotropic plane over 𝔽₁₇, is a local plane of ℚ(√−3, √−7, √−11); χ(G₁₇) is 5
 or 6, and α(G₁₇) ≤ 57 would make it 6. The first part of that bound is checked
@@ -218,7 +221,7 @@ sh scripts/worker_setup.sh                   # kissat and drat-trim, for the sea
 | all eight three-point certificates | `python3 -m pytest -q tests/test_threepoint_certificates.py` | 15 minutes |
 | the same, with an independent checker | `python3 -m pytest -q tests/test_threepoint_indep.py` | 10 minutes |
 | spectral bounds for large q | `python3 scripts/finite_hoffman.py 59 71` and `python3 scripts/finite_hoffman.py --inert 53 59 61` | seconds |
-| de Grey's graph needs five colours | `python3 -m pytest -q tests/test_degrey.py` | hours (the solver limit is four) |
+| de Grey's graph needs five colours | `python3 -m pytest -q tests/test_degrey.py` | up to four hours |
 
 `scripts/verify_pair.py` rebuilds a unit-distance graph or gadget from its data file, recomputes every
 edge exactly and runs the solvers; the multi-distance witnesses have their own checkers, listed in
