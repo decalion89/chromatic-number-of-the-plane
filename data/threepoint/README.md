@@ -22,7 +22,7 @@ bounds are rounded up. Each archive holds `meta`, `z`, `value` and `status`, des
 [`../README.md`](../README.md). `SHA256SUMS` fixes the contents: run `sha256sum -c SHA256SUMS` in
 this folder.
 
-**Checking.** From `research/hadwiger-nelson`,
+**Checking.** From the root of the repository,
 `python3 scripts/threepoint_verify.py data/threepoint/std47.npz` rebuilds the blocks in interval
 arithmetic, proves the dual matrices positive definite by an exact rational LDLᵀ factorisation and
 prints a rigorous bound on α (3–5 minutes). `python3 -m pytest -q tests/test_threepoint_certificates.py`

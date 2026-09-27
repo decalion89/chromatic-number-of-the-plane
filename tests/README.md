@@ -6,7 +6,6 @@ pairs, the local colourings, and the two theorems χ(ℚ(√3, √11)²) = 4, fi
 (1994), and χ(ℚ(√2, √3)²) = 4.
 
 ```sh
-cd research/hadwiger-nelson
 python3 -m pytest -q                       # the whole suite, including the slow tests
 python3 -m pytest -q -m "not slow"         # without the tests marked slow
 python3 -m pytest -q tests/test_q23.py     # one file
@@ -17,10 +16,10 @@ The tests marked `slow` include a 4-colourability solve of de Grey's 1581-vertex
 limit; `hn.coloring` enforces it for CaDiCaL, which ignores pysat's interrupt, by running the
 solver in a separate process.
 
-GitHub Actions (`.github/workflows/tests.yml` at the repository root) runs the 34 files marked CI
-on every push to `main`, on every pull request, and on manual dispatch: 389 tests, which took two
-minutes in a local run. The DRAT test in `test_certify.py` is skipped there, because the
-workflow does not install drat-trim. The other eleven files (283 tests) are run locally; without their
+GitHub Actions (`.github/workflows/tests.yml`) runs the 35 files marked CI on every push to
+`main`, on every pull request, and on manual dispatch: 395 tests. It skips the DRAT test in
+`test_certify.py`, because the workflow does not install drat-trim, and leaves out the six slow tests
+of `test_threepoint_indep.py`. The other eleven files (283 tests) are run locally; without their
 15 tests marked `slow` they took 32 minutes in a local run, 20 of them in one test of
 `test_two_tunings.py`. The eight slow tests of `test_threepoint_certificates.py` take about 15
 minutes together.
@@ -67,7 +66,7 @@ minutes together.
 | `test_split_places.py` | ✓ | Proposition C of `notes/local_colourings.md` §12: the hyperbola graphs H_q = Cay(𝔽_q², {(t, 1/t)}) have χ = 2, 3, 4, 3, 4, 4, 3, 4, 5, 4 for q = 2, 3, 4, 5, 7, 8, 9, 11, 13, 16 (an explicit 5-colouring for q = 13); over ℚ(√3, √5), reduction at the prime above 2 is a proper 4-colouring of `chain35.json`, whose edge vectors are units there, one of its edge vectors is not a unit above 3, and reduction above 3 followed by a 3-colouring of H₉ 3-colours a graph whose edge vectors are units above 3. |
 | `test_threepoint.py` | ✓ | The three-point bound of `scripts/threepoint.py` (§14), without a solver: for q ≤ 13 the rotation blocks and the localizing blocks are compressions of the explicit matrices by an orthonormal basis, so they are positive semidefinite exactly when the matrices are; real independent sets of 𝔽₁₁² and 𝔽₁₃² satisfy every constraint, with objective \|S\|; the stored certificates match `data/threepoint/SHA256SUMS`. |
 | `test_threepoint_certificates.py` |  | Each certificate in `data/threepoint/` proves the lower bound on χ listed in the file (χ ≥ 6 for 𝔽₃₇², 𝔽₄₁², 𝔽₄₃², 𝔽₄₇², G₂₉, G₃₇, G₄₁; χ(G₁₃) ≥ 5), checked by `scripts/threepoint_verify.py` in interval and exact rational arithmetic (marked `slow`: up to four minutes each). |
-| `test_threepoint_indep.py` | ✓ | The independent checker `scripts/threepoint_verify_indep.py`: on 𝔽₇², G₁₁ and G₁₃ the true z of an actual independent set satisfies every constraint it rebuilds; misreading a certificate's labelling (the sign of the basis shifts, or the frequency of each block) more than doubles the bound, so the check is not vacuous; `inert13.npz` and `inert29.npz` give α(G₁₃) ≤ 42 and α(G₂₉) ≤ 163, and the other six certificates their bounds (marked `slow`: up to two minutes each). |
+| `test_threepoint_indep.py` | ✓ | The independent checker `scripts/threepoint_verify_indep.py`: on 𝔽₇², G₁₁ and G₁₃ the true z of an actual independent set satisfies every constraint it rebuilds; misreading a certificate's labelling (the sign of the basis shifts, or the frequency of each block) more than doubles the bound, so the check is not vacuous; `inert13.npz` and `inert29.npz` give α(G₁₃) ≤ 42 and α(G₂₉) ≤ 163, and the other six certificates their bounds (marked `slow`, and left out of CI: up to two minutes each). |
 | `test_tight_four.py` | ✓ | The 24-point graph of `data/tight_four.json` is 4-chromatic and has circular chromatic number exactly 4. |
 | `test_transfer.py` | ✓ | The transfer-matrix construction, which glues copies of a graph along congruent sets of points, on the Moser spindle. |
 | `test_transversal.py` | ✓ | Blocking by rotated copies of targets at one distance: rotation orders over a multiquadratic field divide 24, the triangle is the only odd cycle available, the capacity bounds that follow, and the counting certificate. |

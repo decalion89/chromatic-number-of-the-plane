@@ -1,4 +1,4 @@
-# Checks the formal proofs in research/hadwiger-nelson/lean on every push to main and every pull request: builds
+# Checks the formal proofs in lean/ on every push to main and every pull request: builds
 # them against Mathlib, compares their axioms with lean/axioms.expected, and replays each file in Lean's kernel
 # with leanchecker.
 name: lean
@@ -19,7 +19,7 @@ jobs:
     timeout-minutes: 60
     defaults:
       run:
-        working-directory: research/hadwiger-nelson/lean
+        working-directory: lean
     steps:
       - uses: actions/checkout@v4
       # Mathlib's prebuilt files take several GB: make room on the runner first.
@@ -28,7 +28,7 @@ jobs:
       - name: Install Lean, fetch Mathlib's prebuilt files, build every proof
         uses: leanprover/lean-action@v1
         with:
-          lake-package-directory: research/hadwiger-nelson/lean
+          lake-package-directory: lean
           auto-config: false
           build: true
           use-mathlib-cache: true

@@ -1,5 +1,5 @@
 \\ The decompositions of 2 and 3 used in notes/local_colourings.md (sections 8, 10 and 11) and in the
-\\ note (docs/note), recomputed with PARI/GP.  Run from research/hadwiger-nelson:
+\\ note (papers/planes-4-chromatic), recomputed with PARI/GP.  Run from the root of the repository:
 \\     gp -q scripts/decompositions.gp
 \\ Each output line is: the generators of a multiquadratic field Q(sqrt a, sqrt b, ...), a prime p, and
 \\ the sorted list of [e, f] (ramification index, residue degree) of the primes of the field over p.

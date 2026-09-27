@@ -5,13 +5,13 @@ polynomial identity that holds modulo `r3^2 = 3`, `r11^2 = 11` is written as
 `E = Q0*(r3^2 - 3) + Q1*(r11^2 - 11)`; the script prints `Q0` and `Q1`.
 
   1. `Q311.moserEdges` and `Q311.adj..`. The certificate
-     `research/hadwiger-nelson/certificates/moser_spindle_no3coloring.json` lists only the seven
+     `certificates/moser_spindle_no3coloring.json` lists only the seven
      vertices (basis `1, √3, √11, √33`). The edges are all pairs at distance 1, found exactly
      here (eleven of them), with the coefficients of each unit-distance proof.
   2. Checks of the identities behind `Q311.piL_sq`, `Q311.two_eq`, `Q311.beta_sq` and
      `Q311.exists_int_combo_beta`, for both signs `t = ±√11`.
 
-Run: `python3 lean/tools/q311_coefficients.py` from `research/hadwiger-nelson` (needs sympy).
+Run: `python3 lean/tools/q311_coefficients.py` from the root of the repository (needs sympy).
 """
 import json
 import os

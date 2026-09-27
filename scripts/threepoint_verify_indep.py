@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Independent rigorous check of the three-point certificates data/threepoint/*.npz
-(research/hadwiger-nelson, notes/local_colourings.md section 14).
+(notes/local_colourings.md, section 14).
 
 This file does NOT import scripts/threepoint.py or scripts/threepoint_verify.py.  The programme is rebuilt
 here from the definitions, over full n x n matrices (n = q^2), and the certificate is used only as a source

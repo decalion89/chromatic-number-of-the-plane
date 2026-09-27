@@ -1,8 +1,8 @@
 # Scripts: the maintained tools
 
 The 92 scripts here are the project's maintained tools; the 733 one-off experiments behind the
-research log are in [`experiments/`](experiments/). Run every tool from `research/hadwiger-nelson/`:
-each finds the `hn` package from its own location.
+research log are in [`experiments/`](experiments/). Run every tool from the root of the
+repository: each finds the `hn` package from its own location.
 
 **Start here.**
 - `verify_pair.py` rebuilds a claimed obstruction from its JSON file, rederives every edge in exact

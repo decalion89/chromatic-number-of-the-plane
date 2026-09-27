@@ -1,7 +1,7 @@
 # Formal proofs in Lean 4
 
 This directory holds proofs in Lean 4, with Mathlib, of the two theorems of the note
-[`docs/note/planes-4-chromatic.pdf`](../docs/note/planes-4-chromatic.pdf): the planes over ℚ(√2, √3) and
+[`papers/planes-4-chromatic/planes-4-chromatic.pdf`](../papers/planes-4-chromatic/planes-4-chromatic.pdf): the planes over ℚ(√2, √3) and
 ℚ(√3, √11) have chromatic number 4. The second is K. G. Fischer's theorem (1994); the note gives a short proof
 of both, and these files check that proof.
 
@@ -31,13 +31,13 @@ output of `#print axioms`, and CI compares them.
 
 With [elan](https://github.com/leanprover/elan) installed:
 
-    cd research/hadwiger-nelson/lean
+    cd lean
     lake exe cache get                       # Mathlib's prebuilt files, a few minutes
     lake build                               # the three files, about a minute
     lake env lean PrintAxioms.lean           # compare with axioms.expected
 
 `lean-toolchain` pins Lean v4.34.1 and `lakefile.toml` pins Mathlib v4.34.1. The GitHub Actions workflow
-[`lean.yml`](../../../.github/workflows/lean.yml) runs these steps on every push to `main` and every pull
+[`lean.yml`](../.github/workflows/lean.yml) runs these steps on every push to `main` and every pull
 request. It then replays each file in Lean's kernel with `leanchecker`, independently of the tactics that
 produced the proofs.
 

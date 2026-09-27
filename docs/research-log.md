@@ -3,7 +3,8 @@
 > **About this file.** This is the project's chronological research log, kept as written:
 > results, dead ends, corrections and retractions, in the order they happened. It was the
 > project README until 25 September 2026. For a summary of what is established, see
-> [`../README.md`](../README.md). Paths below are relative to `research/hadwiger-nelson/`.
+> [`../README.md`](../README.md). Paths below are relative to the root of the
+> repository, which held the project in `research/hadwiger-nelson/` until release 1.1.0.
 >
 > **Corrections.** Claims that later turned out wrong are kept where they were made. A
 > correction made on the spot is marked **Corrected**, **Withdrawn** or **Retraction**, and

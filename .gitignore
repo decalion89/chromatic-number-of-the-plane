@@ -5,3 +5,25 @@ __pycache__/
 .venv/
 venv/
 .DS_Store
+# the compiled local-search tools (scripts/README.md)
+scripts/tabucol
+scripts/tabu2
+# transient checkpoints of running growth searches (committed under a final name when a run ends)
+data/*_ls.json
+data/*_ls[0-9]*.json
+data/*_inc.json
+data/*_kw.json
+data/*_kw[0-9]*.json
+!data/L16_kw2.json
+data/*_grow.json
+data/blk_plain.json
+data/rho7_pair2_ckpt.json
+data/*.cnf
+data/*.kissat
+data/blk_plain_*.json
+*.drat
+# Lean: the build, and what the checks write (lean/README.md)
+lean/.lake/
+lean/export/
+lean/axioms.txt
+lean/build.log

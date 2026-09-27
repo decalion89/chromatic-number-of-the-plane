@@ -1,4 +1,4 @@
-# Runs the fast part of research/hadwiger-nelson/tests on every push to main and every pull request.
+# Runs the fast part of tests/ on every push to main and every pull request.
 name: tests
 
 on:
@@ -15,16 +15,13 @@ jobs:
     name: Fast test suite
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    defaults:
-      run:
-        working-directory: research/hadwiger-nelson
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: pip
-          cache-dependency-path: research/hadwiger-nelson/requirements.txt
+          cache-dependency-path: requirements.txt
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
       # PARI/GP recomputes the prime decompositions (tests/test_decompositions.py).
@@ -32,9 +29,12 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends pari-gp
       # The full suite takes hours (it re-solves de Grey's graph); CI runs the files that finish
       # in seconds, which cover the field arithmetic, the local colourings and both theorems.
+      # Of the three-point certificates, the independent checker runs on the two small ones here;
+      # the other six take about ten minutes and are run locally.
       - name: Run the fast tests
         run: >-
           python -m pytest -q
+          --deselect tests/test_threepoint_indep.py::test_other_certificates
           tests/test_q23.py tests/test_q311.py tests/test_q35.py tests/test_q3q.py tests/test_split_places.py
           tests/test_decompositions.py tests/test_cli.py
           tests/test_biquadratic_bounds.py tests/test_finite_planes.py tests/test_g17.py tests/test_threepoint.py tests/test_threepoint_indep.py

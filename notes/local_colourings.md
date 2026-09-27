@@ -625,7 +625,7 @@ possible to do it without `√3` (and without triangle)?"
   triangles give `χ(L²) ≥ 3`.
 - **Upper bound 4.** If `q` is even or `q ≡ 1, 3 (mod 8)`, a prime of `L`
   above 2 has residue field `𝔽₂`, and the criterion of §8 (Theorem 2 of the
-  note `docs/note/planes-4-chromatic.pdf`) gives `χ(L²) ≤ 4`.
+  note `papers/planes-4-chromatic/planes-4-chromatic.pdf`) gives `χ(L²) ≤ 4`.
 - **Lower bound 4.** If `q ≡ 2 (mod 3)`, then 3 splits in `ℚ(√−q)`, a subfield
   of `L(i)`. Let `h` be its class number and `α` a generator of the `h`-th
   power of a prime above 3. Then `N(α) = 3^h`, and 3 does not divide

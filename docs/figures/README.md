@@ -1,6 +1,6 @@
 # Figures
 
-The SVG figures of the project page, generated from the data by
+The SVG figures of the README, generated from the data by
 [`scripts/make_figures.py`](../../scripts/make_figures.py), which rebuilds both files exactly.
 
 | file | shows |

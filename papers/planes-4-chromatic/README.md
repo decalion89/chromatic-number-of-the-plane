@@ -1,4 +1,4 @@
-# The note
+# The planes over ℚ(√3, √11) and ℚ(√2, √3) are 4-chromatic
 
 [`planes-4-chromatic.pdf`](planes-4-chromatic.pdf) is a five-page note proving χ(ℚ(√2, √3)²) = 4
 and giving a short proof of K. G. Fischer's theorem χ(ℚ(√3, √11)²) = 4 (1994). Both theorems are also

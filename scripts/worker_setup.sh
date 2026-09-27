@@ -5,7 +5,7 @@ set -e
 TOOLS=${TOOLS:-$HOME/hn-tools}
 mkdir -p "$TOOLS"
 python3 -m pip install -q numpy scipy sympy python-sat 2>/dev/null || pip install -q numpy scipy sympy python-sat
-# The revisions used for the results of release 1.0.0 (research/hadwiger-nelson/requirements-lock.txt).
+# The revisions used for the results of release 1.0.0 (requirements-lock.txt).
 KISSAT_TAG=rel-4.0.4
 DRAT_TRIM_COMMIT=2e3b2dc0ecf938addbd779d42877b6ed69d9a985
 if [ ! -x "$TOOLS/kissat/build/kissat" ]; then

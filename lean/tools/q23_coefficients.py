@@ -10,10 +10,10 @@ prints `Q0` and `Q1`, which are the coefficients of the hypotheses `u^2 = m`, `v
      `s3 = √3` for `π = (√2 + √6)/2 - 1`.
   3. `Q23.epsL` and `Q23.two_eq_pi_pow_four_mul`: `ε = 2/π⁴` in `ℤ[π]`, and the cofactor of the
      Eisenstein polynomial in `2 - π⁴ε`.
-  4. `Q23.adj..`: the sixteen unit distances of `research/hadwiger-nelson/data/chain23.json`
+  4. `Q23.adj..`: the sixteen unit distances of `data/chain23.json`
      (coordinates on the basis `1, √2, √3, √6`).
 
-Run: `python3 lean/tools/q23_coefficients.py` from `research/hadwiger-nelson` (needs sympy).
+Run: `python3 lean/tools/q23_coefficients.py` from the root of the repository (needs sympy).
 """
 import json
 import os
