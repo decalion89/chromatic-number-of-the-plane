@@ -8674,3 +8674,39 @@ and of `H_q` for `q ≤ 16` other than 13. They are now in
 rebuilds each graph and checks each colouring on every edge, with the lower
 bounds that need no solver (an odd cycle in `G₃`, the Clebsch graph's
 independence number 5, Hoffman's bound for `G₅`, `K₄` in `G₈`).
+
+## `α(G₁₃) = 36` (27 September)
+
+`G₁₃` has 169 vertices, independent sets of 36 points and a 6-colouring, and the
+three-point bound gave `α ≤ 42`, so `χ(G₁₃)` was 5 or 6 (`local_colourings.md`
+§4). Unlike `G₁₇`, bounding `α` cannot decide it: five classes of 36 points
+would hold 180 vertices. The plan was to settle `α` first, and then the sizes
+the largest class of a 5-colouring could have. An independent review of the
+plan checked the case split and the encodings before the run.
+
+- **The case split.** A set of 37 independent points extends to a maximal one,
+  which is dominating. Either that set contains a point together with its whole
+  circle `N = c` for one of the independent circles `c = 6, 7, 9, 11`, or it
+  does not. In the first case the point is translated to 0, and four small
+  formulas (`E37_A_c`) fall in under a second each. The second case is invariant
+  under the 4 732 automorphisms, so lex-leader clauses on the first 25 vertices
+  of `lex_order()` break the symmetry. Its formula, E37_B (114 055 variables and
+  351 802 clauses, mostly the chains), was cut by `scripts/g13/cuber2.py` into a
+  tree of 4 822 cubes, 14 decisions deep along the same order.
+- **The run.** Every leaf fell to kissat within 120 s, with a DRAT proof
+  checked by drat-trim: 3.4 hours of kissat and 3.1 of drat-trim, 1 hour 41
+  minutes on one machine with four jobs, as one share of a computation on
+  several cloud machines. The proofs (22 GB) were deleted after the checks.
+- **The checks.** The share's log was checked on another machine: the five
+  formulas written again by the code have the SHA-256 of the logs, the cube
+  file is a cover, and every leaf formula has a VERIFIED line. cake_lpr then
+  refuted again the four small formulas, the cover formula and 40 leaves
+  chosen at random. So `α(G₁₃) = 36` (`notes/g13.md`), and since `G₁₃` is
+  vertex-transitive, `χ_f(G₁₃) = 169/36`.
+
+`χ(G₁₃)` is still open. A 5-colouring would have a largest class of 34, 35 or
+36 points, and the same machines are refuting one formula for each size
+(`F34`, `F35`, `F36`: the largest class is dominating and lex-leader, and the
+other colours are ordered by value precedence). `F34` is the hard one: kissat
+reached 120 s on 381 of its 4 823 leaves, against 2 to 4 per cent of the leaves
+of the other two, and those leaves are being split again.

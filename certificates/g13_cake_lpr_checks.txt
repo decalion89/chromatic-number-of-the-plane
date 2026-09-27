@@ -1,0 +1,57 @@
+# scripts/verify_g13.py, run on 27 September 2026 on one machine (4 cores and 15 GB), one formula at a time and at
+# low priority, with kissat 4.0.4, drat-trim (commit 2e3b2dc0ecf938addbd779d42877b6ed69d9a985) and cake_lpr (commit
+# a4323b203cc9ecd584ba7da9e3fff08135a09d5f):
+#   HN_OUT=<dir> python3 scripts/verify_g13.py --kissat kissat --drat-trim drat-trim --cake-lpr cake_lpr \
+#       --part a --log <log>
+#   HN_OUT=<dir> python3 scripts/verify_g13.py --kissat kissat --drat-trim drat-trim --cake-lpr cake_lpr \
+#       --part b --sample 40 --seed 20260927 --log <log>
+# Part A: the four formulas E37_A_c. Part B: the cover formula (the negated leaves, with the resolution proof that
+# the script writes) and 40 leaves chosen at random. For the other 4 782 leaves of part B the check on record is
+# drat-trim's (certificates/g13_alpha_part_b_checks.txt.gz). Every formula below has the SHA-256 of the logs, and
+# every proof was checked by drat-trim and by cake_lpr.
+E37_A6: sha256 ba2304d350b0f70fd43640209a9abaf647ee9706950682b7d4ae85768f0353b7 as in the certificate; kissat UNSAT in 0 s; drat-trim VERIFIED in 0 s; cake_lpr VERIFIED UNSAT in 0 s; confirmed
+E37_A7: sha256 f9efbf32e3d60a7d87ba0c710abb1b7aa0d272fda61c62d8c067f62936e61e4e as in the certificate; kissat UNSAT in 1 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 0 s; confirmed
+E37_A9: sha256 be2d24f40c39b68a277db0e1a11ac6c0438bd72d2a343d6096fe91ac6232dcaa as in the certificate; kissat UNSAT in 0 s; drat-trim VERIFIED in 0 s; cake_lpr VERIFIED UNSAT in 0 s; confirmed
+E37_A11: sha256 d03aa90ff245d3259bcfba02e818581c258c297282a448ff95acf005b2c77a71 as in the certificate; kissat UNSAT in 0 s; drat-trim VERIFIED in 0 s; cake_lpr VERIFIED UNSAT in 0 s; confirmed
+part B: 4822 leaves (564 closed by unit propagation); they cover every assignment: True
+part B: the cover formula (4822 negated leaves, sha256 471d9b322cd98cd51c156ef157a9282bf82fc9352c51dd74346cde15be10ab61) is unsatisfiable: cake_lpr VERIFIED
+leaf 57: sha256 22b222c3a70733365d13de6978a47e4cf34f305fe007f1660451f4b41771860d as in the certificate; kissat UNSAT in 3 s; drat-trim VERIFIED in 3 s; cake_lpr VERIFIED UNSAT in 3 s; confirmed
+leaf 100: sha256 4ee8f32e366fd720a5b4271104d50c0562a4f2b2fa7de5d6684a996a48933151 as in the certificate; kissat UNSAT in 1 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 234: sha256 bbdca4e6a6a81a518ebb2683827d1530723c261fd2259ebf679059c44a30d787 as in the certificate; kissat UNSAT in 5 s; drat-trim VERIFIED in 3 s; cake_lpr VERIFIED UNSAT in 2 s; confirmed
+leaf 291: sha256 32b4a86c3bd93c7d6abe4e002d64f0922ac7c0d8b2799b9937ed5e5fea597c8e as in the certificate; kissat UNSAT in 4 s; drat-trim VERIFIED in 2 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 304: sha256 b852ae9ac7c4ee1f3f2ca0289079d13dbcf990a5e0b0e20ab036e1901ae17954 as in the certificate; kissat UNSAT in 1 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 449: sha256 8e0bfa22e383ccfe7184b6192a90dba88675c7d28dbaae6c9af0ad1a36be4c4a as in the certificate; kissat UNSAT in 3 s; drat-trim VERIFIED in 2 s; cake_lpr VERIFIED UNSAT in 2 s; confirmed
+leaf 573: sha256 d4af8a8f4fee3fc742b2e041c6495dbb3de3eb860f6a63687d709e2e0a597a87 as in the certificate; kissat UNSAT in 4 s; drat-trim VERIFIED in 3 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 579: sha256 2f84fb7f6f0d6e1d8feff8a96d3001981131ebd5a517bcd47f4786352c5a08ae as in the certificate; kissat UNSAT in 2 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 584: sha256 5d005b83b79a516d2b3ce3d6c7611437f0d7a1c73d3b61346593f211960a53b4 as in the certificate; kissat UNSAT in 1 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 635: sha256 a5f97f79aed570ed82cb1e75fcc9ac3afa347fab4fac8275573b61a33306d21c as in the certificate; kissat UNSAT in 7 s; drat-trim VERIFIED in 8 s; cake_lpr VERIFIED UNSAT in 4 s; confirmed
+leaf 875: sha256 28d8d8c10678b6f2ef99f1bae16f7a56bf1a083425c2f95fd17a76ee78c7485f as in the certificate; kissat UNSAT in 6 s; drat-trim VERIFIED in 5 s; cake_lpr VERIFIED UNSAT in 2 s; confirmed
+leaf 921: sha256 2e24fa6f7fe015655d2ad28d339f99062e30b7721e7be7a56e0a7b9796298eae as in the certificate; kissat UNSAT in 5 s; drat-trim VERIFIED in 4 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 965: sha256 243ee9e6985cbf1ca3845b1ea92c468afd3818b20b701f62382359b4144b99dc as in the certificate; kissat UNSAT in 5 s; drat-trim VERIFIED in 2 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 986: sha256 1a8c72bde055805044bd0f6cf47b90a6efce0b446015ddd423e7522de2e52472 as in the certificate; kissat UNSAT in 7 s; drat-trim VERIFIED in 6 s; cake_lpr VERIFIED UNSAT in 2 s; confirmed
+leaf 1046: sha256 b580f38d0890b63e12f35aeede30c470b2583158bca6a5ef8773b8814d423723 as in the certificate; kissat UNSAT in 2 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 1092: sha256 6da57e5b3c3bac4f6f7f30a87cb129c2ba1eff4593cc10ae306f99b546b058e7 as in the certificate; kissat UNSAT in 1 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 1167: sha256 b3b1cef3b943e1a752a95c7b6a6ca5fb05736c3191dda065c512d0b005843836 as in the certificate; kissat UNSAT in 4 s; drat-trim VERIFIED in 3 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 1515: sha256 99b04edd44f82b59aeeb93f4a23e2a3f62e5d5c5377b0b923c10e2bb4f28fa3c as in the certificate; kissat UNSAT in 10 s; drat-trim VERIFIED in 16 s; cake_lpr VERIFIED UNSAT in 12 s; confirmed
+leaf 1607: sha256 6405a1b8698d7e87bd87e488064b0e0fa808261cd3d83b45d20ffee701d10d68 as in the certificate; kissat UNSAT in 3 s; drat-trim VERIFIED in 2 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 1675: sha256 0338d786ff33c1a5416ea5126b2679bbfc7e84283c5deddd817ded09b7a5dc85 as in the certificate; kissat UNSAT in 1 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 1956: sha256 87645510a1e648cccb1cabe7fb29b45a3ecaedfdf64f75d89bd1fa300f58c25b as in the certificate; kissat UNSAT in 2 s; drat-trim VERIFIED in 2 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 2081: sha256 17c5888c5b4fd3c2d030473cd622b595a5d19d946121f1ebaccfc370ad0c429b as in the certificate; kissat UNSAT in 0 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 2121: sha256 d07a02b446866942389638daea5fad1035125eb144c7224f602611c6cf9fd453 as in the certificate; kissat UNSAT in 1 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 2313: sha256 0e20cc7f8a29dff21da6d79310003888a2c22e3bc58419251e6f787845017ddc as in the certificate; kissat UNSAT in 1 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 2396: sha256 71210bf65f54ccb7500b061678617b740ace43a37091e474f801bd3293a078ef as in the certificate; kissat UNSAT in 0 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 2547: sha256 3c601492171b972044b6954bbbec8f00731104dd28b6c3d5d7dc75a09ee805d0 as in the certificate; kissat UNSAT in 1 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 2565: sha256 16471cc50fe4363a903964f3e0378cbe7f68898980f13fdd7a93992621407ec5 as in the certificate; kissat UNSAT in 0 s; drat-trim VERIFIED in 0 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 2592: sha256 27f5fa8b9c7b1732b58996da44f0c38b9eec91e448f249ae5145939729515f3f as in the certificate; kissat UNSAT in 0 s; drat-trim VERIFIED in 0 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 2877: sha256 3e5b26946b484263970dfad86a3a3c8b6341f3789f80cffd8e3f1dde84210358 as in the certificate; kissat UNSAT in 1 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 2960: sha256 57ad555edd8869ed0e44ff1d3aa069074afdfdc1bd928d825c36004db050c716 as in the certificate; kissat UNSAT in 1 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 3313: sha256 a875e0096028073c1b0001a8e74ba22106ec59b5124ac911a5e7bc026e797123 as in the certificate; kissat UNSAT in 0 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 3315: sha256 071e0b22b6dd9acac57c03be564d4367ec6f0bf7daa3b78d4a449655d8a04cf3 as in the certificate; kissat UNSAT in 0 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 3472: sha256 bf7ee0c17a884693821445e9339e71f12daf1cd46391816b923951f175a96ace as in the certificate; kissat UNSAT in 1 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 3503: sha256 286f29f16edee8016b4507f760ab11977fa4985a0959b28e5a3ac0636a045804 as in the certificate; kissat UNSAT in 1 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 3814: sha256 ac1b3800ef3fe8331eac9a8b038a086049a99e146db6ae880b1a81248e9b013b as in the certificate; kissat UNSAT in 1 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 3985: sha256 5c68def29c7644b7db89abf6e7c22f9ce8f6a03e91a8be54fab18df2fb8aeedf as in the certificate; kissat UNSAT in 0 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 4055: sha256 4c84ecc8461052091d0d6d24ecac4a8efcb550f4b0a2625fa98103eb33e00852 as in the certificate; kissat UNSAT in 0 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 4132: sha256 4bb476acd70f15d6ca02be201bd51d762762b9a115dd4722703a85617659093a as in the certificate; kissat UNSAT in 0 s; drat-trim VERIFIED in 0 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 4265: sha256 efb7c117314870f4431f2bf7432ded276262b44e930bdadfbdf1a72f8d9a3343 as in the certificate; kissat UNSAT in 0 s; drat-trim VERIFIED in 1 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed
+leaf 4410: sha256 4469be0a261045a816220ed2df4633993b7c73dd9d479c886f7643e95e2e4d7d as in the certificate; kissat UNSAT in 0 s; drat-trim VERIFIED in 0 s; cake_lpr VERIFIED UNSAT in 1 s; confirmed

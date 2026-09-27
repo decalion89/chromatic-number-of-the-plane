@@ -1,0 +1,7 @@
+# alpha(G_13) <= 36, part A (notes/g13.md, section 3): the formulas E37_A_c, c = 6, 7, 9, 11, of
+# scripts/g13/enum_cert.py; kissat 4.0.4 and drat-trim 2e3b2dc through scripts/g13/certify.py,
+# 27 September 2026. Each line: the formula, the SHA-256 of its text, kissat's verdict, drat-trim's.
+E37_A6.cnf: sha256 ba2304d350b0f70fd43640209a9abaf647ee9706950682b7d4ae85768f0353b7; kissat UNSAT in 0.1 s (proof 0.1 MB); drat-trim VERIFIED, 735 of 3474 lemmas in core in 0.1 s
+E37_A7.cnf: sha256 f9efbf32e3d60a7d87ba0c710abb1b7aa0d272fda61c62d8c067f62936e61e4e; kissat UNSAT in 0.7 s (proof 1.2 MB); drat-trim VERIFIED, 15062 of 34358 lemmas in core in 0.5 s
+E37_A9.cnf: sha256 be2d24f40c39b68a277db0e1a11ac6c0438bd72d2a343d6096fe91ac6232dcaa; kissat UNSAT in 0.1 s (proof 0.1 MB); drat-trim VERIFIED, 1318 of 4426 lemmas in core in 0.2 s
+E37_A11.cnf: sha256 d03aa90ff245d3259bcfba02e818581c258c297282a448ff95acf005b2c77a71; kissat UNSAT in 0.1 s (proof 0.1 MB); drat-trim VERIFIED, 777 of 3727 lemmas in core in 0.1 s

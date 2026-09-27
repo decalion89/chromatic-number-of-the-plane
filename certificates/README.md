@@ -50,7 +50,8 @@ be deleted, leaving 31 vertices, with the pressure still 3.
 
 Most logs belong to a certificate above. Four record checks of files in `data/`: the two
 multi-distance witnesses, the forced pair of Exoo and Ismailescu's graph H, and every graph there
-said to have no proper 4-colouring (`data_no4_checks.txt`). One records part A of
+said to have no proper 4-colouring (`data_no4_checks.txt`). Four record `α(G₁₃) ≤ 36` (`notes/g13.md`): its two cases, the cube tree of the
+second, and the recheck by cake_lpr (`g13_*`). One records part A of
 `scripts/g17_alpha.py`, a step towards α(G₁₇) ≤ 57 (`g17_part_a_checks.txt`).
 
 | file | what it records |
@@ -61,6 +62,10 @@ said to have no proper 4-colouring (`data_no4_checks.txt`). One records part A o
 | `degrey_1581_cnf_head.txt` | The first 14 and the last 14 lines of that formula: the header, the first 13 vertex clauses, the last two edge clauses and the 12 unit clauses that pin the triangle. |
 | `ei_H214_forced_pair_drat_trim_verification.txt` | kissat and drat-trim on the formula of `tests/test_denominator_five.py` for `data/ei_H214.json`, Exoo and Ismailescu's graph H with edges at distances 1 and 2 and its pair A, B at distance 5 required to differ, one triangle pinned: unsatisfiable, so A and B share a colour in every such 5-colouring; `s VERIFIED` with 436 214 of 570 197 lemmas in the core. |
 | `five_247_c_drat_trim_verification.txt` | kissat and drat-trim on the 17 063-clause formula of `five_247_c_no4coloring.json`, rebuilt from the certificate: `s VERIFIED`, with 1 455 257 of 4 006 246 lemmas in the core, in 463 s; the file gives the SHA-256 of the formula and of the proof. |
+| `g13_alpha_part_a_checks.txt` | `scripts/g13/certify.py`, case A of `α(G₁₃) ≤ 36`: the four formulas `E37_A_c` of `scripts/g13/enum_cert.py` (an independent dominating set of 37 points containing 0 and the whole circle N = c, c = 6, 7, 9, 11), with the SHA-256 of each, kissat UNSAT and drat-trim VERIFIED. |
+| `g13_alpha_part_b_cubes.icnf` | The 4 822 leaves of the cube tree of case B (`scripts/g13/cuber2.py`, at most 14 decisions along `lex_order()`), 564 of them closed by unit propagation; `scripts/verify_g13.py` checks that they cover every assignment. |
+| `g13_alpha_part_b_checks.txt.gz` | One line per leaf of case B: formula E37_B of `scripts/g13/enum_cert.py` plus the leaf, its SHA-256, kissat UNSAT within 120 s and drat-trim VERIFIED. |
+| `g13_cake_lpr_checks.txt` | `scripts/verify_g13.py` with cake_lpr: the four formulas of case A, the cover formula and 40 leaves of case B chosen at random, each rebuilt, compared with the logs, refuted again by kissat and checked by drat-trim and by cake_lpr. |
 | `g17_part_a_checks.txt` | `scripts/g17_alpha.py`, part A: for each of the seven circles N = c of G₁₇ with no unit distance inside, the formula saying that 39 vertices of the region adjacent to none of {0} + C_c are independent; kissat finds all seven unsatisfiable and drat-trim verifies all seven DRAT proofs, so no independent set of 58 points contains a point together with its whole circle. Each line gives the SHA-256 of the formula, which `tests/test_g17.py` recomputes. |
 | `genuine_pair_19_drat_trim_verification.txt` | kissat (with `--no-binary`) and drat-trim on the 118-clause formula of `genuine_pair_19_no3coloring.json`, rebuilt from the certificate: `s VERIFIED`, with 50 of 91 lemmas in the core. |
 | `moser_spindle_drat_trim_verification.txt` | kissat (with `--no-binary`) and drat-trim on the 40-clause formula of `moser_spindle_no3coloring.json`, rebuilt from the certificate: `s VERIFIED`, with 12 of 26 lemmas in the core. |
