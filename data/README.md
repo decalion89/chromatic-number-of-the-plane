@@ -1,14 +1,14 @@
 # Data: graphs and witnesses in exact coordinates
 
 Every graph here is stored with exact coordinates, so every distance can be recomputed exactly. The
-table at the end lists each of the 85 JSON files tracked in this directory once. Growth runs also write
+table at the end lists each of the 86 JSON files tracked in this directory once. Growth runs also write
 transient checkpoints and solver files here (`*_kw<n>.json`, `*_ls<n>.json`, `*_inc.json`,
 `*_grow.json`, `blk_plain*.json`, `*.cnf`, `*.kissat`); `.gitignore` excludes them, and they are not
 indexed. The one exception is `L16_kw2.json`, a checkpoint kept as data and indexed below.
 
 ## Formats
 
-Five formats occur.
+Six formats occur.
 
 **Graphs with coordinates in a multiquadratic field** (66 files) have the keys:
 - `field_generators`: `[a, b, …]`, meaning that the coordinates lie in ℚ(√a, √b, …);
@@ -49,6 +49,10 @@ a point of `witness_five.json` is `[x, y]` with 16 strings each. `claim` states 
 **Results without coordinates** (16 files) record computations on the graph named in a `graph` key
 or in the table below, by the vertex indices of that graph; `mu5_menu.json` is a list of such
 records.
+
+**Colourings of finite planes**: `small_plane_colourings.json` gives, for each small finite plane `G_q` or
+`H_q`, a proper colouring as a list of colours, one per vertex, in the order its `vertex_order` key
+describes.
 
 **Three-point certificates** (`threepoint/*.npz`, numpy archives, not indexed below) bound the
 independence number `α` of a finite plane, and so its chromatic number from below
@@ -95,6 +99,7 @@ The tests and `scripts/verify_pair.py` read the first format. `scripts/orbit_wit
 | `ei_H214.json`, `ei_rho7.json`, `K_rot.json` | Exoo–Ismailescu's graphs, rebuilt from their paper (arXiv:1909.13177) and turned onto the project's modules. |
 | `L16_seed.json` | 6 080 points: the starting graph of the searches in L16. |
 | `L16_kw2.json` | 18 524 points: the largest growth from `L16_seed.json` kept. |
+| `small_plane_colourings.json` | Colourings of the small finite planes G_q (q = 3, 4, 5, 7, 8, 13) and H_q (q ≤ 16, q ≠ 13), with as few colours as each needs: the upper bounds of `notes/local_colourings.md` §4, §8 and §12, checked on every edge by `tests/test_small_plane_colourings.py`. |
 | `tight_four.json`, `witness_five.json` | Small graphs with a stated claim: circular chromatic number 4, and 161 pairs one of which is monochromatic in every proper 5-colouring. |
 
 ## All files
@@ -193,6 +198,7 @@ in which the construction worked.
 | `rho7_pair5_ckpt.json` | 6 878 | ℚ(√3, √11, √247) | A checkpoint of the growth from `rho7_pair5_seed.json`. |
 | `rho7_pair5_seed.json` | 4 998 | ℚ(√3, √11, √247) | The seed of `rho7_pair2_seed.json` with the pair a, a + 5e at distance 5 instead. |
 | `shrunk_1135.json` | 1 135 | ℚ(√3, √11, √247) | A subgraph of `five_247.json` with no proper 4-colouring, extracted from an unsatisfiable core (seed 0; `scripts/experiments/shrink_core.py`). |
+| `small_plane_colourings.json` | — | — | Proper colourings of the small finite planes G_q (q = 3, 4, 5, 7, 8, 13) and H_q (q ≤ 16, q ≠ 13), each with as few colours as the plane needs, in the vertex order the file describes (`tests/test_small_plane_colourings.py`). |
 | `tight_four.json` | 24 | ℚ(√3, √5, √7, √11) | A unit-distance graph with 54 edges whose chromatic number and circular chromatic number are both 4 (`tests/test_tight_four.py`). |
 | `tight_hexagon_4159.json` | 4 159 | ℚ(√3, √11, √247) | Six copies of `five_247_c.json` with their densest vertices on the vertices of a hexagon, each turned by a different multiple of 60°, with no proper 4-colouring. |
 | `two_distance_five_247_c.json` | — | — | No squared distance among the 60 most frequent in `five_247_c.json` is forced at five colours: with the pairs at any one of them added as edges, the graph stays 5-colourable (`scripts/experiments/twodist.py`). |

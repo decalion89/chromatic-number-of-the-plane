@@ -12,6 +12,11 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- `data/small_plane_colourings.json` and `tests/test_small_plane_colourings.py`:
+  the colourings behind the upper bounds for the small finite planes (`G_q` for
+  `q = 3, 4, 5, 7, 8, 13`, `H_q` for `q ≤ 16`), found by SAT and until now
+  recomputed or not stored, are stored and checked on every edge, with the
+  lower bounds that need no solver.
 - `scripts/threepoint_verify_indep.py`, an independent check of the eight
   three-point certificates. It imports neither the solver nor
   `threepoint_verify.py`: it rebuilds the programme from its definitions, takes

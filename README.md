@@ -238,7 +238,7 @@ cvxopt 1.3.3 (DSDP) and clarabel 0.11.1; checking them needs only numpy, scipy a
 their contents. `requirements-lock.txt` lists the exact versions of the Python packages used for the
 results and of their dependencies, and `scripts/worker_setup.sh` builds the pinned kissat and drat-trim.
 
-GitHub Actions runs the fast part of the suite, 397 tests in 35 files
+GitHub Actions runs the fast part of the suite, 414 tests in 36 files
 ([`tests.yml`](.github/workflows/tests.yml)), and builds and checks the Lean proofs
 ([`lean.yml`](.github/workflows/lean.yml)), on pushes to `main` and on pull requests.
 
@@ -253,7 +253,7 @@ GitHub Actions runs the fast part of the suite, 397 tests in 35 files
 | [`data/`](data/README.md) | graphs and witnesses in exact coordinates (JSON), and the three-point certificates |
 | [`certificates/`](certificates/README.md) | colourings, DRAT verification logs and non-colourability claims |
 | [`scripts/`](scripts/README.md) | maintained tools: verification, search, figures; `scripts/experiments/` keeps the 734 one-off experiments behind the research log |
-| [`tests/`](tests/README.md) | the test suite: 686 tests, 24 of them marked slow |
+| [`tests/`](tests/README.md) | the test suite: 703 tests, 24 of them marked slow |
 | [`docs/`](docs/README.md) | the research log, the full chronological record, and the figures |
 
 Each of these folders has a README describing its contents. Until release 1.1.0 the project sat in
