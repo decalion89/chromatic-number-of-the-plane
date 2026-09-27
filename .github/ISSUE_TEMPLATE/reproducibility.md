@@ -11,4 +11,4 @@ labels: reproducibility
 
 **Observed.** The output or error (the last lines are enough).
 
-**Environment.** Operating system, `python3 --version`, and `python3 -m pip freeze | grep -i -E "numpy|scipy|sympy|mpmath|python-sat|cvxopt|clarabel"`. The versions used for the results are in `research/hadwiger-nelson/requirements-lock.txt`.
+**Environment.** Operating system, `python3 --version`, and `python3 -m pip freeze | grep -i -E "numpy|scipy|sympy|mpmath|python-sat|cvxopt|clarabel"`. The versions used for the results are in `requirements-lock.txt`.

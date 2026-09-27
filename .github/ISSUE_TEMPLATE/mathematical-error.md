@@ -5,7 +5,7 @@ title: "Error: "
 labels: erratum
 ---
 
-**Where.** File and section (for example `research/hadwiger-nelson/notes/local_colourings.md` §14), or the table row.
+**Where.** File and section (for example `notes/local_colourings.md` §14), or the table row.
 
 **The statement.** Quote it.
 

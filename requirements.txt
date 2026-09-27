@@ -1,0 +1,11 @@
+# Minimum versions. requirements-lock.txt lists the exact versions used for the results.
+python-sat>=1.8.dev1  # PyPI only publishes .dev releases of python-sat
+numpy>=1.24
+scipy>=1.10
+sympy>=1.12
+pytest>=7.0
+python-flint>=0.6  # exact integer matrices, for scripts/threepoint_verify_indep.py
+# Optional, for the circular-gate tools scripts/circrel.py and scripts/circsat.py: ortools
+# Optional, for solving the three-point programmes (scripts/threepoint.py): cvxopt (its DSDP interface) and
+# clarabel.  Checking their certificates (scripts/threepoint_verify.py) needs only numpy, scipy and mpmath,
+# which sympy installs.

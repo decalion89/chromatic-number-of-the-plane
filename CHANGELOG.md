@@ -7,9 +7,56 @@ data formats.
 
 Mathematical corrections are listed in each version. The full record,
 including every retracted claim, is the research log,
-[`research/hadwiger-nelson/docs/research-log.md`](research/hadwiger-nelson/docs/research-log.md).
+[`docs/research-log.md`](docs/research-log.md).
 
 ## [Unreleased]
+
+### Added
+- `scripts/threepoint_verify_indep.py`, an independent check of the eight
+  three-point certificates. It imports neither the solver nor
+  `threepoint_verify.py`: it rebuilds the programme from its definitions, takes
+  only the dual multipliers from each file, proves the dual blocks positive
+  definite exactly and bounds α by an exact rational. All eight bounds are
+  confirmed, each within 4·10⁻⁶ of the solver's value
+  (`certificates/threepoint_indep_checks.txt`). `tests/test_threepoint_indep.py`
+  also checks it against actual independent sets, and shows that misreading a
+  certificate destroys its bound.
+
+- The Zenodo DOI of version 1.1.0, 10.5281/zenodo.22985036, in `CITATION.cff`
+  and in the README's BibTeX entry.
+
+### Changed
+- **Layout.** The project moved from `research/hadwiger-nelson/` to the root of
+  the repository, and the note to `papers/planes-4-chromatic/`, where each paper
+  has its own folder. Commands now run from the root. Release 1.1.0, and
+  version 5 of the note, which cites it, keep the old paths.
+- **One front page.** The README merges the former front page and project page.
+  Each result has a status (proved, formally verified, computer proof, known),
+  the evidence behind it and where to read it; one table gives the command that
+  checks each result.
+- `python-flint` is now a requirement: the independent checker multiplies
+  integer matrices with FLINT.
+
+### Fixed
+- **Citations**, after an audit against primary sources:
+  - standard results are now credited where they are used: de Bruijn–Erdős,
+    Hoffman (with Haemers for the ratio form), Weil, Delsarte, Stiemke, Croft,
+    Falconer, Molloy, Alon–Krivelevich–Sudakov, value precedence, cube and
+    conquer, Lean 4 and Mathlib;
+  - the 103-vertex graph with edges at 1 and 2/√3 is Exoo's and Ismailescu's,
+    not Ismailescu's alone;
+  - Speyer's 2-adic colouring of the Moser ring is in Polymath16's thread 2,
+    not thread 3;
+  - χ_f(ℝ²) ≤ 4.36, derived in the research log as if new, is Hochberg and
+    O'Donnell's (1993), and the log no longer says that the LP line had
+    stalled;
+  - the claim that the repulsion of a distance had not been measured before
+    is withdrawn: it is an empirical counterpart of the probability `p_d` of
+    Polymath16's probabilistic formulation;
+  - the README's references gain journal data, and the works the repository
+    cites.
+
+  The research log lists every fix under "Citation audit (27 September)".
 
 ## [1.1.0] - 2026-09-27
 

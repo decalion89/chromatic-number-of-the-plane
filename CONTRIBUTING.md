@@ -19,21 +19,20 @@ Open an issue with one of the two templates:
 A confirmed error is corrected where it stands and recorded in two places:
 - [`CHANGELOG.md`](CHANGELOG.md), under *Fixed*;
 - the research log,
-  [`research/hadwiger-nelson/docs/research-log.md`](research/hadwiger-nelson/docs/research-log.md),
+  [`docs/research-log.md`](docs/research-log.md),
   which keeps the earlier statement, marked as corrected, with the reason.
 
 ## Reproducing a result
 
-The section *Reproducing* of
-[`research/hadwiger-nelson/README.md`](research/hadwiger-nelson/README.md#reproducing)
-gives one command per result, with its running time. In that directory:
+The section [*Reproducing*](README.md#reproducing) of the README gives one
+command per result, with its running time. At the root of the repository:
 - `requirements-lock.txt` pins the Python packages;
 - `scripts/worker_setup.sh` builds kissat 4.0.4 and drat-trim at a fixed
   commit.
 
 ## Changing code or claims
 
-A pull request follows the principles of the research README:
+A pull request follows the principles stated in the README:
 - **Exact geometry.** Coordinates live in number fields. Floating point may
   prune a search, but never decides that two points are at distance 1.
 - **Evidence with every claim.**
@@ -43,6 +42,9 @@ A pull request follows the principles of the research README:
   - Claims that rest on solvers alone say so.
   - A semidefinite bound needs a stored dual certificate checked in interval
     arithmetic.
+  - A formal proof in `lean/` builds with no `sorry`,
+    and its theorems use only the axioms listed in `lean/axioms.expected`; a
+    change to that file says why.
 - **Tests.** Every new statement the code supports gets a test. Run the test
   files you touched, and the fast subset that CI runs
   (`.github/workflows/tests.yml`).
