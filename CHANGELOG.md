@@ -23,9 +23,10 @@ None of the results below has been refereed.
   `lean/axioms.expected` and replays them in Lean's kernel with `leanchecker`.
 - Version 5 of the note, now in LaTeX (`docs/note/planes-4-chromatic.tex`):
   five pages, with a figure of the 10-vertex graph and a paragraph on the
-  formal proofs, reviewed independently before release. Citations added or completed: L. and W. Moser (1961) for the
-  spindle; Moorhouse's draft and its address; the Polymath16 threads, with
-  their titles, comment numbers and addresses; issue and zbMATH numbers.
+  formal proofs, reviewed independently before release. Citations added or
+  completed: L. and W. Moser (1961) for the spindle; Moorhouse's draft and its
+  address; the Polymath16 threads, with their titles, comment numbers and
+  addresses; issue and zbMATH numbers.
 - `scripts/g17_alpha.py`, towards α(G₁₇) ≤ 57, which would give χ(G₁₇) ≥ 6:
   - the 57-point rosette found by kissat;
   - part A: no independent set of 58 points contains a point together with its
