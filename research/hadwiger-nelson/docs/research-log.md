@@ -8565,5 +8565,5 @@ did not finish, so the search was cut down first.
 - CI (`.github/workflows/lean.yml`) builds the proofs, compares their axioms
   with `lean/axioms.expected`, and replays each file in Lean's kernel with
   `leanchecker`.
-- The note is now typeset in LaTeX (version 5, four pages), with a figure of
+- The note is now typeset in LaTeX (version 5, five pages), with a figure of
   the 10-vertex graph and the citation audit's fixes.

@@ -1,6 +1,6 @@
 # The note
 
-[`planes-4-chromatic.pdf`](planes-4-chromatic.pdf) is a four-page note proving χ(ℚ(√2, √3)²) = 4
+[`planes-4-chromatic.pdf`](planes-4-chromatic.pdf) is a five-page note proving χ(ℚ(√2, √3)²) = 4
 and giving a short proof of K. G. Fischer's theorem χ(ℚ(√3, √11)²) = 4 (1994). Both theorems are also
 proved in Lean 4 ([`lean/`](../../lean/)).
 [`planes-4-chromatic.tex`](planes-4-chromatic.tex) is its LaTeX source (`amsart`). To rebuild the PDF, run

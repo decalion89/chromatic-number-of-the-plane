@@ -46,7 +46,7 @@ Moser spindle (Moorhouse, 2010).
   also tested by computer on finite unit-distance graphs with up to 3 134
   vertices. Not yet refereed.
 
-**Read:** [the four-page note (PDF)](research/hadwiger-nelson/docs/note/planes-4-chromatic.pdf) ·
+**Read:** [the note (PDF)](research/hadwiger-nelson/docs/note/planes-4-chromatic.pdf) ·
 [the Lean proofs](research/hadwiger-nelson/lean/README.md) ·
 [full details](research/hadwiger-nelson/notes/local_colourings.md) (§8 and §10) ·
 [comparison with the literature](research/hadwiger-nelson/notes/literature.md)
@@ -112,10 +112,10 @@ resolves to the latest version. For the repository as a whole, use GitHub's
 @software{galan2026hn,
   author  = {Gal{\'a}n, Sergi},
   title   = {The {H}adwiger--{N}elson problem over number fields},
-  version = {1.0.0},
+  version = {1.1.0},
   year    = {2026},
-  doi     = {10.5281/zenodo.22976636},
-  url     = {https://github.com/decalion89/chromatic-number-of-the-plane/releases/tag/v1.0.0},
+  doi     = {10.5281/zenodo.22976635},
+  url     = {https://github.com/decalion89/chromatic-number-of-the-plane/releases/tag/v1.1.0},
   note    = {AI-assisted research; not peer reviewed}
 }
 ```
@@ -170,7 +170,7 @@ una prueba corta de un teorema de K. G. Fischer (1994): el plano sobre
 pasado desapercibido; los trabajos posteriores lo daban por abierto. La prueba
 cambia de coordenadas para que el argumento de reducción de Madore funcione
 módulo 2. Está explicada en una
-[nota de cuatro páginas](research/hadwiger-nelson/docs/note/planes-4-chromatic.pdf)
+[nota breve](research/hadwiger-nelson/docs/note/planes-4-chromatic.pdf)
 y verificada formalmente en Lean 4.
 También se demuestra, con certificados verificados por un programa
 independiente, que siete planos finitos necesitan seis colores. Es un trabajo

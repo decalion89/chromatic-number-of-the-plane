@@ -1,6 +1,6 @@
 # Docs
 
-[`note/`](note/) holds the four-page note on the two theorems,
+[`note/`](note/) holds the note on the two theorems,
 [`planes-4-chromatic.pdf`](note/planes-4-chromatic.pdf), and its LaTeX source. Run `pdflatex
 planes-4-chromatic.tex` three times in `note/` to rebuild it.
 

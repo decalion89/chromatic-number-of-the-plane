@@ -5,8 +5,8 @@ abstract: >-
   Exact-arithmetic tools, data and machine-checked certificates for the
   Hadwiger–Nelson problem on the chromatic number of the plane. Includes a
   short proof that the planes over Q(sqrt2, sqrt3) and Q(sqrt3, sqrt11) are
-  4-chromatic (the latter a theorem of K. G. Fischer, 1994), with a
-  three-page note, reproductions of chi(R^2) >= 4 and
+  4-chromatic (the latter a theorem of K. G. Fischer, 1994), with a note and
+  formal proofs in Lean 4, reproductions of chi(R^2) >= 4 and
   >= 5 with DRAT certificates, multi-distance witnesses for the route to
   chi(R^2) >= 6, and certified three-point bounds showing that several finite
   planes need six colours. AI-assisted research; not peer reviewed.
@@ -25,8 +25,8 @@ identifiers:
     value: 10.5281/zenodo.22976636
     description: "Version 1.0.0"
 license: MIT
-version: "1.0.0"
-date-released: "2026-09-26"
+version: "1.1.0"
+date-released: "2026-09-27"
 keywords:
   - Hadwiger–Nelson problem
   - chromatic number of the plane
@@ -36,3 +36,5 @@ keywords:
   - DRAT proofs
   - algebraic number theory
   - p-adic fields
+  - formal verification
+  - Lean 4
