@@ -491,5 +491,7 @@ every case computed:
 If it held in general, `ℚ(√−3, √−7, √−11)` would be 6-chromatic as soon as
 the local planes at 17 and 41 need six colours at every level (so far
 `χ(G₄₁) ≥ 6` is proved at level 1, `notes/local_colourings.md` §14, and
-`χ(G₁₇)` is 5 or 6), and then `χ(ℝ²) ≥ 6`. Nothing here proves that; the
+`χ(G₁₇)` is 5 or 6) and so do its local planes above 83, 101, …: Proposition
+12 gives that at level 1, and at the deeper levels only with its character-sum
+estimate. Then `χ(ℝ²) ≥ 6`. Nothing here proves that; the
 growth run is the experiment.

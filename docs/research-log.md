@@ -8638,3 +8638,31 @@ lists them.
     `data/README.md` names arXiv:1909.13177; `scripts/README.md` cites
     Hertz–de Werra, Galinier–Hao and Fincke–Pohst; `tests/README.md` cites Croft
     and Hochberg–O'Donnell.
+
+## Statuses: what Hoffman's bound already proves (27 September)
+
+An internal review of a draft paper found statuses in the notes that claimed
+less than the repository proves, and one conditional with a hypothesis left
+out.
+- **No 4-colouring of `𝔽₂₃²` and `𝔽₃₁²`** follows from Hoffman's bound in
+  interval arithmetic: `α ≤ 131 < 529/4` and `α ≤ 240 < 961/4`
+  (`scripts/finite_hoffman.py --inert 23 31`; for `q ≡ 3 (mod 4)` these planes
+  are `G₂₃` and `G₃₁`). The notes gave SAT. The margin at 31 is small, a quarter
+  of a point, but the eigenvalues are enclosed rigorously.
+- **`χ(G₅) ≥ 4` and `χ(G₃) ≥ 3`** follow in the same way (`α ≤ 7 < 25/3`,
+  `α ≤ 3`). For `G₇`, `G₁₁`, `G₁₃`, `G₁₇` and `G₁₉` Hoffman's bound gives only
+  3 or 4, and the lower bounds there stay as they were.
+- **The planes over 2.** `Cay(𝔽₁₆, μ₅)` is the Clebsch graph, whose independence
+  number is 5 `< 16/3`, and `Cay(𝔽₆₄, μ₉)` contains `K₄` (the subfield `𝔽₄`,
+  since `μ₃ ⊂ μ₉`). Only their 4-colourings still come from SAT.
+- **Linear colourings of `𝔽₁₇²`** need six colours by an exhaustive count: the
+  nine admissible circulants `{αx + βy : x² + y² = 1}` all have independence
+  number at most 3, and `17/3 > 5`.
+- **A conditional, completed.** "`ℚ(√−3, √−7, √−11)` would be 6-chromatic as soon
+  as its local planes at 17 and 41 need six colours at every level" also needs
+  its other non-split places, above 83, 101, …, at every level. At level 1 that
+  is Weil's bound; at the deeper levels it rests on the character-sum estimate
+  of Proposition 12 in `notes/rigidity.md`, which is sketched, not proved.
+  `notes/local_colourings.md` §6 and `notes/rigidity.md` §11 now say so.
+
+`tests/test_finite_planes.py` checks the first and the fourth item.

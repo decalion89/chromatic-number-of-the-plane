@@ -17,7 +17,7 @@ limit; `hn.coloring` enforces it for CaDiCaL, which ignores pysat's interrupt, b
 solver in a separate process.
 
 GitHub Actions (`.github/workflows/tests.yml`) runs the 35 files marked CI on every push to
-`main`, on every pull request, and on manual dispatch: 395 tests. It skips the DRAT test in
+`main`, on every pull request, and on manual dispatch: 397 tests. It skips the DRAT test in
 `test_certify.py`, because the workflow does not install drat-trim, and leaves out the six slow tests
 of `test_threepoint_indep.py`. The other eleven files (283 tests) are run locally; without their
 15 tests marked `slow` they took 32 minutes in a local run, 20 of them in one test of
@@ -38,7 +38,7 @@ minutes together.
 | `test_disjunctive_spindle.py` | ✓ | The three- and six-copy disjunctive spindles, which need only c(v) = c(q₁) or c(v) = c(q₂) instead of a forced pair, checked in exact arithmetic and by an exhaustive sweep over the choices of the copies. |
 | `test_fast_agrees.py` | ✓ | The vectorised integer arithmetic of `hn/fast.py` agrees with exact rational arithmetic on points, unit vectors, walks and edge sets. |
 | `test_field.py` | ✓ | Exact arithmetic in multiquadratic fields: admissible generators, products of radicals, inverses through the Galois conjugates, exact equality and hashing. |
-| `test_finite_planes.py` | ✓ | Bounds for Moorhouse's table of χ(𝔽_q²) (`notes/local_colourings.md` §12): interval colourings, with m consecutive parallel lines ax + by = r per colour when a² + b² − r² is a non-square for r < m, for q = 7, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61 (optimal for 7, 13, 19); a linear 8-colouring of 𝔽₄₃²; no 4-colouring of 𝔽₂₃² or 𝔽₃₇². Hoffman's bound with every eigenvalue in interval arithmetic (§14): χ(𝔽₅₉²) ≥ 6, χ ≥ 7 for q = 71, 97, 101, and χ(G_q) ≥ 6 for the anisotropic planes with q = 53, 59, 61, the cases of Proposition B below Weil's threshold. |
+| `test_finite_planes.py` | ✓ | Bounds for Moorhouse's table of χ(𝔽_q²) (`notes/local_colourings.md` §12): interval colourings, with m consecutive parallel lines ax + by = r per colour when a² + b² − r² is a non-square for r < m, for q = 7, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61 (optimal for 7, 13, 19); a linear 8-colouring of 𝔽₄₃²; no 4-colouring of 𝔽₂₃² or 𝔽₃₇²; linear colourings of 𝔽₁₇² need six colours (every admissible circulant has independence number at most 3). Hoffman's bound with every eigenvalue in interval arithmetic (§14): no 4-colouring of 𝔽₂₃² or 𝔽₃₁², χ(𝔽₅₉²) ≥ 6, χ ≥ 7 for q = 71, 97, 101, and χ(G_q) ≥ 6 for the anisotropic planes with q = 53, 59, 61, the cases of Proposition B below Weil's threshold. |
 | `test_finite_planes_slow.py` |  | No 4-colouring of 𝔽₂₉², 𝔽₃₁², 𝔽₄₁² or 𝔽₄₃² (marked `slow`; 15 s to 8 minutes each). |
 | `test_five_247.py` |  | The 5-chromatic unit-distance graphs over ℚ(√3, √11, √247) and ℚ(√3, √11, √23) in `data/`: edge counts recomputed exactly, chromatic number 5, C₆-invariance of the symmetric graphs, and the radicals that the spindle angles need. |
 | `test_forced.py` | ✓ | Forced colour relations on graphs with known answers: pairs forced alike or different, cores, and the pressure at a vertex p (the least number of colours a k-colouring uses on the unit neighbours of p), including `certificates/pressure3_witness_47.json`. |

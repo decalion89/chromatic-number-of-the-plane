@@ -159,17 +159,17 @@ goes further: it proves `χ(G_q) ≥ 6` for `q = 29, 37, 41, 43, 47`.
 | `q` | `χ(G_q)` | evidence |
 |---|---|---|
 | 2 | 4 | the 2-adic analysis above |
-| 3 | 3 | SAT (Moorhouse) |
-| 4 | 4 | SAT: `Cay(𝔽₁₆, μ₅)` (`tests/test_biquadratic_bounds.py`) |
-| 5 | 4 | SAT |
+| 3 | 3 | Hoffman's bound, `α ≤ 3` (`scripts/finite_hoffman.py --inert 3`), and a 3-colouring (SAT; Moorhouse) |
+| 4 | 4 | `Cay(𝔽₁₆, μ₅)` is the Clebsch graph, whose independence number is 5 `< 16/3`; a 4-colouring (SAT, `tests/test_biquadratic_bounds.py`) |
+| 5 | 4 | Hoffman's bound, `α ≤ 7 < 25/3` (`scripts/finite_hoffman.py --inert 5`), and a 4-colouring (SAT) |
 | 7 | 4 | SAT (Moorhouse) |
 | 11 | 5 | SAT |
 | 13 | 5–6 | a 6-colouring (SAT); the three-point bound gives `α ≤ 42.64` (§14, certified), so `α ≤ 42 < 169/4` and there is no 4-colouring. Tabu search finds no 5-colouring, and CaDiCaL ran 25 minutes without an answer; independent sets of 36 points exist, above `169/5`, so bounding `α` cannot decide it |
 | 17 | 5–6 | no 4-colouring and a 6-colouring (SAT); tabu finds no 5-colouring. Independent sets of 57 points are found easily, never 58. Since `5·57 < 289`, `α = 57` would prove `χ ≥ 6`. Two kissat runs found 57-point sets in the same orbit: *rosettes*, made of a point, its whole circle `N = 12` and 38 points on six other circles around it. No independent set of 58 points contains a point together with its whole circle (DRAT, `scripts/g17_alpha.py`, part A); the other case is open. SAT runs on the 5-colouring have not finished; the three-point bound of §14 gives only `α ≤ 63.33` (numerically, not certified) |
 | 19 | 5 | SAT; triangle-free, with the linear 5-colouring `(a, b) ↦ c(a + b mod 19)` (§13) |
-| 23 | 5–8, likely ≥ 7 | no 4-colouring (SAT); an interval 8-colouring (§12); tabu finds no 7-colouring, and independent sets of 87 points, against `529/6 ≈ 88.2`; the three-point bound of §14 gives `α ≤ 107.04` (numerically, not certified), and proving `χ ≥ 6` this way needs `α ≤ 105` |
+| 23 | 5–8, likely ≥ 7 | no 4-colouring (Hoffman's bound, `α ≤ 131 < 529/4`, `scripts/finite_hoffman.py --inert 23`); an interval 8-colouring (§12); tabu finds no 7-colouring, and independent sets of 87 points, against `529/6 ≈ 88.2`; the three-point bound of §14 gives `α ≤ 107.04` (numerically, not certified), and proving `χ ≥ 6` this way needs `α ≤ 105` |
 | 29 | ≥ 6 | three-point bound: `α ≤ 163.25 < 841/5` (§14) |
-| 31 | 5–8 | `G₃₁ = 𝔽₃₁²` (§12); the three-point bound gives only `α ≤ 200.89` (numerically, not certified), against `961/5 = 192.2` |
+| 31 | 5–8 | `G₃₁ = 𝔽₃₁²` (§12); no 4-colouring (Hoffman's bound, `α ≤ 240 < 961/4`, `scripts/finite_hoffman.py --inert 31`); the three-point bound gives only `α ≤ 200.89` (numerically, not certified), against `961/5 = 192.2` |
 | 37 | ≥ 6 | three-point bound: `α ≤ 263.64 < 1369/5` (§14) |
 | 41 | ≥ 6 | three-point bound: `α ≤ 300.73 < 1681/5` (§14); local search finds 213 |
 | 43 | 6–8 | `G₄₃ = 𝔽₄₃²`; three-point bound: `α ≤ 347.79 < 1849/5` (§14); a linear 8-colouring (§12) |
@@ -240,7 +240,10 @@ It holds in every case computed:
 
 If it held in general, `ℚ(√−3, √−7, √−11)` would be 6-chromatic as soon as its
 local planes at 17 and 41 need six colours at every level (so far `χ(G₄₁) ≥ 6`
-is proved at level 1, §14, and `χ(G₁₇)` is 5 or 6), and then `χ(ℝ²) ≥ 6`. We
+is proved at level 1, §14, and `χ(G₁₇)` is 5 or 6) and so do those at its other
+non-split places, above 83, 101, …: at level 1 by Weil's bound, at the deeper
+levels only given the character-sum estimate sketched in `notes/rigidity.md`
+(Proposition 12). Then `χ(ℝ²) ≥ 6`. We
 do not claim this.
 
 Reduction to a finite field goes back to Woodall (1973), who proved
@@ -435,8 +438,10 @@ local fields this is a short observation. Fischer had settled the question in
     (`59 ≡ 2² (mod 11)`).
   - The classes left open are `d ≡ 47, 143, 167 (mod 168)`.
 - **Inert, larger residue fields.** The finite plane at an inert place over 2
-  with residue field `𝔽_{2^f}` is `Cay(𝔽_{4^f}, μ_{2^f+1})`. SAT gives
-  chromatic number 4 for `f = 1, 2, 3`. For `f = 2` it is the Clebsch graph.
+  with residue field `𝔽_{2^f}` is `Cay(𝔽_{4^f}, μ_{2^f+1})`. Its chromatic
+  number is 4 for `f = 1, 2, 3`: it is `K₄` for `f = 1` and the Clebsch graph
+  for `f = 2`; for `f = 3` it contains `K₄` (the subfield `𝔽₄`, since
+  `μ₃ ⊂ μ₉`), and SAT finds a 4-colouring.
 - **A necessary condition for five.** Suppose a real field `F` has
   `χ(F²) ≥ 5`. Then:
   - no place of `F` over 2 ramifies in `F(i)`;
@@ -754,8 +759,9 @@ number of graphs with small clique number*, J. Combin. Theory Ser. B 134 (2019)
 Alon–Krivelevich–Sudakov's for locally sparse graphs (N. Alon, M. Krivelevich,
 B. Sudakov, *Coloring graphs with sparse neighborhoods*, J. Combin. Theory
 Ser. B 77 (1999) 73–82) otherwise. Linear
-colourings `(x, y) ↦ c(αx + βy)` cannot do better for `q = 17`: every
-admissible circulant needs six colours (SAT).
+colourings `(x, y) ↦ c(αx + βy)` cannot do better for `q = 17`: the nine
+admissible circulants `{αx + βy : x² + y² = 1}` all have independence number
+at most 3 (exhaustive search), and `17/3 > 5`, so each needs six colours.
 Whether five colours suffice is open. Tabu search stops at two monochromatic
 edges. For comparison, a random graph with 289 vertices and 2312 edges has on
 average `5^289 (4/5)^2312 ≈ e^{−51}` proper 5-colourings.
@@ -803,10 +809,12 @@ the graph of every isotropic quadratic form over `F`. Since `H₉ ≅ 𝔽₉²`
   `(x, y) ↦ c(αx + βy)` beats the intervals: for the other `q ≤ 47` the circulant
   `{αx + βy : x² + y² = 1}` has independence number `α_c` with
   `⌈q/α_c⌉` equal to the interval count.
-- **Lower bounds.** There is no 4-colouring for `q = 23, 29, 31, 37, 41, 43`
-  (SAT, with a unit triangle pinned where there is one), nor for `q ≥ 47`
-  (Hoffman's bound). Six colours are needed for `q = 37, 41, 43, 47` (the
-  three-point bound) and for `q = 59` (Hoffman's bound), §14.
+- **Lower bounds.** There is no 4-colouring for `q = 23, 31` (Hoffman's bound,
+  in interval arithmetic: `scripts/finite_hoffman.py --inert 23 31`), for
+  `q = 29` (SAT, with an edge pinned, since there is no unit triangle), for
+  `q = 37, 41, 43` (they need six colours, below), nor for `q ≥ 47` (Hoffman's
+  bound). Six colours are needed for `q = 37, 41, 43, 47` (the three-point
+  bound) and for `q = 59` (Hoffman's bound), §14.
 - **Optimal cases.** The interval colourings are optimal for `q = 7, 13, 19`.
 - **`q = 23`.** Tabu finds no 7-colouring (six monochromatic edges at best), and
   its largest independent sets have 87 points. Since `529/87 > 6`, an
