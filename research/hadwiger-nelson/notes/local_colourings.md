@@ -352,6 +352,11 @@ units digit of the 2-adic integer part. This is `hn.adelic.q311_colour`.
 - On 638 further points and 3 012 edges (`data/ei_rho7.json`) there are no
   monochromatic edges, at either place.
 
+**Formal proof.** `lean/Q311.lean` proves `χ = 4` in Lean 4 with Mathlib, with only Lean's standard axioms
+([`lean/README.md`](../lean/README.md)). There the place over 2 is a valuation subring given by Chevalley's
+extension theorem, and its residue field is shown to be `𝔽₂` with `π = √3 − 1` and a Hensel-type argument for
+`(1 + √33)/2`, whichever of the two places it is.
+
 **Coordinates versus the Hermitian form.** Moorhouse (Lemma 8.2, Lemma 8.4) and Madore
 (Prop. 3.2, 3.8) reduce the *coordinates* `(x, y)`. That needs `x² + y²` to be
 anisotropic modulo `𝔪` or `𝔪²`. At a place over 2 with `√3` this fails, since
@@ -581,6 +586,11 @@ The graph (`data/chain23.json`) has 10 vertices and 16 edges.
   and on a 3 134-point graph mixing six families of unit vectors;
 - the lower bound, for the rhombus chain and for the set `M₂` of Voronov,
   Neopryatnaya and Dergachev.
+
+**Formal proof.** `lean/Q23.lean` proves `χ = 4` in Lean 4 with Mathlib, with only Lean's standard axioms
+([`lean/README.md`](../lean/README.md)). The place over 2 is a valuation subring given by Chevalley's extension
+theorem; the uniformiser `π = (√2 + √6)/2 − 1`, a root of the 2-Eisenstein polynomial
+`X⁴ + 4X³ + 2X² − 4X − 2`, shows that its residue field is `𝔽₂`.
 
 **What else uses this.** The criterion is general:
 - **Upper bound.** A real field `L` with a place over 2 that does not split

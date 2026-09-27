@@ -8545,3 +8545,25 @@ did not finish, so the search was cut down first.
   points) contain no whole circle.
 
 `χ(G₁₇)` stays 5 or 6.
+
+## Formal proofs of the two theorems (27 September)
+
+- `lean/` proves both theorems of the note in Lean 4 with Mathlib (Lean and
+  Mathlib v4.34.1): `Q23.chromaticNumber_eq_four` and
+  `Q311.chromaticNumber_eq_four`. `#print axioms` lists only `propext`,
+  `Classical.choice` and `Quot.sound` (`lean/axioms.expected`).
+- The formal proof follows the note except at one step. The note reads the
+  residue field of a prime above 2 from the decomposition of 2 in the ring of
+  integers. Lean takes a valuation subring with 2 in its maximal ideal, from
+  Chevalley's extension theorem, and computes its residue field directly:
+  - over `ℚ(√2, √3)`, `π = (√2 + √6)/2 − 1` is a root of the 2-Eisenstein
+    polynomial `X⁴ + 4X³ + 2X² − 4X − 2`, and `2 = π⁴ε` with `ε` a unit;
+  - over `ℚ(√3, √11)`, 2 has two places, and the proof works at either: with
+    `π = √3 − 1`, and a Hensel-type argument for `(1 + √33)/2`.
+- The lower bounds are the 10-vertex chain of `data/chain23.json`, whose 16
+  edges are proved to have length exactly 1, and the Moser spindle.
+- CI (`.github/workflows/lean.yml`) builds the proofs, compares their axioms
+  with `lean/axioms.expected`, and replays each file in Lean's kernel with
+  `leanchecker`.
+- The note is now typeset in LaTeX (version 5, five pages), with a figure of
+  the 10-vertex graph and the citation audit's fixes.

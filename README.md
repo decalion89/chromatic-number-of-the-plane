@@ -3,6 +3,7 @@
 **Sergi Galán** · research repository, 2026
 
 [![tests](https://github.com/decalion89/chromatic-number-of-the-plane/actions/workflows/tests.yml/badge.svg)](https://github.com/decalion89/chromatic-number-of-the-plane/actions/workflows/tests.yml)
+[![lean](https://github.com/decalion89/chromatic-number-of-the-plane/actions/workflows/lean.yml/badge.svg)](https://github.com/decalion89/chromatic-number-of-the-plane/actions/workflows/lean.yml)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22976635.svg)](https://doi.org/10.5281/zenodo.22976635)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
@@ -40,10 +41,13 @@ Moser spindle (Moorhouse, 2010).
   subtracting fixed coset representatives, gives a proper 4-colouring of the
   whole plane. Speyer used reduction modulo 2 in 2018 to
   4-colour the Moser ring; on that ring our colouring is one of his.
-- **Status.** Proved. The colourings were also tested by computer on finite
-  unit-distance graphs with up to 3 134 vertices. Not yet refereed.
+- **Status.** Proved, and formally verified in Lean 4 with Mathlib: both
+  theorems depend only on Lean's three standard axioms. The colourings were
+  also tested by computer on finite unit-distance graphs with up to 3 134
+  vertices. Not yet refereed.
 
-**Read:** [the three-page note (PDF)](research/hadwiger-nelson/docs/note/planes-4-chromatic.pdf) ·
+**Read:** [the note (PDF)](research/hadwiger-nelson/docs/note/planes-4-chromatic.pdf) ·
+[the Lean proofs](research/hadwiger-nelson/lean/README.md) ·
 [full details](research/hadwiger-nelson/notes/local_colourings.md) (§8 and §10) ·
 [comparison with the literature](research/hadwiger-nelson/notes/literature.md)
 
@@ -73,6 +77,7 @@ described in the [project page](research/hadwiger-nelson/README.md).
 | [`research/hadwiger-nelson/data/`](research/hadwiger-nelson/data/) | graphs and witnesses in exact coordinates |
 | [`research/hadwiger-nelson/certificates/`](research/hadwiger-nelson/certificates/) | colourings and verified proofs |
 | [`research/hadwiger-nelson/tests/`](research/hadwiger-nelson/tests/) | test suite |
+| [`research/hadwiger-nelson/lean/`](research/hadwiger-nelson/lean/README.md) | formal proofs in Lean 4 of the two theorems |
 | [`research/hadwiger-nelson/scripts/`](research/hadwiger-nelson/scripts/) | verification, search and figure tools |
 
 Every folder of the project has a README describing its contents.
@@ -83,14 +88,15 @@ Every folder of the project has a README describing its contents.
 cd research/hadwiger-nelson
 python3 -m pip install -r requirements.txt
 python3 -m pytest -q tests/test_q311.py tests/test_q23.py   # the two theorems, in seconds
+cd lean && lake exe cache get && lake build                  # their formal proofs (needs elan), minutes
 ```
 
 `scripts/verify_pair.py` rebuilds a unit-distance graph or gadget from its data
 file, recomputes every edge exactly and runs the solvers; the multi-distance
 witnesses have their own checkers, listed in
 [`scripts/README.md`](research/hadwiger-nelson/scripts/README.md). GitHub
-Actions runs the fast part of the test suite on pushes to `main` and on pull
-requests.
+Actions runs the fast part of the test suite and builds the Lean proofs on
+pushes to `main` and on pull requests.
 
 ## Citing
 
@@ -106,10 +112,10 @@ resolves to the latest version. For the repository as a whole, use GitHub's
 @software{galan2026hn,
   author  = {Gal{\'a}n, Sergi},
   title   = {The {H}adwiger--{N}elson problem over number fields},
-  version = {1.0.0},
+  version = {1.1.0},
   year    = {2026},
-  doi     = {10.5281/zenodo.22976636},
-  url     = {https://github.com/decalion89/chromatic-number-of-the-plane/releases/tag/v1.0.0},
+  doi     = {10.5281/zenodo.22976635},
+  url     = {https://github.com/decalion89/chromatic-number-of-the-plane/releases/tag/v1.1.0},
   note    = {AI-assisted research; not peer reviewed}
 }
 ```
@@ -122,7 +128,7 @@ For the note on the two 4-chromatic planes:
   title  = {A short proof that the planes over {$\mathbb{Q}(\sqrt{3},\sqrt{11})$}
             and {$\mathbb{Q}(\sqrt{2},\sqrt{3})$} are 4-chromatic},
   year   = {2026},
-  note   = {Preprint, not refereed. AI-assisted},
+  note   = {Version 5, 27 September 2026. Preprint, not refereed. AI-assisted},
   url    = {https://github.com/decalion89/chromatic-number-of-the-plane}
 }
 ```
@@ -164,7 +170,8 @@ una prueba corta de un teorema de K. G. Fischer (1994): el plano sobre
 pasado desapercibido; los trabajos posteriores lo daban por abierto. La prueba
 cambia de coordenadas para que el argumento de reducción de Madore funcione
 módulo 2. Está explicada en una
-[nota de tres páginas](research/hadwiger-nelson/docs/note/planes-4-chromatic.pdf).
+[nota breve](research/hadwiger-nelson/docs/note/planes-4-chromatic.pdf)
+y verificada formalmente en Lean 4.
 También se demuestra, con certificados verificados por un programa
 independiente, que siete planos finitos necesitan seis colores. Es un trabajo
 hecho con ayuda de IA y todavía no ha sido revisado por pares.

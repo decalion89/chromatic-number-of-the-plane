@@ -1,0 +1,322 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage[hyphens]{url}
+\usepackage{tikz}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
+\usepackage[margin=2.5cm]{geometry}
+
+\hypersetup{
+  pdftitle={A short proof that the planes over Q(sqrt3, sqrt11) and Q(sqrt2, sqrt3) are 4-chromatic},
+  pdfauthor={Sergi Gal\'an},
+  pdfsubject={The Hadwiger-Nelson problem over number fields},
+  pdfkeywords={Hadwiger-Nelson problem, chromatic number of the plane, unit-distance graph, number field, formal verification}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\p}{\mathfrak{p}}
+\newcommand{\Op}{\mathcal{O}_{\mathfrak{p}}}
+
+\title[The planes over $\Q(\sqrt3,\sqrt{11})$ and $\Q(\sqrt2,\sqrt3)$ are $4$-chromatic]{A short proof that the
+planes over $\Q(\sqrt3,\sqrt{11})$ and $\Q(\sqrt2,\sqrt3)$ are $4$-chromatic}
+\author{Sergi Gal\'an}
+\thanks{These results were obtained with the assistance of an AI system (Claude, by Anthropic), which carried
+out the computations, the checks and the formalisation in Lean, and helped to draft this note. No mathematician
+has checked the note yet. The author is not a professional mathematician and submits it for independent
+verification.}
+\date{Version 5, 27 September 2026}
+\subjclass[2020]{Primary 05C15, 52C10; Secondary 11R16, 68V20}
+\keywords{Hadwiger--Nelson problem, chromatic number of the plane, unit-distance graph, number field, formal verification}
+
+\begin{document}
+
+\begin{abstract}
+For a subfield $F\subset\R$ let $\chi(F^2)$ be the chromatic number of the graph on $F^2$ joining points at
+Euclidean distance $1$. Fischer proved in 1994 that $\chi(\Q(\sqrt3,\sqrt{11})^2)=4$. His result seems to have
+been overlooked: Moorhouse (2010), Madore (2015), Cranston--Rabern (2017), Exoo--Ismailescu (2020) and Voronov
+(2021) all treat the value as unknown. We give a short proof of a criterion that gives the upper bound $4$ for
+this field and for $\Q(\sqrt2,\sqrt3)$; with a $10$-vertex graph it gives $\chi(\Q(\sqrt2,\sqrt3)^2)=4$, the
+second case that Voronov thought likely, which we have not found in the literature. The criterion is a case of
+Madore's reduction argument for quadratic forms, in other coordinates. With $\alpha=x+y/\sqrt3$ and
+$\beta=2y/\sqrt3$ the squared distance becomes $\alpha^2-\alpha\beta+\beta^2$, a form that is anisotropic modulo
+any prime above $2$ with residue field $\F_2$. Both values are also formally verified in Lean~4 with Mathlib.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+The Hadwiger--Nelson problem asks for $\chi(\R^2)$. Since de Grey \cite{deGrey} and Exoo--Ismailescu
+\cite{ExooIsmailescu} it is known that $\chi(\R^2)\in\{5,6,7\}$; see Soifer \cite{Soifer} for the history. For a
+subfield $F\subset\R$ one has $\chi(F^2)\le\chi(\R^2)$. For quadratic fields $\Q(\sqrt N)$, with $N$ squarefree:
+\begin{itemize}
+\item $\chi(\Q^2)=2$ (Woodall \cite{Woodall}), and $\chi(\Q(\sqrt N)^2)=2$ exactly when $N\equiv1,2\pmod 4$
+(Johnson \cite{Johnson1987}; Fischer \cite[Thm.~8]{Fischer1990});
+\item $\chi(\Q(\sqrt N)^2)\le3$ for $N\equiv0,1\pmod 3$, and $\le4$ for $N\equiv3\pmod 8$ (Fischer
+\cite[Thms.~9,~10]{Fischer1990}; see also Payne \cite{Payne});
+\item later, Moorhouse \cite{Moorhouse} and Madore \cite{Madore} proved further bounds by reduction modulo a
+prime.
+\end{itemize}
+
+The field $\Q(\sqrt3,\sqrt{11})$ is the smallest whose plane contains a Moser spindle \cite{Moser} (Moorhouse
+\cite[Prop.~1.4]{Moorhouse}). Fischer
+\cite{Fischer1994} proved that the plane over $\Q(\sqrt p,\sqrt q)$ has an additive $4$-colouring, with values in
+$\Z/4$, for squarefree coprime $p\equiv3\pmod{16}$ and $q\equiv11\pmod{16}$ with $pq\equiv1\pmod{32}$; for
+$\Q(\sqrt3,\sqrt{11})$ the Moser spindle gives the lower bound, so $\chi(\Q(\sqrt3,\sqrt{11})^2)=4$. This seems
+to have been overlooked. Moorhouse \cite{Moorhouse} noted that the exact value was undetermined, Madore
+\cite{Madore} proved $4\le\chi\le5$, Cranston and Rabern \cite{CranstonRabern} asked for the chromatic number,
+Exoo and Ismailescu \cite{ExooIsmailescu} asked whether a $5$-chromatic unit-distance graph embeds in
+$\Q(\sqrt3,\sqrt{11})^2$, and in Polymath16 Voronov wrote: ``it seems likely that
+$\chi(\Q(i,\sqrt3,\sqrt{11}))=4$, and the same is true in case $(2,3)$. But as far as I know, nobody has proved
+this yet'' \cite{Polymath17}. Case $(2,3)$ is the field $\Q(i,\sqrt2,\sqrt3)=\Q(\zeta_{24})$, which Fischer's
+hypotheses exclude. For it Voronov suggested a colouring through a homomorphism
+$\Z[\zeta_{24},1/3]\to(\Z/4)[\zeta_{24}]$, adding ``Perhaps there is a simpler way'' \cite{Polymath17}.
+
+\begin{theorem}\label{thm:main}
+$\chi(\Q(\sqrt2,\sqrt3)^2)=\chi(\Q(\sqrt3,\sqrt{11})^2)=4$.
+\end{theorem}
+
+The second equality is Fischer's theorem \cite{Fischer1994}; the argument below gives a short proof of both.
+Both upper bounds are instances of the following criterion.
+
+\begin{theorem}\label{thm:criterion}
+Let $L\subset\R$ be a number field containing $\sqrt3$, and suppose some prime $\p$ of $L$ above $2$ has residue
+field $\mathcal{O}_L/\p\cong\F_2$. Then $\chi(L^2)\le4$.
+\end{theorem}
+
+Theorem~\ref{thm:criterion} is the case $Q=\alpha^2-\alpha\beta+\beta^2$, with residue field $\F_2$, of Madore's
+\P6.6 \cite{Madore}, which extends his Proposition~3.2 to any quadratic form; we include the short proof for
+completeness (compare Moorhouse \cite[Lemma~4.2 and Theorem~7.1]{Moorhouse}). In the coordinates $(x,y)$ the
+argument fails at $2$: the form $x^2+y^2\equiv(x+y)^2$ is isotropic modulo $2$, and unit vectors such as
+$(1/2,\sqrt3/2)$ are not even integral at $2$. Since $\sqrt3\in L$, we have $L(i)=L(\omega)$ with
+$\omega=e^{2\pi i/3}$, and the hypothesis on $\p$ implies that $\p$ is inert in $L(i)$: the minimal polynomial
+$X^2+X+1$ of $\omega$ has discriminant $-3$, a unit at $\p$, and no root in $\F_2$.
+
+\section{The identity and the lemma}
+
+Put $Q(\alpha,\beta)=\alpha^2-\alpha\beta+\beta^2$. For $x,y\in L$ set
+\[
+\alpha=x+\frac{y}{\sqrt3},\qquad \beta=\frac{2y}{\sqrt3},\qquad\text{so that}\qquad x^2+y^2=Q(\alpha,\beta).
+\]
+The identity is a direct expansion. Equivalently, $x+iy=\alpha+\beta\omega$, and $Q$ is the norm form of
+$\Q(\omega)$. The map $(x,y)\mapsto(\alpha,\beta)$ is $L$-linear and bijective.
+
+\begin{lemma}\label{lem:valuation}
+Let $v$ be the normalised valuation of $L$ at a prime $\p$ above $2$ with residue field $\F_2$. Then for all
+$(\alpha,\beta)\ne(0,0)$ in $L^2$,
+\[
+v(Q(\alpha,\beta))=2\min(v(\alpha),v(\beta)).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $k=\min(v(\alpha),v(\beta))$ and let $\pi$ be a uniformiser. Write $\alpha=\pi^k\alpha_0$ and
+$\beta=\pi^k\beta_0$, with $\alpha_0,\beta_0$ integral at $\p$ and not both in $\p$. Then
+$Q(\alpha,\beta)=\pi^{2k}Q(\alpha_0,\beta_0)$. Modulo $\p$, $Q(\alpha_0,\beta_0)$ reduces to $s^2+st+t^2$ with
+$(s,t)\in\F_2^2\setminus\{0\}$, since signs do not matter in characteristic $2$. This value is $1$ for every
+such $(s,t)$, because $X^2+X+1$ has no root in $\F_2$. Hence $v(Q(\alpha_0,\beta_0))=0$.
+\end{proof}
+
+\section{Proof of Theorem~\ref{thm:criterion}}
+
+Let $\Op=\{c\in L: v(c)\ge0\}$ and let $\rho\colon\Op\to\F_2$ be reduction modulo $\p$. Fix a set of
+representatives of the cosets $L/\Op$, and write $r(c)$ for the representative of $c+\Op$. Since $L$ is
+countable, no choice principle is needed. Colour $(x,y)\in L^2$ by
+\[
+\kappa(x,y)=\bigl(\rho(\alpha-r(\alpha)),\ \rho(\beta-r(\beta))\bigr)\in\F_2^2,
+\]
+which uses four colours. Suppose $(x,y)$ and $(x',y')$ are at distance $1$, with coordinates $(\alpha,\beta)$
+and $(\alpha',\beta')$, and let $\Delta\alpha=\alpha-\alpha'$ and $\Delta\beta=\beta-\beta'$.
+\begin{enumerate}
+\item By linearity, $Q(\Delta\alpha,\Delta\beta)=1$.
+\item By Lemma~\ref{lem:valuation}, $\min(v(\Delta\alpha),v(\Delta\beta))=0$. So $\Delta\alpha$ and
+$\Delta\beta$ lie in $\Op$ and are not both in $\p$.
+\item Hence $r(\alpha)=r(\alpha')$ and $r(\beta)=r(\beta')$.
+\item So the two colours differ by $(\rho(\Delta\alpha),\rho(\Delta\beta))\ne(0,0)$.\qed
+\end{enumerate}
+
+\section{Proof of Theorem~\ref{thm:main}}
+
+\emph{Upper bounds.} Both fields satisfy the hypotheses of Theorem~\ref{thm:criterion}.
+\begin{itemize}
+\item $\Q(\sqrt2,\sqrt3)$. The prime $2$ ramifies in all three quadratic subfields, so no subfield other than
+$\Q$ is unramified at $2$, the inertia group is the whole Galois group, and $2=\p^4$ with residue field $\F_2$
+($e=4$, $f=g=1$).
+\item $\Q(\sqrt3,\sqrt{11})$. The prime $2$ ramifies in $\Q(\sqrt3)$ and $\Q(\sqrt{11})$ ($3,11\equiv3\pmod 4$)
+and splits in $\Q(\sqrt{33})$ ($33\equiv1\pmod 8$). So $e\ge2$ and $g\ge2$, and since $efg=4$,
+$2=\p_1^2\p_2^2$ and both primes have residue field $\F_2$.
+\end{itemize}
+Both decompositions were also confirmed with sympy and with PARI/GP (Section~\ref{sec:verification}).
+
+\emph{Lower bounds.} For $\Q(\sqrt2,\sqrt3)$, a $4$-chromatic graph is already implicit in Voronov, Neopryatnaya
+and Dergachev \cite{VND}: their second series of $5$-chromatic graphs is built from the $4$-chromatic $10$-vertex
+graph $L_{10,2}$ and the unit vectors $\zeta_{24}$ and $(\sqrt6+i\sqrt3)/3$, all with coordinates in
+$\Q(\sqrt2,\sqrt3)$. For completeness, here is a short explicit example. Take the unit vectors
+\[
+u_1=(1,0),\qquad u_2=(0,1),\qquad u_3=\Bigl(-\frac23-\frac{\sqrt2}6,\ -\frac23+\frac{\sqrt2}6\Bigr),
+\]
+for which $|u_1+u_2+u_3|^2=1/3$. Let $P_0=O$ and $P_k=\sqrt3\,(u_1+\dots+u_k)$. Join $P_{k-1}$ and $P_k$ by the
+unit rhombus whose middle vertices are $(P_{k-1}+P_k)/2\pm u_k^\perp/2$, where $u_k^\perp$ is $u_k$ turned by
+$90^\circ$. The ten points span $16$ unit distances: the $15$ edges of the three rhombi and $P_0P_3$
+(Figure~\ref{fig:chain}).
+\begin{enumerate}
+\item In any $3$-colouring, the two middle vertices of each rhombus take two distinct colours, and its two tips
+both take the third. So each rhombus forces its tips alike, and $P_0$ and $P_3$ share a colour.
+\item But $|P_0P_3|=1$, a contradiction.\qed
+\end{enumerate}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[scale=2.2]
+  % exact coordinates in the comments; the figure is drawn to scale (scripts check the 16 unit distances)
+  \coordinate (P0) at (0.0000,0.0000);
+  \coordinate (P1) at (1.7321,0.0000);    % (sqrt3, 0)
+  \coordinate (P2) at (1.7321,1.7321);    % (sqrt3, sqrt3)
+  \coordinate (P3) at (0.1691,0.9856);    % sqrt3 (1/3 - sqrt2/6, 1/3 + sqrt2/6)
+  \coordinate (M1p) at (0.8660,0.5000);
+  \coordinate (M1m) at (0.8660,-0.5000);
+  \coordinate (M2p) at (1.2321,0.8660);
+  \coordinate (M2m) at (2.2321,0.8660);
+  \coordinate (M3p) at (1.1661,0.9076);
+  \coordinate (M3m) at (0.7351,1.8100);
+  \draw[line width=0.5pt]
+    (P0)--(M1p)--(P1)--(M1m)--(P0) (M1p)--(M1m)
+    (P1)--(M2p)--(P2)--(M2m)--(P1) (M2p)--(M2m)
+    (P2)--(M3p)--(P3)--(M3m)--(P2) (M3p)--(M3m);
+  \draw[line width=1.1pt] (P0)--(P3);
+  \foreach \v in {M1p,M1m,M2p,M2m,M3p,M3m} \filldraw[fill=white,draw=black,line width=0.5pt] (\v) circle (0.021);
+  \foreach \v in {P0,P1,P2,P3} \fill (\v) circle (0.03);
+  \node[below left] at (P0) {$P_0$};
+  \node[below right] at (P1) {$P_1$};
+  \node[above right] at (P2) {$P_2$};
+  \node[left] at (P3) {$P_3$};
+\end{tikzpicture}
+\caption{The $10$-vertex graph of Section~4, to scale; every edge has length $1$. The rhombi force
+$P_0$ and $P_3$ alike in any $3$-colouring, but they are adjacent (thick edge). The white middle vertices of the
+last two rhombi are close but distinct.}
+\label{fig:chain}
+\end{figure}
+
+For $\Q(\sqrt3,\sqrt{11})$ the Moser spindle \cite{Moser} suffices (see Moorhouse \cite[Prop.~1.4]{Moorhouse}): the unit rhombus
+with vertices $O$, $(1,0)$, $(1/2,\sqrt3/2)$, $(3/2,\sqrt3/2)$, together with its image under the rotation about
+$O$ with $\cos\theta=5/6$, $\sin\theta=\sqrt{11}/6$. The two far tips are at distance $1$, since
+$|(3/2,\sqrt3/2)|^2=3$ and $2\cdot3\cdot(1-5/6)=1$.
+
+\section{Remarks}
+
+\begin{enumerate}
+\item \emph{Prior work.} Fischer's additive colourings \cite{Fischer1990,Fischer1994} came first. He colours the
+plane through the additive group generated by the unit vectors, the component of the origin, whose translates
+are the other components \cite[Thm.~1]{Fischer1990}. His $4$-colouring of $\Q(\sqrt N)^2$ for \mbox{$N\equiv3\pmod 8$}
+is already a reduction at $2$, with values in $\Z/4$ \cite[Thm.~10]{Fischer1990}, and his $4$-colouring of
+$\Q(\sqrt p,\sqrt q)^2$ is also a homomorphism to $\Z/4$ \cite{Fischer1994}. He also described the component of
+the origin in the plane over $\Q(\sqrt{N_1},\dots,\sqrt{N_d})$ \cite{Fischer1990b}. Moorhouse
+\cite[Lemma~4.2]{Moorhouse} and Madore \mbox{\cite[Prop.~3.2]{Madore}} pass to the whole plane by cosets in the same
+way, of a component or of a local ring. Speyer \cite{Polymath2} $4$-coloured the Moser ring
+$R=\mathcal{O}_K[1/3]$, $K=\Q(\sqrt{-3},\sqrt{-11})$, in 2018 by reduction modulo $2$:
+$R/2R\cong\F_4\times\F_4$, and either projection to $\F_4$ is a $4$-colouring. On $R$ the colouring of
+Section~3 is one of these projections, written in the coordinates $\alpha+\beta\omega$. An analysis and computer
+search by Hubai, reported by Gibbs, found that all $4$-colourings of $R$ have period $8$ \cite{Polymath3}, and
+D\'ucz \cite{Ducz} has recently given geometric $4$-colourings of the Moser lattice and ring. The contribution of
+this note is the choice of coordinates, which lets Madore's \P6.6 work at primes above $2$ and reduces the
+question to the decomposition of $2$ in $L$, and the case $\Q(\sqrt2,\sqrt3)$.
+\item \emph{Consistency check.} The criterion cannot apply to fields that contain $5$-chromatic graphs, and it
+does not. In $\Q(\sqrt3,\sqrt{11},\sqrt{247})$, the field of Exoo--Ismailescu, and in
+$\Q(\sqrt3,\sqrt5,\sqrt{11})$, the field of Heule \cite{Heule}, every prime above $2$ has residue field
+containing $\F_4$, where $X^2+X+1$ has roots.
+\end{enumerate}
+
+\section{Verification and provenance}\label{sec:verification}
+
+\begin{itemize}
+\item \emph{Upper bounds.} Besides the proof, the colourings were tested by computer on random unit vectors
+$z/\bar z$ of each field and on unit-distance graphs with up to $3\,134$ vertices, with no monochromatic edge.
+The prime decompositions were recomputed with sympy and with PARI/GP.
+\item \emph{Lower bounds.} Both graphs can be checked by hand. An exhaustive computer search also confirms that
+neither has a proper $3$-colouring.
+\item \emph{Formal proof.} Both equalities of Theorem~\ref{thm:main} are proved in Lean~4 \cite{Lean4}
+(version 4.34.1) with Mathlib \cite{Mathlib} (tag v4.34.1): for $L=\Q(\sqrt2,\sqrt3)$ and for
+$L=\Q(\sqrt3,\sqrt{11})$, as subfields of $\R$, the graph on $L\times L$ that joins $(x,y)$ and $(x',y')$ when
+$(x-x')^2+(y-y')^2=1$ has chromatic number~$4$ (theorems \path{Q23.chromaticNumber_eq_four} and
+\path{Q311.chromaticNumber_eq_four}). The proofs use only Lean's standard axioms: propositional
+extensionality, quotient soundness and the axiom of choice, which gives the valuation subring and the coset
+representatives below. They follow Sections~2--4 in the setting of Madore's \P6.6: $\Op$ is replaced by a
+valuation subring $O$ of $L$ with $2$ in its maximal ideal, given by Chevalley's extension theorem;
+Lemma~\ref{lem:valuation} is used only in the form ``if $Q(\alpha,\beta)=1$, then $\alpha,\beta\in O$, not both
+in the maximal ideal'', which needs no uniformiser; and instead of the decomposition of~$2$, the residue field
+of $O$ is shown to be $\F_2$ directly, with an explicit uniformiser for $\Q(\sqrt2,\sqrt3)$ and a Hensel-type
+argument for $\Q(\sqrt3,\sqrt{11})$, whichever of its two places above $2$ $O$ belongs to. No ring of integers
+is used.
+\item \emph{Literature.} We have read \cite{Fischer1990} in full, the zbMATH entries for \cite{Fischer1990b} and
+\cite{Fischer1994}, and Johnson's paper \cite{Johnson1987} through its zbMATH entry and Payne's summary
+\cite{Payne}. We have not seen the full texts of \cite{Fischer1990b}, \cite{Fischer1994} and
+\cite{Johnson1987}, nor Johnson's survey \cite{Johnson2000} of problems in this area.
+\item \emph{Code and data.} Everything above is in release 1.1.0 of the repository \cite{Repo}, in the
+folder \path{research/hadwiger-nelson}: the formal proofs are \path{lean/LocalColouring.lean},
+\path{lean/Q23.lean} and \path{lean/Q311.lean}; the Python tests \path{tests/test_q23.py} and
+\path{tests/test_q311.py} check the computations used in the proofs; and the PARI/GP script
+\path{scripts/decompositions.gp} recomputes the decompositions of~$2$.
+\end{itemize}
+
+\begin{thebibliography}{99}
+\bibitem{CranstonRabern} D. W. Cranston and L. Rabern, \emph{The fractional chromatic number of the plane},
+Combinatorica \textbf{37} (2017), 837--861; arXiv:1501.01647.
+\bibitem{deGrey} A. D. N. J. de Grey, \emph{The chromatic number of the plane is at least 5}, Geombinatorics
+\textbf{28} (2018), 18--31; arXiv:1804.02385.
+\bibitem{Lean4} L. de Moura and S. Ullrich, \emph{The Lean 4 theorem prover and programming language},
+Automated Deduction -- CADE 28, Lecture Notes in Comput. Sci., vol. 12699, Springer, 2021, pp.~625--635.
+\bibitem{Ducz} \'A. D\'ucz, \emph{A note on geometric colorings of the Moser lattice}, arXiv:2606.12325 (2026).
+\bibitem{ExooIsmailescu} G. Exoo and D. Ismailescu, \emph{The chromatic number of the plane is at least 5: a new
+proof}, Discrete Comput. Geom. \textbf{64} (2020), 216--226; arXiv:1805.00157.
+\bibitem{Fischer1990} K. G. Fischer, \emph{Additive $K$-colorable extensions of the rational plane}, Discrete
+Math. \textbf{82} (1990), 181--195.
+\bibitem{Fischer1990b} K. G. Fischer, \emph{The connected components of the graph
+$\Q(\sqrt{N_1},\dots,\sqrt{N_d})^2$}, Congr. Numer. \textbf{72} (1990), 213--221 (Zbl 0733.05048).
+\bibitem{Fischer1994} K. G. Fischer, \emph{A planar geometric graph of chromatic number four}, Congr. Numer.
+\textbf{104} (1994), 73--79 (Zbl 0836.05030).
+\bibitem{Repo} S. Gal\'an, \emph{The Hadwiger--Nelson problem over number fields}, code, data and formal
+proofs, release 1.1.0, 2026. Archived at Zenodo,
+\href{https://doi.org/10.5281/zenodo.22976635}{doi:10.5281/zenodo.22976635} (all versions); source at
+\url{https://github.com/decalion89/chromatic-number-of-the-plane}.
+\bibitem{Heule} M. J. H. Heule, \emph{Computing small unit-distance graphs with chromatic number 5},
+Geombinatorics \textbf{28} (2018), 32--50; arXiv:1805.12181.
+\bibitem{Johnson1987} P. D. Johnson Jr., \emph{Two-colorings of real quadratic extensions of $\Q^2$ that forbid
+many distances}, Congr. Numer. \textbf{60} (1987), 51--58 (Zbl 0648.05006).
+\bibitem{Johnson2000} P. D. Johnson Jr., \emph{Problems posed in or arising from ``Colorings of metric spaces'':
+status report}, Geombinatorics \textbf{9} (2000), no.~4, 170--179.
+\bibitem{Madore} D. A. Madore, \emph{The Hadwiger--Nelson problem over certain fields}, arXiv:1509.07023 (2015).
+\bibitem{Mathlib} The mathlib Community, \emph{The Lean mathematical library}, Proceedings of the 9th ACM
+SIGPLAN International Conference on Certified Programs and Proofs (CPP 2020), ACM, 2020, pp.~367--381.
+\bibitem{Moorhouse} G. E. Moorhouse, \emph{On the chromatic numbers of planes}, preliminary draft, revised
+3 March 2010, \url{https://www.ericmoorhouse.org/pub/chromatic.pdf}.
+\bibitem{Moser} L. Moser and W. Moser, \emph{Solution to Problem 10}, Canad. Math. Bull. \textbf{4} (1961),
+187--189.
+\bibitem{Payne} M. S. Payne, \emph{Unit distance graphs with ambiguous chromatic number}, Electron. J. Combin.
+\textbf{16} (2009), Note~31; arXiv:0707.1177.
+\bibitem{Polymath2} Polymath16, second thread, \emph{What does it take to be 5-chromatic?}, on D. G. Mixon's
+blog \emph{Short, Fat Matrices} (2018), comments 4013--4014 by D. Speyer, 25 April 2018,
+\url{https://dustingmixon.wordpress.com/2018/04/22/polymath16-second-thread-what-does-it-take-to-be-5-chromatic/}.
+\bibitem{Polymath3} Polymath16, third thread, \emph{Is 6-chromatic within reach?}, ibid.\ (2018), comments 4206
+by D. Speyer (3 May 2018) and 4367 by P. Gibbs (9 May 2018),
+\url{https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/}.
+\bibitem{Polymath17} Polymath16, seventeenth thread, \emph{Declaring victory}, ibid.\ (2021), comments 29291 and
+29476 by V. Voronov, 18 and 30 July 2021,
+\url{https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/}.
+\bibitem{Soifer} A. Soifer, \emph{The New Mathematical Coloring Book}, Springer, 2024.
+\bibitem{VND} V. A. Voronov, A. M. Neopryatnaya and E. A. Dergachev, \emph{Constructing 5-chromatic unit distance
+graphs embedded in the Euclidean plane and two-dimensional spheres}, Discrete Math. \textbf{345} (2022), 113106;
+arXiv:2106.11824.
+\bibitem{Woodall} D. R. Woodall, \emph{Distances realized by sets covering the plane}, J. Combin. Theory Ser. A
+\textbf{14} (1973), 187--200.
+\end{thebibliography}
+
+\end{document}

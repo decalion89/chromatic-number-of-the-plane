@@ -42,6 +42,9 @@ below, with their evidence.
   positive-definiteness test. Spectral (Hoffman) bounds need no certificate:
   `scripts/finite_hoffman.py` recomputes every eigenvalue in interval
   arithmetic.
+- **Formal proofs.** The two theorems on ℚ(√2, √3) and ℚ(√3, √11) are also
+  proved in Lean 4 (`lean/`). CI builds the proofs, checks that they use only
+  Lean's standard axioms, and replays them in Lean's kernel.
 - **Corrections stay visible.** Withdrawn claims are kept, with the reason, in
   the research log.
 
@@ -51,14 +54,15 @@ below, with their evidence.
 
 | statement | status | where |
 |---|---|---|
-| **χ(ℚ(√2, √3)²) = 4.** Voronov's second case; not found in the literature. | Proved (not yet refereed); unit tests. The lower bound was already implicit in Voronov–Neopryatnaya–Dergachev; a 10-vertex rhombus chain gives a short one. | `notes/local_colourings.md` §10, `tests/test_q23.py`, `certificates/chain23_no3coloring.json` |
-| **χ(ℚ(√3, √11)²) = 4.** A theorem of K. G. Fischer (1994); a short new proof. | Fischer's theorem; our proof is not yet refereed; unit tests. | `notes/local_colourings.md` §8, `hn/adelic.py`, `tests/test_q311.py` |
+| **χ(ℚ(√2, √3)²) = 4.** Voronov's second case; not found in the literature. | Proved (not yet refereed); formally verified in Lean 4; unit tests. The lower bound was already implicit in Voronov–Neopryatnaya–Dergachev; a 10-vertex rhombus chain gives a short one. | `notes/local_colourings.md` §10, `lean/Q23.lean`, `tests/test_q23.py`, `certificates/chain23_no3coloring.json` |
+| **χ(ℚ(√3, √11)²) = 4.** A theorem of K. G. Fischer (1994); a short new proof. | Fischer's theorem; our proof is not yet refereed, and is formally verified in Lean 4; unit tests. | `notes/local_colourings.md` §8, `lean/Q311.lean`, `hn/adelic.py`, `tests/test_q311.py` |
 | χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, as whole complex fields | Known: the first follows from Fischer's theorem, the second from Madore's reduction at 11 and Exoo–Ismailescu's graph. Our local proofs reduce at the primes 2 and 11; the lower bounds come from the Moser spindle and from `five_247_c`, certified by DRAT. Not yet refereed. | `notes/local_colourings.md` §3, `notes/rigidity.md`, `certificates/five_247_c_no4coloring.json` |
 | Necessary local conditions for a field to hold a 6-chromatic unit-distance graph | Proved (not yet refereed) | `notes/local_colourings.md` §5–§9, `scripts/fieldscreen.py` |
 | **Six colours for finite planes.** χ ≥ 6 for 𝔽₃₇², 𝔽₄₁², 𝔽₄₃², 𝔽₄₇² and the anisotropic planes G₂₉, G₃₇, G₄₁. With Proposition B and Hoffman's bound, χ(G_q) ≥ 6 for every prime q ≥ 29 except 31, and χ(𝔽_q²) ≥ 6 for q = 37, 41, 43, 47, 59 and every prime q ≥ 67; χ(𝔽₄₁²) ∈ {6, 7}. | Computer proof, not refereed: Schrijver's three-point bound gives α < q²/5, and each dual certificate is checked in interval and exact rational arithmetic; for large q, Hoffman's bound with Weil's estimate or the exact spectrum. | `notes/local_colourings.md` §14, `data/threepoint/`, `scripts/threepoint_verify.py` |
 
-The first two are written up in a three-page note,
-[`docs/note/planes-4-chromatic.pdf`](docs/note/planes-4-chromatic.pdf).
+The first two are written up in a short note,
+[`docs/note/planes-4-chromatic.pdf`](docs/note/planes-4-chromatic.pdf), and proved in Lean 4 with Mathlib in
+[`lean/`](lean/README.md): `#print axioms` lists only Lean's three standard axioms.
 
 **On χ(ℚ(√3, √11)²) = 4.** K. G. Fischer proved it in 1994 (*A planar
 geometric graph of chromatic number four*, Congr. Numer. 104, 73–79). He
@@ -177,6 +181,7 @@ data/           graphs and witnesses with exact coordinates (JSON), and the
 certificates/   colourings, DRAT verification logs, non-colourability claims
                 (certificates/README.md)
 notes/          technical notes: local colourings, rigidity, literature, jobs
+lean/           formal proofs in Lean 4 of the two theorems (lean/README.md)
 docs/research-log.md
                 the full chronological log, including corrections
 ```
@@ -197,6 +202,7 @@ sh scripts/worker_setup.sh                   # kissat and drat-trim, for the sea
 |---|---|---|
 | χ(ℚ(√2, √3)²) = 4 | `python3 -m pytest -q tests/test_q23.py` | seconds |
 | χ(ℚ(√3, √11)²) = 4 | `python3 -m pytest -q tests/test_q311.py` | seconds |
+| both theorems, formally (needs [elan](https://github.com/leanprover/elan)) | `cd lean && lake exe cache get && lake build && lake env lean PrintAxioms.lean` | minutes |
 | four and five colours suffice for the fields ℚ(√−3, √−11) and ℚ(√−3, √−11, √−247) | `python3 -m pytest -q tests/test_moser_field.py tests/test_reduce11.py` | seconds |
 | six colours for a finite plane, e.g. 𝔽₄₇²: it prints the rigorous bound α ≤ 371.41…, below 47²/5 = 441.8, so χ ≥ 6 | `python3 scripts/threepoint_verify.py data/threepoint/std47.npz` | 3–5 minutes |
 | all eight three-point certificates | `python3 -m pytest -q tests/test_threepoint_certificates.py` | 15 minutes |
