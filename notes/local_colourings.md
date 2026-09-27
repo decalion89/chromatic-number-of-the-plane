@@ -494,7 +494,7 @@ So a module is `k`-colourable as soon as one integral place has a
   `H₄₉` needs at least five colours because the 5-chromatic `five_tuned_16`,
   which has no 7 in any denominator, maps into it at a place over 7.
 - **Hoffman.** The eigenvalues are Kloosterman sums, of modulus at most
-  `2√q` (Weil, 1948, §4). So `χ(H_q) ≥ 1 + (q − 1)/(2√q)` (Hoffman, 1970, §4), which is above 5 once
+  `2√q` (Weil, 1948, cited in §4). So `χ(H_q) ≥ 1 + (q − 1)/(2√q)` (Hoffman, 1970, cited in §4), which is above 5 once
   `q ≥ 67`.
 - **Split places of degree 2.** For every `p ≥ 11`, `H_{p²}` has
   `χ ≥ 7`.
@@ -745,7 +745,7 @@ settles the entry "5 or 6" for `𝔽₁₃²` in Moorhouse's Table 6.1.
 
 The entry becomes "5 or 6". This is Vinh's colouring by pairs of parallel lines
 with longer blocks: if `N, N − 1, N − 4, …, N − (m − 1)²` are all non-squares,
-then `χ(𝔽_q²) ≤ ⌈q/m⌉`. By the Weil bound (1948, §4) such an `N` exists once
+then `χ(𝔽_q²) ≤ ⌈q/m⌉`. By the Weil bound (1948, cited in §4) such an `N` exists once
 `2^m (m + 1) < √q`. So the colouring gives `χ(𝔽_q²) ≤ (2 + o(1)) q / log₂ q`,
 against `q (1/2 + o(1))` for pairs of lines. General theorems give the same
 order: Molloy's bound for triangle-free graphs (M. Molloy, *The list chromatic
@@ -950,13 +950,13 @@ anisotropic plane of §4; they coincide for `q ≡ 3 (mod 4)`.
 
 **The spectral bound.** The eigenvalues are `λ_ξ = Σ_u cos(2π ξ·u/q)` over the
 `q ∓ 1` unit vectors, and Hoffman's ratio bound gives
-`α ≤ n (−λ_min)/(d − λ_min)` (Hoffman, 1970, §4; in this form, W. H. Haemers,
+`α ≤ n (−λ_min)/(d − λ_min)` (Hoffman, 1970, cited in §4; in this form, W. H. Haemers,
 *Hoffman's ratio bound*, Linear Algebra Appl. 617 (2021) 215–219). This is Vinh's method
 ([arXiv math/0510092](https://arxiv.org/abs/math/0510092)), with the spectra
 of Medrano–Myers–Stark–Terras (§4) and, for the anisotropic planes `G_q`, of
 Bannai, Shimabukuro and Tanaka (*Finite Euclidean graphs and Ramanujan graphs*,
 Discrete Math. 309 (2009) 6126–6134); the thresholds below follow from it.
-- **Weil.** Every non-trivial eigenvalue has `|λ| ≤ 2√q` (Weil, 1948, §4): a Kloosterman sum
+- **Weil.** Every non-trivial eigenvalue has `|λ| ≤ 2√q` (Weil, 1948, cited in §4): a Kloosterman sum
   for `q ≡ 1 (mod 4)`, the sum of §4 for `q ≡ 3`. Hence
   `χ(𝔽_q²) ≥ 1 + (q ∓ 1)/(2√q)`, which exceeds 5 for every prime `q ≥ 67` and
   6 for every prime `q ≥ 103`.
@@ -967,7 +967,7 @@ Discrete Math. 309 (2009) 6126–6134); the thresholds below follow from it.
   (`χ_f(G₆₁) ≥ 5.20`; the first version of its proof omitted 61).
 - **Where it stops.** For `q ≤ 53` and `q = 61` the ratio bound for `𝔽_q²`
   stays above `q²/5` (`0.2111 q²` at `q = 47`, `0.2036 q²` at `q = 61`). The
-  Delsarte linear programme (Delsarte, 1973, §4) on the circles `x² + y² = r` gives exactly the same
+  Delsarte linear programme (Delsarte, 1973, cited in §4) on the circles `x² + y² = r` gives exactly the same
   numbers, and conditional constraints from unit triangles, Moser spindles and
   rigid templates move it by under 2%. Linear-programming bounds with triangle
   constraints were used earlier for planar sets avoiding unit distance, by

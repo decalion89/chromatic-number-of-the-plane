@@ -132,9 +132,9 @@ The route is **not ours**.
    `2/√3` is the most repulsive distance measured, at 8%, and it is not a
    two-step distance in `L16`. Exoo and Ismailescu had already found a 103-vertex graph
    with edges at 1 and `2/√3` and no 4-colouring (Polymath16, thread 3, comment 4161).
-   The quantity measured, the probability that two points at distance `d` get the
-   same colour, is the `p_d` of Polymath16's probabilistic formulation (Tao, thread 7,
-   comment 4893; Ágoston, [arXiv 2112.07665](https://arxiv.org/abs/2112.07665)).
+   The quantity measured, how often two points at distance `d` get the same
+   colour, is an empirical counterpart of the `p_d` of Polymath16's probabilistic
+   formulation (Tao, thread 7, comment 4893; Ágoston, [arXiv 2112.07665](https://arxiv.org/abs/2112.07665)).
 4. **A sparse 72-point lattice witness** for
    `{1, 4/√3, √7, √(28/3), √(61/3)}`, verified by four solvers and DRAT.
 5. **Methods:**

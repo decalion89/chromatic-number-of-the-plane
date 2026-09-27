@@ -8610,8 +8610,8 @@ lists them.
   2019), not to "Ágoston–Pálvölgyi".
 - **The notes and the folder READMEs.**
   - `notes/literature.md`: Conjecture 8.1 is in arXiv:1805.06055, not
-    1805.00157. The repulsion measurement is the `p_d` of Polymath16's
-    probabilistic formulation (Tao, thread 7, comment 4893; Ágoston,
+    1805.00157. The repulsion measurement is an empirical counterpart of
+    the `p_d` of Polymath16's probabilistic formulation (Tao, thread 7, comment 4893; Ágoston,
     arXiv:2112.07665). Woodall, Benda–Perles, De Neve et al. and
     Bannai–Shimabukuro–Tanaka are now cited, and Keleti et al. and DeCorte et al.
     as earlier linear-programming bounds with triangle constraints.

@@ -396,7 +396,7 @@ Its structure, for `q ≡ 5 (mod 6)`:
   `Cay(𝔽_q[ω], ρ^j μ₆)`.
 - **Eigenvalues.** They are `λ(n) = Σ_c (1 − η(c² − 4n)) e(c/q)`, which depend
   only on `n = N(y)`. They are Kloosterman sums, `λ(n) = −Kl(1, n; q)`, and `|λ| ≤ 2√q` by Weil's
-  bound (1948, §8 above; `notes/local_colourings.md` §4). The bound was also checked for all
+  bound (1948, cited in §8 above; `notes/local_colourings.md` §4). The bound was also checked for all
   `q < 400`. For the finite Euclidean planes these spectral facts go back to
   Medrano, Myers, Stark and Terras (J. Comput. Appl. Math. 68, 1996).
 

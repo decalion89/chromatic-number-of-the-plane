@@ -20,6 +20,8 @@ colours such that no two points at distance exactly 1 share a colour. It has bee
 | χ(ℝ²) ≥ 5 | Parts, 2020 | the same property on 509 vertices |
 | χ(ℝ²) ≤ 7 | Isbell, 1950 | a hexagonal tiling |
 
+Soifer's book (2024) tells the history of the problem and of these bounds.
+
 This repository studies the problem through exact arithmetic in number fields:
 - every point has algebraic coordinates, so "distance 1" is decided exactly;
 - claims that a graph cannot be coloured are decided by SAT solvers, and the main ones are certified by
@@ -147,8 +149,9 @@ running.
 
 ## Towards χ(ℝ²) ≥ 6
 
-**χ(ℝ²) ≥ 6 has not been proved.** It needs one finite unit-distance graph with no proper 5-colouring. A
-finite object can be searched for, and anyone can check it once found. That graph has not been found.
+**χ(ℝ²) ≥ 6 has not been proved.** By the de Bruijn–Erdős theorem, it holds exactly when some finite
+unit-distance graph has no proper 5-colouring. A finite object can be searched for, and anyone can check it
+once found. No such graph has been found.
 
 The route searched in September 2026 is the reduction of Exoo and Ismailescu, which Polymath16 calls
 clamping onto "virtual edges":
@@ -163,9 +166,11 @@ existed for its orbit of distances.
 Two observations that guided the search:
 - **Repulsive distances.** Some distances, such as 2/√3, are coloured alike
   unusually rarely in 5-colourings, so they are the natural gadget targets.
-  We have not found this measurement in the literature. For four colours,
-  Ismailescu found a 103-vertex graph with edges at 1 and 2/√3 and no
-  4-colouring (Polymath16, thread 3).
+  How often a distance is coloured alike is an empirical counterpart of the
+  probability `p_d` in Polymath16's probabilistic formulation (Tao, thread 7,
+  comment 4893; Ágoston, 2021). For four colours, Exoo and Ismailescu found a
+  103-vertex graph with edges at 1 and 2/√3 and no 4-colouring (Polymath16,
+  thread 3, comment 4161).
 - **Galois orbits.** A Galois automorphism that preserves unit distance maps
   gadgets to gadgets, so one gadget serves a whole orbit of distances. The
   principle is Tao's (Polymath16, thread 7, comment 4893). The 187-point
@@ -313,24 +318,59 @@ Code, data and text are released under the [MIT License](LICENSE).
 
 ## References
 
+- A. Soifer, *The New Mathematical Coloring Book: Mathematics of Coloring and
+  the Colorful Life of Its Creators*, 2nd ed., Springer, New York, 2024
+  ([doi](https://doi.org/10.1007/978-1-0716-3597-1)) (the history of the
+  problem, with Nelson's and Isbell's bounds)
+- L. Moser, W. Moser, *Solution to Problem 10*, Canad. Math. Bull. 4(2) (1961)
+  187–189 ([doi](https://doi.org/10.1017/S0008439500025765)) (the Moser spindle)
+- N. G. de Bruijn, P. Erdős, *A colour problem for infinite graphs and a problem
+  in the theory of relations*, Indag. Math. 13 (1951) 371–373
+  ([doi](https://doi.org/10.1016/S1385-7258(51)50053-7))
 - A. D. N. J. de Grey, *The chromatic number of the plane is at least 5*,
   Geombinatorics 28(1) (2018) 18–31; [arXiv:1804.02385](https://arxiv.org/abs/1804.02385)
 - G. Exoo, D. Ismailescu, *The chromatic number of the plane is at least 5: a
   new proof*, Discrete Comput. Geom. 64(1) (2020) 216–226;
   [arXiv:1805.00157](https://arxiv.org/abs/1805.00157)
 - G. Exoo, D. Ismailescu, *The Hadwiger–Nelson problem with two forbidden
-  distances*; [arXiv:1805.06055](https://arxiv.org/abs/1805.06055)
-- G. Exoo, D. Ismailescu, *A 6-chromatic two-distance graph in the plane*;
+  distances*, Geombinatorics 28(1) (2018) 51–70;
+  [arXiv:1805.06055](https://arxiv.org/abs/1805.06055)
+- G. Exoo, D. Ismailescu, *A 6-chromatic two-distance graph in the plane*,
+  Geombinatorics 29(3) (2020) 97–103;
   [arXiv:1909.13177](https://arxiv.org/abs/1909.13177)
+- J. Parts, *A small 6-chromatic two-distance graph in the plane*,
+  Geombinatorics 29(3) (2020) 111–115;
+  [arXiv:2010.12656](https://arxiv.org/abs/2010.12656)
+- J. De Neve, F. Vanden Kerchove, D. Colle, W. Tavernier, M. Pickavet, *On the
+  chromatic number of the plane with two forbidden distances*, Amer. Math.
+  Monthly 132(10) (2025) 1007–1022
+  ([doi](https://doi.org/10.1080/00029890.2025.2559554))
+- P. Ágoston, *On the range of two-distance graphs* (2026);
+  [arXiv:2601.07828](https://arxiv.org/abs/2601.07828)
 - M. J. H. Heule, *Computing small unit-distance graphs with chromatic number
   5*, Geombinatorics 28(1) (2018) 32–50; [arXiv:1805.12181](https://arxiv.org/abs/1805.12181)
+- M. J. H. Heule, *Trimming graphs using clausal proof optimization*, in
+  Principles and Practice of Constraint Programming (CP 2019), LNCS 11802,
+  Springer, 2019, 251–267; [arXiv:1907.00929](https://arxiv.org/abs/1907.00929)
 - D. W. Cranston, L. Rabern, *The fractional chromatic number of the plane*,
   Combinatorica 37(5) (2017) 837–861; [arXiv:1501.01647](https://arxiv.org/abs/1501.01647)
 - J. Parts, *The chromatic number of the plane is at least 5: a human-verifiable
-  proof*; [arXiv:2010.12661](https://arxiv.org/abs/2010.12661)
+  proof*, Geombinatorics 30(2) (2020) 77–102;
+  [arXiv:2010.12661](https://arxiv.org/abs/2010.12661)
 - J. Parts, *Graph minimization, focusing on the example of 5-chromatic
-  unit-distance graphs in the plane* (the 509-vertex graph);
-  [arXiv:2010.12665](https://arxiv.org/abs/2010.12665)
+  unit-distance graphs in the plane* (the 509-vertex graph), Geombinatorics
+  29(4) (2020) 137–166; [arXiv:2010.12665](https://arxiv.org/abs/2010.12665)
+- A. D. N. J. de Grey, J. Parts, *On lower bounds of the order of k-chromatic
+  unit distance graphs*, Geombinatorics 32(2) (2022) 72–74;
+  [arXiv:2303.14714](https://arxiv.org/abs/2303.14714)
+- J. K. Haugland, *A Moser-spindle-free 5-chromatic unit distance graph on 2131
+  vertices in the plane* (2026); [arXiv:2608.04542](https://arxiv.org/abs/2608.04542)
+- N. Frankl, T. Hubai, D. Pálvölgyi, *Almost-monochromatic sets and the
+  chromatic number of the plane*, Discrete Comput. Geom. 70(3) (2023) 753–772;
+  [arXiv:1912.02604](https://arxiv.org/abs/1912.02604)
+- D. R. Woodall, *Distances realized by sets covering the plane*, J. Combin.
+  Theory Ser. A 14(2) (1973) 187–200
+  ([doi](https://doi.org/10.1016/0097-3165(73)90020-4))
 - K. G. Fischer, *Additive K-colorable extensions of the rational plane*,
   Discrete Math. 82(2) (1990) 181–195; *The connected components of the graph
   ℚ(√N₁, …, √N_d)²*, Congr. Numer. 72 (1990) 213–221 (Zbl 0733.05048); and
@@ -338,38 +378,70 @@ Code, data and text are released under the [MIT License](LICENSE).
   73–79 (Zbl 0836.05030)
 - P. D. Johnson Jr., *Two-colorings of real quadratic extensions of ℚ² that
   forbid many distances*, Congr. Numer. 60 (1987) 51–58
+- M. Benda, M. Perles, *Colorings of metric spaces*, Geombinatorics 9(3) (2000)
+  113–126 (the problems that Johnson's status report follows up)
 - P. D. Johnson Jr., *Problems posed in or arising from "Colorings of metric
-  spaces": status report*, Geombinatorics 9 (2000) 170–179 (a survey we have
+  spaces": status report*, Geombinatorics 9(4) (2000) 170–179 (a survey we have
   not seen)
 - M. S. Payne, *Unit distance graphs with ambiguous chromatic number*,
-  Electron. J. Combin. 16 (2009), Note 31;
+  Electron. J. Combin. 16(1) (2009), Note 31;
   [arXiv:0707.1177](https://arxiv.org/abs/0707.1177) (summarises Johnson's and
   Fischer's results on quadratic fields)
 - G. E. Moorhouse, *On the chromatic numbers of planes* (draft, 2010);
   [pdf](https://www.ericmoorhouse.org/pub/chromatic.pdf)
-- D. A. Madore, *The Hadwiger–Nelson problem over certain fields*;
+- D. A. Madore, *The Hadwiger–Nelson problem over certain fields* (2015);
   [arXiv:1509.07023](https://arxiv.org/abs/1509.07023)
 - A. Medrano, P. Myers, H. M. Stark, A. Terras, *Finite analogues of Euclidean
-  space*, J. Comput. Appl. Math. 68 (1996) 221–238
+  space*, J. Comput. Appl. Math. 68(1–2) (1996) 221–238
   ([doi](https://doi.org/10.1016/0377-0427(95)00261-8))
+- Le Anh Vinh, *On chromatic number of unit-quadrance graphs (finite Euclidean
+  graphs)* (2005); [arXiv:math/0510092](https://arxiv.org/abs/math/0510092)
+- M. Bardestani, K. Mallahi-Karai, *On a generalization of the Hadwiger–Nelson
+  problem*, Israel J. Math. 217 (2017) 313–335;
+  [arXiv:1507.05300](https://arxiv.org/abs/1507.05300)
+- A. J. Hoffman, *On eigenvalues and colorings of graphs*, in *Graph Theory and
+  its Applications* (B. Harris, ed.), Academic Press, New York, 1970, 79–91
+- W. H. Haemers, *Hoffman's ratio bound*, Linear Algebra Appl. 617 (2021)
+  215–219 ([doi](https://doi.org/10.1016/j.laa.2021.02.010));
+  [arXiv:2102.05529](https://arxiv.org/abs/2102.05529)
+- A. Weil, *On some exponential sums*, Proc. Natl. Acad. Sci. USA 34(5) (1948)
+  204–207 ([doi](https://doi.org/10.1073/pnas.34.5.204))
 - A. Schrijver, *New code upper bounds from the Terwilliger algebra and
-  semidefinite programming*, IEEE Trans. Inform. Theory 51 (2005) 2859–2866
+  semidefinite programming*, IEEE Trans. Inform. Theory 51(8) (2005) 2859–2866
 - Polymath16 threads
   [2](https://dustingmixon.wordpress.com/2018/04/22/polymath16-second-thread-what-does-it-take-to-be-5-chromatic/)
-  and [3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/)
-  (Speyer's 2-adic colourings of the Moser ring),
+  (*What does it take to be 5-chromatic?*) and
+  [3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/)
+  (*Is 6-chromatic within reach?*): Speyer's 2-adic colourings of the Moser ring
+  (comments 4013 and 4206) and Exoo and Ismailescu's 103-vertex graph (comment
+  4161);
   [7](https://dustingmixon.wordpress.com/2018/06/16/polymath16-seventh-thread-upper-bounds/)
-  (Tao on Galois symmetry) and
+  (*Upper bounds*): Tao on Galois symmetry and on the probabilities `p_d`
+  (comment 4893);
+  [13](https://dustingmixon.wordpress.com/2019/07/08/polymath16-thirteenth-thread-bumping-the-deadline/)
+  (*Bumping the deadline?*): Parts' "funny proof";
+  [14](https://dustingmixon.wordpress.com/2019/08/05/polymath16-fourteenth-thread-automated-graph-minimization/)
+  (*Automated graph minimization?*): 6-chromatic two-distance graphs (comment
+  24460);
   [17](https://dustingmixon.wordpress.com/2021/02/01/polymath16-seventeenth-thread-declaring-victory/)
-  (Voronov's questions), and the Polymath16 wiki page
+  (*Declaring victory*): Voronov's questions; and the Polymath16 wiki page
   [Algebraic formulation of Hadwiger–Nelson problem](https://web.archive.org/web/20210412075722/https://asone.ai/polymath/index.php?title=Algebraic_formulation_of_Hadwiger-Nelson_problem)
   (colourings of rings such as the Moser ring)
+- P. Ágoston, *Probabilistic formulation of the Hadwiger–Nelson problem* (2021);
+  [arXiv:2112.07665](https://arxiv.org/abs/2112.07665)
 - V. A. Voronov, A. M. Neopryatnaya, E. A. Dergachev, *Constructing
   5-chromatic unit distance graphs embedded in the Euclidean plane and
   two-dimensional spheres*, Discrete Math. 345(12) (2022) 113106;
   [arXiv:2106.11824](https://arxiv.org/abs/2106.11824)
-- Á. Dúcz, *A note on geometric colorings of the Moser lattice*;
+- Á. Dúcz, *A note on geometric colorings of the Moser lattice* (2026);
   [arXiv:2606.12325](https://arxiv.org/abs/2606.12325)
+- L. de Moura, S. Ullrich, *The Lean 4 theorem prover and programming
+  language*, in Automated Deduction – CADE 28, LNCS 12699, Springer, 2021,
+  625–635 ([doi](https://doi.org/10.1007/978-3-030-79876-5_37))
+- The mathlib Community, *The Lean mathematical library*, in Proceedings of the
+  9th ACM SIGPLAN International Conference on Certified Programs and Proofs
+  (CPP 2020), 367–381 ([doi](https://doi.org/10.1145/3372885.3373824));
+  [arXiv:1910.09336](https://arxiv.org/abs/1910.09336)
 
 [`notes/literature.md`](notes/literature.md) compares the project with the literature in detail.
 

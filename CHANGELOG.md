@@ -37,6 +37,27 @@ including every retracted claim, is the research log,
 - `python-flint` is now a requirement: the independent checker multiplies
   integer matrices with FLINT.
 
+### Fixed
+- **Citations**, after an audit against primary sources:
+  - standard results are now credited where they are used: de Bruijn–Erdős,
+    Hoffman (with Haemers for the ratio form), Weil, Delsarte, Stiemke, Croft,
+    Falconer, Molloy, Alon–Krivelevich–Sudakov, value precedence, cube and
+    conquer, Lean 4 and Mathlib;
+  - the 103-vertex graph with edges at 1 and 2/√3 is Exoo's and Ismailescu's,
+    not Ismailescu's alone;
+  - Speyer's 2-adic colouring of the Moser ring is in Polymath16's thread 2,
+    not thread 3;
+  - χ_f(ℝ²) ≤ 4.36, derived in the research log as if new, is Hochberg and
+    O'Donnell's (1993), and the log no longer says that the LP line had
+    stalled;
+  - the claim that the repulsion of a distance had not been measured before
+    is withdrawn: it is an empirical counterpart of the probability `p_d` of
+    Polymath16's probabilistic formulation;
+  - the README's references gain journal data, and the works the repository
+    cites.
+
+  The research log lists every fix under "Citation audit (27 September)".
+
 ## [1.1.0] - 2026-09-27
 
 None of the results below has been refereed.
