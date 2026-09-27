@@ -16,8 +16,8 @@ including every retracted claim, is the research log,
   𝔽₁₃ are independent, so its fractional chromatic number is 169/36. A computer
   proof: a case split on a point with its whole circle, then four formulas and
   a cube tree of 4 822 leaves, each refuted by kissat with a DRAT proof checked
-  by drat-trim (`certificates/g13_alpha_*`), and cake_lpr on the four formulas,
-  the cover and 40 leaves chosen at random (`certificates/g13_cake_lpr_checks.txt`).
+  by drat-trim (`certificates/g13_alpha_*`); a second run had cake_lpr check
+  every one of these proofs and the cover (`certificates/g13_cake_lpr_checks.txt.gz`).
   `scripts/g13/` writes the formulas, and `scripts/g13/g13_audit.py` checks
   from their text alone that every clause holds in the intended models;
   `scripts/verify_g13.py` checks everything again; `tests/test_g13.py` checks

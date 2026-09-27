@@ -8,12 +8,14 @@ kissat or drat-trim.
   with the automorphisms of G_13 themselves), value precedence.
 - The certificate: the formulas of part A, written again by scripts/g13/enum_cert.py, have the SHA-256 of the log;
   the leaves of part B cover every assignment, and formula E37_B under each leaf has the SHA-256 of a drat-trim
-  VERIFIED line of the log.
+  VERIFIED line of the log. The second run, with cake_lpr, has one confirmed line for each of these 4 826 formulas,
+  with the same SHA-256, and cake_lpr VERIFIED on the cover formula.
 """
 import hashlib
 import itertools
 import os
 import random
+import re
 import sys
 
 import pytest
@@ -169,3 +171,29 @@ def test_the_cover_proof_resolves_to_the_empty_clause():
         assert (clauses[a] | clauses[b]) - {pivot[0], -pivot[0]} == frozenset(lits)
         clauses[step], last = frozenset(lits), step
     assert clauses[last] == frozenset()
+
+
+def test_cake_lpr_checked_every_proof():
+    """certificates/g13_cake_lpr_checks.txt.gz, from scripts/verify_g13.py run with --cake-lpr: every formula of
+    parts A and B has exactly one line, with the SHA-256 of the logs of scripts/g13/certify.py, where kissat refuted
+    it and drat-trim and cake_lpr checked the proof; and cake_lpr checked the proof of the cover formula"""
+    want = {name[:-len(".cnf")]: sha for name, sha in vg.logged(vg.LOG_A).items()}
+    want.update({f"leaf {name[len('E37_B_leaf'):]}": sha for name, sha in vg.logged(vg.LOG_B, vg.gzip.open).items()})
+    line = re.compile(r"(E37_A\d+|leaf \d+): sha256 ([0-9a-f]{64}) as in the certificate; kissat UNSAT in \d+ s; "
+                      r"drat-trim VERIFIED in \d+ s; cake_lpr VERIFIED UNSAT in \d+ s; confirmed$")
+    got, lines = {}, []
+    with vg.gzip.open(os.path.join(vg.CERT, "g13_cake_lpr_checks.txt.gz"), "rt") as fh:
+        for text in fh:
+            if text.startswith("#"):
+                continue
+            lines.append(text.rstrip("\n"))
+            m = line.match(lines[-1])
+            if m:
+                assert m.group(1) not in got
+                got[m.group(1)] = m.group(2)
+    assert len(want) == 4826 and got == want
+    assert not any("NOT" in text or "FAIL" in text for text in lines)
+    cnf, _, _ = vg.cover_proof(vg.read_cubes(vg.CUBES))
+    sha = hashlib.sha256(cnf.encode()).hexdigest()
+    assert (f"part B: the cover formula (4822 negated leaves, sha256 {sha}) is unsatisfiable: cake_lpr VERIFIED"
+            in lines)

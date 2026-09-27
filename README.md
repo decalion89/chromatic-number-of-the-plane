@@ -135,7 +135,7 @@ None of these results has been refereed. Each has one or more of these statuses:
 | χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, for the whole complex fields | Known; new local proofs | The first follows from Fischer's theorem, the second from Madore's reduction at 11 and Exoo–Ismailescu's graph. Our proofs reduce at the primes 2 and 11 ([`notes/local_colourings.md`](notes/local_colourings.md) §3, [`notes/rigidity.md`](notes/rigidity.md)); the lower bound graph `five_247_c` has a DRAT proof (`certificates/five_247_c_no4coloring.json`). |
 | Necessary local conditions for a field to hold a 6-chromatic unit-distance graph | Proved | [`notes/local_colourings.md`](notes/local_colourings.md) §5–§9, `scripts/fieldscreen.py` |
 | **Six colours for finite planes.** χ(G_q) ≥ 6 for every prime q ≥ 29 except 31, and χ(𝔽_q²) ≥ 6 for q = 37, 41, 43, 47, 59 and every prime q ≥ 67; χ(𝔽₄₁²) ∈ {6, 7}. Here 𝔽_q² is the plane x² + y² (Moorhouse's table stops at q = 17), and G_q the anisotropic plane, a local plane of number fields. | Computer proof; proved for large q | For 𝔽₃₇², 𝔽₄₁², 𝔽₄₃², 𝔽₄₇², G₂₉, G₃₇ and G₄₁, Schrijver's three-point bound gives α < q²/5, and each dual certificate is checked in interval and exact rational arithmetic, and again by an independent checker. The other cases follow from Proposition B and Hoffman's bound, with Weil's estimate or the exact spectrum. [`notes/local_colourings.md`](notes/local_colourings.md) §14, [`data/threepoint/`](data/threepoint/README.md), `scripts/threepoint_verify.py`, `scripts/threepoint_verify_indep.py` |
-| **α(G₁₃) = 36.** The anisotropic plane over 𝔽₁₃ has no 37 independent points, so its fractional chromatic number is 169/36. Whether χ(G₁₃) is 5 or 6 stays open. | Computer proof | [`notes/g13.md`](notes/g13.md): a case split, then four formulas and the 4 822 leaves of a cube tree, each refuted by kissat with a DRAT proof checked by drat-trim; cake_lpr on the four formulas, the cover and 40 leaves chosen at random (`certificates/g13_*`); an audit checks every clause of the formulas from their text alone (`scripts/g13/g13_audit.py`). `scripts/verify_g13.py`, `tests/test_g13.py` |
+| **α(G₁₃) = 36.** The anisotropic plane over 𝔽₁₃ has no 37 independent points, so its fractional chromatic number is 169/36. Whether χ(G₁₃) is 5 or 6 stays open. | Computer proof | [`notes/g13.md`](notes/g13.md): a case split, then four formulas and the 4 822 leaves of a cube tree, each refuted by kissat with a DRAT proof checked by drat-trim, and every proof and the cover checked again by cake_lpr, a checker verified in HOL4 (`certificates/g13_*`); an audit checks every clause of the formulas from their text alone (`scripts/g13/g13_audit.py`). `scripts/verify_g13.py`, `tests/test_g13.py` |
 | χ(ℝ²) ≥ 4: the Moser spindle has no 3-colouring | Known; computer proof | L. and W. Moser (1961). `certificates/moser_spindle_no3coloring.json`, checked by drat-trim. |
 | χ(ℝ²) ≥ 5: de Grey's 1581-vertex graph, rebuilt from his 39-point seed, has no 4-colouring | Known; computer proof | De Grey (2018). A DRAT proof of 13.1 M lemmas, checked by drat-trim, for the formula with the colours of one triangle fixed, which loses no generality: `certificates/degrey_1581_no4coloring.json`. |
 | Two 5-chromatic unit-distance graphs in ℚ(√3, √11, √247): `five_247_c`, 803 vertices and vertex-critical, and `five_247`, 1 139 vertices. Not a record: Parts' 509 stands. | Computer proof | DRAT proofs checked by drat-trim: `certificates/five_247_c_no4coloring.json`, `certificates/data_no4_checks.txt`; `tests/test_five_247.py` |
@@ -240,7 +240,7 @@ cvxopt 1.3.3 (DSDP) and clarabel 0.11.1; checking them needs only numpy, scipy a
 their contents. `requirements-lock.txt` lists the exact versions of the Python packages used for the
 results and of their dependencies, and `scripts/worker_setup.sh` builds the pinned kissat and drat-trim.
 
-GitHub Actions runs the fast part of the suite, 459 tests in 38 files
+GitHub Actions runs the fast part of the suite, 460 tests in 38 files
 ([`tests.yml`](.github/workflows/tests.yml)), and builds and checks the Lean proofs
 ([`lean.yml`](.github/workflows/lean.yml)), on pushes to `main` and on pull requests.
 
@@ -255,7 +255,7 @@ GitHub Actions runs the fast part of the suite, 459 tests in 38 files
 | [`data/`](data/README.md) | graphs and witnesses in exact coordinates (JSON), and the three-point certificates |
 | [`certificates/`](certificates/README.md) | colourings, DRAT verification logs and non-colourability claims |
 | [`scripts/`](scripts/README.md) | maintained tools: verification, search, figures; `scripts/experiments/` keeps the 734 one-off experiments behind the research log |
-| [`tests/`](tests/README.md) | the test suite: 748 tests, 24 of them marked slow |
+| [`tests/`](tests/README.md) | the test suite: 749 tests, 24 of them marked slow |
 | [`docs/`](docs/README.md) | the research log, the full chronological record, and the figures |
 
 Each of these folders has a README describing its contents. Until release 1.1.0 the project sat in
