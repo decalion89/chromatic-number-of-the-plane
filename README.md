@@ -6,6 +6,7 @@
 [![lean](https://github.com/decalion89/chromatic-number-of-the-plane/actions/workflows/lean.yml/badge.svg)](https://github.com/decalion89/chromatic-number-of-the-plane/actions/workflows/lean.yml)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22976635.svg)](https://doi.org/10.5281/zenodo.22976635)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![peer review: not yet](https://img.shields.io/badge/peer%20review-not%20yet-lightgrey.svg)](#how-this-work-was-done)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
 
 The Hadwiger–Nelson problem asks for the chromatic number χ(ℝ²) of the plane:
@@ -17,7 +18,8 @@ through exact arithmetic:
   and the main ones are certified by DRAT proofs checked by an independent
   program (`drat-trim`). The evidence for each claim is stated with it.
 
-**Status (September 2026):** proved, not yet refereed; AI-assisted.
+**Status (September 2026):** AI-assisted research; nothing here has been refereed yet. Each result below
+states its evidence.
 
 ## Main result
 
@@ -31,9 +33,10 @@ Moser spindle (Moorhouse, 2010).
 - **Background.** Fischer proved χ(ℚ(√3, √11)²) = 4 in 1994 (*Congressus
   Numerantium* 104). His result seems to have been overlooked: Moorhouse (2010),
   Madore (2015, who proved 4 ≤ χ ≤ 5), Cranston–Rabern (2017), Exoo–Ismailescu
-  (2018) and Voronov (Polymath16, 2021) all treat the value as unknown. Voronov
-  also thought χ = 4 likely for the plane over ℚ(√2, √3). Fischer's hypotheses
-  exclude that field, and we have not found its value in the literature.
+  (2020) and Voronov (Polymath16, 2021) all treat the value as unknown. Voronov
+  also thought χ = 4 likely for the plane over ℚ(√2, √3). Fischer's hypotheses,
+  as the zbMATH review of his 1994 paper states them (we have not seen its full
+  text), exclude that field, and we have not found its value in the literature.
 - **Proof idea.** Change coordinates to α = x + y/√3, β = 2y/√3. The squared
   distance becomes α² − αβ + β². This form is anisotropic modulo a prime above
   2 with residue field 𝔽₂, so Madore's reduction argument, which he stated for
@@ -103,7 +106,8 @@ pushes to `main` and on pull requests.
 Cite a tagged release, so that the reader finds the version you read; the
 changes between releases are in [`CHANGELOG.md`](CHANGELOG.md). Zenodo archives
 each release with its own DOI: version 1.0.0 is
-[10.5281/zenodo.22976636](https://doi.org/10.5281/zenodo.22976636), and
+[10.5281/zenodo.22976636](https://doi.org/10.5281/zenodo.22976636), version 1.1.0 is
+[10.5281/zenodo.22985036](https://doi.org/10.5281/zenodo.22985036), and
 [10.5281/zenodo.22976635](https://doi.org/10.5281/zenodo.22976635) always
 resolves to the latest version. For the repository as a whole, use GitHub's
 "Cite this repository" button, which reads [`CITATION.cff`](CITATION.cff):
@@ -114,7 +118,7 @@ resolves to the latest version. For the repository as a whole, use GitHub's
   title   = {The {H}adwiger--{N}elson problem over number fields},
   version = {1.1.0},
   year    = {2026},
-  doi     = {10.5281/zenodo.22976635},
+  doi     = {10.5281/zenodo.22985036},
   url     = {https://github.com/decalion89/chromatic-number-of-the-plane/releases/tag/v1.1.0},
   note    = {AI-assisted research; not peer reviewed}
 }
@@ -138,9 +142,10 @@ Please also cite the original papers listed in the project page.
 ## How this work was done
 
 This is AI-assisted research. The code, the computations and most of the text
-were produced with Claude (Anthropic), under the direction of Sergi Galán. Every
-computational claim is machine-checked as described above. No result has been
-peer reviewed yet.
+were produced with Claude (Anthropic), under the direction of Sergi Galán. The
+computational claims are checked by machine: the main ones by certificates that an
+independent program verifies, the others by solvers, as each one states. No
+result has been peer reviewed yet.
 
 ## Reporting an error
 

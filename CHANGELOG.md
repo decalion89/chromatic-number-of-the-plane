@@ -22,6 +22,9 @@ including every retracted claim, is the research log,
   also checks it against actual independent sets, and shows that misreading a
   certificate destroys its bound.
 
+- The Zenodo DOI of version 1.1.0, 10.5281/zenodo.22985036, in `CITATION.cff`
+  and in the README's BibTeX entry.
+
 ### Changed
 - `python-flint` is now a requirement: the independent checker multiplies
   integer matrices with FLINT.

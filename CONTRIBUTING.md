@@ -43,6 +43,9 @@ A pull request follows the principles of the research README:
   - Claims that rest on solvers alone say so.
   - A semidefinite bound needs a stored dual certificate checked in interval
     arithmetic.
+  - A formal proof in `research/hadwiger-nelson/lean/` builds with no `sorry`,
+    and its theorems use only the axioms listed in `lean/axioms.expected`; a
+    change to that file says why.
 - **Tests.** Every new statement the code supports gets a test. Run the test
   files you touched, and the fast subset that CI runs
   (`.github/workflows/tests.yml`).
