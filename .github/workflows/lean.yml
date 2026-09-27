@@ -22,6 +22,9 @@ jobs:
         working-directory: research/hadwiger-nelson/lean
     steps:
       - uses: actions/checkout@v4
+      # Mathlib's prebuilt files take several GB: make room on the runner first.
+      - name: Free disk space
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL && df -h /
       - name: Install Lean, fetch Mathlib's prebuilt files, build every proof
         uses: leanprover/lean-action@v1
         with:
@@ -29,6 +32,8 @@ jobs:
           auto-config: false
           build: true
           use-mathlib-cache: true
+          # Saving .lake (Mathlib's files) to GitHub's cache filled the runner's disk.
+          use-github-cache: false
       - name: Compare the axioms with axioms.expected
         run: lake env lean PrintAxioms.lean > axioms.txt && diff axioms.expected axioms.txt
       - name: Replay each file in the kernel
