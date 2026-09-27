@@ -54,10 +54,12 @@ records.
 independence number `α` of a finite plane, and so its chromatic number from below
 (`notes/local_colourings.md` §14): `χ ≥ 6` for seven planes, and `χ(G₁₃) ≥ 5` from `inert13.npz`.
 Each holds `meta` (JSON: the plane `q`, `kind` = `std` for x² + y² or `inert` for the anisotropic
-plane, the options and the orbit data of `scripts/threepoint.py`), `z` (the dual solution:
-multipliers of the linear constraints, then each psd block in upper-triangle svec form), `value`
+plane, the options and the orbit data of `scripts/threepoint.py`), `z` (the dual solution: the
+multipliers of the constraints z ≥ 0, zero in every stored file, then those of the triangle and of
+the Delsarte inequalities, then each psd block in upper-triangle svec form), `value`
 (the solver's floating-point bound; the verifier's rigorous bound differs from it by less than 10⁻⁴)
-and `status` (the solver's final status). `scripts/threepoint_verify.py` checks one rigorously;
+and `status` (the solver's final status). `scripts/threepoint_verify.py` checks one rigorously, and
+`scripts/threepoint_verify_indep.py`, written independently of both, checks it again;
 `tests/test_threepoint_certificates.py` lists what each one proves and checks them all.
 `threepoint/SHA256SUMS` fixes their contents (`sha256sum -c SHA256SUMS` in that folder).
 

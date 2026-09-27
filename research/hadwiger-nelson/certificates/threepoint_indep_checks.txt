@@ -1,0 +1,119 @@
+# scripts/threepoint_verify_indep.py on the eight three-point certificates of data/threepoint/
+# (notes/local_colourings.md §14). The checker imports neither scripts/threepoint.py nor
+# scripts/threepoint_verify.py. It rebuilds the programme from its definitions, proves the dual blocks
+# positive definite in exact integer arithmetic, and bounds alpha by an exact rational, printed rounded up
+# to 1e-6. Run on 27 September 2026, one thread (OPENBLAS_NUM_THREADS=1), with Python 3.11.15, numpy 2.4.6,
+# python-flint 0.9.0 and mpmath 1.3.0, from research/hadwiger-nelson:
+#   python3 scripts/threepoint_verify_indep.py data/threepoint/NAME.npz
+== python3 scripts/threepoint_verify_indep.py data/threepoint/inert13.npz
+[    0.0s] certificate inert13.npz: status 'DSDP optimal; dual on the null spaces', solver value 42.632032, len(z) = 2488
+[    0.0s] plane inert13: n = 169, Q = x^2 + 11 y^2, N = 14 unit vectors, |O(Q)| = 28
+[    0.0s] 233 orbits of ordered pairs: 172 free triangle orbits, 11 free circles, 49 with a unit side; largest orbit 168 pairs
+[    0.0s] z splits as 183 (var >= 0) + 1032 (triangle inequalities) + 12 (Delsarte) + 16 psd blocks: length 2488 matches
+[    0.0s] linear multipliers: min 0.000e+00, 0 negative (set to 0); Delsarte multipliers: min 0.000e+00, 0 negative (set to 0)
+[    0.0s] rotation data checked: sig in SO(Q) of order N, its orbits partition P - 0; tau a reflection with tau(rep_a) = sig^(2 shift_a) rep_a, or = rep of the partner orbit
+[    0.0s] psd blocks: 8 proved positive definite exactly (shift eps*lambda_max, eps up to 1e-12; worst raw lambda_min/lambda_max = -2.55e-16), 8 zero
+[    0.2s] M1: exact class sums of W1 done (8 nonzero blocks, 0s)
+[    0.2s] M0: every dual block is zero, W0 = 0
+[    0.2s] RIGOROUS: c_0 = 42.63203175, sum of positive residuals = 5.711e-09 (largest 1.91e-09; Delsarte interval width <= 2.4e-41)
+RESULT inert13: alpha <= 42.632032  (exact rational upper bound; solver value 42.632032; n/5 = 33.8, n/4 = 42.25)
+         alpha <= 42 < n/4 = 42.25: chi >= n/alpha > 4, so chi >= 5
+exit 0
+== python3 scripts/threepoint_verify_indep.py data/threepoint/inert29.npz
+[    0.0s] certificate inert29.npz: status 'DSDP optimal; dual on the null spaces', solver value 163.248261, len(z) = 27188
+[    0.0s] plane inert29: n = 841, Q = x^2 + 27 y^2, N = 30 unit vectors, |O(Q)| = 60
+[    1.4s] 2269 orbits of ordered pairs: 2016 free triangle orbits, 27 free circles, 225 with a unit side; largest orbit 360 pairs
+[    1.5s] z splits as 2043 (var >= 0) + 12096 (triangle inequalities) + 28 (Delsarte) + 32 psd blocks: length 27188 matches
+[    1.5s] linear multipliers: min 0.000e+00, 0 negative (set to 0); Delsarte multipliers: min 0.000e+00, 0 negative (set to 0)
+[    1.5s] rotation data checked: sig in SO(Q) of order N, its orbits partition P - 0; tau a reflection with tau(rep_a) = sig^(2 shift_a) rep_a, or = rep of the partner orbit
+[    1.6s] psd blocks: 16 proved positive definite exactly (shift eps*lambda_max, eps up to 1e-12; worst raw lambda_min/lambda_max = -3.10e-16), 16 zero
+[    5.2s] M1: exact class sums of W1 done (16 nonzero blocks, 3s)
+[    5.2s] M0: every dual block is zero, W0 = 0
+[    5.2s] RIGOROUS: c_0 = 163.24826100, sum of positive residuals = 1.963e-08 (largest 3.57e-09; Delsarte interval width <= 3.7e-40)
+RESULT inert29: alpha <= 163.248262  (exact rational upper bound; solver value 163.248261; n/5 = 168.2, n/4 = 210.25)
+         alpha <= 163 < n/5 = 168.2: chi >= n/alpha > 5, so chi >= 6
+exit 0
+== python3 scripts/threepoint_verify_indep.py data/threepoint/std37.npz
+[    0.0s] certificate std37.npz: status 'DSDP optimal; dual by LP', solver value 259.894433, len(z) = 59273
+[    0.0s] plane std37: n = 1369, Q = x^2 + 1 y^2, N = 36 unit vectors, |O(Q)| = 72
+[    4.3s] 4827 orbits of ordered pairs: 4429 free triangle orbits, 36 free circles, 361 with a unit side; largest orbit 432 pairs
+[    4.3s] z splits as 4465 (var >= 0) + 26574 (triangle inequalities) + 37 (Delsarte) + 38 psd blocks: length 59273 matches
+[    4.3s] linear multipliers: min 0.000e+00, 0 negative (set to 0); Delsarte multipliers: min 0.000e+00, 0 negative (set to 0)
+[    4.3s] rotation data checked: sig in SO(Q) of order N, its orbits partition P - 0; tau a reflection with tau(rep_a) = sig^(2 shift_a) rep_a, or = rep of the partner orbit
+[    4.8s] psd blocks: 19 proved positive definite exactly (shift eps*lambda_max, eps up to 1e-12; worst raw lambda_min/lambda_max = -4.02e-16), 19 zero
+[   18.5s] M1: exact class sums of W1 done (19 nonzero blocks, 13s)
+[   18.5s] M0: every dual block is zero, W0 = 0
+[   18.5s] RIGOROUS: c_0 = 259.89443485, sum of positive residuals = 6.169e-08 (largest 7.61e-09; Delsarte interval width <= 3.9e-39)
+RESULT std37: alpha <= 259.894435  (exact rational upper bound; solver value 259.894433; n/5 = 273.8, n/4 = 342.25)
+         alpha <= 259 < n/5 = 273.8: chi >= n/alpha > 5, so chi >= 6
+exit 0
+== python3 scripts/threepoint_verify_indep.py data/threepoint/inert37.npz
+[    0.0s] certificate inert37.npz: status 'DSDP optimal; dual on the null spaces', solver value 263.631526, len(z) = 56064
+[    0.0s] plane inert37: n = 1369, Q = x^2 + 35 y^2, N = 38 unit vectors, |O(Q)| = 76
+[    3.9s] 4585 orbits of ordered pairs: 4188 free triangle orbits, 35 free circles, 361 with a unit side; largest orbit 456 pairs
+[    3.9s] z splits as 4223 (var >= 0) + 25128 (triangle inequalities) + 36 (Delsarte) + 40 psd blocks: length 56064 matches
+[    3.9s] linear multipliers: min 0.000e+00, 0 negative (set to 0); Delsarte multipliers: min 0.000e+00, 0 negative (set to 0)
+[    3.9s] rotation data checked: sig in SO(Q) of order N, its orbits partition P - 0; tau a reflection with tau(rep_a) = sig^(2 shift_a) rep_a, or = rep of the partner orbit
+[    4.3s] psd blocks: 21 proved positive definite exactly (shift eps*lambda_max, eps up to 1e-12; worst raw lambda_min/lambda_max = -3.70e-16), 19 zero
+[   16.9s] M1: exact class sums of W1 done (20 nonzero blocks, 12s)
+[   18.7s] M0: exact class sums of W0 done (1 nonzero blocks, 2s)
+[   18.7s] RIGOROUS: c_0 = 263.63152858, sum of positive residuals = 8.440e-08 (largest 1.46e-08; Delsarte interval width <= 3.0e-39)
+RESULT inert37: alpha <= 263.631529  (exact rational upper bound; solver value 263.631526; n/5 = 273.8, n/4 = 342.25)
+         alpha <= 263 < n/5 = 273.8: chi >= n/alpha > 5, so chi >= 6
+exit 0
+== python3 scripts/threepoint_verify_indep.py data/threepoint/std41.npz
+[    0.0s] certificate std41.npz: status 'DSDP optimal; dual by LP', solver value 327.676348, len(z) = 79959
+[    0.0s] plane std41: n = 1681, Q = x^2 + 1 y^2, N = 40 unit vectors, |O(Q)| = 80
+[    7.2s] 6469 orbits of ordered pairs: 5987 free triangle orbits, 40 free circles, 441 with a unit side; largest orbit 480 pairs
+[    7.3s] z splits as 6027 (var >= 0) + 35922 (triangle inequalities) + 41 (Delsarte) + 42 psd blocks: length 79959 matches
+[    7.3s] linear multipliers: min 0.000e+00, 0 negative (set to 0); Delsarte multipliers: min 0.000e+00, 0 negative (set to 0)
+[    7.3s] rotation data checked: sig in SO(Q) of order N, its orbits partition P - 0; tau a reflection with tau(rep_a) = sig^(2 shift_a) rep_a, or = rep of the partner orbit
+[    8.1s] psd blocks: 22 proved positive definite exactly (shift eps*lambda_max, eps up to 1e-12; worst raw lambda_min/lambda_max = -5.81e-16), 20 zero
+[   33.2s] M1: exact class sums of W1 done (21 nonzero blocks, 24s)
+[   36.1s] M0: exact class sums of W0 done (1 nonzero blocks, 3s)
+[   36.1s] RIGOROUS: c_0 = 327.67633802, sum of positive residuals = 1.356e-05 (largest 1.35e-05; Delsarte interval width <= 2.8e-39)
+RESULT std41: alpha <= 327.676352  (exact rational upper bound; solver value 327.676348; n/5 = 336.2, n/4 = 420.25)
+         alpha <= 327 < n/5 = 336.2: chi >= n/alpha > 5, so chi >= 6
+exit 0
+== python3 scripts/threepoint_verify_indep.py data/threepoint/inert41.npz
+[    0.0s] certificate inert41.npz: status 'DSDP optimal; dual by LP', solver value 300.724003, len(z) = 76240
+[    0.0s] plane inert41: n = 1681, Q = x^2 + 38 y^2, N = 42 unit vectors, |O(Q)| = 84
+[    7.1s] 6201 orbits of ordered pairs: 5720 free triangle orbits, 39 free circles, 441 with a unit side; largest orbit 504 pairs
+[    7.2s] z splits as 5759 (var >= 0) + 34320 (triangle inequalities) + 40 (Delsarte) + 44 psd blocks: length 76240 matches
+[    7.2s] linear multipliers: min 0.000e+00, 0 negative (set to 0); Delsarte multipliers: min 0.000e+00, 0 negative (set to 0)
+[    7.2s] rotation data checked: sig in SO(Q) of order N, its orbits partition P - 0; tau a reflection with tau(rep_a) = sig^(2 shift_a) rep_a, or = rep of the partner orbit
+[    7.9s] psd blocks: 23 proved positive definite exactly (shift eps*lambda_max, eps up to 1e-12; worst raw lambda_min/lambda_max = -7.09e-16), 21 zero
+[   34.6s] M1: exact class sums of W1 done (22 nonzero blocks, 26s)
+[   37.3s] M0: exact class sums of W0 done (1 nonzero blocks, 3s)
+[   37.4s] RIGOROUS: c_0 = 300.72400428, sum of positive residuals = 3.692e-08 (largest 3.12e-09; Delsarte interval width <= 1.4e-39)
+RESULT inert41: alpha <= 300.724005  (exact rational upper bound; solver value 300.724003; n/5 = 336.2, n/4 = 420.25)
+         alpha <= 300 < n/5 = 336.2: chi >= n/alpha > 5, so chi >= 6
+exit 0
+== python3 scripts/threepoint_verify_indep.py data/threepoint/std43.npz
+[    0.0s] certificate std43.npz: status 'DSDP optimal; dual on the null spaces', solver value 347.788695, len(z) = 87773
+[    0.0s] plane std43: n = 1849, Q = x^2 + 1 y^2, N = 44 unit vectors, |O(Q)| = 88
+[    9.7s] 7113 orbits of ordered pairs: 6587 free triangle orbits, 41 free circles, 484 with a unit side; largest orbit 528 pairs
+[    9.7s] z splits as 6628 (var >= 0) + 39522 (triangle inequalities) + 42 (Delsarte) + 46 psd blocks: length 87773 matches
+[    9.7s] linear multipliers: min 0.000e+00, 0 negative (set to 0); Delsarte multipliers: min 0.000e+00, 0 negative (set to 0)
+[    9.8s] rotation data checked: sig in SO(Q) of order N, its orbits partition P - 0; tau a reflection with tau(rep_a) = sig^(2 shift_a) rep_a, or = rep of the partner orbit
+[   10.6s] psd blocks: 23 proved positive definite exactly (shift eps*lambda_max, eps up to 1e-12; worst raw lambda_min/lambda_max = -4.39e-16), 23 zero
+[   46.2s] M1: exact class sums of W1 done (23 nonzero blocks, 34s)
+[   46.2s] M0: every dual block is zero, W0 = 0
+[   46.2s] RIGOROUS: c_0 = 347.78869881, sum of positive residuals = 1.054e-07 (largest 8.46e-09; Delsarte interval width <= 1.5e-39)
+RESULT std43: alpha <= 347.788699  (exact rational upper bound; solver value 347.788695; n/5 = 369.8, n/4 = 462.25)
+         alpha <= 347 < n/5 = 369.8: chi >= n/alpha > 5, so chi >= 6
+exit 0
+== python3 scripts/threepoint_verify_indep.py data/threepoint/std47.npz
+[    0.0s] certificate std47.npz: status 'DSDP optimal; dual on the null spaces', solver value 371.414126, len(z) = 114563
+[    0.1s] plane std47: n = 2209, Q = x^2 + 1 y^2, N = 48 unit vectors, |O(Q)| = 96
+[   28.4s] 9247 orbits of ordered pairs: 8625 free triangle orbits, 45 free circles, 576 with a unit side; largest orbit 576 pairs
+[   28.5s] z splits as 8670 (var >= 0) + 51750 (triangle inequalities) + 46 (Delsarte) + 50 psd blocks: length 114563 matches
+[   28.5s] linear multipliers: min 0.000e+00, 0 negative (set to 0); Delsarte multipliers: min 0.000e+00, 0 negative (set to 0)
+[   28.5s] rotation data checked: sig in SO(Q) of order N, its orbits partition P - 0; tau a reflection with tau(rep_a) = sig^(2 shift_a) rep_a, or = rep of the partner orbit
+[   30.0s] psd blocks: 26 proved positive definite exactly (shift eps*lambda_max, eps up to 1e-12; worst raw lambda_min/lambda_max = -4.25e-16), 24 zero
+[   82.1s] M1: exact class sums of W1 done (25 nonzero blocks, 50s)
+[   86.9s] M0: exact class sums of W0 done (1 nonzero blocks, 5s)
+[   87.0s] RIGOROUS: c_0 = 371.41401622, sum of positive residuals = 1.120e-04 (largest 7.18e-05; Delsarte interval width <= 1.8e-39)
+RESULT std47: alpha <= 371.414129  (exact rational upper bound; solver value 371.414126; n/5 = 441.8, n/4 = 552.25)
+         alpha <= 371 < n/5 = 441.8: chi >= n/alpha > 5, so chi >= 6
+exit 0

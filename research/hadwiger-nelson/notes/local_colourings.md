@@ -981,7 +981,9 @@ unit 5-cycle. A target `K₀` enters through the corners of these matrices,
 which are valid when `|S| ≥ K₀`; a bound below `K₀` then proves `α < K₀`.
 
 **Results.** Each bound below is proved by a dual solution stored in
-`data/threepoint/`, which `scripts/threepoint_verify.py` checks:
+`data/threepoint/`, which `scripts/threepoint_verify.py` checks.
+`scripts/threepoint_verify_indep.py`, written independently of the solver and of that checker, checks
+every one again (`certificates/threepoint_indep_checks.txt`):
 
 | plane | `n = q²` | bound on `α` | `n/5` | so |
 |---|---|---|---|---|

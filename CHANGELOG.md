@@ -11,6 +11,21 @@ including every retracted claim, is the research log,
 
 ## [Unreleased]
 
+### Added
+- `scripts/threepoint_verify_indep.py`, an independent check of the eight
+  three-point certificates. It imports neither the solver nor
+  `threepoint_verify.py`: it rebuilds the programme from its definitions, takes
+  only the dual multipliers from each file, proves the dual blocks positive
+  definite exactly and bounds α by an exact rational. All eight bounds are
+  confirmed, each within 4·10⁻⁶ of the solver's value
+  (`certificates/threepoint_indep_checks.txt`). `tests/test_threepoint_indep.py`
+  also checks it against actual independent sets, and shows that misreading a
+  certificate destroys its bound.
+
+### Changed
+- `python-flint` is now a requirement: the independent checker multiplies
+  integer matrices with FLINT.
+
 ## [1.1.0] - 2026-09-27
 
 None of the results below has been refereed.
