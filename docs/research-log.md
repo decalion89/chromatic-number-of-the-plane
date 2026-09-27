@@ -16,9 +16,10 @@
 > that the project filtered out" (the multiquadratic claim of "Why every known
 > construction stops at five"); "The circular gate: colourings through a real
 > character" (the sampled cyclic gates); "Correction: `χ(ℚ(√3, √11)²) = 4` is Fischer's
-> theorem (1994)" (the status entry below and "An open question closed"); and "Pre-release
+> theorem (1994)" (the status entry below and "An open question closed"); "Pre-release
 > audit (26 September)" (the whole-field results, the local colourings, the note, and the
-> descriptions of the data and certificates). The
+> descriptions of the data and certificates); and "Citation audit (27 September)"
+> (attributions and bibliographic data, corrected in place and listed there). The
 > state of every result is given by the README and the notes, not by this log.
 
 **How many colours does the plane need, so that no two points at distance exactly 1
@@ -29,7 +30,7 @@ Posed around 1950. Still open. The answer, written χ(ℝ²), is known only to l
 
 | bound | value | who, when | how |
 |---|---|---|---|
-| lower | ≥ 4 | Nelson, 1950; L. and W. Moser, 1961 | the 7-vertex Moser spindle |
+| lower | ≥ 4 | Nelson, 1950; L. and W. Moser, 1961 (Canad. Math. Bull. 4, 187–189) | the 7-vertex Moser spindle |
 | lower | ≥ 5 | Aubrey de Grey, 2018 | a 1581-vertex unit-distance graph with no 4-colouring |
 | lower | ≥ 5 | Jaan Parts, 2020 | the same, down to 509 vertices |
 | upper | ≤ 7 | Isbell, 1950 | a hexagonal tiling of diameter just under 1 |
@@ -1620,8 +1621,8 @@ sublattice with 28 cells a side, 784 cells and 78 792 constrained pairs, a
 
 **And it cannot reach six, by a theorem rather than by a compute limit.** Cell-based
 colourings are map-type colourings with polygonal regions, and those need at least
-seven colours: Woodall (1973) and Townsend (1981) give six,
-[arXiv:2502.01958](https://arxiv.org/abs/2502.01958) raises it to seven for maps
+seven colours: Woodall (1973) and Townsend (1981) give six, G. Sokolov and V. Voronov
+([arXiv:2502.01958](https://arxiv.org/abs/2502.01958)) raise it to seven for maps
 whose boundaries are not arcs of unit circles, with arbitrary polygons as a
 corollary. Any discretisation into cells lands squarely inside that.
 
@@ -2027,11 +2028,13 @@ plane force one of density at least `1/5`. So a single `G` with
 `alpha/n < 1/5` would give `chi_m(R^2) >= 6`, from one independent-set
 computation.
 
-**It cannot happen.** Croft's 1967 construction is a measurable 1-avoiding set
+**It cannot happen.** Croft's 1967 construction (H. T. Croft, *Incidence incidents*,
+Eureka 30 (1967) 22–26) is a measurable 1-avoiding set
 of density about `0.2293`, and averaging runs the other way too: that forces
 `alpha(G)/n >= 0.2293` for *every* finite unit-distance graph. Since
 `0.2293 > 1/5`, no graph ever brings the ratio under `0.2`, and the most this
-argument can yield is `1/0.2293 = 4.36` — `chi_m >= 5`, which is already known.
+argument can yield is `1/0.2293 = 4.36` — `chi_m >= 5`, which is already known
+(K. J. Falconer, J. Combin. Theory Ser. A 31 (1981) 184–189).
 
 ### Every fractional method is blind to this problem
 
@@ -2041,11 +2044,15 @@ weighting them is a *fractional colouring* of total weight `1/m_1`. Hence
 
     chi_f(R^2) <= 1 / m_1 <= 1 / 0.2293 = 4.36 < 5.
 
-The fractional chromatic number of the plane is **below five**. Every LP and
+The fractional chromatic number of the plane is **below five**. This bound is not
+new: it is R. Hochberg and P. O'Donnell's (*A large independent set in the unit
+distance graph*, Geombinatorics 2(4) (1993) 83–84). Every LP and
 SDP relaxation is bounded by `chi_f`, so no relaxation can see `chi >= 5`, let
 alone `chi >= 6`. That is why de Grey's 2018 result had to be an integral
-combinatorial argument, and why the LP line had stalled for decades without it
-being a shortage of computation. **The only route to six is integral.**
+combinatorial argument, and why the LP line, which has kept advancing (to
+`chi_f(R^2) >= 4`: M. Matolcsi, I. Z. Ruzsa, D. Varga, P. Zsámboki,
+[arXiv:2311.10069](https://arxiv.org/abs/2311.10069)), cannot reach five, however
+much computation it is given. **The only route to six is integral.**
 
 ### And what that says about the object being searched for
 
@@ -2065,7 +2072,7 @@ Recorded rather than dropped, because knowing why an avenue closes is worth as
 much as a search that fails quietly inside it. The ceiling here is a
 construction, not a shortage of computation, and `tests/test_density.py` pins
 it. The Moser spindle's `2/7 = 0.2857` and the published `m_1 <= 0.2470`
-(Ambrus, Csiszárik, Matolcsi, Varga, Zsámboki 2023, by Fourier methods rather
+(Ambrus, Csiszárik, Matolcsi, Varga, Zsámboki, Math. Program. 207 (2024) 303–327, by Fourier methods rather
 than from a graph) sit between the two.
 
 ## The gate: every 6-chromatic unit-distance graph is blocked
@@ -7728,9 +7735,9 @@ pair at distance `d` split by every 5-colouring, together with a finite
 
 | `d` | who |
 |---|---|
-| `(1+√5)/2` | Huddleston; 31 vertices (Parts, [arXiv 2010.12656](https://arxiv.org/abs/2010.12656)) |
+| `(1+√5)/2` | Huddleston (Owings, Tetiva, Huddleston, Amer. Math. Monthly 115(2) (2008) 170–172); 31 vertices (Parts, [arXiv 2010.12656](https://arxiv.org/abs/2010.12656)) |
 | `2` | Exoo–Ismailescu ([arXiv 1909.13177](https://arxiv.org/abs/1909.13177)) |
-| `√3`, `(√3+1)/√2` | Ágoston–Pálvölgyi |
+| `√3`, `(√3+1)/√2` | Polymath16, thread 14, comment 24460 (21 October 2019) |
 
 **All four are two-step distances** `|u + v|`, with `u, v` unit vectors, at
 turning angles 72°, 0°, 60° and 30°. Two points at such a distance share a
@@ -7861,9 +7868,10 @@ Reducing `z = x + iy` instead — the Hermitian form, `notes/local_colourings.md
 §2 — sees the `ω` that the coordinates hide.
 
 **Who came closest.** The 2-adic idea is not ours.
-- In thread 3 (May 2018) David Speyer 4-coloured the *Moser ring*, the
+- In thread 2 (25 April 2018, comment 4013) David Speyer 4-coloured the *Moser ring*, the
   elements of `ℚ(√−3, √−11)` integral over `ℤ[1/3]`. He used exactly this
-  reduction, with colours in `ℤ[ω]/2 = 𝔽₄`.
+  reduction, with colours in `ℤ[ω]/2 = 𝔽₄`. In thread 3 (comment 4206) he gave
+  8-periodic variants.
 - Gibbs and Hubai found that all such colourings have period 8.
 - Dúcz ([arXiv 2606.12325](https://arxiv.org/abs/2606.12325)) 4-coloured the
   Moser lattice and ring in 2026.
@@ -7907,7 +7915,7 @@ links. In short:
 - **Known reduction.** Reduction of field planes modulo a prime is Moorhouse's
   and Madore's.
 - **Known 2-adic colourings.** Speyer 4-coloured the Moser ring by the
-  Hermitian reduction over 2 (Polymath16, thread 3).
+  Hermitian reduction over 2 (Polymath16, thread 2, comment 4013).
 - **Not found anywhere else:**
   - the theorem above, which carries that reduction to the whole plane;
   - the CM whole-field results, with their thresholds for six;
@@ -8434,9 +8442,9 @@ What had to change:
 - **Attributions.** Reduction modulo a prime goes back to Woodall (1973) and
   Fischer (1990), and extension by cosets to Fischer's Theorem 1 (1990). The
   spectra of the finite planes are Medrano–Myers–Stark–Terras's (1996), and
-  Galois symmetry between distances is Tao's (Polymath16, thread 7). Ismailescu
-  had a 103-vertex graph with edges at 1 and `2/√3` and no 4-colouring (thread
-  3). The reduction to two-distance witnesses is Exoo–Ismailescu's (arXiv
+  Galois symmetry between distances is Tao's (Polymath16, thread 7). Exoo and Ismailescu
+  had a 103-vertex graph with edges at 1 and `2/√3` and no 4-colouring (Polymath16, thread
+  3, comment 4161). The reduction to two-distance witnesses is Exoo–Ismailescu's (arXiv
   1805.00157 and 1805.06055), not stated in 1909.13177. Cranston–Rabern had
   also asked about `ℚ(√3, √11)`.
 - **Code.** `scripts/tabucol.py` and `scripts/quotient.py` ran their whole
@@ -8568,3 +8576,53 @@ did not finish, so the search was cut down first.
   `leanchecker`.
 - The note is now typeset in LaTeX (version 5, five pages), with a figure of
   the 10-vertex graph and the citation audit's fixes.
+
+## Citation audit (27 September)
+
+An audit of the citations found credits missing, and some attributions and
+bibliographic data wrong. The slips are fixed where they were made; this entry
+lists them.
+
+- **The 103-vertex graph** with edges at 1 and `2/√3` and no 4-colouring is
+  Exoo's and Ismailescu's (Polymath16, thread 3, comment 4161), not
+  Ismailescu's alone: fixed in "Pre-release audit (26 September)" and in
+  `notes/literature.md`.
+- **Speyer's thread.** His 2-adic 4-colouring of the Moser ring is in thread 2
+  (25 April 2018, comment 4013), not thread 3; thread 3 (comment 4206) has his
+  8-periodic variants. Fixed in "An open question closed" and "Where this work
+  stands in the literature".
+- **The fractional bound.** `χ_f(ℝ²) ≤ 4.36`, derived in "A whole avenue, closed
+  with a reason" as if new, is Hochberg and O'Donnell's (Geombinatorics 2(4)
+  (1993) 83–84). The entry now says so, and cites Croft (Eureka 30 (1967)
+  22–26) for the set and Falconer (J. Combin. Theory Ser. A 31 (1981) 184–189)
+  for `χ_m ≥ 5`.
+- **The stalled LP line.** The same entry said that the LP line "had stalled for
+  decades". It had not: the fractional lower bound has reached `χ_f(ℝ²) ≥ 4`
+  (Matolcsi, Ruzsa, Varga, Zsámboki, arXiv:2311.10069). What stands is that no
+  such bound can reach five.
+- **Other fixes in this log.** Ambrus et al. is Math. Program. 207 (2024)
+  303–327; arXiv:2502.01958 ("The upper bound, and why searching it is closed")
+  is by G. Sokolov and V. Voronov; the opening table cites the Mosers' spindle,
+  Canad. Math. Bull. 4 (1961) 187–189. In "Two-step distances, and the repulsive
+  distance `2/√3`" the witness for `(1+√5)/2` now cites Owings, Tetiva and
+  Huddleston (Amer. Math. Monthly 115(2) (2008) 170–172), and those for `√3` and
+  `(√3+1)/√2` are credited to Polymath16, thread 14, comment 24460 (21 October
+  2019), not to "Ágoston–Pálvölgyi".
+- **The notes and the folder READMEs.**
+  - `notes/literature.md`: Conjecture 8.1 is in arXiv:1805.06055, not
+    1805.00157. The repulsion measurement is the `p_d` of Polymath16's
+    probabilistic formulation (Tao, thread 7, comment 4893; Ágoston,
+    arXiv:2112.07665). Woodall, Benda–Perles, De Neve et al. and
+    Bannai–Shimabukuro–Tanaka are now cited, and Keleti et al. and DeCorte et al.
+    as earlier linear-programming bounds with triangle constraints.
+  - `notes/local_colourings.md` and `notes/rigidity.md` now cite de Bruijn–Erdős
+    (with Moorhouse's Thm 1.2) for `χ(ℝ²) = sup_K χ(Γ(K))`; Madore (Prop. 3.2,
+    ¶6.6) at Proposition A and Proposition 10; Hoffman (1970) and, for the
+    ratio form, Haemers (2021); Weil (1948); Delsarte (1973); Stiemke (1915);
+    Croft; Falconer; Molloy; Alon–Krivelevich–Sudakov; Law–Lee for value
+    precedence; Heule–Kullmann–Wieringa–Biere for cube and conquer; Lean 4 and
+    Mathlib.
+  - `notes/worker_jobs.md` credits the witnesses as above, with De Neve et al.;
+    `data/README.md` names arXiv:1909.13177; `scripts/README.md` cites
+    Hertz–de Werra, Galinier–Hao and Fincke–Pohst; `tests/README.md` cites Croft
+    and Hochberg–O'Donnell.
