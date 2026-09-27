@@ -12,6 +12,17 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- **`α(G₁₃) = 36`** (`notes/g13.md`): no 37 points of the anisotropic plane over
+  𝔽₁₃ are independent, so its fractional chromatic number is 169/36. A computer
+  proof: a case split on a point with its whole circle, then four formulas and
+  a cube tree of 4 822 leaves, each refuted by kissat with a DRAT proof checked
+  by drat-trim (`certificates/g13_alpha_*`); a second run had cake_lpr check
+  every one of these proofs and the cover (`certificates/g13_cake_lpr_checks.txt.gz`).
+  `scripts/g13/` writes the formulas, and `scripts/g13/g13_audit.py` checks
+  from their text alone that every clause holds in the intended models;
+  `scripts/verify_g13.py` checks everything again; `tests/test_g13.py` checks
+  the encodings by brute force and every formula against the logs, and
+  `tests/test_g13_audit.py` the audit. `χ(G₁₃)` stays 5 or 6.
 - `data/small_plane_colourings.json` and `tests/test_small_plane_colourings.py`:
   the colourings behind the upper bounds for the small finite planes (`G_q` for
   `q = 3, 4, 5, 7, 8, 13`, `H_q` for `q ≤ 16`), found by SAT and until now
