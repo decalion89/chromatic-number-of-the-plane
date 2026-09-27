@@ -8620,8 +8620,9 @@ lists them.
     ¶6.6) at Proposition A and Proposition 10; Hoffman (1970) and, for the
     ratio form, Haemers (2021); Weil (1948); Delsarte (1973); Stiemke (1915);
     Croft; Falconer; Molloy; Alon–Krivelevich–Sudakov; Law–Lee for value
-    precedence; Heule–Kullmann–Wieringa–Biere for cube and conquer; Lean 4 and
-    Mathlib.
+    precedence; Heule–Kullmann–Wieringa–Biere for cube and conquer;
+    Bannai–Shimabukuro–Tanaka, Keleti et al. and DeCorte et al. in §14; Lean 4
+    and Mathlib.
   - `notes/worker_jobs.md` credits the witnesses as above, with De Neve et al.;
     `data/README.md` names arXiv:1909.13177; `scripts/README.md` cites
     Hertz–de Werra, Galinier–Hao and Fincke–Pohst; `tests/README.md` cites Croft
