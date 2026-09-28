@@ -43,8 +43,14 @@ Both planes can be coloured with four colours, and both contain unit-distance gr
   seems to have been overlooked: Moorhouse (2010), Madore (2015, who proved 4 ≤ χ ≤ 5), Cranston–Rabern
   (2017), Exoo–Ismailescu (2020) and Voronov (Polymath16, 2021) all treat the value as unknown. Voronov
   also thought χ = 4 likely for the plane over ℚ(√2, √3). Fischer's hypotheses, as the zbMATH review of
-  his 1994 paper states them (we have not seen its full text), exclude that field, and we have not found
-  its value in the literature.
+  his 1994 paper states them (we have not seen its full text), exclude that field, and we had not found
+  its value in the literature when we wrote the note (but see the next point).
+- **Found later (28 September 2026).** The upper bound χ ≤ 4 for both planes is also a case of earlier
+  public work: *A 2-adic obstruction to 5-chromatic unit-distance graphs*
+  ([hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction), a repository of July 2026, not refereed). Its Theorem A is the
+  same reduction of z = x + iy at a place over 2; its Corollary B′ covers a field that contains ℚ(√2, √3)
+  and ℚ(√3, √11); it proves χ(ℚ(√3, √11)²) = 4. It does not state the case ℚ(√2, √3). What remains ours:
+  the explicit value for ℚ(√2, √3), with its 10-vertex lower bound, and the Lean proofs.
 - **Proof idea.** Change coordinates to α = x + y/√3, β = 2y/√3. The squared distance becomes
   α² − αβ + β². This form is anisotropic modulo a prime above 2 with residue field 𝔽₂, so Madore's
   reduction argument, which he stated for any quadratic form, applies. Reducing (α, β) modulo that prime,
@@ -94,9 +100,12 @@ states for any quadratic form); in the coordinates (x, y) that argument fails at
 
 Fischer's colouring is additive, with values in ℤ/4. Speyer used reduction modulo 2 in Polymath16
 (thread 2, April 2018) to 4-colour the Moser ring. The passage from a subgroup or a ring to the whole
-field by cosets is Fischer's (1990, Thm 1), Moorhouse's and Madore's. Our contribution is the choice of
+field by cosets is Fischer's (1990, Thm 1), Moorhouse's and Madore's. We took our contribution to be the choice of
 coordinates, which lets Madore's argument work at the places over 2 (they are inert in L(i), so the
-reduction covers every unit vector of the plane), and the case ℚ(√2, √3). None of this has been refereed.
+reduction covers every unit vector of the plane), and the case ℚ(√2, √3). On 28 September we found the
+same reduction of z = x + iy, with the same condition at 2, as Theorem A of the repository hn-2adic-obstruction
+(July 2026); the case ℚ(√2, √3) follows from its Corollary B′. As with Fischer's paper, we found it after the
+note had been sent out. None of this has been refereed.
 
 </details>
 
@@ -130,7 +139,7 @@ None of these results has been refereed. Each has one or more of these statuses:
 
 | result | status | evidence |
 |---|---|---|
-| **χ(ℚ(√2, √3)²) = 4.** Voronov's second case; not found in the literature. | Proved; formally verified | [The note](papers/planes-4-chromatic/planes-4-chromatic.pdf), [`lean/Q23.lean`](lean/Q23.lean), [`notes/local_colourings.md`](notes/local_colourings.md) §10, `tests/test_q23.py`. The lower bound was already implicit in Voronov–Neopryatnaya–Dergachev; a 10-vertex chain of unit rhombi gives a short one (`certificates/chain23_no3coloring.json`). |
+| **χ(ℚ(√2, √3)²) = 4.** Voronov's second case. The upper bound is also a case of Corollary B′ of [hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction) (July 2026), which we found after our note; the explicit value is not stated there. | Proved; formally verified | [The note](papers/planes-4-chromatic/planes-4-chromatic.pdf), [`lean/Q23.lean`](lean/Q23.lean), [`notes/local_colourings.md`](notes/local_colourings.md) §10, `tests/test_q23.py`. The lower bound was already implicit in Voronov–Neopryatnaya–Dergachev; a 10-vertex chain of unit rhombi gives a short one (`certificates/chain23_no3coloring.json`). |
 | **χ(ℚ(√3, √11)²) = 4**, K. G. Fischer's theorem (1994) | Known; a new short proof, proved and formally verified | [The note](papers/planes-4-chromatic/planes-4-chromatic.pdf), [`lean/Q311.lean`](lean/Q311.lean), [`notes/local_colourings.md`](notes/local_colourings.md) §8, `hn/adelic.py`, `tests/test_q311.py` |
 | χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, for the whole complex fields | Known; new local proofs | The first follows from Fischer's theorem, the second from Madore's reduction at 11 and Exoo–Ismailescu's graph. Our proofs reduce at the primes 2 and 11 ([`notes/local_colourings.md`](notes/local_colourings.md) §3, [`notes/rigidity.md`](notes/rigidity.md)); the lower bound graph `five_247_c` has a DRAT proof (`certificates/five_247_c_no4coloring.json`). |
 | Necessary local conditions for a field to hold a 6-chromatic unit-distance graph | Proved | [`notes/local_colourings.md`](notes/local_colourings.md) §5–§9, `scripts/fieldscreen.py` |
@@ -460,6 +469,9 @@ K. G. Fischer (1994): el plano sobre ℚ(√3, √11) también tiene número cro
 Fischer había pasado desapercibido; los trabajos posteriores lo daban por abierto. La prueba cambia de
 coordenadas para que el argumento de reducción de Madore funcione módulo 2. Está explicada en una
 [nota breve](papers/planes-4-chromatic/planes-4-chromatic.pdf) y verificada formalmente en Lean 4.
+Nota del 28 de septiembre: la cota superior también se deduce de un trabajo público anterior, el
+repositorio [hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction) (julio de 2026,
+sin revisión por pares), que encontramos después de escribir la nota; allí no aparece el caso ℚ(√2, √3).
 También se demuestra, con certificados verificados por dos programas independientes, que siete planos
 finitos necesitan seis colores. Es un trabajo hecho con ayuda de IA y todavía no ha sido revisado por
 pares.

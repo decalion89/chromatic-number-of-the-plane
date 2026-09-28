@@ -11,6 +11,15 @@ including every retracted claim, is the research log,
 
 ## [Unreleased]
 
+### Changed
+- **Credit for earlier work (28 September).** The upper bound of `χ(ℚ(√2, √3)²) = 4`
+  and of Fischer's `χ(ℚ(√3, √11)²) = 4` is also a case of Corollary B′ of
+  [hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction), a public,
+  unrefereed repository of July 2026, whose Theorem A is the same reduction of
+  `z = x + iy` at a place over 2. We found it after our note. The front page,
+  `notes/literature.md` and the note (version 6) now say so; what remains ours is
+  the explicit case `ℚ(√2, √3)` with its lower bound, and the Lean proofs.
+
 ### Added
 - **`α(G₁₃) = 36`** (`notes/g13.md`): no 37 points of the anisotropic plane over
   𝔽₁₃ are independent, so its fractional chromatic number is 169/36. A computer
