@@ -8732,3 +8732,30 @@ statement for `ℚ(√2, √3)` with its lower bound, and the Lean proofs. The f
 and the note (version 6) now say so. The same search also found that Dúcz and Varga
 ([arXiv:2606.28157](https://arxiv.org/abs/2606.28157), June 2026) proved that the fractional chromatic number
 of the plane is larger than 4.
+
+## The 509-vertex record: nine routes, none below 509 (27–28 September)
+
+We tried to beat Parts' record, a 5-chromatic unit-distance graph with 509 vertices
+([arXiv:2010.12665](https://arxiv.org/abs/2010.12665)). **No route got below 509.** The work is on the branch
+`claude/record-parts` (not merged; its `record-attempt/README.md` lists every file), with one branch per route,
+`claude/record-r1` to `claude/record-r9`.
+
+- **Parts' construction, rebuilt** from the paper's definitions alone: `L727 ∪ ρS361` (1 087 points, no
+  4-colouring, drat-trim VERIFIED), and from his orbit tables the region `W = W_L ∪ ρW_S` (775 points) that
+  contains his graph. Our reduction reached 571 vertices; Parts reached 568 at the same stage, then 509 by an
+  exact reduction.
+- **His pieces are tight.** `L374` did not shrink under large-neighbourhood search against `ρS136`; an exact
+  search of `W_S` (and of a larger region) found no `S` smaller than his `S136` against `L374`; and the exact
+  minimum on his accumulative graphs `A412`, `A406 + A403` and `A406 + A451` against `ρS136` is 509.
+- **Other joins.** Of the 15 835 rotations that place `W_S` against `W_L`, only Parts' 12 give a graph with no
+  4-colouring (a complete scan). A 2-adic screen (a join whose rotation is a unit at a place above 2 is
+  4-colourable) rules out 15 451 of them without a solver; for spindle rotations it is the first half of
+  Nedelcu's divisibility law (preprint of 20 September 2026, found after we wrote ours).
+- **Other radii, other fields.** Parts' construction at the other admissible radii gives graphs of 571 to 893
+  vertices; our own families (`ℚ(√3, √11, √247)` and the 803-point family) need forcing sets of at least 273
+  points, hence at least 545 vertices.
+- **New graphs, not records:** a 5-chromatic graph with 980 vertices on Parts' `L374` without his rotation,
+  from nine turned copies of `W_S` (exact edges, drat-trim VERIFIED twice, vertex-critical), and a
+  vertex-critical 5-chromatic graph with 819 vertices in `ℚ(√3, √5, √11)` from colouring-guided growth.
+
+The record stays at 509.
