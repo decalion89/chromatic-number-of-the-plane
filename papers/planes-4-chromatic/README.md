@@ -13,7 +13,9 @@ pdflatex planes-4-chromatic.tex && pdflatex planes-4-chromatic.tex && pdflatex p
 Figure 1 is drawn with TikZ from decimal coordinates; its exact coordinates are those of
 [`data/chain23.json`](../../data/chain23.json), and `lean/Q23.lean` proves that its 16 edges have length 1.
 Versions 1 to 4 were written in HTML and printed to PDF with headless Chromium; version 5 is the first in
-LaTeX, and adds the formal proofs.
+LaTeX, and adds the formal proofs. Version 6 (28 September 2026) credits the repository
+[hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction) (July 2026), found after
+version 5: its Corollary B′ already gives the upper bounds, and its Theorem A is the same reduction at 2.
 
 The fuller account, with the checks behind each step, is
 [`notes/local_colourings.md`](../../notes/local_colourings.md) §8 and §10; the tests are

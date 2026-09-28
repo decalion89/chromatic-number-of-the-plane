@@ -33,7 +33,7 @@ planes over $\Q(\sqrt3,\sqrt{11})$ and $\Q(\sqrt2,\sqrt3)$ are $4$-chromatic}
 out the computations, the checks and the formalisation in Lean, and helped to draft this note. No mathematician
 has checked the note yet. The author is not a professional mathematician and submits it for independent
 verification.}
-\date{Version 5, 27 September 2026}
+\date{Version 6, 28 September 2026}
 \subjclass[2020]{Primary 05C15, 52C10; Secondary 11R16, 68V20}
 \keywords{Hadwiger--Nelson problem, chromatic number of the plane, unit-distance graph, number field, formal verification}
 
@@ -45,7 +45,9 @@ Euclidean distance $1$. Fischer proved in 1994 that $\chi(\Q(\sqrt3,\sqrt{11})^2
 been overlooked: Moorhouse (2010), Madore (2015), Cranston--Rabern (2017), Exoo--Ismailescu (2020) and Voronov
 (2021) all treat the value as unknown. We give a short proof of a criterion that gives the upper bound $4$ for
 this field and for $\Q(\sqrt2,\sqrt3)$; with a $10$-vertex graph it gives $\chi(\Q(\sqrt2,\sqrt3)^2)=4$, the
-second case that Voronov thought likely, which we have not found in the literature. The criterion is a case of
+second case that Voronov thought likely. After this note was written we found that both upper bounds also follow
+from a public, unrefereed repository of July 2026 \cite{MM}, whose Theorem~A is the same reduction; it does not
+state the case $\Q(\sqrt2,\sqrt3)$. The criterion is a case of
 Madore's reduction argument for quadratic forms, in other coordinates. With $\alpha=x+y/\sqrt3$ and
 $\beta=2y/\sqrt3$ the squared distance becomes $\alpha^2-\alpha\beta+\beta^2$, a form that is anisotropic modulo
 any prime above $2$ with residue field $\F_2$. Both values are also formally verified in Lean~4 with Mathlib.
@@ -226,9 +228,15 @@ $R=\mathcal{O}_K[1/3]$, $K=\Q(\sqrt{-3},\sqrt{-11})$, in 2018 by reduction modul
 $R/2R\cong\F_4\times\F_4$, and either projection to $\F_4$ is a $4$-colouring. On $R$ the colouring of
 Section~3 is one of these projections, written in the coordinates $\alpha+\beta\omega$. An analysis and computer
 search by Hubai, reported by Gibbs, found that all $4$-colourings of $R$ have period $8$ \cite{Polymath3}, and
-D\'ucz \cite{Ducz} has recently given geometric $4$-colourings of the Moser lattice and ring. The contribution of
-this note is the choice of coordinates, which lets Madore's \P6.6 work at primes above $2$ and reduces the
-question to the decomposition of $2$ in $L$, and the case $\Q(\sqrt2,\sqrt3)$.
+D\'ucz \cite{Ducz} has recently given geometric $4$-colourings of the Moser lattice and ring. We took the
+contribution of this note to be the choice of coordinates, which lets Madore's \P6.6 work at primes above $2$ and
+reduces the question to the decomposition of $2$ in $L$, and the case $\Q(\sqrt2,\sqrt3)$. After the note was
+written we found the repository \cite{MM} (July 2026, not refereed). Its Theorem~A is the same reduction of
+$z=x+iy$ at a conjugation-stable place above $2$, its Corollary~B$'$ gives $\chi\le4$ for a field that contains
+$\Q(\sqrt2,\sqrt3)$ and $\Q(\sqrt3,\sqrt{11})$, and it proves $\chi(\Q(\sqrt3,\sqrt{11})^2)=4$. What remains new
+here, as far as we know, is the explicit case $\Q(\sqrt2,\sqrt3)$, with its lower bound, and the formal proofs.
+That repository also points to a statement for lattices with a condition modulo $8$ on the generators
+\cite[Thm.~2.3]{ACLMSS}, which we have not seen.
 \item \emph{Consistency check.} The criterion cannot apply to fields that contain $5$-chromatic graphs, and it
 does not. In $\Q(\sqrt3,\sqrt{11},\sqrt{247})$, the field of Exoo--Ismailescu, and in
 $\Q(\sqrt3,\sqrt5,\sqrt{11})$, the field of Heule \cite{Heule}, every prime above $2$ has residue field
@@ -268,6 +276,8 @@ folder \path{research/hadwiger-nelson}: the formal proofs are \path{lean/LocalCo
 \end{itemize}
 
 \begin{thebibliography}{99}
+\bibitem{ACLMSS} M. Axenovich, J. Choi, M. Lastrina, T. McKay, J. Smith and B. Stanton, \emph{On the chromatic
+number of subsets of the Euclidean plane}, Graphs Combin. (2014).
 \bibitem{CranstonRabern} D. W. Cranston and L. Rabern, \emph{The fractional chromatic number of the plane},
 Combinatorica \textbf{37} (2017), 837--861; arXiv:1501.01647.
 \bibitem{deGrey} A. D. N. J. de Grey, \emph{The chromatic number of the plane is at least 5}, Geombinatorics
@@ -296,6 +306,9 @@ status report}, Geombinatorics \textbf{9} (2000), no.~4, 170--179.
 \bibitem{Madore} D. A. Madore, \emph{The Hadwiger--Nelson problem over certain fields}, arXiv:1509.07023 (2015).
 \bibitem{Mathlib} The mathlib Community, \emph{The Lean mathematical library}, Proceedings of the 9th ACM
 SIGPLAN International Conference on Certified Programs and Proofs (CPP 2020), ACM, 2020, pp.~367--381.
+\bibitem{MM} MildlyMeticulous (GitHub account), \emph{A $2$-adic obstruction to $5$-chromatic unit-distance
+graphs, and the exact chromatic number of the plane over $\Q(\sqrt3,\sqrt{11})$}, code, logs and draft, July 2026,
+\url{https://github.com/MildlyMeticulous/hn-2adic-obstruction}.
 \bibitem{Moorhouse} G. E. Moorhouse, \emph{On the chromatic numbers of planes}, preliminary draft, revised
 3 March 2010, \url{https://www.ericmoorhouse.org/pub/chromatic.pdf}.
 \bibitem{Moser} L. Moser and W. Moser, \emph{Solution to Problem 10}, Canad. Math. Bull. \textbf{4} (1961),
