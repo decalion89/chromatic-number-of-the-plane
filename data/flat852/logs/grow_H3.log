@@ -1,0 +1,5 @@
+=== grow3 seed=g806c_pts.npy tag=H3: 806 vertices, 4039 edges; triangle (8, 23, 34); maxn 20000; kissat 1500s; tabu 4000000
+round 1: n=806 SAT (kissat) in 47.2s; cand 70904, blocked 91; added 67 (nbrs 4-9, inO 0) -> n=873 e=4461  [total 47s]
+round 2: n=873 SAT (kissat) in 27.1s; cand 76042, blocked 117; added 72 (nbrs 5-12, inO 0) -> n=945 e=4935  [total 74s]
+round 3: n=945 SAT (kissat) in 169.2s; cand 81503, blocked 102; added 78 (nbrs 4-10, inO 0) -> n=1023 e=5440  [total 244s]
+round 4: n=1023 e=5440: kissat TIME-OUT (1500s)  [total 1747s]

@@ -149,6 +149,7 @@ None of these results has been refereed. Each has one or more of these statuses:
 | χ(ℝ²) ≥ 4: the Moser spindle has no 3-colouring | Known; computer proof | L. and W. Moser (1961). `certificates/moser_spindle_no3coloring.json`, checked by drat-trim. |
 | χ(ℝ²) ≥ 5: de Grey's 1581-vertex graph, rebuilt from his 39-point seed, has no 4-colouring | Known; computer proof | De Grey (2018). A DRAT proof of 13.1 M lemmas, checked by drat-trim, for the formula with the colours of one triangle fixed, which loses no generality: `certificates/degrey_1581_no4coloring.json`. |
 | Two 5-chromatic unit-distance graphs in ℚ(√3, √11, √247): `five_247_c`, 803 vertices and vertex-critical, and `five_247`, 1 139 vertices. Not a record: Parts' 509 stands. | Computer proof | DRAT proofs checked by drat-trim: `certificates/five_247_c_no4coloring.json`, `certificates/data_no4_checks.txt`; `tests/test_five_247.py` |
+| **A Moser-spindle-free 5-chromatic unit-distance graph with 852 vertices**, in ℚ(ζ₂₁), built from the unit vectors of J. K. Haugland's heptagon graph (2 131 vertices, [arXiv 2608.04542](https://arxiv.org/abs/2608.04542)) and their mirror images. The smallest spindle-free one we found; the record with spindles allowed is Parts' 509. | Computer proof | [`notes/flat852.md`](notes/flat852.md): exact edges in ℚ(ζ₂₁), a stored 5-colouring, and no 4-colouring, by kissat with a DRAT proof checked by drat-trim, twice with separate encodings (`data/flat852/`). The field has no √−11, so the graph has no Moser spindle. `scripts/verify_flat852.py`, `tests/test_flat852.py` |
 | A vertex-critical unit-distance graph with 19 vertices and 33 edges and no 3-colouring. Unlike the Moser spindle, its obstruction combines two constraints, neither of which is forced on its own. | Computer proof | A DRAT proof checked by drat-trim: `certificates/genuine_pair_19_no3coloring.json` |
 | Two multi-distance graphs with no 5-colouring: 187 points with edges at 1 and at one Galois orbit of two distances, and 72 points with edges at 1, 4/√3, √7, √(28/3), √(61/3) | Computer proof | Kissat and drat-trim; four solvers agree. `data/W_moser_orbit_9_33.json`, `data/W_lattice_16_21_28_61.json`, their drat-trim logs in [`certificates/`](certificates/README.md), and the research log |
 | No twisted colouring of the module of `five_rho7` is proper | Computer proof | 3 840 exact linear-programming (Stiemke) certificates, one for each of the 960 × 4 pairs (ψ, t): [`notes/rigidity.md`](notes/rigidity.md) §2, `scripts/stiemke.py` |
@@ -239,6 +240,7 @@ sh scripts/worker_setup.sh                   # kissat and drat-trim, for the sea
 | spectral bounds for large q | `python3 scripts/finite_hoffman.py 59 71` and `python3 scripts/finite_hoffman.py --inert 53 59 61` | seconds |
 | α(G₁₃) = 36, without a solver: the 36-point sets, the audit of the formulas, the cover, and every formula against the logs; with `--kissat` and `--drat-trim` it refutes all 4 826 formulas again | `python3 scripts/verify_g13.py --no-solve` | seconds; about 2 hours on 4 cores with the solvers |
 | χ(G₁₃) = 6, without a solver: the 6-colouring, the case formulas written again by the code, every cube tree, and a drat-trim VERIFIED line for every leaf | `python3 scripts/verify_g13_chi.py` | A few minutes and 6.6 GB of disk |
+| the 852-vertex spindle-free graph: its exact edges, the 5-colouring and the stored formula; with `--kissat` and `--drat-trim` it writes the formula again, solves it and checks the proof | `python3 scripts/verify_flat852.py` | under a second; about an hour with the solvers |
 | de Grey's graph needs five colours | `python3 -m pytest -q tests/test_degrey.py` | up to four hours |
 
 `scripts/verify_pair.py` rebuilds a unit-distance graph or gadget from its data file, recomputes every
@@ -251,7 +253,7 @@ cvxopt 1.3.3 (DSDP) and clarabel 0.11.1; checking them needs only numpy, scipy a
 their contents. `requirements-lock.txt` lists the exact versions of the Python packages used for the
 results and of their dependencies, and `scripts/worker_setup.sh` builds the pinned kissat and drat-trim.
 
-GitHub Actions runs the fast part of the suite, 460 tests in 38 files
+GitHub Actions runs the fast part of the suite, 506 tests in 40 files
 ([`tests.yml`](.github/workflows/tests.yml)), and builds and checks the Lean proofs
 ([`lean.yml`](.github/workflows/lean.yml)), on pushes to `main` and on pull requests.
 

@@ -1,0 +1,2 @@
+=== grow4 seed=G1G1c_pts.npy tag=G1: 1441 vertices, 7896 edges; triangle (718, 1260, 1265); maxn 20000; kissat 900s; tabu 3000000
+round 1: n=1441 e=7896: kissat TIME-OUT (900s)  [total 903s]

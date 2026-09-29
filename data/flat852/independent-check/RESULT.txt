@@ -1,0 +1,9 @@
+Independent check of core852a (29 September 2026, 00:36-01:28 UTC), with code written apart from the growth code:
+- verify852.py: exact unit distances in Q(zeta21) with sympy (all 4487 edges: (v_b - v_a)*conj(v_b - v_a) = 1),
+  50-digit numerics (max ||d| - 1| = 1.1e-50), 852 distinct vertices (min distance 0.0095), triangle (8, 23, 34)
+  checked, 5-colouring proper (5 colours).
+- mine852.cnf: its own encoding (variable c*n + v + 1; at-least-one per vertex, one clause per edge and colour,
+  triangle fixed to colours 0, 1, 2).
+- kissat 4.0.4: s UNSATISFIABLE in 19 min 28 s (proof 1.0 GB, binary DRAT).
+- drat-trim: s VERIFIED in 2027 s (16527 of 18803 clauses and 6.67 M of 11.09 M lemmas in the core).
+So core852a has chromatic number exactly 5.

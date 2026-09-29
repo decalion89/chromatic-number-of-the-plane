@@ -1,0 +1,3 @@
+PARI/gp: n = 1023, m = 5440; vertices distinct: 1; all edges exactly unit (d*conj(d) = 1): 1
+   realprecision = 77 significant digits (60 digits displayed)
+PARI/gp: unit-distance pairs among the vertices (numeric, 60 digits): 5440

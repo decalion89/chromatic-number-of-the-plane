@@ -8800,3 +8800,32 @@ The computation announced under "`α(G₁₃) = 36`" is done: `G₁₃` has no p
 
 Not done: an audit of `F34`, `F35` and `F36` from their text alone, as for the
 formulas of `α`; a second check of the proofs by cake_lpr; a proof in Lean.
+
+## A Moser-spindle-free 5-chromatic graph with 852 vertices (28–29 September)
+
+J. K. Haugland's heptagon graph ([arXiv 2608.04542](https://arxiv.org/abs/2608.04542), August 2026) is a
+5-chromatic unit-distance graph with 2 131 vertices and no Moser spindle. Its edges use 84 unit vectors
+`D = μ₄₂ ∪ ω·μ₄₂` of `ℚ(ζ₂₁)`. We asked where his construction is forced to leave its lattice
+(`notes/flat852.md`).
+
+- **Why the mirror.** Reduced at the places above 2, the 84 vectors of `D` fall into only two of the three
+  cosets of `μ₂₁` in `𝔽₆₄^*`, and 42 linear maps `𝔽₆₄² → 𝔽₂²` vanish on none of them. So every graph with
+  edges in `D` is 4-colourable: the reduction of `notes/local_colourings.md`, which at a place above 2 is
+  Theorem A of hn-2adic-obstruction. Haugland's six colourings of his lattice are among these maps. The
+  mirror vectors `ω̄·μ₄₂` reduce to the third coset, and with them no such colouring exists.
+- **The search.** Colouring-guided growth from Haugland's 21-point graph and its mirror image, with the 126
+  directions `U = D ∪ D̄`: after about 30 rounds, 1 023 points had no 4-colouring (kissat, drat-trim
+  VERIFIED). The clauses of the drat-trim core named 850 vertices. With the fixed triangle and one peel of
+  the 4-core, this gave `core852`: 852 vertices and 4 487 edges.
+- **The checks.** Every edge was recomputed in exact arithmetic in `ℚ(ζ₂₁)`, and a stored 5-colouring is
+  proper. No 4-colouring, twice: the formula of the search (kissat 25 minutes; drat-trim 34 minutes on a
+  proof of 954 MB) and a second encoding written by separate code (kissat 19 minutes; drat-trim 34 minutes
+  on 1.0 GB). A Moser spindle would need `√−11` in `ℚ(ζ₂₁)`, whose quadratic subfields are `ℚ(√−3)`,
+  `ℚ(√−7)` and `ℚ(√21)`.
+- **Comparison.** The spindle-free 5-chromatic graphs we found have 2 131 vertices (Haugland), 1 441 (cited
+  by him), 1 435 (posted on 9 September) and 1 299 (posted on GitHub by zach7036). A smaller one may exist
+  that we did not find. The record with spindles allowed is still Parts' 509; `core852` does not approach it.
+
+Not done: vertex-by-vertex minimisation (a first pass, with one selector per vertex, did not finish in 33
+minutes and was stopped), so the graph is not known to be vertex-critical. Nobody outside the project has
+refereed it.

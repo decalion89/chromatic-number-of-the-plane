@@ -22,6 +22,18 @@ including every retracted claim, is the research log,
 
 ### Added
 
+- **A Moser-spindle-free 5-chromatic unit-distance graph with 852 vertices**
+  (`notes/flat852.md`, `data/flat852/`). Its points lie in `ℚ(ζ₂₁)`, and its
+  edges use the 84 unit vectors of J. K. Haugland's heptagon graph
+  ([arXiv 2608.04542](https://arxiv.org/abs/2608.04542), 2 131 vertices) and
+  their mirror images. Haugland's directions alone are 4-colourable by
+  reduction at the places above 2, which is why the mirror is needed. No
+  4-colouring: kissat with a DRAT proof checked by drat-trim, twice, with
+  separate encodings. The field contains no `√−11`, so the graph has no Moser
+  spindle. The smallest spindle-free example we found (the next has 1 299
+  vertices); the record with spindles allowed is still Parts' 509. The graph is
+  not known to be vertex-critical. `scripts/verify_flat852.py` checks it again,
+  and `tests/test_flat852.py` runs the fast checks.
 - **`χ(G₁₃) = 6`** (`notes/g13_chi.md`): the anisotropic plane over 𝔽₁₃ has no
   proper 5-colouring. A computer proof. The largest class of a 5-colouring would
   have 34, 35 or 36 points (`α(G₁₃) = 36`); in a colouring where it is as large as
