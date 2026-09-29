@@ -1,0 +1,11 @@
+vertices: 852, all distinct (exact): True
+edges: 4487; every edge vector is one of the 126 directions: True; diff*conj(diff) = 1 exactly for every edge: True
+float check: unit-distance pairs (|d-1|<1e-9) = 4487, not among the edges: 0; min distance between distinct vertices 0.00947048
+degree min/mean/max: 4/10.53/34
+vertices in Z[zeta21]: 1
+directions used: mu42 42/42, total 126/126; edges by family: mu42 2252, omega*mu42 1848, conj(omega)*mu42 387
+CNF core852a.cnf: 3408 variables, 18803 clauses; triangle (8, 23, 34) fixed
+free in /dev/shm: 15.2 GiB; running kissat (time 2700s) with proof /dev/shm/core852a.drat
+kissat: s UNSATISFIABLE (exit 20) in 1513.1s wall; proof 910.2 MiB
+drat-trim: VERIFIED (exit 0) in 2037.2s
+wrote core852a.json, core852a.edges, core852a.cnf, core852a.kissat.log, core852a.drat-trim.log

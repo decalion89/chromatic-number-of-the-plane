@@ -1,0 +1,12 @@
+vertices: 1023, all distinct (exact): True
+edges: 5440; every edge vector is one of the 126 directions: True; diff*conj(diff) = 1 exactly for every edge: True
+float check: unit-distance pairs (|d-1|<1e-9) = 5440, not among the edges: 0; min distance between distinct vertices 0.00681086
+degree min/mean/max: 4/10.64/34
+vertices in Z[zeta21]: 1
+directions used: mu42 42/42, total 126/126; edges by family: mu42 2599, omega*mu42 1891, conj(omega)*mu42 950
+existing g1023.cnf equals the CNF regenerated from the points: True
+CNF g1023.cnf: 4092 variables, 22786 clauses; triangle (8, 23, 34) fixed
+reusing kissat run g1023.kissat.log and proof /dev/shm/g1023.drat
+kissat: s UNSATISFIABLE (exit 20) in nans wall; proof 981.8 MiB
+drat-trim: VERIFIED (exit 0) in 2233.5s
+wrote g1023.json, g1023.edges, g1023.cnf, g1023.kissat.log, g1023.drat-trim.log

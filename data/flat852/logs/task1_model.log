@@ -1,0 +1,14 @@
+|D| = 84, |conj D| = 84, |U| = 126
+|D & conj D| = 42 (should be the 42 of mu42)
+7 w^12 - 13 w^6 + 7 == 0 exactly: True
+|omega - formula| = 5.594315114139762e-16
+u*conj(u) == 1 exactly for all 126: True
+closed under negation: True
+conj(U) == U: True
+max ||u|-1| (float): 6.661338147750939e-16
+min distance between two directions (float): 0.02284875088815968
+directions in Z[zeta21]: 42 (mu42)
+D (84): 42 distinct residues mod 2 (zero residue present: False); ordered pairs (a,b) with (a.r,b.r)!=(0,0) for all r: 252 (brute force: 252); row spaces {a,b,a+b}: 42
+conj D (84): 42 distinct residues mod 2 (zero residue present: False); ordered pairs (a,b) with (a.r,b.r)!=(0,0) for all r: 252 (brute force: 252); row spaces {a,b,a+b}: 42
+U (126): 63 distinct residues mod 2 (zero residue present: False); ordered pairs (a,b) with (a.r,b.r)!=(0,0) for all r: 0 (brute force: 0); row spaces {a,b,a+b}: 0
+wrote directions.json
