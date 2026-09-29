@@ -1,6 +1,6 @@
-# A Moser-spindle-free 5-chromatic unit-distance graph on 852 vertices (working data)
+# A Moser-spindle-free 5-chromatic unit-distance graph on 852 vertices: the data
 
-Working data of 29 September 2026, before minimisation and before the write-up.
+The data of `notes/flat852.md` (29 September 2026). The graph is not known to be vertex-critical.
 
 - `core852a.json`: 852 vertices, 4487 edges. A vertex is (c0 + c1 z + ... + c11 z^11)/7 with `exact7` = [c0..c11],
   z = zeta21, embedded by z -> exp(2 pi i/21). Every edge vector lies in U = mu42 ∪ omega*mu42 ∪ conj(omega)*mu42
