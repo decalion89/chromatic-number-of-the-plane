@@ -1,6 +1,6 @@
 # Scripts: the maintained tools
 
-The 92 scripts here are the project's maintained tools; the 734 one-off experiments behind the
+The 95 scripts here are the project's maintained tools; the 734 one-off experiments behind the
 research log are in [`experiments/`](experiments/). Run every tool from the root of the
 repository: each finds the `hn` package from its own location.
 
@@ -145,6 +145,7 @@ result to the path in `OUT`, by default under `/tmp`.
 | `verify_g13.py` | One command that checks `α(G₁₃) = 36` again: the stored 6-colouring, the 36-point sets, the audit of the formulas, the cover, every formula against the logs, and with `--kissat` and `--drat-trim` (and `--cake-lpr`) every refutation (`notes/g13.md` §6). |
 | `g13/chi/` | `χ(G₁₃) = 6` (`notes/g13_chi.md`): the code of the run (the case formulas, the cube trees, `certify.py`, `share_driver.py` and its helpers, the re-splits of leaf 430, `verify_plan_D.py`) and `pack_certificates.py`, which writes the certificate archive; `scripts/g13/chi/README.md` lists the files. |
 | `verify_g13_chi.py` | One command that checks `χ(G₁₃) = 6` again from `certificates/g13_chi_certlogs.tar.gz`: the stored 6-colouring, the eight case formulas against the code, every cover, and a drat-trim VERIFIED line for every leaf (`notes/g13_chi.md` §7). |
+| `verify_flat852.py` | One command that checks the 852-vertex spindle-free graph again, with no library: every edge in exact arithmetic in ℚ(ζ₂₁), the 5-colouring, and that the stored CNF is the graph's formula; with `--kissat` and `--drat-trim` it writes the formula in its own encoding, solves it and checks the proof (`notes/flat852.md` §4). |
 | `threepoint_verify.py` | Checks a saved certificate rigorously: rebuilds the blocks in interval arithmetic, proves the dual matrices positive definite by an exact rational LDLᵀ, and bounds α using 0 ≤ g, z ≤ 1 (`data/threepoint/`). |
 | `threepoint_verify_indep.py` | Checks the same certificates again, independently: it imports neither `threepoint.py` nor `threepoint_verify.py`, rebuilds the programme from its definitions over full n × n matrices (the orbits of ordered pairs, M₁, M₀, the triangle and Delsarte inequalities), takes only the dual multipliers from the file, proves the dual blocks positive definite in exact integer arithmetic (FLINT) and bounds α by an exact rational. Its log on all eight: `certificates/threepoint_indep_checks.txt`. |
 

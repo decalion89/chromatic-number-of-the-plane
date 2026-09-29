@@ -176,6 +176,16 @@ The route is **not ours**.
    earlier for planar sets avoiding unit distance: Keleti–Matolcsi–de Oliveira
    Filho–Ruzsa (Discrete Comput. Geom. 55 (2016) 642–661) and DeCorte–de Oliveira
    Filho–Vallentin (Math. Program. 191 (2022) 487–558).
+7. **A Moser-spindle-free 5-chromatic unit-distance graph with 852 vertices**
+   (`notes/flat852.md`), in `ℚ(ζ₂₁)`, from the unit vectors of Haugland's heptagon
+   graph and their mirror images. The spindle-free 5-chromatic graphs we found
+   before it have 2 131 vertices (Haugland, [arXiv 2608.04542](https://arxiv.org/abs/2608.04542)),
+   1 441 (cited there), 1 435
+   ([ruturajr-raval/hadwiger-nelson-spindle-free](https://github.com/ruturajr-raval/hadwiger-nelson-spindle-free/releases/tag/v0.1.0),
+   9 September 2026) and 1 299 (posted on GitHub by zach7036). That Haugland's
+   directions alone are 4-colourable is the reduction of Theorem A of
+   hn-2adic-obstruction, applied to them; we found no earlier statement of it for
+   this family. We searched arXiv and GitHub on 28 and 29 September 2026.
 
 ## What this means
 
