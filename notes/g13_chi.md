@@ -1,29 +1,3 @@
-<!--
-DRAFT until scripts/verify_g13_chi.py ends with CONFIRMED on the final archive (FINALIZE.md).
-Placeholders: each name below stands in the text between double braces.
-From `python3 scripts/verify_g13_chi.py --stats` (`--fill notes/g13_chi.md` writes them in):
-  F36_TOP_VERIFIED, F35_TOP_VERIFIED, F34_TOP_VERIFIED   leaves of level 0 with a VERIFIED line
-  F36_TOP_RESPLIT, F35_TOP_RESPLIT, F34_TOP_RESPLIT      leaves of level 0 split again
-  F36_CERTIFIED, F35_CERTIFIED, F34_CERTIFIED            leaves certified in all, re-splits included
-  F36_DEPTH, F35_DEPTH, F34_DEPTH                        the deepest level of re-splits
-  COLOURING_CERTIFIED     the leaves of F36, F35 and F34 together
-  DRAT_PROOFS             the DRAT proofs, checked by drat-trim, that the proof uses: one per certified leaf or
-                          formula, the 4 826 formulas of E37 included
-  RESPLITS                the re-split formulas in the certified trees
-  TREE_TABLE              the rows of the table of re-splits in section 6, level by level
-  KISSAT_HOURS, DRAT_TRIM_HOURS, MAX_KISSAT_S, PROOF_GB  on the log lines that certify the leaves
-  ALL_LINES, TIMEOUTS, TIMEOUTS_120, TIMEOUTS_1200, TIMEOUTS_3600, ALL_KISSAT_HOURS, ALL_DRAT_TRIM_HOURS
-                          over every line of every log
-  UNUSED_RESPLITS         cube files of re-splits that the certified trees do not use
-  REGEN_GB                the disk space that `share_driver.py regen` takes
-  ARCHIVE_FILES, ARCHIVE_MB, ARCHIVE_SHA256              certificates/g13_chi_certlogs.tar.gz
-By hand:
-  RUN_END                 the day the last share finished, as "28 September"
-  MACHINES                the number of machines the shares ran on
-  DATE                    the day scripts/verify_g13_chi.py confirmed the archive
-  VERIFY_MINUTES          how long that run took
--->
-
 # The anisotropic plane over `𝔽₁₃` needs six colours
 
 `G₁₃` is the graph on `𝔽₁₃²` in which `z ~ w` when `N(z − w) = 1`, where
@@ -291,12 +265,28 @@ branched on the next variable of its list that propagation had not assigned, but
 the solver did not report what the unit clauses of the leaf imply. So each of the
 8 decisions was on a variable whose value the leaf already implied: one branch
 contradicted the leaf and was closed at once, and the other added a unit clause
-that the leaf implies. Each such re-split has 8 closed leaves and one open leaf
-(`verify_g13_chi.py --stats` counts them), and it only solved the leaf again,
-with 1 200 s and then 3 600 s. Plan E (from 27 September, 21:20) passes the unit
+that the leaf implies. All such re-splits but one (155 of 156, as
+`verify_g13_chi.py --stats` counts them) have 8 closed leaves and one open leaf,
+and they only solved the leaf again, with 1 200 s and then 3 600 s; the
+exception is the re-split of leaf 430 below. Plan E (from 27 September, 21:20) passes the unit
 clauses to the solver as assumptions, and its re-splits, named `CASE_splitI`,
 have up to 256 leaves on new variables. Both kinds are valid certificates: the
 leaves of each cover the leaf.
+
+**Helpers, and leaf 430.** From 28 September, machines that had finished took
+the last leaves of the slowest shares from the other end (`help_driver.py`), and
+at the end single sub-leaves of the last two leaves (`sub_help.py`). Both run a
+leaf exactly as `share_driver.py` does and stop where the share's own run starts,
+so two runs of the same leaf write the same re-split files. Leaf 430 of `F34`
+needed one step more: below it, `cuber2.py` reached a sub-leaf,
+`F34_split430_split210_split90_split35_leaf1`, in which every variable of colour 0
+was already assigned, so its re-splits had one leaf each and share 33 stopped.
+That sub-leaf was re-split on the variables of colours 1 and 2 into 256 leaves
+(`hard430.py`, with a name of plan D), and the four sub-leaves of
+`F34_split430` that share 33 had not reached (211, 214, 215 and 223) were
+re-split cutting on colour 0 first and then on colours 1 and 2 (`hard430c.py`).
+`verify_plan_D.py` checks these re-splits like all the others: their leaves must
+cover the leaf, and each must have a VERIFIED line.
 
 **The rule.** `scripts/g13/chi/verify_plan_D.py` accepts a case formula when its
 cube file is a cover and every leaf counts. A leaf counts if a line of the log
@@ -310,45 +300,52 @@ the four formulas `E37_A_c` have a VERIFIED line. It ends with
 
 ## 6. What was computed
 
-The shares ran on {{MACHINES}} machines, from 27 September to {{RUN_END}} 2026;
+The shares ran on several dozen cloud machines (64 branches: 47 shares and 17 helpers), from 27 September to 29 September 2026;
 `scripts/g13/chi/README.md` lists them.
 
 | case | formula | leaves of level 0 | refuted there | split again | leaves certified in all | deepest re-split |
 |---|---|---|---|---|---|---|
 | `s ≥ 37` | `E37_A_c`, `E37_B` | 4 + 4 822 | 4 + 4 822 | 0 | 4 826 | none |
-| `s = 36` | `F36` | 4 823 | {{F36_TOP_VERIFIED}} | {{F36_TOP_RESPLIT}} | {{F36_CERTIFIED}} | level {{F36_DEPTH}} |
-| `s = 35` | `F35` | 4 823 | {{F35_TOP_VERIFIED}} | {{F35_TOP_RESPLIT}} | {{F35_CERTIFIED}} | level {{F35_DEPTH}} |
-| `s = 34` | `F34` | 4 823 | {{F34_TOP_VERIFIED}} | {{F34_TOP_RESPLIT}} | {{F34_CERTIFIED}} | level {{F34_DEPTH}} |
+| `s = 36` | `F36` | 4 823 | 4 794 | 29 | 5 055 | level 1 |
+| `s = 35` | `F35` | 4 823 | 4 743 | 80 | 7 951 | level 2 |
+| `s = 34` | `F34` | 4 823 | 4 443 | 380 | 123 542 | level 5 |
 
 Level 0 is the cube file of the case. A leaf of level `k` that was split again
 became a formula of level `k + 1`, whose leaves are of level `k + 1`:
 
 | case | level | re-split formulas | their leaves | refuted | split again |
 |---|---|---|---|---|---|
-{{TREE_TABLE}}
+| `F36` | 1 | 29 | 261 | 261 | 0 |
+| `F35` | 1 | 80 | 3 184 | 3 181 | 3 |
+| `F35` | 2 | 3 | 27 | 27 | 0 |
+| `F34` | 1 | 380 | 90 602 | 90 484 | 118 |
+| `F34` | 2 | 118 | 24 662 | 24 631 | 31 |
+| `F34` | 3 | 31 | 3 635 | 3 633 | 2 |
+| `F34` | 4 | 2 | 96 | 95 | 1 |
+| `F34` | 5 | 1 | 256 | 256 | 0 |
 
-- In all, {{DRAT_PROOFS}} DRAT proofs make the proof, one for each certified
-  leaf or formula: {{COLOURING_CERTIFIED}} for the leaves of `F36`, `F35` and
-  `F34`, in {{RESPLITS}} re-split formulas, and 4 826 for the formulas of
+- In all, 141 374 DRAT proofs make the proof, one for each certified
+  leaf or formula: 136 548 for the leaves of `F36`, `F35` and
+  `F34`, in 644 re-split formulas, and 4 826 for the formulas of
   `α(G₁₃) ≤ 36`.
-- On the lines that certify them, kissat took {{KISSAT_HOURS}} hours and drat-trim
-  {{DRAT_TRIM_HOURS}} hours; the longest refutation took {{MAX_KISSAT_S}} s. The
-  DRAT proofs took {{PROOF_GB}} GB and are not stored.
-- The logs have {{ALL_LINES}} lines in all, runs repeated by more than one share
-  and timeouts included: kissat reached its limit {{TIMEOUTS}} times
-  ({{TIMEOUTS_120}} at 120 s, {{TIMEOUTS_1200}} at 1 200 s, {{TIMEOUTS_3600}} at
-  3 600 s). All runs together took {{ALL_KISSAT_HOURS}} hours of kissat and
-  {{ALL_DRAT_TRIM_HOURS}} hours of drat-trim. No run found a leaf satisfiable.
-- {{UNUSED_RESPLITS}} cube files of re-splits are not used by the certified
+- On the lines that certify them, kissat took 342.1 hours and drat-trim
+  458.4 hours; the longest refutation took 3 324 s. The
+  DRAT proofs took 1 162 GB and are not stored.
+- The logs have 161 855 lines in all, runs repeated by more than one share
+  and timeouts included: kissat reached its limit 838 times
+  (645 at 120 s, 182 at 1 200 s, 11 at
+  3 600 s). All runs together took 469 hours of kissat and
+  500 hours of drat-trim. No run found a leaf satisfiable.
+- 71 cube files of re-splits are not used by the certified
   trees. Some leaves were refuted or re-split by more than one share, and
   `verify_plan_D.py` takes a VERIFIED line first, then a re-split of plan D, then
   one of plan E.
 - The formulas are not stored: the code writes them again, and each log line
   records the SHA-256 of its formula. The logs and the cube files of the
   re-splits are in
-  `certificates/g13_chi_certlogs.tar.gz` ({{ARCHIVE_FILES}} files,
-  {{ARCHIVE_MB}} MB, SHA-256 `{{ARCHIVE_SHA256}}`).
-- `scripts/verify_g13_chi.py` checked the archive on {{DATE}} (§7).
+  `certificates/g13_chi_certlogs.tar.gz` (1 435 files,
+  9.3 MB, SHA-256 `31ffbfb652d4cdf320df520f914640dd4b98d09364bbabaac3c2a080add37e4b`).
+- `scripts/verify_g13_chi.py` checked the archive on 29 September 2026 (§7).
 
 ## 7. How to check it, and what has to be trusted
 
@@ -356,7 +353,7 @@ From the root of the repository, with Python, numpy and python-sat
 (`requirements.txt`):
 
     python3 -m pytest -q tests/test_g13_chi.py         # half a minute
-    python3 scripts/verify_g13_chi.py --stats          # {{VERIFY_MINUTES}} minutes
+    python3 scripts/verify_g13_chi.py --stats          # 2 minutes here
     python3 scripts/verify_g13.py --no-solve           # alpha(G_13) = 36 (notes/g13.md): seconds
 
 The second command checks the stored 6-colouring, checks the archive against
@@ -366,7 +363,7 @@ case formulas with the code, checks them against `cases/SHA256SUMS`, and writes
 the formula of every re-split from its parent; and then `verify_plan_D.py` (§5).
 It ends with `CONFIRMED` only if `verify_plan_D.py` ends with
 `PLAN D FULLY CERTIFIED`, and with `--stats` it prints the numbers of §6. It runs
-no solver. The formulas of the re-splits take {{REGEN_GB}} GB of disk while it
+no solver. The formulas of the re-splits take 6.6 GB of disk while it
 runs; `--workdir DIR` puts the copy on another disk. To refute leaves again,
 keep the copy with `--keep`, and there run, for example,
 
@@ -402,9 +399,9 @@ This proof has no formal version in Lean.
 - The fractional chromatic number of `G₁₃` is `169/36 ≈ 4.69` (`notes/g13.md`),
   so `χ(G₁₃)` exceeds it by more than one: the sizes of the independent sets
   alone would allow five colours.
-- The case `s = 34` took most of the work: {{F34_TOP_RESPLIT}} of the 4 823
-  leaves of `F34` had to be split again, against {{F35_TOP_RESPLIT}} of `F35` and
-  {{F36_TOP_RESPLIT}} of `F36`.
+- The case `s = 34` took most of the work: 380 of the 4 823
+  leaves of `F34` had to be split again, against 80 of `F35` and
+  29 of `F36`.
 
 ## 9. Files
 

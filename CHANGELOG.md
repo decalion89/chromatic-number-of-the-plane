@@ -21,6 +21,19 @@ including every retracted claim, is the research log,
   the explicit case `ℚ(√2, √3)` with its lower bound, and the Lean proofs.
 
 ### Added
+
+- **`χ(G₁₃) = 6`** (`notes/g13_chi.md`): the anisotropic plane over 𝔽₁₃ has no
+  proper 5-colouring. A computer proof. The largest class of a 5-colouring would
+  have 34, 35 or 36 points (`α(G₁₃) = 36`); in a colouring where it is as large as
+  possible it is dominating, an automorphism makes it lex-leader, and renaming
+  the other colours gives them value precedence. One formula for each size says
+  this; cube and conquer refutes the three, 136 548 leaves in all,
+  each by kissat with a DRAT proof checked by drat-trim. `scripts/g13/chi/` is the
+  code of the run, `certificates/g13_chi_certlogs.tar.gz` holds its logs, and
+  `scripts/verify_g13_chi.py` checks them again. `tests/test_g13_chi.py` reads
+  the three formulas (the counts and the chains with the audit of `α`) and tests
+  them on intended models, and tests the checkers on a small made-up run. The
+  proofs have not been checked by cake_lpr.
 - **`α(G₁₃) = 36`** (`notes/g13.md`): no 37 points of the anisotropic plane over
   𝔽₁₃ are independent, so its fractional chromatic number is 169/36. A computer
   proof: a case split on a point with its whole circle, then four formulas and

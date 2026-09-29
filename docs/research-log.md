@@ -8715,6 +8715,10 @@ other colours are ordered by value precedence). `F34` is the hard one: kissat
 reached 120 s on 381 of its 4 823 leaves, against 2 to 4 per cent of the leaves
 of the other two, and those leaves are being split again.
 
+> **Correction (29 September).** The leaves of `F36` and `F35` on which kissat reached 120 s
+> were 29 and 80 of 4 823 (0.6 and 1.7 per cent), not 2 to 4 per cent. The final count for
+> `F34` is 380.
+
 ## Earlier work on the 2-adic colouring of real fields (28 September)
 
 A literature search before new announcements found a public repository from July 2026:
@@ -8759,3 +8763,40 @@ We tried to beat Parts' record, a 5-chromatic unit-distance graph with 509 verti
   vertex-critical 5-chromatic graph with 819 vertices in `ℚ(√3, √5, √11)` from colouring-guided growth.
 
 The record stays at 509.
+
+## `χ(G₁₃) = 6` (29 September)
+
+The computation announced under "`α(G₁₃) = 36`" is done: `G₁₃` has no proper
+5-colouring, so `χ(G₁₃) = 6` (`notes/g13_chi.md`). The lower bound needed more than
+`α`: five classes of 36 points would hold 180 vertices.
+
+- **The case split.** In a 5-colouring whose largest class is as large as
+  possible, every largest class is dominating, or a vertex could join it. Its size
+  is 34, 35 or 36. An automorphism makes one such class lex-leader on the first 25
+  vertices of `lex_order()`, and then the other colours are renamed by first
+  appearance. One formula for each size (`F36`, `F35`, `F34`) says this. An
+  independent review before the run found the lemma and the encodings sound, and
+  the planned check of the logs not; `verify_plan_D.py` replaced that check.
+- **The run.** Each formula was cut into 4 823 leaves of at most 14 decisions, and
+  each leaf refuted by kissat within 120 s, with a DRAT proof checked by
+  drat-trim, or split again. The first re-splits did not split: `cuber2.py` did
+  not see what the unit clauses of a leaf imply, so they only solved each leaf
+  again with a longer limit. From 21:20 on 27 September, plan E passed those
+  clauses as assumptions and cut each remaining leaf into up to 256 new ones. In
+  all, 136 548 leaves of the three formulas were certified,
+  123 542 of them for `F34`, in 644 re-split formulas: kissat
+  took 342.1 hours and drat-trim 458.4 on the lines that
+  certify them, on several dozen cloud machines until 29 September. At the end,
+  machines that had finished helped the slowest shares from the other end, and
+  one sub-leaf of leaf 430 of `F34`, where no variable of colour 0 was left to cut
+  on, was re-split on the variables of colours 1 and 2.
+- **The checks.** The logs of every share were merged, and `verify_plan_D.py`
+  found every leaf of every tree certified. `scripts/verify_g13_chi.py` does the
+  same from the archive `certificates/g13_chi_certlogs.tar.gz`. The tests read the
+  three formulas: every clause is of a known kind; the counts and the chains pass
+  the functions of the audit of `α`; and on colourings built from maximal
+  independent sets, and on colourings far from any normal form, the clauses that
+  fail are exactly those that their meaning predicts.
+
+Not done: an audit of `F34`, `F35` and `F36` from their text alone, as for the
+formulas of `α`; a second check of the proofs by cake_lpr; a proof in Lean.

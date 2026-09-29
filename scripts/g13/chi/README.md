@@ -7,7 +7,9 @@ the argument, and says what was computed and how to check it.
 The files come from the directory `g13-plan-d/` of commit `97047ff3` (the branch of plan D,
 27 September 2026), the version that the last shares ran. They are copied unchanged, byte for byte and
 at the same relative paths, so that `share_driver.py` and `verify_plan_D.py` run here as they ran
-there. No path had to change. Two files are new: `pack_certificates.py`, and this README, which
+there. No path had to change. New files: `pack_certificates.py`; the helpers `help_driver.py` and `sub_help.py`, and
+the re-splits of leaf 430, `hard430.py` and `hard430c.py` with `work/vars_c12_lex.txt` and `work/vars_c012_lex.txt`
+(added after the run, as they ran, except that `hard430.py` no longer names the machine's directory); and this README, which
 replaces the README of the plan and keeps its account of the shares. The independent review
 `review_plan_D.md` is added as it was written; `verify_plan_D.py` cites it.
 
@@ -20,6 +22,8 @@ replaces the README of the plan and keeps its account of the shares. The indepen
 | `cuber2.py` | the cube trees, and `check_cover()`. It differs from `scripts/g13/cuber2.py` by the fix of plan E: the unit clauses of a formula go to the solver as assumptions, so that a re-split branches on variables that its leaf has not fixed. `check_cover()` is the same |
 | `certify.py` | kissat with a DRAT proof, then drat-trim, on a formula or on the leaves of a cube file; one log line per formula. The code of `scripts/g13/certify.py`, with two more lines of docstring |
 | `share_driver.py` | runs one share of the computation; `share_driver.py regen` writes the formulas of the re-splits again from their parents |
+| `help_driver.py`, `sub_help.py` | the helpers: they certify leaves of a share, or sub-leaves of one leaf, from the other end of its list, exactly as `share_driver.py` does, and stop where the share's own run starts |
+| `hard430.py`, `hard430c.py` | leaf 430 of `F34` (`notes/g13_chi.md`): the re-split of its sub-leaf `F34_split430_split210_split90_split35_leaf1` on the variables of colours 1 and 2, and of its sub-leaves 211, 214, 215 and 223 cutting on colour 0 and then on colours 1 and 2 |
 | `verify_plan_D.py` | the final check: it prints `PLAN D FULLY CERTIFIED` only when every leaf of every case is certified |
 | `check_colouring.py` | checks a colouring of `G₁₃`, or a kissat model; a satisfiable leaf of `F36`, `F35` or `F34` would be a proper 5-colouring |
 | `cnc_case.sh`, `resplit.sh` | the cube-and-conquer scripts of the first plan; `share_driver.py` does their work |
@@ -27,6 +31,7 @@ replaces the README of the plan and keeps its account of the shares. The indepen
 | `cases/E37_B.icnf`, `F36.icnf`, `F35.icnf`, `F34.icnf` | the cube trees of the four case formulas, made once and committed so that every machine split alike. `E37_B.icnf` is `certificates/g13_alpha_part_b_cubes.icnf`; `F35.icnf` and `F34.icnf` are the same file |
 | `cases/SHA256SUMS` | the SHA-256 of the eight case formulas |
 | `work/vars_c0_lex.txt`, `work/vars_s_lex.txt` | the variables the cube trees branch on: `x(v, 0)`, or `s_v`, for the vertices `v` along `lex_order()` |
+| `work/vars_c12_lex.txt`, `work/vars_c012_lex.txt` | the variables of colours 1 and 2, and of colours 0, 1 and 2, in the same order, for the re-splits of leaf 430 |
 | `review_plan_D.md` | the independent review of the plan, written before the run and before plan E |
 | `.gitignore` | the formulas and proofs that a run writes here |
 | `pack_certificates.py` | new: packs the merged logs into `certificates/g13_chi_certlogs.tar.gz` |
