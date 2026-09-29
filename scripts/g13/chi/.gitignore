@@ -1,0 +1,5 @@
+cases/*.cnf
+cases/*.cnf.tmp
+proofs/*.cnf
+proofs/*.drat
+__pycache__/

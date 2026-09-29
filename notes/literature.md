@@ -166,7 +166,8 @@ The route is **not ours**.
 6. **Six colours for finite planes** (`notes/local_colourings.md` §14):
    `χ ≥ 6` for `𝔽₃₇²`, `𝔽₄₁²`, `𝔽₄₃²`, `𝔽₄₇²` and the anisotropic planes
    `G₂₉`, `G₃₇`, `G₄₁`, from Schrijver's three-point bound with checked dual
-   certificates. Moorhouse's table stops at `q = 17`. We found no earlier bound
+   certificates. `G₁₃` joins them, by a SAT proof rather than the three-point
+   bound: `χ(G₁₃) = 6` (`notes/g13_chi.md`). Moorhouse's table stops at `q = 17`. We found no earlier bound
    of six for these planes, and no earlier use of the three-point bound for
    finite unit-distance graphs. For large `q` Hoffman's bound gives six, with
    the spectra of Medrano–Myers–Stark–Terras and, for the anisotropic planes, of

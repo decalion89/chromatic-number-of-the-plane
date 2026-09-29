@@ -51,7 +51,7 @@ be deleted, leaving 31 vertices, with the pressure still 3.
 Most logs belong to a certificate above. Four record checks of files in `data/`: the two
 multi-distance witnesses, the forced pair of Exoo and Ismailescu's graph H, and every graph there
 said to have no proper 4-colouring (`data_no4_checks.txt`). Four record `α(G₁₃) ≤ 36` (`notes/g13.md`): its two cases, the cube tree of the
-second, and the recheck by cake_lpr (`g13_*`). One records part A of
+second, and the recheck by cake_lpr (`g13_alpha_*`, `g13_cake_lpr_checks.txt.gz`). Two record `χ(G₁₃) = 6` (`notes/g13_chi.md`): the logs and cube files of the run, and their SHA-256 (`g13_chi_*`). One records part A of
 `scripts/g17_alpha.py`, a step towards α(G₁₇) ≤ 57 (`g17_part_a_checks.txt`).
 
 | file | what it records |
@@ -66,6 +66,8 @@ second, and the recheck by cake_lpr (`g13_*`). One records part A of
 | `g13_alpha_part_b_cubes.icnf` | The 4 822 leaves of the cube tree of case B (`scripts/g13/cuber2.py`, at most 14 decisions along `lex_order()`), 564 of them closed by unit propagation; `scripts/verify_g13.py` checks that they cover every assignment. |
 | `g13_alpha_part_b_checks.txt.gz` | One line per leaf of case B: formula E37_B of `scripts/g13/enum_cert.py` plus the leaf, its SHA-256, kissat UNSAT within 120 s and drat-trim VERIFIED. |
 | `g13_cake_lpr_checks.txt.gz` | `scripts/verify_g13.py` with cake_lpr, on another machine: every formula of both cases (the four of case A and the 4 822 leaves of case B) rebuilt, compared with the logs, refuted again by kissat and its proof checked by drat-trim and by cake_lpr; and the cover formula's proof checked by cake_lpr. |
+| `g13_chi_certlogs.tar.gz` | `scripts/g13/chi/pack_certificates.py`, `χ(G₁₃) = 6` (`notes/g13_chi.md`): the 720 logs of the run (161 855 lines of `certify.py`: the SHA-256 of each leaf formula, kissat's verdict and time, drat-trim's) and the 715 cube files of the re-splits; 1 435 files, 36.2 MB unpacked, 9.3 MB packed. `scripts/verify_g13_chi.py` checks it. |
+| `g13_chi_SHA256SUMS.txt` | The SHA-256 of the archive and of each of its 1 435 files. |
 | `g17_part_a_checks.txt` | `scripts/g17_alpha.py`, part A: for each of the seven circles N = c of G₁₇ with no unit distance inside, the formula saying that 39 vertices of the region adjacent to none of {0} + C_c are independent; kissat finds all seven unsatisfiable and drat-trim verifies all seven DRAT proofs, so no independent set of 58 points contains a point together with its whole circle. Each line gives the SHA-256 of the formula, which `tests/test_g17.py` recomputes. |
 | `genuine_pair_19_drat_trim_verification.txt` | kissat (with `--no-binary`) and drat-trim on the 118-clause formula of `genuine_pair_19_no3coloring.json`, rebuilt from the certificate: `s VERIFIED`, with 50 of 91 lemmas in the core. |
 | `moser_spindle_drat_trim_verification.txt` | kissat (with `--no-binary`) and drat-trim on the 40-clause formula of `moser_spindle_no3coloring.json`, rebuilt from the certificate: `s VERIFIED`, with 12 of 26 lemmas in the core. |
