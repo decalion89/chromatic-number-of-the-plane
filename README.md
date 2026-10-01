@@ -127,12 +127,12 @@ points of the same colour.</sub></p>
 
 ## Real quadratic planes (1 October 2026)
 
-> **Theorem.** χ(ℚ(√d)²) = 4 for d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431, and 4 ≤ χ(ℚ(√47)²) ≤ 5.
+> **Theorem.** χ(ℚ(√d)²) = 4 for d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431, 455, and 4 ≤ χ(ℚ(√47)²) ≤ 5.
 
 For real quadratic fields only the values 2 and 3 were known, and a field can need four colours only if
 d ≡ 11 (mod 12). With the known results, χ(ℚ(√d)²) is now known for every squarefree d < 83 except 47.
 Each lower bound is a triangle-free unit-distance graph with coordinates in ℚ(√d) and no 3-colouring,
-with 94 to 1 404 vertices: a computer proof, by SAT with DRAT proofs checked by drat-trim, for two
+with 74 to 1 404 vertices: a computer proof, by SAT with DRAT proofs checked by drat-trim, for two
 separate encodings. The upper bounds are reductions modulo a prime (Moorhouse 2010, Fischer 1990). As far
 as we found, these are the first real quadratic fields known to need four colours. Not yet refereed.
 
@@ -140,8 +140,8 @@ as we found, these are the first real quadratic fields known to need four colour
   <img src="docs/figures/quadratic_q11.svg" width="560"
        alt="The 94-vertex unit-distance graph over Q(sqrt11), which has no 3-colouring, shown with a 4-colouring">
 </p>
-<p align="center"><sub><b>Figure 3.</b> The smallest of the graphs: 94 points of the plane over ℚ(√11) and the
-214 segments of length 1 between them. No 3-colouring exists; one 4-colouring is shown.</sub></p>
+<p align="center"><sub><b>Figure 3.</b> The first field, ℚ(√11): 94 points of the plane and the 214 segments of
+length 1 between them. No 3-colouring exists; one 4-colouring is shown.</sub></p>
 
 **Read:** [the paper (PDF, draft)](papers/quadratic-planes/quadratic-planes.pdf) ·
 [the note](notes/quadratic_planes.md) · **Check:** `python3 scripts/verify_quadratic_planes.py`
@@ -163,7 +163,7 @@ None of these results has been refereed. Each has one or more of these statuses:
 |---|---|---|
 | **χ(ℚ(√2, √3)²) = 4.** Voronov's second case. The upper bound is also a case of Corollary B′ of [hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction) (July 2026), which we found after our note; the explicit value is not stated there. | Proved; formally verified | [The note](papers/planes-4-chromatic/planes-4-chromatic.pdf), [`lean/Q23.lean`](lean/Q23.lean), [`notes/local_colourings.md`](notes/local_colourings.md) §10, `tests/test_q23.py`. The lower bound was already implicit in Voronov–Neopryatnaya–Dergachev; a 10-vertex chain of unit rhombi gives a short one (`certificates/chain23_no3coloring.json`). |
 | **χ(ℚ(√3, √11)²) = 4**, K. G. Fischer's theorem (1994) | Known; a new short proof, proved and formally verified | [The note](papers/planes-4-chromatic/planes-4-chromatic.pdf), [`lean/Q311.lean`](lean/Q311.lean), [`notes/local_colourings.md`](notes/local_colourings.md) §8, `hn/adelic.py`, `tests/test_q311.py` |
-| **χ(ℚ(√d)²) = 4 for d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431, and 4 ≤ χ(ℚ(√47)²) ≤ 5.** The first real quadratic fields known to need four colours, as far as we found: the values known before were 2 and 3. With the known results, χ(ℚ(√d)²) is now known for every squarefree d < 83 except 47. Each lower bound is a triangle-free, vertex-critical unit-distance graph, with 94 to 1 404 vertices. | Computer proof (lower bounds); known (upper bounds) | [`notes/quadratic_planes.md`](notes/quadratic_planes.md): exact unit edges, a stored 4-colouring, 3-colourings of every vertex-deleted graph, and no 3-colouring, by kissat with DRAT proofs checked by drat-trim, twice with separate encodings (`data/quadratic_planes/`). The upper bounds are Moorhouse's reduction at 7, Fischer's Theorem 10 and the reduction at 11. `scripts/verify_quadratic_planes.py`, `tests/test_quadratic_planes.py` |
+| **χ(ℚ(√d)²) = 4 for d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431, 455, and 4 ≤ χ(ℚ(√47)²) ≤ 5.** The first real quadratic fields known to need four colours, as far as we found: the values known before were 2 and 3. With the known results, χ(ℚ(√d)²) is now known for every squarefree d < 83 except 47. Each lower bound is a triangle-free, vertex-critical unit-distance graph, with 74 to 1 404 vertices. | Computer proof (lower bounds); known (upper bounds) | [`notes/quadratic_planes.md`](notes/quadratic_planes.md): exact unit edges, a stored 4-colouring, 3-colourings of every vertex-deleted graph, and no 3-colouring, by kissat with DRAT proofs checked by drat-trim, twice with separate encodings (`data/quadratic_planes/`). The upper bounds are Moorhouse's reduction at 7, Fischer's Theorem 10 and the reduction at 11. `scripts/verify_quadratic_planes.py`, `tests/test_quadratic_planes.py` |
 | χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, for the whole complex fields | Known; new local proofs | The first follows from Fischer's theorem, the second from Madore's reduction at 11 and Exoo–Ismailescu's graph. Our proofs reduce at the primes 2 and 11 ([`notes/local_colourings.md`](notes/local_colourings.md) §3, [`notes/rigidity.md`](notes/rigidity.md)); the lower bound graph `five_247_c` has a DRAT proof (`certificates/five_247_c_no4coloring.json`). |
 | Necessary local conditions for a field to hold a 6-chromatic unit-distance graph | Proved | [`notes/local_colourings.md`](notes/local_colourings.md) §5–§9, `scripts/fieldscreen.py` |
 | **Six colours for finite planes.** χ(G_q) ≥ 6 for every prime q ≥ 29 except 31, and χ(𝔽_q²) ≥ 6 for q = 37, 41, 43, 47, 59 and every prime q ≥ 67; χ(𝔽₄₁²) ∈ {6, 7}. Here 𝔽_q² is the plane x² + y² (Moorhouse's table stops at q = 17), and G_q the anisotropic plane, a local plane of number fields. | Computer proof; proved for large q | For 𝔽₃₇², 𝔽₄₁², 𝔽₄₃², 𝔽₄₇², G₂₉, G₃₇ and G₄₁, Schrijver's three-point bound gives α < q²/5, and each dual certificate is checked in interval and exact rational arithmetic, and again by an independent checker. The other cases follow from Proposition B and Hoffman's bound, with Weil's estimate or the exact spectrum. [`notes/local_colourings.md`](notes/local_colourings.md) §14, [`data/threepoint/`](data/threepoint/README.md), `scripts/threepoint_verify.py`, `scripts/threepoint_verify_indep.py` |
@@ -255,7 +255,7 @@ sh scripts/worker_setup.sh                   # kissat and drat-trim, for the sea
 |---|---|---|
 | χ(ℚ(√2, √3)²) = 4 | `python3 -m pytest -q tests/test_q23.py` | seconds |
 | χ(ℚ(√3, √11)²) = 4 | `python3 -m pytest -q tests/test_q311.py` | seconds |
-| χ = 4 for ℚ(√d)² with d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431, and 4 ≤ χ(ℚ(√47)²) ≤ 5: the exact edges, the colourings, the stored formulas and the upper bounds; with `--kissat` and `--drat-trim` it writes the formulas again, solves them and checks the proofs, and with `--cake-lpr` the verified checker cake_lpr checks them too (log: `data/quadratic_planes/cake_lpr_checks.txt`) | `python3 scripts/verify_quadratic_planes.py` | about a second; about a minute with the solvers |
+| χ = 4 for ℚ(√d)² with d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431, 455, and 4 ≤ χ(ℚ(√47)²) ≤ 5: the exact edges, the colourings, the stored formulas and the upper bounds; with `--kissat` and `--drat-trim` it writes the formulas again, solves them and checks the proofs, and with `--cake-lpr` the verified checker cake_lpr checks them too (log: `data/quadratic_planes/cake_lpr_checks.txt`) | `python3 scripts/verify_quadratic_planes.py` | about a second; about a minute with the solvers |
 | both theorems, formally (needs [elan](https://github.com/leanprover/elan)) | `cd lean && lake exe cache get && lake build && lake env lean PrintAxioms.lean` | minutes |
 | four and five colours suffice for the fields ℚ(√−3, √−11) and ℚ(√−3, √−11, √−247) | `python3 -m pytest -q tests/test_moser_field.py tests/test_reduce11.py` | seconds |
 | six colours for a finite plane, e.g. 𝔽₄₇²: it prints the rigorous bound α ≤ 371.41…, below 47²/5 = 441.8, so χ ≥ 6 | `python3 scripts/threepoint_verify.py data/threepoint/std47.npz` | 3–5 minutes |
@@ -277,7 +277,7 @@ cvxopt 1.3.3 (DSDP) and clarabel 0.11.1; checking them needs only numpy, scipy a
 their contents. `requirements-lock.txt` lists the exact versions of the Python packages used for the
 results and of their dependencies, and `scripts/worker_setup.sh` builds the pinned kissat and drat-trim.
 
-GitHub Actions runs the fast part of the suite, 559 tests in 41 files
+GitHub Actions runs the fast part of the suite, 562 tests in 41 files
 ([`tests.yml`](.github/workflows/tests.yml)), and builds and checks the Lean proofs
 ([`lean.yml`](.github/workflows/lean.yml)), on pushes to `main` and on pull requests.
 
@@ -500,8 +500,8 @@ coordenadas para que el argumento de reducción de Madore funcione módulo 2. Es
 Nota del 28 de septiembre: la cota superior también se deduce de un trabajo público anterior, el
 repositorio [hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction) (julio de 2026,
 sin revisión por pares), que encontramos después de escribir la nota; allí no aparece el caso ℚ(√2, √3).
-Nuevo (1 de octubre): los planos sobre ℚ(√d) con d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359 y
-431 necesitan exactamente 4 colores,
+Nuevo (1 de octubre): los planos sobre ℚ(√d) con d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431 y
+455 necesitan exactamente 4 colores,
 y el de ℚ(√47) necesita 4 o 5. Hasta donde hemos encontrado, no se conocía ningún cuerpo cuadrático
 real que necesitara 4 colores: los valores conocidos eran 2 y 3. Así, χ(ℚ(√d)²) se conoce ya para todo d < 83
 libre de cuadrados salvo d = 47. Cada cota inferior es un grafo de distancia

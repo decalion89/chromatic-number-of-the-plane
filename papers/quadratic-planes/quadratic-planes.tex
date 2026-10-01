@@ -46,10 +46,10 @@ SAT solving, DRAT proofs}
 For a subfield $F\subset\R$ let $\chi(F^2)$ be the chromatic number of the graph on $F^2$ joining points at
 Euclidean distance $1$. For real quadratic fields $K=\Q(\sqrt d)$ the values known so far were $2$ and $3$, and
 a field can need four colours only when $d\equiv 11\pmod{12}$. We show that
-$\chi(\Q(\sqrt d)^2)=4$ for $d=11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431$, and that
+$\chi(\Q(\sqrt d)^2)=4$ for $d=11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431, 455$, and that
 $4\le\chi(\Q(\sqrt{47})^2)\le5$. With the known results, $\chi(\Q(\sqrt d)^2)$ is now determined for every
 squarefree $d<83$ except $d=47$. Each lower bound is a triangle-free, vertex-critical unit-distance graph with
-coordinates in $\Q(\sqrt d)$, with between $94$ and $1\,404$ vertices, that has no proper $3$-colouring: a computer
+coordinates in $\Q(\sqrt d)$, with between $74$ and $1\,404$ vertices, that has no proper $3$-colouring: a computer
 proof, by a SAT solver whose DRAT proofs are checked by \texttt{drat-trim}, for two independently written
 encodings. The upper bounds are reductions modulo a prime due to Moorhouse and Fischer. We also explain why
 some searches fail: when every direction is integral at certain primes above $2$, $3$ or $5$, reduction there
@@ -85,8 +85,9 @@ field was known to need four colours. Moorhouse asked in a 2010 talk \cite{Moorh
 about $\chi(\Q(\sqrt d)^2)$, and about $\chi(\Q(\sqrt{47})^2)$ in particular.
 
 \begin{theorem}\label{thm:main}
-$\chi(\Q(\sqrt d)^2)=4$ for $d=11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431$, and
-$4\le\chi(\Q(\sqrt{47})^2)\le5$.
+$\chi(\Q(\sqrt d)^2)=4$ for
+\[d=11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431, 455,\]
+and $4\le\chi(\Q(\sqrt{47})^2)\le5$.
 \end{theorem}
 
 \begin{corollary}\label{cor:small}
@@ -164,7 +165,7 @@ $3$-colourings of $G-v$ for every $v$, that the stored formula is exactly $\Phi(
 finite planes behind the upper bounds. With a path to kissat and \texttt{drat-trim} it also writes the second
 encoding, solves it and checks the proof. With a path to \texttt{cake\_lpr} as well, \texttt{drat-trim} writes
 each proof in LRAT form and \texttt{cake\_lpr}, a proof checker verified in HOL4 and compiled by the verified
-CakeML compiler \cite{cakelpr}, checks it; it accepted the proofs for all sixteen graphs. What has to be trusted
+CakeML compiler \cite{cakelpr}, checks it; it accepted the proofs for all seventeen graphs. What has to be trusted
 is a proof checker (\texttt{drat-trim}, or \texttt{cake\_lpr} and its formal verification), the short code that
 writes $\Phi(G)$ from the list of edges, and exact integer arithmetic.
 
@@ -180,10 +181,10 @@ $\F_p$, so every unit vector is $\p$-integral and reduction modulo $\p$ is a gra
 component of the origin. Since $\chi(\F_7^2)=4$ \cite[\S7]{Moorhouse} and $\F_{11}^2$ has a proper
 $5$-colouring \cite[Lemma~4.5]{Madore}:
 \begin{itemize}
-\item $d=11,23,71,95,155,179,191,239,359,431$ are nonzero squares and $d=35,119$ are $\equiv0$ modulo $7$, so
+\item $d=11,23,71,95,155,179,191,239,359,431$ are nonzero squares and $d=35,119,455$ are $\equiv0$ modulo $7$, so
   $\chi\le4$;
-\item $d=59,131,251$ are $\equiv3\pmod8$, so $\chi\le4$ by Fischer's Theorem~10 (which also covers $11$, $35$
-  and $179$);
+\item $d=59,131,251$ are $\equiv3\pmod8$, so $\chi\le4$ by Fischer's Theorem~10 (which also covers $11$, $35$,
+  $155$ and $179$);
 \item $47\equiv5^2\pmod{11}$, so $\chi(\Q(\sqrt{47})^2)\le5$.
 \end{itemize}
 The repository stores a proper $4$-colouring of $\F_7^2$ and a proper $5$-colouring of $\F_{11}^2$, and the
@@ -195,14 +196,14 @@ $(\Z/121)^2$ is not $4$-colourable.
 \subsection*{Directions}
 For a denominator $D$ let $U_D$ be the set of unit vectors $[a,b,c,e]$ with integer coordinates, that is, of
 solutions of \eqref{eq:unit} with $\Delta=(a,b,c,e)$. It is finite, and closed under negation, the quarter
-turn and complex conjugation. We used sets with $108$ to $276$ elements.
+turn and complex conjugation. We used sets with $68$ to $276$ elements.
 
 \subsection*{Colouring-guided growth}
 Start from all sums of at most two vectors of $U_D$; $3$-colour the graph (tabu search, else kissat); add the
 candidate points $p+u$ ($p$ in the graph, $u\in U_D$) whose neighbours in the graph already see all three
 colours; repeat until kissat answers that the graph is not $3$-colourable. When no candidate was blocked, a
 variant coloured the graph again from scratch and, failing that, added candidates whose neighbours see two
-colours. The successful runs took $1$ to $96$ rounds and ended with $5\,941$ to $39\,265$ points.
+colours. The successful runs took $1$ to $96$ rounds and ended with $2\,930$ to $39\,265$ points.
 
 \subsection*{Shrinking}
 A single incremental SAT solver (CaDiCaL through PySAT) holds the formula with one selector literal per vertex,
@@ -268,8 +269,8 @@ and have residues differing by $\pm1$.
 \item Does every real quadratic field with $d\equiv11\pmod{12}$ need four colours? Our searches over
   $\Q(\sqrt{83})$, $\Q(\sqrt{107})$ and $\Q(\sqrt{203})$ have so far found only $3$-colourable graphs.
 \item A uniform proof: a family of graphs, or an argument, covering all $d\equiv11\pmod{12}$ at once.
-\item How small can a $4$-chromatic unit-distance graph over a real quadratic field be? Ours has $94$ vertices
-  for $d=11$ and $100$ for $d=191$.
+\item How small can a $4$-chromatic unit-distance graph over a real quadratic field be? The smallest of ours
+  has $74$ vertices, for $d=455$; the one for $d=11$ has $94$.
 \end{itemize}
 
 \begin{thebibliography}{99}

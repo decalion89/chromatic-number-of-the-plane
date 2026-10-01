@@ -8867,9 +8867,9 @@ set of directions changes that (`notes/quadratic_planes.md`).
   stored formula and for a second encoding written by separate code. `scripts/verify_quadratic_planes.py`
   repeats all of it.
 - **Upper bounds.** `11, 23, 71, 95, 155, 179, 191, 239, 359, 431` are squares modulo 7 and `35 = 5 · 7`, `119 = 7 ·
-  17`, so Moorhouse's reduction modulo a prime of norm 7 (his Lemma 8.2) gives `χ ≤ χ(𝔽₇²) = 4`; `59, 131, 251 ≡ 3
+  17`, `455 = 5 · 7 · 13`, so Moorhouse's reduction modulo a prime of norm 7 (his Lemma 8.2) gives `χ ≤ χ(𝔽₇²) = 4`; `59, 131, 251 ≡ 3
   (mod 8)` give `χ ≤ 4` by Fischer's Theorem 10; `47 ≡ 5² (mod 11)` gives `χ ≤ χ(𝔽₁₁²) = 5`. So `χ = 4` for `d
-  = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`. With the known results,
+  = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431, 455`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`. With the known results,
   `χ(ℚ(√d)²)` is now known for every squarefree `d < 83` except `d = 47`.
 - **An incident.** The first certification runs for `d = 23` and `d = 47` ran at the same time and wrote
   their DRAT proofs to the same temporary file. We stopped both, gave the temporary files distinct names,
@@ -8949,12 +8949,20 @@ set of directions changes that (`notes/quadratic_planes.md`).
   first run, `d = 251` with `D = 390` (116 directions), found a graph with no 3-colouring in 9 rounds (9 209
   points, under two minutes); `min3inc.py` shrank it in 4 seconds to a vertex-critical graph with 291 vertices
   and 715 edges, certified like the others and checked again by the checker with cake_lpr. `251 ≡ 3 (mod 8)`,
-  so Fischer's Theorem 10 gives `χ ≤ 4`, and `χ(ℚ(√251)²) = 4`. The other seven are being tried
-  (`scan_r5.sh`, `shrink_worker.sh`).
+  so Fischer's Theorem 10 gives `χ ≤ 4`, and `χ(ℚ(√251)²) = 4`. The others ran with `scan_r5.sh` and
+  `shrink_worker.sh`. `d = 455 = 5 · 7 · 13` with `D = 780` (68 directions, the smallest set we used) found a
+  graph with no 3-colouring in 16 rounds (2 930 points, 21 seconds). `min3inc.py` shrank it to 77 vertices;
+  `min3multi.py` with 400 random orders to 74 vertices and 161 edges (4 000 orders found nothing smaller),
+  certified like the others and checked again with cake_lpr. It is the smallest of the graphs. `455 ≡ 0
+  (mod 7)`, so Moorhouse's Lemma 8.2 gives `χ ≤ 4`, and `χ(ℚ(√455)²) = 4`. `d = 287, 407, 263` (`D = 780`) ran
+  out of time with 3-colourable graphs of 21 854 to 27 895 points, and `d = 491` (`D = 390`), `323` and `299`
+  stopped with no blocked candidate. Of the pairs prescreened, exactly two have a closed walk of length 5 among
+  their directions, five unit vectors with sum 0: `d = 251` with `D = 390` (and 780) and `d = 455` with
+  `D = 780`, the two quick successes; for every other pair it checked, the prescreen found none shorter than 7.
 - **A figure.** `papers/quadratic-planes/make_figure.py` draws the graph over `ℚ(√11)` for the paper (Figure
   1), and `scripts/make_figures.py` for the front page (Figure 3): 94 points, 214 unit segments, and the
   stored 4-colouring as marker shapes. The point at the origin has 32 neighbours, all on its unit circle.
 
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; smaller witnesses (the
-smallest graphs have 94 vertices, for `d = 11`, and 100, for `d = 191`). Nobody outside the project has
+smallest graphs have 74 vertices, for `d = 455`, and 94, for `d = 11`). Nobody outside the project has
 refereed this.

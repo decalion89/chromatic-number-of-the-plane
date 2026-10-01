@@ -6,7 +6,7 @@ different colours. For real quadratic fields `K = ℚ(√d)` the known values we
 2 and 3. No real quadratic field was known to need four colours.
 
 **Theorem.**
-1. `χ(ℚ(√d)²) = 4` for `d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431`.
+1. `χ(ℚ(√d)²) = 4` for `d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431, 455`.
 2. `4 ≤ χ(ℚ(√47)²) ≤ 5`.
 
 Each lower bound is a finite graph: a triangle-free unit-distance graph with
@@ -14,7 +14,8 @@ coordinates in `ℚ(√d)`, which is not 3-colourable and is vertex-critical. Th
 graphs have 94 vertices (`d = 11`), 660 (`d = 23`), 580 (`d = 35`), 816
 (`d = 47`), 406 (`d = 59`), 611 (`d = 71`), 1 404 (`d = 95`), 399 (`d = 119`),
 356 (`d = 131`), 1 281 (`d = 155`), 259 (`d = 179`), 100 (`d = 191`), 355
-(`d = 239`), 291 (`d = 251`), 715 (`d = 359`) and 331 (`d = 431`).
+(`d = 239`), 291 (`d = 251`), 715 (`d = 359`), 331 (`d = 431`) and 74
+(`d = 455`).
 
 So `χ(ℚ(√d)²)` is now known for every squarefree `d < 83` except `d = 47`
 (§1): it is 2 if `d ≡ 1, 2 (mod 4)`, 3 if `d ≡ 3 (mod 4)` and `d ≢ 2 (mod 3)`,
@@ -117,6 +118,7 @@ These are two identities between integers, so every edge is checked exactly.
 | 251 | 390 | 291 | 715 | 3–56 | 98 |
 | 359 | 600 | 715 | 1 851 | 3–63 | 74 |
 | 431 | 600 | 331 | 764 | 3–28 | 66 |
+| 455 | 780 | 74 | 161 | 3–18 | 34 |
 
 In each graph:
 - the edges are all the pairs of its points at distance 1;
@@ -135,7 +137,8 @@ There is no triangle in any of these planes. A unit triangle would need
 `U_D`, closed under negation, under the quarter turn and under complex
 conjugation. We used `|U_D| = 108` in each case (140 for `d = 71`, 148 for
 `d = 119` and `d = 155`, 132 for `d = 95` and `d = 239`, 140 for `d = 359`, 116 for
-`d = 251` and `d = 431`, 196 for `d = 131`, 212 for `d = 179`, 276 for `d = 35`).
+`d = 251` and `d = 431`, 196 for `d = 131`, 212 for `d = 179`, 276 for `d = 35`,
+68 for `d = 455`).
 
 **The growth.**
 1. Start from all sums of at most two vectors of `U_D`.
@@ -145,7 +148,7 @@ conjugation. We used `|U_D| = 108` in each case (140 for `d = 71`, 148 for
    1 to 30 rounds and at most 12 211 points (21 895 for `d = 131`, 24 785 for
    `d = 179`, 39 265 for `d = 35`; 96 rounds for `d = 431`; 38 rounds and
    15 913 points for `d = 155`, 43 rounds and 12 477 points for `d = 95`). For
-   `d = 35, 95, 131, 155, 179, 239, 251, 359, 431` we used a variant:
+   `d = 35, 95, 131, 155, 179, 239, 251, 359, 431, 455` we used a variant:
    when no candidate is blocked, it 3-colours the graph again from scratch, and
    if still none is blocked it adds candidates whose neighbours see two colours.
 5. Shrink: keep the vertices whose clauses lie in the drat-trim core of a
@@ -221,15 +224,15 @@ covers every field.
 
 ## 5. The upper bounds
 
-- **`d = 11, 23, 35, 71, 95, 119, 155, 179, 191, 239, 359, 431`.** `d` is a nonzero square
+- **`d = 11, 23, 35, 71, 95, 119, 155, 179, 191, 239, 359, 431, 455`.** `d` is a nonzero square
   modulo 7 (`d = 11, 23, 71, 95, 155, 179, 191, 239, 359, 431`) or `d ≡ 0 (mod 7)` (`d = 35 = 5 · 7`,
-  `d = 119 = 7 · 17`), and
+  `d = 119 = 7 · 17`, `d = 455 = 5 · 7 · 13`), and
   `7 ≡ 3 (mod 4)`. Moorhouse's Lemma 8.2 reduces the plane modulo a prime of
   norm 7 into the unit-distance graph of `𝔽₇²`. That graph is 4-colourable, so `χ(K²) ≤ 4`.
   `data/quadratic_planes/finite_planes.json` holds the colouring, and the
   checker checks it.
 - **`d = 59, 131, 251`.** `d ≡ 3 (mod 8)`, so `χ(K²) ≤ 4` by Fischer's Theorem 10 (which
-  also covers `d = 11`, `d = 35` and `d = 155`). The
+  also covers `d = 11`, `d = 35`, `d = 155` and `d = 179`). The
   proof in `notes/local_colourings.md` reduces modulo the place above 2, whose
   residue plane is `K₄`.
 - **`d = 47`.** `47 ≡ 3 = 5² (mod 11)` and `11 ≡ 3 (mod 4)`, so reduction modulo
@@ -259,8 +262,8 @@ covers every field.
   3-colouring is periodic modulo `mM`, where `M` is the lattice the directions
   span, for `m ≤ 10` or `m = 12` (`D = 510`) and `m ≤ 8` (`D = 1530`)
   (`data/quadratic_planes/scripts/periodicq.py`).
-- **Smaller witnesses.** The graph over `ℚ(√11)` has 94 vertices, and the
-  one over `ℚ(√191)` 100. How small can a 4-chromatic unit-distance graph over a
+- **Smaller witnesses.** The graph over `ℚ(√455)` has 74 vertices, and the
+  one over `ℚ(√11)` 94. How small can a 4-chromatic unit-distance graph over a
   real quadratic field be?
 
 ## 7. Files
