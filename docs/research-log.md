@@ -8866,10 +8866,10 @@ set of directions changes that (`notes/quadratic_planes.md`).
   vertex, and no 3-colouring, twice: kissat answered UNSATISFIABLE and drat-trim VERIFIED the proof, for the
   stored formula and for a second encoding written by separate code. `scripts/verify_quadratic_planes.py`
   repeats all of it.
-- **Upper bounds.** `11, 23, 71, 155, 179, 191, 239, 359, 431` are squares modulo 7 and `35 = 5 · 7`, `119 = 7 ·
+- **Upper bounds.** `11, 23, 71, 95, 155, 179, 191, 239, 359, 431` are squares modulo 7 and `35 = 5 · 7`, `119 = 7 ·
   17`, so Moorhouse's reduction modulo a prime of norm 7 (his Lemma 8.2) gives `χ ≤ χ(𝔽₇²) = 4`; `59, 131 ≡ 3
   (mod 8)` give `χ ≤ 4` by Fischer's Theorem 10; `47 ≡ 5² (mod 11)` gives `χ ≤ χ(𝔽₁₁²) = 5`. So `χ = 4` for `d
-  = 11, 23, 35, 59, 71, 119, 131, 155, 179, 191, 239, 359, 431`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`. With the known results,
+  = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 359, 431`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`. With the known results,
   `χ(ℚ(√d)²)` is now known for every squarefree `d < 83` except `d = 47`.
 - **An incident.** The first certification runs for `d = 23` and `d = 47` ran at the same time and wrote
   their DRAT proofs to the same temporary file. We stopped both, gave the temporary files distinct names,
@@ -8919,6 +8919,22 @@ set of directions changes that (`notes/quadratic_planes.md`).
   grown with `D = 510` (148 directions; 38 rounds, 15 913 points), gave a vertex-critical graph with 1 281
   vertices and 3 526 edges, certified in the same way (519 solver calls) and checked again by the checker
   with the solvers. It replaces the first as the published witness.
+- **`ℚ(√95)`.** The graph grown at noon with `D = 480` (132 directions, `grow3r.py`; 43 rounds, 12 477
+  points) was shrunk by `min3inc.py` to a vertex-critical graph with 1 404 vertices and 3 780 edges and
+  certified (both encodings unsatisfiable, drat-trim VERIFIED; 613 solver calls for the colourings of
+  `G − v`). The checker, run with the solvers and cake_lpr, verified it again. `95 ≡ 4 (mod 7)` is a nonzero
+  square, so `χ ≤ 4`, and `χ(ℚ(√95)²) = 4`: the fourteenth field.
+- **Why `d = 83, 107` resist.** Three more direction sets fail at the gate at 3 (`d = 83` with `D = 410` and
+  `1230`, `d = 107` with `D = 870`; for the last two, `Cay(M/3M, U)` is 3-colourable). A divisor 3 of `D` is
+  not enough: a direction with 3 in its denominator needs a partner prime (7, 11, 17 or 31 for `d = 83`; 11,
+  13, 19 or 23 for `d = 107`), because the primes above 3 are not principal in `ℚ(√−d)`. Without a gate,
+  runs with `D = 714, 1122, 1428, 1530` (`d = 83`) and `D = 1170, 2442` (`d = 107`) still stopped with a
+  colouring that extends to every candidate. Those colourings are not periodic modulo `mM` for `m ≤ 60`.
+  The shortest odd cycle has length 9 for `d = 83, D = 510` and `d = 107, D = 390`, and 5 or 7 for every
+  direction set that succeeded; the share of points at 3 steps that are also at 4 steps (each closes an odd
+  walk of length 7) is 0.03–1.6 % for the failed sets of `d = 83, 107`, against 0.6–78 % for the successful
+  ones; the ranges overlap, so this is no criterion (`oddmitm.py`, `oddcount.py` and `colstruct.py` in
+  `data/quadratic_planes/scripts/`).
 - **`d = 83, 107, 203`.** Growth runs with up to 180 directions found only 3-colourable graphs. For `d = 83`
   no gate explains it: with `D = 510` (108 directions) there is no proper 3-colouring periodic modulo `mM`,
   where `M` is the lattice the directions span, for `m ≤ 10` or `m = 12`, nor with `D = 1530` (180
@@ -8926,7 +8942,6 @@ set of directions changes that (`notes/quadratic_planes.md`).
   stopped on the collision of keys, ran again and found only 3-colourable graphs (121 rounds, 20 356 points).
   Runs with 324 directions are under way.
 
-Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 95, 107, 203, …` (for `d = 95` a graph with no
-3-colouring was found and is being shrunk); smaller witnesses (the
+Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; smaller witnesses (the
 smallest graphs have 94 vertices, for `d = 11`, and 100, for `d = 191`). Nobody outside the project has
 refereed this.

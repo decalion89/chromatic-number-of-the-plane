@@ -35,6 +35,8 @@ files go to `/dev/shm`.
 | `gates.py`, `gates2.py` | which directions are integral at the places above 2, 3 and 5 (the gates of §3 of the note) |
 | `gate2adic.py` | for `d ≡ 3 (mod 8)`: is the Cayley graph of the directions modulo `2^m` 3-colourable? (it was not, for `m ≤ 3`, in every case we tried except `d = 203`, `D = 1105`) |
 | `cohen_check.py` | a numerical check of the remark on Cohen's conjecture (§1 of the note) |
+| `oddmitm.py`, `oddcount.py` | the shortest odd closed walk among the directions `U_D` (meeting in the middle), and how many points at 3 steps are also at 4 steps |
+| `colstruct.py` | is the 3-colouring saved by a stopped growth run a function of the point modulo `mM`? |
 | `periodicq.py` | is there a 3-colouring periodic modulo `mM`, where `M` is the lattice spanned by the directions `U_D`? (for `d = 83` there is none for the `m` and `D` of §6 of the note) |
 
 A typical run, for `d = 191`:
