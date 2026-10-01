@@ -6,15 +6,15 @@ different colours. For real quadratic fields `K = ℚ(√d)` the known values we
 2 and 3. No real quadratic field was known to need four colours.
 
 **Theorem.**
-1. `χ(ℚ(√d)²) = 4` for `d = 11, 23, 35, 59, 71, 119, 131, 179, 191, 239, 359, 431`.
+1. `χ(ℚ(√d)²) = 4` for `d = 11, 23, 35, 59, 71, 119, 131, 155, 179, 191, 239, 359, 431`.
 2. `4 ≤ χ(ℚ(√47)²) ≤ 5`.
 
 Each lower bound is a finite graph: a triangle-free unit-distance graph with
 coordinates in `ℚ(√d)`, which is not 3-colourable and is vertex-critical. The
 graphs have 94 vertices (`d = 11`), 660 (`d = 23`), 580 (`d = 35`), 816
 (`d = 47`), 406 (`d = 59`), 611 (`d = 71`), 399 (`d = 119`), 356 (`d = 131`),
-259 (`d = 179`), 100 (`d = 191`), 355 (`d = 239`), 715 (`d = 359`) and 331
-(`d = 431`).
+1 813 (`d = 155`), 259 (`d = 179`), 100 (`d = 191`), 355 (`d = 239`), 715
+(`d = 359`) and 331 (`d = 431`).
 
 So `χ(ℚ(√d)²)` is now known for every squarefree `d < 83` except `d = 47`
 (§1): it is 2 if `d ≡ 1, 2 (mod 4)`, 3 if `d ≡ 3 (mod 4)` and `d ≢ 2 (mod 3)`,
@@ -109,6 +109,7 @@ These are two identities between integers, so every edge is checked exactly.
 | 71 | 120 | 611 | 1 557 | 3–85 | 128 |
 | 119 | 240 | 399 | 1 019 | 3–62 | 106 |
 | 131 | 390 | 356 | 804 | 3–61 | 126 |
+| 155 | 390 | 1 813 | 5 041 | 3–119 | 146 |
 | 179 | 390 | 259 | 622 | 3–39 | 90 |
 | 191 | 240 | 100 | 224 | 3–23 | 52 |
 | 239 | 480 | 355 | 888 | 3–47 | 80 |
@@ -131,8 +132,8 @@ There is no triangle in any of these planes. A unit triangle would need
 `((a + b√d)/D, (c + e√d)/D)` with integer coordinates. They form a finite set
 `U_D`, closed under negation, under the quarter turn and under complex
 conjugation. We used `|U_D| = 108` in each case (140 for `d = 71`, 148 for
-`d = 119`, 132 for `d = 239`, 140 for `d = 359`, 116 for `d = 431`, 196 for
-`d = 131`, 212 for `d = 179`, 276 for `d = 35`).
+`d = 119` and `d = 155`, 132 for `d = 239`, 140 for `d = 359`, 116 for `d = 431`,
+196 for `d = 131`, 212 for `d = 179`, 276 for `d = 35`).
 
 **The growth.**
 1. Start from all sums of at most two vectors of `U_D`.
@@ -140,8 +141,9 @@ conjugation. We used `|U_D| = 108` in each case (140 for `d = 71`, 148 for
 3. Add the points `p + u` whose neighbours already see all three colours.
 4. Repeat until kissat answers that the graph is not 3-colourable. This took
    1 to 30 rounds and at most 12 211 points (21 895 for `d = 131`, 24 785 for
-   `d = 179`, 39 265 for `d = 35`; 96 rounds for `d = 431`). For
-   `d = 35, 131, 179, 239, 359, 431` we used a variant:
+   `d = 179`, 39 265 for `d = 35`; 96 rounds for `d = 431`; 46 rounds and
+   19 061 points for `d = 155`). For `d = 35, 131, 155, 179, 239, 359, 431` we
+   used a variant:
    when no candidate is blocked, it 3-colours the graph again from scratch, and
    if still none is blocked it adds candidates whose neighbours see two colours.
 5. Shrink: keep the vertices whose clauses lie in the drat-trim core of a
@@ -150,7 +152,8 @@ conjugation. We used `|U_D| = 108` in each case (140 for `d = 71`, 148 for
    incremental SAT solver (CaDiCaL through PySAT): a selector literal per
    vertex, each test a solve under assumptions, the core of failed assumptions
    of every refutation as the new vertex set, and up to 400 random deletion
-   orders per grown graph, keeping the smallest critical graph.
+   orders per grown graph, keeping the smallest critical graph (for `d = 155`
+   so far one order).
 
 **Why some direction sets fail.** Three places act as gates. When every unit
 vector of a set is integral at such a place, reduction at that place colours
@@ -209,15 +212,15 @@ and checks the proof, in about ten seconds for the five fields.
 
 ## 5. The upper bounds
 
-- **`d = 11, 23, 35, 71, 119, 179, 191, 239, 359, 431`.** `d` is a nonzero square
-  modulo 7 (`d = 11, 23, 71, 179, 191, 239, 359, 431`) or `d ≡ 0 (mod 7)` (`d = 35 = 5 · 7`,
+- **`d = 11, 23, 35, 71, 119, 155, 179, 191, 239, 359, 431`.** `d` is a nonzero square
+  modulo 7 (`d = 11, 23, 71, 155, 179, 191, 239, 359, 431`) or `d ≡ 0 (mod 7)` (`d = 35 = 5 · 7`,
   `d = 119 = 7 · 17`), and
   `7 ≡ 3 (mod 4)`. Moorhouse's Lemma 8.2 reduces the plane modulo a prime of
   norm 7 into the unit-distance graph of `𝔽₇²`. That graph is 4-colourable, so `χ(K²) ≤ 4`.
   `data/quadratic_planes/finite_planes.json` holds the colouring, and the
   checker checks it.
 - **`d = 59, 131`.** `d ≡ 3 (mod 8)`, so `χ(K²) ≤ 4` by Fischer's Theorem 10 (which
-  also covers `d = 11` and `d = 35`). The
+  also covers `d = 11`, `d = 35` and `d = 155`). The
   proof in `notes/local_colourings.md` reduces modulo the place above 2, whose
   residue plane is `K₄`.
 - **`d = 47`.** `47 ≡ 3 = 5² (mod 11)` and `11 ≡ 3 (mod 4)`, so reduction modulo
@@ -231,14 +234,19 @@ and checks the proof, in about ten seconds for the five fields.
 - **`ℚ(√47)`.** Is `χ = 4` or `5`? It is the smallest open case of Moorhouse's
   table that this note does not settle.
 - **All of `d ≡ 11 (mod 12)`.** Does every such field need four colours? For
-  `d = 83, 95, 107, 155, 203`, our growth has so far found only
-  3-colourable graphs, with 60 to 212 directions. That may be a limit of the
-  search: over `ℚ(√35)`, `ℚ(√131)` and `ℚ(√179)` it failed in the same way
-  with 60 to 212 directions, and succeeded with the directions of denominator
-  dividing 390 and the variant of the growth. Two of the
-  failed direction sets fail at a gate of §3: for `d = 35` and `D = 174` every
-  direction is integral at the places above 5, and for `d = 83` and `D = 410`
-  at the places above 3. We do not know why the others fail.
+  `d = 83, 107, 203` our growth has so far found only 3-colourable graphs,
+  with up to 180 directions. That may be a limit of the search: over `ℚ(√35)`,
+  `ℚ(√131)`, `ℚ(√155)` and `ℚ(√179)` it failed in the same way at first, and
+  succeeded with the directions of denominator dividing 390 and the variant of
+  the growth. Over `ℚ(√95)` it found a graph with no 3-colouring (`D = 480`,
+  132 directions) that we have not yet reduced to a certified critical graph.
+  Two of the failed direction sets fail at a gate of §3: for `d = 35` and
+  `D = 174` every direction is integral at the places above 5, and for `d = 83`
+  and `D = 410` at the places above 3. For the others we found no such reason:
+  for `d = 83` with `D = 510` (108 directions) and `D = 1530` (180), no proper
+  3-colouring is periodic modulo `mM`, where `M` is the lattice the directions
+  span, for `m ≤ 10` or `m = 12` (`D = 510`) and `m ≤ 8` (`D = 1530`)
+  (`data/quadratic_planes/scripts/periodicq.py`).
 - **Smaller witnesses.** The graph over `ℚ(√11)` has 94 vertices, and the
   one over `ℚ(√191)` 100. How small can a 4-chromatic unit-distance graph over a
   real quadratic field be?

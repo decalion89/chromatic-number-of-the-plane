@@ -81,12 +81,57 @@ def solve(k, drop=None):
 
 c4 = solve(4)
 print("proper 4-colouring:", c4 is not None)
-crit = {}
-for v in range(n):
-    c = solve(3, drop=v)
-    assert c is not None, f"G - {v} is not 3-colourable: not vertex-critical"
-    crit[str(v)] = c
-print(f"vertex-critical: a proper 3-colouring of G - v for all {n} vertices")
+
+
+def critical_colourings():
+    """for every vertex v a proper 3-colouring of G - v (the entry for v is -1). One incremental CaDiCaL solver with
+    a selector per vertex: the selector of v switches off v's clause "v has a colour", so solving under the
+    assumption that every other selector is on 3-colours G - v. Rotation adds colourings without a solver call: if
+    in a 3-colouring of G - v exactly one neighbour w of v has colour k, giving v colour k and dropping w 3-colours
+    G - w. Every colouring is checked before it is stored."""
+    from pysat.solvers import Solver
+    var = lambda v, c: 3 * v + c + 1
+    sel = lambda v: 3 * n + v + 1
+    s = Solver(name="cadical153")
+    for v in range(n):
+        s.add_clause([-sel(v)] + [var(v, c) for c in range(3)])
+    for a, b in E:
+        for c in range(3):
+            s.add_clause([-var(a, c), -var(b, c)])
+    crit, solves = {}, 0
+
+    def store(v, col):
+        assert col[v] == -1 and all(0 <= col[u] <= 2 for u in range(n) if u != v)
+        assert all(col[a] != col[b] for a, b in E if v not in (a, b)), "not a proper colouring"
+        crit[str(v)] = col
+        stack.append(v)
+
+    for v0 in range(n):
+        if str(v0) in crit:
+            continue
+        ok = s.solve(assumptions=[sel(w) if w != v0 else -sel(w) for w in range(n)])
+        solves += 1
+        assert ok, f"G - {v0} is not 3-colourable: not vertex-critical"
+        m = set(l for l in s.get_model() if l > 0)
+        col = [next((c for c in range(3) if var(u, c) in m), 0) for u in range(n)]
+        col[v0] = -1
+        stack = []
+        store(v0, col)
+        while stack:
+            v = stack.pop(); col = crit[str(v)]
+            for k in range(3):
+                nb = [w for w in adj[v] if col[w] == k]
+                assert nb, "G would be 3-colourable"
+                if len(nb) == 1 and str(nb[0]) not in crit:
+                    c2 = list(col); c2[v] = k; c2[nb[0]] = -1
+                    store(nb[0], c2)
+    s.delete()
+    return crit, solves
+
+
+crit, solves = critical_colourings()
+assert sorted(map(int, crit)) == list(range(n))
+print(f"vertex-critical: a proper 3-colouring of G - v for all {n} vertices ({solves} solver calls, the rest by rotation)")
 json.dump({"field": f"Q(sqrt{R})", "D": D, "points": [list(p) for p in pts], "edges": [list(e) for e in E],
            "four_colouring": c4, "critical_3_colourings": crit,
            "checks": {"edges_unit_exact": True, "unlisted_unit_pairs": len(extra), "triangles": tri,

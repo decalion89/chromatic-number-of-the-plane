@@ -44,10 +44,10 @@ SAT solving, DRAT proofs}
 For a subfield $F\subset\R$ let $\chi(F^2)$ be the chromatic number of the graph on $F^2$ joining points at
 Euclidean distance $1$. For real quadratic fields $K=\Q(\sqrt d)$ the values known so far were $2$ and $3$, and
 a field can need four colours only when $d\equiv 11\pmod{12}$. We show that
-$\chi(\Q(\sqrt d)^2)=4$ for $d=11, 23, 35, 59, 71, 119, 131, 179, 191, 239, 359, 431$, and that
+$\chi(\Q(\sqrt d)^2)=4$ for $d=11, 23, 35, 59, 71, 119, 131, 155, 179, 191, 239, 359, 431$, and that
 $4\le\chi(\Q(\sqrt{47})^2)\le5$. With the known results, $\chi(\Q(\sqrt d)^2)$ is now determined for every
 squarefree $d<83$ except $d=47$. Each lower bound is a triangle-free, vertex-critical unit-distance graph with
-coordinates in $\Q(\sqrt d)$, with between $94$ and $816$ vertices, that has no proper $3$-colouring: a computer
+coordinates in $\Q(\sqrt d)$, with between $94$ and $1\,813$ vertices, that has no proper $3$-colouring: a computer
 proof, by a SAT solver whose DRAT proofs are checked by \texttt{drat-trim}, for two independently written
 encodings. The upper bounds are reductions modulo a prime due to Moorhouse and Fischer. We also explain why
 some searches fail: when every direction is integral at certain primes above $2$, $3$ or $5$, reduction there
@@ -83,7 +83,7 @@ field was known to need four colours. Moorhouse asked in a 2010 talk \cite{Moorh
 about $\chi(\Q(\sqrt d)^2)$, and about $\chi(\Q(\sqrt{47})^2)$ in particular.
 
 \begin{theorem}\label{thm:main}
-$\chi(\Q(\sqrt d)^2)=4$ for $d=11, 23, 35, 59, 71, 119, 131, 179, 191, 239, 359, 431$, and
+$\chi(\Q(\sqrt d)^2)=4$ for $d=11, 23, 35, 59, 71, 119, 131, 155, 179, 191, 239, 359, 431$, and
 $4\le\chi(\Q(\sqrt{47})^2)\le5$.
 \end{theorem}
 
@@ -165,7 +165,7 @@ $\F_p$, so every unit vector is $\p$-integral and reduction modulo $\p$ is a gra
 component of the origin. Since $\chi(\F_7^2)=4$ \cite[\S7]{Moorhouse} and $\F_{11}^2$ has a proper
 $5$-colouring \cite[Lemma~4.5]{Madore}:
 \begin{itemize}
-\item $d=11,23,71,179,191,239,359,431$ are nonzero squares and $d=35,119$ are $\equiv0$ modulo $7$, so
+\item $d=11,23,71,155,179,191,239,359,431$ are nonzero squares and $d=35,119$ are $\equiv0$ modulo $7$, so
   $\chi\le4$;
 \item $d=59,131$ are $\equiv3\pmod8$, so $\chi\le4$ by Fischer's Theorem~10 (which also covers $11$, $35$
   and $179$);
@@ -252,8 +252,8 @@ and have residues differing by $\pm1$.
   unit-distance graph.
 \item Does every real quadratic field with $d\equiv11\pmod{12}$ need four colours? Our searches over
   $\Q(\sqrt{83})$, $\Q(\sqrt{107})$ and $\Q(\sqrt{203})$ have so far found only $3$-colourable graphs, and over
-  $\Q(\sqrt{95})$ and $\Q(\sqrt{155})$ they found graphs with no $3$-colouring that we have not yet reduced to
-  certified critical graphs.
+  $\Q(\sqrt{95})$ they found a graph with no $3$-colouring that we have not yet reduced to a certified critical
+  graph.
 \item A uniform proof: a family of graphs, or an argument, covering all $d\equiv11\pmod{12}$ at once.
 \item How small can a $4$-chromatic unit-distance graph over a real quadratic field be? Ours has $94$ vertices
   for $d=11$ and $100$ for $d=191$.

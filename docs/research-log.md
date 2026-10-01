@@ -8866,10 +8866,10 @@ set of directions changes that (`notes/quadratic_planes.md`).
   vertex, and no 3-colouring, twice: kissat answered UNSATISFIABLE and drat-trim VERIFIED the proof, for the
   stored formula and for a second encoding written by separate code. `scripts/verify_quadratic_planes.py`
   repeats all of it.
-- **Upper bounds.** `11, 23, 71, 179, 191, 239, 359, 431` are squares modulo 7 and `35 = 5 · 7`, `119 = 7 ·
+- **Upper bounds.** `11, 23, 71, 155, 179, 191, 239, 359, 431` are squares modulo 7 and `35 = 5 · 7`, `119 = 7 ·
   17`, so Moorhouse's reduction modulo a prime of norm 7 (his Lemma 8.2) gives `χ ≤ χ(𝔽₇²) = 4`; `59, 131 ≡ 3
   (mod 8)` give `χ ≤ 4` by Fischer's Theorem 10; `47 ≡ 5² (mod 11)` gives `χ ≤ χ(𝔽₁₁²) = 5`. So `χ = 4` for `d
-  = 11, 23, 35, 59, 71, 119, 131, 179, 191, 239, 359, 431`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`. With the known results,
+  = 11, 23, 35, 59, 71, 119, 131, 155, 179, 191, 239, 359, 431`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`. With the known results,
   `χ(ℚ(√d)²)` is now known for every squarefree `d < 83` except `d = 47`.
 - **An incident.** The first certification runs for `d = 23` and `d = 47` ran at the same time and wrote
   their DRAT proofs to the same temporary file. We stopped both, gave the temporary files distinct names,
@@ -8904,7 +8904,27 @@ set of directions changes that (`notes/quadratic_planes.md`).
   355 for `d = 239`, 741 → 715 for `d = 359`, 344 → 331 for `d = 431` and 872 → 816 for `d = 47`. Each was
   certified again from scratch by `certify_q.py`, and checked again by the checker with the solvers. On
   `ℚ(√431)` the incremental solver took 18 seconds where `min3fast.py` had taken nine minutes.
+- **`ℚ(√155)`, the same evening.** The growth with `D = 390` (148 directions, the variant `grow3r.py`) stopped
+  after 46 rounds at 19 061 points with no 3-colouring. One pass of `min3inc.py` gave a vertex-critical graph
+  with 1 813 vertices and 5 041 edges. Its certification first called kissat once per vertex for the
+  3-colourings of `G − v`; at about a minute per vertex, under load, that would have taken more than a day.
+  So `certify_q.py` now finds them with one incremental CaDiCaL solver, with a selector per vertex as in
+  `min3inc.py`, and by rotation: if in a 3-colouring of `G − v` exactly one neighbour `w` of `v` has colour
+  `k`, giving `v` colour `k` and dropping `w` 3-colours `G − w`. Every colouring is checked before it is
+  stored, and the checker checks them all again. Here this took 753 solver calls and 15 minutes; on the
+  816-vertex graph over `ℚ(√47)`, 315 calls and 21 seconds. Certified: both encodings unsatisfiable with
+  drat-trim VERIFIED, and the checker, run with the solvers, wrote its own formula and verified it again
+  (40 seconds). `155 ≡ 1 (mod 7)` is a nonzero square, so Moorhouse's Lemma 8.2 gives `χ ≤ 4` (and
+  `155 ≡ 3 (mod 8)`, so does Fischer's Theorem 10). So `χ(ℚ(√155)²) = 4`. A second shrinking, of the graph
+  grown with `D = 510`, is under way and may give a smaller witness.
+- **`d = 83, 107, 203`.** Growth runs with up to 180 directions found only 3-colourable graphs. For `d = 83`
+  no gate explains it: with `D = 510` (108 directions) there is no proper 3-colouring periodic modulo `mM`,
+  where `M` is the lattice the directions span, for `m ≤ 10` or `m = 12`, nor with `D = 1530` (180
+  directions) for `m ≤ 8` (`periodicq.py`). A run for `d = 107` with `D = 1170` (180 directions), which had
+  stopped on the collision of keys, ran again and found only 3-colourable graphs (121 rounds, 20 356 points).
+  Runs with 324 directions are under way.
 
-Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 95, 107, 155, 203, …`; smaller witnesses (the
+Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 95, 107, 203, …` (for `d = 95` a graph with no
+3-colouring was found and is being shrunk); smaller witnesses (the
 smallest graphs have 94 vertices, for `d = 11`, and 100, for `d = 191`). Nobody outside the project has
 refereed this.
