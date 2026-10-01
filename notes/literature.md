@@ -197,8 +197,10 @@ The route is **not ours**.
    bound of four. D. Cohen (University of Chicago REU paper, 2007) conjectured
    that `ℚ[α] ⊂ ℂ` is 3-colourable for every quadratic `α`. That set has dimension
    2 over `ℚ`, not 4 like the plane `ℚ(√d)²`; reduction at a ramified prime
-   proves the conjecture (`notes/quadratic_planes.md` §1). We searched on
-   1 October 2026.
+   proves the conjecture (`notes/quadratic_planes.md` §1). Moorhouse asked in a
+   talk in 2010 what can be said about `χ(ℚ(√d)²)`, and about `χ(ℚ(√47)²)` in
+   particular. We searched on 1 October 2026; the sources we read, and those we
+   could not read, are listed in `notes/quadratic_planes.md` §1.
 
 ## What this means
 

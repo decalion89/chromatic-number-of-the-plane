@@ -8878,7 +8878,12 @@ set of directions changes that (`notes/quadratic_planes.md`).
   proves the upper bound 4 for `d ≡ 3 (mod 8)` again and finds odd cycles over `ℚ(√11)`. Cohen's
   conjecture (University of Chicago REU paper, 2007) that `ℚ[α] ⊂ ℂ` is 3-colourable for every quadratic
   `α` is about a set of dimension 2 over `ℚ`; reduction at a ramified prime proves it, so the theorem above
-  does not contradict it.
+  does not contradict it. A second pass the same day added Moorhouse's talk of 2010 (which asks what can
+  be said about `χ(ℚ(√d)²)` and about `χ(ℚ(√47)²)`), Axenovich et al. (2014, Theorem 2.2: the upper
+  bounds), Currie and Eggleton, Bardestani and Mallahi-Karai, arXiv abstracts, MathOverflow and
+  Mathematics Stack Exchange. None of them has a lower bound above 3 for a real quadratic field. Johnson
+  (1987), Chilakamarri (1993), Benda and Perles (2000) and Soifer's book (2024) we could not read; the list
+  is in `notes/quadratic_planes.md` §1.
 - **Where it fails.** In the first runs, for `d = 35, 83, 95, 107, 131, 155, 179, 203`, with one to six
   denominators each (60 to 212 directions), the growth stopped: the 3-colouring extended to every candidate
   point (or, for `d = 179`, the starting graph was already larger than the limit of the run). Two of these

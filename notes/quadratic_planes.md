@@ -49,13 +49,28 @@ So a real quadratic field can need four colours only if `d ≡ 11 (mod 12)`:
 `d ≡ 3 (mod 4)` (else 2 colours suffice) and `d ≡ 2 (mod 3)` (else 3 suffice).
 The first such values are 11, 23, 35, 47, 59, 71, 83, …. For these fields the
 known lower bound was 3. For `ℚ(√47)` the bounds were `3 ≤ χ ≤ 5`, and our own
-experiments of 25 September had left it open (`docs/research-log.md`).
+experiments of 25 September had left it open (`docs/research-log.md`). Moorhouse
+asked both questions in a talk in 2010 ("Colouring the plane", Designs, Codes &
+Geometries 2010; slides at
+[ericmoorhouse.org/slides/ebertfest.pdf](https://www.ericmoorhouse.org/slides/ebertfest.pdf)):
+"What can we say about `χ(K²)` when `K = ℚ(√d)`?" and "What about `χ(ℚ(√47)²)`?"
 
-We searched Moorhouse (2010), Fischer (1990, 1994), Madore (2015), Payne (2009),
-Cohen (2007), hn-2adic-obstruction, the Polymath16 threads and wiki, and the
-sources listed in `notes/literature.md`, on 1 October 2026. None of them gives a
-real quadratic field that needs four colours. An earlier proof may exist that we
-did not find.
+**The literature search.** On 1 October 2026 we read, for statements about
+`χ(ℚ(√d)²)`: Moorhouse's draft and his talk (2010); Fischer (1990, 1994); Madore
+(2015); Payne (2009); Axenovich, Choi, Lastrina, McKay, Smith and Stanton
+(Graphs Combin. 30 (2014), 71–81), whose Theorem 2.2 collects the upper bounds;
+Currie and Eggleton (arXiv:1509.03667); Bardestani and Mallahi-Karai
+(arXiv:1507.05300); Cohen (2007); hn-2adic-obstruction; the Polymath16 threads
+and wiki; and the sources listed in `notes/literature.md`. We also searched
+arXiv titles and abstracts, MathOverflow, Mathematics Stack Exchange and the
+web. None of these gives a real quadratic field that needs four colours: the
+largest lower bound they give for a real quadratic field is 3, and Madore (§2)
+writes that practically the only useful graphs here are the triangle and the
+Moser spindle. We could not read Johnson (1987), Fischer's paper on connected
+components (Congr. Numer. 72, 1990), Chilakamarri's survey (1993), Benda and
+Perles (2000) or Soifer's book (2024), and we could not query the citation lists
+of zbMATH, Semantic Scholar or OpenAlex. An earlier proof may exist that we did
+not find.
 
 **A different question: `ℚ(√−d)` inside `ℂ`.** Cohen (2007) wrote that "the
 natural conjecture is that `ℚ[α]` is 3-colorable for all `α` quadratic over `ℚ`",

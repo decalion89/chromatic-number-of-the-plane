@@ -79,7 +79,8 @@ $K=\Q(\sqrt d)$, $d\ge2$ squarefree, the following was known.
 Madore \cite{Madore} proved $\chi(\Q(\sqrt3)^2)=\chi(\Q(\sqrt7)^2)=3$. Together these give $\chi(K^2)=3$ when
 $d\equiv3\pmod4$ and $d\not\equiv2\pmod3$; so a real quadratic field can need four colours only if
 $d\equiv11\pmod{12}$, and for those the known lower bound was~$3$. As far as we could find, no real quadratic
-field was known to need four colours.
+field was known to need four colours. Moorhouse asked in a 2010 talk \cite{MoorhouseTalk} what can be said
+about $\chi(\Q(\sqrt d)^2)$, and about $\chi(\Q(\sqrt{47})^2)$ in particular.
 
 \begin{theorem}\label{thm:main}
 $\chi(\Q(\sqrt d)^2)=4$ for $d=11, 23, 35, 59, 71, 119, 131, 179, 191, 239, 359, 431$, and
@@ -144,7 +145,7 @@ answered UNSATISFIABLE and wrote a DRAT proof, which \texttt{drat-trim} verified
 encoding, written by separate code, with $x_{v,c}$ numbered $cn+v+1$. The DRAT proofs are a few megabytes and
 each check takes seconds.
 
-A checker that uses only the Python standard library (\texttt{scripts/verify\_quadratic\_planes.py}) checks
+The checker \texttt{scripts/verify\_quadratic\_planes.py}, which uses only the Python standard library, checks
 again, for each $d$: that the points are distinct, that every listed edge satisfies \eqref{eq:unit} and every
 pair satisfying \eqref{eq:unit} is listed, that there is no triangle, the stored $4$-colouring, the stored
 $3$-colourings of $G-v$ for every $v$, that the stored formula is exactly $\Phi(G)$, and the colourings of the
@@ -277,6 +278,8 @@ graphs, and the exact chromatic number of the plane over $\Q(\sqrt3,\sqrt{11})$}
 \url{https://github.com/MildlyMeticulous/hn-2adic-obstruction}.
 \bibitem{Moorhouse} G. E. Moorhouse, \emph{On the chromatic numbers of planes}, preliminary draft, revised
 3 March 2010, \url{https://www.ericmoorhouse.org/pub/chromatic.pdf}.
+\bibitem{MoorhouseTalk} G. E. Moorhouse, \emph{Colouring the plane}, talk at Designs, Codes \& Geometries
+2010, slides at \url{https://www.ericmoorhouse.org/slides/ebertfest.pdf}.
 \bibitem{Payne} M. S. Payne, \emph{Unit distance graphs with ambiguous chromatic number}, Electron. J. Combin.
 \textbf{16} (2009), Note~31; arXiv:0707.1177.
 \bibitem{Soifer} A. Soifer, \emph{The New Mathematical Coloring Book}, Springer, 2024.
