@@ -13,7 +13,7 @@ Each lower bound is a finite graph: a triangle-free unit-distance graph with
 coordinates in `ℚ(√d)`, which is not 3-colourable and is vertex-critical. The
 graphs have 94 vertices (`d = 11`), 660 (`d = 23`), 580 (`d = 35`), 816
 (`d = 47`), 406 (`d = 59`), 611 (`d = 71`), 399 (`d = 119`), 356 (`d = 131`),
-1 813 (`d = 155`), 259 (`d = 179`), 100 (`d = 191`), 355 (`d = 239`), 715
+1 281 (`d = 155`), 259 (`d = 179`), 100 (`d = 191`), 355 (`d = 239`), 715
 (`d = 359`) and 331 (`d = 431`).
 
 So `χ(ℚ(√d)²)` is now known for every squarefree `d < 83` except `d = 47`
@@ -109,7 +109,7 @@ These are two identities between integers, so every edge is checked exactly.
 | 71 | 120 | 611 | 1 557 | 3–85 | 128 |
 | 119 | 240 | 399 | 1 019 | 3–62 | 106 |
 | 131 | 390 | 356 | 804 | 3–61 | 126 |
-| 155 | 390 | 1 813 | 5 041 | 3–119 | 146 |
+| 155 | 510 | 1 281 | 3 526 | 3–103 | 124 |
 | 179 | 390 | 259 | 622 | 3–39 | 90 |
 | 191 | 240 | 100 | 224 | 3–23 | 52 |
 | 239 | 480 | 355 | 888 | 3–47 | 80 |
@@ -141,8 +141,8 @@ conjugation. We used `|U_D| = 108` in each case (140 for `d = 71`, 148 for
 3. Add the points `p + u` whose neighbours already see all three colours.
 4. Repeat until kissat answers that the graph is not 3-colourable. This took
    1 to 30 rounds and at most 12 211 points (21 895 for `d = 131`, 24 785 for
-   `d = 179`, 39 265 for `d = 35`; 96 rounds for `d = 431`; 46 rounds and
-   19 061 points for `d = 155`). For `d = 35, 131, 155, 179, 239, 359, 431` we
+   `d = 179`, 39 265 for `d = 35`; 96 rounds for `d = 431`; 38 rounds and
+   15 913 points for `d = 155`). For `d = 35, 131, 155, 179, 239, 359, 431` we
    used a variant:
    when no candidate is blocked, it 3-colours the graph again from scratch, and
    if still none is blocked it adds candidates whose neighbours see two colours.
@@ -237,9 +237,10 @@ and checks the proof, in about ten seconds for the five fields.
   `d = 83, 107, 203` our growth has so far found only 3-colourable graphs,
   with up to 180 directions. That may be a limit of the search: over `ℚ(√35)`,
   `ℚ(√131)`, `ℚ(√155)` and `ℚ(√179)` it failed in the same way at first, and
-  succeeded with the directions of denominator dividing 390 and the variant of
-  the growth. Over `ℚ(√95)` it found a graph with no 3-colouring (`D = 480`,
-  132 directions) that we have not yet reduced to a certified critical graph.
+  succeeded with the directions of denominator dividing 390 (also 510 for
+  `d = 155`) and the variant of the growth. Over `ℚ(√95)` it found a graph
+  with no 3-colouring (`D = 480`, 132 directions) that we have not yet reduced
+  to a certified critical graph.
   Two of the failed direction sets fail at a gate of §3: for `d = 35` and
   `D = 174` every direction is integral at the places above 5, and for `d = 83`
   and `D = 410` at the places above 3. For the others we found no such reason:

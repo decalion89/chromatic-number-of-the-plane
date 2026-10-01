@@ -8916,7 +8916,9 @@ set of directions changes that (`notes/quadratic_planes.md`).
   drat-trim VERIFIED, and the checker, run with the solvers, wrote its own formula and verified it again
   (40 seconds). `155 ≡ 1 (mod 7)` is a nonzero square, so Moorhouse's Lemma 8.2 gives `χ ≤ 4` (and
   `155 ≡ 3 (mod 8)`, so does Fischer's Theorem 10). So `χ(ℚ(√155)²) = 4`. A second shrinking, of the graph
-  grown with `D = 510`, is under way and may give a smaller witness.
+  grown with `D = 510` (148 directions; 38 rounds, 15 913 points), gave a vertex-critical graph with 1 281
+  vertices and 3 526 edges, certified in the same way (519 solver calls) and checked again by the checker
+  with the solvers. It replaces the first as the published witness.
 - **`d = 83, 107, 203`.** Growth runs with up to 180 directions found only 3-colourable graphs. For `d = 83`
   no gate explains it: with `D = 510` (108 directions) there is no proper 3-colouring periodic modulo `mM`,
   where `M` is the lattice the directions span, for `m ≤ 10` or `m = 12`, nor with `D = 1530` (180
