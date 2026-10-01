@@ -20,7 +20,7 @@ def load(name):
 
 
 def test_fields():
-    assert {11, 23, 47, 59, 71, 119, 191, 239} <= set(FIELDS)
+    assert {11, 23, 35, 47, 59, 71, 119, 191, 239} <= set(FIELDS)
     for d in FIELDS:
         assert d % 4 == 3 and d % 3 == 2            # d = 11 mod 12: the only real quadratic fields that can need 4
 
@@ -60,7 +60,7 @@ def test_upper_bounds():
     assert vq.upper_bound(11, planes)[0] == 4 and vq.upper_bound(23, planes)[0] == 4
     assert vq.upper_bound(59, planes)[0] == 4 and vq.upper_bound(71, planes)[0] == 4
     assert vq.upper_bound(119, planes)[0] == 4 and vq.upper_bound(191, planes)[0] == 4    # 119 = 0, 191 = 3^2 mod 7
-    assert vq.upper_bound(239, planes)[0] == 4
+    assert vq.upper_bound(239, planes)[0] == 4 and vq.upper_bound(35, planes)[0] == 4
     assert vq.upper_bound(47, planes)[0] == 5
 
 
