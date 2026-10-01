@@ -155,19 +155,25 @@ def residue(d, p):
     return d % p and pow(d % p, (p - 1) // 2, p) == 1
 
 
+def reduces(d, p):
+    """the hypothesis of Moorhouse's Lemma 8.2 for p = 3 mod 4: d = 0 or a nonzero square mod p"""
+    return d % p == 0 or residue(d, p)
+
+
 def upper_bound(d, planes):
     """the best of: reduction at 7 (4 colours), the place over 2 when d = 3 mod 8 (4), reduction at 11 (5)"""
     def by(p):
         pl = planes[str(p)]
         if not plane_colouring_ok(p, pl["colouring"]):
             return None, f"the stored colouring of F_{p}^2 is not proper"
-        return pl["colours"], f"d = {d} is a nonzero square mod {p} and p = {p} is 3 mod 4: chi <= chi(F_{p}^2) <= " \
-                              f"{pl['colours']} (stored colouring checked)"
-    if residue(d, 7):
+        how = "0" if d % p == 0 else "a nonzero square"
+        return pl["colours"], f"d = {d} is {how} mod {p} and p = {p} is 3 mod 4: chi <= chi(F_{p}^2) <= " \
+                              f"{pl['colours']} (Moorhouse, Lemma 8.2; stored colouring checked)"
+    if reduces(d, 7):
         return by(7)
     if d % 8 == 3:
         return 4, f"d = {d} is 3 mod 8: chi <= 4 (Fischer 1990, Thm 10; notes/local_colourings.md, Proposition A)"
-    if residue(d, 11):
+    if reduces(d, 11):
         return by(11)
     return None, "no upper bound below 7 recorded"
 

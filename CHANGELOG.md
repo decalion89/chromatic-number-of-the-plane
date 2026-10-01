@@ -23,13 +23,13 @@ including every retracted claim, is the research log,
 ### Added
 
 - **Real quadratic planes that need four colours** (`notes/quadratic_planes.md`,
-  `data/quadratic_planes/`): `χ(ℚ(√d)²) = 4` for `d = 11, 23, 59, 71`, and
+  `data/quadratic_planes/`): `χ(ℚ(√d)²) = 4` for `d = 11, 23, 59, 71, 119, 191`, and
   `4 ≤ χ(ℚ(√47)²) ≤ 5`. For real quadratic fields the values known before were
   2 and 3, and a field can need four colours only if `d ≡ 11 (mod 12)`. Each
   lower bound is a triangle-free, vertex-critical unit-distance graph (106, 686,
-  872, 462 and 674 vertices) with no 3-colouring: kissat with DRAT proofs checked
+  872, 462, 674, 469 and 143 vertices) with no 3-colouring: kissat with DRAT proofs checked
   by drat-trim, twice, with separate encodings. The upper bounds are known:
-  Moorhouse's reduction at 7 (`d = 11, 23, 71`), Fischer's Theorem 10
+  Moorhouse's reduction at 7 (`d = 11, 23, 71, 119, 191`), Fischer's Theorem 10
   (`d = 59`) and the reduction at 11 (`d = 47`). The note also observes that
   Cohen's conjecture (2007) on the sets `ℚ(√−d) ⊂ ℂ` is a different question,
   which reduction at a ramified prime settles. `scripts/verify_quadratic_planes.py`
