@@ -8829,3 +8829,49 @@ J. K. Haugland's heptagon graph ([arXiv 2608.04542](https://arxiv.org/abs/2608.0
 Not done: vertex-by-vertex minimisation (a first pass, with one selector per vertex, did not finish in 33
 minutes and was stopped), so the graph is not known to be vertex-critical. Nobody outside the project has
 refereed it.
+
+## Real quadratic planes that need four colours (1 October)
+
+For squarefree `d`, the plane over `ℚ(√d)` needs 2 colours when `d ≡ 1, 2 (mod 4)` (Johnson 1987;
+Moorhouse 2010, §8), and at most 3 when `d ≡ 0, 1 (mod 3)` (Fischer 1990). So only `d ≡ 11 (mod 12)` can
+need four, and for those the known lower bound was 3. `ℚ(√47)`, with `3 ≤ χ ≤ 5`, had resisted our
+experiments of 25 September (balls of up to 2 248 121 points were 3-colourable). We asked whether a richer
+set of directions changes that (`notes/quadratic_planes.md`).
+
+- **The method.** A point is `((a + b√d)/D, (c + e√d)/D)` with integers `a, b, c, e`; two points are at
+  distance 1 exactly when two integer identities hold. For a denominator `D` we took every unit vector with
+  denominator dividing `D`: 108 of them for `d = 11, 23, 47, 59` (`D = 30, 120, 240, 210`) and 140 for
+  `d = 71` (`D = 120`). Colouring-guided growth: start from the sums of at most two directions, 3-colour the
+  graph (tabucol, else kissat), add the points whose neighbours already see all three colours, repeat.
+- **The gates.** The first runs over `ℚ(√47)`, with the 44 vectors `s/s̄` for `s` with coefficients in
+  `{−1, 0, 1}`, built only bipartite graphs. For `d ≡ 7 (mod 8)` such vectors are integral at a place
+  above 2 with residue field `𝔽₂`, where the unit graph is a perfect matching. At 3, when `d ≡ 2 (mod 3)`,
+  integral vectors map to `H₉`, which is 3-colourable. The sets above contain vectors that are integral at
+  neither place, such as `(1 + 7i√47)/48`, from Pell's equation `48² − 47·7² = 1`.
+- **The growth.** kissat found no 3-colouring after 1 round for `d = 11` (5 941 points), 12 for `d = 23`
+  (7 539), 30 for `d = 47` (9 139), 18 for `d = 59` (7 972) and 12 for `d = 71` (12 004); each run took
+  under three minutes. We kept the vertices whose clauses lie in the drat-trim core of a checked proof,
+  then deleted vertices one at a time while the rest stayed not 3-colourable. This left vertex-critical
+  graphs with 106, 686, 872, 462 and 674 vertices.
+- **The checks.** For each graph: every point and edge in exact integer arithmetic, the edges are all the
+  unit pairs, there is no triangle, a proper 4-colouring, a proper 3-colouring of the graph minus each
+  vertex, and no 3-colouring, twice: kissat answered UNSATISFIABLE and drat-trim VERIFIED the proof, for the
+  stored formula and for a second encoding written by separate code. `scripts/verify_quadratic_planes.py`
+  repeats all of it.
+- **Upper bounds.** `11, 23, 71` are squares modulo 7, so Moorhouse's reduction modulo a prime of norm 7
+  gives `χ ≤ χ(𝔽₇²) = 4`; `59 ≡ 3 (mod 8)` gives `χ ≤ 4` by Fischer's Theorem 10; `47 ≡ 5² (mod 11)`
+  gives `χ ≤ χ(𝔽₁₁²) = 5`. So `χ = 4` for `d = 11, 23, 59, 71`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`.
+- **An incident.** The first certification runs for `d = 23` and `d = 47` ran at the same time and wrote
+  their DRAT proofs to the same temporary file. We stopped both, gave the temporary files distinct names,
+  and ran both certifications again from the start. The certification of `d = 11` had run alone.
+- **The literature.** We found no real quadratic field known to need four colours. hn-2adic-obstruction
+  proves the upper bound 4 for `d ≡ 3 (mod 8)` again and finds odd cycles over `ℚ(√11)`. Cohen's
+  conjecture (University of Chicago REU paper, 2007) that `ℚ[α] ⊂ ℂ` is 3-colourable for every quadratic
+  `α` is about a set of dimension 2 over `ℚ`; reduction at a ramified prime proves it, so the theorem above
+  does not contradict it.
+- **Where it fails.** For `d = 35` (`D = 90, 450, 630`) and `d = 131` (`D = 210, 330, 1 650`), the growth
+  stopped after two or three rounds: the 3-colouring extended to every candidate point. We do not know
+  why. The runs for `d = 23` and `d = 59` started from graphs of the same shape and went on.
+
+Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 35, 83, 131, …`; smaller witnesses (the smallest
+graph has 106 vertices). Nobody outside the project has refereed this.

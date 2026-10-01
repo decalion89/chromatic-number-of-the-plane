@@ -186,6 +186,19 @@ The route is **not ours**.
    directions alone are 4-colourable is the reduction of Theorem A of
    hn-2adic-obstruction, applied to them; we found no earlier statement of it for
    this family. We searched arXiv and GitHub on 28 and 29 September 2026.
+8. **Real quadratic planes that need four colours** (`notes/quadratic_planes.md`):
+   `χ(ℚ(√d)²) = 4` for `d = 11, 23, 59, 71`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`. For real
+   quadratic fields the values in the literature are 2 (Johnson 1987; Moorhouse
+   2010, §8) and 3 (Fischer 1990; Madore 2015); for `d ≡ 3 (mod 4)` the lower
+   bound was 3 (Fischer 1990, Theorem 8). The upper bounds are known (Moorhouse's
+   Corollary 8.3, Fischer's Theorem 10, reduction at 11); the lower bounds of four
+   are ours. hn-2adic-obstruction (item 1) proves the upper bound 4 for
+   `d ≡ 3 (mod 8)` again and finds odd cycles over `ℚ(√11)`; it gives no lower
+   bound of four. D. Cohen (University of Chicago REU paper, 2007) conjectured
+   that `ℚ[α] ⊂ ℂ` is 3-colourable for every quadratic `α`. That set has dimension
+   2 over `ℚ`, not 4 like the plane `ℚ(√d)²`; reduction at a ramified prime
+   proves the conjecture (`notes/quadratic_planes.md` §1). We searched on
+   1 October 2026.
 
 ## What this means
 
@@ -196,7 +209,8 @@ The strategy for six is the known one. The new pieces are:
   χ(ℚ(√3, √11)²) = 4 (1994), which later work had treated as open. The upper
   bounds, and the reduction of `z = x + iy` at 2 behind them, are also in a
   public repository of July 2026 that we found on 28 September (item 1);
-- lower bounds of six for finite planes, from the three-point bound.
+- lower bounds of six for finite planes, from the three-point bound;
+- real quadratic planes that need four colours (item 8).
 
 All are modest. Voronov raised the case ℚ(√2, √3) in a Polymath16 comment.
 The questions about ℚ(√3, √11) asked in print, by Exoo–Ismailescu and by

@@ -22,6 +22,19 @@ including every retracted claim, is the research log,
 
 ### Added
 
+- **Real quadratic planes that need four colours** (`notes/quadratic_planes.md`,
+  `data/quadratic_planes/`): `χ(ℚ(√d)²) = 4` for `d = 11, 23, 59, 71`, and
+  `4 ≤ χ(ℚ(√47)²) ≤ 5`. For real quadratic fields the values known before were
+  2 and 3, and a field can need four colours only if `d ≡ 11 (mod 12)`. Each
+  lower bound is a triangle-free, vertex-critical unit-distance graph (106, 686,
+  872, 462 and 674 vertices) with no 3-colouring: kissat with DRAT proofs checked
+  by drat-trim, twice, with separate encodings. The upper bounds are known:
+  Moorhouse's reduction at 7 (`d = 11, 23, 71`), Fischer's Theorem 10
+  (`d = 59`) and the reduction at 11 (`d = 47`). The note also observes that
+  Cohen's conjecture (2007) on the sets `ℚ(√−d) ⊂ ℂ` is a different question,
+  which reduction at a ramified prime settles. `scripts/verify_quadratic_planes.py`
+  checks everything again, and `tests/test_quadratic_planes.py` runs the fast
+  checks.
 - **A Moser-spindle-free 5-chromatic unit-distance graph with 852 vertices**
   (`notes/flat852.md`, `data/flat852/`). Its points lie in `ℚ(ζ₂₁)`, and its
   edges use the 84 unit vectors of J. K. Haugland's heptagon graph
