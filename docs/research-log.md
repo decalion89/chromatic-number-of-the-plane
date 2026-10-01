@@ -8896,9 +8896,9 @@ set of directions changes that (`notes/quadratic_planes.md`).
   (`min3multi.py`), gave smaller vertex-critical graphs, which replace the first ones: 106 → 94 vertices for
   `d = 11`, 686 → 660 for `d = 23`, 650 → 580 for `d = 35`, 462 → 406 for `d = 59`, 674 → 611 for `d = 71`,
   469 → 399 for `d = 119`, 511 → 356 for `d = 131`, 361 → 259 for `d = 179`, 143 → 100 for `d = 191`, 394 →
-  355 for `d = 239`, 741 → 715 for `d = 359` and 344 → 331 for `d = 431`. Each was certified again from
-  scratch by `certify_q.py`, and checked again by the checker with the solvers. On `ℚ(√431)` the incremental
-  solver took 18 seconds where `min3fast.py` had taken nine minutes.
+  355 for `d = 239`, 741 → 715 for `d = 359`, 344 → 331 for `d = 431` and 872 → 816 for `d = 47`. Each was
+  certified again from scratch by `certify_q.py`, and checked again by the checker with the solvers. On
+  `ℚ(√431)` the incremental solver took 18 seconds where `min3fast.py` had taken nine minutes.
 
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 95, 107, 155, 203, …`; smaller witnesses (the
 smallest graphs have 94 vertices, for `d = 11`, and 100, for `d = 191`). Nobody outside the project has

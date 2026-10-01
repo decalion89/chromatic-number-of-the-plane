@@ -132,7 +132,7 @@ points of the same colour.</sub></p>
 For real quadratic fields only the values 2 and 3 were known, and a field can need four colours only if
 d ≡ 11 (mod 12). With the known results, χ(ℚ(√d)²) is now known for every squarefree d < 83 except 47.
 Each lower bound is a triangle-free unit-distance graph with coordinates in ℚ(√d) and no 3-colouring,
-with 94 to 872 vertices: a computer proof, by SAT with DRAT proofs checked by drat-trim, for two
+with 94 to 816 vertices: a computer proof, by SAT with DRAT proofs checked by drat-trim, for two
 separate encodings. The upper bounds are reductions modulo a prime (Moorhouse 2010, Fischer 1990). As far
 as we found, these are the first real quadratic fields known to need four colours. Not yet refereed.
 

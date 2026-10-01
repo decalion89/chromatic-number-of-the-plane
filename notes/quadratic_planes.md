@@ -11,7 +11,7 @@ different colours. For real quadratic fields `K = ℚ(√d)` the known values we
 
 Each lower bound is a finite graph: a triangle-free unit-distance graph with
 coordinates in `ℚ(√d)`, which is not 3-colourable and is vertex-critical. The
-graphs have 94 vertices (`d = 11`), 660 (`d = 23`), 580 (`d = 35`), 872
+graphs have 94 vertices (`d = 11`), 660 (`d = 23`), 580 (`d = 35`), 816
 (`d = 47`), 406 (`d = 59`), 611 (`d = 71`), 399 (`d = 119`), 356 (`d = 131`),
 259 (`d = 179`), 100 (`d = 191`), 355 (`d = 239`), 715 (`d = 359`) and 331
 (`d = 431`).
@@ -89,7 +89,7 @@ These are two identities between integers, so every edge is checked exactly.
 | 11 | 30 | 94 | 214 | 3–32 | 68 |
 | 23 | 120 | 660 | 1 727 | 3–60 | 100 |
 | 35 | 390 | 580 | 1 501 | 3–107 | 218 |
-| 47 | 240 | 872 | 2 280 | 3–76 | 102 |
+| 47 | 240 | 816 | 2 134 | 3–72 | 94 |
 | 59 | 210 | 406 | 993 | 3–48 | 66 |
 | 71 | 120 | 611 | 1 557 | 3–85 | 128 |
 | 119 | 240 | 399 | 1 019 | 3–62 | 106 |
