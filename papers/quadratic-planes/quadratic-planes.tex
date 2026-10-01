@@ -150,7 +150,10 @@ again, for each $d$: that the points are distinct, that every listed edge satisf
 pair satisfying \eqref{eq:unit} is listed, that there is no triangle, the stored $4$-colouring, the stored
 $3$-colourings of $G-v$ for every $v$, that the stored formula is exactly $\Phi(G)$, and the colourings of the
 finite planes behind the upper bounds. With a path to kissat and \texttt{drat-trim} it also writes the second
-encoding, solves it and checks the proof. What has to be trusted is \texttt{drat-trim}, the short code that
+encoding, solves it and checks the proof. With a path to \texttt{cake\_lpr} as well, \texttt{drat-trim} writes
+each proof in LRAT form and \texttt{cake\_lpr}, a proof checker verified in HOL4 and compiled by the verified
+CakeML compiler \cite{cakelpr}, checks it; it accepted the proofs for all fourteen graphs. What has to be trusted
+is a proof checker (\texttt{drat-trim}, or \texttt{cake\_lpr} and its formal verification), the short code that
 writes $\Phi(G)$ from the list of edges, and exact integer arithmetic.
 
 \section{The upper bounds}\label{sec:upper}
@@ -260,6 +263,8 @@ and have residues differing by $\pm1$.
 \end{itemize}
 
 \begin{thebibliography}{99}
+\bibitem{cakelpr} Y. K. Tan, M. J. H. Heule and M. O. Myreen, \emph{cake\_lpr: verified propagation redundancy
+checking in CakeML}, TACAS 2021, Lecture Notes in Comput. Sci. \textbf{12652}, 223--241.
 \bibitem{Cohen} D. Cohen, \emph{The $\C$ unit distance graph}, University of Chicago REU paper, 2007,
 \url{https://www.math.uchicago.edu/~may/VIGRE/VIGRE2007/REUPapers/FINALFULL/Cohen.pdf}.
 \bibitem{deGrey} A. D. N. J. de Grey, \emph{The chromatic number of the plane is at least 5}, Geombinatorics

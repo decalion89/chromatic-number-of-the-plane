@@ -37,8 +37,10 @@ including every retracted claim, is the research log,
   10 (`d = 59, 131`) and the reduction at 11 (`d = 47`). The note also observes
   that Cohen's conjecture (2007) on the sets `ℚ(√−d) ⊂ ℂ` is a different
   question, which reduction at a ramified prime settles.
-  `scripts/verify_quadratic_planes.py` checks everything again, and
-  `tests/test_quadratic_planes.py` runs the fast checks.
+  `scripts/verify_quadratic_planes.py` checks everything again (with
+  `--cake-lpr`, every proof is also checked by the verified checker cake_lpr;
+  it accepted all of them), and `tests/test_quadratic_planes.py` runs the fast
+  checks.
 - **A Moser-spindle-free 5-chromatic unit-distance graph with 852 vertices**
   (`notes/flat852.md`, `data/flat852/`). Its points lie in `ℚ(ζ₂₁)`, and its
   edges use the 84 unit vectors of J. K. Haugland's heptagon graph

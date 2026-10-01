@@ -207,8 +207,15 @@ lengths, the 4-colourings, the vertex-critical 3-colourings, that each stored
 formula is exactly its graph's formula, and the upper bounds of §5. It uses no
 library and runs in about a second. With
 `--kissat PATH --drat-trim PATH` it also writes the second formula, solves it
-and checks the proof, in about ten seconds for the five fields.
-`tests/test_quadratic_planes.py` runs the fast checks.
+and checks the proof, in about a minute for all the fields. With
+`--cake-lpr PATH` as well, drat-trim also writes each proof in LRAT form and
+cake_lpr checks it. cake_lpr (Tan, Heule and Myreen) is a proof checker
+verified in the HOL4 theorem prover and compiled by the verified CakeML
+compiler, so this check does not rest on drat-trim. On 1 October we ran it for
+every graph: each proof `VERIFIED UNSAT`
+(`data/quadratic_planes/cake_lpr_checks.txt`).
+`tests/test_quadratic_planes.py` runs the fast checks, and checks that this log
+covers every field.
 
 ## 5. The upper bounds
 
@@ -258,6 +265,7 @@ and checks the proof, in about ten seconds for the five fields.
 |---|---|
 | `data/quadratic_planes/q{d}.json` | the graph over `ℚ(√d)`: points, edges, fixed edge, 4-colouring, 3-colourings of `G − v` |
 | `data/quadratic_planes/q{d}.cnf`, `q{d}.logs/` | the formula of §4 and the kissat and drat-trim logs for both encodings |
+| `data/quadratic_planes/cake_lpr_checks.txt` | the checker's log with kissat, drat-trim and cake_lpr, for every field |
 | `data/quadratic_planes/finite_planes.json` | proper colourings of the unit-distance graphs of `𝔽₇²` (4 colours) and `𝔽₁₁²` (5 colours) |
 | `scripts/verify_quadratic_planes.py`, `tests/test_quadratic_planes.py` | the checks of §4 and §5 |
 | `data/quadratic_planes/scripts/` | the code of the search of §3 (growth, shrinking, certification), as it was run, with a README |
@@ -266,6 +274,8 @@ and checks the proof, in about ten seconds for the five fields.
 
 - D. Cohen, *The ℂ unit distance graph*, University of Chicago REU paper (2007),
   [math.uchicago.edu/~may/VIGRE/VIGRE2007/REUPapers/FINALFULL/Cohen.pdf](https://www.math.uchicago.edu/~may/VIGRE/VIGRE2007/REUPapers/FINALFULL/Cohen.pdf).
+- Y. K. Tan, M. J. H. Heule and M. O. Myreen, *cake_lpr: verified propagation
+  redundancy checking in CakeML*, TACAS 2021, LNCS 12652, 223–241.
 - K. G. Fischer, *Additive K-colorable extensions of the rational plane*,
   Discrete Math. 82 (1990), 181–195.
 - *A 2-adic obstruction to 5-chromatic unit-distance graphs*, public repository

@@ -90,3 +90,12 @@ def test_tampering_is_caught():
     col[b] = col[a]
     g["critical_3_colourings"][v] = "".join(col)
     assert not vq.check_critical(g)[0]
+
+
+def test_cake_lpr_log_covers_every_field():
+    """data/quadratic_planes/cake_lpr_checks.txt: the checker run with kissat, drat-trim and cake_lpr has a
+    VERIFIED UNSAT line for every field and ends with exit status 0"""
+    log = open(os.path.join(D, "cake_lpr_checks.txt"), encoding="utf-8").read()
+    for d in FIELDS:
+        assert f"Q(sqrt{d}): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT" in log, d
+    assert "\n# exit status 0" in log and "\nCONFIRMED: " in log

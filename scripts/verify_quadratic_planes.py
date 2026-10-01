@@ -11,11 +11,13 @@ For each field Q(sqrt d) in data/quadratic_planes/ the file qD.json holds a grap
   - the stored CNF (qD.cnf) is exactly the formula "G is 3-colourable, with the edge fixed[0], fixed[1] coloured 0, 1"
     in the encoding 3v + c + 1. Its unsatisfiability is the certificate in qD.logs/ (kissat, drat-trim); with
     --kissat PATH --drat-trim PATH this script writes the formula again in its own encoding (c n + v + 1), solves it
-    and checks the proof. Then chi(G) = 4 and chi(Q(sqrt d)^2) >= 4.
+    and checks the proof; with --cake-lpr PATH as well, drat-trim also writes the proof in LRAT form and cake_lpr,
+    a proof checker verified in CakeML, checks it too. Then chi(G) = 4 and chi(Q(sqrt d)^2) >= 4.
   - the upper bound: when d is a nonzero square modulo p = 7 or p = 11 (both 3 mod 4), reduction modulo a prime of
     norm p maps the plane over Q(sqrt d) into the unit-distance graph of F_p^2 (Moorhouse, Lemma 8.2), and
     finite_planes.json holds a proper 4-colouring of F_7^2 and a proper 5-colouring of F_11^2, checked here.
-usage: python3 scripts/verify_quadratic_planes.py [--field d ...] [--kissat PATH --drat-trim PATH] [--workdir DIR]
+usage: python3 scripts/verify_quadratic_planes.py [--field d ...] [--kissat PATH --drat-trim PATH [--cake-lpr PATH]]
+       [--workdir DIR]
 The last line begins with CONFIRMED or with NOT CONFIRMED; the exit status is 0 only if everything checked holds."""
 import argparse
 import json
@@ -122,21 +124,33 @@ def check_cnf(g, path):
     return True, f"{os.path.basename(path)} is the 3-colouring formula of this graph ({len(cl)} clauses)"
 
 
-def solve(g, kissat, drat_trim, workdir):
+def solve(g, kissat, drat_trim, workdir, cake_lpr=None):
     n = len(g["points"])
     cl = clauses(g, lambda v, c: c * n + v + 1)
     os.makedirs(workdir, exist_ok=True)
     cnf, proof = os.path.join(workdir, f"q{g['d']}.cnf"), os.path.join(workdir, f"q{g['d']}.drat")
+    lrat = os.path.join(workdir, f"q{g['d']}.lrat")
     with open(cnf, "w") as fh:
         fh.write(f"p cnf {3 * n} {len(cl)}\n" + "".join(" ".join(map(str, c)) + " 0\n" for c in cl))
-    k = subprocess.run([kissat, cnf, proof], capture_output=True, text=True)
-    if "s UNSATISFIABLE" not in k.stdout:
-        return False, "kissat did not answer UNSATISFIABLE"
-    r = subprocess.run([drat_trim, cnf, proof, "-t", "20000"], capture_output=True, text=True)
-    os.remove(proof)
-    if "s VERIFIED" not in r.stdout:
-        return False, "drat-trim did not verify the proof"
-    return True, "kissat UNSATISFIABLE and drat-trim VERIFIED on a formula written again here"
+    try:
+        k = subprocess.run([kissat, cnf, proof], capture_output=True, text=True)
+        if "s UNSATISFIABLE" not in k.stdout:
+            return False, "kissat did not answer UNSATISFIABLE"
+        r = subprocess.run([drat_trim, cnf, proof, "-t", "20000"] + (["-L", lrat, "-C"] if cake_lpr else []),
+                           capture_output=True, text=True)
+        if "s VERIFIED" not in r.stdout:
+            return False, "drat-trim did not verify the proof"
+        if not cake_lpr:
+            return True, "kissat UNSATISFIABLE and drat-trim VERIFIED on a formula written again here"
+        c = subprocess.run([cake_lpr, cnf, lrat], capture_output=True, text=True)
+        if "s VERIFIED UNSAT" not in c.stdout:
+            return False, "cake_lpr did not verify the LRAT proof"
+        return True, ("kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula "
+                      "written again here")
+    finally:
+        for f in (proof, lrat):
+            if os.path.exists(f):
+                os.remove(f)
 
 
 def plane_colouring_ok(p, col):
@@ -183,6 +197,7 @@ def main():
     ap.add_argument("--field", type=int, nargs="*")
     ap.add_argument("--kissat")
     ap.add_argument("--drat-trim")
+    ap.add_argument("--cake-lpr", help="also check each proof, in LRAT form, with cake_lpr")
     ap.add_argument("--workdir", default=os.path.join(tempfile.gettempdir(), "quadratic_planes"))
     a = ap.parse_args()
     planes = load(os.path.join(DATA, "finite_planes.json"))["planes"]
@@ -195,7 +210,7 @@ def main():
                  lambda: check_critical(g),
                  lambda: check_cnf(g, os.path.join(DATA, f"q{d}.cnf"))]
         if a.kissat and a.drat_trim:
-            steps.append(lambda: solve(g, a.kissat, a.drat_trim, a.workdir))
+            steps.append(lambda: solve(g, a.kissat, a.drat_trim, a.workdir, a.cake_lpr))
         for step in steps:
             ok, msg = step()
             print(f"Q(sqrt{d}): " + ("ok: " if ok else "FAILED: ") + msg)
@@ -208,7 +223,8 @@ def main():
             print(f"NOT CONFIRMED: Q(sqrt{d}): {msg}")
             return 1
         summary.append(f"chi(Q(sqrt{d})^2) {'= 4' if ub == 4 else '>= 4' if ub is None else f'in [4, {ub}]'}")
-    how = "kissat and drat-trim run here" if a.kissat and a.drat_trim else \
+    how = ("kissat, drat-trim and cake_lpr run here" if a.cake_lpr else "kissat and drat-trim run here") \
+        if a.kissat and a.drat_trim else \
         "non-3-colourability by the stored certificates (run with --kissat and --drat-trim to solve again)"
     print("CONFIRMED: " + "; ".join(summary) + f" ({how})")
     return 0
