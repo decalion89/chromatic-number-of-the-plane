@@ -6,6 +6,8 @@
 \usepackage[hyphens]{url}
 \usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
 \usepackage[margin=2.5cm]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric}
 
 \hypersetup{
   pdftitle={Real quadratic planes that need four colours},
@@ -44,7 +46,7 @@ SAT solving, DRAT proofs}
 For a subfield $F\subset\R$ let $\chi(F^2)$ be the chromatic number of the graph on $F^2$ joining points at
 Euclidean distance $1$. For real quadratic fields $K=\Q(\sqrt d)$ the values known so far were $2$ and $3$, and
 a field can need four colours only when $d\equiv 11\pmod{12}$. We show that
-$\chi(\Q(\sqrt d)^2)=4$ for $d=11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 359, 431$, and that
+$\chi(\Q(\sqrt d)^2)=4$ for $d=11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431$, and that
 $4\le\chi(\Q(\sqrt{47})^2)\le5$. With the known results, $\chi(\Q(\sqrt d)^2)$ is now determined for every
 squarefree $d<83$ except $d=47$. Each lower bound is a triangle-free, vertex-critical unit-distance graph with
 coordinates in $\Q(\sqrt d)$, with between $94$ and $1\,404$ vertices, that has no proper $3$-colouring: a computer
@@ -83,7 +85,7 @@ field was known to need four colours. Moorhouse asked in a 2010 talk \cite{Moorh
 about $\chi(\Q(\sqrt d)^2)$, and about $\chi(\Q(\sqrt{47})^2)$ in particular.
 
 \begin{theorem}\label{thm:main}
-$\chi(\Q(\sqrt d)^2)=4$ for $d=11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 359, 431$, and
+$\chi(\Q(\sqrt d)^2)=4$ for $d=11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431$, and
 $4\le\chi(\Q(\sqrt{47})^2)\le5$.
 \end{theorem}
 
@@ -115,7 +117,8 @@ differences satisfy the two integer identities
 \begin{equation}\label{eq:unit}
   \Delta a^2+d\,\Delta b^2+\Delta c^2+d\,\Delta e^2=D^2,\qquad \Delta a\,\Delta b+\Delta c\,\Delta e=0 .
 \end{equation}
-So every edge is checked exactly. Table~\ref{tab:graphs} lists the graphs.
+So every edge is checked exactly. Table~\ref{tab:graphs} lists the graphs, and Figure~\ref{fig:q11} shows the
+one over $\Q(\sqrt{11})$.
 
 \begin{table}[ht]
 \centering
@@ -124,6 +127,15 @@ So every edge is checked exactly. Table~\ref{tab:graphs} lists the graphs.
 \caption{The graphs of Theorem~\ref{thm:main}. $D$ is the common denominator; ``directions used'' counts the
 unit vectors $v-u$ over the edges $uv$, with both signs.}\label{tab:graphs}
 \end{table}
+
+\begin{figure}[ht]
+\centering
+\input{q11-graph.tex}
+\caption{The graph over $\Q(\sqrt{11})$: $94$ points, joined by the $214$ segments of length exactly $1$ (drawn from
+the coordinates rounded to five decimals; \texttt{make\_figure.py} writes the drawing from the data). The marker
+shapes show a proper $4$-colouring; there is no proper $3$-colouring. The vertex at the origin has $32$ neighbours, on
+the dashed unit circle.}\label{fig:q11}
+\end{figure}
 
 For each graph $G$:
 \begin{itemize}
@@ -152,7 +164,7 @@ $3$-colourings of $G-v$ for every $v$, that the stored formula is exactly $\Phi(
 finite planes behind the upper bounds. With a path to kissat and \texttt{drat-trim} it also writes the second
 encoding, solves it and checks the proof. With a path to \texttt{cake\_lpr} as well, \texttt{drat-trim} writes
 each proof in LRAT form and \texttt{cake\_lpr}, a proof checker verified in HOL4 and compiled by the verified
-CakeML compiler \cite{cakelpr}, checks it; it accepted the proofs for all fifteen graphs. What has to be trusted
+CakeML compiler \cite{cakelpr}, checks it; it accepted the proofs for all sixteen graphs. What has to be trusted
 is a proof checker (\texttt{drat-trim}, or \texttt{cake\_lpr} and its formal verification), the short code that
 writes $\Phi(G)$ from the list of edges, and exact integer arithmetic.
 
@@ -170,7 +182,7 @@ $5$-colouring \cite[Lemma~4.5]{Madore}:
 \begin{itemize}
 \item $d=11,23,71,95,155,179,191,239,359,431$ are nonzero squares and $d=35,119$ are $\equiv0$ modulo $7$, so
   $\chi\le4$;
-\item $d=59,131$ are $\equiv3\pmod8$, so $\chi\le4$ by Fischer's Theorem~10 (which also covers $11$, $35$
+\item $d=59,131,251$ are $\equiv3\pmod8$, so $\chi\le4$ by Fischer's Theorem~10 (which also covers $11$, $35$
   and $179$);
 \item $47\equiv5^2\pmod{11}$, so $\chi(\Q(\sqrt{47})^2)\le5$.
 \end{itemize}

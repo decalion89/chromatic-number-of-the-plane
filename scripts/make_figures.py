@@ -4,6 +4,8 @@ Writes SVG files to docs/figures/:
   plane_q311.svg       unit-distance graph on a piece of Q(sqrt3, sqrt11)^2, 4-coloured by hn.adelic.q311_colour
   lower_bounds.svg     the Moser spindle (Q(sqrt3, sqrt11)) and the 10-vertex rhombus chain (Q(sqrt2, sqrt3)),
                        each properly 4-coloured by its 2-adic colouring
+  quadratic_q11.svg    the 94-vertex graph over Q(sqrt11) of notes/quadratic_planes.md, with no 3-colouring,
+                       coloured by its stored 4-colouring (data/quadratic_planes/q11.json)
 
 Every edge is found by exact arithmetic (hn.graph.build_graph), and the script asserts that no edge
 is monochromatic before drawing. Colours are the four residue pairs (rho(alpha), rho(beta)) in F_2^2,
@@ -160,10 +162,47 @@ def lower_bounds_figure():
     return svg(730, 392, body, "The Moser spindle and the 10-vertex rhombus chain, each 4-coloured"), (g1, g2)
 
 
+def quadratic_figure():
+    """The vertex-critical graph over Q(sqrt11): points from the exact data, edges checked to length 1 (in floating
+    point here; the checker does it exactly), the stored 4-colouring asserted proper."""
+    import math
+    g = json.load(open(os.path.join(HN_DIR, "data", "quadratic_planes", "q11.json")))
+    r = math.sqrt(g["d"])
+    P = [((a + b * r) / g["D"], (c + e * r) / g["D"]) for a, b, c, e in g["points"]]
+    E = [tuple(e) for e in g["edges"]]
+    col = [int(c) for c in g["four_colouring"]]
+    assert all(abs(math.dist(P[a], P[b]) - 1) < 1e-9 for a, b in E)
+    assert all(col[a] != col[b] for a, b in E), "the stored 4-colouring must be proper"
+    W, H, pad, top = 720, 640, 22, 46
+    xs, ys = [p[0] for p in P], [p[1] for p in P]
+    s = min((W - 2 * pad) / (max(xs) - min(xs)), (H - top - 2 * pad - 30) / (max(ys) - min(ys)))
+    cx = W / 2 - s * (max(xs) + min(xs)) / 2
+    cy = top + pad + (H - top - 2 * pad - 30) / 2 + s * (max(ys) + min(ys)) / 2
+    X = [cx + s * x for x in xs]
+    Y = [cy - s * y for y in ys]
+    body = [f'<text x="{W / 2:.1f}" y="22" text-anchor="middle" font-size="13" font-weight="600" fill="{INK}">'
+            f'A plane over a real quadratic field that needs four colours: ℚ(√11)</text>',
+            f'<text x="{W / 2:.1f}" y="38" text-anchor="middle" font-size="11" fill="{INK2}">{len(P)} points, '
+            f'{len(E)} segments of length exactly 1; no 3-colouring exists. One 4-colouring is shown.</text>',
+            f'<circle cx="{cx:.2f}" cy="{cy:.2f}" r="{s:.2f}" fill="none" stroke="{INK2}" stroke-width="1" '
+            f'stroke-dasharray="4 4" opacity="0.6"/>']
+    body += [f'<line x1="{X[a]:.2f}" y1="{Y[a]:.2f}" x2="{X[b]:.2f}" y2="{Y[b]:.2f}" stroke="{EDGE}" '
+             f'stroke-width="1"/>' for a, b in E]
+    body += [marker(SHAPES[col[v]], X[v], Y[v], 4.2, COLOURS[col[v]]) for v in range(len(P))]
+    body.append(f'<text x="{W / 2:.1f}" y="{H - 32}" text-anchor="middle" font-size="11" fill="{INK2}">Dashed: the '
+                f'unit circle around the point at the origin, which has 32 neighbours on it.</text>')
+    body.append(f'<text x="{W / 2:.1f}" y="{H - 16}" text-anchor="middle" font-size="11" fill="{INK2}">Shapes and '
+                f'colours: the four colour classes of a proper 4-colouring.</text>')
+    return svg(W, H, body, "The 94-vertex unit-distance graph over Q(sqrt11), which needs four colours"), (len(P), len(E))
+
+
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     s, g = plane_figure()
     open(os.path.join(OUT, "plane_q311.svg"), "w").write(s)
     t, _ = lower_bounds_figure()
     open(os.path.join(OUT, "lower_bounds.svg"), "w").write(t)
-    print(f"plane_q311.svg: {g.n} points, {g.m} edges; lower_bounds.svg written to {OUT}")
+    q, (n, m) = quadratic_figure()
+    open(os.path.join(OUT, "quadratic_q11.svg"), "w").write(q)
+    print(f"plane_q311.svg: {g.n} points, {g.m} edges; lower_bounds.svg; quadratic_q11.svg: {n} points, {m} "
+          f"edges; written to {OUT}")

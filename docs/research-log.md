@@ -8867,9 +8867,9 @@ set of directions changes that (`notes/quadratic_planes.md`).
   stored formula and for a second encoding written by separate code. `scripts/verify_quadratic_planes.py`
   repeats all of it.
 - **Upper bounds.** `11, 23, 71, 95, 155, 179, 191, 239, 359, 431` are squares modulo 7 and `35 = 5 · 7`, `119 = 7 ·
-  17`, so Moorhouse's reduction modulo a prime of norm 7 (his Lemma 8.2) gives `χ ≤ χ(𝔽₇²) = 4`; `59, 131 ≡ 3
+  17`, so Moorhouse's reduction modulo a prime of norm 7 (his Lemma 8.2) gives `χ ≤ χ(𝔽₇²) = 4`; `59, 131, 251 ≡ 3
   (mod 8)` give `χ ≤ 4` by Fischer's Theorem 10; `47 ≡ 5² (mod 11)` gives `χ ≤ χ(𝔽₁₁²) = 5`. So `χ = 4` for `d
-  = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 359, 431`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`. With the known results,
+  = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`. With the known results,
   `χ(ℚ(√d)²)` is now known for every squarefree `d < 83` except `d = 47`.
 - **An incident.** The first certification runs for `d = 23` and `d = 47` ran at the same time and wrote
   their DRAT proofs to the same temporary file. We stopped both, gave the temporary files distinct names,
@@ -8940,7 +8940,20 @@ set of directions changes that (`notes/quadratic_planes.md`).
   where `M` is the lattice the directions span, for `m ≤ 10` or `m = 12`, nor with `D = 1530` (180
   directions) for `m ≤ 8` (`periodicq.py`). A run for `d = 107` with `D = 1170` (180 directions), which had
   stopped on the collision of keys, ran again and found only 3-colourable graphs (121 rounds, 20 356 points).
-  Runs with 324 directions are under way.
+  Runs with 324 directions (`d = 83`: `D = 2958, 3570`; `d = 107`: `D = 2262, 2886`), and longer runs with 60
+  soft rounds (`d = 83`, `D = 1122`; `d = 107`, `D = 2442`; up to 26 535 points), stopped in the same way.
+- **More fields (night of 1 to 2 October).** `prescreen.py` looked at fifteen more `d ≡ 11 (mod 12)` with a
+  known upper bound 4 (227, 251, 263, 287, 299, 323, 347, 371, 395, 407, 419, 443, 455, 467, 491), with 13
+  denominators each: the number of directions, the gates of §3 of the note, and the shortest odd closed walk.
+  For eight of them some denominator has every gate open and an odd closed walk of length at most 7. The
+  first run, `d = 251` with `D = 390` (116 directions), found a graph with no 3-colouring in 9 rounds (9 209
+  points, under two minutes); `min3inc.py` shrank it in 4 seconds to a vertex-critical graph with 291 vertices
+  and 715 edges, certified like the others and checked again by the checker with cake_lpr. `251 ≡ 3 (mod 8)`,
+  so Fischer's Theorem 10 gives `χ ≤ 4`, and `χ(ℚ(√251)²) = 4`. The other seven are being tried
+  (`scan_r5.sh`, `shrink_worker.sh`).
+- **A figure.** `papers/quadratic-planes/make_figure.py` draws the graph over `ℚ(√11)` for the paper (Figure
+  1), and `scripts/make_figures.py` for the front page (Figure 3): 94 points, 214 unit segments, and the
+  stored 4-colouring as marker shapes. The point at the origin has 32 neighbours, all on its unit circle.
 
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; smaller witnesses (the
 smallest graphs have 94 vertices, for `d = 11`, and 100, for `d = 191`). Nobody outside the project has
