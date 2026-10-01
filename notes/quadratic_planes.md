@@ -6,14 +6,14 @@ different colours. For real quadratic fields `K = ℚ(√d)` the known values we
 2 and 3. No real quadratic field was known to need four colours.
 
 **Theorem.**
-1. `χ(ℚ(√d)²) = 4` for `d = 11, 23, 35, 59, 71, 119, 131, 191, 239, 359, 431`.
+1. `χ(ℚ(√d)²) = 4` for `d = 11, 23, 35, 59, 71, 119, 131, 179, 191, 239, 359, 431`.
 2. `4 ≤ χ(ℚ(√47)²) ≤ 5`.
 
 Each lower bound is a finite graph: a triangle-free unit-distance graph with
 coordinates in `ℚ(√d)`, which is not 3-colourable and is vertex-critical. The
 graphs have 106 vertices (`d = 11`), 686 (`d = 23`), 650 (`d = 35`), 872
 (`d = 47`), 462 (`d = 59`), 674 (`d = 71`), 469 (`d = 119`), 511 (`d = 131`),
-143 (`d = 191`), 394 (`d = 239`), 741 (`d = 359`) and 344 (`d = 431`).
+361 (`d = 179`), 143 (`d = 191`), 394 (`d = 239`), 741 (`d = 359`) and 344 (`d = 431`).
 
 So `χ(ℚ(√d)²)` is now known for every squarefree `d < 83` except `d = 47`
 (§1): it is 2 if `d ≡ 1, 2 (mod 4)`, 3 if `d ≡ 3 (mod 4)` and `d ≢ 2 (mod 3)`,
@@ -93,6 +93,7 @@ These are two identities between integers, so every edge is checked exactly.
 | 71 | 120 | 674 | 1 737 | 3–90 | 132 |
 | 119 | 240 | 469 | 1 210 | 3–85 | 116 |
 | 131 | 390 | 511 | 1 191 | 3–82 | 134 |
+| 179 | 390 | 361 | 910 | 3–51 | 94 |
 | 191 | 240 | 143 | 344 | 3–40 | 52 |
 | 239 | 480 | 394 | 1 007 | 3–44 | 82 |
 | 359 | 600 | 741 | 1 926 | 3–60 | 78 |
@@ -115,15 +116,16 @@ There is no triangle in any of these planes. A unit triangle would need
 `U_D`, closed under negation, under the quarter turn and under complex
 conjugation. We used `|U_D| = 108` in each case (140 for `d = 71`, 148 for
 `d = 119`, 132 for `d = 239`, 140 for `d = 359`, 116 for `d = 431`, 196 for
-`d = 131`, 276 for `d = 35`).
+`d = 131`, 212 for `d = 179`, 276 for `d = 35`).
 
 **The growth.**
 1. Start from all sums of at most two vectors of `U_D`.
 2. 3-colour the graph (tabucol, else kissat).
 3. Add the points `p + u` whose neighbours already see all three colours.
 4. Repeat until kissat answers that the graph is not 3-colourable. This took
-   1 to 30 rounds and at most 12 211 points (21 895 for `d = 131`, 39 265 for
-   `d = 35`). For `d = 35, 131, 239, 359, 431` we used a variant:
+   1 to 30 rounds and at most 12 211 points (21 895 for `d = 131`, 24 785 for
+   `d = 179`, 39 265 for `d = 35`; 96 rounds for `d = 431`). For
+   `d = 35, 131, 179, 239, 359, 431` we used a variant:
    when no candidate is blocked, it 3-colours the graph again from scratch, and
    if still none is blocked it adds candidates whose neighbours see two colours.
 5. Shrink: keep the vertices whose clauses lie in the drat-trim core of a
@@ -189,8 +191,8 @@ and checks the proof, in about ten seconds for the five fields.
 
 ## 5. The upper bounds
 
-- **`d = 11, 23, 35, 71, 119, 191, 239, 359, 431`.** `d` is a nonzero square
-  modulo 7 (`d = 11, 23, 71, 191, 239, 359, 431`) or `d ≡ 0 (mod 7)` (`d = 35 = 5 · 7`,
+- **`d = 11, 23, 35, 71, 119, 179, 191, 239, 359, 431`.** `d` is a nonzero square
+  modulo 7 (`d = 11, 23, 71, 179, 191, 239, 359, 431`) or `d ≡ 0 (mod 7)` (`d = 35 = 5 · 7`,
   `d = 119 = 7 · 17`), and
   `7 ≡ 3 (mod 4)`. Moorhouse's Lemma 8.2 reduces the plane modulo a prime of
   norm 7 into the unit-distance graph of `𝔽₇²`. That graph is 4-colourable, so `χ(K²) ≤ 4`.
@@ -211,11 +213,11 @@ and checks the proof, in about ten seconds for the five fields.
 - **`ℚ(√47)`.** Is `χ = 4` or `5`? It is the smallest open case of Moorhouse's
   table that this note does not settle.
 - **All of `d ≡ 11 (mod 12)`.** Does every such field need four colours? For
-  `d = 83, 95, 107, 155, 179, 203`, our growth has so far found only
+  `d = 83, 95, 107, 155, 203`, our growth has so far found only
   3-colourable graphs, with 60 to 212 directions. That may be a limit of the
-  search: over `ℚ(√35)` and `ℚ(√131)` it failed in the same way with 60 to 180
-  directions, and succeeded with the 276 and 196 directions of denominator
-  dividing 390. Two of the
+  search: over `ℚ(√35)`, `ℚ(√131)` and `ℚ(√179)` it failed in the same way
+  with 60 to 212 directions, and succeeded with the directions of denominator
+  dividing 390 and the variant of the growth. Two of the
   failed direction sets fail at a gate of §3: for `d = 35` and `D = 174` every
   direction is integral at the places above 5, and for `d = 83` and `D = 410`
   at the places above 3. We do not know why the others fail.

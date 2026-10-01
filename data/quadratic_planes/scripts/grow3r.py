@@ -69,15 +69,25 @@ log(f"=== grow3 {tag}: {len(U)} unit vectors with denominator dividing D = {D}")
 HW = np.array([1000003, 998244353, 19260817, 1610612741], dtype=np.int64)
 
 
+OFF = 1 << 15                       # exact keys: four 16-bit fields (every coordinate must be below 2^15 - 1)
+SENTINEL = np.uint64(0xFFFFFFFFFFFFFFFF)
+
+
 def keys(A):
-    with np.errstate(over='ignore'):
-        return (np.asarray(A, dtype=np.int64) * HW).sum(axis=1)
+    A = np.asarray(A, dtype=np.int64).reshape(-1, 4)
+    ok = np.all(np.abs(A) < OFF - 1, axis=1)
+    B = (A + OFF).astype(np.uint64)
+    k = (B[:, 0] << np.uint64(48)) | (B[:, 1] << np.uint64(32)) | (B[:, 2] << np.uint64(16)) | B[:, 3]
+    k[~ok] = SENTINEL                   # out of range: matches no point of a PointSet
+    return k
 
 
 class PointSet:
     def __init__(self, P):
         self.P = np.asarray(P, dtype=np.int64).reshape(-1, 4)
         k = keys(self.P)
+        if np.any(k == SENTINEL):
+            raise ValueError("a coordinate is too large for the exact keys")
         self.order = np.argsort(k, kind='stable')
         self.sk = k[self.order]
         if len(k) > 1 and np.any(self.sk[1:] == self.sk[:-1]):

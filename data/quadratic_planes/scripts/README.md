@@ -20,8 +20,8 @@ files go to `/dev/shm`.
 | `units_fast.py` | every unit vector `((a + b√d)/D, (c + e√d)/D)` with integer coordinates |
 | `tabu.py`, `tabucol.c` | tabu search for `k`-colourings |
 | `grow3.py`, `grow3d.py` | the first growth runs over `ℚ(√47)`; `grow3d.py` with `D = 240` reached the 9 139-point graph |
-| `grow3q.py` | colouring-guided growth for any `d` (`QD=d`); it found the graphs for `d = 11, 23, 59, 71, 119, 191` |
-| `grow3r.py` | the same, but when no candidate is blocked it 3-colours the graph again from scratch, and then adds candidates whose neighbours see two colours; it found the graphs for `d = 35, 131, 239, 359` |
+| `grow3q.py` | colouring-guided growth for any `d` (`QD=d`); it found the graphs for `d = 11, 23, 59, 71, 119, 191`. Points are looked up by exact keys (four 16-bit fields); the first version used a hash, and two runs with `D = 1170` stopped on a collision of keys (the code detects them, so no edge was wrong) |
+| `grow3r.py` | the same, but when no candidate is blocked it 3-colours the graph again from scratch, and then adds candidates whose neighbours see two colours; it found the graphs for `d = 35, 131, 179, 239, 359, 431` |
 | `exactcheck.py` | an exact check of a grown graph and of its formula |
 | `min3.py` | shrinking: rounds of drat-trim cores, then deletion of vertices one at a time, to a vertex-critical graph (two copies with fixed temporary names were run for `d = 11` and `d = 23`) |
 | `min3fast.py` | the same shrinking, faster on large graphs: several random seeds per core round, the two vertices of the fixed edge always kept in the core (`min3.py` drops them, and then stops too early), and tabu search before kissat in the deletion phase; used for `d = 431` |
