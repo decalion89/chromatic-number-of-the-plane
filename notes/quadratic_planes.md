@@ -6,13 +6,14 @@ different colours. For real quadratic fields `K = ℚ(√d)` the known values we
 2 and 3. No real quadratic field was known to need four colours.
 
 **Theorem.**
-1. `χ(ℚ(√d)²) = 4` for `d = 11, 23, 59, 71, 119, 191`.
+1. `χ(ℚ(√d)²) = 4` for `d = 11, 23, 59, 71, 119, 191, 239`.
 2. `4 ≤ χ(ℚ(√47)²) ≤ 5`.
 
 Each lower bound is a finite graph: a triangle-free unit-distance graph with
 coordinates in `ℚ(√d)`, which is not 3-colourable and is vertex-critical. The
 graphs have 106 vertices (`d = 11`), 686 (`d = 23`), 872 (`d = 47`), 462
-(`d = 59`), 674 (`d = 71`), 469 (`d = 119`) and 143 (`d = 191`).
+(`d = 59`), 674 (`d = 71`), 469 (`d = 119`), 143 (`d = 191`) and 394
+(`d = 239`).
 
 That they are not 3-colourable is a computer proof: SAT solving with a DRAT
 proof checked by drat-trim, done for two separate encodings of each graph (§4).
@@ -87,6 +88,7 @@ These are two identities between integers, so every edge is checked exactly.
 | 71 | 120 | 674 | 1 737 | 3–90 | 132 |
 | 119 | 240 | 469 | 1 210 | 3–85 | 116 |
 | 191 | 240 | 143 | 344 | 3–40 | 52 |
+| 239 | 480 | 394 | 1 007 | 3–44 | 82 |
 
 In each graph:
 - the edges are all the pairs of its points at distance 1;
@@ -104,14 +106,16 @@ There is no triangle in any of these planes. A unit triangle would need
 `((a + b√d)/D, (c + e√d)/D)` with integer coordinates. They form a finite set
 `U_D`, closed under negation, under the quarter turn and under complex
 conjugation. We used `|U_D| = 108` in each case (140 for `d = 71`, 148 for
-`d = 119`).
+`d = 119`, 132 for `d = 239`).
 
 **The growth.**
 1. Start from all sums of at most two vectors of `U_D`.
 2. 3-colour the graph (tabucol, else kissat).
 3. Add the points `p + u` whose neighbours already see all three colours.
 4. Repeat until kissat answers that the graph is not 3-colourable. This took
-   1 to 30 rounds and at most 12 211 points.
+   1 to 30 rounds and at most 12 211 points. For `d = 239` we used a variant:
+   when no candidate is blocked, it 3-colours the graph again from scratch, and
+   if still none is blocked it adds candidates whose neighbours see two colours.
 5. Shrink: keep the vertices whose clauses lie in the drat-trim core of a
    checked proof, then delete vertices one at a time while the rest stays not
    3-colourable.
@@ -173,8 +177,8 @@ and checks the proof, in about ten seconds for the five fields.
 
 ## 5. The upper bounds
 
-- **`d = 11, 23, 71, 119, 191`.** `d` is a nonzero square modulo 7
-  (`d = 11, 23, 71, 191`) or `d ≡ 0 (mod 7)` (`d = 119 = 7 · 17`), and
+- **`d = 11, 23, 71, 119, 191, 239`.** `d` is a nonzero square modulo 7
+  (`d = 11, 23, 71, 191, 239`) or `d ≡ 0 (mod 7)` (`d = 119 = 7 · 17`), and
   `7 ≡ 3 (mod 4)`. Moorhouse's Lemma 8.2 reduces the plane modulo a prime of
   norm 7 into the unit-distance graph of `𝔽₇²`. That graph is 4-colourable, so `χ(K²) ≤ 4`.
   `data/quadratic_planes/finite_planes.json` holds the colouring, and the
@@ -211,6 +215,7 @@ and checks the proof, in about ten seconds for the five fields.
 | `data/quadratic_planes/q{d}.cnf`, `q{d}.logs/` | the formula of §4 and the kissat and drat-trim logs for both encodings |
 | `data/quadratic_planes/finite_planes.json` | proper colourings of the unit-distance graphs of `𝔽₇²` (4 colours) and `𝔽₁₁²` (5 colours) |
 | `scripts/verify_quadratic_planes.py`, `tests/test_quadratic_planes.py` | the checks of §4 and §5 |
+| `data/quadratic_planes/scripts/` | the code of the search of §3 (growth, shrinking, certification), as it was run, with a README |
 
 ## References
 

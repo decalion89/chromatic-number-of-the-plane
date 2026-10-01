@@ -8841,9 +8841,9 @@ set of directions changes that (`notes/quadratic_planes.md`).
 - **The method.** A point is `((a + b√d)/D, (c + e√d)/D)` with integers `a, b, c, e`; two points are at
   distance 1 exactly when two integer identities hold. For a denominator `D` we took every unit vector with
   denominator dividing `D`: 108 of them for `d = 11, 23, 47, 59, 191` (`D = 30, 120, 240, 210, 240`), 140
-  for `d = 71` (`D = 120`) and 148 for `d = 119` (`D = 240`). Colouring-guided growth: start from the sums
-  of at most two directions, 3-colour the graph (tabucol, else kissat), add the points whose neighbours
-  already see all three colours, repeat.
+  for `d = 71` (`D = 120`), 148 for `d = 119` (`D = 240`) and 132 for `d = 239` (`D = 480`).
+  Colouring-guided growth: start from the sums of at most two directions, 3-colour the graph (tabucol, else
+  kissat), add the points whose neighbours already see all three colours, repeat.
 - **The gates.** The first runs over `ℚ(√47)`, with the 44 vectors `s/s̄` for `s` with coefficients in
   `{−1, 0, 1}`, built only bipartite graphs. For `d ≡ 7 (mod 8)` such vectors are integral at a place
   above 2 with residue field `𝔽₂`, where the unit graph is a perfect matching. At 3, when `d ≡ 2 (mod 3)`,
@@ -8851,19 +8851,21 @@ set of directions changes that (`notes/quadratic_planes.md`).
   neither place, such as `(1 + 7i√47)/48`, from Pell's equation `48² − 47·7² = 1`.
 - **The growth.** kissat found no 3-colouring after 1 round for `d = 11` (5 941 points), 12 for `d = 23`
   (7 539), 30 for `d = 47` (9 139), 18 for `d = 59` (7 972), 12 for `d = 71` (12 004), 7 for `d = 119`
-  (12 211) and 5 for `d = 191` (6 684); each run took under three minutes. We kept the vertices whose
-  clauses lie in the drat-trim core of a checked proof, then deleted vertices one at a time while the rest
-  stayed not 3-colourable. This left vertex-critical graphs with 106, 686, 872, 462, 674, 469 and 143
-  vertices.
+  (12 211), 5 for `d = 191` (6 684) and 26 for `d = 239` (10 682); each run took under three minutes. For
+  `d = 239` we used a variant (`grow3r.py`): when no candidate is blocked, it 3-colours the graph again
+  from scratch, and if still none is blocked it adds candidates whose neighbours see two colours. We kept
+  the vertices whose clauses lie in the drat-trim core of a checked proof, then deleted vertices one at a
+  time while the rest stayed not 3-colourable. This left vertex-critical graphs with 106, 686, 872, 462, 674, 469, 143 and
+  394 vertices.
 - **The checks.** For each graph: every point and edge in exact integer arithmetic, the edges are all the
   unit pairs, there is no triangle, a proper 4-colouring, a proper 3-colouring of the graph minus each
   vertex, and no 3-colouring, twice: kissat answered UNSATISFIABLE and drat-trim VERIFIED the proof, for the
   stored formula and for a second encoding written by separate code. `scripts/verify_quadratic_planes.py`
   repeats all of it.
-- **Upper bounds.** `11, 23, 71, 191` are squares modulo 7 and `119 = 7 · 17`, so Moorhouse's reduction
+- **Upper bounds.** `11, 23, 71, 191, 239` are squares modulo 7 and `119 = 7 · 17`, so Moorhouse's reduction
   modulo a prime of norm 7 (his Lemma 8.2) gives `χ ≤ χ(𝔽₇²) = 4`; `59 ≡ 3 (mod 8)` gives `χ ≤ 4` by
   Fischer's Theorem 10; `47 ≡ 5² (mod 11)` gives `χ ≤ χ(𝔽₁₁²) = 5`. So `χ = 4` for
-  `d = 11, 23, 59, 71, 119, 191`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`.
+  `d = 11, 23, 59, 71, 119, 191, 239`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`.
 - **An incident.** The first certification runs for `d = 23` and `d = 47` ran at the same time and wrote
   their DRAT proofs to the same temporary file. We stopped both, gave the temporary files distinct names,
   and ran both certifications again from the start. The certification of `d = 11` had run alone.
