@@ -8890,7 +8890,16 @@ set of directions changes that (`notes/quadratic_planes.md`).
   over `ℚ(√35)` with no 3-colouring in 4 rounds, and with 196 and 212 directions ones over `ℚ(√131)` and
   `ℚ(√179)` in 14 and 8 rounds (above). So the failures were, at least for these three fields, a limit of the
   search.
+- **Smaller witnesses.** A second shrinking, with one incremental SAT solver (CaDiCaL 1.5.3 through PySAT: a
+  selector literal per vertex, each test a solve under assumptions, and the core of failed assumptions of
+  every refutation as the new vertex set) and up to 400 random deletion orders per grown graph
+  (`min3multi.py`), gave smaller vertex-critical graphs, which replace the first ones: 106 → 94 vertices for
+  `d = 11`, 686 → 660 for `d = 23`, 650 → 580 for `d = 35`, 462 → 406 for `d = 59`, 674 → 611 for `d = 71`,
+  469 → 399 for `d = 119`, 511 → 356 for `d = 131`, 361 → 259 for `d = 179`, 143 → 100 for `d = 191`, 394 →
+  355 for `d = 239`, 741 → 715 for `d = 359` and 344 → 331 for `d = 431`. Each was certified again from
+  scratch by `certify_q.py`, and checked again by the checker with the solvers. On `ℚ(√431)` the incremental
+  solver took 18 seconds where `min3fast.py` had taken nine minutes.
 
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 95, 107, 155, 203, …`; smaller witnesses (the
-smallest graphs have 106 vertices, for `d = 11`, and 143, for `d = 191`). Nobody outside the project has
+smallest graphs have 94 vertices, for `d = 11`, and 100, for `d = 191`). Nobody outside the project has
 refereed this.

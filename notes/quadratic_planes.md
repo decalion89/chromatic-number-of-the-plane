@@ -11,9 +11,10 @@ different colours. For real quadratic fields `K = ℚ(√d)` the known values we
 
 Each lower bound is a finite graph: a triangle-free unit-distance graph with
 coordinates in `ℚ(√d)`, which is not 3-colourable and is vertex-critical. The
-graphs have 106 vertices (`d = 11`), 686 (`d = 23`), 650 (`d = 35`), 872
-(`d = 47`), 462 (`d = 59`), 674 (`d = 71`), 469 (`d = 119`), 511 (`d = 131`),
-361 (`d = 179`), 143 (`d = 191`), 394 (`d = 239`), 741 (`d = 359`) and 344 (`d = 431`).
+graphs have 94 vertices (`d = 11`), 660 (`d = 23`), 580 (`d = 35`), 872
+(`d = 47`), 406 (`d = 59`), 611 (`d = 71`), 399 (`d = 119`), 356 (`d = 131`),
+259 (`d = 179`), 100 (`d = 191`), 355 (`d = 239`), 715 (`d = 359`) and 331
+(`d = 431`).
 
 So `χ(ℚ(√d)²)` is now known for every squarefree `d < 83` except `d = 47`
 (§1): it is 2 if `d ≡ 1, 2 (mod 4)`, 3 if `d ≡ 3 (mod 4)` and `d ≢ 2 (mod 3)`,
@@ -50,7 +51,7 @@ The first such values are 11, 23, 35, 47, 59, 71, 83, …. For these fields the
 known lower bound was 3. For `ℚ(√47)` the bounds were `3 ≤ χ ≤ 5`, and our own
 experiments of 25 September had left it open (`docs/research-log.md`).
 
-We searched Moorhouse (2010), Fischer (1990, 1994), Madore (2015), Payne (2007),
+We searched Moorhouse (2010), Fischer (1990, 1994), Madore (2015), Payne (2009),
 Cohen (2007), hn-2adic-obstruction, the Polymath16 threads and wiki, and the
 sources listed in `notes/literature.md`, on 1 October 2026. None of them gives a
 real quadratic field that needs four colours. An earlier proof may exist that we
@@ -85,19 +86,19 @@ These are two identities between integers, so every edge is checked exactly.
 
 | `d` | `D` | vertices | edges | degrees | directions used |
 |---|---|---|---|---|---|
-| 11 | 30 | 106 | 246 | 3–31 | 78 |
-| 23 | 120 | 686 | 1 777 | 3–55 | 102 |
-| 35 | 390 | 650 | 1 711 | 3–121 | 252 |
+| 11 | 30 | 94 | 214 | 3–32 | 68 |
+| 23 | 120 | 660 | 1 727 | 3–60 | 100 |
+| 35 | 390 | 580 | 1 501 | 3–107 | 218 |
 | 47 | 240 | 872 | 2 280 | 3–76 | 102 |
-| 59 | 210 | 462 | 1 163 | 3–53 | 72 |
-| 71 | 120 | 674 | 1 737 | 3–90 | 132 |
-| 119 | 240 | 469 | 1 210 | 3–85 | 116 |
-| 131 | 390 | 511 | 1 191 | 3–82 | 134 |
-| 179 | 390 | 361 | 910 | 3–51 | 94 |
-| 191 | 240 | 143 | 344 | 3–40 | 52 |
-| 239 | 480 | 394 | 1 007 | 3–44 | 82 |
-| 359 | 600 | 741 | 1 926 | 3–60 | 78 |
-| 431 | 600 | 344 | 794 | 3–32 | 68 |
+| 59 | 210 | 406 | 993 | 3–48 | 66 |
+| 71 | 120 | 611 | 1 557 | 3–85 | 128 |
+| 119 | 240 | 399 | 1 019 | 3–62 | 106 |
+| 131 | 390 | 356 | 804 | 3–61 | 126 |
+| 179 | 390 | 259 | 622 | 3–39 | 90 |
+| 191 | 240 | 100 | 224 | 3–23 | 52 |
+| 239 | 480 | 355 | 888 | 3–47 | 80 |
+| 359 | 600 | 715 | 1 851 | 3–63 | 74 |
+| 431 | 600 | 331 | 764 | 3–28 | 66 |
 
 In each graph:
 - the edges are all the pairs of its points at distance 1;
@@ -130,9 +131,11 @@ conjugation. We used `|U_D| = 108` in each case (140 for `d = 71`, 148 for
    if still none is blocked it adds candidates whose neighbours see two colours.
 5. Shrink: keep the vertices whose clauses lie in the drat-trim core of a
    checked proof, then delete vertices one at a time while the rest stays not
-   3-colourable. (For `d = 431` a faster version: several solver seeds per
-   core, the two vertices of the fixed edge always kept in the core, and tabu
-   search before kissat.)
+   3-colourable. The published graphs come from a second pass with one
+   incremental SAT solver (CaDiCaL through PySAT): a selector literal per
+   vertex, each test a solve under assumptions, the core of failed assumptions
+   of every refutation as the new vertex set, and up to 400 random deletion
+   orders per grown graph, keeping the smallest critical graph.
 
 **Why some direction sets fail.** Three places act as gates. When every unit
 vector of a set is integral at such a place, reduction at that place colours
@@ -221,8 +224,8 @@ and checks the proof, in about ten seconds for the five fields.
   failed direction sets fail at a gate of §3: for `d = 35` and `D = 174` every
   direction is integral at the places above 5, and for `d = 83` and `D = 410`
   at the places above 3. We do not know why the others fail.
-- **Smaller witnesses.** The graph over `ℚ(√11)` has 106 vertices, and the one
-  over `ℚ(√191)` 143. How small can a 4-chromatic unit-distance graph over a
+- **Smaller witnesses.** The graph over `ℚ(√11)` has 94 vertices, and the
+  one over `ℚ(√191)` 100. How small can a 4-chromatic unit-distance graph over a
   real quadratic field be?
 
 ## 7. Files
@@ -244,11 +247,12 @@ and checks the proof, in about ten seconds for the five fields.
 - *A 2-adic obstruction to 5-chromatic unit-distance graphs*, public repository
   [MildlyMeticulous/hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction)
   (July 2026), not refereed.
-- P. D. Johnson Jr., Congr. Numer. 60 (1987), 51–58, as summarised by Payne
-  (2007).
+- P. D. Johnson Jr., *Two-colorings of real quadratic extensions of ℚ² that forbid
+  many distances*, Congr. Numer. 60 (1987), 51–58 (we have not seen it; its
+  result as summarised by Payne).
 - D. A. Madore, *The Hadwiger–Nelson problem over certain fields*,
   [arXiv:1509.07023](https://arxiv.org/abs/1509.07023) (2015).
 - G. E. Moorhouse, *On the chromatic numbers of planes*, draft of 3 March 2010,
   [ericmoorhouse.org/pub/chromatic.pdf](https://www.ericmoorhouse.org/pub/chromatic.pdf).
-- T. H. Payne, *Unit distance graphs with ambiguous chromatic number*,
-  [arXiv:0707.1177](https://arxiv.org/abs/0707.1177) (2007).
+- M. S. Payne, *Unit distance graphs with ambiguous chromatic number*, Electron.
+  J. Combin. 16 (2009), Note 31; [arXiv:0707.1177](https://arxiv.org/abs/0707.1177).

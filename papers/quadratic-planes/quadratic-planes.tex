@@ -1,0 +1,287 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage[hyphens]{url}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
+\usepackage[margin=2.5cm]{geometry}
+
+\hypersetup{
+  pdftitle={Real quadratic planes that need four colours},
+  pdfauthor={Sergi Gal\'an},
+  pdfsubject={The Hadwiger-Nelson problem over number fields},
+  pdfkeywords={Hadwiger-Nelson problem, chromatic number of the plane, unit-distance graph, real quadratic field, SAT, DRAT}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\p}{\mathfrak{p}}
+\newcommand{\PP}{\mathfrak{P}}
+
+\title{Real quadratic planes that need four colours}
+\author{Sergi Gal\'an}
+\thanks{These results were obtained with the assistance of an AI system (Claude, by Anthropic), which carried
+out the searches, the computations and the checks, and helped to draft this note. No mathematician has checked
+the note yet. The author is not a professional mathematician and submits it for independent verification.}
+\date{Draft, 1 October 2026}
+\subjclass[2020]{Primary 05C15, 52C10; Secondary 11R11, 68V15}
+\keywords{Hadwiger--Nelson problem, chromatic number of the plane, unit-distance graph, real quadratic field,
+SAT solving, DRAT proofs}
+
+\begin{document}
+
+\begin{abstract}
+For a subfield $F\subset\R$ let $\chi(F^2)$ be the chromatic number of the graph on $F^2$ joining points at
+Euclidean distance $1$. For real quadratic fields $K=\Q(\sqrt d)$ the values known so far were $2$ and $3$, and
+a field can need four colours only when $d\equiv 11\pmod{12}$. We show that
+$\chi(\Q(\sqrt d)^2)=4$ for $d=11, 23, 35, 59, 71, 119, 131, 179, 191, 239, 359, 431$, and that
+$4\le\chi(\Q(\sqrt{47})^2)\le5$. With the known results, $\chi(\Q(\sqrt d)^2)$ is now determined for every
+squarefree $d<83$ except $d=47$. Each lower bound is a triangle-free, vertex-critical unit-distance graph with
+coordinates in $\Q(\sqrt d)$, with between $94$ and $872$ vertices, that has no proper $3$-colouring: a computer
+proof, by a SAT solver whose DRAT proofs are checked by \texttt{drat-trim}, for two independently written
+encodings. The upper bounds are reductions modulo a prime due to Moorhouse and Fischer. We also explain why
+some searches fail: when every direction is integral at certain primes above $2$, $3$ or $5$, reduction there
+colours every graph built from those directions with two or three colours.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+The Hadwiger--Nelson problem asks for the chromatic number $\chi(\R^2)$ of the plane; since de Grey
+\cite{deGrey} it is known to be $5$, $6$ or $7$. A natural relative restricts the coordinates to a subfield
+$F\subset\R$: $\chi(F^2)$ is the least number of colours for the points of $F^2$ such that points at distance
+$1$ get different colours. Woodall \cite{Woodall} showed $\chi(\Q^2)=2$. For a real quadratic field
+$K=\Q(\sqrt d)$, $d\ge2$ squarefree, the following was known.
+
+\begin{itemize}
+\item $\chi(K^2)=2$ if $d\equiv1,2\pmod 4$ (Johnson \cite{Johnson1987}, see \cite{Payne}; Moorhouse
+  \cite[Lemma~8.4, Theorem~8.5]{Moorhouse}).
+\item $\chi(K^2)\ge3$ if $d\equiv3\pmod 4$ (Fischer \cite[Theorem~8]{Fischer1990}; Moorhouse
+  \cite[Theorem~8.6]{Moorhouse} for prime $d$, by an odd cycle from Pell's equation).
+\item $\chi(K^2)\le3$ if $d\equiv0,1\pmod3$ (Fischer \cite[Theorem~9]{Fischer1990}; Moorhouse
+  \cite[Corollary~8.3]{Moorhouse}).
+\item $\chi(K^2)\le4$ if $d\equiv0,1,2,4\pmod7$ (Moorhouse \cite[Corollary~8.3]{Moorhouse}) or
+  $d\equiv3\pmod8$ (Fischer \cite[Theorem~10]{Fischer1990}; also \cite[Corollary~D]{MM}). Moorhouse's
+  Theorem~8.1 states $\chi(K^2)\le4$ unless $d\equiv47,59,83\pmod{84}$.
+\end{itemize}
+
+Madore \cite{Madore} proved $\chi(\Q(\sqrt3)^2)=\chi(\Q(\sqrt7)^2)=3$. Together these give $\chi(K^2)=3$ when
+$d\equiv3\pmod4$ and $d\not\equiv2\pmod3$; so a real quadratic field can need four colours only if
+$d\equiv11\pmod{12}$, and for those the known lower bound was~$3$. As far as we could find, no real quadratic
+field was known to need four colours.
+
+\begin{theorem}\label{thm:main}
+$\chi(\Q(\sqrt d)^2)=4$ for $d=11, 23, 35, 59, 71, 119, 131, 179, 191, 239, 359, 431$, and
+$4\le\chi(\Q(\sqrt{47})^2)\le5$.
+\end{theorem}
+
+\begin{corollary}\label{cor:small}
+For squarefree $2\le d<83$, $\chi(\Q(\sqrt d)^2)$ is $2$ if $d\equiv1,2\pmod4$, $3$ if $d\equiv3\pmod4$ and
+$d\not\equiv2\pmod3$, and $4$ if $d\in\{11,23,35,59,71\}$. The only remaining value is $d=47$, with
+$4\le\chi\le5$.
+\end{corollary}
+
+The upper bounds in Theorem~\ref{thm:main} are known (Section~\ref{sec:upper}). Each lower bound is a finite
+graph: a unit-distance graph with coordinates in $\Q(\sqrt d)$ that is not $3$-colourable. That it is not
+$3$-colourable is a computer proof (Section~\ref{sec:cert}); the rest of each certificate is checked in exact
+integer arithmetic. The graphs, the formulas, the solver logs, the checker and the search code are in the
+repository \cite{Repo}.
+
+The graphs are triangle-free: a unit triangle needs $\sqrt{-3}\in K(i)$, which fails for $d\neq3$. A
+triangle-free $5$-chromatic unit-distance graph is not known (see \cite[ch.~55]{Soifer}, \cite[\S2]{MM});
+since $\chi(\Q(\sqrt{47})^2)\le5$ and $\sqrt3\notin\Q(\sqrt{47})$, deciding whether $\chi(\Q(\sqrt{47})^2)$
+is $4$ or $5$ touches that question.
+
+\section{The graphs}\label{sec:graphs}
+
+Fix $d$ and a positive integer $D$. A point is written $[a,b,c,e]$ with $a,b,c,e\in\Z$, and stands for
+\[
+  \Bigl(\frac{a+b\sqrt d}{D},\ \frac{c+e\sqrt d}{D}\Bigr)\in K^2.
+\]
+Since $1$ and $\sqrt d$ are linearly independent over $\Q$, two points are at distance $1$ exactly when their
+differences satisfy the two integer identities
+\begin{equation}\label{eq:unit}
+  \Delta a^2+d\,\Delta b^2+\Delta c^2+d\,\Delta e^2=D^2,\qquad \Delta a\,\Delta b+\Delta c\,\Delta e=0 .
+\end{equation}
+So every edge is checked exactly. Table~\ref{tab:graphs} lists the graphs.
+
+\begin{table}[ht]
+\centering
+\input{graphs-table.tex}
+\medskip
+\caption{The graphs of Theorem~\ref{thm:main}. $D$ is the common denominator; ``directions used'' counts the
+unit vectors $v-u$ over the edges $uv$, with both signs.}\label{tab:graphs}
+\end{table}
+
+For each graph $G$:
+\begin{itemize}
+\item the edges are all the pairs of its points that satisfy \eqref{eq:unit};
+\item there is no triangle, and the girth is $4$;
+\item there is a proper $4$-colouring, and no proper $3$-colouring;
+\item $G$ is vertex-critical: for every vertex $v$ there is a proper $3$-colouring of $G-v$.
+\end{itemize}
+
+\section{The certificates}\label{sec:cert}
+
+For a graph $G$ with vertices $0,\dots,n-1$ and a fixed edge $u_0v_0$, let $\Phi(G)$ be the formula with
+variables $x_{v,c}$ ($v$ a vertex, $c\in\{0,1,2\}$), the clauses $x_{v,0}\lor x_{v,1}\lor x_{v,2}$ for each
+vertex, $\lnot x_{u,c}\lor\lnot x_{v,c}$ for each edge $uv$ and colour $c$, and the unit clauses $x_{u_0,0}$
+and $x_{v_0,1}$. Renaming colours, $G$ is $3$-colourable if and only if $\Phi(G)$ is satisfiable.
+
+For each $d$ the repository stores $\Phi(G)$, with $x_{v,c}$ numbered $3v+c+1$. The solver kissat~4.0.4
+answered UNSATISFIABLE and wrote a DRAT proof, which \texttt{drat-trim} verified. The same was done for a second
+encoding, written by separate code, with $x_{v,c}$ numbered $cn+v+1$. The DRAT proofs are a few megabytes and
+each check takes seconds.
+
+A checker that uses only the Python standard library (\texttt{scripts/verify\_quadratic\_planes.py}) checks
+again, for each $d$: that the points are distinct, that every listed edge satisfies \eqref{eq:unit} and every
+pair satisfying \eqref{eq:unit} is listed, that there is no triangle, the stored $4$-colouring, the stored
+$3$-colourings of $G-v$ for every $v$, that the stored formula is exactly $\Phi(G)$, and the colourings of the
+finite planes behind the upper bounds. With a path to kissat and \texttt{drat-trim} it also writes the second
+encoding, solves it and checks the proof. What has to be trusted is \texttt{drat-trim}, the short code that
+writes $\Phi(G)$ from the list of edges, and exact integer arithmetic.
+
+\section{The upper bounds}\label{sec:upper}
+
+\begin{lemma}[Moorhouse {\cite[Lemma~8.2]{Moorhouse}}]
+If $p\equiv3\pmod4$ is prime and $d$ is $0$ or a nonzero square modulo $p$, then
+$\chi(\Q(\sqrt d)^2)\le\chi(\F_p^2)$, where $\F_p^2$ carries the graph $x^2+y^2=1$.
+\end{lemma}
+
+The prime $p$ ramifies or splits in $K$; at a prime $\p$ of norm $p$ the form $x^2+y^2$ is anisotropic over
+$\F_p$, so every unit vector is $\p$-integral and reduction modulo $\p$ is a graph homomorphism on the
+component of the origin. Since $\chi(\F_7^2)=4$ \cite[\S7]{Moorhouse} and $\F_{11}^2$ has a proper
+$5$-colouring \cite[Lemma~4.5]{Madore}:
+\begin{itemize}
+\item $d=11,23,71,179,191,239,359,431$ are nonzero squares and $d=35,119$ are $\equiv0$ modulo $7$, so
+  $\chi\le4$;
+\item $d=59,131$ are $\equiv3\pmod8$, so $\chi\le4$ by Fischer's Theorem~10 (which also covers $11$, $35$
+  and $179$);
+\item $47\equiv5^2\pmod{11}$, so $\chi(\Q(\sqrt{47})^2)\le5$.
+\end{itemize}
+The repository stores a proper $4$-colouring of $\F_7^2$ and a proper $5$-colouring of $\F_{11}^2$, and the
+checker checks them. For $d=47$ the next level at $11$ does not help: the unit-distance graph on
+$(\Z/121)^2$ is not $4$-colourable.
+
+\section{How the graphs were found}\label{sec:search}
+
+\subsection*{Directions}
+For a denominator $D$ let $U_D$ be the set of unit vectors $[a,b,c,e]$ with integer coordinates, that is, of
+solutions of \eqref{eq:unit} with $\Delta=(a,b,c,e)$. It is finite, and closed under negation, the quarter
+turn and complex conjugation. We used sets with $108$ to $276$ elements.
+
+\subsection*{Colouring-guided growth}
+Start from all sums of at most two vectors of $U_D$; $3$-colour the graph (tabu search, else kissat); add the
+candidate points $p+u$ ($p$ in the graph, $u\in U_D$) whose neighbours in the graph already see all three
+colours; repeat until kissat answers that the graph is not $3$-colourable. When no candidate was blocked, a
+variant coloured the graph again from scratch and, failing that, added candidates whose neighbours see two
+colours. The successful runs took $1$ to $96$ rounds and ended with $5\,941$ to $39\,265$ points.
+
+\subsection*{Shrinking}
+A single incremental SAT solver (CaDiCaL through PySAT) holds the formula with one selector literal per vertex,
+enabling its at-least-one clause. Each test is a solve under assumptions, and each refutation returns a core of
+selectors, a subset of the vertices that is still not $3$-colourable. Deleting vertices one at a time, keeping
+a deletion when the rest is still refuted, gives a vertex-critical graph; repeating with up to $400$ random
+deletion orders and keeping the smallest result gave the graphs of Table~\ref{tab:graphs}.
+
+\subsection*{Gates}
+Some searches stop with $3$-colourable graphs for an arithmetic reason. Let $\PP$ be a prime of $K(i)$ above
+$p$ that splits in $K(i)/K$, with residue field $\F_q$. Writing a unit vector as $z=x+iy$, we have
+$z\bar z=1$, where the bar is the automorphism $i\mapsto-i$ over $K$; so $v_\PP(z)=-v_{\bar\PP}(z)$, and if
+$z$ is $\PP$-integral its residues at $\PP$ and $\bar\PP$ are inverse to each other. Hence, if every
+direction is $\PP$-integral, the reduction $z\mapsto(z\bmod\PP,\ z\bmod\bar\PP)$ maps every graph built from
+the directions homomorphically into
+\[
+  H_q=\mathrm{Cay}\bigl(\F_q^2,\ \{(x,x^{-1}):x\in\F_q^\times\}\bigr),
+\]
+and $\chi(H_q)=3$ for $q=3,5,9$, while $\chi(H_q)\ge5$ for $q=13,17,25,29,37,41,49$ (computed with kissat).
+The place above $2$ splits with residue field $\F_2$ when $d\equiv7\pmod8$, and there the graph is a perfect
+matching. This gives three \emph{gates}:
+\begin{itemize}
+\item at $2$, when $d\equiv7\pmod8$ (two colours): with the $44$ vectors $s/\bar s$ for $s$ with
+  coefficients in $\{-1,0,1\}$, every graph over $\Q(\sqrt{47})$ we built was bipartite;
+\item at $3$, when $d\equiv2\pmod3$, with residue field $\F_9$: for $d=83$ and $D=410$ every direction is
+  integral there;
+\item at $5$, when $d\equiv0,\pm1\pmod5$, with residue field $\F_5$: for $d=35$ and $D=174$ every direction
+  is integral there.
+\end{itemize}
+Each of these direction sets builds only $3$-colourable graphs. A useful set contains vectors that are
+integral at no gate, such as $(1+7i\sqrt{47})/48$, from Pell's equation $48^2-47\cdot7^2=1$. The gates do not
+explain every failure: the first searches over $\Q(\sqrt{35})$, $\Q(\sqrt{131})$ and $\Q(\sqrt{179})$ failed
+with sets of $60$ to $212$ directions that pass all three gates, and succeeded with the $196$ to $276$
+directions of denominator dividing $390$ and the variant of the growth.
+
+\section{Remarks}
+
+\subsection*{A different question: \texorpdfstring{$\Q(\sqrt{-d})$ inside $\C$}{Q(sqrt(-d)) inside C}}
+Cohen \cite{Cohen} wrote that ``the natural conjecture is that $\Q[\alpha]$ is $3$-colorable for all $\alpha$
+quadratic over $\Q$'', for the set $\Q[\alpha]\subset\C$. For $\alpha=\sqrt{-d}$ this set is
+$\{x+y\sqrt{-d}\}$, of dimension $2$ over $\Q$, while $\Q(\sqrt d)^2$ has dimension $4$; so
+Theorem~\ref{thm:main} does not contradict the conjecture. The conjecture holds:
+
+\begin{proposition}
+For every $\alpha$ quadratic over $\Q$, the unit-distance graph on $\Q[\alpha]\subset\C$ is $3$-colourable.
+\end{proposition}
+
+\begin{proof}
+For real $\alpha$ the set lies on a line. For $\alpha=\sqrt{-1}$ it is $\Q^2$ \cite{Woodall}, and for
+$\alpha=\sqrt{-2}$ it lies in $\Q(\sqrt2)^2$, which is $2$-colourable. Otherwise $d$ has an odd prime factor
+$p$, and the prime $\p$ of $L=\Q(\sqrt{-d})$ above $p$ is ramified. An element $z\in L$ with $|z|=1$
+satisfies $z\bar z=1$ and $v_\p(\bar z)=v_\p(z)$, so $z$ is a $\p$-adic unit; and $z\equiv\bar z\pmod\p$, so $z^2\equiv1$ and
+$z\equiv\pm1\pmod\p$. Choose a representative $r_C$ of each coset $C$ of the ring $\mathcal O_\p$ of
+$\p$-integral elements, and colour $w\in C$ by $f((w-r_C)\bmod\p)$, where $f$ is a proper $3$-colouring of the
+cycle $\mathrm{Cay}(\F_p,\{\pm1\})$. Points at distance $1$ differ by such an element, lie in the same coset,
+and have residues differing by $\pm1$.
+\end{proof}
+
+\subsection*{Open questions}
+\begin{itemize}
+\item Is $\chi(\Q(\sqrt{47})^2)$ equal to $4$ or $5$? A value of $5$ would give a triangle-free $5$-chromatic
+  unit-distance graph.
+\item Does every real quadratic field with $d\equiv11\pmod{12}$ need four colours? Our searches over
+  $\Q(\sqrt{83})$, $\Q(\sqrt{107})$ and $\Q(\sqrt{203})$ have so far found only $3$-colourable graphs, and over
+  $\Q(\sqrt{95})$ and $\Q(\sqrt{155})$ they found graphs with no $3$-colouring that we have not yet reduced to
+  certified critical graphs.
+\item A uniform proof: a family of graphs, or an argument, covering all $d\equiv11\pmod{12}$ at once.
+\item How small can a $4$-chromatic unit-distance graph over a real quadratic field be? Ours has $94$ vertices
+  for $d=11$ and $100$ for $d=191$.
+\end{itemize}
+
+\begin{thebibliography}{99}
+\bibitem{Cohen} D. Cohen, \emph{The $\C$ unit distance graph}, University of Chicago REU paper, 2007,
+\url{https://www.math.uchicago.edu/~may/VIGRE/VIGRE2007/REUPapers/FINALFULL/Cohen.pdf}.
+\bibitem{deGrey} A. D. N. J. de Grey, \emph{The chromatic number of the plane is at least 5}, Geombinatorics
+\textbf{28} (2018), 18--31; arXiv:1804.02385.
+\bibitem{Fischer1990} K. G. Fischer, \emph{Additive $K$-colorable extensions of the rational plane}, Discrete
+Math. \textbf{82} (1990), 181--195.
+\bibitem{Repo} S. Gal\'an, \emph{The Hadwiger--Nelson problem over number fields}, code, data and formal
+proofs, 2026. Archived at Zenodo, \href{https://doi.org/10.5281/zenodo.22976635}{doi:10.5281/zenodo.22976635}
+(all versions); source at \url{https://github.com/decalion89/chromatic-number-of-the-plane}; this note is
+\texttt{notes/quadratic\_planes.md} there.
+\bibitem{Johnson1987} P. D. Johnson Jr., \emph{Two-colorings of real quadratic extensions of $\Q^2$ that forbid
+many distances}, Congr. Numer. \textbf{60} (1987), 51--58.
+\bibitem{Madore} D. A. Madore, \emph{The Hadwiger--Nelson problem over certain fields}, arXiv:1509.07023 (2015).
+\bibitem{MM} MildlyMeticulous (GitHub account), \emph{A $2$-adic obstruction to $5$-chromatic unit-distance
+graphs, and the exact chromatic number of the plane over $\Q(\sqrt3,\sqrt{11})$}, code, logs and draft, July 2026,
+\url{https://github.com/MildlyMeticulous/hn-2adic-obstruction}.
+\bibitem{Moorhouse} G. E. Moorhouse, \emph{On the chromatic numbers of planes}, preliminary draft, revised
+3 March 2010, \url{https://www.ericmoorhouse.org/pub/chromatic.pdf}.
+\bibitem{Payne} M. S. Payne, \emph{Unit distance graphs with ambiguous chromatic number}, Electron. J. Combin.
+\textbf{16} (2009), Note~31; arXiv:0707.1177.
+\bibitem{Soifer} A. Soifer, \emph{The New Mathematical Coloring Book}, Springer, 2024.
+\bibitem{Woodall} D. R. Woodall, \emph{Distances realized by sets covering the plane}, J. Combin. Theory Ser. A
+\textbf{14} (1973), 187--200.
+\end{thebibliography}
+
+\end{document}
