@@ -48,7 +48,7 @@ def kissat(S, proof=None, seed=0):
     L, E = cnf(S, TMP + ".cnf")
     args = [KISSAT, "--time=900", f"--seed={seed}", TMP + ".cnf"] + ([proof] if proof else [])
     r = subprocess.run(args, capture_output=True, text=True).returncode
-    return {10: True, 20: False}.get(r), L
+    return {10: True, 20: False}.get(r), L, E
 
 
 def core3(S):
@@ -67,7 +67,7 @@ def core3(S):
 
 def drat_core(S, seed):
     proof = TMP + ".drat"
-    r, L = kissat(S, proof, seed)
+    r, L, E = kissat(S, proof, seed)
     if r is not False:
         return None
     o = subprocess.run([DRAT, TMP + ".cnf", proof, "-c", TMP + ".core", "-t", "3000"], capture_output=True, text=True).stdout
@@ -81,6 +81,9 @@ def drat_core(S, seed):
         t = [int(x) for x in line.split()[:-1]]
         if len(t) == 3 and all(x > 0 for x in t):
             C.add(L[(t[0] - 1) // 3])
+    # the formula fixes the colours of the first edge by unit clauses, so the refutation may use those two
+    # vertices without their at-least-one clauses: keep them
+    C |= {L[E[0][0]], L[E[0][1]]}
     return core3(C)
 
 
@@ -92,7 +95,7 @@ while True:
         C = drat_core(S, seed)
         if C is None or len(C) >= len(S):
             continue
-        r, _ = kissat(C)
+        r, _, _ = kissat(C)
         if r is False and (best is None or len(C) < len(best)):
             best = C
     print(f"core round: {len(S)} -> {len(best) if best else '-'}", flush=True)
@@ -118,7 +121,7 @@ while changed:
             necessary.add(v); tabu_keeps += 1
             continue
         kissat_calls += 1
-        r, _ = kissat(T)
+        r, _, _ = kissat(T)
         if r is False:
             S = T; changed = True
             print(f"delete {v}: -> {len(S)}  [tests {tests}, tabu keeps {tabu_keeps}, kissat {kissat_calls}]", flush=True)

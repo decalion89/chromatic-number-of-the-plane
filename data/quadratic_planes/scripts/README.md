@@ -24,7 +24,7 @@ files go to `/dev/shm`.
 | `grow3r.py` | the same, but when no candidate is blocked it 3-colours the graph again from scratch, and then adds candidates whose neighbours see two colours; it found the graphs for `d = 35, 131, 239, 359` |
 | `exactcheck.py` | an exact check of a grown graph and of its formula |
 | `min3.py` | shrinking: rounds of drat-trim cores, then deletion of vertices one at a time, to a vertex-critical graph (two copies with fixed temporary names were run for `d = 11` and `d = 23`) |
-| `min3fast.py` | the same shrinking, faster on large graphs: several random seeds per core round, and tabu search before kissat in the deletion phase |
+| `min3fast.py` | the same shrinking, faster on large graphs: several random seeds per core round, the two vertices of the fixed edge always kept in the core (`min3.py` drops them, and then stops too early), and tabu search before kissat in the deletion phase; used for `d = 431` |
 | `certify_q.py` | the certificate of a critical graph: exact edges, unlisted unit pairs, triangles, two encodings with kissat and drat-trim, a 4-colouring, and 3-colourings of `G − v` |
 | `export_q.py` | writes `q{d}.json`, `q{d}.cnf` and `q{d}.logs/` from a certificate directory |
 | `pipeline_q.sh` | `exactcheck.py`, kissat with a DRAT proof, drat-trim, `min3.py` and `certify_q.py` for one grown graph |

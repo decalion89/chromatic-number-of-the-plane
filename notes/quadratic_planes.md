@@ -6,14 +6,14 @@ different colours. For real quadratic fields `K = ℚ(√d)` the known values we
 2 and 3. No real quadratic field was known to need four colours.
 
 **Theorem.**
-1. `χ(ℚ(√d)²) = 4` for `d = 11, 23, 35, 59, 71, 119, 131, 191, 239, 359`.
+1. `χ(ℚ(√d)²) = 4` for `d = 11, 23, 35, 59, 71, 119, 131, 191, 239, 359, 431`.
 2. `4 ≤ χ(ℚ(√47)²) ≤ 5`.
 
 Each lower bound is a finite graph: a triangle-free unit-distance graph with
 coordinates in `ℚ(√d)`, which is not 3-colourable and is vertex-critical. The
 graphs have 106 vertices (`d = 11`), 686 (`d = 23`), 650 (`d = 35`), 872
 (`d = 47`), 462 (`d = 59`), 674 (`d = 71`), 469 (`d = 119`), 511 (`d = 131`),
-143 (`d = 191`), 394 (`d = 239`) and 741 (`d = 359`).
+143 (`d = 191`), 394 (`d = 239`), 741 (`d = 359`) and 344 (`d = 431`).
 
 So `χ(ℚ(√d)²)` is now known for every squarefree `d < 83` except `d = 47`
 (§1): it is 2 if `d ≡ 1, 2 (mod 4)`, 3 if `d ≡ 3 (mod 4)` and `d ≢ 2 (mod 3)`,
@@ -96,6 +96,7 @@ These are two identities between integers, so every edge is checked exactly.
 | 191 | 240 | 143 | 344 | 3–40 | 52 |
 | 239 | 480 | 394 | 1 007 | 3–44 | 82 |
 | 359 | 600 | 741 | 1 926 | 3–60 | 78 |
+| 431 | 600 | 344 | 794 | 3–32 | 68 |
 
 In each graph:
 - the edges are all the pairs of its points at distance 1;
@@ -113,8 +114,8 @@ There is no triangle in any of these planes. A unit triangle would need
 `((a + b√d)/D, (c + e√d)/D)` with integer coordinates. They form a finite set
 `U_D`, closed under negation, under the quarter turn and under complex
 conjugation. We used `|U_D| = 108` in each case (140 for `d = 71`, 148 for
-`d = 119`, 132 for `d = 239`, 140 for `d = 359`, 196 for `d = 131`, 276 for
-`d = 35`).
+`d = 119`, 132 for `d = 239`, 140 for `d = 359`, 116 for `d = 431`, 196 for
+`d = 131`, 276 for `d = 35`).
 
 **The growth.**
 1. Start from all sums of at most two vectors of `U_D`.
@@ -122,12 +123,14 @@ conjugation. We used `|U_D| = 108` in each case (140 for `d = 71`, 148 for
 3. Add the points `p + u` whose neighbours already see all three colours.
 4. Repeat until kissat answers that the graph is not 3-colourable. This took
    1 to 30 rounds and at most 12 211 points (21 895 for `d = 131`, 39 265 for
-   `d = 35`). For `d = 35, 131, 239, 359` we used a variant:
+   `d = 35`). For `d = 35, 131, 239, 359, 431` we used a variant:
    when no candidate is blocked, it 3-colours the graph again from scratch, and
    if still none is blocked it adds candidates whose neighbours see two colours.
 5. Shrink: keep the vertices whose clauses lie in the drat-trim core of a
    checked proof, then delete vertices one at a time while the rest stays not
-   3-colourable.
+   3-colourable. (For `d = 431` a faster version: several solver seeds per
+   core, the two vertices of the fixed edge always kept in the core, and tabu
+   search before kissat.)
 
 **Why some direction sets fail.** Three places act as gates. When every unit
 vector of a set is integral at such a place, reduction at that place colours
@@ -186,8 +189,8 @@ and checks the proof, in about ten seconds for the five fields.
 
 ## 5. The upper bounds
 
-- **`d = 11, 23, 35, 71, 119, 191, 239, 359`.** `d` is a nonzero square modulo 7
-  (`d = 11, 23, 71, 191, 239, 359`) or `d ≡ 0 (mod 7)` (`d = 35 = 5 · 7`,
+- **`d = 11, 23, 35, 71, 119, 191, 239, 359, 431`.** `d` is a nonzero square
+  modulo 7 (`d = 11, 23, 71, 191, 239, 359, 431`) or `d ≡ 0 (mod 7)` (`d = 35 = 5 · 7`,
   `d = 119 = 7 · 17`), and
   `7 ≡ 3 (mod 4)`. Moorhouse's Lemma 8.2 reduces the plane modulo a prime of
   norm 7 into the unit-distance graph of `𝔽₇²`. That graph is 4-colourable, so `χ(K²) ≤ 4`.
