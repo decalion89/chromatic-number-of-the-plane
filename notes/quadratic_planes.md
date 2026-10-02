@@ -14,7 +14,7 @@ coordinates in `ℚ(√d)`, which is not 3-colourable and is vertex-critical. Th
 graphs have 76 vertices (`d = 11`), 393 (`d = 23`), 580 (`d = 35`),
 816 (`d = 47`), 406 (`d = 59`), 611 (`d = 71`), 1 404 (`d = 95`),
 399 (`d = 119`), 356 (`d = 131`), 1 281 (`d = 155`), 259 (`d = 179`),
-96 (`d = 191`), 339 (`d = 239`), 291 (`d = 251`), 394 (`d = 263`),
+96 (`d = 191`), 338 (`d = 239`), 291 (`d = 251`), 394 (`d = 263`),
 715 (`d = 359`), 331 (`d = 431`), 703 (`d = 443`), 71 (`d = 455`),
 659 (`d = 599`), 712 (`d = 611`), 898 (`d = 791`), 327 (`d = 911`),
 252 (`d = 935`) and 513 (`d = 959`).
@@ -37,8 +37,8 @@ Let `d ≥ 2` be squarefree and `K = ℚ(√d)`.
 | `d ≡ 1, 2 (mod 4)` | `= 2` | Johnson (1987); Moorhouse (2010), Lemma 8.4 and Theorem 8.5 |
 | `d ≡ 0, 1 (mod 3)` | `≤ 3` | Fischer (1990), Theorem 9; Moorhouse, Corollary 8.3 |
 | `d ≡ 0, 1, 2, 4 (mod 7)` | `≤ 4` | Moorhouse, Corollary 8.3 |
-| `d ≡ 3 (mod 8)` | `≤ 4` | Fischer (1990), Theorem 10; Corollary D of hn-2adic-obstruction (2026); `notes/local_colourings.md`, Proposition A |
-| `d ≡ 3 (mod 4)` | `≥ 3` | Fischer (1990), Theorem 8; Moorhouse, Theorem 8.6, for prime `d` (an odd cycle from Pell's equation) |
+| `d ≡ 3 (mod 8)` | `≤ 4` | Fischer (1990), Theorem 10; hn-2adic-obstruction (2026), `RESULTS.md` §0, item 3 (Corollary D of its `NOTES.md`); `notes/local_colourings.md`, Proposition A |
+| `d ≡ 3 (mod 4)` | `≥ 3` | Fischer (1990), Theorem 8; Moorhouse, Theorem 8.6, for prime `d` (an odd cycle from Pell's equation); directly, the unit vector `z = (1 + i√d)/(1 − i√d)` gives `((d + 1)/4)(z + z̄) + ((d − 1)/2)·1 = 0`, a closed walk of odd length `d` |
 
 Madore (2015) proved `χ(ℚ(√3)²) = χ(ℚ(√7)²) = 3`. Moorhouse's Theorem 8.1,
 `χ(K²) ≤ 4` unless `d ≡ 47, 59, 83 (mod 84)`, combines the rows on 3 and 7.
@@ -46,7 +46,8 @@ The public repository
 [hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction)
 (July 2026, not refereed; `notes/literature.md`, item 1) proves the rows on
 `d ≡ 1, 2 (mod 4)` and `d ≡ 3 (mod 8)` again by reduction at 2 (its
-Corollary D), and finds odd cycles over `ℚ(√11)`.
+`RESULTS.md`, §0, item 3, and Corollary D of its `NOTES.md`), and finds odd
+cycles over `ℚ(√11)`.
 
 So a real quadratic field can need four colours only if `d ≡ 11 (mod 12)`:
 `d ≡ 3 (mod 4)` (else 2 colours suffice) and `d ≡ 2 (mod 3)` (else 3 suffice).
@@ -116,7 +117,7 @@ These are two identities between integers, so every edge is checked exactly.
 | 155 | 510 | 1 281 | 3 526 | 3–103 | 124 |
 | 179 | 390 | 259 | 622 | 3–39 | 90 |
 | 191 | 240 | 96 | 212 | 3–21 | 50 |
-| 239 | 480 | 339 | 848 | 3–42 | 78 |
+| 239 | 480 | 338 | 840 | 3–41 | 78 |
 | 251 | 390 | 291 | 715 | 3–56 | 98 |
 | 263 | 1020 | 394 | 1 017 | 3–62 | 72 |
 | 359 | 600 | 715 | 1 851 | 3–63 | 74 |
@@ -173,28 +174,41 @@ from a different start (below, **Spindles**).
    vertex, each test a solve under assumptions, the core of failed assumptions
    of every refutation as the new vertex set, and up to 400 random deletion
    orders per grown graph, keeping the smallest critical graph (for `d = 95`,
-   `d = 155` and `d = 251` so far one order). For `d = 191` and `455` a third
-   pass did better (2 October). `min3fast2.py` keeps the vertex set of every
-   round of drat-trim cores, and `min3multi.py` started from one of these
-   (122 and 78 vertices) instead of from the grown graph, whose first core of
-   failed assumptions has 438 and 234. Then 394 of 1 000 orders gave 96
-   vertices, and 980 of 3 000 gave 71, where 3 000 orders from the grown graphs
-   had given no fewer than 100 and 74.
+   `d = 155` and `d = 251` so far one order). For `d = 191`, `239`, `455` and
+   `935` a third pass did better (2 October). `min3fast2.py` keeps the vertex
+   set of every round of drat-trim cores, and `min3multi.py` started from one
+   of these (122, 449, 78 and 315 vertices) instead of from the grown graph.
+   For `d = 191` and `455`, whose grown graphs have first cores of failed
+   assumptions of 438 and 234 vertices, 394 of 1 000 orders gave 96 vertices,
+   and 980 of 3 000 gave 71, where 3 000 orders from the grown graphs had given
+   no fewer than 100 and 74. For `d = 239` and `935`, 29 of 729 orders gave
+   338 vertices (355 before) and 14 of 1 000 gave 252 (257 before).
 
-**Why some direction sets fail.** Three places act as gates. When every unit
-vector of a set is integral at such a place, reduction at that place colours
-every graph the set builds.
+**Why some direction sets fail.** Three places act as gates. Let `𝔭` be a prime
+of `K` that splits as `𝔓𝔓̄` in `K(i)`, with residue field `𝔽_q`. A unit vector
+`z = x + iy` has `zz̄ = 1`, so `v_𝔓(z) = −v_𝔓̄(z)`; when every direction of a set
+is integral at `𝔓` and `𝔓̄` (for instance when `p ∤ D`), reduction maps every
+graph the set builds into `H_q = Cay(𝔽_q², {(x, x⁻¹)})`.
 - **At 2**, when `d ≡ 7 (mod 8)`, the place above 2 splits in `K(i)` with
   residue field `𝔽₂`. Integral unit vectors reduce to the edge `(1, 1)` of the
-  graph `H₂ = Cay(𝔽₂², {(1, 1)})`, a perfect matching. With the 44 unit vectors
-  `s/s̄` for `s` with coefficients in `{−1, 0, 1}`, the graphs over `ℚ(√47)`
-  were bipartite.
+  graph `H₂ = Cay(𝔽₂², {(1, 1)})`, a perfect matching: with `D` odd every graph
+  is bipartite.
 - **At 3**, when `d ≡ 2 (mod 3)`, the place above 3 has residue field `𝔽₉` and
   splits in `K(i)`. Integral graphs map to
-  `H₉ = Cay(𝔽₉², {(x, x⁻¹) : x ∈ 𝔽₉*})`, which is 3-colourable.
+  `H₉ = Cay(𝔽₉², {(x, x⁻¹) : x ∈ 𝔽₉*})`, which is 3-colourable. So `3 | D` is
+  needed, and for `d = 83` it is not enough (below: `D = 1230`).
 - **At 5**, when `d ≡ 0, 1, 4 (mod 5)`, the places above 5 have residue field
   `𝔽₅` and split in `K(i)`. Integral graphs map to `H₅`, which is
-  3-colourable. For `d = 35` and `D = 174`, every direction is integral there.
+  3-colourable. So `5 | D` is needed; for `d = 35` and `D = 174`, every
+  direction is integral there.
+
+Every denominator of the published graphs meets these conditions. (Corrected on
+2 October: we wrote before that with the 44 unit vectors `s/s̄` for `s` with
+coefficients in `{−1, 0, 1}` the graphs over `ℚ(√47)` were bipartite because of
+the gate at 2. Eight of these vectors, `±(23 ± i√47)/24` and their quarter
+turns, are not integral at 2, and `12z + 12z̄ + 23 = 0` for
+`z = (−23 + i√47)/24` is a closed walk of odd length 47: the graphs we built
+were bipartite only because they were small.)
 
 The graphs `H_q` are those of §12 of `notes/local_colourings.md`. Their
 chromatic number is 3 for `q = 3, 5, 9`, and at least 5 for
@@ -298,7 +312,9 @@ itself. cake_lpr (Tan, Heule and Myreen) is a proof checker verified in the
 HOL4 theorem prover and compiled by the verified CakeML compiler, so this
 check does not rest on drat-trim. On 2 October we ran it for every graph:
 each proof `VERIFIED UNSAT`, for both formulas
-(`data/quadratic_planes/cake_lpr_checks.txt`).
+(`data/quadratic_planes/cake_lpr_checks.txt`). The log records the SHA-256 hash
+of each stored formula it checked, and a test checks that it is the hash of the
+file in the repository.
 `tests/test_quadratic_planes.py` runs the fast checks, and checks that this log
 covers every field.
 
@@ -388,8 +404,9 @@ that they are up to date.
   we found no such reason:
   for `d = 83` with `D = 510` (108 directions) and `D = 1530` (180), no proper
   3-colouring is periodic modulo `mM`, where `M` is the lattice the directions
-  span, for `m ≤ 10` or `m = 12` (`D = 510`) and `m ≤ 8` (`D = 1530`)
-  (`data/quadratic_planes/scripts/periodicq.py`).
+  span, for `m ≤ 10` or `m = 12` (`D = 510`), `m ≤ 8` (`D = 1530`) and `m ≤ 13`
+  (`D = 2958`, 324 directions, where the growth stopped at 2 788 points with no
+  blocked candidate) (`data/quadratic_planes/scripts/periodicq.py`).
 - **Smaller witnesses.** The graph over `ℚ(√455)` has 71 vertices, and the
   one over `ℚ(√11)` 76. How small can a 4-chromatic unit-distance graph over a
   real quadratic field be?

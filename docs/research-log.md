@@ -9119,6 +9119,41 @@ set of directions changes that (`notes/quadratic_planes.md`).
   smaller graphs for `d = 935` (257 → 252 vertices) and `d = 239` (355 → 339), both certified. `lean/Sqrt443.lean`
   proves the theorem given the unsatisfiability of its formula, like the other large graphs; cake_lpr checked
   all 25 graphs again, each in both encodings.
+- **A smaller graph for `d = 239`, and corrections after a referee's reading (2 October).** The random orders
+  from the 449-vertex drat-trim core of `d = 239` gave 338 vertices and 840 edges (29 of 729 orders), certified
+  from scratch by `certify_q.py`; it replaces the 339-vertex graph. `lean/Sqrt239.lean` was written again from
+  the data (built and replayed locally in 45 s and 20 s), and cake_lpr checked all 25 graphs again, each in both
+  encodings and on the stored formula. A subagent then read the paper as a referee would, recomputed every
+  number from the data (with CaDiCaL as a second solver) and checked the citations it could reach. Corrected:
+  - **An error.** The note and the paper gave the 44 vectors `s/s̄` (`s` with coefficients in `{−1, 0, 1}`) over
+    `ℚ(√47)` as an example of the gate at 2. Eight of them, `±(23 ± i√47)/24` and their quarter turns, are not
+    integral at 2, and `12z + 12z̄ + 23 = 0` for `z = (−23 + i√47)/24` is a closed walk of odd length 47: the
+    graphs built from them were bipartite only because they were small (the research log of 25 September drew
+    the wrong conclusion). The gates are now stated with the rule they imply: a gate at `p` closes whenever
+    `p ∤ D`, so `3 | D`, `2 | D` when `d ≡ 7 (mod 8)` and `5 | D` when `d ≡ 0, ±1 (mod 5)`; every published
+    denominator meets it, and the non-trivial example is `d = 83`, `D = 1230`.
+  - Four published graphs (`d = 191, 239, 455, 935`), not two, came from random orders started at a drat-trim
+    core. The stored DRAT proofs have 1.4 kB to 17 MB (kissat's binary format; 42 MB in text form for
+    `d = 95`) and each drat-trim check at most 18 s, not "a few megabytes". The growth ended with up to
+    40 198 points (`d = 911`), not 39 265. `χ(𝔽₇²) = 4` is Moorhouse's Table 6.1 (§6), not §7. The citation of
+    hn-2adic-obstruction names the file (`RESULTS.md`, §0, item 3; its "Corollary D" is in `NOTES.md`), and
+    the reference to Soifer's book, which we have not read, is gone. The paper's abstract now says what is
+    proved in Lean (for `d = 47`, the lower bound); its Lean paragraph says that `#guard` compares the formula
+    with the stored file by evaluation, not in the kernel; the reduction argument cites Moorhouse's Lemma 4.2
+    (every component is a translate of the component of the origin).
+  - The intro gives a direct proof of `χ ≥ 3` for `d ≡ 3 (mod 4)` (the referee's remark):
+    `((d + 1)/4)(z + z̄) + ((d − 1)/2)·1 = 0` for `z = (1 + i√d)/(1 − i√d)` is a closed walk of odd length `d`.
+  - The checker now reports the girth (4 for every graph) and prints the SHA-256 hash of each stored formula,
+    and a test checks that the log of the cake_lpr run names the formulas as they are now (before, a stale log
+    would have passed).
+  The LRAT proofs of the fifteen conditional graphs (kissat seed 0, `drat-trim -L`) have from 1.0 MB
+  (`d = 263`; 0.67 MB with the best of eight seeds) to 70 MB (`d = 95`).
+- **`ℚ(√83)` again (2 October).** With `D = 2958` (324 directions, the most of any gate-open denominator up to
+  3 000) the growth stopped at 2 788 points with no blocked candidate. Two explanations are ruled out: no proper
+  3-colouring of `Cay(M/mM, U)` exists for `m ≤ 13` (`periodicq.py`), so there is no periodic colouring with a
+  small period; and there is no colouring `c(P) = ⌊3{t·P/2997}⌋` with `t ∈ ℤ⁴` (CP-SAT: infeasible), so none
+  by a character of that resolution. The shortest odd cycles have length 7 for `D = 2958` and `1530`, and 9 for
+  `D = 2040` (`oddmitm.py`).
 
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; smaller witnesses (the
 smallest graphs have 71 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has

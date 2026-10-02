@@ -1,7 +1,9 @@
 """Planes over real quadratic fields that need four colours (notes/quadratic_planes.md): exact checks, no solver."""
 import copy
+import hashlib
 import json
 import os
+import re
 import sys
 
 import pytest
@@ -32,6 +34,7 @@ def test_graph_is_a_unit_distance_graph(d):
     assert g["d"] == d
     ok, msg = vq.check_graph(g)
     assert ok, msg
+    assert msg.endswith("no triangle, girth 4"), msg       # the paper says every graph has girth 4
 
 
 @pytest.mark.parametrize("d", FIELDS)
@@ -102,9 +105,12 @@ def test_tampering_is_caught():
 def test_cake_lpr_log_covers_every_field():
     """data/quadratic_planes/cake_lpr_checks.txt: the checker run with kissat, drat-trim and cake_lpr has a
     VERIFIED UNSAT line for every field, for its own encoding and for the stored formula, and ends with exit
-    status 0"""
+    status 0; and it checked the stored formulas as they are now (the sha256 it printed for each q{d}.cnf)"""
     log = open(os.path.join(D, "cake_lpr_checks.txt"), encoding="utf-8").read()
     for d in FIELDS:
+        digest = hashlib.sha256(open(os.path.join(D, f"q{d}.cnf"), "rb").read()).hexdigest()
+        assert re.search(rf"Q\(sqrt{d}\): ok: q{d}\.cnf is the 3-colouring formula of this graph \(\d+ clauses, "
+                         rf"sha256 {digest}\)", log), (d, "the log does not check this q{d}.cnf")
         assert f"Q(sqrt{d}): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT" in log, d
         # the stored formula itself: the hypothesis of the Lean files of field_lean.COND_FIELDS
         assert (f"Q(sqrt{d}): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on "

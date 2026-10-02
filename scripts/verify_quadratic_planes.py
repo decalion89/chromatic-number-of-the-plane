@@ -5,11 +5,12 @@ For each field Q(sqrt d) in data/quadratic_planes/ the file qD.json holds a grap
   - the points are distinct, and every edge has length exactly 1: with da, db, dc, de the differences,
     (da + db sqrt d)^2 + (dc + de sqrt d)^2 = D^2, i.e. da^2 + d db^2 + dc^2 + d de^2 = D^2 and da db + dc de = 0;
   - the edge list is every pair of points at distance 1 (so G is the unit-distance graph on its points), and G has
-    no triangle;
+    no triangle (its girth, 4 when two vertices have two common neighbours, is reported);
   - the stored 4-colouring is proper, so chi(G) <= 4;
   - for every vertex v the stored 3-colouring of G - v is proper, so G is vertex-critical if chi(G) = 4;
   - the stored CNF (qD.cnf) is exactly the formula "G is 3-colourable, with the edge fixed[0], fixed[1] coloured 0, 1"
-    in the encoding 3v + c + 1. Its unsatisfiability is the certificate in qD.logs/ (kissat, drat-trim); with
+    in the encoding 3v + c + 1 (its sha256 is printed, so a log of this script names the file it checked). Its
+    unsatisfiability is the certificate in qD.logs/ (kissat, drat-trim); with
     --kissat PATH --drat-trim PATH this script writes the formula again in its own encoding (c n + v + 1), solves it
     and checks the proof; with --cake-lpr PATH as well, drat-trim also writes the proof in LRAT form and cake_lpr,
     a proof checker verified in CakeML, checks it too, and the same is done for the stored formula qD.cnf itself
@@ -22,6 +23,7 @@ usage: python3 scripts/verify_quadratic_planes.py [--field d ...] [--kissat PATH
        [--workdir DIR]
 The last line begins with CONFIRMED or with NOT CONFIRMED; the exit status is 0 only if everything checked holds."""
 import argparse
+import hashlib
 import json
 import os
 import subprocess
@@ -62,7 +64,9 @@ def check_graph(g):
         adj[a].add(b); adj[b].add(a)
     if any(adj[a] & adj[b] for a, b in E):
         return False, "the graph has a triangle"
-    return True, f"{n} distinct points of the plane over Q(sqrt{d}), {len(E)} edges, all pairs at distance exactly 1, no triangle"
+    four = any(len(adj[a] & adj[b]) >= 2 for a in range(n) for b in range(a + 1, n))
+    return True, (f"{n} distinct points of the plane over Q(sqrt{d}), {len(E)} edges, all pairs at distance exactly 1, "
+                  f"no triangle, girth {'4' if four else 'more than 4'}")
 
 
 def digits(s):
@@ -123,7 +127,8 @@ def check_cnf(g, path):
         return False, "the fixed pair is not an edge"
     if nv != 3 * len(g["points"]) or norm(cl) != norm(clauses(g, lambda v, c: 3 * v + c + 1)):
         return False, f"{os.path.basename(path)} is not the 3-colouring formula of this graph"
-    return True, f"{os.path.basename(path)} is the 3-colouring formula of this graph ({len(cl)} clauses)"
+    digest = hashlib.sha256(open(path, "rb").read()).hexdigest()
+    return True, f"{os.path.basename(path)} is the 3-colouring formula of this graph ({len(cl)} clauses, sha256 {digest})"
 
 
 def refute(cnf, kissat, drat_trim, workdir, cake_lpr, where, name):

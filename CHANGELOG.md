@@ -29,7 +29,7 @@ including every retracted claim, is the research log,
   `d < 83` except 47. For real quadratic fields the values known before were 2
   and 3, and a field can need four colours only if `d ≡ 11 (mod 12)`. Each lower
   bound is a triangle-free, vertex-critical unit-distance graph (76, 393, 580,
-  816, 406, 611, 1 404, 399, 356, 1 281, 259, 96, 339, 291, 394, 715, 331, 703,
+  816, 406, 611, 1 404, 399, 356, 1 281, 259, 96, 338, 291, 394, 715, 331, 703,
   71, 659, 712, 898, 327, 252 and 513 vertices, for d = 11, 23, 35, 47, 59, 71,
   95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455, 599, 611, 791,
   911, 935, 959) with no 3-colouring:
@@ -41,8 +41,8 @@ including every retracted claim, is the research log,
   is a different question, which reduction at a ramified prime settles.
   `scripts/verify_quadratic_planes.py` checks everything again (with
   `--cake-lpr`, every proof is also checked by the verified checker cake_lpr; it
-  accepted all of them), and `tests/test_quadratic_planes.py` runs the fast
-  checks. The graph over ℚ(√11) is drawn in the paper (Figure 1) and on the
+  accepted all of them; its log names each formula by its SHA-256 hash), and
+  `tests/test_quadratic_planes.py` runs the fast checks. The graph over ℚ(√11) is drawn in the paper (Figure 1) and on the
   front page (Figure 3).
   As a corollary, a real number field that contains one of these `√d` and has a
   place with residue field `𝔽₇` has `χ = 4`; for example `ℚ(√11, 7^{1/m})`, of
@@ -64,7 +64,8 @@ including every retracted claim, is the research log,
   `lrat_proof`, `lean/Sqrt{d}.lean` proves the theorem from the hypothesis that the
   graph's colouring formula is unsatisfiable. `lean/ColouringFormula.lean` defines that
   formula as a Lean object and proves that a 3-colouring would satisfy it; each file
-  checks, when it is built, that `q{d}.cnf` is exactly this formula, and
+  checks by evaluation (`#guard`), when it is built, that `q{d}.cnf` is exactly this
+  formula, and
   `scripts/verify_quadratic_planes.py --cake-lpr` has the verified checker cake_lpr
   check an LRAT proof of `q{d}.cnf` itself. Typed coordinates and a balanced tree of
   points make every field file build in seconds to minutes.
