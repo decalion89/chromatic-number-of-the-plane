@@ -449,7 +449,7 @@ that they are up to date.
   `𝔽₁₉²` has no 4-colouring is in `finite19.logs/`, kissat UNSAT and drat-trim VERIFIED). For the real plane the measurable bound 5 is Falconer's theorem and 6 is
   open; for the `p`-adic planes with `p ≥ 59` six colours are needed.
 
-  A six-page draft with these results and their proofs is `papers/padic-planes/`; a referee's reading by a separate
+  A seven-page draft with these results and their proofs is `papers/padic-planes/`; a referee's reading by a separate
   agent found no mathematical error and corrected the attributions (Madore, Bachoc–DeCorte–Oliveira–Vallentin,
   Medrano–Myers–Stark–Terras, Vinh).
 
@@ -478,6 +478,21 @@ that they are up to date.
   first prime that escapes is `p = 2 129 503 819`, where every `d` is a non-square, as at 3. It would follow,
   for example, from `χ(ℚ(√q)²) = 4` for every prime `q ≡ 11 (mod 12)`: by Dirichlet, every prime `p ≡ 3 (mod 4)`
   with `p ≥ 7` has such a `q` that is a square modulo `p`, and then `ℚ(√q) ⊂ ℚ_p`.
+- **Lines and higher dimensions.** For the graph on `ℚ_p^n` (adjacent when `Σ(v_i − w_i)² = 1`), `χ(ℚ_p^n)` is
+  finite exactly when `n = 1`, or `n = 2` and `p ≢ 1 (mod 4)`, or `p = 2` and `n ≤ 4`: the other forms are isotropic
+  (five or more variables always, three or more for odd `p`), and Davies's theorem applies. On the line,
+  `χ(ℚ_p¹) = 2` (each coset of `ℤ` is a path), but for odd `p` every measurable 2-colouring would be invariant
+  under the dense subgroup `2ℤ` of `ℤ_p`, hence almost everywhere constant, so `χ_B(ℚ_p¹) = χ_m(ℚ_p¹) = 3` (the
+  cycle `ℤ/p` coloured on the cosets of `ℤ_p`). In dimensions 3 and 4 at `p = 2`: unit vectors of `ℚ₂³` are
+  integral with exactly one odd coordinate, so `χ(ℚ₂³) = 2`; and `χ(ℚ₂⁴) = 4`, the lower bound from the rational
+  regular tetrahedron `0, (1, 0, 0, 0), (½, ½, ½, ½), (½, ½, ½, −½)`, the upper bound by colouring each coset of
+  the 2-adic Hurwitz order through its residue field `𝔽₄` (Hamilton's quaternions over `ℚ₂` form a division
+  algebra whose reduced norm is the form). These are the 2-adic forms of Benda and Perles's `χ(ℚ³) = 2` and
+  `χ(ℚ⁴) = 4` (Geombinatorics 9 (2000), 113–126, as cited by Madore, ¶1.6; we have not read their proofs), and as
+  `ℚⁿ ⊂ ℚ₂ⁿ` and the tetrahedron is rational, they prove both values again. So no non-degenerate quadratic graph
+  over a local field of characteristic 0 has finite chromatic number and infinite Borel chromatic number (in one
+  variable the graph is empty or `x ∼ x ± b`, which has a Borel colouring in at most three colours); on the
+  `p`-adic line with `p` odd the two differ by one.
 
 ## 6. Open
 

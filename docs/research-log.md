@@ -9323,6 +9323,27 @@ set of directions changes that (`notes/quadratic_planes.md`).
   number, so BMK's dichotomy holds for ordinary colourings too. The referee also asked for evidence that
   `χ(𝔽₁₉²) = 5`: `finite_planes.json` now stores a 5-colouring of `𝔽₁₉²`, and `finite19.logs/` the formula with
   one edge fixed, kissat UNSAT (8 s) and drat-trim VERIFIED (5.5 s); a new test refutes it again with CaDiCaL.
+- **The search over `ℚ(√47)` at 70 000 points (2 October, night).** Three of the four four-colour forced-pair growths
+  with `D = 240` stopped at a one-hour kissat time-out: `b240` at round 9 (72 997 points, 371 369 edges) and, on the
+  cloud machine of share A, `a12` (72 179 points) and `a13` (76 482 points); `a11` went on (77 490 points, its last
+  colouring took 35 minutes). The formulas were rebuilt from the saved states (`mkcnf_state.py`, the same
+  encoding as `growforce4.py`) and are being decided with longer runs: kissat for 8 hours here, a portfolio of
+  four solvers on `b240` (share C) and kissat in its `--sat` and `--unsat` modes on `a12` and `a13` (share D), up
+  to 20 hours each. The growths become slow at this size whether or not a forced pair is near, so a time-out is
+  no evidence either way; an UNSATISFIABLE answer would have to be shrunk to a small forcing core, spun, and
+  certified with drat-trim before it means anything. The `s4080` growth (`D = 4080`) was stopped by the kernel's
+  memory limit at round 11 (77 800 points, 10 GB, 63 million candidate points), and the scans Q15a/Q15b finished at
+  22:01 UTC with no new field beyond 491 and 851. Whether `𝔽₂₃²` has a 7-colouring (a triangle pinned) was left
+  undecided by kissat after two hours.
+- **Lines and higher dimensions, and a second reading (2 October, night).** The draft has a new section: `χ(ℚ_p^n)`
+  is finite exactly when `n = 1`, or `n = 2` and `p ≢ 1 (mod 4)`, or `p = 2` and `n ≤ 4`; `χ(ℚ₂³) = 2` and
+  `χ(ℚ₂⁴) = 4`, the upper bound by colouring the cosets of the 2-adic Hurwitz order through its residue field `𝔽₄`;
+  and `χ(ℚ_p¹) = 2` but `χ_B(ℚ_p¹) = 3` for odd `p`. A second referee, again a separate agent, found the section
+  correct, with one gap: the closing remark (no non-degenerate quadratic graph over a local field of
+  characteristic 0 has `χ` finite and `χ_B` infinite) rested on a corollary stated for two or more variables, and
+  the one-variable case needed its own line. That line, a citation to Serre for forms in five variables, the
+  pinned references to Voight's book (Proposition 13.3.4 and Theorem 13.3.11, read in the open-access edition)
+  and Madore's ¶1.6 for Benda and Perles (read in his paper) are in.
 
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; smaller witnesses (the
 smallest graphs have 71 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has

@@ -1,6 +1,6 @@
 # Colouring the p-adic plane
 
-[`padic-planes.pdf`](padic-planes.pdf) is a six-page draft about the graph on ℚ_p² in which two points are adjacent
+[`padic-planes.pdf`](padic-planes.pdf) is a seven-page draft about the graph on ℚ_p² in which two points are adjacent
 when (x − x′)² + (y − y′)² = 1:
 
 - For p ≡ 3 (mod 4) every measurable proper colouring needs at least 1 + (p + 1)/(2√p) colours, so the Borel
@@ -16,6 +16,9 @@ when (x − x′)² + (y − y′)² = 1:
 - χ(ℚ_p²) ≥ 4 for every prime p ≡ 3 (mod 4) with 7 ≤ p < 2 129 503 819, from the unit-distance graphs over 27 real
   quadratic fields of [`papers/quadratic-planes/`](../quadratic-planes/); by Chebotarev's theorem no finite set of
   number fields gives this for every p.
+- In every dimension n, χ(ℚ_p^n) is finite exactly when n = 1, or n = 2 and p ≢ 1 (mod 4), or p = 2 and n ≤ 4;
+  χ(ℚ₂⁴) = 4, through the residue field 𝔽₄ of the 2-adic quaternions, and on the p-adic line χ = 2 but the Borel
+  chromatic number is 3 for odd p.
 
 [`padic-planes.tex`](padic-planes.tex) is its LaTeX source (`amsart`). To rebuild the PDF, run in this folder, with
 TeX Live:

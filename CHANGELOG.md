@@ -66,8 +66,10 @@ including every retracted claim, is the research log,
   `χ(ℚ_p²) = ∞` for `p ≡ 1 (mod 4)`, so `χ(ℚ_p²)` is finite exactly for `p = 2` and `p ≡ 3 (mod 4)`; and by
   Chebotarev's theorem no finite set of number fields gives `χ(ℚ_p²) ≥ 4` for every `p ≡ 3 (mod 4)` (note §5). The 27
   certified fields reach every prime `p ≡ 3 (mod 4)` from 7 below `2 129 503 819`, the first one they miss
-  (`padic_reach.c`, checked by `padic_reach.py`). A six-page draft, *Colouring the p-adic plane*
-  (`papers/padic-planes/`), proves these results.
+  (`padic_reach.c`, checked by `padic_reach.py`). A seven-page draft, *Colouring the p-adic plane*
+  (`papers/padic-planes/`), proves these results; it also determines in every dimension `n` when `χ(ℚ_p^n)` is
+  finite (`n = 1`, or `n = 2` and `p ≢ 1 (mod 4)`, or `p = 2` and `n ≤ 4`), with `χ(ℚ₂⁴) = 4` through the residue
+  field `𝔽₄` of the 2-adic quaternions, and `χ(ℚ_p¹) = 2` but `χ_B(ℚ_p¹) = 3` for odd `p`.
 - **`χ(ℚ(√d)²) = 4` in Lean 4 for ten fields**, `d = 11, 119, 131, 179, 191, 251,
   431, 455, 911, 935` (`lean/Sqrt{d}.lean`), with Mathlib. Each lower bound is the graph
   of `data/quadratic_planes/q{d}.json`: the kernel checks its unit distances and,

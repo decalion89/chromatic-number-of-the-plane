@@ -53,12 +53,13 @@ $p\equiv3\pmod4$ every proper colouring with Haar-measurable colour classes uses
 $1+(p+1)/(2\sqrt p)$ colours. The proof is the Delsarte--Hoffman bound on the compact group $\Z_p^2$, where the
 Fourier coefficients of the unit circle are Kloosterman sums at the first level and at most $2/(p+1)$ at every
 deeper level. We also show $\chi(\Q_7^2)=4$, for ordinary and for Borel colourings, while $\chi(\Q_2^2)=2$ and
-$\chi(\Q_3^2)=3$ follow from results of Madore. A theorem of Davies shows that the graph of every isotropic form
-over a field of characteristic $0$ has infinite chromatic number, so the dichotomy of Bardestani and
+$\chi(\Q_3^2)=3$ follow from results of Madore. A theorem of Davies shows that the graph of every non-degenerate
+isotropic form over a field of characteristic $0$ has infinite chromatic number, so the dichotomy of Bardestani and
 Mallahi-Karai holds for ordinary colourings too; in particular $\chi(\Q_p^2)=\infty$ for $p\equiv1\pmod4$. Finally,
 unit-distance graphs over $27$ real quadratic fields give $\chi(\Q_p^2)\ge4$ for every prime $p\equiv3\pmod4$ with
 $7\le p<2\,129\,503\,819$, and a Chebotarev argument shows that no finite set of number fields gives this bound
-for every such $p$.
+for every such $p$. In every dimension $n$ we determine when $\chi(\Q_p^n)$ is finite, and show
+$\chi(\Q_2^4)=4$ through the residue field $\F_4$ of the $2$-adic quaternions.
 \end{abstract}
 
 \maketitle
@@ -138,6 +139,10 @@ $p\equiv3\pmod4$.
 If $Q$ is anisotropic, \cite[Theorem~1.1]{BMK} gives $\chi\le\chiB<\infty$; if it is isotropic,
 Proposition~\ref{prop:C} gives $\chiB\ge\chi=\infty$.
 \end{proof}
+
+In all dimensions (Proposition~\ref{prop:dim} in \S\ref{sec:dim}), $\chi(\Q_p^n)$ is finite exactly when $n=1$, or
+$n=2$ and $p\not\equiv1\pmod4$, or $p=2$ and $n\le4$; and $\chi(\Q_2^2)=\chi(\Q_2^3)=2$, $\chi(\Q_2^4)=4$. On the
+$p$-adic line, $\chi(\Q_p^1)=2$ but $\chiB(\Q_p^1)=3$ for odd $p$.
 
 Finally, every number field $K$ with an embedding $K\hookrightarrow\Q_p$ gives $\chi(\Q_p^2)\ge\chi(K^2)$.
 Unit-distance graphs with no proper $3$-colouring over $27$ real quadratic fields \cite{QP} give:
@@ -373,6 +378,62 @@ Madore had observed that $\chi(\R^{1,1})=\infty$ would give $\chi(\C^2)=\infty$ 
 recorded this consequence of his theorem; the proposition is the same remark for any field of characteristic
 $0$.
 
+\section{Lines and higher dimensions}\label{sec:dim}
+
+For $n\ge1$ let $\chi(\Q_p^n)$ be the chromatic number of the graph on $\Q_p^n$ joining $v$ and $w$ when
+$\sum_i(v_i-w_i)^2=1$, and $\chiB(\Q_p^n)$, $\chiM(\Q_p^n)$ its Borel and measurable versions.
+
+\begin{proposition}\label{prop:dim}
+$\chi(\Q_p^n)$ is finite if and only if $n=1$, or $n=2$ and $p\not\equiv1\pmod4$, or $p=2$ and $n\le4$. Moreover:
+\begin{enumerate}
+\item $\chi(\Q_p^1)=2$ for every $p$, while $\chiB(\Q_2^1)=2$ and $\chiB(\Q_p^1)=\chiM(\Q_p^1)=3$ for odd $p$;
+\item $\chi(\Q_2^2)=\chi(\Q_2^3)=2$ and $\chi(\Q_2^4)=4$, and the Borel chromatic numbers are the same.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Over $\Q_p$ every form in at least five variables is isotropic \cite[Chapter~IV, Theorem~6]{Serre}, and so is
+$x_1^2+x_2^2+x_3^2$ for odd $p$: it has a nonsingular zero modulo $p$ by the Chevalley--Warning theorem, which lifts
+by Hensel's lemma. For $p=2$ the forms $x_1^2+\dots+x_n^2$ with $n\le4$ are anisotropic: a primitive zero
+$(a_1,\dots,a_4)\in\Z_2^4$ would have $t\ge1$ odd entries with $t\equiv\sum_ia_i^2\equiv0\pmod4$, so $t=4$, and then
+$\sum_ia_i^2\equiv4\pmod8$. Proposition~\ref{prop:C} gives $\chi=\infty$ in the isotropic cases, and Corollary~\ref{cor:dich} treats
+$n=2$.
+
+(1) The neighbours of $x$ are $x\pm1$, so each coset of $\Z$ in $\Q_p$ is a two-way infinite path, and colouring it
+by the parity of the offset from a chosen representative gives $\chi(\Q_p^1)=2$. For a Borel colouring use the
+cosets of $\Z_p$ instead: $x\mapsto(x-r(x))\bmod p$, with $r$ as in the proof of Proposition~\ref{prop:upper},
+maps the graph to the cycle
+$\Z/p$ with steps $\pm1$, which needs $2$ colours for $p=2$ and $3$ for odd $p$. Conversely, for odd $p$ a
+measurable $2$-colouring $c$ would satisfy $c(x+2)=c(x)$; since $2$ generates a dense subgroup of $\Z_p$, the
+translation by $2$ is ergodic on $\Z_p$, so $c$ would be almost everywhere constant on $\Z_p$, which contradicts
+$c(x+1)\ne c(x)$.
+
+(2) The graph has edges, and $0$, $(1,0,0,0)$, $(\frac12,\frac12,\frac12,\frac12)$, $(\frac12,\frac12,\frac12,-\frac12)$
+are pairwise at distance $1$, so $\chi(\Q_2^4)\ge4$. For $n\le3$, if $\sum_ix_i^2=1$ with $\min_iv_2(x_i)=-k<0$,
+then $\sum_ia_i^2=4^k$ with $a_i=2^kx_i\in\Z_2$ not all even; but a sum of at most three squares of which
+$t\ge1$ are odd is $\equiv t\not\equiv0\pmod4$. So unit vectors are integral, and as $\sum_ix_i^2\equiv1\pmod8$
+exactly one coordinate is odd; colouring each coset of $\Z_2^n$ by the parity of the coordinate sum (after
+subtracting its representative) gives $\chi(\Q_2^n)=2$ for $n=2,3$. For $n=4$ identify $\Q_2^4$ with Hamilton's
+quaternions $H$ over $\Q_2$ by $x\mapsto x_1+x_2i+x_3j+x_4k$, so that the form becomes the reduced norm $\N$. As
+$\N$ is anisotropic, $H$ is a division algebra; its valuation ring $\Oo_H=\{x:\N x\in\Z_2\}$ (the $2$-adic Hurwitz
+order, $\Z_2^4\cup(h+\Z_2^4)$ with $h=(\frac12,\frac12,\frac12,\frac12)$) has the maximal ideal
+$P=\{x:\N x\in2\Z_2\}=\{x\in\Z_2^4:\sum_ix_i\in2\Z_2\}$ and the residue field $\Oo_H/P\cong\F_4$
+\cite[Proposition~13.3.4 and Theorem~13.3.11]{Voight}. A unit vector lies in $\Oo_H\setminus P$, so adjacent points
+lie in one coset of $\Oo_H$ and their difference is nonzero in $\Oo_H/P$; fixing a representative $r(v)$ of each
+coset (the cosets are open) and colouring $v$ by $(v-r(v))\bmod P\in\F_4$ gives $\chi(\Q_2^4)\le4$. All these
+colourings are locally constant.
+\end{proof}
+
+The values for $n=3,4$ are the $2$-adic forms of Benda and Perles's $\chi(\Q^3)=2$ and $\chi(\Q^4)=4$ \cite{BP},
+as cited in \cite[\P1.6]{Madore} (see also \cite[\S\S11.3--11.4]{Soifer}); we have not read their proofs. Since
+$\Q^n\subset\Q_2^n$ and the tetrahedron above is rational, the proposition proves both values again. By
+Corollary~\ref{cor:dich}, and in one variable because the graph of $ax^2$ is empty or is $x\sim x\pm b$, which
+$x\mapsto x/b$ turns into $x\sim x\pm1$ with a Borel colouring in at most three colours (through the residue field
+as in (1), or by $\lfloor\operatorname{Re}x\rfloor\bmod2$ over $\R$ and $\C$), a non-degenerate quadratic graph over
+a local field of characteristic $0$ never has finite chromatic number and infinite Borel chromatic number, the
+behaviour that \cite[Remark~1.3]{BMK} asks about; on the $p$-adic line with $p$ odd the two differ by one, as for
+the graphs of irrational rotations.
+
 \section{Questions}
 
 \begin{enumerate}
@@ -396,6 +457,7 @@ $(p+1)/2$.
 \end{enumerate}
 
 \begin{thebibliography}{99}
+\bibitem{BP} M. Benda and M. Perles, \emph{Colorings of metric spaces}, Geombinatorics \textbf{9} (2000), 113--126.
 \bibitem{BDOV} C. Bachoc, E. DeCorte, F. M. de Oliveira Filho and F. Vallentin, \emph{Spectral bounds for the
 independence ratio and the chromatic number of an operator}, Israel J. Math. \textbf{202} (2014), 227--254.
 \bibitem{BMK} M. Bardestani and K. Mallahi-Karai, \emph{On a generalization of the Hadwiger--Nelson problem},
@@ -432,9 +494,11 @@ J. Comput. Appl. Math. \textbf{68} (1996), 221--238.
 2010, slides at \url{https://www.ericmoorhouse.org/slides/ebertfest.pdf}.
 \bibitem{Neukirch} J. Neukirch, \emph{Algebraic number theory}, Grundlehren Math. Wiss. \textbf{322}, Springer,
 Berlin, 1999.
+\bibitem{Serre} J.-P. Serre, \emph{A course in arithmetic}, Grad. Texts in Math. \textbf{7}, Springer, New York, 1973.
 \bibitem{Soifer} A. Soifer, \emph{The mathematical coloring book}, Springer, New York, 2009.
 \bibitem{Vinh} L. A. Vinh, \emph{On chromatic number of unit-quadrance graphs (finite Euclidean graphs)},
 arXiv:math/0510092 (2005).
+\bibitem{Voight} J. Voight, \emph{Quaternion algebras}, Grad. Texts in Math. \textbf{288}, Springer, Cham, 2021.
 \bibitem{Weil} A. Weil, \emph{On some exponential sums}, Proc. Nat. Acad. Sci. U.S.A. \textbf{34} (1948),
 204--207.
 \bibitem{Woodall} D. R. Woodall, \emph{Distances realized by sets covering the plane}, J. Combin. Theory Ser. A
