@@ -1,6 +1,6 @@
 # Real quadratic planes that need four colours
 
-[`quadratic-planes.pdf`](quadratic-planes.pdf) is a six-page draft proving χ(ℚ(√d)²) = 4 for twenty-four real
+[`quadratic-planes.pdf`](quadratic-planes.pdf) is a seven-page draft proving χ(ℚ(√d)²) = 4 for twenty-four real
 quadratic fields and 4 ≤ χ(ℚ(√47)²) ≤ 5. The lower bounds are computer proofs: unit-distance graphs over
 ℚ(√d) with no 3-colouring, certified by DRAT proofs checked by drat-trim for two encodings. The upper bounds
 are known reductions modulo a prime.
