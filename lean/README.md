@@ -5,7 +5,7 @@ This directory holds proofs in Lean 4, with Mathlib, of:
   [`papers/planes-4-chromatic/planes-4-chromatic.pdf`](../papers/planes-4-chromatic/planes-4-chromatic.pdf): the planes
   over ℚ(√2, √3) and ℚ(√3, √11) have chromatic number 4. The second is K. G. Fischer's theorem (1994); the note
   gives a short proof of both, and these files check that proof;
-- χ(ℚ(√d)²) = 4 for d = 11, 119, 131, 179, 191, 251, 431, 455 and 935, nine of the real quadratic fields of
+- χ(ℚ(√d)²) = 4 for d = 11, 119, 131, 179, 191, 251, 431, 455, 911 and 935, ten of the real quadratic fields of
   [`notes/quadratic_planes.md`](../notes/quadratic_planes.md), one file per field. Each lower bound is the graph
   of `data/quadratic_planes/q{d}.json`, whose SAT certificate the kernel checks. The upper bounds are
   reductions at a place: at 7 when d is a nonzero square modulo 7 (Moorhouse's Lemma 8.2) or d = 7d′ (d = 119,
@@ -19,7 +19,7 @@ theorem Q23.chromaticNumber_eq_four : (LocalColouring.unitDistGraph Q23.L).chrom
 theorem Q311.chromaticNumber_eq_four : (LocalColouring.unitDistGraph Q311.L).chromaticNumber = 4
 theorem Sqrt11.chromaticNumber_eq_four :
     (LocalColouring.unitDistGraph (QuadraticPlanes.L 11)).chromaticNumber = 4
--- and the same for Sqrt119, Sqrt131, Sqrt179, Sqrt191, Sqrt251, Sqrt431, Sqrt455 and Sqrt935
+-- and the same for Sqrt119, Sqrt131, Sqrt179, Sqrt191, Sqrt251, Sqrt431, Sqrt455, Sqrt911 and Sqrt935
 ```
 
 Here `Q23.L`, `Q311.L` and `QuadraticPlanes.L d` are the subfields ℚ(√2, √3), ℚ(√3, √11) and ℚ(√d) of ℝ,
@@ -34,7 +34,7 @@ def LocalColouring.unitDistGraph (K : IntermediateField ℚ ℝ) : SimpleGraph (
   Adj p q := ((p.1 : ℝ) - q.1) ^ 2 + ((p.2 : ℝ) - q.2) ^ 2 = 1
 ```
 
-`chromaticNumber` is Mathlib's `SimpleGraph.chromaticNumber`, with values in `ℕ∞`. The eleven theorems depend
+`chromaticNumber` is Mathlib's `SimpleGraph.chromaticNumber`, with values in `ℕ∞`. The twelve theorems depend
 only on Lean's three standard axioms, `propext`, `Classical.choice` and `Quot.sound`: `axioms.expected` records
 the output of `#print axioms`, and CI compares them.
 
@@ -101,8 +101,8 @@ colourings exist but cannot be computed.
 | `Q23.lean` | ℚ(√2, √3): the place above 2, and the 10-vertex graph of [`data/chain23.json`](../data/chain23.json) |
 | `Q311.lean` | ℚ(√3, √11): the place above 2, and the Moser spindle |
 | `QuadraticPlanes.lean` | ℚ(√d): the three upper bounds (at 7, at 7 ramified, at 2), and the tools for the lower bounds |
-| `Sqrt{d}.lean` | ℚ(√d), for d = 11, 119, 131, 179, 191, 251, 431, 455, 935: the graph of `data/quadratic_planes/q{d}.json`. It reads `data/quadratic_planes/q{d}.cnf` and the LRAT proof `data/quadratic_planes/q{d}.lrat` (kissat, then `drat-trim -L`) with `include_str` |
-| `PrintAxioms.lean`, `axioms.expected` | the axioms of the eleven theorems |
+| `Sqrt{d}.lean` | ℚ(√d), for d = 11, 119, 131, 179, 191, 251, 431, 455, 911, 935: the graph of `data/quadratic_planes/q{d}.json`. It reads `data/quadratic_planes/q{d}.cnf` and the LRAT proof `data/quadratic_planes/q{d}.lrat` (kissat, then `drat-trim -L`) with `include_str` |
+| `PrintAxioms.lean`, `axioms.expected` | the axioms of the twelve theorems |
 | `tools/q23_coefficients.py`, `tools/q311_coefficients.py` | sympy scripts that produce the coefficients of the `linear_combination` steps and the edge lists |
 | `tools/field_lean.py` | writes `Sqrt{d}.lean` from the data (`--check` compares, and checks the colouring of 𝔽₇² in `QuadraticPlanes.lean` against `finite_planes.json`; the tests run it) |
 

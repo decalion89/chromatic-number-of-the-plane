@@ -1,5 +1,5 @@
 # python3 scripts/verify_quadratic_planes.py --kissat KISSAT --drat-trim DRAT_TRIM --cake-lpr CAKE_LPR
-# run 2026-10-02 02:08 UTC; kissat 4.0.4; cake_lpr sha256 b25551c853c7b7fe6a9059bcddd81a46fb4ed952b842e1080697f8122ee0c8ca
+# run 2026-10-02 05:22 UTC; kissat 4.0.4; cake_lpr sha256 b25551c853c7b7fe6a9059bcddd81a46fb4ed952b842e1080697f8122ee0c8ca
 Q(sqrt11): ok: 76 distinct points of the plane over Q(sqrt11), 172 edges, all pairs at distance exactly 1, no triangle
 Q(sqrt11): ok: a proper 4-colouring
 Q(sqrt11): ok: for each of the 76 vertices v, a proper 3-colouring of G minus v
@@ -114,6 +114,24 @@ Q(sqrt599): ok: for each of the 659 vertices v, a proper 3-colouring of G minus 
 Q(sqrt599): ok: q599.cnf is the 3-colouring formula of this graph (5719 clauses)
 Q(sqrt599): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula written again here
 Q(sqrt599): upper bound: d = 599 is a nonzero square mod 7 and p = 7 is 3 mod 4: chi <= chi(F_7^2) <= 4 (Moorhouse, Lemma 8.2; stored colouring checked)
+Q(sqrt611): ok: 712 distinct points of the plane over Q(sqrt611), 1821 edges, all pairs at distance exactly 1, no triangle
+Q(sqrt611): ok: a proper 4-colouring
+Q(sqrt611): ok: for each of the 712 vertices v, a proper 3-colouring of G minus v
+Q(sqrt611): ok: q611.cnf is the 3-colouring formula of this graph (6177 clauses)
+Q(sqrt611): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula written again here
+Q(sqrt611): upper bound: d = 611 is a nonzero square mod 7 and p = 7 is 3 mod 4: chi <= chi(F_7^2) <= 4 (Moorhouse, Lemma 8.2; stored colouring checked)
+Q(sqrt791): ok: 898 distinct points of the plane over Q(sqrt791), 2237 edges, all pairs at distance exactly 1, no triangle
+Q(sqrt791): ok: a proper 4-colouring
+Q(sqrt791): ok: for each of the 898 vertices v, a proper 3-colouring of G minus v
+Q(sqrt791): ok: q791.cnf is the 3-colouring formula of this graph (7611 clauses)
+Q(sqrt791): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula written again here
+Q(sqrt791): upper bound: d = 791 is 0 mod 7 and p = 7 is 3 mod 4: chi <= chi(F_7^2) <= 4 (Moorhouse, Lemma 8.2; stored colouring checked)
+Q(sqrt911): ok: 327 distinct points of the plane over Q(sqrt911), 777 edges, all pairs at distance exactly 1, no triangle
+Q(sqrt911): ok: a proper 4-colouring
+Q(sqrt911): ok: for each of the 327 vertices v, a proper 3-colouring of G minus v
+Q(sqrt911): ok: q911.cnf is the 3-colouring formula of this graph (2660 clauses)
+Q(sqrt911): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula written again here
+Q(sqrt911): upper bound: d = 911 is a nonzero square mod 7 and p = 7 is 3 mod 4: chi <= chi(F_7^2) <= 4 (Moorhouse, Lemma 8.2; stored colouring checked)
 Q(sqrt935): ok: 257 distinct points of the plane over Q(sqrt935), 612 edges, all pairs at distance exactly 1, no triangle
 Q(sqrt935): ok: a proper 4-colouring
 Q(sqrt935): ok: for each of the 257 vertices v, a proper 3-colouring of G minus v
@@ -126,5 +144,5 @@ Q(sqrt959): ok: for each of the 513 vertices v, a proper 3-colouring of G minus 
 Q(sqrt959): ok: q959.cnf is the 3-colouring formula of this graph (4214 clauses)
 Q(sqrt959): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula written again here
 Q(sqrt959): upper bound: d = 959 is 0 mod 7 and p = 7 is 3 mod 4: chi <= chi(F_7^2) <= 4 (Moorhouse, Lemma 8.2; stored colouring checked)
-CONFIRMED: chi(Q(sqrt11)^2) = 4; chi(Q(sqrt23)^2) = 4; chi(Q(sqrt35)^2) = 4; chi(Q(sqrt47)^2) in [4, 5]; chi(Q(sqrt59)^2) = 4; chi(Q(sqrt71)^2) = 4; chi(Q(sqrt95)^2) = 4; chi(Q(sqrt119)^2) = 4; chi(Q(sqrt131)^2) = 4; chi(Q(sqrt155)^2) = 4; chi(Q(sqrt179)^2) = 4; chi(Q(sqrt191)^2) = 4; chi(Q(sqrt239)^2) = 4; chi(Q(sqrt251)^2) = 4; chi(Q(sqrt263)^2) = 4; chi(Q(sqrt359)^2) = 4; chi(Q(sqrt431)^2) = 4; chi(Q(sqrt455)^2) = 4; chi(Q(sqrt599)^2) = 4; chi(Q(sqrt935)^2) = 4; chi(Q(sqrt959)^2) = 4 (kissat, drat-trim and cake_lpr run here)
+CONFIRMED: chi(Q(sqrt11)^2) = 4; chi(Q(sqrt23)^2) = 4; chi(Q(sqrt35)^2) = 4; chi(Q(sqrt47)^2) in [4, 5]; chi(Q(sqrt59)^2) = 4; chi(Q(sqrt71)^2) = 4; chi(Q(sqrt95)^2) = 4; chi(Q(sqrt119)^2) = 4; chi(Q(sqrt131)^2) = 4; chi(Q(sqrt155)^2) = 4; chi(Q(sqrt179)^2) = 4; chi(Q(sqrt191)^2) = 4; chi(Q(sqrt239)^2) = 4; chi(Q(sqrt251)^2) = 4; chi(Q(sqrt263)^2) = 4; chi(Q(sqrt359)^2) = 4; chi(Q(sqrt431)^2) = 4; chi(Q(sqrt455)^2) = 4; chi(Q(sqrt599)^2) = 4; chi(Q(sqrt611)^2) = 4; chi(Q(sqrt791)^2) = 4; chi(Q(sqrt911)^2) = 4; chi(Q(sqrt935)^2) = 4; chi(Q(sqrt959)^2) = 4 (kissat, drat-trim and cake_lpr run here)
 # exit status 0

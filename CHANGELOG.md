@@ -24,17 +24,18 @@ including every retracted claim, is the research log,
 
 - **Real quadratic planes that need four colours** (`notes/quadratic_planes.md`,
   `data/quadratic_planes/`): `χ(ℚ(√d)²) = 4` for
-  `d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 935, 959`,
+  `d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 611, 791, 911, 935, 959`,
   and `4 ≤ χ(ℚ(√47)²) ≤ 5`; so `χ(ℚ(√d)²)` is now known for every squarefree
   `d < 83` except 47. For real quadratic fields the values known before were 2
   and 3, and a field can need four colours only if `d ≡ 11 (mod 12)`. Each lower
   bound is a triangle-free, vertex-critical unit-distance graph (76, 393, 580,
   816, 406, 611, 1 404, 399, 356, 1 281, 259, 100, 355, 291, 394, 715, 331, 74,
-  659, 257 and 513 vertices, for d = 11, 23, 35, 47, 59, 71, 95, 119, 131, 155,
-  179, 191, 239, 251, 263, 359, 431, 455, 599, 935, 959) with no 3-colouring:
+  659, 712, 898, 327, 257 and 513 vertices, for d = 11, 23, 35, 47, 59, 71, 95,
+  119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 611, 791, 911, 935,
+  959) with no 3-colouring:
   kissat with DRAT proofs checked by drat-trim, twice, with separate encodings.
   The upper bounds are known: Moorhouse's reduction at 7
-  (`d = 11, 23, 35, 71, 95, 119, 155, 179, 191, 239, 263, 359, 431, 455, 599, 935, 959`),
+  (`d = 11, 23, 35, 71, 95, 119, 155, 179, 191, 239, 263, 359, 431, 455, 599, 611, 791, 911, 935, 959`),
   Fischer's Theorem 10 (`d = 59, 131, 251`) and the reduction at 11 (`d = 47`).
   The note also observes that Cohen's conjecture (2007) on the sets `ℚ(√−d) ⊂ ℂ`
   is a different question, which reduction at a ramified prime settles.
@@ -43,8 +44,8 @@ including every retracted claim, is the research log,
   accepted all of them), and `tests/test_quadratic_planes.py` runs the fast
   checks. The graph over ℚ(√11) is drawn in the paper (Figure 1) and on the
   front page (Figure 3).
-- **`χ(ℚ(√d)²) = 4` in Lean 4 for nine fields**, `d = 11, 119, 131, 179, 191, 251,
-  431, 455, 935` (`lean/Sqrt{d}.lean`), with Mathlib. Each lower bound is the graph
+- **`χ(ℚ(√d)²) = 4` in Lean 4 for ten fields**, `d = 11, 119, 131, 179, 191, 251,
+  431, 455, 911, 935` (`lean/Sqrt{d}.lean`), with Mathlib. Each lower bound is the graph
   of `data/quadratic_planes/q{d}.json`: the kernel checks its unit distances and,
   through Mathlib's `lrat_proof`, the LRAT proof `data/quadratic_planes/q{d}.lrat`
   that its formula `q{d}.cnf` is unsatisfiable. The upper bounds are proved once,

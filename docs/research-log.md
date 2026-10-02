@@ -9040,6 +9040,23 @@ set of directions changes that (`notes/quadratic_planes.md`).
   The time grows with the number of clauses (each clause is one goal after `casesm*`) and the memory with the
   LRAT proof. The other fields have LRAT proofs from 0.7 MB (`d = 263`, the best of eight kissat seeds; the
   seeds changed the size by at most 30 %) to 70 MB (`d = 95`), so they stay with drat-trim and cake_lpr.
+- **Three more fields: `d = 611, 791, 911` (2 October).** Scan Q8 (`scan_r5.sh`, the variant growth `grow3r.py`
+  with radius-2 seeds, 1 500 s per field) tried denominators not used before for the fields still open. It stopped
+  with 3-colourable graphs for `83:1020`, `203:1020`, `107:1560`, `83:2040`, `287:1560`, `407:1560`, `287:2040`
+  and `491:1020`, and kissat found no 3-colouring for `611:1020` (round 7, 10 580 points, 65 s), `695:1020` (round
+  90, 16 158 points), `791:1020` (round 46, 17 750 points) and `911:1560` (round 8, 40 198 points). The
+  incremental shrink (`min3inc.py`) gave vertex-critical graphs with 715, 977 and 329 vertices, and random
+  deletion orders for 40 minutes (`min3multi.py`: 5, 27 and 60 orders) 712, 898 and 327. `certify_q.py` certified
+  each from scratch: exact unit edges and no others, no triangle, kissat UNSATISFIABLE with drat-trim VERIFIED for
+  both encodings, a 4-colouring, and a 3-colouring of every vertex-deleted graph; the checker with kissat,
+  drat-trim and cake_lpr then confirmed all 24 graphs (`data/quadratic_planes/cake_lpr_checks.txt`). The upper
+  bounds are the reduction at 7: `611 ≡ 3²` and `911 ≡ 1² (mod 7)`, and `791 = 7 · 113`. Unlike the six fields of
+  the previous scan, these direction sets close no 5-cycle, and the graphs' shortest odd cycles have length 7; so
+  a 5-cycle helps but is not needed. For `d = 695` the incremental shrink was too slow (one test took 540 s on a
+  9 630-point core), and `min3fast.py` (kissat cores) is still shrinking it. The 327-vertex graph over `ℚ(√911)`
+  has a 214 KB LRAT proof (kissat's default seed; the other five seeds gave up to 312 KB), so it got a Lean file
+  too, `lean/Sqrt911.lean`: 343 s to build and 120 s to replay with `leanchecker` on the shared machine. The
+  graphs over `ℚ(√611)` and `ℚ(√791)` have LRAT proofs of 7.7 and 3.0 MB.
 
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; smaller witnesses (the
 smallest graphs have 74 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has

@@ -6,7 +6,7 @@ different colours. For real quadratic fields `K = ℚ(√d)` the known values we
 2 and 3. No real quadratic field was known to need four colours.
 
 **Theorem.**
-1. `χ(ℚ(√d)²) = 4` for `d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 935, 959`.
+1. `χ(ℚ(√d)²) = 4` for `d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 611, 791, 911, 935, 959`.
 2. `4 ≤ χ(ℚ(√47)²) ≤ 5`.
 
 Each lower bound is a finite graph: a triangle-free unit-distance graph with
@@ -15,7 +15,8 @@ graphs have 76 vertices (`d = 11`), 393 (`d = 23`), 580 (`d = 35`), 816
 (`d = 47`), 406 (`d = 59`), 611 (`d = 71`), 1 404 (`d = 95`), 399 (`d = 119`),
 356 (`d = 131`), 1 281 (`d = 155`), 259 (`d = 179`), 100 (`d = 191`), 355
 (`d = 239`), 291 (`d = 251`), 394 (`d = 263`), 715 (`d = 359`), 331 (`d = 431`),
-74 (`d = 455`), 659 (`d = 599`), 257 (`d = 935`) and 513 (`d = 959`).
+74 (`d = 455`), 659 (`d = 599`), 712 (`d = 611`), 898 (`d = 791`), 327 (`d = 911`),
+257 (`d = 935`) and 513 (`d = 959`).
 
 So `χ(ℚ(√d)²)` is now known for every squarefree `d < 83` except `d = 47`
 (§1): it is 2 if `d ≡ 1, 2 (mod 4)`, 3 if `d ≡ 3 (mod 4)` and `d ≢ 2 (mod 3)`,
@@ -121,6 +122,9 @@ These are two identities between integers, so every edge is checked exactly.
 | 431 | 600 | 331 | 764 | 3–28 | 66 |
 | 455 | 780 | 74 | 161 | 3–18 | 34 |
 | 599 | 1020 | 659 | 1 686 | 3–102 | 160 |
+| 611 | 1020 | 712 | 1 821 | 3–97 | 130 |
+| 791 | 1020 | 898 | 2 237 | 3–85 | 120 |
+| 911 | 1560 | 327 | 777 | 3–47 | 102 |
 | 935 | 1020 | 257 | 612 | 3–36 | 60 |
 | 959 | 2460 | 513 | 1 233 | 3–57 | 94 |
 
@@ -154,8 +158,9 @@ from a different start (below, **Spindles**).
    1 to 30 rounds and at most 12 211 points (18 041 for `d = 23`, 21 895 for
    `d = 131`, 24 785 for `d = 179`, 39 265 for `d = 35`; 96 rounds for
    `d = 431`; 38 rounds and 15 913 points for `d = 155`, 43 rounds and 12 477
-   points for `d = 95`). For `d = 23, 35, 95, 131, 155, 179, 239, 251, 263, 359,
-   431, 455, 599, 935, 959` we used a variant:
+   points for `d = 95`; for `d = 611`, `791` and `911`, 7, 46 and 8 rounds and
+   10 580, 17 750 and 40 198 points). For `d = 23, 35, 95, 131, 155, 179, 239,
+   251, 263, 359, 431, 455, 599, 611, 791, 911, 935, 959` we used a variant:
    when no candidate is blocked, it 3-colours the graph again from scratch, and
    if still none is blocked it adds candidates whose neighbours see two colours.
 5. Shrink: keep the vertices whose clauses lie in the drat-trim core of a
@@ -202,15 +207,17 @@ gate. With all 108 unit vectors of denominator dividing 240, which include
 
 **Short odd cycles.** There are no triangles, so the shortest odd cycle of a
 graph built from `U_D` has length at least 5, and length 5 exactly when five
-vectors of `U_D` have sum 0. For thirteen of the twenty-one graphs `U_D` has
+vectors of `U_D` have sum 0. For thirteen of the twenty-four graphs `U_D` has
 such a 5-cycle (`d = 11, 23, 35, 71, 119, 131, 191, 251, 263, 455, 599, 935,
-959`), and the graph contains one; the other eight have no odd cycle shorter
+959`), and the graph contains one; the other eleven have no odd cycle shorter
 than 7 (`data/quadratic_planes/scripts/odd_published.py`). The three smallest
 graphs (74, 76 and 100 vertices) are among the thirteen; so is the graph over
 `ℚ(√23)`, which a 5-cycle denominator (`D = 156`) shrank from 660 vertices to
 393. `scan5.py` lists the denominators with a 5-cycle and every gate open; on
 1–2 October they gave every success of the scan (`d = 251`, `455`, `935`,
-`263`, `599`, `959`, in 21 to 616 seconds). A 5-cycle is not enough: with such denominators `d = 299`
+`263`, `599`, `959`, in 21 to 616 seconds). It is not necessary: on 2 October `D = 1020` settled
+`d = 611` and `791`, and `D = 1560` settled `d = 911`, in 65 to 477 seconds, although these `U_D` have no
+5-cycle (the graphs' shortest odd cycles have length 7). A 5-cycle is not enough: with such denominators `d = 299`
 and `407` (and `263` with `D = 408` and `816`) stopped with no blocked
 candidate. For `d = 83`, `107` and `203` there is none with `D ≤ 4 000`,
 prime factors at most 61, 40 to 400 directions and every gate open. More
@@ -283,8 +290,8 @@ every graph: each proof `VERIFIED UNSAT`
 `tests/test_quadratic_planes.py` runs the fast checks, and checks that this log
 covers every field.
 
-**Formal proofs for nine fields.** For `d = 11, 119, 131, 179, 191, 251, 431,
-455` and `935`, `lean/Sqrt{d}.lean` proves `χ(ℚ(√d)²) = 4` in Lean 4 with
+**Formal proofs for ten fields.** For `d = 11, 119, 131, 179, 191, 251, 431,
+455, 911` and `935`, `lean/Sqrt{d}.lean` proves `χ(ℚ(√d)²) = 4` in Lean 4 with
 Mathlib, and depends only on Lean's three standard axioms. For the lower bound
 the kernel checks the unit distances of `q{d}.json` and, through Mathlib's
 `lrat_proof`, an LRAT proof (`data/quadratic_planes/q{d}.lrat`, from kissat and
@@ -299,7 +306,7 @@ vectors are integral there, and the 4-colouring of `𝔽₇²` in
 valuation subring with 2 in its maximal ideal has residue field `𝔽₂`, with
 `√d − 1` in the maximal ideal; in the coordinates `a = x + y/√d`, `b = 2y/√d`
 the squared length is `a² − ab + ((d + 1)/4)b²`, which has no nontrivial zero
-over `𝔽₂`, so the residues in `𝔽₂²` colour the plane. The nine fields cover the
+over `𝔽₂`, so the residues in `𝔽₂²` colour the plane. The ten fields cover the
 three kinds of upper bound and take from half a minute to ten minutes each. For
 the other fields the LRAT proofs are larger (from 0.7 MB to 70 MB), beyond what
 `lrat_proof` checks in reasonable time and memory. `lean/tools/field_lean.py`
@@ -307,16 +314,16 @@ writes each file from the data, and a test checks that they are up to date.
 
 ## 5. The upper bounds
 
-- **`d = 11, 23, 35, 71, 95, 119, 155, 179, 191, 239, 263, 359, 431, 455, 599, 935, 959`.** `d` is a nonzero square
-  modulo 7 (`d = 11, 23, 71, 95, 155, 179, 191, 239, 263, 359, 431, 599, 935`) or `d ≡ 0 (mod 7)` (`d = 35 = 5 · 7`,
-  `d = 119 = 7 · 17`, `d = 455 = 5 · 7 · 13`, `d = 959 = 7 · 137`), and
+- **`d = 11, 23, 35, 71, 95, 119, 155, 179, 191, 239, 263, 359, 431, 455, 599, 611, 791, 911, 935, 959`.** `d` is a nonzero square
+  modulo 7 (`d = 11, 23, 71, 95, 155, 179, 191, 239, 263, 359, 431, 599, 611, 911, 935`) or `d ≡ 0 (mod 7)` (`d = 35 = 5 · 7`,
+  `d = 119 = 7 · 17`, `d = 455 = 5 · 7 · 13`, `d = 791 = 7 · 113`, `d = 959 = 7 · 137`), and
   `7 ≡ 3 (mod 4)`. Moorhouse's Lemma 8.2 reduces the plane modulo a prime of
   norm 7 into the unit-distance graph of `𝔽₇²`. That graph is 4-colourable, so `χ(K²) ≤ 4`.
   `data/quadratic_planes/finite_planes.json` holds the colouring, and the
   checker checks it. In Lean: `QuadraticPlanes.colorable_four` and, for `d ≡ 0 (mod 7)`,
   `colorable_four_ramified`.
 - **`d = 59, 131, 251`.** `d ≡ 3 (mod 8)`, so `χ(K²) ≤ 4` by Fischer's Theorem 10 (which
-  also covers `d = 11`, `d = 35`, `d = 155` and `d = 179`). The
+  also covers `d = 11`, `35`, `155`, `179` and `611`). The
   proof in `notes/local_colourings.md` reduces modulo the place above 2, whose
   residue plane is `K₄`. In Lean: `QuadraticPlanes.colorable_four_two`.
 - **`d = 47`.** `47 ≡ 3 = 5² (mod 11)` and `11 ≡ 3 (mod 4)`, so reduction modulo
@@ -331,7 +338,10 @@ writes each file from the data, and a test checks that they are up to date.
   table that this note does not settle.
 - **All of `d ≡ 11 (mod 12)`.** Does every such field need four colours? For
   `d = 83, 107, 203` our growth has so far found only 3-colourable graphs,
-  with up to 180 directions. That may be a limit of the search: over `ℚ(√35)`,
+  with up to 180 directions, and on 2 October with `D = 1020` and `2040`
+  (`d = 83`), `1560` (`d = 107`) and `1020` (`d = 203`), and for `d = 83` with
+  `D = 1722, 3444, 5166`, which contain the factor 82 of its Pell vector
+  `(1 + 9i√83)/82` and the factor 7. That may be a limit of the search: over `ℚ(√35)`,
   `ℚ(√131)`, `ℚ(√155)` and `ℚ(√179)` it failed in the same way at first, and
   succeeded with the directions of denominator dividing 390 (also 510 for
   `d = 155`, 480 for `d = 95`) and the variant of the growth.
@@ -359,7 +369,7 @@ writes each file from the data, and a test checks that they are up to date.
 | `data/quadratic_planes/cake_lpr_checks.txt` | the checker's log with kissat, drat-trim and cake_lpr, for every field |
 | `data/quadratic_planes/finite_planes.json` | proper colourings of the unit-distance graphs of `𝔽₇²` (4 colours) and `𝔽₁₁²` (5 colours) |
 | `scripts/verify_quadratic_planes.py`, `tests/test_quadratic_planes.py` | the checks of §4 and §5 |
-| `lean/QuadraticPlanes.lean`, `lean/Sqrt{d}.lean`, `data/quadratic_planes/q{d}.lrat` | the formal proofs of §4, for nine fields |
+| `lean/QuadraticPlanes.lean`, `lean/Sqrt{d}.lean`, `data/quadratic_planes/q{d}.lrat` | the formal proofs of §4, for ten fields |
 | `data/quadratic_planes/scripts/` | the code of the search of §3 (growth, shrinking, certification), as it was run, with a README |
 
 ## References

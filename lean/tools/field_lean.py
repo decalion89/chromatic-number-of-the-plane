@@ -16,7 +16,7 @@ import json, os, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "..", "..", "data", "quadratic_planes")
 # The fields with a Lean proof: those whose LRAT proof the kernel checks in a few minutes and a few GB.
-FIELDS = [11, 119, 131, 179, 191, 251, 431, 455, 935]
+FIELDS = [11, 119, 131, 179, 191, 251, 431, 455, 911, 935]
 
 
 def chunks(items, per):

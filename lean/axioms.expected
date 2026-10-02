@@ -8,4 +8,5 @@
 'Sqrt251.chromaticNumber_eq_four' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Sqrt431.chromaticNumber_eq_four' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Sqrt455.chromaticNumber_eq_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Sqrt911.chromaticNumber_eq_four' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Sqrt935.chromaticNumber_eq_four' depends on axioms: [propext, Classical.choice, Quot.sound]

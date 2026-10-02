@@ -187,7 +187,7 @@ The route is **not ours**.
    hn-2adic-obstruction, applied to them; we found no earlier statement of it for
    this family. We searched arXiv and GitHub on 28 and 29 September 2026.
 8. **Real quadratic planes that need four colours** (`notes/quadratic_planes.md`):
-   `χ(ℚ(√d)²) = 4` for `d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 935, 959`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`. For real
+   `χ(ℚ(√d)²) = 4` for `d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 611, 791, 911, 935, 959`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`. For real
    quadratic fields the values in the literature are 2 (Johnson 1987; Moorhouse
    2010, §8) and 3 (Fischer 1990; Madore 2015); for `d ≡ 3 (mod 4)` the lower
    bound was 3 (Fischer 1990, Theorem 8). The upper bounds are known (Moorhouse's

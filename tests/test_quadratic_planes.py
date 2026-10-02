@@ -20,7 +20,8 @@ def load(name):
 
 
 def test_fields():
-    assert {11, 23, 35, 47, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 935, 959} <= set(FIELDS)
+    assert {11, 23, 35, 47, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 611, 791, 911, 935,
+            959} <= set(FIELDS)
     for d in FIELDS:
         assert d % 4 == 3 and d % 3 == 2            # d = 11 mod 12: the only real quadratic fields that can need 4
 

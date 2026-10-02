@@ -8,6 +8,7 @@ import Sqrt191
 import Sqrt251
 import Sqrt431
 import Sqrt455
+import Sqrt911
 import Sqrt935
 
 -- The axioms the theorems depend on; `axioms.expected` holds the expected output.
@@ -21,4 +22,5 @@ import Sqrt935
 #print axioms Sqrt251.chromaticNumber_eq_four
 #print axioms Sqrt431.chromaticNumber_eq_four
 #print axioms Sqrt455.chromaticNumber_eq_four
+#print axioms Sqrt911.chromaticNumber_eq_four
 #print axioms Sqrt935.chromaticNumber_eq_four

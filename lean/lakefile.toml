@@ -1,6 +1,6 @@
 name = "HadwigerNelson"
 version = "0.1.0"
-defaultTargets = ["LocalColouring", "Q23", "Q311", "QuadraticPlanes", "Sqrt11", "Sqrt119", "Sqrt131", "Sqrt179", "Sqrt191", "Sqrt251", "Sqrt431", "Sqrt455", "Sqrt935"]
+defaultTargets = ["LocalColouring", "Q23", "Q311", "QuadraticPlanes", "Sqrt11", "Sqrt119", "Sqrt131", "Sqrt179", "Sqrt191", "Sqrt251", "Sqrt431", "Sqrt455", "Sqrt911", "Sqrt935"]
 
 [[require]]
 name = "mathlib"
@@ -54,6 +54,10 @@ name = "Sqrt431"
 # χ(ℚ(√455)²) = 4 (455 = 7 · 65: the reduction at 7, ramified).
 [[lean_lib]]
 name = "Sqrt455"
+
+# χ(ℚ(√911)²) = 4 (911 ≡ 1² (mod 7): the reduction at 7).
+[[lean_lib]]
+name = "Sqrt911"
 
 # χ(ℚ(√935)²) = 4 (935 ≡ 2² (mod 7): the reduction at 7).
 [[lean_lib]]
