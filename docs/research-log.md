@@ -9148,6 +9148,64 @@ set of directions changes that (`notes/quadratic_planes.md`).
     would have passed).
   The LRAT proofs of the fifteen conditional graphs (kissat seed 0, `drat-trim -L`) have from 1.0 MB
   (`d = 263`; 0.67 MB with the best of eight seeds) to 70 MB (`d = 95`).
+- **Moorhouse's `ℚ(√47)`: the 11-adic plane (2 October).** The upper bound 5 is the reduction at a prime above
+  11, where `ℚ(√47)` embeds in `ℚ₁₁` (and so does `ℚ(√3, √5)`, Voronov's case, whose bound 5 has the same
+  source). Every finite level `G_k = Cay((ℤ/11^k)², T_k)` of the 11-adic plane bounds `χ`, and `χ(G_k)` does not
+  increase with `k`, so a 4-colouring of some `G_k` would give `χ(ℚ(√47)²) = χ(ℚ(√3, √5)²) = 4`. `G₁` and `G₂`
+  have none. At level 3 (1 771 561 points, 1 452 unit vectors) we looked for colourings constant on the orbits of
+  a group of automorphisms that fixes no edge (`data/quadratic_planes/scripts/level3.py`):
+  - the rotations `t ≡ 1 (mod 11)`: 15 961 orbits, 9 864 756 edges, kissat UNSAT (a unit triangle pinned);
+  - the rotations `t ≡ 1 (mod 121)` and the translations by `121·(ℤ/11)·(1, 0)`: 27 951 orbits, 2 576 816
+    edges, UNSAT.
+  The same construction at level 2 is UNSAT, as it must be. A 4-colouring of `ℚ(√47)²` would therefore have to
+  be finer than these 11-adic ones. We also tried splitting the edges by the 2-adic place, which splits in
+  `ℚ(√47, i)`: the edge vectors integral there give a bipartite graph (the gate at 2), so if the others did too, a
+  product of two 2-colourings would 4-colour the plane. In the 816-vertex graph 451 of the 2 134 edges are
+  integral at 2 and the other 1 683 contain an odd cycle, so this fails. In the other direction `χ = 5` would
+  need a triangle-free 5-chromatic unit-distance graph in the plane, itself an open problem; a growth at four
+  colours over `ℚ(√47)` (`grow4r.py`, `D = 240`, from the points within two steps of `0`) reached 12 799 points
+  and 46 599 edges in 212 rounds, 4-colourable throughout and with about two blocked candidates per round, and
+  was stopped.
+- **The other places of `ℚ(√47)` (2 October).** A colouring by reduction at a place `v` is locally constant on
+  `K_v²`. Where `−1` is a square in `K_v` (the places above 2, 3, 5, 7, 13, 17, …) there is no such colouring with
+  finitely many colours: in the coordinates `z = x + iy`, `w = x − iy` the unit steps are
+  `(z, w) ↦ (z + t, w + 1/t)`, and if `c` is constant on a ball of radius `r` around `(z₂, w)`, then for
+  `|z₂ − z₁| > 1/r` the point `(z₁, w)` is adjacent to `(z₂, w + 1/(z₂ − z₁))`, which has the colour of `(z₂, w)`.
+  So on each line `w = const` every colour class is bounded, and finitely many bounded sets do not cover `K_v`
+  (Bardestani and Mallahi-Karai show more: the hyperbola graph of `ℚ_p` has infinite Borel chromatic number).
+  The other places lie above the primes `p ≡ 3 (mod 4)` with `(47/p) = 1` (11, 19, 23, 31, 43, 67, 107, …) and
+  above 47, which ramifies. At a place above such a `p` the colouring factors through some level
+  `G_k = Cay((ℤ/p^k)², T_k)`, and Hoffman's bound settles every level at once when `p ≥ 23`:
+  - the eigenvalues of `G_k` are the sums `Σ_{t ∈ T_k} e(⟨ξ, t⟩/p^k)`. For `ξ` of level 1 they are `p^{k−1}`
+    times those of `G₁`, which are Kloosterman sums of absolute value at most `2√p` (Medrano, Myers, Stark and
+    Terras). For `ξ` of exact level `ℓ ≥ 2`, write the rotations as `t₀(1 + i p^m s)` with `m = ⌈ℓ/2⌉` and sum
+    over `s` first: only the `t₀` with `ξ̄ t₀` real modulo `p^{ℓ−m}` survive, so the sum is 0 when `|ξ|²` is not
+    a square modulo `p` and at most `2p^m` in any case, at most `2/(p + 1)` of the degree `(p + 1)p^{ℓ−1}`;
+  - so the smallest eigenvalue, as a fraction `μ` of the degree, is that of level 1 at every level, and Hoffman's
+    ratio `−μ/(1 − μ)` bounds the independence ratio of every `G_k`. It is 0.2855 for `p = 11`, 0.2756 for 19,
+    0.24908 for 23, 0.249997 for 31, 0.2138 for 43 and 0.1813 for 67, and below `1/4` for every `p ≥ 37` by
+    the bound `2√p`. Below `1/4` no level has a proper 4-colouring. Among the primes `p ≡ 3 (mod 4)` below 700
+    only 3, 7, 11 and 19 have a ratio of at least `1/4` (`hoffman_padic.py`; `spectrum.py` computed every level
+    up to 4 for `p = 11`, 3 for 19 and 2 for 23, 31, 43 and 67; at level 2 the largest new eigenvalue
+    comes within 0.1% of `2/(p + 1)`).
+  - The same argument works at the ramified place above 47: there `O[i]` is unramified over `O`, the
+    uniformiser `π = √47` lies in `O`, and the levels are `(O/π^k)²`, so the new eigenvalues are again at most
+    `2/(q + 1)` of the degree, with `q = 47`. The level-1 plane is `𝔽₄₇²` (ratio 0.2111), so every level is
+    excluded. (At level 2, `O/π² ≅ 𝔽₄₇[ε]` with `ε² = 0`, this is visible directly: a unit vector is `u₀ + εu₁`
+    with `u₁ ⊥ u₀`, and summing over `u₁` leaves at most two `u₀`.)
+
+  So reduction at one place can give `χ(ℚ(√47)²) = 4` only through the 11-adic plane at level 3 or higher or
+  the 19-adic plane at level 2 or higher. Several places at once do not
+  obviously help: such a colouring colours the tensor product of the levels, whose fractional chromatic number
+  is the smallest of theirs (Zhu), and that is above 4 at every place with Hoffman ratio below `1/4`. On the two
+  open places:
+  - at 19, level 1 needs five colours (`notes/local_colourings.md` §13). Level 2 (130 321 points, 380 unit
+    vectors) has no 4-colouring constant on the orbits of the rotations `t ≡ 1 (mod 19)`: 7 201 orbits and
+    1 245 070 edges, kissat UNSAT within a minute, with an edge pinned (`√3 ∉ ℚ₁₉`, so there is no triangle;
+    `levelp.py`), nor one invariant under the translations by `19·(1, 0)` (6 859 classes, 1 179 748 edges,
+    UNSAT; `levelt.py`). The whole of level 2 (24 760 990 edges, 99 million clauses) is with kissat;
+  - at 11, `α(G₁) = 28` (CP-SAT), a ratio of 0.231, and among the rotation-invariant independent sets of `G₂`
+    CP-SAT found none larger than the lifts of level 1 (`28 · 121 = 3 388`) in 900 seconds (bound 4 651).
 - **`ℚ(√83)` again (2 October).** With `D = 2958` (324 directions, the most of any gate-open denominator up to
   3 000) the growth stopped at 2 788 points with no blocked candidate. Two explanations are ruled out: no proper
   3-colouring of `Cay(M/mM, U)` exists for `m ≤ 13` (`periodicq.py`), so there is no periodic colouring with a

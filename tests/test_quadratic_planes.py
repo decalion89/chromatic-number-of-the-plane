@@ -77,6 +77,38 @@ def test_upper_bounds():
     assert vq.upper_bound(47, planes)[0] == 5
 
 
+
+def _circle_eigenvalues(p, level):
+    """the eigenvalues of Cay((Z/p^level)^2, unit circle) for the characters of exact level `level`, as fractions
+    of the degree: one character per norm class (rotations act transitively on primitive vectors of a given norm)"""
+    import math
+    m = p ** level
+    T = [(x, y) for x in range(m) for y in range(m) if (x * x + y * y) % m == 1]
+    reps = {}
+    for x in range(m):
+        for y in range(m):
+            N = (x * x + y * y) % m
+            if N % p and N not in reps:
+                reps[N] = (x, y)
+    return [sum(math.cos(2 * math.pi * ((a * u + b * v) % m) / m) for u, v in T) / len(T) for a, b in reps.values()]
+
+
+def test_padic_planes_hoffman():
+    """notes §6, Q(sqrt47): Hoffman's ratio -mu/(1 - mu) of the level-1 plane F_p^2 is below 1/4 for p = 23, 31, 43,
+    47 (no 4-colouring), not for p = 11, 19; at level 2 the new eigenvalues are at most 2/(p + 1) of the degree,
+    so the least eigenvalue, and with it Hoffman's ratio, is that of level 1"""
+    ratio = {}
+    for p in (11, 19, 23, 31, 43, 47):
+        mu = min(_circle_eigenvalues(p, 1))
+        ratio[p] = -mu / (1 - mu)
+    assert ratio[11] > 0.28 and ratio[19] > 0.27
+    assert all(ratio[p] < 0.25 for p in (23, 31, 43, 47))
+    assert 0.2499 < ratio[31] < 0.25
+    for p in (11, 19):
+        new = _circle_eigenvalues(p, 2)
+        assert max(abs(x) for x in new) <= 2 / (p + 1) + 1e-12
+        assert min(new) > min(_circle_eigenvalues(p, 1))
+
 def test_unit_length_is_exact():
     # (sqrt11/6, 5/6) has length 1 in Q(sqrt11)^2: 11/36 + 25/36 = 1; scaled by D = 6
     assert vq.unit(11, 6, (0, 0, 0, 0), (0, 1, 5, 0))

@@ -47,6 +47,11 @@ including every retracted claim, is the research log,
   As a corollary, a real number field that contains one of these `√d` and has a
   place with residue field `𝔽₇` has `χ = 4`; for example `ℚ(√11, 7^{1/m})`, of
   degree `2m`, so every even degree occurs.
+  For `ℚ(√47)` the note narrows down where a 4-colouring by reduction at one place
+  could come from: not where `−1` is a square in the completion (no locally constant
+  colouring with finitely many colours exists there), and not above 47 or any prime
+  `p ≥ 23` (Hoffman's bound excludes every level of the local plane at once). That
+  leaves the 11-adic and 19-adic planes, whose levels tried so far need five colours.
 - **`χ(ℚ(√d)²) = 4` in Lean 4 for ten fields**, `d = 11, 119, 131, 179, 191, 251,
   431, 455, 911, 935` (`lean/Sqrt{d}.lean`), with Mathlib. Each lower bound is the graph
   of `data/quadratic_planes/q{d}.json`: the kernel checks its unit distances and,

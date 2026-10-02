@@ -50,6 +50,12 @@ files go to `/dev/shm`.
 | `rotunion.py`, `overlap.py` | unions of a graph with copies rotated about `0` (by any `t`), and the rotations `w v̄` (`v, w ∈ U_D`) ranked by how many points they keep in the graph |
 | `pentagons.py` | unit pentagons over `ℚ(√d)` on three directions of `U_D`: `Q = u₁ + u₂ − v₁` closes with two unit vectors of any denominator when `|Q|²(4 − |Q|²)` is a square |
 | `periodicq.py` | is there a 3-colouring periodic modulo `mM`, where `M` is the lattice spanned by the directions `U_D`? (for `d = 83` there is none for the `m` and `D` of §6 of the note) |
+| `level3.py` | the 11-adic plane at level `k`, `Cay((ℤ/11^k)², T_k)`, modulo a group of rotations and translations that fixes no edge: a 4-colouring of it would 4-colour every plane over a field that embeds in `ℚ₁₁`, such as `ℚ(√47)` and `ℚ(√3, √5)`; at level 3 both groups tried give no 4-colouring (§6 of the note) |
+| `grow4r.py` | `grow3r.py` at four colours: colouring-guided growth towards a graph with no 4-colouring (over `ℚ(√47)`, for §6 of the note) |
+| `levelp.py` | the same for any prime `p ≡ 3 (mod 4)`: the `p`-adic plane at level `k` modulo the rotations `t ≡ 1 (mod p^s)`, written as a 4-colouring CNF (at `p = 19`, level 2, the rotations `t ≡ 1 (mod 19)` leave no 4-colouring) |
+| `levelt.py` | the `p`-adic plane at level `k` modulo the translations by `p^j·(1, 0)`, as a 4-colouring CNF (at `p = 19`, level 2, `j = 1`: no 4-colouring) |
+| `spectrum.py` | the eigenvalues of the `p`-adic plane level by level, as fractions of the degree: the new ones at level `ℓ ≥ 2` are at most `2/(p + 1)`, so Hoffman's bound is the same at every level |
+| `hoffman_padic.py` | Hoffman's ratio for the level-1 planes `𝔽_p²`, `p ≡ 3 (mod 4)`: below `1/4` (so no level is 4-colourable) for every `p ≥ 23` (checked below 700; the bound `2√p` on the eigenvalues covers `p ≥ 37`), and not for `p = 3, 7, 11, 19` |
 
 A typical run, for `d = 191`:
 

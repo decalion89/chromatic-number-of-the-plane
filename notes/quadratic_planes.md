@@ -347,9 +347,11 @@ theorem from the hypothesis that the graph's formula is unsatisfiable
 `not_colorable_of_unsatisfiable` proves that a 3-colouring would satisfy it.
 When a file is built, `#guard` checks that `q{d}.cnf` is exactly this formula,
 and cake_lpr checked an LRAT proof that `q{d}.cnf` is unsatisfiable. So for
-every graph the kernel checks the points, the unit distances, the formula and
-the upper bound (except the bound 5 for `d = 47`), and the unsatisfiability of
-the formula is checked by the kernel (ten fields) or by cake_lpr (the others).
+every graph the kernel checks the points, the unit distances, the upper bound
+(except the bound 5 for `d = 47`) and the step from the unsatisfiability of the
+formula to the theorem; `#guard` (an evaluation, not the kernel) checks that the
+formula is the stored one; and its unsatisfiability is checked by the kernel
+(ten fields) or by cake_lpr (the others).
 `lean/tools/field_lean.py` writes each file from the data, and a test checks
 that they are up to date.
 
@@ -385,7 +387,38 @@ that they are up to date.
 ## 6. Open
 
 - **`ℚ(√47)`.** Is `χ = 4` or `5`? It is the smallest open case of Moorhouse's
-  table that this note does not settle.
+  table that this note does not settle. The plane is triangle-free, so `χ = 5`
+  would give a triangle-free 5-chromatic unit-distance graph. The bound 5 is
+  the reduction at a prime above 11, where `ℚ(√47)` embeds in `ℚ₁₁`: every
+  finite level of the 11-adic plane bounds `χ`, but none we could test has a
+  4-colouring. `(ℤ/121)²` has none (September), and on 2 October `(ℤ/1331)²`
+  had none that is invariant under the rotations `t ≡ 1 (mod 11)`, nor one
+  invariant under the rotations `t ≡ 1 (mod 121)` and the translations by
+  `121·(ℤ/11)·(1, 0)` (kissat). `ℚ(√3, √5)` embeds in `ℚ₁₁` too, and its bound
+  5 comes from the same plane. Splitting the edges of the 816-vertex graph by
+  whether their vector is integral at 2 does not help either: the edges that
+  are not integral there contain an odd cycle.
+
+  No other place can give 4 by reduction. Where `−1` is a square in `K_v` (above
+  2, 3, 5, 7, 13, 17, …), no colouring of `K_v²` with finitely many colours is
+  locally constant: with `z = x + iy`, `w = x − iy` the unit steps are
+  `(z, w) ↦ (z + t, w + 1/t)`, so on a line `w = const` each colour class is
+  bounded. The remaining places lie above 47 and above the primes
+  `p ≡ 3 (mod 4)` with `(47/p) = 1`: 11, 19, 23, 31, 43, 67, …. For `p ≥ 23`
+  Hoffman's bound excludes every level at once. The eigenvalues of level 1 are
+  Kloosterman sums, at most `2√p`, and those new at a level `ℓ ≥ 2` are at most
+  `2/(p + 1)` of the degree (sum over the rotations `≡ 1 (mod p^⌈ℓ/2⌉)` first),
+  so the independence ratio of every level is at most `−μ/(1 − μ)`, where `μ` is
+  the least level-1 eigenvalue over the degree: 0.2491 for `p = 23`, 0.249997
+  for 31, 0.214 for 43, and below `1/4` for every `p ≥ 37`, while a 4-colouring
+  has a colour class with ratio at least `1/4`. The ramified place above 47 is
+  excluded the same way (residue field `𝔽₄₇`, ratio 0.211). For `p = 11` and 19
+  the ratio is 0.286 and 0.276. So a 4-colouring by reduction could only come
+  from the 11-adic plane at level 3 or more, or the 19-adic plane at level 2 or
+  more; on 2 October that level had no 4-colouring invariant under the rotations
+  `t ≡ 1 (mod 19)`, nor one invariant under the translations by `19·(1, 0)`
+  (`data/quadratic_planes/scripts/hoffman_padic.py`, `spectrum.py`,
+  `levelp.py`, `levelt.py`).
 - **All of `d ≡ 11 (mod 12)`.** Does every such field need four colours? For
   `d = 83, 107, 203` our growth has so far found only 3-colourable graphs,
   with up to 180 directions, and on 2 October with `D = 1020` and `2040`

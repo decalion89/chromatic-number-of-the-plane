@@ -13,8 +13,9 @@ This directory holds proofs in Lean 4, with Mathlib, of:
 - the same for the other fourteen fields of the note, d = 23, 35, 59, 71, 95, 155, 239, 263, 359, 443, 599, 611,
   791 and 959, and χ(ℚ(√47)²) ≥ 4, given that the graph's colouring formula `q{d}.cnf` is unsatisfiable. Their
   LRAT proofs (from 0.7 MB to 70 MB) are beyond what `lrat_proof` checks in reasonable time and memory; the
-  verified checker cake_lpr checked them (`data/quadratic_planes/cake_lpr_checks.txt`). Everything else (the
-  points, the unit distances, the formula and the upper bound) the kernel checks as for the first ten.
+  verified checker cake_lpr checked them (`data/quadratic_planes/cake_lpr_checks.txt`). The kernel checks the
+  points, the unit distances and the upper bound as for the first ten; that `q{d}.cnf` is the graph's formula is
+  checked by evaluation (`#guard`) when the file is built.
 
 ## The theorems
 
