@@ -109,6 +109,48 @@ def test_padic_planes_hoffman():
         assert max(abs(x) for x in new) <= 2 / (p + 1) + 1e-12
         assert min(new) > min(_circle_eigenvalues(p, 1))
 
+
+def _no_four_colouring(m, pts):
+    """True if the subgraph of Cay((Z/m)^2, unit circle) induced on pts has no proper 4-colouring (CaDiCaL, with the
+    colours of one unit triangle fixed, which loses nothing)"""
+    from pysat.solvers import Solver
+    idx = {tuple(q): i for i, q in enumerate(pts)}
+    assert len(idx) == len(pts)
+    T = [(a, b) for a in range(m) for b in range(m) if (a * a + b * b) % m == 1]
+    E = {(min(i, j), max(i, j)) for i, (x, y) in enumerate(pts) for a, b in T
+         for j in [idx.get(((x + a) % m, (y + b) % m))] if j is not None}
+    adj = {}
+    for u, v in E:
+        adj.setdefault(u, set()).add(v)
+        adj.setdefault(v, set()).add(u)
+    tri = next((u, v, min(adj[u] & adj[v])) for u, v in sorted(E) if adj[u] & adj[v])
+    s = Solver(name="cadical153")
+    for v in range(len(pts)):
+        s.add_clause([4 * v + c + 1 for c in range(4)])
+    for u, v in E:
+        for c in range(4):
+            s.add_clause([-(4 * u + c + 1), -(4 * v + c + 1)])
+    for c, v in enumerate(tri):
+        s.add_clause([4 * v + c + 1])
+    return not s.solve()
+
+
+def test_eleven_adic_levels_need_five_colours():
+    """notes §6, Q(sqrt47): data/quadratic_planes/padic11.json. The 69 points of level 1 and the 244 points of level 2
+    have no proper 4-colouring; every level-2 point lies above a level-1 point; and the logs of the level-3 check
+    (the preimage of the level-2 points, 29 524 points) say UNSATISFIABLE and VERIFIED"""
+    g = load("padic11.json")
+    assert g["p"] == 11 and len(g["level1"]) == 69 and len(g["level2"]) == 244
+    l1 = {tuple(q) for q in g["level1"]}
+    assert all((x % 11, y % 11) in l1 for x, y in g["level2"])
+    assert _no_four_colouring(11, g["level1"])
+    assert _no_four_colouring(121, g["level2"])
+    logs = os.path.join(D, "padic11.logs")
+    check = open(os.path.join(logs, "level3.check.txt"), encoding="utf-8").read()
+    assert "level 3: 29524 points, 1689039 edges, 1452 unit vectors" in check
+    assert "s UNSATISFIABLE" in open(os.path.join(logs, "level3.kissat.log"), encoding="utf-8").read()
+    assert "s VERIFIED" in open(os.path.join(logs, "level3.drat-trim.log"), encoding="utf-8").read()
+
 def test_unit_length_is_exact():
     # (sqrt11/6, 5/6) has length 1 in Q(sqrt11)^2: 11/36 + 25/36 = 1; scaled by D = 6
     assert vq.unit(11, 6, (0, 0, 0, 0), (0, 1, 5, 0))

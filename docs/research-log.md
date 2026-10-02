@@ -9206,6 +9206,30 @@ set of directions changes that (`notes/quadratic_planes.md`).
     UNSAT; `levelt.py`). The whole of level 2 (24 760 990 edges, 99 million clauses) is with kissat;
   - at 11, `α(G₁) = 28` (CP-SAT), a ratio of 0.231, and among the rotation-invariant independent sets of `G₂`
     CP-SAT found none larger than the lifts of level 1 (`28 · 121 = 3 388`) in 900 seconds (bound 4 651).
+- **The 11-adic plane at level 3 needs five colours (2 October).** A proper 4-colouring of a level restricts to the
+  preimage of any set of points of the level below, so a set with no proper 4-colouring at one level gives a
+  smaller search at the next: refute its preimage (`p²` points above each point). `liftcore.py` does this with
+  kissat, has drat-trim check the proof, and shrinks to the drat-trim core (the points whose "some colour" clause
+  the proof uses), which again has no proper 4-colouring; `crit4.py` then makes the set vertex-critical with one
+  incremental CaDiCaL solver.
+  - Level 1: the drat-trim cores of `𝔽₁₁²` end at 69 points (287 edges) with no proper 4-colouring.
+  - Level 2: their preimage (8 349 points, 381 997 edges) has none (kissat about 15 minutes), and its cores end
+    at 364 points; `crit4.py` makes that 244 points and 1 269 edges, vertex-critical.
+  - Level 3: the preimage of the 364 points (44 044 points, 3 584 383 edges of `G₃`, whose 1 452 unit vectors are
+    the circle modulo 1 331) has no proper 4-colouring: kissat UNSAT and drat-trim VERIFIED within four minutes. So
+    does the preimage of the 244 points (29 524 points, 1 689 039 edges; nine minutes).
+  - `check_lift.py`, written separately (the unit vectors by a direct search, the points listed one by one, the
+    colour-major encoding, another pinned triangle), agrees on both counts and both answers, and its logs are in
+    `data/quadratic_planes/padic11.logs/`. The 69 and 244 points are in `data/quadratic_planes/padic11.json`, and a
+    test refutes both levels again with CaDiCaL in under a second.
+
+  So `Cay((ℤ/1331)², T₃)` has no proper 4-colouring. This says nothing yet about level 4: each level maps onto
+  the one below, so colourings pass up the levels and obstructions do not. A 4-colouring of `ℚ(√47)²` or of
+  `ℚ(√3, √5)²` by reduction above 11 would need level 4 or more. Lifting again
+  needs a smaller level-3 set: the cores of the 44 044 points reached 15 876 points, and `crit4.py` was shrinking
+  them further when this was written. At 19 the same method has no small start: the drat-trim core of `𝔽₁₉²` is
+  all 361 points, so its preimage is the whole of level 2 (130 321 points), where kissat stopped after 90
+  minutes without an answer; subsets with 19 random points in each fibre were also undecided within 10 minutes.
 - **`ℚ(√83)` again (2 October).** With `D = 2958` (324 directions, the most of any gate-open denominator up to
   3 000) the growth stopped at 2 788 points with no blocked candidate. Two explanations are ruled out: no proper
   3-colouring of `Cay(M/mM, U)` exists for `m ≤ 13` (`periodicq.py`), so there is no periodic colouring with a

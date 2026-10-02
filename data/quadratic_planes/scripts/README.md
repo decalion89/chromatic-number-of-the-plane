@@ -54,6 +54,9 @@ files go to `/dev/shm`.
 | `grow4r.py` | `grow3r.py` at four colours: colouring-guided growth towards a graph with no 4-colouring (over `ℚ(√47)`, for §6 of the note) |
 | `levelp.py` | the same for any prime `p ≡ 3 (mod 4)`: the `p`-adic plane at level `k` modulo the rotations `t ≡ 1 (mod p^s)`, written as a 4-colouring CNF (at `p = 19`, level 2, the rotations `t ≡ 1 (mod 19)` leave no 4-colouring) |
 | `levelt.py` | the `p`-adic plane at level `k` modulo the translations by `p^j·(1, 0)`, as a 4-colouring CNF (at `p = 19`, level 2, `j = 1`: no 4-colouring) |
+| `liftcore.py` | obstruction lifting: the preimage at level `k` of a set of level-`k − 1` points with no proper 4-colouring, refuted by kissat (drat-trim checks the proof and gives a core, which is shrunk while it shrinks); at 11 it took a 69-point set of level 1 to levels 2 and 3 (`data/quadratic_planes/padic11.json`) |
+| `check_lift.py` | an independent check of one lifting step (its own enumeration of the unit vectors and of the points, the colour-major encoding, another pinned triangle; kissat and drat-trim, with logs) |
+| `crit4.py` | shrinks a set of points of a level with no proper 4-colouring to a vertex-critical one, with one incremental CaDiCaL solver (the 244 points of level 2 in `padic11.json`) |
 | `spectrum.py` | the eigenvalues of the `p`-adic plane level by level, as fractions of the degree: the new ones at level `ℓ ≥ 2` are at most `2/(p + 1)`, so Hoffman's bound is the same at every level |
 | `hoffman_padic.py` | Hoffman's ratio for the level-1 planes `𝔽_p²`, `p ≡ 3 (mod 4)`: below `1/4` (so no level is 4-colourable) for every `p ≥ 23` (checked below 700; the bound `2√p` on the eigenvalues covers `p ≥ 37`), and not for `p = 3, 7, 11, 19` |
 

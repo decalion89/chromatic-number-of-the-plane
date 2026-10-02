@@ -51,7 +51,10 @@ including every retracted claim, is the research log,
   could come from: not where `−1` is a square in the completion (no locally constant
   colouring with finitely many colours exists there), and not above 47 or any prime
   `p ≥ 23` (Hoffman's bound excludes every level of the local plane at once). That
-  leaves the 11-adic and 19-adic planes, whose levels tried so far need five colours.
+  leaves the 11-adic plane, whose levels 1, 2 and 3 need five colours (an obstruction
+  of 69 points at level 1 lifts to 244 points at level 2 and to 29 524 points at level
+  3, `data/quadratic_planes/padic11.json`), and the 19-adic plane, whose level 1 needs
+  five.
 - **`χ(ℚ(√d)²) = 4` in Lean 4 for ten fields**, `d = 11, 119, 131, 179, 191, 251,
   431, 455, 911, 935` (`lean/Sqrt{d}.lean`), with Mathlib. Each lower bound is the graph
   of `data/quadratic_planes/q{d}.json`: the kernel checks its unit distances and,

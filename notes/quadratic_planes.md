@@ -391,10 +391,14 @@ that they are up to date.
   would give a triangle-free 5-chromatic unit-distance graph. The bound 5 is
   the reduction at a prime above 11, where `ℚ(√47)` embeds in `ℚ₁₁`: every
   finite level of the 11-adic plane bounds `χ`, but none we could test has a
-  4-colouring. `(ℤ/121)²` has none (September), and on 2 October `(ℤ/1331)²`
-  had none that is invariant under the rotations `t ≡ 1 (mod 11)`, nor one
-  invariant under the rotations `t ≡ 1 (mod 121)` and the translations by
-  `121·(ℤ/11)·(1, 0)` (kissat). `ℚ(√3, √5)` embeds in `ℚ₁₁` too, and its bound
+  4-colouring. `(ℤ/121)²` has none (September), and on 2 October neither has
+  `(ℤ/1331)²`. Obstructions lift: a 4-colouring of a level restricts to the
+  preimage of any set of the level below, so it is enough to refute that
+  preimage. A 69-point set of level 1 with no proper 4-colouring has a preimage
+  at level 2 with none, which shrinks to 244 points (vertex-critical), and the
+  29 524 points of level 3 above those have none either (kissat, drat-trim, and
+  an independent second program; `data/quadratic_planes/padic11.json`,
+  `scripts/liftcore.py`, `check_lift.py`). `ℚ(√3, √5)` embeds in `ℚ₁₁` too, and its bound
   5 comes from the same plane. Splitting the edges of the 816-vertex graph by
   whether their vector is integral at 2 does not help either: the edges that
   are not integral there contain an odd cycle.
@@ -414,7 +418,7 @@ that they are up to date.
   has a colour class with ratio at least `1/4`. The ramified place above 47 is
   excluded the same way (residue field `𝔽₄₇`, ratio 0.211). For `p = 11` and 19
   the ratio is 0.286 and 0.276. So a 4-colouring by reduction could only come
-  from the 11-adic plane at level 3 or more, or the 19-adic plane at level 2 or
+  from the 11-adic plane at level 4 or more, or the 19-adic plane at level 2 or
   more; on 2 October that level had no 4-colouring invariant under the rotations
   `t ≡ 1 (mod 19)`, nor one invariant under the translations by `19·(1, 0)`
   (`data/quadratic_planes/scripts/hoffman_padic.py`, `spectrum.py`,
