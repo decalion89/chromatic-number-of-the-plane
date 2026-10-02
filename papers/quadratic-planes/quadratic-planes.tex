@@ -202,6 +202,22 @@ The repository stores a proper $4$-colouring of $\F_7^2$ and a proper $5$-colour
 checker checks them. For $d=47$ the next level at $11$ does not help: the unit-distance graph on
 $(\Z/121)^2$ is not $4$-colourable.
 
+\begin{corollary}\label{cor:larger}
+Let $L\subset\R$ be a number field that contains $\sqrt d$ for one of the $d$ with $\chi(\Q(\sqrt d)^2)=4$ in
+Theorem~\ref{thm:main} and has a place with residue field $\F_7$. Then $\chi(L^2)=4$. For example
+$L=\Q(\sqrt{11},7^{1/m})$, of degree $2m$; so there are real number fields of every even degree with
+$\chi(L^2)=4$.
+\end{corollary}
+
+\begin{proof}
+The graph over $\Q(\sqrt d)$ lies in $L^2$, so $\chi(L^2)\ge4$. Since $-1$ is not a square in $\F_7$, unit
+vectors are integral at the place, and reduction gives $\chi(L^2)\le\chi(\F_7^2)=4$ as above. The prime $7$
+splits in $\Q(\sqrt{11})$, and $x^m-7$ is Eisenstein at each prime above it; so $[L:\Q]=2m$, and these
+primes are totally ramified in $L$, with residue field $\F_7$.
+\end{proof}
+
+Fields of odd degree have $\chi(L^2)=2$ \cite[Theorem~7.1]{Moorhouse}.
+
 \section{How the graphs were found}\label{sec:search}
 
 \subsection*{Directions}

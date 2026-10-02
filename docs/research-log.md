@@ -9073,6 +9073,16 @@ set of directions changes that (`notes/quadratic_planes.md`).
   written again from the data: LRAT proofs of 23 and 12 KB (the same for twelve kissat seeds), 69 and 35 s to
   build, 18 s each to replay with `leanchecker`, and the same three axioms. The same method is running on the
   other fields.
+- **Fields of every even degree (2 October).** A first idea for something new was a cubic field that needs four
+  colours, since a field of odd degree contains no `√d` and no `√3`. Moorhouse's Theorem 7.1 rules it out: a
+  field of odd degree has a place above 2 with `e·f` odd, and that place 2-colours its plane. The quadratic
+  fields give the even degrees instead. If a real number field `L` contains `√d` for one of the twenty-three `d`
+  and has a place with residue field `𝔽₇`, then `χ(L²) = 4`: the graph lies in `L²`, unit vectors are integral
+  at the place (`−1` is not a square in `𝔽₇`), and reduction gives `χ(L²) ≤ χ(𝔽₇²) = 4`. For
+  `L = ℚ(√11, 7^{1/m})`, 7 splits in `ℚ(√11)` and `x^m − 7` is Eisenstein at each prime above it, so
+  `[L : ℚ] = 2m` and those primes are totally ramified in `L`, with residue field `𝔽₇`. So every even degree
+  occurs for real number fields with `χ = 4`, and no odd degree does. The note (§5) and the paper (Corollary 4)
+  say so.
 
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; smaller witnesses (the
 smallest graphs have 71 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has

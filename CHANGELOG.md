@@ -44,6 +44,9 @@ including every retracted claim, is the research log,
   accepted all of them), and `tests/test_quadratic_planes.py` runs the fast
   checks. The graph over ℚ(√11) is drawn in the paper (Figure 1) and on the
   front page (Figure 3).
+  As a corollary, a real number field that contains one of these `√d` and has a
+  place with residue field `𝔽₇` has `χ = 4`; for example `ℚ(√11, 7^{1/m})`, of
+  degree `2m`, so every even degree occurs.
 - **`χ(ℚ(√d)²) = 4` in Lean 4 for ten fields**, `d = 11, 119, 131, 179, 191, 251,
   431, 455, 911, 935` (`lean/Sqrt{d}.lean`), with Mathlib. Each lower bound is the graph
   of `data/quadratic_planes/q{d}.json`: the kernel checks its unit distances and,

@@ -337,6 +337,15 @@ writes each file from the data, and a test checks that they are up to date.
   5-colouring of `𝔽₁₁²`; `finite_planes.json` holds one, checked by the
   checker. Reduction at 121 does not help (`notes/local_colourings.md`; the
   level-2 plane at 11 is not 4-colourable).
+- **Larger fields.** Let `L ⊂ ℝ` be a number field that contains `√d` for one of
+  the twenty-three `d` and has a place with residue field `𝔽₇`. Then
+  `χ(L²) = 4`: the graph over `ℚ(√d)` lies in `L²`, and since `−1` is not a
+  square in `𝔽₇`, unit vectors are integral at the place and reduction gives
+  `χ(L²) ≤ χ(𝔽₇²) = 4`. For example `L = ℚ(√11, 7^{1/m})`: 7 splits in
+  `ℚ(√11)`, and `x^m − 7` is Eisenstein at each prime above it, so `[L : ℚ] = 2m`
+  and those primes are totally ramified in `L`, with residue field `𝔽₇`. So
+  there are real number fields of every even degree with `χ(L²) = 4`; fields of
+  odd degree have `χ(L²) = 2` (Moorhouse's Theorem 7.1).
 
 ## 6. Open
 

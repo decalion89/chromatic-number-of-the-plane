@@ -136,8 +136,9 @@ with 71 to 1 404 vertices: a computer proof, by SAT with DRAT proofs checked by 
 separate encodings. The upper bounds are reductions modulo a prime (Moorhouse 2010, Fischer 1990). For the
 first field and nine more (d = 11, 119, 131, 179, 191, 251, 431, 455, 911, 935), χ(ℚ(√d)²) = 4 is also proved in
 Lean 4 with Mathlib ([`lean/`](lean/README.md)): the kernel checks each graph's SAT certificate and the reduction
-at 7 or at 2. As far as we found, these are the first real quadratic fields known to need four colours. Not
-yet refereed.
+at 7 or at 2. As far as we found, these are the first real quadratic fields known to need four colours. A
+corollary: a real number field containing one of these √d and having a place with residue field 𝔽₇ also has
+χ = 4, for example ℚ(√11, 7^{1/m}), of degree 2m; fields of odd degree have χ = 2 (Moorhouse). Not yet refereed.
 
 <p align="center">
   <img src="docs/figures/quadratic_q11.svg" width="560"
@@ -509,7 +510,9 @@ y el de ℚ(√47) necesita 4 o 5. Hasta donde hemos encontrado, no se conocía 
 real que necesitara 4 colores: los valores conocidos eran 2 y 3. Así, χ(ℚ(√d)²) se conoce ya para todo d < 83
 libre de cuadrados salvo d = 47. Cada cota inferior es un grafo de distancia
 unidad sin triángulos, con pruebas DRAT verificadas por drat-trim
-([`notes/quadratic_planes.md`](notes/quadratic_planes.md)).
+([`notes/quadratic_planes.md`](notes/quadratic_planes.md)). Como consecuencia, hay cuerpos reales de todo
+grado par que necesitan 4 colores, por ejemplo ℚ(√11, 7^{1/m}), de grado 2m; los de grado impar necesitan 2
+(Moorhouse).
 También se demuestra, con certificados verificados por dos programas independientes, que siete planos
 finitos necesitan seis colores. Es un trabajo hecho con ayuda de IA y todavía no ha sido revisado por
 pares.
