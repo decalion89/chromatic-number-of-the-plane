@@ -279,3 +279,15 @@ def test_padic_planes_table():
     assert rows[7][2] == "4" and rows[7][3] == "4" and "Q(sqrt11)" in rows[7][4]
     assert rows[11][2] == "5" and rows[11][3] == "4" and rows[19][2] == "5" and rows[19][3] == "4"
     assert rows[83][3] == "5" and all(rows[p][3] == "4" for p in (23, 31, 43, 47, 59, 67, 71, 79))
+
+
+def test_padic_measurable_bounds():
+    """note §5, measurable colourings of Q_p^2: the interval-arithmetic bounds 5, 5, 6, 7 at p = 23, 31, 59, 71"""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "padic_measurable", os.path.join(ROOT, "data", "quadratic_planes", "scripts", "padic_measurable.py"))
+    pm = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(pm)
+    assert {p: pm.bound(p)[2] for p in (7, 11, 23, 31, 59, 71)} == {7: 3, 11: 4, 23: 5, 31: 5, 59: 6, 71: 7}
+    assert float(pm.bound(31)[1].a) > 4.00004
+

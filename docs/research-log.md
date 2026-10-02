@@ -9267,6 +9267,17 @@ set of directions changes that (`notes/quadratic_planes.md`).
   `[propext, Classical.choice, Quot.sound]`). The upper bound at 7 is `QuadraticPlanes.sumSqGraph_colorable` for
   the valuation subring `ℤ_[7]`; the lower bound sends the graph of `Sqrt11.lean` into `ℚ_[7]²` through a square
   root of 11 from Mathlib's Hensel's lemma, and holds in any field of characteristic 0 containing one.
+- **Measurable colourings of `ℚ_p²` (2 October).** Asked for a theorem nobody had stated, we turned the eigenvalue
+  bounds of §6 into one about measurable colourings: for `p ≡ 3 (mod 4)` a measurable colouring of `ℚ_p²` has a
+  class of measure at least `1/k` in the compact group `ℤ_p²`, and the Delsarte–Hoffman argument on that group
+  bounds it by `−m/(1 − m)`, `m` the least Fourier coefficient of the circle measure: the least eigenvalue of
+  `𝔽_p²` over its degree at level 1, and at most `2/(p + 1)` at deeper levels. So `χ_m(ℚ_p²) ≥ 1 + (p + 1)/(2√p)`
+  (Weil), which is unbounded, and from the exact spectra in interval arithmetic (`padic_measurable.py`, 120 bits):
+  at least 5 colours for `p = 23, 31, 43, 47` (4.000044 for `p = 31`), 6 for `p = 59` and every `p ≥ 67`, 7 for
+  `p = 71` and every `p ≥ 103`, 8 for every `p ≥ 131`, 9 for `p = 191` and every `p ≥ 199`. In the real plane
+  six measurable colours is open. A side computation: tabu search finds 8-colourings of `𝔽₂₃²` at once but no
+  7-colouring in 120 million steps, and kissat with 5 colours gave no answer in 30 minutes; whether the table's
+  `5–8` for `q = 23` is really 8 is being tested with kissat (a triangle pinned, 7 and then 6 colours).
 - **`ℚ(√83)` again (2 October).** With `D = 2958` (324 directions, the most of any gate-open denominator up to
   3 000) the growth stopped at 2 788 points with no blocked candidate. Two explanations are ruled out: no proper
   3-colouring of `Cay(M/mM, U)` exists for `m ≤ 13` (`periodicq.py`), so there is no periodic colouring with a

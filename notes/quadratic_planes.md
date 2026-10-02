@@ -414,6 +414,27 @@ that they are up to date.
   `PadicPlanes.padicSeven_chromaticNumber : (QuadraticPlanes.sumSqGraph ℚ_[7]).chromaticNumber = 4`, and the same
   with 3 for `ℚ_[3]` and 2 for `ℚ_[2]`; the lower bound at 7 holds in any field of characteristic 0 that contains
   a square root of 11 (`not_colorable_three_of_sq_eq_eleven`).
+- **Measurable colourings of `ℚ_p²`.** For measurable colourings the `p`-adic planes need more and more colours.
+  Let `p ≡ 3 (mod 4)`. The unit circle `S` lies in `ℤ_p²`, so edges stay inside the compact group `ℤ_p²`, and a
+  measurable colouring of `ℚ_p²` with `k` colours has a class `A ⊂ ℤ_p²` of Haar measure at least `1/k` with no
+  pair `x, x + s` (`s ∈ S`). Its autocorrelation `f(x) = μ(A ∩ (A − x))` is positive definite, `f(0) = μ(A)` and
+  `f = 0` on `S`; integrating it against the Haar measure `σ` of `S` gives `μ(A) ≤ −m/(1 − m)`, where `m` is the
+  least value of `σ̂` at a nontrivial character (the argument of Delsarte and Hoffman). A character of level 1 gives
+  `σ̂ = λ/(p + 1)`, with `λ` an eigenvalue of the unit-distance graph of `𝔽_p²`; one of level `ℓ ≥ 2` gives
+  `|σ̂| ≤ 2/(p + 1)` (average over the rotations `≡ 1 (mod p^⌈ℓ/2⌉)` first, as in §6). Hence
+  `χ_m(ℚ_p²) ≥ 1 + 1/|m|` with `m = min(λ_min/(p + 1), −2/(p + 1))`, and the same for Borel colourings. With
+  Weil's bound `|λ| ≤ 2√p` this is `χ_m(ℚ_p²) ≥ 1 + (p + 1)/(2√p)`, which tends to infinity; with the exact
+  spectra in interval arithmetic (`data/quadratic_planes/scripts/padic_measurable.py`):
+  - `χ_m(ℚ_p²) ≥ 5` for `p = 23, 31, 43, 47` (for `p = 31` the bound is `4.000044`);
+  - `χ_m(ℚ_p²) ≥ 6` for `p = 59, 67, 79, 83` and every `p ≥ 67`;
+  - `χ_m(ℚ_p²) ≥ 7` for `p = 71` and every `p ≥ 103`; `≥ 8` for every `p ≥ 131`; `≥ 9` for `p = 191` and every
+    `p ≥ 199`.
+
+  Together with the colourings of the finite planes, `χ_m(ℚ₇²) = 4`, `χ_m(ℚ₃²) = 3` and `χ_m(ℚ₂²) = 2`, while
+  `4 ≤ χ_m(ℚ_p²) ≤ 5` for `p = 11, 19`. For the real plane the measurable bound 5 is Falconer's theorem and 6 is
+  open; for the `p`-adic planes with `p ≥ 59` six colours are needed. For `p ≡ 1 (mod 4)` the Borel chromatic
+  number is infinite (Bardestani and Mallahi-Karai). The ordinary chromatic
+  numbers are only bounded below by the graphs above (4, and 5 at `p = 83`).
 
 ## 6. Open
 

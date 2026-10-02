@@ -57,7 +57,9 @@ including every retracted claim, is the research log,
   needs five. The same graphs give the first exact chromatic numbers of
   `p`-adic planes that we know of: `χ(ℚ₂²) = 2`, `χ(ℚ₃²) = 3`, `χ(ℚ₇²) = 4`, and `4 ≤ χ(ℚ₁₁²), χ(ℚ₁₉²) ≤ 5`
   (note §5, `data/quadratic_planes/scripts/padic_planes.py`); the three exact values are proved in Lean
-  (`lean/PadicPlanes.lean`).
+  (`lean/PadicPlanes.lean`). For measurable colourings the `p`-adic planes need more and more colours:
+  `χ_m(ℚ_p²) ≥ 1 + (p + 1)/(2√p)` for `p ≡ 3 (mod 4)`, so at least 5 from `p = 23`, 6 at `p = 59` and from 67, 7 at 71
+  and from 103 (`padic_measurable.py`); for the real plane six measurable colours is open.
 - **`χ(ℚ(√d)²) = 4` in Lean 4 for ten fields**, `d = 11, 119, 131, 179, 191, 251,
   431, 455, 911, 935` (`lean/Sqrt{d}.lean`), with Mathlib. Each lower bound is the graph
   of `data/quadratic_planes/q{d}.json`: the kernel checks its unit distances and,
