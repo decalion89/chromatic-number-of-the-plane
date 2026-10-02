@@ -232,25 +232,27 @@ builds the spindle, checks it exactly and shrinks it. A pair is forced only if
 `ℚ(√11)` with `D = 30` it reported the pair `0`, `m = [−15, 0, 24, −9]` (`|m|² =
 (47 − 12√11)/25`, `t = (8 − 3√11)/5`) forced at once, on the 11 612 points
 within two steps of `0` or of `m`; but that graph has no 3-colouring by itself,
-so nothing was forced. It still gave the published graph. Shrinking it directly,
-over 400 random orders, gave 94 vertices; `spin.py` shrank its union with the
-copy rotated by `u` (22 481 points, denominator 750), over 300 orders, to 76
-vertices and 172 edges, all of them in the rotated copy (2 000 orders found the
-same graph). Rotated back by `ū` they lie in the first graph, with `D = 30`, and
-they replace the 94-vertex graph over `ℚ(√11)`. The 82 vertices over `ℚ(√455)`
-and 598 over `ℚ(√119)` came the same way. Now `growforce.py` solves the graph
-again without the pair, and `spin.py` refuses a graph with no 3-colouring unless
-`PLAIN=1`, and writes the result rotated back when it lies in the copy.
-Genuinely forced pairs came out over `ℚ(√455)` (5 690 points), `ℚ(√119)` (23
-084) and `ℚ(√935)` (9 082 and 9 937); their spindles shrank to 139, 802, 488 and
-521 vertices, more than the published graphs (74, 399 and 257). Over `ℚ(√83)` no
-pair at such a distance was forced: there is none two steps from `0` for any `D`
-tried (two steps `u₁ + u₂` are at such a distance exactly when `(15 − s²)(1 +
-s²)` is a square in `K`, where `u₁ū₂ = (1 − s² + 2is)/(1 + s²)`, a curve of
-genus 1), `growforce.py` stopped with no blocked candidate for the three kinds
-of targets three steps away, and unions of a 17 222-point 3-colourable graph
-with copies rotated so as to share up to 4 305 points stayed 3-colourable
-(`rotunion.py`, `overlap.py`).
+so nothing was forced. Indeed already the 5 941 points within two steps of `0`
+have none: that is where the plain growth stopped, in its first round. It still
+gave the published graph. Shrinking the 11 612 points directly, over 400 random
+orders, gave 94 vertices; `spin.py` shrank their union with the copy rotated by
+`u` (22 481 points, denominator 750), over 300 orders, to 76 vertices and 172
+edges, all of them in the rotated copy (2 000 orders found the same graph).
+Rotated back by `ū` they lie in the first graph, with `D = 30` (75 of them
+within two steps of `0`), and they replace the 94-vertex graph over `ℚ(√11)`.
+The 82 vertices over `ℚ(√455)` and 598 over `ℚ(√119)` came the same way. Now
+`growforce.py` solves the graph again without the pair, and `spin.py` refuses a
+graph with no 3-colouring unless `PLAIN=1`, and writes the result rotated back
+when it lies in the copy. Genuinely forced pairs came out over `ℚ(√455)` (5 690
+points), `ℚ(√119)` (23 084) and `ℚ(√935)` (9 082 and 9 937); their spindles
+shrank to 139, 802, 488 and 521 vertices, more than the published graphs (74,
+399 and 257). Over `ℚ(√83)` no pair at such a distance was forced: there is none
+two steps from `0` for any `D` tried (two steps `u₁ + u₂` are at such a distance
+exactly when `(15 − s²)(1 + s²)` is a square in `K`, where `u₁ū₂ = (1 − s² +
+2is)/(1 + s²)`, a curve of genus 1), `growforce.py` stopped with no blocked
+candidate for the three kinds of targets three steps away, and unions of a 17
+222-point 3-colourable graph with copies rotated so as to share up to 4 305
+points stayed 3-colourable (`rotunion.py`, `overlap.py`).
 
 ## 4. The certificates
 
