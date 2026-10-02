@@ -11,7 +11,7 @@ different colours. For real quadratic fields `K = ℚ(√d)` the known values we
 
 Each lower bound is a finite graph: a triangle-free unit-distance graph with
 coordinates in `ℚ(√d)`, which is not 3-colourable and is vertex-critical. The
-graphs have 94 vertices (`d = 11`), 660 (`d = 23`), 580 (`d = 35`), 816
+graphs have 76 vertices (`d = 11`), 393 (`d = 23`), 580 (`d = 35`), 816
 (`d = 47`), 406 (`d = 59`), 611 (`d = 71`), 1 404 (`d = 95`), 399 (`d = 119`),
 356 (`d = 131`), 1 281 (`d = 155`), 259 (`d = 179`), 100 (`d = 191`), 355
 (`d = 239`), 291 (`d = 251`), 394 (`d = 263`), 715 (`d = 359`), 331 (`d = 431`),
@@ -102,8 +102,8 @@ These are two identities between integers, so every edge is checked exactly.
 
 | `d` | `D` | vertices | edges | degrees | directions used |
 |---|---|---|---|---|---|
-| 11 | 30 | 94 | 214 | 3–32 | 68 |
-| 23 | 120 | 660 | 1 727 | 3–60 | 100 |
+| 11 | 30 | 76 | 172 | 3–26 | 46 |
+| 23 | 156 | 393 | 1 011 | 3–47 | 76 |
 | 35 | 390 | 580 | 1 501 | 3–107 | 218 |
 | 47 | 240 | 816 | 2 134 | 3–72 | 94 |
 | 59 | 210 | 406 | 993 | 3–48 | 66 |
@@ -143,18 +143,19 @@ conjugation. We used `|U_D| = 108` in each case (140 for `d = 71`, 148 for
 `d = 119` and `d = 155`, 132 for `d = 95` and `d = 239`, 140 for `d = 359`, 116 for
 `d = 251` and `d = 431`, 196 for `d = 131`, 212 for `d = 179`, 276 for `d = 35`,
 68 for `d = 455`, 84 for `d = 935`, 156 for `d = 263` and `d = 959`, 252 for
-`d = 599`).
+`d = 599`, 180 for `d = 23` with `D = 156`). The graph over `ℚ(√11)` came
+from a different start (below, **Spindles**).
 
 **The growth.**
 1. Start from all sums of at most two vectors of `U_D`.
 2. 3-colour the graph (tabucol, else kissat).
 3. Add the points `p + u` whose neighbours already see all three colours.
 4. Repeat until kissat answers that the graph is not 3-colourable. This took
-   1 to 30 rounds and at most 12 211 points (21 895 for `d = 131`, 24 785 for
-   `d = 179`, 39 265 for `d = 35`; 96 rounds for `d = 431`; 38 rounds and
-   15 913 points for `d = 155`, 43 rounds and 12 477 points for `d = 95`). For
-   `d = 35, 95, 131, 155, 179, 239, 251, 263, 359, 431, 455, 599, 935, 959` we
-   used a variant:
+   1 to 30 rounds and at most 12 211 points (18 041 for `d = 23`, 21 895 for
+   `d = 131`, 24 785 for `d = 179`, 39 265 for `d = 35`; 96 rounds for
+   `d = 431`; 38 rounds and 15 913 points for `d = 155`, 43 rounds and 12 477
+   points for `d = 95`). For `d = 23, 35, 95, 131, 155, 179, 239, 251, 263, 359,
+   431, 455, 599, 935, 959` we used a variant:
    when no candidate is blocked, it 3-colours the graph again from scratch, and
    if still none is blocked it adds candidates whose neighbours see two colours.
 5. Shrink: keep the vertices whose clauses lie in the drat-trim core of a
@@ -201,17 +202,55 @@ gate. With all 108 unit vectors of denominator dividing 240, which include
 
 **Short odd cycles.** There are no triangles, so the shortest odd cycle of a
 graph built from `U_D` has length at least 5, and length 5 exactly when five
-vectors of `U_D` have sum 0. For twelve of the twenty-one graphs `U_D` has
-such a 5-cycle (`d = 11, 35, 71, 119, 131, 191, 251, 263, 455, 599, 935,
-959`), and the graph contains one; the other nine have no odd cycle shorter
+vectors of `U_D` have sum 0. For thirteen of the twenty-one graphs `U_D` has
+such a 5-cycle (`d = 11, 23, 35, 71, 119, 131, 191, 251, 263, 455, 599, 935,
+959`), and the graph contains one; the other eight have no odd cycle shorter
 than 7 (`data/quadratic_planes/scripts/odd_published.py`). The three smallest
-graphs (74, 94 and 100 vertices) are among the twelve. `scan5.py` lists the
-denominators with a 5-cycle and every gate open; on 1–2 October they gave
-every success of the scan (`d = 251`, `455`, `935`, `263`, `599`, `959`, in 21
-to 616 seconds). A 5-cycle is not enough: with such denominators `d = 299`
+graphs (74, 76 and 100 vertices) are among the thirteen; so is the graph over
+`ℚ(√23)`, which a 5-cycle denominator (`D = 156`) shrank from 660 vertices to
+393. `scan5.py` lists the denominators with a 5-cycle and every gate open; on
+1–2 October they gave every success of the scan (`d = 251`, `455`, `935`,
+`263`, `599`, `959`, in 21 to 616 seconds). A 5-cycle is not enough: with such denominators `d = 299`
 and `407` (and `263` with `D = 408` and `816`) stopped with no blocked
 candidate. For `d = 83`, `107` and `203` there is none with `D ≤ 4 000`,
-prime factors at most 61, 40 to 400 directions and every gate open.
+prime factors at most 61, 40 to 400 directions and every gate open. More
+generally (`pentagons.py`), for `d = 47, 83, 107, 203` no unit pentagon at all
+has three consecutive sides in `U_D` for the `D` we tried (510, 1020, 1530
+and 2142 for `d = 83`), whatever the denominators of the other two sides.
+
+**Spindles.** If two points `A`, `B` of a graph `G` with `|AB| = r` have the
+same colour in every 3-colouring, and `4r² − 1 = t²` with `t ∈ K`, then `u = (t
++ i)/(t − i)` has modulus 1, the rotation `z ↦ A + u(z − A)` maps `K²` to
+itself, and it moves `B` to a point `B'` with `|BB'| = r |1 − u| = 1`. So `G`,
+its rotated copy and the edge `BB'` have no 3-colouring: this is the argument of
+the Moser spindle, where `r = √3` and `t = √11`. `targets.py` lists the vectors
+of the module spanned by `U_D` at such distances, `growforce.py` grows a graph
+until a chosen pair is forced (the growth above, with the extra condition that
+the two points have different colours, until that is impossible), and `spin.py`
+builds the spindle, checks it exactly and shrinks it. A pair is forced only if
+`G` itself is 3-colourable, and at first `growforce.py` did not check that. Over
+`ℚ(√11)` with `D = 30` it reported the pair `0`, `m = [−15, 0, 24, −9]` (`|m|² =
+(47 − 12√11)/25`, `t = (8 − 3√11)/5`) forced at once, on the 11 612 points
+within two steps of `0` or of `m`; but that graph has no 3-colouring by itself,
+so nothing was forced. It still gave the published graph. Shrinking it directly,
+over 400 random orders, gave 94 vertices; `spin.py` shrank its union with the
+copy rotated by `u` (22 481 points, denominator 750), over 300 orders, to 76
+vertices and 172 edges, all of them in the rotated copy (2 000 orders found the
+same graph). Rotated back by `ū` they lie in the first graph, with `D = 30`, and
+they replace the 94-vertex graph over `ℚ(√11)`. The 82 vertices over `ℚ(√455)`
+and 598 over `ℚ(√119)` came the same way. Now `growforce.py` solves the graph
+again without the pair, and `spin.py` refuses a graph with no 3-colouring unless
+`PLAIN=1`, and writes the result rotated back when it lies in the copy.
+Genuinely forced pairs came out over `ℚ(√455)` (5 690 points), `ℚ(√119)` (23
+084) and `ℚ(√935)` (9 082 and 9 937); their spindles shrank to 139, 802, 488 and
+521 vertices, more than the published graphs (74, 399 and 257). Over `ℚ(√83)` no
+pair at such a distance was forced: there is none two steps from `0` for any `D`
+tried (two steps `u₁ + u₂` are at such a distance exactly when `(15 − s²)(1 +
+s²)` is a square in `K`, where `u₁ū₂ = (1 − s² + 2is)/(1 + s²)`, a curve of
+genus 1), `growforce.py` stopped with no blocked candidate for the three kinds
+of targets three steps away, and unions of a 17 222-point 3-colourable graph
+with copies rotated so as to share up to 4 305 points stayed 3-colourable
+(`rotunion.py`, `overlap.py`).
 
 ## 4. The certificates
 
@@ -283,7 +322,7 @@ covers every field.
   span, for `m ≤ 10` or `m = 12` (`D = 510`) and `m ≤ 8` (`D = 1530`)
   (`data/quadratic_planes/scripts/periodicq.py`).
 - **Smaller witnesses.** The graph over `ℚ(√455)` has 74 vertices, and the
-  one over `ℚ(√11)` 94. How small can a 4-chromatic unit-distance graph over a
+  one over `ℚ(√11)` 76. How small can a 4-chromatic unit-distance graph over a
   real quadratic field be?
 
 ## 7. Files

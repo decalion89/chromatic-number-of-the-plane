@@ -138,9 +138,9 @@ as we found, these are the first real quadratic fields known to need four colour
 
 <p align="center">
   <img src="docs/figures/quadratic_q11.svg" width="560"
-       alt="The 94-vertex unit-distance graph over Q(sqrt11), which has no 3-colouring, shown with a 4-colouring">
+       alt="The 76-vertex unit-distance graph over Q(sqrt11), which has no 3-colouring, shown with a 4-colouring">
 </p>
-<p align="center"><sub><b>Figure 3.</b> The first field, ℚ(√11): 94 points of the plane and the 214 segments of
+<p align="center"><sub><b>Figure 3.</b> The first field, ℚ(√11): 76 points of the plane and the 172 segments of
 length 1 between them. No 3-colouring exists; one 4-colouring is shown.</sub></p>
 
 **Read:** [the paper (PDF, draft)](papers/quadratic-planes/quadratic-planes.pdf) ·

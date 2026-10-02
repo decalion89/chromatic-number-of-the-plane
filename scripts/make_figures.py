@@ -4,7 +4,7 @@ Writes SVG files to docs/figures/:
   plane_q311.svg       unit-distance graph on a piece of Q(sqrt3, sqrt11)^2, 4-coloured by hn.adelic.q311_colour
   lower_bounds.svg     the Moser spindle (Q(sqrt3, sqrt11)) and the 10-vertex rhombus chain (Q(sqrt2, sqrt3)),
                        each properly 4-coloured by its 2-adic colouring
-  quadratic_q11.svg    the 94-vertex graph over Q(sqrt11) of notes/quadratic_planes.md, with no 3-colouring,
+  quadratic_q11.svg    the graph over Q(sqrt11) of notes/quadratic_planes.md (76 vertices), with no 3-colouring,
                        coloured by its stored 4-colouring (data/quadratic_planes/q11.json)
 
 Every edge is found by exact arithmetic (hn.graph.build_graph), and the script asserts that no edge
@@ -189,11 +189,13 @@ def quadratic_figure():
     body += [f'<line x1="{X[a]:.2f}" y1="{Y[a]:.2f}" x2="{X[b]:.2f}" y2="{Y[b]:.2f}" stroke="{EDGE}" '
              f'stroke-width="1"/>' for a, b in E]
     body += [marker(SHAPES[col[v]], X[v], Y[v], 4.2, COLOURS[col[v]]) for v in range(len(P))]
+    o = [tuple(p) for p in g["points"]].index((0, 0, 0, 0))
+    deg_o = sum(1 for a, b in E if o in (a, b))
     body.append(f'<text x="{W / 2:.1f}" y="{H - 32}" text-anchor="middle" font-size="11" fill="{INK2}">Dashed: the '
-                f'unit circle around the point at the origin, which has 32 neighbours on it.</text>')
+                f'unit circle around the point at the origin, which has {deg_o} neighbours on it.</text>')
     body.append(f'<text x="{W / 2:.1f}" y="{H - 16}" text-anchor="middle" font-size="11" fill="{INK2}">Shapes and '
                 f'colours: the four colour classes of a proper 4-colouring.</text>')
-    return svg(W, H, body, "The 94-vertex unit-distance graph over Q(sqrt11), which needs four colours"), (len(P), len(E))
+    return svg(W, H, body, f"The {len(P)}-vertex unit-distance graph over Q(sqrt11), which needs four colours"), (len(P), len(E))
 
 
 if __name__ == "__main__":

@@ -20,8 +20,8 @@ files go to `/dev/shm`.
 | `units_fast.py` | every unit vector `((a + b√d)/D, (c + e√d)/D)` with integer coordinates |
 | `tabu.py`, `tabucol.c` | tabu search for `k`-colourings |
 | `grow3.py`, `grow3d.py` | the first growth runs over `ℚ(√47)`; `grow3d.py` with `D = 240` reached the 9 139-point graph |
-| `grow3q.py` | colouring-guided growth for any `d` (`QD=d`); it found the graphs for `d = 11, 23, 59, 71, 119, 191`. Points are looked up by exact keys (four 16-bit fields); the first version used a hash, and two runs with `D = 1170` stopped on a collision of keys (the code detects them, so no edge was wrong) |
-| `grow3r.py` | the same, but when no candidate is blocked it 3-colours the graph again from scratch, and then adds candidates whose neighbours see two colours; it found the graphs for `d = 35, 95, 131, 155, 179, 239, 251, 263, 359, 431, 455, 599, 935, 959` |
+| `grow3q.py` | colouring-guided growth for any `d` (`QD=d`); it found the graphs for `d = 59, 71, 119, 191` (and the first ones for `d = 11, 23`). Points are looked up by exact keys (four 16-bit fields); the first version used a hash, and two runs with `D = 1170` stopped on a collision of keys (the code detects them, so no edge was wrong) |
+| `grow3r.py` | the same, but when no candidate is blocked it 3-colours the graph again from scratch, and then adds candidates whose neighbours see two colours; it found the graphs for `d = 23, 35, 95, 131, 155, 179, 239, 251, 263, 359, 431, 455, 599, 935, 959` |
 | `exactcheck.py` | an exact check of a grown graph and of its formula |
 | `min3.py` | shrinking: rounds of drat-trim cores, then deletion of vertices one at a time, to a vertex-critical graph (two copies with fixed temporary names were run for `d = 11` and `d = 23`) |
 | `min3fast.py` | the same shrinking, faster on large graphs: several random seeds per core round, the two vertices of the fixed edge always kept in the core (`min3.py` drops them, and then stops too early), and tabu search before kissat in the deletion phase; used for `d = 431` |
@@ -40,7 +40,12 @@ files go to `/dev/shm`.
 | `prescreen.py` | for each `d` and `D`: the number of directions, the gates of `gates2.py` and the shortest odd closed walk; it chose the denominators of the scan of 1–2 October |
 | `scan_r5.sh`, `shrink_worker.sh` | the growth over a list of pairs `d:D` with `grow3r.py`, queueing every graph with no 3-colouring for the worker, which shrinks it with `min3inc.py` and certifies it with `certify_q.py`, one at a time |
 | `scan5.py` | for each `d`, the denominators `D` (up to a bound, with small prime factors) whose directions pass every gate and close a 5-cycle, five unit vectors with sum 0; it chose the denominators for `d = 263, 299, 407, 599, 935, 959` |
-| `odd_published.py` | for each published graph: does `U_D` close a 5-cycle, and the shortest odd cycle of the graph (5 for `d = 11, 35, 71, 119, 131, 191, 251, 263, 455, 599, 935, 959`, 7 for the others) |
+| `odd_published.py` | for each published graph: does `U_D` close a 5-cycle, and the shortest odd cycle of the graph (5 for `d = 11, 23, 35, 71, 119, 131, 191, 251, 263, 455, 599, 935, 959`, 7 for the others) |
+| `targets.py` | the vectors `m` of the module spanned by `U_D` (sums of at most three directions) at a spindle distance: `4|m|² − 1 = t²` with `t` in `ℚ(√d)` |
+| `growforce.py` | `grow3r.py` aimed at a forced pair: the graph contains `0` and `m` (`FORCE`), every colouring it uses gives them different colours, and it stops when that is impossible; it then solves the graph again without the pair, and reports a forced pair only if the graph itself is 3-colourable (the first runs did not check, and reported pairs over `ℚ(√11)`, `ℚ(√119)` and `ℚ(√455)` in graphs with no 3-colouring) |
+| `spin.py` | the spindle of a forced pair: the graph and its copy rotated about `0` by `u = (t + i)/(t − i)`, which moves `m` by exactly 1, checked exactly, confirmed not 3-colourable, shrunk over `RUNS` random orders and written in the format of `certify_q.py`, and rotated back when every point lies in the copy. It refuses a graph with no 3-colouring unless `PLAIN=1`; `PLAIN=1 RUNS=300` on the `d = 11` graph of `growforce.py` (`D = 30`, `FORCE=-15,0,24,-9`) gives the published graph for `d = 11` (rotated back) |
+| `rotunion.py`, `overlap.py` | unions of a graph with copies rotated about `0` (by any `t`), and the rotations `w v̄` (`v, w ∈ U_D`) ranked by how many points they keep in the graph |
+| `pentagons.py` | unit pentagons over `ℚ(√d)` on three directions of `U_D`: `Q = u₁ + u₂ − v₁` closes with two unit vectors of any denominator when `|Q|²(4 − |Q|²)` is a square |
 | `periodicq.py` | is there a 3-colouring periodic modulo `mM`, where `M` is the lattice spanned by the directions `U_D`? (for `d = 83` there is none for the `m` and `D` of §6 of the note) |
 
 A typical run, for `d = 191`:

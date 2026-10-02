@@ -28,7 +28,7 @@ including every retracted claim, is the research log,
   and `4 ≤ χ(ℚ(√47)²) ≤ 5`; so `χ(ℚ(√d)²)` is now known for every squarefree
   `d < 83` except 47. For real quadratic fields the values known before were 2
   and 3, and a field can need four colours only if `d ≡ 11 (mod 12)`. Each lower
-  bound is a triangle-free, vertex-critical unit-distance graph (94, 660, 580,
+  bound is a triangle-free, vertex-critical unit-distance graph (76, 393, 580,
   816, 406, 611, 1 404, 399, 356, 1 281, 259, 100, 355, 291, 394, 715, 331, 74,
   659, 257 and 513 vertices, for d = 11, 23, 35, 47, 59, 71, 95, 119, 131, 155,
   179, 191, 239, 251, 263, 359, 431, 455, 599, 935, 959) with no 3-colouring:

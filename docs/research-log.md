@@ -8981,7 +8981,37 @@ set of directions changes that (`notes/quadratic_planes.md`).
 - **A figure.** `papers/quadratic-planes/make_figure.py` draws the graph over `ℚ(√11)` for the paper (Figure
   1), and `scripts/make_figures.py` for the front page (Figure 3): 94 points, 214 unit segments, and the
   stored 4-colouring as marker shapes. The point at the origin has 32 neighbours, all on its unit circle.
+- **Smaller witnesses for 11 and 23, and spindles (2 October).** Over `ℚ(√23)` the 5-cycle denominator
+  `D = 156` (180 directions) gave a graph with no 3-colouring in 11 rounds (18 041 points, 125 seconds), shrunk
+  to 393 vertices (`min3multi.py`), which replaces the 660-vertex graph. Over `ℚ(√11)` we tried a spindle: if
+  `0` and `m` have the same colour in every 3-colouring of `G` and `4|m|² − 1 = t²` with `t ∈ K`, the rotation
+  by `u = (t + i)/(t − i)` moves `m` by exactly 1, so `G`, `uG` and the edge `{m, um}` have no 3-colouring (the
+  Moser spindle has `|m|² = 3`, `t = √11`). `targets.py` found pairs two steps apart at such distances for
+  `D = 30` (`|m|² = (47 ∓ 12√11)/25`), and `growforce.py` (the growth with `0` and `m` required to differ)
+  reported each of the two forced in its first round, on the 11 612 points within two steps of `0` or of `m`
+  (about four minutes). **Corrected before publishing:** that graph has no 3-colouring by itself (CaDiCaL,
+  0.1 seconds), so nothing was forced; `growforce.py` did not check it. It still gave the new graph: shrinking
+  it directly over 400 random orders gave 94 and 95 vertices, while `spin.py` shrank its union with the copy
+  rotated by `u` (22 481 points, denominator 750; `m = [−15, 0, 24, −9]`, `t = (8 − 3√11)/5`), over 300
+  orders, to 76 vertices and 172 edges, all in the rotated copy (2 000 orders found the same graph; the pair
+  at the other distance gave 84 over 1 500 orders). Rotated back by `ū` they lie in the first graph, with
+  `D = 30`; certified again from scratch (kissat, drat-trim, and cake_lpr in the full check of all 21 graphs),
+  they replace the 94-vertex graph, and Figures 1 and 3 now show them (172 segments; the origin has 26
+  neighbours). The 82 vertices over `ℚ(√455)` and 598 over
+  `ℚ(√119)` came from the same mistake. `growforce.py` now solves the graph again without the pair, and
+  `spin.py` refuses a graph with no 3-colouring (unless `PLAIN=1`) and writes its result rotated back when it
+  lies in the copy. Genuinely forced pairs came out over `ℚ(√455)` (5 690 points), `ℚ(√119)` (23 084) and
+  `ℚ(√935)` (9 082 and 9 937 points); their spindles shrank to 139 (1 500 orders), 802, 488 and 521 vertices,
+  above the published 74, 399 and 257. Over `ℚ(√83)` it failed: no pair two steps apart is at a spindle
+  distance for any of 13 denominators (two steps `u₁ + u₂` are exactly when
+  `(15 − s²)(1 + s²)` is a square in `K`, with `u₁ū₂ = (1 − s² + 2is)/(1 + s²)`, a curve of genus 1), forcing
+  growth towards the three kinds of targets three steps away stopped with no blocked candidate (14 746 to
+  15 630 points), and unions of a stopped 17 222-point graph with rotated copies sharing up to 4 305 points
+  stayed 3-colourable. `pentagons.py` found no unit pentagon over `ℚ(√47)`, `ℚ(√83)`, `ℚ(√107)` or `ℚ(√203)`
+  with three consecutive sides in `U_D` for the denominators tried, whatever the other two sides; the
+  colourings of the stopped graphs over `ℚ(√83)` show no bias along any direction (between 50 and 71 % of the
+  edges along a direction step the colour the same way), so they are not periodic in disguise either.
 
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; smaller witnesses (the
-smallest graphs have 74 vertices, for `d = 455`, and 94, for `d = 11`). Nobody outside the project has
+smallest graphs have 74 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has
 refereed this.

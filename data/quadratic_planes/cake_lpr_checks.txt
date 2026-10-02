@@ -1,15 +1,15 @@
 # python3 scripts/verify_quadratic_planes.py --kissat KISSAT --drat-trim DRAT_TRIM --cake-lpr CAKE_LPR
-# run 2026-10-02 01:00 UTC; kissat 4.0.4; cake_lpr sha256 b25551c853c7b7fe6a9059bcddd81a46fb4ed952b842e1080697f8122ee0c8ca
-Q(sqrt11): ok: 94 distinct points of the plane over Q(sqrt11), 214 edges, all pairs at distance exactly 1, no triangle
+# run 2026-10-02 02:08 UTC; kissat 4.0.4; cake_lpr sha256 b25551c853c7b7fe6a9059bcddd81a46fb4ed952b842e1080697f8122ee0c8ca
+Q(sqrt11): ok: 76 distinct points of the plane over Q(sqrt11), 172 edges, all pairs at distance exactly 1, no triangle
 Q(sqrt11): ok: a proper 4-colouring
-Q(sqrt11): ok: for each of the 94 vertices v, a proper 3-colouring of G minus v
-Q(sqrt11): ok: q11.cnf is the 3-colouring formula of this graph (738 clauses)
+Q(sqrt11): ok: for each of the 76 vertices v, a proper 3-colouring of G minus v
+Q(sqrt11): ok: q11.cnf is the 3-colouring formula of this graph (594 clauses)
 Q(sqrt11): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula written again here
 Q(sqrt11): upper bound: d = 11 is a nonzero square mod 7 and p = 7 is 3 mod 4: chi <= chi(F_7^2) <= 4 (Moorhouse, Lemma 8.2; stored colouring checked)
-Q(sqrt23): ok: 660 distinct points of the plane over Q(sqrt23), 1727 edges, all pairs at distance exactly 1, no triangle
+Q(sqrt23): ok: 393 distinct points of the plane over Q(sqrt23), 1011 edges, all pairs at distance exactly 1, no triangle
 Q(sqrt23): ok: a proper 4-colouring
-Q(sqrt23): ok: for each of the 660 vertices v, a proper 3-colouring of G minus v
-Q(sqrt23): ok: q23.cnf is the 3-colouring formula of this graph (5843 clauses)
+Q(sqrt23): ok: for each of the 393 vertices v, a proper 3-colouring of G minus v
+Q(sqrt23): ok: q23.cnf is the 3-colouring formula of this graph (3428 clauses)
 Q(sqrt23): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula written again here
 Q(sqrt23): upper bound: d = 23 is a nonzero square mod 7 and p = 7 is 3 mod 4: chi <= chi(F_7^2) <= 4 (Moorhouse, Lemma 8.2; stored colouring checked)
 Q(sqrt35): ok: 580 distinct points of the plane over Q(sqrt35), 1501 edges, all pairs at distance exactly 1, no triangle

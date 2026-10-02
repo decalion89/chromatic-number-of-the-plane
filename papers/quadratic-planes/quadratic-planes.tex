@@ -132,9 +132,9 @@ unit vectors $v-u$ over the edges $uv$, with both signs.}\label{tab:graphs}
 \begin{figure}[ht]
 \centering
 \input{q11-graph.tex}
-\caption{The graph over $\Q(\sqrt{11})$: $94$ points, joined by the $214$ segments of length exactly $1$ (drawn from
+\caption{The graph over $\Q(\sqrt{11})$: $76$ points, joined by the $172$ segments of length exactly $1$ (drawn from
 the coordinates rounded to five decimals; \texttt{make\_figure.py} writes the drawing from the data). The marker
-shapes show a proper $4$-colouring; there is no proper $3$-colouring. The vertex at the origin has $32$ neighbours, on
+shapes show a proper $4$-colouring; there is no proper $3$-colouring. The vertex at the origin has $26$ neighbours, on
 the dashed unit circle.}\label{fig:q11}
 \end{figure}
 
@@ -212,6 +212,13 @@ selectors, a subset of the vertices that is still not $3$-colourable. Deleting v
 a deletion when the rest is still refuted, gives a vertex-critical graph; repeating with up to $400$ random
 deletion orders and keeping the smallest result gave the graphs of Table~\ref{tab:graphs}.
 
+\subsection*{The graph over \texorpdfstring{$\Q(\sqrt{11})$}{Q(sqrt11)}}
+With $D=30$, the $11\,612$ points within two steps of $0$ or of $m=[-15,0,24,-9]$ form a graph with no proper
+$3$-colouring, and shrinking it gave $94$ vertices. We had built it to test a spindle: $4|m|^2-1=t^2$ with
+$t=(8-3\sqrt{11})/5\in K$, so $u=(t+i)/(t-i)$ has modulus $1$ and $|m-um|=1$, as in Moser's spindle, where
+$|m|^2=3$ and $t=\sqrt{11}$. Shrinking the union of the graph and its copy rotated by $u$ gave $76$ vertices,
+all in the copy; rotated back by $\bar u$, they are the graph of Figure~\ref{fig:q11}.
+
 \subsection*{Gates}
 Some searches stop with $3$-colourable graphs for an arithmetic reason. Let $\PP$ be a prime of $K(i)$ above
 $p$ that splits in $K(i)/K$, with residue field $\F_q$. Writing a unit vector as $z=x+iy$, we have
@@ -270,7 +277,7 @@ and have residues differing by $\pm1$.
   $\Q(\sqrt{83})$, $\Q(\sqrt{107})$ and $\Q(\sqrt{203})$ have so far found only $3$-colourable graphs.
 \item A uniform proof: a family of graphs, or an argument, covering all $d\equiv11\pmod{12}$ at once.
 \item How small can a $4$-chromatic unit-distance graph over a real quadratic field be? The smallest of ours
-  has $74$ vertices, for $d=455$; the one for $d=11$ has $94$.
+  has $74$ vertices, for $d=455$; the one for $d=11$ has $76$.
 \end{itemize}
 
 \begin{thebibliography}{99}
