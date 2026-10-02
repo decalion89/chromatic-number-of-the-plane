@@ -169,6 +169,12 @@ CakeML compiler \cite{cakelpr}, checks it; it accepted the proofs for all twenty
 is a proof checker (\texttt{drat-trim}, or \texttt{cake\_lpr} and its formal verification), the short code that
 writes $\Phi(G)$ from the list of edges, and exact integer arithmetic.
 
+For $d=11$ the whole theorem is also proved in Lean~4 \cite{Lean} with Mathlib \cite{mathlib}
+(\texttt{lean/Q11.lean} in \cite{Repo}). The kernel checks the $172$ unit distances, an LRAT proof that
+$\Phi(G)$ is unsatisfiable, through Mathlib's \texttt{lrat\_proof}, and the upper bound of
+Section~\ref{sec:upper} at $p=7$, from a valuation ring of $\Q(\sqrt{11})$ with residue field $\F_7$. The proof
+depends only on Lean's three standard axioms, and neither the SAT solver nor \texttt{drat-trim} is trusted.
+
 \section{The upper bounds}\label{sec:upper}
 
 \begin{lemma}[Moorhouse {\cite[Lemma~8.2]{Moorhouse}}]
@@ -297,6 +303,10 @@ proofs, 2026. Archived at Zenodo, \href{https://doi.org/10.5281/zenodo.22976635}
 \bibitem{Johnson1987} P. D. Johnson Jr., \emph{Two-colorings of real quadratic extensions of $\Q^2$ that forbid
 many distances}, Congr. Numer. \textbf{60} (1987), 51--58.
 \bibitem{Madore} D. A. Madore, \emph{The Hadwiger--Nelson problem over certain fields}, arXiv:1509.07023 (2015).
+\bibitem{mathlib} The mathlib Community, \emph{The Lean mathematical library}, CPP 2020, 367--381;
+arXiv:1910.09336.
+\bibitem{Lean} L. de Moura and S. Ullrich, \emph{The Lean 4 theorem prover and programming language}, CADE 28,
+Lecture Notes in Comput. Sci. \textbf{12699} (2021), 625--635.
 \bibitem{MM} MildlyMeticulous (GitHub account), \emph{A $2$-adic obstruction to $5$-chromatic unit-distance
 graphs, and the exact chromatic number of the plane over $\Q(\sqrt3,\sqrt{11})$}, code, logs and draft, July 2026,
 \url{https://github.com/MildlyMeticulous/hn-2adic-obstruction}.

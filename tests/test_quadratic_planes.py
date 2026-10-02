@@ -105,3 +105,35 @@ def test_cake_lpr_log_covers_every_field():
     for d in FIELDS:
         assert f"Q(sqrt{d}): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT" in log, d
     assert "\n# exit status 0" in log and "\nCONFIRMED: " in log
+
+
+def test_lean_file_matches_the_data():
+    """lean/Q11.lean (the Lean proof of chi(Q(sqrt11)^2) = 4) is the file lean/tools/q11_lean.py writes from
+    data/quadratic_planes/q11.json and finite_planes.json, so the formal proof is about the published graph."""
+    import subprocess
+    r = subprocess.run([sys.executable, os.path.join(ROOT, "lean", "tools", "q11_lean.py"), "--check"],
+                       capture_output=True, text=True)
+    assert r.returncode == 0, r.stdout + r.stderr
+
+
+def test_lrat_proof_is_for_the_stored_formula():
+    """data/quadratic_planes/q11.lrat, which Q11.lean checks, refers only to the clauses of q11.cnf and ends with
+    the empty clause."""
+    with open(os.path.join(D, "q11.cnf")) as fh:
+        header = fh.readline().split()
+    nclauses = int(header[3])
+    with open(os.path.join(D, "q11.lrat")) as fh:
+        lines = [l.split() for l in fh if l.strip()]
+    added = set()
+    empty = False
+    for t in lines:
+        if t[1] == "d":
+            continue
+        k = int(t[0])
+        assert k > nclauses and k not in added
+        z = t.index("0", 1)
+        hints = [int(x) for x in t[z + 1:-1]]
+        assert all(0 < abs(h) <= nclauses or abs(h) in added for h in hints)
+        added.add(k)
+        empty = empty or z == 1
+    assert empty

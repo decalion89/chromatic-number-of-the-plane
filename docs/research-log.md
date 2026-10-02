@@ -9013,6 +9013,19 @@ set of directions changes that (`notes/quadratic_planes.md`).
   two sides; the colourings of the stopped graphs over `ℚ(√83)` show no bias along any direction (between 50 and
   71 % of the edges along a direction step the colour the same way), so they are not periodic in disguise
   either.
+- **`χ(ℚ(√11)²) = 4` in Lean (2 October).** `lean/Q11.lean`, written from the data by `lean/tools/q11_lean.py`,
+  proves `Q11.chromaticNumber_eq_four` with Mathlib v4.34.1, using only `propext`, `Classical.choice` and
+  `Quot.sound`. Lower bound: `checkEdges_E` (the kernel evaluates the two integer identities for the 172 edges),
+  `adj_pt` (they give distance 1, since `r11² = 11`), and Mathlib's `lrat_proof` on `q11.cnf` with the LRAT proof
+  `q11.lrat` (126 lines, from kissat and `drat-trim -L`), which yields a 228-variable propositional theorem; a
+  3-colouring, its colours renamed so that the fixed edge has colours 0 and 1, refutes each of its 594 disjuncts.
+  Upper bound: Moorhouse's reduction at 7 from a valuation subring with 7 in its maximal ideal (Chevalley), its
+  residue field `𝔽₇` (one of `±√11 − 2` lies in `𝔪`; Hensel's lemma gives integers `bₖ ≡ √11 (mod 7ᵏ⁺¹)`), the
+  integrality of unit vectors (`−1` is not a square mod 7) and the stored 4-colouring of `𝔽₇²`. The file
+  compiles in about a minute. Two practical points: with all of Mathlib imported, `decide +kernel` on statements
+  with `^` and `Prop`-level membership in lists of tuples ran out of memory (6 GB), while the same checks as
+  Boolean recursions with products took 2 seconds; and the names that `lrat_proof` gives its auxiliary
+  definitions are private, so the proof uses the propositional theorem itself.
 
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; smaller witnesses (the
 smallest graphs have 74 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has

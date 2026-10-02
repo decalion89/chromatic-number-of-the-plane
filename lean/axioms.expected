@@ -1,2 +1,3 @@
 'Q23.chromaticNumber_eq_four' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Q311.chromaticNumber_eq_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Q11.chromaticNumber_eq_four' depends on axioms: [propext, Classical.choice, Quot.sound]

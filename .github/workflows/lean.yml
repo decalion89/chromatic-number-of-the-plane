@@ -37,4 +37,4 @@ jobs:
       - name: Compare the axioms with axioms.expected
         run: lake env lean PrintAxioms.lean > axioms.txt && diff axioms.expected axioms.txt
       - name: Replay each file in the kernel
-        run: for m in LocalColouring Q23 Q311; do lake env leanchecker -v "$m"; done
+        run: for m in LocalColouring Q23 Q311 Q11; do lake env leanchecker -v "$m"; done

@@ -283,6 +283,19 @@ every graph: each proof `VERIFIED UNSAT`
 `tests/test_quadratic_planes.py` runs the fast checks, and checks that this log
 covers every field.
 
+**A formal proof for `d = 11`.** `lean/Q11.lean` proves `χ(ℚ(√11)²) = 4` in Lean 4
+with Mathlib, and depends only on Lean's three standard axioms. For the lower
+bound the kernel checks the 172 unit distances of `q11.json` and, through
+Mathlib's `lrat_proof`, an LRAT proof (`data/quadratic_planes/q11.lrat`, from
+kissat and `drat-trim -L`) that `q11.cnf` is unsatisfiable; a 3-colouring of the
+plane, with its colours renamed, would satisfy every clause. Neither the SAT
+solver nor drat-trim is trusted. For the upper bound it follows §5 at the prime 7:
+a valuation subring of `ℚ(√11)` with 7 in its maximal ideal (Chevalley's theorem)
+has residue field `𝔽₇`, by Hensel's lemma for `√11 ≡ ±2`, unit vectors are
+integral there, and a 4-colouring of the unit-distance graph of `𝔽₇²`
+(`finite_planes.json`) colours the plane. `lean/tools/q11_lean.py` writes the file
+from the data, and a test checks that it is up to date.
+
 ## 5. The upper bounds
 
 - **`d = 11, 23, 35, 71, 95, 119, 155, 179, 191, 239, 263, 359, 431, 455, 599, 935, 959`.** `d` is a nonzero square

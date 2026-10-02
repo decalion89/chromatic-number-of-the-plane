@@ -133,8 +133,10 @@ For real quadratic fields only the values 2 and 3 were known, and a field can ne
 d ≡ 11 (mod 12). With the known results, χ(ℚ(√d)²) is now known for every squarefree d < 83 except 47.
 Each lower bound is a triangle-free unit-distance graph with coordinates in ℚ(√d) and no 3-colouring,
 with 74 to 1 404 vertices: a computer proof, by SAT with DRAT proofs checked by drat-trim, for two
-separate encodings. The upper bounds are reductions modulo a prime (Moorhouse 2010, Fischer 1990). As far
-as we found, these are the first real quadratic fields known to need four colours. Not yet refereed.
+separate encodings. The upper bounds are reductions modulo a prime (Moorhouse 2010, Fischer 1990). For the
+first field, χ(ℚ(√11)²) = 4 is also proved in Lean 4 with Mathlib ([`lean/Q11.lean`](lean/Q11.lean)): the
+kernel checks the graph's SAT certificate and the reduction at 7. As far as we found, these are the first
+real quadratic fields known to need four colours. Not yet refereed.
 
 <p align="center">
   <img src="docs/figures/quadratic_q11.svg" width="560"
@@ -163,7 +165,7 @@ None of these results has been refereed. Each has one or more of these statuses:
 |---|---|---|
 | **χ(ℚ(√2, √3)²) = 4.** Voronov's second case. The upper bound is also a case of Corollary B′ of [hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction) (July 2026), which we found after our note; the explicit value is not stated there. | Proved; formally verified | [The note](papers/planes-4-chromatic/planes-4-chromatic.pdf), [`lean/Q23.lean`](lean/Q23.lean), [`notes/local_colourings.md`](notes/local_colourings.md) §10, `tests/test_q23.py`. The lower bound was already implicit in Voronov–Neopryatnaya–Dergachev; a 10-vertex chain of unit rhombi gives a short one (`certificates/chain23_no3coloring.json`). |
 | **χ(ℚ(√3, √11)²) = 4**, K. G. Fischer's theorem (1994) | Known; a new short proof, proved and formally verified | [The note](papers/planes-4-chromatic/planes-4-chromatic.pdf), [`lean/Q311.lean`](lean/Q311.lean), [`notes/local_colourings.md`](notes/local_colourings.md) §8, `hn/adelic.py`, `tests/test_q311.py` |
-| **χ(ℚ(√d)²) = 4 for d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 935, 959, and 4 ≤ χ(ℚ(√47)²) ≤ 5.** The first real quadratic fields known to need four colours, as far as we found: the values known before were 2 and 3. With the known results, χ(ℚ(√d)²) is now known for every squarefree d < 83 except 47. Each lower bound is a triangle-free, vertex-critical unit-distance graph, with 74 to 1 404 vertices. | Computer proof (lower bounds); known (upper bounds) | [`notes/quadratic_planes.md`](notes/quadratic_planes.md): exact unit edges, a stored 4-colouring, 3-colourings of every vertex-deleted graph, and no 3-colouring, by kissat with DRAT proofs checked by drat-trim, twice with separate encodings (`data/quadratic_planes/`). The upper bounds are Moorhouse's reduction at 7, Fischer's Theorem 10 and the reduction at 11. `scripts/verify_quadratic_planes.py`, `tests/test_quadratic_planes.py` |
+| **χ(ℚ(√d)²) = 4 for d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 935, 959, and 4 ≤ χ(ℚ(√47)²) ≤ 5.** The first real quadratic fields known to need four colours, as far as we found: the values known before were 2 and 3. With the known results, χ(ℚ(√d)²) is now known for every squarefree d < 83 except 47. Each lower bound is a triangle-free, vertex-critical unit-distance graph, with 74 to 1 404 vertices. | Computer proof (lower bounds); known (upper bounds); formally verified for d = 11 | [`notes/quadratic_planes.md`](notes/quadratic_planes.md): exact unit edges, a stored 4-colouring, 3-colourings of every vertex-deleted graph, and no 3-colouring, by kissat with DRAT proofs checked by drat-trim, twice with separate encodings (`data/quadratic_planes/`). The upper bounds are Moorhouse's reduction at 7, Fischer's Theorem 10 and the reduction at 11. `scripts/verify_quadratic_planes.py`, `tests/test_quadratic_planes.py`. For d = 11 the theorem is also formally verified: [`lean/Q11.lean`](lean/Q11.lean) |
 | χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, for the whole complex fields | Known; new local proofs | The first follows from Fischer's theorem, the second from Madore's reduction at 11 and Exoo–Ismailescu's graph. Our proofs reduce at the primes 2 and 11 ([`notes/local_colourings.md`](notes/local_colourings.md) §3, [`notes/rigidity.md`](notes/rigidity.md)); the lower bound graph `five_247_c` has a DRAT proof (`certificates/five_247_c_no4coloring.json`). |
 | Necessary local conditions for a field to hold a 6-chromatic unit-distance graph | Proved | [`notes/local_colourings.md`](notes/local_colourings.md) §5–§9, `scripts/fieldscreen.py` |
 | **Six colours for finite planes.** χ(G_q) ≥ 6 for every prime q ≥ 29 except 31, and χ(𝔽_q²) ≥ 6 for q = 37, 41, 43, 47, 59 and every prime q ≥ 67; χ(𝔽₄₁²) ∈ {6, 7}. Here 𝔽_q² is the plane x² + y² (Moorhouse's table stops at q = 17), and G_q the anisotropic plane, a local plane of number fields. | Computer proof; proved for large q | For 𝔽₃₇², 𝔽₄₁², 𝔽₄₃², 𝔽₄₇², G₂₉, G₃₇ and G₄₁, Schrijver's three-point bound gives α < q²/5, and each dual certificate is checked in interval and exact rational arithmetic, and again by an independent checker. The other cases follow from Proposition B and Hoffman's bound, with Weil's estimate or the exact spectrum. [`notes/local_colourings.md`](notes/local_colourings.md) §14, [`data/threepoint/`](data/threepoint/README.md), `scripts/threepoint_verify.py`, `scripts/threepoint_verify_indep.py` |
@@ -234,9 +236,9 @@ construction stops at five".
   an exact rational positive-definiteness test, and again by a second checker written from the
   definitions. Spectral (Hoffman) bounds need no certificate: `scripts/finite_hoffman.py` recomputes every
   eigenvalue in interval arithmetic.
-- **Formal proofs.** The two theorems on ℚ(√2, √3) and ℚ(√3, √11) are also proved in Lean 4
-  ([`lean/`](lean/README.md)). CI builds the proofs, checks that they use only Lean's standard axioms,
-  and replays them in Lean's kernel.
+- **Formal proofs.** The two theorems on ℚ(√2, √3) and ℚ(√3, √11), and χ(ℚ(√11)²) = 4, are also proved
+  in Lean 4 ([`lean/`](lean/README.md)). CI builds the proofs, checks that they use only Lean's standard
+  axioms, and replays them in Lean's kernel.
 - **Corrections stay visible.** Withdrawn claims are kept, with the reason, in the research log.
 
 ## Reproducing
@@ -287,7 +289,7 @@ GitHub Actions runs the fast part of the suite, 574 tests in 41 files
 |---|---|
 | [`papers/`](papers/README.md) | the papers, in LaTeX and PDF |
 | [`hn/`](hn/) | the Python library: exact number fields, geometry, unit-distance graphs, SAT colouring, certificates, local (adelic) colourings |
-| [`lean/`](lean/README.md) | formal proofs in Lean 4 of the two theorems |
+| [`lean/`](lean/README.md) | formal proofs in Lean 4 of the two theorems and of χ(ℚ(√11)²) = 4 |
 | [`notes/`](notes/README.md) | technical notes: local colourings, rigidity, the literature, the search jobs |
 | [`data/`](data/README.md) | graphs and witnesses in exact coordinates (JSON), and the three-point certificates |
 | [`certificates/`](certificates/README.md) | colourings, DRAT verification logs and non-colourability claims |

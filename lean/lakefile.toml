@@ -1,6 +1,6 @@
 name = "HadwigerNelson"
 version = "0.1.0"
-defaultTargets = ["LocalColouring", "Q23", "Q311"]
+defaultTargets = ["LocalColouring", "Q23", "Q311", "Q11"]
 
 [[require]]
 name = "mathlib"
@@ -18,3 +18,7 @@ name = "Q23"
 # χ(ℚ(√3, √11)²) = 4 (K. G. Fischer, 1994).
 [[lean_lib]]
 name = "Q311"
+
+# χ(ℚ(√11)²) = 4: the first real quadratic field whose plane needs four colours.
+[[lean_lib]]
+name = "Q11"

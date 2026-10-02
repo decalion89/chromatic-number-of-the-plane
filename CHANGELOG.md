@@ -43,6 +43,15 @@ including every retracted claim, is the research log,
   accepted all of them), and `tests/test_quadratic_planes.py` runs the fast
   checks. The graph over ℚ(√11) is drawn in the paper (Figure 1) and on the
   front page (Figure 3).
+- **`χ(ℚ(√11)²) = 4` in Lean 4** (`lean/Q11.lean`), with Mathlib. The lower bound is
+  the 76-vertex graph of `data/quadratic_planes/q11.json`: the kernel checks its
+  172 unit distances and, through Mathlib's `lrat_proof`, the LRAT proof
+  `data/quadratic_planes/q11.lrat` that its formula `q11.cnf` is unsatisfiable. The
+  upper bound is Moorhouse's reduction at 7, proved from a valuation subring with
+  residue field 𝔽₇ (Hensel's lemma for √11) and a 4-colouring of the unit-distance
+  graph of 𝔽₇². It depends only on Lean's three standard axioms; CI builds it,
+  compares the axioms and replays it with `leanchecker`, and a test checks that
+  `lean/tools/q11_lean.py` writes the same file from the data.
 - **A Moser-spindle-free 5-chromatic unit-distance graph with 852 vertices**
   (`notes/flat852.md`, `data/flat852/`). Its points lie in `ℚ(ζ₂₁)`, and its
   edges use the 84 unit vectors of J. K. Haugland's heptagon graph
