@@ -59,7 +59,14 @@ including every retracted claim, is the research log,
   (note §5, `data/quadratic_planes/scripts/padic_planes.py`); the three exact values are proved in Lean
   (`lean/PadicPlanes.lean`). For measurable colourings the `p`-adic planes need more and more colours:
   `χ_m(ℚ_p²) ≥ 1 + (p + 1)/(2√p)` for `p ≡ 3 (mod 4)`, so at least 5 from `p = 23`, 6 at `p = 59` and from 67, 7 at 71
-  and from 103 (`padic_measurable.py`); for the real plane six measurable colours is open.
+  and from 103 (`padic_measurable.py`); for the real plane six measurable colours is open. This answers
+  Question 1 of Bardestani and Mallahi-Karai (arXiv 1507.05300), the `p`-adic Hadwiger–Nelson problem, in the
+  negative: the Borel chromatic number of `ℚ_p²` is not bounded over `p ≡ 3 (mod 4)`; the coset colouring also
+  gives `χ_Bor(ℚ_p²) ≤ χ(𝔽_p²) ≤ p + 1`, where they had `O(p²)`. With Davies's theorem (arXiv 2308.16885),
+  `χ(ℚ_p²) = ∞` for `p ≡ 1 (mod 4)`, so `χ(ℚ_p²)` is finite exactly for `p = 2` and `p ≡ 3 (mod 4)`; and by
+  Chebotarev's theorem no finite set of graphs gives `χ(ℚ_p²) ≥ 4` for every `p ≡ 3 (mod 4)` (note §5). The 27
+  certified fields reach every prime `p ≡ 3 (mod 4)` from 7 below `2 129 503 819`, the first one they miss
+  (`padic_reach.c`, checked by `padic_reach.py`).
 - **`χ(ℚ(√d)²) = 4` in Lean 4 for ten fields**, `d = 11, 119, 131, 179, 191, 251,
   431, 455, 911, 935` (`lean/Sqrt{d}.lean`), with Mathlib. Each lower bound is the graph
   of `data/quadratic_planes/q{d}.json`: the kernel checks its unit distances and,

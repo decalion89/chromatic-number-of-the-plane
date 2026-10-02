@@ -9285,6 +9285,23 @@ set of directions changes that (`notes/quadratic_planes.md`).
   by a character of that resolution. The shortest odd cycles have length 7 for `D = 2958` and `1530`, and 9 for
   `D = 2040` (`oddmitm.py`).
 
+- **The `p`-adic Hadwiger–Nelson problem (2 October, evening).** Rereading Bardestani and Mallahi-Karai
+  (arXiv 1507.05300, §1): their Question 1 asks whether the Borel chromatic number of `ℚ_p²` is bounded by a
+  constant independent of `p ≡ 3 (mod 4)`. The measurable bound above answers it: no, since
+  `χ_Bor ≥ χ_m ≥ 1 + (p + 1)/(2√p)`. The coset colouring gives `χ_Bor(ℚ_p²) ≤ χ(𝔽_p²) ≤ p + 1` (Brooks), where
+  they had `O(p²)`. We looked for a later answer (their 2017 paper on polynomial configurations, arXiv
+  1701.06024; Davies 2023; web searches) and found none. Davies (arXiv 2308.16885, Theorem 3, from a theorem of
+  Graham) proved that every finite colouring of `ℚ²` has a monochromatic pair with
+  `(x − x′)² − (y − y′)² = 1`; through `(x, y) ↦ (x, iy)` this gives `χ(ℚ_p²) = ∞` for `p ≡ 1 (mod 4)`, a
+  one-line consequence we have not seen stated. So `χ(ℚ_p²)` is finite exactly for `p = 2` and `p ≡ 3 (mod 4)`.
+  Last, a remark with Chebotarev's theorem: no finite set of 4-chromatic graphs gives `χ(ℚ_p²) ≥ 4` for every
+  `p ≡ 3 (mod 4)`, because a prime whose Frobenius copies the one at 3 only sees fields with a place of residue
+  field `𝔽₃`, and those are 3-colourable (note §5). For our 27 fields the first prime that escapes is
+  `2 129 503 819` (`padic_reach.c`, a sieve with Jacobi symbols, 21 s; `padic_reach.py` checks it by Miller–Rabin
+  and Euler's criterion, and every prime below `10⁷` again), so `χ(ℚ_p²) ≥ 4` for every prime `p ≡ 3 (mod 4)`
+  from 7 below it, where the table had stopped at 79. The proofs are short and use known tools
+  (Delsarte–Hoffman, Weil, Chebotarev); nobody outside the project has checked them.
+
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; smaller witnesses (the
 smallest graphs have 71 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has
 refereed this.

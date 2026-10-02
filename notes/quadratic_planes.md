@@ -402,11 +402,19 @@ that they are up to date.
     `ℚ₇²`;
   - `4 ≤ χ(ℚ_p²) ≤ 5` for `p = 11` and `p = 19`, since `χ(𝔽₁₁²) = χ(𝔽₁₉²) = 5` and `47` is a square modulo
     both;
-  - `χ(ℚ_p²) ≥ 4` for every `p ≡ 3 (mod 4)` from 7 to 79, and `χ(ℚ₈₃²) ≥ 5`: `3`, `11` and `247` are squares
-    modulo 83, so the 5-chromatic graph `data/five_247_c.json` over `ℚ(√3, √11, √247)` lies in `ℚ₈₃²`.
+  - `χ(ℚ_p²) ≥ 4` for every prime `p ≡ 3 (mod 4)` with `7 ≤ p < 2 129 503 819`: for each of them one of the 27
+    values of `d` (47 included) is a nonzero square modulo `p`. The bound `2 129 503 819` is the first prime
+    `p ≡ 3 (mod 4)` after 3 that none of them reaches (`data/quadratic_planes/scripts/padic_reach.c`, a sieve with
+    Jacobi symbols, 21 seconds; `padic_reach.py` checks that prime and every prime below `10⁷` again by Euler's
+    criterion). The next item explains why some prime had to escape.
+  - `χ(ℚ₈₃²) ≥ 5`: `3`, `11` and `247` are squares modulo 83, so the 5-chromatic graph `data/five_247_c.json`
+    over `ℚ(√3, √11, √247)` lies in `ℚ₈₃²`.
 
-  The Borel chromatic numbers have the same values and bounds. For `p ≡ 1 (mod 4)` the graphs over `ℚ(√d)`
-  still give `χ(ℚ_p²) ≥ 4` (for example `ℚ(√11) ⊂ ℚ₅`); the Borel chromatic number is infinite there. Since
+  The Borel chromatic numbers have the same values and bounds. For `p ≡ 1 (mod 4)` even the ordinary chromatic
+  number is infinite: `−1 = i²` in `ℚ_p`, so `(x, y) ↦ (x, iy)` maps the graph of `x² − y² = 1` on `ℚ²` into
+  `ℚ_p²`, and Davies ([arXiv 2308.16885](https://arxiv.org/abs/2308.16885), Theorem 3) proved that every finite
+  colouring of `ℚ²` has a monochromatic pair with `(x − x′)² − (y − y′)² = 1` (Madore had noted the same consequence
+  for `ℂ²`). So `χ(ℚ_p²)` is finite exactly when `p = 2` or `p ≡ 3 (mod 4)`. Since
   `ℚ₁₁` contains `ℚ(√47)` and also `ℚ(√3, √5)` (Voronov's case), `χ(ℚ₁₁²) = 4` would give `χ(ℚ(√47)²) = 4` and
   `χ(ℚ(√3, √5)²) ≤ 4`, while a 5-chromatic unit-distance graph over any number field inside `ℚ₁₁` would give
   `χ(ℚ₁₁²) = 5`. `data/quadratic_planes/scripts/padic_planes.py` checks the ingredients (the stored colourings,
@@ -432,9 +440,29 @@ that they are up to date.
 
   Together with the colourings of the finite planes, `χ_m(ℚ₇²) = 4`, `χ_m(ℚ₃²) = 3` and `χ_m(ℚ₂²) = 2`, while
   `4 ≤ χ_m(ℚ_p²) ≤ 5` for `p = 11, 19`. For the real plane the measurable bound 5 is Falconer's theorem and 6 is
-  open; for the `p`-adic planes with `p ≥ 59` six colours are needed. For `p ≡ 1 (mod 4)` the Borel chromatic
-  number is infinite (Bardestani and Mallahi-Karai). The ordinary chromatic
-  numbers are only bounded below by the graphs above (4, and 5 at `p = 83`).
+  open; for the `p`-adic planes with `p ≥ 59` six colours are needed.
+
+  This answers Question 1 of Bardestani and Mallahi-Karai ([arXiv 1507.05300](https://arxiv.org/abs/1507.05300),
+  §1), which they call the `p`-adic Hadwiger–Nelson problem: is `χ_Bor(ℚ_p²)` bounded by a constant independent
+  of `p ≡ 3 (mod 4)`? It is not. In the other direction the coset colouring gives
+  `χ_Bor(ℚ_p²) ≤ χ(𝔽_p²) ≤ p + 1` (Brooks), where they had `O(p²)`. So, for every `p ≡ 3 (mod 4)`,
+  `1 + (p + 1)/(2√p) ≤ χ_m(ℚ_p²) ≤ χ_Bor(ℚ_p²) ≤ χ(𝔽_p²) ≤ p + 1`. We found no other answer to their question
+  (literature search of 2 October 2026). For `p ≡ 3 (mod 4)` the ordinary chromatic numbers are only bounded
+  below by the graphs above (4, and 5 at `p = 83`); for `p ≡ 1 (mod 4)` all three are infinite.
+- **No finite set of graphs gives `χ(ℚ_p²) ≥ 4` for every `p ≡ 3 (mod 4)`.** Let `𝒦` be a finite set of number
+  fields with `χ(K²) ≥ 4` for every `K ∈ 𝒦`. Then for infinitely many primes `p ≡ 3 (mod 4)` no `K ∈ 𝒦` embeds
+  in `ℚ_p`. Let `M` be the Galois closure of the compositum of `ℚ(i)` and the fields of `𝒦`, `G = Gal(M/ℚ)`,
+  `D ⊂ G` the decomposition group of a prime of `M` above 3, `I ⊂ D` its inertia group, and `σ ∈ D` a lift of
+  the Frobenius of `D/I`, so that `D = ⟨σ⟩I`. By Chebotarev infinitely many `p`, unramified in `M`, have
+  Frobenius conjugate to `σ`, and `p ≡ 3 (mod 4)` because `σ` acts on the residue field `𝔽₉` of `ℚ(i)` at 3 by
+  `x ↦ x³`, so it moves `i`. If `K = M^H` embeds in `ℚ_p`, a prime of `K` above `p` has degree 1, so `σ` fixes a
+  coset `gH`; then `D·gH = I⟨σ⟩·gH = I·gH`, so the prime of `K` above 3 given by this orbit has residue field
+  `𝔽₃`. There `−1` is not a square, unit vectors are integral and reduce to `(±1, 0)` or `(0, ±1)`, and
+  `x + y mod 3` on each coset gives `χ(K²) ≤ 3` (Fischer's Theorem 9 is the case of quadratic fields), a
+  contradiction. So the table above cannot be extended to every `p` with finitely many graphs; for our 27 fields the
+  first prime that escapes is `p = 2 129 503 819`, where every `d` is a non-square, as at 3. It would follow,
+  for example, from `χ(ℚ(√q)²) = 4` for every prime `q ≡ 11 (mod 12)`: by Dirichlet, every prime `p ≡ 3 (mod 4)`
+  with `p ≥ 7` has such a `q` that is a square modulo `p`, and then `ℚ(√q) ⊂ ℚ_p`.
 
 ## 6. Open
 
@@ -496,6 +524,15 @@ that they are up to date.
   span, for `m ≤ 10` or `m = 12` (`D = 510`), `m ≤ 8` (`D = 1530`) and `m ≤ 13`
   (`D = 2958`, 324 directions, where the growth stopped at 2 788 points with no
   blocked candidate) (`data/quadratic_planes/scripts/periodicq.py`).
+- **Ordinary and Borel colourings of `ℚ_p²`.** For `p ≡ 3 (mod 4)` the Borel
+  chromatic number of `ℚ_p²` tends to infinity (§5), while the ordinary one is
+  only known to be at least 4 (5 at `p = 83`). Is it bounded? A finite subgraph
+  whose coordinates generate a field with a real embedding lies in `ℝ²` and is
+  7-colourable, so more than seven colours would need a field with no real
+  embedding. If it is bounded, Borel and ordinary chromatic numbers drift apart
+  along the `p`-adic planes, the kind of behaviour Bardestani and Mallahi-Karai
+  discuss in their Remark 1.3 (for indefinite forms over `ℝ`, where Davies has
+  since shown that both are infinite).
 - **Smaller witnesses.** The graph over `ℚ(√455)` has 71 vertices, and the
   one over `ℚ(√11)` 76. How small can a 4-chromatic unit-distance graph over a
   real quadratic field be?

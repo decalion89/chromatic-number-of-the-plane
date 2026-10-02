@@ -281,6 +281,19 @@ def test_padic_planes_table():
     assert rows[83][3] == "5" and all(rows[p][3] == "4" for p in (23, 31, 43, 47, 59, 67, 71, 79))
 
 
+def test_padic_reach():
+    """note §5: the 27 certified fields reach every prime p = 3 (mod 4) from 7 on below 10^5 (padic_reach.c finds the
+    first one they miss, 2 129 503 819, which is prime, 3 mod 4, and has no d as a nonzero square)"""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "padic_reach", os.path.join(ROOT, "data", "quadratic_planes", "scripts", "padic_reach.py"))
+    pr = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(pr)
+    ds, count = pr.check(10 ** 5)
+    assert len(ds) == 27 and count == 4808
+    assert 11 in pr.reached(7, ds) and pr.reached(pr.P0, ds) == []
+
+
 def test_padic_measurable_bounds():
     """note §5, measurable colourings of Q_p^2: the interval-arithmetic bounds 5, 5, 6, 7 at p = 23, 31, 59, 71"""
     import importlib.util
