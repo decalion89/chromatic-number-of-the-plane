@@ -1,6 +1,6 @@
 name = "HadwigerNelson"
 version = "0.1.0"
-defaultTargets = ["LocalColouring", "Q23", "Q311", "QuadraticPlanes", "Sqrt11", "Sqrt119", "Sqrt131", "Sqrt179", "Sqrt191", "Sqrt251", "Sqrt431", "Sqrt455", "Sqrt911", "Sqrt935", "ColouringFormula", "Sqrt23", "Sqrt35", "Sqrt47", "Sqrt59", "Sqrt71", "Sqrt95", "Sqrt155", "Sqrt239", "Sqrt263", "Sqrt359", "Sqrt443", "Sqrt491", "Sqrt599", "Sqrt611", "Sqrt791", "Sqrt959"]
+defaultTargets = ["LocalColouring", "Q23", "Q311", "QuadraticPlanes", "Sqrt11", "Sqrt119", "Sqrt131", "Sqrt179", "Sqrt191", "Sqrt251", "Sqrt431", "Sqrt455", "Sqrt911", "Sqrt935", "ColouringFormula", "Sqrt23", "Sqrt35", "Sqrt47", "Sqrt59", "Sqrt71", "Sqrt95", "Sqrt155", "Sqrt239", "Sqrt263", "Sqrt359", "Sqrt443", "Sqrt491", "Sqrt599", "Sqrt611", "Sqrt791", "Sqrt851", "Sqrt959"]
 
 [[require]]
 name = "mathlib"
@@ -126,6 +126,10 @@ name = "Sqrt611"
 # χ(ℚ(√791)²) = 4 if q791.cnf is unsatisfiable (791 = 7 · 113: the reduction at 7, ramified).
 [[lean_lib]]
 name = "Sqrt791"
+
+# χ(ℚ(√851)²) = 4 if q851.cnf is unsatisfiable (851 ≡ 2² (mod 7): the reduction at 7).
+[[lean_lib]]
+name = "Sqrt851"
 
 # χ(ℚ(√959)²) = 4 if q959.cnf is unsatisfiable (959 = 7 · 137: the reduction at 7, ramified).
 [[lean_lib]]

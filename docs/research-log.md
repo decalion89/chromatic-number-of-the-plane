@@ -9241,6 +9241,17 @@ set of directions changes that (`notes/quadratic_planes.md`).
   unsatisfiability of `q491.cnf`, like the other large graphs, and the run with cake_lpr was repeated for all
   twenty-six graphs. Writing the field lists we noticed that the note's list of the `d` that are nonzero squares
   modulo 7 had missed 443 (added with this field; the paper's list had it).
+- **`ℚ(√851)`: a twenty-sixth field (2 October).** In the Q14 scan the field had stayed 3-colourable (with
+  `D = 2550`, 268 directions, the growth stopped at 4 104 points with no blocked candidate), and in Q15 `D = 1530`
+  (164 directions) went 80 rounds to 16 640 points while adding only a few points per round. With `D = 2460`
+  (132 directions) the Q15 scan found at 18:06 UTC a graph with no 3-colouring: 11 rounds of `grow3r.py`,
+  10 992 points and 27 911 edges. `min3inc.py` made it vertex-critical in 94 seconds: 538 vertices, 1 368 edges,
+  degrees 3 to 63, 98 of the 132 directions used, shortest odd cycle 7. `certify_q.py` certified it from scratch
+  (exact edges and no other unit pairs, no triangle, kissat UNSAT and drat-trim VERIFIED for both encodings, a
+  proper 4-colouring, and a 3-colouring of every vertex-deleted graph). Since `851 = 23 · 37 ≡ 2² (mod 7)`,
+  Moorhouse's reduction at 7 gives `χ ≤ 4`, so `χ(ℚ(√851)²) = 4`. Its Lean file is conditional on the
+  unsatisfiability of `q851.cnf`, like the other large graphs, and the run with cake_lpr was repeated for all
+  twenty-seven graphs.
 - **`ℚ(√83)` again (2 October).** With `D = 2958` (324 directions, the most of any gate-open denominator up to
   3 000) the growth stopped at 2 788 points with no blocked candidate. Two explanations are ruled out: no proper
   3-colouring of `Cay(M/mM, U)` exists for `m ≤ 13` (`periodicq.py`), so there is no periodic colouring with a

@@ -10,8 +10,8 @@ This directory holds proofs in Lean 4, with Mathlib, of:
   of `data/quadratic_planes/q{d}.json`, whose SAT certificate the kernel checks. The upper bounds are
   reductions at a place: at 7 when d is a nonzero square modulo 7 (Moorhouse's Lemma 8.2) or d = 7d′ (d = 119,
   455), and at 2 when d ≡ 3 (mod 8) (Fischer's Theorem 10; d = 131, 251);
-- the same for the other fifteen fields of the note, d = 23, 35, 59, 71, 95, 155, 239, 263, 359, 443, 491, 599,
-  611, 791 and 959, and χ(ℚ(√47)²) ≥ 4, given that the graph's colouring formula `q{d}.cnf` is unsatisfiable. Their
+- the same for the other sixteen fields of the note, d = 23, 35, 59, 71, 95, 155, 239, 263, 359, 443, 491, 599,
+  611, 791, 851 and 959, and χ(ℚ(√47)²) ≥ 4, given that the graph's colouring formula `q{d}.cnf` is unsatisfiable. Their
   LRAT proofs (from 0.7 MB to 70 MB) are beyond what `lrat_proof` checks in reasonable time and memory; the
   verified checker cake_lpr checked them (`data/quadratic_planes/cake_lpr_checks.txt`). The kernel checks the
   points, the unit distances and the upper bound as for the first ten; that `q{d}.cnf` is the graph's formula is
@@ -57,7 +57,7 @@ says that no assignment satisfies every clause. When a file is built, `#guard` c
 `data/quadratic_planes/q{d}.cnf` is exactly `formula`, and `scripts/verify_quadratic_planes.py --cake-lpr` has
 cake_lpr check an LRAT proof that this file is unsatisfiable.
 
-The twenty-eight theorems depend only on Lean's three standard axioms, `propext`, `Classical.choice` and
+The twenty-nine theorems depend only on Lean's three standard axioms, `propext`, `Classical.choice` and
 `Quot.sound`: `axioms.expected` records the output of `#print axioms`, and CI compares them.
 
 ## Checking the proofs
@@ -126,8 +126,8 @@ colourings exist but cannot be computed.
 | `Q311.lean` | ℚ(√3, √11): the place above 2, and the Moser spindle |
 | `QuadraticPlanes.lean` | ℚ(√d): the three upper bounds (at 7, at 7 ramified, at 2), and the tools for the lower bounds |
 | `ColouringFormula.lean` | the colouring formula as a Lean object (`colourCNF`), the lower bound from its unsatisfiability, a reader for DIMACS files, and a balanced tree of points (`PtTree`) in which the kernel finds a point in logarithmic time |
-| `Sqrt{d}.lean` | ℚ(√d), for d = 11, 119, 131, 179, 191, 251, 431, 455, 911, 935: the graph of `data/quadratic_planes/q{d}.json`. It reads `data/quadratic_planes/q{d}.cnf` and the LRAT proof `data/quadratic_planes/q{d}.lrat` (kissat, then `drat-trim -L`) with `include_str`. For the other sixteen graphs (d = 23, 35, 47, 59, 71, 95, 155, 239, 263, 359, 443, 491, 599, 611, 791, 959): the graph, `formula`, and the check that `q{d}.cnf` is `formula` |
-| `PrintAxioms.lean`, `axioms.expected` | the axioms of the twenty-eight theorems |
+| `Sqrt{d}.lean` | ℚ(√d), for d = 11, 119, 131, 179, 191, 251, 431, 455, 911, 935: the graph of `data/quadratic_planes/q{d}.json`. It reads `data/quadratic_planes/q{d}.cnf` and the LRAT proof `data/quadratic_planes/q{d}.lrat` (kissat, then `drat-trim -L`) with `include_str`. For the other seventeen graphs (d = 23, 35, 47, 59, 71, 95, 155, 239, 263, 359, 443, 491, 599, 611, 791, 851, 959): the graph, `formula`, and the check that `q{d}.cnf` is `formula` |
+| `PrintAxioms.lean`, `axioms.expected` | the axioms of the twenty-nine theorems |
 | `tools/q23_coefficients.py`, `tools/q311_coefficients.py` | sympy scripts that produce the coefficients of the `linear_combination` steps and the edge lists |
 | `tools/field_lean.py` | writes `Sqrt{d}.lean` from the data (`--check` compares, and checks the colouring of 𝔽₇² in `QuadraticPlanes.lean` against `finite_planes.json`; the tests run it) |
 

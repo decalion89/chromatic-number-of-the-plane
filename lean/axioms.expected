@@ -25,4 +25,5 @@
 'Sqrt599.chromaticNumber_eq_four_of_unsatisfiable' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Sqrt611.chromaticNumber_eq_four_of_unsatisfiable' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Sqrt791.chromaticNumber_eq_four_of_unsatisfiable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Sqrt851.chromaticNumber_eq_four_of_unsatisfiable' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Sqrt959.chromaticNumber_eq_four_of_unsatisfiable' depends on axioms: [propext, Classical.choice, Quot.sound]

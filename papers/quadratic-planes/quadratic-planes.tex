@@ -47,7 +47,7 @@ For a subfield $F\subset\R$ let $\chi(F^2)$ be the chromatic number of the graph
 Euclidean distance $1$. For real quadratic fields $K=\Q(\sqrt d)$ the values known so far were $2$ and $3$, and
 a field can need four colours only when $d\equiv 11\pmod{12}$. We show that
 $\chi(\Q(\sqrt d)^2)=4$ for $d=11$, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455, 491, 599,
-611, 791, 911, 935, 959, and that
+611, 791, 851, 911, 935, 959, and that
 $4\le\chi(\Q(\sqrt{47})^2)\le5$. With the known results, $\chi(\Q(\sqrt d)^2)$ is now determined for every
 squarefree $d<83$ except $d=47$. Each lower bound is a triangle-free, vertex-critical unit-distance graph with
 coordinates in $\Q(\sqrt d)$, with between $71$ and $1\,404$ vertices, that has no proper $3$-colouring: a computer
@@ -92,7 +92,7 @@ about $\chi(\Q(\sqrt d)^2)$, and about $\chi(\Q(\sqrt{47})^2)$ in particular.
 \begin{theorem}\label{thm:main}
 $\chi(\Q(\sqrt d)^2)=4$ for
 \[\begin{aligned}d={}&11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239,\\
-&251, 263, 359, 431, 443, 455, 491, 599, 611, 791, 911, 935, 959,\end{aligned}\]
+&251, 263, 359, 431, 443, 455, 491, 599, 611, 791, 851, 911, 935, 959,\end{aligned}\]
 and $4\le\chi(\Q(\sqrt{47})^2)\le5$.
 \end{theorem}
 
@@ -175,7 +175,7 @@ finite planes behind the upper bounds. With a path to kissat and \texttt{drat-tr
 encoding, solves it and checks the proof. With a path to \texttt{cake\_lpr} as well, \texttt{drat-trim} writes
 each proof in LRAT form and \texttt{cake\_lpr}, a proof checker verified in HOL4 and compiled by the verified
 CakeML compiler \cite{cakelpr}, checks it, also for the stored formula; it accepted the proofs for all
-twenty-six graphs. What has to be trusted
+twenty-seven graphs. What has to be trusted
 is a proof checker (\texttt{drat-trim}, or \texttt{cake\_lpr} and its formal verification), the short code that
 writes $\Phi(G)$ from the list of edges, and exact integer arithmetic.
 
@@ -207,7 +207,7 @@ component of the origin; every component is a translate of that one \cite[Lemma~
 $\chi(\F_7^2)=4$ \cite[Table~6.1]{Moorhouse} and $\F_{11}^2$ has a proper
 $5$-colouring \cite[Lemma~4.5]{Madore}:
 \begin{itemize}
-\item $d=11$, 23, 71, 95, 155, 179, 191, 239, 263, 359, 431, 443, 491, 599, 611, 911, 935 are nonzero squares
+\item $d=11$, 23, 71, 95, 155, 179, 191, 239, 263, 359, 431, 443, 491, 599, 611, 851, 911, 935 are nonzero squares
   modulo $7$ and
   $d=35$, 119, 455, 791, 959 are $\equiv0$ modulo $7$, so $\chi\le4$;
 \item $d=59,131,251$ are $\equiv3\pmod8$, so $\chi\le4$ by Fischer's Theorem~10 (which also covers $11$, $35$,

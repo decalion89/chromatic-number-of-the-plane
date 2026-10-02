@@ -22,7 +22,7 @@ DATA = os.path.join(HERE, "..", "..", "data", "quadratic_planes")
 # The fields with a Lean proof: those whose LRAT proof the kernel checks in a few minutes and a few GB.
 FIELDS = [11, 119, 131, 179, 191, 251, 431, 455, 911, 935]
 # The other graphs: the Lean proof takes the unsatisfiability of q{d}.cnf as a hypothesis.
-COND_FIELDS = [23, 35, 47, 59, 71, 95, 155, 239, 263, 359, 443, 491, 599, 611, 791, 959]
+COND_FIELDS = [23, 35, 47, 59, 71, 95, 155, 239, 263, 359, 443, 491, 599, 611, 791, 851, 959]
 
 
 def chunks(items, per):

@@ -25,6 +25,7 @@ import Sqrt491
 import Sqrt599
 import Sqrt611
 import Sqrt791
+import Sqrt851
 import Sqrt959
 
 -- The axioms the theorems depend on; `axioms.expected` holds the expected output.
@@ -55,4 +56,5 @@ import Sqrt959
 #print axioms Sqrt599.chromaticNumber_eq_four_of_unsatisfiable
 #print axioms Sqrt611.chromaticNumber_eq_four_of_unsatisfiable
 #print axioms Sqrt791.chromaticNumber_eq_four_of_unsatisfiable
+#print axioms Sqrt851.chromaticNumber_eq_four_of_unsatisfiable
 #print axioms Sqrt959.chromaticNumber_eq_four_of_unsatisfiable
