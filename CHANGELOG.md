@@ -24,37 +24,37 @@ including every retracted claim, is the research log,
 
 - **Real quadratic planes that need four colours** (`notes/quadratic_planes.md`,
   `data/quadratic_planes/`): `χ(ℚ(√d)²) = 4` for
-  `d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455, 599, 611, 791, 911, 935, 959`,
+  `d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455, 491, 599, 611, 791, 911, 935, 959`,
   and `4 ≤ χ(ℚ(√47)²) ≤ 5`; so `χ(ℚ(√d)²)` is now known for every squarefree
   `d < 83` except 47. For real quadratic fields the values known before were 2
   and 3, and a field can need four colours only if `d ≡ 11 (mod 12)`. Each lower
   bound is a triangle-free, vertex-critical unit-distance graph (76, 393, 580,
   816, 406, 611, 1 404, 399, 356, 1 281, 259, 96, 338, 291, 394, 715, 331, 703,
-  71, 659, 712, 898, 327, 252 and 513 vertices, for d = 11, 23, 35, 47, 59, 71,
-  95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455, 599, 611, 791,
-  911, 935, 959) with no 3-colouring:
-  kissat with DRAT proofs checked by drat-trim, twice, with separate encodings.
-  The upper bounds are known: Moorhouse's reduction at 7
-  (`d = 11, 23, 35, 71, 95, 119, 155, 179, 191, 239, 263, 359, 431, 443, 455, 599, 611, 791, 911, 935, 959`),
+  71, 835, 659, 712, 898, 327, 252 and 513 vertices, for d = 11, 23, 35, 47, 59,
+  71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455, 491, 599,
+  611, 791, 911, 935, 959) with no 3-colouring: kissat with DRAT proofs checked
+  by drat-trim, twice, with separate encodings. The upper bounds are known:
+  Moorhouse's reduction at 7
+  (`d = 11, 23, 35, 71, 95, 119, 155, 179, 191, 239, 263, 359, 431, 443, 455, 491, 599, 611, 791, 911, 935, 959`),
   Fischer's Theorem 10 (`d = 59, 131, 251`) and the reduction at 11 (`d = 47`).
   The note also observes that Cohen's conjecture (2007) on the sets `ℚ(√−d) ⊂ ℂ`
   is a different question, which reduction at a ramified prime settles.
   `scripts/verify_quadratic_planes.py` checks everything again (with
   `--cake-lpr`, every proof is also checked by the verified checker cake_lpr; it
   accepted all of them; its log names each formula by its SHA-256 hash), and
-  `tests/test_quadratic_planes.py` runs the fast checks. The graph over ℚ(√11) is drawn in the paper (Figure 1) and on the
-  front page (Figure 3).
-  As a corollary, a real number field that contains one of these `√d` and has a
-  place with residue field `𝔽₇` has `χ = 4`; for example `ℚ(√11, 7^{1/m})`, of
-  degree `2m`, so every even degree occurs.
-  For `ℚ(√47)` the note narrows down where a 4-colouring by reduction at one place
-  could come from: not where `−1` is a square in the completion (no locally constant
-  colouring with finitely many colours exists there), and not above 47 or any prime
-  `p ≥ 23` (Hoffman's bound excludes every level of the local plane at once). That
-  leaves the 11-adic plane, whose levels 1, 2 and 3 need five colours (an obstruction
-  of 69 points at level 1 lifts to 244 points at level 2 and to 29 524 points at level
-  3, `data/quadratic_planes/padic11.json`), and the 19-adic plane, whose level 1 needs
-  five.
+  `tests/test_quadratic_planes.py` runs the fast checks. The graph over ℚ(√11)
+  is drawn in the paper (Figure 1) and on the front page (Figure 3). As a
+  corollary, a real number field that contains one of these `√d` and has a place
+  with residue field `𝔽₇` has `χ = 4`; for example `ℚ(√11, 7^{1/m})`, of degree
+  `2m`, so every even degree occurs. For `ℚ(√47)` the note narrows down where a
+  4-colouring by reduction at one place could come from: not where `−1` is a
+  square in the completion (no locally constant colouring with finitely many
+  colours exists there), and not above 47 or any prime `p ≥ 23` (Hoffman's bound
+  excludes every level of the local plane at once). That leaves the 11-adic
+  plane, whose levels 1, 2 and 3 need five colours (an obstruction of 69 points
+  at level 1 lifts to 244 points at level 2 and to 29 524 points at level 3,
+  `data/quadratic_planes/padic11.json`), and the 19-adic plane, whose level 1
+  needs five.
 - **`χ(ℚ(√d)²) = 4` in Lean 4 for ten fields**, `d = 11, 119, 131, 179, 191, 251,
   431, 455, 911, 935` (`lean/Sqrt{d}.lean`), with Mathlib. Each lower bound is the graph
   of `data/quadratic_planes/q{d}.json`: the kernel checks its unit distances and,

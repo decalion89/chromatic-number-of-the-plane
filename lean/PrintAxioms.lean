@@ -21,6 +21,7 @@ import Sqrt239
 import Sqrt263
 import Sqrt359
 import Sqrt443
+import Sqrt491
 import Sqrt599
 import Sqrt611
 import Sqrt791
@@ -50,6 +51,7 @@ import Sqrt959
 #print axioms Sqrt263.chromaticNumber_eq_four_of_unsatisfiable
 #print axioms Sqrt359.chromaticNumber_eq_four_of_unsatisfiable
 #print axioms Sqrt443.chromaticNumber_eq_four_of_unsatisfiable
+#print axioms Sqrt491.chromaticNumber_eq_four_of_unsatisfiable
 #print axioms Sqrt599.chromaticNumber_eq_four_of_unsatisfiable
 #print axioms Sqrt611.chromaticNumber_eq_four_of_unsatisfiable
 #print axioms Sqrt791.chromaticNumber_eq_four_of_unsatisfiable

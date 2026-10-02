@@ -9230,6 +9230,17 @@ set of directions changes that (`notes/quadratic_planes.md`).
   them further when this was written. At 19 the same method has no small start: the drat-trim core of `𝔽₁₉²` is
   all 361 points, so its preimage is the whole of level 2 (130 321 points), where kissat stopped after 90
   minutes without an answer; subsets with 19 random points in each fibre were also undecided within 10 minutes.
+- **`ℚ(√491)`: a twenty-fifth field (2 October).** The Q15 scan (`scan_r8.sh`, each field with a gate-open
+  denominator rich in directions) found at 15:16 UTC a graph over `ℚ(√491)` with no 3-colouring: `D = 2340`
+  (180 directions, no 5-cycle among them), 27 rounds of `grow3r.py`, 22 135 points and 60 670 edges. The shrink
+  worker (`min3inc.py`, one incremental CaDiCaL solver) made it vertex-critical in four minutes: 835 vertices,
+  2 023 edges, degrees 3 to 91, 154 of the 180 directions used, shortest odd cycle 7. `certify_q.py` certified it
+  from scratch (exact edges and no other unit pairs, no triangle, kissat UNSAT and drat-trim VERIFIED for both
+  encodings, a proper 4-colouring, and a 3-colouring of every vertex-deleted graph). Since `491 ≡ 1 (mod 7)`,
+  Moorhouse's reduction at 7 gives `χ ≤ 4`, so `χ(ℚ(√491)²) = 4`. Its Lean file is conditional on the
+  unsatisfiability of `q491.cnf`, like the other large graphs, and the run with cake_lpr was repeated for all
+  twenty-six graphs. Writing the field lists we noticed that the note's list of the `d` that are nonzero squares
+  modulo 7 had missed 443 (added with this field; the paper's list had it).
 - **`ℚ(√83)` again (2 October).** With `D = 2958` (324 directions, the most of any gate-open denominator up to
   3 000) the growth stopped at 2 788 points with no blocked candidate. Two explanations are ruled out: no proper
   3-colouring of `Cay(M/mM, U)` exists for `m ≤ 13` (`periodicq.py`), so there is no periodic colouring with a
