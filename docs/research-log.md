@@ -8866,10 +8866,10 @@ set of directions changes that (`notes/quadratic_planes.md`).
   vertex, and no 3-colouring, twice: kissat answered UNSATISFIABLE and drat-trim VERIFIED the proof, for the
   stored formula and for a second encoding written by separate code. `scripts/verify_quadratic_planes.py`
   repeats all of it.
-- **Upper bounds.** `11, 23, 71, 95, 155, 179, 191, 239, 359, 431` are squares modulo 7 and `35 = 5 · 7`, `119 = 7 ·
+- **Upper bounds.** `11, 23, 71, 95, 155, 179, 191, 239, 359, 431, 935` are squares modulo 7 and `35 = 5 · 7`, `119 = 7 ·
   17`, `455 = 5 · 7 · 13`, so Moorhouse's reduction modulo a prime of norm 7 (his Lemma 8.2) gives `χ ≤ χ(𝔽₇²) = 4`; `59, 131, 251 ≡ 3
   (mod 8)` give `χ ≤ 4` by Fischer's Theorem 10; `47 ≡ 5² (mod 11)` gives `χ ≤ χ(𝔽₁₁²) = 5`. So `χ = 4` for `d
-  = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431, 455`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`. With the known results,
+  = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431, 455, 935`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`. With the known results,
   `χ(ℚ(√d)²)` is now known for every squarefree `d < 83` except `d = 47`.
 - **An incident.** The first certification runs for `d = 23` and `d = 47` ran at the same time and wrote
   their DRAT proofs to the same temporary file. We stopped both, gave the temporary files distinct names,
@@ -8959,6 +8959,20 @@ set of directions changes that (`notes/quadratic_planes.md`).
   stopped with no blocked candidate. Of the pairs prescreened, exactly two have a closed walk of length 5 among
   their directions, five unit vectors with sum 0: `d = 251` with `D = 390` (and 780) and `d = 455` with
   `D = 780`, the two quick successes; for every other pair it checked, the prescreen found none shorter than 7.
+- **Short odd cycles (2 October).** Five unit vectors with sum 0 give the plane graph a 5-cycle; with no
+  triangles that is the shortest possible odd cycle. `odd_published.py`: of the published graphs, those with
+  `d = 11, 35, 71, 119, 131, 191, 251, 455, 935` have one (and their `U_D` closes one), among them the three
+  smallest (74, 94 and 100 vertices); the other nine have no odd cycle shorter than 7 and are on average
+  twice as large. `scan5.py` lists, for each `d`, the denominators `D ≤ 4 000` with prime factors at most
+  61, 40 to 400 directions, every gate open and a 5-cycle. There are none for `d = 83, 107, 203` (nor for 47,
+  155, 179, 359, 227, 287, 323, 347, 371, 395, 419, 443, 467, 491 and most `d` up to 995); there are 14 for
+  `d = 263` (from `D = 204`), three each for 299 and 407, two each for 599, 935 and 959, and some for 23,
+  59, 95, 239 and 431. A 5-cycle is not enough: `d = 263` with `D = 816`, `299` with `D = 1110` and `2220`,
+  and `407` with `D = 888` and `1776` stopped with no blocked candidate (4 009 to 10 714 points). But
+  `d = 935 = 5 · 11 · 17` with `D = 1020` (84 directions) gave a graph with no 3-colouring in 24 rounds
+  (6 496 points, 91 seconds); `min3inc.py` shrank it to 275 vertices and `min3multi.py` (400 orders) to 257
+  vertices and 612 edges, certified like the others and checked again with cake_lpr. `935 ≡ 2² (mod 7)`, so
+  `χ(ℚ(√935)²) = 4`.
 - **A figure.** `papers/quadratic-planes/make_figure.py` draws the graph over `ℚ(√11)` for the paper (Figure
   1), and `scripts/make_figures.py` for the front page (Figure 3): 94 points, 214 unit segments, and the
   stored 4-colouring as marker shapes. The point at the origin has 32 neighbours, all on its unit circle.

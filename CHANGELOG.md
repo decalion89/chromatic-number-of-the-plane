@@ -24,17 +24,17 @@ including every retracted claim, is the research log,
 
 - **Real quadratic planes that need four colours** (`notes/quadratic_planes.md`,
   `data/quadratic_planes/`): `χ(ℚ(√d)²) = 4` for
-  `d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431, 455`,
+  `d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431, 455, 935`,
   and `4 ≤ χ(ℚ(√47)²) ≤ 5`; so `χ(ℚ(√d)²)` is now known for every squarefree
   `d < 83` except 47. For real quadratic fields the values known before were 2
   and 3, and a field can need four colours only if `d ≡ 11 (mod 12)`. Each lower
   bound is a triangle-free, vertex-critical unit-distance graph (94, 660, 580,
-  816, 406, 611, 1 404, 399, 356, 1 281, 259, 100, 355, 291, 715, 331 and 74
-  vertices, for d = 11, 23, 35, 47, 59, 71, 95, 119, 131, 155, 179, 191, 239,
-  251, 359, 431, 455) with no 3-colouring: kissat with DRAT proofs checked by
-  drat-trim, twice, with separate encodings. The upper bounds are known:
-  Moorhouse's reduction at 7
-  (`d = 11, 23, 35, 71, 95, 119, 155, 179, 191, 239, 359, 431, 455`), Fischer's
+  816, 406, 611, 1 404, 399, 356, 1 281, 259, 100, 355, 291, 715, 331, 74 and
+  257 vertices, for d = 11, 23, 35, 47, 59, 71, 95, 119, 131, 155, 179, 191,
+  239, 251, 359, 431, 455, 935) with no 3-colouring: kissat with DRAT proofs
+  checked by drat-trim, twice, with separate encodings. The upper bounds are
+  known: Moorhouse's reduction at 7
+  (`d = 11, 23, 35, 71, 95, 119, 155, 179, 191, 239, 359, 431, 455, 935`), Fischer's
   Theorem 10 (`d = 59, 131, 251`) and the reduction at 11 (`d = 47`). The note
   also observes that Cohen's conjecture (2007) on the sets `ℚ(√−d) ⊂ ℂ` is a
   different question, which reduction at a ramified prime settles.
