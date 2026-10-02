@@ -9262,7 +9262,11 @@ set of directions changes that (`notes/quadratic_planes.md`).
   `χ(ℚ₈₃²) ≥ 5` from the 803-vertex graph over `ℚ(√3, √11, √247)` (`padic_planes.py`; note §5). The same values
   hold for Borel colourings. `ℚ₁₁` contains both `ℚ(√47)` and Voronov's `ℚ(√3, √5)`, so one number, `χ(ℚ₁₁²)`,
   sits above both open questions: if it is 4, both fields have `χ ≤ 4`; a 5-chromatic graph over any number field
-  inside `ℚ₁₁` makes it 5.
+  inside `ℚ₁₁` makes it 5. The three exact values are also proved in Lean (`lean/PadicPlanes.lean`, written by a
+  separate agent and checked here again: built from scratch, replayed by `leanchecker`, axioms
+  `[propext, Classical.choice, Quot.sound]`). The upper bound at 7 is `QuadraticPlanes.sumSqGraph_colorable` for
+  the valuation subring `ℤ_[7]`; the lower bound sends the graph of `Sqrt11.lean` into `ℚ_[7]²` through a square
+  root of 11 from Mathlib's Hensel's lemma, and holds in any field of characteristic 0 containing one.
 - **`ℚ(√83)` again (2 October).** With `D = 2958` (324 directions, the most of any gate-open denominator up to
   3 000) the growth stopped at 2 788 points with no blocked candidate. Two explanations are ruled out: no proper
   3-colouring of `Cay(M/mM, U)` exists for `m ≤ 13` (`periodicq.py`), so there is no periodic colouring with a

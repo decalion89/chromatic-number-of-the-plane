@@ -27,3 +27,6 @@
 'Sqrt791.chromaticNumber_eq_four_of_unsatisfiable' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Sqrt851.chromaticNumber_eq_four_of_unsatisfiable' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Sqrt959.chromaticNumber_eq_four_of_unsatisfiable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PadicPlanes.padicSeven_chromaticNumber' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PadicPlanes.padicThree_chromaticNumber' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PadicPlanes.padicTwo_chromaticNumber' depends on axioms: [propext, Classical.choice, Quot.sound]

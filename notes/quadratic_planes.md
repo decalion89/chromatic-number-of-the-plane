@@ -410,7 +410,10 @@ that they are up to date.
   `ℚ₁₁` contains `ℚ(√47)` and also `ℚ(√3, √5)` (Voronov's case), `χ(ℚ₁₁²) = 4` would give `χ(ℚ(√47)²) = 4` and
   `χ(ℚ(√3, √5)²) ≤ 4`, while a 5-chromatic unit-distance graph over any number field inside `ℚ₁₁` would give
   `χ(ℚ₁₁²) = 5`. `data/quadratic_planes/scripts/padic_planes.py` checks the ingredients (the stored colourings,
-  the 5-cycle, the quadratic residues) and prints the table up to `p = 83`.
+  the 5-cycle, the quadratic residues) and prints the table up to `p = 83`. In Lean (`lean/PadicPlanes.lean`):
+  `PadicPlanes.padicSeven_chromaticNumber : (QuadraticPlanes.sumSqGraph ℚ_[7]).chromaticNumber = 4`, and the same
+  with 3 for `ℚ_[3]` and 2 for `ℚ_[2]`; the lower bound at 7 holds in any field of characteristic 0 that contains
+  a square root of 11 (`not_colorable_three_of_sq_eq_eleven`).
 
 ## 6. Open
 

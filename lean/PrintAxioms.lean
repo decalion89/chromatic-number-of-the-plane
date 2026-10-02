@@ -27,6 +27,7 @@ import Sqrt611
 import Sqrt791
 import Sqrt851
 import Sqrt959
+import PadicPlanes
 
 -- The axioms the theorems depend on; `axioms.expected` holds the expected output.
 #print axioms Q23.chromaticNumber_eq_four
@@ -58,3 +59,6 @@ import Sqrt959
 #print axioms Sqrt791.chromaticNumber_eq_four_of_unsatisfiable
 #print axioms Sqrt851.chromaticNumber_eq_four_of_unsatisfiable
 #print axioms Sqrt959.chromaticNumber_eq_four_of_unsatisfiable
+#print axioms PadicPlanes.padicSeven_chromaticNumber
+#print axioms PadicPlanes.padicThree_chromaticNumber
+#print axioms PadicPlanes.padicTwo_chromaticNumber

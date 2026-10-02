@@ -234,8 +234,12 @@ def test_lean_fields_are_built_and_checked():
         assert f"import {m}\n" in pa and f"#print axioms {thm}\n" in pa, m
         assert f"'{thm}' depends on axioms: [propext, Classical.choice, Quot.sound]" in ax.splitlines(), m
         assert m in replayed, m
-    for m in ("QuadraticPlanes", "ColouringFormula"):
+    for m in ("QuadraticPlanes", "ColouringFormula", "PadicPlanes"):
         assert m in replayed and f'"{m}"' in default, m
+    assert "import PadicPlanes\n" in pa
+    for t in ("padicSeven_chromaticNumber", "padicThree_chromaticNumber", "padicTwo_chromaticNumber"):
+        assert f"#print axioms PadicPlanes.{t}\n" in pa
+        assert f"'PadicPlanes.{t}' depends on axioms: [propext, Classical.choice, Quot.sound]" in ax.splitlines()
     on_disk = {int(f[4:-5]) for f in os.listdir(LEAN) if f.startswith("Sqrt") and f.endswith(".lean")}
     assert on_disk == set(field_lean.FIELDS) | set(field_lean.COND_FIELDS) == set(FIELDS)
     assert not set(field_lean.FIELDS) & set(field_lean.COND_FIELDS)
