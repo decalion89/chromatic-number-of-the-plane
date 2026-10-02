@@ -9057,7 +9057,23 @@ set of directions changes that (`notes/quadratic_planes.md`).
   has a 214 KB LRAT proof (kissat's default seed; the other five seeds gave up to 312 KB), so it got a Lean file
   too, `lean/Sqrt911.lean`: 343 s to build and 120 s to replay with `leanchecker` on the shared machine. The
   graphs over `ℚ(√611)` and `ℚ(√791)` have LRAT proofs of 7.7 and 3.0 MB.
+- **Smaller graphs for `d = 455` and `191` (2 October).** 3 000 random deletion orders from the grown graphs
+  (`min3multi.py`) had given 74 and 100 vertices again. `min3fast2.py` is `min3fast.py` (rounds of drat-trim cores
+  with several kissat seeds, then deletion with tabu search first), but it saves the vertex set after every core
+  round, and in the deletion phase it takes the drat-trim core of each refutation as the new vertex set. On the
+  grown graph of `d = 455` (2 930 points, 3-core 1 310) the core rounds gave 157, 98, 91, 85, 81 and 78 vertices,
+  and its deletion phase 72; on that of `d = 191` (6 684 points, 3-core 1 963), 134, 122 and 120, and 102. Random
+  orders started from these cores did better than from the grown graphs, whose first cores of failed assumptions
+  have 234 and 438 vertices: for `d = 455` every core of at most 98 vertices gave 71 (from the 78-vertex core, 980
+  of 3 000 orders), and for `d = 191` the 122-vertex core gave 96 (394 of 1 000 orders; the 120-vertex core gave
+  102). `certify_q.py` certified both from scratch: exact unit edges and no others, no triangle, kissat
+  UNSATISFIABLE with drat-trim VERIFIED for both encodings, a 4-colouring, and a 3-colouring of every
+  vertex-deleted graph. They replace the published graphs, and the checker with kissat, drat-trim and cake_lpr
+  confirmed all 24 graphs again (`cake_lpr_checks.txt`); both still contain 5-cycles. Their Lean files were
+  written again from the data: LRAT proofs of 23 and 12 KB (the same for twelve kissat seeds), 69 and 35 s to
+  build, 18 s each to replay with `leanchecker`, and the same three axioms. The same method is running on the
+  other fields.
 
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; smaller witnesses (the
-smallest graphs have 74 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has
+smallest graphs have 71 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has
 refereed this.

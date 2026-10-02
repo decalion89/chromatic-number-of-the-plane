@@ -35,7 +35,7 @@
 \thanks{These results were obtained with the assistance of an AI system (Claude, by Anthropic), which carried
 out the searches, the computations and the checks, and helped to draft this note. No mathematician has checked
 the note yet. The author is not a professional mathematician and submits it for independent verification.}
-\date{Draft, 1 October 2026}
+\date{Draft, 2 October 2026}
 \subjclass[2020]{Primary 05C15, 52C10; Secondary 11R11, 68V15}
 \keywords{Hadwiger--Nelson problem, chromatic number of the plane, unit-distance graph, real quadratic field,
 SAT solving, DRAT proofs}
@@ -46,10 +46,11 @@ SAT solving, DRAT proofs}
 For a subfield $F\subset\R$ let $\chi(F^2)$ be the chromatic number of the graph on $F^2$ joining points at
 Euclidean distance $1$. For real quadratic fields $K=\Q(\sqrt d)$ the values known so far were $2$ and $3$, and
 a field can need four colours only when $d\equiv 11\pmod{12}$. We show that
-$\chi(\Q(\sqrt d)^2)=4$ for $d=11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 611, 791, 911, 935, 959$, and that
+$\chi(\Q(\sqrt d)^2)=4$ for $d=11$, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 611,
+791, 911, 935, 959, and that
 $4\le\chi(\Q(\sqrt{47})^2)\le5$. With the known results, $\chi(\Q(\sqrt d)^2)$ is now determined for every
 squarefree $d<83$ except $d=47$. Each lower bound is a triangle-free, vertex-critical unit-distance graph with
-coordinates in $\Q(\sqrt d)$, with between $74$ and $1\,404$ vertices, that has no proper $3$-colouring: a computer
+coordinates in $\Q(\sqrt d)$, with between $71$ and $1\,404$ vertices, that has no proper $3$-colouring: a computer
 proof, by a SAT solver whose DRAT proofs are checked by \texttt{drat-trim}, for two independently written
 encodings. The upper bounds are reductions modulo a prime due to Moorhouse and Fischer. We also explain why
 some searches fail: when every direction is integral at certain primes above $2$, $3$ or $5$, reduction there
@@ -86,7 +87,8 @@ about $\chi(\Q(\sqrt d)^2)$, and about $\chi(\Q(\sqrt{47})^2)$ in particular.
 
 \begin{theorem}\label{thm:main}
 $\chi(\Q(\sqrt d)^2)=4$ for
-\[d=11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 611, 791, 911, 935, 959,\]
+\[\begin{aligned}d={}&11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239,\\
+&251, 263, 359, 431, 455, 599, 611, 791, 911, 935, 959,\end{aligned}\]
 and $4\le\chi(\Q(\sqrt{47})^2)\le5$.
 \end{theorem}
 
@@ -219,7 +221,11 @@ A single incremental SAT solver (CaDiCaL through PySAT) holds the formula with o
 enabling its at-least-one clause. Each test is a solve under assumptions, and each refutation returns a core of
 selectors, a subset of the vertices that is still not $3$-colourable. Deleting vertices one at a time, keeping
 a deletion when the rest is still refuted, gives a vertex-critical graph; repeating with up to $400$ random
-deletion orders and keeping the smallest result gave the graphs of Table~\ref{tab:graphs}.
+deletion orders and keeping the smallest result gave the graphs of Table~\ref{tab:graphs}, except two. For
+$d=191$ and $d=455$ we first kept the vertices whose clauses lie in the unsatisfiable core that \texttt{drat-trim}
+extracts from kissat's proof, in rounds, and started the random orders from one of these cores ($122$ and $78$
+vertices): they gave $96$ and $71$ vertices, where $3\,000$ orders from the grown graphs had given $100$ and
+$74$.
 
 \subsection*{The graph over \texorpdfstring{$\Q(\sqrt{11})$}{Q(sqrt11)}}
 With $D=30$ the growth stops at once: the $5\,941$ points within two steps of $0$ have no proper $3$-colouring.
@@ -287,7 +293,7 @@ and have residues differing by $\pm1$.
   $\Q(\sqrt{83})$, $\Q(\sqrt{107})$ and $\Q(\sqrt{203})$ have so far found only $3$-colourable graphs.
 \item A uniform proof: a family of graphs, or an argument, covering all $d\equiv11\pmod{12}$ at once.
 \item How small can a $4$-chromatic unit-distance graph over a real quadratic field be? The smallest of ours
-  has $74$ vertices, for $d=455$; the one for $d=11$ has $76$.
+  has $71$ vertices, for $d=455$; the one for $d=11$ has $76$.
 \end{itemize}
 
 \begin{thebibliography}{99}

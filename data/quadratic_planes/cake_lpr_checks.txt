@@ -1,5 +1,5 @@
 # python3 scripts/verify_quadratic_planes.py --kissat KISSAT --drat-trim DRAT_TRIM --cake-lpr CAKE_LPR
-# run 2026-10-02 05:22 UTC; kissat 4.0.4; cake_lpr sha256 b25551c853c7b7fe6a9059bcddd81a46fb4ed952b842e1080697f8122ee0c8ca
+# run 2026-10-02 07:21 UTC; kissat 4.0.4; cake_lpr sha256 b25551c853c7b7fe6a9059bcddd81a46fb4ed952b842e1080697f8122ee0c8ca
 Q(sqrt11): ok: 76 distinct points of the plane over Q(sqrt11), 172 edges, all pairs at distance exactly 1, no triangle
 Q(sqrt11): ok: a proper 4-colouring
 Q(sqrt11): ok: for each of the 76 vertices v, a proper 3-colouring of G minus v
@@ -66,10 +66,10 @@ Q(sqrt179): ok: for each of the 259 vertices v, a proper 3-colouring of G minus 
 Q(sqrt179): ok: q179.cnf is the 3-colouring formula of this graph (2127 clauses)
 Q(sqrt179): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula written again here
 Q(sqrt179): upper bound: d = 179 is a nonzero square mod 7 and p = 7 is 3 mod 4: chi <= chi(F_7^2) <= 4 (Moorhouse, Lemma 8.2; stored colouring checked)
-Q(sqrt191): ok: 100 distinct points of the plane over Q(sqrt191), 224 edges, all pairs at distance exactly 1, no triangle
+Q(sqrt191): ok: 96 distinct points of the plane over Q(sqrt191), 212 edges, all pairs at distance exactly 1, no triangle
 Q(sqrt191): ok: a proper 4-colouring
-Q(sqrt191): ok: for each of the 100 vertices v, a proper 3-colouring of G minus v
-Q(sqrt191): ok: q191.cnf is the 3-colouring formula of this graph (774 clauses)
+Q(sqrt191): ok: for each of the 96 vertices v, a proper 3-colouring of G minus v
+Q(sqrt191): ok: q191.cnf is the 3-colouring formula of this graph (734 clauses)
 Q(sqrt191): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula written again here
 Q(sqrt191): upper bound: d = 191 is a nonzero square mod 7 and p = 7 is 3 mod 4: chi <= chi(F_7^2) <= 4 (Moorhouse, Lemma 8.2; stored colouring checked)
 Q(sqrt239): ok: 355 distinct points of the plane over Q(sqrt239), 888 edges, all pairs at distance exactly 1, no triangle
@@ -102,10 +102,10 @@ Q(sqrt431): ok: for each of the 331 vertices v, a proper 3-colouring of G minus 
 Q(sqrt431): ok: q431.cnf is the 3-colouring formula of this graph (2625 clauses)
 Q(sqrt431): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula written again here
 Q(sqrt431): upper bound: d = 431 is a nonzero square mod 7 and p = 7 is 3 mod 4: chi <= chi(F_7^2) <= 4 (Moorhouse, Lemma 8.2; stored colouring checked)
-Q(sqrt455): ok: 74 distinct points of the plane over Q(sqrt455), 161 edges, all pairs at distance exactly 1, no triangle
+Q(sqrt455): ok: 71 distinct points of the plane over Q(sqrt455), 150 edges, all pairs at distance exactly 1, no triangle
 Q(sqrt455): ok: a proper 4-colouring
-Q(sqrt455): ok: for each of the 74 vertices v, a proper 3-colouring of G minus v
-Q(sqrt455): ok: q455.cnf is the 3-colouring formula of this graph (559 clauses)
+Q(sqrt455): ok: for each of the 71 vertices v, a proper 3-colouring of G minus v
+Q(sqrt455): ok: q455.cnf is the 3-colouring formula of this graph (523 clauses)
 Q(sqrt455): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula written again here
 Q(sqrt455): upper bound: d = 455 is 0 mod 7 and p = 7 is 3 mod 4: chi <= chi(F_7^2) <= 4 (Moorhouse, Lemma 8.2; stored colouring checked)
 Q(sqrt599): ok: 659 distinct points of the plane over Q(sqrt599), 1686 edges, all pairs at distance exactly 1, no triangle

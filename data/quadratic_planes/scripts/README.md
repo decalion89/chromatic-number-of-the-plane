@@ -2,7 +2,7 @@
 
 These scripts found and certified the graphs of `data/quadratic_planes/`
 (`notes/quadratic_planes.md` §3–§4). They are the code as it was run on
-1 October 2026, kept as a record; the maintained checker is
+1–2 October 2026, kept as a record; the maintained checker is
 `scripts/verify_quadratic_planes.py`, which needs none of them.
 
 **Layout.** A working directory `SC` holds kissat at `SC/kissat/build/kissat`
@@ -25,8 +25,9 @@ files go to `/dev/shm`.
 | `exactcheck.py` | an exact check of a grown graph and of its formula |
 | `min3.py` | shrinking: rounds of drat-trim cores, then deletion of vertices one at a time, to a vertex-critical graph (two copies with fixed temporary names were run for `d = 11` and `d = 23`) |
 | `min3fast.py` | the same shrinking, faster on large graphs: several random seeds per core round, the two vertices of the fixed edge always kept in the core (`min3.py` drops them, and then stops too early), and tabu search before kissat in the deletion phase; used for `d = 431` |
+| `min3fast2.py` | `min3fast.py`, but it saves the vertex set of every core round (`OUT_core{N}_pts.npy`, `N` its size), and in the deletion phase it replaces the vertex set by the drat-trim core of each refutation; a fifth argument starts it from a saved core. With `min3multi.py` started from one of these cores it gave the graphs for `d = 191` and `455` (2 October) |
 | `min3inc.py` | the same shrinking with one incremental solver (CaDiCaL 1.5.3 through pysat): a selector literal per vertex, each test a solve under assumptions, and the core of failed assumptions of every refutation as the new vertex set; seconds instead of minutes |
-| `min3multi.py`, `reshrink.sh` | `min3inc.py` repeated with up to 400 random deletion orders, keeping the smallest vertex-critical graph; `reshrink.sh` ran it on every grown graph and certified the results; the published graphs come from it |
+| `min3multi.py`, `reshrink.sh` | `min3inc.py` repeated with up to 400 random deletion orders, keeping the smallest vertex-critical graph; `reshrink.sh` ran it on every grown graph and certified the results; the published graphs come from it (for `d = 191` and `455`, `python3 min3multi.py STATE.json CORE_pts.npy OUT 1000 1200` and `3000`, with `CORE_pts.npy` a core of `min3fast2.py` of 122 and 78 vertices) |
 | `certify_q.py` | the certificate of a critical graph: exact edges, unlisted unit pairs, triangles, two encodings with kissat and drat-trim, a 4-colouring, and 3-colourings of `G − v`. Since the certificate of `d = 155` it finds the colourings of `G − v` with one incremental CaDiCaL solver (a selector per vertex) and by rotation (a colouring of `G − v` in which exactly one neighbour `w` of `v` has colour `k` gives, with `v` coloured `k`, one of `G − w`); the earlier certificates called kissat once per vertex |
 | `export_q.py` | writes `q{d}.json`, `q{d}.cnf` and `q{d}.logs/` from a certificate directory |
 | `pipeline_q.sh` | `exactcheck.py`, kissat with a DRAT proof, drat-trim, `min3.py` and `certify_q.py` for one grown graph |

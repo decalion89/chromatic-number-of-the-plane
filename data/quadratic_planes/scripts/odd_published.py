@@ -1,7 +1,7 @@
 """odd_published.py: for each published graph q{d}.json (in the parent directory), whether its direction set U_D
 closes a 5-cycle (scan5.has5) and the length of the shortest odd cycle of the graph itself (breadth-first search
 from every vertex). On 2 October: the thirteen graphs with d = 11, 23, 35, 71, 119, 131, 191, 251, 263, 455, 599, 935,
-959 have 5-cycles (among them the three smallest, with 74, 76 and 100 vertices); the other eleven, among them those for
+959 have 5-cycles (among them the three smallest, with 71, 76 and 96 vertices); the other eleven, among them those for
 d = 611, 791 and 911, have no odd cycle shorter than 7."""
 import json, os
 from collections import deque

@@ -50,7 +50,7 @@ With [elan](https://github.com/leanprover/elan) installed:
 `lean-toolchain` pins Lean v4.34.1 and `lakefile.toml` pins Mathlib v4.34.1. The GitHub Actions workflow
 [`lean.yml`](../.github/workflows/lean.yml) runs these steps on every push to `main` and every pull
 request. It then replays each file in Lean's kernel with `leanchecker`, independently of the tactics that
-produced the proofs. The field files take from half a minute (d = 11, 191, 455) to ten minutes (d = 119) and up
+produced the proofs. The field files take from half a minute (d = 11, 191) to ten minutes (d = 119) and up
 to 2.5 GB of memory (d = 179) each; the time grows with the number of clauses of the formula, the memory with
 the size of the LRAT proof.
 

@@ -13,9 +13,9 @@ Each lower bound is a finite graph: a triangle-free unit-distance graph with
 coordinates in `ℚ(√d)`, which is not 3-colourable and is vertex-critical. The
 graphs have 76 vertices (`d = 11`), 393 (`d = 23`), 580 (`d = 35`), 816
 (`d = 47`), 406 (`d = 59`), 611 (`d = 71`), 1 404 (`d = 95`), 399 (`d = 119`),
-356 (`d = 131`), 1 281 (`d = 155`), 259 (`d = 179`), 100 (`d = 191`), 355
+356 (`d = 131`), 1 281 (`d = 155`), 259 (`d = 179`), 96 (`d = 191`), 355
 (`d = 239`), 291 (`d = 251`), 394 (`d = 263`), 715 (`d = 359`), 331 (`d = 431`),
-74 (`d = 455`), 659 (`d = 599`), 712 (`d = 611`), 898 (`d = 791`), 327 (`d = 911`),
+71 (`d = 455`), 659 (`d = 599`), 712 (`d = 611`), 898 (`d = 791`), 327 (`d = 911`),
 257 (`d = 935`) and 513 (`d = 959`).
 
 So `χ(ℚ(√d)²)` is now known for every squarefree `d < 83` except `d = 47`
@@ -114,13 +114,13 @@ These are two identities between integers, so every edge is checked exactly.
 | 131 | 390 | 356 | 804 | 3–61 | 126 |
 | 155 | 510 | 1 281 | 3 526 | 3–103 | 124 |
 | 179 | 390 | 259 | 622 | 3–39 | 90 |
-| 191 | 240 | 100 | 224 | 3–23 | 52 |
+| 191 | 240 | 96 | 212 | 3–21 | 50 |
 | 239 | 480 | 355 | 888 | 3–47 | 80 |
 | 251 | 390 | 291 | 715 | 3–56 | 98 |
 | 263 | 1020 | 394 | 1 017 | 3–62 | 72 |
 | 359 | 600 | 715 | 1 851 | 3–63 | 74 |
 | 431 | 600 | 331 | 764 | 3–28 | 66 |
-| 455 | 780 | 74 | 161 | 3–18 | 34 |
+| 455 | 780 | 71 | 150 | 3–14 | 34 |
 | 599 | 1020 | 659 | 1 686 | 3–102 | 160 |
 | 611 | 1020 | 712 | 1 821 | 3–97 | 130 |
 | 791 | 1020 | 898 | 2 237 | 3–85 | 120 |
@@ -170,7 +170,13 @@ from a different start (below, **Spindles**).
    vertex, each test a solve under assumptions, the core of failed assumptions
    of every refutation as the new vertex set, and up to 400 random deletion
    orders per grown graph, keeping the smallest critical graph (for `d = 95`,
-   `d = 155` and `d = 251` so far one order).
+   `d = 155` and `d = 251` so far one order). For `d = 191` and `455` a third
+   pass did better (2 October). `min3fast2.py` keeps the vertex set of every
+   round of drat-trim cores, and `min3multi.py` started from one of these
+   (122 and 78 vertices) instead of from the grown graph, whose first core of
+   failed assumptions has 438 and 234. Then 394 of 1 000 orders gave 96
+   vertices, and 980 of 3 000 gave 71, where 3 000 orders from the grown graphs
+   had given no fewer than 100 and 74.
 
 **Why some direction sets fail.** Three places act as gates. When every unit
 vector of a set is integral at such a place, reduction at that place colours
@@ -211,7 +217,7 @@ vectors of `U_D` have sum 0. For thirteen of the twenty-four graphs `U_D` has
 such a 5-cycle (`d = 11, 23, 35, 71, 119, 131, 191, 251, 263, 455, 599, 935,
 959`), and the graph contains one; the other eleven have no odd cycle shorter
 than 7 (`data/quadratic_planes/scripts/odd_published.py`). The three smallest
-graphs (74, 76 and 100 vertices) are among the thirteen; so is the graph over
+graphs (71, 76 and 96 vertices) are among the thirteen; so is the graph over
 `ℚ(√23)`, which a 5-cycle denominator (`D = 156`) shrank from 660 vertices to
 393. `scan5.py` lists the denominators with a 5-cycle and every gate open; on
 1–2 October they gave every success of the scan (`d = 251`, `455`, `935`,
@@ -252,7 +258,7 @@ The 82 vertices over `ℚ(√455)` and 598 over `ℚ(√119)` came the same way.
 graph with no 3-colouring unless `PLAIN=1`, and writes the result rotated back
 when it lies in the copy. Genuinely forced pairs came out over `ℚ(√455)` (5 690
 points), `ℚ(√119)` (23 084) and `ℚ(√935)` (9 082 and 9 937); their spindles
-shrank to 139, 802, 488 and 521 vertices, more than the published graphs (74,
+shrank to 139, 802, 488 and 521 vertices, more than the published graphs (71,
 399 and 257). Over `ℚ(√83)` no pair at such a distance was forced: there is none
 two steps from `0` for any `D` tried (two steps `u₁ + u₂` are at such a distance
 exactly when `(15 − s²)(1 + s²)` is a square in `K`, where `u₁ū₂ = (1 − s² +
@@ -356,7 +362,7 @@ writes each file from the data, and a test checks that they are up to date.
   3-colouring is periodic modulo `mM`, where `M` is the lattice the directions
   span, for `m ≤ 10` or `m = 12` (`D = 510`) and `m ≤ 8` (`D = 1530`)
   (`data/quadratic_planes/scripts/periodicq.py`).
-- **Smaller witnesses.** The graph over `ℚ(√455)` has 74 vertices, and the
+- **Smaller witnesses.** The graph over `ℚ(√455)` has 71 vertices, and the
   one over `ℚ(√11)` 76. How small can a 4-chromatic unit-distance graph over a
   real quadratic field be?
 
