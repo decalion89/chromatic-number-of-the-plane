@@ -310,7 +310,8 @@ def test_finite_plane_19():
 
 def test_padic_reach():
     """note §5: the 27 certified fields reach every prime p = 3 (mod 4) from 7 on below 10^5 (padic_reach.c finds the
-    first one they miss, 2 129 503 819, which is prime, 3 mod 4, and has no d as a nonzero square)"""
+    first one they miss, 2 129 503 819, which is prime, 3 mod 4, and has no d as a nonzero square, and 17 such primes
+    below 3 * 10^10, as many as the density 2^-25 predicts: the d span a subgroup of rank 25 modulo squares)"""
     import importlib.util
     spec = importlib.util.spec_from_file_location(
         "padic_reach", os.path.join(ROOT, "data", "quadratic_planes", "scripts", "padic_reach.py"))
@@ -319,6 +320,8 @@ def test_padic_reach():
     ds, count = pr.check(10 ** 5)
     assert len(ds) == 27 and count == 4808
     assert 11 in pr.reached(7, ds) and pr.reached(pr.P0, ds) == []
+    assert pr.rank_mod_squares(ds) == 25 and len(pr.MISSED_3E10) == 17
+    assert all(pr.reached(p, ds) == [] for p in pr.MISSED_3E10)
 
 
 def test_padic_measurable_bounds():

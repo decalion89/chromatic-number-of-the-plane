@@ -9344,6 +9344,14 @@ set of directions changes that (`notes/quadratic_planes.md`).
   the one-variable case needed its own line. That line, a citation to Serre for forms in five variables, the
   pinned references to Voight's book (Proposition 13.3.4 and Theorem 13.3.11, read in the open-access edition)
   and Madore's ¶1.6 for Benda and Perles (read in his paper) are in.
+- **How many primes escape the 27 fields (2 October, night).** `padic_reach.c` run to `3·10¹⁰` finds 17 primes
+  `p ≡ 3 (mod 4)` at which no `d` is a nonzero square: 3, `2 129 503 819`, `3 502 762 979`, `3 625 331 999`, …,
+  `29 059 558 867` (six minutes; `padic_reach.py` checks all 17 again by Euler's criterion and Miller–Rabin). Chebotarev's
+  theorem predicts about 19.4: the 27 values of `d` span a subgroup of rank 25 of `ℚ^×/ℚ^×²` (relations
+  `11·35·119·935 = 6545²` and `35·47·455·611 = 21385²`, four factors each), so these primes have density `2⁻²⁵` among
+  the primes `≡ 3 (mod 4)`. A first run, asked for four primes, stopped at the fourth and still printed its limit
+  `3·10¹⁰`; for a moment we took that for "only three primes below `3·10¹⁰`" (said in conversation, never written
+  here), and the full run above replaced it.
 
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; smaller witnesses (the
 smallest graphs have 71 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has

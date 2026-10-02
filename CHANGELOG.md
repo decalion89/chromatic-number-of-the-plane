@@ -66,7 +66,8 @@ including every retracted claim, is the research log,
   `χ(ℚ_p²) = ∞` for `p ≡ 1 (mod 4)`, so `χ(ℚ_p²)` is finite exactly for `p = 2` and `p ≡ 3 (mod 4)`; and by
   Chebotarev's theorem no finite set of number fields gives `χ(ℚ_p²) ≥ 4` for every `p ≡ 3 (mod 4)` (note §5). The 27
   certified fields reach every prime `p ≡ 3 (mod 4)` from 7 below `2 129 503 819`, the first one they miss
-  (`padic_reach.c`, checked by `padic_reach.py`). A seven-page draft, *Colouring the p-adic plane*
+  (`padic_reach.c`, checked by `padic_reach.py`); below `3·10¹⁰` they miss seventeen, as the density `2⁻²⁵` from
+  Chebotarev's theorem predicts (the 27 values of `d` have rank 25 modulo squares). A seven-page draft, *Colouring the p-adic plane*
   (`papers/padic-planes/`), proves these results; it also determines in every dimension `n` when `χ(ℚ_p^n)` is
   finite (`n = 1`, or `n = 2` and `p ≢ 1 (mod 4)`, or `p = 2` and `n ≤ 4`), with `χ(ℚ₂⁴) = 4` through the residue
   field `𝔽₄` of the 2-adic quaternions, and `χ(ℚ_p¹) = 2` but `χ_B(ℚ_p¹) = 3` for odd `p`.

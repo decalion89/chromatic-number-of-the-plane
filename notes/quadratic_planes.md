@@ -412,7 +412,11 @@ that they are up to date.
     values of `d` (47 included) is a nonzero square modulo `p`. The bound `2 129 503 819` is the first prime
     `p ≡ 3 (mod 4)` after 3 that none of them reaches (`data/quadratic_planes/scripts/padic_reach.c`, a sieve with
     Jacobi symbols, 21 seconds; `padic_reach.py` checks that prime and every prime below `10⁷` again by Euler's
-    criterion). The next item explains why some prime had to escape.
+    criterion). Below `3·10¹⁰` seventeen primes escape, 3 included (after `2 129 503 819` come `3 502 762 979` and
+    `3 625 331 999`), where Chebotarev's theorem predicts about 19.4: the 27 values of `d` span a subgroup of rank 25 of `ℚ^×/ℚ^×²`
+    (the relations are `11·35·119·935 = 6545²` and `35·47·455·611 = 21385²`, each with four factors), so the primes
+    at which every `d` is a non-square have density `2⁻²⁵` among the primes `≡ 3 (mod 4)`. The next item explains
+    why some prime had to escape.
   - `χ(ℚ₈₃²) ≥ 5`: `3`, `11` and `247` are squares modulo 83, so the 5-chromatic graph `data/five_247_c.json`
     over `ℚ(√3, √11, √247)` lies in `ℚ₈₃²`.
 
