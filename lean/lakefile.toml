@@ -1,13 +1,13 @@
 name = "HadwigerNelson"
 version = "0.1.0"
-defaultTargets = ["LocalColouring", "Q23", "Q311", "Q11"]
+defaultTargets = ["LocalColouring", "Q23", "Q311", "QuadraticPlanes", "Sqrt11", "Sqrt119", "Sqrt131", "Sqrt179", "Sqrt191", "Sqrt251", "Sqrt431", "Sqrt455", "Sqrt935"]
 
 [[require]]
 name = "mathlib"
 git = "https://github.com/leanprover-community/mathlib4.git"
 rev = "v4.34.1"
 
-# The criterion and the tools shared by both fields.
+# The criterion at 2 for fields containing √3, and the tools the fields share.
 [[lean_lib]]
 name = "LocalColouring"
 
@@ -19,6 +19,42 @@ name = "Q23"
 [[lean_lib]]
 name = "Q311"
 
-# χ(ℚ(√11)²) = 4: the first real quadratic field whose plane needs four colours.
+# The real quadratic fields: the upper bounds (reductions at 7 and at 2) and the tools for the lower bounds.
 [[lean_lib]]
-name = "Q11"
+name = "QuadraticPlanes"
+
+# χ(ℚ(√11)²) = 4 (11 ≡ 2² (mod 7): the reduction at 7).
+[[lean_lib]]
+name = "Sqrt11"
+
+# χ(ℚ(√119)²) = 4 (119 = 7 · 17: the reduction at 7, ramified).
+[[lean_lib]]
+name = "Sqrt119"
+
+# χ(ℚ(√131)²) = 4 (131 ≡ 3 (mod 8): the reduction at 2).
+[[lean_lib]]
+name = "Sqrt131"
+
+# χ(ℚ(√179)²) = 4 (179 ≡ 2² (mod 7): the reduction at 7).
+[[lean_lib]]
+name = "Sqrt179"
+
+# χ(ℚ(√191)²) = 4 (191 ≡ 3² (mod 7): the reduction at 7).
+[[lean_lib]]
+name = "Sqrt191"
+
+# χ(ℚ(√251)²) = 4 (251 ≡ 3 (mod 8): the reduction at 2).
+[[lean_lib]]
+name = "Sqrt251"
+
+# χ(ℚ(√431)²) = 4 (431 ≡ 2² (mod 7): the reduction at 7).
+[[lean_lib]]
+name = "Sqrt431"
+
+# χ(ℚ(√455)²) = 4 (455 = 7 · 65: the reduction at 7, ramified).
+[[lean_lib]]
+name = "Sqrt455"
+
+# χ(ℚ(√935)²) = 4 (935 ≡ 2² (mod 7): the reduction at 7).
+[[lean_lib]]
+name = "Sqrt935"

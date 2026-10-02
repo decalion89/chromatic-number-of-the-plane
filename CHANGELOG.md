@@ -43,15 +43,18 @@ including every retracted claim, is the research log,
   accepted all of them), and `tests/test_quadratic_planes.py` runs the fast
   checks. The graph over ℚ(√11) is drawn in the paper (Figure 1) and on the
   front page (Figure 3).
-- **`χ(ℚ(√11)²) = 4` in Lean 4** (`lean/Q11.lean`), with Mathlib. The lower bound is
-  the 76-vertex graph of `data/quadratic_planes/q11.json`: the kernel checks its
-  172 unit distances and, through Mathlib's `lrat_proof`, the LRAT proof
-  `data/quadratic_planes/q11.lrat` that its formula `q11.cnf` is unsatisfiable. The
-  upper bound is Moorhouse's reduction at 7, proved from a valuation subring with
-  residue field 𝔽₇ (Hensel's lemma for √11) and a 4-colouring of the unit-distance
-  graph of 𝔽₇². It depends only on Lean's three standard axioms; CI builds it,
-  compares the axioms and replays it with `leanchecker`, and a test checks that
-  `lean/tools/q11_lean.py` writes the same file from the data.
+- **`χ(ℚ(√d)²) = 4` in Lean 4 for nine fields**, `d = 11, 119, 131, 179, 191, 251,
+  431, 455, 935` (`lean/Sqrt{d}.lean`), with Mathlib. Each lower bound is the graph
+  of `data/quadratic_planes/q{d}.json`: the kernel checks its unit distances and,
+  through Mathlib's `lrat_proof`, the LRAT proof `data/quadratic_planes/q{d}.lrat`
+  that its formula `q{d}.cnf` is unsatisfiable. The upper bounds are proved once,
+  in `lean/QuadraticPlanes.lean`: Moorhouse's reduction at 7 when `d` is a nonzero
+  square modulo 7 (Hensel's lemma for √d) or `d = 7d′` (`d = 119, 455`), and
+  Fischer's reduction at 2 when `d ≡ 3 (mod 8)` (`d = 131, 251`), each from a
+  valuation subring with the right residue field. The proofs depend only on Lean's
+  three standard axioms; CI builds them, compares the axioms and replays them with
+  `leanchecker`, and a test checks that `lean/tools/field_lean.py` writes the same
+  files from the data.
 - **A Moser-spindle-free 5-chromatic unit-distance graph with 852 vertices**
   (`notes/flat852.md`, `data/flat852/`). Its points lie in `ℚ(ζ₂₁)`, and its
   edges use the 84 unit vectors of J. K. Haugland's heptagon graph

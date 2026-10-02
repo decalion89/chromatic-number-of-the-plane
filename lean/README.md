@@ -1,38 +1,42 @@
 # Formal proofs in Lean 4
 
-This directory holds proofs in Lean 4, with Mathlib, of three theorems:
+This directory holds proofs in Lean 4, with Mathlib, of:
 - the two theorems of the note
   [`papers/planes-4-chromatic/planes-4-chromatic.pdf`](../papers/planes-4-chromatic/planes-4-chromatic.pdf): the planes
   over ℚ(√2, √3) and ℚ(√3, √11) have chromatic number 4. The second is K. G. Fischer's theorem (1994); the note
   gives a short proof of both, and these files check that proof;
-- the plane over ℚ(√11) has chromatic number 4, the first real quadratic field of
-  [`notes/quadratic_planes.md`](../notes/quadratic_planes.md). The lower bound is the graph with 76 vertices of
-  [`data/quadratic_planes/q11.json`](../data/quadratic_planes/q11.json), whose SAT certificate the kernel checks;
-  the upper bound is Moorhouse's reduction at 7.
+- χ(ℚ(√d)²) = 4 for d = 11, 119, 131, 179, 191, 251, 431, 455 and 935, nine of the real quadratic fields of
+  [`notes/quadratic_planes.md`](../notes/quadratic_planes.md), one file per field. Each lower bound is the graph
+  of `data/quadratic_planes/q{d}.json`, whose SAT certificate the kernel checks. The upper bounds are
+  reductions at a place: at 7 when d is a nonzero square modulo 7 (Moorhouse's Lemma 8.2) or d = 7d′ (d = 119,
+  455), and at 2 when d ≡ 3 (mod 8) (Fischer's Theorem 10; d = 131, 251). The other fields of the note have
+  larger LRAT proofs (from 0.7 MB to 70 MB), beyond what `lrat_proof` checks in reasonable time and memory.
 
 ## The theorems
 
 ```lean
 theorem Q23.chromaticNumber_eq_four : (LocalColouring.unitDistGraph Q23.L).chromaticNumber = 4
 theorem Q311.chromaticNumber_eq_four : (LocalColouring.unitDistGraph Q311.L).chromaticNumber = 4
-theorem Q11.chromaticNumber_eq_four : (LocalColouring.unitDistGraph Q11.L).chromaticNumber = 4
+theorem Sqrt11.chromaticNumber_eq_four :
+    (LocalColouring.unitDistGraph (QuadraticPlanes.L 11)).chromaticNumber = 4
+-- and the same for Sqrt119, Sqrt131, Sqrt179, Sqrt191, Sqrt251, Sqrt431, Sqrt455 and Sqrt935
 ```
 
-Here `Q23.L`, `Q311.L` and `Q11.L` are the subfields ℚ(√2, √3), ℚ(√3, √11) and ℚ(√11) of ℝ, and
-`unitDistGraph K` joins two points of `K × K` at Euclidean distance 1:
+Here `Q23.L`, `Q311.L` and `QuadraticPlanes.L d` are the subfields ℚ(√2, √3), ℚ(√3, √11) and ℚ(√d) of ℝ,
+and `unitDistGraph K` joins two points of `K × K` at Euclidean distance 1:
 
 ```lean
 noncomputable def Q23.L : IntermediateField ℚ ℝ := IntermediateField.adjoin ℚ {√2, √3}
 noncomputable def Q311.L : IntermediateField ℚ ℝ := IntermediateField.adjoin ℚ {√3, √11}
-noncomputable def Q11.L : IntermediateField ℚ ℝ := IntermediateField.adjoin ℚ {√11}
+noncomputable def QuadraticPlanes.L (d : ℕ) : IntermediateField ℚ ℝ := IntermediateField.adjoin ℚ {√(d : ℝ)}
 
 def LocalColouring.unitDistGraph (K : IntermediateField ℚ ℝ) : SimpleGraph (K × K) where
   Adj p q := ((p.1 : ℝ) - q.1) ^ 2 + ((p.2 : ℝ) - q.2) ^ 2 = 1
 ```
 
-`chromaticNumber` is Mathlib's `SimpleGraph.chromaticNumber`, with values in `ℕ∞`. The three theorems depend only on
-Lean's three standard axioms, `propext`, `Classical.choice` and `Quot.sound`: `axioms.expected` records the
-output of `#print axioms`, and CI compares them.
+`chromaticNumber` is Mathlib's `SimpleGraph.chromaticNumber`, with values in `ℕ∞`. The eleven theorems depend
+only on Lean's three standard axioms, `propext`, `Classical.choice` and `Quot.sound`: `axioms.expected` records
+the output of `#print axioms`, and CI compares them.
 
 ## Checking the proofs
 
@@ -40,13 +44,15 @@ With [elan](https://github.com/leanprover/elan) installed:
 
     cd lean
     lake exe cache get                       # Mathlib's prebuilt files, a few minutes
-    lake build                               # the four files, a few minutes
+    lake build                               # every file: about half an hour on four cores
     lake env lean PrintAxioms.lean           # compare with axioms.expected
 
 `lean-toolchain` pins Lean v4.34.1 and `lakefile.toml` pins Mathlib v4.34.1. The GitHub Actions workflow
 [`lean.yml`](../.github/workflows/lean.yml) runs these steps on every push to `main` and every pull
 request. It then replays each file in Lean's kernel with `leanchecker`, independently of the tactics that
-produced the proofs.
+produced the proofs. The field files take from half a minute (d = 11, 191, 455) to ten minutes (d = 119) and up
+to 2.5 GB of memory (d = 179) each; the time grows with the number of clauses of the formula, the memory with
+the size of the LRAT proof.
 
 ## From the note to the files
 
@@ -63,23 +69,26 @@ produced the proofs.
 | §4, lower bounds | `Q23.chain23_not_colorable`, `Q311.moser_not_colorable`, `not_colorable_three` |
 | Theorem 1 | `Q23.chromaticNumber_eq_four`, `Q311.chromaticNumber_eq_four` |
 
-For ℚ(√11) (`notes/quadratic_planes.md`):
+For the real quadratic fields (`notes/quadratic_planes.md`; `QuadraticPlanes` holds what the fields share):
 
 | the note | Lean |
 |---|---|
-| §2, the points `[a, b, c, e]` and the identities (1) | `Q11.pt`, `Q11.unitPairB`, `Q11.adj_pt` |
-| the graph `data/quadratic_planes/q11.json` | `Q11.P`, `Q11.E`, `Q11.checkEdges_E` (every edge has length 1) |
-| §4, the formula `q11.cnf` and its proof | `Q11.q11Refuted` (Mathlib's `lrat_proof`, from `q11.cnf` and `q11.lrat`) |
-| no 3-colouring | `Q11.graph_not_colorable`, `Q11.not_colorable_three` |
-| §5, Moorhouse's Lemma 8.2 at 7 | `Q11.exists_valuationSubring_seven_mem_nonunits`, `Q11.exists_int_sub_mem` (residue field 𝔽₇, by Hensel's lemma for √11), `Q11.core_lemma_seven`, `Q11.sumSqGraph_colorable`, `Q11.colorable_four` |
-| the theorem for d = 11 | `Q11.chromaticNumber_eq_four` |
+| §2, the points `[a, b, c, e]` and the identities (1) | `QuadraticPlanes.pt`, `unitPairB`, `adj_pt` |
+| the graph `data/quadratic_planes/q{d}.json` | `Sqrt{d}.P`, `Sqrt{d}.E`, `Sqrt{d}.checkEdges_E` (every edge has length 1) |
+| §4, the formula `q{d}.cnf` and its proof | `Sqrt{d}.refuted` (Mathlib's `lrat_proof`, from `q{d}.cnf` and `q{d}.lrat`) |
+| no 3-colouring | `QuadraticPlanes.clause_facts`, `Sqrt{d}.graph_not_colorable`, `Sqrt{d}.not_colorable_three` |
+| §5, Moorhouse's Lemma 8.2 at 7 | `QuadraticPlanes.exists_valuationSubring_seven_mem_nonunits`, `exists_int_sub_mem` (residue field 𝔽₇ when d ≡ s² mod 7, by Hensel's lemma for √d), `exists_int_sub_mem_ramified` (when d = 7d′), `core_lemma_seven`, `sumSqGraph_colorable`, `colorable_four`, `colorable_four_ramified` |
+| §5, Fischer's Theorem 10 (d ≡ 3 mod 8) | `QuadraticPlanes.mem_nonunits_or_sub_one_mem_two` (residue field 𝔽₂), `toKHom` (x² + y² = a² − ab + ((d + 1)/4)b²), `core_lemma_two`, `kGraph_colorable`, `colorable_four_two` |
+| the theorem for d | `Sqrt{d}.chromaticNumber_eq_four` |
 
-The proofs follow the note with one difference. The note takes a prime of the ring of integers above 2 and
-reads its residue field from the decomposition of 2. Here the place above 2 is a valuation subring with 2 in
-its maximal ideal, given by Chevalley's extension theorem, and its residue field is shown to be 𝔽₂ directly:
+The proofs follow the notes with one difference. The notes take a prime of the ring of integers above 2 or 7
+and read its residue field from the decomposition of the prime. Here the place is a valuation subring with 2
+(or 7) in its maximal ideal, given by Chevalley's extension theorem, and its residue field is shown directly:
 - for ℚ(√2, √3), with the uniformiser π = (√2 + √6)/2 − 1, a root of the 2-Eisenstein polynomial
   X⁴ + 4X³ + 2X² − 4X − 2;
-- for ℚ(√3, √11), where 2 has two places, with π = √3 − 1 and a Hensel-type argument for (1 + √33)/2.
+- for ℚ(√3, √11), where 2 has two places, with π = √3 − 1 and a Hensel-type argument for (1 + √33)/2;
+- for ℚ(√d) at 7, with Hensel's lemma for the root of X² − d near ±s when d ≡ s² (mod 7), and by descent on
+  the power of 7 in the denominators when d = 7d′; at 2, with π = √d − 1 when d ≡ 3 (mod 4).
 
 The valuation subring and the coset representatives come from Zorn's lemma and `Quotient.out`, so the
 colourings exist but cannot be computed.
@@ -88,17 +97,19 @@ colourings exist but cannot be computed.
 
 | file | contents |
 |---|---|
-| `LocalColouring.lean` | the graph, the criterion, and the tools both fields use |
+| `LocalColouring.lean` | the graph, the criterion at 2 for fields containing √3, and the tools the fields share |
 | `Q23.lean` | ℚ(√2, √3): the place above 2, and the 10-vertex graph of [`data/chain23.json`](../data/chain23.json) |
 | `Q311.lean` | ℚ(√3, √11): the place above 2, and the Moser spindle |
-| `Q11.lean` | ℚ(√11): the graph of `data/quadratic_planes/q11.json` and the place above 7. It reads `data/quadratic_planes/q11.cnf` and the LRAT proof `data/quadratic_planes/q11.lrat` (kissat, then `drat-trim -L`) with `include_str` |
-| `PrintAxioms.lean`, `axioms.expected` | the axioms of the three theorems |
+| `QuadraticPlanes.lean` | ℚ(√d): the three upper bounds (at 7, at 7 ramified, at 2), and the tools for the lower bounds |
+| `Sqrt{d}.lean` | ℚ(√d), for d = 11, 119, 131, 179, 191, 251, 431, 455, 935: the graph of `data/quadratic_planes/q{d}.json`. It reads `data/quadratic_planes/q{d}.cnf` and the LRAT proof `data/quadratic_planes/q{d}.lrat` (kissat, then `drat-trim -L`) with `include_str` |
+| `PrintAxioms.lean`, `axioms.expected` | the axioms of the eleven theorems |
 | `tools/q23_coefficients.py`, `tools/q311_coefficients.py` | sympy scripts that produce the coefficients of the `linear_combination` steps and the edge lists |
-| `tools/q11_lean.py` | writes `Q11.lean` from the data (`--check` compares; the tests run it) |
+| `tools/field_lean.py` | writes `Sqrt{d}.lean` from the data (`--check` compares, and checks the colouring of 𝔽₇² in `QuadraticPlanes.lean` against `finite_planes.json`; the tests run it) |
 
 ## What is trusted
 
 Lean's kernel; Mathlib's definitions of `IntermediateField.adjoin`, `Real.sqrt` (written `√`) and
-`SimpleGraph.chromaticNumber`; and the definitions of `Q23.L`, `Q311.L`, `Q11.L` and `unitDistGraph` quoted above.
-For ℚ(√11), Mathlib's `lrat_proof` turns the LRAT proof into a proof term that the kernel checks; nothing
-runs as native code, so neither the SAT solver nor drat-trim is trusted.
+`SimpleGraph.chromaticNumber`; and the definitions of `Q23.L`, `Q311.L`, `QuadraticPlanes.L` and
+`unitDistGraph` quoted above. For the real quadratic fields, Mathlib's `lrat_proof` turns each LRAT proof into a
+proof term that the kernel checks; nothing runs as native code, so neither the SAT solver nor drat-trim is
+trusted.

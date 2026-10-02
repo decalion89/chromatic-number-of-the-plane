@@ -107,22 +107,53 @@ def test_cake_lpr_log_covers_every_field():
     assert "\n# exit status 0" in log and "\nCONFIRMED: " in log
 
 
-def test_lean_file_matches_the_data():
-    """lean/Q11.lean (the Lean proof of chi(Q(sqrt11)^2) = 4) is the file lean/tools/q11_lean.py writes from
-    data/quadratic_planes/q11.json and finite_planes.json, so the formal proof is about the published graph."""
+sys.path.insert(0, os.path.join(ROOT, "lean", "tools"))
+import field_lean  # noqa: E402
+
+LEAN = os.path.join(ROOT, "lean")
+
+
+def test_lean_files_match_the_data():
+    """lean/Sqrt{d}.lean (the Lean proof of chi(Q(sqrt d)^2) = 4) is the file lean/tools/field_lean.py writes from
+    data/quadratic_planes/q{d}.json, for every field with a Lean proof, so each formal proof is about the published
+    graph; and the 4-colouring of F_7^2 in lean/QuadraticPlanes.lean is that of finite_planes.json."""
     import subprocess
-    r = subprocess.run([sys.executable, os.path.join(ROOT, "lean", "tools", "q11_lean.py"), "--check"],
+    r = subprocess.run([sys.executable, os.path.join(LEAN, "tools", "field_lean.py"), "--check"],
                        capture_output=True, text=True)
     assert r.returncode == 0, r.stdout + r.stderr
 
 
-def test_lrat_proof_is_for_the_stored_formula():
-    """data/quadratic_planes/q11.lrat, which Q11.lean checks, refers only to the clauses of q11.cnf and ends with
-    the empty clause."""
-    with open(os.path.join(D, "q11.cnf")) as fh:
+def test_lean_fields_are_built_and_checked():
+    """Every field of field_lean.FIELDS has its file, its library in lakefile.toml (built by default), its line in
+    PrintAxioms.lean and axioms.expected, and its kernel replay in the Lean workflow; and no other Sqrt{d}.lean
+    exists."""
+    lake = open(os.path.join(LEAN, "lakefile.toml"), encoding="utf-8").read()
+    default = lake.split("defaultTargets = [", 1)[1].split("]", 1)[0]
+    pa = open(os.path.join(LEAN, "PrintAxioms.lean"), encoding="utf-8").read()
+    ax = open(os.path.join(LEAN, "axioms.expected"), encoding="utf-8").read()
+    wf = open(os.path.join(ROOT, ".github", "workflows", "lean.yml"), encoding="utf-8").read()
+    replayed = wf.split("for m in ", 1)[1].split(";", 1)[0].split()
+    for d in field_lean.FIELDS:
+        m = f"Sqrt{d}"
+        assert os.path.exists(os.path.join(LEAN, m + ".lean")), m
+        assert f'name = "{m}"' in lake and f'"{m}"' in default, m
+        assert f"import {m}\n" in pa and f"#print axioms {m}.chromaticNumber_eq_four\n" in pa, m
+        assert (f"'{m}.chromaticNumber_eq_four' depends on axioms: [propext, Classical.choice, Quot.sound]"
+                in ax.splitlines()), m
+        assert m in replayed, m
+    assert "QuadraticPlanes" in replayed and '"QuadraticPlanes"' in default
+    on_disk = {int(f[4:-5]) for f in os.listdir(LEAN) if f.startswith("Sqrt") and f.endswith(".lean")}
+    assert on_disk == set(field_lean.FIELDS)
+
+
+@pytest.mark.parametrize("d", field_lean.FIELDS)
+def test_lrat_proof_is_for_the_stored_formula(d):
+    """data/quadratic_planes/q{d}.lrat, which Sqrt{d}.lean checks, refers only to the clauses of q{d}.cnf and earlier
+    lemmas, and ends with the empty clause."""
+    with open(os.path.join(D, f"q{d}.cnf")) as fh:
         header = fh.readline().split()
     nclauses = int(header[3])
-    with open(os.path.join(D, "q11.lrat")) as fh:
+    with open(os.path.join(D, f"q{d}.lrat")) as fh:
         lines = [l.split() for l in fh if l.strip()]
     added = set()
     empty = False

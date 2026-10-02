@@ -16,7 +16,7 @@ jobs:
   lean:
     name: Lean proofs
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     defaults:
       run:
         working-directory: lean
@@ -37,4 +37,4 @@ jobs:
       - name: Compare the axioms with axioms.expected
         run: lake env lean PrintAxioms.lean > axioms.txt && diff axioms.expected axioms.txt
       - name: Replay each file in the kernel
-        run: for m in LocalColouring Q23 Q311 Q11; do lake env leanchecker -v "$m"; done
+        run: for m in LocalColouring Q23 Q311 QuadraticPlanes Sqrt11 Sqrt119 Sqrt131 Sqrt179 Sqrt191 Sqrt251 Sqrt431 Sqrt455 Sqrt935; do lake env leanchecker -v "$m"; done

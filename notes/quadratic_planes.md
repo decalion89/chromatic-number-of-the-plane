@@ -283,18 +283,27 @@ every graph: each proof `VERIFIED UNSAT`
 `tests/test_quadratic_planes.py` runs the fast checks, and checks that this log
 covers every field.
 
-**A formal proof for `d = 11`.** `lean/Q11.lean` proves `χ(ℚ(√11)²) = 4` in Lean 4
-with Mathlib, and depends only on Lean's three standard axioms. For the lower
-bound the kernel checks the 172 unit distances of `q11.json` and, through
-Mathlib's `lrat_proof`, an LRAT proof (`data/quadratic_planes/q11.lrat`, from
-kissat and `drat-trim -L`) that `q11.cnf` is unsatisfiable; a 3-colouring of the
-plane, with its colours renamed, would satisfy every clause. Neither the SAT
-solver nor drat-trim is trusted. For the upper bound it follows §5 at the prime 7:
-a valuation subring of `ℚ(√11)` with 7 in its maximal ideal (Chevalley's theorem)
-has residue field `𝔽₇`, by Hensel's lemma for `√11 ≡ ±2`, unit vectors are
-integral there, and a 4-colouring of the unit-distance graph of `𝔽₇²`
-(`finite_planes.json`) colours the plane. `lean/tools/q11_lean.py` writes the file
-from the data, and a test checks that it is up to date.
+**Formal proofs for nine fields.** For `d = 11, 119, 131, 179, 191, 251, 431,
+455` and `935`, `lean/Sqrt{d}.lean` proves `χ(ℚ(√d)²) = 4` in Lean 4 with
+Mathlib, and depends only on Lean's three standard axioms. For the lower bound
+the kernel checks the unit distances of `q{d}.json` and, through Mathlib's
+`lrat_proof`, an LRAT proof (`data/quadratic_planes/q{d}.lrat`, from kissat and
+`drat-trim -L`) that `q{d}.cnf` is unsatisfiable; a 3-colouring of the plane,
+with its colours renamed, would satisfy every clause. Neither the SAT solver nor
+drat-trim is trusted. The upper bounds follow §5 (`lean/QuadraticPlanes.lean`).
+A valuation subring of `ℚ(√d)` with 7 in its maximal ideal (Chevalley's theorem)
+has residue field `𝔽₇`: by Hensel's lemma for `√d ≡ ±s` when `d ≡ s² (mod 7)`,
+and by descent on the power of 7 in the denominators when `d = 7d′` (`d = 119, 455`). Unit
+vectors are integral there, and the 4-colouring of `𝔽₇²` in
+`finite_planes.json` colours the plane. For `d ≡ 3 (mod 8)` (`d = 131, 251`) a
+valuation subring with 2 in its maximal ideal has residue field `𝔽₂`, with
+`√d − 1` in the maximal ideal; in the coordinates `a = x + y/√d`, `b = 2y/√d`
+the squared length is `a² − ab + ((d + 1)/4)b²`, which has no nontrivial zero
+over `𝔽₂`, so the residues in `𝔽₂²` colour the plane. The nine fields cover the
+three kinds of upper bound and take from half a minute to ten minutes each. For
+the other fields the LRAT proofs are larger (from 0.7 MB to 70 MB), beyond what
+`lrat_proof` checks in reasonable time and memory. `lean/tools/field_lean.py`
+writes each file from the data, and a test checks that they are up to date.
 
 ## 5. The upper bounds
 
@@ -304,11 +313,12 @@ from the data, and a test checks that it is up to date.
   `7 ≡ 3 (mod 4)`. Moorhouse's Lemma 8.2 reduces the plane modulo a prime of
   norm 7 into the unit-distance graph of `𝔽₇²`. That graph is 4-colourable, so `χ(K²) ≤ 4`.
   `data/quadratic_planes/finite_planes.json` holds the colouring, and the
-  checker checks it.
+  checker checks it. In Lean: `QuadraticPlanes.colorable_four` and, for `d ≡ 0 (mod 7)`,
+  `colorable_four_ramified`.
 - **`d = 59, 131, 251`.** `d ≡ 3 (mod 8)`, so `χ(K²) ≤ 4` by Fischer's Theorem 10 (which
   also covers `d = 11`, `d = 35`, `d = 155` and `d = 179`). The
   proof in `notes/local_colourings.md` reduces modulo the place above 2, whose
-  residue plane is `K₄`.
+  residue plane is `K₄`. In Lean: `QuadraticPlanes.colorable_four_two`.
 - **`d = 47`.** `47 ≡ 3 = 5² (mod 11)` and `11 ≡ 3 (mod 4)`, so reduction modulo
   a prime of norm 11 gives `χ(K²) ≤ χ(𝔽₁₁²) = 5`. Madore's Lemma 4.5 prints a
   5-colouring of `𝔽₁₁²`; `finite_planes.json` holds one, checked by the
@@ -349,6 +359,7 @@ from the data, and a test checks that it is up to date.
 | `data/quadratic_planes/cake_lpr_checks.txt` | the checker's log with kissat, drat-trim and cake_lpr, for every field |
 | `data/quadratic_planes/finite_planes.json` | proper colourings of the unit-distance graphs of `𝔽₇²` (4 colours) and `𝔽₁₁²` (5 colours) |
 | `scripts/verify_quadratic_planes.py`, `tests/test_quadratic_planes.py` | the checks of §4 and §5 |
+| `lean/QuadraticPlanes.lean`, `lean/Sqrt{d}.lean`, `data/quadratic_planes/q{d}.lrat` | the formal proofs of §4, for nine fields |
 | `data/quadratic_planes/scripts/` | the code of the search of §3 (growth, shrinking, certification), as it was run, with a README |
 
 ## References
