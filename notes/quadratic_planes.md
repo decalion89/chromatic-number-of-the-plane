@@ -6,7 +6,7 @@ different colours. For real quadratic fields `K = ℚ(√d)` the known values we
 2 and 3. No real quadratic field was known to need four colours.
 
 **Theorem.**
-1. `χ(ℚ(√d)²) = 4` for `d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431, 455, 935`.
+1. `χ(ℚ(√d)²) = 4` for `d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 935, 959`.
 2. `4 ≤ χ(ℚ(√47)²) ≤ 5`.
 
 Each lower bound is a finite graph: a triangle-free unit-distance graph with
@@ -14,8 +14,8 @@ coordinates in `ℚ(√d)`, which is not 3-colourable and is vertex-critical. Th
 graphs have 94 vertices (`d = 11`), 660 (`d = 23`), 580 (`d = 35`), 816
 (`d = 47`), 406 (`d = 59`), 611 (`d = 71`), 1 404 (`d = 95`), 399 (`d = 119`),
 356 (`d = 131`), 1 281 (`d = 155`), 259 (`d = 179`), 100 (`d = 191`), 355
-(`d = 239`), 291 (`d = 251`), 715 (`d = 359`), 331 (`d = 431`), 74 (`d = 455`)
-and 257 (`d = 935`).
+(`d = 239`), 291 (`d = 251`), 394 (`d = 263`), 715 (`d = 359`), 331 (`d = 431`),
+74 (`d = 455`), 659 (`d = 599`), 257 (`d = 935`) and 513 (`d = 959`).
 
 So `χ(ℚ(√d)²)` is now known for every squarefree `d < 83` except `d = 47`
 (§1): it is 2 if `d ≡ 1, 2 (mod 4)`, 3 if `d ≡ 3 (mod 4)` and `d ≢ 2 (mod 3)`,
@@ -116,10 +116,13 @@ These are two identities between integers, so every edge is checked exactly.
 | 191 | 240 | 100 | 224 | 3–23 | 52 |
 | 239 | 480 | 355 | 888 | 3–47 | 80 |
 | 251 | 390 | 291 | 715 | 3–56 | 98 |
+| 263 | 1020 | 394 | 1 017 | 3–62 | 72 |
 | 359 | 600 | 715 | 1 851 | 3–63 | 74 |
 | 431 | 600 | 331 | 764 | 3–28 | 66 |
 | 455 | 780 | 74 | 161 | 3–18 | 34 |
+| 599 | 1020 | 659 | 1 686 | 3–102 | 160 |
 | 935 | 1020 | 257 | 612 | 3–36 | 60 |
+| 959 | 2460 | 513 | 1 233 | 3–57 | 94 |
 
 In each graph:
 - the edges are all the pairs of its points at distance 1;
@@ -139,7 +142,8 @@ There is no triangle in any of these planes. A unit triangle would need
 conjugation. We used `|U_D| = 108` in each case (140 for `d = 71`, 148 for
 `d = 119` and `d = 155`, 132 for `d = 95` and `d = 239`, 140 for `d = 359`, 116 for
 `d = 251` and `d = 431`, 196 for `d = 131`, 212 for `d = 179`, 276 for `d = 35`,
-68 for `d = 455`, 84 for `d = 935`).
+68 for `d = 455`, 84 for `d = 935`, 156 for `d = 263` and `d = 959`, 252 for
+`d = 599`).
 
 **The growth.**
 1. Start from all sums of at most two vectors of `U_D`.
@@ -149,7 +153,8 @@ conjugation. We used `|U_D| = 108` in each case (140 for `d = 71`, 148 for
    1 to 30 rounds and at most 12 211 points (21 895 for `d = 131`, 24 785 for
    `d = 179`, 39 265 for `d = 35`; 96 rounds for `d = 431`; 38 rounds and
    15 913 points for `d = 155`, 43 rounds and 12 477 points for `d = 95`). For
-   `d = 35, 95, 131, 155, 179, 239, 251, 359, 431, 455, 935` we used a variant:
+   `d = 35, 95, 131, 155, 179, 239, 251, 263, 359, 431, 455, 599, 935, 959` we
+   used a variant:
    when no candidate is blocked, it 3-colours the graph again from scratch, and
    if still none is blocked it adds candidates whose neighbours see two colours.
 5. Shrink: keep the vertices whose clauses lie in the drat-trim core of a
@@ -196,18 +201,17 @@ gate. With all 108 unit vectors of denominator dividing 240, which include
 
 **Short odd cycles.** There are no triangles, so the shortest odd cycle of a
 graph built from `U_D` has length at least 5, and length 5 exactly when five
-vectors of `U_D` have sum 0. For nine of the eighteen graphs `U_D` has such
-a 5-cycle (`d = 11, 35, 71, 119, 131, 191, 251, 455, 935`), and the graph
-contains one; the other nine have no odd cycle shorter than 7
-(`data/quadratic_planes/scripts/odd_published.py`). The three smallest graphs
-(74, 94 and 100 vertices) are among the nine. `scan5.py` lists the
-denominators with a 5-cycle and every gate open. In the scan of 1–2 October
-they gave the three quick successes (`d = 251`, `D = 390`; `d = 455`,
-`D = 780`; `d = 935`, `D = 1020`, each in under two minutes), but a 5-cycle
-is not enough: with such denominators `d = 263`, `299` and `407` stopped with
-no blocked candidate. For `d = 83`, `107` and `203` there is none with
-`D ≤ 4 000`, prime factors at most 61, 40 to 400 directions and every gate
-open.
+vectors of `U_D` have sum 0. For twelve of the twenty-one graphs `U_D` has
+such a 5-cycle (`d = 11, 35, 71, 119, 131, 191, 251, 263, 455, 599, 935,
+959`), and the graph contains one; the other nine have no odd cycle shorter
+than 7 (`data/quadratic_planes/scripts/odd_published.py`). The three smallest
+graphs (74, 94 and 100 vertices) are among the twelve. `scan5.py` lists the
+denominators with a 5-cycle and every gate open; on 1–2 October they gave
+every success of the scan (`d = 251`, `455`, `935`, `263`, `599`, `959`, in 21
+to 616 seconds). A 5-cycle is not enough: with such denominators `d = 299`
+and `407` (and `263` with `D = 408` and `816`) stopped with no blocked
+candidate. For `d = 83`, `107` and `203` there is none with `D ≤ 4 000`,
+prime factors at most 61, 40 to 400 directions and every gate open.
 
 ## 4. The certificates
 
@@ -240,9 +244,9 @@ covers every field.
 
 ## 5. The upper bounds
 
-- **`d = 11, 23, 35, 71, 95, 119, 155, 179, 191, 239, 359, 431, 455, 935`.** `d` is a nonzero square
-  modulo 7 (`d = 11, 23, 71, 95, 155, 179, 191, 239, 359, 431, 935`) or `d ≡ 0 (mod 7)` (`d = 35 = 5 · 7`,
-  `d = 119 = 7 · 17`, `d = 455 = 5 · 7 · 13`), and
+- **`d = 11, 23, 35, 71, 95, 119, 155, 179, 191, 239, 263, 359, 431, 455, 599, 935, 959`.** `d` is a nonzero square
+  modulo 7 (`d = 11, 23, 71, 95, 155, 179, 191, 239, 263, 359, 431, 599, 935`) or `d ≡ 0 (mod 7)` (`d = 35 = 5 · 7`,
+  `d = 119 = 7 · 17`, `d = 455 = 5 · 7 · 13`, `d = 959 = 7 · 137`), and
   `7 ≡ 3 (mod 4)`. Moorhouse's Lemma 8.2 reduces the plane modulo a prime of
   norm 7 into the unit-distance graph of `𝔽₇²`. That graph is 4-colourable, so `χ(K²) ≤ 4`.
   `data/quadratic_planes/finite_planes.json` holds the colouring, and the

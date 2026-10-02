@@ -1,5 +1,5 @@
 # python3 scripts/verify_quadratic_planes.py --kissat KISSAT --drat-trim DRAT_TRIM --cake-lpr CAKE_LPR
-# run 2026-10-02 00:14 UTC; kissat 4.0.4; cake_lpr sha256 b25551c853c7b7fe6a9059bcddd81a46fb4ed952b842e1080697f8122ee0c8ca
+# run 2026-10-02 01:00 UTC; kissat 4.0.4; cake_lpr sha256 b25551c853c7b7fe6a9059bcddd81a46fb4ed952b842e1080697f8122ee0c8ca
 Q(sqrt11): ok: 94 distinct points of the plane over Q(sqrt11), 214 edges, all pairs at distance exactly 1, no triangle
 Q(sqrt11): ok: a proper 4-colouring
 Q(sqrt11): ok: for each of the 94 vertices v, a proper 3-colouring of G minus v
@@ -84,6 +84,12 @@ Q(sqrt251): ok: for each of the 291 vertices v, a proper 3-colouring of G minus 
 Q(sqrt251): ok: q251.cnf is the 3-colouring formula of this graph (2438 clauses)
 Q(sqrt251): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula written again here
 Q(sqrt251): upper bound: d = 251 is 3 mod 8: chi <= 4 (Fischer 1990, Thm 10; notes/local_colourings.md, Proposition A)
+Q(sqrt263): ok: 394 distinct points of the plane over Q(sqrt263), 1017 edges, all pairs at distance exactly 1, no triangle
+Q(sqrt263): ok: a proper 4-colouring
+Q(sqrt263): ok: for each of the 394 vertices v, a proper 3-colouring of G minus v
+Q(sqrt263): ok: q263.cnf is the 3-colouring formula of this graph (3447 clauses)
+Q(sqrt263): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula written again here
+Q(sqrt263): upper bound: d = 263 is a nonzero square mod 7 and p = 7 is 3 mod 4: chi <= chi(F_7^2) <= 4 (Moorhouse, Lemma 8.2; stored colouring checked)
 Q(sqrt359): ok: 715 distinct points of the plane over Q(sqrt359), 1851 edges, all pairs at distance exactly 1, no triangle
 Q(sqrt359): ok: a proper 4-colouring
 Q(sqrt359): ok: for each of the 715 vertices v, a proper 3-colouring of G minus v
@@ -102,11 +108,23 @@ Q(sqrt455): ok: for each of the 74 vertices v, a proper 3-colouring of G minus v
 Q(sqrt455): ok: q455.cnf is the 3-colouring formula of this graph (559 clauses)
 Q(sqrt455): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula written again here
 Q(sqrt455): upper bound: d = 455 is 0 mod 7 and p = 7 is 3 mod 4: chi <= chi(F_7^2) <= 4 (Moorhouse, Lemma 8.2; stored colouring checked)
+Q(sqrt599): ok: 659 distinct points of the plane over Q(sqrt599), 1686 edges, all pairs at distance exactly 1, no triangle
+Q(sqrt599): ok: a proper 4-colouring
+Q(sqrt599): ok: for each of the 659 vertices v, a proper 3-colouring of G minus v
+Q(sqrt599): ok: q599.cnf is the 3-colouring formula of this graph (5719 clauses)
+Q(sqrt599): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula written again here
+Q(sqrt599): upper bound: d = 599 is a nonzero square mod 7 and p = 7 is 3 mod 4: chi <= chi(F_7^2) <= 4 (Moorhouse, Lemma 8.2; stored colouring checked)
 Q(sqrt935): ok: 257 distinct points of the plane over Q(sqrt935), 612 edges, all pairs at distance exactly 1, no triangle
 Q(sqrt935): ok: a proper 4-colouring
 Q(sqrt935): ok: for each of the 257 vertices v, a proper 3-colouring of G minus v
 Q(sqrt935): ok: q935.cnf is the 3-colouring formula of this graph (2095 clauses)
 Q(sqrt935): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula written again here
 Q(sqrt935): upper bound: d = 935 is a nonzero square mod 7 and p = 7 is 3 mod 4: chi <= chi(F_7^2) <= 4 (Moorhouse, Lemma 8.2; stored colouring checked)
-CONFIRMED: chi(Q(sqrt11)^2) = 4; chi(Q(sqrt23)^2) = 4; chi(Q(sqrt35)^2) = 4; chi(Q(sqrt47)^2) in [4, 5]; chi(Q(sqrt59)^2) = 4; chi(Q(sqrt71)^2) = 4; chi(Q(sqrt95)^2) = 4; chi(Q(sqrt119)^2) = 4; chi(Q(sqrt131)^2) = 4; chi(Q(sqrt155)^2) = 4; chi(Q(sqrt179)^2) = 4; chi(Q(sqrt191)^2) = 4; chi(Q(sqrt239)^2) = 4; chi(Q(sqrt251)^2) = 4; chi(Q(sqrt359)^2) = 4; chi(Q(sqrt431)^2) = 4; chi(Q(sqrt455)^2) = 4; chi(Q(sqrt935)^2) = 4 (kissat, drat-trim and cake_lpr run here)
+Q(sqrt959): ok: 513 distinct points of the plane over Q(sqrt959), 1233 edges, all pairs at distance exactly 1, no triangle
+Q(sqrt959): ok: a proper 4-colouring
+Q(sqrt959): ok: for each of the 513 vertices v, a proper 3-colouring of G minus v
+Q(sqrt959): ok: q959.cnf is the 3-colouring formula of this graph (4214 clauses)
+Q(sqrt959): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula written again here
+Q(sqrt959): upper bound: d = 959 is 0 mod 7 and p = 7 is 3 mod 4: chi <= chi(F_7^2) <= 4 (Moorhouse, Lemma 8.2; stored colouring checked)
+CONFIRMED: chi(Q(sqrt11)^2) = 4; chi(Q(sqrt23)^2) = 4; chi(Q(sqrt35)^2) = 4; chi(Q(sqrt47)^2) in [4, 5]; chi(Q(sqrt59)^2) = 4; chi(Q(sqrt71)^2) = 4; chi(Q(sqrt95)^2) = 4; chi(Q(sqrt119)^2) = 4; chi(Q(sqrt131)^2) = 4; chi(Q(sqrt155)^2) = 4; chi(Q(sqrt179)^2) = 4; chi(Q(sqrt191)^2) = 4; chi(Q(sqrt239)^2) = 4; chi(Q(sqrt251)^2) = 4; chi(Q(sqrt263)^2) = 4; chi(Q(sqrt359)^2) = 4; chi(Q(sqrt431)^2) = 4; chi(Q(sqrt455)^2) = 4; chi(Q(sqrt599)^2) = 4; chi(Q(sqrt935)^2) = 4; chi(Q(sqrt959)^2) = 4 (kissat, drat-trim and cake_lpr run here)
 # exit status 0

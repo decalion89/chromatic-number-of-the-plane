@@ -8866,10 +8866,10 @@ set of directions changes that (`notes/quadratic_planes.md`).
   vertex, and no 3-colouring, twice: kissat answered UNSATISFIABLE and drat-trim VERIFIED the proof, for the
   stored formula and for a second encoding written by separate code. `scripts/verify_quadratic_planes.py`
   repeats all of it.
-- **Upper bounds.** `11, 23, 71, 95, 155, 179, 191, 239, 359, 431, 935` are squares modulo 7 and `35 = 5 · 7`, `119 = 7 ·
-  17`, `455 = 5 · 7 · 13`, so Moorhouse's reduction modulo a prime of norm 7 (his Lemma 8.2) gives `χ ≤ χ(𝔽₇²) = 4`; `59, 131, 251 ≡ 3
+- **Upper bounds.** `11, 23, 71, 95, 155, 179, 191, 239, 263, 359, 431, 599, 935` are squares modulo 7 and `35 = 5 · 7`, `119 = 7 ·
+  17`, `455 = 5 · 7 · 13`, `959 = 7 · 137`, so Moorhouse's reduction modulo a prime of norm 7 (his Lemma 8.2) gives `χ ≤ χ(𝔽₇²) = 4`; `59, 131, 251 ≡ 3
   (mod 8)` give `χ ≤ 4` by Fischer's Theorem 10; `47 ≡ 5² (mod 11)` gives `χ ≤ χ(𝔽₁₁²) = 5`. So `χ = 4` for `d
-  = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 359, 431, 455, 935`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`. With the known results,
+  = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 935, 959`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`. With the known results,
   `χ(ℚ(√d)²)` is now known for every squarefree `d < 83` except `d = 47`.
 - **An incident.** The first certification runs for `d = 23` and `d = 47` ran at the same time and wrote
   their DRAT proofs to the same temporary file. We stopped both, gave the temporary files distinct names,
@@ -8972,7 +8972,12 @@ set of directions changes that (`notes/quadratic_planes.md`).
   `d = 935 = 5 · 11 · 17` with `D = 1020` (84 directions) gave a graph with no 3-colouring in 24 rounds
   (6 496 points, 91 seconds); `min3inc.py` shrank it to 275 vertices and `min3multi.py` (400 orders) to 257
   vertices and 612 edges, certified like the others and checked again with cake_lpr. `935 ≡ 2² (mod 7)`, so
-  `χ(ℚ(√935)²) = 4`.
+  `χ(ℚ(√935)²) = 4`. Then three more with 5-cycle denominators: `d = 263` with `D = 1020` (156 directions;
+  12 rounds, 15 537 points, 183 seconds; shrunk to 438 vertices, then to 394 over 250 orders), `d = 599` with
+  `D = 1020` (252 directions; 27 rounds, 35 439 points, 616 seconds; 710, then 659 vertices) and `d = 959 =
+  7 · 137` with `D = 2460` (156 directions; 57 rounds, 18 149 points, 524 seconds; 551, then 513 vertices).
+  `263 ≡ 599 ≡ 2² (mod 7)` and `959 ≡ 0 (mod 7)`, so `χ = 4` for all three. Every graph found in the scan
+  has a 5-cycle, and so do the three new ones.
 - **A figure.** `papers/quadratic-planes/make_figure.py` draws the graph over `ℚ(√11)` for the paper (Figure
   1), and `scripts/make_figures.py` for the front page (Figure 3): 94 points, 214 unit segments, and the
   stored 4-colouring as marker shapes. The point at the origin has 32 neighbours, all on its unit circle.

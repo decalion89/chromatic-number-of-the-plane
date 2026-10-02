@@ -3,7 +3,8 @@ Q(sqrt d)^2, the gates of gates2.py, and whether U_D closes a 5-cycle (five unit
 unit-distance graph has cycles of length 5; there are no triangles). Prints each (d, D) with all gates open and a
 5-cycle, then a summary per d. On 1-2 October the two quick successes of the field scan (d = 251 with D = 390,
 d = 455 with D = 780) were exactly the prescreened pairs with a 5-cycle; it then chose the denominators for
-d = 263, 299, 407, 599, 935 and 959 (935 with D = 1020 succeeded; 263, 299 and 407 stalled)."""
+d = 263, 299, 407, 599, 935 and 959 (263, 599 and 935 with D = 1020 and 959 with D = 2460 succeeded; 299 and
+407 stalled)."""
 import sys
 import numpy as np
 from units_fast import units_fast
