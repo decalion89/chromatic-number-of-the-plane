@@ -534,9 +534,12 @@ that they are up to date.
   the ratio is 0.286 and 0.276. So a 4-colouring by reduction could only come
   from the 11-adic plane at level 4 or more, or the 19-adic plane at level 2 or
   more; on 2 October that level had no 4-colouring invariant under the rotations
-  `t ≡ 1 (mod 19)`, nor one invariant under the translations by `19·(1, 0)`
+  `t ≡ 1 (mod 19)`, nor one invariant under the translations by `19·(1, 0)` or by
+  `19·(1, 1)` (the two classes of directions; the last one also with a drat-trim check)
   (`data/quadratic_planes/scripts/hoffman_padic.py`, `spectrum.py`,
-  `levelp.py`, `levelt.py`).
+  `levelp.py`, `levelt.py`, `quotlevel.py`). The whole of level 2 at 19 (the formula of
+  `liftline.py`, 795 644 variables) is being decided; a 4-colouring would give
+  `χ(ℚ(√47)²) = 4`.
 - **All of `d ≡ 11 (mod 12)`.** Does every such field need four colours? For
   `d = 83, 107, 203` our growth has so far found only 3-colourable graphs,
   with up to 180 directions, and on 2 October with `D = 1020` and `2040`

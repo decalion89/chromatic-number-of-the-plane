@@ -9352,6 +9352,24 @@ set of directions changes that (`notes/quadratic_planes.md`).
   the primes `≡ 3 (mod 4)`. A first run, asked for four primes, stopped at the fourth and still printed its limit
   `3·10¹⁰`; for a moment we took that for "only three primes below `3·10¹⁰`" (said in conversation, never written
   here), and the full run above replaced it.
+- **`ℚ(√47)`: the hard formula `b240` is satisfiable, and the 19-adic plane at level 2 (2 October, night).** Share C
+  decided `b240_r9` SATISFIABLE in 36 minutes (kissat 4.0.4 with `--seed=7`, one of four solvers; the default seed had
+  run here for over an hour without an answer). Its model, checked here against the graph (72 997 points, 371 369
+  edges, no monochromatic edge, `c(0) ≠ c(m)`), restarted the growth at round 10. The first share D never started its
+  solvers (its session ended its turn first); a new session, D2, runs kissat with seeds 3 and 7 on `a12` and `a13`,
+  and decided `a12` SATISFIABLE in eight minutes (seed 3). Share A's three runs had all ended at kissat time-outs
+  (`a11` at 80 490 points); a new session, A2, resumes `a12` from D2's colouring (checked here: 363 419 edges, none
+  monochromatic), decides `a11`'s formula before resuming it, and starts a fresh seed. So far every hard formula of
+  these growths has been satisfiable once a solver with another seed was given time: the time-outs mark solver
+  difficulty, not forcing.
+  The other way to settle the question is a 4-colouring of `ℚ₁₉²` that factors through level 2, that is, of
+  `Cay((ℤ/361)², U₂)`: it would colour `ℚ(√47)²` with four colours, since `47 ≡ 3² (mod 19)`. No such colouring is
+  invariant under the rotations `t ≡ 1 (mod 19)`, under the translations by `19·(1, 0)`, or under those by
+  `19·(1, 1)` (the two classes of directions, by norm residue; kissat UNSAT each time, the last also drat-trim
+  VERIFIED). The full formula (795 644 variables, 5 617 523 clauses, the line encoding of `liftline.py`) runs here
+  and on share E (four more solvers); share E's `verify_model.py` checks any model against the definition of the
+  graph. For calibration, tabu search finds no 4-colouring of `𝔽₁₉²` with fewer than 114 monochromatic edges (three
+  seeds), while it 5-colours it at once.
 
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; smaller witnesses (the
 smallest graphs have 71 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has
