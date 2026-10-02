@@ -10,6 +10,21 @@ import Sqrt431
 import Sqrt455
 import Sqrt911
 import Sqrt935
+import Sqrt23
+import Sqrt35
+import Sqrt47
+import Sqrt59
+import Sqrt71
+import Sqrt95
+import Sqrt155
+import Sqrt239
+import Sqrt263
+import Sqrt359
+import Sqrt443
+import Sqrt599
+import Sqrt611
+import Sqrt791
+import Sqrt959
 
 -- The axioms the theorems depend on; `axioms.expected` holds the expected output.
 #print axioms Q23.chromaticNumber_eq_four
@@ -24,3 +39,18 @@ import Sqrt935
 #print axioms Sqrt455.chromaticNumber_eq_four
 #print axioms Sqrt911.chromaticNumber_eq_four
 #print axioms Sqrt935.chromaticNumber_eq_four
+#print axioms Sqrt23.chromaticNumber_eq_four_of_unsatisfiable
+#print axioms Sqrt35.chromaticNumber_eq_four_of_unsatisfiable
+#print axioms Sqrt47.not_colorable_three_of_unsatisfiable
+#print axioms Sqrt59.chromaticNumber_eq_four_of_unsatisfiable
+#print axioms Sqrt71.chromaticNumber_eq_four_of_unsatisfiable
+#print axioms Sqrt95.chromaticNumber_eq_four_of_unsatisfiable
+#print axioms Sqrt155.chromaticNumber_eq_four_of_unsatisfiable
+#print axioms Sqrt239.chromaticNumber_eq_four_of_unsatisfiable
+#print axioms Sqrt263.chromaticNumber_eq_four_of_unsatisfiable
+#print axioms Sqrt359.chromaticNumber_eq_four_of_unsatisfiable
+#print axioms Sqrt443.chromaticNumber_eq_four_of_unsatisfiable
+#print axioms Sqrt599.chromaticNumber_eq_four_of_unsatisfiable
+#print axioms Sqrt611.chromaticNumber_eq_four_of_unsatisfiable
+#print axioms Sqrt791.chromaticNumber_eq_four_of_unsatisfiable
+#print axioms Sqrt959.chromaticNumber_eq_four_of_unsatisfiable

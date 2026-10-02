@@ -20,7 +20,7 @@ def load(name):
 
 
 def test_fields():
-    assert {11, 23, 35, 47, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 611, 791, 911, 935,
+    assert {11, 23, 35, 47, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455, 599, 611, 791, 911, 935,
             959} <= set(FIELDS)
     for d in FIELDS:
         assert d % 4 == 3 and d % 3 == 2            # d = 11 mod 12: the only real quadratic fields that can need 4
@@ -101,10 +101,14 @@ def test_tampering_is_caught():
 
 def test_cake_lpr_log_covers_every_field():
     """data/quadratic_planes/cake_lpr_checks.txt: the checker run with kissat, drat-trim and cake_lpr has a
-    VERIFIED UNSAT line for every field and ends with exit status 0"""
+    VERIFIED UNSAT line for every field, for its own encoding and for the stored formula, and ends with exit
+    status 0"""
     log = open(os.path.join(D, "cake_lpr_checks.txt"), encoding="utf-8").read()
     for d in FIELDS:
         assert f"Q(sqrt{d}): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT" in log, d
+        # the stored formula itself: the hypothesis of the Lean files of field_lean.COND_FIELDS
+        assert (f"Q(sqrt{d}): ok: kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on "
+                f"q{d}.cnf itself") in log, d
     assert "\n# exit status 0" in log and "\nCONFIRMED: " in log
 
 
@@ -125,9 +129,9 @@ def test_lean_files_match_the_data():
 
 
 def test_lean_fields_are_built_and_checked():
-    """Every field of field_lean.FIELDS has its file, its library in lakefile.toml (built by default), its line in
-    PrintAxioms.lean and axioms.expected, and its kernel replay in the Lean workflow; and no other Sqrt{d}.lean
-    exists."""
+    """Every field of field_lean.FIELDS and field_lean.COND_FIELDS has its file, its library in lakefile.toml (built
+    by default), its line in PrintAxioms.lean and axioms.expected, and its kernel replay in the Lean workflow; every
+    published graph has its file, and no other Sqrt{d}.lean exists."""
     lake = open(os.path.join(LEAN, "lakefile.toml"), encoding="utf-8").read()
     default = lake.split("defaultTargets = [", 1)[1].split("]", 1)[0]
     pa = open(os.path.join(LEAN, "PrintAxioms.lean"), encoding="utf-8").read()
@@ -142,9 +146,19 @@ def test_lean_fields_are_built_and_checked():
         assert (f"'{m}.chromaticNumber_eq_four' depends on axioms: [propext, Classical.choice, Quot.sound]"
                 in ax.splitlines()), m
         assert m in replayed, m
-    assert "QuadraticPlanes" in replayed and '"QuadraticPlanes"' in default
+    for d in field_lean.COND_FIELDS:
+        m = f"Sqrt{d}"
+        thm = f"{m}.not_colorable_three_of_unsatisfiable" if d == 47 else f"{m}.chromaticNumber_eq_four_of_unsatisfiable"
+        assert os.path.exists(os.path.join(LEAN, m + ".lean")), m
+        assert f'name = "{m}"' in lake and f'"{m}"' in default, m
+        assert f"import {m}\n" in pa and f"#print axioms {thm}\n" in pa, m
+        assert f"'{thm}' depends on axioms: [propext, Classical.choice, Quot.sound]" in ax.splitlines(), m
+        assert m in replayed, m
+    for m in ("QuadraticPlanes", "ColouringFormula"):
+        assert m in replayed and f'"{m}"' in default, m
     on_disk = {int(f[4:-5]) for f in os.listdir(LEAN) if f.startswith("Sqrt") and f.endswith(".lean")}
-    assert on_disk == set(field_lean.FIELDS)
+    assert on_disk == set(field_lean.FIELDS) | set(field_lean.COND_FIELDS) == set(FIELDS)
+    assert not set(field_lean.FIELDS) & set(field_lean.COND_FIELDS)
 
 
 @pytest.mark.parametrize("d", field_lean.FIELDS)

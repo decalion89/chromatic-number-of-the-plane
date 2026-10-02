@@ -46,8 +46,8 @@ SAT solving, DRAT proofs}
 For a subfield $F\subset\R$ let $\chi(F^2)$ be the chromatic number of the graph on $F^2$ joining points at
 Euclidean distance $1$. For real quadratic fields $K=\Q(\sqrt d)$ the values known so far were $2$ and $3$, and
 a field can need four colours only when $d\equiv 11\pmod{12}$. We show that
-$\chi(\Q(\sqrt d)^2)=4$ for $d=11$, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 611,
-791, 911, 935, 959, and that
+$\chi(\Q(\sqrt d)^2)=4$ for $d=11$, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455, 599,
+611, 791, 911, 935, 959, and that
 $4\le\chi(\Q(\sqrt{47})^2)\le5$. With the known results, $\chi(\Q(\sqrt d)^2)$ is now determined for every
 squarefree $d<83$ except $d=47$. Each lower bound is a triangle-free, vertex-critical unit-distance graph with
 coordinates in $\Q(\sqrt d)$, with between $71$ and $1\,404$ vertices, that has no proper $3$-colouring: a computer
@@ -88,7 +88,7 @@ about $\chi(\Q(\sqrt d)^2)$, and about $\chi(\Q(\sqrt{47})^2)$ in particular.
 \begin{theorem}\label{thm:main}
 $\chi(\Q(\sqrt d)^2)=4$ for
 \[\begin{aligned}d={}&11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239,\\
-&251, 263, 359, 431, 455, 599, 611, 791, 911, 935, 959,\end{aligned}\]
+&251, 263, 359, 431, 443, 455, 599, 611, 791, 911, 935, 959,\end{aligned}\]
 and $4\le\chi(\Q(\sqrt{47})^2)\le5$.
 \end{theorem}
 
@@ -167,7 +167,8 @@ $3$-colourings of $G-v$ for every $v$, that the stored formula is exactly $\Phi(
 finite planes behind the upper bounds. With a path to kissat and \texttt{drat-trim} it also writes the second
 encoding, solves it and checks the proof. With a path to \texttt{cake\_lpr} as well, \texttt{drat-trim} writes
 each proof in LRAT form and \texttt{cake\_lpr}, a proof checker verified in HOL4 and compiled by the verified
-CakeML compiler \cite{cakelpr}, checks it; it accepted the proofs for all twenty-four graphs. What has to be trusted
+CakeML compiler \cite{cakelpr}, checks it, also for the stored formula; it accepted the proofs for all
+twenty-five graphs. What has to be trusted
 is a proof checker (\texttt{drat-trim}, or \texttt{cake\_lpr} and its formal verification), the short code that
 writes $\Phi(G)$ from the list of edges, and exact integer arithmetic.
 
@@ -178,7 +179,12 @@ the unit distances of the graph, an LRAT proof that $\Phi(G)$ is unsatisfiable, 
 $\Q(\sqrt d)$ with residue field $\F_7$ (when $d$ is a nonzero square modulo~$7$, and when $7\mid d$), and for
 $d=131,251$ at the place above~$2$, with residue field $\F_2$. The proofs depend only on Lean's three standard
 axioms, and neither the SAT solver nor \texttt{drat-trim} is trusted. For the other fields the LRAT proofs,
-from $0.7$ to $70$~MB, are too large for \texttt{lrat\_proof} in reasonable time and memory.
+from $0.7$ to $70$~MB, are too large for \texttt{lrat\_proof} in reasonable time and memory. For them the
+Lean files prove the theorem (for $d=47$ the lower bound) from the hypothesis that $\Phi(G)$ is
+unsatisfiable: there $\Phi(G)$ is a Lean object, which each file checks against the stored formula when it is
+built, and \texttt{cake\_lpr} checked an LRAT proof that the stored formula is unsatisfiable. So for every graph
+the kernel checks the unit distances, the formula and the upper bound (for $d\ne47$), and the
+unsatisfiability is checked by the kernel or by \texttt{cake\_lpr}.
 
 \section{The upper bounds}\label{sec:upper}
 
@@ -192,10 +198,10 @@ $\F_p$, so every unit vector is $\p$-integral and reduction modulo $\p$ is a gra
 component of the origin. Since $\chi(\F_7^2)=4$ \cite[\S7]{Moorhouse} and $\F_{11}^2$ has a proper
 $5$-colouring \cite[Lemma~4.5]{Madore}:
 \begin{itemize}
-\item $d=11,23,71,95,155,179,191,239,263,359,431,599,611,911,935$ are nonzero squares and $d=35,119,455,791,959$ are $\equiv0$ modulo $7$, so
-  $\chi\le4$;
+\item $d=11,23,71,95,155,179,191,239,263,\allowbreak 359,431,443,599,611,911,935$ are nonzero squares and
+  $d=35,119,455,791,959$ are $\equiv0$ modulo $7$, so $\chi\le4$;
 \item $d=59,131,251$ are $\equiv3\pmod8$, so $\chi\le4$ by Fischer's Theorem~10 (which also covers $11$, $35$,
-  $155$, $179$ and $611$);
+  $155$, $179$, $443$ and $611$);
 \item $47\equiv5^2\pmod{11}$, so $\chi(\Q(\sqrt{47})^2)\le5$.
 \end{itemize}
 The repository stores a proper $4$-colouring of $\F_7^2$ and a proper $5$-colouring of $\F_{11}^2$, and the

@@ -1,6 +1,6 @@
 name = "HadwigerNelson"
 version = "0.1.0"
-defaultTargets = ["LocalColouring", "Q23", "Q311", "QuadraticPlanes", "Sqrt11", "Sqrt119", "Sqrt131", "Sqrt179", "Sqrt191", "Sqrt251", "Sqrt431", "Sqrt455", "Sqrt911", "Sqrt935"]
+defaultTargets = ["LocalColouring", "Q23", "Q311", "QuadraticPlanes", "Sqrt11", "Sqrt119", "Sqrt131", "Sqrt179", "Sqrt191", "Sqrt251", "Sqrt431", "Sqrt455", "Sqrt911", "Sqrt935", "ColouringFormula", "Sqrt23", "Sqrt35", "Sqrt47", "Sqrt59", "Sqrt71", "Sqrt95", "Sqrt155", "Sqrt239", "Sqrt263", "Sqrt359", "Sqrt443", "Sqrt599", "Sqrt611", "Sqrt791", "Sqrt959"]
 
 [[require]]
 name = "mathlib"
@@ -62,3 +62,67 @@ name = "Sqrt911"
 # χ(ℚ(√935)²) = 4 (935 ≡ 2² (mod 7): the reduction at 7).
 [[lean_lib]]
 name = "Sqrt935"
+
+# The colouring formula as a Lean object, and the lower bound from its unsatisfiability.
+[[lean_lib]]
+name = "ColouringFormula"
+
+# χ(ℚ(√23)²) = 4 if q23.cnf is unsatisfiable (23 ≡ 3² (mod 7): the reduction at 7).
+[[lean_lib]]
+name = "Sqrt23"
+
+# χ(ℚ(√35)²) = 4 if q35.cnf is unsatisfiable (35 = 7 · 5: the reduction at 7, ramified).
+[[lean_lib]]
+name = "Sqrt35"
+
+# χ(ℚ(√47)²) ≥ 4 if q47.cnf is unsatisfiable.
+[[lean_lib]]
+name = "Sqrt47"
+
+# χ(ℚ(√59)²) = 4 if q59.cnf is unsatisfiable (59 ≡ 3 (mod 8): the reduction at 2).
+[[lean_lib]]
+name = "Sqrt59"
+
+# χ(ℚ(√71)²) = 4 if q71.cnf is unsatisfiable (71 ≡ 1² (mod 7): the reduction at 7).
+[[lean_lib]]
+name = "Sqrt71"
+
+# χ(ℚ(√95)²) = 4 if q95.cnf is unsatisfiable (95 ≡ 2² (mod 7): the reduction at 7).
+[[lean_lib]]
+name = "Sqrt95"
+
+# χ(ℚ(√155)²) = 4 if q155.cnf is unsatisfiable (155 ≡ 1² (mod 7): the reduction at 7).
+[[lean_lib]]
+name = "Sqrt155"
+
+# χ(ℚ(√239)²) = 4 if q239.cnf is unsatisfiable (239 ≡ 1² (mod 7): the reduction at 7).
+[[lean_lib]]
+name = "Sqrt239"
+
+# χ(ℚ(√263)²) = 4 if q263.cnf is unsatisfiable (263 ≡ 2² (mod 7): the reduction at 7).
+[[lean_lib]]
+name = "Sqrt263"
+
+# χ(ℚ(√359)²) = 4 if q359.cnf is unsatisfiable (359 ≡ 3² (mod 7): the reduction at 7).
+[[lean_lib]]
+name = "Sqrt359"
+
+# χ(ℚ(√443)²) = 4 if q443.cnf is unsatisfiable (443 ≡ 3² (mod 7): the reduction at 7).
+[[lean_lib]]
+name = "Sqrt443"
+
+# χ(ℚ(√599)²) = 4 if q599.cnf is unsatisfiable (599 ≡ 2² (mod 7): the reduction at 7).
+[[lean_lib]]
+name = "Sqrt599"
+
+# χ(ℚ(√611)²) = 4 if q611.cnf is unsatisfiable (611 ≡ 3² (mod 7): the reduction at 7).
+[[lean_lib]]
+name = "Sqrt611"
+
+# χ(ℚ(√791)²) = 4 if q791.cnf is unsatisfiable (791 = 7 · 113: the reduction at 7, ramified).
+[[lean_lib]]
+name = "Sqrt791"
+
+# χ(ℚ(√959)²) = 4 if q959.cnf is unsatisfiable (959 = 7 · 137: the reduction at 7, ramified).
+[[lean_lib]]
+name = "Sqrt959"

@@ -2,21 +2,27 @@
 the published data. The upper bound is a reduction at 7 (d a nonzero square mod 7, or d = 7d' with 7 not dividing d')
 or at 2 (d = 3 mod 8).
 
-    python3 lean/tools/field_lean.py              # writes Sqrt{d}.lean for every d in FIELDS
+    python3 lean/tools/field_lean.py              # writes Sqrt{d}.lean for every d in FIELDS and COND_FIELDS
     python3 lean/tools/field_lean.py 11 191       # writes Sqrt11.lean and Sqrt191.lean
     python3 lean/tools/field_lean.py --check      # exits 1 if a file differs from what the data give, or if the
                                                   # 4-colouring of F_7^2 in QuadraticPlanes.lean is not the one
                                                   # of data/quadratic_planes/finite_planes.json
 
 The lower bound uses the graph of data/quadratic_planes/q{d}.json (points [a, b, c, e] with denominator D, edges,
-fixed edge), its formula q{d}.cnf and the LRAT proof q{d}.lrat (kissat, then drat-trim -L). The general parts are
-in QuadraticPlanes.lean."""
+fixed edge) and its formula q{d}.cnf. For the fields of FIELDS the kernel also checks the LRAT proof q{d}.lrat
+(kissat, then drat-trim -L) that the formula is unsatisfiable; the general parts are in QuadraticPlanes.lean. For
+the fields of COND_FIELDS, whose LRAT proofs are too large for lrat_proof, the theorems take the unsatisfiability of
+the formula as a hypothesis (ColouringFormula.lean); cake_lpr checks it (scripts/verify_quadratic_planes.py
+--cake-lpr), and the file checks, when it is built, that q{d}.cnf is the formula of the hypothesis. For d = 47 only
+the lower bound is formalized."""
 import json, os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "..", "..", "data", "quadratic_planes")
 # The fields with a Lean proof: those whose LRAT proof the kernel checks in a few minutes and a few GB.
 FIELDS = [11, 119, 131, 179, 191, 251, 431, 455, 911, 935]
+# The other graphs: the Lean proof takes the unsatisfiability of q{d}.cnf as a hypothesis.
+COND_FIELDS = [23, 35, 47, 59, 71, 95, 155, 239, 263, 359, 443, 599, 611, 791, 959]
 
 
 def chunks(items, per):
@@ -43,8 +49,10 @@ def source(d):
         lemma = "QuadraticPlanes.colorable_four"
         upper_doc = f"`{d} ≡ {s}² (mod 7)`, so Moorhouse's reduction at 7 applies."
         upper = f"colorable_four (s := {s}) (by norm_num) (by norm_num)"
+    elif d % 8 != 3:
+        assert d == 47 and d in COND_FIELDS, f"{d} is not 0 or a nonzero square modulo 7, nor 3 modulo 8"
+        lemma = upper_doc = upper = None
     else:
-        assert d % 8 == 3, f"{d} is not 0 or a nonzero square modulo 7, nor 3 modulo 8"
         lemma = "QuadraticPlanes.colorable_four_two"
         upper_doc = f"`{d} ≡ 3 (mod 8)`, so the reduction at 2 applies (Fischer, Theorem 10)."
         upper = "colorable_four_two (by norm_num)"
@@ -52,10 +60,54 @@ def source(d):
         header = fh.readline().split()
     nvars, nclauses = int(header[2]), int(header[3])
     assert nvars == 3 * n
-    pts = ",\n    ".join(", ".join(f"({a}, {b}, {c}, {e})" for a, b, c, e in row) for row in chunks(P, 4))
-    edges = ",\n    ".join(", ".join(f"({i}, {j})" for i, j in row) for row in chunks(E, 10))
+    # each coordinate with its type: without it, elaborating hundreds of negative numerals takes minutes
+    pts = ",\n    ".join(", ".join(f"(({a} : ℤ), ({b} : ℤ), ({c} : ℤ), ({e} : ℤ))" for a, b, c, e in row)
+                          for row in chunks(P, 2))
+    # the edges in lists of at most 500 (one long list literal exceeds the elaborator's recursion depth)
+    parts = chunks(E, 500)
+    lists = ["[\n    " + ",\n    ".join(", ".join(f"({i}, {j})" for i, j in row) for row in chunks(part, 8)) + "]"
+             for part in parts]
+    if len(parts) == 1:
+        edge_defs = f"""set_option maxHeartbeats 4000000 in
+/-- The {len(E)} edges of `data/quadratic_planes/q{d}.json`: all the unit distances among the points. -/
+def E : List (Fin {n} × Fin {n}) := {lists[0]}"""
+        mem0 = "List.mem_cons_self .."
+    else:
+        edge_defs = "".join(f"""set_option maxHeartbeats 4000000 in
+/-- Edges {500 * k} to {500 * k + len(part) - 1} of `data/quadratic_planes/q{d}.json`. -/
+def E{k} : List (Fin {n} × Fin {n}) := {lists[k]}
+
+""" for k, part in enumerate(parts))
+        edge_defs += (f"/-- The {len(E)} edges of `data/quadratic_planes/q{d}.json`: all the unit distances among the "
+                      f"points. -/\ndef E : List (Fin {n} × Fin {n}) :=\n  "
+                      + " ++ (".join(f"E{k}" for k in range(len(parts))) + ")" * (len(parts) - 1))
+        mem0 = "List.mem_append_left _ (List.mem_cons_self ..)"
+    depth = max(1, (n - 1).bit_length())  # 2 ** depth >= n
+    data_part = f"""set_option maxHeartbeats 4000000 in
+/-- The {n} points of `data/quadratic_planes/q{d}.json`, as `[a, b, c, e]` with denominator {D}. -/
+def points : List (ℤ × ℤ × ℤ × ℤ) := [
+    {pts}]
+
+/-- The points as a balanced tree, where the kernel finds each in at most {depth} steps. -/
+def tree : PtTree := PtTree.ofList {depth} points
+
+-- `tree` holds the points in their order.
+#guard (List.range {n}).all fun i => tree.get i == points.getD i (0, 0, 0, 0)
+
+/-- The point with index `i`. -/
+def P (i : Fin {n}) : ℤ × ℤ × ℤ × ℤ := tree.get i.val
+
+{edge_defs}
+
+lemma checkEdges_E : checkEdges {d} {D} P E = true := by decide +kernel
+
+lemma noLoops_E : noLoops E = true := by decide +kernel
+"""
     args = "\n    ".join(" ".join(f"(V {i})" for i in row) for row in chunks(list(range(nvars)), 12))
-    return f'''import QuadraticPlanes
+    if d in COND_FIELDS:
+        return cond_source(d, D, n, E, u0, v0, nvars, nclauses, data_part, mem0, lemma, upper_doc, upper)
+    assert d in FIELDS
+    return f'''import ColouringFormula
 
 /-!
 # The plane over `ℚ(√{d})` has chromatic number 4
@@ -69,30 +121,15 @@ standing for `((a + b√{d})/{D}, (c + e√{d})/{D})`, and {len(E)} edges. The k
 `data/quadratic_planes/q{d}.lrat` that the colouring formula `q{d}.cnf` ({nvars} variables, {nclauses} clauses) is
 unsatisfiable. A 3-colouring would satisfy it (`QuadraticPlanes.clause_facts`).
 
-*Upper bound* (`{lemma}`): {upper_doc}
+*Upper bound* (`{lemma}`):
+{upper_doc}
 -/
 
 namespace Sqrt{d}
 
 open LocalColouring QuadraticPlanes
 
-set_option maxHeartbeats 4000000 in
-/-- The {n} points of `data/quadratic_planes/q{d}.json`, as `[a, b, c, e]` with denominator {D}. -/
-def points : List (ℤ × ℤ × ℤ × ℤ) := [
-    {pts}]
-
-/-- The point with index `i`. -/
-def P (i : Fin {n}) : ℤ × ℤ × ℤ × ℤ := points.getD i.val (0, 0, 0, 0)
-
-set_option maxHeartbeats 4000000 in
-/-- The {len(E)} edges of `data/quadratic_planes/q{d}.json`: all the unit distances among the points. -/
-def E : List (Fin {n} × Fin {n}) := [
-    {edges}]
-
-lemma checkEdges_E : checkEdges {d} {D} P E = true := by decide +kernel
-
-lemma noLoops_E : noLoops E = true := by decide +kernel
-
+{data_part}
 -- `q{d}.cnf` is unsatisfiable: for all propositions `x₀, …, x_{nvars - 1}`, some clause is false. The statement is
 -- a disjunction, over the clauses, of the negations of the clauses.
 lrat_proof refuted
@@ -103,7 +140,8 @@ set_option maxHeartbeats 10000000 in
 /-- The graph of `q{d}.json` is not 3-colourable. -/
 theorem graph_not_colorable : ¬ (edgeGraph E).Colorable 3 := by
   rintro ⟨C⟩
-  obtain ⟨V, hVert, hEdge, hVu, hVv⟩ := clause_facts noLoops_E (u₀ := {u0}) (v₀ := {v0}) (List.mem_cons_self ..) C
+  obtain ⟨V, hVert, hEdge, hVu, hVv⟩ := clause_facts noLoops_E (u₀ := {u0}) (v₀ := {v0})
+    ({mem0}) C
   have H := refuted
     {args}
   casesm* _ ∨ _
@@ -125,6 +163,70 @@ end Sqrt{d}
 '''
 
 
+def cond_source(d, D, n, E, u0, v0, nvars, nclauses, data_part, mem0, lemma, upper_doc, upper):
+    """Sqrt{d}.lean for a field of COND_FIELDS: the theorems take the unsatisfiability of the formula as a hypothesis."""
+    kb = os.path.getsize(os.path.join(DATA, f"q{d}.cnf")) // 1000
+    if upper is None:
+        head = f"""# The plane over `ℚ(√{d})` needs four colours, if its colouring formula is unsatisfiable
+
+**Theorem** (`Sqrt{d}.not_colorable_three_of_unsatisfiable`). If the colouring formula `q{d}.cnf` is
+unsatisfiable, the unit-distance graph on `ℚ(√{d})²` is not 3-colourable (`notes/quadratic_planes.md`); so
+`χ(ℚ(√{d})²) ≥ 4`. The upper bound `χ ≤ 5`, by reduction at 11, is not formalized here."""
+        upper_part = ""
+        theorem = ""
+    else:
+        head = f"""# The plane over `ℚ(√{d})` has chromatic number 4, if its colouring formula is unsatisfiable
+
+**Theorem** (`Sqrt{d}.chromaticNumber_eq_four_of_unsatisfiable`). If the colouring formula `q{d}.cnf` is
+unsatisfiable, the unit-distance graph on `ℚ(√{d})²` has chromatic number 4 (`notes/quadratic_planes.md`)."""
+        upper_part = f"""
+
+*Upper bound* (`{lemma}`):
+{upper_doc}"""
+        theorem = f"""
+
+/-- **Theorem**, if `formula` is unsatisfiable: the unit-distance graph of `ℚ(√{d})²` has chromatic number 4. -/
+theorem chromaticNumber_eq_four_of_unsatisfiable (h : Unsatisfiable formula) :
+    (unitDistGraph (L {d})).chromaticNumber = 4 :=
+  chromaticNumber_eq_four_of ({upper})
+    (not_colorable_three_of_unsatisfiable h)"""
+    return f'''import ColouringFormula
+
+/-!
+{head}
+cake_lpr, a verified proof checker, checked an LRAT proof of the hypothesis
+(`data/quadratic_planes/cake_lpr_checks.txt`); the proof is too large for Mathlib's `lrat_proof`. This file is
+written from the data by `tools/field_lean.py`.
+
+*Lower bound* (`not_colorable_three_of_unsatisfiable`). The graph of `data/quadratic_planes/q{d}.json` has {n}
+vertices `[a, b, c, e]`, standing for `((a + b√{d})/{D}, (c + e√{d})/{D})`, and {len(E)} edges. The kernel checks that
+each edge has length 1 (`checkEdges_E`, `QuadraticPlanes.adj_pt`). `formula` is the colouring formula of the graph,
+`QuadraticPlanes.colourCNF E {u0} {v0}` ({nvars} variables, {nclauses} clauses), and a 3-colouring would satisfy it
+(`QuadraticPlanes.not_colorable_of_unsatisfiable`). When the file is built, `#guard` checks that
+`data/quadratic_planes/q{d}.cnf` ({kb} KB) is this formula.{upper_part}
+-/
+
+namespace Sqrt{d}
+
+open LocalColouring QuadraticPlanes
+
+{data_part}
+/-- The colouring formula of the graph, with the edge `{u0}–{v0}` coloured `0, 1`. -/
+def formula : List (List ℤ) := colourCNF E {u0} {v0}
+
+-- `q{d}.cnf` is `formula`.
+#guard parseDimacs (include_str "../data/quadratic_planes/q{d}.cnf") == formula
+
+/-- **Lower bound**, if `formula` is unsatisfiable: the unit-distance graph of `ℚ(√{d})²` is not 3-colourable. -/
+theorem not_colorable_three_of_unsatisfiable (h : Unsatisfiable formula) :
+    ¬(unitDistGraph (L {d})).Colorable 3 := fun hc =>
+  not_colorable_of_unsatisfiable noLoops_E ({mem0}) h
+    (hc.of_hom (edgeGraph.hom (fun i => pt {d} {D} (P i)) (pt_adj (by norm_num) checkEdges_E))){theorem}
+
+end Sqrt{d}
+'''
+
+
 def f7_table_matches():
     """The table f7Colour of QuadraticPlanes.lean is the 4-colouring of F_7^2 in finite_planes.json (vertex 7x + y)."""
     planes = json.load(open(os.path.join(DATA, "finite_planes.json")))
@@ -138,7 +240,7 @@ def f7_table_matches():
 if __name__ == "__main__":
     args = sys.argv[1:]
     check = "--check" in args
-    ds = [int(a) for a in args if a != "--check"] or FIELDS
+    ds = [int(a) for a in args if a != "--check"] or FIELDS + COND_FIELDS
     bad = 0
     for d in ds:
         src = source(d)

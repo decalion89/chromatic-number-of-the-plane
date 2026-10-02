@@ -12,7 +12,9 @@ For each field Q(sqrt d) in data/quadratic_planes/ the file qD.json holds a grap
     in the encoding 3v + c + 1. Its unsatisfiability is the certificate in qD.logs/ (kissat, drat-trim); with
     --kissat PATH --drat-trim PATH this script writes the formula again in its own encoding (c n + v + 1), solves it
     and checks the proof; with --cake-lpr PATH as well, drat-trim also writes the proof in LRAT form and cake_lpr,
-    a proof checker verified in CakeML, checks it too. Then chi(G) = 4 and chi(Q(sqrt d)^2) >= 4.
+    a proof checker verified in CakeML, checks it too, and the same is done for the stored formula qD.cnf itself
+    (the hypothesis of the Lean files lean/Sqrt{d}.lean that do not check an LRAT proof). Then chi(G) = 4 and
+    chi(Q(sqrt d)^2) >= 4.
   - the upper bound: when d is a nonzero square modulo p = 7 or p = 11 (both 3 mod 4), reduction modulo a prime of
     norm p maps the plane over Q(sqrt d) into the unit-distance graph of F_p^2 (Moorhouse, Lemma 8.2), and
     finite_planes.json holds a proper 4-colouring of F_7^2 and a proper 5-colouring of F_11^2, checked here.
@@ -124,14 +126,11 @@ def check_cnf(g, path):
     return True, f"{os.path.basename(path)} is the 3-colouring formula of this graph ({len(cl)} clauses)"
 
 
-def solve(g, kissat, drat_trim, workdir, cake_lpr=None):
-    n = len(g["points"])
-    cl = clauses(g, lambda v, c: c * n + v + 1)
+def refute(cnf, kissat, drat_trim, workdir, cake_lpr, where, name):
+    """kissat on the formula in the file cnf, drat-trim on its proof, and, with cake_lpr, cake_lpr on the proof in
+    LRAT form; where names the formula in the message, and the proofs are workdir/name.drat and name.lrat."""
     os.makedirs(workdir, exist_ok=True)
-    cnf, proof = os.path.join(workdir, f"q{g['d']}.cnf"), os.path.join(workdir, f"q{g['d']}.drat")
-    lrat = os.path.join(workdir, f"q{g['d']}.lrat")
-    with open(cnf, "w") as fh:
-        fh.write(f"p cnf {3 * n} {len(cl)}\n" + "".join(" ".join(map(str, c)) + " 0\n" for c in cl))
+    proof, lrat = os.path.join(workdir, name + ".drat"), os.path.join(workdir, name + ".lrat")
     try:
         k = subprocess.run([kissat, cnf, proof], capture_output=True, text=True)
         if "s UNSATISFIABLE" not in k.stdout:
@@ -141,16 +140,25 @@ def solve(g, kissat, drat_trim, workdir, cake_lpr=None):
         if "s VERIFIED" not in r.stdout:
             return False, "drat-trim did not verify the proof"
         if not cake_lpr:
-            return True, "kissat UNSATISFIABLE and drat-trim VERIFIED on a formula written again here"
+            return True, f"kissat UNSATISFIABLE and drat-trim VERIFIED on {where}"
         c = subprocess.run([cake_lpr, cnf, lrat], capture_output=True, text=True)
         if "s VERIFIED UNSAT" not in c.stdout:
             return False, "cake_lpr did not verify the LRAT proof"
-        return True, ("kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on a formula "
-                      "written again here")
+        return True, f"kissat UNSATISFIABLE, drat-trim VERIFIED and cake_lpr VERIFIED UNSAT (LRAT) on {where}"
     finally:
         for f in (proof, lrat):
             if os.path.exists(f):
                 os.remove(f)
+
+
+def solve(g, kissat, drat_trim, workdir, cake_lpr=None):
+    n = len(g["points"])
+    cl = clauses(g, lambda v, c: c * n + v + 1)
+    os.makedirs(workdir, exist_ok=True)
+    cnf = os.path.join(workdir, f"q{g['d']}.cnf")
+    with open(cnf, "w") as fh:
+        fh.write(f"p cnf {3 * n} {len(cl)}\n" + "".join(" ".join(map(str, c)) + " 0\n" for c in cl))
+    return refute(cnf, kissat, drat_trim, workdir, cake_lpr, "a formula written again here", f"q{g['d']}")
 
 
 def plane_colouring_ok(p, col):
@@ -211,6 +219,10 @@ def main():
                  lambda: check_cnf(g, os.path.join(DATA, f"q{d}.cnf"))]
         if a.kissat and a.drat_trim:
             steps.append(lambda: solve(g, a.kissat, a.drat_trim, a.workdir, a.cake_lpr))
+        if a.kissat and a.drat_trim and a.cake_lpr:
+            # the stored formula itself, the hypothesis of the Lean files of the fields without lrat_proof
+            steps.append(lambda: refute(os.path.join(DATA, f"q{d}.cnf"), a.kissat, a.drat_trim, a.workdir, a.cake_lpr,
+                                        f"q{d}.cnf itself", f"q{d}_stored"))
         for step in steps:
             ok, msg = step()
             print(f"Q(sqrt{d}): " + ("ok: " if ok else "FAILED: ") + msg)

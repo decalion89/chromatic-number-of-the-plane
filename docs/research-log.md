@@ -9083,6 +9083,42 @@ set of directions changes that (`notes/quadratic_planes.md`).
   `[L : ℚ] = 2m` and those primes are totally ramified in `L`, with residue field `𝔽₇`. So every even degree
   occurs for real number fields with `χ = 4`, and no odd degree does. The note (§5) and the paper (Corollary 4)
   say so.
+- **Every graph in Lean, the larger ones given their formula's unsatisfiability (2 October).** Other kissat
+  configurations (`--unsat`, `--plain`, `--sat`, seeds, no probing, other tiers) changed the LRAT proofs of the
+  other fields by at most about 25 % (`d = 263`: 0.83 to 1.0 MB), far from the 0.4 MB that `lrat_proof` handles in
+  minutes. So those fields now have Lean files of another kind. `lean/ColouringFormula.lean` defines the colouring
+  formula as a Lean object, `colourCNF E u₀ v₀` (lists of DIMACS literals, in the order of `q{d}.cnf`), and proves
+  `not_colorable_of_unsatisfiable`: if no assignment satisfies it, the graph is not 3-colourable. Each of the other
+  files proves `chromaticNumber_eq_four_of_unsatisfiable` (for `d = 47`, `not_colorable_three_of_unsatisfiable`)
+  with the hypothesis `Unsatisfiable formula`, and checks with `#guard`, when it is built, that `parseDimacs` reads
+  exactly `formula` from `q{d}.cnf`. The checker, with `--cake-lpr`, now also has cake_lpr check an LRAT proof of
+  the stored file itself (before, only of its own encoding), so the hypothesis is checked by a verified checker.
+  Two changes made the files fast. The coordinates are written with their type, `(-1430 : ℤ)`: without it Lean
+  took 236 s to elaborate the 394 points of `q263.json`, with it about 2 s. And the points sit in a balanced tree
+  (`PtTree`), so that the kernel finds a point in about log₂ n steps instead of n: for `d = 95` (1 404 points,
+  3 780 edges) the kernel check of the edges went from 187 s and 10.5 GB to about 60 s and 2 GB. The ten files
+  with `lrat_proof` were written again in the same form. The edge lists come in pieces of at most 500, since one
+  list of 3 780 pairs exceeded the elaborator's recursion depth. Locally, on the shared four-core machine, all 30
+  modules built one at a time in 41 minutes (the conditional files in 36 to 110 s and at most 2.3 GB; `d = 119`,
+  the slowest with `lrat_proof`, in 354 s instead of 616 s), `leanchecker` replayed every module in 27 minutes,
+  and the 27 theorems depend only on `propext`, `Classical.choice` and `Quot.sound`.
+- **A new field: `d = 443` (2 October).** Scan Q14 grows each open field with the denominator that `gatescan.py`
+  ranks first: every gate open, and the most directions (`scan_r8.sh`, two copies sharing a list of finished
+  fields). For `d = 443` that is `D = 2652` (212 directions), and the variant growth found no 3-colouring at round
+  15, with 25 429 points, after 794 s. The shrink worker (`min3inc.py`) gave a vertex-critical graph with 726
+  vertices, which `certify_q.py` certified; random deletion orders (`min3multi.py`, 35 orders in 20 minutes) gave 703
+  vertices and 1 765 edges, certified again from scratch: exact unit edges and no others, no triangle, kissat
+  UNSATISFIABLE with drat-trim VERIFIED for both encodings, a 4-colouring, and a 3-colouring of every
+  vertex-deleted graph. The upper bound is the reduction at 7, since `443 ≡ 3² (mod 7)`; `443 ≡ 3 (mod 8)`, so
+  Fischer's Theorem 10 gives it too. The directions close no 5-cycle, so the graph has no odd cycle shorter
+  than 7. The other fields of the scan so far (`d = 227, 287, 299, 323, 347, 371, 395, 407, 419, 467, 491`)
+  reached the 25-minute limit with graphs that were still 3-colourable. A first 40-minute run of random orders
+  reached 703 vertices but was stopped by an outer time limit equal to its own, before it wrote its result; the
+  run was repeated with a shorter limit of its own.
+  The sweep of drat-trim cores and random orders over the other fields (`min3fast2.py`, `min3multi.py`) gave
+  smaller graphs for `d = 935` (257 → 252 vertices) and `d = 239` (355 → 339), both certified. `lean/Sqrt443.lean`
+  proves the theorem given the unsatisfiability of its formula, like the other large graphs; cake_lpr checked
+  all 25 graphs again, each in both encodings.
 
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; smaller witnesses (the
 smallest graphs have 71 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has

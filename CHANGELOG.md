@@ -24,18 +24,18 @@ including every retracted claim, is the research log,
 
 - **Real quadratic planes that need four colours** (`notes/quadratic_planes.md`,
   `data/quadratic_planes/`): `χ(ℚ(√d)²) = 4` for
-  `d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 611, 791, 911, 935, 959`,
+  `d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455, 599, 611, 791, 911, 935, 959`,
   and `4 ≤ χ(ℚ(√47)²) ≤ 5`; so `χ(ℚ(√d)²)` is now known for every squarefree
   `d < 83` except 47. For real quadratic fields the values known before were 2
   and 3, and a field can need four colours only if `d ≡ 11 (mod 12)`. Each lower
   bound is a triangle-free, vertex-critical unit-distance graph (76, 393, 580,
-  816, 406, 611, 1 404, 399, 356, 1 281, 259, 96, 355, 291, 394, 715, 331, 71,
-  659, 712, 898, 327, 257 and 513 vertices, for d = 11, 23, 35, 47, 59, 71, 95,
-  119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 611, 791, 911, 935,
-  959) with no 3-colouring:
+  816, 406, 611, 1 404, 399, 356, 1 281, 259, 96, 339, 291, 394, 715, 331, 703,
+  71, 659, 712, 898, 327, 252 and 513 vertices, for d = 11, 23, 35, 47, 59, 71,
+  95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455, 599, 611, 791,
+  911, 935, 959) with no 3-colouring:
   kissat with DRAT proofs checked by drat-trim, twice, with separate encodings.
   The upper bounds are known: Moorhouse's reduction at 7
-  (`d = 11, 23, 35, 71, 95, 119, 155, 179, 191, 239, 263, 359, 431, 455, 599, 611, 791, 911, 935, 959`),
+  (`d = 11, 23, 35, 71, 95, 119, 155, 179, 191, 239, 263, 359, 431, 443, 455, 599, 611, 791, 911, 935, 959`),
   Fischer's Theorem 10 (`d = 59, 131, 251`) and the reduction at 11 (`d = 47`).
   The note also observes that Cohen's conjecture (2007) on the sets `ℚ(√−d) ⊂ ℂ`
   is a different question, which reduction at a ramified prime settles.
@@ -59,6 +59,15 @@ including every retracted claim, is the research log,
   three standard axioms; CI builds them, compares the axioms and replays them with
   `leanchecker`, and a test checks that `lean/tools/field_lean.py` writes the same
   files from the data.
+- **The other graphs in Lean, given their formula's unsatisfiability.** For the other
+  fourteen fields and the lower bound over `ℚ(√47)`, whose LRAT proofs are too large for
+  `lrat_proof`, `lean/Sqrt{d}.lean` proves the theorem from the hypothesis that the
+  graph's colouring formula is unsatisfiable. `lean/ColouringFormula.lean` defines that
+  formula as a Lean object and proves that a 3-colouring would satisfy it; each file
+  checks, when it is built, that `q{d}.cnf` is exactly this formula, and
+  `scripts/verify_quadratic_planes.py --cake-lpr` has the verified checker cake_lpr
+  check an LRAT proof of `q{d}.cnf` itself. Typed coordinates and a balanced tree of
+  points make every field file build in seconds to minutes.
 - **A Moser-spindle-free 5-chromatic unit-distance graph with 852 vertices**
   (`notes/flat852.md`, `data/flat852/`). Its points lie in `ℚ(ζ₂₁)`, and its
   edges use the 84 unit vectors of J. K. Haugland's heptagon graph
