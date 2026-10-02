@@ -9252,6 +9252,17 @@ set of directions changes that (`notes/quadratic_planes.md`).
   Moorhouse's reduction at 7 gives `χ ≤ 4`, so `χ(ℚ(√851)²) = 4`. Its Lean file is conditional on the
   unsatisfiability of `q851.cnf`, like the other large graphs, and the run with cake_lpr was repeated for all
   twenty-seven graphs.
+- **Planes over `ℚ_p` (2 October).** The two halves of the argument above also work over the complete fields
+  `ℚ_p`. Bardestani and Mallahi-Karai proved that the Borel chromatic number of `ℚ_p²` (for `x² + y²`) is finite
+  exactly when the form is anisotropic, but we found no exact value in the literature. For `p = 2` and
+  `p ≡ 3 (mod 4)` unit vectors are integral, so a colouring of `𝔽_p²` colours `ℚ_p²` coset by coset; and every
+  certified graph over `ℚ(√d)` with `d` a square mod `p` is a subgraph of `ℚ_p²`. This gives `χ(ℚ₂²) = 2`,
+  `χ(ℚ₃²) = 3` (a 5-cycle over `ℚ(√7)`, checked exactly), `χ(ℚ₇²) = 4` (the 76-vertex graph over `ℚ(√11)`, since
+  `11 ≡ 2² mod 7`), `4 ≤ χ(ℚ_p²) ≤ 5` for `p = 11, 19`, `χ(ℚ_p²) ≥ 4` for all `p ≡ 3 (mod 4)` from 7 to 79, and
+  `χ(ℚ₈₃²) ≥ 5` from the 803-vertex graph over `ℚ(√3, √11, √247)` (`padic_planes.py`; note §5). The same values
+  hold for Borel colourings. `ℚ₁₁` contains both `ℚ(√47)` and Voronov's `ℚ(√3, √5)`, so one number, `χ(ℚ₁₁²)`,
+  sits above both open questions: if it is 4, both fields have `χ ≤ 4`; a 5-chromatic graph over any number field
+  inside `ℚ₁₁` makes it 5.
 - **`ℚ(√83)` again (2 October).** With `D = 2958` (324 directions, the most of any gate-open denominator up to
   3 000) the growth stopped at 2 788 points with no blocked candidate. Two explanations are ruled out: no proper
   3-colouring of `Cay(M/mM, U)` exists for `m ≤ 13` (`periodicq.py`), so there is no periodic colouring with a

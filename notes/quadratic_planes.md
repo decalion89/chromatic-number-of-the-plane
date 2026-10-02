@@ -387,6 +387,30 @@ that they are up to date.
   and those primes are totally ramified in `L`, with residue field `𝔽₇`. So
   there are real number fields of every even degree with `χ(L²) = 4`; fields of
   odd degree have `χ(L²) = 2` (Moorhouse's Theorem 7.1).
+- **Planes over `ℚ_p`.** The same two arguments work over the `p`-adic numbers, for the graph on `ℚ_p²` in
+  which `(x, y)` and `(x', y')` are adjacent when `(x − x')² + (y − y')² = 1`. Bardestani and Mallahi-Karai
+  ([arXiv 1507.05300](https://arxiv.org/abs/1507.05300)) show that its Borel chromatic number is finite exactly when
+  `x² + y²` is anisotropic over `ℚ_p`, that is for `p = 2` and `p ≡ 3 (mod 4)`; we know of no exact value in
+  the literature. For these `p`, `−1` is not a square in `ℚ_p`, so unit vectors have `p`-adic integer
+  coordinates, adjacent points lie in one coset of `ℤ_p²`, and their difference reduces to a nonzero point of
+  the circle of `𝔽_p²`. Colouring every coset through a proper colouring of `𝔽_p²` colours `ℚ_p²`, and the
+  colouring is locally constant. In the other direction, a unit-distance graph over a number field `K ⊂ ℚ_p` is
+  a subgraph of `ℚ_p²`, and `ℚ(√d) ⊂ ℚ_p` when `d` is a nonzero square modulo an odd `p` (Hensel). Hence:
+  - `χ(ℚ₂²) = 2` (colour `x + y mod 2` on each coset) and `χ(ℚ₃²) = 3` (`x + y mod 3`; a 5-cycle over
+    `ℚ(√7)`, and `7 ≡ 1 (mod 3)`, lies in `ℚ₃²`);
+  - `χ(ℚ₇²) = 4`: `𝔽₇²` is 4-colourable, and `11 ≡ 2² (mod 7)`, so the 76-vertex graph over `ℚ(√11)` lies in
+    `ℚ₇²`;
+  - `4 ≤ χ(ℚ_p²) ≤ 5` for `p = 11` and `p = 19`, since `χ(𝔽₁₁²) = χ(𝔽₁₉²) = 5` and `47` is a square modulo
+    both;
+  - `χ(ℚ_p²) ≥ 4` for every `p ≡ 3 (mod 4)` from 7 to 79, and `χ(ℚ₈₃²) ≥ 5`: `3`, `11` and `247` are squares
+    modulo 83, so the 5-chromatic graph `data/five_247_c.json` over `ℚ(√3, √11, √247)` lies in `ℚ₈₃²`.
+
+  The Borel chromatic numbers have the same values and bounds. For `p ≡ 1 (mod 4)` the graphs over `ℚ(√d)`
+  still give `χ(ℚ_p²) ≥ 4` (for example `ℚ(√11) ⊂ ℚ₅`); the Borel chromatic number is infinite there. Since
+  `ℚ₁₁` contains `ℚ(√47)` and also `ℚ(√3, √5)` (Voronov's case), `χ(ℚ₁₁²) = 4` would give `χ(ℚ(√47)²) = 4` and
+  `χ(ℚ(√3, √5)²) ≤ 4`, while a 5-chromatic unit-distance graph over any number field inside `ℚ₁₁` would give
+  `χ(ℚ₁₁²) = 5`. `data/quadratic_planes/scripts/padic_planes.py` checks the ingredients (the stored colourings,
+  the 5-cycle, the quadratic residues) and prints the table up to `p = 83`.
 
 ## 6. Open
 

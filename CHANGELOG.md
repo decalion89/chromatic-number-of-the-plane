@@ -54,7 +54,9 @@ including every retracted claim, is the research log,
   plane, whose levels 1, 2 and 3 need five colours (an obstruction of 69 points
   at level 1 lifts to 244 points at level 2 and to 29 524 points at level 3,
   `data/quadratic_planes/padic11.json`), and the 19-adic plane, whose level 1
-  needs five.
+  needs five. The same graphs give the first exact chromatic numbers of
+  `p`-adic planes that we know of: `χ(ℚ₂²) = 2`, `χ(ℚ₃²) = 3`, `χ(ℚ₇²) = 4`, and `4 ≤ χ(ℚ₁₁²), χ(ℚ₁₉²) ≤ 5`
+  (note §5, `data/quadratic_planes/scripts/padic_planes.py`).
 - **`χ(ℚ(√d)²) = 4` in Lean 4 for ten fields**, `d = 11, 119, 131, 179, 191, 251,
   431, 455, 911, 935` (`lean/Sqrt{d}.lean`), with Mathlib. Each lower bound is the graph
   of `data/quadratic_planes/q{d}.json`: the kernel checks its unit distances and,

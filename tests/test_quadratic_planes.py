@@ -263,3 +263,15 @@ def test_lrat_proof_is_for_the_stored_formula(d):
         added.add(k)
         empty = empty or z == 1
     assert empty
+
+
+def test_padic_planes_table():
+    """note §5, planes over Q_p: chi(Q_2^2) = 2, chi(Q_3^2) = 3, chi(Q_7^2) = 4, and the bounds up to p = 83"""
+    import subprocess, sys
+    out = subprocess.run([sys.executable, os.path.join(ROOT, "data", "quadratic_planes", "scripts", "padic_planes.py")],
+                         capture_output=True, text=True, check=True).stdout
+    assert "exact: chi(Q_2^2) = 2, chi(Q_3^2) = 3, chi(Q_7^2) = 4" in out
+    rows = {int(l.split("|")[0]): [c.strip() for c in l.split("|")] for l in out.splitlines() if l[:1].isdigit()}
+    assert rows[7][2] == "4" and rows[7][3] == "4" and "Q(sqrt11)" in rows[7][4]
+    assert rows[11][2] == "5" and rows[11][3] == "4" and rows[19][2] == "5" and rows[19][3] == "4"
+    assert rows[83][3] == "5" and all(rows[p][3] == "4" for p in (23, 31, 43, 47, 59, 67, 71, 79))
