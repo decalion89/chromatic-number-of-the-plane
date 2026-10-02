@@ -390,16 +390,22 @@ that they are up to date.
 - **Planes over `ℚ_p`.** The same two arguments work over the `p`-adic numbers, for the graph on `ℚ_p²` in
   which `(x, y)` and `(x', y')` are adjacent when `(x − x')² + (y − y')² = 1`. Bardestani and Mallahi-Karai
   ([arXiv 1507.05300](https://arxiv.org/abs/1507.05300)) show that its Borel chromatic number is finite exactly when
-  `x² + y²` is anisotropic over `ℚ_p`, that is for `p = 2` and `p ≡ 3 (mod 4)`; we know of no exact value in
-  the literature. For these `p`, `−1` is not a square in `ℚ_p`, so unit vectors have `p`-adic integer
+  `x² + y²` is anisotropic over `ℚ_p`, that is for `p = 2` and `p ≡ 3 (mod 4)`. Madore
+  ([arXiv 1509.07023](https://arxiv.org/abs/1509.07023), ¶1.5, Remark 3.6, Propositions 3.2 and 3.8) had already
+  stated `χ(ℚ_p²) ≤ χ(𝔽_p²)` for `p ≡ 3 (mod 4)` and the reduction behind `χ(ℚ₂²) ≤ 2`, and his 9-cycle over
+  `ℚ(√7)` (Proposition 4.3) lies in `ℚ₃²`; so `χ(ℚ₂²) = 2` and `χ(ℚ₃²) = 3` follow from his paper, and the new
+  value below is `χ(ℚ₇²) = 4` (we had first called all three the first exact values; corrected on 2 October after
+  a referee's reading). For these `p`, `−1` is not a square in `ℚ_p`, so unit vectors have `p`-adic integer
   coordinates, adjacent points lie in one coset of `ℤ_p²`, and their difference reduces to a nonzero point of
   the circle of `𝔽_p²`. Colouring every coset through a proper colouring of `𝔽_p²` colours `ℚ_p²`, and the
   colouring is locally constant. In the other direction, a unit-distance graph over a number field `K ⊂ ℚ_p` is
   a subgraph of `ℚ_p²`, and `ℚ(√d) ⊂ ℚ_p` when `d` is a nonzero square modulo an odd `p` (Hensel). Hence:
   - `χ(ℚ₂²) = 2` (colour `x + y mod 2` on each coset) and `χ(ℚ₃²) = 3` (`x + y mod 3`; a 5-cycle over
-    `ℚ(√7)`, and `7 ≡ 1 (mod 3)`, lies in `ℚ₃²`);
+    `ℚ(√7)`, and `7 ≡ 1 (mod 3)`, lies in `ℚ₃²`), both following from Madore's paper as said above;
   - `χ(ℚ₇²) = 4`: `𝔽₇²` is 4-colourable, and `11 ≡ 2² (mod 7)`, so the 76-vertex graph over `ℚ(√11)` lies in
-    `ℚ₇²`;
+    `ℚ₇²`. Since 3 is not a square modulo 7, `ℚ₇²` has no unit triangle (the third vertex of a unit triangle on
+    `0` and `(a, b)` is `(a/2 − (√3/2)b, b/2 + (√3/2)a)`), so the classical 4-chromatic graphs, built from triangles,
+    do not embed, and a triangle-free graph such as this one is needed;
   - `4 ≤ χ(ℚ_p²) ≤ 5` for `p = 11` and `p = 19`, since `χ(𝔽₁₁²) = χ(𝔽₁₉²) = 5` and `47` is a square modulo
     both;
   - `χ(ℚ_p²) ≥ 4` for every prime `p ≡ 3 (mod 4)` with `7 ≤ p < 2 129 503 819`: for each of them one of the 27
@@ -439,17 +445,26 @@ that they are up to date.
     `p ≥ 199`.
 
   Together with the colourings of the finite planes, `χ_m(ℚ₇²) = 4`, `χ_m(ℚ₃²) = 3` and `χ_m(ℚ₂²) = 2`, while
-  `4 ≤ χ_m(ℚ_p²) ≤ 5` for `p = 11, 19`. For the real plane the measurable bound 5 is Falconer's theorem and 6 is
+  `4 ≤ χ_m(ℚ_p²) ≤ 5` for `p = 11, 19` (`finite_planes.json` stores 5-colourings of `𝔽₁₁²` and `𝔽₁₉²`; that
+  `𝔽₁₉²` has no 4-colouring is in `finite19.logs/`, kissat UNSAT and drat-trim VERIFIED). For the real plane the measurable bound 5 is Falconer's theorem and 6 is
   open; for the `p`-adic planes with `p ≥ 59` six colours are needed.
+
+  A six-page draft with these results and their proofs is `papers/padic-planes/`; a referee's reading by a separate
+  agent found no mathematical error and corrected the attributions (Madore, Bachoc–DeCorte–Oliveira–Vallentin,
+  Medrano–Myers–Stark–Terras, Vinh).
 
   This answers Question 1 of Bardestani and Mallahi-Karai ([arXiv 1507.05300](https://arxiv.org/abs/1507.05300),
   §1), which they call the `p`-adic Hadwiger–Nelson problem: is `χ_Bor(ℚ_p²)` bounded by a constant independent
   of `p ≡ 3 (mod 4)`? It is not. In the other direction the coset colouring gives
-  `χ_Bor(ℚ_p²) ≤ χ(𝔽_p²) ≤ p + 1` (Brooks), where they had `O(p²)`. So, for every `p ≡ 3 (mod 4)`,
-  `1 + (p + 1)/(2√p) ≤ χ_m(ℚ_p²) ≤ χ_Bor(ℚ_p²) ≤ χ(𝔽_p²) ≤ p + 1`. We found no other answer to their question
+  `χ_Bor(ℚ_p²) ≤ χ(𝔽_p²)`, and `χ(𝔽_p²) ≤ (p + 1)/2` for `p > 3` (Le Anh Vinh,
+  [arXiv math/0510092](https://arxiv.org/abs/math/0510092), Theorem 1), where they had `O(p²)`. So, for every
+  `p ≡ 3 (mod 4)`, `1 + (p + 1)/(2√p) ≤ χ_m(ℚ_p²) ≤ χ_Bor(ℚ_p²) ≤ χ(𝔽_p²)`, and the last is at most `(p + 1)/2` for
+  `p > 3`. The first inequality uses the ratio bound of Bachoc, DeCorte, Oliveira and Vallentin (stated on
+  `ℚ_p^n` in BMK's Theorem 2.5) and the Kloosterman eigenvalues of Medrano, Myers, Stark and Terras; what is new is
+  the bound at the deeper levels and the conclusion. We found no other answer to their question
   (literature search of 2 October 2026). For `p ≡ 3 (mod 4)` the ordinary chromatic numbers are only bounded
   below by the graphs above (4, and 5 at `p = 83`); for `p ≡ 1 (mod 4)` all three are infinite.
-- **No finite set of graphs gives `χ(ℚ_p²) ≥ 4` for every `p ≡ 3 (mod 4)`.** Let `𝒦` be a finite set of number
+- **No finite set of number fields gives `χ(ℚ_p²) ≥ 4` for every `p ≡ 3 (mod 4)`.** Let `𝒦` be a finite set of number
   fields with `χ(K²) ≥ 4` for every `K ∈ 𝒦`. Then for infinitely many primes `p ≡ 3 (mod 4)` no `K ∈ 𝒦` embeds
   in `ℚ_p`. Let `M` be the Galois closure of the compositum of `ℚ(i)` and the fields of `𝒦`, `G = Gal(M/ℚ)`,
   `D ⊂ G` the decomposition group of a prime of `M` above 3, `I ⊂ D` its inertia group, and `σ ∈ D` a lift of

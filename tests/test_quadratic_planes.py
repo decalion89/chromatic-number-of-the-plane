@@ -281,6 +281,33 @@ def test_padic_planes_table():
     assert rows[83][3] == "5" and all(rows[p][3] == "4" for p in (23, 31, 43, 47, 59, 67, 71, 79))
 
 
+def test_finite_plane_19():
+    """note §5: F_19^2 is 5-colourable (finite_planes.json) and has no proper 4-colouring. CaDiCaL refutes the stored
+    formula again here (about 10 s); finite19.logs/ holds that formula (one edge fixed to colours 0, 1), the kissat
+    log (UNSATISFIABLE) and the drat-trim log (VERIFIED)"""
+    from pysat.solvers import Solver
+    planes = load("finite_planes.json")["planes"]
+    col = planes["19"]["colouring"]
+    assert vq.plane_colouring_ok(19, col) and planes["19"]["colours"] == 5 and len(set(col)) == 5
+    p, K = 19, 4
+    C = [(a, b) for a in range(p) for b in range(p) if (a * a + b * b) % p == 1]
+    E = sorted({(min(u, v), max(u, v)) for x in range(p) for y in range(p) for a, b in C
+                for u, v in [(p * x + y, p * ((x + a) % p) + (y + b) % p)]})
+    cl = [[K * v + c + 1 for c in range(K)] for v in range(p * p)]
+    cl += [[-(K * a + c + 1), -(K * b + c + 1)] for a, b in E for c in range(K)]
+    cl += [[K * E[0][0] + 1], [K * E[0][1] + 2]]
+    logs = os.path.join(D, "finite19.logs")
+    with open(os.path.join(logs, "f19_k4.cnf"), encoding="utf-8") as fh:
+        assert fh.read() == f"p cnf {K * p * p} {len(cl)}\n" + "".join(" ".join(map(str, c)) + " 0\n" for c in cl)
+    with open(os.path.join(logs, "kissat.log"), encoding="utf-8") as fh:
+        assert "s UNSATISFIABLE" in fh.read()
+    with open(os.path.join(logs, "drat-trim.log"), encoding="utf-8") as fh:
+        assert "s VERIFIED" in fh.read()
+    s = Solver(name="cadical153", bootstrap_with=cl)
+    assert not s.solve()
+    s.delete()
+
+
 def test_padic_reach():
     """note §5: the 27 certified fields reach every prime p = 3 (mod 4) from 7 on below 10^5 (padic_reach.c finds the
     first one they miss, 2 129 503 819, which is prime, 3 mod 4, and has no d as a nonzero square)"""

@@ -9288,19 +9288,41 @@ set of directions changes that (`notes/quadratic_planes.md`).
 - **The `p`-adic Hadwiger–Nelson problem (2 October, evening).** Rereading Bardestani and Mallahi-Karai
   (arXiv 1507.05300, §1): their Question 1 asks whether the Borel chromatic number of `ℚ_p²` is bounded by a
   constant independent of `p ≡ 3 (mod 4)`. The measurable bound above answers it: no, since
-  `χ_Bor ≥ χ_m ≥ 1 + (p + 1)/(2√p)`. The coset colouring gives `χ_Bor(ℚ_p²) ≤ χ(𝔽_p²) ≤ p + 1` (Brooks), where
+  `χ_Bor ≥ χ_m ≥ 1 + (p + 1)/(2√p)`. The coset colouring gives `χ_Bor(ℚ_p²) ≤ χ(𝔽_p²) ≤ p + 1` (Brooks; Vinh's `(p + 1)/2` is better, see below), where
   they had `O(p²)`. We looked for a later answer (their 2017 paper on polynomial configurations, arXiv
   1701.06024; Davies 2023; web searches) and found none. Davies (arXiv 2308.16885, Theorem 3, from a theorem of
   Graham) proved that every finite colouring of `ℚ²` has a monochromatic pair with
   `(x − x′)² − (y − y′)² = 1`; through `(x, y) ↦ (x, iy)` this gives `χ(ℚ_p²) = ∞` for `p ≡ 1 (mod 4)`, a
   one-line consequence we have not seen stated. So `χ(ℚ_p²)` is finite exactly for `p = 2` and `p ≡ 3 (mod 4)`.
-  Last, a remark with Chebotarev's theorem: no finite set of 4-chromatic graphs gives `χ(ℚ_p²) ≥ 4` for every
+  Last, a remark with Chebotarev's theorem: no finite set of number fields with 4-chromatic graphs gives `χ(ℚ_p²) ≥ 4` for every
   `p ≡ 3 (mod 4)`, because a prime whose Frobenius copies the one at 3 only sees fields with a place of residue
   field `𝔽₃`, and those are 3-colourable (note §5). For our 27 fields the first prime that escapes is
   `2 129 503 819` (`padic_reach.c`, a sieve with Jacobi symbols, 21 s; `padic_reach.py` checks it by Miller–Rabin
   and Euler's criterion, and every prime below `10⁷` again), so `χ(ℚ_p²) ≥ 4` for every prime `p ≡ 3 (mod 4)`
   from 7 below it, where the table had stopped at 79. The proofs are short and use known tools
-  (Delsarte–Hoffman, Weil, Chebotarev); nobody outside the project has checked them.
+  (Delsarte–Hoffman, Weil, Chebotarev); nobody outside the project has checked them. They are written up as a
+  draft, *Colouring the p-adic plane* (`papers/padic-planes/`), with a self-contained proof that the
+  level-1 Fourier coefficients are minus Kloosterman sums, `λ = −K((a² + b²)/4)` (checked numerically for
+  `p ≤ 31`).
+- **A referee's reading of the p-adic draft, and a correction (2 October, night).** A separate agent refereed
+  `papers/padic-planes/` against the sources and recomputed every number (the Kloosterman identity for
+  `p ≤ 59`, Table 1, the Weil thresholds, the exact spectra up to 200, the 5-cycle, the sieve to `2.2·10⁹` with
+  its own Legendre symbols, all 27 graphs, `five_247_c.json`, the 11-adic obstruction sets). It found no
+  mathematical error; Theorem 1 and the negative answer to Question 1 stand. It corrected the attributions:
+  Madore (arXiv 1509.07023, ¶1.5, Remark 3.6, Propositions 3.2, 3.8 and 4.3) had already stated
+  `χ(ℚ_p²) ≤ χ(𝔽_p²)` for `p ≡ 3 (mod 4)`, the reduction giving `χ(ℚ₂²) ≤ 2`, and a 9-cycle over `ℚ(√7) ⊂ ℚ₃`,
+  so `χ(ℚ₂²) = 2` and `χ(ℚ₃²) = 3` follow from his paper: **our earlier claim that the three values were the
+  first exact values known was wrong**; the new value is `χ(ℚ₇²) = 4` (the plane `ℚ₇²` has no unit triangle, as
+  3 is not a square mod 7, so a triangle-free graph such as the one over `ℚ(√11)` is needed). Lemma 8 is the ratio
+  bound of Bachoc–DeCorte–Oliveira–Vallentin (stated on `ℚ_p^n` in BMK's Theorem 2.5), the Kloosterman eigenvalues
+  are due to Medrano–Myers–Stark–Terras, and Vinh's Theorem 1 gives `χ(𝔽_p²) ≤ (p + 1)/2`. We read BMK's other
+  paper, arXiv 1511.02427 (non-singular and hyperbola graphs over finite rings): it does not treat Question 1.
+  Other fixes: Proposition 5 is about finitely many number fields, not about finitely many abstract graphs;
+  "first such prime" is "first such prime after 3"; and Davies's theorem with BMK's Lemma 2.7 gives the general
+  statement that the graph of every isotropic form over a field of characteristic 0 has infinite chromatic
+  number, so BMK's dichotomy holds for ordinary colourings too. The referee also asked for evidence that
+  `χ(𝔽₁₉²) = 5`: `finite_planes.json` now stores a 5-colouring of `𝔽₁₉²`, and `finite19.logs/` the formula with
+  one edge fixed, kissat UNSAT (8 s) and drat-trim VERIFIED (5.5 s); a new test refutes it again with CaDiCaL.
 
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; smaller witnesses (the
 smallest graphs have 71 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has
