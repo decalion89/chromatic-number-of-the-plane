@@ -22,6 +22,16 @@ including every retracted claim, is the research log,
 
 ### Added
 
+- **Theorem W: three colours and characters** (`notes/winding_lemma.md`, 3 October). A Cayley graph of an
+  abelian group is 3-colourable if and only if some character maps every generator into `[1/3, 2/3]` (and maps to
+  `C_{2k+1}` if and only if some character maps them into `[k/(2k+1), (k+1)/(2k+1)]`). It gives Payan's theorem,
+  the exponent-4 case of Krebs–Sankar and, for distance graphs, `χ ≤ 3` iff `κ(D) ≥ 1/3`. Over `ℚ(√d)` it turns
+  3-colourability into a question on a 4-torus, settled by exact branch-and-bound certificates
+  (`data/quadratic_planes/winding/`: `certify_w2.py`, the independent checker `check_w.py`, six certificates):
+  `χ(ℚ(√d)²) = 4` for `d = 83, 107, 203`, `4 ≤ χ(ℚ(√143)²) ≤ 5`, `χ(ℚ(√167)²) ≥ 4`, the fields the graph searches
+  could not settle. `tests/test_winding.py` (in CI) checks the theorem on random Cayley graphs and distance graphs
+  and four of the certificates; the other two are marked slow.
+
 - **Paper: *Two-colourable planes over number fields*** (`papers/two-colour-planes/`, 5 pages, draft of
   3 October): `χ(F²) = 2` if and only if some prime of `F` above 2 ramifies in `F(i)`, its corollaries, and the
   local–global question. The "if" direction is Theorem A′ of hn-2adic-obstruction, Lemma 2 is Fischer's

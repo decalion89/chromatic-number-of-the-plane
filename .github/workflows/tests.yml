@@ -35,6 +35,7 @@ jobs:
         run: >-
           python -m pytest -q
           --deselect tests/test_threepoint_indep.py::test_other_certificates
+          --deselect tests/test_winding.py::test_certificates_slow
           tests/test_q23.py tests/test_q311.py tests/test_q35.py tests/test_q3q.py tests/test_split_places.py
           tests/test_decompositions.py tests/test_cli.py
           tests/test_biquadratic_bounds.py tests/test_finite_planes.py tests/test_g13.py tests/test_g13_audit.py tests/test_g13_chi.py tests/test_flat852.py tests/test_quadratic_planes.py tests/test_g17.py tests/test_threepoint.py tests/test_threepoint_indep.py
@@ -45,3 +46,4 @@ jobs:
           tests/test_ring_geometry.py tests/test_tight_four.py tests/test_fast_agrees.py
           tests/test_neighbourhoods_are_bipartite.py tests/test_kappa.py tests/test_transversal.py
           tests/test_forced.py tests/test_multispindle.py tests/test_mixed.py
+          tests/test_winding.py

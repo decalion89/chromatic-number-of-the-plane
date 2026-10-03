@@ -164,8 +164,12 @@ So `LG_3` predicts `χ(ℚ(√d)²) ≥ 4` for every `d ≡ 11 (mod 12)` (for `d
 deep level at 7 is 3-colourable). This is proved for the 27 values in
 `notes/quadratic_planes.md` (11, 23, 35, 47, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251,
 263, 359, 431, 443, 455, 491, 599, 611, 791, 851, 911, 935, 959), with certified graphs,
-and open for `d = 83, 107, 143, 167, 203, …` (the growth searches have not yet found
-graphs there). No real quadratic field is known where the prediction fails.
+and, since 3 October, for `d = 83, 107, 143, 167, 203`, which the growth searches could not settle: there
+the proof is Theorem W of `notes/winding_lemma.md` (3-colourings of an abelian Cayley graph come from
+characters) with an exact certificate that no character works for the unit vectors of one denominator. So the
+prediction holds for every `d ≡ 11 (mod 12)` below 210, including `d = 203` (no level at 7 is 3-colourable).
+A scan of all `d ≡ 11 (mod 12)` up to 2000 is under way. No real quadratic field is known where the prediction
+fails.
 
 Other exact values agree with `min_v χ_loc(v)`: `χ(ℚ²) = 2`; Madore's
 `χ(ℚ(√3)²) = χ(ℚ(√7)²) = 3`; our `χ(ℚ(√2, √3)²) = 4` and Fischer's
@@ -220,10 +224,10 @@ suspected `χ(ℝ²) = 7`.
 
 ## 5. Tests under way
 
-- `ℚ(√167)` at three colours: colouring-guided growth (`grow3r.py`, `QD = 167`) with the
-  gate-open denominators 2784, 3480 and six others. A graph with no 3-colouring would
-  confirm `LG_3` in Moorhouse's class `d ≡ 167 (mod 168)`. So far the runs stop, or time
-  out, with 3-colourable graphs of 10 000 to 43 000 points.
+- `ℚ(√167)` at three colours: settled on 3 October, `χ(ℚ(√167)²) ≥ 4` (Theorem W with an exact
+  certificate for `D = 1560`, `notes/winding_lemma.md`), which confirms `LG_3` in Moorhouse's class
+  `d ≡ 167 (mod 168)`. Colouring-guided growth (`grow3r.py`) had stopped, or timed out, with 3-colourable
+  graphs of 10 000 to 43 000 points.
 - `ℚ(√167)` at four colours: points at distance exactly `1/2` lie 4 steps from the
   origin for `D = 2784` and `D = 4176` (e.g. `m = (−1058, 0, 0, −70)/2784`), so a pair
   forced to one colour at distance `1/2` closes a 5-chromatic graph after a half-turn

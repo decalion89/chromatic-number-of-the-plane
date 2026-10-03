@@ -9481,7 +9481,46 @@ set of directions changes that (`notes/quadratic_planes.md`).
     colouring is close to the reduction at one place above 3, at odd and at long distance. The 4-colourings over
     `ℚ(√47)` show nothing of the kind at 11 or 19, levels 1 and 2 (0.232 and 0.242 beyond distance 4): they are not
     close to a colouring that factors through those levels.
-Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; the four-colour case of the
-local–global question (`ℚ(√167)`); smaller witnesses (the
+Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …` (settled on 3 October by
+Theorem W, below); the four-colour case of the local–global question (`ℚ(√167)`); smaller witnesses (the
 smallest graphs have 71 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has
 refereed this.
+
+## Three colours and characters: Theorem W (3 October)
+
+- **Theorem W** (`notes/winding_lemma.md`): a Cayley graph of an abelian group maps to the odd cycle `C_{2k+1}` if
+  and only if some character sends every generator into `[k/(2k+1), (k+1)/(2k+1)]`; for `k = 1`, it is 3-colourable
+  if and only if some character sends every generator into `[1/3, 2/3]`. The proof lifts a 3-colouring to signs
+  `±1` on the edges, notes that squares have zero winding, and averages the signs over an ergodic
+  translation-invariant measure on the colourings; the averages define the character. It gives Payan's theorem and
+  the exponent-4 case of Krebs and Sankar (arXiv:2410.11028) in two lines. We did not find it in the literature.
+  - **Checks.** 3 888 random Cayley graphs of `ℤ/m × ℤ/n` (SAT against the character criterion; `circ_test.py`);
+    all 1 747 distance graphs `G(ℤ, D)` with `D ⊆ [1, 24]`, `|D| = 3`, against SAT on long segments, which also
+    reproduces Zhu's list of the 74 sets that need four colours (`distgraph_test.py`); 40 pairs `(d, D)` over fields
+    known to be 2- or 3-colourable, all feasible. `tests/test_winding.py` repeats smaller versions.
+  - **The test for a plane.** Over `F = ℚ(√d)` the unit vectors with denominator `D` generate a group of rank at most
+    4, so the character question lives on a 4-torus. In the coordinates `(a, b, c, e)` the strips are thin (up to
+    364 periods across the torus for `d = 83`, `D = 510`), and SCIP did not decide the formulation in `θ` within
+    10 minutes; in relation space (`f_u ∈ [1/3, 2/3]` per unit vector, `⟨r, f⟩ ∈ ℤ` for an LLL-reduced basis of the
+    integer relations, `ℓ¹`-norm at most 17 there) it decides in about a second (`kapparel.py`).
+  - **Exact certificates.** `certify_w2.py` branches on the integer values `⟨r, f⟩` (fail-first) and stores a rational
+    Farkas vector at every leaf; `check_w.py` rechecks a certificate with integers and fractions only. A first
+    version that branched in a fixed order made no visible progress in 13 minutes and was stopped. The minimal
+    infeasible subset found by greedy deletion (28 of the 54 vectors for `d = 83`) gave the largest tree (98 300
+    nodes, 20 minutes); the full set of 54 gave 6 886 nodes in 5 minutes: more constraints, smaller tree.
+  - **Results.** Infeasible and certified: `d = 83` (`D = 510`), `107` (`1170`), `143` (`1740`), `167` (`1560` and
+    `1680`), `203` (`1530`), every field that `notes/local_global.md` listed as open for three colours. So
+    `χ(ℚ(√d)²) = 4` for `d = 83, 107, 203` (with Fischer's bound for `d ≡ 3 (mod 8)`), `4 ≤ χ(ℚ(√143)²) ≤ 5`, and
+    `χ(ℚ(√167)²) ≥ 4`; `χ(ℚ(√d)²)` is known for every squarefree `d < 143` except 47. The certificates for 107, 143
+    and 167 were computed by a cloud worker (share J) and rechecked here.
+  - **Why the growth searches failed.** For `d = 83, D = 510`, growth stopped at 6 008 points because a 3-colouring of
+    the 2-ball extended to all 215 478 candidates, although `Cay(ℤU, U)` is not 3-colourable: the obstruction is
+    global. The relations used have length up to 17, and the proof averages over all translates; finite witnesses
+    with these directions are probably large.
+  - **`D` must be divisible by 2 and 3.** `D = 1105` is feasible for every field tried: its vectors are 2-integral,
+    and the place above 2 then 2-colours `Cay(ℤU, U)`. The infeasible denominators found are all multiples of 6.
+  - **Four colours.** The analogue fails (`K₄` as a Cayley graph of `(ℤ/2)²`). As a sufficient test for
+    4-colourability (a character into `[1/4, 3/4]`), the `D = 240` directions of `ℚ(√47)` are infeasible: the growth
+    module has no circular 4-colouring, so those searches are not ruled out by one.
+  - **Under way.** `scan_all.py` runs the test with certificates over every squarefree `d ≡ 11 (mod 12)` up to 2000
+    (shares K and L).

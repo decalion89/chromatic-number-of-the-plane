@@ -6,10 +6,15 @@ different colours. For real quadratic fields `K = ℚ(√d)` the known values we
 2 and 3. No real quadratic field was known to need four colours.
 
 **Theorem.**
-1. `χ(ℚ(√d)²) = 4` for `d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455, 491, 599, 611, 791, 851, 911, 935, 959`.
-2. `4 ≤ χ(ℚ(√47)²) ≤ 5`.
+1. `χ(ℚ(√d)²) = 4` for `d = 11, 23, 35, 59, 71, 83, 95, 107, 119, 131, 155, 179, 191, 203, 239, 251, 263, 359, 431, 443, 455, 491, 599, 611, 791, 851, 911, 935, 959`.
+2. `4 ≤ χ(ℚ(√d)²) ≤ 5` for `d = 47` and `d = 143`, and `χ(ℚ(√167)²) ≥ 4`.
 
-Each lower bound is a finite graph: a triangle-free unit-distance graph with
+For `d = 83, 107, 143, 167, 203` (added on 3 October) the lower bound is not a finite graph: it is Theorem W of
+`notes/winding_lemma.md` (a Cayley graph of an abelian group is 3-colourable if and only if a character maps every
+generator into `[1/3, 2/3]`) with an exact certificate that no such character exists for the unit vectors of one
+denominator; see that note, §4.
+
+For the 27 values found by 2 October, each lower bound is a finite graph: a triangle-free unit-distance graph with
 coordinates in `ℚ(√d)`, which is not 3-colourable and is vertex-critical. The
 graphs have 76 vertices (`d = 11`), 393 (`d = 23`), 580 (`d = 35`), 816
 (`d = 47`), 406 (`d = 59`), 611 (`d = 71`), 1 404 (`d = 95`), 399 (`d = 119`),
@@ -19,9 +24,9 @@ graphs have 76 vertices (`d = 11`), 393 (`d = 23`), 580 (`d = 35`), 816
 (`d = 611`), 898 (`d = 791`), 538 (`d = 851`), 327 (`d = 911`), 252 (`d = 935`)
 and 513 (`d = 959`).
 
-So `χ(ℚ(√d)²)` is now known for every squarefree `d < 83` except `d = 47`
+So `χ(ℚ(√d)²)` is now known for every squarefree `d < 143` except `d = 47`
 (§1): it is 2 if `d ≡ 1, 2 (mod 4)`, 3 if `d ≡ 3 (mod 4)` and `d ≢ 2 (mod 3)`,
-and 4 for `d = 11, 23, 35, 59, 71`.
+and 4 for `d = 11, 23, 35, 59, 71, 83, 95, 107, 119, 131`.
 
 That they are not 3-colourable is a computer proof: SAT solving with a DRAT
 proof checked by drat-trim, done for two separate encodings of each graph (§4).
