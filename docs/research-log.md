@@ -9380,8 +9380,11 @@ set of directions changes that (`notes/quadratic_planes.md`).
   - **Two colours, proved.** For every number field `F`, `χ(F²) = 2` iff some prime of `F` above 2 ramifies in `F(i)`.
     The unit vectors form a group, so their additive span `A` is a ring, and a 2-colouring is a ring homomorphism
     `A → 𝔽₂`; Chevalley's extension theorem puts its kernel at a place `w | 2`, and weak approximation on the circle
-    rules out the split and the inert places. This contains Johnson's and Fischer's quadratic fields and Moorhouse's
-    Theorem 7.1 (odd degree); `two_colour_criterion.gp` (PARI/GP) agrees on 242 quadratic and nine odd-degree fields.
+    rules out the split and the inert places. The "if" half was already the corollary of Proposition A in
+    `notes/local_colourings.md` (Madore's Proposition 3.9 is `ℚ(√2)`); the converse is new as far as we know. This
+    contains Fischer's Theorem 8 and Moorhouse's Theorem 7.1 (odd degree); `two_colour_criterion.gp` (PARI/GP) agrees
+    on 242 quadratic, nine odd-degree and 1 522 biquadratic fields, and `odd_walks.gp` finds exact odd closed walks in
+    three quartic fields where no quadratic subfield explains them.
   - **Three colours.** For `ℚ(√d)` the fields with no local 3-colouring are exactly `d ≡ 11 (mod 12)` (above 2 the
     plane is isotropic or contains the graph of `ℚ(√11)`; levels 1 to 3 of the ramified `ℚ₇(√7)`, which occurs for
     `d = 203`, have no 3-colouring, `ramified_levels.py`). `χ ≥ 4` is proved for 27 of them and open for 83, 107,
@@ -9398,6 +9401,16 @@ set of directions changes that (`notes/quadratic_planes.md`).
     steps from 0 for `D = 2784` and `D = 4176`), `growforce4.py` stalled at 34 358 points with average degree 4.5,
     against 10 for `ℚ(√47)` at `D = 240`. `χ(H₂₅) ≥ 5` (`hyperbola_plane.py`), so the places above 5 are no gate at
     four colours.
+  - **Referee.** A separate agent refereed `notes/local_global.md`: Theorem A is true as stated, for every number
+    field, and it found odd walks in twelve quartic fields (eight with Galois group `S₄`). It asked for small fixes,
+    all applied: why `φ(u) = 1` (`u` is a unit of `A`); Zorn's lemma and `V ⊇ O_L` in the Chevalley step; the
+    attribution of the "if" half to our Proposition A; levels `O_w/𝔪_w^r` at 2-adic places; Hedetniemi
+    (Shitov 2019; El-Zahar–Sauer 1985 for three colours); "the first real quadratic field with no local
+    4-colouring" was an overclaim (for `d = 47` and `143` the places above 11 are undecided), now "the first
+    admissible field"; the thin Hoffman margin at 31 (0.2499973); the real-place clause marked as the speculative
+    part (the smallest `d` in the `χ_B(ℝ²)` argument is 635 087); and citations limited to what we read (Soifer's
+    chapter 55 through its abstract, de Grey's `ℝ³` graph through MathWorld). Benda–Perles and Johnson's 2000
+    survey are still unread.
   - **A restart.** The machine restarted at 23:57 UTC and stopped every local run. The local kissat run on the 19-adic
     level 2 (3 h 45 min) was lost; share E's four solvers continue. The 695 shrink resumed from its 4 393-point core.
 

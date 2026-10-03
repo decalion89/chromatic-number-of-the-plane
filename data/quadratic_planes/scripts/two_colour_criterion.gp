@@ -22,8 +22,9 @@ biq(a, b) = ram2(polcompositum(y^2 - a, y^2 - b)[1]);
   print("odd degree: ", #L, " fields, mismatches with chi = 2 (Moorhouse, Theorem 7.1): ", bad);
 }
 {
-  my(n = 0, new = 0);
+  my(n = 0, bad = 0);
   for (a = 2, 60, if (!issquarefree(a), next); for (b = a + 1, 120, if (!issquarefree(b) || gcd(a, b) != 1, next);
-     n++; if (a % 4 != 3 && b % 4 != 3 && core(a * b) % 4 != 3 && !biq(a, b), new++)));
-  print("biquadratic: ", n, " fields Q(sqrt a, sqrt b), a <= 60, a < b <= 120 coprime; chi >= 3 with every quadratic subfield 2-colourable: ", new);
+     n++; my(three = (a % 4 == 3) || (b % 4 == 3) || (core(a * b) % 4 == 3));
+     if (biq(a, b) != !three, bad++; print("MISMATCH biquadratic ", [a, b]))));
+  print("biquadratic: ", n, " fields Q(sqrt a, sqrt b), a <= 60, a < b <= 120 coprime; mismatches with chi = 2 iff no quadratic subfield has c = 3 mod 4: ", bad);
 }

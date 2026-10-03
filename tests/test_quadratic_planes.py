@@ -393,3 +393,22 @@ def test_hyperbola_plane_25():
     V, S, E = hp.h_q(5)
     assert (len(V), len(S), len(E)) == (625, 24, 7500)
     assert not hp.colourable(len(V), E, 4)
+
+
+def test_odd_walks_in_quartic_fields():
+    """notes/local_global.md, Theorem A (the new half): three quartic fields where no prime above 2 ramifies in F(i)
+    and no quadratic subfield needs three colours have exact odd closed walks; three fields where one ramifies give only
+    even relations"""
+    import shutil
+    import subprocess
+    gp = shutil.which("gp")
+    if gp is None:
+        pytest.skip("PARI/GP is not installed")
+    script = os.path.join(ROOT, "data", "quadratic_planes", "scripts", "odd_walks.gp")
+    out = subprocess.run([gp, "-q", "-s", "2000000000", script], stdin=subprocess.DEVNULL, capture_output=True,
+                         text=True, timeout=600).stdout
+    odd = [l for l in out.splitlines() if l.startswith("odd walk:")]
+    even = [l for l in out.splitlines() if l.startswith("even only:")]
+    assert len(odd) == 3 and len(even) == 3
+    assert all(", ram2 0," in l and ", odd 0," not in l for l in odd)
+    assert all(", ram2 1," in l and l.endswith(", odd 0") for l in even)

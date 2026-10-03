@@ -24,10 +24,11 @@ including every retracted claim, is the research log,
 
 - **A local–global question** (`notes/local_global.md`, 3 October): is `χ(F²)` the least of
   the local chromatic numbers? Proved for two colours: for every number field `F`, `χ(F²) = 2` iff a prime of
-  `F` above 2 ramifies in `F(i)`, which contains Johnson's, Fischer's and Moorhouse's cases
-  (`two_colour_criterion.gp`). At four colours the question would give a triangle-free 5-chromatic
-  unit-distance graph in the plane, through `ℚ(√167)`, the first real quadratic field with no local
-  4-colouring (`admissible.py`); `ramified_levels.py` and `hyperbola_plane.py` check the local cases used.
+  `F` above 2 ramifies in `F(i)` (the "if" half was our Proposition A; the converse is new as far as we know),
+  which contains Fischer's and Moorhouse's cases (`two_colour_criterion.gp`, `odd_walks.gp`; refereed by a
+  separate agent). At four colours the question would give a triangle-free 5-chromatic
+  unit-distance graph in the plane, through `ℚ(√167)`, the smallest real quadratic field shown to have
+  no local 4-colouring and no unit triangle (`admissible.py`); `ramified_levels.py` and `hyperbola_plane.py` check the local cases used.
 
 - **Real quadratic planes that need four colours** (`notes/quadratic_planes.md`,
   `data/quadratic_planes/`): `χ(ℚ(√d)²) = 4` for

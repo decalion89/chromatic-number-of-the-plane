@@ -62,6 +62,7 @@ files go to `/dev/shm`.
 | `levelt.py` | the `p`-adic plane at level `k` modulo the translations by `p^j·(1, 0)`, as a 4-colouring CNF (at `p = 19`, level 2, `j = 1`: no 4-colouring) |
 | `quotlevel.py` | the same for the translations by `p^(k−1)·(v_x, v_y)` in any direction, as a quotient graph (at `p = 19`, level 2, direction `(1, 1)`, whose norm is not a square mod 19: kissat UNSAT, drat-trim VERIFIED) |
 | `two_colour_criterion.gp` | Theorem A of `notes/local_global.md`: `χ(F²) = 2` iff a prime of `F` above 2 ramifies in `F(i)`, computed from the relative discriminant of `F(i)/F` (PARI/GP); checks it against Johnson and Fischer for the 242 squarefree `d ≤ 400` and against Moorhouse's Theorem 7.1 for nine fields of odd degree |
+| `odd_walks.gp` | the new half of Theorem A on quartic fields: exact integer relations among unit vectors `z/z̄` with odd coefficient sum (closed walks of odd length) where no prime above 2 ramifies in `F(i)`, and only even relations where one does |
 | `admissible.py` | the real multiquadratic fields with no local 4-colouring and no unit triangle (`notes/local_global.md` §4): `√3 ∉ F` and `i` in every completion above 2, 3, 7, 11 and 19; the first quadratic one is `ℚ(√167)` |
 | `ramified_levels.py` | the levels of the plane over a ramified quadratic extension `ℚ_p(√(pm))` and their colourability (levels 1 to 3 of `ℚ₇(√7)` have no 3-colouring) |
 | `hyperbola_plane.py` | `H_q = Cay(𝔽_q², {(t, 1/t)})` for `q = p²` and its colourability (`H₂₅` has no 4-colouring) |
