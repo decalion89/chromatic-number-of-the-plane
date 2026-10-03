@@ -9456,9 +9456,13 @@ set of directions changes that (`notes/quadratic_planes.md`).
   - Level 2 has about 95 000 pairs per place, level 3 about 130 (error about 0.04).
   This is what `notes/local_global.md` predicts if a 4-colouring of `ℚ(√47)²` comes from the place above 19:
   level 1 there needs five colours, the 11-adic levels 1 to 3 need five, and every other place contains `i` or
-  has `χ_loc ≥ 5`. It is evidence, not a proof. A tabu search for a 4-colouring of the 19-adic level 2 (`ls19.c`,
-  130 321 vertices, neighbours computed from the 380 unit vectors) started at 03:06 UTC, besides share E's
-  solvers.
+  has `χ_loc ≥ 5`. It is evidence, not a proof.
+  - A tabu search for a 4-colouring of the 19-adic level 2 (`level_tabu.c`, 130 321 vertices, neighbours computed
+    from the 380 unit vectors) fell within a minute, from a random start and from a start seeded with the `b240`
+    colours, to 781 926 = 114 · 6 859 monochromatic edges and stayed there: the lift of the best 4-colouring of
+    level 1 (114 bad edges), constant on the fibres. The solvers' colourings over `ℚ(√47)` are not of that kind
+    (their level-1 agreement is 0.26), so local search of this sort cannot reach them; the full formula stays with
+    share E's solvers.
 
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; the four-colour case of the
 local–global question (`ℚ(√167)`); smaller witnesses (the

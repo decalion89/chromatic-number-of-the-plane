@@ -72,6 +72,7 @@ files go to `/dev/shm`.
 | `check_lift.py` | an independent check of one lifting step (its own enumeration of the unit vectors and of the points, the colour-major encoding, another pinned triangle; kissat and drat-trim, with logs) |
 | `crit4.py` | shrinks a set of points of a level with no proper 4-colouring to a vertex-critical one, with one incremental CaDiCaL solver (the 244 points of level 2 in `padic11.json`) |
 | `spectrum.py` | the eigenvalues of the `p`-adic plane level by level, as fractions of the degree: the new ones at level `ℓ ≥ 2` are at most `2/(p + 1)`, so Hoffman's bound is the same at every level |
+| `level_tabu.c` | tabu search for a proper `K`-colouring of the level `Cay((ℤ/p^r)², U_r)` of the `p`-adic plane, neighbours computed from the unit vectors; at 19, level 2, it falls to the lift of the best level-1 colouring (`docs/research-log.md`, 3 October) |
 | `padic_signature.py` | does a colouring of a growth graph over `ℚ(√d)` look like a reduction at a place above `p`? Agreement of colours among points with the same residue modulo `p^r` (`notes/local_global.md` §5: the 4-colourings over `ℚ(√47)` lean towards the place above 19) |
 | `hoffman_padic.py` | Hoffman's ratio for the level-1 planes `𝔽_p²`, `p ≡ 3 (mod 4)`: below `1/4` (so no level is 4-colourable) for every `p ≥ 23` (checked below 700; the bound `2√p` on the eigenvalues covers `p ≥ 37`), and not for `p = 3, 7, 11, 19` |
 
