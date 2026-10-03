@@ -32,6 +32,12 @@ This directory holds proofs in Lean 4, with Mathlib, of:
   with ξ(S) ⊆ [q/p, 1 − q/p] (mod 1), and conversely ⌊p ξ⌋ is such a homomorphism. The proof lifts each edge to
   δ ∈ [q, p − q]; two sides of a square differ by a multiple of p of size at most 2(p − 2q) < p, so squares do not
   wind, and ξ(s) is the average of δ(·, s) divided by p. For p = 3, q = 1 this is the theorem above.
+- the same for distance graphs G(ℤ, D) (D a finite set of positive integers, edges x ~ x + d), and the answer to
+  Problem 3 of Liu's survey on distance graphs (Taiwanese J. Math. 12 (2008)): for every set D of three positive
+  integers, G(ℤ, D) has a homomorphism to K_{p/q} if and only if some α has ‖dα‖ ≥ q/p for all d ∈ D, that is,
+  χ_c(G(ℤ, D)) = 1/κ(D). For p < 4q this is the theorem above, through a periodic window and an extension of the
+  character to ℤ/P; for p ≥ 4q it is the lonely runner theorem for three speeds, which the file also proves (a
+  short argument: put the fastest runner at distance exactly 1/4 at a time x/(4c), x odd, and choose x).
 
 ## The theorems
 
@@ -74,6 +80,14 @@ theorem GKR.question3 (c : ℕ → Fin 3) :
 theorem GKR.chromatic_recurrence (S : Set ℤ) (h0 : (0 : ℤ) ∉ S)
     (hS : ∀ α : ℝ, ∃ s ∈ S, |(s : ℝ) * α - round ((s : ℝ) * α)| < 1/3) (c : ℤ → Fin 3) :
     ∃ x : ℤ, ∃ s ∈ S, c x = c (x + s)
+-- Theorem W⁺ for distance graphs, and Problem 3 of Liu's survey (three distances):
+theorem DistLiu.liu_problem3_iff_unconditional (D : Finset ℤ) (hD3 : D.card = 3) (hD : ∀ d ∈ D, 0 < d)
+    (p q : ℕ) (hq : 0 < q) (hqp : q ≤ p) :
+    (∃ c : ℤ → ZMod p, ∀ x : ℤ, ∀ d ∈ D,
+        q ≤ (c (x + d) - c x).val ∧ (c (x + d) - c x).val ≤ p - q) ↔
+      ∃ α : ℝ, ∀ d ∈ D, (q : ℝ) / p ≤ |(d : ℝ) * α - round ((d : ℝ) * α)|
+-- and DistLiu.wplus_distance (any finite D, 2q ≤ p < 4q), DistLiu.wplus_distance_converse, and the lonely runner
+-- theorem for three speeds, DistLiu.lonely_runner_three (integers) and DistLiu.lonely_runner_real (reals)
 ```
 
 Here `Q23.L`, `Q311.L` and `QuadraticPlanes.L d` are the subfields ℚ(√2, √3), ℚ(√3, √11) and ℚ(√d) of ℝ,
@@ -101,7 +115,7 @@ says that no assignment satisfies every clause. When a file is built, `#guard` c
 `data/quadratic_planes/q{d}.cnf` is exactly `formula`, and `scripts/verify_quadratic_planes.py --cake-lpr` has
 cake_lpr check an LRAT proof that this file is unsatisfiable.
 
-The forty theorems depend only on Lean's three standard axioms, `propext`, `Classical.choice` and
+The forty-nine theorems depend only on Lean's three standard axioms, `propext`, `Classical.choice` and
 `Quot.sound`: `axioms.expected` records the output of `#print axioms`, and CI compares them.
 
 ## Checking the proofs
@@ -175,7 +189,8 @@ colourings exist but cannot be computed.
 | `TheoremW.lean` | Theorem W for three colours and finite abelian groups: the winding sum of a walk (`W`), its invariance under permutations of the steps (squares do not wind), and the averaged character `ξ₀(s) = (F(s)/(3|H|) + 1)/2` over `H = closure S` |
 | `Recurrence.lean` | the case of three colours of Katznelson's question, from `TheoremW.lean`: periodic windows by pigeonhole, Theorem W on `ZMod P`, the extension of the character to `ZMod P` (ℝ/ℤ is divisible), and compactness of `UnitAddCircle` |
 | `TheoremWplus.lean` | Theorem W for circular cliques `K_{p/q}`, `p < 4q`: the lift `δ ∈ [q, p − q]`, squares (`dl_square`), the winding sums as in `TheoremW.lean`, the average `ξ₀(s) = F(s)/(p|H|)`, and the converse |
-| `PrintAxioms.lean`, `axioms.expected` | the axioms of the forty theorems |
+| `DistLiu.lean` | Theorem W⁺ for distance graphs `G(ℤ, D)` (a periodic window, `TheoremWplus` on `ZMod P`, the extension of the character), the converse colouring `⌊p · frac(xα)⌋`, the lonely runner theorem for three speeds (`exists_odd_window`), and Problem 3 of Liu's survey |
+| `PrintAxioms.lean`, `axioms.expected` | the axioms of the forty-nine theorems |
 | `tools/q23_coefficients.py`, `tools/q311_coefficients.py` | sympy scripts that produce the coefficients of the `linear_combination` steps and the edge lists |
 | `tools/field_lean.py` | writes `Sqrt{d}.lean` from the data (`--check` compares, and checks the colouring of 𝔽₇² in `QuadraticPlanes.lean` against `finite_planes.json`; the tests run it) |
 

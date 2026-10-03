@@ -244,6 +244,31 @@ def test_lean_theorem_w_plus_is_built_and_checked():
     assert "TheoremWplus" in wf.split("for m in ", 1)[1].split(";", 1)[0].split()
 
 
+def test_lean_dist_liu_is_built_and_checked():
+    """lean/DistLiu.lean (Theorem W+ for distance graphs, the lonely runner theorem for three speeds, and Problem 3 of
+    Liu's survey: chi_c(G(Z, D)) = 1/kappa(D) for |D| = 3) is a default target that imports TheoremWplus, its nine
+    theorems have the standard axioms only, it has no sorry and no copy of the finite theorem, and CI replays it."""
+    lean = os.path.join(ROOT, "lean")
+    src = open(os.path.join(lean, "DistLiu.lean"), encoding="utf-8").read()
+    assert "sorry" not in src and "admit" not in src and "native_decide" not in src
+    assert src.startswith("import TheoremWplus\n") and "namespace ThmWplus" not in src
+    assert "TheoremWplus.theoremWplus_general" in src
+    lake = open(os.path.join(lean, "lakefile.toml"), encoding="utf-8").read()
+    default = lake.split("defaultTargets = [", 1)[1].split("]", 1)[0]
+    assert 'name = "DistLiu"' in lake and '"DistLiu"' in default
+    pa = open(os.path.join(lean, "PrintAxioms.lean"), encoding="utf-8").read()
+    ax = open(os.path.join(lean, "axioms.expected"), encoding="utf-8").read().splitlines()
+    assert "import DistLiu\n" in pa
+    for t in ("wplus_distance", "colourOf_isColouring", "wplus_distance_converse", "liu_problem3", "liu_problem3_iff",
+              "lonely_runner_real", "lonely_runner_three", "liu_problem3_unconditional",
+              "liu_problem3_iff_unconditional"):
+        assert f"theorem {t} " in src
+        assert f"#print axioms DistLiu.{t}\n" in pa
+        assert f"'DistLiu.{t}' depends on axioms: [propext, Classical.choice, Quot.sound]" in ax
+    wf = open(os.path.join(ROOT, ".github", "workflows", "lean.yml"), encoding="utf-8").read()
+    assert "DistLiu" in wf.split("for m in ", 1)[1].split(";", 1)[0].split()
+
+
 def _hom_to_circular_clique(m, n, S, p, q):
     """does Cay(Z/m x Z/n, S) map to K_{p/q} (vertices Z/p, i ~ j iff q <= (j - i mod p) <= p - q)?  SAT."""
     N = m * n

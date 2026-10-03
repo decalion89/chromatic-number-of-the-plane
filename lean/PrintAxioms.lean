@@ -31,6 +31,7 @@ import PadicPlanes
 import TheoremW
 import Recurrence
 import TheoremWplus
+import DistLiu
 
 -- The axioms the theorems depend on; `axioms.expected` holds the expected output.
 #print axioms Q23.chromaticNumber_eq_four
@@ -73,3 +74,12 @@ import TheoremWplus
 #print axioms TheoremWplus.theoremWplus_finite
 #print axioms TheoremWplus.converse_of_lift
 #print axioms TheoremWplus.converse
+#print axioms DistLiu.wplus_distance
+#print axioms DistLiu.colourOf_isColouring
+#print axioms DistLiu.wplus_distance_converse
+#print axioms DistLiu.liu_problem3
+#print axioms DistLiu.liu_problem3_iff
+#print axioms DistLiu.lonely_runner_real
+#print axioms DistLiu.lonely_runner_three
+#print axioms DistLiu.liu_problem3_unconditional
+#print axioms DistLiu.liu_problem3_iff_unconditional

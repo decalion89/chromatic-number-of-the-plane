@@ -279,8 +279,11 @@ For finite $\Gamma$ the theorem is formalised in Lean~4 with Mathlib: both direc
 \texttt{lean/TheoremWplus.lean} of \cite{Repo}, and the case of $K_3$, with the signs of Krebs and Sankar, in
 \texttt{lean/TheoremW.lean}. The formal proofs follow Steps~1--4, with the plain average as the mean. The last statement of Corollary~\ref{cor:bohr} (the answer to Question~3 of \cite{GKR}) and the form for
 $\Z$ of its first statement are formalised from it in \texttt{lean/Recurrence.lean}, by the route through finite
-cyclic groups described after the corollary. Both files depend only on Lean's three standard axioms, and the
-repository's continuous integration replays them in Lean's kernel.
+cyclic groups described after the corollary. Corollary~\ref{cor:liu} is formalised in \texttt{lean/DistLiu.lean}:
+Theorem~\ref{thm:main} for $G(\Z,D)$ with $D$ finite (from the finite case, through one periodic window), its
+converse, Lemma~\ref{lem:lr3}, and for $|D|=3$ the statement that $G(\Z,D)$ maps to $K_{p/q}$ if and only if
+$\kappa(D)\ge q/p$. These files depend only on Lean's three standard axioms, and the repository's continuous
+integration replays them in Lean's kernel.
 \end{remark}
 
 \section{Groups of small exponent}\label{sec:exp}
@@ -333,7 +336,8 @@ $D=\{k,2k,3k\}$ for some $k$.
 
 \begin{proof}
 If $\chi_c<4$, the first equality is Corollary~\ref{cor:dist}. Otherwise $4\le\chi_c\le1/\kappa(D)\le4$, the last
-inequality being the lonely runner theorem for three speeds \cite{BW,Cusick}. The \emph{if} direction of
+inequality being the lonely runner theorem for three speeds \cite{BW,Cusick} (Lemma~\ref{lem:lr3} below). The
+\emph{if} direction of
 Theorem~\ref{thm:main} gives a homomorphism to $K_{1/\kappa(D)}$ ($\kappa(D)$ is rational), so
 $\chi\le\lceil1/\kappa(D)\rceil$, and $\chi\ge\chi_c$. Finally, $\kappa(D)=1/4$ only for $D=\{k,2k,3k\}$, the only
 tight instances of the lonely runner problem with three speeds \cite{Cusick2}, \cite[\S2]{PS}.
@@ -343,6 +347,29 @@ So the chromatic number of a distance graph with three distances is $\lceil1/\ka
 the lonely runner parameter. As a check, for all $28\,876$ sets $D\subseteq[1,60]$ with $|D|=3$ and $\gcd(D)=1$,
 $\lceil1/\kappa(D)\rceil$, with $\kappa(D)$ computed exactly, agrees with Zhu's formula for $\chi(G(\Z,D))$
 \cite{Zhu2002}, and $\kappa(D)=1/4$ only for $D=\{1,2,3\}$.
+
+The lonely runner theorem for three speeds is classical \cite{BW,Cusick}; we include the short proof that is
+formalised (Remark~\ref{rem:lean}).
+
+\begin{lemma}\label{lem:lr3}
+For all real $a,b,c>0$ there is $t\in\R$ with $\|at\|\ge1/4$, $\|bt\|\ge1/4$ and $\|ct\|\ge1/4$.
+\end{lemma}
+
+\begin{proof}
+We may assume $0<a\le b\le c$. Put $P=c/a$, $Q=c/b$ and $\rho=P/Q=b/a$, so $P\ge Q\ge1$ and $\rho\ge1$. For an
+odd integer $x$ let $t=x/(4c)$. Then $\|ct\|=\|x/4\|=1/4$; $\|at\|\ge1/4$ if $P\le x\le3P$, since then
+$at=x/(4P)\in[1/4,3/4]$; and $\|bt\|\ge1/4$ if $(4m+1)Q\le x\le(4m+3)Q$ for some integer $m\ge0$, since then
+$bt\in[m+1/4,m+3/4]$. Every closed interval of length at least $2$ contains an odd integer.
+\begin{itemize}
+\item If $\rho\ge3$, let $m=\lceil(\rho-1)/4\rceil$. Then $P=\rho Q\le(4m+1)Q$ and $(4m+3)Q<(\rho+6)Q\le3\rho Q=3P$,
+so $[(4m+1)Q,(4m+3)Q]$, of length $2Q\ge2$, lies in $[P,3P]$.
+\item If $7/3\le\rho<3$, the same holds with $m=1$: $P<5Q$ and $7Q\le3P$.
+\item If $\rho<7/3$, an odd integer in $[P,3Q]$ (with $m=0$) or in $[5Q,3P]$ (with $m=1$) works. If both intervals
+are shorter than $2$, then $4Q=3(3Q-P)+(3P-5Q)<8$, so $Q<2$ and $P<(2+5Q)/3<4$. Then $x=3$ works if $P\le3$;
+$x=5$, with $m=0$, if $P>3$ and $3Q\ge5$; and $x=9$, with $m=1$, if $P>3$ and $3Q<5$, since then
+$9/7<3P/7<Q<5/3$. \qedhere
+\end{itemize}
+\end{proof}
 
 For larger sets $\chi_c(G(\Z,D))<1/\kappa(D)$ does happen \cite[Theorems~17 and~18]{Liu}, but by
 Corollary~\ref{cor:dist} only when $\chi_c\ge4$; indeed, in that family the sets with $\chi_c<4$ satisfy

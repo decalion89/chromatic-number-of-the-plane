@@ -250,7 +250,13 @@ Cusick, Aequationes Math. 9 (1973)). Hence also `χ(G(ℤ, D)) = ⌈1/κ(D)⌉`,
 `D = {k, 2k, 3k}`, the only tight instances of the lonely runner problem with three speeds (Cusick, J. Combin.
 Theory Ser. A 16 (1974); Perarnau and Serra, arXiv:2409.20160). As a check, `⌈1/κ(D)⌉` with `κ(D)` computed exactly
 agrees with Zhu's formula for `χ(G(ℤ, D))` on all 28 876 sets `D ⊆ [1, 60]` with `|D| = 3` and `gcd(D) = 1`
-(`tests/test_winding.py` repeats this up to 30). For larger `D`, `χ_c < 1/κ` does happen (Liu's Theorems 17 and
+(`tests/test_winding.py` repeats this up to 30). The whole statement is formalised in Lean (`lean/DistLiu.lean`,
+`DistLiu.liu_problem3_iff_unconditional`: for `|D| = 3`, `G(ℤ, D)` maps to `K_{p/q}` if and only if
+`κ(D) ≥ q/p`), from Theorem W⁺ for finite groups through one periodic window, together with a short proof of the
+lonely runner theorem for three speeds (`DistLiu.lonely_runner_real`): for `0 < a ≤ b ≤ c` put the fastest runner
+at distance exactly 1/4 at a time `t = x/(4c)` with `x` odd; `‖at‖ ≥ 1/4` when `x ∈ [P, 3P]` and `‖bt‖ ≥ 1/4` when
+`x ∈ [(4m + 1)Q, (4m + 3)Q]`, where `P = c/a ≥ Q = c/b ≥ 1`, and a short case analysis on `b/a` finds such an odd
+`x` (paper, Lemma 10). For larger `D`, `χ_c < 1/κ` does happen (Liu's Theorems 17 and
 18), but by Theorem W⁺ only with `χ_c ≥ 4`. Liu and Robinson (European J. Combin. 85 (2020)) conjecture
 `κ(D) = μ(D)` for `|D| = 3` and confirm it for `max D ≤ 25`, which there gives `χ_f = χ_c = 1/κ`; the corollary
 covers every `D` but says nothing about `χ_f`.

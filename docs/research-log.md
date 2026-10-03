@@ -9659,3 +9659,12 @@ refereed this.
   `(2, 4)`"); Payan 1992 with Simonyi–Tardos 2006 (cube-like graphs whose chromatic number 4 is topological); the
   same threshold 4 in circular-colouring reconfiguration (Brewster, McGuinness, Moore and Noel 2016; Brewster and
   Moore, mixing for `p/q < 4` via the wind of cycles). All cited in the paper.
+- **Liu's Problem 3 in Lean** (`lean/DistLiu.lean`). A separate agent proved, from `TheoremWplus.theoremWplus_general`,
+  Theorem W⁺ for distance graphs `G(ℤ, D)` with `D` finite (one periodic window by pigeonhole, the induced colouring of
+  `ZMod P`, the extension of the character because ℝ/ℤ is divisible), the converse colouring `⌊p · frac(xα)⌋`, and
+  the lonely runner theorem for three real speeds with a short argument of its own (the fastest runner at distance
+  exactly 1/4 at `t = x/(4c)`, `x` odd; a case analysis on `b/a` with the fallbacks `x = 3, 5, 9`; checked
+  numerically first for all speeds below 160). So `DistLiu.liu_problem3_iff_unconditional`: for `|D| = 3`, `G(ℤ, D)`
+  maps to `K_{p/q}` iff `κ(D) ≥ q/p`, with no hypothesis. Rebuilt here against the repository's `TheoremWplus`
+  (18 s), axioms `[propext, Classical.choice, Quot.sound]` for all nine theorems, replayed with `leanchecker`. The
+  short proof of the three-speed case is in the paper as Lemma 10; the result itself is Betke–Wills' and Cusick's.

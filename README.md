@@ -146,7 +146,9 @@ The same proof works with the edges lifted to integers in [q, p − q]: for p < 
 differ by a whole turn. Consequence: for every distance graph with three distances, χ_c(G(ℤ, D)) = 1/κ(D) and
 χ(G(ℤ, D)) = ⌈1/κ(D)⌉ (with the lonely runner theorem for three speeds), a negative answer to Problem 3 of Liu's
 survey on distance graphs (Taiwanese J. Math. 2008). Also: no Cayley graph of an abelian group of exponent 2 or 4
-has 2 < χ_c < 4. Formally verified in Lean for finite groups (`lean/TheoremWplus.lean`).
+has 2 < χ_c < 4. Formally verified in Lean for finite groups (`lean/TheoremWplus.lean`), and the answer to
+Liu's Problem 3 for distance graphs, with a short proof of the lonely runner theorem for three speeds
+(`lean/DistLiu.lean`).
 
 > **Katznelson's question for three colours.** For every 3-colouring ℕ = A₁ ∪ A₂ ∪ A₃ there is an α with
 > (A₁ − A₁) ∪ (A₂ − A₂) ∪ (A₃ − A₃) ⊇ {n : ‖nα‖ < 1/3}. So every set of Bohr recurrence is a set of 3-chromatic

@@ -22,6 +22,12 @@ including every retracted claim, is the research log,
 
 ### Added
 
+- **Liu's Problem 3 in Lean** (`lean/DistLiu.lean`, 3 October). For every set `D` of three positive integers,
+  `G(ℤ, D)` maps to `K_{p/q}` if and only if some `α` has `‖dα‖ ≥ q/p` for all `d ∈ D`, that is,
+  `χ_c(G(ℤ, D)) = 1/κ(D)` (`DistLiu.liu_problem3_iff_unconditional`). Proved from `lean/TheoremWplus.lean` through
+  one periodic window, with Theorem W⁺ for every distance graph with `2q ≤ p < 4q` (`DistLiu.wplus_distance`), its
+  converse, and a short proof of the lonely runner theorem for three real speeds (`DistLiu.lonely_runner_real`),
+  also written out in the paper (Lemma 10). Standard axioms only; CI builds it, checks its axioms and replays it.
 - **Theorem W⁺ and Liu's Problem 3** (`papers/winding`, `notes/winding_lemma.md`, 3 October). For `p/q < 4`, an
   abelian Cayley graph maps to `K_{p/q}` if and only if a character maps the connection set into `[q/p, 1 − q/p]`;
   so `χ_c = 1/κ` below 4, with 4 sharp. Consequence: `χ_c(G(ℤ, D)) = 1/κ(D)` and `χ(G(ℤ, D)) = ⌈1/κ(D)⌉` for every
