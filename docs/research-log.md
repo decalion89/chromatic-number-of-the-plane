@@ -9414,6 +9414,35 @@ set of directions changes that (`notes/quadratic_planes.md`).
   - **A restart.** The machine restarted at 23:57 UTC and stopped every local run. The local kissat run on the 19-adic
     level 2 (3 h 45 min) was lost; share E's four solvers continue. The 695 shrink resumed from its 4 393-point core.
 
+- **A short paper on two colours (3 October).** `papers/two-colour-planes/` (5 pages, `amsart`) states and proves
+  Theorem A for every number field (Theorem 1), with Corollary 5 for multiquadratic fields (`F²` is 2-colourable
+  exactly when every quadratic subfield's plane is; for `G` the square classes generated, no prime above 2 ramifies
+  in `F(i)` exactly when `G` contains `−1` or `−5`), the odd-degree case, the same statement for every
+  nondegenerate binary form `x² + c y²` with `F(√−c)`, the quartic examples of `odd_walks.gp`, and the
+  local–global question as its last section.
+  - **Credit corrected before publication.** The first draft credited the "if" direction to Madore and to our
+    Proposition A. A referee found that Madore's Propositions 3.2 and 3.8 do not reach ramified places above 2.
+    Checking the sources again, we found that the general statement, with the same proof, is Theorem A′ of
+    hn-2adic-obstruction (July 2026), whose Corollary B is also the 2-colourable half of Corollary 5. We had
+    cited that repository for the 4-colour bounds since 28 September, but not here. We also found that Lemma 2 (a
+    2-colouring is a ring homomorphism) is Fischer's Theorem 1(iii) (1990), which he used for quadratic fields in
+    his Theorem 8. The draft now says so. What is ours is the converse for every number field (Proposition 4: Chevalley's
+    theorem and the density of the circle in its completions), Remark 6 and Section 4.
+  - **Section 4 by restriction.** A place `v` above `p` has `F_v ⊇ ℚ_p`, so `χ_loc(v) ≥ χ_M(ℚ_p²)` for every number
+    field. This replaces an eigenvalue argument at ramified places, and the admissibility statement now holds for
+    every number field. The three-colour claim (a place with `χ_loc ≤ 3` exactly when `d ≢ 11 (mod 12)`) is
+    argued in full: `√11` lies in `ℚ₂(√3)` and in `ℚ₇`. The real-place example improves to `d = 186 023`,
+    because `χ_M(ℚ₇₁²) ≥ 7`.
+  - **Third referee pass.** A separate agent refereed the revised draft against the local copies of the sources and
+    found no mathematical error. Its small fixes are applied: the credit in Corollary 5 and in the abstract is for
+    real fields; Moorhouse's Theorem 8.6 covers `ℚ(√p)` with `p` prime; Fischer's odd cycle uses his Theorem 7;
+    Fischer's Example 4 had singled out `ℚ(√167)` (no additive `k`-colouring for `k < 11`); de Bruijn–Erdős is cited;
+    and Soifer's and de Grey's statements are marked as known through the chapter abstract and MathWorld.
+  - **Disk full (02:07 UTC).** The proof file of the local `α(𝔽₁₉²) ≤ 90` run reached 4 GB and, with a 2 GB file left
+    from the run cut at 23:57, filled the session's disk. That run, the `ℚ(√167)` forced-pair run (its state file was
+    truncated) and the 695 shrink stopped. The two proof files were deleted; the 695 shrink resumed from its last
+    intact core (4 253 points) and the `ℚ(√167)` run restarted from scratch. No result was affected.
+
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; the four-colour case of the
 local–global question (`ℚ(√167)`); smaller witnesses (the
 smallest graphs have 71 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has

@@ -346,14 +346,16 @@ def _load_script(name):
 
 
 def test_local_global_admissible_fields():
-    """notes/local_global.md §4: Q(sqrt167) is the first real quadratic field with no locally constant 4-colouring at
-    any place and no unit triangle; Q(sqrt47) fails at 11 and 19, Q(sqrt3, sqrt5) has triangles"""
+    """notes/local_global.md §4: Q(sqrt167) is the first admissible real quadratic field (no locally constant
+    4-colouring at any place, no unit triangle); Q(sqrt47) fails at 11 and 19, Q(sqrt3, sqrt5) has triangles. The
+    real-place example of papers/two-colour-planes is d = 186023 (635087 if 71 is also required)."""
     ad = _load_script("admissible")
     sq = [d for d in range(2, 2000) if ad.sqfree(d) == d]
     assert [d for d in sq if ad.admissible([d])] == [167, 887, 1055, 1319, 1823]
     assert ad.admissible([2, 31]) and ad.admissible([2, 47]) and ad.admissible([11, 13])
     assert not ad.admissible([47]) and not ad.admissible([3, 5]) and not ad.admissible([5, 7])
     assert not ad.has_i_at(ad.group_of([47]), 11) and not ad.has_i_at(ad.group_of([47]), 19)
+    assert ad.real_place_example() == 186023 and ad.real_place_example(skip=()) == 635087
 
 
 def test_ramified_seven_adic_levels():

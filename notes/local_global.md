@@ -1,8 +1,9 @@
 # A local–global question for the chromatic number of planes over number fields
 
-*Working note, 3 October 2026. Theorem A is proved here (its "if" half was already in
-`notes/local_colourings.md`); the rest is a question, with the evidence we have and the
-tests under way. A separate agent refereed this note (its findings are applied below);
+*Working note, 3 October 2026. Theorem A is proved here. Its "if" half is Theorem A′ of the
+repository hn-2adic-obstruction (July 2026) and was also in `notes/local_colourings.md`, and its
+Step 1 is Fischer's Theorem 1(iii) (1990); the converse is ours. The rest is a question, with the
+evidence we have and the tests under way. A separate agent refereed this note (its findings are applied below);
 nobody outside the project has.*
 
 Let `F` be a number field and give `F²` the unit-distance relation
@@ -58,10 +59,15 @@ Hoffman ratio below `1/4`.
 > **Theorem A.** Let `F` be a number field. Then `χ(F²) = 2` if and only if some prime of
 > `F` above 2 ramifies in `F(i)`.
 
-So `LG_2` holds for every number field. The "if" half is the corollary of Proposition A
-in `notes/local_colourings.md` §3 (a ramified prime over 2 gives a locally constant
-2-colouring; Madore's Proposition 3.9 is the case `ℚ(√2)`, and he did not state the
-general case). The converse, Step 3 below, is new as far as we know. Together they
+So `LG_2` holds for every number field. The "if" half, that a ramified prime over 2 gives a
+locally constant 2-colouring, is Theorem A′ of
+[hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction) (`RESULTS.md` §1,
+July 2026, not refereed), which we found on 28 September, and the corollary of our Proposition A in
+`notes/local_colourings.md` §3. Madore's Proposition 3.8 covers the fields with a prime above 2
+unramified over `ℚ`, and his Proposition 3.9 the field `ℚ(√2)`. Step 1 below is Fischer's
+Theorem 1(iii) (1990), which he used for real quadratic fields in his Theorem 8. The converse,
+Step 3 below, is new as far as we know; we have not seen Johnson (1987), Johnson's survey (2006)
+or Benda–Perles (2000). Together they
 contain Fischer's Theorem 8 (`ℚ(√N)²` is 2-colourable exactly when `N ≢ 3 (mod 4)`), the
 "if" part of Johnson (1987), which we know only through Payne's account, and Moorhouse's
 Theorems 7.1 (odd degree: some `v | 2` has odd degree over `ℚ₂`, so `F_v(i)/F_v` is
@@ -74,7 +80,7 @@ its additive span `A = ℤ[T]` is a subring of `L`, and `F²` is a disjoint unio
 translates of `A`, each a copy of `Cay(A, T)`. Every `u ∈ T` is a unit of `A`
 (`u⁻¹ = ū ∈ T`).
 
-*Step 1: `χ(F²) = 2` if and only if there is a ring homomorphism `φ : A → 𝔽₂`.* If
+*Step 1 (Fischer 1990, Theorem 1(iii), for `F ⊂ ℝ`): `χ(F²) = 2` if and only if there is a ring homomorphism `φ : A → 𝔽₂`.* If
 `Cay(A, T)` is bipartite, let `φ(a)` be the parity of the length of any walk from 0 to
 `a` (since `−1 ∈ T`, every element of `A` is a sum of unit vectors). It is additive, and
 multiplicative because a product of an `m`-term and an `n`-term sum of unit vectors is an
@@ -123,7 +129,8 @@ ramifies in `F(i)` exactly when the subgroup `⟨a, b⟩` of `ℚ₂^×/ℚ₂^�
 `i ∈ F_v`) or `−5` (then `F_v(i) = F_v(√5)` is unramified), that is, when one of the
 three quadratic subfields `ℚ(√c)` has `c ≡ 3 (mod 4)`. So `χ(ℚ(√a, √b)²) = 2` unless
 a quadratic subfield already needs three colours: here Theorem A gives nothing beyond
-the subfields.
+the subfields. The 2-colourable half, for every multiquadratic field, is Corollary B of
+hn-2adic-obstruction.
 
 **Checks.** `data/quadratic_planes/scripts/two_colour_criterion.gp` (PARI/GP) computes the
 criterion from the relative discriminant of `F(i)/F`. It agrees with Fischer's Theorem 8
@@ -169,9 +176,13 @@ every odd place is isotropic.
 
 ## 4. Four colours: what the question predicts
 
-A real field has a locally constant 4-colouring only at an anisotropic place whose
-levels have Hoffman ratio at least `1/4`, that is above 2, 3, 7, 11 or 19 (research log,
-"The other places of ℚ(√47)"; `data/quadratic_planes/scripts/hoffman_padic.py`). The
+A place `v` above a prime `p` has `F_v ⊇ ℚ_p`, and a locally constant colouring of `F_v²`
+restricts to a locally constant, hence measurable, colouring of `ℚ_p²`; so
+`χ_loc(v) ≥ χ_M(ℚ_p²)`, which is at least 5 for every prime `p ≡ 3 (mod 4)` with `p ≥ 23`
+(`papers/padic-planes`, Theorem 1 and Table 1). This holds for every number field, whatever
+the ramification and residue degree at `v`. So a real field can have a locally constant
+4-colouring only at an anisotropic place above 2, 3, 7, 11 or 19 (research log, "The other
+places of ℚ(√47)"; `data/quadratic_planes/scripts/hoffman_padic.py`). The
 margins are thin near the threshold: the level-1 ratio is 0.249077 at 23 and 0.2499973
 at 31 (Hoffman bound 4.000044), which matters for `ℚ(√2, √31)`, where 31 ramifies. Call
 `F` *admissible* if `√3 ∉ F` and every place of `F` above 2, 3, 7, 11 and 19 contains
@@ -185,7 +196,7 @@ Soifer asked for such a graph in a 2019 problem paper; chapter 55 of his *New
 Mathematical Coloring Book* (2024) is titled "Triangle-Free 5-Chromatic Unit Distance
 Graphs" (we have read only its abstract). MathWorld cites de Grey, "A 5-chromatic,
 triangle-free unit-distance graph in ℝ³ with 61 vertices", Geombinatorics 35 (2026). We
-know of no planar example.
+have not found a planar example in the literature we could consult.
 
 The admissible quadratic fields are `ℚ(√d)` with `d ≡ 7 (mod 8)` a non-residue modulo 3,
 7, 11 and 19 and prime to them: `d = 167, 887, 1055, 1319, 1823, …`. `ℚ(√167)` is the first
@@ -193,16 +204,17 @@ of them: the smallest `d` for which every place is shown to have no locally cons
 4-colouring. (For `d = 47` and `143` the places above 11, and for 47 also above 19, are
 undecided.) Its places above 2, 3, 7, 11, 19 and 31 are isotropic, and the anisotropic
 ones lie above 167 (ramified) and the split primes `p ≡ 3 (mod 4)`, which are 23, 43,
-59, 67, …; all have Hoffman ratio below `1/4` at every level. Fischer (1990, Example 4)
+59, 67, …; at each of them `χ_loc(v) ≥ χ_M(ℚ_p²) ≥ 5`. Fischer (1990, Example 4)
 had already shown that `ℚ(√167)²` has no additive `k`-colouring for `k < 11`. Admissible
 biquadratic fields include `ℚ(√2, √31)`, `ℚ(√2, √47)`, `ℚ(√10, √38)`, `ℚ(√2, √55)` and
 `ℚ(√11, √13)` (`data/quadratic_planes/scripts/admissible.py`).
 
 With the real place included, the question also predicts `χ(ℝ²) = χ_B(ℝ²)`: by
 Dirichlet's theorem there are primes `d ≡ 7 (mod 8)` that are non-residues modulo every
-prime `p ≡ 3 (mod 4)` below 100 (the smallest is `d = 635 087`), and every finite place
-of `ℚ(√d)` then has `χ_loc ≥ 7` (Hoffman's bound `1 + (q + 1)/(2√q)` is at least 6.12
-for `q ≥ 103`, and Zhu's theorem covers colourings through several places), so LG would
+prime `p ≡ 3 (mod 4)` below 100 other than 71 (the smallest is `d = 186 023`; with 71
+included it is `d = 635 087`), and every finite place of `ℚ(√d)` then has `χ_loc ≥ 7`
+(`χ_M(ℚ_p²) ≥ 7` for `p = 71` and every `p ≥ 103`, `papers/padic-planes`, Table 1; Zhu's
+theorem covers colourings through several places), so LG would
 give `χ(ℚ(√d)²) = χ_B(ℝ²) ≥ χ(ℝ²)`. Moorhouse (2010, introduction, p. 1) wrote that he
 suspected `χ(ℝ²) = 7`.
 
@@ -229,7 +241,8 @@ suspected `χ(ℝ²) = 7`.
 
 ## References
 
-- M. F. Atiyah and I. G. Macdonald, *Introduction to Commutative Algebra*, Theorem 5.21.
+- M. F. Atiyah and I. G. Macdonald, *Introduction to Commutative Algebra*, Lemma 5.19 and
+  Theorem 5.21.
 - M. Benda and M. Perles, Colorings of metric spaces, Geombinatorics 9 (2000) 113–126
   (not read; cited through Madore).
 - A. D. N. J. de Grey, A 5-chromatic, triangle-free unit-distance graph in ℝ³ with 61
@@ -242,9 +255,15 @@ suspected `χ(ℝ²) = 7`.
 - K. G. Fischer, Additive K-colorable extensions of the rational plane, Discrete Math.
   82 (1990) 181–195.
 - P. D. Johnson Jr., Two-colorings of real quadratic extensions of `ℚ²` that forbid many
-  distances, Congr. Numer. 60 (1987) 51–58 (not read; known through Payne,
+  distances, Congr. Numer. 60 (1987) 51–58 (not read; known through Fischer 1990 and Payne,
   arXiv:0707.1177).
+- P. D. Johnson Jr., Coloring the rational points to forbid the distance one — a tentative
+  history and compendium, Geombinatorics 16 (2006) 209–218 (not read).
 - D. A. Madore, The Hadwiger–Nelson problem over certain fields, arXiv:1509.07023 (2015).
+- MildlyMeticulous (GitHub account), A 2-adic obstruction to 5-chromatic unit-distance graphs,
+  and the exact chromatic number of the plane over `ℚ(√3, √11)`, public repository
+  [hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction), July 2026:
+  Theorem A′ and Corollary B (`RESULTS.md` §1).
 - G. E. Moorhouse, On the chromatic numbers of planes, draft of 3 March 2010, §§7–9.
 - Y. Shitov, Counterexamples to Hedetniemi's conjecture, Ann. of Math. 190 (2019)
   663–667.
@@ -253,5 +272,5 @@ suspected `χ(ℝ²) = 7`.
 - X. Zhu, The fractional version of Hedetniemi's conjecture is true, European J.
   Combin. 32 (2011) 1168–1175.
 
-Not yet read, and needed before claiming novelty: Benda–Perles (2000) and Johnson's
-survey of their problems (Geombinatorics 9 (2000) 170–179).
+Not yet read, and needed before claiming novelty: Benda–Perles (2000), Johnson's survey of
+their problems (Geombinatorics 9 (2000) 170–179) and Johnson's survey of 2006.
