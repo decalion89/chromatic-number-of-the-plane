@@ -9690,3 +9690,27 @@ refereed this.
     promised. Smaller fixes: `S ≠ ∅`, `σ = 3 − 2δ`, the conditions for `χ(ℚ(√d)²) ≤ 3`, "our searches".
   - Not done: Katznelson's paper (2001) could not be read; Glasscock, Koutsogiannis and Richter, who cite it, say three
     colours is open.
+
+## Six: the September hard instances fall to local repair (3 October)
+
+- **The frontier.** In September, four colouring-guided growths at the witness orbit `d² = (9 ∓ √33)/6`
+  (worker g0737, `MODE=apart`: `c(A) = c(B)` imposed, so UNSAT would be a gadget) stopped on instances that kissat
+  could not decide in 6 hours at half a core: 15–20 thousand points in `L16`.
+- **Local repair.** Free the last 40 points and every vertex within graph distance `r` of them, fix every other
+  vertex to the previous colouring, and solve the restricted formula. At `r = 3`, three of the four instances
+  (`n = 20 000`, `19 560`, `19 440`) were satisfiable in 1 to 56 seconds. Each colouring was checked against every
+  exact unit edge, with `c(A) = c(B)`. The fourth (`n = 16 920`) could not be repaired at `r ≤ 3`, but
+  `kissat --sat --seed=1` on the full formula found a colouring in 35 minutes. So none of the four graphs is a
+  gadget. An UNSAT at radius `r` says only that the old colouring cannot be repaired there; only the full formula
+  decides.
+- **Not really local.** These graphs are compact: radius about 4.5 around the pair, and `r = 3` already frees two
+  thirds of the vertices. Within a few steps the growth met instances again where `r = 3` fails (`n ≈ 19 600 –
+  20 120`), and the workers fell back to `r = 4` and full-formula portfolios.
+- **Growth resumed** with local repair before full kissat in every hard step (four cloud workers, branches
+  `claude/six-gadget-*`, each with a STATUS.md and a table of every solver call). By 16:00 UTC all four were
+  again at hard steps, at 16 960 to 20 120 points (local repair UNSAT for `r ≤ 3`, `r = 4` undecided after 30 to
+  60 minutes), with full-formula portfolios running. No UNSAT anywhere.
+- **The split-place gate, again.** The 934 growth directions have denominators only at 2, 3, 5 and 7, so they are
+  integral at every place above every other prime. The first split place of degree 1 is above 37, where
+  `H₃₇ ≅ 𝔽₃₇²` needs six colours (`notes/local_colourings.md`, §14); places of degree 2 give `H_{p²}`, which needs
+  at least seven. So no reduction modulo a prime 5-colours these growths, as recorded in September.
