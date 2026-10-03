@@ -37,4 +37,4 @@ jobs:
       - name: Compare the axioms with axioms.expected
         run: lake env lean PrintAxioms.lean > axioms.txt && diff axioms.expected axioms.txt
       - name: Replay each file in the kernel
-        run: for m in LocalColouring Q23 Q311 QuadraticPlanes Sqrt11 Sqrt119 Sqrt131 Sqrt179 Sqrt191 Sqrt251 Sqrt431 Sqrt455 Sqrt911 Sqrt935 ColouringFormula Sqrt23 Sqrt35 Sqrt47 Sqrt59 Sqrt71 Sqrt95 Sqrt155 Sqrt239 Sqrt263 Sqrt359 Sqrt443 Sqrt491 Sqrt599 Sqrt611 Sqrt791 Sqrt851 Sqrt959 PadicPlanes TheoremW Recurrence TheoremWplus DistLiu; do lake env leanchecker -v "$m"; done
+        run: for m in LocalColouring Q23 Q311 QuadraticPlanes Sqrt11 Sqrt119 Sqrt131 Sqrt179 Sqrt191 Sqrt251 Sqrt431 Sqrt455 Sqrt911 Sqrt935 ColouringFormula Sqrt23 Sqrt35 Sqrt47 Sqrt59 Sqrt71 Sqrt95 Sqrt155 Sqrt239 Sqrt263 Sqrt359 Sqrt443 Sqrt491 Sqrt599 Sqrt611 Sqrt791 Sqrt851 Sqrt959 PadicPlanes TheoremW Recurrence TheoremWplus DistLiu TheoremWInf FourColours; do lake env leanchecker -v "$m"; done
