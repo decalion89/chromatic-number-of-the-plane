@@ -5,6 +5,12 @@ the plane with coordinates in `K` such that two points at distance 1 get
 different colours. For real quadratic fields `K = ℚ(√d)` the known values were
 2 and 3. No real quadratic field was known to need four colours.
 
+**Update (3 October, evening): every `d ≡ 11 (mod 12)`.** `χ(ℚ(√d)²) ≥ 4` for every `d ≡ 11 (mod 12)`, by a proof
+by hand for all `d` at once, with Theorem W (`notes/four_colours_11_mod_12.md`, draft `papers/four-colours/`; two
+internal referees). So a real quadratic field needs four colours exactly when `d ≡ 11 (mod 12)`, and with the bounds
+of Fischer and Moorhouse `χ(ℚ(√d)²) = 4` for all these `d` except possibly `d ≡ 47, 143, 167 (mod 168)`. The finite
+graphs below stay what they were: explicit witnesses, whose proofs do not use Theorem W.
+
 **Theorem.**
 1. `χ(ℚ(√d)²) = 4` for `d = 11, 23, 35, 59, 71, 83, 95, 107, 119, 131, 155, 179, 191, 203, 239, 251, 263, 359, 431, 443, 455, 491, 599, 611, 791, 851, 911, 935, 959`.
 2. `4 ≤ χ(ℚ(√d)²) ≤ 5` for `d = 47` and `d = 143`, and `χ(ℚ(√167)²) ≥ 4`.
@@ -507,7 +513,8 @@ that they are up to date.
 
 - **The local–global question** (`notes/local_global.md`). Every bound above comes from one place.
   If `χ(F²)` were always the least local value, `χ(ℚ(√d)²) = 4` for every `d ≡ 11 (mod 12)`, and
-  `ℚ(√167)²`, which has no local 4-colouring and no unit triangle, would need five colours.
+  `ℚ(√167)²`, which has no local 4-colouring and no unit triangle, would need five colours. The lower half of the
+  first prediction, `χ ≥ 4` for every `d ≡ 11 (mod 12)`, is now proved (`notes/four_colours_11_mod_12.md`).
 
 - **`ℚ(√47)`.** Is `χ = 4` or `5`? It is the smallest open case of Moorhouse's
   table that this note does not settle. The plane is triangle-free, so `χ = 5`

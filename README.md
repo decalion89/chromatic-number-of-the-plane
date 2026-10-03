@@ -171,11 +171,37 @@ decides every field that the graph searches could not:
 known for every squarefree d < 143 except 47. For ℚ(√83) the obstruction does not lie in a small ball:
 colouring-guided growth with the same directions stopped at 6 008 points because a 3-colouring of the 2-ball
 extended to every candidate point. Refereed inside the project by a separate agent (corrections applied), not yet
-outside it; a scan of every d ≡ 11 (mod 12) up to 2000 is under way.
+outside it. Since the evening of 3 October these five fields are special cases of the theorem in the next section,
+which covers every d ≡ 11 (mod 12).
 
 **Read:** [the note](notes/winding_lemma.md) · **Check:** `python3 data/quadratic_planes/winding/check_w.py
 data/quadratic_planes/winding/cert_83_510_full.json.gz` (about 10 s; likewise the other `cert_*.json.gz`) ·
 `tests/test_winding.py`
+
+## Which real quadratic planes need four colours (3 October 2026)
+
+> **Theorem.** χ(ℚ(√d)²) ≥ 4 for every d ≡ 11 (mod 12). So, for squarefree d ≥ 2, the plane over ℚ(√d) needs
+> four colours exactly when d ≡ 11 (mod 12); with the upper bounds of Fischer (1990) and Moorhouse (2010),
+> χ(ℚ(√d)²) = 4 for all these d except possibly d ≡ 47, 143, 167 (mod 168), and 4 ≤ χ(ℚ(√47)²) ≤ 5.
+
+It was known that χ(ℚ(√d)²) = 2 unless d ≡ 3 (mod 4), that χ ≥ 3 for d ≡ 3 (mod 4), and that χ ≤ 3 unless
+d ≡ 11 (mod 12); no real quadratic field was known to need four colours before the graphs below. The proof is by
+hand, for every d at once. For d ≡ 23 (mod 24), take the classical unit vector u = ((1 − d)/(1 + d), 2√d/(1 + d)),
+its mirror image, and their rotations by the 4(2k + 1) rational rotations whose denominators divide 5^k, with
+d < 21·5^(k−1) (a sharp bound); for d ≡ 11 (mod 24) add one more vector, (n + i√d)²/(n² + d) with n > 0,
+n ≡ 3 (mod 4) and n ≡ 1 (mod 3^(s+1)), s = v₃(d + 1). No character of the group these generate maps all of them into [1/3, 2/3], so by
+Theorem W above the graph is not 3-colourable. The key step describes exactly the characters of (1/5^k)ℤ[i] that keep
+every rotation in [1/3, 2/3]: a polygon around the bipartite character and four points of order 3. Fischer (1990,
+Theorem 10(ii)) had used the same vector to exclude *additive* colourings with at most six colours when
+d ≡ 23 (mod 24). Two internal referees (separate AI agents with their own programs) checked the proofs; nobody
+outside the project has. The lower bound rests on Theorem W, whose proof for infinite groups is not constructive,
+so no finite graph is exhibited; for 26 of the fields the explicit graphs below give it without Theorem W.
+
+**Read:** [the paper (PDF, draft)](papers/four-colours/four-colours.pdf) ·
+[the note](notes/four_colours_11_mod_12.md) · **Check:**
+`python3 data/quadratic_planes/winding/family/structure_lemma.py 6 3` (exact checks behind the proof, about 20 s)
+and `python3 -m pytest tests/test_winding_family.py` (19 exact certificates for small d, and the valuations of
+the proof for every d ≡ 11 (mod 24) below 20 000)
 
 ## Real quadratic planes (1–2 October 2026)
 
@@ -230,6 +256,7 @@ None of these results has been refereed. Each has one or more of these statuses:
 |---|---|---|
 | **χ(ℚ(√2, √3)²) = 4.** Voronov's second case. The upper bound is also a case of Corollary B′ of [hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction) (July 2026), which we found after our note; the explicit value is not stated there. | Proved; formally verified | [The note](papers/planes-4-chromatic/planes-4-chromatic.pdf), [`lean/Q23.lean`](lean/Q23.lean), [`notes/local_colourings.md`](notes/local_colourings.md) §10, `tests/test_q23.py`. The lower bound was already implicit in Voronov–Neopryatnaya–Dergachev; a 10-vertex chain of unit rhombi gives a short one (`certificates/chain23_no3coloring.json`). |
 | **χ(ℚ(√3, √11)²) = 4**, K. G. Fischer's theorem (1994) | Known; a new short proof, proved and formally verified | [The note](papers/planes-4-chromatic/planes-4-chromatic.pdf), [`lean/Q311.lean`](lean/Q311.lean), [`notes/local_colourings.md`](notes/local_colourings.md) §8, `hn/adelic.py`, `tests/test_q311.py` |
+| **χ(ℚ(√d)²) ≥ 4 for every d ≡ 11 (mod 12).** So a real quadratic plane needs four colours exactly when d ≡ 11 (mod 12), and χ(ℚ(√d)²) = 4 for all these d except possibly d ≡ 47, 143, 167 (mod 168). | Proved by hand, assuming Theorem W; two internal referees; not refereed outside the project | [`notes/four_colours_11_mod_12.md`](notes/four_colours_11_mod_12.md), draft [`papers/four-colours/`](papers/four-colours/four-colours.pdf): explicit sets of unit vectors (one or two vectors rotated by the rational rotations with denominators dividing 5^k) with no character into [1/3, 2/3]. `data/quadratic_planes/winding/family/structure_lemma.py` checks the computations behind the proof in exact arithmetic; 19 exact certificates for small d; `tests/test_winding_family.py` |
 | **χ(ℚ(√d)²) = 4 for d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455, 491, 599, 611, 791, 851, 911, 935, 959, and 4 ≤ χ(ℚ(√47)²) ≤ 5.** The first real quadratic fields known to need four colours, as far as we found: the values known before were 2 and 3. With the known results, χ(ℚ(√d)²) is now known for every squarefree d < 83 except 47. Each lower bound is a triangle-free, vertex-critical unit-distance graph, with 71 to 1 404 vertices. | Computer proof (lower bounds); known (upper bounds); formally verified for d = 11, 119, 131, 179, 191, 251, 431, 455, 911, 935, and for the other graphs given the unsatisfiability of their formulas (checked by cake_lpr) | [`notes/quadratic_planes.md`](notes/quadratic_planes.md): exact unit edges, a stored 4-colouring, 3-colourings of every vertex-deleted graph, and no 3-colouring, by kissat with DRAT proofs checked by drat-trim, twice with separate encodings (`data/quadratic_planes/`). The upper bounds are Moorhouse's reduction at 7, Fischer's Theorem 10 and the reduction at 11. `scripts/verify_quadratic_planes.py`, `tests/test_quadratic_planes.py`. For d = 11, 119, 131, 179, 191, 251, 431, 455, 911 and 935 the theorem is also formally verified: [`lean/Sqrt11.lean`](lean/Sqrt11.lean) and the other `lean/Sqrt{d}.lean`, with the upper bounds in [`lean/QuadraticPlanes.lean`](lean/QuadraticPlanes.lean). For the other fields `lean/Sqrt{d}.lean` proves the theorem from the unsatisfiability of the stored formula ([`lean/ColouringFormula.lean`](lean/ColouringFormula.lean)), which cake_lpr checked |
 | **Theorem W: an abelian Cayley graph is 3-colourable iff a character maps every generator into [1/3, 2/3]** (and maps to C₂ₖ₊₁ iff into [k/(2k+1), (k+1)/(2k+1)]); **Theorem W⁺: for p/q < 4 it maps to K_{p/q} iff a character maps the generators into [q/p, 1 − q/p], so χ_c = 1/κ below 4**, and χ_c(G(ℤ, D)) = 1/κ(D) for three distances (answers Problem 3 of Liu's 2008 survey). Consequences: every set of Bohr recurrence is a set of 3-chromatic recurrence (Katznelson's question for three colours; answers Question 3 of Glasscock–Koutsogiannis–Richter, Bull. AMS 2022); 3-colourable Cayley graphs of ℤ^d have periodic 3-colourings and 3-colourability is decidable; Payan's theorem and the exponent-4 case of Krebs–Sankar at once (the winding number in the proof is theirs; the averaging is new); G(ℤ, D) is 3-colourable iff κ(D) ≥ 1/3; **χ(ℚ(√d)²) = 4 for d = 83, 107, 203, 4 ≤ χ(ℚ(√143)²) ≤ 5 and χ(ℚ(√167)²) ≥ 4**, the fields the graph searches could not settle. | Proved (the theorem); computer proof (the five fields: exact certificates); not refereed outside the project | [`notes/winding_lemma.md`](notes/winding_lemma.md), `data/quadratic_planes/winding/` (certificates, `check_w.py`, `certify_w2.py`), `tests/test_winding.py` |
 | **The p-adic Hadwiger–Nelson problem.** For p ≡ 3 (mod 4) the measurable (hence Borel) chromatic number of ℚ_p² is at least 1 + (p + 1)/(2√p), so it is unbounded: Question 1 of Bardestani and Mallahi-Karai answered in the negative. χ(ℚ₇²) = 4 (and, from Madore's results, χ(ℚ₂²) = 2, χ(ℚ₃²) = 3); χ(ℚ_p²) ≥ 4 for every prime p ≡ 3 (mod 4) with 7 ≤ p < 2 129 503 819; χ(ℚ_p²) = ∞ for p ≡ 1 (mod 4) (from Davies's theorem); in every dimension n, χ(ℚ_p^n) is finite exactly when n = 1, or n = 2 and p ≢ 1 (mod 4), or p = 2 and n ≤ 4, and χ(ℚ₂⁴) = 4. | Proved; the three exact values formally verified | [The draft](papers/padic-planes/padic-planes.pdf), [`lean/PadicPlanes.lean`](lean/PadicPlanes.lean), [`notes/quadratic_planes.md`](notes/quadratic_planes.md) §5, `padic_planes.py`, `padic_measurable.py`, `padic_reach.c`, `tests/test_quadratic_planes.py` |
@@ -327,6 +354,7 @@ sh scripts/worker_setup.sh                   # kissat and drat-trim, for the sea
 | χ(ℚ(√2, √3)²) = 4 | `python3 -m pytest -q tests/test_q23.py` | seconds |
 | χ(ℚ(√3, √11)²) = 4 | `python3 -m pytest -q tests/test_q311.py` | seconds |
 | χ = 4 for ℚ(√d)² with d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455, 491, 599, 611, 791, 851, 911, 935, 959, and 4 ≤ χ(ℚ(√47)²) ≤ 5: the exact edges, the colourings, the stored formulas and the upper bounds; with `--kissat` and `--drat-trim` it writes the formulas again, solves them and checks the proofs, and with `--cake-lpr` the verified checker cake_lpr checks them too (log: `data/quadratic_planes/cake_lpr_checks.txt`) | `python3 scripts/verify_quadratic_planes.py` | about a second; about a minute with the solvers |
+| χ(ℚ(√d)²) ≥ 4 for every d ≡ 11 (mod 12): the exact facts behind the proof, and the certificates for small d | `python3 data/quadratic_planes/winding/family/structure_lemma.py 6 3` and `python3 -m pytest -q tests/test_winding_family.py` | 20 s; about 10 min |
 | χ(ℚ(√d)²) ≥ 4 for d = 83, 107, 143, 167, 203 (Theorem W): the unit vectors, the integer relations, the branch-and-bound tree and every Farkas vector, in exact arithmetic | `python3 data/quadratic_planes/winding/check_w.py data/quadratic_planes/winding/cert_83_510_full.json.gz` (and the other `cert_*.json.gz`) | 3 s to 1 min each |
 | both theorems, formally (needs [elan](https://github.com/leanprover/elan)) | `cd lean && lake exe cache get && lake build && lake env lean PrintAxioms.lean` | minutes |
 | four and five colours suffice for the fields ℚ(√−3, √−11) and ℚ(√−3, √−11, √−247) | `python3 -m pytest -q tests/test_moser_field.py tests/test_reduce11.py` | seconds |

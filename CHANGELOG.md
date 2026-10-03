@@ -29,6 +29,17 @@ including every retracted claim, is the research log,
 
 ### Added
 
+- **Four colours are needed for every `d ≡ 11 (mod 12)`** (3 October, evening). `χ(ℚ(√d)²) ≥ 4` for every
+  `d ≡ 11 (mod 12)`, by a proof by hand from Theorem W (`notes/four_colours_11_mod_12.md`, draft
+  `papers/four-colours/`). So a real quadratic plane needs four colours exactly when `d ≡ 11 (mod 12)`, and
+  `χ(ℚ(√d)²) = 4` for all these `d` except possibly `d ≡ 47, 143, 167 (mod 168)`. The sets of unit vectors are
+  explicit (Fischer's vector `(1 + i√d)²/(1 + d)`, its mirror image and, for `d ≡ 11 (mod 24)`, one more vector,
+  rotated by the rational rotations with denominators dividing `5^k`); the bound on `k` is sharp for
+  `d ≡ 23 (mod 24)`. Two internal referees checked the proofs (no error in the proof of Theorem 1; one wrong
+  generality in the statement of Theorem 1b, for negative `n`, corrected). New: `data/quadratic_planes/winding/family/`
+  (exact checks of the structure lemma, the configurations, the large-`N` criterion, 19 exact certificates) and
+  `tests/test_winding_family.py` (in CI, except the slow certificates).
+
 - **Liu's Problem 3 in Lean** (`lean/DistLiu.lean`, 3 October). For every set `D` of three positive integers,
   `G(ℤ, D)` maps to `K_{p/q}` if and only if some `α` has `‖dα‖ ≥ q/p` for all `d ∈ D`, that is,
   `χ_c(G(ℤ, D)) = 1/κ(D)` (`DistLiu.liu_problem3_iff_unconditional`). Proved from `lean/TheoremWplus.lean` through
