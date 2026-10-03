@@ -388,6 +388,27 @@ def test_two_colour_criterion():
     assert "MISMATCH" not in out
 
 
+def test_padic_signature():
+    """padic_signature.py: a colouring that is a function of the residue at one place above 19 gives agreement 1
+    there, and about the random value at the other place above 19 and at the places above 23"""
+    ps = _load_script("padic_signature")
+    import random
+    rnd = random.Random(5)
+    D, d = 240, 47
+    P = [tuple(rnd.randrange(-2000, 2000) for _ in range(4)) for _ in range(3000)]
+    s = ps.sqrt_mod_pk(d, 19, 1)
+    Dinv = pow(D, -1, 19)
+    col = [((a + b * s) * Dinv + 3 * ((c + e * s) * Dinv)) % 19 % 4 for (a, b, c, e) in P]
+    n, pairs, agree = ps.signature(P, col, D, d, 19, 1, 1)
+    assert n == len({((a + b * s) * Dinv % 19, (c + e * s) * Dinv % 19) for (a, b, c, e) in P}) and agree == pairs
+    _, pairs, agree = ps.signature(P, col, D, d, 19, -1, 1)
+    assert 0.2 < agree / pairs < 0.4
+    for sign in (1, -1):
+        _, pairs, agree = ps.signature(P, col, D, d, 23, sign, 1)
+        assert 0.2 < agree / pairs < 0.4
+    assert pow(ps.sqrt_mod_pk(47, 19, 3), 2, 19 ** 3) == 47
+
+
 def test_hyperbola_plane_25():
     """notes/local_global.md §5: H_25 = Cay(F_25^2, {(t, 1/t)}) has no proper 4-colouring, so a place with residue
     field F_25 where x^2 + y^2 is isotropic is no gate at four colours"""

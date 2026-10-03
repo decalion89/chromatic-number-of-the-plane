@@ -236,8 +236,32 @@ suspected `χ(ℝ²) = 7`.
   (`D = 240`) and the units of `ℚ(√2)` with denominator 3, a new direction meets the
   72 997-point graph over `ℚ(√47)` (share C's colouring) in at most two points, so none
   of them blocks a colouring: the new directions add little at this scale.
-- `ℚ(√47)`: the 19-adic level 2 (130 321 points) is with kissat; a 4-colouring would
-  give `χ(ℚ(√47)²) = 4`.
+- `ℚ(√47)`: the 19-adic level 2 (130 321 points) is with kissat, and with a tabu search
+  (`ls19.c`); a 4-colouring would give `χ(ℚ(√47)²) = 4`.
+
+### A signature of the place above 19 (3 October)
+
+The 4-colourings that the SAT solvers find for the large growth graphs over `ℚ(√47)` are
+not reductions at any place, but they are not unrelated to the places either.
+`data/quadratic_planes/scripts/padic_signature.py` groups the points of a graph by their
+residue modulo `p^r` at a place above `p` and counts, over the pairs of points in one
+class, how often the colours agree. A colouring that factors through that level gives 1;
+one unrelated to the place gives the sum of the squared colour frequencies, here 0.25.
+
+| colouring | 11, levels 1/2/3 | 19, levels 1/2/3 | 23, levels 1/2/3 |
+|---|---|---|---|
+| `b240` (74 497 points, model of 01:55 UTC) | 0.26 / 0.27 / 0.21–0.23 | 0.26 / **0.40–0.41** / **0.48–0.51** | 0.26 / 0.24–0.25 / 0.26–0.28 |
+| share F's `a13` (76 482 points, another seed) | 0.26 / 0.27 / 0.24–0.25 | 0.26 / **0.42–0.43** / **0.48–0.52** | 0.26 / 0.25–0.27 / 0.18 |
+
+The two signs are the two places above `p` (`47` is a square modulo 11, 19 and 23). At 17,
+31 and 43 the level-2 agreement is 0.24 to 0.31. Level 3 has only about 130 pairs per place,
+so those values carry an error of about 0.04; at level 2 there are about 95 000 pairs.
+
+So the solvers' colourings lean towards being locally constant at 19, beyond level 1, and
+not at 11. That is what the question predicts if a 4-colouring of `ℚ(√47)²` comes from the
+place above 19: level 1 needs five colours there, the levels at 11 up to 3 need five, and
+every other place either contains `i` or has `χ_loc ≥ 5`. It is evidence, not a proof: a
+4-colouring of some level of the 19-adic plane would prove `χ(ℚ(√47)²) = 4`, and none is known.
 
 ## References
 

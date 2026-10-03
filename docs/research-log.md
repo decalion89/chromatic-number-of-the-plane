@@ -9443,6 +9443,23 @@ set of directions changes that (`notes/quadratic_planes.md`).
     truncated) and the 695 shrink stopped. The two proof files were deleted; the 695 shrink resumed from its last
     intact core (4 253 points) and the `ℚ(√167)` run restarted from scratch. No result was affected.
 
+- **A signature of the place above 19 in the solvers' colourings (3 October, 03:00 UTC).** The SAT solvers'
+  4-colourings of the large growth graphs over `ℚ(√47)` lean towards being locally constant at 19.
+  `padic_signature.py` groups the points by their residue modulo `p^r` at a place above `p` and counts how often
+  two points in one class have the same colour (1 for a colouring that factors through the level; the sum of the
+  squared colour frequencies, 0.25 here, for one unrelated to the place).
+  - `b240` (74 497 points): at 19, levels 1/2/3 give 0.26 / 0.40–0.41 / 0.48–0.51 (the two places above 19); at
+    11, 0.26 / 0.27 / 0.21–0.23; at 23, 0.26 / 0.24–0.25 / 0.26–0.28; at 17, 31 and 43 the level-2 values are
+    0.24 to 0.31.
+  - Share F's `a13` (76 482 points, another solver seed, another growth): at 19, 0.26 / 0.42–0.43 / 0.48–0.52; at
+    11 and 23, as above.
+  - Level 2 has about 95 000 pairs per place, level 3 about 130 (error about 0.04).
+  This is what `notes/local_global.md` predicts if a 4-colouring of `ℚ(√47)²` comes from the place above 19:
+  level 1 there needs five colours, the 11-adic levels 1 to 3 need five, and every other place contains `i` or
+  has `χ_loc ≥ 5`. It is evidence, not a proof. A tabu search for a 4-colouring of the 19-adic level 2 (`ls19.c`,
+  130 321 vertices, neighbours computed from the 380 unit vectors) started at 03:06 UTC, besides share E's
+  solvers.
+
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; the four-colour case of the
 local–global question (`ℚ(√167)`); smaller witnesses (the
 smallest graphs have 71 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has
