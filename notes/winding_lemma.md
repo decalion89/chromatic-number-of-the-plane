@@ -29,21 +29,54 @@ The "if" direction is the classical bound `χ_c ≤ 1/κ` (Zhu's multiplier meth
 Theorem 3.2, for Cayley graphs of `ℤ/p`). The content of Theorem W is the converse at the thresholds `2 + 1/k`,
 which include 3.
 
-**Recurrence.** In the language of Katznelson's question on Bohr recurrence, the case `k = 1` reads: `S` is a set of
-3-chromatic recurrence (every 3-colouring of `Γ` has two points of one colour that differ by an element of `S`) if
-and only if `S` meets the Bohr set `{g : ‖ξ(g)‖ < 1/3}` of every single character `ξ`. A set of Bohr recurrence
-meets every Bohr neighbourhood of 0, in particular these. So:
+**Recurrence: Katznelson's question for three colours.** In the language of recurrence, the case `k = 1` reads:
+`S` is a set of 3-chromatic recurrence (every 3-colouring of `Γ` has two points of one colour that differ by an
+element of `S`) if and only if `S` meets the Bohr set `{g : ‖ξ(g)‖ < 1/3}` of every single character `ξ`. A set of
+Bohr recurrence meets every Bohr neighbourhood of 0, in particular these. So:
 
 > **Corollary (three colours of Katznelson's question).** In every abelian group, every set of Bohr recurrence is a
-> set of 3-chromatic recurrence. Equivalently, every 3-colourable abelian Cayley graph has a 3-colouring by Bohr
-> sets: the colour classes `ξ⁻¹[0, 1/3)`, `ξ⁻¹[1/3, 2/3)`, `ξ⁻¹[2/3, 1)` of one character `ξ`.
+> set of 3-chromatic recurrence. For `ℕ`: for every 3-colouring `ℕ = A₁ ∪ A₂ ∪ A₃` there is an `α` such that
+> `(A₁ − A₁) ∪ (A₂ − A₂) ∪ (A₃ − A₃) ⊇ {n ∈ ℕ : ‖nα‖ < 1/3}`; in particular this union is a Bohr₀ set. More
+> generally, every 3-colourable abelian Cayley graph has a 3-colouring whose colour classes are the preimages
+> `ξ⁻¹[0, 1/3)`, `ξ⁻¹[1/3, 2/3)`, `ξ⁻¹[2/3, 1)` under a single character `ξ`.
 
-Katznelson's question asks whether every set of Bohr recurrence is a set of chromatic recurrence for every number
-of colours; it is open, and Griesmer (arXiv:2108.02190) notes that the answer is not known for any countably
-infinite abelian group. For two colours the statement is easy (a bipartite Cayley graph has a character with
-`ξ(S) = {1/2}`). We have not found the case of three colours stated in Griesmer's paper, in Host, Kra and Maass
-("Variations on topological recurrence", Monatsh. Math. 2016), or in Liu, Wu, Yang and Zhang (arXiv:2603.05490);
-we have not been able to read Katznelson's paper (Combinatorica 21 (2001), 211–219).
+For `ℕ`, let `S = ℤ ∖ ⋃ᵢ (Aᵢ − Aᵢ)`. Every finite piece of `Cay(ℤ, S)` can be translated into `ℕ`, where the given
+colouring is proper on it, so `Cay(ℤ, S)` is 3-colourable (de Bruijn–Erdős). Theorem W then gives `α` with
+`‖sα‖ ≥ 1/3` for all `s ∈ S`, that is, `{n : ‖nα‖ < 1/3}` misses `S`.
+
+This answers Question 3 of Glasscock, Koutsogiannis and Richter ("On Katznelson's question for skew product
+systems", Bull. Amer. Math. Soc. 59 (2022), 569–606; arXiv:2106.11393), who proved the case of two colours (their
+Theorem 4.9) and wrote that it was not known for three. As they remark, it follows that the difference set
+`A − A` of a set `A` with `A ∪ (A − ℓ₁) ∪ (A − ℓ₂) ⊇ ℕ` is a Bohr₀ set. Katznelson's question asks whether every
+set of Bohr recurrence is a set of chromatic recurrence for every number of colours. It is open: Griesmer
+(arXiv:2108.02190) notes that the answer is not known for any countably infinite abelian group. Alweiss
+(arXiv:2511.21680, §3) notes that a counterexample needs at least 3 colours; by the corollary it needs at least 4.
+For two colours the statement is easy (a bipartite Cayley graph has a character with `ξ(S) = {1/2}`). We have not
+found the case of three colours in the literature we read: the papers above, Host, Kra and Maass ("Variations on
+topological recurrence", Monatsh. Math. 179 (2016)), and Liu, Wu, Yang and Zhang (arXiv:2603.05490). A separate
+agent made an independent search with the same result. We have not been able to read Katznelson's paper
+(Combinatorica 21 (2001), 211–219).
+
+**Periodic colourings.** Let `Γ` be finitely generated and `S` finite. In coordinates `Γ ≅ ℤ^r × F` the characters
+with `ξ(S) ⊆ [k/n, (k+1)/n]` form a finite union of polytopes with rational vertices in the torus, so if there is
+one there is one of finite order `N`, and the colouring `c = 2⌊nξ⌋ mod n` of the proof below is invariant under the
+subgroup `ker ξ ⊇ NΓ`, of finite index. So:
+
+> **Corollary (periodic colourings).** If a Cayley graph of a finitely generated abelian group with a finite
+> connection set (for example a Cayley graph of `ℤ^d`) has a homomorphism to `C_{2k+1}`, in particular if it is
+> 3-colourable, then it has one that is invariant under a subgroup of finite index; and whether it has one is
+> decidable (enumerate the vertices of the polytopes).
+
+For `d = 1` (distance graphs) optimal colourings are periodic for any number of colours, by a pigeonhole argument
+on windows. For `d ≥ 2` that argument fails, and subshifts of finite type on `ℤ²` can be aperiodic. Abrishami,
+Esperet, Giocanti, Hamann, Knappe and Möller (arXiv:2411.01951, Problem 4.6) ask whether every graph with a periodic
+proper colouring has a periodic proper colouring with `χ(G)` colours. They show that the answer is yes for graphs of
+bounded pathwidth (for instance Cayley graphs of 2-ended groups) and no for some ∞-ended graphs. Cayley graphs of
+`ℤ^d`, `d ≥ 2`, are 1-ended; the corollary gives the answer yes for abelian Cayley graphs with `χ ≤ 3`. Vallentin,
+Weißbach and Zimmermann (arXiv:2407.03513) note that it is not known whether the chromatic number of a lattice (the
+Cayley graph of `Λ ≅ ℤⁿ` on its strict Voronoi vectors) is computable, and ask whether there is always a periodic
+colouring with `χ(Λ)` colours. By the corollary, whether `χ(Λ) ≤ 3` is decidable, and if it is, a periodic
+3-colouring exists.
 
 ## 2. Proof
 
@@ -211,9 +244,12 @@ averaging.
     2303.06272. The last characterises 3-colourability for small dimension and rank by two forbidden subgraphs,
     diamond lanyards and `C₁₃(1, 5)`; `C₁₃(1, 5)` indeed has no suitable character. Also Krebs and Leyva,
     arXiv:2511.03028.
-  - On Bohr recurrence: Katznelson, Combinatorica 21 (2001) (not seen by us); Griesmer, arXiv:2108.02190; Host, Kra
-    and Maass, Monatsh. Math. 2016; Liu, Wu, Yang and Zhang, arXiv:2603.05490. Perarnau and Serra,
-    arXiv:2409.20160, §3.5, has `χ_f ≤ χ_c ≤ 1/κ`.
+  - On Bohr recurrence: Katznelson, Combinatorica 21 (2001) (not seen by us); Glasscock, Koutsogiannis and Richter,
+    Bull. Amer. Math. Soc. 59 (2022) (their Question 3 is answered in §1); Griesmer, arXiv:2108.02190; Host, Kra and
+    Maass, Monatsh. Math. 2016; Alweiss, arXiv:2511.21680; Liu, Wu, Yang and Zhang, arXiv:2603.05490. Perarnau and
+    Serra, arXiv:2409.20160, §3.5, has `χ_f ≤ χ_c ≤ 1/κ`.
+  - On periodic colourings and computability: Abrishami, Esperet, Giocanti, Hamann, Knappe and Möller,
+    arXiv:2411.01951; Vallentin, Weißbach and Zimmermann, arXiv:2407.03513 (see §1).
   - We did not find Theorem W in any of these, nor in web searches on characters, circular colourings and odd-cycle
     homomorphisms of Cayley graphs. The proof uses only classical tools, so an earlier occurrence is possible; we
     would be glad to learn of one.

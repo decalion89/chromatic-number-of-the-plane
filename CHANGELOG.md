@@ -27,7 +27,10 @@ including every retracted claim, is the research log,
   `C_{2k+1}` if and only if some character maps them into `[k/(2k+1), (k+1)/(2k+1)]`). Steps 1–2 of the proof are
   the discrete winding number of Krebs–Sankar; the averaging step is new. It gives Payan's theorem, the exponent-4
   case of Krebs–Sankar, for distance graphs `χ ≤ 3` iff `κ(D) ≥ 1/3`, and the three-colour case of Katznelson's
-  question (every set of Bohr recurrence is a set of 3-chromatic recurrence). Over `ℚ(√d)` it turns
+  question: every set of Bohr recurrence is a set of 3-chromatic recurrence, and for every 3-colouring of `ℕ` the
+  union of the difference sets of the classes contains `{n : ‖nα‖ < 1/3}` for some `α` (Question 3 of Glasscock,
+  Koutsogiannis and Richter, Bull. Amer. Math. Soc. 59 (2022)). Also: 3-colourable Cayley graphs of finitely
+  generated abelian groups have periodic 3-colourings, and 3-colourability is decidable. Over `ℚ(√d)` it turns
   3-colourability into a question on a 4-torus, settled by exact branch-and-bound certificates
   (`data/quadratic_planes/winding/`: `certify_w2.py`, the independent checker `check_w.py`, six certificates):
   `χ(ℚ(√d)²) = 4` for `d = 83, 107, 203`, `4 ≤ χ(ℚ(√143)²) ≤ 5`, `χ(ℚ(√167)²) ≥ 4`, the fields the graph searches
