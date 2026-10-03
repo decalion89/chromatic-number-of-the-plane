@@ -9472,9 +9472,15 @@ set of directions changes that (`notes/quadratic_planes.md`).
   in any colouring. The 108 directions of `D = 240` fall into only 60 classes modulo `19²`, with 128 ordered pairs
   `u + u′ ≡ 0 (mod 19²)`, `u′ ≠ −u`; modulo `23²` and `31²` all 108 are distinct. So at 19 more same-class pairs
   are close in the graph, and nothing is left at long range: the colourings do not lean towards the place above
-  19. `padic_signature.py` now has `--by-distance`, and the note (§5) says so. A control over `ℚ(√7)` (a growth that
-  stalls at 2 652 points, where the place above 3 has a 3-colouring) gave 0.64 at one place above 3 and 0.34 at the
-  other, against 0.34 by chance; it has not been split by distance yet.
+  19. `padic_signature.py` now has `--by-distance`, and the note (§5) says so.
+  - **The method, split by distance, does detect a real local colouring.** Control over `ℚ(√7)`: a three-colour
+    growth (`D = 520`) stalls at 2 652 points, that is, its last 3-colouring extends to every candidate point; the
+    plane has a 3-colouring at each place above 3. At one place above 3, level 1, the same-class pairs agree 0.797
+    at distance 2, 0.696 at distance 3, 0.696 at distance 4 and 0.479 at distance 5 or more, against 0.336 by
+    chance; at the other place, 0.479 / 0.248 / 0.347 / 0.323, and at 29, 0.28 to 0.34 beyond distance 4. So that
+    colouring is close to the reduction at one place above 3, at odd and at long distance. The 4-colourings over
+    `ℚ(√47)` show nothing of the kind at 11 or 19, levels 1 and 2 (0.232 and 0.242 beyond distance 4): they are not
+    close to a colouring that factors through those levels.
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; the four-colour case of the
 local–global question (`ℚ(√167)`); smaller witnesses (the
 smallest graphs have 71 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has

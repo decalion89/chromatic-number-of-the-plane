@@ -253,6 +253,12 @@ with `D = 240` fall into only 60 classes modulo `19²` (128 ordered pairs `u + u
 108 classes modulo `23²` and `31²`. So more same-class pairs are close in the graph at 19, and that is all the
 excess shows. There is no long-range agreement, so these colourings say nothing about the place above 19.
 
+Split by distance, the method does see a real local colouring. Over `ℚ(√7)`, whose plane has a 3-colouring
+at each place above 3, a three-colour growth stalls at 2 652 points (its colouring extends to every candidate),
+and at one place above 3 its pairs agree 0.70 at distance 3 and 0.48 at distance 5 or more, against 0.34 by
+chance; at the other place and at 29 they do not. The 4-colourings over `ℚ(√47)` are not close to a colouring
+that factors through levels 1 or 2 at 11 or 19.
+
 ## References
 
 - M. F. Atiyah and I. G. Macdonald, *Introduction to Commutative Algebra*, Lemma 5.19 and
