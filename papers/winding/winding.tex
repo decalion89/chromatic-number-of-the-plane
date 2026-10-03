@@ -441,6 +441,14 @@ $x^2+y^2=1$ of $\mathbb{F}_{11}^2$, whose graph is $5$-colourable \cite{QP}, whi
 valuation ring.
 \end{proof}
 
+\begin{remark}[added 3 October 2026]
+A later draft \cite{FC} proves $\chi(\Q(\sqrt d)^2)\ge4$ for every $d\equiv11\pmod{12}$, by hand: for each such $d$
+it gives a finite set $U$ of unit vectors (Fischer's vector $(1+i\sqrt d)^2/(1+d)$, its mirror image and, when
+$d\equiv11\pmod{24}$, one more vector, all rotated by the rational rotations whose denominators divide a power of
+$5$) for which no character of $\Z U$ maps $U$ into $[1/3,2/3]$, and applies Corollary~\ref{cor:planes}. The
+certificates of Table~\ref{tab:certs} remain an independent check for the five fields of Theorem~\ref{thm:fields}.
+\end{remark}
+
 \begin{table}[ht]
 \centering
 \begin{tabular}{rrrrrr}
@@ -602,6 +610,8 @@ proofs, 2026. Archived at Zenodo, \href{https://doi.org/10.5281/zenodo.22976635}
 checker cited here are in \texttt{data/quadratic\_planes/winding/}, and the account is
 \texttt{notes/winding\_lemma.md}; these files and the Lean files cited here are in the development version and will
 appear in the next archived version.
+\bibitem{FC} S. Gal\'an, \emph{Which real quadratic planes need four colours}, draft, 2026,
+\texttt{papers/four-colours/} in \cite{Repo}.
 \bibitem{LG} S. Gal\'an, \emph{Two-colourable planes over number fields}, draft, 2026, in \cite{Repo}.
 \bibitem{QP} S. Gal\'an, \emph{Real quadratic planes that need four colours}, draft, 2026, in \cite{Repo}.
 \bibitem{GKM} I. Garc\'ia-Marco, K. Knauer and G. Menara, \emph{Coloring semiminimal Cayley graphs},

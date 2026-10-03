@@ -4,7 +4,8 @@
 repository hn-2adic-obstruction (July 2026) and was also in `notes/local_colourings.md`, and its
 Step 1 is Fischer's Theorem 1(iii) (1990); the converse is ours. The rest is a question, with the
 evidence we have and the tests under way. A separate agent refereed this note (its findings are applied below);
-nobody outside the project has.*
+nobody outside the project has. For three colours and real quadratic fields the question is now answered:
+`notes/four_colours_11_mod_12.md` proves what §3 predicts.*
 
 Let `F` be a number field and give `F²` the unit-distance relation
 `(x − x′)² + (y − y′)² = 1`. This is algebraic, so the same relation makes sense on
@@ -161,15 +162,21 @@ For real quadratic `F = ℚ(√d)` (squarefree `d`), the places with a locally c
   `1/3`. (For `ℚ₇(√7)`, which occurs for `d = 203`, levels 4 and up are not checked.)
 
 So `LG_3` predicts `χ(ℚ(√d)²) ≥ 4` for every `d ≡ 11 (mod 12)` (for `d = 203`, unless a
-deep level at 7 is 3-colourable). This is proved for the 27 values in
+deep level at 7 is 3-colourable).
+
+> **Update (3 October 2026, late).** This is now proved for every `d ≡ 11 (mod 12)`
+> (`notes/four_colours_11_mod_12.md`, Theorem 1; draft `papers/four-colours/`), by hand, from Theorem W
+> (`notes/winding_lemma.md`). So `LG_3` holds for every real quadratic field: `χ(ℚ(√d)²) ≤ 3` exactly when a place
+> above 2 or 3 has a locally constant 3-colouring. Two internal referees checked the proof; nobody outside the
+> project has. What follows is the evidence as it stood before the proof. This is proved for the 27 values in
 `notes/quadratic_planes.md` (11, 23, 35, 47, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251,
 263, 359, 431, 443, 455, 491, 599, 611, 791, 851, 911, 935, 959), with certified graphs,
 and, since 3 October, for `d = 83, 107, 143, 167, 203`, which the growth searches could not settle: there
 the proof is Theorem W of `notes/winding_lemma.md` (3-colourings of an abelian Cayley graph come from
 characters) with an exact certificate that no character works for the unit vectors of one denominator. So the
 prediction holds for every `d ≡ 11 (mod 12)` below 210, including `d = 203` (no level at 7 is 3-colourable).
-A scan of all `d ≡ 11 (mod 12)` up to 2000 is under way. No real quadratic field is known where the prediction
-fails.
+A scan of all `d ≡ 11 (mod 12)` up to 2000 was then under way; since Theorem 1 it is a cross-check. No real quadratic
+field is known where the prediction fails.
 
 Other exact values agree with `min_v χ_loc(v)`: `χ(ℚ²) = 2`; Madore's
 `χ(ℚ(√3)²) = χ(ℚ(√7)²) = 3`; our `χ(ℚ(√2, √3)²) = 4` and Fischer's

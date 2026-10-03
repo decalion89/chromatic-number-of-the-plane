@@ -357,7 +357,8 @@ averaging.
   integer coordinates, relations and branch values, and exact fractions in the Farkas vectors. So it cannot be fooled
   by `python -O` or by floating-point entries. The referee also checked every certificate with a checker of its own.
 - **Scan.** `scan_all.py` runs the test, with certificates, over every squarefree `d ≡ 11 (mod 12)` in a range. The
-  runs up to 2000 are in progress.
+  runs up to 2000 are in progress. Since 3 October they are a cross-check: `notes/four_colours_11_mod_12.md` proves
+  `χ(ℚ(√d)²) ≥ 4` for every `d ≡ 11 (mod 12)` from Theorem W, with an explicit set of unit vectors for each `d`.
 - **Literature.**
   - Closest: Krebs and Sankar (the same winding number for `K₃`, used for torsion fundamental groups), and
     Brewster, McGuinness, Moore and Noel and Brewster and Moore (the wind of `(p, q)`-colourings for `p/q < 4`, used

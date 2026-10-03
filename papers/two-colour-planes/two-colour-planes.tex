@@ -55,7 +55,8 @@ degree, and it holds for the plane of any nondegenerate binary form $x^2+cy^2$, 
 $F(i)$. We then ask whether, for a real number field, $\chi(F^2)$ is always the least number of colours of a
 colouring of a single completion $F_v^2$ that is locally constant (Borel at a real place); the theorem is the case
 of two colours. For three colours the question
-predicts $\chi(\Q(\sqrt d)^2)\ge4$ for every squarefree $d\equiv11\pmod{12}$, and for four colours a positive
+predicts $\chi(\Q(\sqrt d)^2)\ge4$ for every squarefree $d\equiv11\pmod{12}$ (proved since, in a later draft), and
+for four colours a positive
 answer for $\Q(\sqrt{167})$ would give a triangle-free $5$-chromatic unit-distance graph in the plane.
 \end{abstract}
 
@@ -276,7 +277,9 @@ In both cases $\chiloc(v)\ge\chi(\Q(\sqrt{11})^2)=4$ \cite{QP}. Above a prime $p
 $\chiloc(v)\ge\chiM(\Q_p^2)\ge4$. So Question~\ref{q:lg} predicts
 $\chi(\Q(\sqrt d)^2)\ge4$ for every squarefree $d\equiv11\pmod{12}$. This has been checked, by unit-distance
 graphs with certified proofs of non-$3$-colourability, for $27$ values of $d$ \cite{QP}; no counterexample is
-known.
+known. \emph{[Added 3 October 2026.]} A later draft \cite{FC} proves $\chi(\Q(\sqrt d)^2)\ge4$ for every
+$d\equiv11\pmod{12}$. So for three colours the answer to Question~\ref{q:lg} is positive for every real quadratic
+field: $\chi(\Q(\sqrt d)^2)\le3$ exactly when a place above $2$ or $3$ has a locally constant $3$-colouring.
 
 Colourings that are locally constant at several anisotropic finite places colour a categorical product of finite
 level graphs, since $T$ is dense in the product of the local groups $T(F_v)$; they can do better than every
@@ -331,6 +334,8 @@ Math. \textbf{82} (1990), 181--195.
 proofs, 2026. Archived at Zenodo, \href{https://doi.org/10.5281/zenodo.22976635}{doi:10.5281/zenodo.22976635}
 (all versions); source at \url{https://github.com/decalion89/chromatic-number-of-the-plane}; the scripts cited here
 are in \texttt{data/quadratic\_planes/scripts/}, and the account is \texttt{notes/local\_global.md}.
+\bibitem{FC} S. Gal\'an, \emph{Which real quadratic planes need four colours}, draft, 2026,
+\texttt{papers/four-colours/} in \cite{Repo}.
 \bibitem{PP} S. Gal\'an, \emph{Colouring the $p$-adic plane}, draft, 2026, in \cite{Repo}
 (\texttt{papers/padic-planes/}).
 \bibitem{QP} S. Gal\'an, \emph{Real quadratic planes that need four colours}, draft, 2026, in \cite{Repo}
