@@ -30,3 +30,5 @@
 'PadicPlanes.padicSeven_chromaticNumber' depends on axioms: [propext, Classical.choice, Quot.sound]
 'PadicPlanes.padicThree_chromaticNumber' depends on axioms: [propext, Classical.choice, Quot.sound]
 'PadicPlanes.padicTwo_chromaticNumber' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TheoremW.theoremW_finite' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TheoremW.theoremW_finite_finset' depends on axioms: [propext, Classical.choice, Quot.sound]

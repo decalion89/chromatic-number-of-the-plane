@@ -28,6 +28,7 @@ import Sqrt791
 import Sqrt851
 import Sqrt959
 import PadicPlanes
+import TheoremW
 
 -- The axioms the theorems depend on; `axioms.expected` holds the expected output.
 #print axioms Q23.chromaticNumber_eq_four
@@ -62,3 +63,5 @@ import PadicPlanes
 #print axioms PadicPlanes.padicSeven_chromaticNumber
 #print axioms PadicPlanes.padicThree_chromaticNumber
 #print axioms PadicPlanes.padicTwo_chromaticNumber
+#print axioms TheoremW.theoremW_finite
+#print axioms TheoremW.theoremW_finite_finset

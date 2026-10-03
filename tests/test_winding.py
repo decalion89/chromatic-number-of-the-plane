@@ -180,3 +180,24 @@ def test_checker_rejects_bad_certificates(tmp_path):
         bad = tmp_path / "bad.json"; bad.write_text(json.dumps(m))
         with pytest.raises(CertificateError):
             check(str(bad))
+
+
+def test_lean_theorem_w_is_built_and_checked():
+    """lean/TheoremW.lean (Theorem W for three colours and finite abelian groups) is a default target, its two
+    theorems are in PrintAxioms.lean and axioms.expected with the standard axioms only, the Lean workflow replays it
+    in the kernel, and it has no sorry."""
+    lean = os.path.join(ROOT, "lean")
+    src = open(os.path.join(lean, "TheoremW.lean"), encoding="utf-8").read()
+    assert "sorry" not in src and "admit" not in src and "native_decide" not in src
+    lake = open(os.path.join(lean, "lakefile.toml"), encoding="utf-8").read()
+    default = lake.split("defaultTargets = [", 1)[1].split("]", 1)[0]
+    assert 'name = "TheoremW"' in lake and '"TheoremW"' in default
+    pa = open(os.path.join(lean, "PrintAxioms.lean"), encoding="utf-8").read()
+    ax = open(os.path.join(lean, "axioms.expected"), encoding="utf-8").read().splitlines()
+    assert "import TheoremW\n" in pa
+    for t in ("theoremW_finite", "theoremW_finite_finset"):
+        assert f"theorem {t} " in src
+        assert f"#print axioms TheoremW.{t}\n" in pa
+        assert f"'TheoremW.{t}' depends on axioms: [propext, Classical.choice, Quot.sound]" in ax
+    wf = open(os.path.join(ROOT, ".github", "workflows", "lean.yml"), encoding="utf-8").read()
+    assert "TheoremW" in wf.split("for m in ", 1)[1].split(";", 1)[0].split()
