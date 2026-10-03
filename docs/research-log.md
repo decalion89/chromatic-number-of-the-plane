@@ -9572,3 +9572,43 @@ refereed this.
   vectors in one lattice, on one ellipse): every 5- and 6-subset of the vectors of norm `N < 400` of 14 binary forms
   has a character. Evidence for `χ_max(5) = χ_max(6) = 3`, not a proof. The only quadratic orders where the local
   argument at 2 or 3 does not already give a character are `ℚ(√−m)` with `m ≡ 11 (mod 12)`.
+
+## Theorem W in Lean, a referee of the corollaries, and aperiodic colourings (3 October)
+
+- **Lean.** A separate agent formalised the case `k = 1` of Theorem W for finite abelian groups
+  (`lean/TheoremW.lean`): a proper 3-colouring `c : G → ZMod 3` of `Cay(G, S)`, `S` symmetric, gives a character
+  `ξ : closure S →+ AddCircle 1` with every `ξ s` represented by a real number in `[1/3, 2/3]`. The proof follows the
+  note: winding sums of walks, squares do not wind (so the sum is invariant under permutations of the steps), and
+  the average `ξ₀(s) = (F(s)/(3|H|) + 1)/2` over `H = closure S`. No `sorry`; only `propext`, `Classical.choice`
+  and `Quot.sound`. Rebuilt here from the source (16 s against the shared Mathlib), replayed with `leanchecker`, and
+  `PrintAxioms.lean` matches `axioms.expected`. Commit 5b6c92a2.
+- **Referee of the two corollaries** (a separate agent; its scripts stay in the scratch area). Verdict: both
+  correct as stated in the corollaries; the fixes, all applied to the note and the paper:
+  - the abstract and the text around the periodicity corollary omitted "finite connection set", without which the
+    statement is false (for irrational `α` and `S = {n : ‖nα‖ ≥ 1/3}`, `Cay(ℤ, S)` is 3-colourable but `S` meets
+    every `Mℤ`, so no proper colouring is periodic); the case `χ = 2` needs the parity character (now said);
+  - "for `ℤ` optimal colourings are periodic" is false as worded (`G(ℤ, {1, 4})` has about `1.38^L` 3-colourings of
+    a segment of length `L`): now "there are periodic optimal colourings";
+  - the argument that the radius `1/3` is sharp only showed that the union of difference sets is
+    `U = {n : ‖nα‖ < 1/3}`, not that `U` contains no `{n : ‖nβ‖ < δ}` with `δ > 1/3`; the referee's argument through
+    the closure `H` of the multiples of `(α, β)` in `𝕋²` is now in both texts;
+  - smaller points: define Bohr neighbourhoods (Griesmer, Definition 1.2); `S = −S` and `0 ∉ S` in the proof for
+    `ℕ`; "locally finite graph" in Problem 4.6 of Abrishami et al.; decidability for lattices assumes the strict
+    Voronoi vectors are given in lattice coordinates.
+  - Its computations: all 3-colourings of `ℤ/P`, `P ≤ 16` (about 6.5·10⁷), read as periodic colourings of `ℕ`,
+    satisfy the corollary with `α = j/P`; 708 SAT colourings with `17 ≤ P ≤ 100`; 23 968 rotation codings
+    `n ↦ colour({nθ})` over 3-coloured arcs (every valid `α` is then `mθ`; all pass with `1 ≤ m ≤ 6`); for the golden
+    `θ` and 50 001 values of `β` with `δ = 1/3 + 10⁻⁴`, a witness `n ≤ 562` every time. These test periodic colourings
+    and rotation codings only. A web search found no earlier answer to Question 3 of Glasscock, Koutsogiannis and
+    Richter.
+- **Many colours: periodicity fails** (Proposition in the note and the paper). For finite `F` and
+  `S_F = (F − F) ∖ {0}`, the proper `|F|`-colourings of `Cay(Γ, S_F)` are exactly the tilings by `F` (each translate
+  `x + F` is a clique of size `|F|`, so it meets every colour class once). With Greenfeld and Tao's counterexample to
+  the periodic tiling conjecture (Ann. of Math. 200 (2024), 301–363; in `ℤ² × G₀` and in `ℤ^d`), some Cayley graphs
+  of `ℤ^d` have no periodic proper colouring with `χ` colours. Since every automorphism of a connected Cayley graph of
+  `ℤ^d` is affine (Morris, Morris and Verret, New York J. Math. 22 (2016), after Ryabchenko), this gives a negative
+  answer to Problem 4.6 of Abrishami et al. for Cayley graphs of `ℤ^d`, against the positive answer for `χ ≤ 3`. We
+  found no earlier statement (web searches; the June 2025 version of Abrishami et al. does not mention tilings); it
+  is a direct translation of Greenfeld and Tao's theorem. Open: the least such `k` (at least 4), periodicity for
+  Cayley graphs of `ℤ²` (single tiles of `ℤ²` tile periodically, Bhattacharya 2020), and decidability of
+  `k`-colourability for `k ≥ 4` (Greenfeld and Tao's undecidability of monotiling is for periodic subsets).

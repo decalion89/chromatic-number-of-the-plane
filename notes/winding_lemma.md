@@ -32,22 +32,43 @@ which include 3.
 **Recurrence: Katznelson's question for three colours.** In the language of recurrence, the case `k = 1` reads:
 `S` is a set of 3-chromatic recurrence (every 3-colouring of `Γ` has two points of one colour that differ by an
 element of `S`) if and only if `S` meets the Bohr set `{g : ‖ξ(g)‖ < 1/3}` of every single character `ξ`. A set of
-Bohr recurrence meets every Bohr neighbourhood of 0, in particular these. So:
+Bohr recurrence meets every Bohr neighbourhood of 0 (every set `{g : ‖ξ₁(g)‖ < ε, …, ‖ξ_m(g)‖ < ε}` with characters
+`ξⱼ` and `ε > 0`; Griesmer, arXiv:2108.02190, Definition 1.2), in particular these. So:
 
 > **Corollary (three colours of Katznelson's question).** In every abelian group, every set of Bohr recurrence is a
 > set of 3-chromatic recurrence. For `ℕ`: for every 3-colouring `ℕ = A₁ ∪ A₂ ∪ A₃` there is an `α` such that
 > `(A₁ − A₁) ∪ (A₂ − A₂) ∪ (A₃ − A₃) ⊇ {n ∈ ℕ : ‖nα‖ < 1/3}`; in particular this union is a Bohr₀ set. More
-> generally, every 3-colourable abelian Cayley graph has a 3-colouring whose colour classes are the preimages
+> generally, every 3-colourable Cayley graph of an abelian group has a 3-colouring whose colour classes are the preimages
 > `ξ⁻¹[0, 1/3)`, `ξ⁻¹[1/3, 2/3)`, `ξ⁻¹[2/3, 1)` under a single character `ξ`.
 
-For `ℕ`, let `S = ℤ ∖ ⋃ᵢ (Aᵢ − Aᵢ)`. Every finite piece of `Cay(ℤ, S)` can be translated into `ℕ`, where the given
+For `ℕ`, let `S = ℤ ∖ ⋃ᵢ (Aᵢ − Aᵢ)`; then `S = −S` (each `Aᵢ − Aᵢ` is symmetric) and `0 ∉ S` (some `Aᵢ` is
+nonempty). Every finite piece of `Cay(ℤ, S)` can be translated into `ℕ`, where the given
 colouring is proper on it, so `Cay(ℤ, S)` is 3-colourable (de Bruijn–Erdős). Theorem W then gives `α` with
 `‖sα‖ ≥ 1/3` for all `s ∈ S`, that is, `{n : ‖nα‖ < 1/3}` misses `S`.
+
+For `Γ = ℤ` no invariant mean is needed. If `S` is finite with largest element `L` and `c` is a 3-colouring of
+`Cay(ℤ, S)`, two windows `[i, i + L)` and `[j, j + L)` with `i < j` carry the same colours, and repeating `c` on
+`[i, j)` with period `N = j − i` is again a proper colouring. This is a 3-colouring of `Cay(ℤ/N, S)`, and Theorem W for
+the finite group `ℤ/N`, where `m` is the plain average, gives `α ∈ (1/N)ℤ/ℤ`. For infinite `S`, apply this to finite
+`S_m ↑ S` and take a limit point of the `α_m` in the circle; the conditions `‖sα‖ ≥ 1/3` are closed. So the answer to
+Question 3 below needs only Theorem W for finite cyclic groups.
+
+The radius `1/3` cannot be improved. For irrational `α`, the colouring `n ↦ ⌊3{nα}⌋` of `ℕ` has
+`⋃ᵢ (Aᵢ − Aᵢ) ∩ ℕ = U := {n ≥ 1 : ‖nα‖ < 1/3}`, and `U` contains no set `{n ≥ 1 : ‖nβ‖ < δ}` with `δ > 1/3`. Indeed,
+let `H` be the closure of the multiples of `(α, β)` in `𝕋²`; the multiples with `n ≥ 1` are dense in `H`, so it
+suffices to find `(x, y) ∈ H` with `‖x‖ > 1/3` and `‖y‖ < δ`. If `H = 𝕋²`, take `(1/2, 0)`. Otherwise
+`H = {(x, y) : ax + by = 0}` for a generator `(a, b)` of the annihilator of `H` in `ℤ²`, and `b ≠ 0` because `α` is
+irrational. If `|b| ≥ 2`, some `(1/2, y) ∈ H` has `‖y‖ ≤ 1/4`. If `b = ±1`, then `H = {(x, cx)}` for an integer `c`,
+and `x = 1/3 + ε` with small `ε > 0` has `‖cx‖ ≤ 1/3 + |c|ε < δ`. (The referee's check of this argument and of the
+corollary is recorded in the research log.)
 
 This answers Question 3 of Glasscock, Koutsogiannis and Richter ("On Katznelson's question for skew product
 systems", Bull. Amer. Math. Soc. 59 (2022), 569–606; arXiv:2106.11393), who proved the case of two colours (their
 Theorem 4.9) and wrote that it was not known for three. As they remark, it follows that the difference set
-`A − A` of a set `A` with `A ∪ (A − ℓ₁) ∪ (A − ℓ₂) ⊇ ℕ` is a Bohr₀ set. Katznelson's question asks whether every
+`A − A` of a set `A` with `A ∪ (A − ℓ₁) ∪ (A − ℓ₂) ⊇ ℕ` is a Bohr₀ set. The same holds in every abelian group `Γ`,
+directly from Theorem W: for every 3-colouring `Γ = A₁ ∪ A₂ ∪ A₃` some character `ξ` has
+`⋃ᵢ (Aᵢ − Aᵢ) ⊇ {g : ‖ξ(g)‖ < 1/3}`. So if three translates of `A ⊆ ℤ^d` cover `ℤ^d`, then `A − A` contains
+`{z : ‖z · λ‖ < 1/3}` for some `λ ∈ 𝕋^d`: the case of three translates of their Question 8. Katznelson's question asks whether every
 set of Bohr recurrence is a set of chromatic recurrence for every number of colours. It is open: Griesmer
 (arXiv:2108.02190) notes that the answer is not known for any countably infinite abelian group. Alweiss
 (arXiv:2511.21680, §3) notes that a counterexample needs at least 3 colours; by the corollary it needs at least 4.
@@ -67,16 +88,48 @@ subgroup `ker ξ ⊇ NΓ`, of finite index. So:
 > 3-colourable, then it has one that is invariant under a subgroup of finite index; and whether it has one is
 > decidable (enumerate the vertices of the polytopes).
 
-For `d = 1` (distance graphs) optimal colourings are periodic for any number of colours, by a pigeonhole argument
-on windows. For `d ≥ 2` that argument fails, and subshifts of finite type on `ℤ²` can be aperiodic. Abrishami,
-Esperet, Giocanti, Hamann, Knappe and Möller (arXiv:2411.01951, Problem 4.6) ask whether every graph with a periodic
+For `d = 1` and finite `S` (distance graphs) there are periodic optimal colourings for any number of colours, by a
+pigeonhole argument on windows (not every optimal colouring is periodic). For `d ≥ 2` that argument fails, and subshifts of finite type on `ℤ²` can be aperiodic. Abrishami,
+Esperet, Giocanti, Hamann, Knappe and Möller (arXiv:2411.01951, Problem 4.6) ask whether every locally finite graph with a periodic
 proper colouring has a periodic proper colouring with `χ(G)` colours. They show that the answer is yes for graphs of
 bounded pathwidth (for instance Cayley graphs of 2-ended groups) and no for some ∞-ended graphs. Cayley graphs of
-`ℤ^d`, `d ≥ 2`, are 1-ended; the corollary gives the answer yes for abelian Cayley graphs with `χ ≤ 3`. Vallentin,
+`ℤ^d`, `d ≥ 2`, are 1-ended; the corollary gives the answer yes for Cayley graphs of finitely generated abelian
+groups with finite connection sets and `χ ≤ 3` (for `χ = 2`, the parity of `Cay(Γ′, S)` is a character of order 2
+of `Γ′ = ⟨S⟩`; extended to a character of finite order of `Γ`, it gives a periodic 2-colouring). Without a finite
+connection set this fails: for irrational `α` and `S = {n : ‖nα‖ ≥ 1/3}`, `Cay(ℤ, S)` is 3-colourable, but `S` meets
+every `Mℤ`, so it has no periodic proper colouring at all. Vallentin,
 Weißbach and Zimmermann (arXiv:2407.03513) note that it is not known whether the chromatic number of a lattice (the
 Cayley graph of `Λ ≅ ℤⁿ` on its strict Voronoi vectors) is computable, and ask whether there is always a periodic
-colouring with `χ(Λ)` colours. By the corollary, whether `χ(Λ) ≤ 3` is decidable, and if it is, a periodic
+colouring with `χ(Λ)` colours. By the corollary, whether `χ(Λ) ≤ 3` is decidable (given the strict Voronoi vectors in
+coordinates of `Λ`), and if it is, a periodic
 3-colouring exists.
+
+**Many colours: periodicity fails.** Three colours are special: with many colours, colourings can encode tilings,
+and tilings can be aperiodic. For a finite `F ⊂ Γ` let
+`S_F = (F − F) ∖ {0}`. Every translate `x + F` is a clique of `Cay(Γ, S_F)`, so `χ ≥ |F|`, and the proper
+`|F|`-colourings are the tilings by `F`: if `c` is one, each translate `x + F` meets each colour class `A` exactly
+once, which says `A ⊕ (−F) = Γ`; conversely, if `F ⊕ A = Γ`, colouring `f + a` by `f` is proper. A colouring
+invariant under a subgroup of finite index gives a periodic tiling, and conversely. Greenfeld and Tao (Ann. of
+Math. 200 (2024), arXiv:2211.15847) found a finite `F` that tiles `ℤ² × G₀` (`G₀` a finite abelian group), and one
+that tiles `ℤ^d` for some large `d`, but neither tiles periodically. So:
+
+> **Proposition (aperiodic colourings).** There are a finitely generated abelian group `Γ` (`ℤ^d` for some `d`, or
+> `ℤ² × G₀` with `G₀` finite) and a finite `S ⊂ Γ` such that `Cay(Γ, S)` is `k`-colourable, `k = χ(Cay(Γ, S))`,
+> but no proper `k`-colouring is invariant under a subgroup of finite index.
+
+For `ℤ^d` we may take `S` generating (replace `ℤ^d` by the subgroup generated by `F − F`, which is free abelian;
+a periodic tiling of it would extend to one of `ℤ^d`). Every automorphism of a connected Cayley graph of `ℤ^d` with
+finite connection set is affine (Ryabchenko; Morris, Morris and Verret, New York J. Math. 22 (2016)), so a
+colouring whose colour-preserving automorphisms act with finitely many orbits is invariant under a subgroup of
+finite index. And `x ↦ x mod N` is a periodic proper colouring once `S ∩ Nℤ^d = ∅`. So Problem 4.6 of Abrishami
+et al. has a negative answer for Cayley graphs of `ℤ^d`, while the corollary above gives the answer yes when
+`χ ≤ 3`. We do not know the least `k` for which this happens (it is at least 4, by the corollary), nor whether
+every `k`-colourable Cayley graph of `ℤ²` has a periodic `k`-colouring: Bhattacharya (Amer. J. Math. 142 (2020))
+proved that a single tile of `ℤ²` always tiles periodically, so the examples above need `d ≥ 3` or torsion. Nor do
+we know whether `k`-colourability of abelian Cayley graphs is decidable for `k ≥ 4`: Greenfeld and Tao (J. Eur.
+Math. Soc., 2025, arXiv:2309.09504) proved that tiling a periodic subset of `ℤ² × G₀` by one tile is undecidable,
+but a colouring problem cannot single out a subset. The question of Vallentin, Weißbach and Zimmermann concerns the
+Voronoi connection set and is not touched.
 
 ## 2. Proof
 
@@ -249,7 +302,11 @@ averaging.
     Maass, Monatsh. Math. 2016; Alweiss, arXiv:2511.21680; Liu, Wu, Yang and Zhang, arXiv:2603.05490. Perarnau and
     Serra, arXiv:2409.20160, §3.5, has `χ_f ≤ χ_c ≤ 1/κ`.
   - On periodic colourings and computability: Abrishami, Esperet, Giocanti, Hamann, Knappe and Möller,
-    arXiv:2411.01951; Vallentin, Weißbach and Zimmermann, arXiv:2407.03513 (see §1).
+    arXiv:2411.01951; Vallentin, Weißbach and Zimmermann, arXiv:2407.03513 (see §1). On tilings: Greenfeld and Tao,
+    Ann. of Math. 200 (2024) and J. Eur. Math. Soc. (2025); Bhattacharya, Amer. J. Math. 142 (2020). On automorphisms
+    of Cayley graphs of `ℤ^d`: Morris, Morris and Verret, New York J. Math. 22 (2016), after Ryabchenko. We found no
+    earlier statement of the proposition on aperiodic colourings, which is a direct translation of Greenfeld and
+    Tao's theorem; the latest version of Abrishami et al. (June 2025) does not mention tilings.
   - We did not find Theorem W in any of these, nor in web searches on characters, circular colourings and odd-cycle
     homomorphisms of Cayley graphs. The proof uses only classical tools, so an earlier occurrence is possible; we
     would be glad to learn of one.
