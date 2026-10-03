@@ -9443,7 +9443,8 @@ set of directions changes that (`notes/quadratic_planes.md`).
     truncated) and the 695 shrink stopped. The two proof files were deleted; the 695 shrink resumed from its last
     intact core (4 253 points) and the `ℚ(√167)` run restarted from scratch. No result was affected.
 
-- **A signature of the place above 19 in the solvers' colourings (3 October, 03:00 UTC).** The SAT solvers'
+- **A signature of the place above 19 in the solvers' colourings (3 October, 03:00 UTC).** *Retracted at 03:40 UTC:
+  see the next item.* The SAT solvers'
   4-colourings of the large growth graphs over `ℚ(√47)` lean towards being locally constant at 19.
   `padic_signature.py` groups the points by their residue modulo `p^r` at a place above `p` and counts how often
   two points in one class have the same colour (1 for a colouring that factors through the level; the sum of the
@@ -9464,6 +9465,16 @@ set of directions changes that (`notes/quadratic_planes.md`).
     (their level-1 agreement is 0.26), so local search of this sort cannot reach them; the full formula stays with
     share E's solvers.
 
+- **Retracted: the 19-adic signature was an artifact of the directions (3 October, 03:40 UTC).** Split by distance
+  in the graph, the same-class pairs at 19 (level 2, one place) agree 0.537 at distance 2 (30 662 pairs), 0.459 at
+  distance 4 (33 990) and 0.232 at distance 5 or more (31 584); at 11, 0.530 at distance 2 (11 574), 0.065 at
+  distance 3 (3 996), 0.442 at distance 4 (18 185) and 0.242 beyond (167 045). Colours agree more at even distance
+  in any colouring. The 108 directions of `D = 240` fall into only 60 classes modulo `19²`, with 128 ordered pairs
+  `u + u′ ≡ 0 (mod 19²)`, `u′ ≠ −u`; modulo `23²` and `31²` all 108 are distinct. So at 19 more same-class pairs
+  are close in the graph, and nothing is left at long range: the colourings do not lean towards the place above
+  19. `padic_signature.py` now has `--by-distance`, and the note (§5) says so. A control over `ℚ(√7)` (a growth that
+  stalls at 2 652 points, where the place above 3 has a 3-colouring) gave 0.64 at one place above 3 and 0.34 at the
+  other, against 0.34 by chance; it has not been split by distance yet.
 Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; the four-colour case of the
 local–global question (`ℚ(√167)`); smaller witnesses (the
 smallest graphs have 71 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has
