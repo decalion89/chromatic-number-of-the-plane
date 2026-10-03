@@ -48,3 +48,8 @@
 'DistLiu.lonely_runner_three' depends on axioms: [propext, Classical.choice, Quot.sound]
 'DistLiu.liu_problem3_unconditional' depends on axioms: [propext, Classical.choice, Quot.sound]
 'DistLiu.liu_problem3_iff_unconditional' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TheoremWInf.theoremW' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TheoremWInf.theoremWplus' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FourColours.no_character' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FourColours.not_colorable_three_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FourColours.not_colorable_three' depends on axioms: [propext, Classical.choice, Quot.sound]
