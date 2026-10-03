@@ -24,13 +24,18 @@ including every retracted claim, is the research log,
 
 - **Theorem W: three colours and characters** (`notes/winding_lemma.md`, 3 October). A Cayley graph of an
   abelian group is 3-colourable if and only if some character maps every generator into `[1/3, 2/3]` (and maps to
-  `C_{2k+1}` if and only if some character maps them into `[k/(2k+1), (k+1)/(2k+1)]`). It gives Payan's theorem,
-  the exponent-4 case of Krebs–Sankar and, for distance graphs, `χ ≤ 3` iff `κ(D) ≥ 1/3`. Over `ℚ(√d)` it turns
+  `C_{2k+1}` if and only if some character maps them into `[k/(2k+1), (k+1)/(2k+1)]`). Steps 1–2 of the proof are
+  the discrete winding number of Krebs–Sankar; the averaging step is new. It gives Payan's theorem, the exponent-4
+  case of Krebs–Sankar, for distance graphs `χ ≤ 3` iff `κ(D) ≥ 1/3`, and the three-colour case of Katznelson's
+  question (every set of Bohr recurrence is a set of 3-chromatic recurrence). Over `ℚ(√d)` it turns
   3-colourability into a question on a 4-torus, settled by exact branch-and-bound certificates
   (`data/quadratic_planes/winding/`: `certify_w2.py`, the independent checker `check_w.py`, six certificates):
   `χ(ℚ(√d)²) = 4` for `d = 83, 107, 203`, `4 ≤ χ(ℚ(√143)²) ≤ 5`, `χ(ℚ(√167)²) ≥ 4`, the fields the graph searches
   could not settle. `tests/test_winding.py` (in CI) checks the theorem on random Cayley graphs and distance graphs
-  and four of the certificates; the other two are marked slow.
+  and four of the certificates (the other two are marked slow), and that `check_w.py` rejects mutated certificates.
+  A separate agent refereed the note; its corrections are applied (attribution, an invariant mean in place of an
+  ergodic measure, the `κ(D)` endpoint statement, the controls, a checker that raises errors instead of asserting
+  and accepts only integers and exact fractions). Paper draft: `papers/winding/`.
 
 - **Paper: *Two-colourable planes over number fields*** (`papers/two-colour-planes/`, 5 pages, draft of
   3 October): `χ(F²) = 2` if and only if some prime of `F` above 2 ramifies in `F(i)`, its corollaries, and the

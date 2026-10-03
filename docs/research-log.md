@@ -9491,9 +9491,13 @@ refereed this.
 - **Theorem W** (`notes/winding_lemma.md`): a Cayley graph of an abelian group maps to the odd cycle `C_{2k+1}` if
   and only if some character sends every generator into `[k/(2k+1), (k+1)/(2k+1)]`; for `k = 1`, it is 3-colourable
   if and only if some character sends every generator into `[1/3, 2/3]`. The proof lifts a 3-colouring to signs
-  `±1` on the edges, notes that squares have zero winding, and averages the signs over an ergodic
-  translation-invariant measure on the colourings; the averages define the character. It gives Payan's theorem and
-  the exponent-4 case of Krebs and Sankar (arXiv:2410.11028) in two lines. We did not find it in the literature.
+  `±1` on the edges, notes that squares have zero winding, and averages the signs over the group; the averages
+  define the character. The first two steps (squares do not wind; the winding of a closed walk) are the discrete
+  winding number of Krebs and Sankar (arXiv:2410.11028), which we had missed at first; the averaging and the
+  characterisation are new as far as we know. It gives Payan's theorem and the exponent-4 case of Krebs and Sankar
+  at once, and the three-colour case of Katznelson's question: every set of Bohr recurrence is a set of 3-chromatic
+  recurrence (not stated in Griesmer, arXiv:2108.02190, Host–Kra–Maass 2016 or arXiv:2603.05490; Katznelson's own
+  paper we could not read).
   - **Checks.** 3 888 random Cayley graphs of `ℤ/m × ℤ/n` (SAT against the character criterion; `circ_test.py`);
     all 1 747 distance graphs `G(ℤ, D)` with `D ⊆ [1, 24]`, `|D| = 3`, against SAT on long segments, which also
     reproduces Zhu's list of the 74 sets that need four colours (`distgraph_test.py`); 40 pairs `(d, D)` over fields
@@ -9514,13 +9518,24 @@ refereed this.
     `χ(ℚ(√167)²) ≥ 4`; `χ(ℚ(√d)²)` is known for every squarefree `d < 143` except 47. The certificates for 107, 143
     and 167 were computed by a cloud worker (share J) and rechecked here.
   - **Why the growth searches failed.** For `d = 83, D = 510`, growth stopped at 6 008 points because a 3-colouring of
-    the 2-ball extended to all 215 478 candidates, although `Cay(ℤU, U)` is not 3-colourable: the obstruction is
-    global. The relations used have length up to 17, and the proof averages over all translates; finite witnesses
-    with these directions are probably large.
-  - **`D` must be divisible by 2 and 3.** `D = 1105` is feasible for every field tried: its vectors are 2-integral,
-    and the place above 2 then 2-colours `Cay(ℤU, U)`. The infeasible denominators found are all multiples of 6.
+    the 2-ball extended to all 215 478 candidates, although `Cay(ℤU, U)` is not 3-colourable: the obstruction does
+    not lie in a small ball. The relations used have length up to 17, and the proof averages over all translates;
+    our guess (not a result) is that finite witnesses with these directions are large.
+  - **`D` must be even.** For odd `D`, `a + b + c + e` is odd for every unit vector, so the character
+    `½(a + b + c + e)` takes the value 1/2 on all of them. The control `D = 1105` used at first proves nothing about
+    the fields: its unit vectors are all rational. The infeasible denominators found are all multiples of 6, but
+    some multiples of 6 are feasible (`D = 1170` for `d = 203`), and so are the even controls with irrational
+    vectors `(107, 1450)`, `(143, 1752)`, `(167, 1820)`, `(203, 1590)`.
   - **Four colours.** The analogue fails (`K₄` as a Cayley graph of `(ℤ/2)²`). As a sufficient test for
-    4-colourability (a character into `[1/4, 3/4]`), the `D = 240` directions of `ℚ(√47)` are infeasible: the growth
-    module has no circular 4-colouring, so those searches are not ruled out by one.
+    4-colourability (a character into `[1/4, 3/4]`), the `D = 240` directions of `ℚ(√47)` are infeasible in floating
+    point: no 4-colouring of the growth module is induced by a character. Other 4-colourings are not excluded
+    (Theorem W fails at four colours), so this does not rule out those searches either way.
+  - **Referee.** A separate agent refereed the note (theorem, proof, certificates, literature). Verdict: the theorem
+    and the five field results hold. Corrections applied: the attribution of steps 1–2 to Krebs and Sankar; an
+    invariant mean in place of the ergodic measure; the `κ(D)` endpoint statement; the `D = 1105` control;
+    `check_w.py` now raises errors instead of asserting and accepts only integers and exact fractions (a new test
+    feeds it mutated certificates). Its own tests: 132 874 symmetric connection sets on 42 groups of order at most 27
+    and 24 240 random ones, for `C₃`, `C₅` and `C₇`, with no mismatch; an independent checker agrees on every
+    certificate.
   - **Under way.** `scan_all.py` runs the test with certificates over every squarefree `d ≡ 11 (mod 12)` up to 2000
     (shares K and L).
