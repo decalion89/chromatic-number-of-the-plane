@@ -9371,6 +9371,37 @@ set of directions changes that (`notes/quadratic_planes.md`).
   graph. For calibration, tabu search finds no 4-colouring of `𝔽₁₉²` with fewer than 114 monochromatic edges (three
   seeds), while it 5-colours it at once.
 
-Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; smaller witnesses (the
+- **A local–global question, and two colours for every number field (3 October).** Every upper bound for `χ(F²)`
+  that we know comes from a locally constant colouring at one place. `notes/local_global.md` asks whether that is all:
+  is `χ(F²)` the least of the local values `χ_loc(v)` (`∞` where `x² + y²` is isotropic, the least chromatic number of a
+  finite level where it is anisotropic, `χ_B(ℝ²)` at a real place)? Moorhouse's draft (2010) remarks that several
+  places at once cannot beat one place without a counterexample to Hedetniemi's conjecture (his §9) and suspects
+  `χ(ℝ²) = 7`, but we found no statement of the question itself.
+  - **Two colours, proved.** For every number field `F`, `χ(F²) = 2` iff some prime of `F` above 2 ramifies in `F(i)`.
+    The unit vectors form a group, so their additive span `A` is a ring, and a 2-colouring is a ring homomorphism
+    `A → 𝔽₂`; Chevalley's extension theorem puts its kernel at a place `w | 2`, and weak approximation on the circle
+    rules out the split and the inert places. This contains Johnson's and Fischer's quadratic fields and Moorhouse's
+    Theorem 7.1 (odd degree); `two_colour_criterion.gp` (PARI/GP) agrees on 242 quadratic and nine odd-degree fields.
+  - **Three colours.** For `ℚ(√d)` the fields with no local 3-colouring are exactly `d ≡ 11 (mod 12)` (above 2 the
+    plane is isotropic or contains the graph of `ℚ(√11)`; levels 1 to 3 of the ramified `ℚ₇(√7)`, which occurs for
+    `d = 203`, have no 3-colouring, `ramified_levels.py`). `χ ≥ 4` is proved for 27 of them and open for 83, 107,
+    143, 167 and 203.
+  - **Four colours, a prediction.** A real field with `√3 ∉ F` whose places above 2, 3, 7, 11 and 19 all contain `i`
+    has no local 4-colouring and no unit triangle. So the four-colour case of the question would give a triangle-free
+    5-chromatic unit-distance graph in the plane, which is open (Soifer 2024; de Grey has one in `ℝ³`). The first such
+    quadratic fields are `ℚ(√d)` for `d = 167, 887, 1055, 1319, 1823`, and biquadratic ones include `ℚ(√2, √31)`,
+    `ℚ(√2, √47)` and `ℚ(√11, √13)` (`admissible.py`). With the real place, the question also predicts
+    `χ(ℝ²) = χ_B(ℝ²)`.
+  - **`ℚ(√167)` in practice.** Its unit vectors have large denominators. The three-colour growth with the gate-open
+    denominators 2784 and 3480 (172 and 276 directions) was 3-colourable at 17 000 and 41 000 points after eight
+    minutes. At four colours, with the pair `0, m` at distance `1/2` (a half-turn spindles it; 16 such `m` lie four
+    steps from 0 for `D = 2784` and `D = 4176`), `growforce4.py` stalled at 34 358 points with average degree 4.5,
+    against 10 for `ℚ(√47)` at `D = 240`. `χ(H₂₅) ≥ 5` (`hyperbola_plane.py`), so the places above 5 are no gate at
+    four colours.
+  - **A restart.** The machine restarted at 23:57 UTC and stopped every local run. The local kissat run on the 19-adic
+    level 2 (3 h 45 min) was lost; share E's four solvers continue. The 695 shrink resumed from its 4 393-point core.
+
+Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …`; the four-colour case of the
+local–global question (`ℚ(√167)`); smaller witnesses (the
 smallest graphs have 71 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has
 refereed this.

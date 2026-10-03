@@ -500,6 +500,10 @@ that they are up to date.
 
 ## 6. Open
 
+- **The local–global question** (`notes/local_global.md`). Every bound above comes from one place.
+  If `χ(F²)` were always the least local value, `χ(ℚ(√d)²) = 4` for every `d ≡ 11 (mod 12)`, and
+  `ℚ(√167)²`, which has no local 4-colouring and no unit triangle, would need five colours.
+
 - **`ℚ(√47)`.** Is `χ = 4` or `5`? It is the smallest open case of Moorhouse's
   table that this note does not settle. The plane is triangle-free, so `χ = 5`
   would give a triangle-free 5-chromatic unit-distance graph. The bound 5 is

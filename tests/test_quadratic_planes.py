@@ -334,3 +334,62 @@ def test_padic_measurable_bounds():
     assert {p: pm.bound(p)[2] for p in (7, 11, 23, 31, 59, 71)} == {7: 3, 11: 4, 23: 5, 31: 5, 59: 6, 71: 7}
     assert float(pm.bound(31)[1].a) > 4.00004
 
+
+
+def _load_script(name):
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        name, os.path.join(ROOT, "data", "quadratic_planes", "scripts", name + ".py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def test_local_global_admissible_fields():
+    """notes/local_global.md §4: Q(sqrt167) is the first real quadratic field with no locally constant 4-colouring at
+    any place and no unit triangle; Q(sqrt47) fails at 11 and 19, Q(sqrt3, sqrt5) has triangles"""
+    ad = _load_script("admissible")
+    sq = [d for d in range(2, 2000) if ad.sqfree(d) == d]
+    assert [d for d in sq if ad.admissible([d])] == [167, 887, 1055, 1319, 1823]
+    assert ad.admissible([2, 31]) and ad.admissible([2, 47]) and ad.admissible([11, 13])
+    assert not ad.admissible([47]) and not ad.admissible([3, 5]) and not ad.admissible([5, 7])
+    assert not ad.has_i_at(ad.group_of([47]), 11) and not ad.has_i_at(ad.group_of([47]), 19)
+
+
+def test_ramified_seven_adic_levels():
+    """notes/local_global.md §3: levels 1 and 2 of the planes over Q_7(sqrt7) and Q_7(sqrt21) = Q_7(sqrt-7) have no
+    proper 3-colouring (level 2: 2401 points, 56 unit vectors)"""
+    rl = _load_script("ramified_levels")
+    for m in (1, 3):
+        for r in (1, 2):
+            V, U, E = rl.level_graph(7, m, r)
+            assert len(V) == 7 ** (2 * r) and len(U) == (8 if r == 1 else 56)
+            assert not rl.colourable(len(V), E, 3)
+    V, U, E = rl.level_graph(7, 1, 1)
+    assert rl.colourable(len(V), E, 4)
+
+
+def test_two_colour_criterion():
+    """notes/local_global.md, Theorem A: chi(F^2) = 2 iff a prime of F above 2 ramifies in F(i). The PARI/GP check
+    agrees with Johnson and Fischer on the 242 squarefree d <= 400 and with Moorhouse's Theorem 7.1 on nine fields of
+    odd degree"""
+    import shutil
+    import subprocess
+    gp = shutil.which("gp")
+    if gp is None:
+        pytest.skip("PARI/GP is not installed")
+    script = os.path.join(ROOT, "data", "quadratic_planes", "scripts", "two_colour_criterion.gp")
+    out = subprocess.run([gp, "-q", "-s", "800000000", script], stdin=subprocess.DEVNULL, capture_output=True,
+                         text=True, timeout=1200).stdout
+    assert "quadratic: 242 fields d <= 400, mismatches with chi = 2 iff d != 3 mod 4 (Johnson, Fischer): 0" in out
+    assert "odd degree: 9 fields, mismatches with chi = 2 (Moorhouse, Theorem 7.1): 0" in out
+    assert "MISMATCH" not in out
+
+
+def test_hyperbola_plane_25():
+    """notes/local_global.md §5: H_25 = Cay(F_25^2, {(t, 1/t)}) has no proper 4-colouring, so a place with residue
+    field F_25 where x^2 + y^2 is isotropic is no gate at four colours"""
+    hp = _load_script("hyperbola_plane")
+    V, S, E = hp.h_q(5)
+    assert (len(V), len(S), len(E)) == (625, 24, 7500)
+    assert not hp.colourable(len(V), E, 4)
