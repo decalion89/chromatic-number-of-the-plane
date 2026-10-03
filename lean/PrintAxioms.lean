@@ -30,6 +30,7 @@ import Sqrt959
 import PadicPlanes
 import TheoremW
 import Recurrence
+import TheoremWplus
 
 -- The axioms the theorems depend on; `axioms.expected` holds the expected output.
 #print axioms Q23.chromaticNumber_eq_four
@@ -68,3 +69,7 @@ import Recurrence
 #print axioms TheoremW.theoremW_finite_finset
 #print axioms GKR.question3
 #print axioms GKR.chromatic_recurrence
+#print axioms TheoremWplus.theoremWplus_general
+#print axioms TheoremWplus.theoremWplus_finite
+#print axioms TheoremWplus.converse_of_lift
+#print axioms TheoremWplus.converse

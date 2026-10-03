@@ -34,3 +34,7 @@
 'TheoremW.theoremW_finite_finset' depends on axioms: [propext, Classical.choice, Quot.sound]
 'GKR.question3' depends on axioms: [propext, Classical.choice, Quot.sound]
 'GKR.chromatic_recurrence' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TheoremWplus.theoremWplus_general' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TheoremWplus.theoremWplus_finite' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TheoremWplus.converse_of_lift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TheoremWplus.converse' depends on axioms: [propext, Classical.choice, Quot.sound]

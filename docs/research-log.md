@@ -9620,3 +9620,11 @@ refereed this.
   Theorem W gives a character on the subgroup they generate, it extends to `ZMod P` because ℝ/ℤ is divisible
   (Baer's criterion in Mathlib), and compactness of `UnitAddCircle` gives one `α` for all steps. Rebuilt here from
   the source (11 s), replayed with `leanchecker`, axioms `[propext, Classical.choice, Quot.sound]`.
+- **Circular cliques below 4** (in progress when written). Doubling the colour of a `K_{p/q}`-colouring
+  (`σ = 2δ − p`) made squares rigid for odd `p` and `p/q < 4`, which extends Theorem W to every circular clique below
+  4; a separate agent formalising it found a simpler argument with the lift `δ ∈ [q, p − q]` itself (any `p`): two
+  sides of a square differ by a multiple of `p` of size at most `2(p − 2q) < p`. `lean/TheoremWplus.lean` proves it
+  for finite abelian groups, with the converse; rebuilt here (20 s), replayed with `leanchecker`, standard axioms.
+  Computer tests before the proof: no counterexample to `χ_c = 1/κ` among circulants up to 20 vertices (`χ_c < 4`),
+  several groups `ℤ/a × ℤ/b`, and 2 400 random graphs for eight cliques. The bound 4 is sharp (`K₄`). A referee
+  agent is checking the proof and the literature (in particular Problem 3 of Liu's 2008 survey on distance graphs).

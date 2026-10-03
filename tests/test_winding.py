@@ -222,3 +222,73 @@ def test_lean_recurrence_is_built_and_checked():
         assert f"'GKR.{t}' depends on axioms: [propext, Classical.choice, Quot.sound]" in ax
     wf = open(os.path.join(ROOT, ".github", "workflows", "lean.yml"), encoding="utf-8").read()
     assert "Recurrence" in wf.split("for m in ", 1)[1].split(";", 1)[0].split()
+
+
+def test_lean_theorem_w_plus_is_built_and_checked():
+    """lean/TheoremWplus.lean (Theorem W for circular cliques K_{p/q}, p < 4q) is a default target, its four theorems
+    have the standard axioms only, it has no sorry, and the Lean workflow replays it."""
+    lean = os.path.join(ROOT, "lean")
+    src = open(os.path.join(lean, "TheoremWplus.lean"), encoding="utf-8").read()
+    assert "sorry" not in src and "admit" not in src and "native_decide" not in src
+    lake = open(os.path.join(lean, "lakefile.toml"), encoding="utf-8").read()
+    default = lake.split("defaultTargets = [", 1)[1].split("]", 1)[0]
+    assert 'name = "TheoremWplus"' in lake and '"TheoremWplus"' in default
+    pa = open(os.path.join(lean, "PrintAxioms.lean"), encoding="utf-8").read()
+    ax = open(os.path.join(lean, "axioms.expected"), encoding="utf-8").read().splitlines()
+    assert "import TheoremWplus\n" in pa
+    for t in ("theoremWplus_general", "theoremWplus_finite", "converse_of_lift", "converse"):
+        assert f"theorem {t} " in src
+        assert f"#print axioms TheoremWplus.{t}\n" in pa
+        assert f"'TheoremWplus.{t}' depends on axioms: [propext, Classical.choice, Quot.sound]" in ax
+    wf = open(os.path.join(ROOT, ".github", "workflows", "lean.yml"), encoding="utf-8").read()
+    assert "TheoremWplus" in wf.split("for m in ", 1)[1].split(";", 1)[0].split()
+
+
+def _hom_to_circular_clique(m, n, S, p, q):
+    """does Cay(Z/m x Z/n, S) map to K_{p/q} (vertices Z/p, i ~ j iff q <= (j - i mod p) <= p - q)?  SAT."""
+    N = m * n
+    v = lambda x, c: p * x + c + 1
+    s = Solver(name="cadical195")
+    for x in range(N):
+        s.add_clause([v(x, c) for c in range(p)])
+    for a in range(m):
+        for b in range(n):
+            x = a * n + b
+            for (da, db) in S:
+                y = ((a + da) % m) * n + (b + db) % n
+                if x == y:
+                    return False
+                for c in range(p):
+                    for c2 in range(p):
+                        if not (q <= (c2 - c) % p <= p - q):
+                            s.add_clause([-v(x, c), -v(y, c2)])
+    r = s.solve()
+    s.delete()
+    return r
+
+
+def _circular_character_exists(m, n, S, p, q):
+    for j in range(m):
+        for l in range(n):
+            if all(Fr(q, p) <= (Fr(j * da, m) + Fr(l * db, n)) % 1 <= 1 - Fr(q, p) for (da, db) in S):
+                return True
+    return False
+
+
+@pytest.mark.parametrize("p,q", [(8, 3), (11, 4), (7, 2), (11, 3)])
+def test_theorem_w_plus_on_random_cayley_graphs(p, q):
+    """Theorem W+: for 2 < p/q < 4, Cay(G, S) maps to K_{p/q} iff a character maps S into [q/p, 1 - q/p]."""
+    agree = {True: 0, False: 0}
+    for m, n, S in _random_connection_sets(1000 + 37 * p + q, 120):
+        a = _hom_to_circular_clique(m, n, S, p, q)
+        assert a == _circular_character_exists(m, n, S, p, q), (m, n, S, p, q)
+        agree[a] += 1
+    assert agree[True] > 10 and agree[False] > 10
+
+
+def test_theorem_w_plus_fails_at_four():
+    """the bound p/q < 4 is sharp: K_4 = Cay((Z/2)^2, all nonzero) maps to K_{4/1}, but no character keeps the three
+    generators in [1/4, 3/4]."""
+    S = [(0, 1), (1, 0), (1, 1)]
+    assert _hom_to_circular_clique(2, 2, S, 4, 1)
+    assert not _circular_character_exists(2, 2, S, 4, 1)
