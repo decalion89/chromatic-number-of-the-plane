@@ -20,6 +20,13 @@ including every retracted claim, is the research log,
   `notes/literature.md` and the note (version 6) now say so; what remains ours is
   the explicit case `ℚ(√2, √3)` with its lower bound, and the Lean proofs.
 
+### Changed
+
+- **The winding paper after a second referee** (3 October). Correct mathematics; attribution fixed: Steps 1–2 for
+  `K_{p/q}` are the wind of Brewster, McGuinness, Moore and Noel and of Brewster and Moore (for `K₃`, Krebs and Sankar);
+  the exponent-2/4 corollary is a uniform proof of known facts; the formal-proof remark says exactly what Lean checks;
+  citations and journal data updated; the character on all of `G` added in Lean (`theoremWplus_extended`).
+
 ### Added
 
 - **Liu's Problem 3 in Lean** (`lean/DistLiu.lean`, 3 October). For every set `D` of three positive integers,

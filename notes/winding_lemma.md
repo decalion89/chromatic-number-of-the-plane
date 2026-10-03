@@ -1,9 +1,11 @@
 # Three colours and characters: the winding lemma
 
-*Working note, 3 October 2026. Steps 1 and 2 of the proof below are the discrete winding number of Krebs and Sankar
-(arXiv:2410.11028, J. Combin. Theory Ser. B, 2026: Definition 3.5, Propositions 3.3 and 3.6, Remark 3.7, and the
-parity used in the proof of their Theorem 4.1). The averaging step and the characterisation it gives, Theorem W, are
-new as far as we know (§5 lists what we checked). §2 also proves Theorem W⁺, the same statement for every circular
+*Working note, 3 October 2026. Steps 1 and 2 of the proof below are the winding of circular colourings: for `K₃` the
+discrete winding number of Krebs and Sankar (J. Combin. Theory Ser. B 179 (2026): Definition 3.5, Propositions 3.3 and
+3.6, Remark 3.7, and the parity used in the proof of their Theorem 4.1), and for every circular clique below 4 the
+wind of Brewster, McGuinness, Moore and Noel (Theoret. Comput. Sci. 639 (2016), §2.1) and Brewster and Moore
+(J. Graph Theory 102 (2023), §2), who use it for reconfiguration. The averaging step and the characterisation it
+gives, Theorem W, are new as far as we know (§5 lists what we checked). §2 also proves Theorem W⁺, the same statement for every circular
 clique `K_{p/q}` with `p/q < 4`, which gives `χ_c = 1/κ` below 4 and answers Problem 3 of Liu's survey on distance
 graphs. Internal referees (separate AI agents, with their own checkers and tests) went through the note and through
 Theorem W⁺, and their findings are applied. Nobody outside the project has refereed it.*
@@ -78,9 +80,10 @@ set of Bohr recurrence is a set of chromatic recurrence for every number of colo
 (arXiv:2511.21680, §3) notes that a counterexample needs at least 3 colours; by the corollary it needs at least 4.
 For two colours the statement is easy (a bipartite Cayley graph has a character with `ξ(S) = {1/2}`). We have not
 found the case of three colours in the literature we read: the papers above, Host, Kra and Maass ("Variations on
-topological recurrence", Monatsh. Math. 179 (2016)), and Liu, Wu, Yang and Zhang (arXiv:2603.05490). A separate
-agent made an independent search with the same result. We have not been able to read Katznelson's paper
-(Combinatorica 21 (2001), 211–219).
+topological recurrence", Monatsh. Math. 179 (2016)), Boshernitzan and Glasner (Fund. Math. 206 (2009)), and Liu,
+Wu, Yang and Zhang (arXiv:2603.05490); a second search found nothing either. We have not been able to read
+Katznelson's paper (Combinatorica 21 (2001), 211–219); Glasscock, Koutsogiannis and Richter, who cite it, state that
+the case of three colours is open.
 
 **Periodic colourings.** Let `Γ` be finitely generated and `S` finite. In coordinates `Γ ≅ ℤ^r × F` the characters
 with `ξ(S) ⊆ [k/n, (k+1)/n]` form a finite union of polytopes with rational vertices in the torus, so if there is
@@ -147,10 +150,12 @@ character of `Γ'` extends to `Γ` because `ℝ/ℤ` is divisible. Averaging ove
 `Cay(Γ, S)` is disconnected, since different components can wind in opposite directions. For `g ∈ Γ'` and `s ∈ S`
 let `σ(g, s) ∈ {1, −1}` be the lift of `c(g + s) − c(g)`; then `σ(g + s, −s) = −σ(g, s)`.
 
-1. *Squares do not wind* (Krebs–Sankar, Proposition 3.6). For `s, t ∈ S`, both `σ(g, s) + σ(g + s, t)` and
+1. *Squares do not wind* (for `K₃`: Krebs–Sankar, Proposition 3.6; for odd cycles and every `K_{p/q}` with
+   `p/q < 4`: a 4-cycle has wind 2, Brewster and Moore, §2). For `s, t ∈ S`, both `σ(g, s) + σ(g + s, t)` and
    `σ(g, t) + σ(g + t, s)` lie in `{−2, 0, 2}` and are congruent to `c(g + s + t) − c(g)` modulo the odd number
    `n ≥ 3`. Two different elements of `{−2, 0, 2}` differ by 2 or 4, so the two sums are equal.
-2. *Winding* (Krebs–Sankar, Definition 3.5, Proposition 3.3 and Remark 3.7). Let `Z` be the abelian group generated
+2. *Winding* (for `K₃`: Krebs–Sankar, Definition 3.5, Proposition 3.3 and Remark 3.7; in general Brewster and
+   Moore, §2). Let `Z` be the abelian group generated
    by symbols `[s]`, `s ∈ S`, with the relations `[−s] = −[s]`. It is free on one representative of each pair
    `{s, −s}`, except that `2[s] = 0` when `2s = 0`. Let `R` be the kernel of `Z → Γ'`, `[s] ↦ s`. The parity of the
    number of symbols, `Z → ℤ/2`, is well defined.
@@ -209,7 +214,8 @@ The averaging must be over `Γ' = ⟨S⟩`, not over `Γ`: for `Γ = ℤ/5 × �
 character value since `5 · (1, 0) = 0`; the average over `⟨S⟩` gives `2/5`. The referee's report on Theorem W⁺
 (correct for every abelian `Γ`, every symmetric `S`, finite or infinite, and every `2 ≤ p/q < 4`) is summarised in
 the research log. For finite groups both directions are formalised in Lean (`lean/TheoremWplus.lean`,
-`TheoremWplus.theoremWplus_general` and `TheoremWplus.converse`), with the plain average as the mean.
+`TheoremWplus.theoremWplus_general`, the character extended to all of `G` in `TheoremWplus.theoremWplus_extended`,
+and `TheoremWplus.converse`), with the plain average as the mean.
 
 The consequence `χ_c = 1/κ` (when `χ_c < 4`): for every rational `r = p/q` with `χ_c < r < 4` the graph maps to
 `K_r`, so `κ(S) ≥ 1/r`; hence `1/κ ≤ χ_c`, and `χ_c ≤ 1/κ` always. In particular `χ_c < 4` if and only if
@@ -220,7 +226,7 @@ The consequence `χ_c = 1/κ` (when `χ_c < 4`): for every rational `r = p/q` wi
 **Groups of small exponent.** If `Γ` has exponent `m`, characters take values in `(1/m)ℤ/ℤ`. For `m = 2` and `m = 4`
 the only such value in `[1/3, 2/3]`, or in any `[q/p, 1 − q/p]` with `p/q < 4`, is `1/2`, and a character with
 `ξ(S) = {1/2}` makes `⌊2ξ⌋` a proper 2-colouring. So Theorem W⁺ gives at once that no Cayley graph of an abelian
-group of exponent 2 or 4 has `2 < χ_c < 4`; in particular (Theorem W):
+group of exponent 2 or 4 has `2 < χ_c < 4`. This is a uniform proof of known facts; in particular (Theorem W):
 
 - (Payan, 1992) a cube-like graph (a Cayley graph of `(ℤ/2)ⁿ`) is never 3-chromatic;
 - (Krebs and Sankar, the exponent-4 case of their Theorem 1.2) a Cayley graph of an abelian group of exponent 4 is
@@ -229,7 +235,13 @@ group of exponent 2 or 4 has `2 < χ_c < 4`; in particular (Theorem W):
 Krebs and Sankar's Theorem 1.2 covers all abelian groups: some Cayley graph is 3-chromatic if and only if the
 exponent is not 1, 2 or 4. Their proof of the exponent-4 case uses the same winding number: they show that the
 discrete fundamental group is torsion, and their Theorem 4.1 says that a non-bipartite graph with torsion
-fundamental group needs four colours. Cervantes and Krebs (arXiv:2303.06267) gave another proof of Payan's theorem.
+fundamental group needs four colours; run with the wind of Brewster and Moore (the homomorphism
+`w ↦ 2Σδ − p·length` from closed walks to ℤ, which is `≡ p (mod 2p)` on odd closed walks), the same argument gives
+`χ_c ≥ 4`. Cervantes and Krebs (arXiv:2303.06267) gave another proof of Payan's theorem. For exponent 2 the bound
+`χ_c ≥ 4` is also known: Payan's proof shows that a non-bipartite cube-like graph contains a generalised Mycielski
+graph of an odd cycle (Beaudou, Naserasr and Tardif, Discrete Math. 338 (2015), Theorem 1.4), and these are strongly
+topologically 4-chromatic (Stiebitz; Simonyi and Tardos, Combinatorica 26 (2006), Proposition 9), hence have
+`χ_c = 4` (Simonyi and Tardos, Theorem 6).
 
 **Distance graphs.** For `D ⊂ ℤ_{>0}` finite, `G(ℤ, D)` is 3-colourable if and only if `κ(D) ≥ 1/3`, where
 `κ(D) = max_α min_{d∈D} ‖αd‖`. The set `{α : ‖αd‖ ≥ 1/3 for all d ∈ D}` is a finite union of closed intervals whose
@@ -257,9 +269,10 @@ lonely runner theorem for three speeds (`DistLiu.lonely_runner_real`): for `0 < 
 at distance exactly 1/4 at a time `t = x/(4c)` with `x` odd; `‖at‖ ≥ 1/4` when `x ∈ [P, 3P]` and `‖bt‖ ≥ 1/4` when
 `x ∈ [(4m + 1)Q, (4m + 3)Q]`, where `P = c/a ≥ Q = c/b ≥ 1`, and a short case analysis on `b/a` finds such an odd
 `x` (paper, Lemma 10). For larger `D`, `χ_c < 1/κ` does happen (Liu's Theorems 17 and
-18), but by Theorem W⁺ only with `χ_c ≥ 4`. Liu and Robinson (European J. Combin. 85 (2020)) conjecture
-`κ(D) = μ(D)` for `|D| = 3` and confirm it for `max D ≤ 25`, which there gives `χ_f = χ_c = 1/κ`; the corollary
-covers every `D` but says nothing about `χ_f`.
+18), but by Theorem W⁺ only with `χ_c ≥ 4`. Haralambis (J. Combin. Theory Ser. A 23 (1977)) conjectured
+`κ(D) = μ(D)` for `|D| = 3` (Liu's Problem 2; Liu and Robinson, European J. Combin. 85 (2020), Conjecture 3), and Liu
+and Robinson report a computer check for `max D ≤ 25`, which there gives `χ_f = χ_c = 1/κ`; the corollary covers
+every `D` but says nothing about `χ_f`.
 
 **Planes over number fields.** Let `F` be a number field with `i ∉ F`, `L = F(i)`, `T ⊂ L` the unit vectors
 (`x + iy` with `x² + y² = 1`) and `A = ℤ[T]`. The plane `F²` is a disjoint union of translates of `Cay(A, T)`, so:
@@ -346,10 +359,12 @@ averaging.
 - **Scan.** `scan_all.py` runs the test, with certificates, over every squarefree `d ≡ 11 (mod 12)` in a range. The
   runs up to 2000 are in progress.
 - **Literature.**
-  - Closest: Krebs and Sankar (the same winding number, used for torsion fundamental groups; no characters and no
-    averaging).
-  - The "if" direction is classical: Zhu's multiplier method in Liu's survey; Alon 2013, Theorem 3.2;
-    García-Marco, Knauer and Menara, arXiv:2607.26942, Lemma 2.2.
+  - Closest: Krebs and Sankar (the same winding number for `K₃`, used for torsion fundamental groups), and
+    Brewster, McGuinness, Moore and Noel and Brewster and Moore (the wind of `(p, q)`-colourings for `p/q < 4`, used
+    for reconfiguration); no characters and no averaging. Naserasr, Pujol and Wang (arXiv:2606.25644) use winding
+    numbers of circular colourings for gaps in `χ_c` of graphs with prescribed faces.
+  - The "if" direction is classical: Zhu's multiplier method in Liu's survey; Alon 2013, the proof of Theorem 3.2
+    and the remark after it; see also García-Marco, Knauer and Menara, arXiv:2607.26942, proof of Theorem 2.3.
   - Consistent with Theorem W, and not implying it: Cervantes and Krebs, arXiv:2303.06262, 2303.06267 and
     2303.06272. The last characterises 3-colourability for small dimension and rank by two forbidden subgraphs,
     diamond lanyards and `C₁₃(1, 5)`; `C₁₃(1, 5)` indeed has no suitable character. Also Krebs and Leyva,

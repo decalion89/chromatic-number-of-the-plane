@@ -74,6 +74,7 @@ import DistLiu
 #print axioms TheoremWplus.theoremWplus_finite
 #print axioms TheoremWplus.converse_of_lift
 #print axioms TheoremWplus.converse
+#print axioms TheoremWplus.theoremWplus_extended
 #print axioms DistLiu.wplus_distance
 #print axioms DistLiu.colourOf_isColouring
 #print axioms DistLiu.wplus_distance_converse

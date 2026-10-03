@@ -9668,3 +9668,25 @@ refereed this.
   maps to `K_{p/q}` iff `κ(D) ≥ q/p`, with no hypothesis. Rebuilt here against the repository's `TheoremWplus`
   (18 s), axioms `[propext, Classical.choice, Quot.sound]` for all nine theorems, replayed with `leanchecker`. The
   short proof of the three-speed case is in the paper as Lemma 10; the result itself is Betke–Wills' and Cusick's.
+- **A second referee of the paper** (a separate agent; its scripts stay in the scratch area). Verdict: the mathematics
+  is correct (Theorem 1 against SAT on 13 212 instances in 21 groups for 12 ratios, 0 mismatches; Zhu's formula on all
+  28 876 three-distance sets up to 60; Liu's family of Theorem 17: `χ_c = 1/κ` in all 60 cases with `χ_c < 4`; the five
+  certificates of the table; the Lean files compiled). The problems were attribution and description, all fixed:
+  - Steps 1 and 2 for `K_{p/q}` are not ours: the integer lift with cycle sums in `pℤ` is Brewster, McGuinness, Moore
+    and Noel (2016, §2.1), and the wind, with 4-cycles of wind 2 for `p/q < 4`, is Brewster and Moore (J. Graph Theory
+    102 (2023), §2). Krebs and Sankar's Definition 3.5 and Proposition 3.6 are for `K₃` only. The paper and the note
+    now credit them; what is claimed as new (hedged) is the averaging and the characterisation.
+  - Corollary 7 is a uniform proof of known facts: for exponent 2, Payan's proof gives a generalised Mycielski graph of
+    an odd cycle (Beaudou, Naserasr and Tardif, Theorem 1.4), which has `χ_c = 4` by Simonyi and Tardos; for exponent 4,
+    Krebs and Sankar's argument run with the wind gives `χ_c ≥ 4`.
+  - What is formalised is now stated exactly (the first two assertions of Corollary 9; the non-trivial direction of
+    the first statement of Corollary 3 for `ℤ`; `TheoremW.lean` has the "only if" direction). The extension of the
+    character from `⟨S⟩` to `G` was missing in Lean and is now `TheoremWplus.theoremWplus_extended` (a separate agent;
+    rebuilt here, the fifty axioms match, `leanchecker` replays `TheoremWplus` and `DistLiu`).
+  - Citations: Haralambis (1977) for the conjecture `κ = μ`; Perarnau–Serra §§4 and 6.2; Alon's proof and remark;
+    García-Marco–Knauer–Menara's proof of Theorem 2.3; Griesmer's Definitions 1.1–1.2; the reference to Axenovich et
+    al. dropped; journal data for seven entries; Naserasr–Pujol–Wang, Brewster–Noel, Beaudou–Naserasr–Tardif and
+    Boshernitzan–Glasner added. Corollary 4 now states the periodic homomorphism to `K_{χ_c}` that the abstract
+    promised. Smaller fixes: `S ≠ ∅`, `σ = 3 − 2δ`, the conditions for `χ(ℚ(√d)²) ≤ 3`, "our searches".
+  - Not done: Katznelson's paper (2001) could not be read; Glasscock, Koutsogiannis and Richter, who cite it, say three
+    colours is open.

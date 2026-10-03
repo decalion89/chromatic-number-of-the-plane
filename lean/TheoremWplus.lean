@@ -7,6 +7,7 @@ import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Positivity
+import Mathlib.Algebra.Category.Grp.Injective
 
 /-!
 # Theorem W for circular cliques `K_{p/q}` with `p < 4q`, finite abelian groups
@@ -19,6 +20,8 @@ representative `δ(g, s) ∈ {0, …, p - 1}` of `c (g + s) - c g` lies in `[q, 
 * `theoremWplus_finite`: the statement for `p` odd and `2q < p < 4q`;
 * `theoremWplus_general`: the same conclusion only assuming `0 < p < 4q` (oddness of `p` and
   `2q < p` are not used).
+* `theoremWplus_extended`: the character extended from `AddSubgroup.closure S` to all of `G`
+  (`ℝ/ℤ` is divisible, hence an injective `ℤ`-module).
 
 Proof (winding numbers, exactly as in `TheoremW.lean`, with the lift `δ` in place of `sgn3`; in
 terms of the centred lift `σ = 2δ - p` of the informal proof, `δ = (σ + p) / 2`).
@@ -528,5 +531,32 @@ theorem converse {G : Type*} [AddCommGroup G] (S : Set G) (p q : ℕ) (hp0 : 0 <
   simp only [hcdef]
   exact converse_of_lift S p q hp0 ξ (fun g => (AddCircle.equivIco (1 : ℝ) 0 (ξ g) : ℝ))
     (fun _ => AddCircle.coe_equivIco) hξ g s hs
+
+/-! ### The character on all of `G` -/
+
+/-- **Theorem W for `K_{p/q}`, with a character of all of `G`.** Let `G` be a finite abelian
+group, `S ⊆ G` symmetric, `0 < p < 4q`, and `c : G → ZMod p` a homomorphism
+`Cay(G, S) → K_{p/q}`. Then there is a character `ξ : G →+ ℝ/ℤ` of the whole group `G` such that
+every `ξ s` (`s ∈ S`) is represented by a real number in `[q/p, 1 - q/p]`. This is
+`theoremWplus_general`, which gives such a character on `closure S`, followed by the extension
+of characters: `ℝ/ℤ` is divisible, hence an injective `ℤ`-module (`Module.Baer.of_divisible`),
+so every homomorphism `closure S →+ ℝ/ℤ` extends to `G`. -/
+theorem theoremWplus_extended {G : Type*} [AddCommGroup G] [Finite G]
+    (S : Set G) (hS : ∀ s ∈ S, -s ∈ S)
+    (p q : ℕ) (hp0 : 0 < p) (h4 : p < 4 * q)
+    (c : G → ZMod p)
+    (hc : ∀ g, ∀ s ∈ S, q ≤ (c (g + s) - c g).val ∧ (c (g + s) - c g).val ≤ p - q) :
+    ∃ ξ : G →+ AddCircle (1 : ℝ),
+      ∀ s ∈ S, ∃ x : ℝ, (q : ℝ) / p ≤ x ∧ x ≤ 1 - (q : ℝ) / p ∧
+        (x : AddCircle (1 : ℝ)) = ξ s := by
+  obtain ⟨ξ, hξ⟩ := theoremWplus_general S hS p q hp0 h4 c hc
+  -- extend `ξ` from `closure S` to `G` (`ℝ/ℤ` is divisible, hence an injective `ℤ`-module)
+  obtain ⟨F, hF⟩ := (Module.Baer.of_divisible (AddCircle (1 : ℝ))).extension_property_addMonoidHom
+    (AddSubgroup.closure S).subtype (AddSubgroup.subtype_injective _) ξ
+  refine ⟨F, fun s hs => ?_⟩
+  obtain ⟨x, hx1, hx2, hx⟩ := hξ s hs
+  refine ⟨x, hx1, hx2, ?_⟩
+  rw [hx, ← hF]
+  rfl
 
 end TheoremWplus

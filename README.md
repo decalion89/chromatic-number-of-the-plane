@@ -132,9 +132,11 @@ points of the same colour.</sub></p>
 > only if some character maps every generator into [k/(2k+1), (k+1)/(2k+1)].
 
 The proof lifts a 3-colouring to signs ±1 on the edges. Squares have zero winding, so closed walks have a winding
-number: this part is the discrete winding number of Krebs and Sankar (2024/2026). Averaging the signs over the
+number: this part is the discrete winding number of Krebs and Sankar (2024/2026), and for circular cliques below 4
+the wind of Brewster, McGuinness, Moore and Noel (2016) and Brewster and Moore (2023). Averaging the signs over the
 group with an invariant mean gives the character; that step, and the theorem, are new as far as we know. It gives
-Payan's theorem (cube-like graphs are never 3-chromatic) and the exponent-4 case of Krebs and Sankar at once; for
+a uniform proof of Payan's theorem (cube-like graphs are never 3-chromatic) and of the exponent-4 case of Krebs
+and Sankar; for
 distance graphs it says that G(ℤ, D) is 3-colourable exactly when κ(D) ≥ 1/3, which reproduces Zhu's list of the
 4-chromatic sets with three distances.
 

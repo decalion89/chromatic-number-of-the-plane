@@ -225,7 +225,7 @@ def test_lean_recurrence_is_built_and_checked():
 
 
 def test_lean_theorem_w_plus_is_built_and_checked():
-    """lean/TheoremWplus.lean (Theorem W for circular cliques K_{p/q}, p < 4q) is a default target, its four theorems
+    """lean/TheoremWplus.lean (Theorem W for circular cliques K_{p/q}, p < 4q) is a default target, its five theorems
     have the standard axioms only, it has no sorry, and the Lean workflow replays it."""
     lean = os.path.join(ROOT, "lean")
     src = open(os.path.join(lean, "TheoremWplus.lean"), encoding="utf-8").read()
@@ -236,7 +236,7 @@ def test_lean_theorem_w_plus_is_built_and_checked():
     pa = open(os.path.join(lean, "PrintAxioms.lean"), encoding="utf-8").read()
     ax = open(os.path.join(lean, "axioms.expected"), encoding="utf-8").read().splitlines()
     assert "import TheoremWplus\n" in pa
-    for t in ("theoremWplus_general", "theoremWplus_finite", "converse_of_lift", "converse"):
+    for t in ("theoremWplus_general", "theoremWplus_finite", "converse_of_lift", "converse", "theoremWplus_extended"):
         assert f"theorem {t} " in src
         assert f"#print axioms TheoremWplus.{t}\n" in pa
         assert f"'TheoremWplus.{t}' depends on axioms: [propext, Classical.choice, Quot.sound]" in ax

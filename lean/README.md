@@ -72,7 +72,8 @@ theorem TheoremWplus.theoremWplus_general {G : Type*} [AddCommGroup G] [Finite G
       ∀ s (hs : s ∈ S), ∃ x : ℝ, (q : ℝ) / p ≤ x ∧ x ≤ 1 - (q : ℝ) / p ∧
         (x : AddCircle (1 : ℝ)) = ξ ⟨s, AddSubgroup.subset_closure hs⟩
 -- and TheoremWplus.theoremWplus_finite (p odd, 2q < p < 4q), TheoremWplus.converse_of_lift and
--- TheoremWplus.converse (a character with ξ(S) ⊆ [q/p, 1 − q/p] gives the colouring ⌊p ξ⌋)
+-- TheoremWplus.converse (a character with ξ(S) ⊆ [q/p, 1 − q/p] gives the colouring ⌊p ξ⌋), and
+-- TheoremWplus.theoremWplus_extended (the character extended to all of G, as ℝ/ℤ is divisible)
 -- three colours of Katznelson's question (Question 3 of Glasscock, Koutsogiannis and Richter):
 theorem GKR.question3 (c : ℕ → Fin 3) :
     ∃ α : ℝ, ∀ n : ℕ, 0 < n → |(n : ℝ) * α - round ((n : ℝ) * α)| < 1/3 →
@@ -115,7 +116,7 @@ says that no assignment satisfies every clause. When a file is built, `#guard` c
 `data/quadratic_planes/q{d}.cnf` is exactly `formula`, and `scripts/verify_quadratic_planes.py --cake-lpr` has
 cake_lpr check an LRAT proof that this file is unsatisfiable.
 
-The forty-nine theorems depend only on Lean's three standard axioms, `propext`, `Classical.choice` and
+The fifty theorems depend only on Lean's three standard axioms, `propext`, `Classical.choice` and
 `Quot.sound`: `axioms.expected` records the output of `#print axioms`, and CI compares them.
 
 ## Checking the proofs
@@ -190,7 +191,7 @@ colourings exist but cannot be computed.
 | `Recurrence.lean` | the case of three colours of Katznelson's question, from `TheoremW.lean`: periodic windows by pigeonhole, Theorem W on `ZMod P`, the extension of the character to `ZMod P` (ℝ/ℤ is divisible), and compactness of `UnitAddCircle` |
 | `TheoremWplus.lean` | Theorem W for circular cliques `K_{p/q}`, `p < 4q`: the lift `δ ∈ [q, p − q]`, squares (`dl_square`), the winding sums as in `TheoremW.lean`, the average `ξ₀(s) = F(s)/(p|H|)`, and the converse |
 | `DistLiu.lean` | Theorem W⁺ for distance graphs `G(ℤ, D)` (a periodic window, `TheoremWplus` on `ZMod P`, the extension of the character), the converse colouring `⌊p · frac(xα)⌋`, the lonely runner theorem for three speeds (`exists_odd_window`), and Problem 3 of Liu's survey |
-| `PrintAxioms.lean`, `axioms.expected` | the axioms of the forty-nine theorems |
+| `PrintAxioms.lean`, `axioms.expected` | the axioms of the fifty theorems |
 | `tools/q23_coefficients.py`, `tools/q311_coefficients.py` | sympy scripts that produce the coefficients of the `linear_combination` steps and the edge lists |
 | `tools/field_lean.py` | writes `Sqrt{d}.lean` from the data (`--check` compares, and checks the colouring of 𝔽₇² in `QuadraticPlanes.lean` against `finite_planes.json`; the tests run it) |
 
