@@ -292,3 +292,31 @@ def test_theorem_w_plus_fails_at_four():
     S = [(0, 1), (1, 0), (1, 1)]
     assert _hom_to_circular_clique(2, 2, S, 4, 1)
     assert not _circular_character_exists(2, 2, S, 4, 1)
+
+
+def _kappa(D):
+    """kappa(D) = max over alpha of min over d of ||alpha d||, exactly. The maximum is attained where two of the
+    functions ||alpha d|| cross or one of them peaks, so alpha = j/m with m a sum or difference of two elements of D
+    (or twice one of them)."""
+    best = Fr(0)
+    for m in {a + b for a in D for b in D} | {abs(a - b) for a in D for b in D} - {0}:
+        for j in range(m):
+            best = max(best, min(Fr(min(j * d % m, m - j * d % m), m) for d in D))
+    return best
+
+
+def test_three_distances_chromatic_number_is_ceil_one_over_kappa():
+    """Liu's Problem 3 (Theorem W+ with the lonely runner theorem for three speeds): chi_c(G(Z, D)) = 1/kappa(D) for
+    |D| = 3, hence chi(G(Z, D)) = ceil(1/kappa(D)). Compare with Zhu's formula for chi: 2 if all of D is odd, 4 if
+    D = {1, 2, 3m} or D = {a, b, a + b} with a != b mod 3, else 3 (gcd(D) = 1); and kappa(D) = 1/4 only for {1, 2, 3}."""
+    n = 0
+    for a, b, c in itertools.combinations(range(1, 31), 3):
+        if math.gcd(math.gcd(a, b), c) != 1:
+            continue
+        k = _kappa((a, b, c))
+        assert k >= Fr(1, 4) and (k > Fr(1, 4) or (a, b, c) == (1, 2, 3)), (a, b, c, k)
+        zhu = 2 if a % 2 and b % 2 and c % 2 else (
+            4 if (a, b) == (1, 2) and c % 3 == 0 or a + b == c and (a - b) % 3 else 3)
+        assert math.ceil(1 / k) == zhu, (a, b, c, k)
+        n += 1
+    assert n == 3472

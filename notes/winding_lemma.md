@@ -3,8 +3,10 @@
 *Working note, 3 October 2026. Steps 1 and 2 of the proof below are the discrete winding number of Krebs and Sankar
 (arXiv:2410.11028, J. Combin. Theory Ser. B, 2026: Definition 3.5, Propositions 3.3 and 3.6, Remark 3.7, and the
 parity used in the proof of their Theorem 4.1). The averaging step and the characterisation it gives, Theorem W, are
-new as far as we know (§5 lists what we checked). An internal referee (a separate AI agent, with its own checker and
-tests) went through the note, and its findings are applied. Nobody outside the project has refereed it.*
+new as far as we know (§5 lists what we checked). §2 also proves Theorem W⁺, the same statement for every circular
+clique `K_{p/q}` with `p/q < 4`, which gives `χ_c = 1/κ` below 4 and answers Problem 3 of Liu's survey on distance
+graphs. Internal referees (separate AI agents, with their own checkers and tests) went through the note and through
+Theorem W⁺, and their findings are applied. Nobody outside the project has refereed it.*
 
 ## 1. The statement
 
@@ -176,11 +178,49 @@ and the averages are the slope. Squares not winding is special to odd cycles, an
 fails: `K₄ = Cay((ℤ/2)², (ℤ/2)² ∖ {0})` is 4-colourable, but no character of `(ℤ/2)²` maps its three generators into
 `[1/4, 3/4]`.
 
+### Circular colourings below four (Theorem W⁺)
+
+Theorem W is the case `p/q = (2k+1)/k` of a statement about every circular clique below 4. For integers `p ≥ 2q ≥ 2`,
+`K_{p/q}` has vertices `ℤ/p`, with `i ~ j` when `q ≤ (j − i mod p) ≤ p − q`; `K_{3/1} = K₃`, `K_{(2k+1)/k} = C_{2k+1}`,
+and the circular chromatic number `χ_c(G)` is the infimum of the `p/q` with `G → K_{p/q}`.
+
+> **Theorem W⁺.** Let `p ≥ 2q ≥ 2` with `p < 4q`. `Cay(Γ, S)` (`Γ` abelian) has a homomorphism to `K_{p/q}` if and
+> only if some character `ξ` has `ξ(S) ⊆ [q/p, 1 − q/p]`. Hence, if `χ_c(Cay(Γ, S)) < 4`, then
+> `χ_c(Cay(Γ, S)) = 1/κ(S)`. The bound 4 is sharp: `K₄ = Cay((ℤ/2)², (ℤ/2)² ∖ {0})` has `χ_c = 4` and `κ = 0`.
+
+*Proof.* "If": `c(x) = ⌊p ξ(x)⌋ mod p`; along an edge `pξ` moves by `a ∈ [q, p − q]`, and `⌊y + a⌋ − ⌊y⌋` is
+`⌊a⌋` or `⌈a⌉`, both in `[q, p − q]` because `q` and `p − q` are integers. "Only if": work in `Γ' = ⟨S⟩` as above,
+and lift each edge to `δ(g, s) ∈ {q, …, p − q}`, the representative of `c(g + s) − c(g)`; then
+`δ(g + s, −s) = p − δ(g, s)`.
+1. *Squares do not wind.* For `s, t ∈ S` the sums `δ(g, s) + δ(g + s, t)` and `δ(g, t) + δ(g + t, s)` lie in
+   `[2q, 2p − 2q]` and are congruent mod `p`; they differ by at most `2p − 4q < p`, so they are equal. This is the
+   only place where `p < 4q` is used, and it works for even and odd `p` alike.
+2. *Winding.* So the sum `W` of `δ` along a walk does not change when two consecutive steps are exchanged. Along a
+   closed walk `W ≡ 0 (mod p)`, and `W` does not depend on the base point: the walk `s, …, −s` from `g` sums to
+   `W(g + s) + p`, and, with its first step moved to the end, to `W(g) + p`; and `Cay(Γ', S)` is connected.
+3. *Averaging.* With a translation-invariant mean `m` on `Γ'`, `f(s) = m(δ(·, s)) ∈ [q, p − q]`, `f(−s) = p − f(s)`,
+   and `Σ_j f(s_j) = W ∈ pℤ` along every closed walk.
+4. *The character.* `ξ(s) = f(s)/p ∈ [q/p, 1 − q/p]` satisfies `ξ(−s) = −ξ(s)` mod 1 (and `ξ(s) = 1/2` when
+   `2s = 0`), and its sum along every closed walk is an integer; so `ξ(x)`, the sum of `ξ` along any walk from 0 to
+   `x`, is a well-defined character of `Γ'` (two walks differ by a closed walk). Extend it to `Γ`. ∎
+
+The averaging must be over `Γ' = ⟨S⟩`, not over `Γ`: for `Γ = ℤ/5 × ℤ/2`, `S = {±(1, 0)}`, the colouring
+`c(i, 0) = 2i`, `c(i, 1) = 3i` maps to `K_{5/2}`, and the average over `Γ` gives `ξ(1, 0) = 1/2`, which is not a
+character value since `5 · (1, 0) = 0`; the average over `⟨S⟩` gives `2/5`. The referee's report on Theorem W⁺
+(correct for every abelian `Γ`, every symmetric `S`, finite or infinite, and every `2 ≤ p/q < 4`) is summarised in
+the research log. For finite groups both directions are formalised in Lean (`lean/TheoremWplus.lean`,
+`TheoremWplus.theoremWplus_general` and `TheoremWplus.converse`), with the plain average as the mean.
+
+The consequence `χ_c = 1/κ` (when `χ_c < 4`): for every rational `r = p/q` with `χ_c < r < 4` the graph maps to
+`K_r`, so `κ(S) ≥ 1/r`; hence `1/κ ≤ χ_c`, and `χ_c ≤ 1/κ` always. In particular `χ_c < 4` if and only if
+`κ(S) > 1/4`.
+
 ## 3. Consequences
 
 **Groups of small exponent.** If `Γ` has exponent `m`, characters take values in `(1/m)ℤ/ℤ`. For `m = 2` and `m = 4`
-the only such value in `[1/3, 2/3]` is `1/2`, and a character with `ξ(S) = {1/2}` makes `⌊2ξ⌋` a proper
-2-colouring. So Theorem W gives at once:
+the only such value in `[1/3, 2/3]`, or in any `[q/p, 1 − q/p]` with `p/q < 4`, is `1/2`, and a character with
+`ξ(S) = {1/2}` makes `⌊2ξ⌋` a proper 2-colouring. So Theorem W⁺ gives at once that no Cayley graph of an abelian
+group of exponent 2 or 4 has `2 < χ_c < 4`; in particular (Theorem W):
 
 - (Payan, 1992) a cube-like graph (a Cayley graph of `(ℤ/2)ⁿ`) is never 3-chromatic;
 - (Krebs and Sankar, the exponent-4 case of their Theorem 1.2) a Cayley graph of an abelian group of exponent 4 is
@@ -203,8 +243,17 @@ with 3-colourability of the segment `[0, 12 max D + 59]` (SAT), for all 1 747 se
 `C₅` and `C₇` on all 132 874 symmetric connection sets of 42 groups of order at most 27, and on 24 240 random sets
 in 101 groups of order at most 100, with no mismatch.
 
-Liu's survey asks whether `χ_c(G(ℤ, D)) < 1/κ(D)` can happen when `|D| = 3` (Problem 3). By Theorem W, if one of
-the two numbers is at most 3, then both equal 2 or both lie in the same interval `(2 + 1/(k + 1), 2 + 1/k]`.
+**Liu's Problem 3.** Liu's survey asks: "Does there exist a 3-element set D with χ_c(Z, D) < 1/κ(D)?" (Problem 3).
+No: for every 3-element `D`, `χ_c(G(ℤ, D)) = 1/κ(D)`. If `χ_c < 4` this is Theorem W⁺; otherwise
+`4 ≤ χ_c ≤ 1/κ(D) ≤ 4` by the lonely runner theorem for three speeds (Betke and Wills, Monatsh. Math. 76 (1972);
+Cusick, Aequationes Math. 9 (1973)). Hence also `χ(G(ℤ, D)) = ⌈1/κ(D)⌉`, and `χ_c = 4` exactly for
+`D = {k, 2k, 3k}`, the only tight instances of the lonely runner problem with three speeds (Cusick, J. Combin.
+Theory Ser. A 16 (1974); Perarnau and Serra, arXiv:2409.20160). As a check, `⌈1/κ(D)⌉` with `κ(D)` computed exactly
+agrees with Zhu's formula for `χ(G(ℤ, D))` on all 28 876 sets `D ⊆ [1, 60]` with `|D| = 3` and `gcd(D) = 1`
+(`tests/test_winding.py` repeats this up to 30). For larger `D`, `χ_c < 1/κ` does happen (Liu's Theorems 17 and
+18), but by Theorem W⁺ only with `χ_c ≥ 4`. Liu and Robinson (European J. Combin. 85 (2020)) conjecture
+`κ(D) = μ(D)` for `|D| = 3` and confirm it for `max D ≤ 25`, which there gives `χ_f = χ_c = 1/κ`; the corollary
+covers every `D` but says nothing about `χ_f`.
 
 **Planes over number fields.** Let `F` be a number field with `i ∉ F`, `L = F(i)`, `T ⊂ L` the unit vectors
 (`x + iy` with `x² + y² = 1`) and `A = ℤ[T]`. The plane `F²` is a disjoint union of translates of `Cay(A, T)`, so:

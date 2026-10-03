@@ -9628,3 +9628,34 @@ refereed this.
   Computer tests before the proof: no counterexample to `χ_c = 1/κ` among circulants up to 20 vertices (`χ_c < 4`),
   several groups `ℤ/a × ℤ/b`, and 2 400 random graphs for eight cliques. The bound 4 is sharp (`K₄`). A referee
   agent is checking the proof and the literature (in particular Problem 3 of Liu's 2008 survey on distance graphs).
+
+## Theorem W⁺ refereed: circular colourings below 4, and Liu's Problem 3 (3 October)
+
+- **Statement.** For `p ≥ 2q ≥ 2` with `p < 4q`, an abelian Cayley graph `Cay(Γ, S)` maps to `K_{p/q}` if and only if
+  a character maps `S` into `[q/p, 1 − q/p]`. So `χ_c = 1/κ(S)` whenever `χ_c < 4`, and the bound 4 is sharp (`K₄`).
+  The paper `papers/winding` is rewritten around it (now *Circular colourings of abelian Cayley graphs below four
+  come from characters*, 9 pages) and the note has a section on it.
+- **Referee** (a separate agent with its own code; its scripts stay in the scratch area). Verdict: correct for every
+  abelian `Γ`, every symmetric `S` (finite or infinite) and every `2 ≤ p/q < 4`; the `δ`-proof needs neither odd `p`
+  nor the even-`p` approximation of the first draft. Points made explicit in both texts: average over `⟨S⟩`, not
+  over `Γ` (counterexample: `ℤ/5 × ℤ/2`, `S = {±(1, 0)}`, `c(i, 0) = 2i`, `c(i, 1) = 3i` into `K_{5/2}`; the average
+  over `Γ` gives `1/2`, not a character value); the character is well defined because closed walks sum to integers;
+  for infinite groups the mean is a Banach limit (or reduce to finitely generated subgroups by compactness).
+  Its computations: 14 922 tests on Cayley graphs of finite abelian groups (every symmetric `S` up to automorphism for
+  cyclic groups of order 3 to 28 and 23 non-cyclic groups, 12 428 classes; and 4 079 random sparse sets), with no
+  counterexample; 6 899 linear colourings `⌊pξ⌋` into `K_{1/κ}` verified; exact `χ_c` for 1 706 classes: all 528 with
+  `χ_c < 4` have `χ_c = 1/κ` (37 distinct values, 66 with even numerator); 231 have `4 ≤ χ_c < 1/κ`, as expected
+  above the threshold (Paley `P₁₃`: `χ_c = 5`, `1/κ = 13/2`).
+- **Liu's Problem 3 answered.** Liu's survey (Taiwanese J. Math. 12 (2008)) asks: "Does there exist a 3-element set D
+  with χ_c(Z, D) < 1/κ(D)?" No: if `χ_c < 4` by Theorem W⁺, and otherwise `4 ≤ χ_c ≤ 1/κ ≤ 4` by the lonely runner
+  theorem for three speeds (Betke–Wills 1972, Cusick 1973). Hence `χ(G(ℤ, D)) = ⌈1/κ(D)⌉` for `|D| = 3`, and
+  `χ_c = 4` exactly for `{k, 2k, 3k}` (Cusick's tight instances). Checked: `⌈1/κ⌉` agrees with Zhu's formula for `χ` on
+  all 28 876 sets `D ⊆ [1, 60]` (reproduced here; the test does `D ⊆ [1, 30]`). The referee also compared Theorem W
+  with Liu and Sutedja's classification of `χ(G(ℤ, {2, 3, x, y}))` (tables from Sutedja's thesis): all 6 785 pairs
+  `4 ≤ x < y ≤ 120` agree; we have not checked its transcription of the tables, so the paper does not cite it.
+- **Literature.** No publication states Theorem W⁺ or answers Problem 3 (Perarnau–Serra 2024 and Liu–Robinson 2020
+  do not mention a solution; Liu–Robinson's Conjecture 3, `κ = μ` for `|D| = 3`, confirmed for `max D ≤ 25`, would
+  give `χ_f = χ_c = 1/κ` there). Related: Krebs–Sankar (exponent 4; implied, and strengthened to "no `χ_c` in
+  `(2, 4)`"); Payan 1992 with Simonyi–Tardos 2006 (cube-like graphs whose chromatic number 4 is topological); the
+  same threshold 4 in circular-colouring reconfiguration (Brewster, McGuinness, Moore and Noel 2016; Brewster and
+  Moore, mixing for `p/q < 4` via the wind of cycles). All cited in the paper.
