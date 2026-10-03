@@ -32,6 +32,7 @@ import TheoremW
 import Recurrence
 import TheoremWplus
 import DistLiu
+import PadicFour
 
 -- The axioms the theorems depend on; `axioms.expected` holds the expected output.
 #print axioms Q23.chromaticNumber_eq_four
@@ -84,3 +85,5 @@ import DistLiu
 #print axioms DistLiu.lonely_runner_three
 #print axioms DistLiu.liu_problem3_unconditional
 #print axioms DistLiu.liu_problem3_iff_unconditional
+#print axioms PadicFour.not_colorable_three_of_sq
+#print axioms PadicFour.padic_not_colorable_three
