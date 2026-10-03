@@ -135,7 +135,7 @@ the same colours, and repeating the colouring on $[i,j)$ with period $N=j-i$ giv
 $\Cay(\Z/N,S)$; Theorem~\ref{thm:main} for the finite group $\Z/N$, where the mean is a plain average, gives
 $\alpha\in\frac1N\Z/\Z$. For infinite $S$, a limit point of the characters obtained for finite $S_m\uparrow S$ works,
 since the conditions $\|s\alpha\|\ge1/3$ are closed. So the last statement of Corollary~\ref{cor:bohr} needs only
-the finite cyclic case of Theorem~\ref{thm:main}.
+the finite cyclic case of Theorem~\ref{thm:main}; this is the proof that is checked in Lean (Remark~\ref{rem:lean}).
 
 The last statement answers Question~3 of Glasscock, Koutsogiannis and Richter \cite{GKR}, who proved it for two
 colours \cite[Theorem~4.9]{GKR} and wrote that the case of three colours was not known. As they remark, it follows
@@ -248,11 +248,13 @@ of any abelian Cayley graph form a character as above. The colouring $c$ itself 
 $\Gamma=\Z^2$ most $3$-colourings do not.
 \end{remark}
 
-\begin{remark}[Formal proof]
+\begin{remark}[Formal proof]\label{rem:lean}
 For finite $\Gamma$ and $k=1$ the \emph{only if} direction is formalised in Lean~4 with Mathlib, in the file
 \texttt{lean/TheoremW.lean} of \cite{Repo}. The formal proof follows Steps~1--4, with the plain average as the
-mean; it depends only on Lean's three standard axioms, and the repository's continuous integration replays it in
-Lean's kernel.
+mean. The last statement of Corollary~\ref{cor:bohr} (the answer to Question~3 of \cite{GKR}) and the form for
+$\Z$ of its first statement are formalised from it in \texttt{lean/Recurrence.lean}, by the route through finite
+cyclic groups described after the corollary. Both files depend only on Lean's three standard axioms, and the
+repository's continuous integration replays them in Lean's kernel.
 \end{remark}
 
 \section{Groups of small exponent}\label{sec:exp}

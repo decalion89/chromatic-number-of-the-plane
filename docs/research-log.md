@@ -9612,3 +9612,11 @@ refereed this.
   is a direct translation of Greenfeld and Tao's theorem. Open: the least such `k` (at least 4), periodicity for
   Cayley graphs of `ℤ²` (single tiles of `ℤ²` tile periodically, Bhattacharya 2020), and decidability of
   `k`-colourability for `k ≥ 4` (Greenfeld and Tao's undecidability of monotiling is for periodic subsets).
+- **The answer to Question 3 of Glasscock, Koutsogiannis and Richter, in Lean** (`lean/Recurrence.lean`). A
+  separate agent proved `GKR.question3` (for every `c : ℕ → Fin 3` there is `α : ℝ` such that every `n > 0` with
+  `|nα − round(nα)| < 1/3` has some `m` with `c m = c (m + n)`) and `GKR.chromatic_recurrence` (the form for `ℤ` and
+  any `S ⊆ ℤ ∖ {0}` meeting every `{s : ‖sα‖ < 1/3}`), from `TheoremW.theoremW_finite`: two equal colour windows
+  (pigeonhole) make the colouring periodic, the induced colouring of `ZMod P` is proper for the forbidden steps,
+  Theorem W gives a character on the subgroup they generate, it extends to `ZMod P` because ℝ/ℤ is divisible
+  (Baer's criterion in Mathlib), and compactness of `UnitAddCircle` gives one `α` for all steps. Rebuilt here from
+  the source (11 s), replayed with `leanchecker`, axioms `[propext, Classical.choice, Quot.sound]`.

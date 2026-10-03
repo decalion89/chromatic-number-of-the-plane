@@ -32,3 +32,5 @@
 'PadicPlanes.padicTwo_chromaticNumber' depends on axioms: [propext, Classical.choice, Quot.sound]
 'TheoremW.theoremW_finite' depends on axioms: [propext, Classical.choice, Quot.sound]
 'TheoremW.theoremW_finite_finset' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GKR.question3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GKR.chromatic_recurrence' depends on axioms: [propext, Classical.choice, Quot.sound]

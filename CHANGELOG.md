@@ -22,6 +22,11 @@ including every retracted claim, is the research log,
 
 ### Added
 
+- **Katznelson's question for three colours, in Lean** (`lean/Recurrence.lean`, 3 October). `GKR.question3`: for
+  every 3-colouring of `ℕ` there is a real `α` such that every `n ≥ 1` with `‖nα‖ < 1/3` is a difference of two
+  numbers of the same colour (Question 3 of Glasscock, Koutsogiannis and Richter, Bull. Amer. Math. Soc. 59
+  (2022)); `GKR.chromatic_recurrence`: the same for `ℤ` and any set that meets every `{s : ‖sα‖ < 1/3}`. Proved from
+  `lean/TheoremW.lean` by periodic windows, Theorem W on `ZMod P` and compactness; only the three standard axioms.
 - **Aperiodic colourings for many colours** (`notes/winding_lemma.md`, `papers/winding`, 3 October). The
   proper `|F|`-colourings of `Cay(Γ, (F − F) ∖ {0})` are the tilings by `F`, so Greenfeld and Tao's counterexample
   to the periodic tiling conjecture gives Cayley graphs of `ℤ^d` with no periodic colouring with `χ` colours: a

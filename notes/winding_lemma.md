@@ -51,7 +51,9 @@ For `Γ = ℤ` no invariant mean is needed. If `S` is finite with largest elemen
 `[i, j)` with period `N = j − i` is again a proper colouring. This is a 3-colouring of `Cay(ℤ/N, S)`, and Theorem W for
 the finite group `ℤ/N`, where `m` is the plain average, gives `α ∈ (1/N)ℤ/ℤ`. For infinite `S`, apply this to finite
 `S_m ↑ S` and take a limit point of the `α_m` in the circle; the conditions `‖sα‖ ≥ 1/3` are closed. So the answer to
-Question 3 below needs only Theorem W for finite cyclic groups.
+Question 3 below needs only Theorem W for finite cyclic groups. This proof is formalised in Lean 4
+(`lean/Recurrence.lean`, theorems `GKR.question3` and `GKR.chromatic_recurrence`), on top of the formal proof of
+Theorem W for finite groups (`lean/TheoremW.lean`); both use only Lean's three standard axioms.
 
 The radius `1/3` cannot be improved. For irrational `α`, the colouring `n ↦ ⌊3{nα}⌋` of `ℕ` has
 `⋃ᵢ (Aᵢ − Aᵢ) ∩ ℕ = U := {n ≥ 1 : ‖nα‖ < 1/3}`, and `U` contains no set `{n ≥ 1 : ‖nβ‖ < δ}` with `δ > 1/3`. Indeed,

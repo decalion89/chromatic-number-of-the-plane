@@ -201,3 +201,24 @@ def test_lean_theorem_w_is_built_and_checked():
         assert f"'TheoremW.{t}' depends on axioms: [propext, Classical.choice, Quot.sound]" in ax
     wf = open(os.path.join(ROOT, ".github", "workflows", "lean.yml"), encoding="utf-8").read()
     assert "TheoremW" in wf.split("for m in ", 1)[1].split(";", 1)[0].split()
+
+
+def test_lean_recurrence_is_built_and_checked():
+    """lean/Recurrence.lean (three colours of Katznelson's question, Question 3 of Glasscock, Koutsogiannis and
+    Richter) imports TheoremW, is a default target, has the standard axioms only and no sorry, and is replayed."""
+    lean = os.path.join(ROOT, "lean")
+    src = open(os.path.join(lean, "Recurrence.lean"), encoding="utf-8").read()
+    assert "import TheoremW\n" in src
+    assert "sorry" not in src and "admit" not in src and "native_decide" not in src
+    lake = open(os.path.join(lean, "lakefile.toml"), encoding="utf-8").read()
+    default = lake.split("defaultTargets = [", 1)[1].split("]", 1)[0]
+    assert 'name = "Recurrence"' in lake and '"Recurrence"' in default
+    pa = open(os.path.join(lean, "PrintAxioms.lean"), encoding="utf-8").read()
+    ax = open(os.path.join(lean, "axioms.expected"), encoding="utf-8").read().splitlines()
+    assert "import Recurrence\n" in pa
+    for t in ("question3", "chromatic_recurrence"):
+        assert f"theorem {t} " in src
+        assert f"#print axioms GKR.{t}\n" in pa
+        assert f"'GKR.{t}' depends on axioms: [propext, Classical.choice, Quot.sound]" in ax
+    wf = open(os.path.join(ROOT, ".github", "workflows", "lean.yml"), encoding="utf-8").read()
+    assert "Recurrence" in wf.split("for m in ", 1)[1].split(";", 1)[0].split()
