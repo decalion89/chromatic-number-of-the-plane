@@ -53,3 +53,7 @@
 'FourColours.no_character' depends on axioms: [propext, Classical.choice, Quot.sound]
 'FourColours.not_colorable_three_of' depends on axioms: [propext, Classical.choice, Quot.sound]
 'FourColours.not_colorable_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PadicFour.not_colorable_three_of_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PadicFour.padic_not_colorable_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PadicFour.padic_not_colorable_three_unconditional' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PadicFour.not_colorable_three_of_sq_unconditional' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -34,6 +34,7 @@ import TheoremWplus
 import DistLiu
 import TheoremWInf
 import FourColours
+import PadicFour
 
 -- The axioms the theorems depend on; `axioms.expected` holds the expected output.
 #print axioms Q23.chromaticNumber_eq_four
@@ -91,3 +92,7 @@ import FourColours
 #print axioms FourColours.no_character
 #print axioms FourColours.not_colorable_three_of
 #print axioms FourColours.not_colorable_three
+#print axioms PadicFour.not_colorable_three_of_sq
+#print axioms PadicFour.padic_not_colorable_three
+#print axioms PadicFour.padic_not_colorable_three_unconditional
+#print axioms PadicFour.not_colorable_three_of_sq_unconditional

@@ -1,6 +1,6 @@
 name = "HadwigerNelson"
 version = "0.1.0"
-defaultTargets = ["LocalColouring", "Q23", "Q311", "QuadraticPlanes", "Sqrt11", "Sqrt119", "Sqrt131", "Sqrt179", "Sqrt191", "Sqrt251", "Sqrt431", "Sqrt455", "Sqrt911", "Sqrt935", "ColouringFormula", "Sqrt23", "Sqrt35", "Sqrt47", "Sqrt59", "Sqrt71", "Sqrt95", "Sqrt155", "Sqrt239", "Sqrt263", "Sqrt359", "Sqrt443", "Sqrt491", "Sqrt599", "Sqrt611", "Sqrt791", "Sqrt851", "Sqrt959", "PadicPlanes", "TheoremW", "Recurrence", "TheoremWplus", "DistLiu", "TheoremWInf", "FourColours"]
+defaultTargets = ["LocalColouring", "Q23", "Q311", "QuadraticPlanes", "Sqrt11", "Sqrt119", "Sqrt131", "Sqrt179", "Sqrt191", "Sqrt251", "Sqrt431", "Sqrt455", "Sqrt911", "Sqrt935", "ColouringFormula", "Sqrt23", "Sqrt35", "Sqrt47", "Sqrt59", "Sqrt71", "Sqrt95", "Sqrt155", "Sqrt239", "Sqrt263", "Sqrt359", "Sqrt443", "Sqrt491", "Sqrt599", "Sqrt611", "Sqrt791", "Sqrt851", "Sqrt959", "PadicPlanes", "TheoremW", "Recurrence", "TheoremWplus", "DistLiu", "TheoremWInf", "FourColours", "PadicFour"]
 
 [[require]]
 name = "mathlib"
@@ -168,3 +168,8 @@ name = "TheoremWInf"
 # [1/3, 2/3] (mod 1), and Theorem W (TheoremWInf) turns a 3-colouring into such a character.
 [[lean_lib]]
 name = "FourColours"
+
+# χ(ℚ_[p]²) ≥ 4 for every prime p ≥ 5 (Corollary 3 of notes/four_colours_11_mod_12.md), and the same for every
+# field of characteristic 0 containing a square root of some d ≡ 11 (mod 12): the transfer, from Theorem 1.
+[[lean_lib]]
+name = "PadicFour"

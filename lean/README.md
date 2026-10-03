@@ -51,6 +51,11 @@ This directory holds proofs in Lean 4, with Mathlib, of:
   χ_c(G(ℤ, D)) = 1/κ(D). For p < 4q this is the theorem above, through a periodic window and an extension of the
   character to ℤ/P; for p ≥ 4q it is the lonely runner theorem for three speeds, which the file also proves (a
   short argument: put the fastest runner at distance exactly 1/4 at a time x/(4c), x odd, and choose x).
+- Corollary 3 of [`notes/four_colours_11_mod_12.md`](../notes/four_colours_11_mod_12.md): the graph of
+  x² + y² = 1 over ℚ_[p] is not 3-colourable for every prime p ≥ 5,
+  and more generally over every field of characteristic 0 containing a square root of some d ≡ 11 (mod 12). The
+  proof is the transfer: X² − d is the minimal polynomial of √d, so ℚ(√d) maps into such a field, and for ℚ_[p]
+  the Chinese remainder theorem and Hensel's lemma give such a d with d ≡ 1 (mod p) and √d ∈ ℤ_[p];
 
 ## The theorems
 
@@ -69,6 +74,12 @@ theorem Sqrt47.not_colorable_three_of_unsatisfiable (h : QuadraticPlanes.Unsatis
 theorem PadicPlanes.padicSeven_chromaticNumber : (QuadraticPlanes.sumSqGraph ℚ_[7]).chromaticNumber = 4
 theorem PadicPlanes.padicThree_chromaticNumber : (QuadraticPlanes.sumSqGraph ℚ_[3]).chromaticNumber = 3
 theorem PadicPlanes.padicTwo_chromaticNumber : (QuadraticPlanes.sumSqGraph ℚ_[2]).chromaticNumber = 2
+-- the p-adic planes need four colours for every prime p ≥ 5 (Corollary 3 of notes/four_colours_11_mod_12.md):
+theorem PadicFour.padic_not_colorable_three_unconditional (p : ℕ) [Fact p.Prime] (hp : 5 ≤ p) :
+    ¬ (QuadraticPlanes.sumSqGraph ℚ_[p]).Colorable 3
+-- and PadicFour.not_colorable_three_of_sq_unconditional, the same for every field of characteristic 0 with s² = d,
+-- d ≡ 11 (mod 12); PadicFour.padic_not_colorable_three and PadicFour.not_colorable_three_of_sq are the transfers,
+-- with Theorem 1 as the hypothesis PadicFour.Theorem1
 -- Theorem W for three colours and finite abelian groups (note on the winding lemma):
 theorem TheoremW.theoremW_finite {G : Type*} [AddCommGroup G] [Finite G]
     (S : Set G) (hS : ∀ s ∈ S, -s ∈ S)
@@ -143,7 +154,7 @@ says that no assignment satisfies every clause. When a file is built, `#guard` c
 `data/quadratic_planes/q{d}.cnf` is exactly `formula`, and `scripts/verify_quadratic_planes.py --cake-lpr` has
 cake_lpr check an LRAT proof that this file is unsatisfiable.
 
-The fifty theorems depend only on Lean's three standard axioms, `propext`, `Classical.choice` and
+The fifty-nine theorems depend only on Lean's three standard axioms, `propext`, `Classical.choice` and
 `Quot.sound`: `axioms.expected` records the output of `#print axioms`, and CI compares them.
 
 ## Checking the proofs
@@ -214,13 +225,14 @@ colourings exist but cannot be computed.
 | `ColouringFormula.lean` | the colouring formula as a Lean object (`colourCNF`), the lower bound from its unsatisfiability, a reader for DIMACS files, and a balanced tree of points (`PtTree`) in which the kernel finds a point in logarithmic time |
 | `Sqrt{d}.lean` | ℚ(√d), for d = 11, 119, 131, 179, 191, 251, 431, 455, 911, 935: the graph of `data/quadratic_planes/q{d}.json`. It reads `data/quadratic_planes/q{d}.cnf` and the LRAT proof `data/quadratic_planes/q{d}.lrat` (kissat, then `drat-trim -L`) with `include_str`. For the other seventeen graphs (d = 23, 35, 47, 59, 71, 95, 155, 239, 263, 359, 443, 491, 599, 611, 791, 851, 959): the graph, `formula`, and the check that `q{d}.cnf` is `formula` |
 | `PadicPlanes.lean` | the `p`-adic planes: `χ(ℚ₇²) = 4` (the upper bound of `QuadraticPlanes.lean` at 7 for `ℤ_[7]`, and the graph of `Sqrt11.lean` through a square root of 11 in `ℚ_[7]` from Hensel's lemma), `χ(ℚ₃²) = 3` and `χ(ℚ₂²) = 2` |
+| `PadicFour.lean` | from Theorem 1 of `notes/four_colours_11_mod_12.md` (`FourColours.not_colorable_three`): no 3-colouring of the plane over a field of characteristic 0 containing `√d`, `d ≡ 11 (mod 12)`, and over `ℚ_[p]` for every prime `p ≥ 5` (Chinese remainder theorem and Hensel's lemma) |
 | `TheoremW.lean` | Theorem W for three colours and finite abelian groups: the winding sum of a walk (`W`), its invariance under permutations of the steps (squares do not wind), and the averaged character `ξ₀(s) = (F(s)/(3|H|) + 1)/2` over `H = closure S` |
 | `Recurrence.lean` | the case of three colours of Katznelson's question, from `TheoremW.lean`: periodic windows by pigeonhole, Theorem W on `ZMod P`, the extension of the character to `ZMod P` (ℝ/ℤ is divisible), and compactness of `UnitAddCircle` |
 | `TheoremWplus.lean` | Theorem W for circular cliques `K_{p/q}`, `p < 4q`: the lift `δ ∈ [q, p − q]`, squares (`dl_square`), the winding sums as in `TheoremW.lean`, the average `ξ₀(s) = F(s)/(p|H|)`, and the converse |
 | `TheoremWInf.lean` | Theorem W for three colours, every abelian group and finite `S`: averaging operators `avg n s f g = (1/(n+1)) ∑_{t ≤ n} f(g + t•s)` and box averages `avgs`, the averaged winding sums of closed walks (`closed_avg`), limits along `hyperfilter ℕ` (`exists_F`), and the character from any `ξ₀` with integer sums along closed walks (`exists_char`); the same for `K_{p/q}` (`theoremWplus`) |
 | `FourColours.lean` | χ(ℚ(√d)²) ≥ 4 for every `d ≡ 11 (mod 12)`: `(3 + 4i)^j` modulo 2, 3 and 5, the sets `S_N` and the structure lemma by induction on `k` (`rep_of_inS`), the vectors `e, u₁, ū₁, u_n` and their two relations (`rel1`, `rel2`), the lift of a character to `ℝ` (`exists_lift`), the exact relations among the integer parts (`exact3`) and the contradictions modulo 2 and 3 (`contra_23`, `contra_11`) |
 | `DistLiu.lean` | Theorem W⁺ for distance graphs `G(ℤ, D)` (a periodic window, `TheoremWplus` on `ZMod P`, the extension of the character), the converse colouring `⌊p · frac(xα)⌋`, the lonely runner theorem for three speeds (`exists_odd_window`), and Problem 3 of Liu's survey |
-| `PrintAxioms.lean`, `axioms.expected` | the axioms of the fifty-five theorems |
+| `PrintAxioms.lean`, `axioms.expected` | the axioms of the fifty-nine theorems |
 | `tools/q23_coefficients.py`, `tools/q311_coefficients.py` | sympy scripts that produce the coefficients of the `linear_combination` steps and the edge lists |
 | `tools/field_lean.py` | writes `Sqrt{d}.lean` from the data (`--check` compares, and checks the colouring of 𝔽₇² in `QuadraticPlanes.lean` against `finite_planes.json`; the tests run it) |
 
