@@ -101,6 +101,26 @@ $d\equiv47,143,167\pmod{168}$. For $d=47$, the bound $5$ comes from reduction at
 in $\Q(\sqrt{47})$, and $\chi(\F_{11}^2)=5$ \cite[Lemma~8.2 and Table~6.1]{Moorhouse}.
 \end{proof}
 
+\begin{corollary}\label{cor:padic}
+For every prime $p\ge5$, $\chi(\Q_p^2)\ge4$, where $\Q_p^2$ is the graph joining $x,y\in\Q_p^2$ when
+$(x_1-y_1)^2+(x_2-y_2)^2=1$. So $\chi(\Q_p^2)\ge4$ exactly for $p\ge5$.
+\end{corollary}
+
+\begin{proof}
+As $\gcd(p,12)=1$, some positive integer $d$ satisfies $d\equiv11\pmod{12}$ and $d\equiv1\pmod p$ (it need not be
+squarefree; Theorem~\ref{thm:main} covers it). By Hensel's lemma $d$ has a square root in $\Z_p^\times$, so
+$\sqrt d\mapsto s$ defines a field embedding $\sigma\colon\Q(\sqrt d)\to\Q_p$. Being an injective ring homomorphism
+fixing $\Q$, $\sigma$ preserves the relation $(x_1-y_1)^2+(x_2-y_2)^2=1$ in both directions, so applied coordinatewise
+it maps the plane over $\Q(\sqrt d)$ isomorphically onto an induced subgraph of $\Q_p^2$, and
+$\chi(\Q_p^2)\ge\chi(\Q(\sqrt d)^2)\ge4$. For $p=2,3$ no $d\equiv11\pmod{12}$ is a square in $\Q_p$, and indeed
+$\chi(\Q_2^2)=2$ and $\chi(\Q_3^2)=3$, following from \cite{Madore}.
+\end{proof}
+
+For $p\equiv1\pmod4$ this is weaker than $\chi(\Q_p^2)=\infty$, a consequence of a theorem of Davies; the new case is
+$p\equiv3\pmod4$, where explicit graphs over $27$ fields had given the bound only for $7\le p<2\,129\,503\,819$, and
+where no finite set of fields can give it for every $p$, by Chebotarev's theorem \cite{PA}. A finite $4$-chromatic
+unit-distance graph in $\Q_p^2$ exists, by compactness, but is not exhibited.
+
 The proof is explicit. Let $G_N$ be the set of the $4(2k+1)$ rational unit vectors whose denominators divide
 $N=5^k$ (Lemma~\ref{lem:GN}), and for an integer $n$ let
 \[
@@ -390,6 +410,8 @@ many distances}, Congr. Numer. \textbf{60} (1987), 51--58.
 3 March 2010, \url{https://www.ericmoorhouse.org/pub/chromatic.pdf}.
 \bibitem{MoorhouseTalk} G. E. Moorhouse, \emph{Colouring the plane}, talk at Designs, Codes \& Geometries
 2010, slides at \url{https://www.ericmoorhouse.org/slides/ebertfest.pdf}.
+\bibitem{PA} S. Gal\'an, \emph{Colouring the $p$-adic plane}, draft, 2026, \texttt{papers/padic-planes/} in
+\cite{Repo}.
 \bibitem{QP} S. Gal\'an, \emph{Real quadratic planes that need four colours}, draft, 2026,
 \texttt{papers/quadratic-planes/} in \cite{Repo}.
 \bibitem{Repo} S. Gal\'an, \emph{The Hadwiger--Nelson problem over number fields}, code, data and formal

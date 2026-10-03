@@ -9769,3 +9769,10 @@ refereed this.
     integer `n`" (the theorem uses `n = 1 + 2·3^{s+1}`). Also: `b ≡ 2 (mod 3)`, not 1; 28 infeasible triples for
     `d = 11`, not 20 (our search had stopped at 20); the conditions on `n` are sufficient, not necessary.
   - Both sets of fixes are in the note and the paper.
+- **A p-adic corollary.** `χ(ℚ_p²) ≥ 4` for every prime `p ≥ 5`: by the Chinese remainder theorem some
+  `d ≡ 11 (mod 12)` has `d ≡ 1 (mod p)`, so (Hensel) `ℚ(√d)` embeds in `ℚ_p` and its plane is an induced subgraph of
+  `ℚ_p²`. Before, the 27 explicit graphs gave this only for `7 ≤ p < 2 129 503 819`, and Chebotarev's theorem shows
+  that no finite set of fields can do better; here `d` depends on `p` (for `p = 2 129 503 819`, `d = 21 295 038 191`).
+  The second referee checked it (no error, no gap; 671 primes checked, and the set of Theorem 1b for `d = 11`,
+  `N = 25`, embedded in `ℚ₅²` to precision `5⁴⁰`); its wording points are applied. A finite witness exists
+  (de Bruijn–Erdős, or König's lemma) but is not exhibited. Note added to the p-adic draft.

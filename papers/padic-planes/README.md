@@ -15,7 +15,9 @@ when (x − x′)² + (y − y′)² = 1:
   for p = 2 and p ≡ 3 (mod 4).
 - χ(ℚ_p²) ≥ 4 for every prime p ≡ 3 (mod 4) with 7 ≤ p < 2 129 503 819, from the unit-distance graphs over 27 real
   quadratic fields of [`papers/quadratic-planes/`](../quadratic-planes/); by Chebotarev's theorem no finite set of
-  number fields gives this for every p.
+  number fields gives this for every p. A remark added on 3 October: by
+  [`papers/four-colours/`](../four-colours/) (Corollary 3), χ(ℚ_p²) ≥ 4 for every prime p ≥ 5, with a field that
+  depends on p; no finite witness is exhibited there.
 - In every dimension n, χ(ℚ_p^n) is finite exactly when n = 1, or n = 2 and p ≢ 1 (mod 4), or p = 2 and n ≤ 4;
   χ(ℚ₂⁴) = 4, through the residue field 𝔽₄ of the 2-adic quaternions, and on the p-adic line χ = 2 but the Borel
   chromatic number is 3 for odd p.

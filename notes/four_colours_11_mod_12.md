@@ -20,6 +20,26 @@ Theorem 1 gives `χ ≥ 4`; and `χ ≤ 4` when `d ≡ 3 (mod 8)` (Fischer 1990,
 (Moorhouse, Corollary 8.3). Among `d ≡ 11 (mod 12)`, the residues left by both are `d ≡ 7 (mod 8)` with
 `d ≡ 3, 5, 6 (mod 7)`, i.e. `d ≡ 47, 143, 167 (mod 168)`. ∎
 
+> **Corollary 3.** For every prime `p ≥ 5`, `χ(ℚ_p²) ≥ 4`, where `ℚ_p²` is the graph on `ℚ_p²` joining `x` and `y`
+> when `(x₁ − y₁)² + (x₂ − y₂)² = 1`. So `χ(ℚ_p²) ≥ 4` exactly for `p ≥ 5`.
+
+*Proof.* As `gcd(p, 12) = 1`, there is a positive integer `d ≡ 11 (mod 12)` with `d ≡ 1 (mod p)` (Chinese remainder
+theorem); `d` need not be squarefree, and Theorem 1 is stated for every positive `d ≡ 11 (mod 12)`. By Hensel's lemma
+`d` has a square root `s ∈ ℤ_p^×` (the root 1 of `t² − d` modulo `p` is simple), and `√d ↦ s` is a field embedding
+`σ : ℚ(√d) → ℚ_p` (`d ≡ 3 (mod 4)` is not a square in `ℚ`). `σ` is an injective ring homomorphism fixing `ℚ`, so
+`(σx₁ − σy₁)² + (σx₂ − σy₂)² = σ((x₁ − y₁)² + (x₂ − y₂)²)` equals 1 exactly when the original expression does;
+applied coordinatewise, `σ` maps the plane over `ℚ(√d)` (whose edges are the pairs at real distance 1, that is,
+with `(x₁ − y₁)² + (x₂ − y₂)² = 1`) isomorphically onto an induced subgraph of `ℚ_p²`. By Theorem 1,
+`χ(ℚ_p²) ≥ χ(ℚ(√d)²) ≥ 4`. For `p = 2, 3` no `d ≡ 11 (mod 12)` is a square in `ℚ_p`, and indeed `χ(ℚ₂²) = 2`,
+`χ(ℚ₃²) = 3` (both following from Madore 2015). ∎
+
+For `p ≡ 1 (mod 4)` this is weaker than `χ(ℚ_p²) = ∞` (Davies's theorem, `notes/quadratic_planes.md` §5); the new
+content is `p ≡ 3 (mod 4)`. The 27 explicit graphs of `notes/quadratic_planes.md` gave `χ(ℚ_p²) ≥ 4` only for
+`7 ≤ p < 2 129 503 819`, and by Chebotarev's theorem no finite set of fields can reach every `p`; here `d` depends on
+`p`. A finite 4-chromatic unit-distance graph in `ℚ_p²` exists (de Bruijn–Erdős, or König's lemma, as the graph is
+countable and locally finite), but it is not exhibited. The second referee checked the corollary (research log,
+3 October); for `p = 2 129 503 819`, the first prime the 27 graphs miss, `d = 21 295 038 191` works.
+
 So this answers, for the step from three to four colours, Moorhouse's question (2010) "What can we say about `χ(K²)`
 when `K = ℚ(√d)`?": before, the largest known lower bound for a real quadratic field was 3
 (`notes/quadratic_planes.md` §1). For `d ≡ 47 (mod 168)`, in particular `d = 47` (Moorhouse's second question), it

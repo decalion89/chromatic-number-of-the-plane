@@ -38,7 +38,9 @@ including every retracted claim, is the research log,
   `d ≡ 23 (mod 24)`. Two internal referees checked the proofs (no error in the proof of Theorem 1; one wrong
   generality in the statement of Theorem 1b, for negative `n`, corrected). New: `data/quadratic_planes/winding/family/`
   (exact checks of the structure lemma, the configurations, the large-`N` criterion, 19 exact certificates) and
-  `tests/test_winding_family.py` (in CI, except the slow certificates).
+  `tests/test_winding_family.py` (in CI, except the slow certificates). Corollary: `χ(ℚ_p²) ≥ 4` for every prime
+  `p ≥ 5` (choose `d ≡ 11 (mod 12)` with `d ≡ 1 (mod p)`, so `ℚ(√d) ⊂ ℚ_p`); checked by the second referee; the
+  p-adic draft has a remark on it.
 
 - **Liu's Problem 3 in Lean** (`lean/DistLiu.lean`, 3 October). For every set `D` of three positive integers,
   `G(ℤ, D)` maps to `K_{p/q}` if and only if some `α` has `‖dα‖ ≥ q/p` for all `d ∈ D`, that is,

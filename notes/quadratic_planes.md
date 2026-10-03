@@ -427,7 +427,9 @@ that they are up to date.
     `3 625 331 999`), where Chebotarev's theorem predicts about 19.4: the 27 values of `d` span a subgroup of rank 25 of `ℚ^×/ℚ^×²`
     (the relations are `11·35·119·935 = 6545²` and `35·47·455·611 = 21385²`, each with four factors), so the primes
     at which every `d` is a non-square have density `2⁻²⁵` among the primes `≡ 3 (mod 4)`. The next item explains
-    why some prime had to escape.
+    why some prime had to escape. *Since 3 October (evening):* `χ(ℚ_p²) ≥ 4` for every prime `p ≥ 5`, by Theorem 1 of
+    `notes/four_colours_11_mod_12.md` (Corollary 3 there: take `d ≡ 11 (mod 12)` with `d ≡ 1 (mod p)`); a finite
+    witness exists but is not exhibited beyond the 27 fields.
   - `χ(ℚ₈₃²) ≥ 5`: `3`, `11` and `247` are squares modulo 83, so the 5-chromatic graph `data/five_247_c.json`
     over `ℚ(√3, √11, √247)` lies in `ℚ₈₃²`.
 
@@ -492,7 +494,8 @@ that they are up to date.
   contradiction. So the table above cannot be extended to every `p` with finitely many graphs; for our 27 fields the
   first prime that escapes is `p = 2 129 503 819`, where every `d` is a non-square, as at 3. It would follow,
   for example, from `χ(ℚ(√q)²) = 4` for every prime `q ≡ 11 (mod 12)`: by Dirichlet, every prime `p ≡ 3 (mod 4)`
-  with `p ≥ 7` has such a `q` that is a square modulo `p`, and then `ℚ(√q) ⊂ ℚ_p`.
+  with `p ≥ 7` has such a `q` that is a square modulo `p`, and then `ℚ(√q) ⊂ ℚ_p`. Theorem 1 of
+  `notes/four_colours_11_mod_12.md` gives more, `χ(ℚ(√d)²) ≥ 4` for every `d ≡ 11 (mod 12)`, so this now holds.
 - **Lines and higher dimensions.** For the graph on `ℚ_p^n` (adjacent when `Σ(v_i − w_i)² = 1`), `χ(ℚ_p^n)` is
   finite exactly when `n = 1`, or `n = 2` and `p ≢ 1 (mod 4)`, or `p = 2` and `n ≤ 4`: the other forms are isotropic
   (five or more variables always, three or more for odd `p`), and Davies's theorem applies. On the line,
