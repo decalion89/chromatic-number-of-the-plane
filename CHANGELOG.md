@@ -20,8 +20,11 @@ including every retracted claim, is the research log,
   tests in `tests/test_three_colours.py`.
 - **A circular chromatic number (4 October).** `notes/circular_planes.md`: `χ_c(ℚ(√11)²) = χ_c(ℚ(√35)²) = χ_c(ℚ₇²) = 7/2`,
   by a 7-adic colouring and exact certificates (`data/number_fields/circular/`, two checkers) with Theorem W⁺; no plane
-  over a number field has `2 < χ_c < 3`; colourings locally constant at one place give, below 4, only 2, 3 and `7/2`
-  (Proposition C2, for the residue fields computed).
+  over a number field has `2 < χ_c < 3`; locally constant colourings of one completion give, below 4, only the bounds 2, 3 and `7/2`
+  (Propositions C2, C3 and Corollary C4, with Weil's bound for Kloosterman sums); `χ_c = 7/2` for infinitely many
+  number fields (Corollary C5).
+- **Paper draft `papers/three-colours/` (4 October).** Theorem B, Proposition B9, the corollaries, Theorem C and the
+  local circular values; refereed once (no mathematical error), fixes applied.
 - **Literature sweep (4 October).** `notes/literature.md`, last section: what the systematic search of arXiv found for
   each result, and the relevant papers the project did not cite before.
 

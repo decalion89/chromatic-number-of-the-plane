@@ -4,7 +4,7 @@
 certificates, each accepted by two exact checkers that share no code, together with Theorem W⁺
 (`notes/winding_lemma.md` §2, proved in Lean in `lean/TheoremWInf.lean`). An internal referee (a separate AI agent,
 with its own programs) checked Theorem C for `ℚ(√11)` and `ℚ₇` and found it correct; its corrections to this note are
-applied (research log, 4 October). Proposition C2 and Question 1 are new and not yet refereed. Nobody outside the
+applied (research log, 4 October). Propositions C2, C3, Corollary C4 and Question 1 are new and not yet refereed. Nobody outside the
 project has checked any of it.*
 
 ## 1. Circular colourings and characters
@@ -64,6 +64,13 @@ with `p/q < 7/2`, Theorem W⁺ would give a character of `ℤU` with values in `
 `χ ≥ χ_c = 7/2 > 3` gives `χ ≥ 4` (also Theorem 1 of `notes/four_colours_11_mod_12.md`, and
 `notes/quadratic_planes.md` §5 for `ℚ₇`). ∎
 
+> **Corollary C5.** `χ_c(K²) = 7/2` for every finite extension `K` of `ℚ₇` with residue degree 1, and `χ_c(F²) = 7/2`
+> for every number field `F` that contains `√11` or `√35` and has a place above 7 of residue degree 1 (for example
+> `ℚ(√7, √11)`, `ℚ(√2, √35)`, or `ℚ(√11, √m)` for every `m` that is a nonzero square modulo 7).
+
+*Proof.* `K ⊇ ℚ₇ ⊇ ℚ(√11)`, and `F ⊇ ℚ(√11)` or `ℚ(√35)`, give `χ_c ≥ 7/2` by Theorem C; the residue field `𝔽₇` gives
+`χ_c ≤ 7/2` by Proposition C1. ∎
+
 The lower bound is about the infinite graph `Cay(ℤU, U)`: Theorem W⁺ is applied to it directly. Every finite subgraph
 has `χ_c ≤ 7/2` and their supremum is `7/2`, but we do not know a finite subgraph with `χ_c = 7/2` exactly. The
 16 characters that come from the 7-adic colourings (two embeddings, eight maps `λ`) lie in the closed box `[2/7, 5/7]`
@@ -92,24 +99,42 @@ if it were the whole group, `ξ(T(K))` would contain a point with `‖·‖ ≤ 
 `ẑ ∈ μ_{q+1}`, hence on `D·span_{𝔽_q}(μ_{q+1}) = 𝔽_{q²}`: a contradiction. So `ξ` factors through `𝔽_{q²}` and
 `Q/P ≤ κ₁(K)`. ∎
 
-Values (`data/number_fields/circular/kappa1.py`): `κ₁ = 0` for `p = 2` (the sum of `λ` over `μ_{q+1}`, `q + 1` odd,
-is `λ(0) = 0`); for odd `p`, `κ₁` depends only on `(p, f)`, and `κ₁ = 1/3` for `(3, 1)`, `2/7` for `(7, 1)`, `< 1/4`
-for `f = 1` and every prime `p ≡ 3 (mod 4)` with `11 ≤ p < 400`, and `κ₁ = 0` (every `λ` vanishes somewhere on
-`μ_{q+1}`) for `(p, f) = (3, 3), (3, 5), (7, 3), (11, 3)`. Checks on finite models (`level2.py`): at level 2 the best
-character of `O/49` for `ℚ₇` is the level-1 one (`2/7`; the best that is nonzero on `7O` gives `2/49 < 1/14`), and
-for `ℚ₂₇` no character of `O/9` keeps `T` away from 0.
+> **Proposition C3 (residue fields).** `κ₁(K) > 1/4` only for `(p, f) = (3, 1)`, where `κ₁ = 1/3`, and
+> `(p, f) = (7, 1)`, where `κ₁ = 2/7`. In every other case (with `i ∉ K` and `K(i)/K` unramified) `κ₁(K) < 1/4`, and
+> `κ₁(K) = 0` when `p = 2` or `f ≥ 3`.
 
-So a colouring that is locally constant at one place gives, below 4, only the bounds 2 (Theorem B, (a)), 3 (Theorem
-B, (b)) and `7/2` (a place above 7 with residue degree 1), at least for the residue fields computed.
+*Proof.* `p = 2`: the elements of `μ_{q+1}` add up to 0 and `q + 1` is odd, so `λ ≡ 1/2` on `μ_{q+1}` is impossible.
+For odd `p` (so `p ≡ 3 (mod 4)`, `f` odd) let `S(b) = Σ_{z ∈ μ_{q+1}} ψ(Tr(bz))`, `ψ(x) = e^{2πix/p}`. Writing the
+indicator of `μ_{q+1} = ker N` with the characters `χ` of `𝔽_q^×` and using Hasse–Davenport
+(`G(χ∘N, ψ∘Tr) = −G(χ, ψ_q)²`) gives `S(b) = −Σ_{y ∈ 𝔽_q^×} ψ_q(y + N(b)/y)`, minus a Kloosterman sum; so
+`|S(b)| ≤ 2√q` (Weil). For `b ≠ 0` the number of zeros of `Tr(bz)` on `μ_{q+1}` is at least
+`(q + 1)/p − 2(p − 1)√q/p > 0` when `f ≥ 3`. For `f = 1`, `p = 4k + 3`, the number of `z` with `‖Tr(bz)/p‖ < 1/4` is
+at least `(p² − 1)/(2p) − 2√p (ln p + 1)` (Dirichlet kernel, `Σ_a 1/|sin(πa/p)| ≤ p(ln p + 1)`), positive for
+`p ≥ 1001`; for `11 ≤ p < 3000` a direct computation gives `κ₁ < 1/4` (largest `4/19`, `kappa1_f1.py`). ∎
+
+The bound `|S(b)| ≤ 2√q` and the identity with Kloosterman sums are checked numerically in `torus_sums.py`
+(`(p, f) = (3, 1), (7, 1), (11, 1), (19, 1), (3, 3), (7, 3), (3, 5)` and `p = 2`, `f = 1, 3, 5`). `kappa1.py` computes
+`κ₁(p, f)` for any small `(p, f)` (for example `κ₁ = 0` at `(3, 3), (3, 5), (7, 3), (11, 3)`), and `level2.py` checks the
+level lemma on finite models: at level 2 the best character of `O/49` for `ℚ₇` is the level-1 one (`2/7`; the best
+that is nonzero on `7O` gives `2/49 < 1/14`), and for `ℚ₂₇` no character of `O/9` keeps `T` away from 0.
+
+> **Corollary C4 (local circular values).** Let `K` be a finite extension of `ℚ_p`. If `K²` has a locally constant
+> homomorphism to some `K_{P/Q}` with `P/Q < 4`, then `p = 2` and `K(i)/K` is ramified (and `K²` is bipartite), or
+> `(p, f) = (3, 1)` (and `P/Q ≥ 3`), or `(p, f) = (7, 1)` (and `P/Q ≥ 7/2`).
+
+So the restriction to `F²` of a locally constant colouring of one completion `F_v²` gives, below 4, only the bounds 2
+(Theorem B, (a)), 3 (Theorem B, (b)) and `7/2` (a place above 7 with residue degree 1).
 
 ## 5. Questions
 
 1. *Circular local–global.* Is `χ_c(F²) ∈ {2, 3, 7/2}` whenever `χ_c(F²) < 4`? More precisely: is `χ_c(F²) = 7/2`
    exactly when (a) and (b) of Theorem B fail and some place above 7 has residue degree 1, and `χ_c(F²) ≥ 4` when (a)
-   and (b) fail and no such place exists? Theorem B (with Corollary B6) is the part of this at 2 and 3. It predicts
-   `χ_c(ℚ(√23)²) = 7/2` and `χ_c(ℚ(√59)²) = 4` (7 is inert in `ℚ(√59)`, and `χ(ℚ(√59)²) = 4`).
-   Along the rational rotations with denominator `5^k` there are characters with `min ‖ξ(γ)‖ = 3/10` for every `k`
-   we tried (`chartypes.py`, `lift.py`, up to `k = 6`); they look 5-adic, and 5-adic characters cannot survive on a
+   and (b) fail and no such place exists? Theorem B (with Corollary B6) is the part of this at 2 and 3. For `ℚ(√23)`,
+   where 7 splits and `χ_c ≤ 7/2` by Proposition C1, it predicts `χ_c = 7/2`; for `ℚ(√59)` (7 inert, `χ = 4`) it
+   predicts `χ_c = 4`.
+   Along the rational rotations with denominator `5^k` there are characters of neither type c nor type q with
+   `min ‖ξ(γ)‖ = 3/10` for every `k` we tried (`chartypes.py`, `lift.py`, up to `k = 6`; the referee found four on
+   the grid `(1/10)ℤ[i]` for `k ≤ 3`); they look 5-adic, and 5-adic characters cannot survive on a
    whole field plane (every place above 5 splits in `F(i)`), but a proof needs an analogue of Proposition 1 for the
    intervals `[r, 1 − r]` with `1/4 < r < 1/3`.
 2. What is `χ_c(F²)` for fields with `χ ≥ 4` and no place of residue field `𝔽₇`, such as `ℚ(√47)` (where

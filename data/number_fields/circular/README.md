@@ -14,4 +14,6 @@ Companion to `notes/circular_planes.md` (Proposition C1, Theorem C). Uses `../th
 | `cert_sqrt35_open_7_2_N25.json.gz` | the same for `ℚ(√35)` (14 199 nodes, 10 241 leaves): `χ_c(ℚ(√35)²) ≥ 7/2` |
 | `kappa1.py p,f …` | `κ₁(p, f)`: the best residue-field circular colouring at a place with residue field `𝔽_{p^f}` (Proposition C2) |
 | `level2.py` | the level lemma of Proposition C2 on finite models: `O/49` for `ℚ₇`, `O/9` for `ℚ₂₇` |
+| `kappa1_f1.py P` | `κ₁(p, 1)` for every prime `p ≡ 3 (mod 4)` below `P`, fast (Proposition C3 needs `P ≥ 1001`; we ran `P = 3000`) |
+| `torus_sums.py` | the sums over the norm-one torus against `2√q` (Weil, through Kloosterman sums) |
 | `chartypes.py k h thr`, `lift.py THR KMAX [types file]` | maps of the characters of `(1/N)ℤ[i]` that keep `G_N` in `[r, 1 − r]`, and their coherent lifts from `N` to `5N` (§5 of the note) |

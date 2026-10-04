@@ -9894,3 +9894,24 @@ denominator `5^k`) decide three colours for every number field, not only for rea
   `p ≡ 3 (mod 4)` from 11 to 383 with `f = 1`, and 0 for `(3, 3), (3, 5), (7, 3), (11, 3)`; at `p = 2` it is 0. This
   suggests a circular local–global question: is `χ_c(F²) ∈ {2, 3, 7/2}` whenever it is below 4? It predicts
   `χ_c(ℚ(√23)²) = 7/2` and `χ_c(ℚ(√59)²) = 4`.
+- **The residue-field values for every `(p, f)`** (Proposition C3). The sum of `e(Tr(bz)/p)` over the norm-one torus
+  `μ_{q+1}` is minus a Kloosterman sum (Davenport–Hasse), so it is at most `2√q` (Weil). Hence every functional
+  vanishes somewhere on `μ_{q+1}` when `f ≥ 3`, and for `f = 1` some value lies within `1/4` of 0 once
+  `p ≥ 1001`; a computation covers `11 ≤ p < 3000`. So `κ₁ > 1/4` only at `(3, 1)` and `(7, 1)`, and Corollary C4
+  holds for every local field: a locally constant colouring of one completion gives, below 4, only the bounds 2, 3 or
+  `7/2`.
+  (The referee proposed the same route for `f ≥ 3`, and checked `f = 1` up to 5000 with the count
+  `#{N(x) = c, Tr x = a} = 1 − η(a² − 4c)`.)
+- **Infinitely many fields with `χ_c = 7/2`** (Corollary C5): every number field containing `√11` or `√35` with a
+  place above 7 of residue degree 1, such as `ℚ(√7, √11)` and `ℚ(√2, √35)`, and every finite extension of `ℚ₇` with
+  residue degree 1.
+- **`ℚ(√23)` and `ℚ(√59)` numerically.** With an LLL-reduced relation basis, SCIP gives `max_ξ min_U ‖ξ‖ = 2/7` for
+  `ℚ(√23)` (the 70-vector set of Theorem C); the exact certificate is being built. For `ℚ(√59)` the same set gives
+  0.2638 (a generic character with irrational-looking values), so it does not reach `χ_c ≥ 4`; a larger set is
+  needed. Without the LLL step the solver had failed on these fields (the referee saw SCIP report a wrong 0 on an
+  unreduced basis), so the earlier 'did not finish' entries were numerical, not mathematical.
+- **Paper.** `papers/three-colours/` (eleven pages): Theorem B, Proposition B9, the corollaries, Theorem C and the
+  local values. A referee read it with its own programs: no mathematical error; the fixes concern attributions
+  (the 'admissible' fields of the two-colour paper are a stronger notion than 'split above 2 and 3'), an overstated
+  'first exact value' (now 'first non-integral value'), the citation for `χ(ℚ(√2, √3)²) = 4`, the theorem letters,
+  'into' → 'onto' in Proposition C2, and a qualifier that Proposition C3 now removes.

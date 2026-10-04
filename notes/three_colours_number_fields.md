@@ -233,10 +233,10 @@ rational rotations of denominator `5^k` act as a probe: Proposition 1 says that 
 interval strictly inside `(1/3, 2/3)`. In the proof of Lemma B1, `φ(v)` then lies in the subset of `S_N` defined by
 this interval, which contains no point of type q (at `γ = 1` their value `Re(c̄)` lies in `{1/3, 2/3} + ℤ`). So every `v` has type c, `τ ≡ c` in Lemma B2, case (c) holds, and `χ(F²) ≤ 2`. ∎
 
-> **Corollary B7 (admissible fields).** If `i ∈ F_v` for every place `v` of `F` above 2 and above 3, then
+> **Corollary B7 (fields split above 2 and 3).** If `i ∈ F_v` for every place `v` of `F` above 2 and above 3, then
 > `χ(F²) ≥ 4`.
 
-This covers the admissible fields of `notes/local_global.md` §4. Of those listed there, `ℚ(√167)`, `ℚ(√2, √47)`,
+This covers the admissible fields of `notes/local_global.md` §4 and of the two-colour paper (`papers/two-colour-planes/`, §4), which must moreover satisfy `√3 ∉ F` and `i ∈ F_v` above 7, 11 and 19. A real quadratic field is split above 2 and 3 exactly when `d ≡ 23 (mod 24)`. Of those listed there, `ℚ(√167)`, `ℚ(√2, √47)`,
 `ℚ(√11, √13)` and `ℚ(√10, √38)` (which contains `√95`) already contain some `√d` with `d ≡ 11 (mod 12)`; for
 `ℚ(√2, √31)` and `ℚ(√2, √55)` the bound is new (also by Proposition B9).
 
