@@ -12,6 +12,12 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- **A smaller witness for `7/2` over `ℚ(√11)`: 157 vertices (4 October, night).** Deleting vertices, in a random
+  order, from the union of the 170-vertex witness and a second one (from the same growth with at most 100 new points
+  per round) leaves a vertex-critical unit-distance graph with 157 vertices, 409 edges and `χ_c = 7/2`
+  (`witness_q11b.json.gz`), certified like the others: both checkers, two encodings, `drat-trim` on both DRAT proofs,
+  `cake_lpr` on the LRAT form of one, and criticality certificates for every `H − v`. The paper, the note and the
+  READMEs now give 157 as the smallest known size; the test of the grown witnesses covers it.
 - **The subdivided hexagon over `ℚ(√7)`, and a referee's report on the value-3 witnesses (4 October, night).** `M`, the
   hexagon with its three long diagonals subdivided (9 vertices, 12 edges), is the unit-distance graph of nine points
   of `ℚ(√7)²` (`witness_q7m.json.gz`), and so are `M` plus one or two edges between midpoints: all three nine-vertex

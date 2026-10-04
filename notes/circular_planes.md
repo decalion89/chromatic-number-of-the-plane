@@ -92,7 +92,7 @@ vectors already push `χ_c` above `7/2`.
 
 The lower bound is about the infinite graph `Cay(ℤU, U)`: Theorem W⁺ is applied to it directly. Every finite subgraph
 has `χ_c ≤ 7/2` and their supremum is `7/2`; some finite subgraph has `χ_c = 7/2` exactly (Corollary F12, §6.8), and
-§6.8 gives one with 170 vertices, found by computer and certified. The
+§6.8 gives one with 157 vertices, found by computer and certified. The
 16 characters that come from the 7-adic colourings (two embeddings, eight maps `λ`) lie in the closed box `[2/7, 5/7]`
 and end at tight leaves of the tree; so the closed-interval statement is false and the open interval is essential.
 The certificates were found with a floating-point solver (`kappa_max.py`: SCIP, through OR-tools, maximises
@@ -726,7 +726,10 @@ stops after 52 rounds at 653 vertices. Deleting vertices while the formula stays
 leaves `H₁₁`: 170 vertices, 468 edges (all unit pairs), `χ_c(H₁₁) = 7/2`, and vertex-critical: for every vertex `v` a
 `(7, 2)`-colouring of `H₁₁ − v` with an acyclic tight digraph is stored, so `χ_c(H₁₁ − v) < 7/2` (the other half of
 Guichard's characterisation, explicitly: if `G` has `N` vertices and `pos` numbers them along a topological order of
-the tight digraph of `c`, then `N·c + pos` is a homomorphism of `G` to `K_{7N/(2N+1)}`). From the 71-vertex
+the tight digraph of `c`, then `N·c + pos` is a homomorphism of `G` to `K_{7N/(2N+1)}`).
+(The same growth with at most 100 new points per round stops at 573 vertices, and deletion leaves another
+vertex-critical witness with 170 vertices; deletion from the union of the two leaves one with 157 vertices and 409
+edges, `witness_q11b.json.gz`, the smallest we know.) From the 71-vertex
 graph over `ℚ(√455)` and the 96-vertex graph over `ℚ(√191)` the same procedure gives vertex-critical witnesses with 175
 vertices (434 edges) and 293 vertices (803 edges) (denominators 780 and 240). So `χ_c = 7/2` for both planes without
 Proposition F1: the witnesses give `≥ 7/2`, and the residue field `𝔽₇` gives `≤ 7/2`, as 7 ramifies in `ℚ(√455)` and
@@ -789,7 +792,7 @@ midpoints and centroids of them that stay optimal, the tight elements have a non
    be one. The 5-chromatic unit-distance graphs we know lie over fields containing `√3`, or `√−3` and `√−7`, and 3
    and −7 are not squares modulo 19.
 2. *Finite witnesses.* By Corollary F12 some finite unit-distance graph in `ℚ(√11)²` has `χ_c = 7/2`; the proof
-   (compactness) gives no bound on its size, and the smallest we know has 170 vertices and is vertex-critical (§6.8). How small can it be? (For the value 3 in a plane without unit triangles nine vertices are needed, and they suffice over `ℚ(√7)` and
+   (compactness) gives no bound on its size, and the smallest we know has 157 vertices and is vertex-critical (§6.8). How small can it be? (For the value 3 in a plane without unit triangles nine vertices are needed, and they suffice over `ℚ(√7)` and
 `ℚ(√31)`; §6.8. Over other such planes, for example `ℚ(√15)`, the least number is open.) And when `χ_c(F²) = 4`, is the value attained by
    a finite subgraph, for example for `ℚ(√59)`? Above 4 Lemmas F10 and F11 are not available. When `χ(F²) = 4`,
    compactness makes it a question about the plane: some finite subgraph has `χ_c = 4` if and only if every proper

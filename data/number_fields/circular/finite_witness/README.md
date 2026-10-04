@@ -24,11 +24,12 @@ distance 1 is an edge), with `χ_c(H) = 7/2`.
 | witness | field | denominator | vertices | edges | listed cycles (lengths) | found by |
 |---|---|---|---|---|---|---|
 | `witness_q11` | `ℚ(√11)` | 30 | 170 | 468 | 879 (7, 14, 21, 28) | growth from the 76-vertex graph to 653 vertices, then vertex deletion |
+| `witness_q11b` | `ℚ(√11)` | 30 | 157 | 409 | 1 159 (7, 14, 21, 28) | deletion from the union of `witness_q11` and a second 170-vertex witness |
 | `witness_q191` | `ℚ(√191)` | 240 | 293 | 803 | 489 (7 to 35) | growth from the 96-vertex graph to 3 258 vertices, then vertex deletion |
 | `witness_q455` | `ℚ(√455)` | 780 | 175 | 434 | 91 (7, 14, 28) | growth from the 71-vertex graph to 959 vertices, then vertex deletion |
 | `witness_q11sum` | `ℚ(√11)` | 30 | 2 237 | 11 300 | 180 (14 to 42) | the sumset `A + A` of the 76-vertex graph (the first one found) |
 
-The three grown witnesses are also *vertex-critical*: for every vertex `v`, `witness_*_critical.json.gz` gives a
+The four grown witnesses are also *vertex-critical*: for every vertex `v`, `witness_*_critical.json.gz` gives a
 `(7, 2)`-colouring `c` of `H − v` whose tight digraph has no directed cycle, so `χ_c(H − v) < 7/2` (the other half
 of Guichard's characterisation, explicitly: if `H − v` has `N` vertices and `pos` numbers them `0, …, N − 1` along a
 topological order of the tight digraph, then `N·c + pos` is a homomorphism to `K_{7N/(2N+1)}`), and no proper induced
@@ -63,6 +64,12 @@ the others read `p` and `q` from the file, `7/2` when absent), with the same res
 `minimise.py` for `7/2` is that its first and last solver calls now run without a conflict budget (the referee of the
 value-3 witnesses compared the clause streams of both versions).
 
+`witness_q11b` is smaller: the same growth from `q11.json` with at most 100 new points per round (`3000 100`) stopped
+after 51 rounds at 573 vertices, deletion left a second vertex-critical witness with 170 vertices (458 edges), and
+deleting vertices from the union of the two (205 vertices), in a random order, left 157 vertices and 409 edges. These
+runs used the earlier working copies of the programs and are not reproduced here; the witness is certified like the
+others (`verification.txt`), with `fixed_vertex` 106.
+
 **Verification** (`verification.txt`): for every witness, two checks that share no code.
 1. `check_witness.py` (written for `witness_q11sum`; it reads `d` from the file): exact
    integer checks of the points, of every edge and of all unit pairs, of the colouring and of the cycles; rebuilds
@@ -74,7 +81,8 @@ value-3 witnesses compared the clause streams of both versions).
    formally verified checker of CakeML) accepts the LRAT proof.
 
 The stored proofs of the grown witnesses are the core proofs that `drat-trim -l` extracts from `kissat`'s proofs,
-verified again by `check_witness.py`. To recheck one witness (`W` = `witness_q11`, `witness_q191`, `witness_q455`):
+verified again by `check_witness.py`. To recheck one witness (`W` = `witness_q11`, `witness_q11b`, `witness_q191`,
+`witness_q455`):
 
     xz -dk W.drat.xz
     python3 check_witness.py W.json.gz W.cnf.gz W.drat /path/to/drat-trim

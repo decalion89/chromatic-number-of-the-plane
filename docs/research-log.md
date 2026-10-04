@@ -10429,3 +10429,14 @@ on the seed and that the least size there is open. The referee also realised all
 over `ℚ(√31)`, `M + m₀m₁ + m₁m₂` over `ℚ(√7)`), as the search above does; asked for Vince's and Bondy–Hell's papers to be
 cited for the numerator bound; and asked for the proof by hand to name the three 6-cycles `C₀, C₁, C₂` it uses
 (`C_{k+3}` is `C_k` reversed). All of this is applied.
+
+## A 157-vertex witness for `7/2` over `ℚ(√11)` (4 October, night)
+
+The growth from the 76-vertex graph over `ℚ(√11)` with at most 100 new points per round (instead of 200) stopped after
+51 rounds at 573 vertices, and deletion left a second vertex-critical witness with 170 vertices (458 edges), different
+from `witness_q11`. The two share 135 vertices; their union has 205. Deleting vertices from the union in a random
+order (the deletion program with seed 1, 105 minutes) left 157 vertices and 409 edges: `witness_q11b.json.gz`. It is
+vertex-critical (`critical.py`, `check_critical.py`), and its lower bound is certified like the others: `kissat`,
+`drat-trim` on the stored core proof (`check_witness.py`), and the second encoding (`verify_independent.py`) refuted
+again by `kissat`, verified by `drat-trim` and, in LRAT form, by `cake_lpr`. So the smallest known witness for
+`χ_c(ℚ(√11)²) = 7/2` has 157 vertices; other random orders are running.

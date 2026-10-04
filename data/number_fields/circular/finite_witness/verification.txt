@@ -190,3 +190,26 @@ programs of its own (exact arithmetic on the points; all 2^28 labelled graphs on
 vertices without isomorphism tests: 1897 classes, 3 with chi_c = 3; an exhaustive 8^8 search for homomorphisms to
 K_8/3; the proof by hand on all 126 colourings of M; the formulas clause by clause; kissat, drat-trim and cake_lpr;
 the reproduction over Q(sqrt7)). Its findings on wording and reproducibility are applied (see the README).
+
+witness_q11b: Q(sqrt11), denominator 30, (p, q) = (7, 2), 157 vertices, 409 edges, 1159 listed cycles (lengths 7 to
+28), fixed vertex 106 (degree 19). Found by deleting vertices, in a random order, from the union (205 vertices) of
+witness_q11 and a second 170-vertex witness (growth from q11.json with at most 100 new points per round: 573
+vertices).
+1. python3 check_witness.py witness_q11b.json.gz witness_q11b.cnf.gz witness_q11b.drat drat-trim
+   (1) 157 points, 409 edges, every edge at distance exactly 1; unit-distance pairs among the points: 409; not listed
+       as edges: 0 (induced)
+   (2) the colouring is a (7,2)-colouring: chi_c(H) <= 7/2
+   (3) 1159 cycles, all closed walks along edges (lengths 7..28)
+   (4) the CNF is the formula built from the edges and cycles; sha256 c70d13800c1f47d9048b2466dd2afb53728a2f2ec9d680c107c0871cb8f715da
+   (5) drat-trim: s VERIFIED
+   kissat 4.0.4 (--seed=1) refuted the formula in about 20 s; drat-trim -l kept 198 417 of 370 423 lemmas (11 468 of
+   15 506 clauses in the core). Stored proof: the core proof, xz-compressed.
+2. python3 verify_independent.py H.cnf witness_q11b.json.gz
+   unit vectors with denominator 30: 108; unit pairs: 409 ; witness edges: 409 ; equal: True; (7,2)-colouring: yes;
+   1159 simple cycles along edges, lengths 7, 14, 21, 28; CNF: 1899 variables, 15506 clauses (sha256
+   f84c9c668e1e26659026eb82ddf9e342dea2bd4b0c7776d66507123dac3d1722)
+   kissat 4.0.4 (--seed=1): s UNSATISFIABLE; drat-trim: s VERIFIED (195 915 of 356 185 lemmas in the core), with an
+   LRAT proof as output; cake_lpr on the LRAT proof: s VERIFIED UNSAT
+3. python3 critical.py and python3 check_critical.py witness_q11b.json.gz witness_q11b_critical.json.gz
+   157 vertices: for every v, a (7,2)-colouring of H - v with an acyclic tight digraph, so chi_c(H - v) < 7/2; H is
+   vertex-critical for chi_c = 7/2
