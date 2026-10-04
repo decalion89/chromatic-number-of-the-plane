@@ -1,4 +1,5 @@
 import FourColours
+import PadicFour
 
 /-!
 # Four colours for every real field containing `√a` and `√b`, `a ≡ 2 (mod 3)`, `b ≡ 7 (mod 8)`
@@ -11,6 +12,10 @@ then the unit-distance graph of `K²` is not 3-colourable.
 * `not_colorable_three_of`: with Theorem W for infinite abelian groups (`FourColours.TheoremWStatement`), the
   unit-distance graph of `K²` is not 3-colourable.
 * `not_colorable_three`: the same, unconditionally, with `TheoremWInf.theoremW`.
+* `not_colorable_three_of_sq`: the transfer to every field `F` of characteristic 0 containing square roots of such
+  `a` and `b` (for `sumSqGraph F`): `ℚ(√a, √b)` maps into `F`.
+* `not_colorable_three_23`: as a check, the case `d ≡ 23 (mod 24)` of `FourColours.not_colorable_three`, with
+  `a = b = d`.
 
 *The set.* For `c ∈ ℕ` and `s ∈ K` with `s² = c`, `u_c = ((1 - c)/(1 + c), 2s/(1 + c))` and
 `ū_c = ((1 - c)/(1 + c), -2s/(1 + c))`; they satisfy `(1 + c)(u_c + ū_c) = 2(1 - c) e` (`rel`), `e = (1, 0)`.
@@ -29,6 +34,10 @@ relation by 4 gives `2(β + 1)(E_{u_b} + E_{ū_b}) + (4β + 3) E_e = 0` for `b =
 *Decisions.* Only the first coordinates, and only the type of `E_e`, are used. The lemmas of `FourColours` are
 imported, not copied; `rotv`, `gam`, `Uset` and their lemmas are restated for an arbitrary `K` (the originals are
 stated for `QuadraticPlanes.L d`). `k = 8(a + b)` is far more than needed (`exact3` needs `8a, 8b < 5^k`).
+The transfer needs no hypothesis relating `a` and `b` (such as `ab` not a square, or `a = b`): every root of the
+minimal polynomial of `√c` over `ℚ` is `±s` when `s² = c`, so the minimal polynomials of `√a` and `√b` split in `F`,
+and `IntermediateField.nonempty_algHom_adjoin_of_splits` gives a `ℚ`-algebra map `ℚ(√a, √b) → F` (which may send
+`√b` to `-t`; that does not matter).
 -/
 
 namespace TwoRoots
@@ -285,5 +294,60 @@ theorem not_colorable_three (K : IntermediateField ℚ ℝ) (a b : ℕ) (ha : a 
     (hsa : Real.sqrt a ∈ K) (hsb : Real.sqrt b ∈ K) :
     ¬ (LocalColouring.unitDistGraph K).Colorable 3 :=
   not_colorable_three_of theoremWStatement_holds K a b ha hb hsa hsb
+
+/-! ## The transfer to fields of characteristic 0, and the case `d ≡ 23 (mod 24)` -/
+
+section Transfer
+
+open Polynomial QuadraticPlanes
+
+/-- The minimal polynomial over `ℚ` of `√c` splits in every field containing a square root of `c`. -/
+lemma integral_splits {F : Type*} [Field F] [CharZero F] (c : ℕ) {s : F} (hs : s ^ 2 = c) :
+    IsIntegral ℚ √(c : ℝ) ∧ ((minpoly ℚ √(c : ℝ)).map (algebraMap ℚ F)).Splits := by
+  refine ⟨PadicFour.isIntegral_sqrt c, ?_⟩
+  have hdvd : minpoly ℚ √(c : ℝ) ∣ X ^ 2 - C (c : ℚ) :=
+    minpoly.dvd ℚ _ (by simp [Real.sq_sqrt (Nat.cast_nonneg c)])
+  have hfac : (X ^ 2 - C (c : ℚ)).map (algebraMap ℚ F) = (X - C s) * (X - C (-s)) := by
+    simp only [Polynomial.map_sub, Polynomial.map_pow, map_X, map_C, eq_ratCast, Rat.cast_natCast, C_neg,
+      sub_neg_eq_add]
+    rw [← hs, C_pow]
+    ring
+  refine Splits.of_dvd ?_ ?_ (Polynomial.map_dvd _ hdvd)
+  · rw [hfac]; exact (Splits.X_sub_C _).mul (Splits.X_sub_C _)
+  · rw [hfac]
+    exact mul_ne_zero (X_sub_C_ne_zero _) (X_sub_C_ne_zero _)
+
+/-- A ring map `K → F` maps the unit-distance graph of `K²` to `sumSqGraph F`. -/
+def hom {F : Type*} [Field F] {K : IntermediateField ℚ ℝ} (φ : K →+* F) :
+    LocalColouring.unitDistGraph K →g sumSqGraph F where
+  toFun x := (φ x.1, φ x.2)
+  map_rel' {x y} h := by
+    have h : ((x.1 : ℝ) - y.1) ^ 2 + ((x.2 : ℝ) - y.2) ^ 2 = 1 := h
+    have h' : (x.1 - y.1) ^ 2 + (x.2 - y.2) ^ 2 = (1 : K) := by
+      apply Subtype.ext
+      push_cast
+      exact h
+    show (φ x.1 - φ y.1) ^ 2 + (φ x.2 - φ y.2) ^ 2 = 1
+    simpa using congrArg φ h'
+
+/-- The transfer: `χ(F²) ≥ 4` for every field `F` of characteristic 0 containing square roots of `a ≡ 2 (mod 3)`
+and of `b ≡ 7 (mod 8)`. -/
+theorem not_colorable_three_of_sq {F : Type*} [Field F] [CharZero F] {a b : ℕ} (ha : a % 3 = 2)
+    (hb : b % 8 = 7) {s t : F} (hs : s ^ 2 = a) (ht : t ^ 2 = b) : ¬ (sumSqGraph F).Colorable 3 := by
+  rintro ⟨C⟩
+  let K := IntermediateField.adjoin ℚ ({√(a : ℝ), √(b : ℝ)} : Set ℝ)
+  obtain ⟨φ⟩ := IntermediateField.nonempty_algHom_adjoin_of_splits (K := F) (S := ({√(a : ℝ), √(b : ℝ)} : Set ℝ))
+    (by
+      rintro x (rfl | rfl)
+      · exact integral_splits a hs
+      · exact integral_splits b ht)
+  exact not_colorable_three K a b ha hb (IntermediateField.subset_adjoin ℚ _ (by simp))
+    (IntermediateField.subset_adjoin ℚ _ (by simp)) ⟨C.comp (hom φ.toRingHom)⟩
+
+/-- Check of the API: the case `d ≡ 23 (mod 24)` of `FourColours.not_colorable_three`, with `a = b = d`. -/
+theorem not_colorable_three_23 (d : ℕ) (hd : d % 24 = 23) : ¬ (LocalColouring.unitDistGraph (L d)).Colorable 3 :=
+  not_colorable_three (L d) d d (by omega) (by omega) (sqrt_mem d) (sqrt_mem d)
+
+end Transfer
 
 end TwoRoots

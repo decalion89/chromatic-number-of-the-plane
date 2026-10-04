@@ -100,3 +100,5 @@ import TwoRoots
 #print axioms TwoRoots.no_character
 #print axioms TwoRoots.not_colorable_three_of
 #print axioms TwoRoots.not_colorable_three
+#print axioms TwoRoots.not_colorable_three_of_sq
+#print axioms TwoRoots.not_colorable_three_23
