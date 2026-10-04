@@ -738,10 +738,11 @@ computation, certified twice: the first checker (`check_witness.py`) and a secon
 (`verify_independent.py`) check the graph, the colouring and the cycles exactly and write the formula with different
 variable numberings and arc indicators; `drat-trim` verifies the stored DRAT proof of the
 first, and a new `kissat` proof of the second, which `cake_lpr` (a formally verified checker) also accepts in LRAT
-form (`verification.txt`); `check_critical.py` checks the criticality certificates. A referee checked all three
-witnesses again with programs of its own (`finite_witness/indep_W/`: a third encoding, cycle lists rebuilt from
-scratch, `cake_lpr` on the stored proofs, the explicit homomorphisms `N·c + pos`), found no error, and reproduced
-`H₁₁` and the `ℚ(√455)` witness exactly. As `√11 ∈ ℚ₇`, `H₁₁` is an explicit witness for `ℚ₇` and for every finite
+form (`verification.txt`); `check_critical.py` checks the criticality certificates. A referee checked the witnesses
+with 170, 175 and 293 vertices again with programs of its own (`finite_witness/indep_W/`: a third encoding, cycle
+lists rebuilt from scratch, `cake_lpr` on the stored proofs, the explicit homomorphisms `N·c + pos`), found no error,
+and reproduced `H₁₁` and the `ℚ(√455)` witness exactly; the one with 157 vertices, found afterwards, was checked by
+the two programs above. As `√11 ∈ ℚ₇`, `H₁₁` is an explicit witness for `ℚ₇` and for every finite
 extension `K` of `ℚ₇` with `χ_c(K²) < 4`. **A witness for 3 without
 unit triangles** (4 October, night; `check_small.py`, `small_triangle_free.py`, `nine_vertices.py`,
 `hexagon_search.py`): the same procedure with `K₃` in
@@ -794,7 +795,8 @@ midpoints and centroids of them that stay optimal, the tight elements have a non
 2. *Finite witnesses.* By Corollary F12 some finite unit-distance graph in `ℚ(√11)²` has `χ_c = 7/2`; the proof
    (compactness) gives no bound on its size, and the smallest we know has 157 vertices and is vertex-critical (§6.8). How small can it be? (For the value 3 in a plane without unit triangles nine vertices are needed, and they suffice over `ℚ(√7)` and
 `ℚ(√31)`; §6.8. Over other such planes, for example `ℚ(√15)`, the least number is open.) And when `χ_c(F²) = 4`, is the value attained by
-   a finite subgraph, for example for `ℚ(√59)`? Above 4 Lemmas F10 and F11 are not available. When `χ(F²) = 4`,
+   a finite subgraph, for example for `ℚ(√59)`? At 4 and above, Lemmas F10 and F11 are not available (F10 needs
+`p < 4q`). When `χ(F²) = 4`,
    compactness makes it a question about the plane: some finite subgraph has `χ_c = 4` if and only if every proper
    colouring `F² → ℤ/4` has a tight cycle (the colour increases by 1 at each step). If every colouring has one,
    finitely many cycles meet every colouring, and some finite subgraph has no 4-colouring avoiding them (Lemma F9

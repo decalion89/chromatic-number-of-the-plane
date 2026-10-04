@@ -56,8 +56,8 @@ run in this folder,
 
 reproduce the points, edges, colouring and cycles of `witness_q455` and its criticality certificates exactly; so do
 `q11.json` with `3000 200` (52 rounds, 653 vertices) and then the same two commands for `witness_q11` (checked
-again by the referee, below). For `witness_q191` the growth was `q191.json` with `12000 200` (89 rounds, 3 258
-vertices), and `minimise.py` with its defaults. The files also carry `description` and `construction` (text) and
+again by the referee, below). For `witness_q191` the same commands with `q191.json` and `12000 200` (89 rounds, 3 258
+vertices; `minimise.py` takes about 45 minutes) reproduce it exactly too, criticality certificates included. The files also carry `description` and `construction` (text) and
 `fixed_vertex`, added afterwards (a vertex of largest degree, the first one); `critical.py` also writes
 `not_critical` (empty). The three programs take any value `p/q` (`grow.py ... p q`;
 the others read `p` and `q` from the file, `7/2` when absent), with the same results for `7/2`; the only change in
@@ -93,8 +93,9 @@ For `witness_q11sum` the commands are the same without `check_critical.py` (and 
 uses it by default). The tests are in `tests/test_two_primes.py` (`test_finite_witness_q11`,
 `test_finite_witness_grown`, `test_finite_witness_critical_rejects`; the proof checks are marked slow).
 
-**Referee** (`indep_W/`, with its report `REPORT.md`). A referee checked the three grown witnesses with programs of its
-own, written from the file format: all pairs of points (468, 803 and 434 unit pairs, none missing or extra), the
+**Referee** (`indep_W/`, with its report `REPORT.md`). A referee checked the three grown witnesses stored then
+(`witness_q11`, `witness_q191`, `witness_q455`; `witness_q11b` came later and is checked by the two checkers above)
+with programs of its own, written from the file format: all pairs of points (468, 803 and 434 unit pairs, none missing or extra), the
 colourings and the cycles; a third encoding (two-sided arc indicators, variables renamed and negated at random); cycle
 lists rebuilt from scratch by its own lazy SAT loop; a clause-by-clause validation of every formula, the stored ones
 included; `kissat`, `drat-trim` and `cake_lpr` on all of them, and `cake_lpr` on the stored proofs; and the
@@ -129,7 +130,7 @@ explicitly (an `assert` would be skipped under `python -O`), `check_witness.py` 
 
 ## The value 3: nine points over `ℚ(√7)` and `ℚ(√31)`
 
-`ℚ(√7)²` has no unit triangle, as `√3 ∉ ℚ(√7)`, and `χ_c(ℚ(√7)²) = 3` (Theorem B and Corollary B6 of the paper).
+`ℚ(√7)²` has no unit triangle, as `√3 ∉ ℚ(√7)`, and `χ_c(ℚ(√7)²) = 3` (Theorem B and Corollary 1 of the paper).
 `witness_q7.json.gz` is a unit-distance graph `H₇` on nine points of `ℚ(√7)²` (denominator 160), induced, with
 `χ_c(H₇) = 3`; its vertices `0, …, 7, 8` are the points `P₀, …, P₇, S` of the paper:
 

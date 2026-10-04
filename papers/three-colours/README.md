@@ -1,6 +1,6 @@
 # Three colours for the plane over a number field
 
-[`three-colours.pdf`](three-colours.pdf) is a 26-page draft (4 October 2026) about the graph on `F²`, for a
+[`three-colours.pdf`](three-colours.pdf) is a 27-page draft (4 October 2026) about the graph on `F²`, for a
 number field `F`, in which two points are adjacent when `(x − x′)² + (y − y′)² = 1`:
 
 - **Theorem B.** `χ(F²) ≤ 3` if and only if some prime of `F` above 2 ramifies in `F(i)` or some prime of `F` above 3

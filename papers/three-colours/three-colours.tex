@@ -149,9 +149,10 @@ on another (Proposition~\ref{prop:window7}), which also gives Theorem~\ref{thm:E
 whose certificates are checked by programs written separately from those that produced them, and which two
 independent checkers confirmed by methods of their own. The lower bounds of Theorem~\ref{thm:C} and
 Proposition~\ref{prop:fiftynine} are proved in Section~\ref{sec:circ} with exact certificates checked by computer (the
-former also follow from Theorem~\ref{thm:E}), and Proposition~\ref{prop:residue}, used only for
-Corollary~\ref{cor:localvalues}, rests on a finite computation of $\kappa_1$ for the primes $11\le p<1001$. The rest
-of the proofs are by hand. Theorem~\ref{thm:D}, which
+former also follow from Theorem~\ref{thm:E}), and the case $f=1$, $p\ge11$ of Proposition~\ref{prop:residue}, used
+only for Corollary~\ref{cor:localvalues}, rests on a finite computation of $\kappa_1$ for the primes $11\le p<1001$ (run
+up to $3000$); its case $f\ge3$, which Lemma~\ref{lem:B5seven} also uses, is proved by hand. The rest of the proofs
+are by hand. Theorem~\ref{thm:D}, which
 Theorem~\ref{thm:E} supersedes, is proved entirely by hand. So below $4$ the circular chromatic number of the plane
 over a number field takes only the values $2$, $3$ and $7/2$, each given by a locally constant colouring of one
 completion; more precisely, below $4$ it is the least circular chromatic number of the planes over its completions
@@ -160,7 +161,7 @@ $4$ the value is also the circular chromatic number of a finite unit-distance gr
 (Corollary~\ref{cor:finite}); the proof gives no bound on its size, but a computer search finds explicit ones,
 certified: over $\Q(\sqrt{11})$ one with $157$ vertices, and others over $\Q(\sqrt{455})$ and $\Q(\sqrt{191})$;
 for the value $3$, over $\Q(\sqrt7)$, whose plane has no unit triangle, one with nine vertices, the fewest possible
-(Section~\ref{sec:twoprimes}). For a
+by an exhaustive enumeration (Section~\ref{sec:twoprimes}). For a
 real quadratic field $\Q(\sqrt d)$, $d$ squarefree, (a) or (b) holds unless $d\equiv11\pmod{12}$. If
 $d\equiv11\pmod{12}$, then $\chi_c=7/2$ when $(d/7)\ne-1$ (for example $d=23$, $71$); $\chi_c=4$ when $(d/7)=-1$ and
 $d\equiv11\pmod{24}$ (for example $d=59$, $83$), as then the place above $2$ gives $\chi\le4$; and only when
@@ -187,7 +188,8 @@ $\chi_c(F^2)$ given by the restriction to $F^2$ of a locally constant colouring 
 $7/2$ (Corollary~\ref{cor:localvalues}); Section~\ref{sec:gap} proves Theorem~\ref{thm:D} and
 Section~\ref{sec:twoprimes} Theorems~\ref{thm:E} and~\ref{thm:F}, with the local fields and finite witnesses;
 Section~\ref{sec:checks} lists the computer checks,
-and Section~\ref{sec:questions} asks what happens above $4$. The programs and certificates are in \cite{Repo}.
+and Section~\ref{sec:questions} asks what happens above $4$, at four colours, and how small finite witnesses can be.
+The programs and certificates are in \cite{Repo}.
 
 \section{Preliminaries}\label{sec:prelim}
 
@@ -1422,8 +1424,9 @@ corresponding place has the same value by the first part.
 \end{proof}
 
 For example $\chi_c(\Q_{19}^2)$ and $\chi_c(\Q(\sqrt{47})^2)$ lie in $[4,19/4]$: the lower bound is
-Corollary~\ref{cor:localF}, resp.\ Theorem~\ref{thm:F}, and the upper bound is Proposition~\ref{prop:C1} at $19$,
-where $\kappa_1=4/19$ (as $47\equiv3^2\pmod{19}$, $\sqrt{47}\in\Q_{19}$). The same holds for $\Q(\sqrt5,\sqrt7)$. So if
+Corollary~\ref{cor:localF}, resp.\ Theorem~\ref{thm:F}, and the upper bound is Proposition~\ref{prop:C1} at $19$
+with $m=4$, as $\lambda(a+bi)=4a+5b$ takes its values in $\{4,\dots,15\}$ on $\mu_{20}\subset\F_{361}$ (and
+$\kappa_1=4/19$; as $47\equiv3^2\pmod{19}$, $\sqrt{47}\in\Q_{19}$). The same holds for $\Q(\sqrt5,\sqrt7)$. So if
 $\chi(\Q(\sqrt{47})^2)=5$, which is open \cite[Corollary~2]{FC}, its circular chromatic number lies in $(4,19/4]$ and is not
 an integer.
 
@@ -1503,14 +1506,14 @@ cycle, and some finite subgraph of $\Cay(\Gamma,S)$ has circular chromatic numbe
 
 \begin{proof}
 Here $\kappa(S)=q/p$, so $\Cay(\Gamma,S)$ has a homomorphism to $K_{p/q}$. Let $c$ be one, and $a$, $\xi$ as in
-Lemma~\ref{lem:winding}; let $T=\{s\in S:a(s)=q\}$. Suppose that no nonzero nonnegative integers $n_t$ give
-$\sum_{t\in T}n_tt=0$. Then the images $\bar t$ of the elements of $T$ in $\Gamma\otimes\R$ have no nonzero
+Lemma~\ref{lem:winding}; let $S_q=\{s\in S:a(s)=q\}$. Suppose that no nonzero nonnegative integers $n_t$ give
+$\sum_{t\in S_q}n_tt=0$. Then the images $\bar t$ of the elements of $S_q$ in $\Gamma\otimes\R$ have no nonzero
 nonnegative real relation: in a basis of $\Gamma\otimes\Q$ the cone of such relations is cut out by rational
 equations, so if it were nonzero it would contain a nonzero rational, hence integral, point $(n_t)$, and then
 $\sum n_tt$ would be a torsion element, killed by some $m\ge1$. By Gordan's theorem there is a linear form on
-$\Gamma\otimes\R$, hence a homomorphism $h:\Gamma\to\R$, with $h(t)>0$ for every $t\in T$. For $\varepsilon>0$,
+$\Gamma\otimes\R$, hence a homomorphism $h:\Gamma\to\R$, with $h(t)>0$ for every $t\in S_q$. For $\varepsilon>0$,
 $\xi_\varepsilon=\xi+\varepsilon h\bmod1$ is a character of $\Gamma$, and for $s\in S$: if $a(s)=q$, then
-$\xi_\varepsilon(s)=\frac qp+\varepsilon h(s)$; if $a(s)=p-q$, then $-s\in T$ and
+$\xi_\varepsilon(s)=\frac qp+\varepsilon h(s)$; if $a(s)=p-q$, then $-s\in S_q$ and
 $\xi_\varepsilon(s)=1-\frac qp-\varepsilon h(-s)$; otherwise $\xi(s)$ lies in the open interval
 $(\frac qp,1-\frac qp)$, which is nonempty as $p>2q$. As $S$ is finite, for small $\varepsilon$ all values
 $\xi_\varepsilon(s)$ lie in that open interval, so $\kappa(S)>q/p$: a contradiction. So such $n_t$ exist, and
@@ -1577,12 +1580,14 @@ $2$, so $\chi_c\ge\chi_f\ge7/2$; its circular chromatic number is $7/2$. But it 
 $\Q(\sqrt{11})^2$ does not, and $\chi_c(\Q(\sqrt3,\sqrt{11})^2)\ge4$ by Theorem~\ref{thm:F}: (a) and (b) fail, as
 $\chi(\Q(\sqrt3,\sqrt{11})^2)=4$ \cite{Fischer1994,MM}, and (7) fails, as $7$ is inert in $\Q(\sqrt3)$. By SAT
 computations, not certified, the $76$-vertex unit-distance graph over $\Q(\sqrt{11})$ with no $3$-colouring in
-\cite{Repo} (\nolinkurl{data/quadratic_planes/q11.json}) has circular chromatic number $16/5$, the unit-distance graph
+\cite{Repo} (\nolinkurl{data/quadratic_planes/q11.json}) has circular chromatic number $16/5$, and the unit-distance graph
 induced on the union of its images under the nine rotations $\rho^j\sigma^l$, $|j|,|l|\le1$ ($628$ vertices and
 $1\,506$ edges; the nine copies alone have $1\,494$) has circular chromatic number in $(16/5,13/4]$. Exactly, the ball of radius
 $2$ around $0$ in the Cayley graph of the $140$ vectors ($9\,941$ vertices, $19\,600$ edges) is bipartite, and the
 unit-distance graph it induces ($216$ more edges) has circular chromatic number $5/2$: it contains a $5$-cycle and no
-triangle, and maps to $K_{5/2}$ (\nolinkurl{finite_ball.py}). Witnesses for $7/2$, found by computer: let $A$ be
+triangle, and maps to $K_{5/2}$ (\nolinkurl{twoprime/finite_ball.py}).
+
+Witnesses for $7/2$, found by computer: let $A$ be
 the vertex set of the $76$-vertex graph. The unit-distance graph on $A+A=\{a+a':a,a'\in A\}$ ($2\,237$ vertices,
 $11\,300$ edges) maps to $K_{7/2}$ (by a $7$-adic colouring), and every homomorphism of it to $K_{7/2}$ has a tight
 cycle, already among $180$ listed cycles of lengths $14$ to $42$; so its circular chromatic number is $7/2$ by
@@ -1590,7 +1595,8 @@ Lemma~\ref{lem:tight}. A colouring-guided growth gives smaller ones. Starting fr
 homomorphism to $K_{7/2}$ in which every listed directed cycle has a non-tight arc; the tight cycles of its answer
 are added to the list, and when its tight digraph has no directed cycle, the points $x+u$ ($x$ a vertex, $u$ a unit
 vector with the denominator $D$ of the starting graph, here $D=30$) whose neighbours leave no colour (or, if there are
-none, those whose neighbours leave one colour) are added to the graph. This stops after $52$
+none, those whose neighbours leave one colour) are added to the graph, at most $200$ in a round, those with most
+neighbours first. This stops after $52$
 rounds, at $653$ vertices; deleting vertices while the property persists leaves a unit-distance graph $H_{11}$ with
 $170$ vertices and $468$ edges, and $\chi_c(H_{11})=7/2$. It is vertex-critical: for every vertex $v$ a homomorphism
 $c$ of $H_{11}-v$ to $K_{7/2}$ whose tight digraph has no directed cycle is stored, so $\chi_c(H_{11}-v)<7/2$ (the
@@ -1598,19 +1604,22 @@ other half of the characterisation of \cite{Guichard}, explicitly: if a graph $G
 $\mathrm{pos}$ numbers them $0,\dots,N-1$ along a topological order of the tight digraph of a homomorphism
 $c\colon G\to K_{7/2}$, then $Nc+\mathrm{pos}$ is a homomorphism of $G$ to $K_{7N/(2N+1)}$). The same growth with
 at most $100$ new points per round stops at $573$ vertices and deletion leaves another vertex-critical witness with
-$170$ vertices; deleting vertices, in a random order, from the union of the two leaves a vertex-critical witness with
+$170$ vertices; deleting vertices, in a random order, from the unit-distance graph on the union of their vertex sets
+($205$ points) leaves a vertex-critical witness with
 $157$ vertices and $409$ edges, the smallest we know (\nolinkurl{witness_q11b.json.gz}). Started from the
 $4$-chromatic graphs of \cite{Repo} over $\Q(\sqrt{455})$ and $\Q(\sqrt{191})$ ($71$ and $96$ vertices; $D=780$ and
 $240$), the same procedure gives vertex-critical witnesses with $175$ and $293$ vertices ($434$ and $803$ edges). So
 $\chi_c=7/2$ for both planes without Proposition~\ref{prop:window7}: the witnesses give $\chi_c\ge7/2$, and
 Proposition~\ref{prop:C1} gives $\chi_c\le7/2$, as $7$ ramifies in $\Q(\sqrt{455})$ and splits in $\Q(\sqrt{191})$
-(in agreement with Theorem~\ref{thm:F}, as (a) and (b) fail for $d\equiv11\pmod{12}$). Every refutation is
-certified: two programs that share no code check the graphs, the colourings and the cycles and write the formula
+(in agreement with Theorem~\ref{thm:F}, as (a) and (b) fail for $d\equiv11\pmod{12}$).
+
+Every refutation is certified: two programs that share no code check the graphs, the colourings and the cycles and write the formula
 with different variable numberings and arc indicators, and the DRAT proofs of both are verified, one of them also,
-in LRAT form, by the formally verified checker \texttt{cake\_lpr}. A referee checked all three witnesses again with
-programs of its own: a third encoding (renamed variables, two-sided arc indicators), cycle lists rebuilt from
-scratch, \texttt{cake\_lpr} on the stored proofs, and the explicit homomorphisms $Nc+\mathrm{pos}$ of the graphs
-$H-v$ (\nolinkurl{data/number_fields/circular/finite_witness/}). As $\sqrt{11}\in\Q_7$, $H_{11}$ is also an explicit
+in LRAT form, by the formally verified checker \texttt{cake\_lpr}. A referee checked the witnesses with $170$, $175$
+and $293$ vertices again with programs of its own: a third encoding (renamed variables, two-sided arc indicators),
+cycle lists rebuilt from scratch, \texttt{cake\_lpr} on the stored proofs, and the explicit homomorphisms
+$Nc+\mathrm{pos}$ of the graphs $H-v$ (\nolinkurl{data/number_fields/circular/finite_witness/}); the one with $157$
+vertices, found afterwards, was checked by the two programs above. As $\sqrt{11}\in\Q_7$, $H_{11}$ is also an explicit
 witness for $\Q_7$ and for every finite extension $K$ of $\Q_7$ with $\chi_c(K^2)<4$.
 
 The same procedure with $K_3$ in place of $K_{7/2}$ (an arc is now tight when the colour increases by $1$ modulo
@@ -1759,7 +1768,7 @@ computation beyond those of Theorem~\ref{thm:F}, two independent checkers tested
 with programs of their own: on $291$ small graphs and $766$ tight relations; on $115$ random finite sets $S$ in $\Z$,
 $\Z^2$ and $\Z\times\Z/m$ with $2<\chi_c<4$, at all of whose $409$ optimal points (vertices of the optimal set, and
 midpoints and centroids of them that stay optimal) the tight elements have a nonnegative relation
-(\nolinkurl{indep_FW2/test_kappa_relations.py 1 180}); and by SAT on finite pieces of $13$ such Cayley graphs, all of which have finite witnesses
+(\nolinkurl{indep_FW2/test_kappa_relations.py} with arguments $1$ and $180$); and by SAT on finite pieces of $13$ such Cayley graphs, all of which have finite witnesses
 (for instance the segment $\{0,\dots,18\}$ of the distance graph with distances $3,4,9,12$, of circular chromatic
 number $7/2$). One of them clipped $S^{2/7}(2,1)$ exactly: $13$ components, one of type c, four of type q, and the
 eight points of type $7$, each a component by itself. As consistency checks, a program
@@ -1795,8 +1804,8 @@ has circular chromatic number $7/2$; the proof, by compactness, gives no bound o
 has $157$ vertices and is vertex-critical (Section~\ref{sec:twoprimes}). How small can it be? (For the value $3$ in
 a plane without unit triangles, nine vertices are needed, and they suffice over $\Q(\sqrt7)$ and $\Q(\sqrt{31})$;
 Section~\ref{sec:twoprimes}. Over other such planes, for example $\Q(\sqrt{15})$, the least number is open.)
-And when $\chi_c(F^2)=4$, is the value attained by a finite subgraph, for example for $\Q(\sqrt{59})$? Above $4$
-Lemma~\ref{lem:winding} is not available. When $\chi(F^2)=4$, compactness turns this into a question about the
+And when $\chi_c(F^2)=4$, is the value attained by a finite subgraph, for example for $\Q(\sqrt{59})$? At $4$ and
+above, Lemma~\ref{lem:winding} is not available (it needs $p<4q$). When $\chi(F^2)=4$, compactness turns this into a question about the
 plane: some finite subgraph has $\chi_c=4$ if and only if every proper colouring $c\colon F^2\to\Z/4$ has a tight
 cycle (a directed cycle along which $c$ increases by $1$ at each step). Indeed, if every colouring has one, finitely
 many cycles already meet every colouring, and by compactness every $4$-colouring of some finite subgraph $H$ makes

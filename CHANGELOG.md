@@ -11,6 +11,16 @@ including every retracted claim, is the research log,
 
 ## [Unreleased]
 
+### Changed
+- **A full reading of the three-colours paper (4 October, night).** A referee read the whole paper again, with
+  priority on Section 10 and the Questions, and reran the cheap checks with programs of its own: no mathematical
+  error. Its corrections are applied: the introduction now says that Lemma 19 also uses Proposition 6, in its case
+  `f ≥ 3`, which is proved by hand (only the case `f = 1`, `p ≥ 11` rests on a computation, used only for Corollary 5);
+  the sentence on the referee of the `7/2` witnesses no longer covers the 157-vertex witness, which only the two
+  checkers checked; Lemma 21 needs `p < 4q`, so it is unavailable already at 4; the notation of Lemma 22 no longer
+  clashes with `T`; the bound `19/4` now has an explicit map (`4a + 5b` on `μ₂₀ ⊂ 𝔽₃₆₁`); and small presentation
+  fixes. The README of the witnesses records that the programs reproduce `witness_q191` exactly.
+
 ### Added
 - **A smaller witness for `7/2` over `ℚ(√11)`: 157 vertices (4 October, night).** Deleting vertices, in a random
   order, from the union of the 170-vertex witness and a second one (from the same growth with at most 100 new points

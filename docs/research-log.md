@@ -10440,3 +10440,41 @@ vertex-critical (`critical.py`, `check_critical.py`), and its lower bound is cer
 `drat-trim` on the stored core proof (`check_witness.py`), and the second encoding (`verify_independent.py`) refuted
 again by `kissat`, verified by `drat-trim` and, in LRAT form, by `cake_lpr`. So the smallest known witness for
 `χ_c(ℚ(√11)²) = 7/2` has 157 vertices; other random orders are running.
+
+## A full reading of the three-colours paper, and the 191 witness reproduced (4 October, night)
+
+A referee read the whole paper at 84307c57, with priority on what changed today (Section 10, the Questions), checked
+the new points, cycles and 1-chain identities, reran `check_small.py`, `small_triangle_free.py`, `nine_vertices.py`,
+`hexagon_search.py`, the window checkers and the computation of `κ₁` (largest value `4/19` for `11 ≤ p < 3000`), and
+found no mathematical error. One sentence of the introduction was false: Proposition 6 is not used only for Corollary
+5, since Lemma 19 uses its case `f ≥ 3` (proved by hand from Weil's bound); only its case `f = 1`, `p ≥ 11` rests on
+the computation. The sentence on the referee of the `7/2` witnesses had become stale (it does not cover the
+157-vertex witness), Question 3 said "above 4" where Lemma 21 already fails at 4, and the bound `19/4` now comes with
+an explicit map, `4a + 5b`, which takes the values 4, …, 15 on the twenty elements of norm 1 of `𝔽₃₆₁`. All applied.
+
+The programs of `finite_witness/` reproduce `witness_q191` exactly, as they do `witness_q455`: 89 growth rounds to
+3 258 points, deletion to the stored 293 vertices (45 minutes), and the same criticality certificates.
+
+## Is `χ_c(ℚ(√59)²) = 4` attained? Two probes, both negative (4 October, night)
+
+Question 3 of the paper asks whether some finite unit-distance graph over `ℚ(√59)` has `χ_c = 4`; by compactness this
+holds if and only if every proper colouring `c: F² → ℤ/4` has a tight cycle. Two kinds of colourings that would
+answer it in the negative were tested, without success (nothing here is a result).
+
+*Characters.* If a character `φ` of `F²` maps every unit vector into `[1/4, 3/4]`, then `c = ⌊4φ⌋` is a proper
+4-colouring, and an arc `x → x + u` is tight for every `x` exactly when `φ(u) = 1/4`; a tight cycle of `c` is a
+nonnegative relation among the unit vectors `u` with `φ(u) = 1/4`. When `φ` is locally constant at finitely many
+places, that set is open in the adelic topology of the circle, hence dense in both real circles, and a nonnegative
+relation exists (the convex hull of the torus of the two complex places contains 0 inside); so these colourings have
+tight cycles (a sketch, not refereed).
+
+*Monotone colourings.* If some linear height `h` on `F² ⊗ ℝ` makes `c(y) − c(x) ∈ {1, 2}` for every unit pair with
+`h(y − x) > 0`, every tight arc goes up and there is no tight cycle. On the 406-point 4-chromatic graph of
+`data/quadratic_planes/q59.json` such a colouring exists for no height through one real embedding (68 types) and
+for 4 of 1 000 random heights through both; on its union with one rotated copy (790 points, 1 953 edges) for none of
+the 122 types and 300 random heights tried (`monotone.py`, `rotunion.py`; the radius-2 ball of the unit vectors with
+denominator 210, 5 941 points, is too sparse to say anything: every height works there).
+
+The 2-adic colourings (residues in `𝔽₄`) have tight 4-cycles, and at levels 2 and 4 the 2-adic plane also has
+4-colourings that do not factor through `𝔽₄` (`level.py`); whether the periodic ones always have tight cycles in the
+plane, and what an aperiodic colouring without tight cycles could look like, is open.

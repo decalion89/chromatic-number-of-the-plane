@@ -213,3 +213,8 @@ vertices).
 3. python3 critical.py and python3 check_critical.py witness_q11b.json.gz witness_q11b_critical.json.gz
    157 vertices: for every v, a (7,2)-colouring of H - v with an acyclic tight digraph, so chi_c(H - v) < 7/2; H is
    vertex-critical for chi_c = 7/2
+
+witness_q191, reproduction (4 October 2026, night): grow.py ../../../quadratic_planes/q191.json A G 12000 200 (89
+rounds, UNSAT with 3258 points, 15238 unit pairs, 35 cycles), minimise.py G.json W.json (293 vertices, 803 edges, 489
+cycles; 2716 s) and critical.py W.json C.json give exactly the stored points, edges, colouring, cycles and criticality
+certificates, in the same order.
