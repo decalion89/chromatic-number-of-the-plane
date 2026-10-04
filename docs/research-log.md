@@ -9824,3 +9824,53 @@ refereed this.
   builds the LP (column generation with CP-SAT pricing) and an independent certificate checker, calibrates on
   `χ ≥ 5` (how small a graph suffices, against 509), and then runs it at five colours on the project's graphs. No
   result yet.
+
+## Three colours for every number field (4 October, early morning)
+
+Question: does the machinery of Theorem 1 (Theorem W, and the shape of the characters along the rational rotations of
+denominator `5^k`) decide three colours for every number field, not only for real quadratic ones? Answer: yes
+(`notes/three_colours_number_fields.md`, Theorem B).
+
+- **The reduction (Lemma B1).** For a number field `F` with `i ∉ F`, a 3-colouring of `F²` gives, for every finite
+  set `V` of unit vectors, an element `β ∈ L = F(i)` with `Tr_{L/ℚ(i)}(βv) ∈ E` for all `v ∈ V`, where `E` is the set
+  of the types c and q of Proposition 1. The proof is that of Theorem 1, with Lemma 5 applied to `ℤ[i]`-relations.
+- **Localisation (Lemma B2).** By compactness and weak approximation for the norm-one torus, either a 2-adic
+  half-character works on all unit vectors of `F ⊗ ℚ₂` (then `χ ≤ 2`, and Theorem A gives a ramified prime above 2),
+  or a 3-adic one with values in `{(±1 ± i)/3} + ℤ₉` works on all unit vectors of `F ⊗ ℚ₃`.
+- **The places above 3 (Lemmas B3–B5).** The 3-adic case comes from a single place and from its residue field, and
+  exists only when the residue degree is 1: for odd `f ≥ 3` no `𝔽₉`-linear map `𝔽_{3^{2f}} → 𝔽₉` sends the
+  `(3^f + 1)`-th roots of unity into the non-squares of `𝔽₉` (elementary proof through `λ⁴ = −1` and the
+  independence of characters; exhaustive checks for `f = 3, 5`).
+- **Theorem B.** `χ(F²) ≤ 3` iff a prime above 2 ramifies in `F(i)` or a prime above 3 has residue degree 1. It
+  contains Theorem 1, gives `LG₃` for every number field, and decides the local fields (`χ(ℚ₂₇²) ≥ 4`, for instance).
+- **Explicit family (Proposition B9).** Every real field containing `√a` and `√b`, `a ≡ 2 (mod 3)`,
+  `b ≡ 7 (mod 8)`, needs four colours: the relations `(1 + c)(u_c + ū_c) = 2(1 − c)` for `c = a, b` force the vector 1
+  out of type q at 3 and out of type c at 2. For `a = b` this is Theorem 1a. A Lean share (branch
+  `claude/lean-two-roots`) formalises it.
+- **Computer checks through Lemma B1 alone** (exact, three implementations: Python with PARI's `matrixqz`, PARI/GP
+  alone with `matkerint`, and the first referee's with `matsolvemod`): `ℚ(√2, √7)` (27 vectors, then 5 after greedy
+  deletion), `ℚ(2cos(2π/7), √7)` (44 vectors), `ℚ(√3, √5)`; controls stay feasible. Exact certificates for
+  `ℚ(√2, √7)` (50 and 70 vectors) are accepted by a separate checker. With the 7-adic colouring, `χ(ℚ(√2, √7)²) = 4`.
+- **Referees.** Two separate agents checked the proof with their own programs. Neither found an error. Both found
+  the same two small gaps (why the `ℚ(i)`-span of `T` is a field; the parity of `[K : ℚ₂]` in Corollary B8), now
+  closed, and several wording points, now fixed. The second referee caught an overclaim in a draft corollary: of the
+  five admissible biquadratic fields listed, three already contain some `√d` with `d ≡ 11 (mod 12)`; only
+  `ℚ(√2, √31)` and `ℚ(√2, √55)` are new. The first referee pointed out that fields containing `√3` and some `√q`,
+  `q ≡ 2 (mod 3)`, were already known to need four colours (`notes/local_colourings.md` §11, Theorem 5); the note now
+  names both earlier families. The first referee also tested 23 random quartic and sextic fields with an independent
+  implementation: every prediction checked agreed with Theorem B.
+
+## Circular chromatic number of a field plane (4 October, early morning)
+
+- **Upper bounds from residue planes (Proposition C1).** At a place with residue field `𝔽₇`, the map
+  `a + bi ↦ 2a + 3b` takes only the values 2, 3, 4, 5 on the norm-one elements of `𝔽₄₉`, so `F²` maps to the circular
+  clique `K_{7/2}`. Only `p = 3` and `p = 7` give bounds below 4 at level 1.
+- **`χ_c(ℚ(√11)²) = χ_c(ℚ₇²) = 7/2`** (`notes/circular_planes.md`, Theorem C), while `χ = 4` for both. The lower
+  bound: 70 unit vectors `G_25{1, u_1, ū_1, u_7, ū_7, u_19, ū_19}` admit no character into the open interval
+  `(2/7, 5/7)`; exact certificate (17 744 nodes), separate exact checker, then Theorem W⁺. A MIP solver had returned
+  exactly `2/7` as the best value. A referee (separate agent) is checking it.
+- **No value between 2 and 3** (Corollary B6): the proof of Theorem B shows that a homomorphism to `K_{p/q}` with
+  `p/q < 3` forces case (c).
+- **Open.** Is there a gap `(3, 7/2)` for every number field? Along the rotations alone there are characters with
+  `min ‖ξ(γ)‖ = 3/10` at every level tried; they look 5-adic, which a whole field plane should kill. `ℚ(√35)`: solver
+  value `2/7`, certificate under way. `ℚ(√23)`, `ℚ(√47)`: the solver did not finish in 300 s.

@@ -4,8 +4,10 @@
 repository hn-2adic-obstruction (July 2026) and was also in `notes/local_colourings.md`, and its
 Step 1 is Fischer's Theorem 1(iii) (1990); the converse is ours. The rest is a question, with the
 evidence we have and the tests under way. A separate agent refereed this note (its findings are applied below);
-nobody outside the project has. For three colours and real quadratic fields the question is now answered:
-`notes/four_colours_11_mod_12.md` proves what §3 predicts.*
+nobody outside the project has. For three colours the question is now answered for every number field:
+`notes/four_colours_11_mod_12.md` proves what §3 predicts for real quadratic fields, and
+`notes/three_colours_number_fields.md` (Theorem B, 4 October) proves `LG₃` for every number field: `χ(F²) ≤ 3` iff a
+prime above 2 ramifies in `F(i)` or a prime above 3 has residue degree 1.*
 
 Let `F` be a number field and give `F²` the unit-distance relation
 `(x − x′)² + (y − y′)² = 1`. This is algebraic, so the same relation makes sense on
@@ -168,7 +170,8 @@ deep level at 7 is 3-colourable).
 > (`notes/four_colours_11_mod_12.md`, Theorem 1; draft `papers/four-colours/`), by hand, from Theorem W
 > (`notes/winding_lemma.md`). So `LG_3` holds for every real quadratic field: `χ(ℚ(√d)²) ≤ 3` exactly when a place
 > above 2 or 3 has a locally constant 3-colouring. Two internal referees checked the proof; nobody outside the
-> project has. What follows is the evidence as it stood before the proof. This is proved for the 27 values in
+> project has. Since 4 October the same holds for every number field (`notes/three_colours_number_fields.md`,
+> Theorem B; also checked by two internal referees). What follows is the evidence as it stood before the proof. This is proved for the 27 values in
 `notes/quadratic_planes.md` (11, 23, 35, 47, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251,
 263, 359, 431, 443, 455, 491, 599, 611, 791, 851, 911, 935, 959), with certified graphs,
 and, since 3 October, for `d = 83, 107, 143, 167, 203`, which the growth searches could not settle: there

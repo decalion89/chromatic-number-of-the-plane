@@ -11,6 +11,19 @@ including every retracted claim, is the research log,
 
 ## [Unreleased]
 
+### Added
+- **Three colours for every number field (4 October).** `notes/three_colours_number_fields.md`, Theorem B:
+  `χ(F²) ≤ 3` iff a prime above 2 ramifies in `F(i)` or a prime above 3 has residue degree 1. It contains Theorem 1,
+  proves the local–global question at three colours for every number field, and decides the local fields. Checked by
+  two separate agents (no error; two small gaps closed). New fields that need four colours, among them `ℚ(√2, √7)`,
+  with an exact certificate (`data/number_fields/three_colours/`) and `χ = 4`; an elementary family (Proposition B9);
+  tests in `tests/test_three_colours.py`.
+- **A circular chromatic number (4 October).** `notes/circular_planes.md`: `χ_c(ℚ(√11)²) = χ_c(ℚ₇²) = 7/2`, by a 7-adic
+  colouring and an exact certificate (`data/number_fields/circular/`) with Theorem W⁺; no plane over a number field has
+  `2 < χ_c < 3`.
+- **Literature sweep (4 October).** `notes/literature.md`, last section: what the systematic search of arXiv found for
+  each result, and the relevant papers the project did not cite before.
+
 ### Changed
 - **Credit for earlier work (28 September).** The upper bound of `χ(ℚ(√2, √3)²) = 4`
   and of Fischer's `χ(ℚ(√3, √11)²) = 4` is also a case of Corollary B′ of

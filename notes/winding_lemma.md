@@ -5,7 +5,9 @@ discrete winding number of Krebs and Sankar (J. Combin. Theory Ser. B 179 (2026)
 3.6, Remark 3.7, and the parity used in the proof of their Theorem 4.1), and for every circular clique below 4 the
 wind of Brewster, McGuinness, Moore and Noel (Theoret. Comput. Sci. 639 (2016), §2.1) and Brewster and Moore
 (J. Graph Theory 102 (2023), §2), who use it for reconfiguration. The averaging step and the characterisation it
-gives, Theorem W, are new as far as we know (§5 lists what we checked). §2 also proves Theorem W⁺, the same statement for every circular
+gives, Theorem W, are new as far as we know (§5 lists what we checked; a systematic search of arXiv on 4 October,
+`notes/literature.md`, last section, found the winding idea in related settings, Gao–Jackson–Krohne–Seward
+arXiv:1803.03872 and Wrochna arXiv:1408.2812, but not the characterisation). §2 also proves Theorem W⁺, the same statement for every circular
 clique `K_{p/q}` with `p/q < 4`, which gives `χ_c = 1/κ` below 4 and answers Problem 3 of Liu's survey on distance
 graphs. Internal referees (separate AI agents, with their own checkers and tests) went through the note and through
 Theorem W⁺, and their findings are applied. Nobody outside the project has refereed it.*
