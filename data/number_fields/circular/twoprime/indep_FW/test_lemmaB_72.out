@@ -1,0 +1,5 @@
+Z/14 S=+-[4, 5, 6], (p,q)=(7,2): 4 colourings, 8 positive tight relations, 2800 (shuffled walk, start) checks: all tight
+Z/21 S=+-[6, 7, 8, 9], (p,q)=(7,2): 6 colourings, 12 positive tight relations, 6300 (shuffled walk, start) checks: all tight
+Z/7 S=+-[2, 3], (p,q)=(7,2): 2 colourings, 4 positive tight relations, 700 (shuffled walk, start) checks: all tight
+Z/14 S=+-[4, 6], (p,q)=(7,2): 28 colourings, 28 positive tight relations, 9800 (shuffled walk, start) checks: all tight
+Z/28 S=+-[8, 9, 11, 12], (p,q)=(7,2): 8 colourings, 16 positive tight relations, 11200 (shuffled walk, start) checks: all tight

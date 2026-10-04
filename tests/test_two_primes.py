@@ -1,6 +1,6 @@
 """Theorems E and F (notes/circular_planes.md §6, papers/three-colours Section 10): the computer-assisted steps and
 the finite facts at 7, rerun from the stored programs and certificates (data/number_fields/circular/twoprime/ and the
-referees' subfolders indep_E/, indep_F/ and indep_S10/)."""
+referees' subfolders indep_E/, indep_F/, indep_S10/ and indep_FW/)."""
 import gzip, os, re, shutil, subprocess, sys
 
 import pytest
@@ -160,3 +160,29 @@ def test_section10_referee(tmp_path):
     out = run(tmp_path, "clip_window.py", "1", "1", "2/7", "run/prop7_certificates.txt").stdout
     assert "(K,M)=(1,1) N=65 r0=2/7: 13 index vectors with nonempty polygons" in out
     assert "same set of index vectors as the certificate: True" in out
+
+
+def test_tight_walks(tmp_path):
+    """Corollary on finite witnesses: the eight certificates of value 2/7 give positive integer relations among tight
+    rotations (closed walks of length 140 or 42), type q has relations 3, 4, 5 in G_5, and the Moser spindle has
+    chi = 4 and maps to K_{7/2}; the program reproduces its stored output."""
+    d = stage(tmp_path, ["tight_walks.py", "cert_K2M1_seven.txt"])
+    out = run(d, "tight_walks.py").stdout
+    assert out == open(os.path.join(P, "tight_walks.txt")).read()
+    assert out.count("multiplicities [63, 52, 25], length 140") == 4
+    assert out.count("multiplicities [13, 14, 15], length 42") == 4
+    assert out.count("multiplicities (3, 4, 5)") == 8
+    assert "proper 3-colourings: 0; a homomorphism to K_7/2: (0, 2, 4, 6, 3, 5, 1)" in out
+
+
+def test_finite_witness_referee(tmp_path):
+    """The referee of the corollary on finite witnesses: its checks of the certificates, of type q, of the tight
+    relations of the 7-adic colourings, of the Moser spindle and of the tight-cycle and winding lemmas reproduce."""
+    src = os.path.join(P, "indep_FW")
+    d = tmp_path / "indep_FW"
+    shutil.copytree(src, d)
+    for n in ["cert_K2M1.txt", "cert_K2M1_seven.txt"]:
+        shutil.copy(os.path.join(P, n), tmp_path / n)
+    for prog in ["check_seven_certs", "check_type_q", "seven_adic_tight", "moser", "test_lemmas_AB"]:
+        assert run(d, prog + ".py").stdout == (d / (prog + ".out")).read_text()
+

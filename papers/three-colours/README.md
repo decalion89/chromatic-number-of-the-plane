@@ -36,8 +36,10 @@ number field `F`, in which two points are adjacent when `(x − x′)² + (y −
   above `2/7`, and the types c, q and a 7-adic one above `1/4`; Lemmas 12–19 (by hand) and compactness at 2, 3 and 7
   give the theorems; Theorem F needs only Proposition 9, which also gives Theorem E again. Corollary 6: for every
   finite extension `K` of `ℚ_p`, `χ_c(K²)` is 2, 3, `7/2` or at least 4 by explicit local conditions, so below 4 the
-  circular chromatic number of `F²` is the least one of the planes over the completions of `F`. The certificates are
-  in [`data/number_fields/circular/twoprime/`](../../data/number_fields/circular/twoprime/).
+  circular chromatic number of `F²` is the least one of the planes over the completions of `F`. Corollary 7: below 4
+  the value is also the circular chromatic number of some finite unit-distance graph in `F²` (by compactness, with
+  Guichard's tight cycles, the winding argument of Theorem W⁺ and the certificates of Proposition 9; no bound on its
+  size). The certificates are in [`data/number_fields/circular/twoprime/`](../../data/number_fields/circular/twoprime/).
 
 The working notes are [`notes/three_colours_number_fields.md`](../../notes/three_colours_number_fields.md) and
 [`notes/circular_planes.md`](../../notes/circular_planes.md); the programs and certificates are in
@@ -47,7 +49,10 @@ second look at Section 8), Theorem D twice (the note's version and Section 9), a
 separate AI agents with their own programs; no mathematician has checked it yet. A third referee then read Section 10
 as written in the paper, with programs of its own: no error in a proof; its corrections (two false sentences about
 the 7-adic characters, a bound quoted for the wrong range, the dependence of Theorem F on Proposition 8, now removed
-by eight new certificates, and smaller gaps) are applied. Corollary 6 was added after that reading.
+by eight new certificates, and smaller gaps) are applied. Corollary 6 was added after that reading. Corollary 7 was
+refereed separately (no mathematical error; its expository gaps are closed); while preparing it we found that the
+paper had wrongly said that no finite unit-distance graph with circular chromatic number `7/2` was known: the Moser
+spindle is one (over `ℚ(√3, √11)`). The PDF has 24 pages.
 
 [`three-colours.tex`](three-colours.tex) is the LaTeX source (`amsart`). To rebuild the PDF, run in this folder,
 with TeX Live:

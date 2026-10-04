@@ -1,0 +1,45 @@
+type point c: least margin 1/2
+type point q:(1+1i)/3: least margin 1/3
+type point q:(1+2i)/3: least margin 1/3
+type point q:(2+1i)/3: least margin 1/3
+type point q:(2+2i)/3: least margin 1/3
+type point 7:(1+3i)/7: least margin 2/7
+type point 7:(1+4i)/7: least margin 2/7
+type point 7:(3+1i)/7: least margin 2/7
+type point 7:(3+6i)/7: least margin 2/7
+type point 7:(4+1i)/7: least margin 2/7
+type point 7:(4+6i)/7: least margin 2/7
+type point 7:(6+3i)/7: least margin 2/7
+type point 7:(6+4i)/7: least margin 2/7
+comp_249_1000.txt: 29 components
+  cell (40,81) 15-gon   index vector = type point NONE; stored label: EXTRA
+  cell (40,243) 15-gon   index vector = type point NONE; stored label: EXTRA
+  cell (46,139) 15-gon   index vector = type point ['7:(1+3i)/7']; stored label: SEVEN
+  cell (46,185) 15-gon   index vector = type point ['7:(1+4i)/7']; stored label: SEVEN
+  cell (81,40) 15-gon   index vector = type point NONE; stored label: EXTRA
+  cell (81,81) 30-gon   index vector = type point NONE; stored label: EXTRA
+  cell (81,162) 15-gon   index vector = type point NONE; stored label: EXTRA
+  cell (81,243) 30-gon   index vector = type point NONE; stored label: EXTRA
+  cell (81,284) 15-gon   index vector = type point NONE; stored label: EXTRA
+  cell (108,108) 30-gon   index vector = type point ['q:(1+1i)/3']; stored label: MAIN
+  cell (108,216) 30-gon   index vector = type point ['q:(1+2i)/3']; stored label: MAIN
+  cell (139,46) 15-gon   index vector = type point ['7:(3+1i)/7']; stored label: SEVEN
+  cell (139,278) 15-gon   index vector = type point ['7:(3+6i)/7']; stored label: SEVEN
+  cell (162,81) 15-gon   index vector = type point NONE; stored label: EXTRA
+  cell (162,162) 60-gon   index vector = type point ['c']; stored label: MAIN
+  cell (162,243) 15-gon   index vector = type point NONE; stored label: EXTRA
+  cell (185,46) 15-gon   index vector = type point ['7:(4+1i)/7']; stored label: SEVEN
+  cell (185,278) 15-gon   index vector = type point ['7:(4+6i)/7']; stored label: SEVEN
+  cell (216,108) 30-gon   index vector = type point ['q:(2+1i)/3']; stored label: MAIN
+  cell (216,216) 30-gon   index vector = type point ['q:(2+2i)/3']; stored label: MAIN
+  cell (243,40) 15-gon   index vector = type point NONE; stored label: EXTRA
+  cell (243,81) 30-gon   index vector = type point NONE; stored label: EXTRA
+  cell (243,162) 15-gon   index vector = type point NONE; stored label: EXTRA
+  cell (243,243) 30-gon   index vector = type point NONE; stored label: EXTRA
+  cell (243,284) 15-gon   index vector = type point NONE; stored label: EXTRA
+  cell (278,139) 15-gon   index vector = type point ['7:(6+3i)/7']; stored label: SEVEN
+  cell (278,185) 15-gon   index vector = type point ['7:(6+4i)/7']; stored label: SEVEN
+  cell (284,81) 15-gon   index vector = type point NONE; stored label: EXTRA
+  cell (284,243) 15-gon   index vector = type point NONE; stored label: EXTRA
+type points matched: 13 of 13; every component matched: False
+all component vectors among the 29 stored: True

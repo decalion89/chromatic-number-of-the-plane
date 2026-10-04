@@ -91,7 +91,8 @@ Theorem F (§6) gives more: `χ_c(ℚ(√59)²) = 4`. Proposition C6 is the fini
 vectors already push `χ_c` above `7/2`.
 
 The lower bound is about the infinite graph `Cay(ℤU, U)`: Theorem W⁺ is applied to it directly. Every finite subgraph
-has `χ_c ≤ 7/2` and their supremum is `7/2`, but we do not know a finite subgraph with `χ_c = 7/2` exactly. The
+has `χ_c ≤ 7/2` and their supremum is `7/2`; some finite subgraph has `χ_c = 7/2` exactly (Corollary F11, §6.8), but
+we know none explicitly. The
 16 characters that come from the 7-adic colourings (two embeddings, eight maps `λ`) lie in the closed box `[2/7, 5/7]`
 and end at tight leaves of the tree; so the closed-interval statement is false and the open interval is essential.
 The certificates were found with a floating-point solver (`kappa_max.py`: SCIP, through OR-tools, maximises
@@ -446,7 +447,8 @@ them.)
 branches, 29 leaves) and `cert_K2M1.txt` are checked by `verify_window.py 2 1` (about 45 s): of the 29 index vectors,
 5 are those of the c- and q-points, 8 those of the 7-points, each with all margins at least `2/7`, and each of the
 other 16 has a certificate `λ ≥ 0`, `Σλ = 1`, `Σλ_iμ_i ≡ 1/4` on three margins, which excludes it for `r > 1/4`.
-Each of the 8 vectors of family 7 has a certificate of the same kind with value `2/7` (`cert_K2M1_seven.txt`, written
+Each of the 8 vectors of family 7 has a certificate of the same kind, with three positive multipliers and
+`Σλ_iμ_i = 2/7` identically (`cert_K2M1_seven.txt`, written
 by `seven_certificates_K2M1.py` and checked by `verify_seven_K2M1.py`; added after the referees' reports, on a
 suggestion of the referee of Theorem F), which excludes it for `r > 2/7`; these certificates use margins at
 `ρ^{−2}σˡ`, outside `G(1, 1)`. ∎
@@ -459,7 +461,9 @@ window (1, 1) does not suffice below `2/7` (at `r = 0.2501` it keeps extra compo
 rotations of denominator dividing 325 and 29 components. The referee's vertex enumeration of the line arrangement (in
 C with 128-bit integers, every point rechecked with fractions: `vertex_enum.c`, `analyze_components.py`) and its
 lifting by rows (`lift_rows.py`) give the same 29 vectors at `r₀` and the same 13 at `1/4 + 10⁻⁷`
-(`compare_methods.py`).
+(`compare_methods.py`). The referee of the corollary on finite witnesses (§6.8) clipped `S^(2/7)(2, 1)` exactly,
+cell by cell: 13 components (one 60-gon of family c, four 30-gons of family q, and the eight 7-points, each a single
+point), with the stored index vectors.
 
 > **Lemma F2.** Let `1/4 < r ≤ 1/3`, let `k` be a positive multiple of 6 (so `N = 5^k ≡ 1 mod 7`), and let `C ∈ ℂ` satisfy
 > `Re(C̄γ) ∈ [r, 1 − r] + ℤ` for every `γ ∈ G(k, 1)`. Then modulo `Nℤ[i]`:
@@ -600,6 +604,87 @@ torsion character `ξ` that keeps all of `⟨i, ρ, σ⟩` above `2/7` is of typ
 `ξ(i5^{−k})` lie within `0.23·5^{−k}` of `1/2`, `1/3` or `2/3` for every `k`; as `ξ` has finite order, it has order 2
 or 3.
 
+### 6.8 Finite witnesses
+
+By compactness `χ_c(F²)` is the supremum of `χ_c(H)` over the finite subgraphs `H` of `F²` (if every finite subgraph
+maps to `K_{p/q}`, so does `F²`). Below 4 the supremum is attained. For a homomorphism `c` of a graph to `K_{p/q}`,
+the *tight digraph* `D_c` has an arc `x → y` for every edge `xy` with `c(y) − c(x) ≡ q (mod p)`; a *tight cycle* is a
+directed cycle of `D_c`.
+
+> **Lemma F9 (tight cycles; the easy half of a characterisation of Guichard, J. Graph Theory 17 (1993); cf. Zhu's
+> survey).** Let `H` be a finite graph with a homomorphism to `K_{p/q}`. If every homomorphism of `H` to `K_{p/q}`
+> has a tight cycle, then `χ_c(H) = p/q`.
+
+*Proof.* Suppose `χ_c(H) < p/q`: then `H` maps to some `K_{p′/q′}` with `p′/q′ < p/q`, by `c′`. Let
+`g(x) = (p/p′)c′(x) ∈ [0, p)` (reading `c′(x)` in `{0, …, p′ − 1}`) and `c(x) = ⌊g(x)⌋ mod p`. For an edge `xy` the
+lift `D ∈ [pq′/p′, p − pq′/p′]` of `g(y) − g(x)` modulo `p` has `q < D < p − q`, as `pq′/p′ > q`; the integer
+`⌊g(x) + D⌋ − ⌊g(x)⌋` is `⌊D⌋` or `⌈D⌉`, so it lies in `[q, p − q]`, and it is congruent to `c(y) − c(x)`. So `c` maps
+`H` to `K_{p/q}`, and `x → y` is tight exactly when this integer is `q`. Along a closed walk these integers have the
+same sum as the lifts `D` (the floors telescope); on a tight cycle of length `m` the first sum is `mq` and the second
+is larger. So `c` has no tight cycle. ∎
+
+> **Lemma F10 (winding).** Let `Γ` be an abelian group, `S = −S ⊆ Γ` finite with `Γ = ℤS`, `p < 4q`, and `c` a
+> homomorphism of `Cay(Γ, S)` to `K_{p/q}`. For `x ∈ Γ`, `s ∈ S` let `ℓ(x, s) ∈ [q, p − q]` be the integer congruent
+> to `c(x + s) − c(x)` modulo `p`, and `a(s) = M_x ℓ(x, s)` for an invariant mean `M` on `Γ`. Then
+> `s_1 + … + s_m ↦ (1/p) Σ a(s_k) mod 1` is a well-defined character `ξ` with `ξ(s) = a(s)/p ∈ [q/p, 1 − q/p]` on
+> `S`; and if `u_1, …, u_r ∈ S` and positive integers `n_i` satisfy `Σ n_i u_i = 0` and `a(u_i) = q` for every `i`,
+> every closed walk with `n_i` steps `u_i` is a closed walk in `D_c`, so `c` has a tight cycle.
+
+*Proof.* This is the proof of Theorem W⁺ (`notes/winding_lemma.md`). For `s, t ∈ S` the integers
+`ℓ(x, s) + ℓ(x + s, t)` and `ℓ(x, t) + ℓ(x + t, s)` are congruent modulo `p` and lie in `[2q, 2p − 2q]`, of length
+`2p − 4q < p`, so they are equal. For a closed walk `W` with steps `s_1, …, s_m` from `x` (`x_k = x + s_1 + … + s_k`),
+`Λ(W, x) = Σ_k ℓ(x_{k−1}, s_k)` is a multiple of `p`, and for `t ∈ S` the identity gives
+`Λ(W, x + t) − Λ(W, x) = Σ_k (ℓ(x_k, t) − ℓ(x_{k−1}, t)) = 0`; so `Λ(W, x)` does not depend on `x`, and by
+invariance it equals `Σ_k a(s_k)`. This makes `ξ` well defined (`ℓ(x + s, −s) = p − ℓ(x, s)` gives
+`a(−s) = p − a(s)`). For the walk of the statement, `Λ(W, x) = q Σ n_i` for every `x`, and each of its `Σ n_i` terms
+is at least `q`, so each is `q`. A closed walk in `D_c` contains a directed cycle. ∎
+
+> **Corollary F11 (finite witnesses).** If `χ_c(F²) < 4`, some finite subgraph of `F²` has circular chromatic
+> number `χ_c(F²)`.
+
+*Proof.* The value is 2, 3 or `7/2` (Theorem F); for 2 an edge is a witness. Let `p/q` be `3/1` or `7/2`; then `F²`
+maps to `K_{p/q}`, `i ∉ F` and `p < 4q`. If every finite subgraph had a homomorphism to `K_{p/q}` without tight
+cycles, so would `F²` (for each finite `H ⊂ L`, the maps `L → ℤ/p` that restrict to such a homomorphism on `H` form a
+nonempty closed subset of `(ℤ/p)^L`; these have the finite intersection property, and a tight cycle is finite). By
+Lemma F9 it suffices to show that every homomorphism `c` of `F²` to `K_{p/q}` has a tight cycle. Suppose `c` has none.
+
+*`p/q = 7/2`.* By Theorem F, (7) holds and (a), (b) fail; Proposition C1 gives the homomorphism to `K_{7/2}`. Take
+`V`, `k` and `U = G(k, 1)V` as in Lemma F3 and apply Lemma F10 to `c` on `Cay(ℤU, U)`: `ξ(U) ⊆ [2/7, 5/7] + ℤ`, and
+as in Lemma B1 there is a `ℚ(i)`-linear `φ : L → ℂ` with `ξ(γv) = Re(γφ(v)) mod 1` for `γ ∈ G(k, 1)`, `v ∈ V`. Let
+`C_v = conj(φ(v))`. For `|j| ≤ k − 2` the point `ρ^{−j}C_v` lies in `S^(2/7)(2, 1)`, and its value at `γ ∈ G(2, 1)`
+is `ξ(ρ^jγv)`. If `ρ^{−j}C_v` had the index vector of a point of family 7, the certificate of Proposition F1 for it
+(three margins `ψ_i`, the lower or upper margin at rotations `γ_i ∈ G(2, 1)`, and `λ_i > 0` with
+`Σ λ_i ψ_i = 2/7` identically) would give `ψ_i(ρ^{−j}C_v) = 2/7` for each `i`, as every margin is at least `2/7`:
+`ξ(u_i) ≡ 2/7` for `u_i = ±ρ^jγ_i v ∈ U` (`+` for a lower margin, `−` for an upper one), so `a(u_i) = 2`. The linear
+parts cancel, `Σ λ_i(±γ_i) = 0`, so `Σ λ_i u_i = 0`; with integers `n_i ∝ λ_i` (`63, 52, 25` or `13, 14, 15`: walks of
+length 140 or 42; `twoprime/tight_walks.py`) Lemma F10 gives a tight cycle. So no window has family 7; the overlap
+argument and the identification in the proof of Lemma F2 give `C_v ∈ Nε + P_k + Nℤ[i]` (`ε ∈ E_c`) or
+`C_v ∈ Nε + Y_k(ε) + Nℤ[i]` (`ε ∈ E_q`), so `φ(v) = Nε_v + x_v` with `ε_v ∈ E` and `|x_v| ≤ r′`; Lemma F3's proof gives
+`β ∈ L` with `Tr(βv) ∈ E` on `V`, and as `V` is arbitrary, the proof of Lemma B2 (which uses only this conclusion for
+every finite `V`) and the proof of Theorem B give (a) or (b): a contradiction.
+
+*`p/q = 3`.* By Corollary B6 and Theorem B, (b) holds, (a) fails and `F²` is 3-colourable. With `V` and `N = 5^k` as
+in Lemma B1 and `U = G_N V`, Lemma F10 and the proof of Lemma B1 give `φ(v) ∈ S_N`, so by Proposition D1 at `r = 1/3`
+(the shape of `S_N`) either `φ(v) = Nε_v + x_v` with `ε_v ∈ E_c`, or `φ(v) = Nε_v` with `ε_v ∈ E_q`. In the second
+case, with `ε_v ≡ (α + βi)/3 (mod ℤ[i])`, `ξ(γv) ≡ Re(Nγ(α + βi))/3 ∈ {1/3, 2/3} + ℤ` for `γ ∈ G_N`, and the
+`γ ∈ G_5` with `ξ(γv) ≡ 1/3` contain three with `3γ_1 + 4γ_2 + 5γ_3 = 0` (for `ε_v ≡ (1 + i)/3` and odd `k`, for
+example `−1`, `i` and `(3 − 4i)/5`; all four classes and both residues of `5^{k−1}` modulo 3 in
+`twoprime/tight_walks.py`); Lemma F10 gives a tight cycle. So every `ε_v` has type c, (c) holds as in the proof of
+Corollary B6, and case (c) gives a proper 2-colouring of `F²`: a contradiction.
+
+In both cases every homomorphism of `F²` to `K_{p/q}` has a tight cycle, so some finite subgraph `H` has
+`χ_c(H) = χ_c(F²)`. ∎
+
+The same holds for the local fields of Corollary F8 with `χ_c < 4` (`K ⊇ ℚ₇ ⊃ ℚ(√11)`, resp. `K ⊇ ℚ₃ ⊃ ℚ(√7)`). The
+proof gives no bound on the size of the subgraph; when `√3 ∈ F` and `χ_c(F²) = 3`, a unit triangle is a witness. The
+Moser spindle (7 vertices, over `ℚ(√3, √11)`) maps to `K_{7/2}` (the common vertex of its two rhombi coloured 0, the
+far tips 6 and 1, the others 2, 4, 3, 5), and its independence number is 2, so `χ_c ≥ χ_f ≥ 7/2` and `χ_c = 7/2`; but
+it has unit triangles, which `ℚ(√11)²` has not, and `χ_c(ℚ(√3, √11)²) ≥ 4` by Theorem F ((a) and (b) fail as
+`χ = 4` there, and 7 is inert in `ℚ(√3)`). The 76-vertex graph of `χ(ℚ(√11)²) = 4` has `χ_c = 16/5`, and the union of
+its nine images under `ρʲσˡ`, `|j|, |l| ≤ 1` (628 vertices, 1 506 edges), maps to `K_{13/4}` and not to `K_{16/5}`
+(SAT computations, colourings checked, refutations not certified; for the 76-vertex graph the decisive refutation, at
+`67/21`, took 22 minutes, and the referee's own run at `67/21` did not finish).
+
 ## 7. Questions
 
 1. *Above 4.* Theorem F decides `χ_c(F²)` below 4: there it is the least value of `χ_c(F_v²)` over the completions
@@ -611,8 +696,9 @@ or 3.
    there a number field with `4 < χ_c(F²) < 5`? Any `F` with `χ(F²) = 5` and a place of residue field `𝔽₁₉` would
    be one. The 5-chromatic unit-distance graphs we know lie over fields containing `√3`, or `√−3` and `√−7`, and 3
    and −7 are not squares modulo 19.
-2. *Finite witnesses.* Every finite unit-distance graph in `ℚ(√11)²` has `χ_c ≤ 7/2`, and their supremum is `7/2`.
-   Is it attained? The proofs of Theorems C and E work with infinite Cayley graphs `Cay(ℤU, U)`.
+2. *Finite witnesses.* By Corollary F11 some finite unit-distance graph in `ℚ(√11)²` has `χ_c = 7/2`, but the proof
+   (compactness) gives no bound on its size. How small can it be? And when `χ_c(F²) = 4`, is the value attained by
+   a finite subgraph, for example for `ℚ(√59)`? Above 4 Lemma F10 is not available.
 3. *The one-prime probe.* Does `r0(5^k)` tend to `3/10` (the conjecture of §5)? Theorem E no longer needs it.
 
 Measurements (floating-point MIP, not proofs): for `U = G_25{1, u_n, ū_n : n = 1, 7, 19}`, `max_ξ min_u ‖ξ(u)‖` is

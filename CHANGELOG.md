@@ -40,7 +40,12 @@ including every retracted claim, is the research log,
   Section 10 of the paper: no error in a proof; its corrections are applied, and eight new dual certificates
   (`cert_K2M1_seven.txt`, with a separate checker) make Theorem F depend on the window modulo 325 alone; the referee's programs are in `twoprime/indep_S10/`. Corollary 6
   of the paper (`notes/circular_planes.md`, Corollary F8): the same values for the local fields, so below 4 `χ_c(F²)`
-  is the least `χ_c` of the planes over the completions of `F`; and `4 ≤ χ_c(ℚ(√47)²) ≤ 19/4`.
+  is the least `χ_c` of the planes over the completions of `F`; and `4 ≤ χ_c(ℚ(√47)²) ≤ 19/4`. Corollary 7 of the
+  paper (note Corollary F11): below 4, `χ_c(F²)` is the circular chromatic number of a finite subgraph of `F²`
+  (compactness, Guichard's tight cycles, the winding argument of Theorem W⁺, and complementary slackness in the eight
+  certificates of value `2/7`; `twoprime/tight_walks.py`); refereed by a separate agent (no mathematical error; its
+  programs in `twoprime/indep_FW/`). Corrected: the paper said that no finite unit-distance graph with `χ_c = 7/2`
+  was known, but the Moser spindle has `χ_c = 7/2`.
 - **Paper draft `papers/three-colours/` (4 October).** Theorem B, Proposition B9, the corollaries, Theorem C,
   the local circular values, Theorem D (Section 9, by hand) and Theorems E and F (Section 10); refereed (no
   mathematical error), fixes applied; Section 10 refereed separately as written (no error in a proof; fixes applied).

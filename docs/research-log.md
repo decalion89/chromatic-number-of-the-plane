@@ -10036,5 +10036,45 @@ denominator `5^k`) decide three colours for every number field, not only for rea
   `(d/7) = −1` (59, 83, 131, …) the place above 2 gives `χ = χ_c = 4`.
 - **A measurement.** The 76-vertex graph of `χ(ℚ(√11)²) = 4` has `χ_c = 16/5` by SAT (CaDiCaL through pysat,
   colourings checked, the refutations not certified), far below `7/2`; the stored graphs for `d = 47, 59, 131, 251`
-  all map to `K_{7/2}`. The question whether some finite subgraph of `ℚ(√11)²` has `χ_c = 7/2` stays open.
+  all map to `K_{7/2}`. The question whether some finite subgraph of `ℚ(√11)²` has `χ_c = 7/2` stays open (answered,
+  without an explicit graph, in the next section).
 
+## Finite witnesses below 4 (4 October, late morning)
+
+- **Corollary** (paper Corollary 7, note Corollary F11). If `χ_c(F²) < 4`, some finite subgraph of `F²` has circular
+  chromatic number `χ_c(F²)`. This answers the question left open in the morning (whether `7/2` is attained in
+  `ℚ(√11)²`). The proof is not constructive:
+  - *Tight cycles.* For a finite graph, if every homomorphism to `K_{p/q}` has a tight cycle (a directed cycle of
+    edges with colour difference exactly `q`), then `χ_c = p/q` (Guichard 1993; Zhu's survey; the direction we use
+    is proved in four lines by rounding an optimal circular colouring). With compactness it suffices that every
+    homomorphism of `F²` to `K_{p/q}` has a tight cycle.
+  - *Winding.* In the proof of Theorem W⁺ the lifted colour differences satisfy a square identity (`p < 4q`), so the
+    total lift of a closed walk does not depend on its starting point, and its mean over an invariant mean is the sum
+    of the averaged lifts `a(s)`. If a positive integer relation `Σ n_i u_i = 0` holds among steps with `a(u_i) = q`,
+    every such walk is tight at every step.
+  - *At 7/2.* The averaged character of a homomorphism without tight cycles keeps `G(k, 1)V` in `[2/7, 5/7]`. By
+    Proposition 9 at `θ = 2/7` every window has type c, q or 7. A window of type 7 is impossible: its dual certificate
+    of value `2/7` (the eight certificates added after the third referee's report) has three positive multipliers, so
+    by complementary slackness its three margins are exactly `2/7`, and the cancellation of their linear parts is a
+    positive integer relation among tight unit vectors (multiplicities `63, 52, 25` or `13, 14, 15`, closed walks of
+    length 140 or 42). So all windows have type c or q, and Lemmas 14, 15, 4 and the proof of Theorem B give (a) or
+    (b), which fail.
+  - *At 3.* A window of type q has values exactly `1/3` or `2/3`, and the tight rotations of `G_5` contain a relation
+    with multiplicities `3, 4, 5`; so all windows have type c, which gives (a).
+  - `twoprime/tight_walks.py` checks the finite facts; `tests/test_two_primes.py` reruns it.
+  - *Referee.* A separate agent checked the draft with its own exact programs (`twoprime/indep_FW/`): the two lemmas
+    on 291 small graphs and 766 tight relations, the certificates and relations with conventions derived from
+    scratch, and its own clipping of `S^(2/7)(2, 1)` (13 components; the eight of family 7 are single points).
+    Verdict: correct with gaps, no mathematical error. Applied: the positivity of the multipliers is now stated in
+    Proposition 9; the type-7 windows are excluded one by one before the overlap argument of Lemma 14 is used; the
+    proof of Lemma B2 (not its statement) is cited; the existence of a homomorphism to `K_{7/2}` (Proposition 3) is
+    said; Lemma A no longer assumes that the infimum is attained; notation and wording.
+- **A false sentence corrected.** The paper said, after the proof of Theorem C, that we know no finite unit-distance
+  graph with circular chromatic number exactly `7/2`. The Moser spindle is one: it maps to `K_{7/2}` (colours
+  `0, 2, 4, 6, 3, 5, 1`) and has `χ = 4`, and a graph on 7 vertices has `χ_c = p/q` with `p ≤ 7`. It lies over
+  `ℚ(√3, √11)`, whose plane has `χ_c ≥ 4` by Theorem F, and it has unit triangles, which `ℚ(√11)²` has not. The
+  sentence now refers to finite subgraphs of `ℚ(√11)²`.
+- **Measurements (SAT, not certified).** The union of the nine images of the 76-vertex graph under `ρʲσˡ`,
+  `|j|, |l| ≤ 1` (628 vertices, 1 506 edges) maps to `K_{13/4}` and not to `K_{16/5}`; a lazy search (a `(7, 2)`-colouring
+  whose tight digraph is acyclic, cycles forbidden one by one) finds such a colouring after 40 rounds. Explicit
+  witnesses for `7/2` are probably large; their size is a question of the paper.

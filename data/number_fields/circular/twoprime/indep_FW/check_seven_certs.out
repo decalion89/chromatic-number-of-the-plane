@@ -1,0 +1,11 @@
+A'_7 = [(2, 3), (2, 4), (3, 2), (3, 5), (4, 2), (4, 5), (5, 3), (5, 4)]
+cert_K2M1.txt: 8 SEVEN, 16 EXTRA (all value 1/4, lambda>0, sum 1, linear parts cancel), 5 MAIN lines; total 29
+7-point (325/7)(4+1i) | cert ['-2,-1,Re,+,9/20', '-2,0,Im,-,13/35', '-1,-1,Re,-,5/28'] | multiplicities [63, 52, 25] | walk length 140
+7-point (325/7)(4+6i) | cert ['-2,-1,Im,+,13/42', '-2,0,Im,-,1/3', '-1,0,Im,+,5/14'] | multiplicities [13, 14, 15] | walk length 42
+7-point (325/7)(1+4i) | cert ['-2,-1,Re,+,13/42', '-2,0,Re,-,1/3', '-1,0,Re,+,5/14'] | multiplicities [13, 14, 15] | walk length 42
+7-point (325/7)(1+3i) | cert ['-2,-1,Im,+,9/20', '-2,0,Re,+,13/35', '-1,-1,Im,-,5/28'] | multiplicities [63, 52, 25] | walk length 140
+7-point (325/7)(6+4i) | cert ['-2,-1,Im,-,9/20', '-2,0,Re,-,13/35', '-1,-1,Im,+,5/28'] | multiplicities [63, 52, 25] | walk length 140
+7-point (325/7)(6+3i) | cert ['-2,-1,Re,-,13/42', '-2,0,Re,+,1/3', '-1,0,Re,-,5/14'] | multiplicities [13, 14, 15] | walk length 42
+7-point (325/7)(3+1i) | cert ['-2,-1,Im,-,13/42', '-2,0,Im,+,1/3', '-1,0,Im,-,5/14'] | multiplicities [13, 14, 15] | walk length 42
+7-point (325/7)(3+6i) | cert ['-2,-1,Re,-,9/20', '-2,0,Im,+,13/35', '-1,-1,Re,+,5/28'] | multiplicities [63, 52, 25] | walk length 140
+ALL CHECKS PASSED: 8 certificates, lambda > 0, sum 1, sum lambda_i eps_i gamma_i = 0 in Q(i), constant 2/7, tight margins exactly 2/7 at the 7-points, all 60 margins >= 2/7 there, walk lengths divisible by 7

@@ -1,0 +1,21 @@
+(1) family 7 in the window G(2,1): tight relations from the certificates of value 2/7
+  7-point 1300/7 + 325/7i: multiplicities [63, 52, 25], length 140
+  7-point 1300/7 + 1950/7i: multiplicities [13, 14, 15], length 42
+  7-point 325/7 + 1300/7i: multiplicities [13, 14, 15], length 42
+  7-point 325/7 + 975/7i: multiplicities [63, 52, 25], length 140
+  7-point 1950/7 + 1300/7i: multiplicities [63, 52, 25], length 140
+  7-point 1950/7 + 975/7i: multiplicities [13, 14, 15], length 42
+  7-point 975/7 + 325/7i: multiplicities [13, 14, 15], length 42
+  7-point 975/7 + 1950/7i: multiplicities [63, 52, 25], length 140
+  all 8: positive integer relations among tight rotations; lengths [42, 140]
+(2) type q: positive relations among the tight rotations of G_5
+  class 1+1i, sign +1: multiplicities (3, 4, 5) on -1+0i, 0+1i, 3/5-4/5i
+  class 1+1i, sign -1: multiplicities (3, 4, 5) on 1+0i, 0-1i, -3/5+4/5i
+  class 1+2i, sign +1: multiplicities (3, 4, 5) on -1+0i, 0-1i, 3/5+4/5i
+  class 1+2i, sign -1: multiplicities (3, 4, 5) on 1+0i, 0+1i, -3/5-4/5i
+  class 2+1i, sign +1: multiplicities (3, 4, 5) on 1+0i, 0+1i, -3/5-4/5i
+  class 2+1i, sign -1: multiplicities (3, 4, 5) on -1+0i, 0-1i, 3/5+4/5i
+  class 2+2i, sign +1: multiplicities (3, 4, 5) on 1+0i, 0-1i, -3/5+4/5i
+  class 2+2i, sign -1: multiplicities (3, 4, 5) on -1+0i, 0+1i, 3/5-4/5i
+(3) the Moser spindle
+  proper 3-colourings: 0; a homomorphism to K_7/2: (0, 2, 4, 6, 3, 5, 1); so chi = 4 and chi_c = 7/2

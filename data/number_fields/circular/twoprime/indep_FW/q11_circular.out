@@ -1,0 +1,5 @@
+(1) 76 points, 172 edges = exactly the unit-distance pairs (exact arithmetic in Q(sqrt11))
+K_3/1: UNSAT [0.0s]
+K_4/1: SAT (colouring verified) [0.0s]
+K_16/5: SAT (colouring verified) [0.6s]
+largest P/Q < 16/5 with P <= 76 : 67/21
