@@ -1,16 +1,16 @@
-"""Vertex-criticality certificates for a chi_c = 7/2 witness: for every vertex v, a (7,2)-colouring of H - v whose
-tight digraph is acyclic (so chi_c(H - v) < 7/2).  If some H - v still has no such colouring, v is reported (the
+"""Vertex-criticality certificates for a chi_c = p/q witness (p/q read from the file, 7/2 by default): for every
+vertex v, a (p,q)-colouring of H - v whose tight digraph is acyclic (so chi_c(H - v) < p/q).  If some H - v still has no such colouring, v is reported (the
 witness is then not vertex-critical; minimise again).
 
-usage: python3 critical.py WITNESS.json OUT.json   (check the output with check_critical.py)"""
+usage: python3 critical.py WITNESS.json OUT.json   (check the output with check_critical.py, for 7/2)"""
 import json, sys, time
 from pysat.solvers import Solver
 
 
 def tight_cycles(n, adj, col, limit):
-    """Directed cycles of the tight digraph (arcs a->b with col[b]-col[a] = 2 mod 7): Tarjan SCCs, then from one
+    """Directed cycles of the tight digraph (arcs a->b with col[b]-col[a] = q mod p): Tarjan SCCs, then from one
     vertex of each nontrivial SCC a shortest cycle through it (BFS inside the SCC); at most `limit` cycles."""
-    out = [[b for b in adj[a] if (col[b] - col[a]) % 7 == 2] for a in range(n)]
+    out = [[b for b in adj[a] if (col[b] - col[a]) % PP == QQ] for a in range(n)]
     index = [None] * n; low = [0] * n; onst = [False] * n; st = []; comp = [-1] * n; ncomp = 0; t = 0
     for s in range(n):
         if index[s] is not None:
@@ -74,26 +74,28 @@ def tight_cycles(n, adj, col, limit):
 
 
 W = json.load(open(sys.argv[1])); outp = sys.argv[2]
+PP, QQ = W.get('p', 7), W.get('q', 2)
+FD = sorted({dl % PP for dl in range(1 - QQ, QQ)})    # forbidden colour differences on an edge
 n = len(W['points']); E = [tuple(e) for e in W['edges']]
 adj = [[] for _ in range(n)]
 for i, j in E:
     adj[i].append(j); adj[j].append(i)
-x = lambda v, c: 7 * v + c + 1
-a = lambda v: 7 * n + v + 1
-nv = [8 * n]
+x = lambda v, c: PP * v + c + 1
+a = lambda v: PP * n + v + 1
+nv = [(PP + 1) * n]
 s = Solver(name='cadical153')
 for v in range(n):
-    s.add_clause([-a(v)] + [x(v, c) for c in range(7)])
+    s.add_clause([-a(v)] + [x(v, c) for c in range(PP)])
 for i, j in E:
-    for c in range(7):
-        for dl in (0, 1, 6):
-            s.add_clause([-x(i, c), -x(j, (c + dl) % 7)])
+    for c in range(PP):
+        for dl in FD:
+            s.add_clause([-x(i, c), -x(j, (c + dl) % PP)])
 tv = {}
 def T(p, q):
     if (p, q) not in tv:
         nv[0] += 1; tv[(p, q)] = nv[0]
-        for c in range(7):
-            s.add_clause([-x(p, c), -x(q, (c + 2) % 7), nv[0]])
+        for c in range(PP):
+            s.add_clause([-x(p, c), -x(q, (c + QQ) % PP), nv[0]])
     return tv[(p, q)]
 for c in W['cycles']:
     s.add_clause([-T(c[k], c[(k + 1) % len(c)]) for k in range(len(c))])
@@ -105,7 +107,7 @@ for v in range(n):
         if not s.solve(assumptions=[a(u) for u in sorted(K)]):
             bad.append(v); break
         ms = set(l for l in s.get_model() if l > 0)
-        col = [next((c for c in range(7) if x(u, c) in ms), 0) if u != v else 0 for u in range(n)]
+        col = [next((c for c in range(PP) if x(u, c) in ms), 0) if u != v else 0 for u in range(n)]
         cyc = [c for c in tight_cycles(n, sub, col, 40) if v not in c]
         if not cyc:
             col[v] = -1

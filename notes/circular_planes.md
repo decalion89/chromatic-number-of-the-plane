@@ -704,7 +704,7 @@ vectors has `χ_c = 7/2`. A finite extension `K` of `ℚ_p` with `χ_c(K²) < 4`
 witnesses too: an edge for the value 2, and for 3 and `7/2` those of Corollary F12 for `ℚ(√7)`, resp. `ℚ(√11)`, as
 then `p = 3` and `K ⊇ ℚ₃ ⊃ ℚ(√7)`, where `χ_c(ℚ(√7)²) = 3` (Theorem B and Corollary B6), resp. `p = 7` and
 `K ⊇ ℚ₇ ⊃ ℚ(√11)`. The proof gives no bound on the size of the subgraph; when `√3 ∈ F` and `χ_c(F²) = 3`, a
-unit triangle is a witness. The Moser spindle (7 vertices, over `ℚ(√3, √11)`) maps to `K_{7/2}` (the common vertex of
+unit triangle is a witness, and over `ℚ(√7)`, which has none, there is one with nine vertices (below). The Moser spindle (7 vertices, over `ℚ(√3, √11)`) maps to `K_{7/2}` (the common vertex of
 its two rhombi coloured 0, the far tips 6 and 1, the others 2, 4, 3, 5), and its independence number is 2, so
 `χ_c ≥ χ_f ≥ 7/2` and `χ_c = 7/2`; but it has unit triangles, which `ℚ(√11)²` has not, and `χ_c(ℚ(√3, √11)²) ≥ 4` by
 Theorem F ((a) and (b) fail as `χ = 4` there, and 7 is inert in `ℚ(√3)`). Measurements (SAT, colourings checked,
@@ -732,7 +732,20 @@ in `ℚ(√191)`). Every lower bound is a SAT computation, certified twice: the 
 and the cycles exactly and write the formula in two encodings; `drat-trim` verifies the stored DRAT proof of the
 first, and a new `kissat` proof of the second, which `cake_lpr` (a formally verified checker) also accepts in LRAT
 form (`verification.txt`); `check_critical.py` checks the criticality certificates. As `√11 ∈ ℚ₇`, `H₁₁` is an
-explicit witness for `ℚ₇` and for every finite extension `K` of `ℚ₇` with `χ_c(K²) < 4`. Lemmas F9–F11 were tested by two referees: on 291 small graphs and 766 tight relations; on 115
+explicit witness for `ℚ₇` and for every finite extension `K` of `ℚ₇` with `χ_c(K²) < 4`. **A witness for 3 without
+unit triangles** (4 October, night; `check_small.py`, `small_triangle_free.py`): the same procedure with `K₃` in
+place of `K_{7/2}` (an arc is tight when the colour increases by 1 mod 3), over `ℚ(√7)`, from 0, the 204 unit vectors
+with denominator 160 and two points closing a 5-cycle, stops at 607 vertices, and deletion leaves nine points:
+`P₀ = (−1, 0)`, `P₁ = (−(3 + √7)/8, −(5 + √7)/8)`, `P₂ = (1/4, −√7/4)`, `P₃ = (√7/4, 1/4)`, `P₄ = (−1/4, √7/4)`,
+`P₅ = ((3 − √7)/8, (√7 − 5)/8)`, `P₆ = (1, 0)`, `P₇ = (0, 0)`, `S = (0, 1)`. Their unit pairs form the 8-cycle
+`P₀⋯P₇`, the chords `P₀P₄`, `P₁P₅`, `P₂P₆` and the path `P₃SP₇`: `H₇` is the Wagner graph (the Möbius ladder on 8
+vertices) with one chord subdivided. Each of its 84 proper 3-colourings has a tight 6-cycle, so `χ_c(H₇) = 3` by
+Lemma F9; equivalently `H₇` has no homomorphism to `K_{8/3}`, which is the Wagner graph itself (`χ_c` of a graph
+with 9 vertices is a fraction with numerator at most 9, and `8/3` is the largest one below 3). `H₇` is
+vertex-critical, and nine vertices are the fewest possible without unit triangles: every triangle-free graph with at
+most 8 vertices maps to `K_{8/3}` (checked over the 4 682 270 triangle-free graphs on 8 labelled vertices). All of
+this is checked by enumeration, the first fact also by a certified SAT refutation; as `√7 ∈ ℚ₃`, `H₇` is an explicit
+witness for `ℚ₃` and its finite extensions `K` with `χ_c(K²) < 4`. Lemmas F9–F11 were tested by two referees: on 291 small graphs and 766 tight relations; on 115
 random finite sets `S` in `ℤ`, `ℤ²` and `ℤ × ℤ/m` with `2 < χ_c < 4` (at all 409 optimal points, vertices of the optimal set and
 midpoints and centroids of them that stay optimal, the tight elements have a nonnegative relation;
 `indep_FW2/test_kappa_relations.py 1 180`); and by SAT on finite pieces of 13 such Cayley graphs, all with finite witnesses
@@ -752,7 +765,13 @@ midpoints and centroids of them that stay optimal, the tight elements have a non
    and −7 are not squares modulo 19.
 2. *Finite witnesses.* By Corollary F12 some finite unit-distance graph in `ℚ(√11)²` has `χ_c = 7/2`; the proof
    (compactness) gives no bound on its size, and the smallest we know has 170 vertices and is vertex-critical (§6.8). How small can it be? And when `χ_c(F²) = 4`, is the value attained by
-   a finite subgraph, for example for `ℚ(√59)`? Above 4 Lemmas F10 and F11 are not available.
+   a finite subgraph, for example for `ℚ(√59)`? Above 4 Lemmas F10 and F11 are not available. When `χ(F²) = 4`,
+   compactness makes it a question about the plane: some finite subgraph has `χ_c = 4` if and only if every proper
+   colouring `F² → ℤ/4` has a tight cycle (the colour increases by 1 at each step). If every colouring has one,
+   finitely many cycles meet every colouring, and some finite subgraph has no 4-colouring avoiding them (Lemma F9
+   then gives `χ_c = 4`); if one colouring has none, every finite subgraph inherits an acyclic tight digraph, and
+   perturbing along a topological order gives fewer than 4 colours. The 2-adic 4-colourings of `ℚ(√59)²` do not
+   decide it: for every cyclic order of `𝔽₄` they have a tight unit rhombus.
 3. *The one-prime probe.* Does `r0(5^k)` tend to `3/10` (the conjecture of §5)? Theorem E no longer needs it.
 
 Measurements (floating-point MIP, not proofs): for `U = G_25{1, u_n, ū_n : n = 1, 7, 19}`, `max_ξ min_u ‖ξ(u)‖` is

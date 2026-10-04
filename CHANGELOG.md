@@ -12,6 +12,16 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- **A nine-point witness for `χ_c = 3` in a plane without unit triangles (4 October, night).** Over `ℚ(√7)`, where
+  `χ_c = 3` and there is no unit triangle, nine points span a unit-distance graph `H₇` with `χ_c(H₇) = 3`: the Wagner
+  graph (the Möbius ladder on 8 vertices, which is `K_{8/3}`) with one chord subdivided. Each of its 84 proper
+  3-colourings has a tight 6-cycle; equivalently it has no homomorphism to `K_{8/3}`. It is vertex-critical, and nine
+  vertices are the fewest possible: every triangle-free graph with at most 8 vertices maps to `K_{8/3}` (enumeration
+  of the 4 682 270 triangle-free graphs on 8 labelled vertices). As `√7 ∈ ℚ₃`, it is also a witness for `ℚ₃`. Found
+  by the growth and deletion programs, now for any value `p/q` (`grow.py ... p q`; the results for `7/2` are
+  unchanged), from 207 points; checked by enumeration (`check_small.py`, no solver) and by a SAT refutation that
+  `kissat`, `drat-trim` and `cake_lpr` certify; `small_triangle_free.py`. The three-colours paper (Section 10 and the
+  introduction) and `notes/circular_planes.md` §6.8 updated; tests in `tests/test_two_primes.py`.
 - **Smaller witnesses for `χ_c = 7/2`, and the first over `ℚ(√455)` and `ℚ(√191)` (4 October, evening).** A colouring-guided growth with
   lazy SAT (`grow.py`: list the tight cycles of each `(7, 2)`-colouring the solver returns; when its tight digraph is
   acyclic, add the points whose neighbours leave no colour), followed by vertex deletion (`minimise.py`), gives a

@@ -10309,10 +10309,53 @@ with 30 546 listed tight 4-colour cycles at 4 361 points, without an answer. By 
 cycle along which the colour increases by 1 mod 4): if none has one, every finite subgraph has `χ_c < 4` by the
 perturbation argument; if all have one, finitely many cycles serve all colourings, and a finite subgraph containing
 them on which no 4-colouring avoids them exists. The 2-adic 4-colourings of `ℚ(√59)²` (residues in `𝔽₄`) do have
-tight cycles for every cyclic order of the colours: a unit rhombus whose two directions have distinct residues in
-`μ₃` is one. So they do not decide it.
+tight cycles for every cyclic order of the colours: a unit rhombus whose two directions have suitable distinct
+residues in `μ₃`. So they do not decide it. Nor do rhombi alone force the answer on small pieces: the 406-point
+4-chromatic graph of `ℚ(√59)` and the ball of radius 2 in the Cayley graph of its 108 unit vectors (5 941 points,
+5 724 four-cycles) both have 4-colourings without a tight 4-cycle (SAT, `rhomb4.py`, not stored). The criterion is
+now stated after Question 3 of the paper.
 
 Files: `data/number_fields/circular/finite_witness/` (the witnesses, their formulas, proofs and criticality
 certificates, both checkers, `check_critical.py`, `grow.py`, `minimise.py`, `critical.py`, `verification.txt`); tests:
 `tests/test_two_primes.py` (`test_finite_witness_grown` for the three witnesses, `test_finite_witness_critical_rejects`,
 and the slow `test_finite_witness_grown_proof`).
+
+## A nine-point witness for `χ_c = 3` without unit triangles (4 October, night)
+
+When `√3 ∈ F` and `χ_c(F²) = 3`, a unit triangle is a finite witness for Corollary 7 of the three-colours paper.
+`ℚ(√7)` is the natural test without triangles: `χ_c(ℚ(√7)²) = 3` (Theorem B and Corollary B6), `√3 ∉ ℚ(√7)`, and
+`√7 ∈ ℚ₃`, so a witness there also serves `ℚ₃`. The growth of the previous section, run with `K₃` in place of
+`K_{7/2}` (an arc is tight when the colour increases by 1 mod 3; `grow.py ... 3 1`), from 0, the 204 unit vectors with
+denominator 160 and two points closing a 5-cycle (207 points, `finite_witness/q7_seed.json`), stops after two growth
+rounds at 607 vertices with 7 listed cycles, in a few seconds; deletion (`minimise.py`) leaves nine vertices and
+`critical.py` finds all nine certificates. The nine points, translated so that one of them is 0, are `P₀ = (−1, 0)`,
+`P₁ = (−(3 + √7)/8, −(5 + √7)/8)`, `P₂ = (1/4, −√7/4)`, `P₃ = (√7/4, 1/4)`, `P₄ = (−1/4, √7/4)`,
+`P₅ = ((3 − √7)/8, (√7 − 5)/8)`, `P₆ = (1, 0)`, `P₇ = (0, 0)` and `S = (0, 1)`, and their 13 unit pairs form the
+8-cycle `P₀⋯P₇`, the chords `P₀P₄`, `P₁P₅`, `P₂P₆` and the path `P₃SP₇`: the Wagner graph with one chord subdivided
+(found by matching against the Wagner graph after contracting the degree-2 vertex). The seed's 5-cycle is
+`P₆P₇P₀P₁P₂`.
+
+Why `3`: each of the 84 proper 3-colourings has a tight 6-cycle (three of the four 6-cycles suffice, each in both
+directions), so `χ_c = 3` by Lemma 20. A second view needs no tight cycles: a graph with 9 vertices has `χ_c = p/q`
+with `p ≤ 9`, the largest such fraction below 3 is `8/3`, and `K_{8/3}` is the Wagner graph itself (`0, 3, 6, 1, 4,
+7, 2, 5` is an 8-cycle and difference 4 joins opposite vertices); so `χ_c(H₇) = 3` says that subdividing one chord of
+the Wagner graph destroys every homomorphism to the Wagner graph, which a backtracking search confirms. Nine vertices
+are the fewest possible in a plane without unit triangles: every triangle-free graph with at most 8 vertices maps to
+`K_{8/3}`. `small_triangle_free.py` generates the 4 682 270 triangle-free graphs on 8 labelled vertices (vertex `v`
+joined to an independent set of the earlier ones) and searches a homomorphism for the 15 247 maximal ones (the
+15 120 that are not bipartite need a search); none fails. Its counts for 3 to 6 vertices (7, 41, 388, 5 789) agree
+with a direct enumeration of all graphs.
+
+Checked by enumeration with Python integers (`check_small.py`: points, all unit pairs, all `3⁹` maps, no
+homomorphism to `K_{8/3}`, the nine criticality certificates), and the first fact again by a SAT refutation of the
+formula in the layout of `check_witness.py` (51 variables, 126 clauses): `kissat` refutes it, `drat-trim` verifies the
+proof and `cake_lpr` its LRAT form, for the stored labelling and for the graph as found. A hand proof of the first
+fact covers one case: if the 8-cycle has winding ±2 (sum of the colour steps ±6), one of the two 6-cycles through `S`
+is tight; the case of winding 0 is left to the enumeration.
+
+`grow.py`, `minimise.py` and `critical.py` now take any `p/q` (`grow.py ... p q`; the others read `p` and `q` from the
+file, `7/2` when absent); for `7/2` they build the same clauses in the same order, and they reproduce the stored
+`ℚ(√455)` witness and its certificates exactly, as before. Files: `finite_witness/witness_q7.json.gz`,
+`q7_seed.json`, `check_small.py`, `small_triangle_free.py`, `verification.txt`; tests: `test_finite_witness_q7`,
+`test_finite_witness_q7_rejects` (four corruptions), `test_finite_witness_q7_found_by_growth`,
+`test_small_triangle_free_six` and the slow `test_small_triangle_free_eight`.

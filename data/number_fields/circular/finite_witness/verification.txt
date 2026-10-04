@@ -108,3 +108,28 @@ cake_lpr: s VERIFIED UNSAT (62 s).
 The grown graphs before deletion were refuted too (kissat, drat-trim: s VERIFIED, cake_lpr: s VERIFIED UNSAT, in the
 second encoding without a fixed vertex): 653 vertices over Q(sqrt11) (also in the first encoding), 959 over Q(sqrt455),
 3 258 over Q(sqrt191) (drat-trim 52 minutes). They are not stored; grow.py rebuilds them.
+
+Verification of the witness for the value 3 over Q(sqrt7) (4 October 2026, night)
+
+witness_q7: Q(sqrt7), denominator 160, (p, q) = (3, 1), 9 vertices, 13 edges, 6 listed cycles (three 6-cycles, each
+in both directions); the Wagner graph with one chord subdivided. Every check is a finite enumeration with Python
+integers; the SAT refutation is a second, redundant check of (3).
+1. python3 check_small.py witness_q7.json.gz q7.cnf   (under a second)
+   (1) Q(sqrt7): 9 points, 13 edges, every edge at distance exactly 1, and no other unit pair (induced)
+   (2) the colouring is a (3,1)-colouring: chi_c(H) <= 3/1
+   (3) all 19683 maps V -> Z/3: 84 (3,1)-colourings, each with a tight cycle (one of the 6 listed cycles): chi_c(H) =
+       3/1 by Lemma 20
+   (4) no homomorphism to K_8/3, the largest fraction below 3/1 with numerator <= 9: chi_c(H) = 3/1 again
+   (5) for every vertex v, a (3,1)-colouring of H - v with an acyclic tight digraph: H is vertex-critical
+2. The formula q7.cnf written by check_small.py (51 variables, 126 clauses; sha256
+   258bcc7fc1dea349bc33aa8c896dda337e42e8b90074c5f1e32c09434d8ee6fb):
+   kissat 4.0.4: s UNSATISFIABLE; drat-trim: s VERIFIED (126 of 126 clauses and 49 of 158 lemmas in the core), with
+   an LRAT proof as output (-L); cake_lpr: s VERIFIED UNSAT. The proofs are not stored; kissat rebuilds them at once.
+   The same three checks passed on the formula of the graph as found (before the translation and the relabelling).
+3. python3 small_triangle_free.py   (23 s)
+   triangle-free graphs on 8 labelled vertices: 4682270; maximal: 15247; not bipartite: 15120; without a homomorphism
+   to K_8/3: 0
+   For N = 3, 4, 5, 6 the counts 7, 41, 388, 5789 agree with a direct enumeration of all graphs on N vertices.
+4. Reproduction: grow.py q7_seed.json A G7 2000 200 3 1 (607 vertices, 7 cycles), minimise.py G7.json W7.json and
+   critical.py W7.json C7.json give the stored points translated by (-1, 0), and the same edges, colouring, cycles and
+   certificates under that correspondence (tests/test_two_primes.py, test_finite_witness_q7_found_by_growth).

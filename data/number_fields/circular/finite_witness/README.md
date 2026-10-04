@@ -1,9 +1,10 @@
-# Explicit finite witnesses for `χ_c = 7/2`
+# Explicit finite witnesses for `χ_c = 7/2` and `χ_c = 3`
 
 Corollary 7 of `papers/three-colours/` (Corollary F12 of `notes/circular_planes.md`) says that below 4 the circular
 chromatic number of the plane over a number field `F` is the circular chromatic number of a finite unit-distance graph
 in `F²`; its proof, by compactness, gives no bound on the size. Here are explicit ones for `χ_c = 7/2`, over `ℚ(√11)`,
-`ℚ(√191)` and `ℚ(√455)` (Theorem F gives `χ_c(ℚ(√d)²) = 7/2` for all three: some prime above 7 has residue degree 1).
+`ℚ(√191)` and `ℚ(√455)` (Theorem F gives `χ_c(ℚ(√d)²) = 7/2` for all three: some prime above 7 has residue degree 1),
+and one with nine vertices for `χ_c = 3` over `ℚ(√7)`, whose plane has no unit triangle (last section).
 
 **The claim.** Each graph `H` below is a unit-distance graph in `ℚ(√d)²`, induced (every pair of its points at
 distance 1 is an edge), with `χ_c(H) = 7/2`.
@@ -48,7 +49,8 @@ run in this folder,
 
 reproduce the points, edges, colouring and cycles of `witness_q455` and its criticality certificates exactly, and
 `q11.json` with `3000 200` gives the 653-vertex graph from which `witness_q11` was cut. (`fixed_vertex` is added
-afterwards: a vertex of largest degree, the first one.)
+afterwards: a vertex of largest degree, the first one.) The three programs take any value `p/q` (`grow.py ... p q`;
+the others read `p` and `q` from the file, `7/2` when absent), with the same results for `7/2`.
 
 **Verification** (`verification.txt`): for every witness, two checks that share no code.
 1. `check_witness.py` (written by the session that found `witness_q11sum`; it reads `d` from the file): exact
@@ -82,4 +84,55 @@ uses it by default). The tests are in `tests/test_two_primes.py` (`test_finite_w
 | `verify_independent.py` | the second checker and the second encoding |
 | `check_critical.py` | the checker of the criticality certificates |
 | `grow.py`, `minimise.py`, `critical.py` | the programs that found the grown witnesses and their certificates |
+| `witness_q7.json.gz` | the nine-point witness for `χ_c = 3` over `ℚ(√7)`: `d`, the denominator, `p = 3`, `q = 1`, the points, the edges, a 3-colouring, the cycles and the criticality certificates |
+| `q7_seed.json` | the 207 points from which `grow.py` found it |
+| `check_small.py` | the exhaustive checker for small witnesses (any `p/q`; no solver) |
+| `small_triangle_free.py` | every triangle-free graph with at most 8 vertices maps to `K_{8/3}` |
 | `verification.txt` | the outputs of both checks for every witness |
+
+## The value 3 over `ℚ(√7)`: nine points
+
+`ℚ(√7)²` has no unit triangle, as `√3 ∉ ℚ(√7)`, and `χ_c(ℚ(√7)²) = 3` (Theorem B and Corollary B6 of the paper).
+`witness_q7.json.gz` is a unit-distance graph `H₇` on nine points of `ℚ(√7)²` (denominator 160), induced, with
+`χ_c(H₇) = 3`; its vertices `0, …, 7, 8` are the points `P₀, …, P₇, S` of the paper:
+
+| vertex | point | vertex | point |
+|---|---|---|---|
+| `P₀` | `(−1, 0)` | `P₅` | `((3 − √7)/8, (√7 − 5)/8)` |
+| `P₁` | `(−(3 + √7)/8, −(5 + √7)/8)` | `P₆` | `(1, 0)` |
+| `P₂` | `(1/4, −√7/4)` | `P₇` | `(0, 0)` |
+| `P₃` | `(√7/4, 1/4)` | `S` | `(0, 1)` |
+| `P₄` | `(−1/4, √7/4)` | | |
+
+Its 13 edges, all the pairs at distance 1, are the 8-cycle `P₀P₁⋯P₇`, the chords `P₀P₄`, `P₁P₅`, `P₂P₆` and the path
+`P₃SP₇`: `H₇` is the Wagner graph (the Möbius ladder on 8 vertices) with one of its four chords subdivided.
+
+- *Upper bound.* A proper 3-colouring is stored.
+- *Lower bound.* Each of the 84 proper 3-colourings has a tight cycle (a directed cycle along which the colour
+  increases by 1 mod 3), already one of the six listed directed 6-cycles, so `χ_c(H₇) ≥ 3` by Lemma 20. Independently,
+  `H₇` has no homomorphism to `K_{8/3}`, which is the Wagner graph itself; as the circular chromatic number of a graph
+  with 9 vertices is a fraction with numerator at most 9 (Zhu's survey), and `8/3` is the largest such fraction below 3,
+  this gives `χ_c(H₇) ≥ 3` again.
+- *Vertex-critical.* For every vertex `v` a 3-colouring of `H₇ − v` with an acyclic tight digraph is stored.
+- *Smallest possible.* Every triangle-free graph with at most 8 vertices maps to `K_{8/3}`, so a graph with `χ_c = 3`
+  in a plane without unit triangles has at least 9 vertices.
+- As `√7 ∈ ℚ₃`, `H₇` is also a witness for `ℚ₃` and for every finite extension `K` of `ℚ₃` with `χ_c(K²) < 4`.
+
+The checks are finite enumerations (`verification.txt`):
+
+    python3 check_small.py witness_q7.json.gz q7.cnf   # points, unit pairs, all 3^9 maps, K_{8/3}, criticality
+    python3 small_triangle_free.py                     # the 4 682 270 triangle-free graphs on 8 labelled vertices
+
+`check_small.py` also writes the formula "a 3-colouring in which every listed cycle has a non-tight arc" (the layout of
+`check_witness.py`, with `(p, q) = (3, 1)`); kissat refutes it, and drat-trim and `cake_lpr` verify the proof.
+
+**How it was found.** From `q7_seed.json` (0, the 204 unit vectors with denominator 160, and `(−2, 0)` and
+`((−11 − √7)/8, (−5 − √7)/8)`, which close the 5-cycle `0, (−1, 0), (−2, 0), ((−11 − √7)/8, (−5 − √7)/8),
+(−3/4, −√7/4)`),
+
+    python3 grow.py q7_seed.json A G7 2000 200 3 1   # 2 growth rounds, 607 vertices, 7 cycles
+    python3 minimise.py G7.json W7.json              # 9 vertices
+    python3 critical.py W7.json C7.json
+
+give the nine points translated by `(−1, 0)` and in another order, with the same edges, colouring, cycles and
+certificates under that correspondence; the stored file uses the labels of the paper.

@@ -332,3 +332,84 @@ def test_finite_witness_grown_proof(tmp_path, stem):
     out = run(tmp_path, "check_witness.py", stem + ".json.gz", stem + ".cnf.gz", stem + ".drat", DRAT,
               timeout=3600).stdout
     assert "(5) drat-trim: s VERIFIED" in out and "chi_c(H) = 7/2" in out
+
+
+def test_finite_witness_q7(tmp_path):
+    """The nine-point witness for chi_c = 3 over Q(sqrt7) (finite_witness/README.md): check_small.py checks the points,
+    all unit pairs, all 3^9 maps (each of the 84 proper 3-colourings has a tight listed cycle), that there is no
+    homomorphism to K_{8/3}, and the criticality certificates; the formula it writes is the one that kissat, drat-trim
+    and cake_lpr refuted (verification.txt).  The graph is the Wagner graph with one chord subdivided: the 8-cycle
+    P_0 ... P_7, the chords P_0P_4, P_1P_5, P_2P_6 and the path P_3 S P_7 (S = vertex 8)."""
+    out = run(FW, "check_small.py", "witness_q7.json.gz", str(tmp_path / "q7.cnf")).stdout
+    assert "(1) Q(sqrt7): 9 points, 13 edges, every edge at distance exactly 1, and no other unit pair" in out
+    assert "(3) all 19683 maps V -> Z/3: 84 (3,1)-colourings, each with a tight cycle" in out
+    assert "(4) no homomorphism to K_8/3" in out and "H is vertex-critical" in out
+    digest = hashlib.sha256((tmp_path / "q7.cnf").read_bytes()).hexdigest()
+    assert digest == "258bcc7fc1dea349bc33aa8c896dda337e42e8b90074c5f1e32c09434d8ee6fb"
+    W = json.load(gzip.open(os.path.join(FW, "witness_q7.json.gz"), "rt"))
+    wagner = [(i, (i + 1) % 8) for i in range(8)] + [(0, 4), (1, 5), (2, 6), (3, 8), (7, 8)]
+    assert sorted(tuple(sorted(e)) for e in W["edges"]) == sorted(tuple(sorted(e)) for e in wagner)
+
+
+@pytest.mark.parametrize("what,message", [("point", "an edge is not at distance 1"),
+                                          ("edge", "the edges are not all the unit pairs"),
+                                          ("cycles", "no listed cycle is tight"),
+                                          ("certificate", "tight cycle in H - v")])
+def test_finite_witness_q7_rejects(tmp_path, what, message):
+    """check_small.py rejects a moved point, a missing edge, a cycle list that misses some 3-colouring, and a
+    criticality certificate whose tight digraph has a directed cycle."""
+    W = json.load(gzip.open(os.path.join(FW, "witness_q7.json.gz"), "rt"))
+    if what == "point":
+        W["points"][8][2] += 1
+    elif what == "edge":
+        W["edges"].pop()
+    elif what == "cycles":
+        W["cycles"] = W["cycles"][:1]
+    else:
+        col = W["colouring"]
+        tight = [c for c in W["cycles"] if all((col[c[(k + 1) % len(c)]] - col[c[k]]) % 3 == 1 for k in range(len(c)))]
+        v = next(u for u in range(9) if u not in tight[0])
+        W["critical_colourings"][v] = [-1 if u == v else c for u, c in enumerate(col)]
+    with gzip.open(tmp_path / "bad.json.gz", "wt") as f:
+        json.dump(W, f)
+    shutil.copy(os.path.join(FW, "check_small.py"), tmp_path / "check_small.py")
+    r = run(tmp_path, "check_small.py", "bad.json.gz", check=False)
+    assert r.returncode != 0 and message in r.stderr
+
+
+def test_finite_witness_q7_found_by_growth(tmp_path):
+    """grow.py with (p, q) = (3, 1) from q7_seed.json, then minimise.py and critical.py, give the stored nine-point
+    witness and its certificates, up to the translation by (1, 0) and the order of the vertices."""
+    for n in ["grow.py", "minimise.py", "critical.py", "q7_seed.json"]:
+        shutil.copy(os.path.join(FW, n), tmp_path / n)
+    out = run(tmp_path, "grow.py", "q7_seed.json", "A", "G7", "2000", "200", "3", "1").stdout
+    assert "UNSAT with 607 points" in out and "chi_c(H) = 3/1" in out
+    run(tmp_path, "minimise.py", "G7.json", "W7.json")
+    run(tmp_path, "critical.py", "W7.json", "C7.json")
+    W = json.load(open(tmp_path / "W7.json"))
+    C = json.load(open(tmp_path / "C7.json"))
+    S = json.load(gzip.open(os.path.join(FW, "witness_q7.json.gz"), "rt"))
+    pos = {tuple(p): i for i, p in enumerate(S["points"])}
+    m = [pos[(p[0] + S["denominator"], p[1], p[2], p[3])] for p in W["points"]]    # found vertex -> stored vertex
+    assert sorted(m) == list(range(9)) and (W["p"], W["q"]) == (3, 1)
+    assert sorted(tuple(sorted((m[a], m[b]))) for a, b in W["edges"]) == sorted(tuple(sorted(e)) for e in S["edges"])
+    assert all(S["colouring"][m[v]] == W["colouring"][v] for v in range(9))
+    assert [[m[v] for v in c] for c in W["cycles"]] == S["cycles"]
+    assert C["not_critical"] == []
+    assert all(S["critical_colourings"][m[v]][m[u]] == C["critical_colourings"][v][u] for v in range(9) for u in range(9))
+
+
+def test_small_triangle_free_six():
+    """small_triangle_free.py on 6 vertices: the count of triangle-free graphs agrees with a direct enumeration."""
+    out = run(FW, "small_triangle_free.py", "6").stdout
+    assert ("triangle-free graphs on 6 labelled vertices: 5789; maximal: 211; not bipartite: 180; without a "
+            "homomorphism to K_8/3: 0") in out
+
+
+@pytest.mark.slow
+def test_small_triangle_free_eight():
+    """Nine vertices are the fewest for chi_c = 3 in a plane without unit triangles: every triangle-free graph with at
+    most 8 vertices maps to K_{8/3}."""
+    out = run(FW, "small_triangle_free.py").stdout
+    assert ("triangle-free graphs on 8 labelled vertices: 4682270; maximal: 15247; not bipartite: 15120; without a "
+            "homomorphism to K_8/3: 0") in out

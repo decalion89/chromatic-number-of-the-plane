@@ -1,7 +1,9 @@
-"""Colouring-guided growth of a finite unit-distance graph H over Q(sqrt d) with chi_c(H) = 7/2.
+"""Colouring-guided growth of a finite unit-distance graph H over Q(sqrt d) with chi_c(H) = p/q (by default 7/2).
 
-usage: python3 grow.py GRAPH.json SEED OUT_PREFIX [max_points] [add_per_round]
+usage: python3 grow.py GRAPH.json SEED OUT_PREFIX [max_points] [add_per_round] [p q]
   GRAPH.json: {"d", "D", "points"} (data/quadratic_planes/q<d>.json); SEED: "A" (its points) or "A+A" (their sumset).
+  p q: the value p/q, 2 <= 2q <= p (default 7 2).  Below, for general (p, q), read (p,q) for (7,2), q mod p for
+  2 mod 7, and the differences in (-q, q) mod p for {0, 1, -1} mod 7; the output then also records p and q.
 Lazy SAT: look for a (7,2)-colouring of H in which every listed directed cycle has a non-tight arc (an arc a -> b is
 tight when c(b) - c(a) = 2 mod 7).  When the colouring found has tight cycles, they are listed and the search goes
 on; when its tight digraph is acyclic, H grows: the candidates p = x + u (x in H, u a unit vector with denominator D)
@@ -11,7 +13,8 @@ Stops when no such colouring exists: then every (7,2)-colouring of H has a tight
 Guichard's lemma (Lemma 20 of papers/three-colours), and the (7,2)-colouring written out shows chi_c(H) = 7/2; or at
 max_points.  Writes OUT_PREFIX.json: d, denominator, points, edges (all unit pairs), a (7,2)-colouring, cycles.
 The colour of vertex 0 is fixed to 0 (rotating the colours keeps tightness).  With python-sat 1.9 (CaDiCaL 1.5.3),
-python3 grow.py data/quadratic_planes/q11.json A OUT 3000 200 gives the 653-vertex graph of witness_q11grow."""
+python3 grow.py data/quadratic_planes/q11.json A OUT 3000 200 gives the 653-vertex graph of witness_q11grow, and
+python3 grow.py q7_seed.json A OUT 2000 200 3 1 the 607-vertex graph from which witness_q7 was cut."""
 import json, math, sys, time
 import numpy as np
 from pysat.solvers import Solver
@@ -48,9 +51,9 @@ def unit_vectors(d, D):
 
 
 def tight_cycles(n, adj, col, limit):
-    """Directed cycles of the tight digraph (arcs a->b with col[b]-col[a] = 2 mod 7): Tarjan SCCs, then from one
+    """Directed cycles of the tight digraph (arcs a->b with col[b]-col[a] = q mod p): Tarjan SCCs, then from one
     vertex of each nontrivial SCC a shortest cycle through it (BFS inside the SCC); at most `limit` cycles."""
-    out = [[b for b in adj[a] if (col[b] - col[a]) % 7 == 2] for a in range(n)]
+    out = [[b for b in adj[a] if (col[b] - col[a]) % PP == QQ] for a in range(n)]
     index = [None] * n; low = [0] * n; onst = [False] * n; st = []; comp = [-1] * n; ncomp = 0; t = 0
     for s in range(n):
         if index[s] is not None:
@@ -116,6 +119,9 @@ def tight_cycles(n, adj, col, limit):
 path, seed, outp = sys.argv[1], sys.argv[2], sys.argv[3]
 MAXP = int(sys.argv[4]) if len(sys.argv) > 4 else 60000
 ADD = int(sys.argv[5]) if len(sys.argv) > 5 else 400
+PP, QQ = (int(sys.argv[6]), int(sys.argv[7])) if len(sys.argv) > 7 else (7, 2)
+assert 2 <= 2 * QQ <= PP
+FD = sorted({dl % PP for dl in range(1 - QQ, QQ)})    # forbidden colour differences on an edge: [0, 1, 6] for (7,2)
 g = json.load(open(path)); d, D = g['d'], g['D']
 A = [tuple(p) for p in g['points']]
 P0 = sorted(set(A)) if seed == 'A' else sorted({tuple(x + y for x, y in zip(p, q)) for p in A for q in A})
@@ -134,16 +140,16 @@ def newvar():
     nv[0] += 1; return nv[0]
 def add_point(p):
     v = len(pts); pts.append(p); k = key(p); idx[k] = v; adj.append([])
-    b = nv[0] + 1; nv[0] += 7; base.append(b)
-    s.add_clause([b + c for c in range(7)])
+    b = nv[0] + 1; nv[0] += PP; base.append(b)
+    s.add_clause([b + c for c in range(PP)])
     for du in UD:
         w = idx.get(k + du)
         if w is not None and w != v:
             adj[v].append(w); adj[w].append(v)
             bw = base[w]
-            for c in range(7):
-                for dl in (0, 1, 6):
-                    s.add_clause([-(b + c), -(bw + (c + dl) % 7)])
+            for c in range(PP):
+                for dl in FD:
+                    s.add_clause([-(b + c), -(bw + (c + dl) % PP)])
 for p in P0:
     add_point(p)
 if len(pts) > 0:
@@ -152,35 +158,37 @@ tv = {}; cycles = []
 def T(a, b):
     if (a, b) not in tv:
         t = newvar(); tv[(a, b)] = t
-        for c in range(7):
-            s.add_clause([-(base[a] + c), -(base[b] + (c + 2) % 7), t])
+        for c in range(PP):
+            s.add_clause([-(base[a] + c), -(base[b] + (c + QQ) % PP), t])
     return tv[(a, b)]
-F = [((1 << c) | (1 << ((c + 1) % 7)) | (1 << ((c + 6) % 7))) for c in range(7)]
+F = [sum(1 << ((c + dl) % PP) for dl in FD) for c in range(PP)]
+FULL = (1 << PP) - 1
 ne = lambda: sum(len(a) for a in adj) // 2
 print(f'd={d} D={D} seed={seed}: {len(pts)} points, {ne()} unit pairs, {len(U)} unit vectors [{time.time() - t0:.0f}s]', flush=True)
 rnd = 0
 while True:
     rnd += 1
     if not s.solve():
-        print(f'round {rnd}: UNSAT with {len(pts)} points, {ne()} unit pairs, {len(cycles)} cycles: chi_c(H) = 7/2 [{time.time() - t0:.0f}s]', flush=True)
+        print(f'round {rnd}: UNSAT with {len(pts)} points, {ne()} unit pairs, {len(cycles)} cycles: chi_c(H) = {PP}/{QQ} [{time.time() - t0:.0f}s]', flush=True)
         s2 = Solver(name='cadical153')
         for v in range(len(pts)):
-            s2.add_clause([base[v] + c for c in range(7)])
+            s2.add_clause([base[v] + c for c in range(PP)])
             for w in adj[v]:
                 if w > v:
-                    for c in range(7):
-                        for dl in (0, 1, 6):
-                            s2.add_clause([-(base[v] + c), -(base[w] + (c + dl) % 7)])
-        assert s2.solve(), 'no (7,2)-colouring at all'
+                    for c in range(PP):
+                        for dl in FD:
+                            s2.add_clause([-(base[v] + c), -(base[w] + (c + dl) % PP)])
+        assert s2.solve(), f'no ({PP},{QQ})-colouring at all'
         ms = set(l for l in s2.get_model() if l > 0)
-        col = [next(c for c in range(7) if base[v] + c in ms) for v in range(len(pts))]
+        col = [next(c for c in range(PP) if base[v] + c in ms) for v in range(len(pts))]
         E = sorted((v, w) for v in range(len(pts)) for w in adj[v] if w > v)
-        json.dump({'d': d, 'denominator': D, 'seed': seed, 'source': path, 'points': [list(p) for p in pts],
+        pq = {} if (PP, QQ) == (7, 2) else {'p': PP, 'q': QQ}
+        json.dump({'d': d, 'denominator': D, **pq, 'seed': seed, 'source': path, 'points': [list(p) for p in pts],
                    'edges': [list(e) for e in E], 'colouring': col, 'cycles': cycles}, open(outp + '.json', 'w'))
         print('wrote', outp + '.json', flush=True)
         break
     ms = set(l for l in s.get_model() if l > 0)
-    col = [next(c for c in range(7) if base[v] + c in ms) for v in range(len(pts))]
+    col = [next(c for c in range(PP) if base[v] + c in ms) for v in range(len(pts))]
     cyc = tight_cycles(len(pts), adj, col, 40)
     if cyc:
         for c in cyc:
@@ -210,11 +218,11 @@ while True:
             if w is not None:
                 f |= F[col[w]]; nb += 1
         forb[i] = f; nbrs[i] = nb
-    blocked = [i for i in range(len(ck)) if forb[i] == 127]
+    blocked = [i for i in range(len(ck)) if forb[i] == FULL]
     if blocked:
         blocked.sort(key=lambda i: -nbrs[i]); pick = blocked[:ADD]; kind = 'blocked'
     else:
-        one = [i for i in range(len(ck)) if bin(127 & ~forb[i]).count('1') == 1]
+        one = [i for i in range(len(ck)) if bin(FULL & ~forb[i]).count('1') == 1]
         one.sort(key=lambda i: -nbrs[i]); pick = one[:ADD]; kind = 'one colour left'
     if not pick:
         print(f'round {rnd}: acyclic tight digraph and no candidate; stop [{time.time() - t0:.0f}s]', flush=True)

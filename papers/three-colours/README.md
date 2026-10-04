@@ -65,7 +65,9 @@ references and wording are corrected. A second agent refereed the hand proof of 
 `ℚ(√11)` the unit-distance graph on `A + A`, `A` the vertex set of the 76-vertex graph (2 237 vertices), and, from a
 colouring-guided growth followed by vertex deletion, a vertex-critical one with 170 vertices; over `ℚ(√455)` and
 `ℚ(√191)` ones with 175 and 293 vertices. Each has `χ_c = 7/2`, certified by two DRAT proofs for two encodings
-(`data/number_fields/circular/finite_witness/`). The PDF has 26 pages.
+(`data/number_fields/circular/finite_witness/`). For the value 3, over `ℚ(√7)`, whose plane has no unit triangle,
+Section 10 gives nine points whose unit-distance graph, the Wagner graph with one chord subdivided, has `χ_c = 3`;
+it is vertex-critical, and no triangle-free graph with fewer vertices has `χ_c = 3`. The PDF has 27 pages.
 
 [`three-colours.tex`](three-colours.tex) is the LaTeX source (`amsart`). To rebuild the PDF, run in this folder,
 with TeX Live:
