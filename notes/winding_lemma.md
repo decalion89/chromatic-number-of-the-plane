@@ -279,6 +279,19 @@ at distance exactly 1/4 at a time `t = x/(4c)` with `x` odd; `‖at‖ ≥ 1/4` 
 and Robinson report a computer check for `max D ≤ 25`, which there gives `χ_f = χ_c = 1/κ`; the corollary covers
 every `D` but says nothing about `χ_f`.
 
+**Finite witnesses.** For finite `S` and `2 < χ_c(Cay(Γ, S)) = p/q < 4`, every homomorphism to `K_{p/q}` has a
+*tight cycle* (a cycle along which every lifted colour difference `δ` equals `q`), and so, by compactness and the easy
+half of Guichard's characterisation (J. Graph Theory 17 (1993)), some finite subgraph has `χ_c = p/q` (winding
+paper, Section 7). Proof: with `f` and `ξ` as in the proof, let `T = {s : f(s) = q}`. If some nonnegative integers,
+not all 0, give `Σ n_t t = 0` on `T`, the winding `W` of a closed walk with `n_t` steps `t` is `q Σ n_t` at every
+start, so every step is tight. If not, Gordan's theorem gives a homomorphism `h : Γ → ℝ` with `h > 0` on `T`
+(a real relation would give an integral one up to torsion), and `ξ + εh` maps the finite `S` into the open interval,
+so `κ(S) > q/p`, which contradicts `χ_c = 1/κ(S)`. For example `D = {3, 4, 9, 12}` has `χ_c(G(ℤ, D)) = 7/2`
+(`ξ(n) = n/7`) and the segment `{0, …, 18}` is a witness (SAT, not certified; a referee's run). For the planes over
+number fields, where `S` is infinite, the same holds below 4 because a finite set of unit vectors has
+`κ = 1/χ_c(F²)` (`notes/circular_planes.md`, Corollary F12). Two referees tested this with programs of their own
+(`data/number_fields/circular/twoprime/indep_FW/`, `indep_FW2/`).
+
 **Planes over number fields.** Let `F` be a number field with `i ∉ F`, `L = F(i)`, `T ⊂ L` the unit vectors
 (`x + iy` with `x² + y² = 1`) and `A = ℤ[T]`. The plane `F²` is a disjoint union of translates of `Cay(A, T)`, so:
 

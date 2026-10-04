@@ -10041,7 +10041,7 @@ denominator `5^k`) decide three colours for every number field, not only for rea
 
 ## Finite witnesses below 4 (4 October, late morning)
 
-- **Corollary** (paper Corollary 7, note Corollary F11). If `χ_c(F²) < 4`, some finite subgraph of `F²` has circular
+- **Corollary** (paper Corollary 7, note Corollary F11, renumbered F12 in the next section). If `χ_c(F²) < 4`, some finite subgraph of `F²` has circular
   chromatic number `χ_c(F²)`. This answers the question left open in the morning (whether `7/2` is attained in
   `ℚ(√11)²`). The proof is not constructive:
   - *Tight cycles.* For a finite graph, if every homomorphism to `K_{p/q}` has a tight cycle (a directed cycle of
@@ -10078,3 +10078,35 @@ denominator `5^k`) decide three colours for every number field, not only for rea
   `|j|, |l| ≤ 1` (628 vertices, 1 506 edges) maps to `K_{13/4}` and not to `K_{16/5}`; a lazy search (a `(7, 2)`-colouring
   whose tight digraph is acyclic, cycles forbidden one by one) finds such a colouring after 40 rounds. Explicit
   witnesses for `7/2` are probably large; their size is a question of the paper.
+
+## Finite witnesses: a simpler proof, and a general lemma (4 October, midday)
+
+- **Lemma** (paper Lemma 22, note Lemma F11, winding paper Section 7, Corollary 16). For an abelian group `Γ` and a
+  finite `S = −S` with `2 < χ_c(Cay(Γ, S)) = p/q < 4`, every homomorphism to `K_{p/q}` has a tight cycle, so some
+  finite subgraph has `χ_c = p/q`. Proof: the averaged character `ξ` of a homomorphism (Theorem W⁺) is optimal, as
+  `κ(S) = q/p`; if its tight elements had no nonnegative relation, Gordan's theorem would give a homomorphism
+  `h : Γ → ℝ` positive on them, and `ξ + εh` would keep the finite `S` strictly inside `(q/p, 1 − q/p)`, so
+  `κ(S) > q/p`. So a relation exists, the walk along it winds by exactly `q` per step at every start, and compactness
+  with the easy half of Guichard's lemma gives the finite subgraph.
+- **A simpler proof of Corollary 7.** For a field with `χ_c(F²) = 7/2`, the compactness argument of Lemma B2 gives a
+  finite `V_0` for which no `β` of types c and q exists; with `U_0 = G(k, 1)V_0`, the proof of Theorem F's Lemma 15
+  (for `θ > 2/7`) gives `κ(U_0) ≤ 2/7`, and the 7-adic colouring gives `κ(U_0) ≥ 2/7`. So
+  `χ_c(Cay(ℤU_0, U_0)) = 7/2` and the lemma applies. The same with `G_N V_0` for the value 3. This replaces the
+  argument through the certificates of value `2/7` (which stays correct; `tight_walks.py` keeps its checks as
+  consistency checks). For `ℚ(√11)` and `ℚ(√35)` the 140 vectors of Theorem C already have `κ = 2/7`, so a finite
+  witness lies in the Cayley graph of these explicit vectors.
+- **Referee.** A separate agent checked the lemma and the new proof with programs of its own
+  (`twoprime/indep_FW2/`): exact `κ(S)` by vertex enumeration on 115 random finite sets in `ℤ`, `ℤ²` and `ℤ × ℤ/m`
+  with `2 < χ_c < 4` (all 409 optimal characters have a nonnegative relation among their tight elements; as a
+  control, most non-optimal ones do not); SAT on finite pieces of 13 such Cayley graphs, all with finite witnesses
+  (for instance `{0, …, 18}` for the distances 3, 4, 9, 12, with `χ_c = 7/2`); 244 random periodic homomorphisms; the
+  radii of Lemma 9 (`sup r_θ = √10/14 < 0.23` on `(2/7, 1/3]`); and the 7-adic characters on the 140 vectors of
+  Theorem C. Verdict: correct, minor gaps; all applied (the compactness argument written into the lemma, `κ(S)` and
+  `χ_c = 1/κ(S)` cited from the winding paper, `a(−s) = p − a(s)` stated, the choice of `θ` and `k`, `i ∉ F`, the
+  value 2, printed numbers). A brief literature search found no earlier statement of the lemma.
+- **Explicit witnesses** stay open; see the addendum below.
+- **Explicit witnesses: a first look.** In the Cayley graph of the 140 vectors of Theorem C, the ball of radius 1 is
+  a star (141 vertices, 140 edges: no two of the vectors are at distance 1, as `ℚ(√11)²` has no unit triangle) and
+  the ball of radius 2 has 9 941 vertices and only 19 816 unit-distance edges; it has a `(7, 2)`-colouring with an
+  acyclic tight digraph (found at once), so `χ_c < 7/2` there. The tight walks of the proof (length 42 or 140) need
+  balls of radius about 4, with millions of points, so explicit witnesses are probably large.

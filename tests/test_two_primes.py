@@ -1,6 +1,6 @@
 """Theorems E and F (notes/circular_planes.md §6, papers/three-colours Section 10): the computer-assisted steps and
 the finite facts at 7, rerun from the stored programs and certificates (data/number_fields/circular/twoprime/ and the
-referees' subfolders indep_E/, indep_F/, indep_S10/ and indep_FW/)."""
+referees' subfolders indep_E/, indep_F/, indep_S10/, indep_FW/ and indep_FW2/)."""
 import gzip, os, re, shutil, subprocess, sys
 
 import pytest
@@ -185,4 +185,15 @@ def test_finite_witness_referee(tmp_path):
         shutil.copy(os.path.join(P, n), tmp_path / n)
     for prog in ["check_seven_certs", "check_type_q", "seven_adic_tight", "moser", "test_lemmas_AB"]:
         assert run(d, prog + ".py").stdout == (d / (prog + ".out")).read_text()
+
+
+def test_finite_connection_sets_referee(tmp_path):
+    """The referee of Lemma 22 (finite connection sets): the radii of Lemma 9 (sup r_theta = sqrt10/14 < 0.23 on
+    (2/7, 1/3]) and the 7-adic characters on the 140 vectors of Theorem C, whose tight sets carry positive relations."""
+    d = tmp_path / "indep_FW2"
+    shutil.copytree(os.path.join(P, "indep_FW2"), d)
+    out = run(d, "check_radii.py").stdout
+    assert "max |y|^2 over X = 2" in out and "sup s*sqrt10/3 = 0.2258769757" in out
+    out = run(d, "thmC_tight7.py").stdout
+    assert out.count("all values in {2..5}/7: True;  tight-set sizes: [35]  positive relation found & verified exactly for all: True") == 2
 

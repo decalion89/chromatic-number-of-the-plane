@@ -1391,9 +1391,12 @@ translate $c_k+Nm$ of the points $c_k$ of that Remark has least margin at most $
 \subsection*{Finite witnesses}
 By compactness, $\chi_c(F^2)$ is the supremum of $\chi_c(H)$ over the finite subgraphs $H$ of $F^2$: if every finite
 subgraph has a homomorphism to $K_{p/q}$, so does $F^2$. Below $4$ the supremum is attained. For a homomorphism $c$
-of a graph to $K_{p/q}$, the \emph{tight digraph} $D_c$ has an arc $x\to y$ for every edge $xy$ with $c(y)-c(x)\equiv q\pmod p$,
-and a \emph{tight cycle} of $c$ is a directed cycle of $D_c$. The next lemma is the easy half of a characterisation
-due to Guichard \cite{Guichard} (cf.\ \cite{Zhu}); we include its short proof.
+of a graph to $K_{p/q}$, the \emph{tight digraph} $D_c$ has an arc $x\to y$ for every edge $xy$ with
+$c(y)-c(x)\equiv q\pmod p$, and a \emph{tight cycle} of $c$ is a directed cycle of $D_c$. For a finite set $S$ in an
+abelian group let $\kappa(S)=\max_\xi\min_{s\in S}\|\xi(s)\|$, over the characters $\xi$ of $\Z S$ (a maximum, as the
+dual group is compact); if $\chi_c(\Cay(\Z S,S))<4$, then $\chi_c(\Cay(\Z S,S))=1/\kappa(S)$
+\cite[Corollary~2]{Winding}. The next lemma is the easy half of a characterisation due to Guichard \cite{Guichard}
+(cf.\ \cite{Zhu}); we include its short proof.
 
 \begin{lemma}\label{lem:tight}
 Let $H$ be a finite graph with a homomorphism to $K_{p/q}$. If every homomorphism of $H$ to $K_{p/q}$ has a tight
@@ -1415,10 +1418,10 @@ $mq$, while the second is larger than $mq$. So $c$ has no tight cycle.
 Let $\Gamma$ be an abelian group, $S=-S\subseteq\Gamma$ finite with $\Gamma=\Z S$, $p<4q$, and $c$ a homomorphism of
 $\Cay(\Gamma,S)$ to $K_{p/q}$. For $x\in\Gamma$ and $s\in S$ let $\ell(x,s)\in[q,p-q]$ be the integer congruent to
 $c(x+s)-c(x)$ modulo $p$, and $a(s)=\mathrm M_x\,\ell(x,s)$ for an invariant mean $\mathrm M$ on $\Gamma$. Then
-$s_1+\dots+s_m\mapsto\frac1p\sum_ka(s_k)\bmod1$ \textup{(}$s_k\in S$\textup{)} is a well-defined character $\xi$ of
-$\Gamma$, with $\xi(s)=a(s)/p\in[\frac qp,1-\frac qp]$ for $s\in S$. If $u_1,\dots,u_r\in S$ and positive integers
-$n_1,\dots,n_r$ satisfy $\sum_in_iu_i=0$ and $a(u_i)=q$ for every $i$, then every closed walk in $\Cay(\Gamma,S)$ with
-$n_i$ steps $u_i$ is a closed walk in $D_c$, and so $c$ has a tight cycle.
+$a(-s)=p-a(s)$, and $s_1+\dots+s_m\mapsto\frac1p\sum_ka(s_k)\bmod1$ \textup{(}$s_k\in S$\textup{)} is a well-defined
+character $\xi$ of $\Gamma$, with $\xi(s)=a(s)/p\in[\frac qp,1-\frac qp]$ for $s\in S$. If $u_1,\dots,u_r\in S$ and
+positive integers $n_1,\dots,n_r$ satisfy $\sum_in_iu_i=0$ and $a(u_i)=q$ for every $i$, then every closed walk in
+$\Cay(\Gamma,S)$ with $n_i$ steps $u_i$ is a closed walk in $D_c$, and so $c$ has a tight cycle.
 \end{lemma}
 
 \begin{proof}
@@ -1427,75 +1430,94 @@ $\ell(x,s)+\ell(x+s,t)$ and $\ell(x,t)+\ell(x+t,s)$ are congruent modulo $p$ and
 length $2p-4q<p$; so they are equal. For a closed walk $W$ with steps $s_1,\dots,s_m$ started at $x$, with
 $x_k=x+s_1+\dots+s_k$, the sum $\Lambda(W,x)=\sum_k\ell(x_{k-1},s_k)$ is a multiple of $p$, and for $t\in S$ the
 identity gives $\Lambda(W,x+t)-\Lambda(W,x)=\sum_k\bigl(\ell(x_k,t)-\ell(x_{k-1},t)\bigr)=0$. As $S$ generates
-$\Gamma$, $\Lambda(W,x)$ does not depend on $x$, so by invariance of $\mathrm M$ it equals $\sum_ka(s_k)$. This makes
-$\xi$ well defined: two expressions of the same element give a closed walk, and $\ell(x+s,-s)=p-\ell(x,s)$ gives
-$a(-s)=p-a(s)$. For the walk of the statement, $\Lambda(W,x)=q\sum_in_i$ for every $x$, while each of its $\sum_in_i$
-terms is at least $q$; so every term is $q$. A closed walk in $D_c$ contains a directed cycle.
+$\Gamma$, $\Lambda(W,x)$ does not depend on $x$, so by invariance of $\mathrm M$ it equals $\sum_ka(s_k)$. As
+$\ell(x+s,-s)=p-\ell(x,s)$, invariance also gives $a(-s)=p-a(s)$. So $\xi$ is well defined: two expressions of the
+same element give a closed walk. For the walk of the statement, $\Lambda(W,x)=q\sum_in_i$ for every $x$, while each
+of its $\sum_in_i$ terms is at least $q$; so every term is $q$. A closed walk in $D_c$ contains a directed cycle.
+\end{proof}
+
+\begin{lemma}\label{lem:finiteS}
+Let $\Gamma$ be an abelian group, $S=-S\subseteq\Gamma$ finite with $\Gamma=\Z S$, and suppose that
+$\chi_c(\Cay(\Gamma,S))=p/q$ with $2<p/q<4$. Then every homomorphism of $\Cay(\Gamma,S)$ to $K_{p/q}$ has a tight
+cycle, and some finite subgraph of $\Cay(\Gamma,S)$ has circular chromatic number $p/q$.
+\end{lemma}
+
+\begin{proof}
+Here $\kappa(S)=q/p$, so $\Cay(\Gamma,S)$ has a homomorphism to $K_{p/q}$. Let $c$ be one, and $a$, $\xi$ as in
+Lemma~\ref{lem:winding}; let $T=\{s\in S:a(s)=q\}$. Suppose that no nonzero nonnegative integers $n_t$ give
+$\sum_{t\in T}n_tt=0$. Then the images $\bar t$ of the elements of $T$ in $\Gamma\otimes\R$ have no nonzero
+nonnegative real relation: in a basis of $\Gamma\otimes\Q$ the cone of such relations is cut out by rational
+equations, so if it were nonzero it would contain a nonzero rational, hence integral, point $(n_t)$, and then
+$\sum n_tt$ would be a torsion element, killed by some $m\ge1$. By Gordan's theorem there is a linear form on
+$\Gamma\otimes\R$, hence a homomorphism $h:\Gamma\to\R$, with $h(t)>0$ for every $t\in T$. For $\varepsilon>0$,
+$\xi_\varepsilon=\xi+\varepsilon h\bmod1$ is a character of $\Gamma$, and for $s\in S$: if $a(s)=q$, then
+$\xi_\varepsilon(s)=\frac qp+\varepsilon h(s)$; if $a(s)=p-q$, then $-s\in T$ and
+$\xi_\varepsilon(s)=1-\frac qp-\varepsilon h(-s)$; otherwise $\xi(s)$ lies in the open interval
+$(\frac qp,1-\frac qp)$, which is nonempty as $p>2q$. As $S$ is finite, for small $\varepsilon$ all values
+$\xi_\varepsilon(s)$ lie in that open interval, so $\kappa(S)>q/p$: a contradiction. So such $n_t$ exist, and
+Lemma~\ref{lem:winding}, applied to the $t$ with $n_t>0$, gives a tight cycle of $c$.
+
+If every finite subgraph of $\Cay(\Gamma,S)$ had a homomorphism to $K_{p/q}$ without tight cycles, so would
+$\Cay(\Gamma,S)$: for each finite $H\subset\Gamma$ the maps $\Gamma\to\Z/p$ whose restriction to $H$ is such a
+homomorphism of the subgraph induced on $H$ form a nonempty closed subset of the compact space $(\Z/p)^\Gamma$;
+these subsets have the finite intersection property, and a tight cycle is finite. So some finite subgraph $H$ has a
+tight cycle for every homomorphism to $K_{p/q}$, and $\chi_c(H)=p/q$ by Lemma~\ref{lem:tight}, as
+$\chi_c(H)\le p/q$.
 \end{proof}
 
 \begin{corollary}[finite witnesses]\label{cor:finite}
-If $\chi_c(F^2)<4$, then some finite subgraph of $F^2$ has circular chromatic number $\chi_c(F^2)$.
+If $\chi_c(F^2)<4$, then some finite subgraph of $F^2$ has circular chromatic number $\chi_c(F^2)$. If
+$\chi_c(F^2)\in\{3,7/2\}$, there is a finite set $U\subset T$ with $\chi_c(\Cay(\Z U,U))=\chi_c(F^2)$, and the
+subgraph can be taken in $\Cay(\Z U,U)$.
 \end{corollary}
 
 \begin{proof}
-By Theorem~\ref{thm:F} the value is $2$, $3$ or $7/2$. For $2$ an edge is a witness. Let $p/q$ be $3/1$ or $7/2$;
-then $F^2$ has a homomorphism to $K_{p/q}$, $i\notin F$, and $p<4q$. If every finite subgraph of $F^2$ had a
-homomorphism to $K_{p/q}$ without tight cycles, then so would $F^2$: for each finite $H\subset L$ the maps $L\to\Z/p$
-whose restriction to $H$ is such a homomorphism form a nonempty closed subset of the compact space $(\Z/p)^L$, these
-subsets have the finite intersection property, and a tight cycle is finite. So by Lemma~\ref{lem:tight} it is
-enough to show that every homomorphism $c$ of $F^2$ to $K_{p/q}$ has a tight cycle. Suppose that $c$ has none.
+By Theorem~\ref{thm:F} the value is $2$, $3$ or $7/2$, and $i\notin F$, as otherwise $\chi(F^2)=\infty$. For $2$ an
+edge is a witness. Fix a $\Q(i)$-basis $b_1,\dots,b_n\subset T$ of $L$ as in the proof of Lemma~\ref{lem:B2}. It is
+enough to find a finite $U\subset T$ with $\chi_c(\Cay(\Z U,U))=\chi_c(F^2)$, as Lemma~\ref{lem:finiteS} then gives
+the witness inside $\Cay(\Z U,U)\subseteq F^2$.
 
-Let $p/q=7/2$. By Theorem~\ref{thm:F}, (7) holds and (a), (b) fail; Proposition~\ref{prop:C1} gives the homomorphism
-to $K_{7/2}$. Let $V\subset T$, $k$ and $U=G(k,1)V$ be as in the proof of Lemma~\ref{lem:B1seven}, and apply
-Lemma~\ref{lem:winding} to the restriction of $c$ to $\Cay(\Z U,U)$: the character $\xi$ satisfies
-$\xi(U)\subseteq[\frac27,\frac57]+\Z$, and, as in the proof of Lemma~\ref{lem:B1}, there is a $\Q(i)$-linear map
-$\varphi:L\to\C$ with $\xi(\gamma v)=\operatorname{Re}(\gamma\varphi(v))\bmod1$ for $\gamma\in G(k,1)$ and $v\in V$.
-Let $C_v=\overline{\varphi(v)}$. For $|j|\le k-2$ the point $\rho^{-j}C_v$ lies in $S^{2/7}(2,1)$ (as in the proof
-of Lemma~\ref{lem:window7}), and its value at $\gamma\in G(2,1)$ is $\operatorname{Re}(\overline{\rho^{-j}C_v}\,\gamma)
-\equiv\xi(\rho^j\gamma v)$. Suppose that $\rho^{-j}C_v$ had the strip indices of a point of type~$7$. The certificate
-of Proposition~\ref{prop:window7} for this index vector is a set of three margins $\psi_i$, each the lower or the upper
-margin at a rotation $\gamma_i\in G(2,1)$, and rationals $\lambda_i>0$ with $\sum\lambda_i=1$ and
-$\sum\lambda_i\psi_i=\frac27$ identically. As every margin of $\rho^{-j}C_v$ is at least $\frac27$, each
-$\psi_i(\rho^{-j}C_v)=\frac27$; that is, $\xi(u_i)\equiv\frac27$ for $u_i=\pm\rho^j\gamma_iv\in U$, with the sign $+$
-for a lower and $-$ for an upper margin, and so $a(u_i)=2$. The linear part of $\psi_i$ is
-$z\mapsto\operatorname{Re}(\bar z(\pm\gamma_i))$, so their cancellation says $\sum\lambda_i(\pm\gamma_i)=0$; hence
-$\sum\lambda_iu_i=0$, and with positive integers $n_i$ proportional to $\lambda_i$ Lemma~\ref{lem:winding} gives a
-tight cycle of $c$. So no window $\rho^{-j}C_v$ has the strip indices of a point of type~$7$. Then the proof of
-Lemma~\ref{lem:window7} (its overlap argument, and the identification for types c and q) gives $C_v\in
-N\varepsilon+P_k+N\Z[i]$ with $\varepsilon\in E_c$, or $C_v\in N\varepsilon+Y_k(\varepsilon)+N\Z[i]$ with
-$\varepsilon\in E_q$; so $\varphi(v)=N\varepsilon_v+x_v$ with $\varepsilon_v\in E$ and $|x_v|\le r'$, and the proof
-of Lemma~\ref{lem:B1seven} gives $\beta\in L$ with $\Tr(\beta v)\in E$ for every $v\in V$. As $V$ is arbitrary, the
-proof of Lemma~\ref{lem:B2}, which uses only this conclusion for every finite $V$, and the proof of
-Theorem~\ref{thm:B} give (a) or (b): a contradiction.
+Let $\chi_c(F^2)=7/2$, so that (7) holds and (a) and (b) fail. If for every finite $V\supseteq\{b_j\}$ there were
+$\beta\in L$ with $\Tr(\beta v)\in E$ for every $v\in V$, the proof of Lemma~\ref{lem:B2} (the images of $\beta$ lie
+in $K_2$ and $K_3$, and the types of the $\Tr(\beta v)$ give $\tau$) and the proof of Theorem~\ref{thm:B} would give
+(a) or (b). So there is a finite $V_0\supseteq\{b_j\}$ for which no such $\beta$ exists. Let $k$, with $6\mid k$, and
+$N=5^k$ be as in the proof of Lemma~\ref{lem:B1seven} for $V_0$ (they do not depend on $\theta$), and
+$U_0=G(k,1)V_0$. If $\kappa(U_0)>\frac27$, take $\theta$ with $\frac27<\theta\le\min(\kappa(U_0),\frac13)$ and a
+character $\xi$ of $\Z U_0$ with $\xi(U_0)\subseteq[\theta,1-\theta]+\Z$. The proof of Lemma~\ref{lem:B1seven}, in
+which the third case of Lemma~\ref{lem:window7} does not occur as $\theta>\frac27$, gives $\beta\in L$ with
+$\Tr(\beta v)\in E$ for every $v\in V_0$: impossible. So $\kappa(U_0)\le\frac27$. The homomorphism of $F^2$ to
+$K_{7/2}$ of Proposition~\ref{prop:C1} restricts to $\Cay(\Z U_0,U_0)$, so by Theorem~W$^+$, $\kappa(U_0)\ge\frac27$.
+Hence $\kappa(U_0)=\frac27$ and $\chi_c(\Cay(\Z U_0,U_0))=\frac72$.
 
-Let $p/q=3$. By Corollary~\ref{cor:B6} and Theorem~\ref{thm:B}, (b) holds and (a) fails, and $F^2$ is
-$3$-colourable. Let $V\subset T$ and $N=5^k$ be as in the proof of Lemma~\ref{lem:B1} and $U=G_NV$. By
-Lemma~\ref{lem:winding} and the proof of Lemma~\ref{lem:B1}, $\varphi(v)\in S_N$, so by
-Proposition~\ref{prop:shape} either $\varphi(v)=N\varepsilon_v+x_v$ with $\varepsilon_v\in E_c$, or
-$\varphi(v)=N\varepsilon_v$ with $\varepsilon_v\in E_q$. In the second case, with $\varepsilon_v\equiv
-\frac{\alpha+\beta i}3\pmod{\Z[i]}$, $\xi(\gamma v)\equiv\frac13\operatorname{Re}(N\gamma(\alpha+\beta i))\in
-\{\frac13,\frac23\}+\Z$ for $\gamma\in G_N$, and the rotations $\gamma\in G_5$ with $\xi(\gamma v)\equiv\frac13$
-contain three with $3\gamma_1+4\gamma_2+5\gamma_3=0$ (for $\varepsilon_v\equiv\frac{1+i}3$ and odd $k$, for example,
-$-1$, $i$ and $\frac{3-4i}5$; all four classes and both residues of $5^{k-1}$ modulo $3$ are checked in
-Section~\ref{sec:checks}). Lemma~\ref{lem:winding} with $u_i=\gamma_iv$ gives a tight cycle. So every
-$\varepsilon_v$ has type~c, and, as in the proof of Corollary~\ref{cor:B6}, (c) holds, which gives a proper
-$2$-colouring of $F^2$ (Case (c) after Lemma~\ref{lem:B2}): a contradiction.
-
-In both cases every homomorphism of $F^2$ to $K_{p/q}$ has a tight cycle, so some finite subgraph $H$ has
-$\chi_c(H)=p/q=\chi_c(F^2)$.
+Let $\chi_c(F^2)=3$, so that (b) holds and (a) fails (Corollary~\ref{cor:B6}, Theorem~\ref{thm:B}). As in the proof
+of Corollary~\ref{cor:B6}, if for every finite $V\supseteq\{b_j\}$ there were $\beta\in L$ with $\Tr(\beta v)\in E_c$
+for every $v\in V$, the conditions $P_v$ of the proof of Lemma~\ref{lem:B2} could all be taken with $\tau(v)=\mathrm
+c$, and (c), hence (a), would hold. So there is a finite $V_0\supseteq\{b_j\}$ for which no such $\beta$ exists. Let
+$N$ be as in the proof of Lemma~\ref{lem:B1} for $V_0$, and $U_0=G_NV_0$. If $\kappa(U_0)>\frac13$, a character with
+$\xi(U_0)\subseteq[\theta,1-\theta]+\Z$, $\frac13<\theta\le\kappa(U_0)$, gives as in the proof of
+Corollary~\ref{cor:B6} points $\varphi(v)=N\varepsilon_v+x_v$ with every $\varepsilon_v$ of type c (a point of type q
+would have real part in $\{\frac13,\frac23\}+\Z$, as $3\nmid N$), and then $\beta$ with $\Tr(\beta v)=\varepsilon_v
+\in E_c$ for every $v\in V_0$: impossible. So $\kappa(U_0)\le\frac13$; as $F^2$ is $3$-colourable, $\kappa(U_0)\ge
+\frac13$ by Theorem~W$^+$, and $\chi_c(\Cay(\Z U_0,U_0))=3$.
 \end{proof}
 
-The same holds for the local fields of Corollary~\ref{cor:localF} with $\chi_c<4$, as $K\supseteq\Q_7\supset
-\Q(\sqrt{11})$, resp.\ $K\supseteq\Q_3\supset\Q(\sqrt7)$. The proof, by compactness, gives no bound on the size of
-the subgraph. When $\sqrt3\in F$ and $\chi_c(F^2)=3$, a unit triangle is a witness. The Moser spindle, a
-unit-distance graph on $7$ vertices over $\Q(\sqrt3,\sqrt{11})$, maps to $K_{7/2}$ (the common vertex of its two
-rhombi coloured $0$, the far tips $6$ and $1$, and the others $2,4,3,5$), and its independence number is $2$, so
-$\chi_c\ge\chi_f\ge7/2$; its circular chromatic number is $7/2$. But it contains unit triangles, which
+The proof uses Proposition~\ref{prop:window7} only for $\theta>\frac27$, through Lemma~\ref{lem:window7}, and
+not the certificates of value $\frac27$ themselves. For $\Q(\sqrt{11})$ and $\Q(\sqrt{35})$ one can take for $U$ the $140$ vectors of
+Theorem~\ref{thm:C}, whose certificates give $\kappa(U)\le\frac27$, while Proposition~\ref{prop:C1} gives
+$\kappa(U)\ge\frac27$: some finite subgraph of the Cayley graph of these $140$ explicit unit vectors has circular
+chromatic number $7/2$. The same holds for the local fields of Corollary~\ref{cor:localF} with $\chi_c<4$, as
+$K\supseteq\Q_7\supset\Q(\sqrt{11})$, resp.\ $K\supseteq\Q_3\supset\Q(\sqrt7)$. The proof, by compactness, gives no
+bound on the size of the subgraph. When $\sqrt3\in F$ and $\chi_c(F^2)=3$, a unit triangle is a witness. The Moser
+spindle, a unit-distance graph on $7$ vertices over $\Q(\sqrt3,\sqrt{11})$, maps to $K_{7/2}$ (the common vertex of
+its two rhombi coloured $0$, the far tips $6$ and $1$, and the others $2,4,3,5$), and its independence number is
+$2$, so $\chi_c\ge\chi_f\ge7/2$; its circular chromatic number is $7/2$. But it contains unit triangles, which
 $\Q(\sqrt{11})^2$ does not, and $\chi_c(\Q(\sqrt3,\sqrt{11})^2)\ge4$ by Theorem~\ref{thm:F}: (a) and (b) fail, as
-$\chi(\Q(\sqrt3,\sqrt{11})^2)=4$ \cite{Fischer1994,MM}, and (7) fails, as $7$ is inert in $\Q(\sqrt3)$. By SAT computations, not certified, the
-$76$-vertex unit-distance graph over $\Q(\sqrt{11})$ with no $3$-colouring in \cite{Repo}
-(\nolinkurl{data/quadratic_planes/q11.json}) has circular chromatic number $16/5$, and the union of its images under
-the nine rotations $\rho^j\sigma^l$, $|j|,|l|\le1$ ($628$ vertices) has circular chromatic number in $(16/5,13/4]$.
+$\chi(\Q(\sqrt3,\sqrt{11})^2)=4$ \cite{Fischer1994,MM}, and (7) fails, as $7$ is inert in $\Q(\sqrt3)$. By SAT
+computations, not certified, the $76$-vertex unit-distance graph over $\Q(\sqrt{11})$ with no $3$-colouring in
+\cite{Repo} (\nolinkurl{data/quadratic_planes/q11.json}) has circular chromatic number $16/5$, the union of its images
+under the nine rotations $\rho^j\sigma^l$, $|j|,|l|\le1$ ($628$ vertices) has circular chromatic number in
+$(16/5,13/4]$, and the ball of radius $2$ around $0$ in the Cayley graph of the $140$ vectors ($9\,941$ vertices) has
+circular chromatic number less than $7/2$.
 
 \section{Computer checks}\label{sec:checks}
 
@@ -1585,14 +1607,18 @@ $\theta=\frac7{25}$ the test finds the eight components of type $7$ at each leve
 checked by two programs written separately; Lemma~\ref{lem:B5seven} directly for $f=3$ (no $\F_{49}$-linear map
 $\F_{7^6}\to\F_{49}$ maps $\mu_{344}$ into $A'_7$), and Lemma~\ref{lem:B4seven} on the finite models
 $\F_{49}[\pi]/(\pi^e)$, $e\le3$. The torsion characters of the last Remark were found by two programs; for orders up
-to $400$, one of them counts each character at its exact order. For Corollary~\ref{cor:finite}, a program
-(\nolinkurl{tight_walks.py}) checks that each of the eight certificates of type $7$ has three positive multipliers and
-margins exactly $\frac27$ at its $7$-adic point, and computes the integer relations among the tight rotations
-(multiplicities $63,52,25$ or $13,14,15$, walks of length $140$ or $42$); for each class of type~q and each residue of
-$5^{k-1}$ modulo $3$, it finds three tight rotations in $G_5$ with multiplicities $3,4,5$; and it checks the Moser
-spindle. A referee of Corollary~\ref{cor:finite} tested Lemmas~\ref{lem:tight} and~\ref{lem:winding} on small
-Cayley graphs, rechecked the eight certificates and the relations, and clipped $S^{2/7}(2,1)$ exactly: $13$
-components, one of type c, four of type q, and the eight points of type $7$, each a component by itself.
+to $400$, one of them counts each character at its exact order. For Corollary~\ref{cor:finite}, which needs no
+computation beyond those of Theorem~\ref{thm:F}, two referees tested Lemmas~\ref{lem:tight}--\ref{lem:finiteS}
+with programs of their own: on $291$ small graphs and $766$ tight relations; on $115$ random finite sets $S$ in $\Z$,
+$\Z^2$ and $\Z\times\Z/m$ with $2<\chi_c<4$, whose $409$ optimal characters all have a nonnegative relation among
+their tight elements; and by SAT on finite pieces of $13$ such Cayley graphs, all of which have finite witnesses
+(for instance the segment $\{0,\dots,18\}$ of the distance graph with distances $3,4,9,12$, of circular chromatic
+number $7/2$). One of them clipped $S^{2/7}(2,1)$ exactly: $13$ components, one of type c, four of type q, and the
+eight points of type $7$, each a component by itself. As consistency checks, a program
+(\nolinkurl{tight_walks.py}) finds that each of the eight certificates of type $7$ has three positive multipliers,
+with margins exactly $\frac27$ at its $7$-adic point and integer relations among the tight rotations
+(multiplicities $63,52,25$ or $13,14,15$); the same holds for the tight elements of the $7$-adic characters on the
+$140$ vectors of Theorem~\ref{thm:C}; and the program checks the Moser spindle.
 
 \section{Questions}\label{sec:questions}
 

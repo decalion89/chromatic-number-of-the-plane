@@ -41,10 +41,14 @@ including every retracted claim, is the research log,
   (`cert_K2M1_seven.txt`, with a separate checker) make Theorem F depend on the window modulo 325 alone; the referee's programs are in `twoprime/indep_S10/`. Corollary 6
   of the paper (`notes/circular_planes.md`, Corollary F8): the same values for the local fields, so below 4 `χ_c(F²)`
   is the least `χ_c` of the planes over the completions of `F`; and `4 ≤ χ_c(ℚ(√47)²) ≤ 19/4`. Corollary 7 of the
-  paper (note Corollary F11): below 4, `χ_c(F²)` is the circular chromatic number of a finite subgraph of `F²`
-  (compactness, Guichard's tight cycles, the winding argument of Theorem W⁺, and complementary slackness in the eight
-  certificates of value `2/7`; `twoprime/tight_walks.py`); refereed by a separate agent (no mathematical error; its
-  programs in `twoprime/indep_FW/`). Corrected: the paper said that no finite unit-distance graph with `χ_c = 7/2`
+  paper (note Corollary F12): below 4, `χ_c(F²)` is the circular chromatic number of a finite subgraph of `F²`. It
+  rests on a general lemma (paper Lemma 22, note Lemma F11, and Section 7 of `papers/winding/`): for an abelian
+  Cayley graph with a finite connection set and `2 < χ_c < 4`, every homomorphism to `K_{χ_c}` has a tight cycle
+  (an optimal character has a nonnegative relation among the elements where it is tight, as otherwise it could be
+  perturbed), so `χ_c` is attained by a finite subgraph; for the planes a finite set of unit vectors with
+  `κ = 1/χ_c` exists by compactness. A first proof through the certificates of value `2/7` was refereed and then
+  replaced by this one, refereed separately (no mathematical error in either; programs in `twoprime/indep_FW/` and
+  `twoprime/indep_FW2/`). Corrected: the paper said that no finite unit-distance graph with `χ_c = 7/2`
   was known, but the Moser spindle has `χ_c = 7/2`.
 - **Paper draft `papers/three-colours/` (4 October).** Theorem B, Proposition B9, the corollaries, Theorem C,
   the local circular values, Theorem D (Section 9, by hand) and Theorems E and F (Section 10); refereed (no

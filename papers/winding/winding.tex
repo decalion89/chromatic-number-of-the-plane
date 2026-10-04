@@ -214,7 +214,8 @@ Section~\ref{sec:proof} proves the theorem. Section~\ref{sec:exp} derives Payan'
 exponent-$4$ case of Krebs and Sankar \cite{KS}. Section~\ref{sec:dist} treats distance graphs.
 Section~\ref{sec:planes} applies the theorem to the unit-distance graph of the plane over a number field, the
 setting that led to it, and Section~\ref{sec:four} records that nothing of the kind holds for four colours, and
-that periodicity fails for many colours.
+that periodicity fails for many colours. Section~\ref{sec:finite} shows that below $4$ the circular chromatic number
+of a Cayley graph with a finite connection set is attained by a finite subgraph.
 
 \section{Proof of Theorem~\ref{thm:main}}\label{sec:proof}
 
@@ -541,6 +542,48 @@ $k$-colourability of Cayley graphs of finitely generated abelian groups is decid
 problem cannot single out a subset. The question of \cite{VWZ} concerns the Voronoi connection set and is not
 touched.
 
+\section{Finite witnesses}\label{sec:finite}
+
+For a homomorphism $c$ to $K_{p/q}$, call the edge from $g$ to $g+s$ \emph{tight} if $\delta(g,s)=q$, and a
+\emph{tight cycle} a cycle whose edges are tight in its direction. If a finite graph $H$ has a homomorphism to
+$K_{p/q}$ and every such homomorphism has a tight cycle, then $\chi_c(H)=p/q$: this is the easy half of a
+characterisation of Guichard \cite{Guichard} (if $\chi_c(H)<p/q$, rounding $\frac p{p'}c'$ for a homomorphism $c'$
+to some $K_{p'/q'}$ with $p'/q'<p/q$ gives a homomorphism to $K_{p/q}$ without tight cycles). By compactness,
+$\chi_c$ of an infinite graph is the supremum of $\chi_c$ over its finite subgraphs. For a finite connection set the
+supremum is attained below $4$:
+
+\begin{corollary}\label{cor:finite}
+Let $S$ be finite, and suppose that $\chi_c(\Cay(\Gamma,S))=p/q$ with $2<p/q<4$. Then every homomorphism of
+$\Cay(\Gamma,S)$ to $K_{p/q}$ has a tight cycle, and some finite subgraph of $\Cay(\Gamma,S)$ has circular chromatic
+number $p/q$.
+\end{corollary}
+
+\begin{proof}
+We may assume that $S$ generates $\Gamma$, as the components of $\Cay(\Gamma,S)$ are isomorphic to
+$\Cay(\Gamma',S)$. By Corollary~\ref{cor:chic}, $\kappa(S)=q/p$. Let $c$ be a homomorphism to $K_{p/q}$, and $f$,
+$\xi$ as in Steps~3 and~4, so that $\xi(s)=f(s)/p\in[q/p,1-q/p]$; let $T=\{s\in S:f(s)=q\}$. If nonnegative
+integers $n_t$, not all $0$, give $\sum_{t\in T}n_tt=0$, then for every closed walk with $n_t$ steps $t$ the constant
+$W$ of Step~2 is $\sum_tn_tf(t)=q\sum_tn_t$, while each of its terms $\delta$ is at least $q$; so every step is
+tight, and the walk contains a tight cycle. Otherwise the images of $T$ in $\Gamma\otimes\R$ have no nonzero
+nonnegative relation (the cone of such relations is cut out by rational equations, so a nonzero one would give
+integers $n_t$ with $\sum n_tt$ a torsion element, killed by some $m\ge1$), and by Gordan's theorem there is a
+homomorphism $h:\Gamma\to\R$ with $h(t)>0$ for $t\in T$. For small $\varepsilon>0$ the character
+$\xi+\varepsilon h$ maps every element of the finite set $S$ into the open interval $(q/p,1-q/p)$, which is nonempty
+as $p>2q$: on $T$ it is $q/p+\varepsilon h(t)$, on $-T$ it is $1-q/p-\varepsilon h(-t)$, and elsewhere $\xi$ is
+already inside. Then $\kappa(S)>q/p$, a contradiction. So every homomorphism to $K_{p/q}$ has a tight cycle. If every
+finite subgraph had a homomorphism to $K_{p/q}$ without tight cycles, so would $\Cay(\Gamma,S)$, by compactness of
+$(\Z/p)^\Gamma$, as a tight cycle is finite. So some finite subgraph $H$ has a tight cycle for every homomorphism to
+$K_{p/q}$, and $\chi_c(H)=p/q$.
+\end{proof}
+
+The key point is that an optimal character of a finite $S$ has a nonnegative relation among the elements at which it
+is tight, as otherwise it could be perturbed. For $\Gamma=\Z$ the corollary says that $\chi_c(G(\Z,D))<4$ is
+attained by a finite subgraph for every finite $D$; for instance, a SAT computation by a referee, not certified,
+finds that $D=\{3,4,9,12\}$ has $\chi_c=7/2$ (a character: $\xi(n)=n/7$) and that the segment $\{0,\dots,18\}$ is a
+witness. For
+the planes over number fields, where $S$ is infinite, the conclusion holds below $4$ because a finite set of unit
+vectors already has $\kappa=1/\chi_c$ \cite[Corollary~7]{TCol}.
+
 \section{Literature}\label{sec:lit}
 
 The closest works are those of Krebs and Sankar \cite{KS}, whose winding number of $3$-colourings is Steps~1 and~2
@@ -616,6 +659,8 @@ appear in the next archived version.
 \bibitem{FC} S. Gal\'an, \emph{Which real quadratic planes need four colours}, draft, 2026,
 \texttt{papers/four-colours/} in \cite{Repo}.
 \bibitem{LG} S. Gal\'an, \emph{Two-colourable planes over number fields}, draft, 2026, in \cite{Repo}.
+\bibitem{TCol} S. Gal\'an, \emph{Three colours for the plane over a number field}, draft, 2026,
+\texttt{papers/three-colours/} in \cite{Repo}.
 \bibitem{QP} S. Gal\'an, \emph{Real quadratic planes that need four colours}, draft, 2026, in \cite{Repo}.
 \bibitem{GKM} I. Garc\'ia-Marco, K. Knauer and G. Menara, \emph{Coloring semiminimal Cayley graphs},
 arXiv:2607.26942 (2026).
@@ -627,6 +672,8 @@ systems}, Bull. Amer. Math. Soc. (N.S.) \textbf{59} (2022), 569--606; arXiv:2106
 (2025), doi:10.4171/JEMS/1673.
 \bibitem{Griesmer} J. T. Griesmer, \emph{Special cases and equivalent forms of Katznelson's problem on
 recurrence}, Monatsh. Math. \textbf{200} (2023), 63--79; arXiv:2108.02190.
+\bibitem{Guichard} D. R. Guichard, \emph{Acyclic graph coloring and the complexity of the star chromatic number},
+J. Graph Theory \textbf{17} (1993), 129--134.
 \bibitem{Haralambis} N. M. Haralambis, \emph{Sets of integers with missing differences}, J. Combin. Theory Ser. A
 \textbf{23} (1977), 22--33.
 \bibitem{HKM} B. Host, B. Kra and A. Maass, \emph{Variations on topological recurrence}, Monatsh. Math.

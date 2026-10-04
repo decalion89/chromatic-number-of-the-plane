@@ -1,0 +1,7 @@
+{'d': 11, 'n': 140, 'unit': True, 'symmetric': True, 'seven_adic_values': [2, 3, 4, 5]}
+coords:  70 max |coord| 12125
+{'d': 11, 'n': 140, 'unit': True, 'symmetric': True, 'seven_adic_values': [2, 3, 4, 5], 'rank': 4, 'max_abs_coord': 12125, 'milp_status': 1, 'milp_message': 'Time limit reached. (HiGHS Status 13: Time limit reached)', 'milp_t': 0.10326086956683866, 'milp_dual_bound': -0.5, 'milp_time_s': 901.0, 'milp_check_min': 0.1032608695595627}
+{'d': 35, 'n': 140, 'unit': True, 'symmetric': True, 'seven_adic_values': [2, 3, 4, 5]}
+coords:  70 max |coord| 2475
+HighsMipSolverData::transformNewIntegerFeasibleSolution tmpSolver.run();
+NOTE: the d=35 run was stopped by me; the theta-formulation MILP made no progress for d=11 (incumbent 0.103, bound 0.5 after 900 s), so it gives no evidence either way.

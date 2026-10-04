@@ -1,0 +1,6 @@
+== Z^2, S={(-1,2),(-1,1),(0,1),(3,0)} (10/3): kappa=3/10, chi_c=10/3
+   box=[(0, 1), (0, 1)] |V|=4 |E|=3: acyclic-tight hom EXISTS (chi_c(piece) < p/q) | cross-check K_3/1: hom -> agree
+   box=[(0, 2), (0, 2)] |V|=9 |E|=12: acyclic-tight hom EXISTS (chi_c(piece) < p/q) | cross-check K_3/1: hom -> agree
+   box=[(0, 3), (0, 3)] |V|=16 |E|=31: every hom has a tight cycle (chi_c(piece) = p/q) | cross-check K_13/4: no hom -> agree
+   -> {'name': 'Z^2, S={(-1,2),(-1,1),(0,1),(3,0)} (10/3)', 'kappa': '3/10', 'chi_c': '10/3', 'first_piece_with_chi_c': {'box': [(0, 3), (0, 3)], 'V': 16, 'E': 31}, 'time_s': 0.1}
+[{'name': 'Z^2, S={(-1,2),(-1,1),(0,1),(3,0)} (10/3)', 'kappa': '3/10', 'chi_c': '10/3', 'first_piece_with_chi_c': {'box': [(0, 3), (0, 3)], 'V': 16, 'E': 31}, 'time_s': 0.1}]

@@ -1,0 +1,30 @@
+{
+ "11": {
+  "d": 11,
+  "n": 140,
+  "unit": true,
+  "symmetric": true,
+  "seven_adic_values": [
+   2,
+   3,
+   4,
+   5
+  ],
+  "rank": 4,
+  "max_abs_coord": 12125
+ },
+ "35": {
+  "d": 35,
+  "n": 140,
+  "unit": true,
+  "symmetric": true,
+  "seven_adic_values": [
+   2,
+   3,
+   4,
+   5
+  ],
+  "rank": 4,
+  "max_abs_coord": 2475
+ }
+}

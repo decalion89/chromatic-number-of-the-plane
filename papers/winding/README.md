@@ -1,6 +1,6 @@
 # Circular colourings of abelian Cayley graphs below four come from characters
 
-[`winding.pdf`](winding.pdf) is a ten-page draft (3 October 2026):
+[`winding.pdf`](winding.pdf) is an eleven-page draft (3 and 4 October 2026):
 
 - **Theorem 1 (Theorem W⁺).** For `p/q < 4`, a Cayley graph of an abelian group maps to the circular clique
   `K_{p/q}` if and only if some character maps every generator into `[q/p, 1 − q/p]`. So its circular chromatic
@@ -23,6 +23,11 @@
 - **Theorem 12.** `χ(ℚ(√d)²) = 4` for `d = 83, 107, 203`, `4 ≤ χ(ℚ(√143)²) ≤ 5` and `χ(ℚ(√167)²) ≥ 4`, by exact
   branch-and-bound certificates (`data/quadratic_planes/winding/`, checked by `check_w.py`), for fields where no
   finite non-3-colourable graph had been found.
+- **Finite witnesses (Section 7, added 4 October).** For a finite connection set with `2 < χ_c < 4`, every
+  homomorphism to `K_{χ_c}` has a tight cycle (an optimal character has a nonnegative relation among the generators
+  where it is tight, or it could be perturbed), so `χ_c` is attained by a finite subgraph; for example the segment
+  `{0, …, 18}` of the distance graph with distances 3, 4, 9, 12 (`χ_c = 7/2`; SAT, not certified). Refereed inside
+  the project, with the corollary on planes over number fields of `papers/three-colours/` that it serves.
 - **Lean.** Theorem 1 for finite groups (`lean/TheoremWplus.lean`, `lean/TheoremW.lean`), the answer to Question 3
   of Glasscock, Koutsogiannis and Richter (`lean/Recurrence.lean`), and Corollary 9 with the lonely runner theorem
   for three speeds (Lemma 10; `lean/DistLiu.lean`) are formally verified.

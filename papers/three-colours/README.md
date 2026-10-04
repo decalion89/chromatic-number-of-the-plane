@@ -37,9 +37,10 @@ number field `F`, in which two points are adjacent when `(x − x′)² + (y −
   give the theorems; Theorem F needs only Proposition 9, which also gives Theorem E again. Corollary 6: for every
   finite extension `K` of `ℚ_p`, `χ_c(K²)` is 2, 3, `7/2` or at least 4 by explicit local conditions, so below 4 the
   circular chromatic number of `F²` is the least one of the planes over the completions of `F`. Corollary 7: below 4
-  the value is also the circular chromatic number of some finite unit-distance graph in `F²` (by compactness, with
-  Guichard's tight cycles, the winding argument of Theorem W⁺ and the certificates of Proposition 9; no bound on its
-  size). The certificates are in [`data/number_fields/circular/twoprime/`](../../data/number_fields/circular/twoprime/).
+  the value is also the circular chromatic number of some finite unit-distance graph in `F²`, by Lemma 22 (for a
+  finite connection set and `2 < χ_c < 4`, every homomorphism to `K_{χ_c}` has a tight cycle, so a finite subgraph
+  attains `χ_c`) and a compactness argument that gives a finite set of unit vectors with `κ = 1/χ_c`; no bound on the
+  size. The certificates are in [`data/number_fields/circular/twoprime/`](../../data/number_fields/circular/twoprime/).
 
 The working notes are [`notes/three_colours_number_fields.md`](../../notes/three_colours_number_fields.md) and
 [`notes/circular_planes.md`](../../notes/circular_planes.md); the programs and certificates are in
@@ -50,7 +51,8 @@ separate AI agents with their own programs; no mathematician has checked it yet.
 as written in the paper, with programs of its own: no error in a proof; its corrections (two false sentences about
 the 7-adic characters, a bound quoted for the wrong range, the dependence of Theorem F on Proposition 8, now removed
 by eight new certificates, and smaller gaps) are applied. Corollary 6 was added after that reading. Corollary 7 was
-refereed separately (no mathematical error; its expository gaps are closed); while preparing it we found that the
+refereed separately, in two versions (no mathematical error; the expository gaps are closed; the second, simpler
+proof through Lemma 22 is the one in the paper); while preparing it we found that the
 paper had wrongly said that no finite unit-distance graph with circular chromatic number `7/2` was known: the Moser
 spindle is one (over `ℚ(√3, √11)`). The PDF has 24 pages.
 
