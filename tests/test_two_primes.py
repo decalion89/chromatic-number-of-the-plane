@@ -1,6 +1,6 @@
 """Theorems E and F (notes/circular_planes.md §6, papers/three-colours Section 10): the computer-assisted steps and
 the finite facts at 7, rerun from the stored programs and certificates (data/number_fields/circular/twoprime/ and the
-referees' subfolders indep_E/ and indep_F/)."""
+referees' subfolders indep_E/, indep_F/ and indep_S10/)."""
 import gzip, os, re, shutil, subprocess, sys
 
 import pytest
@@ -129,3 +129,34 @@ def test_padic_points_killed_by_sigma():
     out = run(os.path.join(P, "indep_E"), "ref_ck.py").stdout
     assert out.count("min margin of c_k over G_N = 3/10") == 5
     assert "k=1: min margin of c_k over G_N = 3/10 ; max over m of min margin of c_k+Nm over G(k,1) = 41/250" in out
+
+
+def test_window_325_seven_certificates(tmp_path):
+    """The 8 index vectors of family 7 in the window G(2,1) have largest least margin exactly 2/7, so for theta > 2/7
+    that window leaves only the types c and q (Theorem E again, and Theorem F from Proposition F1 alone)."""
+    d = stage(tmp_path, ["verify_seven_K2M1.py", "cert_K2M1.txt", "cert_K2M1_seven.txt"])
+    assert "largest least margin exactly 2/7" in run(d, "verify_seven_K2M1.py").stdout
+    corrupt(d / "cert_K2M1_seven.txt", r"(\| kappa = 2/7 ; cert -?\d+ -?\d+ \S+ \S+ )(\d+)/(\d+)",
+            lambda m: f"{m[1]}{int(m[2]) + 1}/{m[3]}")
+    r = run(d, "verify_seven_K2M1.py", check=False)
+    assert r.returncode != 0 and "verified" not in r.stdout
+
+
+def test_section10_referee(tmp_path):
+    """The referee of Section 10 of the paper: the facts at 7 and the type points modulo 325, the points c_k, torsion,
+    an archimedean point of Q(i), the family-7 vectors of G(2,1) restricted to G(1,1), and its own clipping of the
+    window G(1,1) at 2/7 (the same 13 index vectors as the certificates)."""
+    d = os.path.join(P, "indep_S10")
+    for n in os.listdir(d):
+        shutil.copy(os.path.join(d, n), tmp_path / n)
+    (tmp_path / "run").mkdir()
+    for n in ["cert_K2M1.txt", "prop7_certificates.txt"]:
+        shutil.copy(os.path.join(P, n), tmp_path / "run" / n)
+    for prog in ["check_seven", "check_ck", "check_qi_char", "check_torsion"]:
+        assert run(tmp_path, prog + ".py").stdout == (tmp_path / (prog + ".txt")).read_text()
+    out = run(tmp_path, "check_remark1.py").stdout.splitlines()
+    assert {x: out.count(x) for x in out} == {"MAIN -> MAIN": 5, "SEVEN -> EXTRA": 8,
+                                               "EXTRA -> not among the 13 (1,1)-vectors": 16}
+    out = run(tmp_path, "clip_window.py", "1", "1", "2/7", "run/prop7_certificates.txt").stdout
+    assert "(K,M)=(1,1) N=65 r0=2/7: 13 index vectors with nonempty polygons" in out
+    assert "same set of index vectors as the certificate: True" in out

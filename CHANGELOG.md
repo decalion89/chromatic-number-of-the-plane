@@ -36,10 +36,14 @@ including every retracted claim, is the research log,
   the rotation `σ = (5 + 12i)/13` to the probe of Theorem D; one computer-assisted step for each theorem (exact
   certificates for the windows modulo 65 and 325 with checkers written separately,
   `data/number_fields/circular/twoprime/`). Found by a research agent and refereed by two others, each with two exact
-  methods of its own (no error; their corrections applied). Tests in `tests/test_two_primes.py`.
+  methods of its own (no error; their corrections applied). Tests in `tests/test_two_primes.py`. A third referee read
+  Section 10 of the paper: no error in a proof; its corrections are applied, and eight new dual certificates
+  (`cert_K2M1_seven.txt`, with a separate checker) make Theorem F depend on the window modulo 325 alone; the referee's programs are in `twoprime/indep_S10/`. Corollary 6
+  of the paper (`notes/circular_planes.md`, Corollary F8): the same values for the local fields, so below 4 `χ_c(F²)`
+  is the least `χ_c` of the planes over the completions of `F`; and `4 ≤ χ_c(ℚ(√47)²) ≤ 19/4`.
 - **Paper draft `papers/three-colours/` (4 October).** Theorem B, Proposition B9, the corollaries, Theorem C,
   the local circular values, Theorem D (Section 9, by hand) and Theorems E and F (Section 10); refereed (no
-  mathematical error), fixes applied; Section 10 not yet refereed in its form in the paper.
+  mathematical error), fixes applied; Section 10 refereed separately as written (no error in a proof; fixes applied).
 - **Literature sweep (4 October).** `notes/literature.md`, last section: what the systematic search of arXiv found for
   each result, and the relevant papers the project did not cite before.
 

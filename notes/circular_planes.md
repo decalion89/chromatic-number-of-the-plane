@@ -265,8 +265,8 @@ an error; their corrections are applied below.*
 > `χ_c(F²) ∈ {2, 3, 7/2} ∪ [4, ∞]`, and every value below 4 comes from a locally constant colouring of one completion
 > (Corollary C4).
 
-Each theorem has one computer-assisted step, an exact finite computation (Propositions E1 and F1); the rest is by
-hand. Theorem E supersedes the bounds of Theorem D (whose part (a) keeps a proof by hand), and gives the lower bounds
+Theorem E has one computer-assisted step (Proposition E1), and Theorem F another (Proposition F1, which also gives
+Theorem E again); both are exact finite computations, and the rest is by hand. Theorem E supersedes the bounds of Theorem D (whose part (a) keeps a proof by hand), and gives the lower bounds
 of Theorem C again from `χ ≥ 4` alone. Theorem F answers affirmatively the question of earlier versions of this note:
 `χ_c(F²) ∈ {2, 3, 7/2}` whenever `χ_c(F²) < 4`, with `7/2` exactly when (a) and (b) fail and (7) holds.
 
@@ -277,8 +277,10 @@ of Theorem C again from `χ ≥ 4` alone. Theorem F answers affirmatively the qu
 above 7 then contains `𝔽₄₉`, and `χ_c = χ = ∞`.)
 
 *Examples.* For squarefree `d ≡ 11 (mod 12)`, (a) and (b) fail, so `χ_c(ℚ(√d)²) = 7/2` if `(d/7) ≠ −1` and
-`χ_c(ℚ(√d)²) ≥ 4` if `(d/7) = −1`. So `χ_c(ℚ(√23)²) = χ_c(ℚ(√71)²) = 7/2`, `χ_c(ℚ(√59)²) = 4` (as `χ = 4`,
-Proposition C6), and `χ_c(ℚ(√47)²) ≥ 4`.
+`χ_c(ℚ(√d)²) ≥ 4` if `(d/7) = −1`. If moreover `d ≡ 11 (mod 24)`, then `ℚ₂(√d) = ℚ₂(√3)` and the place above 2 gives
+`χ ≤ 4` (as in the proof of Proposition C6), so `χ_c = 4`; only for `(d/7) = −1` and `d ≡ 23 (mod 24)` (`d = 47`,
+`143`, `167`, `215`, `311`, …) do we know no more than `χ_c ≥ 4`. So `χ_c(ℚ(√23)²) = χ_c(ℚ(√71)²) = 7/2`,
+`χ_c(ℚ(√59)²) = χ_c(ℚ(√83)²) = 4`, and `χ_c(ℚ(√47)²) ≥ 4`.
 
 ### 6.1 The window (1, 1)
 
@@ -296,7 +298,9 @@ are affine in `c` on each set of points with given strip indices. Those points o
 and two different index vectors give polygons at positive distance (some functional takes values in two strips
 separated by a gap `2r`); so the connected components of `S^(r)(k, m)` are the index vectors that occur. As
 `65γ ∈ ℤ[i]` for `γ ∈ G(1, 1)`, `S^(r)(1, 1)` is invariant under `65ℤ[i]`; its *type points* are `65h` and
-`(65/3)(a + bi)`, `a, b ∈ {1, 2}`.
+`(65/3)(a + bi)`, `a, b ∈ {1, 2}`. At a point of `S^(r)(1, 1)` and at a type point no value `Re(c̄γ)` is an integer,
+so `n_{−γ} = −n_γ − 1` and `n_{iγ} = −n_{−iγ} − 1`: the strip indices at the 18 functionals below determine those at all
+36 rotations.
 
 > **Proposition E1 (computer-assisted).** Let `2/7 < r ≤ 1/3` and `c ∈ S^(r)(1, 1)`. Then for some type point `T`
 > and some `m ∈ ℤ[i]`, `c` has the strip indices of `T + 65m` at every `γ ∈ G(1, 1)`.
@@ -319,8 +323,11 @@ symmetric, only the 18 functionals `Re(c̄γ)`, `Im(c̄γ)` with `γ = ρʲσˡ`
 
 The eight discarded vectors are those of the 7-torsion points `65(a + bi)/7`,
 `(a, b) ∈ {(1,2), (1,5), (2,1), (2,6), (5,1), (5,6), (6,2), (6,5)}`, whose least margin is exactly `2/7`: they are
-the characters of the 7-adic colourings of Proposition C1 (`λ(a + bi) = 2a + 3b` gives `65(1 + 5i)/7`). So `2/7` is
-optimal for this window, and for every window, as these are characters of all of `ℚ(i)`. Cross-checks: the agent's
+on `G(1, 1)` the characters of the 7-adic colourings of Proposition C1 (`λ(a + bi) = 2a + 3b` gives `65(1 + 5i)/7`).
+So `2/7` is optimal for this window, and for every finite set of rational rotations: their denominators are prime to
+7, and if `D` is a common denominator and `d ≡ D⁻¹ (mod 7)`, the point `Dd(s + ti)/7` has the value `λ(γ mod 7)/7`
+at each of them, for `λ(a + bi) = sa + tb` as in Proposition C1. (They are not characters of all of `ℚ(i)`: the
+point `65(1 + 5i)/7` has margin `5/119` at `(−15 − 8i)/17`.) Cross-checks: the agent's
 lifting (`probe2d.py`, in both orders of the primes) and direct enumeration (`indep2d.py`) find 13 components at
 `r = 7/25` and 5 at `r = 2857143/10⁷`; the referee's clipping (`indep_E/ref_clip.py`) and enumeration of all
 1 734 260 vertices of the line arrangement (`ref_vertex.py`) find 13 at `7/25` and at `2/7` (where the eight extra
@@ -410,8 +417,8 @@ Exact enumeration of `𝔽₄₉` (`seven_local.py`; the referee's `indep_F/f49_
 - (A2) `A′₇` contains no coset of a non-zero additive subgroup of `𝔽₄₉`;
 - (A3) `Re` maps `A′₇` into `{2, 3, 4, 5}`.
 
-For `e ∈ E₇` the character `a ↦ Re(ēa) mod 1` of `ℤ_(7)[i]` (it factors through `𝔽₄₉`) takes values in
-`{2, …, 5}/7` at every rational rotation: these are the characters of the 7-adic colourings of Proposition C1.
+For `e ∈ E₇` the character `a ↦ Re(ē ã) mod 1` of `ℤ_(7)[i]`, where `ã ∈ ℤ[i]` is congruent to `a` modulo
+`7ℤ_(7)[i]` (it factors through `𝔽₄₉`), takes values in `{2, …, 5}/7` at every rational rotation: these are the characters of the 7-adic colourings of Proposition C1.
 `2E_c`, `3E_q` and `7E₇` lie in `ℤ[i]`, so `42E′ ⊆ ℤ[i]` for `E′ = E_c ∪ E_q ∪ E₇`, and `E′` is closed under
 conjugation.
 
@@ -428,7 +435,8 @@ Let `N₀ = 5²·13 = 325` and `W = G(2, 1)`. The type points modulo `N₀` are 
 `e ∈ A′₇` (family 7; `5 ≡ 325⁻¹ mod 7`). Their least margins are `1/2`, `1/3` and `2/7`.
 
 > **Proposition F1 (computer-assisted).** Let `1/4 < r ≤ 1/3` and `c ∈ S^(r)(2, 1)`. Then for some type point `T`
-> of family c, q or 7 and some `m ∈ ℤ[i]`, `c` has the strip indices of `T + 325m` at every `γ ∈ W`.
+> of family c, q or 7 and some `m ∈ ℤ[i]`, `c` has the strip indices of `T + 325m` at every `γ ∈ W`. If `r > 2/7`,
+> then `T` has family c or q.
 
 (Strip indices are floors, so they are defined at the 7-points also when `r > 2/7`; the digit formula uses only
 them.)
@@ -437,7 +445,11 @@ them.)
 `|j| ≤ 2`, `|l| ≤ 1`. The tree `tree_K2M1.txt.gz` over all `325²` cells (550 474 branch nodes, 199 920 closed
 branches, 29 leaves) and `cert_K2M1.txt` are checked by `verify_window.py 2 1` (about 45 s): of the 29 index vectors,
 5 are those of the c- and q-points, 8 those of the 7-points, each with all margins at least `2/7`, and each of the
-other 16 has a certificate `λ ≥ 0`, `Σλ = 1`, `Σλ_iμ_i ≡ 1/4` on three margins, which excludes it for `r > 1/4`. ∎
+other 16 has a certificate `λ ≥ 0`, `Σλ = 1`, `Σλ_iμ_i ≡ 1/4` on three margins, which excludes it for `r > 1/4`.
+Each of the 8 vectors of family 7 has a certificate of the same kind with value `2/7` (`cert_K2M1_seven.txt`, written
+by `seven_certificates_K2M1.py` and checked by `verify_seven_K2M1.py`; added after the referees' reports, on a
+suggestion of the referee of Theorem F), which excludes it for `r > 2/7`; these certificates use margins at
+`ρ^{−2}σˡ`, outside `G(1, 1)`. ∎
 
 The 16 excluded vectors are 2-adic: their largest least margin `1/4` is attained at 4- and 8-torsion points such as
 `325(1 + i)/4` and `325(2 + i)/8`. So `1/4` is a limit of the method, consistent with `χ_c(ℚ(√59)²) = 4`. The
@@ -449,14 +461,14 @@ C with 128-bit integers, every point rechecked with fractions: `vertex_enum.c`, 
 lifting by rows (`lift_rows.py`) give the same 29 vectors at `r₀` and the same 13 at `1/4 + 10⁻⁷`
 (`compare_methods.py`).
 
-> **Lemma F2.** Let `1/4 < r ≤ 1/3`, `k ≥ 1` with `6 | k` (so `N = 5^k ≡ 1 mod 7`), and let `C ∈ ℂ` satisfy
+> **Lemma F2.** Let `1/4 < r ≤ 1/3`, let `k` be a positive multiple of 6 (so `N = 5^k ≡ 1 mod 7`), and let `C ∈ ℂ` satisfy
 > `Re(C̄γ) ∈ [r, 1 − r] + ℤ` for every `γ ∈ G(k, 1)`. Then modulo `Nℤ[i]`:
 > - `C ≡ c*_N + x` with `x ∈ P_k^(s)`, or
 > - `C ≡ q + x` with `q ∈ Q_N` and `x ∈ Y_k(q)`, or
 > - `C ≡ Ne + x` with `e ∈ E₇` and `x ∈ X_k(e) = {x : ζ_j(e) + x̄ρʲ ∈ Sq_s for |j| ≤ k}`, where
 >   `ζ_j(e) ∈ {±1/14, ±3/14}²` is given by `conj(Ne)ρʲ ∈ h + ζ_j(e) + ℤ[i]`.
 >
-> In every case `|x| ≤ R′ = (1/4 + 3/14)√2 < 0.66`.
+> The third case does not occur if `r > 2/7`. In every case `|x| ≤ R′ = (1/4 + 3/14)√2 < 0.66`.
 
 *Proof.* As for Lemma E2.
 - *(b)* For `|j| ≤ k − 2`, `c = ρ^{−j}C ∈ S^(r)(2, 1)`, as `ρʲW ⊆ G(k, 1)`. By Proposition F1 the digits
@@ -464,9 +476,13 @@ lifting by rows (`lift_rows.py`) give the same 29 vectors at `r₀` and the same
   (`325ρᵗ` has odd norm); `(ν, −iν, −ν, iν)`, `ν ≠ 0`, for family q (as in Lemma E2(b), now with `325 ≡ 1 mod 3`); and
   four consecutive digits of a shift of `S` for family 7 (`325(a + bi) ≡ e (mod 7)` with `e ∈ A′₇`, so the values of
   `T` at `ρᵗ` are those of the character of `e/7`).
-- *(c)* The windows `|j| ≤ k − 2` cover `ν_{−k+1}, …, ν_k`, and consecutive windows share three digits; as two
-  consecutive digits determine family and shift, the whole word is the zero word, a q-word, or `2k` consecutive
-  digits of one shift of `S`.
+- *(c)* The windows `|j| ≤ k − 2` cover `ν_{−k+1}, …, ν_k`, and consecutive windows share three digits, at given
+  positions in each window. Two consecutive digits at given positions determine the family and the class (for the
+  7-adic classes, `ζ_t(e′) = ζ_{t+j}(e)` when `7e′ ≡ 7e·conj(ρ̃)^j (mod 7)`, `ρ̃ = 2 + 5i ≡ ρ`, as `ρ̃·conj(ρ̃) ≡ 1`). So
+  if the window at `j` has family 7 and class `e_j`, the window at `j + 1` has family 7 and the class
+  `e_{j+1} ≡ e_j·conj(ρ̃)`, and the digits of `C` are those of the class `e_0` at the same positions; likewise for
+  the families c and q. The whole word is the zero word, a q-word, or the digits of one 7-adic class; by Proposition
+  F1 the last case does not occur if `r > 2/7`.
 - *(d)* The first two cases are as in Lemma E2(e). In the third, let `e ∈ E₇` be the class whose character has this
   shift. As `N ≡ 1 (mod 7)` and `Nρʲ ≡ ρʲ (mod 7ℤ_(7)[i])`, `conj(Ne)ρʲ = ē·Nρʲ` has, modulo `ℤ[i]`, the values of
   that character, so `g_j(Ne) = ζ_j(e)` has the digits of `C`, and `g_j − ζ_j(e) = ρ(g_{j−1} − ζ_{j−1}(e))`. With
@@ -542,9 +558,31 @@ For `f = 1`, multiplication by an element of `A′₇` works. The referee checke
 case (c), (q) or (7′). The first two give (a) or (b) as in the proof of Theorem B; in case (7′) Lemmas F5–F7 give a
 place above 7 of residue degree 1, which is (7). ∎
 
-Theorem E also follows from the data of Proposition F1 (as the referee of Theorem F noted): the 8 vectors of family 7
-have largest least margin exactly `2/7`, so for `r > 2/7` only families c and q remain, and Lemma F2 with Lemma B2
-gives Theorem E. So Theorem E has two computer-assisted proofs, through two different windows.
+> **Corollary F8 (local fields; local–global below 4).** Let `K` be a finite extension of `ℚ_p`. Then
+> `χ_c(K²) = 2` if `p = 2` and `K(i)/K` is ramified; `3` if `p = 3` and `K` has residue degree 1; `7/2` if `p = 7`
+> and `K` has residue degree 1; and `χ_c(K²) ≥ 4` in every other case. Consequently, for every number field `F`,
+> `min(χ_c(F²), 4) = min(4, min_v χ_c(F_v²))`, the inner minimum over all places `v` of `F`: below 4 the circular
+> chromatic number of `F²` is the least one of the planes over its completions.
+
+*Proof.* The upper bounds in the first three cases are the local colourings (the 2-colouring of the two-colour paper,
+the 3-colouring of Theorem B, Proposition C1), which colour `K²` itself; the lower bounds come from a bipartite plane
+with an edge, from `ℚ(√7) ⊂ ℚ₃ ⊆ K` with `χ_c(ℚ(√7)²) = χ(ℚ(√7)²) = 3`, and from Corollary C5. Otherwise, if `i ∈ K`
+then `χ = ∞`; if not, the Krasner construction of the corollary on local fields in `papers/three-colours/` (with a
+product of quadratics generating `ℚ₄₉` added over `ℚ₇`, a cubic generating the unramified cubic extension of `ℚ₇` when
+`p = 7` and `[K : ℚ₇]` is odd, and the auxiliary prime chosen outside `{2, 3, 7, p}`) gives a number field `F ⊂ K` for
+which (a), (b) and (7) fail, so `χ_c(K²) ≥ χ_c(F²) ≥ 4` by Theorem F. For the last statement, `F² ⊆ F_v²` gives
+`χ_c(F²) ≤ χ_c(F_v²)`, and if `χ_c(F²) < 4`, Theorem F gives a place where the completion has the same value. ∎
+
+For example `χ_c(ℚ₁₉²)`, `χ_c(ℚ(√47)²)` and `χ_c(ℚ(√5, √7)²)` lie in `[4, 19/4]`: the lower bounds are Corollary F8 and
+Theorem F, the upper bound Proposition C1 at 19 (`κ₁ = 4/19`; `47 ≡ 3² (mod 19)`, and 5 and 7 are squares modulo 19).
+So if `χ(ℚ(√47)²) = 5`, which is Moorhouse's open case, its circular chromatic number lies in `(4, 19/4]` and is not
+an integer; the same holds for `ℚ(√5, √7)`, where `4 ≤ χ ≤ 5` (Theorem B and the place above 19).
+
+Theorem E also follows from Proposition F1 (as the referee of Theorem F noted): for `r > 2/7` it leaves only the
+families c and q, so Lemma F2 (with `6 | k`) gives the conclusion of Lemma E2, and the proof of Theorem E goes through.
+The certificates that exclude the 8 vectors of family 7 there are not those of Proposition E1 (they use the rotations
+`ρ^{−2}σˡ`). So Theorem F, whose proof uses Theorem E, rests on Proposition F1 alone, and Theorem E on either
+proposition.
 
 ### 6.7 Why one prime is not enough
 
@@ -564,11 +602,15 @@ or 3.
 
 ## 7. Questions
 
-1. *Above 4.* Theorem F decides `χ_c(F²)` below 4: there it is the least value given by a locally constant colouring
-   of one completion. Is that true above 4 as well, for `χ_c` or at least for `χ`? Theorem W⁺ is not available
-   there (a homomorphism to `K_{p/q}` with `p/q ≥ 4` need not come from a character). The first case is `ℚ(√47)`:
-   `χ_c(ℚ(√47)²) ≥ 4` by Theorem F and `4 ≤ χ ≤ 5`, and `χ_c(ℚ(√47)²) = 4` if and only if `χ(ℚ(√47)²) = 4`
-   (Moorhouse's open case).
+1. *Above 4.* Theorem F decides `χ_c(F²)` below 4: there it is the least value of `χ_c(F_v²)` over the completions
+   (Corollary F8), given by a locally constant colouring of one completion. Is that true above 4 as well, for `χ_c`
+   or at least for `χ`? Theorem W⁺ is not available there (a homomorphism to `K_{p/q}` with `p/q ≥ 4` need not come
+   from a character). The first case is `ℚ(√47)`: `4 ≤ χ_c(ℚ(√47)²) ≤ 19/4` and `4 ≤ χ ≤ 5`, and
+   `χ_c(ℚ(√47)²) = 4` if and only if `χ(ℚ(√47)²) = 4` (Moorhouse's open case; for "only if", `χ_c = 4` gives
+   `χ_c ≤ 4` on every finite subgraph, hence `χ ≤ 4` there, and `χ ≤ 4` by de Bruijn–Erdős). In particular: is
+   there a number field with `4 < χ_c(F²) < 5`? Any `F` with `χ(F²) = 5` and a place of residue field `𝔽₁₉` would
+   be one. The 5-chromatic unit-distance graphs we know lie over fields containing `√3`, or `√−3` and `√−7`, and 3
+   and −7 are not squares modulo 19.
 2. *Finite witnesses.* Every finite unit-distance graph in `ℚ(√11)²` has `χ_c ≤ 7/2`, and their supremum is `7/2`.
    Is it attained? The proofs of Theorems C and E work with infinite Cayley graphs `Cay(ℤU, U)`.
 3. *The one-prime probe.* Does `r0(5^k)` tend to `3/10` (the conjecture of §5)? Theorem E no longer needs it.

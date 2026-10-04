@@ -1,6 +1,6 @@
 # Three colours for the plane over a number field
 
-[`three-colours.pdf`](three-colours.pdf) is a 21-page draft (4 October 2026) about the graph on `F²`, for a
+[`three-colours.pdf`](three-colours.pdf) is a 22-page draft (4 October 2026) about the graph on `F²`, for a
 number field `F`, in which two points are adjacent when `(x − x′)² + (y − y′)² = 1`:
 
 - **Theorem B.** `χ(F²) ≤ 3` if and only if some prime of `F` above 2 ramifies in `F(i)` or some prime of `F` above 3
@@ -34,16 +34,20 @@ number field `F`, in which two points are adjacent when `(x − x′)² + (y −
   `σ = (5 + 12i)/13` to the probe. One computer-assisted step for each theorem, an exact finite computation along
   the rotations `iᵃρʲσˡ` modulo 65 and 325 (Propositions 8 and 9), shows that the probe has only the types c and q
   above `2/7`, and the types c, q and a 7-adic one above `1/4`; Lemmas 12–19 (by hand) and compactness at 2, 3 and 7
-  give the theorems. The certificates are in
-  [`data/number_fields/circular/twoprime/`](../../data/number_fields/circular/twoprime/).
+  give the theorems; Theorem F needs only Proposition 9, which also gives Theorem E again. Corollary 6: for every
+  finite extension `K` of `ℚ_p`, `χ_c(K²)` is 2, 3, `7/2` or at least 4 by explicit local conditions, so below 4 the
+  circular chromatic number of `F²` is the least one of the planes over the completions of `F`. The certificates are
+  in [`data/number_fields/circular/twoprime/`](../../data/number_fields/circular/twoprime/).
 
 The working notes are [`notes/three_colours_number_fields.md`](../../notes/three_colours_number_fields.md) and
 [`notes/circular_planes.md`](../../notes/circular_planes.md); the programs and certificates are in
 [`data/number_fields/`](../../data/number_fields/), and the tests in `tests/test_three_colours.py`,
 `tests/test_gap_above_three.py` and `tests/test_two_primes.py`. Theorem B was refereed twice, the paper once (with a
 second look at Section 8), Theorem D twice (the note's version and Section 9), and Theorems E and F once each, by
-separate AI agents with their own programs; no mathematician has checked it yet. Section 10 has not yet been read by
-a referee in its form in the paper (the referees read the agent's notes, whose corrections it applies).
+separate AI agents with their own programs; no mathematician has checked it yet. A third referee then read Section 10
+as written in the paper, with programs of its own: no error in a proof; its corrections (two false sentences about
+the 7-adic characters, a bound quoted for the wrong range, the dependence of Theorem F on Proposition 8, now removed
+by eight new certificates, and smaller gaps) are applied. Corollary 6 was added after that reading.
 
 [`three-colours.tex`](three-colours.tex) is the LaTeX source (`amsart`). To rebuild the PDF, run in this folder,
 with TeX Live:

@@ -917,7 +917,9 @@ pairs.
   5-chromatic graph over `ℚ(√5, √7)`. That plane does have odd cycles. With
   `τ = (2 + i√5)/3` and `σ = (1 + i√35)/6`, `1 + 2 Re σ = 2 Re τ`, so the unit
   steps `1, σ̄, −τ, σ, −τ̄` close up into a 5-cycle. Hence
-  `3 ≤ χ(ℚ(√5, √7)²) ≤ 5`.
+  `3 ≤ χ(ℚ(√5, √7)²) ≤ 5`. (Later: `χ ≥ 4` by Theorem B of `notes/three_colours_number_fields.md`, as no place
+  above 2 ramifies in `F(i)` and the places above 3 have residue degree 2; and `4 ≤ χ_c ≤ 19/4` by Theorem F and the
+  place above 19, `notes/circular_planes.md` §6.)
 - **Where a fourth colour must come from.** The places above 3 split in `K`.
   Since `√7 ∈ ℚ₃`, the local field is `ℚ₃(√5)`, the unramified quadratic
   extension. It contains `i`, and its residue field is `𝔽₉`.

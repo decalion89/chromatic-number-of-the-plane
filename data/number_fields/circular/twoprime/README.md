@@ -40,6 +40,7 @@ the results differently:
 | `verify_tree.py`, `verify_prop7.py` | checkers for the window (1, 1) that share no code with the generators (about a second together) |
 | `certify_window.py` → `tree_K2M1.txt.gz`, `cert_K2M1.txt` | window (2, 1): the tree over all 325² cells (550 474 branch nodes, 199 920 closed branches, 29 leaves) and the type points and dual certificates (`python3 certify_window.py 2 1 249/1000`, about 2 minutes) |
 | `verify_window.py` | checker for the window (2, 1) (`python3 verify_window.py 2 1`, 30 to 45 s); rejects corrupted copies |
+| `seven_certificates_K2M1.py` → `cert_K2M1_seven.txt`; `verify_seven_K2M1.py` | the 8 index vectors of family 7 in the window (2, 1): dual certificates with value `2/7` (three margins each, among them margins at `ρ^{−2}σˡ`), so that for `θ > 2/7` the window (2, 1) leaves only the types c and q and gives Theorem E by itself; with a checker that shares no code with the generator (it rebuilds `325ρʲσˡ` as products of `2 ± i` and `3 ± 2i`). Added after the referees' reports: the referee of Section 10 noted that the stored certificates gave only the lower bound `2/7` for these vectors |
 | `probe2d.py`, `lpexact.py`, `kappa2d.py`, `kappa2d_seven.py` | the two-prime probe by exact lifting (`5` and `13` steps in a given order), with labels c/q/7 and the certified largest least margin of every other component |
 | `indep2d.py`, `indepN.py`, `hgeom_ref.py` → `indep_325_r249.txt` | direct enumeration over all cells (cross-check; the geometry is a referee's, from `../probe/indep/`) |
 | `seven_local.py`, `seven_patterns.py` | the facts about `𝔽₄₉` (the set `A′₇` of 8 elements, one `μ₈`-orbit, no coset of a subgroup) and the digit patterns of the 7-adic characters |
@@ -56,11 +57,16 @@ two trees byte for byte): `torsion_exact.py 400`, `torsion_twoprime.py 300`, `gl
 the stored copy of `seven_patterns.py`; they were written again when this folder was assembled, and the program now
 reproduces the file.
 
+A third referee read Section 10 of the paper with programs of its own (exact clipping of both windows, the lifting of
+`S^θ(k, 1)` to the levels `k = 6` and `12`, and checks of the facts at 7); its corrections are applied in the paper and
+the note.
+
 Referees' programs:
 
 | folder | what it checks |
 |---|---|
 | [`indep_E/`](indep_E/) | the window (1, 1) by exact clipping cell by cell (`ref_clip.py`) and by enumerating all vertices of the line arrangement (`ref_vertex.py`); the exact largest least margin of the 13 components (`ref_kappa.py`); the conclusion of Lemma E2 tested exactly up to `k = 7` (`ref_lemma12.py`); the 5-adic points `c_k` under `σ` (`ref_ck.py`); the 7-adic components (`ref_sevenadic.py`); torsion characters by exact order (`ref_torsion.py`) |
+| [`indep_S10/`](indep_S10/) | the referee of Section 10 of the paper: its own exact clipping of both windows (`clip_window.py K M r0 cert`: the same 13 and 29 index vectors as the certificates), the exact lifting of `S^θ(k, 1)` to the levels `k = 6` and `12` for Lemma 14 (`lift_lemma14.py`; and at `k = 5`, components of family 7 not of the form of the lemma, so `6 \| k` is needed), the counterexample to the bound `0.23` near `θ = 1/4` (`lift_lemma14_witness.py`), the facts at 7 and the type points modulo 325 (`check_seven.py`, which reads `run/cert_K2M1.txt`, a copy of `../cert_K2M1.txt`), the restriction of the family-7 vectors to `G(1, 1)` (`check_remark1.py`), sub-windows (`subwindows.py`), the points `c_k` (`check_ck.py`), torsion (`check_torsion.py`), and the margin `5/119` of an archimedean point of `ℚ(i)` (`check_qi_char.py`). The lines that print `False` are expected: one digit does not determine the type, an earlier draft's reading of Lemma 13 (corrected), and above `2/7` only the 5 main vectors of the 13 remain |
 | [`indep_F/`](indep_F/) | the window (2, 1) by vertex enumeration (`vertex_enum.c`, 128-bit integers, with `analyze_components.py`, exact) and by lifting rows (`lift_rows.py`), compared by `compare_methods.py`; the facts at 7 and the digit patterns (`f49_and_digits.py`); Lemma F6 on finite models and Lemma F7 for `f = 3` (`b4_model_check.py`, `b5_f3_check.py`); known answers of Theorem D's probe (`an_kat_*.txt`) |
 
 To recheck the computer-assisted steps (also `tests/test_two_primes.py`):
@@ -69,6 +75,8 @@ To recheck the computer-assisted steps (also `tests/test_two_primes.py`):
 gunzip -k tree_r7_25.txt.gz tree_K2M1.txt.gz
 python3 verify_tree.py && python3 verify_prop7.py      # window (1, 1)
 python3 verify_window.py 2 1                           # window (2, 1)
+python3 verify_seven_K2M1.py                           # the vectors of family 7 there, at 2/7
 cd indep_E && python3 ref_vertex.py 7 25 && python3 ref_clip.py 7 25 clip.txt && python3 ref_kappa.py clip.txt
 cd ../indep_F && cc -O2 -o vertex_enum vertex_enum.c   # then analyze_components.py on its output
+cd ../indep_S10 && mkdir -p run && cp ../cert_K2M1.txt ../prop7_certificates.txt run/ && python3 check_seven.py
 ```

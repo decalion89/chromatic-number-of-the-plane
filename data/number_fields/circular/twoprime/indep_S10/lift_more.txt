@@ -1,0 +1,50 @@
+theta=2501/10000: level 0, period 13: 101 components (0.1s)
+  level 1, period 65: 29 components (1.0s)
+  level 2, period 325: 13 components (1.6s)
+  level 3, period 1625: 13 components (2.3s)
+  level 4, period 8125: 13 components (3.3s)
+  level 5, period 40625: 13 components (4.5s)
+  level 6, period 203125: 13 components (6.0s)
+level 6 (N = 5^6 = 1 mod 7): components by the form of Lemma 14 / Lemma 12: {'c': 1, 'q': 4, '7': 8, 'none': 0}
+  largest |x|^2 by type: {'c': 0.06254006769748438, 'q': 0.007003175562068331, '7': 0.001336850413794754} ; all <= r'^2 = 0.43112244897959184 : True
+theta=1000001/4000000: level 0, period 13: 101 components (0.1s)
+  level 1, period 65: 29 components (1.2s)
+  level 2, period 325: 13 components (1.8s)
+  level 3, period 1625: 13 components (2.5s)
+  level 4, period 8125: 13 components (3.4s)
+  level 5, period 40625: 13 components (4.6s)
+  level 6, period 203125: 13 components (6.1s)
+  level 7, period 1015625: 13 components (7.8s)
+  level 8, period 5078125: 13 components (9.8s)
+  level 9, period 25390625: 13 components (12.2s)
+  level 10, period 126953125: 13 components (14.9s)
+  level 11, period 634765625: 13 components (17.9s)
+  level 12, period 3173828125: 13 components (21.2s)
+level 12 (N = 5^12 = 1 mod 7): components by the form of Lemma 14 / Lemma 12: {'c': 1, 'q': 4, '7': 8, 'none': 0}
+  largest |x|^2 by type: {'c': 0.0625191116498009, 'q': 0.006954417138519746, '7': 0.0012815588979977143} ; all <= r'^2 = 0.43112244897959184 : True
+theta=13/50: level 0, period 13: 101 components (0.1s)
+  level 1, period 65: 29 components (1.0s)
+  level 2, period 325: 13 components (1.5s)
+  level 3, period 1625: 13 components (2.2s)
+  level 4, period 8125: 13 components (3.0s)
+  level 5, period 40625: 13 components (4.0s)
+level 5 (N = 5^5 = 3 mod 7): components by the form of Lemma 14 / Lemma 12: {'c': 1, 'q': 4, '7': 0, 'none': 8}
+  largest |x|^2 by type: {'c': 0.05768306361160071, 'q': 0.0054875283446712015, '7': 0.0} ; all <= r'^2 = 0.43112244897959184 : True
+theta=3/10: level 0, period 13: 65 components (0.1s)
+  level 1, period 65: 5 components (0.5s)
+  level 2, period 325: 5 components (0.7s)
+  level 3, period 1625: 5 components (1.0s)
+  level 4, period 8125: 5 components (1.4s)
+  level 5, period 40625: 5 components (1.9s)
+  level 6, period 203125: 5 components (2.6s)
+level 6 (N = 5^6 = 1 mod 7): components by the form of Lemma 14 / Lemma 12: {'c': 1, 'q': 4, '7': 0, 'none': 0}
+  largest |x|^2 by type: {'c': 0.0400576830636116, 'q': 0.0011232021576983017, '7': 0.0} ; all <= r'^2 = 0.43112244897959184 : True
+theta=1429/5000: level 0, period 13: 77 components (0.1s)
+  level 1, period 65: 5 components (0.7s)
+  level 2, period 325: 5 components (0.9s)
+  level 3, period 1625: 5 components (1.3s)
+  level 4, period 8125: 5 components (1.7s)
+  level 5, period 40625: 5 components (2.4s)
+  level 6, period 203125: 5 components (3.2s)
+level 6 (N = 5^6 = 1 mod 7): components by the form of Lemma 14 / Lemma 12: {'c': 1, 'q': 4, '7': 0, 'none': 0}
+  largest |x|^2 by type: {'c': 0.04594780483896811, 'q': 0.0022840046308277118, '7': 0.0} ; all <= r'^2 = 0.43112244897959184 : True

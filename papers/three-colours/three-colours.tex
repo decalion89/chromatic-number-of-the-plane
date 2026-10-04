@@ -60,7 +60,8 @@ $\chi_c(\Q(\sqrt{11})^2)=\chi_c(\Q(\sqrt{35})^2)=7/2$ (and $\chi_c(\Q_7^2)=7/2$)
 number $4$. Locally constant colourings of one completion give no upper bound on $\chi_c$ below $4$ other than $2$, $3$ and
 $7/2$. We show that these are the only values below $4$: for every number field $F$, $\chi_c(F^2)$ is $2$, $3$,
 $7/2$ or at least $4$, and it is $7/2$ exactly when $\chi(F^2)\ge4$ and some prime of $F$ above $7$ has residue
-degree $1$. So below $4$ the circular chromatic number is also decided by a single completion. This proof has one
+degree $1$; below $4$ it is the least circular chromatic number of the planes over the completions of $F$. This proof
+has one
 computer-assisted step, an exact finite computation along the rational rotations whose denominators divide $325$;
 without it we show that $\chi_c(F^2)\ge56/17$ whenever $\chi(F^2)\ge4$.
 \end{abstract}
@@ -137,15 +138,19 @@ $\chi_c(F^2)=7/2$ if \textup{(7)} holds and \textup{(a)}, \textup{(b)} fail; and
 \textup{(b)} and \textup{(7)} all fail.
 \end{theorem}
 
-Theorems~\ref{thm:E} and~\ref{thm:F} each rest on one computer-assisted step, an exact finite computation with
-certificates that are checked by a program written separately from the one that produced them, and confirmed by
-two further methods (Propositions~\ref{prop:window} and~\ref{prop:window7}); the rest of their proofs is by hand.
-Theorem~\ref{thm:D}, which Theorem~\ref{thm:E} supersedes, is proved entirely by hand. So below $4$ the circular
-chromatic number of the plane over a number field takes only the values $2$, $3$ and $7/2$, each given by a
-locally constant colouring of one completion: a circular local--global principle below $4$ that extends
-Theorem~\ref{thm:B}. For a real quadratic field $\Q(\sqrt d)$ with $d\equiv11\pmod{12}$ squarefree, (a) and (b) fail,
-so $\chi_c=7/2$ if $(d/7)\ne-1$ and $\chi_c\ge4$ otherwise: $\chi_c(\Q(\sqrt{23})^2)=\chi_c(\Q(\sqrt{71})^2)=7/2$,
-$\chi_c(\Q(\sqrt{59})^2)=4$ and $\chi_c(\Q(\sqrt{47})^2)\ge4$.
+Theorem~\ref{thm:E} rests on one computer-assisted step (Proposition~\ref{prop:window}), and Theorem~\ref{thm:F}
+on another (Proposition~\ref{prop:window7}), which also gives Theorem~\ref{thm:E} again: exact finite computations,
+whose certificates are checked by programs written separately from those that produced them, and which two referees
+confirmed by methods of their own. The rest of the proofs is by hand. Theorem~\ref{thm:D}, which
+Theorem~\ref{thm:E} supersedes, is proved entirely by hand. So below $4$ the circular chromatic number of the plane
+over a number field takes only the values $2$, $3$ and $7/2$, each given by a locally constant colouring of one
+completion; more precisely, below $4$ it is the least circular chromatic number of the planes over its completions
+(Corollary~\ref{cor:localF}): a circular local--global principle below $4$ that extends Theorem~\ref{thm:B}. For a
+real quadratic field $\Q(\sqrt d)$, $d$ squarefree, (a) or (b) holds unless $d\equiv11\pmod{12}$. If
+$d\equiv11\pmod{12}$, then $\chi_c=7/2$ when $(d/7)\ne-1$ (for example $d=23$, $71$); $\chi_c=4$ when $(d/7)=-1$ and
+$d\equiv11\pmod{24}$ (for example $d=59$, $83$), as then the place above $2$ gives $\chi\le4$; and only when
+$(d/7)=-1$ and $d\equiv23\pmod{24}$ ($d=47$, $143$, $167$, $215$, \dots) do we know no more than $\chi_c\ge4$, with
+$\chi_c=4$ if and only if $\chi=4$.
 
 The tools are those of \cite{FC}: a characterisation of $3$-colourings of Cayley graphs of abelian groups by
 characters (Theorem~W$^+$, Section~\ref{sec:prelim}), and the exact shape of the characters along the rational rotations whose
@@ -967,8 +972,9 @@ $\chi_c(F^2)\ge10/3$ by this method.
 \section{Two primes}\label{sec:twoprimes}
 
 The probe of Section~\ref{sec:gap} uses only the rotations $i^a\rho^j$, whose denominators are powers of $5$, and for
-$\theta\le3/10$ it has characters of a third kind (Remark in Section~\ref{sec:gap}). The plane over a number field
-contains every rational rotation. We add one with another prime, $\sigma=\frac{3+2i}{3-2i}=\frac{5+12i}{13}$, and for
+$\theta\le3/10$ it has characters of a third kind (Remark~(2) at the end of Section~\ref{sec:gap}). The plane over a
+number field contains every rational rotation. We add one with another prime, $\sigma=\frac{3+2i}{3-2i}=
+\frac{5+12i}{13}$ (in this section $\sigma$ is this rotation, not the automorphism of Section~\ref{sec:three}), and for
 $k,m\ge0$ put
 \begin{align*}
 G(k,m)&=\{i^a\rho^j\sigma^l:\ a\in\Z,\ |j|\le k,\ |l|\le m\},\\
@@ -987,18 +993,21 @@ are affine functions; two different vectors give disjoint polygons, as some func
 different strips. So the connected components of $S^\theta(k,m)$ correspond to the index vectors that occur, and a
 point of $S^\theta(k,m)$ lies in $S^{\theta'}(k,m)$ for $\theta'<\theta$, with the same strip indices. As
 $65\gamma\in\Z[i]$ for $\gamma\in G(1,1)$, $S^\theta(1,1)$ is invariant under translation by $65\Z[i]$; its \emph{type
-points} are $65h$ and $\frac{65}3(\alpha+\beta i)$, $\alpha,\beta\in\{1,2\}$.
+points} are the points of $65h+65\Z[i]$ and of $\frac{65}3(\alpha+\beta i)+65\Z[i]$, $\alpha,\beta\in\{1,2\}$.
 
 \begin{proposition}[computer-assisted]\label{prop:window}
-Let $\frac27<\theta\le\frac13$ and $c\in S^\theta(1,1)$. Then there are a type point $c_0$ and $m\in\Z[i]$ such that
-$c$ and $c_0+65m$ have the same strip index at every $\gamma\in G(1,1)$.
+Let $\frac27<\theta\le\frac13$ and $c\in S^\theta(1,1)$. Then there is a type point $c_0$ such that $c$ and $c_0$
+have the same strip index at every $\gamma\in G(1,1)$.
 \end{proposition}
 
 \begin{proof}
 Let $r_0=\frac7{25}<\frac27$; then $S^\theta(1,1)\subseteq S^{r_0}(1,1)$. As $\operatorname{Re}(\bar c\cdot
 i\gamma)=-\operatorname{Im}(\bar c\gamma)$ and $[\theta,1-\theta]+\Z$ is symmetric, only the $18$ functionals
 $\operatorname{Re}(\bar c\gamma)$ and $\operatorname{Im}(\bar c\gamma)$ with $\gamma=\rho^j\sigma^l$, $|j|,|l|\le1$,
-matter. The proof is a finite computation with exact certificates of two kinds (Section~\ref{sec:checks}).
+matter: at a point of $S^{r_0}(1,1)$ and at a type point no value $\operatorname{Re}(\bar c\gamma)$ is an integer, so
+$n_{-\gamma}=-n_\gamma-1$ and $n_{i\gamma}=-n_{-i\gamma}-1$, and the strip indices at these $18$ functionals determine
+those at all $36$ rotations. The proof is a finite computation with exact certificates of two kinds
+(Section~\ref{sec:checks}).
 
 \emph{Completeness.} After a translation by $65\Z[i]$, $c$ lies in a cell $[a+r_0,a+1-r_0]\times[b+r_0,b+1-r_0]$
 with $0\le a,b\le64$, which fixes the strip indices at $\gamma=1$ and $\gamma=-i$. For each of the other $16$
@@ -1006,20 +1015,23 @@ functionals, in a fixed order, the possible strip indices are the integers $n$ f
 range of the functional on the cell. A tree lists, for each cell and each branch, every possible index either as a
 branch to follow or as closed; a closed branch carries a Farkas certificate: three inequalities valid on the branch
 (sides of the cell, and sides of the strips chosen so far) and rational multipliers $\lambda\ge0$ whose combination
-reads $0\le-\epsilon$ for some rational $\epsilon>0$. The open branches end in $13$ leaves ($15\,620$ branch nodes,
+is a false inequality between rational constants. The open branches end in $13$ leaves ($15\,620$ branch nodes,
 $4\,364$ closed branches), so every $c\in S^{r_0}(1,1)$ has, up to $65\Z[i]$, one of $13$ explicit index vectors.
 
 \emph{The $13$ vectors.} Five are those of the type points. Each of the other eight comes with three of its margins
-$\mu_1,\mu_2,\mu_3$ and rationals $\lambda_1,\lambda_2,\lambda_3\ge0$ with $\sum\lambda_i=1$ and
-$\sum\lambda_i\mu_i=\frac27$ identically (the linear parts cancel). At a point of $S^\theta(1,1)$ every margin is at
+$\psi_1,\psi_2,\psi_3$ and rationals $\lambda_1,\lambda_2,\lambda_3\ge0$ with $\sum\lambda_i=1$ and
+$\sum\lambda_i\psi_i=\frac27$ identically (the linear parts cancel). At a point of $S^\theta(1,1)$ every margin is at
 least $\theta>\frac27$, so no such point has one of these eight vectors.
 \end{proof}
 
 The eight vectors excluded at the end are those of the $7$-torsion points $\frac{65}7(a+bi)$ with
-$(a,b)\in\{(1,2),(1,5),(2,1),(2,6),(5,1),(5,6),(6,2),(6,5)\}$, at which the least margin is exactly $\frac27$. They
-are the characters of the $7$-adic colourings of Proposition~\ref{prop:C1} (the map $\lambda(a+bi)=2a+3b$ gives
-$\frac{65}7(1+5i)$), and as they are characters of all of $\Q(i)$, the bound $\frac27$ is optimal for every finite
-set of rotations. Both primes are needed, and so are the mixed rotations: with the primes $13$ and $17$ the
+$(a,b)\in\{(1,2),(1,5),(2,1),(2,6),(5,1),(5,6),(6,2),(6,5)\}$, at which the least margin is exactly $\frac27$. On
+$G(1,1)$ they give the characters of the $7$-adic colourings of Proposition~\ref{prop:C1} (the map
+$\lambda(a+bi)=2a+3b$ gives $\frac{65}7(1+5i)$). The bound $\frac27$ is optimal for every finite set of rational
+rotations: their denominators are prime to $7$ (as $7\equiv3\pmod4$), and if $D$ is a common denominator,
+$d\equiv D^{-1}\pmod7$ and $\lambda(a+bi)=sa+tb$ is a map as in Proposition~\ref{prop:C1} with values in
+$\{2,3,4,5\}$ on $\mu_8$, then at each of these rotations $\gamma$ the point $Dd(s+ti)/7$ has the value
+$\lambda(\gamma\bmod7)/7$, whose distance to $\Z$ is at least $\frac27$. Both primes are needed, and so are the mixed rotations: with the primes $13$ and $17$ the
 corresponding window keeps $12$ other components above $\frac27$ (some with largest least margin $\frac25$), and the
 rotations $1$, $\rho^{\pm1}$, $\sigma^{\pm1}$ alone keep $180$ other components (some with largest least margin
 $\frac{55}{144}>\frac13$); the primes $5$ and
@@ -1045,11 +1057,11 @@ so $\nu_j$ depends only on the strip indices of $C$ at $\rho^{j-1}$, $-i\rho^{j-
 $c\in\C$ we define $n_t(c)=n_{\rho^t}(c)+i\,n_{-i\rho^t}(c)$, $g_t(c)=\bar c\rho^t-h-n_t(c)$ and
 $\nu_t(c)=g_t(c)-\rho g_{t-1}(c)=(\rho-1)h+\rho n_{t-1}(c)-n_t(c)$ in the same way.
 
-\emph{Type points.} Let $m\in\Z[i]$ and $|t|\le1$. If $c_0=65h$, then $65\rho^t$ is a Gaussian integer of odd norm,
-so $\overline{c_0+65m}\,\rho^t\equiv h\pmod{\Z[i]}$, as in Lemma~\ref{lem:values}(ii), and $\nu_0=\nu_1=0$ at
-$c_0+65m$. If $c_0=\frac{65}3(\alpha+\beta i)$, then $\overline{c_0+65m}\,\rho^t\equiv\frac{\alpha-\beta i}3u_t
-\pmod{\Z[i]}$ with $u_t\equiv65\rho^t\equiv-(-i)^t\pmod3$, as $65\equiv-1$ and $\rho\equiv-i\pmod3$. So
-$g_t=\eta_t/6$ at $c_0+65m$, with $\eta_t\in\{\pm1\pm i\}$ and $\eta_{t+1}=-i\eta_t$ (as $-ih\equiv h$), and
+\emph{Type points.} Let $|t|\le1$. If $c_0\in65h+65\Z[i]$, then, as $65\rho^t$ is a Gaussian integer of odd norm,
+$\bar c_0\rho^t\equiv h\pmod{\Z[i]}$ (as in Lemma~\ref{lem:values}(ii)), and $\nu_0(c_0)=\nu_1(c_0)=0$. If
+$c_0\in\frac{65}3(\alpha+\beta i)+65\Z[i]$, then $\bar c_0\rho^t\equiv\frac{\alpha-\beta i}3u_t\pmod{\Z[i]}$ with
+$u_t\equiv65\rho^t\equiv-(-i)^t\pmod3$, as $65\equiv-1$ and $\rho\equiv-i\pmod3$. So $g_t(c_0)=\eta_t/6$, with
+$\eta_t\in\{\pm1\pm i\}$ and $\eta_{t+1}=-i\eta_t$ (as $-ih\equiv h$), and
 \[
 \nu_t=\frac{\eta_t-\rho\eta_{t-1}}6=-\frac{(i+\rho)\,\eta_{t-1}}6=-\frac{1+3i}{10}\,\eta_{t-1}\ne0,\qquad
 \nu_1=-i\nu_0.
@@ -1057,8 +1069,8 @@ $g_t=\eta_t/6$ at $c_0+65m$, with $\eta_t\in\{\pm1\pm i\}$ and $\eta_{t+1}=-i\et
 
 \emph{Windows.} Let $-k<j<k$ and $c=\rho^{-j}C$, so that $\bar c=\rho^j\bar C$. For $\gamma\in G(1,1)$ we have
 $\rho^j\gamma\in G(k,1)$, so $c\in S^\theta(1,1)$, and by Proposition~\ref{prop:window} $c$ has the strip indices
-of some $c_0+65m$. The strip indices of $c$ at $\rho^t$ and $-i\rho^t$ are those of $C$ at $\rho^{j+t}$ and
-$-i\rho^{j+t}$; so $(\nu_j,\nu_{j+1})=(\nu_0(c_0+65m),\nu_1(c_0+65m))$, which is $(0,0)$ or $(\nu,-i\nu)$ with
+of some type point $c_0$. The strip indices of $c$ at $\rho^t$ and $-i\rho^t$ are those of $C$ at $\rho^{j+t}$ and
+$-i\rho^{j+t}$; so $(\nu_j,\nu_{j+1})=(\nu_0(c_0),\nu_1(c_0))$, which is $(0,0)$ or $(\nu,-i\nu)$ with
 $\nu=-\frac{1+3i}{10}\eta$, $\eta\in\{\pm1\pm i\}$.
 
 \emph{Pure words.} The pairs $(\nu_j,\nu_{j+1})$, $-k<j<k$, cover $\nu_{1-k},\dots,\nu_k$, and consecutive pairs
@@ -1091,7 +1103,7 @@ be finite and contain a $\Q(i)$-basis $b_1,\dots,b_n$ of $L$, write $D_vv=\sum_j
 Lemma~\ref{lem:B1}, and choose $N=5^k>6r_\theta\max_v(|D_v|+\sum_j|\mu_{v,j}|)$. Take $U=G(k,1)V$ in place of $G_NV$:
 it is finite, symmetric and consists of unit vectors, so Theorem~W$^+$ gives a character $\xi$ of $\Z U$ with
 $\xi(U)\subseteq[\theta,1-\theta]+\Z$, and the proof of Lemma~\ref{lem:B1} gives a $\Q(i)$-linear map
-$\varphi:L\to\C$ with $\xi(\gamma v)=\operatorname{Re}(\gamma\varphi(v))$ for $v\in V$ and $\gamma\in G(k,1)$. So
+$\varphi:L\to\C$ with $\xi(\gamma v)=\operatorname{Re}(\gamma\varphi(v))\bmod1$ for $v\in V$ and $\gamma\in G(k,1)$. So
 $C=\overline{\varphi(v)}$ satisfies the hypothesis of Lemma~\ref{lem:window}, and $\varphi(v)=N\varepsilon_v+x_v$ with
 $\varepsilon_v\in E$ (which is closed under conjugation) and $|x_v|\le r_\theta$. As in the proof of
 Theorem~\ref{thm:D}, Lemma~\ref{lem:exact} with $r_\theta$ in place of $r$ gives the conclusion of
@@ -1113,7 +1125,8 @@ A'_7=\{e\in\F_{49}:\ \operatorname{Re}(\bar ez)\in\{2,3,4,5\}\text{ for every }z
 \]
 where $\operatorname{Re}(a+bi)=a$ for $a,b\in\F_7$. Elements of $E_7=\{\varepsilon\in\frac17\Z[i]:\
 7\varepsilon\bmod7\in A'_7\}$ have \emph{type~$7$}; let $E'=E\cup E_7$, so that $42E'\subseteq\Z[i]$. For
-$\varepsilon\in E_7$ the character $a\mapsto\operatorname{Re}(\bar\varepsilon a)$ of $\Z_{(7)}[i]$ takes values in
+$\varepsilon\in E_7$ the character $a\mapsto\operatorname{Re}(\bar\varepsilon\tilde a)\bmod1$ of $\Z_{(7)}[i]$, where
+$\tilde a\in\Z[i]$ is congruent to $a$ modulo $7\Z_{(7)}[i]$ (it factors through $\F_{49}$), takes values in
 $\frac17\{2,3,4,5\}+\Z$ at every rational rotation: these are the characters of the $7$-adic colourings of
 Proposition~\ref{prop:C1}. Let $\tilde\rho=2+5i$, and for $j\in\Z$ let $\zeta_j(\varepsilon)\in\{\pm\frac1{14},
 \pm\frac3{14}\}^2$ be given by $\bar\varepsilon\tilde\rho^{\,j}\in h+\zeta_j(\varepsilon)+\Z[i]$ (with $\tilde\rho^{\,j}$
@@ -1128,25 +1141,28 @@ $\mu_8$-orbit, it is closed under conjugation, its elements add up to $0$, and $
 \textup{(iii)} $\operatorname{Re}(A'_7)=\{2,3,4,5\}$.
 
 \textup{(iv)} For $\varepsilon\in E_7$ the digits $\zeta_j(\varepsilon)-\rho\zeta_{j-1}(\varepsilon)$ form a sequence of
-period $8$ in which the digit $0$ alternates with digits $u\frac{2+i}5$, $u\in\mu_4$; the eight classes of $E_7$
-modulo $\Z[i]$ give its eight shifts. Two consecutive digits of a sequence of type c \textup{(}all digits
+period $8$ in which the digit $0$ alternates with digits $u\frac{2+i}5$, $u\in\mu_4\subset\C$; the eight classes of
+$E_7$ modulo $\Z[i]$ give its eight shifts, as $\zeta_t(\varepsilon')=\zeta_{t+j}(\varepsilon)$ when
+$7\varepsilon'\equiv7\varepsilon\,\overline{\tilde\rho}^{\,j}\pmod7$ \textup{(}$\tilde\rho\,\overline{\tilde\rho}\equiv1
+\pmod7$\textup{)}. Two consecutive digits, at given positions, of a sequence of type c \textup{(}all digits
 $0$\textup{)}, q \textup{(}the digits of the proof of Lemma~\ref{lem:window}, all nonzero\textup{)} or $7$ determine its
-type and its shift.
+type and its class.
 \end{lemma}
 
 \begin{proof}
 A direct computation in $\F_{49}$ (two programs written separately; Section~\ref{sec:checks}).
 \end{proof}
 
-Let $N_0=5^2\cdot13=325$. The set $S^\theta(2,1)$ is invariant under $325\Z[i]$, and its \emph{type points} are
-$325h$ (type c), $\frac{325}3(\alpha+\beta i)$ with $\alpha,\beta\in\{1,2\}$ (type q), and the eight points
-$\frac{325}7(a+bi)$, $0\le a,b\le6$, with $3(a+bi)\bmod7\in A'_7$ (type $7$). As $325\equiv3\pmod7$, a point of type
+The set $S^\theta(2,1)$ is invariant under $325\Z[i]$, and its \emph{type points} are the points of $325h+325\Z[i]$
+(type c), of $\frac{325}3(\alpha+\beta i)+325\Z[i]$ with $\alpha,\beta\in\{1,2\}$ (type q), and of
+$\frac{325}7(a+bi)+325\Z[i]$, $0\le a,b\le6$, with $3(a+bi)\bmod7\in A'_7$ (type $7$; eight classes). As $325\equiv3\pmod7$, a point of type
 $7$ has at $\rho^t$, $|t|\le2$, the values of the character of an element of $E_7$; its least margin is $\frac27$.
 Strip indices are floors, so they are defined at these points also for $\theta>\frac27$.
 
 \begin{proposition}[computer-assisted]\label{prop:window7}
-Let $\frac14<\theta\le\frac13$ and $c\in S^\theta(2,1)$. Then there are a type point $c_0$, of type c, q or $7$,
-and $m\in\Z[i]$ such that $c$ and $c_0+325m$ have the same strip index at every $\gamma\in G(2,1)$.
+Let $\frac14<\theta\le\frac13$ and $c\in S^\theta(2,1)$. Then there is a type point $c_0$, of type c, q or $7$,
+such that $c$ and $c_0$ have the same strip index at every $\gamma\in G(2,1)$. If $\theta>\frac27$, then $c_0$ has
+type c or q.
 \end{proposition}
 
 \begin{proof}
@@ -1154,7 +1170,9 @@ As for Proposition~\ref{prop:window}, with $r_0=\frac{249}{1000}<\frac14$ and th
 rotations $\rho^j\sigma^l$, $|j|\le2$, $|l|\le1$: the tree over the $325^2$ cells has $550\,474$ branch nodes,
 $199\,920$ closed branches and $29$ leaves. Of the $29$ index vectors, five are those of the points of type c and q,
 eight those of the points of type $7$, and each of the other $16$ has a certificate $\lambda\ge0$, $\sum\lambda_i=1$,
-$\sum\lambda_i\mu_i=\frac14$ on three margins, which excludes it for $\theta>\frac14$.
+$\sum\lambda_i\psi_i=\frac14$ on three margins, which excludes it for $\theta>\frac14$. Each of the eight vectors of
+type $7$ has a certificate of the same kind with $\sum\lambda_i\psi_i=\frac27$, which excludes it for
+$\theta>\frac27$; these certificates use margins at the rotations $\rho^{-2}\sigma^l$, outside $G(1,1)$.
 \end{proof}
 
 The $16$ excluded vectors are $2$-adic: their largest least margin $\frac14$ is attained at $4$- and $8$-torsion
@@ -1163,14 +1181,15 @@ $\chi_c(\Q(\sqrt{59})^2)=4$. The window $G(1,1)$ does not suffice below $\frac27
 components, with largest least margins $\frac{11}{42}$ and $\frac{25}{96}$.
 
 \begin{lemma}\label{lem:window7}
-Let $\frac14<\theta\le\frac13$, $k\ge1$ with $6\mid k$ \textup{(}so that $N=5^k\equiv1\pmod7$\textup{)}, and let
-$C\in\C$ satisfy $\operatorname{Re}(\bar C\gamma)\in[\theta,1-\theta]+\Z$ for every $\gamma\in G(k,1)$. Then $C$ is as
-in the conclusion of Lemma~\ref{lem:window}, or $C\in N\varepsilon+X_k(\varepsilon)+N\Z[i]$ for some
-$\varepsilon\in E_7$, where
+Let $\frac14<\theta\le\frac13$, let $k$ be a positive multiple of $6$ \textup{(}so that $N=5^k\equiv1\pmod7$\textup{)},
+and let $C\in\C$ satisfy $\operatorname{Re}(\bar C\gamma)\in[\theta,1-\theta]+\Z$ for every $\gamma\in G(k,1)$. Then
+$C\in N\varepsilon+P_k+N\Z[i]$ for some $\varepsilon\in E_c$, or $C\in N\varepsilon+Y_k(\varepsilon)+N\Z[i]$ for some
+$\varepsilon\in E_q$, or $C\in N\varepsilon+Y^7_k(\varepsilon)+N\Z[i]$ for some $\varepsilon\in E_7$, where
 \[
-X_k(\varepsilon)=\{x\in\C:\ \zeta_j(\varepsilon)+\bar x\rho^j\in B_s\text{ for }|j|\le k\}.
+Y^7_k(\varepsilon)=\{x\in\C:\ \zeta_j(\varepsilon)+\bar x\rho^j\in B_s\text{ for }|j|\le k\};
 \]
-In every case $C=N\varepsilon+x$ with $\varepsilon\in E'$ and $|x|\le r'=(\frac14+\frac3{14})\sqrt2<0.66$.
+the third case does not occur if $\theta>\frac27$. In every case $C=N\varepsilon+x$ with $\varepsilon\in E'$ and
+$|x|\le r'=(\frac14+\frac3{14})\sqrt2<0.66$.
 \end{lemma}
 
 \begin{proof}
@@ -1180,14 +1199,20 @@ $\nu_{j-1},\nu_j,\nu_{j+1},\nu_{j+2}$ of $C$ are those of a type point at $t=-1,
 $325\rho^t\in\Z[i]$ has odd norm; $(\nu,-i\nu,-\nu,i\nu)$ with $\nu\ne0$ for type q, as in the proof of
 Lemma~\ref{lem:window}, now with $325\equiv1\pmod3$; and four consecutive digits of the sequence of
 Lemma~\ref{lem:seven}(iv) for type $7$, as the values of such a point at $\rho^t$ are those of a character of type $7$.
-The windows cover $\nu_{1-k},\dots,\nu_k$, and consecutive windows share three digits. By Lemma~\ref{lem:seven}(iv),
-all digits of $C$ are of one type: all $0$, all of type q, or $2k$ consecutive digits of the sequence of one class
-$\varepsilon\in E_7$. In the first two cases the identification is that of Lemma~\ref{lem:window}. In the third,
+The windows cover $\nu_{1-k},\dots,\nu_k$, and consecutive windows share three digits, which are, in each window, at
+given positions. By Lemma~\ref{lem:seven}(iv) two of them determine the type and the class of each window: if the
+window at $j$ has type $7$ and class $\varepsilon_j$ (its digits are those of $\varepsilon_j$ at the positions
+$-1,0,1,2$), then the window at $j+1$ has type $7$ and the class $\varepsilon_{j+1}$ with
+$7\varepsilon_{j+1}\equiv7\varepsilon_j\overline{\tilde\rho}\pmod7$, and likewise for the types c and q. So all
+digits of $C$ are of one type: all $0$, all of type q, or $\nu_j=\zeta_j(\varepsilon)-\rho\zeta_{j-1}(\varepsilon)$ for
+$1-k\le j\le k$ and one class $\varepsilon\in E_7$ (the class of the window at $0$); by Proposition~\ref{prop:window7},
+the last case does not occur if $\theta>\frac27$. In the first two cases the identification is that of
+Lemma~\ref{lem:window}. In the third,
 $N\rho^j\in\Z[i]$ and $N\rho^j\equiv\tilde\rho^{\,j}\pmod7$ for $|j|\le k$, as $N\equiv1\pmod7$; so
-$\overline{N\varepsilon}\,\rho^j=\bar\varepsilon N\rho^j\in h+\zeta_j(\varepsilon)+\Z[i]$. The digits of $C$ are
-$\zeta_j(\varepsilon)-\rho\zeta_{j-1}(\varepsilon)$, so $g_j-\zeta_j(\varepsilon)=\rho(g_{j-1}-\zeta_{j-1}(\varepsilon))$,
+$\overline{N\varepsilon}\,\rho^j=\bar\varepsilon N\rho^j\in h+\zeta_j(\varepsilon)+\Z[i]$. As the digits of $C$ are
+$\zeta_j(\varepsilon)-\rho\zeta_{j-1}(\varepsilon)$, $g_j-\zeta_j(\varepsilon)=\rho(g_{j-1}-\zeta_{j-1}(\varepsilon))$,
 and with $x=\overline{g_0-\zeta_0(\varepsilon)}$ we get $g_j=\zeta_j(\varepsilon)+\bar x\rho^j$ for $|j|\le k$. So
-$x\in X_k(\varepsilon)$, $\bar C\rho^j\equiv\overline{N\varepsilon+x}\,\rho^j\pmod{\Z[i]}$, and
+$x\in Y^7_k(\varepsilon)$, $\bar C\rho^j\equiv\overline{N\varepsilon+x}\,\rho^j\pmod{\Z[i]}$, and
 $C-N\varepsilon-x\in N\Z[i]$ as before. Finally $|x|$ is at most $s\sqrt{10}/3$, $\sqrt2\,\delta$, resp.\
 $|g_0|+|\zeta_0(\varepsilon)|\le\sqrt2(s+\frac3{14})$, each less than $r'$ as $s<\frac14$.
 \end{proof}
@@ -1227,10 +1252,10 @@ j\}$, which is compact. On $\{\mathrm c,\mathrm q,7\}^T\times K_2\times K_3\time
 \end{align*}
 These conditions are clopen, Lemma~\ref{lem:B1seven} and the local properties of $E_c$, $E_q$ and $E_7$ give the finite
 intersection property, and so some $(\tau,\beta_2,\beta_3,\beta_7)$ satisfies $P_v$ for every $v\in T$. With $a$,
-$a'$, $b$, $b'$ as in the proof of Lemma~\ref{lem:B2}, let $d(x)$ and $d'(x)$, for $x\in T_7$, be the statements
-$\Tr(\beta_7x)\in O_7$ and $\Tr(\beta_7x)\in\cA_7$; they exclude each other, as $0\notin A'_7$. The set of
-$(z,y,x)\in T_2\times T_3\times T_7$ with $(a(z)\wedge b(y)\wedge d(x))\vee(a'(z)\wedge b'(y)\wedge d(x))\vee
-(a'(z)\wedge b(y)\wedge d'(x))$ is clopen and contains the diagonal image of $T$, which is dense by
+$a'$, $b$, $b'$ as in the proof of Lemma~\ref{lem:B2}, let $d(z_7)$ and $d'(z_7)$, for $z_7\in T_7$, be the statements
+$\Tr(\beta_7z_7)\in O_7$ and $\Tr(\beta_7z_7)\in\cA_7$; they exclude each other, as $0\notin A'_7$. The set of
+$(z_2,z_3,z_7)\in T_2\times T_3\times T_7$ with $(a(z_2)\wedge b(z_3)\wedge d(z_7))\vee(a'(z_2)\wedge b'(z_3)\wedge
+d(z_7))\vee(a'(z_2)\wedge b(z_3)\wedge d'(z_7))$ is clopen and contains the diagonal image of $T$, which is dense by
 Lemma~\ref{lem:WA}; so it is everything. If $a(z_0)$ holds for some $z_0$, then $b$ and $d$ hold everywhere, so $b'$
 and $d'$ hold nowhere, and $a$ holds everywhere: this is (c). Otherwise $a'$ holds everywhere. If $b'(y_0)$ holds for
 some $y_0$, then $d$ holds everywhere, so $d'$ holds nowhere, and $b'$ holds everywhere: this is (q). Otherwise $b$
@@ -1243,7 +1268,7 @@ $f$ is even, then $i\in F_u$ and $g_u=0$, exactly as for even $f$ in Section~\re
 $3^m$). If $f$ is odd, $L_u=F_u(i)=F_u\Q_{49}$ is a field, unramified of degree $2$ over $F_u$, with residue field
 $\F_{q^2}$; its non-trivial automorphism acts on $\Q_{49}$ as the Frobenius; $T(F_u)$ lies in $O_{L_u}^\times$,
 contains the Teichm\"uller lifts of $\mu_{q+1}$, among them $\mu_8\subset\Q_{49}$ (as $8\mid q+1$), and reduces onto
-$\mu_{q+1}$; and $g_u(\zeta z)=\zeta g_u(z)$ for $\zeta\in\mu_8$.
+$\mu_{q+1}$; and $g_u(\omega z)=\omega g_u(z)$ for $\omega\in\mu_8$.
 
 \begin{lemma}[one place]\label{lem:B3seven}
 In case \textup{(7$'$)} there are a place $u_0\mid7$ of odd residue degree and $\beta\in L_{u_0}$ with
@@ -1256,9 +1281,9 @@ gives $g_u(z)-g_u(z')\in\cA_7-\cA_7\subseteq\frac17O_7$; with $z'=1$ and $z=i$, 
 $g_u(T(F_u))\subseteq\frac17O_7$. Let $Z_u\subseteq\F_{49}$ be the set of residues of $7g_u(z)$, $z\in T(F_u)$; it is
 stable under $\mu_8$, and $\sum_uz_u\in A'_7$ for every choice of $z_u\in Z_u$. Suppose two places $u\ne u'$ had
 nonzero elements $w\in Z_u$ and $w'\in Z_{u'}$. Fix $z_{u''}\in Z_{u''}$ at the other places and put
-$c=\zeta'w'+\sum z_{u''}$ with $\zeta'\in\mu_8$. The eight distinct elements $c+\zeta w$, $\zeta\in\mu_8$, lie in
-$A'_7$, which has eight elements; so they are all of $A'_7$, and summing them gives $8c=c=\sum A'_7=0$
-(Lemma~\ref{lem:seven}(i)). As this holds for every $\zeta'\in\mu_8$, $w'=0$: a contradiction. Since $0\notin A'_7$,
+$e_0=\omega'w'+\sum z_{u''}$ with $\omega'\in\mu_8$. The eight distinct elements $e_0+\omega w$, $\omega\in\mu_8$, lie
+in $A'_7$, which has eight elements; so they are all of $A'_7$, and summing them gives $8e_0=e_0=\sum A'_7=0$
+(Lemma~\ref{lem:seven}(i)). As this holds for every $\omega'\in\mu_8$, $w'=0$: a contradiction. Since $0\notin A'_7$,
 exactly one place $u_0$ has $Z_{u_0}\ne\{0\}$, and it has odd residue degree; the other $g_u$ take values in $O_7$,
 and $\beta=\beta_{u_0}$ works, because $\cA_7+O_7=\cA_7$.
 \end{proof}
@@ -1272,7 +1297,7 @@ $\lambda_1(\mu_{q+1})\subseteq A'_7$.
 
 \begin{proof}
 The proof of Lemma~\ref{lem:B4} applies with $7$, $\Q_{49}$, $\F_{49}$ and $A'_7$ in place of $3$, $\Q_9$, $\F_9$ and
-$A'$: it uses that the prime is odd, that the order of $7$ modulo $q+1$ is $2f$, and, at the end,
+$A'$ (there $\sigma$ is the automorphism of $L_u/F_u$): it uses that the prime is odd, that the order of $7$ modulo $q+1$ is $2f$, and, at the end,
 Lemma~\ref{lem:seven}(ii) in place of the fact that $A'$ contains no coset of a nonzero subgroup of $\F_9$.
 \end{proof}
 
@@ -1290,7 +1315,8 @@ $\kappa_1>0$ for the unramified extension of $\Q_7$ of degree $f$, and Propositi
 \begin{proof}[Proof of Theorem~\ref{thm:F}]
 If (a) holds, $\chi_c(F^2)=\chi(F^2)=2$. If (b) holds and (a) fails, $\chi(F^2)=3$ by Theorem~\ref{thm:B}, so
 $\chi_c(F^2)=3$ by Corollary~\ref{cor:B6}. If (7) holds and (a), (b) fail, $\chi(F^2)\ge4$ by Theorem~\ref{thm:B}, so
-$\chi_c(F^2)\ge7/2$ by Theorem~\ref{thm:E}, and $\chi_c(F^2)\le7/2$ by Proposition~\ref{prop:C1}, as a place above
+$\chi_c(F^2)\ge7/2$ by Theorem~\ref{thm:E} (which also follows from Proposition~\ref{prop:window7}; Remark~(1)
+below), and $\chi_c(F^2)\le7/2$ by Proposition~\ref{prop:C1}, as a place above
 $7$ of residue degree $1$ has residue field $\F_7$.
 
 It remains to show that if $F^2$ has a homomorphism to $K_{p/q}$ with $p/q<4$, then (a), (b) or (7) holds; then
@@ -1301,20 +1327,60 @@ as in the proof of Theorem~\ref{thm:B}. In case (7$'$), Lemmas~\ref{lem:B3seven}
 and~\ref{lem:B5seven} give a place above $7$ of residue degree $1$: this is (7).
 \end{proof}
 
-\begin{remark}
-(1) Theorem~\ref{thm:E} also follows from Proposition~\ref{prop:window7}: the eight index vectors of type $7$ have
-largest least margin exactly $\frac27$, so for $\theta>\frac27$ only types c and q remain, and
-Lemma~\ref{lem:window7} gives the conclusion of Lemma~\ref{lem:B1}. So Theorem~\ref{thm:E} has two computer-assisted
-proofs, through different sets of rotations.
+\begin{corollary}[local fields]\label{cor:localF}
+Let $K$ be a finite extension of $\Q_p$. Then $\chi_c(K^2)=2$ if $p=2$ and $K(i)/K$ is ramified; $\chi_c(K^2)=3$ if
+$p=3$ and $K$ has residue degree $1$; $\chi_c(K^2)=7/2$ if $p=7$ and $K$ has residue degree $1$; and
+$\chi_c(K^2)\ge4$ in every other case. Consequently, for every number field $F$,
+\[
+\min\bigl(\chi_c(F^2),4\bigr)=\min\Bigl(4,\ \min_v\chi_c(F_v^2)\Bigr),
+\]
+the inner minimum over all places $v$ of $F$: below $4$, the circular chromatic number of the plane over a number
+field is the least circular chromatic number of the planes over its completions.
+\end{corollary}
 
-(2) A second prime is needed. Besides the $5$-adic points of the Remark in Section~\ref{sec:gap}, the one-prime probe
+\begin{proof}
+In the first three cases the upper bounds are the colourings of Corollary~\ref{cor:local} (for $p=2$ and $p=3$) and
+of Proposition~\ref{prop:C1}, which colour $K^2$ itself. The lower bounds: a bipartite plane with an edge has
+$\chi_c=2$; for $p=3$, $K\supseteq\Q_3\supset\Q(\sqrt7)$ and $\chi_c(\Q(\sqrt7)^2)=3$ by Corollary~\ref{cor:B6}, as
+$\chi(\Q(\sqrt7)^2)=3$; for $p=7$, Corollary~\ref{cor:sevenhalves}. In the other cases, if $i\in K$ then
+$\chi(K^2)=\infty$. Otherwise we find, as in the proof of Corollary~\ref{cor:local}, a number field $F\subset K$ for
+which (a), (b) and (7) fail; then $\chi_c(K^2)\ge\chi_c(F^2)\ge4$ by Theorem~\ref{thm:F}. The construction there
+works with $\Q_7$ added to the primes $p$, $p'$ (and with $7$ in the role of $p$ when $p=7$): over $\Q_7$ take a
+product of distinct irreducible quadratics whose roots generate $\Q_{49}$, so that the places of $F$ above $7$ contain
+$i$; over $\Q_p$ take $h_Kh'$ as there, where for $p=7$ the factor $h'$ consists of such quadratics and, if
+$[K:\Q_7]$ is odd, one cubic factor generating the unramified cubic extension of $\Q_7$; and choose the auxiliary
+prime of the irreducibility condition outside $\{2,3,7,p\}$. If $p\notin\{2,3,7\}$, take over $\Q_p$ the polynomial
+$h_K$ times distinct linear factors coprime to it, to adjust the degree. Then every place of $F$ above $2$ contains $i$ or is the
+place giving $K$, where $K(i)/K$ is unramified; every place above $3$ contains $i$ or has residue degree at least $3$;
+and every place above $7$ contains $i$ or has odd residue degree at least $3$.
+
+For the last statement, $F^2\subseteq F_v^2$ gives $\chi_c(F^2)\le\chi_c(F_v^2)$ for every $v$. If $\chi_c(F^2)<4$,
+Theorem~\ref{thm:F} gives (a), (b) or (7), with $\chi_c(F^2)=2$, $3$ or $7/2$ accordingly, and the completion at the
+corresponding place has the same value by the first part.
+\end{proof}
+
+For example $\chi_c(\Q_{19}^2)$ and $\chi_c(\Q(\sqrt{47})^2)$ lie in $[4,19/4]$: the lower bound is
+Corollary~\ref{cor:localF}, resp.\ Theorem~\ref{thm:F}, and the upper bound is Proposition~\ref{prop:C1} at $19$,
+where $\kappa_1=4/19$ (as $47\equiv3^2\pmod{19}$, $\sqrt{47}\in\Q_{19}$). The same holds for $\Q(\sqrt5,\sqrt7)$. So if
+$\chi(\Q(\sqrt{47})^2)=5$, which is open \cite{Moorhouse}, its circular chromatic number lies in $(4,19/4]$ and is not
+an integer.
+
+
+\begin{remark}
+(1) Theorem~\ref{thm:E} also follows from Proposition~\ref{prop:window7}: for $\theta>\frac27$ it leaves only the types
+c and q, so Lemma~\ref{lem:window7} (with $6\mid k$) gives the conclusion of Lemma~\ref{lem:window}, and the proof of
+Theorem~\ref{thm:E} goes through. The certificates that exclude the vectors of type $7$ there use rotations outside
+$G(1,1)$, so they are not those of Proposition~\ref{prop:window}. Hence Theorem~\ref{thm:F} rests on
+Proposition~\ref{prop:window7} alone, and Theorem~\ref{thm:E} on either proposition.
+
+(2) A second prime is needed. Besides the $5$-adic points of Remark~(2) in Section~\ref{sec:gap}, the one-prime probe
 has torsion characters $a\mapsto\operatorname{Re}(\bar c\tilde a)$ of $\Z[\frac15][i]$, where $c\in\frac1M\Z[i]$, $5\nmid M$,
 and $\tilde a$ is the residue of $a$ modulo $M$. For $M\le400$, those other than the characters of type c and q that
 keep every $i^a\rho^j$ at margin greater than $\frac27$ have order $41$ (largest least margin $\frac{12}{41}$, at
 $c=\frac{12+12i}{41}$; $\rho$ has order $5$ modulo $41$) or $76$ (largest least margin $\frac{11}{38}$). For
-$M\le400$ prime to $65$, none of them keeps every element of $\langle i,\rho,\sigma\rangle$ at margin greater than
-$\frac27$; and for $k\le5$ every translate $c_k+Nm$ of the points $c_k$ of that Remark has least margin at most
-$\frac{41}{250}$ on $G(k,1)$.
+$M\le300$ prime to $65$ (and $M\le400$, by a second program), no character of this kind other than those of type c and
+q keeps every element of $\langle i,\rho,\sigma\rangle$ at margin greater than $\frac27$; and for $k\le5$ every
+translate $c_k+Nm$ of the points $c_k$ of that Remark has least margin at most $\frac{41}{250}$ on $G(k,1)$.
 \end{remark}
 
 \section{Computer checks}\label{sec:checks}
@@ -1391,7 +1457,14 @@ for the eight components of type $7$, $\frac13$ and $\frac12$ for types q and c)
 for $\theta=\frac7{25}$ and $\theta=\frac27$, and $5$ for $\theta=0.2857143$, $\frac{1429}{5000}$, $\frac3{10}$ and
 $\frac13$. For Proposition~\ref{prop:window7}: the enumeration of the vertices of the arrangement in $[0,325)^2$ (in C
 with $128$-bit integers, each point rechecked with exact fractions), and lifting by rows; both give the same $29$
-index vectors for $\theta=r_0$ and the same $13$ for $\theta=\frac14+10^{-7}$. The conclusion of
+index vectors for $\theta=\frac{249}{1000}$ and the same $13$ for $\theta=\frac14+10^{-7}$. The eight dual
+certificates of value $\frac27$ for the vectors of type $7$ in Proposition~\ref{prop:window7} were added after the
+referees' reports, by a program of our own (an exact search among the margins that are active at the $7$-adic points),
+and are checked by a further program that rebuilds $325\rho^j\sigma^l$ as products of $2\pm i$ and $3\pm2i$; a referee
+had found the same value $\frac27$ by exact linear programming. Of the three methods for Lemma~\ref{lem:window7}, a
+referee also lifted $S^\theta(k,1)$ exactly to the levels $k=6$ and $k=12$ and found only the components of the
+stated form (and, at $k=5$, components of type $7$ not of that form, so the hypothesis $6\mid k$ is needed). The
+conclusion of
 Lemma~\ref{lem:window} was tested exactly at every level $k\le7$ for $\theta=\frac3{10}$ and $k\le6$ for
 $\theta=\frac{201}{700}$: modulo $13\cdot5^k$ there are exactly five components, all of the stated form, while for
 $\theta=\frac7{25}$ the test finds the eight components of type $7$ at each level $k\le3$. Lemma~\ref{lem:seven} was
@@ -1403,15 +1476,20 @@ to $400$, one of them counts each character at its exact order.
 \section{Questions}\label{sec:questions}
 
 \begin{enumerate}
-\item \emph{Above four.} By Theorem~\ref{thm:F} and Corollary~\ref{cor:localvalues}, below $4$ the value of
-$\chi_c(F^2)$ is the least value given by a locally constant homomorphism of one completion $F_v^2$ to a circular
-clique. Is this true above $4$? There Theorem~W$^+$ is not available: a homomorphism of a Cayley graph to $K_{p/q}$
-with $p/q\ge4$ need not come from a character.
+\item \emph{Above four.} By Theorem~\ref{thm:F} and Corollary~\ref{cor:localF}, below $4$ the value of
+$\chi_c(F^2)$ is the least value of $\chi_c(F_v^2)$ over the completions, and it is given by a locally constant
+homomorphism of one completion to a circular clique. Is this true above $4$? There Theorem~W$^+$ is not available: a
+homomorphism of a Cayley graph to $K_{p/q}$ with $p/q\ge4$ need not come from a character. In particular, is there a
+number field $F$ with $4<\chi_c(F^2)<5$? Every $F$ with $\chi(F^2)=5$ and a place of residue field $\F_{19}$ would be
+one, as $\kappa_1=4/19$ there gives $\chi_c\le19/4$; for example $\Q(\sqrt{47})$ if $\chi(\Q(\sqrt{47})^2)=5$. The
+$5$-chromatic unit-distance graphs we know lie over fields that contain $\sqrt3$, or $\sqrt{-3}$ and $\sqrt{-7}$,
+and $3$ and $-7$ are not squares modulo $19$.
 \item \emph{Four colours.} Is $\chi(F^2)$, in general, the least number of colours of a locally constant colouring
 of one completion? (For real fields this is \cite[Question~8]{TC}, which also allows Borel colourings at the real
 places.) Theorem~\ref{thm:B} answers this at three colours. The first open case is $\Q(\sqrt{47})$, where
 $4\le\chi\le5$ (\cite[Corollary~2]{FC} and \cite{Moorhouse}); by Theorem~\ref{thm:F}, $\chi_c(\Q(\sqrt{47})^2)\ge4$,
-so $\chi_c(\Q(\sqrt{47})^2)=4$ if and only if $\chi(\Q(\sqrt{47})^2)=4$.
+so $\chi_c(\Q(\sqrt{47})^2)=4$ if and only if $\chi(\Q(\sqrt{47})^2)=4$ (if $\chi_c(F^2)=4$, every finite subgraph has
+$\chi_c\le4$, hence $\chi\le4$, and $\chi(F^2)\le4$ by the theorem of de Bruijn and Erd\H{o}s).
 \item \emph{Finite witnesses.} Every finite unit-distance graph in $\Q(\sqrt{11})^2$ has circular chromatic number at
 most $7/2$, and their supremum is $7/2$. Is it attained? The proofs of Theorems~\ref{thm:C} and~\ref{thm:E} work with
 infinite Cayley graphs $\Cay(\Z U,U)$.

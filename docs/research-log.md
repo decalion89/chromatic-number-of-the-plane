@@ -10011,3 +10011,30 @@ denominator `5^k`) decide three colours for every number field, not only for rea
   whether the circular results should form a separate paper, are for Sergi to decide.
 - **Stopped.** The exact certificate for `ℚ(√23)` at `7/2` (422 430 nodes after 4 h 20 min) was stopped as
   redundant: Theorem F gives `χ_c(ℚ(√23)²) = 7/2`.
+- **Third referee (Section 10 of the paper).** A separate agent read Section 10 as written, with programs of its own
+  (exact clipping of both windows, the exact lifting of `S^θ(k, 1)` to the levels `k = 6` and `12`, the facts at 7,
+  and an automaton for the overlap argument): no error in a proof. Corrections, all applied: two sentences about the
+  7-adic characters were false as written (the character is `a ↦ Re(ē ã)` with `ã` a Gaussian integer congruent to
+  `a` modulo 7, not `Re(ē a)`; and these characters are not those of points of `ℂ` on all of `ℚ(i)` — the bound
+  `2/7` is still optimal for every finite set of rotations, by a point `Dd(s + ti)/7`); Lemma 14 quoted from Lemma 12
+  a bound `|x| < 0.23` that fails near `θ = 1/4` (explicit counterexample at `k = 6`; the lemma has its own bound);
+  Theorem F used Theorem E, so it rested on both propositions, and the claim that the window modulo 325 also gives
+  Theorem E needed upper bounds that no stored certificate covered. I added them: eight dual certificates of value
+  `2/7` for the vectors of family 7 there (`cert_K2M1_seven.txt`, found by an exact search among the active margins and
+  checked by `verify_seven_K2M1.py`, which shares no code with the generator and rejects a corrupted copy). They use
+  margins at `ρ^{−2}σˡ`, so they are not those of the window modulo 65. Now Theorem F rests on Proposition 9 alone and
+  Theorem E on either proposition. Smaller gaps closed: why 18 (or 30) functionals determine all strip indices, the
+  alignment of the 7-adic windows, compactness behind "`χ_c = 4` iff `χ = 4`", and notation clashes. The referee's programs are in `twoprime/indep_S10/` and are rerun by
+  `tests/test_two_primes.py` (16 tests, one slow).
+- **Local fields and a local–global form** (paper Corollary 6, note Corollary F8). For a finite extension `K` of
+  `ℚ_p`, `χ_c(K²)` is 2 (`p = 2`, `K(i)/K` ramified), 3 (`p = 3`, residue degree 1), `7/2` (`p = 7`, residue degree 1)
+  or at least 4 (the Krasner construction of the corollary on local fields, with `ℚ₇` added, gives a number field
+  inside `K` where (a), (b) and (7) fail). So `min(χ_c(F²), 4) = min(4, min_v χ_c(F_v²))` for every number field.
+  Examples: `χ_c(ℚ₁₉²)`, `χ_c(ℚ(√47)²)` and `χ_c(ℚ(√5, √7)²)` lie in `[4, 19/4]`; if `χ(ℚ(√47)²) = 5`, its circular
+  chromatic number is not an integer. For real quadratic fields `χ_c` is now known except when `d ≡ 23 (mod 24)` and
+  `(d/7) = −1` (`d = 47, 143, 167, 215, …`), where `χ_c ≥ 4` and `χ_c = 4` iff `χ = 4`; for `d ≡ 11 (mod 24)` with
+  `(d/7) = −1` (59, 83, 131, …) the place above 2 gives `χ = χ_c = 4`.
+- **A measurement.** The 76-vertex graph of `χ(ℚ(√11)²) = 4` has `χ_c = 16/5` by SAT (CaDiCaL through pysat,
+  colourings checked, the refutations not certified), far below `7/2`; the stored graphs for `d = 47, 59, 131, 251`
+  all map to `K_{7/2}`. The question whether some finite subgraph of `ℚ(√11)²` has `χ_c = 7/2` stays open.
+

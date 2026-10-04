@@ -1,0 +1,2 @@
+(K,M)=(2,1) N=325 r0=249/1000: 29 index vectors with nonempty polygons, 550474 nonempty branch nodes, 79s
+same set of index vectors as the certificate: True | labels: {'SEVEN': 8, 'EXTRA': 16, 'MAIN': 5}

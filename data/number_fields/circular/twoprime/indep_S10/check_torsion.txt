@@ -1,0 +1,4 @@
+M=41: order of rho mod M = 5; |<i,rho>| = 20, |<i,rho,sigma>| = 40; best kappa over <i,rho> among exact order M: 12/41 at w=(29, 29)
+   kappa of (12+12i)/41 over <i,rho> = 12/41 ; over <i,rho,sigma> = 0
+M=76: order of rho mod M = 10; |<i,rho>| = 20, |<i,rho,sigma>| = 80; best kappa over <i,rho> among exact order M: 11/38 at w=(54, 49)
+   best over <i,rho,sigma> for exact order 76: 5/76
