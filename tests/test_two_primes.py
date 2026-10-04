@@ -351,6 +351,38 @@ def test_finite_witness_q7(tmp_path):
     assert sorted(tuple(sorted(e)) for e in W["edges"]) == sorted(tuple(sorted(e)) for e in wagner)
 
 
+
+def test_finite_witness_q7_hand_proof():
+    """The hand proof in Section 10 of the paper: for the cycles Q_0 = P_0P_1P_5P_4, Q_1 = P_1P_2P_6P_5,
+    Z = P_0P_1P_2P_6P_7 and the 6-cycles A = P_3P_4P_5P_6P_7S, B = P_7P_0P_1P_2P_3S, C = P_0P_7P_6P_2P_3P_4 of the
+    stored graph (S = vertex 8), 2Z = Q_0 + Q_1 + A + B - C as 1-chains; and the listed cycles are A, B, C, each in
+    both directions."""
+    W = json.load(gzip.open(os.path.join(FW, "witness_q7.json.gz"), "rt"))
+    E = {tuple(sorted(e)) for e in W["edges"]}
+
+    def chain(cyc, k=1):
+        out = {}
+        for a, b in zip(cyc, cyc[1:] + cyc[:1]):
+            assert tuple(sorted((a, b))) in E
+            key, s = ((a, b), k) if a < b else ((b, a), -k)
+            out[key] = out.get(key, 0) + s
+        return out
+
+    def add(*chains):
+        out = {}
+        for ch in chains:
+            for key, v in ch.items():
+                out[key] = out.get(key, 0) + v
+        return {key: v for key, v in out.items() if v}
+
+    S = 8
+    A, B, C = [3, 4, 5, 6, 7, S], [7, 0, 1, 2, 3, S], [0, 7, 6, 2, 3, 4]
+    assert add(chain([0, 1, 2, 6, 7], 2)) == add(chain([0, 1, 5, 4]), chain([1, 2, 6, 5]), chain(A), chain(B),
+                                                 chain(C, -1))
+    canon = lambda c: min(tuple(c[i:] + c[:i]) for i in range(len(c)))
+    listed = {canon(c) for c in W["cycles"]}
+    assert listed == {canon(c) for x in (A, B, C) for c in (x, x[::-1])}
+
 @pytest.mark.parametrize("what,message", [("point", "an edge is not at distance 1"),
                                           ("edge", "the edges are not all the unit pairs"),
                                           ("cycles", "no listed cycle is tight"),

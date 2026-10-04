@@ -109,7 +109,10 @@ Its 13 edges, all the pairs at distance 1, are the 8-cycle `P₀P₁⋯P₇`, th
 
 - *Upper bound.* A proper 3-colouring is stored.
 - *Lower bound.* Each of the 84 proper 3-colourings has a tight cycle (a directed cycle along which the colour
-  increases by 1 mod 3), already one of the six listed directed 6-cycles, so `χ_c(H₇) ≥ 3` by Lemma 20. Independently,
+  increases by 1 mod 3), already one of the six listed directed 6-cycles, so `χ_c(H₇) ≥ 3` by Lemma 20. The paper
+  proves this by hand: with `δ = ±1` the colour step along each arc (mod 3), the sum of `δ` is 0 on the 4-cycles
+  `Q₀ = P₀P₁P₅P₄`, `Q₁ = P₁P₂P₆P₅`, ±3 on the 5-cycle `Z = P₀P₁P₂P₆P₇` and 0 or ±6 on a 6-cycle, and
+  `2Z = Q₀ + Q₁ + A + B − C` for `A = P₃P₄P₅P₆P₇S`, `B = P₇P₀P₁P₂P₃S`, `C = P₀P₇P₆P₂P₃P₄`. Independently,
   `H₇` has no homomorphism to `K_{8/3}`, which is the Wagner graph itself; as the circular chromatic number of a graph
   with 9 vertices is a fraction with numerator at most 9 (Zhu's survey), and `8/3` is the largest such fraction below 3,
   this gives `χ_c(H₇) ≥ 3` again.

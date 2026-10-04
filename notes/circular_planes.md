@@ -740,7 +740,11 @@ with denominator 160 and two points closing a 5-cycle, stops at 607 vertices, an
 `P₅ = ((3 − √7)/8, (√7 − 5)/8)`, `P₆ = (1, 0)`, `P₇ = (0, 0)`, `S = (0, 1)`. Their unit pairs form the 8-cycle
 `P₀⋯P₇`, the chords `P₀P₄`, `P₁P₅`, `P₂P₆` and the path `P₃SP₇`: `H₇` is the Wagner graph (the Möbius ladder on 8
 vertices) with one chord subdivided. Each of its 84 proper 3-colourings has a tight 6-cycle, so `χ_c(H₇) = 3` by
-Lemma F9; equivalently `H₇` has no homomorphism to `K_{8/3}`, which is the Wagner graph itself (`χ_c` of a graph
+Lemma F9. By hand: put `δ(a, b) = ±1` with `c(b) − c(a) ≡ δ(a, b) (mod 3)` on each arc; along a closed walk the sum of
+`δ` is divisible by 3, so it is 0 on the 4-cycles `Q₀ = P₀P₁P₅P₄` and `Q₁ = P₁P₂P₆P₅`, ±3 on the 5-cycle
+`Z = P₀P₁P₂P₆P₇`, and 0 or ±6 on a 6-cycle (±6: tight in one direction); as 1-chains `2Z = Q₀ + Q₁ + A + B − C` for
+the 6-cycles `A = P₃P₄P₅P₆P₇S`, `B = P₇P₀P₁P₂P₃S`, `C = P₀P₇P₆P₂P₃P₄`, so the sums over `A`, `B`, `C` do not all
+vanish and one of them is tight. Equivalently `H₇` has no homomorphism to `K_{8/3}`, which is the Wagner graph itself (`χ_c` of a graph
 with 9 vertices is a fraction with numerator at most 9, and `8/3` is the largest one below 3). `H₇` is
 vertex-critical, and nine vertices are the fewest possible without unit triangles: every triangle-free graph with at
 most 8 vertices maps to `K_{8/3}` (checked over the 4 682 270 triangle-free graphs on 8 labelled vertices). All of

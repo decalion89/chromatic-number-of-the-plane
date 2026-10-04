@@ -10349,9 +10349,17 @@ with a direct enumeration of all graphs.
 Checked by enumeration with Python integers (`check_small.py`: points, all unit pairs, all `3⁹` maps, no
 homomorphism to `K_{8/3}`, the nine criticality certificates), and the first fact again by a SAT refutation of the
 formula in the layout of `check_witness.py` (51 variables, 126 clauses): `kissat` refutes it, `drat-trim` verifies the
-proof and `cake_lpr` its LRAT form, for the stored labelling and for the graph as found. A hand proof of the first
-fact covers one case: if the 8-cycle has winding ±2 (sum of the colour steps ±6), one of the two 6-cycles through `S`
-is tight; the case of winding 0 is left to the enumeration.
+proof and `cake_lpr` its LRAT form, for the stored labelling and for the graph as found. A hand proof followed: with
+`δ = ±1` the colour step along an arc (mod 3), the sum of `δ` vanishes on the two 4-cycles `Q₀ = P₀P₁P₅P₄` and
+`Q₁ = P₁P₂P₆P₅`, is ±3 on the 5-cycle `Z = P₀P₁P₂P₆P₇`, and is 0 or ±6 on each 6-cycle; the 1-chain identity
+`2Z = Q₀ + Q₁ + A + B − C` for the three listed 6-cycles `A = P₃P₄P₅P₆P₇S`, `B = P₇P₀P₁P₂P₃S`,
+`C = P₀P₇P₆P₂P₃P₄` then forces one of them to have sum ±6, i.e. to be tight (the fourth 6-cycle is `Q₀ + Q₁` and is
+never tight). The paper now gives this proof; the identity is a test.
+
+Not a result: seeds made of 0 and the unit vectors of one denominator, which gave the nine points for the value 3, do
+not start the growth for `7/2` over `ℚ(√11)` (denominators 30, 90, 150; 108, 180 and 300 unit vectors): the first
+`(7, 2)`-colouring leaves every candidate point at least two colours, so `grow.py` stops at once. With three colours
+two neighbours of different colours already leave one; with seven, a neighbour excludes only three.
 
 `grow.py`, `minimise.py` and `critical.py` now take any `p/q` (`grow.py ... p q`; the others read `p` and `q` from the
 file, `7/2` when absent); for `7/2` they build the same clauses in the same order, and they reproduce the stored

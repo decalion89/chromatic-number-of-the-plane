@@ -1615,15 +1615,21 @@ P_4=\Bigl(-\frac14,\frac{\sqrt7}4\Bigr),\quad P_5=\Bigl(\frac{3-\sqrt7}8,\frac{\
 \end{gather*}
 The pairs at distance $1$ among them form the $8$-cycle $P_0P_1\cdots P_7$, the chords $P_0P_4$, $P_1P_5$, $P_2P_6$
 and the path $P_3SP_7$: their unit-distance graph $H_7$ is the Wagner graph, the M\"obius ladder on $8$ vertices,
-with one of its four chords subdivided. Each of the $84$ proper $3$-colourings of $H_7$ has a tight $6$-cycle
-(already among three of its four $6$-cycles), so $\chi_c(H_7)=3$ by Lemma~\ref{lem:tight}. Equivalently, $H_7$ has
+with one of its four chords subdivided. Every proper $3$-colouring $c$ of $H_7$ has a tight cycle. Indeed, for an
+arc $a\to b$ let $\delta(a,b)=\pm1$ with $c(b)-c(a)\equiv\delta(a,b)\pmod3$; along a closed walk the sum of $\delta$
+is divisible by $3$. So it is $0$ on the $4$-cycles $Q_0=P_0P_1P_5P_4$ and $Q_1=P_1P_2P_6P_5$, it is $\pm3$ on the
+$5$-cycle $Z=P_0P_1P_2P_6P_7$, and on a $6$-cycle it is $0$ or $\pm6$, and $\pm6$ makes the cycle tight in one
+direction. As $1$-chains, $2Z=Q_0+Q_1+A+B-C$ for the $6$-cycles $A=P_3P_4P_5P_6P_7S$, $B=P_7P_0P_1P_2P_3S$ and
+$C=P_0P_7P_6P_2P_3P_4$ (each cycle read in the order written), so the sums over $A$, $B$ and $C$ do not all vanish,
+and one of these three cycles is tight. Hence $\chi_c(H_7)=3$ by Lemma~\ref{lem:tight}. Equivalently, $H_7$ has
 no homomorphism to $K_{8/3}$, which is the Wagner graph itself (the vertices $0,3,6,1,4,7,2,5$ of $K_{8/3}$ form an
 $8$-cycle, and its other edges join opposite vertices): the circular chromatic number of a graph with $9$ vertices
 is a fraction with numerator at most $9$ \cite{Zhu}, and $8/3$ is the largest such fraction below $3$. The Wagner
 graph has $\chi_c=8/3$, $H_7$ is vertex-critical, and nine vertices are the fewest possible in a plane without unit
-triangles: every triangle-free graph with at most $8$ vertices maps to $K_{8/3}$. These finite facts are checked by
-enumeration, the last one over the $4\,682\,270$ triangle-free graphs on $8$ labelled vertices, and the first also
-by a certified SAT refutation (\nolinkurl{check_small.py}, \nolinkurl{small_triangle_free.py}). As
+triangles: every triangle-free graph with at most $8$ vertices maps to $K_{8/3}$. The last two facts are checked
+by enumeration: \nolinkurl{check_small.py} also checks the points, all $3^9$ colour maps and the absence of a
+homomorphism to $K_{8/3}$, and \nolinkurl{small_triangle_free.py} runs over the $4\,682\,270$ triangle-free
+graphs on $8$ labelled vertices; a certified SAT refutation confirms the tight cycles once more. As
 $\sqrt7\in\Q_3$, $H_7$ is also an explicit witness for $\Q_3$ and for every finite extension $K$ of $\Q_3$ with
 $\chi_c(K^2)<4$.
 

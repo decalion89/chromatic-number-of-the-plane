@@ -15,7 +15,8 @@ including every retracted claim, is the research log,
 - **A nine-point witness for `χ_c = 3` in a plane without unit triangles (4 October, night).** Over `ℚ(√7)`, where
   `χ_c = 3` and there is no unit triangle, nine points span a unit-distance graph `H₇` with `χ_c(H₇) = 3`: the Wagner
   graph (the Möbius ladder on 8 vertices, which is `K_{8/3}`) with one chord subdivided. Each of its 84 proper
-  3-colourings has a tight 6-cycle; equivalently it has no homomorphism to `K_{8/3}`. It is vertex-critical, and nine
+  3-colourings has a tight 6-cycle, by a short proof by hand (a 1-chain identity `2Z = Q₀ + Q₁ + A + B − C` between
+  two 4-cycles, a 5-cycle and three 6-cycles); equivalently it has no homomorphism to `K_{8/3}`. It is vertex-critical, and nine
   vertices are the fewest possible: every triangle-free graph with at most 8 vertices maps to `K_{8/3}` (enumeration
   of the 4 682 270 triangle-free graphs on 8 labelled vertices). As `√7 ∈ ℚ₃`, it is also a witness for `ℚ₃`. Found
   by the growth and deletion programs, now for any value `p/q` (`grow.py ... p q`; the results for `7/2` are
