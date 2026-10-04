@@ -68,9 +68,11 @@ colouring-guided growth followed by vertex deletion, vertex-critical ones with 1
 (`data/number_fields/circular/finite_witness/`). For the value 3, over `ℚ(√7)`, whose plane has no unit triangle,
 Section 10 gives nine points whose unit-distance graph, the Wagner graph with one chord subdivided, has `χ_c = 3`,
 with a proof by hand; it is vertex-critical, no triangle-free graph with fewer vertices has `χ_c = 3`, and exactly
-three triangle-free graphs with nine vertices have `χ_c = 3` (another is a unit-distance graph over `ℚ(√31)`). A
-referee checked the `7/2` witnesses again with programs of its own (no error; its remarks applied: `χ_c = 7/2` over
-`ℚ(√191)` and `ℚ(√455)` now follows from the witnesses and Proposition 3, without Proposition 9). The PDF has 27
+three triangle-free graphs with nine vertices have `χ_c = 3`, all three unit-distance graphs over `ℚ(√7)` and over
+`ℚ(√31)` (the subdivided hexagon itself, with twelve edges, is stored too). A referee checked the `7/2` witnesses again
+with programs of its own (no error; its remarks applied: `χ_c = 7/2` over `ℚ(√191)` and `ℚ(√455)` now follows from the
+witnesses and Proposition 3, without Proposition 9), and another the value-3 witnesses (no error; its remarks
+applied). The PDF has 27
 pages.
 
 [`three-colours.tex`](three-colours.tex) is the LaTeX source (`amsart`). To rebuild the PDF, run in this folder,
