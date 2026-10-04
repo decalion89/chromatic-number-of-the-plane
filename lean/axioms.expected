@@ -57,3 +57,6 @@
 'PadicFour.padic_not_colorable_three' depends on axioms: [propext, Classical.choice, Quot.sound]
 'PadicFour.padic_not_colorable_three_unconditional' depends on axioms: [propext, Classical.choice, Quot.sound]
 'PadicFour.not_colorable_three_of_sq_unconditional' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TwoRoots.no_character' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TwoRoots.not_colorable_three_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TwoRoots.not_colorable_three' depends on axioms: [propext, Classical.choice, Quot.sound]
