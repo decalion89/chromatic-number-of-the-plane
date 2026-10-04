@@ -1,0 +1,9 @@
+d            equal: True
+denominator  equal: True
+points       equal: True
+edges        equal: True
+colouring    equal: True
+cycles       equal: True
+same point SET: True
+critical_colourings equal: True ; extra keys in reproduced certificate file: ['not_critical'] []
+keys only in stored witness: ['construction', 'description', 'fixed_vertex'] ; keys only in reproduced: ['seed']

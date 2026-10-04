@@ -720,19 +720,26 @@ set of the 76-vertex graph, the unit-distance graph `H` on `A + A` (2 237 vertic
 of lengths 14 to 42; so `χ_c(H) = 7/2` by Lemma F9. **Smaller witnesses** (4 October, evening; `grow.py`,
 `minimise.py`): a colouring-guided growth with lazy SAT, started from `A`, asks for a `(7, 2)`-colouring in which every
 listed directed cycle has a non-tight arc, lists the tight cycles of each answer, and, when the tight digraph of the
-answer is acyclic, adds the points `x + u` (`x` a vertex, `u` a unit vector with denominator 30) whose neighbours
-leave no colour; it stops after 52 rounds at 653 vertices. Deleting vertices while the formula stays unsatisfiable
+answer is acyclic, adds the points `x + u` (`x` a vertex, `u` a unit vector with the denominator of the starting
+graph, here 30) whose neighbours leave no colour (or, if there are none, those whose neighbours leave one colour); it
+stops after 52 rounds at 653 vertices. Deleting vertices while the formula stays unsatisfiable
 leaves `H₁₁`: 170 vertices, 468 edges (all unit pairs), `χ_c(H₁₁) = 7/2`, and vertex-critical: for every vertex `v` a
-`(7, 2)`-colouring of `H₁₁ − v` with an acyclic tight digraph is stored, so `χ_c(H₁₁ − v) < 7/2` (perturb the colours
-along a topological order of the tight digraph; the other half of Guichard's characterisation). From the 71-vertex
+`(7, 2)`-colouring of `H₁₁ − v` with an acyclic tight digraph is stored, so `χ_c(H₁₁ − v) < 7/2` (the other half of
+Guichard's characterisation, explicitly: if `G` has `N` vertices and `pos` numbers them along a topological order of
+the tight digraph of `c`, then `N·c + pos` is a homomorphism of `G` to `K_{7N/(2N+1)}`). From the 71-vertex
 graph over `ℚ(√455)` and the 96-vertex graph over `ℚ(√191)` the same procedure gives vertex-critical witnesses with 175
-vertices (434 edges) and 293 vertices (803 edges), where Theorem F gives `χ_c = 7/2` (7 ramifies in `ℚ(√455)` and splits
-in `ℚ(√191)`). Every lower bound is a SAT computation, certified twice: the first checker
-(`check_witness.py`) and a second one sharing no code with it (`verify_independent.py`) check the graph, the colouring
-and the cycles exactly and write the formula in two encodings; `drat-trim` verifies the stored DRAT proof of the
+vertices (434 edges) and 293 vertices (803 edges) (denominators 780 and 240). So `χ_c = 7/2` for both planes without
+Proposition F1: the witnesses give `≥ 7/2`, and the residue field `𝔽₇` gives `≤ 7/2`, as 7 ramifies in `ℚ(√455)` and
+splits in `ℚ(√191)` (in agreement with Theorem F: (a) and (b) fail for `d ≡ 11 mod 12`). Every lower bound is a SAT
+computation, certified twice: the first checker (`check_witness.py`) and a second one sharing no code with it
+(`verify_independent.py`) check the graph, the colouring and the cycles exactly and write the formula with different
+variable numberings and arc indicators; `drat-trim` verifies the stored DRAT proof of the
 first, and a new `kissat` proof of the second, which `cake_lpr` (a formally verified checker) also accepts in LRAT
-form (`verification.txt`); `check_critical.py` checks the criticality certificates. As `√11 ∈ ℚ₇`, `H₁₁` is an
-explicit witness for `ℚ₇` and for every finite extension `K` of `ℚ₇` with `χ_c(K²) < 4`. **A witness for 3 without
+form (`verification.txt`); `check_critical.py` checks the criticality certificates. A referee checked all three
+witnesses again with programs of its own (`finite_witness/indep_W/`: a third encoding, cycle lists rebuilt from
+scratch, `cake_lpr` on the stored proofs, the explicit homomorphisms `N·c + pos`), found no error, and reproduced
+`H₁₁` and the `ℚ(√455)` witness exactly. As `√11 ∈ ℚ₇`, `H₁₁` is an explicit witness for `ℚ₇` and for every finite
+extension `K` of `ℚ₇` with `χ_c(K²) < 4`. **A witness for 3 without
 unit triangles** (4 October, night; `check_small.py`, `small_triangle_free.py`): the same procedure with `K₃` in
 place of `K_{7/2}` (an arc is tight when the colour increases by 1 mod 3), over `ℚ(√7)`, from 0, the 204 unit vectors
 with denominator 160 and two points closing a 5-cycle, stops at 607 vertices, and deletion leaves nine points:
@@ -740,16 +747,20 @@ with denominator 160 and two points closing a 5-cycle, stops at 607 vertices, an
 `P₅ = ((3 − √7)/8, (√7 − 5)/8)`, `P₆ = (1, 0)`, `P₇ = (0, 0)`, `S = (0, 1)`. Their unit pairs form the 8-cycle
 `P₀⋯P₇`, the chords `P₀P₄`, `P₁P₅`, `P₂P₆` and the path `P₃SP₇`: `H₇` is the Wagner graph (the Möbius ladder on 8
 vertices) with one chord subdivided. Each of its 84 proper 3-colourings has a tight 6-cycle, so `χ_c(H₇) = 3` by
-Lemma F9. By hand: put `δ(a, b) = ±1` with `c(b) − c(a) ≡ δ(a, b) (mod 3)` on each arc; along a closed walk the sum of
-`δ` is divisible by 3, so it is 0 on the 4-cycles `Q₀ = P₀P₁P₅P₄` and `Q₁ = P₁P₂P₆P₅`, ±3 on the 5-cycle
-`Z = P₀P₁P₂P₆P₇`, and 0 or ±6 on a 6-cycle (±6: tight in one direction); as 1-chains `2Z = Q₀ + Q₁ + A + B − C` for
-the 6-cycles `A = P₃P₄P₅P₆P₇S`, `B = P₇P₀P₁P₂P₃S`, `C = P₀P₇P₆P₂P₃P₄`, so the sums over `A`, `B`, `C` do not all
-vanish and one of them is tight. Equivalently `H₇` has no homomorphism to `K_{8/3}`, which is the Wagner graph itself (`χ_c` of a graph
+Lemma F9. By hand, already for `M = H₇ − P₁P₅`, the hexagon `v₀⋯v₅ = P₀P₄P₃P₂P₆P₇` with its long diagonals
+`v_j v_{j+3}` subdivided by `m₀, m₁, m₂ = P₁, P₅, S`: put `δ(a, b) = ±1` with `c(b) − c(a) ≡ δ(a, b) (mod 3)` on each
+arc; along a closed walk the sum of `δ` is divisible by 3, so it is ±3 on a 5-cycle and 0 or ±6 on a 6-cycle (±6:
+tight in one direction). For the 5-cycles `Z_k = v_k v_{k+1} v_{k+2} v_{k+3} m_k`, as 1-chains `Z_{k+1} − Z_k` is the
+6-cycle `v_k m_k v_{k+3} v_{k+4} m_{k+1} v_{k+1}` and `Z₀ + Z₃` is the hexagon; if none of these 6-cycles is tight,
+all `Z_k` have the same sum ±3 and the hexagon has sum ±6, so it is tight. Equivalently `H₇` has no homomorphism to `K_{8/3}`, which is the Wagner graph itself (`χ_c` of a graph
 with 9 vertices is a fraction with numerator at most 9, and `8/3` is the largest one below 3). `H₇` is
 vertex-critical, and nine vertices are the fewest possible without unit triangles: every triangle-free graph with at
-most 8 vertices maps to `K_{8/3}` (checked over the 4 682 270 triangle-free graphs on 8 labelled vertices). All of
-this is checked by enumeration, the first fact also by a certified SAT refutation; as `√7 ∈ ℚ₃`, `H₇` is an explicit
-witness for `ℚ₃` and its finite extensions `K` with `χ_c(K²) < 4`. Lemmas F9–F11 were tested by two referees: on 291 small graphs and 766 tight relations; on 115
+most 8 vertices maps to `K_{8/3}` (checked over the 4 682 270 triangle-free graphs on 8 labelled vertices). Of the
+1 897 triangle-free graphs with 9 vertices (up to isomorphism) exactly three have `χ_c = 3` (`nine_vertices.py`, two
+separate tests): `M`, `H₇ = M + m₀m₁` and `M + m₀m₁ + m₁m₂`; the last is the unit-distance graph of nine points of
+`ℚ(√31)²`, found by the same growth (`witness_q31.json.gz`). All of this is checked by enumeration, the tight cycles
+also by certified SAT refutations; as `√7 ∈ ℚ₃`, `H₇` is an explicit witness for `ℚ₃` and its finite extensions `K`
+with `χ_c(K²) < 4`. Lemmas F9–F11 were tested by two referees: on 291 small graphs and 766 tight relations; on 115
 random finite sets `S` in `ℤ`, `ℤ²` and `ℤ × ℤ/m` with `2 < χ_c < 4` (at all 409 optimal points, vertices of the optimal set and
 midpoints and centroids of them that stay optimal, the tight elements have a nonnegative relation;
 `indep_FW2/test_kappa_relations.py 1 180`); and by SAT on finite pieces of 13 such Cayley graphs, all with finite witnesses
@@ -768,7 +779,7 @@ midpoints and centroids of them that stay optimal, the tight elements have a non
    be one. The 5-chromatic unit-distance graphs we know lie over fields containing `√3`, or `√−3` and `√−7`, and 3
    and −7 are not squares modulo 19.
 2. *Finite witnesses.* By Corollary F12 some finite unit-distance graph in `ℚ(√11)²` has `χ_c = 7/2`; the proof
-   (compactness) gives no bound on its size, and the smallest we know has 170 vertices and is vertex-critical (§6.8). How small can it be? And when `χ_c(F²) = 4`, is the value attained by
+   (compactness) gives no bound on its size, and the smallest we know has 170 vertices and is vertex-critical (§6.8). How small can it be? (For the value 3 in a plane without unit triangles the answer is nine, over `ℚ(√7)`; §6.8.) And when `χ_c(F²) = 4`, is the value attained by
    a finite subgraph, for example for `ℚ(√59)`? Above 4 Lemmas F10 and F11 are not available. When `χ(F²) = 4`,
    compactness makes it a question about the plane: some finite subgraph has `χ_c = 4` if and only if every proper
    colouring `F² → ℤ/4` has a tight cycle (the colour increases by 1 at each step). If every colouring has one,

@@ -1,0 +1,11 @@
+== witness_q191: d=191, D=240
+(1) 293 points, all distinct integer 4-tuples; d squarefree, so distinct tuples = distinct points
+    803 listed edges; unit-distance pairs among all 42778 pairs: 803; listed edges not at distance 1: 0; unit pairs not listed: 0
+    => every edge has length exactly 1 and H is the induced unit-distance graph on its points; 52 distinct unit vectors occur as edge differences
+    min degree 2, max degree 34, connected: True
+(2) colouring values in 0..6; edges violating the (7,2) condition: 0
+(3) 489 cycles; every step is an edge of H; non-simple: 0; lengths {7: 107, 14: 275, 21: 81, 28: 24, 35: 2}; lengths not divisible by 7: 0
+    distinct as sequences: 489; distinct up to rotation: 489; directed arcs used: 1335
+    listed cycles tight under the stored colouring: 1 (must be >= 1 if the claim holds)
+    fixed_vertex 56: degree 34; max degree 34; first vertex of max degree: 56
+    CNF cnf/witness_q191.ref.cnf: 3386 variables, 33144 clauses; sha256 189de8ff41ca470362ea33492d93562506292724a48e4ce09a4e21e366369fce; unit clause fixes vertex 56 to colour 0

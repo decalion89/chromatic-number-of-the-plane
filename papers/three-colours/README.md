@@ -66,8 +66,12 @@ references and wording are corrected. A second agent refereed the hand proof of 
 colouring-guided growth followed by vertex deletion, a vertex-critical one with 170 vertices; over `ℚ(√455)` and
 `ℚ(√191)` ones with 175 and 293 vertices. Each has `χ_c = 7/2`, certified by two DRAT proofs for two encodings
 (`data/number_fields/circular/finite_witness/`). For the value 3, over `ℚ(√7)`, whose plane has no unit triangle,
-Section 10 gives nine points whose unit-distance graph, the Wagner graph with one chord subdivided, has `χ_c = 3`;
-it is vertex-critical, and no triangle-free graph with fewer vertices has `χ_c = 3`. The PDF has 27 pages.
+Section 10 gives nine points whose unit-distance graph, the Wagner graph with one chord subdivided, has `χ_c = 3`,
+with a proof by hand; it is vertex-critical, no triangle-free graph with fewer vertices has `χ_c = 3`, and exactly
+three triangle-free graphs with nine vertices have `χ_c = 3` (another is a unit-distance graph over `ℚ(√31)`). A
+referee checked the `7/2` witnesses again with programs of its own (no error; its remarks applied: `χ_c = 7/2` over
+`ℚ(√191)` and `ℚ(√455)` now follows from the witnesses and Proposition 3, without Proposition 9). The PDF has 27
+pages.
 
 [`three-colours.tex`](three-colours.tex) is the LaTeX source (`amsart`). To rebuild the PDF, run in this folder,
 with TeX Live:

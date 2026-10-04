@@ -12,6 +12,22 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- **The triangle-free graphs with nine vertices and `χ_c = 3`, and a referee's report on the `7/2` witnesses
+  (4 October, night).** Of the 1 897 triangle-free graphs with 9 vertices (up to isomorphism) exactly three have
+  `χ_c = 3` (`nine_vertices.py`, two separate tests that agree on every graph): the hexagon with its three long
+  diagonals subdivided, and it with one or two edges between the midpoints. The second is the nine-point witness over
+  `ℚ(√7)`; the third is the unit-distance graph of nine points of `ℚ(√31)²` (`witness_q31.json.gz`, found by the same
+  growth; checked by enumeration and by a SAT refutation certified by `kissat`, `drat-trim` and `cake_lpr`). The proof
+  by hand now covers the subdivided hexagon: for the 5-cycles `Z_k`, `Z_{k+1} − Z_k` is a 6-cycle and `Z₀ + Z₃` is the
+  hexagon. A referee checked the three `7/2` witnesses with programs of its own (`finite_witness/indep_W/`: a third
+  encoding, cycle lists rebuilt from scratch, `cake_lpr` on the stored proofs, explicit `(7N, 2N+1)`-colourings of
+  every `H − v`, exact reproduction of two of them): no error. Its remarks are applied: the paper and the README get
+  `χ_c = 7/2` over `ℚ(√191)` and `ℚ(√455)` from the witnesses and Proposition 3, without the computer-assisted
+  Proposition 9; they describe the second growth rule and the denominators, state the perturbation `N·c + pos`
+  explicitly, and document the reproduction; `check_witness.py`, `verify_independent.py` and the other checkers make
+  every check explicitly (under `python -O` the old `assert`s were skipped), accept only an exact `s VERIFIED` from
+  `drat-trim`, and use a temporary file. Tests: `test_finite_witness_q31`, `test_nine_vertices`,
+  `test_witness_checkers_under_python_O`, and the hand-proof test for the hexagon.
 - **A nine-point witness for `χ_c = 3` in a plane without unit triangles (4 October, night).** Over `ℚ(√7)`, where
   `χ_c = 3` and there is no unit triangle, nine points span a unit-distance graph `H₇` with `χ_c(H₇) = 3`: the Wagner
   graph (the Möbius ladder on 8 vertices, which is `K_{8/3}`) with one chord subdivided. Each of its 84 proper

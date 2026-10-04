@@ -13,8 +13,8 @@ Stops when no such colouring exists: then every (7,2)-colouring of H has a tight
 Guichard's lemma (Lemma 20 of papers/three-colours), and the (7,2)-colouring written out shows chi_c(H) = 7/2; or at
 max_points.  Writes OUT_PREFIX.json: d, denominator, points, edges (all unit pairs), a (7,2)-colouring, cycles.
 The colour of vertex 0 is fixed to 0 (rotating the colours keeps tightness).  With python-sat 1.9 (CaDiCaL 1.5.3),
-python3 grow.py data/quadratic_planes/q11.json A OUT 3000 200 gives the 653-vertex graph of witness_q11grow, and
-python3 grow.py q7_seed.json A OUT 2000 200 3 1 the 607-vertex graph from which witness_q7 was cut."""
+python3 grow.py data/quadratic_planes/q11.json A OUT 3000 200 gives the 653-vertex graph from which witness_q11
+was cut, and python3 grow.py q7_seed.json A OUT 2000 200 3 1 the 607-vertex graph from which witness_q7 was cut."""
 import json, math, sys, time
 import numpy as np
 from pysat.solvers import Solver

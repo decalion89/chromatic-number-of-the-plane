@@ -16,7 +16,8 @@ Output for N = 8: 4682270 triangle-free graphs, 15247 maximal, 15120 of them not
 import itertools, sys
 
 N = int(sys.argv[1]) if len(sys.argv) > 1 else 8
-assert 1 <= N <= 8
+if not 1 <= N <= 8:
+    sys.exit('N must be between 1 and 8')
 P, Q = 8, 3
 OK = [[Q <= (a - b) % P <= P - Q for b in range(P)] for a in range(P)]
 
@@ -97,4 +98,5 @@ def rec(v):
 rec(0)
 print(f'triangle-free graphs on {N} labelled vertices: {count}; maximal: {maximal}; not bipartite: {nonbip}; '
       f'without a homomorphism to K_8/3: {len(fails)}')
-assert not fails, fails[:3]
+if fails:
+    sys.exit(f'graphs without a homomorphism to K_8/3: {fails[:3]}')

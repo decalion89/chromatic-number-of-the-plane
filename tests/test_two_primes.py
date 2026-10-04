@@ -1,7 +1,7 @@
 """Theorems E and F (notes/circular_planes.md §6, papers/three-colours Section 10): the computer-assisted steps and
 the finite facts at 7, rerun from the stored programs and certificates (data/number_fields/circular/twoprime/ and the
 referees' subfolders indep_E/, indep_F/, indep_S10/, indep_FW/ and indep_FW2/)."""
-import gzip, hashlib, json, lzma, os, re, shutil, subprocess, sys
+import gzip, hashlib, itertools, json, lzma, os, re, shutil, subprocess, sys
 
 import pytest
 
@@ -352,36 +352,97 @@ def test_finite_witness_q7(tmp_path):
 
 
 
+def _chain(cyc, E, k=1):
+    """The 1-chain of a closed walk (edges as sorted pairs, signed by direction), checking that it uses edges of E."""
+    out = {}
+    for a, b in zip(cyc, cyc[1:] + cyc[:1]):
+        assert tuple(sorted((a, b))) in E
+        key, s = ((a, b), k) if a < b else ((b, a), -k)
+        out[key] = out.get(key, 0) + s
+    return out
+
+
+def _add(*chains):
+    out = {}
+    for ch in chains:
+        for key, v in ch.items():
+            out[key] = out.get(key, 0) + v
+    return {key: v for key, v in out.items() if v}
+
+
 def test_finite_witness_q7_hand_proof():
-    """The hand proof in Section 10 of the paper: for the cycles Q_0 = P_0P_1P_5P_4, Q_1 = P_1P_2P_6P_5,
-    Z = P_0P_1P_2P_6P_7 and the 6-cycles A = P_3P_4P_5P_6P_7S, B = P_7P_0P_1P_2P_3S, C = P_0P_7P_6P_2P_3P_4 of the
-    stored graph (S = vertex 8), 2Z = Q_0 + Q_1 + A + B - C as 1-chains; and the listed cycles are A, B, C, each in
-    both directions."""
+    """The proof by hand in Section 10 of the paper: H_7 minus the edge P_1P_5 is the hexagon v_0..v_5 =
+    P_0P_4P_3P_2P_6P_7 with its long diagonals v_j v_{j+3} subdivided by m_0, m_1, m_2 = P_1, P_5, S; for the 5-cycles
+    Z_k = v_k v_{k+1} v_{k+2} v_{k+3} m_k, Z_{k+1} - Z_k is the 6-cycle v_k m_k v_{k+3} v_{k+4} m_{k+1} v_{k+1} and
+    Z_0 + Z_3 is the hexagon, as 1-chains; and every 3-colouring of M makes the hexagon or one of these 6-cycles tight."""
     W = json.load(gzip.open(os.path.join(FW, "witness_q7.json.gz"), "rt"))
+    E7 = {tuple(sorted(e)) for e in W["edges"]}
+    v, m = [0, 4, 3, 2, 6, 7], [1, 5, 8]
+    M = {tuple(sorted((v[i], v[(i + 1) % 6]))) for i in range(6)}
+    M |= {tuple(sorted((v[j], m[j]))) for j in range(3)} | {tuple(sorted((m[j], v[j + 3]))) for j in range(3)}
+    assert E7 == M | {(1, 5)}
+    V = lambda k: v[k % 6]
+    Z = [[V(k), V(k + 1), V(k + 2), V(k + 3), m[k % 3]] for k in range(6)]
+    D = [[V(k), m[k % 3], V(k + 3), V(k + 4), m[(k + 1) % 3], V(k + 1)] for k in range(6)]
+    for k in range(6):
+        assert _add(_chain(Z[(k + 1) % 6], M), _chain(Z[k], M, -1)) == _chain(D[k], M)
+    assert _add(_chain(Z[0], M), _chain(Z[3], M)) == _chain(v, M)
+    tight = lambda c, cyc: abs(sum(1 if (c[b] - c[a]) % 3 == 1 else -1 for a, b in zip(cyc, cyc[1:] + cyc[:1]))) == 6
+    count = 0
+    for c in itertools.product(range(3), repeat=9):
+        if any(c[a] == c[b] for a, b in M):
+            continue
+        count += 1
+        assert tight(c, v) or any(tight(c, d) for d in D)
+    assert count == 126
+
+
+def test_finite_witness_q31(tmp_path):
+    """The nine-point witness for chi_c = 3 over Q(sqrt31): check_small.py checks it like witness_q7 (the formula it
+    writes is the one that kissat, drat-trim and cake_lpr refuted), and its graph is the subdivided hexagon M with two
+    edges added between the midpoints (hexagon 0, 1, 8, 7, 2, 6; midpoints 3, 4, 5)."""
+    out = run(FW, "check_small.py", "witness_q31.json.gz", str(tmp_path / "q31.cnf")).stdout
+    digest = hashlib.sha256((tmp_path / "q31.cnf").read_bytes()).hexdigest()
+    assert digest == "7c893b278d45a8f18edb60a22c75ed68b06a173ca3d3529e685f2d174830932d"
+    assert "(1) Q(sqrt31): 9 points, 14 edges, every edge at distance exactly 1, and no other unit pair" in out
+    assert "(3) all 19683 maps V -> Z/3: 48 (3,1)-colourings, each with a tight cycle" in out
+    assert "(4) no homomorphism to K_8/3" in out and "H is vertex-critical" in out
+    W = json.load(gzip.open(os.path.join(FW, "witness_q31.json.gz"), "rt"))
+    v, m = [0, 1, 8, 7, 2, 6], [3, 4, 5]
+    M = {tuple(sorted((v[i], v[(i + 1) % 6]))) for i in range(6)}
+    M |= {tuple(sorted((v[j], m[j]))) for j in range(3)} | {tuple(sorted((m[j], v[j + 3]))) for j in range(3)}
+    assert {tuple(sorted(e)) for e in W["edges"]} == M | {(3, 4), (4, 5)}
+
+
+def test_nine_vertices():
+    """nine_vertices.py: of the 1897 triangle-free graphs with 9 vertices (up to isomorphism) exactly three have
+    chi_c = 3, by two separate tests that agree on every graph: M, M + one edge, M + two edges."""
+    pytest.importorskip("networkx")
+    out = run(FW, "nine_vertices.py", timeout=1800).stdout
+    assert "n = 9: 1897 triangle-free graphs up to isomorphism, 3 with chi_c = 3 (both tests agree)" in out
+    assert "[12, 13, 14] edges" in out and "one or two edges between the midpoints" in out
+
+
+def test_witness_checkers_under_python_O(tmp_path):
+    """The checkers make every check explicitly, so python -O (which skips assert statements) cannot pass a corrupted
+    witness: an edge between two points that are not at distance 1 is rejected by check_witness.py,
+    verify_independent.py and check_small.py run with -O."""
+    W = json.load(gzip.open(os.path.join(FW, "witness_q455.json.gz"), "rt"))
     E = {tuple(sorted(e)) for e in W["edges"]}
+    W["edges"].append(next([i, j] for i in range(len(W["points"])) for j in range(i + 1, len(W["points"]))
+                           if (i, j) not in E))
+    with gzip.open(tmp_path / "bad455.json.gz", "wt") as f:
+        json.dump(W, f)
+    Q = json.load(gzip.open(os.path.join(FW, "witness_q7.json.gz"), "rt"))
+    Q["edges"].append([0, 2])
+    with gzip.open(tmp_path / "bad7.json.gz", "wt") as f:
+        json.dump(Q, f)
+    for prog, args in [("check_witness.py", [str(tmp_path / "bad455.json.gz")]),
+                       ("verify_independent.py", [str(tmp_path / "H.cnf"), str(tmp_path / "bad455.json.gz")]),
+                       ("check_small.py", [str(tmp_path / "bad7.json.gz")])]:
+        r = subprocess.run([sys.executable, "-B", "-O", prog, *args], cwd=FW, capture_output=True, text=True, timeout=600)
+        assert r.returncode != 0 and "REJECTED" in r.stderr, prog
 
-    def chain(cyc, k=1):
-        out = {}
-        for a, b in zip(cyc, cyc[1:] + cyc[:1]):
-            assert tuple(sorted((a, b))) in E
-            key, s = ((a, b), k) if a < b else ((b, a), -k)
-            out[key] = out.get(key, 0) + s
-        return out
-
-    def add(*chains):
-        out = {}
-        for ch in chains:
-            for key, v in ch.items():
-                out[key] = out.get(key, 0) + v
-        return {key: v for key, v in out.items() if v}
-
-    S = 8
-    A, B, C = [3, 4, 5, 6, 7, S], [7, 0, 1, 2, 3, S], [0, 7, 6, 2, 3, 4]
-    assert add(chain([0, 1, 2, 6, 7], 2)) == add(chain([0, 1, 5, 4]), chain([1, 2, 6, 5]), chain(A), chain(B),
-                                                 chain(C, -1))
-    canon = lambda c: min(tuple(c[i:] + c[:i]) for i in range(len(c)))
-    listed = {canon(c) for c in W["cycles"]}
-    assert listed == {canon(c) for x in (A, B, C) for c in (x, x[::-1])}
 
 @pytest.mark.parametrize("what,message", [("point", "an edge is not at distance 1"),
                                           ("edge", "the edges are not all the unit pairs"),

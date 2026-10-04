@@ -17,6 +17,13 @@ usage: python3 verify_independent.py [OUT.cnf [WITNESS.json.gz]]     (default wi
 (then, for instance, kissat OUT.cnf OUT.drat; drat-trim OUT.cnf OUT.drat -L OUT.lrat; cake_lpr OUT.cnf OUT.lrat)"""
 import json, gzip, math, os, sys
 
+
+def _req(ok, *msg):
+    """An explicit check (not assert, so that python -O cannot skip it)."""
+    if not ok:
+        print('REJECTED:', *msg, file=sys.stderr)
+        sys.exit(1)
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.normpath(os.path.join(HERE, "..", "..", "..", ".."))
 OUT = sys.argv[1] if len(sys.argv) > 1 else None
@@ -24,20 +31,20 @@ WIT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(HERE, "witness_q11sum.j
 W = json.load(gzip.open(WIT, 'rt'))
 d = W.get('d', 11); D = W['denominator']
 q = json.load(open(os.path.join(REPO, 'data', 'quadratic_planes', f'q{d}.json')))
-assert q['D'] == D and q['d'] == d
+_req(q['D'] == D and q['d'] == d, 'the witness and q<d>.json differ in d or D')
 print(f'field Q(sqrt{d}), denominator {D}')
 A = [tuple(p) for p in q['points']]
 H = sorted({tuple(x + y for x, y in zip(p, r)) for p in A for r in A})
 print('A + A:', len(H), 'points')
 P = [tuple(p) for p in W['points']]
-assert all(len(p) == 4 and all(isinstance(t, int) for t in p) for p in P)
-assert len(set(P)) == len(P)
+_req(all(len(p) == 4 and all(isinstance(t, int) for t in p) for p in P), 'bad points')
+_req(len(set(P)) == len(P), 'repeated point')
 print('witness:', os.path.basename(WIT), '-', len(P), 'points')
 sumset = set(P) == set(H)
 print('witness points = A + A:', 'yes' if sumset else 'no')
 print(f'points of A in the witness: {len(set(A) & set(P))} of {len(set(A))}')
 if os.path.basename(WIT) == 'witness_q11sum.json.gz':
-    assert sumset, 'point set differs from A + A'
+    _req(sumset, 'point set differs from A + A')
 # unit vectors with denominator 30: a^2 + 11 b^2 + c^2 + 11 e^2 = 900, a b + c e = 0
 U = []
 B = math.isqrt(D * D // d)
@@ -64,19 +71,19 @@ for i, p in enumerate(P):
         if j is not None and j != i:
             E.add((min(i, j), max(i, j)))
 WE = {(min(i, j), max(i, j)) for i, j in W['edges']}
-assert len(WE) == len(W['edges'])
+_req(len(WE) == len(W['edges']), 'repeated edge')
 print('unit pairs:', len(E), '; witness edges:', len(WE), '; equal:', E == WE)
-assert E == WE
+_req(E == WE, 'the witness edges are not the unit pairs')
 col = W['colouring']
-assert len(col) == len(P) and all(isinstance(c, int) and 0 <= c < 7 for c in col)
-assert all((col[j] - col[i]) % 7 in (2, 3, 4, 5) for i, j in E)
+_req(len(col) == len(P) and all(isinstance(c, int) and 0 <= c < 7 for c in col), 'bad colouring')
+_req(all((col[j] - col[i]) % 7 in (2, 3, 4, 5) for i, j in E), 'not a (7,2)-colouring')
 print('(7,2)-colouring: yes')
 cyc = W['cycles']
 for C in cyc:
-    assert len(C) == len(set(C)) >= 3
+    _req(len(C) == len(set(C)) >= 3, 'a cycle is not simple', C)
     for k in range(len(C)):
         a, b = C[k], C[(k + 1) % len(C)]
-        assert (min(a, b), max(a, b)) in E
+        _req((min(a, b), max(a, b)) in E, 'cycle uses a non-edge', C)
 print('cycles:', len(cyc), 'simple cycles along edges; lengths', sorted({len(C) for C in cyc}))
 # tight cycles of the given colouring: each listed cycle's tightness under col (for information)
 tight = sum(all((col[C[(k + 1) % len(C)]] - col[C[k]]) % 7 == 2 for k in range(len(C))) for C in cyc)
@@ -103,7 +110,7 @@ for C in cyc:
     cl.append([arcs[(C[k], C[(k + 1) % len(C)])] for k in range(len(C))])
 if 'fixed_vertex' in W:
     v0 = W['fixed_vertex']
-    assert isinstance(v0, int) and 0 <= v0 < n
+    _req(isinstance(v0, int) and 0 <= v0 < n, 'bad fixed_vertex')
     cl.append([x(v0, 0)])
     print('fixed vertex:', v0, '(colour 0)')
 nv = 7 * n + len(arcs)

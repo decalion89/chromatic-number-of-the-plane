@@ -1,0 +1,17 @@
+(1) Q(sqrt455): 175 points, 434 edges, every edge at distance exactly 1
+    unit-distance pairs among the points: 434; not listed as edges: 0 (induced)
+(2) the colouring is a (7,2)-colouring: chi_c(H) <= 7/2
+(3) 91 cycles, all closed walks along edges (lengths 7..28)
+(4) the CNF is the formula built from the edges and cycles; sha256 0e06b8498615d6dea0bc54cbd39ad7ae979134369c1288587768550b61663839
+(5) drat-trim: 
+c parsing input formula with 1841 variables and 13693 clauses
+
+c finished parsing
+
+c ERROR: no conflict
+
+s NOT VERIFIED
+
+c verification time: 0.201 seconds
+
+=> every (7,2)-colouring of H has a tight cycle, so chi_c(H) = 7/2

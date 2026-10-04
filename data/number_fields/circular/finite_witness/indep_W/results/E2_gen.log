@@ -1,0 +1,3 @@
+E2 cnf/witness_q11_E2.ref.cnf: 2092 variables (1190 colour, 902 arc), 27076 clauses, seed 20261004, sha256 6c4864f5a7b977cb5489c0aa268a6e609f34da52a59c88db1a1d5c4da1310386
+E2 cnf/witness_q191_E2.ref.cnf: 3386 variables (2051 colour, 1335 arc), 42489 clauses, seed 20261004, sha256 9c7e0fd20147e8386c6725d65b08f70da71c57155f20cee768c7e2d294277de2
+E2 cnf/witness_q455_E2.ref.cnf: 1841 variables (1225 colour, 616 arc), 21680 clauses, seed 20261004, sha256 b6ebe3e43b0c3e5f4c6b315f78a62b0ca23220baf4aba336edd76636da123d98

@@ -1589,18 +1589,25 @@ cycle, already among $180$ listed cycles of lengths $14$ to $42$; so its circula
 Lemma~\ref{lem:tight}. A colouring-guided growth gives smaller ones. Starting from $A$, a SAT solver looks for a
 homomorphism to $K_{7/2}$ in which every listed directed cycle has a non-tight arc; the tight cycles of its answer
 are added to the list, and when its tight digraph has no directed cycle, the points $x+u$ ($x$ a vertex, $u$ a unit
-vector with denominator $30$) whose neighbours leave no colour are added to the graph. This stops after $52$
+vector with the denominator $D$ of the starting graph, here $D=30$) whose neighbours leave no colour (or, if there are
+none, those whose neighbours leave one colour) are added to the graph. This stops after $52$
 rounds, at $653$ vertices; deleting vertices while the property persists leaves a unit-distance graph $H_{11}$ with
 $170$ vertices and $468$ edges, and $\chi_c(H_{11})=7/2$. It is vertex-critical: for every vertex $v$ a homomorphism
-of $H_{11}-v$ to $K_{7/2}$ whose tight digraph has no directed cycle is stored, so $\chi_c(H_{11}-v)<7/2$ (the other
-half of the characterisation of \cite{Guichard}: perturb the colours along a topological order of the tight
-digraph). Started from the $4$-chromatic graphs of \cite{Repo} over $\Q(\sqrt{455})$ and $\Q(\sqrt{191})$ ($71$ and
-$96$ vertices), the same procedure gives vertex-critical witnesses with $175$ and $293$ vertices ($434$ and $803$
-edges); Theorem~\ref{thm:F} gives $\chi_c=7/2$ for both planes, as $7$ ramifies in $\Q(\sqrt{455})$ and splits in
-$\Q(\sqrt{191})$. Every refutation is certified: two programs that share no code
-check the graphs, the colourings and the cycles and write the formula in two encodings, and the DRAT proofs of both
-are verified, one of them also, in LRAT form, by the formally verified checker \texttt{cake\_lpr}
-(\nolinkurl{data/number_fields/circular/finite_witness/}). As $\sqrt{11}\in\Q_7$, $H_{11}$ is also an explicit
+$c$ of $H_{11}-v$ to $K_{7/2}$ whose tight digraph has no directed cycle is stored, so $\chi_c(H_{11}-v)<7/2$ (the
+other half of the characterisation of \cite{Guichard}, explicitly: if a graph $G$ has $N$ vertices and
+$\mathrm{pos}$ numbers them $0,\dots,N-1$ along a topological order of the tight digraph of a homomorphism
+$c\colon G\to K_{7/2}$, then $Nc+\mathrm{pos}$ is a homomorphism of $G$ to $K_{7N/(2N+1)}$). Started from the
+$4$-chromatic graphs of \cite{Repo} over $\Q(\sqrt{455})$ and $\Q(\sqrt{191})$ ($71$ and $96$ vertices; $D=780$ and
+$240$), the same procedure gives vertex-critical witnesses with $175$ and $293$ vertices ($434$ and $803$ edges). So
+$\chi_c=7/2$ for both planes without Proposition~\ref{prop:window7}: the witnesses give $\chi_c\ge7/2$, and
+Proposition~\ref{prop:C1} gives $\chi_c\le7/2$, as $7$ ramifies in $\Q(\sqrt{455})$ and splits in $\Q(\sqrt{191})$
+(in agreement with Theorem~\ref{thm:F}, as (a) and (b) fail for $d\equiv11\pmod{12}$). Every refutation is
+certified: two programs that share no code check the graphs, the colourings and the cycles and write the formula
+with different variable numberings and arc indicators, and the DRAT proofs of both are verified, one of them also,
+in LRAT form, by the formally verified checker \texttt{cake\_lpr}. A referee checked all three witnesses again with
+programs of its own: a third encoding (renamed variables, two-sided arc indicators), cycle lists rebuilt from
+scratch, \texttt{cake\_lpr} on the stored proofs, and the explicit homomorphisms $Nc+\mathrm{pos}$ of the graphs
+$H-v$ (\nolinkurl{data/number_fields/circular/finite_witness/}). As $\sqrt{11}\in\Q_7$, $H_{11}$ is also an explicit
 witness for $\Q_7$ and for every finite extension $K$ of $\Q_7$ with $\chi_c(K^2)<4$.
 
 The same procedure with $K_3$ in place of $K_{7/2}$ (an arc is now tight when the colour increases by $1$ modulo
@@ -1615,23 +1622,31 @@ P_4=\Bigl(-\frac14,\frac{\sqrt7}4\Bigr),\quad P_5=\Bigl(\frac{3-\sqrt7}8,\frac{\
 \end{gather*}
 The pairs at distance $1$ among them form the $8$-cycle $P_0P_1\cdots P_7$, the chords $P_0P_4$, $P_1P_5$, $P_2P_6$
 and the path $P_3SP_7$: their unit-distance graph $H_7$ is the Wagner graph, the M\"obius ladder on $8$ vertices,
-with one of its four chords subdivided. Every proper $3$-colouring $c$ of $H_7$ has a tight cycle. Indeed, for an
-arc $a\to b$ let $\delta(a,b)=\pm1$ with $c(b)-c(a)\equiv\delta(a,b)\pmod3$; along a closed walk the sum of $\delta$
-is divisible by $3$. So it is $0$ on the $4$-cycles $Q_0=P_0P_1P_5P_4$ and $Q_1=P_1P_2P_6P_5$, it is $\pm3$ on the
-$5$-cycle $Z=P_0P_1P_2P_6P_7$, and on a $6$-cycle it is $0$ or $\pm6$, and $\pm6$ makes the cycle tight in one
-direction. As $1$-chains, $2Z=Q_0+Q_1+A+B-C$ for the $6$-cycles $A=P_3P_4P_5P_6P_7S$, $B=P_7P_0P_1P_2P_3S$ and
-$C=P_0P_7P_6P_2P_3P_4$ (each cycle read in the order written), so the sums over $A$, $B$ and $C$ do not all vanish,
-and one of these three cycles is tight. Hence $\chi_c(H_7)=3$ by Lemma~\ref{lem:tight}. Equivalently, $H_7$ has
-no homomorphism to $K_{8/3}$, which is the Wagner graph itself (the vertices $0,3,6,1,4,7,2,5$ of $K_{8/3}$ form an
-$8$-cycle, and its other edges join opposite vertices): the circular chromatic number of a graph with $9$ vertices
-is a fraction with numerator at most $9$ \cite{Zhu}, and $8/3$ is the largest such fraction below $3$. The Wagner
-graph has $\chi_c=8/3$, $H_7$ is vertex-critical, and nine vertices are the fewest possible in a plane without unit
-triangles: every triangle-free graph with at most $8$ vertices maps to $K_{8/3}$. The last two facts are checked
-by enumeration: \nolinkurl{check_small.py} also checks the points, all $3^9$ colour maps and the absence of a
-homomorphism to $K_{8/3}$, and \nolinkurl{small_triangle_free.py} runs over the $4\,682\,270$ triangle-free
-graphs on $8$ labelled vertices; a certified SAT refutation confirms the tight cycles once more. As
-$\sqrt7\in\Q_3$, $H_7$ is also an explicit witness for $\Q_3$ and for every finite extension $K$ of $\Q_3$ with
-$\chi_c(K^2)<4$.
+with one of its four chords subdivided. It contains the hexagon $P_0P_4P_3P_2P_6P_7$, the paths $P_0P_1P_2$,
+$P_4P_5P_6$ and $P_3SP_7$ that join its opposite vertices, and one more edge, $P_1P_5$. Already this subgraph $M$, a
+hexagon $v_0\cdots v_5$ whose three long diagonals $v_jv_{j+3}$ are subdivided by vertices $m_j$ (here
+$v_0,\dots,v_5=P_0,P_4,P_3,P_2,P_6,P_7$ and $m_0,m_1,m_2=P_1,P_5,S$), has a tight cycle in every proper
+$3$-colouring $c$. Indeed, for an arc $a\to b$ let $\delta(a,b)=\pm1$ with $c(b)-c(a)\equiv\delta(a,b)\pmod3$;
+along a closed walk the sum of $\delta$ is divisible by $3$, so it is $\pm3$ on a $5$-cycle, and on a $6$-cycle it is
+$0$ or $\pm6$, and $\pm6$ makes the cycle tight in one direction. Let $Z_k$ be the $5$-cycle
+$v_kv_{k+1}v_{k+2}v_{k+3}m_k$ (indices of $v$ modulo $6$, of $m$ modulo $3$). As $1$-chains, $Z_{k+1}-Z_k$ is the
+$6$-cycle $v_km_kv_{k+3}v_{k+4}m_{k+1}v_{k+1}$ and $Z_0+Z_3$ is the hexagon (each cycle read in the order written).
+If none of these six $6$-cycles is tight, the sums over $Z_0,\dots,Z_5$ are all equal, to $\pm3$, so the sum over
+the hexagon is $\pm6$ and the hexagon is tight. As $H_7$ is $3$-colourable, $\chi_c(M)=\chi_c(H_7)=3$ by
+Lemma~\ref{lem:tight}. Equivalently, $H_7$ has no homomorphism to $K_{8/3}$, which is the Wagner graph itself (the
+vertices $0,3,6,1,4,7,2,5$ of $K_{8/3}$ form an $8$-cycle, and its other edges join opposite vertices): the
+circular chromatic number of a graph with $9$ vertices is a fraction with numerator at most $9$ \cite{Zhu}, and
+$8/3$ is the largest such fraction below $3$. The Wagner graph has $\chi_c=8/3$, $H_7$ is vertex-critical, and nine
+vertices are the fewest possible in a plane without unit triangles: every triangle-free graph with at most $8$
+vertices maps to $K_{8/3}$. More precisely, of the $1\,897$ triangle-free graphs with $9$ vertices, up to
+isomorphism, exactly three have $\chi_c=3$: $M$, $H_7=M+m_0m_1$, and $M+m_0m_1+m_1m_2$, which is the unit-distance graph of nine points of
+$\Q(\sqrt{31})^2$ found in the same way (\nolinkurl{witness_q31.json.gz}). These facts are checked by enumeration:
+\nolinkurl{check_small.py} checks the points of both witnesses, all $3^9$ colour maps, the absence of a homomorphism
+to $K_{8/3}$ and the vertex-criticality; \nolinkurl{small_triangle_free.py} runs over the $4\,682\,270$
+triangle-free graphs on $8$ labelled vertices, and \nolinkurl{nine_vertices.py} over the triangle-free graphs on $9$
+vertices up to isomorphism, with two separate tests of $\chi_c=3$; certified SAT refutations confirm the tight
+cycles once more. As $\sqrt7\in\Q_3$, $H_7$ is also an explicit witness for $\Q_3$ and for every finite extension $K$
+of $\Q_3$ with $\chi_c(K^2)<4$.
 
 \section{Computer checks}\label{sec:checks}
 
@@ -1737,7 +1752,9 @@ eight points of type $7$, each a component by itself. As consistency checks, a p
 (\nolinkurl{tight_walks.py}) finds that each of the eight certificates of type $7$ has three positive multipliers,
 with margins exactly $\frac27$ at its $7$-adic point and integer relations among the tight rotations
 (multiplicities $63,52,25$ or $13,14,15$); the same holds for the tight elements of the $7$-adic characters on the
-$140$ vectors of Theorem~\ref{thm:C}; and the program checks the Moser spindle.
+$140$ vectors of Theorem~\ref{thm:C}; and the program checks the Moser spindle. The explicit finite witnesses of
+Section~\ref{sec:twoprimes}, their certificates and the records of every check are in
+\nolinkurl{data/number_fields/circular/finite_witness/} (\nolinkurl{verification.txt}).
 
 \section{Questions}\label{sec:questions}
 
@@ -1761,7 +1778,8 @@ so $\chi_c(\Q(\sqrt{47})^2)=4$ if and only if $\chi(\Q(\sqrt{47})^2)=4$ (if $\ch
 $\chi_c\le4$, hence $\chi\le4$, and $\chi(F^2)\le4$ by the theorem of de Bruijn and Erd\H{o}s).
 \item \emph{Finite witnesses.} By Corollary~\ref{cor:finite} some finite unit-distance graph in $\Q(\sqrt{11})^2$
 has circular chromatic number $7/2$; the proof, by compactness, gives no bound on its size, and the smallest we know
-has $170$ vertices and is vertex-critical (Section~\ref{sec:twoprimes}). How small can it be?
+has $170$ vertices and is vertex-critical (Section~\ref{sec:twoprimes}). How small can it be? (For the value $3$ in
+a plane without unit triangles the answer is nine, over $\Q(\sqrt7)$; Section~\ref{sec:twoprimes}.)
 And when $\chi_c(F^2)=4$, is the value attained by a finite subgraph, for example for $\Q(\sqrt{59})$? Above $4$
 Lemma~\ref{lem:winding} is not available. When $\chi(F^2)=4$, compactness turns this into a question about the
 plane: some finite subgraph has $\chi_c=4$ if and only if every proper colouring $c\colon F^2\to\Z/4$ has a tight

@@ -10367,3 +10367,32 @@ file, `7/2` when absent); for `7/2` they build the same clauses in the same orde
 `q7_seed.json`, `check_small.py`, `small_triangle_free.py`, `verification.txt`; tests: `test_finite_witness_q7`,
 `test_finite_witness_q7_rejects` (four corruptions), `test_finite_witness_q7_found_by_growth`,
 `test_small_triangle_free_six` and the slow `test_small_triangle_free_eight`.
+
+## Nine vertices classified, and a referee's report on the `7/2` witnesses (4 October, night)
+
+The nine-point witness over `ℚ(√7)` is not edge-critical: without the chord `P₁P₅` it still has `χ_c = 3`. What is
+left, `M`, is the hexagon `P₀P₄P₃P₂P₆P₇` with its three long diagonals subdivided by `P₁`, `P₅`, `S`, and it has a
+shorter proof by hand: with `δ = ±1` the colour steps (mod 3), the 5-cycles `Z_k = v_k v_{k+1} v_{k+2} v_{k+3} m_k`
+have sums ±3, `Z_{k+1} − Z_k` is a 6-cycle and `Z₀ + Z₃` is the hexagon, so either some 6-cycle `Z_{k+1} − Z_k` has
+sum ±6 (tight) or all `Z_k` have the same sum and the hexagon has sum ±6. The paper now gives this proof.
+
+Growth with `K₃` over other real quadratic fields, from 0, the unit vectors of one denominator and a 5-cycle (where
+one exists among them; the plain ball seed never starts the growth): `ℚ(√7)` (denominator 80) gives the same nine
+points, `ℚ(√31)` (80) a different nine-point witness with 14 edges, `ℚ(√15)` and `ℚ(√39)` witnesses with 22 and 25
+vertices after one deletion order. Among 22 fields `d ≤ 43` tried, 5-cycles with these denominators exist only for
+`d = 7, 15, 31, 39`, all `≡ 7 (mod 8)`. The `ℚ(√31)` graph contains `H₇` plus one edge between midpoints, which
+suggested the classification: `nine_vertices.py` generates the triangle-free graphs on up to 9 vertices up to
+isomorphism (1, 2, 3, 7, 14, 38, 107, 410, 1 897, as in OEIS A006785) and tests `χ_c = 3` twice, by the absence of a
+homomorphism to `K_{8/3}` and by tight cycles in every 3-colouring; the tests agree everywhere, and exactly three graphs
+on 9 vertices have `χ_c = 3`: `M` and `M` with one or two edges between the midpoints (all three would close a
+triangle). So two of the three are realised as induced unit-distance graphs, over `ℚ(√7)` and `ℚ(√31)`.
+
+The referee of the three `7/2` witnesses (`finite_witness/indep_W/REPORT.md`) confirmed every claim with programs of
+its own and found twelve points of wording and robustness, now applied. One was a real weakness of the checkers: they
+used `assert`, which `python -O` removes, so a corrupted witness passed and an unverified proof was followed by the
+conclusion; every check is now explicit, and a test runs the checkers with `-O` on corrupted files. The paper now
+derives `χ_c = 7/2` over `ℚ(√191)` and `ℚ(√455)` from the witnesses and Proposition 3 alone (no computer-assisted
+Proposition 9), describes the second growth rule (points with one colour left, 382 of the 888 points added over
+`ℚ(√455)`), and states the perturbation explicitly: if `pos` numbers the `N` vertices along a topological order of the
+tight digraph of a `(7, 2)`-colouring `c`, then `N·c + pos` is a `(7N, 2N + 1)`-colouring. The referee's programs and
+its report are stored with the witnesses.

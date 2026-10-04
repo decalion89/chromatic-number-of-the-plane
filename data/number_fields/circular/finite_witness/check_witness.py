@@ -28,8 +28,16 @@ Logic: a (7,2)-colouring c without a tight listed cycle would satisfy the CNF (x
 t(a,b) iff c(b) - c(a) = 2), after replacing c by c - c(v_0) when a vertex is fixed: rotating the colours keeps a
 (7,2)-colouring a (7,2)-colouring and keeps every colour difference, hence every tight arc.  So (5) shows that every (7,2)-colouring of H has a tight cycle (a directed cycle of the
 tight digraph), and Lemma 20 of papers/three-colours (Guichard) gives chi_c(H) >= 7/2; with (2), chi_c(H) = 7/2.
+Every check is explicit (not an assert, which python -O would skip), and (5) needs a line 's VERIFIED' from drat-trim.
 """
-import sys, json, gzip, hashlib, subprocess, itertools
+import sys, json, gzip, hashlib, os, subprocess, itertools, tempfile
+
+
+def _req(ok, *msg):
+    """An explicit check (not assert, so that python -O cannot skip it)."""
+    if not ok:
+        print('REJECTED:', *msg, file=sys.stderr)
+        sys.exit(1)
 
 
 def load(path):
@@ -73,16 +81,16 @@ def main():
     d = W.get('d', 11)
     fixed = W.get('fixed_vertex')
     n = len(P)
-    assert fixed is None or (isinstance(fixed, int) and 0 <= fixed < n), 'bad fixed_vertex'
-    assert isinstance(d, int) and d > 1 and all(d % (k * k) for k in range(2, int(d ** 0.5) + 1)), 'd not squarefree'
-    assert D % 7 != 0 and all(len(p) == 4 and all(isinstance(t, int) for t in p) for p in P)
-    assert len(set(map(tuple, P))) == n, 'repeated point'
+    _req(fixed is None or (isinstance(fixed, int) and 0 <= fixed < n), 'bad fixed_vertex')
+    _req(isinstance(d, int) and d > 1 and all(d % (k * k) for k in range(2, int(d ** 0.5) + 1)), 'd not squarefree')
+    _req(D % 7 != 0 and all(len(p) == 4 and all(isinstance(t, int) for t in p) for p in P), 'bad denominator or points')
+    _req(len(set(map(tuple, P))) == n, 'repeated point')
     Es = set()
     for i, j in E:
-        assert 0 <= i < n and 0 <= j < n and i != j
-        assert unit(P[i], P[j], D, d), ('not a unit-distance edge', i, j)
+        _req(0 <= i < n and 0 <= j < n and i != j, 'bad edge', i, j)
+        _req(unit(P[i], P[j], D, d), 'not a unit-distance edge', i, j)
         Es.add((min(i, j), max(i, j)))
-    assert len(Es) == len(E), 'repeated edge'
+    _req(len(Es) == len(E), 'repeated edge')
     print(f'(1) {"" if d == 11 else f"Q(sqrt{d}): "}{n} points, {len(E)} edges, every edge at distance exactly 1')
     # all unit pairs (exact; quadratic loop with a cheap integer filter on the first coordinate norm)
     allpairs = 0; missing = 0
@@ -99,33 +107,39 @@ def main():
                     missing += 1
     print(f'    unit-distance pairs among the points: {allpairs}; not listed as edges: {missing}'
           f' ({"induced" if missing == 0 else "not induced"})')
-    assert len(col) == n and all(0 <= c < 7 for c in col)
+    _req(len(col) == n and all(isinstance(c, int) and 0 <= c < 7 for c in col), 'bad colouring')
     for i, j in E:
-        assert (col[j] - col[i]) % 7 in (2, 3, 4, 5), ('bad colouring', i, j)
+        _req((col[j] - col[i]) % 7 in (2, 3, 4, 5), 'bad colouring', i, j)
     print('(2) the colouring is a (7,2)-colouring: chi_c(H) <= 7/2')
     for cyc in cycles:
-        assert len(cyc) >= 3 and len(set(cyc)) == len(cyc)
+        _req(len(cyc) >= 3 and len(set(cyc)) == len(cyc), 'a cycle is not simple', cyc)
         for k in range(len(cyc)):
             a, b = cyc[k], cyc[(k + 1) % len(cyc)]
-            assert (min(a, b), max(a, b)) in Es, ('cycle uses a non-edge', cyc)
+            _req((min(a, b), max(a, b)) in Es, 'cycle uses a non-edge', cyc)
     print(f'(3) {len(cycles)} cycles, all closed walks along edges (lengths {min(map(len, cycles))}..{max(map(len, cycles))})')
     if len(sys.argv) > 2:
         txt = cnf_text(n, E, cycles, fixed)
         op = gzip.open if sys.argv[2].endswith('.gz') else open
         with op(sys.argv[2], 'rt') as f:
             given = f.read()
-        assert given == txt, 'CNF differs from the formula built from the witness'
+        _req(given == txt, 'CNF differs from the formula built from the witness')
         print('(4) the CNF is the formula built from the edges and cycles; sha256',
               hashlib.sha256(txt.encode()).hexdigest())
     if len(sys.argv) > 4:
-        cnf = sys.argv[2]
-        if cnf.endswith('.gz'):
-            cnf = 'witness_check_tmp.cnf'
-            open(cnf, 'w').write(txt)
-        r = subprocess.run([sys.argv[4], cnf, sys.argv[3]], capture_output=True, text=True)
-        ok = 's VERIFIED' in r.stdout
+        cnf, tmp = sys.argv[2], None
+        if cnf.endswith('.gz'):                  # drat-trim reads plain text: a temporary copy, removed afterwards
+            fd, tmp = tempfile.mkstemp(suffix='.cnf')
+            with os.fdopen(fd, 'w') as f:
+                f.write(txt)
+            cnf = tmp
+        try:
+            r = subprocess.run([sys.argv[4], cnf, sys.argv[3]], capture_output=True, text=True)
+        finally:
+            if tmp:
+                os.remove(tmp)
+        ok = any(line.strip() == 's VERIFIED' for line in r.stdout.replace('\r', '\n').split('\n'))
         print('(5) drat-trim:', 's VERIFIED' if ok else r.stdout[-500:])
-        assert ok
+        _req(ok, 'drat-trim did not print the line "s VERIFIED"')
         print('=> every (7,2)-colouring of H has a tight cycle, so chi_c(H) = 7/2')
 
 

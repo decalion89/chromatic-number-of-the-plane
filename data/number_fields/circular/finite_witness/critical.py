@@ -1,6 +1,6 @@
 """Vertex-criticality certificates for a chi_c = p/q witness (p/q read from the file, 7/2 by default): for every
-vertex v, a (p,q)-colouring of H - v whose tight digraph is acyclic (so chi_c(H - v) < p/q).  If some H - v still has no such colouring, v is reported (the
-witness is then not vertex-critical; minimise again).
+vertex v, a (p,q)-colouring of H - v whose tight digraph is acyclic (so chi_c(H - v) < p/q).  If some H - v still
+has no such colouring, v is reported (the witness is then not vertex-critical; minimise again).
 
 usage: python3 critical.py WITNESS.json OUT.json   (check the output with check_critical.py, for 7/2)"""
 import json, sys, time

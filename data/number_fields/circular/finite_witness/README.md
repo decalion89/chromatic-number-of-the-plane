@@ -3,8 +3,11 @@
 Corollary 7 of `papers/three-colours/` (Corollary F12 of `notes/circular_planes.md`) says that below 4 the circular
 chromatic number of the plane over a number field `F` is the circular chromatic number of a finite unit-distance graph
 in `F²`; its proof, by compactness, gives no bound on the size. Here are explicit ones for `χ_c = 7/2`, over `ℚ(√11)`,
-`ℚ(√191)` and `ℚ(√455)` (Theorem F gives `χ_c(ℚ(√d)²) = 7/2` for all three: some prime above 7 has residue degree 1),
-and one with nine vertices for `χ_c = 3` over `ℚ(√7)`, whose plane has no unit triangle (last section).
+`ℚ(√191)` and `ℚ(√455)`, and ones with nine vertices for `χ_c = 3` over `ℚ(√7)` and `ℚ(√31)`, whose planes have no
+unit triangle (last section). For the three fields `χ_c(ℚ(√d)²) = 7/2`: the witnesses give `≥ 7/2`, and Proposition 3
+of the paper (a place with residue field `𝔽₇`) gives `≤ 7/2`, as 7 splits in `ℚ(√11)` and `ℚ(√191)` and ramifies in
+`ℚ(√455)`; this agrees with Theorem F, as (a) and (b) fail for `d ≡ 11 (mod 12)`, and does not use its
+computer-assisted Proposition 9.
 
 **The claim.** Each graph `H` below is a unit-distance graph in `ℚ(√d)²`, induced (every pair of its points at
 distance 1 is an edge), with `χ_c(H) = 7/2`.
@@ -26,18 +29,21 @@ distance 1 is an edge), with `χ_c(H) = 7/2`.
 | `witness_q11sum` | `ℚ(√11)` | 30 | 2 237 | 11 300 | 180 (14 to 42) | the sumset `A + A` of the 76-vertex graph (the first one found) |
 
 The three grown witnesses are also *vertex-critical*: for every vertex `v`, `witness_*_critical.json.gz` gives a
-`(7, 2)`-colouring of `H − v` whose tight digraph has no directed cycle, so `χ_c(H − v) < 7/2` (the other half of
-Guichard's characterisation: perturb the colours along a topological order of the tight digraph), and no proper
-induced subgraph of `H` is a witness; `check_critical.py` checks them. As `√11 ∈ ℚ₇`, `witness_q11` is also an explicit
+`(7, 2)`-colouring `c` of `H − v` whose tight digraph has no directed cycle, so `χ_c(H − v) < 7/2` (the other half
+of Guichard's characterisation, explicitly: if `H − v` has `N` vertices and `pos` numbers them `0, …, N − 1` along a
+topological order of the tight digraph, then `N·c + pos` is a homomorphism to `K_{7N/(2N+1)}`), and no proper induced
+subgraph of `H` is a witness; `check_critical.py` checks them. As `√11 ∈ ℚ₇`, `witness_q11` is also an explicit
 witness for `ℚ₇` (Theorem C) and for every finite extension `K` of `ℚ₇` with `χ_c(K²) < 4`, and so is `witness_q191`
-(`√191 ∈ ℚ₇`).
+(`√191 ∈ ℚ₇`). `witness_q455` is one for every finite extension of `ℚ₇` with residue degree 1 that contains `√455`, for
+example the ramified `ℚ₇(√455)` (Proposition 3 gives `χ_c ≤ 7/2` there).
 
 **How they were found.** `grow.py` (colouring-guided growth with lazy SAT): start from the vertex set `A` of the
 4-chromatic graph `data/quadratic_planes/q<d>.json`; ask a SAT solver for a `(7, 2)`-colouring in which every listed
 directed cycle has a non-tight arc; if the colouring has tight cycles, list them (a shortest one through a vertex of
 each nontrivial strong component of the tight digraph) and ask again; if its tight digraph is acyclic, add the points
-`p = x + u` (`x` a vertex, `u` a unit vector with the same denominator) whose neighbours leave `p` no colour, most
-neighbours first, at most 200 a round. When the solver finds no such colouring, `H` is a witness. `minimise.py` then
+`p = x + u` (`x` a vertex, `u` a unit vector with the same denominator) whose neighbours leave `p` no colour (or, if
+there are none, those whose neighbours leave one colour), most neighbours first, at most 200 a round; over `ℚ(√455)`
+the second rule supplied 382 of the 888 points added, over `ℚ(√11)` none. When the solver finds no such colouring, `H` is a witness. `minimise.py` then
 deletes vertices one at a time, lowest degree first, while the formula stays unsatisfiable (one selector literal per
 vertex in an incremental solver; a vertex outside the unsatisfiable core is dropped at once; the tight cycles it meets
 are added to the list), and `critical.py` writes the criticality certificates. With python-sat 1.9 (CaDiCaL 1.5.3),
@@ -47,13 +53,16 @@ run in this folder,
     python3 minimise.py G.json W.json                                    # 175 vertices
     python3 critical.py W.json C.json
 
-reproduce the points, edges, colouring and cycles of `witness_q455` and its criticality certificates exactly, and
-`q11.json` with `3000 200` gives the 653-vertex graph from which `witness_q11` was cut. (`fixed_vertex` is added
-afterwards: a vertex of largest degree, the first one.) The three programs take any value `p/q` (`grow.py ... p q`;
+reproduce the points, edges, colouring and cycles of `witness_q455` and its criticality certificates exactly; so do
+`q11.json` with `3000 200` (52 rounds, 653 vertices) and then the same two commands for `witness_q11` (checked
+again by the referee, below). For `witness_q191` the growth was `q191.json` with `12000 200` (89 rounds, 3 258
+vertices), and `minimise.py` with its defaults. The files also carry `description` and `construction` (text) and
+`fixed_vertex`, added afterwards (a vertex of largest degree, the first one); `critical.py` also writes
+`not_critical` (empty). The three programs take any value `p/q` (`grow.py ... p q`;
 the others read `p` and `q` from the file, `7/2` when absent), with the same results for `7/2`.
 
 **Verification** (`verification.txt`): for every witness, two checks that share no code.
-1. `check_witness.py` (written by the session that found `witness_q11sum`; it reads `d` from the file): exact
+1. `check_witness.py` (written for `witness_q11sum`; it reads `d` from the file): exact
    integer checks of the points, of every edge and of all unit pairs, of the colouring and of the cycles; rebuilds
    the stored formula byte for byte; runs `drat-trim` on the stored DRAT proof: `s VERIFIED`.
 2. `verify_independent.py` (written separately, from the file format only; it reads `d` and the denominator from the
@@ -74,6 +83,17 @@ For `witness_q11sum` the commands are the same without `check_critical.py` (and 
 uses it by default). The tests are in `tests/test_two_primes.py` (`test_finite_witness_q11`,
 `test_finite_witness_grown`, `test_finite_witness_critical_rejects`; the proof checks are marked slow).
 
+**Referee** (`indep_W/`, with its report `REPORT.md`). A referee checked the three grown witnesses with programs of its
+own, written from the file format: all pairs of points (468, 803 and 434 unit pairs, none missing or extra), the
+colourings and the cycles; a third encoding (two-sided arc indicators, variables renamed and negated at random); cycle
+lists rebuilt from scratch by its own lazy SAT loop; a clause-by-clause validation of every formula, the stored ones
+included; `kissat`, `drat-trim` and `cake_lpr` on all of them, and `cake_lpr` on the stored proofs; and the
+criticality certificates through the explicit homomorphisms `N·c + pos` to `K_{7N/(2N+1)}`. It reproduced
+`witness_q11` and `witness_q455` exactly with the programs here. It found no error; its remarks on the wording and on
+the checkers are applied: `check_witness.py`, `verify_independent.py` and the other checkers now make every check
+explicitly (an `assert` would be skipped under `python -O`), `check_witness.py` accepts only a line `s VERIFIED` from
+`drat-trim` and writes the decompressed formula to a temporary file, which it removes.
+
 | file | content |
 |---|---|
 | `witness_*.json.gz` | `d`, the denominator, the points `[a, b, c, e]` (the point `((a + b√d)/D, (c + e√d)/D)`), the edges, the `(7, 2)`-colouring, the cycles, and for the grown witnesses `fixed_vertex` |
@@ -88,9 +108,12 @@ uses it by default). The tests are in `tests/test_two_primes.py` (`test_finite_w
 | `q7_seed.json` | the 207 points from which `grow.py` found it |
 | `check_small.py` | the exhaustive checker for small witnesses (any `p/q`; no solver) |
 | `small_triangle_free.py` | every triangle-free graph with at most 8 vertices maps to `K_{8/3}` |
+| `witness_q31.json.gz` | the nine-point witness for `χ_c = 3` over `ℚ(√31)` (same fields as `witness_q7`) |
+| `nine_vertices.py` | the three triangle-free graphs with 9 vertices and `χ_c = 3` (needs networkx) |
+| `indep_W/` | a referee's programs and report for the three `7/2` witnesses (below) |
 | `verification.txt` | the outputs of both checks for every witness |
 
-## The value 3 over `ℚ(√7)`: nine points
+## The value 3: nine points over `ℚ(√7)` and `ℚ(√31)`
 
 `ℚ(√7)²` has no unit triangle, as `√3 ∉ ℚ(√7)`, and `χ_c(ℚ(√7)²) = 3` (Theorem B and Corollary B6 of the paper).
 `witness_q7.json.gz` is a unit-distance graph `H₇` on nine points of `ℚ(√7)²` (denominator 160), induced, with
@@ -110,21 +133,35 @@ Its 13 edges, all the pairs at distance 1, are the 8-cycle `P₀P₁⋯P₇`, th
 - *Upper bound.* A proper 3-colouring is stored.
 - *Lower bound.* Each of the 84 proper 3-colourings has a tight cycle (a directed cycle along which the colour
   increases by 1 mod 3), already one of the six listed directed 6-cycles, so `χ_c(H₇) ≥ 3` by Lemma 20. The paper
-  proves this by hand: with `δ = ±1` the colour step along each arc (mod 3), the sum of `δ` is 0 on the 4-cycles
-  `Q₀ = P₀P₁P₅P₄`, `Q₁ = P₁P₂P₆P₅`, ±3 on the 5-cycle `Z = P₀P₁P₂P₆P₇` and 0 or ±6 on a 6-cycle, and
-  `2Z = Q₀ + Q₁ + A + B − C` for `A = P₃P₄P₅P₆P₇S`, `B = P₇P₀P₁P₂P₃S`, `C = P₀P₇P₆P₂P₃P₄`. Independently,
+  proves this by hand, for the subgraph `M = H₇ − P₁P₅`: the hexagon `v₀⋯v₅ = P₀P₄P₃P₂P₆P₇` with its three long
+  diagonals subdivided by `m₀, m₁, m₂ = P₁, P₅, S`. With `δ = ±1` the colour step along an arc (mod 3), the sum of `δ`
+  is ±3 on a 5-cycle and 0 or ±6 on a 6-cycle (±6: tight); the 5-cycles `Z_k = v_k v_{k+1} v_{k+2} v_{k+3} m_k` satisfy
+  `Z_{k+1} − Z_k = v_k m_k v_{k+3} v_{k+4} m_{k+1} v_{k+1}` (a 6-cycle) and `Z₀ + Z₃ =` the hexagon, so if no such
+  6-cycle is tight all `Z_k` have the same sum and the hexagon has sum ±6. Independently,
   `H₇` has no homomorphism to `K_{8/3}`, which is the Wagner graph itself; as the circular chromatic number of a graph
   with 9 vertices is a fraction with numerator at most 9 (Zhu's survey), and `8/3` is the largest such fraction below 3,
   this gives `χ_c(H₇) ≥ 3` again.
 - *Vertex-critical.* For every vertex `v` a 3-colouring of `H₇ − v` with an acyclic tight digraph is stored.
 - *Smallest possible.* Every triangle-free graph with at most 8 vertices maps to `K_{8/3}`, so a graph with `χ_c = 3`
-  in a plane without unit triangles has at least 9 vertices.
+  in a plane without unit triangles has at least 9 vertices. Of the 1 897 triangle-free graphs with 9 vertices (up to
+  isomorphism) exactly three have `χ_c = 3`: `M` (12 edges), `H₇ = M + m₀m₁` (13 edges) and `M + m₀m₁ + m₁m₂`
+  (14 edges); `nine_vertices.py` finds them, with two separate tests of `χ_c = 3` (no homomorphism to `K_{8/3}`; every
+  3-colouring has a tight cycle) that agree on every graph.
 - As `√7 ∈ ℚ₃`, `H₇` is also a witness for `ℚ₃` and for every finite extension `K` of `ℚ₃` with `χ_c(K²) < 4`.
+
+`witness_q31.json.gz` is the third of these graphs, `M + m₀m₁ + m₁m₂`, as an induced unit-distance graph on nine points
+of `ℚ(√31)²` (denominator 80; hexagon `v₀, …, v₅` = vertices 0, 1, 8, 7, 2, 6 and midpoints `m₀, m₁, m₂` = 3, 4, 5):
+`(−8/5, −4/5)`, `(−1, 0)`, `((−60 − 3√31)/80, (45 − 4√31)/80)`, `(−3/5, −4/5)`, `(0, 0)`, `(√31/16, −15/16)`,
+`((−30 + √31)/40, (−15 − 2√31)/40)`, `((−108 − 3√31)/80, (−19 − 4√31)/80)`, `(−1 + √31/16, −15/16)`. It was found by
+the same growth over `ℚ(√31)` (from 0, the unit vectors with denominator 80 and a 5-cycle; 367 vertices) and deletion,
+and is vertex-critical too. The growth over `ℚ(√15)` and `ℚ(√39)` gave witnesses with 22 and 25 vertices (not stored).
 
 The checks are finite enumerations (`verification.txt`):
 
-    python3 check_small.py witness_q7.json.gz q7.cnf   # points, unit pairs, all 3^9 maps, K_{8/3}, criticality
-    python3 small_triangle_free.py                     # the 4 682 270 triangle-free graphs on 8 labelled vertices
+    python3 check_small.py witness_q7.json.gz q7.cnf    # points, unit pairs, all 3^9 maps, K_{8/3}, criticality
+    python3 check_small.py witness_q31.json.gz q31.cnf  # the same for the witness over Q(sqrt31)
+    python3 small_triangle_free.py                      # the 4 682 270 triangle-free graphs on 8 labelled vertices
+    python3 nine_vertices.py                            # the triangle-free graphs on 9 vertices (needs networkx)
 
 `check_small.py` also writes the formula "a 3-colouring in which every listed cycle has a non-tight arc" (the layout of
 `check_witness.py`, with `(p, q) = (3, 1)`); kissat refutes it, and drat-trim and `cake_lpr` verify the proof.
