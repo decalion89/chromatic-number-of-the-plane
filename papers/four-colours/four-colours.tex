@@ -395,6 +395,18 @@ the existence of a character with values in $\{\frac13,\frac12,\frac23\}$, a com
 Theorem~\ref{thm:sets}(2) for all $191$ squarefree $d\equiv11\pmod{24}$ below $5000$, and shows that for $d=11$ no
 two vectors $(\mu+i\nu\sqrt{11})/\tau$ with $\nu\le7$, $\tau\le60$ suffice.
 
+\emph{Formal proof.} Theorem~\ref{thm:main} and Corollary~\ref{cor:padic} are also proved in Lean~4 with Mathlib
+(\texttt{lean/FourColours.lean} and \texttt{lean/PadicFour.lean} in \cite{Repo}, with Theorem~W for an arbitrary
+abelian group and a finite set $S$ in \texttt{lean/TheoremWInf.lean}, by averages over boxes and a limit along an
+ultrafilter); the files depend only on Lean's three standard axioms. The formal proof uses a cruder form of
+Proposition~\ref{prop:shape}, which suffices for Theorem~\ref{thm:main} but not for the bound
+$d<21\cdot5^{k-1}$: every $c\in S_N$ is $N(\frac{1+i}2+t)+x$ with $t\in\Z[i]$ and $|x|^2<\frac1{18}$, or
+$N(\frac{\alpha+\beta i}3+t)$ with $\alpha,\beta\in\{1,2\}$. This follows by the induction of
+Proposition~\ref{prop:shape} started at $k=0$, where $S_1=([\frac13,\frac23]+\Z)^2$ and the corners of the square are
+the points of type $q$; in the step, $\frac1{18}=(\frac7{30})^2+(\frac1{30})^2$ replaces the numbers of
+Lemma~\ref{lem:numbers}, and the points of type $q$ are handled by a congruence modulo $15$. Lemma~\ref{lem:exact}
+then needs $N>6\sum_j|m_j|$.
+
 \section*{Acknowledgements}
 The author thanks the authors of the works cited, whose questions and results this note builds on.
 

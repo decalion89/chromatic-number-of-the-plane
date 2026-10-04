@@ -3,7 +3,8 @@
 *Working note, 3 October 2026. The proofs below are by hand; every numerical fact they use is rechecked in exact
 arithmetic by `data/quadratic_planes/winding/family/structure_lemma.py`, and the configurations are checked by
 computer for small `d` (§7). Two internal referees (separate AI agents, with their own programs) checked the proofs
-(research log, 3 October); nobody outside the project has.*
+(research log, 3 October); nobody outside the project has. Theorem 1 and Corollary 3 are also proved in Lean 4 with
+Mathlib, through a cruder form of Proposition 1 (§7).*
 
 ## 1. The results
 
@@ -288,7 +289,8 @@ isotropic for `d ≡ 7 (mod 8)`. Pairs of vectors do not suffice either: for `d 
 ## 6. What the proofs use
 
 Theorem W, in the direction "3-colourable ⟹ a character with `ξ(S) ⊆ [1/3, 2/3]`", for the group `ℤU ≅ ℤ⁴`
-(`notes/winding_lemma.md`; its proof for infinite groups averages with an invariant mean and is not constructive);
+(`notes/winding_lemma.md`; its proof for infinite groups averages with an invariant mean and is not constructive;
+the Lean proof, `lean/TheoremWInf.lean`, averages over boxes and takes a limit along an ultrafilter);
 the elementary arithmetic of `ℤ[i]` (Lemmas 1–4); and the explicit constants `√10/18` and `√2/6` (Lemma 3). The
 condition on `N` is generous: for `d = 11` (`n = 19`) the proof asks for `N = 3125`, but the configuration with
 `N = 25` (40 vectors up to sign) is already infeasible.
@@ -297,6 +299,23 @@ condition on `N` is generous: for `d = 11` (`n = 19`) the proof asks for `N = 31
 
 The scripts are in `data/quadratic_planes/winding/family/` (README there), the tests in
 `tests/test_winding_family.py`.
+
+- **Formal proof.** `lean/FourColours.lean` proves Theorem 1 in Lean 4 with Mathlib for every positive
+  `d ≡ 11 (mod 12)` (`FourColours.not_colorable_three`: the unit-distance graph of `ℚ(√d)²` is not 3-colourable), and
+  `lean/PadicFour.lean` proves Corollary 3 (`PadicFour.padic_not_colorable_three_unconditional`) and its form for every
+  field of characteristic 0 containing a square root of some `d ≡ 11 (mod 12)`. Theorem W for an arbitrary abelian
+  group and finite `S` is `lean/TheoremWInf.lean` (box averages of the winding sums, a limit along an ultrafilter; also
+  for `K_{p/q}`, `p < 4q`). The project's Lean workflow builds the files, compares their axioms with
+  `lean/axioms.expected` (only `propext`, `Classical.choice`, `Quot.sound`) and replays them in Lean's kernel with
+  `leanchecker`; on the commit that brought them in (ec7b021a) it passed on a separate machine, because the
+  repository's CI minutes were exhausted (`lean/VERIFY_ec7b021a.md`). The formal proof uses a cruder form of Proposition 1, which suffices for Theorem 1 but not for the
+  sharp bound of Theorem 1a: every `w ∈ S_N` is `N((1 + i)/2 + t) + x` with `t ∈ ℤ[i]` and `|x|² < 1/18`, or
+  `N((α + βi)/3 + t)` with `α, β ∈ {1, 2}`. The induction starts at `k = 0`, where `S_1 = ([1/3, 2/3] + ℤ)²` and the
+  corners of the square are the points of type `q`; in the step, `|x|² < 1/18 = (7/30)² + (1/30)²` replaces
+  `|x| ≤ √10/18` in Lemma 4, and the points of type `q` are excluded by a congruence modulo 15. Lemma 5 then needs
+  `N > 6Σ|m_j|`, and only the first coordinates of the `ε` are used in §§4–5. `crude_check.py` rechecks in exact
+  arithmetic the facts this form uses (`(3 + 4i)^m ≡ 3 − i (mod 5)` and `≡ i^m (mod 3)`, the bound `1/18`, the
+  residues modulo 15).
 
 - `python3 structure_lemma.py 6 3` checks in exact arithmetic Lemma 1 and Lemma 2 for `k ≤ 6`, Lemma 3 (the vertices
   of `P₁`, `max |x|² = 10/324`; the squared distances `1/18`), and computes `S_{5^k}` by exact polygon clipping for

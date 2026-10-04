@@ -291,7 +291,10 @@ two assertions of Corollary~\ref{cor:liu} are formalised in \texttt{lean/DistLiu
 $G(\Z,D)$ with $D$ finite (from the finite case, through one periodic window), its converse, Lemma~\ref{lem:lr3},
 and for $|D|=3$ the statement that $G(\Z,D)$ maps to $K_{p/q}$ if and only if $\kappa(D)\ge q/p$. These files depend
 only on Lean's three standard axioms; the Lean workflow of \cite{Repo} builds them, compares their axioms with a
-stored list and replays them in Lean's kernel.
+stored list and replays them in Lean's kernel. \emph{[Added 3 October 2026.]} For an arbitrary abelian group and a
+finite set $S$, the \emph{only if} direction for every $p<4q$ is formalised in \texttt{lean/TheoremWInf.lean}:
+averages over boxes $\{\sum_j t_j s_j : 0\le t_j\le n\}$ and a limit along an ultrafilter take the place of the
+invariant mean; \texttt{lean/FourColours.lean} uses it to prove the theorem of \cite{FC}.
 \end{remark}
 
 \section{Groups of small exponent}\label{sec:exp}

@@ -1,6 +1,7 @@
 """Four colours for every d = 11 (mod 12) (notes/four_colours_11_mod_12.md).
 
-Checked here: the exact facts behind the structure lemma for S_{5^k} (structure_lemma.py); that the configurations of
+Checked here: the exact facts behind the structure lemma for S_{5^k} (structure_lemma.py) and behind its crude form,
+the one proved in lean/FourColours.lean (crude_check.py); that the configurations of
 Theorems 1a and 1b consist of unit vectors and satisfy the vector relations used in the proofs; the 2-adic and 3-adic
 valuations of Steps 2 and 3 of the proof of Theorem 1b for every d = 11 (mod 24) below 20000; the large-N limit
 criterion (limit.py) on small cases; and the stored exact certificates (check_w.py), which must describe exactly the
@@ -38,6 +39,13 @@ def test_structure_lemma_exact_facts():
                          capture_output=True, text=True, timeout=600)
     assert out.returncode == 0, out.stdout + out.stderr
     assert "ALL CHECKS PASSED" in out.stdout
+
+
+def test_crude_structure_lemma_facts():
+    """The exact facts behind the crude form of the structure lemma used by lean/FourColours.lean."""
+    out = subprocess.run([sys.executable, os.path.join(FDIR, "crude_check.py")], capture_output=True, text=True,
+                         check=True).stdout
+    assert "ALL PLAN CHECKS PASSED" in out
 
 
 @pytest.mark.parametrize("d,k", [(23, 2), (47, 2), (119, 3)])

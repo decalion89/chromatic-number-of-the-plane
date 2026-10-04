@@ -29,6 +29,16 @@ including every retracted claim, is the research log,
 
 ### Added
 
+- **Theorem 1 and Corollary 3 in Lean** (3 October, night). `lean/FourColours.lean` proves
+  `χ(ℚ(√d)²) ≥ 4` for every `d ≡ 11 (mod 12)` (`FourColours.not_colorable_three`), `lean/PadicFour.lean` proves
+  `χ(ℚ_p²) ≥ 4` for every prime `p ≥ 5` and for every field of characteristic 0 containing a square root of some
+  `d ≡ 11 (mod 12)`, and `lean/TheoremWInf.lean` proves Theorem W for every abelian group and finite `S` (box averages
+  and a limit along an ultrafilter; also for `K_{p/q}`, `p < 4q`). Only Lean's three standard axioms. The Lean
+  workflow's checks (build, axiom diff, kernel replay) passed on ec7b021a, run on a separate machine because the
+  month's CI minutes were used up (`lean/VERIFY_ec7b021a.md`). The formal proof uses a cruder form of the structure lemma (described in
+  §7 of the note and in the paper's checks section), with `data/quadratic_planes/winding/family/crude_check.py`
+  for its numerical facts.
+
 - **Four colours are needed for every `d ≡ 11 (mod 12)`** (3 October, evening). `χ(ℚ(√d)²) ≥ 4` for every
   `d ≡ 11 (mod 12)`, by a proof by hand from Theorem W (`notes/four_colours_11_mod_12.md`, draft
   `papers/four-colours/`). So a real quadratic plane needs four colours exactly when `d ≡ 11 (mod 12)`, and

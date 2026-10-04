@@ -215,7 +215,10 @@ character value since `5 · (1, 0) = 0`; the average over `⟨S⟩` gives `2/5`.
 (correct for every abelian `Γ`, every symmetric `S`, finite or infinite, and every `2 ≤ p/q < 4`) is summarised in
 the research log. For finite groups both directions are formalised in Lean (`lean/TheoremWplus.lean`,
 `TheoremWplus.theoremWplus_general`, the character extended to all of `G` in `TheoremWplus.theoremWplus_extended`,
-and `TheoremWplus.converse`), with the plain average as the mean.
+and `TheoremWplus.converse`), with the plain average as the mean. For every abelian group and finite `S`, the
+direction "homomorphism ⟹ character" is formalised in `lean/TheoremWInf.lean` (`TheoremWInf.theoremW` for `K₃`,
+`TheoremWInf.theoremWplus` for `K_{p/q}`, `p < 4q`): box averages of the winding sums along the generators and a
+limit along an ultrafilter replace the invariant mean.
 
 The consequence `χ_c = 1/κ` (when `χ_c < 4`): for every rational `r = p/q` with `χ_c < r < 4` the graph maps to
 `K_r`, so `κ(S) ≥ 1/r`; hence `1/κ ≤ χ_c`, and `χ_c ≤ 1/κ` always. In particular `χ_c < 4` if and only if

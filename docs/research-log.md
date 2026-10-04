@@ -9776,3 +9776,51 @@ refereed this.
   The second referee checked it (no error, no gap; 671 primes checked, and the set of Theorem 1b for `d = 11`,
   `N = 25`, embedded in `ℚ₅²` to precision `5⁴⁰`); its wording points are applied. A finite witness exists
   (de Bruijn–Erdős, or König's lemma) but is not exhibited. Note added to the p-adic draft.
+
+## Theorem 1 in Lean (3 October, night)
+
+- **What is proved.** `lean/FourColours.lean`: `FourColours.not_colorable_three` — for every positive integer
+  `d ≡ 11 (mod 12)` the unit-distance graph of `ℚ(√d)²` is not 3-colourable — with `FourColours.no_character` (the
+  arithmetic half: for the explicit set `U = G_N·{e, u₁, ū₁, u_n}` no character of `ℤU` maps `U` into `[1/3, 2/3]`).
+  `lean/TheoremWInf.lean`: Theorem W for every abelian group and finite `S` (and for `K_{p/q}`, `p < 4q`), in the
+  direction colouring ⟹ character. `lean/PadicFour.lean`: Corollary 3, `χ(ℚ_p²) ≥ 4` for every prime `p ≥ 5`, and the
+  same over every field of characteristic 0 containing a square root of some `d ≡ 11 (mod 12)`. Only `propext`,
+  `Classical.choice` and `Quot.sound`.
+- **How.** Three cloud shares, one per file, from a written plan; each built its file against Mathlib, checked the
+  axioms and replayed it with `leanchecker` before pushing. The integration (the unconditional p-adic statements,
+  the combined registrations, commit ec7b021a) was checked by running the Lean workflow's commands on a separate
+  machine — full build of the 40 libraries, empty axiom diff, `leanchecker` on all 40 modules
+  (`lean/VERIFY_ec7b021a.md`) — because the repository's GitHub Actions minutes for the month were used up (the CI
+  run on ec7b021a was cancelled to avoid charges).
+- **A cruder structure lemma.** The formal proof does not use the polygon `P_k`. By induction from `k = 0`: every
+  point of `S_{5^k}` is `N((1 + i)/2 + t) + x` with `|x|² < 1/18`, or `N((α + βi)/3 + t)`. At `k = 0`, `S_1` is the
+  square `([1/3, 2/3] + ℤ)²`, whose corners are the points of type `q`; in the step, the new conditions at `ρ^{±(k+1)}`
+  shift by `(3 ± 4i)^{k+1} t̄/5`, which is `(a + bi)/5` with `a ≡ ±2b (mod 5)`, and a nonzero class is at squared
+  distance at least `1/18 = (7/30)² + (1/30)²` from the allowed square, while the type `q` points are excluded by a
+  congruence modulo 15. This proves Theorem 1 with a larger `N`, not the sharp bound of Theorem 1a.
+  `data/quadratic_planes/winding/family/crude_check.py` rechecks the numerical facts in exact arithmetic.
+- **The theorem W for infinite groups** averages the winding sums over boxes `{Σ t_j s_j : 0 ≤ t_j ≤ n}` (the shift
+  by a generator changes a box sum by at most a face) and takes the limit along an ultrafilter on `ℕ`; the share
+  also did `K_{p/q}`.
+
+## Six: where the graph can hide, and the geometric chromatic number (3 October, night)
+
+- **Where it cannot be.** A unit-distance graph with a representation over a field `L` (a map to `L²` preserving the
+  relation `(x − x′)² + (y − y′)² = 1`) is coloured by any colouring of `L²`. So a 6-chromatic graph has no
+  representation over `ℚ₂, ℚ₃, ℚ₇, ℚ₁₁, ℚ₂(√3)` or any other field whose plane is 5-colourable; in a number field
+  this is the field screen of `notes/local_colourings.md`. Fields with no local obstruction (`L16` and the like) are
+  where the searches already run.
+- **A different certificate.** If the plane were 5-colourable, the isometry group (amenable as a discrete group)
+  would give a random 5-colouring whose law is invariant under isometries, so `P(c(x) = c(y))` would depend only on
+  `|x − y|` (and, in the plane over a number field, only on the Galois orbit of the squared distance). A finite graph
+  `G` with weights `w` on pairs, summing to zero in each distance class, such that every 5-colouring of `G` has
+  `Σ w_p [p monochromatic] < 0`, would therefore prove `χ(ℝ²) ≥ 6`; the check is one UNSAT proof. The rotated copies
+  that de Grey's construction pays for in vertices come free. Matolcsi, Ruzsa, Varga and Zsámboki (arXiv:2311.10069)
+  use the same amenability for the fractional chromatic number (a 27-vertex graph with geometric fractional
+  chromatic number 4). Toy case: the unit rhombus forces its tips (distance `√3`) alike in every 3-colouring; one
+  more point at distance `√3` from one tip and 1 from the other gives a pair at distance `√3` that is never alike, so
+  five points prove `χ ≥ 4` this way.
+- **Under way.** A cloud share (branch `claude/six-geometric`) checks the literature for the integral version,
+  builds the LP (column generation with CP-SAT pricing) and an independent certificate checker, calibrates on
+  `χ ≥ 5` (how small a graph suffices, against 509), and then runs it at five colours on the project's graphs. No
+  result yet.
