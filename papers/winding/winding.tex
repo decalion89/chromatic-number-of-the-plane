@@ -34,7 +34,7 @@
 out the computations and the checks and helped to draft this note. A separate AI agent refereed the draft, with
 its own checker and tests, and its findings are incorporated. No mathematician has checked it yet. The author is
 not a professional mathematician and submits it for independent verification.}
-\date{Draft, 3 October 2026}
+\date{Draft, 3 and 4 October 2026}
 \subjclass[2020]{Primary 05C15; Secondary 05C25, 11R11, 52C10}
 \keywords{Cayley graph, abelian group, $3$-colouring, circular colouring, distance graph, unit-distance graph,
 Hadwiger--Nelson problem}
@@ -50,7 +50,8 @@ graph is $3$-colourable if and only if some character maps every generator into 
 cycle $C_{2k+1}$ if and only if some character maps the generators into $[k/(2k+1),(k+1)/(2k+1)]$. The proof averages
 the winding of circular colourings, known from work on their reconfiguration, over the group with an invariant
 mean. Consequences: (i) every set of Bohr recurrence is a set of
-$3$-chromatic recurrence, the case of three colours of Katznelson's question, and its Cayley graph has circular
+$3$-chromatic recurrence, the case of three colours of Katznelson's question (new, as far as we know), and its
+Cayley graph has circular
 chromatic number at least $4$; for every $3$-colouring $\mathbb N=A_1\cup A_2\cup A_3$ the union
 $\bigcup_i(A_i-A_i)$ contains $\{n:\|n\alpha\|<1/3\}$ for some $\alpha$, which answers a question of Glasscock,
 Koutsogiannis and Richter; (ii) $\chi_c(G(\Z,D))=1/\kappa(D)$ for every distance graph with three distances, which
@@ -110,8 +111,11 @@ of $(\Z/2)^2$ vanishes on a nonzero element, so $\kappa=0$ (Section~\ref{sec:fou
 The proof uses the winding of circular colourings. A homomorphism to $K_{p/q}$ lifts each edge to an integer in
 $[q,p-q]$, and the sum of the lifts along a closed walk is a multiple of $p$ (Brewster, McGuinness, Moore and Noel
 \cite[\S2.1]{BMMN}); for $p<4q$ the two sides of a square cannot differ by a whole turn, so this wind does not
-change under homotopy (Brewster and Moore \cite[\S2]{BM}). For $K_3$ it is the discrete winding number of Krebs and
-Sankar \cite{KS} (their Definition~3.5, Propositions~3.3 and~3.6, Remark~3.7), which they use to show that groups of
+change when two consecutive steps are exchanged (a $4$-cycle has wind $2$; Brewster and Moore \cite[\S2]{BM}).
+Closed walks modulo $4$-cycles and backtracks were used by Wrochna \cite{Wrochna} for the reconfiguration of
+homomorphisms to graphs without $4$-cycles, among them $K_3$ and the odd cycles; see also the $r$-fundamental groups of
+Matsushita \cite{Matsushita}. For $K_3$ the wind, normalised as in Section~\ref{sec:exp}, is minus the discrete
+winding number of Krebs and Sankar \cite{KS} (their Definition~3.5, Propositions~3.3 and~3.6, Remark~3.7), which they use to show that groups of
 exponent $4$ have no $3$-chromatic Cayley graphs. What is new, as far as we know, is the averaging of the winding
 over the group with an invariant mean, and the characterisation that results (Section~\ref{sec:lit}).
 
@@ -131,7 +135,7 @@ $\{g:\|\xi(g)\|<1/3\}$ for every character $\xi$. In particular, every set of Bo
 $3$-chromatic recurrence, and even $\chi_c(\Cay(\Gamma,S\cup-S))\ge4$ for such a set; every $3$-colourable abelian
 Cayley graph has a $3$-colouring whose colour classes are
 $\xi^{-1}[0,1/3)$, $\xi^{-1}[1/3,2/3)$ and $\xi^{-1}[2/3,1)$ for a single character $\xi$. For every $3$-colouring
-$\mathbb N=A_1\cup A_2\cup A_3$ there is $\alpha\in\RZ$ with
+$A_1\cup A_2\cup A_3$ of $\mathbb N=\{1,2,\dots\}$ there is $\alpha\in\RZ$ with
 \[
 (A_1-A_1)\cup(A_2-A_2)\cup(A_3-A_3)\supseteq\{n\in\mathbb N:\|n\alpha\|<1/3\};
 \]
@@ -140,8 +144,8 @@ in particular this union is a Bohr$_0$ set.
 
 \begin{proof}
 Apply Theorem~\ref{thm:main} with $p/q=3$ to $S\cup(-S)$; the colouring is the one in the \emph{if} direction of
-the proof. A set of Bohr recurrence has $\kappa=0$, so Corollary~\ref{cor:chic} gives $\chi_c\ge4$. For the last statement let $S=\Z\setminus\bigcup_i(A_i-A_i)$; then $S=-S$, since each $A_i-A_i$ is
-symmetric, and $0\notin S$, since some $A_i$ is nonempty. Every finite subgraph of $\Cay(\Z,S)$ has a
+the proof. A set of Bohr recurrence has $\kappa=0$, so Corollary~\ref{cor:chic} gives $\chi_c\ge4$. For the last statement let $S=\Z\setminus\bigcup_i(A_i-A_i)$; if $S$ is empty there is nothing to prove. Then
+$S=-S$, since each $A_i-A_i$ is symmetric, and $0\notin S$, since some $A_i$ is nonempty. Every finite subgraph of $\Cay(\Z,S)$ has a
 translate inside $\mathbb N$, where the given colouring is proper, so $\Cay(\Z,S)$ is $3$-colourable \cite{dBE}, and
 Theorem~\ref{thm:main} gives $\alpha$ with $\|s\alpha\|\ge1/3$ for all $s\in S$.
 \end{proof}
@@ -171,7 +175,8 @@ $\{z:\|z\cdot\lambda\|<1/3\}$ for some $\lambda\in(\RZ)^d$, the case of three tr
 By Corollary~\ref{cor:bohr}, a counterexample to Katznelson's question needs at least four colours, and with
 four colours it would be a Cayley graph with $\chi_c=\chi=4$.
 We have not found the case $r=3$ in \cite{GKR,Griesmer,HKM,LWYZ,Alweiss,BG}, nor in a second search of the
-literature; we have not been able to read \cite{Katznelson}. Glasscock, Koutsogiannis and Richter, who cite
+literature; we have not been able to read \cite{Katznelson}, whose abstract
+concerns the Cayley graphs of $\Z$ defined by lacunary sequences. Glasscock, Koutsogiannis and Richter, who cite
 \cite{Katznelson}, state that the case of three colours is open \cite{GKR}.
 
 A second consequence concerns periodicity. A colouring of a Cayley graph is \emph{periodic} if it is invariant under
@@ -197,7 +202,8 @@ direction for such a character is a periodic homomorphism to $K_{1/\kappa(S)}=K_
 \end{proof}
 
 For $\Gamma=\Z$ and finite $S$ (distance graphs) there are periodic optimal colourings for any number of colours,
-by a pigeonhole argument. For $\Z^d$ with $d\ge2$ this argument fails, and subshifts of finite type on $\Z^2$ can be aperiodic.
+by a pigeonhole argument. For $\Z^d$ with $d\ge2$ this argument fails, and subshifts of finite type on $\Z^2$ can be
+aperiodic \cite{Berger,Robinson}.
 Abrishami, Esperet, Giocanti, Hamann, Knappe and M\"oller ask whether every locally finite graph with a periodic
 proper colouring has a periodic proper colouring with $\chi(G)$ colours \cite[Problem~4.6]{AEGHKM}; they answer yes for graphs of
 bounded pathwidth, such as Cayley graphs of $2$-ended groups, and no for some $\infty$-ended graphs.
@@ -249,7 +255,8 @@ $\Cay(\Gamma',S)$ is connected.
 \smallskip
 \emph{Step 3: averaging.} As $\Gamma'$ is abelian, it is amenable: there is a mean $m$ on the bounded functions on
 $\Gamma'$ that is invariant under translations. For finite $\Gamma'$ it is the plain average; for countable
-$\Gamma'$ one can take a Banach limit of the averages over a F\o lner sequence. (Alternatively, one can prove the
+$\Gamma'$ one can take a Banach limit of the averages over a F\o lner sequence, and in general abelian groups are
+amenable by the Markov--Kakutani fixed point theorem (see Day \cite{Day}). (Alternatively, one can prove the
 theorem for finitely generated subgroups of $\Gamma'$ and pass to $\Gamma'$ by compactness of the dual group.) Let
 \[
 f(s)=m\bigl(g\mapsto\delta(g,s)\bigr)\in[q,p-q].
@@ -269,8 +276,8 @@ $R$ is the class of a closed walk, on which $\sum_j\xi(s_j)=W/p\in\Z$. So $\xi$ 
 defines a character of $Z/R=\Gamma'$ with $\xi(S)\subseteq[q/p,1-q/p]$. \qed
 
 \smallskip
-Only Step~1 uses $p<4q$. For $p=3$, $q=1$ the lift $\delta\in\{1,2\}$ is the sign of Krebs and Sankar shifted
-by $3/2$: $\sigma=3-2\delta=\pm1$.
+Only Step~1 uses $p<4q$. For $p=3$, $q=1$ the lift $\delta\in\{1,2\}$ is an affine rescaling of the sign of Krebs
+and Sankar: $\sigma=3-2\delta=\pm1$.
 
 \begin{remark}
 For $\Gamma=\Z^2$ with the standard generators this is the height-function picture of $3$-colourings of the
@@ -285,14 +292,19 @@ For finite $\Gamma$ the theorem is formalised in Lean~4 with Mathlib in \texttt{
 \cite{Repo}: the \emph{only if} direction for every $p<4q$, with the character first on the subgroup generated by
 $S$ and then extended to $\Gamma$, and the \emph{if} direction. The \emph{only if} direction for $K_3$, with the signs
 of Krebs and Sankar, is also in \texttt{lean/TheoremW.lean}. The formal proofs follow Steps~1--4, with the plain
-average as the mean. The last statement of Corollary~\ref{cor:bohr} (the answer to Question~3 of \cite{GKR}) and,
+average as the mean. The last statement of Corollary~\ref{cor:bohr} (the answer to Question~3 of \cite{GKR}, there for colourings of
+$\{0,1,2,\dots\}$, which is equivalent by a shift) and,
 for $\Gamma=\Z$, the non-trivial direction of its first statement are formalised from it in
-\texttt{lean/Recurrence.lean}, by the route through finite cyclic groups described after the corollary. The first
-two assertions of Corollary~\ref{cor:liu} are formalised in \texttt{lean/DistLiu.lean}: Theorem~\ref{thm:main} for
+\texttt{lean/Recurrence.lean}, by the route through finite cyclic groups described after the corollary. Corollary~\ref{cor:liu}
+is formalised in \texttt{lean/DistLiu.lean} at the level of homomorphisms ($\chi_c$, $\chi$ and $\kappa$ are not
+defined there): Theorem~\ref{thm:main} for
 $G(\Z,D)$ with $D$ finite (from the finite case, through one periodic window), its converse, Lemma~\ref{lem:lr3},
-and for $|D|=3$ the statement that $G(\Z,D)$ maps to $K_{p/q}$ if and only if $\kappa(D)\ge q/p$. These files depend
+and for $|D|=3$ the statement that $G(\Z,D)$ maps to $K_{p/q}$ if and only if some $\alpha$ has
+$\|d\alpha\|\ge q/p$ for every $d\in D$. These files depend
 only on Lean's three standard axioms; the Lean workflow of \cite{Repo} builds them, compares their axioms with a
-stored list and replays them in Lean's kernel. \emph{[Added 3 October 2026.]} For an arbitrary abelian group and a
+stored list and replays them in Lean's kernel; as the continuous-integration minutes of \cite{Repo} are exhausted,
+this was last done locally, with the same commands (\texttt{lean/VERIFY\_ec7b021a.md} and
+\texttt{lean/VERIFY\_513abbe8.md} there). \emph{[Added 3 October 2026.]} For an arbitrary abelian group and a
 finite set $S$, the \emph{only if} direction for every $p<4q$ is formalised in \texttt{lean/TheoremWInf.lean}:
 averages over boxes $\{\sum_j t_j s_j : 0\le t_j\le n\}$ and a limit along an ultrafilter take the place of the
 invariant mean; \texttt{lean/FourColours.lean} uses it to prove the theorem of \cite{FC}.
@@ -319,8 +331,12 @@ strongly topologically $4$-chromatic (Stiebitz; see \cite[Proposition~9]{ST}), h
 \cite[Theorem~6]{ST}. For exponent $4$ and chromatic number $3$ it is a case of the theorem of Krebs and Sankar
 \cite[Theorem~1.2]{KS}: an abelian group has a $3$-chromatic Cayley graph if and only if its exponent is not $1$,
 $2$ or $4$. Their proof uses the winding number of $3$-colourings: for exponent $4$ they show that the discrete
-fundamental group is torsion, and by their Theorem~4.1 a non-bipartite graph with a torsion fundamental group is
-not $3$-colourable; run with the wind of \cite{BM}, the same argument gives $\chi_c\ge4$. The same argument as for
+fundamental group is torsion, and by their Theorem~4.1 a connected non-bipartite graph with a torsion fundamental
+group is not $3$-colourable. Run with the normalised wind $w=(2\sum\delta-p\cdot\mathrm{length})/p$ of a closed walk,
+which does not change when two consecutive steps $s,t$ are replaced by $s',t'\in S$ with $s+t=s'+t'$ (by the
+argument of Step~1) or a backtrack is inserted or deleted, is
+additive, and is odd on closed walks of odd length (for $p=3$ it is minus the winding number of \cite{KS}), the same
+argument gives $\chi_c\ge4$; the raw sum $\sum\delta$ is not invariant under backtracks, which add $p$. The same argument as for
 Corollary~\ref{cor:exp} gives, for instance, that a Cayley graph of an abelian group of exponent $8$ that maps to
 $C_5$ is bipartite, since $1/2$ is the only element of $\tfrac18\Z/\Z$ in $[2/5,3/5]$. For $C_3$ the values $3/8$
 and $5/8$ are also available, and indeed such groups have $3$-chromatic Cayley graphs \cite{KS}.
@@ -409,14 +425,19 @@ unit-distance graph over $F$ is not $3$-colourable.
 The last assertion is the theorem of de Bruijn and Erd\H{o}s \cite{dBE}. If $F$ is a number field, then $\Z U$ is
 a finitely generated subgroup of the $\Q$-vector space $L$, hence free of rank at most $[L:\Q]$; for a quadratic
 field $F$ the test for a finite $U$ is a question on a torus of dimension at most $4$. A locally constant
-$3$-colouring at a place of $F$ \cite{Fischer1990,Moorhouse,LG} is a colouring of a finite quotient of $A$, and
-Theorem~\ref{thm:main} applied to that quotient gives such a character.
+$3$-colouring at a finite place $v$ of $F$ with $i\notin F_v$ \cite{Fischer1990,Moorhouse,LG} gives such a character: the
+place $w$ of $L$ above $v$ is unique, so conjugation preserves $|\cdot|_w$ and every unit vector is a unit of the
+valuation ring $O_w$; hence $A\subseteq O_w$. A locally constant colouring is constant on the cosets of some
+$\pi^kO_w$ in the compact ring $O_w$, so on $A$ it factors through the finite group $A/(A\cap\pi^kO_w)$; the images
+of the unit vectors are nonzero there, as the colouring is proper, and Theorem~\ref{thm:main} applied to that finite
+Cayley graph gives the character.
 
 \subsection{Real quadratic fields}
 For $F=\Q(\sqrt d)$ with $d>1$ squarefree, $\chi(F^2)=2$ if $d\not\equiv3\pmod4$
-\cite{Johnson1987,Fischer1990,Moorhouse}. If $d\equiv3\pmod4$, then $\chi(F^2)\le3$ when $d\not\equiv2\pmod3$
+\cite{Fischer1990,Moorhouse} (see also \cite{Johnson1987}, which we have not seen). If $d\equiv3\pmod4$, then $\chi(F^2)\le3$ when $d\not\equiv2\pmod3$
 \cite{Fischer1990,Moorhouse}, and $\chi(F^2)\le4$ when $d\equiv3\pmod8$ \cite[Theorem~10]{Fischer1990} or
-$d\equiv0,1,2,4\pmod7$ \cite{Moorhouse}. In \cite{QP} we found finite non-$3$-colourable unit-distance graphs over
+$d\equiv0,1,2,4\pmod7$ \cite{Moorhouse} (the cases $d\equiv3\pmod8$ and $d\equiv0,1,2,4\pmod7$ are also formalised in
+\texttt{lean/QuadraticPlanes.lean} of \cite{Repo}). In \cite{QP} we found finite non-$3$-colourable unit-distance graphs over
 $\Q(\sqrt d)$ for $27$ values $d\equiv11\pmod{12}$ below $1000$, but our searches for such graphs failed for
 $d=83,107,143,167,203$, the values that the local--global question of \cite{LG} predicted to need four colours and
 that remained open below $210$.
@@ -440,16 +461,19 @@ $\chi(\Q(\sqrt d)^2)=4$ for $d=83,107,203$; $4\le\chi(\Q(\sqrt{143})^2)\le5$; an
 The lower bounds are Corollary~\ref{cor:planes} with the certificates of Table~\ref{tab:certs} \cite{Repo}. The
 upper bound $4$ holds because $83\equiv107\equiv203\equiv3\pmod8$ \cite[Theorem~10]{Fischer1990}; this reduction at
 $2$ is also formalised in \texttt{lean/QuadraticPlanes.lean} of \cite{Repo}. For $d=143$ the place above $11$ is ramified in $\Q(\sqrt{143})$ with residue field
-$\mathbb{F}_{11}$, and $i$ is not in its completion; unit vectors are integral there and reduce to the circle
-$x^2+y^2=1$ of $\mathbb{F}_{11}^2$, whose graph is $5$-colourable \cite{QP}, which colours each coset of the
-valuation ring.
+$\mathbb{F}_{11}$, and $i$ is not in its completion; unit vectors are integral there and reduce to the $12$ points of the circle
+$x^2+y^2=1$ of $\mathbb{F}_{11}^2$. The graph on $\mathbb{F}_{11}^2$ whose edges are these differences is
+$5$-colourable: giving $(a,b)$ the $b$-th digit (from $b=0$) of the $a$-th of the words
+$01402014023$, $43020143241$, $10314302014$, $42141420141$, $21410304313$, $14143241420$, $31230314302$,
+$42024103021$, $30231230214$, $02013024142$, $24130231430$ ($a=0,\dots,10$) is a proper colouring, as one checks on
+its $726$ edges; through the residues it colours each coset of the valuation ring.
 \end{proof}
 
-\begin{remark}[added 3 October 2026]
+\begin{remark}[added 3 October 2026]\label{rem:FC}
 A later draft \cite{FC} proves $\chi(\Q(\sqrt d)^2)\ge4$ for every $d\equiv11\pmod{12}$, by hand: for each such $d$
 it gives a finite set $U$ of unit vectors (Fischer's vector $(1+i\sqrt d)^2/(1+d)$, its mirror image and, when
-$d\equiv11\pmod{24}$, one more vector, all rotated by the rational rotations whose denominators divide a power of
-$5$) for which no character of $\Z U$ maps $U$ into $[1/3,2/3]$, and applies Corollary~\ref{cor:planes}. The
+$d\equiv11\pmod{24}$, one more vector, all rotated by the rational rotations whose denominators divide $5^k$ for a
+suitable $k$) for which no character of $\Z U$ maps $U$ into $[1/3,2/3]$, and applies Corollary~\ref{cor:planes}. The
 certificates of Table~\ref{tab:certs} remain an independent check for the five fields of Theorem~\ref{thm:fields}.
 \end{remark}
 
@@ -477,7 +501,7 @@ $\chi(\Q(\sqrt{167})^2)\ge4$ is also the three-colour case of the local--global 
 result shows that no level of the place above $7$ is $3$-colourable, which \cite{LG} had checked only up to level
 $3$. For $d=83$ and $D=510$, colouring-guided growth had stopped at $6\,008$ points because a $3$-colouring of the
 ball of radius $2$ extended to all $215\,478$ candidate points. By greedy deletion, $28$ of the $54$ vectors already
-suffice for $d=83$ (we checked a certificate for this subset but did not keep it). For $\Q(\sqrt{11})$, a
+suffice for $d=83$ (certificate in \cite{Repo}: $24$ relations, $98\,300$ nodes, $79\,686$ leaves). For $\Q(\sqrt{11})$, a
 subset of $16$ vectors with $D=30$ suffices, in agreement with the $76$-vertex graph of \cite{QP}.
 
 The lower bounds rest on Theorem~\ref{thm:main}, whose averaging step is not constructive, and on the
@@ -495,9 +519,13 @@ planes are known to be $3$-colourable, and for the even denominators $(d,D)=(107
 $(167,1820)$ and $(203,1590)$, whose unit vectors also span a group of rank $4$.
 
 \begin{question}
-Is $\chi(\Q(\sqrt d)^2)\ge4$ for every squarefree $d\equiv11\pmod{12}$? In terms of Corollary~\ref{cor:planes} and
-\cite{LG}: for real quadratic fields, does a character that maps all unit vectors into $[1/3,2/3]$ exist only when
-a place gives a locally constant $3$-colouring?
+The question of an earlier version of this note, whether $\chi(\Q(\sqrt d)^2)\ge4$ for every squarefree
+$d\equiv11\pmod{12}$, is answered by \cite{FC} (Remark~\ref{rem:FC}); and for every number field $F$ with $i\notin F$, by Theorem~B of
+\cite{TCol}, a character of $A$ maps all unit vectors into $[1/3,2/3]$ only when a place of $F$ gives a locally
+constant $3$-colouring. Is the same true for four colours: is $\chi(F^2)\le4$ only when a place of $F$ gives a
+locally constant $4$-colouring? Among real quadratic fields the first open case is $\Q(\sqrt{47})$, where
+$4\le\chi\le5$ \cite{FC} and it is not known whether the places above $11$ and $19$ give a locally constant
+$4$-colouring (for $\Q(\sqrt{167})$, as said above, no place does).
 \end{question}
 
 \section{Four and more colours}\label{sec:four}
@@ -530,10 +558,12 @@ $G_0$, and one that tiles $\Z^d$ for some $d$, such that no tiling by $F$ is per
 
 For $\Gamma=\Z^d$ one can also make $S$ generate: replace $\Z^d$ by the subgroup generated by $F-F$, which is free
 abelian, and note that a periodic tiling of it would extend to a periodic tiling of $\Z^d$. Every automorphism of a
-connected Cayley graph of $\Z^d$ with a finite connection set is affine \cite{MMV}, so a colouring whose
+connected Cayley graph of $\Z^d$ with a finite connection set is affine (Ryabchenko \cite{Ryabchenko}; Morris, Morris
+and Verret \cite{MMV} extend this to torsion-free nilpotent groups), so a colouring whose
 colour-preserving automorphisms act with finitely many orbits is invariant under a subgroup of finite index; and
 $x\mapsto x\bmod N\Z^d$ is a periodic proper colouring once $S\cap N\Z^d=\emptyset$. So the answer to
-\cite[Problem~4.6]{AEGHKM} is no for Cayley graphs of $\Z^d$, while Corollary~\ref{cor:periodic} gives yes when
+\cite[Problem~4.6]{AEGHKM} is no for Cayley graphs of $\Z^d$ (we have not found this observation in the
+literature), while Corollary~\ref{cor:periodic} gives yes when
 $\chi\le3$. We do not know the least $k$ in Proposition~\ref{prop:aperiodic}; it is at least $4$. Nor do we know
 whether every $k$-colourable Cayley graph of $\Z^2$ has a periodic $k$-colouring: a single tile of $\Z^2$ always
 tiles periodically \cite{Bhattacharya}, so the examples above need torsion or $d\ge3$. Nor do we know whether
@@ -544,8 +574,9 @@ touched.
 
 \section{Finite witnesses}\label{sec:finite}
 
-For a homomorphism $c$ to $K_{p/q}$, call the edge from $g$ to $g+s$ \emph{tight} if $\delta(g,s)=q$, and a
-\emph{tight cycle} a cycle whose edges are tight in its direction. If a finite graph $H$ has a homomorphism to
+For a homomorphism $c$ of a graph to $K_{p/q}$, call an arc $x\to y$ along an edge \emph{tight} if
+$c(y)-c(x)\equiv q\pmod p$, and a \emph{tight cycle} a directed cycle of tight arcs; when $p>2q$, an edge is tight in
+at most one direction. For a Cayley graph, the arc from $g$ to $g+s$ is tight exactly when $\delta(g,s)=q$. If a finite graph $H$ has a homomorphism to
 $K_{p/q}$ and every such homomorphism has a tight cycle, then $\chi_c(H)=p/q$: this is the easy half of a
 characterisation of Guichard \cite{Guichard} (if $\chi_c(H)<p/q$, rounding $\frac p{p'}c'$ for a homomorphism $c'$
 to some $K_{p'/q'}$ with $p'/q'<p/q$ gives a homomorphism to $K_{p/q}$ without tight cycles). By compactness,
@@ -577,10 +608,11 @@ $K_{p/q}$, and $\chi_c(H)=p/q$.
 \end{proof}
 
 The key point is that an optimal character of a finite $S$ has a nonnegative relation among the elements at which it
-is tight, as otherwise it could be perturbed. For $\Gamma=\Z$ the corollary says that $\chi_c(G(\Z,D))<4$ is
-attained by a finite subgraph for every finite $D$; for instance, a SAT computation by a referee, not certified,
-finds that $D=\{3,4,9,12\}$ has $\chi_c=7/2$ (a character: $\xi(n)=n/7$) and that the segment $\{0,\dots,18\}$ is a
-witness. For
+is tight, as otherwise it could be perturbed. For $\Gamma=\Z$ the corollary says that, for every finite $D$,
+$\chi_c(G(\Z,D))$ is attained by a finite subgraph when it is less than $4$. For instance $D=\{3,4,9,12\}$ has
+$\kappa(D)=2/7$, attained by $\xi(n)=n/7$, so $\chi_c=7/2$ by Corollary~\ref{cor:chic}; SAT computations by a
+referee, not certified, find that the segment $\{0,\dots,18\}$ is a witness and that $\{0,\dots,17\}$ maps to
+$K_{17/5}$. For
 the planes over number fields, where $S$ is infinite, the conclusion holds below $4$ because a finite set of unit
 vectors already has $\kappa=1/\chi_c$ \cite[Corollary~7]{TCol}.
 
@@ -590,9 +622,14 @@ The closest works are those of Krebs and Sankar \cite{KS}, whose winding number 
 for $K_3$, and of Brewster, McGuinness, Moore and Noel \cite{BMMN} and Brewster and Moore \cite{BM}, whose wind of
 $(p,q)$-colourings is Steps~1 and~2 for $2<p/q<4$; they use it for fundamental groups and for reconfiguration,
 without characters or averaging. Naserasr, Pujol and Wang \cite{NPW} use winding numbers of circular colourings to
-prove gaps in $\chi_c$, such as the interval $(2,4)$ for quadrangulations of the projective plane. The \emph{if}
+give unified and simplified proofs of gaps in $\chi_c$, such as the interval $(2,4)$ for quadrangulations of the
+projective plane (for $\chi$ this is Youngs's theorem \cite{Youngs}), and Gujgiczer, Naserasr, S and Taruni
+\cite{GNST} use them for signed graphs of circular chromatic number $4$. Gao, Jackson, Krohne and Seward \cite{GJKS}
+use the winding of $3$-colourings around the $4$-cycles of $\Z^2$ in their proof that the Cayley graph of $\Z^2$ on
+the free part of $2^{\Z^2}$ has no continuous $3$-colouring. The \emph{if}
 direction of Theorem~\ref{thm:main} is classical \cite{Liu,Alon}; see also \cite[proof of Theorem~2.3]{GKM}. The following are consistent with Theorem~\ref{thm:main} and do not imply it:
-Cervantes and Krebs \cite{CK1,CK2,CK3} (in \cite{CK3}, $3$-colourability for small dimension and rank is
+Heuberger \cite{Heuberger} (the chromatic numbers of the circulants $C_n(a,b)$, with the exception $C_{13}(1,5)$;
+his matrices are used in \cite{CK1,KL}); Cervantes and Krebs \cite{CK1,CK2,CK3} (in \cite{CK3}, $3$-colourability for small dimension and rank is
 characterised by two forbidden subgraphs, diamond lanyards and $C_{13}(1,5)$, and $C_{13}(1,5)$ indeed has no
 suitable character); Krebs and Leyva \cite{KL}; the work on Katznelson's question on Bohr recurrence
 \cite{Griesmer,HKM,LWYZ,BG}, where we found no statement for three colours (we have not seen \cite{Katznelson}
@@ -611,7 +648,8 @@ Robinson report a computer check for $\max D\le25$ \cite{LR}; for those sets $\c
 sandwiching. Corollary~\ref{cor:liu} gives $\chi_c=1/\kappa$ for every $D$ with $|D|=3$, but says nothing about
 $\chi_f$.
 
-By Theorem~\ref{thm:main}, whether a finite abelian Cayley graph, given by $\Gamma$ and $S$, maps to $K_{p/q}$ with
+By Theorem~\ref{thm:main}, whether a finite abelian Cayley graph, given by $\Gamma$ as a product of cyclic groups and by the list $S$,
+maps to $K_{p/q}$ with
 $p/q<4$ (for instance, whether it is $3$-colourable) can be decided by checking the $|\Gamma|$ characters, with
 $O(|\Gamma|\,|S|)$ operations: polynomial in the size of the graph.
 
@@ -624,12 +662,13 @@ arXiv:2411.01951.
 (2013), 1232--1243.
 \bibitem{BNT} L. Beaudou, R. Naserasr and C. Tardif, \emph{Homomorphisms of binary Cayley graphs}, Discrete Math.
 \textbf{338} (2015), 2539--2544; arXiv:1502.00776.
+\bibitem{Berger} R. Berger, \emph{The undecidability of the domino problem}, Mem. Amer. Math. Soc. \textbf{66} (1966).
 \bibitem{BW} U. Betke and J. M. Wills, \emph{Untere Schranken f\"ur zwei diophantische
 Approximations-Funktionen}, Monatsh. Math. \textbf{76} (1972), 214--217.
 \bibitem{Bhattacharya} S. Bhattacharya, \emph{Periodicity and decidability of tilings of $\Z^2$}, Amer. J. Math.
 \textbf{142} (2020), 255--266.
-\bibitem{BG} M. Boshernitzan and E. Glasner, \emph{On two recurrence problems}, Fund. Math. \textbf{206} (2009);
-arXiv:0902.3931.
+\bibitem{BG} M. Boshernitzan and E. Glasner, \emph{On two recurrence problems}, Fund. Math. \textbf{206} (2009),
+113--138; arXiv:0902.3931.
 \bibitem{BMMN} R. C. Brewster, S. McGuinness, B. Moore and J. A. Noel, \emph{A dichotomy theorem for circular
 colouring reconfiguration}, Theoret. Comput. Sci. \textbf{639} (2016), 1--13; arXiv:1508.05573.
 \bibitem{BM} R. C. Brewster and B. Moore, \emph{Characterizing circular colouring mixing for $p/q<4$}, J. Graph
@@ -645,9 +684,10 @@ small dimension and rank}, Quaest. Math. \textbf{49} (2026), 1761--1788; arXiv:2
 \bibitem{Cusick} T. W. Cusick, \emph{View-obstruction problems}, Aequationes Math. \textbf{9} (1973), 165--170.
 \bibitem{Cusick2} T. W. Cusick, \emph{View-obstruction problems in $n$-dimensional geometry}, J. Combin. Theory
 Ser. A \textbf{16} (1974), 1--11.
+\bibitem{Day} M. M. Day, \emph{Amenable semigroups}, Illinois J. Math. \textbf{1} (1957), 509--544.
 \bibitem{dBE} N. G. de Bruijn and P. Erd\H{o}s, \emph{A colour problem for infinite graphs and a problem in the
 theory of relations}, Nederl. Akad. Wetensch. Proc. Ser. A \textbf{54} = Indag. Math. \textbf{13} (1951),
-369--373.
+371--373.
 \bibitem{Fischer1990} K. G. Fischer, \emph{Additive $K$-colorable extensions of the rational plane}, Discrete
 Math. \textbf{82} (1990), 181--195.
 \bibitem{Repo} S. Gal\'an, \emph{The Hadwiger--Nelson problem over number fields}, code, data and formal
@@ -662,6 +702,8 @@ appear in the next archived version.
 \bibitem{TCol} S. Gal\'an, \emph{Three colours for the plane over a number field}, draft, 2026,
 \texttt{papers/three-colours/} in \cite{Repo}.
 \bibitem{QP} S. Gal\'an, \emph{Real quadratic planes that need four colours}, draft, 2026, in \cite{Repo}.
+\bibitem{GJKS} S. Gao, S. Jackson, E. Krohne and B. Seward, \emph{Continuous combinatorics of abelian group
+actions}, arXiv:1803.03872 (2018).
 \bibitem{GKM} I. Garc\'ia-Marco, K. Knauer and G. Menara, \emph{Coloring semiminimal Cayley graphs},
 arXiv:2607.26942 (2026).
 \bibitem{GKR} D. Glasscock, A. Koutsogiannis and F. K. Richter, \emph{On Katznelson's question for skew product
@@ -674,8 +716,12 @@ systems}, Bull. Amer. Math. Soc. (N.S.) \textbf{59} (2022), 569--606; arXiv:2106
 recurrence}, Monatsh. Math. \textbf{200} (2023), 63--79; arXiv:2108.02190.
 \bibitem{Guichard} D. R. Guichard, \emph{Acyclic graph coloring and the complexity of the star chromatic number},
 J. Graph Theory \textbf{17} (1993), 129--134.
+\bibitem{GNST} A. Gujgiczer, R. Naserasr, Rohini S and S. Taruni, \emph{Winding number and circular $4$-coloring
+of signed graphs}, arXiv:2307.04652 (2023).
 \bibitem{Haralambis} N. M. Haralambis, \emph{Sets of integers with missing differences}, J. Combin. Theory Ser. A
 \textbf{23} (1977), 22--33.
+\bibitem{Heuberger} C. Heuberger, \emph{On planarity and colorability of circulant graphs}, Discrete Math.
+\textbf{268} (2003), 153--169.
 \bibitem{HKM} B. Host, B. Kra and A. Maass, \emph{Variations on topological recurrence}, Monatsh. Math.
 \textbf{179} (2016), 57--89.
 \bibitem{Johnson1987} P. D. Johnson Jr., \emph{Two-colorings of real quadratic extensions of $\Q^2$ that forbid
@@ -692,6 +738,8 @@ graphs}, Taiwanese J. Math. \textbf{12} (2008), 851--871.
 Combin. \textbf{85} (2020), 103056; arXiv:1611.03940.
 \bibitem{LWYZ} H. Liu, Z. Wu, N. Yang and S. Zhang, \emph{Chromatic thresholds for linear equations and
 recurrence}, arXiv:2603.05490 (2026).
+\bibitem{Matsushita} T. Matsushita, \emph{Fundamental groups of neighborhood complexes}, J. Math. Sci. Univ.
+Tokyo \textbf{24} (2017), 321--353; arXiv:1210.2803.
 \bibitem{MMV} D. W. Morris, J. Morris and G. Verret, \emph{Isomorphisms of Cayley graphs on nilpotent groups}, New
 York J. Math. \textbf{22} (2016), 453--467.
 \bibitem{Moorhouse} G. E. Moorhouse, \emph{On the chromatic numbers of planes}, preliminary draft, revised
@@ -701,11 +749,19 @@ York J. Math. \textbf{22} (2016), 453--467.
 \bibitem{Payan} C. Payan, \emph{On the chromatic number of cube-like graphs}, Discrete Math. \textbf{103} (1992),
 271--277.
 \bibitem{PS} G. Perarnau and O. Serra, \emph{The lonely runner conjecture turns 60}, arXiv:2409.20160 (2024).
+\bibitem{Robinson} R. M. Robinson, \emph{Undecidability and nonperiodicity for tilings of the plane}, Invent.
+Math. \textbf{12} (1971), 177--209.
+\bibitem{Ryabchenko} A. A. Ryabchenko, \emph{Isomorphisms of Cayley graphs of a free abelian group}, Siberian
+Math. J. \textbf{48} (2007), 919--922.
 \bibitem{Sheffield} S. Sheffield, \emph{Random surfaces}, Ast\'erisque \textbf{304} (2005).
 \bibitem{ST} G. Simonyi and G. Tardos, \emph{Local chromatic number, Ky Fan's theorem, and circular colorings},
 Combinatorica \textbf{26} (2006), 587--626.
 \bibitem{VWZ} F. Vallentin, S. Wei{\ss}bach and M. C. Zimmermann, \emph{The chromatic number of 4-dimensional
 lattices}, Indag. Math. (N.S.) \textbf{36} (2025), 988--1004; arXiv:2407.03513.
+\bibitem{Wrochna} M. Wrochna, \emph{Homomorphism reconfiguration via homotopy}, SIAM J. Discrete Math.
+\textbf{34} (2020), 328--350; arXiv:1408.2812.
+\bibitem{Youngs} D. A. Youngs, \emph{$4$-chromatic projective graphs}, J. Graph Theory \textbf{21} (1996),
+219--227.
 \bibitem{ZhuSurvey} X. Zhu, \emph{Circular chromatic number: a survey}, Discrete Math. \textbf{229} (2001),
 371--410.
 \bibitem{Zhu2002} X. Zhu, \emph{Circular chromatic number of distance graphs with distance sets of cardinality $3$},

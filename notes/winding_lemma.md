@@ -239,10 +239,12 @@ group of exponent 2 or 4 has `2 < χ_c < 4`. This is a uniform proof of known fa
 
 Krebs and Sankar's Theorem 1.2 covers all abelian groups: some Cayley graph is 3-chromatic if and only if the
 exponent is not 1, 2 or 4. Their proof of the exponent-4 case uses the same winding number: they show that the
-discrete fundamental group is torsion, and their Theorem 4.1 says that a non-bipartite graph with torsion
-fundamental group needs four colours; run with the wind of Brewster and Moore (the homomorphism
-`w ↦ 2Σδ − p·length` from closed walks to ℤ, which is `≡ p (mod 2p)` on odd closed walks), the same argument gives
-`χ_c ≥ 4`. Cervantes and Krebs (arXiv:2303.06267) gave another proof of Payan's theorem. For exponent 2 the bound
+discrete fundamental group is torsion, and their Theorem 4.1 says that a connected non-bipartite graph with
+torsion fundamental group needs four colours; run with the normalised wind (the homomorphism
+`w ↦ (2Σδ − p·length)/p` from closed walks to ℤ, invariant under backtracks and under replacing two consecutive
+steps `s, t` by any `s′, t′ ∈ S` with `s + t = s′ + t′` (the move of Krebs and Sankar's homotopy, which their proof
+for exponent 4 uses as `(s, s) → (−s, −s)`; invariance by the argument of step 1), odd on odd closed walks, and for `p = 3` minus the winding number of Krebs and Sankar; the raw sum `Σδ`
+is not invariant under backtracks, which add `p`), the same argument gives `χ_c ≥ 4`. Cervantes and Krebs (arXiv:2303.06267) gave another proof of Payan's theorem. For exponent 2 the bound
 `χ_c ≥ 4` is also known: Payan's proof shows that a non-bipartite cube-like graph contains a generalised Mycielski
 graph of an odd cycle (Beaudou, Naserasr and Tardif, Discrete Math. 338 (2015), Theorem 1.4), and these are strongly
 topologically 4-chromatic (Stiebitz; Simonyi and Tardos, Combinatorica 26 (2006), Proposition 9), hence have
@@ -350,8 +352,9 @@ With `d = 83` and `107`, `χ(ℚ(√d)²)` is known for every squarefree `d < 14
 result also shows that no level of the place above 7 gives a 3-colouring; `notes/local_global.md` had left this
 open beyond level 3.
 
-For `d = 83`, a subset of 28 of the 54 vectors (found by greedy deletion) already suffices. Its certificate has
-98 300 nodes and is checked too, but not stored. For `ℚ(√11)` with `D = 30`, a 16-vector subset suffices
+For `d = 83`, a subset of 28 of the 54 vectors (found by greedy deletion, `min_83_510.json`) already suffices. Its
+certificate, `cert_83_510_min28.json.gz` (24 relations, 98 300 nodes, 79 686 leaves; regenerated on 4 October with
+`certify_w2.py` in 692 s), is accepted by `check_w.py` in about 80 s. For `ℚ(√11)` with `D = 30`, a 16-vector subset suffices
 (`cert_11_30.json.gz`, 1 115 nodes), in agreement with the known 76-vertex graph.
 
 These lower bounds rest on Theorem W, whose averaging step is not constructive, and on the certificates. No explicit

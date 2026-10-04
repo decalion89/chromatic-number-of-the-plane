@@ -36,3 +36,7 @@ certify_w2.py   exact certificate: branch and bound over the integer values z_j 
 fastcert.py     the same with sampled branching candidates: python3 fastcert.py IN.json OUT.json [K]
 check_w.py      independent checker (integers and fractions only; every failed check raises an error, so python -O
                 checks the same, and floats are rejected): python3 check_w.py OUT.json -> VERIFIED ... or REJECTED
+
+Certificates (cert_d_D*.json.gz; the table is in notes/winding_lemma.md): 11/30 (16 vectors), 83/510 (all 54
+vectors: cert_83_510_full; the 28 of min_83_510.json: cert_83_510_min28, 98 300 nodes, about 80 s to check),
+107/1170, 143/1740, 167/1560 and 203/1530.

@@ -1,6 +1,6 @@
 # Circular colourings of abelian Cayley graphs below four come from characters
 
-[`winding.pdf`](winding.pdf) is an eleven-page draft (3 and 4 October 2026):
+[`winding.pdf`](winding.pdf) is a twelve-page draft (3 and 4 October 2026):
 
 - **Theorem 1 (Theorem W⁺).** For `p/q < 4`, a Cayley graph of an abelian group maps to the circular clique
   `K_{p/q}` if and only if some character maps every generator into `[q/p, 1 − q/p]`. So its circular chromatic
@@ -29,9 +29,21 @@
   `{0, …, 18}` of the distance graph with distances 3, 4, 9, 12 (`χ_c = 7/2`; SAT, not certified). Refereed inside
   the project, with the corollary on planes over number fields of `papers/three-colours/` that it serves.
 - **Lean.** Theorem 1 for finite groups (`lean/TheoremWplus.lean`, `lean/TheoremW.lean`), the answer to Question 3
-  of Glasscock, Koutsogiannis and Richter (`lean/Recurrence.lean`), and Corollary 9 with the lonely runner theorem
-  for three speeds (Lemma 10; `lean/DistLiu.lean`) are formally verified.
+  of Glasscock, Koutsogiannis and Richter (`lean/Recurrence.lean`), and Corollary 9 at the level of homomorphisms
+  (`χ_c`, `χ` and `κ` are not defined there) with the lonely runner theorem for three speeds (Lemma 10;
+  `lean/DistLiu.lean`) are formally verified, and checked locally (`lean/VERIFY_*.md`), not by continuous
+  integration.
 
 The account with all the checks is [`notes/winding_lemma.md`](../../notes/winding_lemma.md). Refereed inside the
-project by separate agents, whose corrections are applied; not refereed outside the project. Build:
+project by separate agents, whose corrections are applied; not refereed outside the project. A last reading of the
+whole paper (4 October, afternoon) found no false theorem and no broken proof; its corrections are applied: a
+question that asked as open what `papers/four-colours/` proves, an inaccurate sentence on the invariance of the
+wind (the raw wind is not invariant under backtracks; the argument for exponent 4 now uses the normalised wind,
+invariant under every replacement of two consecutive steps by two with the same sum, as Krebs and Sankar's
+homotopy needs, and under backtracks), a missing step in a remark on locally constant colourings (integrality at
+the place), the related literature (Wrochna, Matsushita, Gao–Jackson–Krohne–Seward, Heuberger,
+Gujgiczer–Naserasr–S–Taruni, Ryabchenko, Berger, Robinson, Youngs, Day), an explicit 5-colouring of the plane over
+`𝔽₁₁` in Theorem 12, the certificate for 28 of the 54 vectors for `d = 83` (now stored), and smaller points. A
+second reading of the changes found one more gap (the replacement just described) and smaller points, all applied.
+Build:
 `pdflatex winding.tex` (three times, for the PDF outline).

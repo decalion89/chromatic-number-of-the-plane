@@ -10144,3 +10144,48 @@ applied.
   which graph the SAT bound on the 628 vertices refers to, the level of `level2.py`, a simpler reason for the residue
   field `𝔽₇` of `ℚ(√2, √7)`, the citation for `ℚ(√3, √11)`, which lies in both families, the order of two references,
   and clarifications in the proof of Lemma 13) are applied.
+
+## A full reading of the winding paper (4 October, afternoon)
+
+A separate agent read all of `papers/winding/`, reran every certificate of Theorem 12 with the stored checker and
+with a checker of its own, tested Theorem 1 on 400 random finite abelian Cayley graphs at ten values of `p/q < 4`
+(no mismatch; the expected failures at 4, 9/2 and 5), rechecked the distance-graph classifications, Lemma 10 and the
+example `{3, 4, 9, 12}`, read the cited sources it could fetch and the Lean statements. Verdict: no false theorem
+and no broken proof; Theorem 1 holds in both directions for every abelian group. Applied:
+
+- **An internal contradiction.** Question 14 still asked whether `χ(ℚ(√d)²) ≥ 4` for every `d ≡ 11 (mod 12)`,
+  which `papers/four-colours/` proves (and Lean checks). It now asks the four-colour local–global question.
+- **A false sentence.** "This wind does not change under homotopy" is false for the raw sum of the lifts: a
+  backtrack adds `p`. It is invariant under exchanging two steps (a 4-cycle has wind 2); the argument for groups of
+  exponent 4 now uses the normalised wind `(2Σδ − p·length)/p`, which is also invariant under backtracks. No proof
+  of the paper used the false form.
+- **A missing step.** A locally constant colouring at a place gives a character only after one notes that the unit
+  vectors are integral there (the place of `L` above it is unique when `i ∉ F_v`); now written.
+- **Literature.** Wrochna and Matsushita (walks modulo 4-cycles), Gao–Jackson–Krohne–Seward (the winding of
+  3-colourings of `ℤ²`), Heuberger (circulants), Gujgiczer–Naserasr–S–Taruni, Ryabchenko (the case of `ℤ^d` of the
+  affine automorphism theorem), Berger and Robinson (aperiodic tilings), Youngs (projective quadrangulations) and Day
+  (invariant means); every reference was checked against its publisher or arXiv page. Katznelson (2001) is still
+  unread (not open access; its abstract concerns lacunary sequences).
+- **Self-contained Theorem 12.** The 5-colouring of the plane over `𝔽₁₁` used for `ℚ(√143)` is now printed in the
+  proof (eleven words of eleven digits, checked on its 726 edges).
+- Smaller points: `ℕ = {1, 2, …}`, the empty connection set, the formalised statements of the Liu corollary, the
+  local Lean check, the definition of tight arcs for any graph, the finite witness for `{3, 4, 9, 12}` (`χ_c = 7/2`
+  is rigorous, only the witness rests on SAT), the input model of the decision procedure, the bibliography (the
+  pages of de Bruijn–Erdős, 371–373, also corrected in two other papers).
+
+A second reading of the changes (a fresh agent, diffing the revised source against the version read above) found no
+error and one gap, now closed: the exponent-4 argument of Krebs and Sankar needs their homotopy move, which replaces
+two consecutive steps `s, t` by any `s′, t′ ∈ S` with `s + t = s′ + t′` (for exponent 4 they use `(s, s) → (−s, −s)`),
+and exchanges with backtracks alone do not suffice (in `ℤ/4` with `S = {±1, 2}` the odd closed walk `(1, 1, 2)` has
+no trivial power under them). The normalised wind is invariant under the general move by the argument of Step 1 (both
+sums lie in `[2q, 2p − 2q]` and agree modulo `p`); the sentence now says so. Smaller points applied: Question 14 says
+that for `ℚ(√47)` it is not known whether the places above 11 and 19 give locally constant 4-colourings (which
+removes an apparent conflict with "`ℚ(√167)` is the first admissible field") and assumes `i ∉ F`; Ryabchenko's
+theorem is the case `ℤ^d` (with torsion it fails: `K_n` has non-affine automorphisms), and Morris, Morris and
+Verret extend it to torsion-free nilpotent groups; `d ≡ 0 (mod 7)` is formalised too
+(`QuadraticPlanes.colorable_four_ramified`); "finite place", and why a locally constant colouring is constant on the
+cosets of some `π^k O_w`; the Lean form of the answer to Question 3 of Glasscock, Koutsogiannis and Richter colours
+`{0, 1, 2, …}`, equivalent by a shift; wording. The certificate for the 28 vectors of `min_83_510.json` was
+regenerated (`certify_w2.py`, 692 s: 24 relations, 98 300 nodes, 79 686 leaves), accepted by `check_w.py`, and is
+now stored as `data/quadratic_planes/winding/cert_83_510_min28.json.gz` and checked by the slow tests; the paper
+cites it instead of "checked but not kept". The PDF is rebuilt (12 pages, no warnings).

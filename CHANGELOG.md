@@ -57,6 +57,18 @@ including every retracted claim, is the research log,
   each result, and the relevant papers the project did not cite before.
 
 ### Changed
+- **A full reading of `papers/winding/` (4 October, afternoon).** A separate agent read the whole paper,
+  reran every certificate and wrote its own checker and tests: no false theorem and no broken proof. Applied: Question
+  14 no longer asks as open what `papers/four-colours/` proves (it now asks the four-colour local–global question);
+  the raw wind is not invariant under backtracks, so the exponent-4 argument uses the normalised wind, invariant
+  under backtracks and under every replacement of two consecutive steps by two with the same sum (the move of Krebs
+  and Sankar's homotopy; a second reading found that exchanges alone do not suffice); the remark that a locally constant colouring at a place gives a character now proves integrality at the
+  place; related literature added and checked (Wrochna, Matsushita, Gao–Jackson–Krohne–Seward, Heuberger,
+  Gujgiczer–Naserasr–S–Taruni, Ryabchenko, Berger, Robinson, Youngs, Day); an explicit 5-colouring of the plane over
+  `𝔽₁₁` in Theorem 12; bibliography (de Bruijn–Erdős pages, also in two other papers); the abstract's novelty claim
+  hedged; the certificate for 28 of the 54 vectors for `d = 83` regenerated, checked and stored
+  (`data/quadratic_planes/winding/cert_83_510_min28.json.gz`, in the slow tests); smaller points. The PDF is rebuilt
+  (12 pages).
 - **A full reading of `papers/three-colours/` (4 October, afternoon).** A separate agent read the whole paper
   and found no mathematical error in a proof; its corrections are applied. Lemma 13 (the arithmetic of `𝔽₄₉` at the
   places above 7: `A′₇ = {e : eē = −1}`, no coset of a subgroup inside it, the digit patterns) now has a proof by hand

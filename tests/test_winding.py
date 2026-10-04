@@ -146,7 +146,8 @@ def test_certificates(name, d):
 
 
 @pytest.mark.slow
-@pytest.mark.parametrize("name, d", [("cert_107_1170.json.gz", 107), ("cert_167_1560.json.gz", 167)])
+@pytest.mark.parametrize("name, d", [("cert_107_1170.json.gz", 107), ("cert_167_1560.json.gz", 167),
+                                     ("cert_83_510_min28.json.gz", 83)])
 def test_certificates_slow(name, d):
     out = check(os.path.join(WDIR, name))
     assert out.startswith(f"VERIFIED: d={d} ")
