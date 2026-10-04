@@ -16,11 +16,12 @@ The tests marked `slow` include a 4-colourability solve of de Grey's 1581-vertex
 limit; `hn.coloring` enforces it for CaDiCaL, which ignores pysat's interrupt, by running the
 solver in a separate process.
 
-GitHub Actions (`.github/workflows/tests.yml`) runs the 41 files marked CI on every push to
-`main`, on every pull request, and on manual dispatch: 598 tests. It skips the DRAT test in
-`test_certify.py`, because the workflow does not install drat-trim, and leaves out the six slow tests
-of `test_threepoint_indep.py`. The other eleven files (283 tests) are run locally; without their
-15 tests marked `slow` they took 32 minutes in a local run, 20 of them in one test of
+GitHub Actions (`.github/workflows/tests.yml`) runs the 43 files marked CI on every push to
+`main`, on every pull request, and on manual dispatch: 653 tests. It skips the DRAT test in
+`test_certify.py`, because the workflow does not install drat-trim, and leaves out 22 slow
+certificate tests of `test_threepoint_indep.py`, `test_winding.py` and `test_winding_family.py`.
+The other thirteen files (298 tests, 16 of them marked `slow`) are run locally; in an earlier
+local run, eleven of them without their slow tests took 32 minutes, 20 of them in one test of
 `test_two_tunings.py`. The eight slow tests of `test_threepoint_certificates.py` take about 15
 minutes together.
 
@@ -48,6 +49,7 @@ minutes together.
 | `test_g13_chi.py` | ✓ | `χ(G₁₃) = 6` (`notes/g13_chi.md`): the three case formulas `F34`, `F35`, `F36` (their clauses, the counts and the chains with the functions of the audit of `α`) on intended models and on colourings far from any normal form; `verify_plan_D.py`, the packer and `scripts/verify_g13_chi.py` on a small made-up run; and, when `certificates/g13_chi_certlogs.tar.gz` is present, the archive against its SHA256SUMS file and the logs of `E37_*` in it against the certificates of `α(G₁₃) = 36`. |
 | `test_g17.py` | ✓ | The anisotropic plane G₁₇ of `scripts/g17_alpha.py`: 289 vertices of degree 18, and rotations, reflections and translations are automorphisms; its independent circles are N = 4, 5, 9, 11, 12, 14, 15, with regions of 90 or 108 vertices; the 57-point rosette is independent, contains 0 and the whole circle N = 12, and breaks exactly one clause of the part-B formula; the totalizer is exact on every assignment of up to 8 literals; the part-A formulas are, byte for byte, those whose DRAT proofs `certificates/g17_part_a_checks.txt` records as verified. |
 | `test_g17_slow.py` |  | The seven part-A formulas are unsatisfiable, solved again by CaDiCaL (marked `slow`; about six minutes on a loaded machine). |
+| `test_gap_above_three.py` |  | Theorem D (`notes/circular_planes.md` §5, Section 9 of `papers/three-colours/`), from the programs in `data/number_fields/circular/probe/`: Lemma 8, the base-case identities, the polygons `P` and `X(ε)`, the 5-adic points `c_k` (`k ≤ 15`), the thresholds of the induction step for `k ≤ 6`, and the component counts of the probe at `θ* = 0.3001611` for every level up to 19, on which the computer-assisted bound rests; the slow test recomputes the 25 classes of the base case. |
 | `test_geometry.py` | ✓ | Exact rotations: the 60° rotation, the Moser spindle's angle arccos(5/6), rotations about a pivot, and de Grey's rotations, which need ℚ(√3, √5, √7, √11). |
 | `test_graph_coloring.py` | ✓ | Graph construction, reductions and colouring against known values: the Moser spindle is 4-chromatic, the triangular lattice is 3-chromatic, and the forced pair of a unit rhombus is found and spindled. |
 | `test_homcol.py` |  | Homomorphism (coset) colourings of unit-distance graphs and the blocking screen built on them, on the project's graphs and fields (197 tests). |
@@ -70,6 +72,7 @@ minutes together.
 | `test_spindle.py` | ✓ | The spindle constructions (two-copy, triple and local), separation tests and cores, on cases whose answers are known. |
 | `test_small_plane_colourings.py` | ✓ | The colourings behind the upper bounds for the small finite planes, stored in `data/small_plane_colourings.json`: G_q for q = 3, 4, 5, 7, 8, 13 and H_q for q ≤ 16, q ≠ 13, each rebuilt and checked on every edge. Also the lower bounds that need no solver: G₃ has an odd cycle, G₄ is the Clebsch graph (independence number 5), Hoffman's bound for G₅, and K₄ in G₈. |
 | `test_split_places.py` | ✓ | Proposition C of `notes/local_colourings.md` §12: the hyperbola graphs H_q = Cay(𝔽_q², {(t, 1/t)}) have χ = 2, 3, 4, 3, 4, 4, 3, 4, 5, 4 for q = 2, 3, 4, 5, 7, 8, 9, 11, 13, 16 (an explicit 5-colouring for q = 13); over ℚ(√3, √5), reduction at the prime above 2 is a proper 4-colouring of `chain35.json`, whose edge vectors are units there, one of its edge vectors is not a unit above 3, and reduction above 3 followed by a 3-colouring of H₉ 3-colours a graph whose edge vectors are units above 3. |
+| `test_three_colours.py` |  | Theorems B and C (`notes/three_colours_number_fields.md`, `notes/circular_planes.md`; needs PARI/GP): the limit test of Lemma B1 on known quadratic fields and on ℚ(√2, √7), in Python and in PARI/GP, the exact certificate for two square roots, the criterion (a)/(b) on examples, the circular certificates for ℚ(√11) and ℚ(√35) with both exact checkers, the checkers' rejection of a zero relation, and the 7-adic colouring into `K_{7/2}`. |
 | `test_threepoint.py` | ✓ | The three-point bound of `scripts/threepoint.py` (§14), without a solver: for q ≤ 13 the rotation blocks and the localizing blocks are compressions of the explicit matrices by an orthonormal basis, so they are positive semidefinite exactly when the matrices are; real independent sets of 𝔽₁₁² and 𝔽₁₃² satisfy every constraint, with objective \|S\|; the stored certificates match `data/threepoint/SHA256SUMS`. |
 | `test_threepoint_certificates.py` |  | Each certificate in `data/threepoint/` proves the lower bound on χ listed in the file (χ ≥ 6 for 𝔽₃₇², 𝔽₄₁², 𝔽₄₃², 𝔽₄₇², G₂₉, G₃₇, G₄₁; χ(G₁₃) ≥ 5), checked by `scripts/threepoint_verify.py` in interval and exact rational arithmetic (marked `slow`: up to four minutes each). |
 | `test_threepoint_indep.py` | ✓ | The independent checker `scripts/threepoint_verify_indep.py`: on 𝔽₇², G₁₁ and G₁₃ the true z of an actual independent set satisfies every constraint it rebuilds; misreading a certificate's labelling (the sign of the basis shifts, or the frequency of each block) more than doubles the bound, so the check is not vacuous; `inert13.npz` and `inert29.npz` give α(G₁₃) ≤ 42 and α(G₂₉) ≤ 163, and the other six certificates their bounds (marked `slow`, and left out of CI: up to two minutes each). |
@@ -78,6 +81,8 @@ minutes together.
 | `test_transversal.py` | ✓ | Blocking by rotated copies of targets at one distance: rotation orders over a multiquadratic field divide 24, the triangle is the only odd cycle available, the capacity bounds that follow, and the counting certificate. |
 | `test_tuned_family.py` |  | The tuned family of 5-chromatic graphs in `data/five_tuned_*.json`, where a rotation with cos φ = d²/(2D²) − 1 places the composite forced pair at a chosen distance d and so determines the field. |
 | `test_two_tunings.py` |  | Tuning the forced distance to 1/√3 and then the angle to 60°: the pivot's orbit lies on a circle of radius 1/√3, six of its fifteen pairs are at distance 1, and the union of the six copies has no proper 4-colouring. |
+| `test_winding.py` | ✓ | Theorems W and W⁺ (`notes/winding_lemma.md`): the characterisation of maps to odd cycles and to `K_{p/q}` (`p/q < 4`) on random Cayley graphs of `ℤ/m × ℤ/n`, its failure at 4, groups of exponent 2 and 4, three-distance graphs against Zhu's list and `χ = ⌈1/κ(D)⌉`, the exact certificates for the quadratic fields with their checker (the larger ones are slow), and that the Lean files `TheoremW`, `Recurrence`, `TheoremWplus` and `DistLiu` contain no `sorry` and are registered for the Lean workflow (default targets, `PrintAxioms.lean`, `axioms.expected` with the standard axioms only, the kernel replay). |
+| `test_winding_family.py` | ✓ | Theorem 1 (`notes/four_colours_11_mod_12.md`): the exact facts behind the structure lemma for `S_{5^k}` and its crude form proved in Lean, the configurations and vector relations of Theorems 1a and 1b, the 2-adic and 3-adic valuations, the limit criterion on small cases, and the family certificates (the larger ones are slow). |
 
 ## The two theorems
 
