@@ -9960,3 +9960,12 @@ denominator `5^k`) decide three colours for every number field, not only for rea
   same program, rerun with the arguments `260 0.29`, finds order 41 (and its multiples) with `κ = 12/41 ≈ 0.2927`
   at `c = (12 + 12i)/41`. Found by a research agent; the file and the README are corrected. Theorem D does not use
   it.
+
+## `χ_c(ℚ(√59)²) > 7/2` (4 October, morning)
+
+- The MIP had given `κ ≈ 0.2638 < 2/7` for the 70 vectors `G_25{1, u_n, ū_n : n = 1, 7, 19}` over `ℚ(√59)`. An exact
+  certificate at `P/Q = 53/15` (127 181 nodes, 105 761 leaves, 73 minutes; a run at `18/5`, with less margin, was
+  stopped as redundant) is accepted by both checkers (`check_open.py`, 9 minutes; `check_open_indep.py`, which
+  rebuilds `U` from `d`, 23 s). So `χ_c(ℚ(√59)²) ≥ 53/15 > 7/2` while `χ(ℚ(√59)²) = 4` (Theorem 1 and the inert place
+  above 2): `ℚ(√11)` and `ℚ(√59)` have the same chromatic number and different circular chromatic numbers
+  (`notes/circular_planes.md`, Proposition C6; paper, Proposition 7).

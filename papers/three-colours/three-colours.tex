@@ -568,6 +568,23 @@ the characters that come from the $7$-adic colourings take values in the closed 
 certificates were found with a floating-point mixed-integer solver, which reports
 $\max_\xi\min_{u\in U}\|\xi(u)\|=2/7$ for both sets; nothing in the proof depends on it.
 
+The circular chromatic number separates planes with the same chromatic number:
+
+\begin{proposition}\label{prop:fiftynine}
+$\chi_c(\Q(\sqrt{59})^2)\ge53/15>7/2$, while $\chi(\Q(\sqrt{59})^2)=4$.
+\end{proposition}
+
+\begin{proof}
+For $d=59$ the same set $U=G_{25}V$ has no character into the open interval $(15/53,38/53)$: the certificate has
+$127\,181$ nodes and $105\,761$ leaves, and both checkers accept it (Section~\ref{sec:checks}). As in the proof of
+Theorem~\ref{thm:C}, Theorem~W$^+$ gives $\chi_c\ge53/15$. Here $7$ is inert, so Proposition~\ref{prop:C1} does not
+apply. We have $\chi\ge4$ by \cite[Theorem~1]{FC}, as $59\equiv11\pmod{12}$. And $\chi\le4$: the place of
+$F=\Q(\sqrt{59})$ above $2$ has residue field $\F_2$ and is inert in $F(i)$ (as $59\equiv3\pmod8$), so the unit
+vectors reduce into the group $\mu_3$ of elements of norm one in $\F_4$, and, as in the proof of
+Proposition~\ref{prop:C1}, the residue modulo the maximal ideal is a proper $4$-colouring (a bound of Fischer
+\cite{Fischer1990}).
+\end{proof}
+
 \begin{corollary}\label{cor:sevenhalves}
 $\chi_c(E^2)=7/2$ for every finite extension $E$ of $\Q_7$ with residue degree $1$, and $\chi_c(F^2)=7/2$ for every
 number field $F$ that contains $\sqrt{11}$ or $\sqrt{35}$ and has a place above $7$ of residue degree $1$, for example
@@ -944,7 +961,9 @@ a place above $7$ with residue field $\F_7$ gives $\chi\le4$. The certificates o
 same kind, for the open interval $(2/7,5/7)$: a branch covers all integers strictly inside the range of its
 relation (relations must be nonzero), and a leaf is closed by a Farkas vector valid on the open box. They have
 $12\,850$ leaves ($d=11$) and $10\,241$ leaves ($d=35$), and two exact checkers that share no code accept them; the
-second one also rebuilds $U=G_{25}V$ from $d$. Both reject corrupted copies.
+second one also rebuilds $U=G_{25}V$ from $d$. Both reject corrupted copies. The certificate of
+Proposition~\ref{prop:fiftynine} ($d=59$, the interval $(15/53,38/53)$) has $127\,181$ nodes and $105\,761$ leaves;
+both checkers accept it.
 
 \emph{The lemmas.} Lemma~\ref{lem:B5} was checked exhaustively for $f=1,3,5$, and by the referees with their own
 programs (for $f=3$ over all $3^{12}$ $\F_3$-linear maps); the uniqueness step for odd $f\le79$; Lemma~\ref{lem:B4}

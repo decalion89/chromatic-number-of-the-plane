@@ -23,6 +23,9 @@ including every retracted claim, is the research log,
   over a number field has `2 < χ_c < 3`; locally constant colourings of one completion give, below 4, only the bounds 2, 3 and `7/2`
   (Propositions C2, C3 and Corollary C4, with Weil's bound for Kloosterman sums); `χ_c = 7/2` for infinitely many
   number fields (Corollary C5).
+- **`χ_c(ℚ(√59)²) ≥ 53/15` (4 October).** `notes/circular_planes.md`, Proposition C6: an exact certificate
+  (`data/number_fields/circular/cert_sqrt59_open_53_15_N25.json.gz`, 127 181 nodes, accepted by both checkers) shows
+  that `χ_c(ℚ(√59)²) > 7/2`, although `χ(ℚ(√59)²) = 4`, like `ℚ(√11)` with `χ_c = 7/2`.
 - **A gap above 3 (4 October).** `notes/circular_planes.md` §5, Theorem D: if `χ(F²) ≥ 4` then `χ_c(F²) ≥ 56/17`, and
   `χ_c(F²) > 3.3315` with a computer-assisted step (exact computations by three programs written separately,
   `data/number_fields/circular/probe/`, `probe/indep/` and `probe/indep2/`). Refereed twice by separate agents (no

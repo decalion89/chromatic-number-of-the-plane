@@ -72,6 +72,16 @@ with `p/q < 7/2`, Theorem W⁺ would give a character of `ℤU` with values in `
 *Proof.* `K ⊇ ℚ₇ ⊇ ℚ(√11)`, and `F ⊇ ℚ(√11)` or `ℚ(√35)`, give `χ_c ≥ 7/2` by Theorem C; the residue field `𝔽₇` gives
 `χ_c ≤ 7/2` by Proposition C1. ∎
 
+> **Proposition C6.** `χ_c(ℚ(√59)²) ≥ 53/15 > 7/2`, while `χ(ℚ(√59)²) = 4`. So the planes over `ℚ(√11)` and `ℚ(√59)`
+> have the same chromatic number 4 and different circular chromatic numbers.
+
+*Proof.* Take the same 70 vectors `U = G_25 V` (`n = 1, 7, 19`) for `d = 59`. The certificate
+`cert_sqrt59_open_53_15_N25.json.gz` (127 181 nodes, 105 761 leaves) shows that no character of `ℤU` maps `U` into the
+open interval `(15/53, 38/53)`; `check_open.py` and `check_open_indep.py` (which rebuilds `U` from `d`) accept it. By
+Theorem W⁺, `ℚ(√59)²` has no homomorphism to `K_{p/q}` with `p/q < 53/15`. Here 7 is inert, so Proposition C1 gives
+nothing; `χ ≥ 4` because `59 ≡ 11 (mod 12)`, and `χ ≤ 4` from the place above 2, which is inert with residue field `𝔽₂`
+(`59 ≡ 3 (mod 8)`; Fischer 1990, `notes/local_colourings.md`). ∎
+
 The lower bound is about the infinite graph `Cay(ℤU, U)`: Theorem W⁺ is applied to it directly. Every finite subgraph
 has `χ_c ≤ 7/2` and their supremum is `7/2`, but we do not know a finite subgraph with `χ_c = 7/2` exactly. The
 16 characters that come from the 7-adic colourings (two embeddings, eight maps `λ`) lie in the closed box `[2/7, 5/7]`
@@ -247,6 +257,6 @@ Notation for the probe: `s = 1/2 − r`, `ε = 1/3 − r`, `h = (1 + i)/2`, `Sq_
 Measurements (floating-point MIP, not proofs): for `U = G_25{1, u_n, ū_n : n = 1, 7, 19}`, `max_ξ min_u ‖ξ(u)‖` is
 `2/7` for `d = 11`, `35` and `23` (SCIP on an LLL-reduced relation basis, optimal; the exact certificate for `d = 23` is
 being built), `0.2638` for `d = 59` (an optimal character with irrational-looking values, so this `U` does not reach
-`χ_c ≥ 4`), and `0.2958` for `d = 71` (7 splits; this `U` alone does not give `7/2`). Without the LLL step the solver
+`χ_c ≥ 4`; the exact certificate at `53/15` is Proposition C6), and `0.2958` for `d = 71` (7 splits; this `U` alone does not give `7/2`). Without the LLL step the solver
 had failed on `d = 23`, `47` (no solution in 300 s) and reported a wrong value elsewhere; those failures were
 numerical.

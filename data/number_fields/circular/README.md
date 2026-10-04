@@ -12,6 +12,7 @@ Companion to `notes/circular_planes.md` (Proposition C1, Theorems C and D). Uses
 | `check_open_indep.py CERT [d,N,P,Q,n1,…]` | a second exact checker, written by the referee with no code shared with `check_open.py`; with the optional list it also rebuilds `U = G_N{1, u_n, ū_n}` from `d` and compares |
 | `cert_sqrt11_open_7_2_N25.json.gz` | `ℚ(√11)`, `N = 25`, `V = {1, u_1, ū_1, u_7, ū_7, u_19, ū_19}`: 70 vectors, no character into `(2/7, 5/7)`; with Theorem W⁺, `χ_c(ℚ(√11)²) ≥ 7/2` |
 | `cert_sqrt35_open_7_2_N25.json.gz` | the same for `ℚ(√35)` (14 199 nodes, 10 241 leaves): `χ_c(ℚ(√35)²) ≥ 7/2` |
+| `cert_sqrt59_open_53_15_N25.json.gz` | the same 70 vectors for `ℚ(√59)`, interval `(15/53, 38/53)` (127 181 nodes, 105 761 leaves; `cert_open.py ... 59 25 1,7,19 53 15`, 73 min): `χ_c(ℚ(√59)²) ≥ 53/15 > 7/2` although `χ = 4` (Proposition C6). Check with `check_open.py` (9 min) and `check_open_indep.py CERT 59,25,53,15,1,7,19` (23 s) |
 | `kappa1.py p,f …` | `κ₁(p, f)`: the best residue-field circular colouring at a place with residue field `𝔽_{p^f}` (Proposition C2) |
 | `level2.py` | the level lemma of Proposition C2 on finite models: `O/49` for `ℚ₇`, `O/9` for `ℚ₂₇` |
 | `kappa1_f1.py P` | `κ₁(p, 1)` for every prime `p ≡ 3 (mod 4)` below `P`, fast (Proposition C3 needs `P ≥ 1001`; we ran `P = 3000`) |
