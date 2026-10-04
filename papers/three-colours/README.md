@@ -63,7 +63,7 @@ references and wording are corrected. A second agent refereed the hand proof of 
 (correct, no gap; `twoprime/indep_L13/`) and corrected one more sentence: Proposition 6 rests on a computation of
 `κ₁` for the primes `11 ≤ p < 1001`. Section 10 now gives explicit finite witnesses for Corollary 7: over
 `ℚ(√11)` the unit-distance graph on `A + A`, `A` the vertex set of the 76-vertex graph (2 237 vertices), and, from a
-colouring-guided growth followed by vertex deletion, vertex-critical ones with 170 and then 157 vertices; over `ℚ(√455)` and
+colouring-guided growth followed by vertex deletion, vertex-critical ones with 170 and then 155 vertices; over `ℚ(√455)` and
 `ℚ(√191)` ones with 175 and 293 vertices. Each has `χ_c = 7/2`, certified by two DRAT proofs for two encodings
 (`data/number_fields/circular/finite_witness/`). For the value 3, over `ℚ(√7)`, whose plane has no unit triangle,
 Section 10 gives nine points whose unit-distance graph, the Wagner graph with one chord subdivided, has `χ_c = 3`,

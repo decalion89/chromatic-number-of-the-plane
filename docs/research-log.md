@@ -10478,3 +10478,19 @@ denominator 210, 5 941 points, is too sparse to say anything: every height works
 The 2-adic colourings (residues in `𝔽₄`) have tight 4-cycles, and at levels 2 and 4 the 2-adic plane also has
 4-colourings that do not factor through `𝔽₄` (`level.py`); whether the periodic ones always have tight cycles in the
 plane, and what an aperiodic colouring without tight cycles could look like, is open.
+
+## A 155-vertex witness for `7/2` over `ℚ(√11)` (5 October, night)
+
+Two more random orders on the 205-point union of the two 170-vertex witnesses left 173 and 161 vertices. The 157- and
+161-vertex witnesses together span 170 points (462 edges), and deleting vertices from that union in random orders left
+155 vertices and 404 edges (one order), 156 (two orders) and 157 (one order). The 155-vertex graph is vertex-critical
+(`critical.py`, `check_critical.py`), and its lower bound is certified like the others: `kissat` refutes the formula
+of `check_witness.py` (with the colour of `fixed_vertex` 108, of degree 17, fixed) in about 20 s, `drat-trim` keeps
+236 546 of 451 597 lemmas (11 565 of 16 041 clauses in the core), and `check_witness.py` verifies the stored core
+proof; the second encoding (`verify_independent.py`, 1 880 variables) is refuted again by `kissat`, its proof is
+verified by `drat-trim` (226 574 of 434 641 lemmas in the core) and, in LRAT form, by `cake_lpr`. It replaces the
+157-vertex graph as `witness_q11b.json.gz` (same file names; paper, note, READMEs and test updated). Two of the
+deletion runs were stopped by a restart of the machine and resumed from their saved states: a vertex shown necessary
+in a set stays necessary in every subset (a colouring of `S − v` without tight cycles restricts to one of `S′ − v`), so
+only the vertices not yet tested were tested. How small a witness can be is open; all the witnesses so far come from
+the same two growths, and a new growth (which also lists the reverse of every tight cycle found) is being reduced.

@@ -12,6 +12,12 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Changed
+- **`witness_q11b` now has 155 vertices (5 October, night).** Deleting vertices, in a random order, from the union of
+  the 157-vertex witness and a 161-vertex one (another order on the same 205-point union) leaves a vertex-critical
+  unit-distance graph with 155 vertices, 404 edges and `χ_c = 7/2`. It replaces the 157-vertex graph under the same
+  file names and is certified the same way: both checkers, two encodings, `drat-trim` on both DRAT proofs, `cake_lpr`
+  on the LRAT form of one, and criticality certificates for every `H − v`. The paper, the note, the READMEs and the
+  test of the grown witnesses now give 155.
 - **A full reading of the three-colours paper (4 October, night).** A referee read the whole paper again, with
   priority on Section 10 and the Questions, and reran the cheap checks with programs of its own: no mathematical
   error. Its corrections are applied: the introduction now says that Lemma 19 also uses Proposition 6, in its case

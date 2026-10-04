@@ -159,7 +159,7 @@ completion; more precisely, below $4$ it is the least circular chromatic number 
 (Corollary~\ref{cor:localF}): a circular local--global principle below $4$ that extends Theorem~\ref{thm:B}. Below
 $4$ the value is also the circular chromatic number of a finite unit-distance graph in $F^2$
 (Corollary~\ref{cor:finite}); the proof gives no bound on its size, but a computer search finds explicit ones,
-certified: over $\Q(\sqrt{11})$ one with $157$ vertices, and others over $\Q(\sqrt{455})$ and $\Q(\sqrt{191})$;
+certified: over $\Q(\sqrt{11})$ one with $155$ vertices, and others over $\Q(\sqrt{455})$ and $\Q(\sqrt{191})$;
 for the value $3$, over $\Q(\sqrt7)$, whose plane has no unit triangle, one with nine vertices, the fewest possible
 by an exhaustive enumeration (Section~\ref{sec:twoprimes}). For a
 real quadratic field $\Q(\sqrt d)$, $d$ squarefree, (a) or (b) holds unless $d\equiv11\pmod{12}$. If
@@ -618,7 +618,7 @@ theorem is Corollary~\ref{cor:B6}.
 
 The lower bound is about the infinite graph $\Cay(\Z U,U)$, to which Theorem~W$^+$ is applied directly, and gives no
 finite subgraph of $\Q(\sqrt{11})^2$ with circular chromatic number exactly $7/2$; one exists by
-Corollary~\ref{cor:finite}, and Section~\ref{sec:twoprimes} gives one with $157$ vertices, found by computer. The
+Corollary~\ref{cor:finite}, and Section~\ref{sec:twoprimes} gives one with $155$ vertices, found by computer. The
 open interval is essential:
 the characters that come from the $7$-adic colourings take values in the closed interval $[2/7,5/7]$ on $U$. The
 certificates were found with a floating-point mixed-integer solver, which reports
@@ -1605,8 +1605,9 @@ $\mathrm{pos}$ numbers them $0,\dots,N-1$ along a topological order of the tight
 $c\colon G\to K_{7/2}$, then $Nc+\mathrm{pos}$ is a homomorphism of $G$ to $K_{7N/(2N+1)}$). The same growth with
 at most $100$ new points per round stops at $573$ vertices and deletion leaves another vertex-critical witness with
 $170$ vertices; deleting vertices, in a random order, from the unit-distance graph on the union of their vertex sets
-($205$ points) leaves a vertex-critical witness with
-$157$ vertices and $409$ edges, the smallest we know (\nolinkurl{witness_q11b.json.gz}). Started from the
+($205$ points) leaves vertex-critical witnesses with $157$ and $161$ vertices (for two orders), and the same from the
+union of these two ($170$ points) leaves a vertex-critical witness with $155$ vertices and $404$ edges, the smallest
+we know (\nolinkurl{witness_q11b.json.gz}). Started from the
 $4$-chromatic graphs of \cite{Repo} over $\Q(\sqrt{455})$ and $\Q(\sqrt{191})$ ($71$ and $96$ vertices; $D=780$ and
 $240$), the same procedure gives vertex-critical witnesses with $175$ and $293$ vertices ($434$ and $803$ edges). So
 $\chi_c=7/2$ for both planes without Proposition~\ref{prop:window7}: the witnesses give $\chi_c\ge7/2$, and
@@ -1618,7 +1619,7 @@ with different variable numberings and arc indicators, and the DRAT proofs of bo
 in LRAT form, by the formally verified checker \texttt{cake\_lpr}. A referee checked the witnesses with $170$, $175$
 and $293$ vertices again with programs of its own: a third encoding (renamed variables, two-sided arc indicators),
 cycle lists rebuilt from scratch, \texttt{cake\_lpr} on the stored proofs, and the explicit homomorphisms
-$Nc+\mathrm{pos}$ of the graphs $H-v$ (\nolinkurl{data/number_fields/circular/finite_witness/}); the one with $157$
+$Nc+\mathrm{pos}$ of the graphs $H-v$ (\nolinkurl{data/number_fields/circular/finite_witness/}); the one with $155$
 vertices, found afterwards, was checked by the two programs above. As $\sqrt{11}\in\Q_7$, $H_{11}$ is also an explicit
 witness for $\Q_7$ and for every finite extension $K$ of $\Q_7$ with $\chi_c(K^2)<4$.
 
@@ -1801,7 +1802,7 @@ so $\chi_c(\Q(\sqrt{47})^2)=4$ if and only if $\chi(\Q(\sqrt{47})^2)=4$ (if $\ch
 $\chi_c\le4$, hence $\chi\le4$, and $\chi(F^2)\le4$ by the theorem of de Bruijn and Erd\H{o}s).
 \item \emph{Finite witnesses.} By Corollary~\ref{cor:finite} some finite unit-distance graph in $\Q(\sqrt{11})^2$
 has circular chromatic number $7/2$; the proof, by compactness, gives no bound on its size, and the smallest we know
-has $157$ vertices and is vertex-critical (Section~\ref{sec:twoprimes}). How small can it be? (For the value $3$ in
+has $155$ vertices and is vertex-critical (Section~\ref{sec:twoprimes}). How small can it be? (For the value $3$ in
 a plane without unit triangles, nine vertices are needed, and they suffice over $\Q(\sqrt7)$ and $\Q(\sqrt{31})$;
 Section~\ref{sec:twoprimes}. Over other such planes, for example $\Q(\sqrt{15})$, the least number is open.)
 And when $\chi_c(F^2)=4$, is the value attained by a finite subgraph, for example for $\Q(\sqrt{59})$? At $4$ and

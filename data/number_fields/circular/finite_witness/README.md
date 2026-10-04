@@ -24,7 +24,7 @@ distance 1 is an edge), with `χ_c(H) = 7/2`.
 | witness | field | denominator | vertices | edges | listed cycles (lengths) | found by |
 |---|---|---|---|---|---|---|
 | `witness_q11` | `ℚ(√11)` | 30 | 170 | 468 | 879 (7, 14, 21, 28) | growth from the 76-vertex graph to 653 vertices, then vertex deletion |
-| `witness_q11b` | `ℚ(√11)` | 30 | 157 | 409 | 1 159 (7, 14, 21, 28) | deletion from the union of `witness_q11` and a second 170-vertex witness |
+| `witness_q11b` | `ℚ(√11)` | 30 | 155 | 404 | 1 836 (7, 14, 21, 28) | deletion from unions of `witness_q11` and other 7/2 witnesses (below) |
 | `witness_q191` | `ℚ(√191)` | 240 | 293 | 803 | 489 (7 to 35) | growth from the 96-vertex graph to 3 258 vertices, then vertex deletion |
 | `witness_q455` | `ℚ(√455)` | 780 | 175 | 434 | 91 (7, 14, 28) | growth from the 71-vertex graph to 959 vertices, then vertex deletion |
 | `witness_q11sum` | `ℚ(√11)` | 30 | 2 237 | 11 300 | 180 (14 to 42) | the sumset `A + A` of the 76-vertex graph (the first one found) |
@@ -65,10 +65,12 @@ the others read `p` and `q` from the file, `7/2` when absent), with the same res
 value-3 witnesses compared the clause streams of both versions).
 
 `witness_q11b` is smaller: the same growth from `q11.json` with at most 100 new points per round (`3000 100`) stopped
-after 51 rounds at 573 vertices, deletion left a second vertex-critical witness with 170 vertices (458 edges), and
-deleting vertices from the union of the two (205 vertices), in a random order, left 157 vertices and 409 edges. These
-runs used the earlier working copies of the programs and are not reproduced here; the witness is certified like the
-others (`verification.txt`), with `fixed_vertex` 106.
+after 51 rounds at 573 vertices, and deletion left a second vertex-critical witness with 170 vertices (458 edges).
+Deleting vertices from the union of the two (205 vertices) in random orders left vertex-critical witnesses with 157
+and 161 vertices, and deleting vertices from the union of these two (170 vertices), again in a random order, left 155
+vertices and 404 edges. These runs used the earlier working copies of the programs (deletion in a random order, with
+one selector literal per vertex as in `minimise.py`) and are not reproduced here; the witness is certified like the
+others (`verification.txt`), with `fixed_vertex` 108.
 
 **Verification** (`verification.txt`): for every witness, two checks that share no code.
 1. `check_witness.py` (written for `witness_q11sum`; it reads `d` from the file): exact
