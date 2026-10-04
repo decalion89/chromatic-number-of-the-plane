@@ -1,7 +1,7 @@
 """Theorems E and F (notes/circular_planes.md §6, papers/three-colours Section 10): the computer-assisted steps and
 the finite facts at 7, rerun from the stored programs and certificates (data/number_fields/circular/twoprime/ and the
 referees' subfolders indep_E/, indep_F/, indep_S10/, indep_FW/ and indep_FW2/)."""
-import gzip, hashlib, lzma, os, re, shutil, subprocess, sys
+import gzip, hashlib, json, lzma, os, re, shutil, subprocess, sys
 
 import pytest
 
@@ -253,5 +253,82 @@ def test_finite_witness_q11_proof(tmp_path):
     with lzma.open(os.path.join(FW, "witness_q11sum.drat.xz"), "rb") as src, open(d / "witness_q11sum.drat", "wb") as dst:
         shutil.copyfileobj(src, dst)
     out = run(d, "check_witness.py", "witness_q11sum.json.gz", "witness_q11sum.cnf.gz", "witness_q11sum.drat", DRAT,
+              timeout=3600).stdout
+    assert "(5) drat-trim: s VERIFIED" in out and "chi_c(H) = 7/2" in out
+
+
+# The grown and minimised witnesses (finite_witness/README.md): file stem, d, vertices, edges, listed cycles, sha256 of
+# the formula of check_witness.py, sha256 of the formula of verify_independent.py.
+GROWN = [
+    ("witness_q11", 11, 170, 468, 879, "f36a7e6a79e5459d6c7f735be8143129af0b16651278b3f27e02d7c8a6f68517",
+     "f8b9ac2dc0113f731406c1715521b4ba4c1c554a749182dd37856d4ab5d9186d"),
+    ("witness_q191", 191, 293, 803, 489, "e62238610df1e6ec1899e619ecb94d8968d67dbc527dfc7dfa272866d4f7e9fd",
+     "2c343503bcc20307c4bf16edcf1d98afbfd52a535efdaff441e2400d3644229c"),
+    ("witness_q455", 455, 175, 434, 91, "0e06b8498615d6dea0bc54cbd39ad7ae979134369c1288587768550b61663839",
+     "9994a1a50544107d07c5fa8677c9e9e1c6bf27c609ccc276c2ff2aff43afa022"),
+]
+
+
+@pytest.mark.parametrize("stem,d,nv,ne,nc,sha1,sha2", GROWN)
+def test_finite_witness_grown(tmp_path, stem, d, nv, ne, nc, sha1, sha2):
+    """The witnesses grown from the 4-chromatic graphs and minimised: both checkers, which share no code, accept the
+    graph (every unit-distance pair an edge), the (7,2)-colouring and the cycles; the stored formula is the one
+    check_witness.py builds, the second encoding is the one that kissat, drat-trim and cake_lpr refuted
+    (verification.txt), and every H - v has a (7,2)-colouring with an acyclic tight digraph."""
+    for n in ["check_witness.py", "check_critical.py", stem + ".json.gz", stem + ".cnf.gz", stem + "_critical.json.gz"]:
+        shutil.copy(os.path.join(FW, n), tmp_path / n)
+    out = run(tmp_path, "check_witness.py", stem + ".json.gz", stem + ".cnf.gz").stdout
+    head = "" if d == 11 else f"Q(sqrt{d}): "
+    assert f"(1) {head}{nv} points, {ne} edges, every edge at distance exactly 1" in out
+    assert "not listed as edges: 0 (induced)" in out
+    assert "(2) the colouring is a (7,2)-colouring" in out and f"(3) {nc} cycles" in out
+    assert f"(4) the CNF is the formula built from the edges and cycles; sha256 {sha1}" in out
+    out = run(FW, "verify_independent.py", str(tmp_path / "H.cnf"), os.path.join(FW, stem + ".json.gz")).stdout
+    assert f"field Q(sqrt{d})" in out and "points of A in the witness:" in out
+    assert f"unit pairs: {ne} ; witness edges: {ne} ; equal: True" in out and "(7,2)-colouring: yes" in out
+    assert hashlib.sha256((tmp_path / "H.cnf").read_bytes()).hexdigest() == sha2
+    out = run(tmp_path, "check_critical.py", stem + ".json.gz", stem + "_critical.json.gz").stdout
+    assert f"{nv} vertices: for every v" in out and "vertex-critical" in out
+
+
+def test_finite_witness_critical_rejects(tmp_path):
+    """check_critical.py rejects a certificate whose colouring of H - v gives some edge a forbidden difference, and
+    one whose tight digraph has a directed cycle (the stored colouring of H itself, with v uncoloured, has one when v
+    is off every tight listed cycle)."""
+    stem = GROWN[0][0]
+    for n in ["check_critical.py", stem + ".json.gz"]:
+        shutil.copy(os.path.join(FW, n), tmp_path / n)
+    W = json.load(gzip.open(os.path.join(FW, stem + ".json.gz"), "rt"))
+    C = json.load(gzip.open(os.path.join(FW, stem + "_critical.json.gz"), "rt"))
+    i, j = W["edges"][0]
+    v = next(u for u in range(len(W["points"])) if u not in (i, j))
+    bad = json.loads(json.dumps(C))
+    bad["critical_colourings"][v][j] = bad["critical_colourings"][v][i]
+    with gzip.open(tmp_path / "bad1.json.gz", "wt") as f:
+        json.dump(bad, f)
+    r = run(tmp_path, "check_critical.py", stem + ".json.gz", "bad1.json.gz", check=False)
+    assert r.returncode != 0 and "not a (7,2)-colouring of H - v" in r.stderr
+    tight = [C2 for C2 in W["cycles"] if all((W["colouring"][C2[(k + 1) % len(C2)]] - W["colouring"][C2[k]]) % 7 == 2
+                                               for k in range(len(C2)))]
+    assert tight, "the stored colouring has a tight listed cycle"
+    v = next(u for u in range(len(W["points"])) if u not in tight[0])
+    bad = json.loads(json.dumps(C))
+    bad["critical_colourings"][v] = [-1 if u == v else c for u, c in enumerate(W["colouring"])]
+    with gzip.open(tmp_path / "bad2.json.gz", "wt") as f:
+        json.dump(bad, f)
+    r = run(tmp_path, "check_critical.py", stem + ".json.gz", "bad2.json.gz", check=False)
+    assert r.returncode != 0 and "has a directed cycle" in r.stderr
+
+
+@pytest.mark.slow
+@pytest.mark.skipif(not DRAT, reason="drat-trim not found (PATH or DRAT_TRIM)")
+@pytest.mark.parametrize("stem", [g[0] for g in GROWN])
+def test_finite_witness_grown_proof(tmp_path, stem):
+    """drat-trim verifies the stored DRAT proof that every (7,2)-colouring of the witness has a tight listed cycle."""
+    for n in ["check_witness.py", stem + ".json.gz", stem + ".cnf.gz"]:
+        shutil.copy(os.path.join(FW, n), tmp_path / n)
+    with lzma.open(os.path.join(FW, stem + ".drat.xz"), "rb") as src, open(tmp_path / (stem + ".drat"), "wb") as dst:
+        shutil.copyfileobj(src, dst)
+    out = run(tmp_path, "check_witness.py", stem + ".json.gz", stem + ".cnf.gz", stem + ".drat", DRAT,
               timeout=3600).stdout
     assert "(5) drat-trim: s VERIFIED" in out and "chi_c(H) = 7/2" in out

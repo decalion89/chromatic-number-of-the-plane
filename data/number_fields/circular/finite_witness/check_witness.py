@@ -1,16 +1,18 @@
-"""Stand-alone checker for the finite witness of chi_c = 7/2 over F = Q(sqrt11).
+"""Stand-alone checker for the finite witnesses of chi_c = 7/2 over F = Q(sqrt d) (d = 11 unless the file says).
 
 usage: python3 check_witness.py WITNESS.json.gz [CNF] [PROOF.drat] [path/to/drat-trim]
 
 The witness file contains
+  d            the squarefree integer d > 1 (optional; 11 if absent)
   denominator  D (an integer, prime to 7)
-  points       integer 4-tuples [a, b, c, e]: the point ((a + b r)/D, (c + e r)/D) of F^2, r = sqrt11
+  points       integer 4-tuples [a, b, c, e]: the point ((a + b r)/D, (c + e r)/D) of F^2, r = sqrt d
   edges        pairs [i, j]
   colouring    a map V -> Z/7
   cycles       lists [v_0, ..., v_{m-1}] of vertices
+  fixed_vertex a vertex v_0 whose colour the formula fixes to 0 (optional; see (4))
 The checker verifies, with Python integers only:
   (1) the points are distinct and every edge joins two points at Euclidean distance exactly 1:
-      (Da)^2 + 11 (Db)^2 + (Dc)^2 + 11 (De)^2 = D^2 and Da*Db + Dc*De = 0 for the difference (Da, Db, Dc, De);
+      (Da)^2 + d (Db)^2 + (Dc)^2 + d (De)^2 = D^2 and Da*Db + Dc*De = 0 for the difference (Da, Db, Dc, De);
       it also reports whether `edges` is the set of ALL pairs at distance 1 (the induced unit-distance graph);
   (2) the colouring is a (7,2)-colouring: c(y) - c(x) in {2,3,4,5} mod 7 on every edge (so chi_c(H) <= 7/2);
   (3) every listed cycle is a closed walk v_0 -> v_1 -> ... -> v_{m-1} -> v_0 along edges of H, with distinct vertices;
@@ -20,9 +22,11 @@ The checker verifies, with Python integers only:
                  -x(i,k) v -x(j,k+d)  for d in {0,1,6}, every edge ij and k   (difference not in {0,1,6})
                  -x(a,k) v -x(b,k+2) v t(a,b)                   (t(a,b) is true when the arc a->b is tight)
                  OR over the arcs of C of -t(a,b)               (C is not tight), for every listed cycle C;
+                 x(v_0,0)                                       (only if the file gives fixed_vertex v_0);
   (5) drat-trim (if given) verifies the DRAT proof of unsatisfiability of the CNF.
 Logic: a (7,2)-colouring c without a tight listed cycle would satisfy the CNF (x(v,k) iff c(v) = k,
-t(a,b) iff c(b) - c(a) = 2), so (5) shows that every (7,2)-colouring of H has a tight cycle (a directed cycle of the
+t(a,b) iff c(b) - c(a) = 2), after replacing c by c - c(v_0) when a vertex is fixed: rotating the colours keeps a
+(7,2)-colouring a (7,2)-colouring and keeps every colour difference, hence every tight arc.  So (5) shows that every (7,2)-colouring of H has a tight cycle (a directed cycle of the
 tight digraph), and Lemma 20 of papers/three-colours (Guichard) gives chi_c(H) >= 7/2; with (2), chi_c(H) = 7/2.
 """
 import sys, json, gzip, hashlib, subprocess, itertools
@@ -34,7 +38,7 @@ def load(path):
         return json.load(f)
 
 
-def cnf_text(n, E, cycles):
+def cnf_text(n, E, cycles, fixed=None):
     x = lambda v, c: 7 * v + c + 1
     cl = []
     for v in range(n):
@@ -53,27 +57,33 @@ def cnf_text(n, E, cycles):
                     cl.append([-x(a, c), -x(b, (c + 2) % 7), nv])
     for cyc in cycles:
         cl.append([-tv[(cyc[k], cyc[(k + 1) % len(cyc)])] for k in range(len(cyc))])
+    if fixed is not None:
+        cl.append([x(fixed, 0)])
     return '\n'.join([f'p cnf {nv} {len(cl)}'] + [' '.join(map(str, c)) + ' 0' for c in cl]) + '\n'
 
 
-def unit(p, q, D):
+def unit(p, q, D, d=11):
     a, b, c, e = (q[k] - p[k] for k in range(4))
-    return a * a + 11 * b * b + c * c + 11 * e * e == D * D and a * b + c * e == 0
+    return a * a + d * b * b + c * c + d * e * e == D * D and a * b + c * e == 0
 
 
 def main():
     W = load(sys.argv[1])
     D, P, E, col, cycles = W['denominator'], W['points'], W['edges'], W['colouring'], W['cycles']
+    d = W.get('d', 11)
+    fixed = W.get('fixed_vertex')
     n = len(P)
+    assert fixed is None or (isinstance(fixed, int) and 0 <= fixed < n), 'bad fixed_vertex'
+    assert isinstance(d, int) and d > 1 and all(d % (k * k) for k in range(2, int(d ** 0.5) + 1)), 'd not squarefree'
     assert D % 7 != 0 and all(len(p) == 4 and all(isinstance(t, int) for t in p) for p in P)
     assert len(set(map(tuple, P))) == n, 'repeated point'
     Es = set()
     for i, j in E:
         assert 0 <= i < n and 0 <= j < n and i != j
-        assert unit(P[i], P[j], D), ('not a unit-distance edge', i, j)
+        assert unit(P[i], P[j], D, d), ('not a unit-distance edge', i, j)
         Es.add((min(i, j), max(i, j)))
     assert len(Es) == len(E), 'repeated edge'
-    print(f'(1) {n} points, {len(E)} edges, every edge at distance exactly 1')
+    print(f'(1) {"" if d == 11 else f"Q(sqrt{d}): "}{n} points, {len(E)} edges, every edge at distance exactly 1')
     # all unit pairs (exact; quadratic loop with a cheap integer filter on the first coordinate norm)
     allpairs = 0; missing = 0
     for i in range(n):
@@ -83,7 +93,7 @@ def main():
             a = pj[0] - pi[0]; c = pj[2] - pi[2]
             if a * a + c * c > D * D:
                 continue
-            if unit(pi, pj, D):
+            if unit(pi, pj, D, d):
                 allpairs += 1
                 if (i, j) not in Es:
                     missing += 1
@@ -100,7 +110,7 @@ def main():
             assert (min(a, b), max(a, b)) in Es, ('cycle uses a non-edge', cyc)
     print(f'(3) {len(cycles)} cycles, all closed walks along edges (lengths {min(map(len, cycles))}..{max(map(len, cycles))})')
     if len(sys.argv) > 2:
-        txt = cnf_text(n, E, cycles)
+        txt = cnf_text(n, E, cycles, fixed)
         op = gzip.open if sys.argv[2].endswith('.gz') else open
         with op(sys.argv[2], 'rt') as f:
             given = f.read()

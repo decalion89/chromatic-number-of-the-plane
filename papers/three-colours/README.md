@@ -61,10 +61,11 @@ E and F; the sentence on `ℚ(√47)` now says `4 ≤ χ_c ≤ 19/4`; a remark a
 fields only (`ℚ(√−73)` is split above 2 and 3); and attributions (Isbell, Fischer 1994, the special cases of (a)),
 references and wording are corrected. A second agent refereed the hand proof of Lemma 13 with a program of its own
 (correct, no gap; `twoprime/indep_L13/`) and corrected one more sentence: Proposition 6 rests on a computation of
-`κ₁` for the primes `11 ≤ p < 1001`. Section 10 now gives an explicit finite witness for Corollary 7 over
-`ℚ(√11)`: the unit-distance graph on `A + A`, `A` the vertex set of the 76-vertex graph (2 237 vertices), has
-`χ_c = 7/2`, certified by two DRAT proofs for two encodings (`data/number_fields/circular/finite_witness/`). The PDF
-has 26 pages.
+`κ₁` for the primes `11 ≤ p < 1001`. Section 10 now gives explicit finite witnesses for Corollary 7: over
+`ℚ(√11)` the unit-distance graph on `A + A`, `A` the vertex set of the 76-vertex graph (2 237 vertices), and, from a
+colouring-guided growth followed by vertex deletion, a vertex-critical one with 170 vertices; over `ℚ(√455)` and
+`ℚ(√191)` ones with 175 and 293 vertices. Each has `χ_c = 7/2`, certified by two DRAT proofs for two encodings
+(`data/number_fields/circular/finite_witness/`). The PDF has 26 pages.
 
 [`three-colours.tex`](three-colours.tex) is the LaTeX source (`amsart`). To rebuild the PDF, run in this folder,
 with TeX Live:

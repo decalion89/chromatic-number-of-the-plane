@@ -157,8 +157,9 @@ over a number field takes only the values $2$, $3$ and $7/2$, each given by a lo
 completion; more precisely, below $4$ it is the least circular chromatic number of the planes over its completions
 (Corollary~\ref{cor:localF}): a circular local--global principle below $4$ that extends Theorem~\ref{thm:B}. Below
 $4$ the value is also the circular chromatic number of a finite unit-distance graph in $F^2$
-(Corollary~\ref{cor:finite}); the proof gives no bound on its size, but for $\Q(\sqrt{11})$ a computer search
-found one with $2\,237$ vertices, certified (Section~\ref{sec:twoprimes}). For a
+(Corollary~\ref{cor:finite}); the proof gives no bound on its size, but a computer search finds explicit ones,
+certified: over $\Q(\sqrt{11})$ one with $170$ vertices, and others over $\Q(\sqrt{455})$ and $\Q(\sqrt{191})$
+(Section~\ref{sec:twoprimes}). For a
 real quadratic field $\Q(\sqrt d)$, $d$ squarefree, (a) or (b) holds unless $d\equiv11\pmod{12}$. If
 $d\equiv11\pmod{12}$, then $\chi_c=7/2$ when $(d/7)\ne-1$ (for example $d=23$, $71$); $\chi_c=4$ when $(d/7)=-1$ and
 $d\equiv11\pmod{24}$ (for example $d=59$, $83$), as then the place above $2$ gives $\chi\le4$; and only when
@@ -614,7 +615,7 @@ theorem is Corollary~\ref{cor:B6}.
 
 The lower bound is about the infinite graph $\Cay(\Z U,U)$, to which Theorem~W$^+$ is applied directly, and gives no
 finite subgraph of $\Q(\sqrt{11})^2$ with circular chromatic number exactly $7/2$; one exists by
-Corollary~\ref{cor:finite}, and Section~\ref{sec:twoprimes} gives one with $2\,237$ vertices, found by computer. The
+Corollary~\ref{cor:finite}, and Section~\ref{sec:twoprimes} gives one with $170$ vertices, found by computer. The
 open interval is essential:
 the characters that come from the $7$-adic colourings take values in the closed interval $[2/7,5/7]$ on $U$. The
 certificates were found with a floating-point mixed-integer solver, which reports
@@ -1579,14 +1580,25 @@ induced on the union of its images under the nine rotations $\rho^j\sigma^l$, $|
 $1\,506$ edges; the nine copies alone have $1\,494$) has circular chromatic number in $(16/5,13/4]$. Exactly, the ball of radius
 $2$ around $0$ in the Cayley graph of the $140$ vectors ($9\,941$ vertices, $19\,600$ edges) is bipartite, and the
 unit-distance graph it induces ($216$ more edges) has circular chromatic number $5/2$: it contains a $5$-cycle and no
-triangle, and maps to $K_{5/2}$ (\nolinkurl{finite_ball.py}). A witness for $7/2$ over $\Q(\sqrt{11})$, found by
-computer: let $A$ be the vertex set of the $76$-vertex graph. The unit-distance graph $H$ on $A+A=\{a+a':a,a'\in A\}$
-has $2\,237$ vertices and $11\,300$ edges; it maps to $K_{7/2}$ (by a $7$-adic colouring), and every homomorphism of
-$H$ to $K_{7/2}$ has a tight cycle, already among $180$ listed cycles of lengths $14$ to $42$. So
-$\chi_c(H)=7/2$ by Lemma~\ref{lem:tight}. The second fact is a SAT computation, certified: two programs that share
-no code check the graph, the colouring and the cycles and write the formula in two encodings, and the DRAT proofs
-of both are verified, one of them also, in LRAT form, by the formally verified checker \texttt{cake\_lpr}
-(\nolinkurl{data/number_fields/circular/finite_witness/}). As $\sqrt{11}\in\Q_7$, the same graph is an explicit
+triangle, and maps to $K_{5/2}$ (\nolinkurl{finite_ball.py}). Witnesses for $7/2$, found by computer: let $A$ be
+the vertex set of the $76$-vertex graph. The unit-distance graph on $A+A=\{a+a':a,a'\in A\}$ ($2\,237$ vertices,
+$11\,300$ edges) maps to $K_{7/2}$ (by a $7$-adic colouring), and every homomorphism of it to $K_{7/2}$ has a tight
+cycle, already among $180$ listed cycles of lengths $14$ to $42$; so its circular chromatic number is $7/2$ by
+Lemma~\ref{lem:tight}. A colouring-guided growth gives smaller ones. Starting from $A$, a SAT solver looks for a
+homomorphism to $K_{7/2}$ in which every listed directed cycle has a non-tight arc; the tight cycles of its answer
+are added to the list, and when its tight digraph has no directed cycle, the points $x+u$ ($x$ a vertex, $u$ a unit
+vector with denominator $30$) whose neighbours leave no colour are added to the graph. This stops after $52$
+rounds, at $653$ vertices; deleting vertices while the property persists leaves a unit-distance graph $H_{11}$ with
+$170$ vertices and $468$ edges, and $\chi_c(H_{11})=7/2$. It is vertex-critical: for every vertex $v$ a homomorphism
+of $H_{11}-v$ to $K_{7/2}$ whose tight digraph has no directed cycle is stored, so $\chi_c(H_{11}-v)<7/2$ (the other
+half of the characterisation of \cite{Guichard}: perturb the colours along a topological order of the tight
+digraph). Started from the $4$-chromatic graphs of \cite{Repo} over $\Q(\sqrt{455})$ and $\Q(\sqrt{191})$ ($71$ and
+$96$ vertices), the same procedure gives vertex-critical witnesses with $175$ and $293$ vertices ($434$ and $803$
+edges); Theorem~\ref{thm:F} gives $\chi_c=7/2$ for both planes, as $7$ ramifies in $\Q(\sqrt{455})$ and splits in
+$\Q(\sqrt{191})$. Every refutation is certified: two programs that share no code
+check the graphs, the colourings and the cycles and write the formula in two encodings, and the DRAT proofs of both
+are verified, one of them also, in LRAT form, by the formally verified checker \texttt{cake\_lpr}
+(\nolinkurl{data/number_fields/circular/finite_witness/}). As $\sqrt{11}\in\Q_7$, $H_{11}$ is also an explicit
 witness for $\Q_7$ and for every finite extension $K$ of $\Q_7$ with $\chi_c(K^2)<4$.
 
 \section{Computer checks}\label{sec:checks}
@@ -1717,7 +1729,7 @@ so $\chi_c(\Q(\sqrt{47})^2)=4$ if and only if $\chi(\Q(\sqrt{47})^2)=4$ (if $\ch
 $\chi_c\le4$, hence $\chi\le4$, and $\chi(F^2)\le4$ by the theorem of de Bruijn and Erd\H{o}s).
 \item \emph{Finite witnesses.} By Corollary~\ref{cor:finite} some finite unit-distance graph in $\Q(\sqrt{11})^2$
 has circular chromatic number $7/2$; the proof, by compactness, gives no bound on its size, and the smallest we know
-has $2\,237$ vertices (Section~\ref{sec:twoprimes}). How small can it be?
+has $170$ vertices and is vertex-critical (Section~\ref{sec:twoprimes}). How small can it be?
 And when $\chi_c(F^2)=4$, is the value attained by a finite subgraph, for example for $\Q(\sqrt{59})$? Above $4$
 Lemma~\ref{lem:winding} is not available.
 \end{enumerate}

@@ -12,6 +12,16 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- **Smaller witnesses for `χ_c = 7/2`, and the first over `ℚ(√455)` and `ℚ(√191)` (4 October, evening).** A colouring-guided growth with
+  lazy SAT (`grow.py`: list the tight cycles of each `(7, 2)`-colouring the solver returns; when its tight digraph is
+  acyclic, add the points whose neighbours leave no colour), followed by vertex deletion (`minimise.py`), gives a
+  unit-distance graph over `ℚ(√11)` with 170 vertices and 468 edges and `χ_c = 7/2` (the previous one had 2 237
+  vertices), and ones over `ℚ(√455)` and `ℚ(√191)` with 175 and 293 vertices. All three are vertex-critical: for every vertex `v`, a
+  stored `(7, 2)`-colouring of `H − v` with an acyclic tight digraph shows `χ_c(H − v) < 7/2` (`check_critical.py`).
+  Each lower bound is certified twice (two checkers sharing no code, now reading `d` from the witness file; two
+  encodings; `drat-trim` on both DRAT proofs; `cake_lpr` on one in LRAT form).
+  `data/number_fields/circular/finite_witness/`, tests in `tests/test_two_primes.py`; the three-colours paper
+  (Section 10, introduction, Question 3), the winding paper and `notes/circular_planes.md` §6.8 and §7 updated.
 - **An explicit finite witness for `χ_c(ℚ(√11)²) = 7/2` (4 October).** The unit-distance graph on `A + A`, where `A` is
   the vertex set of the 76-vertex graph of `χ(ℚ(√11)²) = 4` (2 237 vertices, 11 300 edges), has circular chromatic
   number exactly `7/2`: a 7-adic `(7, 2)`-colouring, and a SAT computation that every `(7, 2)`-colouring has a tight

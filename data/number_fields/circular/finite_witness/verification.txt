@@ -28,3 +28,83 @@ Verification of the finite witness over Q(sqrt11) (4 October 2026)
 Files: witness_q11sum.drat.xz is the share's proof (xz; 57 466 663 bytes uncompressed,
 sha256 09a57383938c767c65292b6b8279c866f275d50d503912a6e48e71283dec3ee6). The second proof and its LRAT form
 (164 MB) are not stored; verify_independent.py OUT.cnf and the commands in its docstring regenerate them.
+
+Verification of the grown witnesses (4 October 2026, evening)
+
+Both checkers build formulas that fix the colour of one vertex (fixed_vertex, a vertex of largest degree) to 0; this
+loses nothing, as rotating the colours keeps a (7,2)-colouring and all its colour differences. Each stored proof is
+the core proof that drat-trim -l extracted from a kissat 4.0.4 (--seed=1) proof of the first formula; times are wall
+clock on a shared machine.
+
+witness_q11: Q(sqrt11), denominator 30, 170 vertices, 468 edges, 879 cycles; fixed vertex 34 (degree 20)
+1. python3 check_witness.py witness_q11.json.gz witness_q11.cnf.gz witness_q11.drat drat-trim
+   (1) 170 points, 468 edges, every edge at distance exactly 1
+       unit-distance pairs among the points: 468; not listed as edges: 0 (induced)
+   (2) the colouring is a (7,2)-colouring: chi_c(H) <= 7/2
+   (3) 879 cycles, all closed walks along edges (lengths 7..28)
+   (4) the CNF is the formula built from the edges and cycles; sha256
+       f36a7e6a79e5459d6c7f735be8143129af0b16651278b3f27e02d7c8a6f68517
+   (5) drat-trim: s VERIFIED
+   kissat refuted the formula in 43 s; drat-trim -l kept 161 744 of 309 450 lemmas. Stored proof: 28 824 442 bytes
+   uncompressed, sha256 6258c2409bccf870ce1cae6974ba219bac5567e62a93b940bd52984967d731cc
+2. python3 verify_independent.py H.cnf witness_q11.json.gz
+   points of A in the witness: 50 of 76; unit vectors with denominator 30: 108
+   unit pairs: 468; witness edges: 468; equal: True; (7,2)-colouring: yes
+   cycles: 879 simple cycles along edges; lengths [7, 14, 21, 28]; fixed vertex: 34 (colour 0)
+   CNF: 2092 variables, 17192 clauses; sha256 f8b9ac2dc0113f731406c1715521b4ba4c1c554a749182dd37856d4ab5d9186d
+   kissat: s UNSATISFIABLE (45 s); drat-trim: s VERIFIED (46 s; 199 548 of 360 771 lemmas in the core), with an LRAT
+   proof as output; cake_lpr on the LRAT proof: s VERIFIED UNSAT (17 s)
+3. python3 check_critical.py witness_q11.json.gz witness_q11_critical.json.gz
+   170 vertices: for every v, a (7,2)-colouring of H - v with an acyclic tight digraph, so chi_c(H - v) < 7/2
+Also refuted without the fixed vertex: the formula of check_witness.py (sha256
+9c802d50c04ed1f01883c7893a9c3d14692aefa7a8e9f422460603d46198b7e3) by kissat in 7 minutes, drat-trim: s VERIFIED
+(1 178 751 of 2 424 206 lemmas in the core), and check_witness.py with that core proof: s VERIFIED; the formula of
+verify_independent.py (sha256 454946c1683503fc5a04905bb251bab0fc567fdd4eff539ad08b7677b35555a2) by kissat in 7 minutes,
+drat-trim: s VERIFIED (9 minutes), cake_lpr: s VERIFIED UNSAT. Those proofs (250 MB each) are not stored.
+
+witness_q191: Q(sqrt191), denominator 240, 293 vertices, 803 edges, 489 cycles; fixed vertex 56 (degree 34)
+1. check_witness.py with the stored proof:
+   (1) Q(sqrt191): 293 points, 803 edges, every edge at distance exactly 1
+       unit-distance pairs among the points: 803; not listed as edges: 0 (induced)
+   (2) the colouring is a (7,2)-colouring: chi_c(H) <= 7/2
+   (3) 489 cycles, all closed walks along edges (lengths 7..35)
+   (4) the CNF is the formula built from the edges and cycles; sha256
+       e62238610df1e6ec1899e619ecb94d8968d67dbc527dfc7dfa272866d4f7e9fd
+   (5) drat-trim: s VERIFIED
+   kissat refuted the formula in 38 s; drat-trim -l kept 144 126 of 270 355 lemmas. Stored proof: 22 573 623 bytes
+   uncompressed, sha256 a6f51b09e7a82748cc85569743c8924355f3a540157a05276d68e5b1943d04b8
+2. verify_independent.py: points of A in the witness: 75 of 96; unit vectors with denominator 240: 108
+   unit pairs: 803; witness edges: 803; equal: True; (7,2)-colouring: yes
+   cycles: 489 simple cycles along edges; lengths [7, 14, 21, 28, 35]; fixed vertex: 56 (colour 0)
+   CNF: 3386 variables, 26991 clauses; sha256 2c343503bcc20307c4bf16edcf1d98afbfd52a535efdaff441e2400d3644229c
+   kissat: s UNSATISFIABLE (34 s); drat-trim: s VERIFIED (38 s; 140 034 of 271 929 lemmas in the core);
+   cake_lpr: s VERIFIED UNSAT (13 s)
+3. check_critical.py: 293 vertices: for every v, a (7,2)-colouring of H - v with an acyclic tight digraph
+
+witness_q455: Q(sqrt455), denominator 780, 175 vertices, 434 edges, 91 cycles; fixed vertex 34 (degree 16)
+1. check_witness.py with the stored proof:
+   (1) Q(sqrt455): 175 points, 434 edges, every edge at distance exactly 1
+       unit-distance pairs among the points: 434; not listed as edges: 0 (induced)
+   (2) the colouring is a (7,2)-colouring: chi_c(H) <= 7/2
+   (3) 91 cycles, all closed walks along edges (lengths 7..28)
+   (4) the CNF is the formula built from the edges and cycles; sha256
+       0e06b8498615d6dea0bc54cbd39ad7ae979134369c1288587768550b61663839
+   (5) drat-trim: s VERIFIED
+   kissat refuted the formula in 4 s; drat-trim -l kept 27 684 of 58 654 lemmas. Stored proof: 3 553 814 bytes
+   uncompressed, sha256 2c2738b19cf39d5d0679964aeae0e9250fa0f61bffa89236e92da18e307ca9d6
+2. verify_independent.py: points of A in the witness: 50 of 71; unit vectors with denominator 780: 68
+   unit pairs: 434; witness edges: 434; equal: True; (7,2)-colouring: yes
+   cycles: 91 simple cycles along edges; lengths [7, 14, 28]; fixed vertex: 34 (colour 0)
+   CNF: 1841 variables, 13693 clauses; sha256 9994a1a50544107d07c5fa8677c9e9e1c6bf27c609ccc276c2ff2aff43afa022
+   kissat: s UNSATISFIABLE (4 s); drat-trim: s VERIFIED (5 s; 31 348 of 58 785 lemmas in the core);
+   cake_lpr: s VERIFIED UNSAT (2 s)
+3. check_critical.py: 175 vertices: for every v, a (7,2)-colouring of H - v with an acyclic tight digraph
+Also refuted without the fixed vertex: the formula of check_witness.py (sha256
+3c373263d560f578fcf71a1636fe84bf54523e7e1d9fb5891f7f35ffb5bc9277) by kissat in 46 s, drat-trim: s VERIFIED, and
+check_witness.py with that core proof: s VERIFIED; the formula of verify_independent.py (sha256
+68641af226ed24fcead9300f06b2d42b504a880cc341f8c5d17e85103c07a3f4) by kissat in 57 s, drat-trim: s VERIFIED (53 s),
+cake_lpr: s VERIFIED UNSAT (62 s).
+
+The grown graphs before deletion were refuted too (kissat, drat-trim: s VERIFIED, cake_lpr: s VERIFIED UNSAT, in the
+second encoding without a fixed vertex): 653 vertices over Q(sqrt11) (also in the first encoding), 959 over Q(sqrt455),
+3 258 over Q(sqrt191) (drat-trim 52 minutes). They are not stored; grow.py rebuilds them.

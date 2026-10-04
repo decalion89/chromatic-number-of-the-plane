@@ -1,50 +1,61 @@
-"""Second, independent check of the finite witness over Q(sqrt11) (written from the file format only, sharing no code
-with check_witness.py).  Rebuilds H = A + A from data/quadratic_planes/q11.json, recomputes every unit-distance pair
-from the finite list of unit vectors with denominator 30, compares with the witness, checks the (7,2)-colouring and
-the cycles, and writes a CNF with its own variable numbering:
+"""Second, independent check of the finite witnesses over Q(sqrt d) (written from the file format only, sharing no
+code with check_witness.py; d = 11 unless the witness file says).  Compares the points of the witness with the vertex
+set A of data/quadratic_planes/q<d>.json (witness_q11sum: H = A + A, rebuilt here; the grown and minimised witnesses
+keep part of A), recomputes every unit-distance pair from the finite list of unit vectors with the denominator D of the witness
+(all integer solutions of a^2 + d b^2 + c^2 + d e^2 = D^2, a b + c e = 0), compares with the witness, checks the
+(7,2)-colouring and the cycles, and writes a CNF with its own variable numbering:
   x(v,k) = k*n + v + 1  (vertex v has colour k)            -- different layout from the share
   y(a,b) = 7n + index   ("arc a->b is NOT tight")
   clauses: each vertex some colour; no edge with colour difference 0 or +-1 mod 7;
-           y(a,b) -> not (x(a,k) and x(b,k+2)) for every k;  each listed cycle: OR of y over its arcs.
+           y(a,b) -> not (x(a,k) and x(b,k+2)) for every k;  each listed cycle: OR of y over its arcs;
+           x(v0,0) if the witness fixes a vertex v0 ("fixed_vertex": rotating the colours by -c(v0) keeps a
+           (7,2)-colouring and all its colour differences, so this changes nothing).
 A model gives a (7,2)-colouring in which every listed cycle has a non-tight arc; conversely such a colouring gives a
 model.  So UNSAT <=> every (7,2)-colouring has a tight listed cycle.
 
-usage: python3 verify_independent.py [OUT.cnf]
+usage: python3 verify_independent.py [OUT.cnf [WITNESS.json.gz]]     (default witness: witness_q11sum.json.gz)
 (then, for instance, kissat OUT.cnf OUT.drat; drat-trim OUT.cnf OUT.drat -L OUT.lrat; cake_lpr OUT.cnf OUT.lrat)"""
-import json, gzip, os, sys
+import json, gzip, math, os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.normpath(os.path.join(HERE, "..", "..", "..", ".."))
-WIT = os.path.join(HERE, "witness_q11sum.json.gz")
 OUT = sys.argv[1] if len(sys.argv) > 1 else None
-q = json.load(open(os.path.join(REPO, 'data', 'quadratic_planes', 'q11.json')))
+WIT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(HERE, "witness_q11sum.json.gz")
 W = json.load(gzip.open(WIT, 'rt'))
-D = 30
-assert q['D'] == D and q['d'] == 11 and W['denominator'] == D
+d = W.get('d', 11); D = W['denominator']
+q = json.load(open(os.path.join(REPO, 'data', 'quadratic_planes', f'q{d}.json')))
+assert q['D'] == D and q['d'] == d
+print(f'field Q(sqrt{d}), denominator {D}')
 A = [tuple(p) for p in q['points']]
 H = sorted({tuple(x + y for x, y in zip(p, r)) for p in A for r in A})
 print('A + A:', len(H), 'points')
 P = [tuple(p) for p in W['points']]
+assert all(len(p) == 4 and all(isinstance(t, int) for t in p) for p in P)
 assert len(set(P)) == len(P)
-assert set(P) == set(H), 'point set differs from A + A'
-print('witness points = A + A: yes')
+print('witness:', os.path.basename(WIT), '-', len(P), 'points')
+sumset = set(P) == set(H)
+print('witness points = A + A:', 'yes' if sumset else 'no')
+print(f'points of A in the witness: {len(set(A) & set(P))} of {len(set(A))}')
+if os.path.basename(WIT) == 'witness_q11sum.json.gz':
+    assert sumset, 'point set differs from A + A'
 # unit vectors with denominator 30: a^2 + 11 b^2 + c^2 + 11 e^2 = 900, a b + c e = 0
 U = []
-for b in range(-9, 10):
-    for e in range(-9, 10):
-        r = D * D - 11 * (b * b + e * e)
+B = math.isqrt(D * D // d)
+for b in range(-B, B + 1):
+    for e in range(-B, B + 1):
+        r = D * D - d * (b * b + e * e)
         if r < 0:
             continue
-        for a in range(-30, 31):
+        for a in range(-D, D + 1):
             c2 = r - a * a
             if c2 < 0:
                 continue
-            c = int(round(c2 ** 0.5))
+            c = math.isqrt(c2)
             for cc in {c, -c}:
                 if cc * cc == c2 and a * b + cc * e == 0:
                     U.append((a, b, cc, e))
 U = sorted(set(U))
-print('unit vectors with denominator 30:', len(U))
+print(f'unit vectors with denominator {D}:', len(U))
 idx = {p: i for i, p in enumerate(P)}
 E = set()
 for i, p in enumerate(P):
@@ -90,6 +101,11 @@ for (a, b), y in arcs.items():
         cl.append([-y, -x(a, k), -x(b, (k + 2) % 7)])
 for C in cyc:
     cl.append([arcs[(C[k], C[(k + 1) % len(C)])] for k in range(len(C))])
+if 'fixed_vertex' in W:
+    v0 = W['fixed_vertex']
+    assert isinstance(v0, int) and 0 <= v0 < n
+    cl.append([x(v0, 0)])
+    print('fixed vertex:', v0, '(colour 0)')
 nv = 7 * n + len(arcs)
 print('CNF:', nv, 'variables,', len(cl), 'clauses')
 if OUT:

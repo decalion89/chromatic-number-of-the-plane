@@ -10258,3 +10258,61 @@ applied after checking them here:
 Not done: the referee's completion of the remark "one vector cannot replace `u₁` and `u_n`" (an argument that
 `G_N ∪ G_N v ∪ G_N v̄` always has a character) was not checked here; the remark now states only what it shows, that
 the argument of Section 4 does not extend.
+
+## Smaller witnesses for `χ_c = 7/2`, and the first over other fields (4 October, evening)
+
+The search for a witness inside `A + A` (2 237 vertices) was replaced by a *colouring-guided growth* with lazy SAT
+(`data/number_fields/circular/finite_witness/grow.py`). Start from `A`, the vertex set of the 4-chromatic graph of
+`data/quadratic_planes/q<d>.json`. Ask CaDiCaL for a `(7, 2)`-colouring in which every listed directed cycle has a
+non-tight arc. If the colouring has tight cycles, list them (a shortest one through a vertex of each nontrivial strong
+component of the tight digraph) and ask again. If its tight digraph is acyclic, the graph grows: among the points
+`x + u` (`x` a vertex, `u` a unit vector with the same denominator), add those whose neighbours leave no colour (every
+colour `k` has a neighbour `y` with `k − c(y) ∈ {0, ±1} mod 7`), most neighbours first, at most 200 a round. When no
+such colouring exists, every `(7, 2)`-colouring has a tight listed cycle, and the graph is a witness by Lemma 20 (it
+always has a `(7, 2)`-colouring, written out at the end). Over `ℚ(√11)` this stops after 52 rounds, in 15 seconds, at
+653 vertices (2 528 edges, 32 cycles of lengths 7, 14 and 21). `minimise.py` then deletes vertices, lowest degree
+first, while the formula stays unsatisfiable (one selector literal per vertex in an incremental CaDiCaL, dropping at
+once every vertex outside the unsat core, and listing the tight cycles it meets); no call reached its conflict budget,
+so every vertex left is needed: 170 vertices and 468 edges. `critical.py` stores, for every vertex `v`, a
+`(7, 2)`-colouring of `H − v` with an acyclic tight digraph, so `χ_c(H − v) < 7/2` (perturb the colours along a
+topological order of the tight digraph: the other half of Guichard's characterisation), and `check_critical.py`
+checks them: the witness is vertex-critical.
+
+The same growth, unchanged, works over other fields where Theorem F gives `χ_c = 7/2`: from the 71-vertex graph over
+`ℚ(√455)` it stops after 71 rounds at 959 vertices (deleted down to 175 vertices, 434 edges), and from the 96-vertex
+graph over `ℚ(√191)` after 89 rounds at 3 258 vertices (deleted down to 293 vertices, 803 edges); both are
+vertex-critical. Over `ℚ(√935)`, `ℚ(√239)` and `ℚ(√431)` it reached the cap of 12 000 points without a witness;
+`ℚ(√23)`, `ℚ(√35)`, `ℚ(√71)` and `ℚ(√179)` are still growing. The relation-space MIP of `kapparel.py` (SCIP; a guide,
+not a proof) finds no character with all values in `[0.2858, 0.7142]` on the unit sets used here (`d/D` = 11/30,
+23/156, 35/390, 71/120, 95/480, 119/240, 155/510, 179/390, 191/240, 239/480, 263/1020, 359/600, 431/600, 455/780,
+911/1560, 935/1020), consistent with `κ(U_D) = 2/7`, which a witness inside `Cay(ℤU_D, U_D)` needs.
+
+Certified before anything was claimed, for every witness kept: `check_witness.py` (the first checker, now reading
+`d` from the file) and `verify_independent.py` (the second, now reading `d` and the denominator from the file) accept
+the graph, every unit pair an edge, the colouring and the cycles; `kissat` refutes both encodings, `drat-trim`
+verifies both proofs, and `cake_lpr` accepts the LRAT form of the second (`verification.txt`). The minimal witnesses
+are harder for the solver than the graphs they came from: without symmetry breaking `kissat` needed 7 minutes and a
+250 MB proof for the 170-vertex formula (53 s for the 653-vertex one). Both checkers now accept an optional
+`fixed_vertex`, whose colour the formula fixes to 0 (rotating the colours keeps a `(7, 2)`-colouring and all its
+colour differences, so nothing is lost); with a vertex of largest degree fixed, the proofs are about ten times
+shorter (the stored core proofs: 3.9, 3.2 and 0.5 MB compressed). The 170- and 175-vertex formulas were also refuted
+and checked without the fixed vertex, in both encodings, and the grown graphs before deletion (653, 959 and 3 258
+vertices) in the second encoding. `grow.py`, `minimise.py` and `critical.py` reproduce the stored `ℚ(√455)` witness
+and its certificates exactly (python-sat 1.9, CaDiCaL 1.5.3), and `grow.py` the 653-vertex graph over `ℚ(√11)`.
+
+Also tried, not results: `A + A` with lazy SAT for the other fields gave acyclic colourings at once for most of them
+(the `A + A` graph of `ℚ(√179)`, 24 643 points, gave a formula that `kissat` was still refuting after 50 minutes when
+its DRAT proof reached 1.3 GB and was stopped for disk). A `(4, 1)` version of the growth over `ℚ(√59)`, where
+`χ_c = 4` (Question 3 of the paper: is the value attained by a finite subgraph?), stopped at its 100-minute limit
+with 30 546 listed tight 4-colour cycles at 4 361 points, without an answer. By compactness, `χ_c(F²) = 4` (with
+`χ(F²) = 4`) is attained by a finite subgraph if and only if every 4-colouring of `F²` has a tight cycle (a directed
+cycle along which the colour increases by 1 mod 4): if none has one, every finite subgraph has `χ_c < 4` by the
+perturbation argument; if all have one, finitely many cycles serve all colourings, and a finite subgraph containing
+them on which no 4-colouring avoids them exists. The 2-adic 4-colourings of `ℚ(√59)²` (residues in `𝔽₄`) do have
+tight cycles for every cyclic order of the colours: a unit rhombus whose two directions have distinct residues in
+`μ₃` is one. So they do not decide it.
+
+Files: `data/number_fields/circular/finite_witness/` (the witnesses, their formulas, proofs and criticality
+certificates, both checkers, `check_critical.py`, `grow.py`, `minimise.py`, `critical.py`, `verification.txt`); tests:
+`tests/test_two_primes.py` (`test_finite_witness_grown` for the three witnesses, `test_finite_witness_critical_rejects`,
+and the slow `test_finite_witness_grown_proof`).

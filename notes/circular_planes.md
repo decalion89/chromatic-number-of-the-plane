@@ -92,7 +92,7 @@ vectors already push `χ_c` above `7/2`.
 
 The lower bound is about the infinite graph `Cay(ℤU, U)`: Theorem W⁺ is applied to it directly. Every finite subgraph
 has `χ_c ≤ 7/2` and their supremum is `7/2`; some finite subgraph has `χ_c = 7/2` exactly (Corollary F12, §6.8), and
-§6.8 gives one with 2 237 vertices, found by computer and certified. The
+§6.8 gives one with 170 vertices, found by computer and certified. The
 16 characters that come from the 7-adic colourings (two embeddings, eight maps `λ`) lie in the closed box `[2/7, 5/7]`
 and end at tight leaves of the tree; so the closed-interval statement is false and the open interval is essential.
 The certificates were found with a floating-point solver (`kappa_max.py`: SCIP, through OR-tools, maximises
@@ -717,12 +717,22 @@ it has a 5-cycle and no triangle, and maps to `K_{5/2}`. **An explicit witness f
 search with iterated Minkowski sums and lazy SAT, `data/number_fields/circular/finite_witness/`): with `A` the vertex
 set of the 76-vertex graph, the unit-distance graph `H` on `A + A` (2 237 vertices, all 11 300 unit pairs) maps to
 `K_{7/2}` by a 7-adic colouring, and every homomorphism of `H` to `K_{7/2}` has a tight cycle among 180 listed cycles
-of lengths 14 to 42; so `χ_c(H) = 7/2` by Lemma F9. The second fact is a SAT computation, certified twice: the
-search's own checker (`check_witness.py`) and a second one sharing no code with it (`verify_independent.py`) check the
-graph, the colouring and the cycles exactly and write the formula in two encodings; `drat-trim` verifies the stored
-DRAT proof of the first, and a new `kissat` proof of the second, which `cake_lpr` (a formally verified checker) also
-accepts in LRAT form (`verification.txt`). As `√11 ∈ ℚ₇`, the same graph is an explicit witness for `ℚ₇` and for every
-finite extension `K` of `ℚ₇` with `χ_c(K²) < 4`. Lemmas F9–F11 were tested by two referees: on 291 small graphs and 766 tight relations; on 115
+of lengths 14 to 42; so `χ_c(H) = 7/2` by Lemma F9. **Smaller witnesses** (4 October, evening; `grow.py`,
+`minimise.py`): a colouring-guided growth with lazy SAT, started from `A`, asks for a `(7, 2)`-colouring in which every
+listed directed cycle has a non-tight arc, lists the tight cycles of each answer, and, when the tight digraph of the
+answer is acyclic, adds the points `x + u` (`x` a vertex, `u` a unit vector with denominator 30) whose neighbours
+leave no colour; it stops after 52 rounds at 653 vertices. Deleting vertices while the formula stays unsatisfiable
+leaves `H₁₁`: 170 vertices, 468 edges (all unit pairs), `χ_c(H₁₁) = 7/2`, and vertex-critical: for every vertex `v` a
+`(7, 2)`-colouring of `H₁₁ − v` with an acyclic tight digraph is stored, so `χ_c(H₁₁ − v) < 7/2` (perturb the colours
+along a topological order of the tight digraph; the other half of Guichard's characterisation). From the 71-vertex
+graph over `ℚ(√455)` and the 96-vertex graph over `ℚ(√191)` the same procedure gives vertex-critical witnesses with 175
+vertices (434 edges) and 293 vertices (803 edges), where Theorem F gives `χ_c = 7/2` (7 ramifies in `ℚ(√455)` and splits
+in `ℚ(√191)`). Every lower bound is a SAT computation, certified twice: the first checker
+(`check_witness.py`) and a second one sharing no code with it (`verify_independent.py`) check the graph, the colouring
+and the cycles exactly and write the formula in two encodings; `drat-trim` verifies the stored DRAT proof of the
+first, and a new `kissat` proof of the second, which `cake_lpr` (a formally verified checker) also accepts in LRAT
+form (`verification.txt`); `check_critical.py` checks the criticality certificates. As `√11 ∈ ℚ₇`, `H₁₁` is an
+explicit witness for `ℚ₇` and for every finite extension `K` of `ℚ₇` with `χ_c(K²) < 4`. Lemmas F9–F11 were tested by two referees: on 291 small graphs and 766 tight relations; on 115
 random finite sets `S` in `ℤ`, `ℤ²` and `ℤ × ℤ/m` with `2 < χ_c < 4` (at all 409 optimal points, vertices of the optimal set and
 midpoints and centroids of them that stay optimal, the tight elements have a nonnegative relation;
 `indep_FW2/test_kappa_relations.py 1 180`); and by SAT on finite pieces of 13 such Cayley graphs, all with finite witnesses
@@ -741,7 +751,7 @@ midpoints and centroids of them that stay optimal, the tight elements have a non
    be one. The 5-chromatic unit-distance graphs we know lie over fields containing `√3`, or `√−3` and `√−7`, and 3
    and −7 are not squares modulo 19.
 2. *Finite witnesses.* By Corollary F12 some finite unit-distance graph in `ℚ(√11)²` has `χ_c = 7/2`; the proof
-   (compactness) gives no bound on its size, and the smallest we know has 2 237 vertices (§6.8). How small can it be? And when `χ_c(F²) = 4`, is the value attained by
+   (compactness) gives no bound on its size, and the smallest we know has 170 vertices and is vertex-critical (§6.8). How small can it be? And when `χ_c(F²) = 4`, is the value attained by
    a finite subgraph, for example for `ℚ(√59)`? Above 4 Lemmas F10 and F11 are not available.
 3. *The one-prime probe.* Does `r0(5^k)` tend to `3/10` (the conjecture of §5)? Theorem E no longer needs it.
 
