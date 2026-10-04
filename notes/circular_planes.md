@@ -4,8 +4,9 @@
 certificates, each accepted by two exact checkers that share no code, together with Theorem W⁺
 (`notes/winding_lemma.md` §2, proved in Lean in `lean/TheoremWInf.lean`). An internal referee (a separate AI agent,
 with its own programs) checked Theorem C for `ℚ(√11)` and `ℚ₇` and found it correct; its corrections to this note are
-applied (research log, 4 October). Propositions C2, C3, Corollary C4 and Question 1 are new and not yet refereed. Nobody outside the
-project has checked any of it.*
+applied (research log, 4 October). Propositions C2, C3 and Corollaries C4, C5 were checked in the second referee
+round of `papers/three-colours/`. Theorem D (§5) was found by a separate agent and refereed by another, which found no
+error. Question 1 is open. Nobody outside the project has checked any of it.*
 
 ## 1. Circular colourings and characters
 
@@ -125,21 +126,123 @@ that is nonzero on `7O` gives `2/49 < 1/14`), and for `ℚ₂₇` no character o
 So the restriction to `F²` of a locally constant colouring of one completion `F_v²` gives, below 4, only the bounds 2
 (Theorem B, (a)), 3 (Theorem B, (b)) and `7/2` (a place above 7 with residue degree 1).
 
-## 5. Questions
+## 5. A gap above 3
+
+*Found by a separate agent (programs in `data/number_fields/circular/probe/`), refereed by another with its own exact
+programs (`probe/indep/`): no error in Theorem D or Proposition D1; its corrections are applied below.*
+
+> **Theorem D.** Let `F` be a number field with `χ(F²) ≥ 4`. Then (a) `χ_c(F²) ≥ 56/17 ≈ 3.294`, and (b)
+> (computer-assisted: exact computations by two independent programs) `χ_c(F²) ≥ 10⁷/3001611 > 3.3315`. Hence for
+> every number field `χ_c(F²) ∈ {2, 3}` or `χ_c(F²) ≥ 3.3315`.
+
+*Proof.* If `i ∈ F` there is nothing to prove (`χ = ∞`, no homomorphism to any `K_{p/q}`). Let `F²` map to `K_{p/q}`
+with `p/q < 56/17` (for (b): `p/q < 10⁷/3001611`); we show `χ(F²) ≤ 3`. If `p/q ≤ 3`, then
+`χ(F²) ≤ χ(K_{p/q}) ≤ 3`. Otherwise `r = q/p ∈ (17/56, 1/3)` (for (b): `r > r* = 0.3001611`). Run the proof of
+Theorem B with the interval `[r, 1 − r]` in place of `[1/3, 2/3]`. For a finite `V` and `U = G_N V`, Theorem W⁺ gives a character with `ξ(U) ⊆ [r, 1 − r]`,
+so `φ(v) ∈ S_N^(r)` for `v ∈ V`, where `S_N^(r)` is `S_N` with `[r, 1 − r]`. Proposition D1 (for (b): its
+computer-assisted form, with `k ≥ 17`) says that `φ(v) = Nε_v + x_v` with `ε_v ∈ E` (the same types c and q) and
+`|x_v| ≤ R = max(s√10/3, √2 ε)`, and `R < 0.22` (`s < 0.2`, `ε < 1/30`). The exact-relations lemma (Lemma 1 of
+`papers/three-colours/`, = Lemma 5 of `notes/four_colours_11_mod_12.md`) needs only this uniform bound: choose
+`N = 5^k > 6R·max_v(|D_v| + Σ_j |μ_{v,j}|)` in Lemma B1 (and `k ≥ 17` for (b)). Nothing else in Lemmas B1–B5 depends
+on the interval: case (c) gives (a), case (q) gives (b) of Theorem B, and `χ(F²) ≤ 3`. Finally, if
+`χ_c(F²) < 56/17`, the definition of the infimum gives a homomorphism to some `K_{p/q}` with `p/q < 56/17`. ∎
+
+Notation for the probe: `s = 1/2 − r`, `ε = 1/3 − r`, `h = (1 + i)/2`, `Sq_s = [−s, s]²`, `c*_N = Nh`,
+`Q_N = {(N/3)(a + bi) : a, b ∈ {1, 2}}`, `ρ = (3 + 4i)/5`, `Λ± = ((2 ± i)/5)ℤ[i]`,
+`P_k^(s) = {x : conj(x)ρ^j ∈ Sq_s, |j| ≤ k}`. Then `c ∈ S_N^(r)` iff `conj(c)ρ^j ∈ h + Sq_s + ℤ[i]` for `|j| ≤ k`. For
+`q ∈ Q_N` let `m_j(q) ∈ ℤ[i]` be the lattice point with `conj(q)ρ^j ∈ h + Sq_s + m_j(q)` (the *cell* of `q` at `ρ^j`), and
+`Y_k(q) = {y : conj(q + y)ρ^j ∈ h + Sq_s + m_j(q) for all |j| ≤ k}`.
+
+> **Proposition D1 (the probe for `17/56 < r ≤ 1/3`).** For every `k ≥ 1`, `N = 5^k`,
+> `S_N^(r) = (c*_N + P_k^(s) + Nℤ[i]) ⊔ ⋃_{q ∈ Q_N} (q + Y_k(q) + Nℤ[i])`, with `|x| ≤ s√10/3` on `P_k^(s)` and
+> `|y| ≤ √2 ε` on `Y_k(q)`.
+
+*Proof.*
+- *Lemma 1 (values at type points).* `conj(c*_N)ρ^j ∈ h + ℤ[i]`; for `q = (N/3)(a + bi)`,
+  `conj(q)ρ^j ≡ (1/3)(−1)^k(−i)^j(a − bi) (mod ℤ[i])` (mod 3, `5 ≡ −1` and `(2 ± i)² ≡ ±i`); in particular all values
+  are in `{1/3, 2/3}²`, `p_{±(k−2)} ≡ −p_{±k}`, and for `q′ ∈ Q_{N/5}` the unique `q ∈ Q_N` with `q ≡ q′ (mod N/5)`
+  (`a ≡ 2a′ mod 3`) has the same values as `q′` for `|j| ≤ k − 1`.
+- *Lemma 2 (radii).* `P_1^(s) = s·P_1^(1)`, the 12-gon with vertices `(±1, ±1/3)`, `(±1/3, ±1)`, `(±5/7, ±5/7)` (times
+  `s`), so `|x| ≤ s√10/3`. For `ε ≤ 1/30` (in fact also at `ε = 1/29`, `1/25`), `Y_1(q) = εZ_1(q)` is a hexagon of
+  radius `√2 ε` (for `q = (5/3)(1 + i)`: vertices `(−5/4, 0)`, `(−5/7, −5/7)`, `(0, −5/4)`, `(1, −1/2)`, `(1, 1)`,
+  `(−1/2, 1)`, times `ε`), and `Y_k(q) ⊆ Y_1(q)`.
+- *Lemma C (`k ≥ 2`, `s < 11/56`).* If `x ∈ P_{k−1}^(s)` and `ν ∈ Λ+ \ ℤ[i]`, then `conj(x)ρ^k + ν ∉ Sq_s + ℤ[i]`;
+  likewise with `ρ^{−k}`, `Λ−`. Put `u = conj(x)ρ^k`, `w = conj(x)ρ^{k−2} = u(−7 − 24i)/25 ∈ Sq_s`. As
+  `|u| ≤ s√10/3` and `s(1 + √10/3) < 3/5`, only `ν ≡ ±(2/5, 1/5)` or `±(−1/5, 2/5)` (with no further shift) can occur.
+  For `ν = σ(2/5, 1/5)` and `τ = −σ`: `τu₁ ≥ 2/5 − s`, `τu₂ ≥ 1/5 − s`, so `τ(24u₁ + 7u₂)/25 ≥ (11 − 31s)/25 > s`,
+  contradicting `w ∈ Sq_s`; for `ν = σ(−1/5, 2/5)` the same bound holds for `τ Re w`. (`(11 − 31s)/25 > s` iff
+  `s < 11/56`.)
+- *Lemma Q (`k ≥ 2`, `ε < 5/168`).* If `q ∈ Q_N`, `|y| < 1/6`, the values of `q + y` at `ρ^{±(k−2)}` stay in the
+  cells of `q`, and `ν ∈ Λ+ \ ℤ[i]`, then `conj(q + y)ρ^k + ν ∉ h + Sq_s + ℤ[i]` (likewise with `ρ^{−k}`, `Λ−`). By
+  `y ↦ iy`, which preserves `S_N^(r)`, `Q_N` mod `N` and `Λ±`, reduce to `p_k = h + (1, 1)/6`, so
+  `p_{k−2} = h − (1, 1)/6`. Put `u = conj(y)ρ^k`, so `conj(y)ρ^{k−2} = u(−7 − 24i)/25`. The condition at `ρ^k` reads
+  `1/6 + ν_e + u_e ∈ [−s, s] + ℤ` (`e = 1, 2`). As `|u_e| ≤ |y| < 1/6 < 11/30 − s`, a coordinate `ν_e ≡ 1/5` or
+  `2/5` is impossible, so of the four non-zero classes `±(2/5, 1/5)`, `±(−1/5, 2/5)` of `Λ+/ℤ[i]` only
+  `ν ≡ (−2/5, −1/5)` remains, and it needs `u₁ ≥ 1/15 − ε`. The cell conditions at `ρ^{k−2}` read
+  `24u₁ + 7u₂ ≤ 25ε` and `7u₁ − 24u₂ ≤ 25ε`, which give `625u₁ ≤ 775ε`, i.e. `u₁ ≤ 31ε/25`. So
+  `1/15 − ε ≤ 31ε/25`, i.e. `ε ≥ 5/168`. (With `ρ^{−k}` and `Λ−` only `ν ≡ (−1/5, −2/5)` remains, and the same
+  computation bounds `u₂`.) The hypothesis `|y| < 1/6` cannot be weakened to `|y|_∞ ≤ 1/6`: for `q = (25/3)(1 + i)`,
+  `k = 2`, `y = (1/6, 1/6)` and `ν = (−2/5, −1/5)` the condition holds at `ε = 0`. In the induction `|y| ≤ √2 ε < 0.043`.
+- *Base case `k = 1`.* Write `c = c*_5 + x + λ`, `x ∈ Sq_s`, `λ ∈ ℤ[i]/5` (25 classes), `μ± = conj(λ)ρ^{±1} ∈ Λ±`. For
+  `s < 11/56`, `|x| ≤ s√2`, so a shift `ν` can only be a minimal representative (`s(1 + √2) < 3/5`). Both `μ±`
+  integral: `x ∈ P_1^(s)`. Exactly one integral (8 classes): this is Lemma C for `k = 1` (`u = conj(x)ρ^{±1}`,
+  `w = conj(x)ρ^{∓1} ∈ Sq_s`, with `|u| ≤ s√2` in place of `s√10/3`), so `s ≥ 11/56`. Both non-integral (16 classes, 4 orbits under `x ↦ ix`): with the minimal representatives, three
+  orbits are infeasible for `s < 1/4`, `2/7`, `3/8` (three-term certificates in `probe/base_caseC.txt`; with all
+  representatives the third threshold is `1/4`), and the fourth orbit is the component of a point of `Q_5`
+  (`λ = 1 + i` gives `q = (10/3)(1 + i)`). `probe/base_case.txt` lists the 25 classes at `r = 17/56`.
+- *Induction.* For `k ≥ 2`, `c ∈ S_N^(r) ⊆ S_{N/5}^(r)`. If `c = c*_N + x + (N/5)λ` with `x ∈ P_{k−1}^(s)`, the
+  condition at `ρ^{±k}` and Lemma C give `(2 ± i) | λ`, so `c ≡ c*_N + x (mod N)` and `x ∈ P_k^(s)`. If
+  `c = q′ + y + (N/5)λ` with `q′ ∈ Q_{N/5}`, `y ∈ Y_{k−1}(q′)`, take `q ∈ Q_N` with `q ≡ q′ (mod N/5)` (Lemma 1: the
+  same values, so the same cells, for `|j| ≤ k − 1`); Lemma Q gives `c ≡ q + y (mod N)`, and `y ∈ Y_k(q)`. The
+  converse inclusion is Lemma 1. ∎
+
+*Sharpness, extensions and limits.*
+- `17/56` is best possible for a statement valid for every `k`: at `r = 17/56`, `S_N^(r)` has further isolated points
+  for `N = 5, 25, 125, 625` (8, 20, 12 and 4 of them; coordinates with denominators 8 and 56; `probe/first_new.txt`).
+  The 8 points at `N = 5` and the family `(375/56)(1 + i)` at `N = 25` have values with denominator 56; the other 16
+  points at `N = 25` have values with denominators 40, 280, 1400 (minimum 17/56).
+- The constant comes from the small levels, and Theorem D only needs large `k`. Both programs find that
+  `S_{5^5}^(r)` is the 5 main components plus 8 isolated points at `r = 333/1106`, so only the main components for
+  `r > 333/1106`; the thresholds of Lemmas C and Q using all constraints `|j| ≤ k − 1` are non-increasing in `k`
+  (in the frame `conj(x)ρ^k` the level-`(k+1)` system contains the level-`k` one) and equal `3303/10981` and
+  `13183/43924` at `k = 6`. So D1 holds for all `k ≥ 5` when `r > 333/1106`, and Theorem D(a) holds with
+  `1106/333 ≈ 3.3213`. At `r = 0.3001611` both programs find only the main components at `k = 17, 18, 19` (and extra
+  components at `r = 0.3001609` for these `k`), and the lemma thresholds are at most `0.30005568` and `0.30000928` for `k ≥ 12`; this
+  is Theorem D(b). (Both programs give the same number of components at every level `k ≤ 19` at `r = 0.3001611`:
+  `probe/levels3_r3001611_19.txt` and `probe/indep/out_deep.txt`.)
+- For `r ≤ 3/10` a classification with types c and q only fails for every `k`: the 5-adic point
+  `c_k = c*_N + ρ^k/5 − 5^{k−1}(2 − i)` lies in `S_N^(3/10)` and has `min‖·‖ = 3/10` exactly. Indeed
+  `5^{k−1}(2 + i)ρ^j ∈ ℤ[i]` for `−k ≤ j < k`, while `(2 + i)^{2k+1} ≡ 2 + i (mod 5)` (it is `≡ 0` mod `2 + i` and
+  `≡ −1` mod `2 − i`); so the value of `c_k` at `ρ^j` is `h + ρ^{j−k}/5` (modulus `1/5`) for `j < k`, and
+  `h + 1/5 − (2 + i)/5 = h − (1 + i)/5` at `j = k`. It lies at distance at least `√5·5^{k−1} − 1/5` from `c*_N + Nℤ[i]`
+  and `(7/6)5^{k−1} − 1/5` from `Q_N + Nℤ[i]`, far outside the main components (the referee checked this exactly for `k ≤ 10`,
+  `probe/indep/out_padic.txt`). This is a limit of the present method, not of the problem: on a whole field plane the
+  places above 5 split in `F(i)`, which should kill such types, but the proof would have to add 5-adic types to D1
+  and localise at 5.
+- The earlier grid search (grid 0.02) had reported clusters with `min‖ξ(γ)‖ = 3/10`; exact polygons show they are the
+  components with `κ = 17/56`, `333/1106`, `166/553`, which the grid underestimated.
+- *Conjecture.* Let `r0(5^k)` be the least `r` such that `S_{5^k}^(r′)` consists of the main components for every
+  `r′ > r` (`r0(5^k) = 17/56` for `k ≤ 4`, `r0(5^5) = 333/1106`, `r0(5^6) = 3303/10981`,
+  `r0(5^17) = 452452525229/1507366479208 ≈ 0.30016093`). Then `r0(5^k) → 3/10`, which would give `χ_c ∉ (3, 10/3)` by
+  this method.
+
+## 6. Questions
 
 1. *Circular local–global.* Is `χ_c(F²) ∈ {2, 3, 7/2}` whenever `χ_c(F²) < 4`? More precisely: is `χ_c(F²) = 7/2`
    exactly when (a) and (b) of Theorem B fail and some place above 7 has residue degree 1, and `χ_c(F²) ≥ 4` when (a)
    and (b) fail and no such place exists? Theorem B (with Corollary B6) is the part of this at 2 and 3. For `ℚ(√23)`,
    where 7 splits and `χ_c ≤ 7/2` by Proposition C1, it predicts `χ_c = 7/2`; for `ℚ(√59)` (7 inert, `χ = 4`) it
    predicts `χ_c = 4`.
-   Along the rational rotations with denominator `5^k` there are characters of neither type c nor type q with
-   `min ‖ξ(γ)‖ = 3/10` for every `k` we tried (`chartypes.py`, `lift.py`, up to `k = 6`; the referee found four on
-   the grid `(1/10)ℤ[i]` for `k ≤ 3`); they look 5-adic, and 5-adic characters cannot survive on a
-   whole field plane (every place above 5 splits in `F(i)`), but a proof needs an analogue of Proposition 1 for the
-   intervals `[r, 1 − r]` with `1/4 < r < 1/3`.
+   Theorem D settles the part below `3.3315`. The present method stops at `10/3`: for every `k` the probe has 5-adic
+   points with `min ‖ξ(γ)‖ = 3/10` (§5), which the places above 5 should kill on a whole field plane (they split in
+   `F(i)`), but the classification of the probe would have to include them; the gap up to `7/2` needs that or another
+   idea.
 2. What is `χ_c(F²)` for fields with `χ ≥ 4` and no place of residue field `𝔽₇`, such as `ℚ(√47)` (where
    `4 ≤ χ ≤ 5`)? Question 1 predicts `χ_c ≥ 4`; a value below 4 would give `χ(ℚ(√47)²) = 4`.
 
 Measurements (floating-point MIP, not proofs): for `U = G_25{1, u_n, ū_n : n = 1, 7, 19}`, `max_ξ min_u ‖ξ(u)‖` is
-`2/7` for `d = 35`; for `d = 59` the solver stopped with the optimum between 0.264 and 0.288; for `d = 71` (7 splits)
-it reported 0.2958, so this `U` alone does not give `7/2` there; for `d = 23` and `d = 47` it did not finish.
+`2/7` for `d = 11`, `35` and `23` (SCIP on an LLL-reduced relation basis, optimal; the exact certificate for `d = 23` is
+being built), `0.2638` for `d = 59` (an optimal character with irrational-looking values, so this `U` does not reach
+`χ_c ≥ 4`), and `0.2958` for `d = 71` (7 splits; this `U` alone does not give `7/2`). Without the LLL step the solver
+had failed on `d = 23`, `47` (no solution in 300 s) and reported a wrong value elsewhere; those failures were
+numerical.

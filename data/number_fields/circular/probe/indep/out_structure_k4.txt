@@ -1,0 +1,84 @@
+=== r = 759/2500 (= 0.3036000), s = 491/2500, eps = 223/7500; lifting took 2.0s
+  k=1 N=5: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 241081/5625000 <= 10 s^2/9 = 241081/5625000: True;  max|y|^2 on Y_k = 49729/28125000 <= 2 eps^2 = 49729/28125000: True;  #vertices P_k: 12
+     brute-force G_N (12 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     direct enumeration (0.0s): 5 pieces; identical to lifting: True
+  k=2 N=25: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 241081/6050000 <= 10 s^2/9 = 241081/5625000: True;  max|y|^2 on Y_k = 49729/43245000 <= 2 eps^2 = 49729/28125000: True;  #vertices P_k: 20
+     brute-force G_N (20 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     direct enumeration (1.8s): 5 pieces; identical to lifting: True
+  k=3 N=125: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 241081/6125000 <= 10 s^2/9 = 241081/5625000: True;  max|y|^2 on Y_k = 49729/45000000 <= 2 eps^2 = 49729/28125000: True;  #vertices P_k: 28
+     brute-force G_N (28 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     direct enumeration (43.7s): 5 pieces; identical to lifting: True
+  k=4 N=625: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 241081/6125000 <= 10 s^2/9 = 241081/5625000: True;  max|y|^2 on Y_k = 49729/45000000 <= 2 eps^2 = 49729/28125000: True;  #vertices P_k: 36
+     brute-force G_N (36 rotations, equal to rho^j form): vertices+centroids not in S: 0
+=== r = 17000001/56000000 (= 0.3035714), s = 10999999/56000000, eps = 4999997/168000000; lifting took 2.6s
+  k=1 N=5: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 120999978000001/2822400000000000 <= 10 s^2/9 = 120999978000001/2822400000000000: True;  max|y|^2 on Y_k = 24999970000009/14112000000000000 <= 2 eps^2 = 24999970000009/14112000000000000: True;  #vertices P_k: 12
+     brute-force G_N (12 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     direct enumeration (0.1s): 5 pieces; identical to lifting: True
+  k=2 N=25: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 120999978000001/3035648000000000 <= 10 s^2/9 = 120999978000001/2822400000000000: True;  max|y|^2 on Y_k = 24999970000009/21698611200000000 <= 2 eps^2 = 24999970000009/14112000000000000: True;  #vertices P_k: 20
+     brute-force G_N (20 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     direct enumeration (2.0s): 5 pieces; identical to lifting: True
+  k=3 N=125: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 120999978000001/3073280000000000 <= 10 s^2/9 = 120999978000001/2822400000000000: True;  max|y|^2 on Y_k = 24999970000009/22579200000000000 <= 2 eps^2 = 24999970000009/14112000000000000: True;  #vertices P_k: 28
+     brute-force G_N (28 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     direct enumeration (47.1s): 5 pieces; identical to lifting: True
+  k=4 N=625: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 120999978000001/3073280000000000 <= 10 s^2/9 = 120999978000001/2822400000000000: True;  max|y|^2 on Y_k = 24999970000009/22579200000000000 <= 2 eps^2 = 24999970000009/14112000000000000: True;  #vertices P_k: 36
+     brute-force G_N (36 rotations, equal to rho^j form): vertices+centroids not in S: 0
+=== r = 31/100 (= 0.3100000), s = 19/100, eps = 7/300; lifting took 2.1s
+  k=1 N=5: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 361/9000 <= 10 s^2/9 = 361/9000: True;  max|y|^2 on Y_k = 49/45000 <= 2 eps^2 = 49/45000: True;  #vertices P_k: 12
+     brute-force G_N (12 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     direct enumeration (0.0s): 5 pieces; identical to lifting: True
+  k=2 N=25: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 361/9680 <= 10 s^2/9 = 361/9000: True;  max|y|^2 on Y_k = 49/69192 <= 2 eps^2 = 49/45000: True;  #vertices P_k: 20
+     brute-force G_N (20 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     direct enumeration (1.3s): 5 pieces; identical to lifting: True
+  k=3 N=125: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 361/9800 <= 10 s^2/9 = 361/9000: True;  max|y|^2 on Y_k = 49/72000 <= 2 eps^2 = 49/45000: True;  #vertices P_k: 28
+     brute-force G_N (28 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     direct enumeration (39.5s): 5 pieces; identical to lifting: True
+  k=4 N=625: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 361/9800 <= 10 s^2/9 = 361/9000: True;  max|y|^2 on Y_k = 49/72000 <= 2 eps^2 = 49/45000: True;  #vertices P_k: 36
+     brute-force G_N (36 rotations, equal to rho^j form): vertices+centroids not in S: 0
+=== r = 8/25 (= 0.3200000), s = 9/50, eps = 1/75; lifting took 2.3s
+  k=1 N=5: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 9/250 <= 10 s^2/9 = 9/250: True;  max|y|^2 on Y_k = 2/5625 <= 2 eps^2 = 2/5625: True;  #vertices P_k: 12
+     brute-force G_N (12 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     direct enumeration (0.0s): 5 pieces; identical to lifting: True
+  k=2 N=25: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 81/2420 <= 10 s^2/9 = 9/250: True;  max|y|^2 on Y_k = 2/8649 <= 2 eps^2 = 2/5625: True;  #vertices P_k: 20
+     brute-force G_N (20 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     direct enumeration (1.4s): 5 pieces; identical to lifting: True
+  k=3 N=125: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 81/2450 <= 10 s^2/9 = 9/250: True;  max|y|^2 on Y_k = 1/4500 <= 2 eps^2 = 2/5625: True;  #vertices P_k: 28
+     brute-force G_N (28 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     direct enumeration (37.3s): 5 pieces; identical to lifting: True
+  k=4 N=625: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 81/2450 <= 10 s^2/9 = 9/250: True;  max|y|^2 on Y_k = 1/4500 <= 2 eps^2 = 2/5625: True;  #vertices P_k: 36
+     brute-force G_N (36 rotations, equal to rho^j form): vertices+centroids not in S: 0
+=== r = 1/3 (= 0.3333333), s = 1/6, eps = 0; lifting took 1.4s
+  k=1 N=5: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 5/162 <= 10 s^2/9 = 5/162: True;  max|y|^2 on Y_k = 0 <= 2 eps^2 = 0: True;  #vertices P_k: 12
+     brute-force G_N (12 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     direct enumeration (0.0s): 5 pieces; identical to lifting: True
+  k=2 N=25: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 125/4356 <= 10 s^2/9 = 5/162: True;  max|y|^2 on Y_k = 0 <= 2 eps^2 = 0: True;  #vertices P_k: 20
+     brute-force G_N (20 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     direct enumeration (1.3s): 5 pieces; identical to lifting: True
+  k=3 N=125: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 25/882 <= 10 s^2/9 = 5/162: True;  max|y|^2 on Y_k = 0 <= 2 eps^2 = 0: True;  #vertices P_k: 28
+     brute-force G_N (28 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     direct enumeration (30.6s): 5 pieces; identical to lifting: True
+  k=4 N=625: 5 pieces; c-component x1; q-components x4 (distinct q: 4); junk 0 (0 isolated points)
+     max|x|^2 on P_k = 25/882 <= 10 s^2/9 = 5/162: True;  max|y|^2 on Y_k = 0 <= 2 eps^2 = 0: True;  #vertices P_k: 36
+     brute-force G_N (36 rotations, equal to rho^j form): vertices+centroids not in S: 0
+
+real	3m38.406s
+user	2m53.422s
+sys	0m0.030s

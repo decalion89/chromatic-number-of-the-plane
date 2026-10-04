@@ -1,0 +1,50 @@
+level 1 N=5: 13 components (0.0s)
+   other: nverts=1 pt=(5/8,75/56) ~(0.6250,1.3393) c/N~(0.12500,0.26786) near q0 dist 1.092 kappa_pt=17/56
+   other: nverts=1 pt=(5/8,205/56) ~(0.6250,3.6607) c/N~(0.12500,0.73214) near q1 dist 1.092 kappa_pt=17/56
+   other: nverts=1 pt=(75/56,5/8) ~(1.3393,0.6250) c/N~(0.26786,0.12500) near q0 dist 1.092 kappa_pt=17/56
+   other: nverts=1 pt=(75/56,35/8) ~(1.3393,4.3750) c/N~(0.26786,0.87500) near q1 dist 1.092 kappa_pt=17/56
+   other: nverts=1 pt=(205/56,5/8) ~(3.6607,0.6250) c/N~(0.73214,0.12500) near q2 dist 1.092 kappa_pt=17/56
+   other: nverts=1 pt=(205/56,35/8) ~(3.6607,4.3750) c/N~(0.73214,0.87500) near q3 dist 1.092 kappa_pt=17/56
+   other: nverts=1 pt=(35/8,75/56) ~(4.3750,1.3393) c/N~(0.87500,0.26786) near q2 dist 1.092 kappa_pt=17/56
+   other: nverts=1 pt=(35/8,205/56) ~(4.3750,3.6607) c/N~(0.87500,0.73214) near q3 dist 1.092 kappa_pt=17/56
+level 2 N=25: 25 components (0.1s)
+   other: nverts=1 pt=(5/8,1195/56) ~(0.6250,21.3393) c/N~(0.02500,0.85357) near q1 dist 9.014 kappa_pt=17/56
+   other: nverts=1 pt=(5/8,205/56) ~(0.6250,3.6607) c/N~(0.02500,0.14643) near q0 dist 9.014 kappa_pt=17/56
+   other: nverts=1 pt=(1195/56,5/8) ~(21.3393,0.6250) c/N~(0.85357,0.02500) near q2 dist 9.014 kappa_pt=17/56
+   other: nverts=1 pt=(375/56,375/56) ~(6.6964,6.6964) c/N~(0.26786,0.26786) near q0 dist 2.315 kappa_pt=17/56
+   other: nverts=1 pt=(375/56,1025/56) ~(6.6964,18.3036) c/N~(0.26786,0.73214) near q1 dist 2.315 kappa_pt=17/56
+   other: nverts=1 pt=(1195/56,195/8) ~(21.3393,24.3750) c/N~(0.85357,0.97500) near q3 dist 9.014 kappa_pt=17/56
+   other: nverts=1 pt=(137/56,409/56) ~(2.4464,7.3036) c/N~(0.09786,0.29214) near q0 dist 5.976 kappa_pt=17/56
+   other: nverts=1 pt=(137/56,991/56) ~(2.4464,17.6964) c/N~(0.09786,0.70786) near q1 dist 5.976 kappa_pt=17/56
+   other: nverts=1 pt=(409/56,137/56) ~(7.3036,2.4464) c/N~(0.29214,0.09786) near q0 dist 5.976 kappa_pt=17/56
+   other: nverts=1 pt=(409/56,1263/56) ~(7.3036,22.5536) c/N~(0.29214,0.90214) near q1 dist 5.976 kappa_pt=17/56
+   other: nverts=1 pt=(991/56,137/56) ~(17.6964,2.4464) c/N~(0.70786,0.09786) near q2 dist 5.976 kappa_pt=17/56
+   other: nverts=1 pt=(991/56,1263/56) ~(17.6964,22.5536) c/N~(0.70786,0.90214) near q3 dist 5.976 kappa_pt=17/56
+   other: nverts=1 pt=(1263/56,409/56) ~(22.5536,7.3036) c/N~(0.90214,0.29214) near q2 dist 5.976 kappa_pt=17/56
+   other: nverts=1 pt=(1263/56,991/56) ~(22.5536,17.6964) c/N~(0.90214,0.70786) near q3 dist 5.976 kappa_pt=17/56
+   other: nverts=1 pt=(205/56,5/8) ~(3.6607,0.6250) c/N~(0.14643,0.02500) near q0 dist 9.014 kappa_pt=17/56
+   other: nverts=1 pt=(1025/56,375/56) ~(18.3036,6.6964) c/N~(0.73214,0.26786) near q2 dist 2.315 kappa_pt=17/56
+   other: nverts=1 pt=(1025/56,1025/56) ~(18.3036,18.3036) c/N~(0.73214,0.73214) near q3 dist 2.315 kappa_pt=17/56
+   other: nverts=1 pt=(205/56,195/8) ~(3.6607,24.3750) c/N~(0.14643,0.97500) near q1 dist 9.014 kappa_pt=17/56
+   other: nverts=1 pt=(195/8,1195/56) ~(24.3750,21.3393) c/N~(0.97500,0.85357) near q3 dist 9.014 kappa_pt=17/56
+   other: nverts=1 pt=(195/8,205/56) ~(24.3750,3.6607) c/N~(0.97500,0.14643) near q2 dist 9.014 kappa_pt=17/56
+level 3 N=125: 17 components (0.1s)
+   other: nverts=1 pt=(805/8,1195/56) ~(100.6250,21.3393) c/N~(0.80500,0.17071) near q2 dist 26.687 kappa_pt=17/56
+   other: nverts=1 pt=(805/8,5805/56) ~(100.6250,103.6607) c/N~(0.80500,0.82929) near q3 dist 26.687 kappa_pt=17/56
+   other: nverts=1 pt=(1195/56,805/8) ~(21.3393,100.6250) c/N~(0.17071,0.80500) near q1 dist 26.687 kappa_pt=17/56
+   other: nverts=1 pt=(5975/56,5975/56) ~(106.6964,106.6964) c/N~(0.85357,0.85357) near q3 dist 33.040 kappa_pt=17/56
+   other: nverts=1 pt=(5975/56,1025/56) ~(106.6964,18.3036) c/N~(0.85357,0.14643) near q2 dist 33.040 kappa_pt=17/56
+   other: nverts=1 pt=(1195/56,195/8) ~(21.3393,24.3750) c/N~(0.17071,0.19500) near q0 dist 26.687 kappa_pt=17/56
+   other: nverts=1 pt=(5805/56,805/8) ~(103.6607,100.6250) c/N~(0.82929,0.80500) near q3 dist 26.687 kappa_pt=17/56
+   other: nverts=1 pt=(1025/56,5975/56) ~(18.3036,106.6964) c/N~(0.14643,0.85357) near q1 dist 33.040 kappa_pt=17/56
+   other: nverts=1 pt=(1025/56,1025/56) ~(18.3036,18.3036) c/N~(0.14643,0.14643) near q0 dist 33.040 kappa_pt=17/56
+   other: nverts=1 pt=(5805/56,195/8) ~(103.6607,24.3750) c/N~(0.82929,0.19500) near q2 dist 26.687 kappa_pt=17/56
+   other: nverts=1 pt=(195/8,1195/56) ~(24.3750,21.3393) c/N~(0.19500,0.17071) near q0 dist 26.687 kappa_pt=17/56
+   other: nverts=1 pt=(195/8,5805/56) ~(24.3750,103.6607) c/N~(0.19500,0.82929) near q1 dist 26.687 kappa_pt=17/56
+level 4 N=625: 9 components (0.1s)
+   other: nverts=1 pt=(5975/56,5975/56) ~(106.6964,106.6964) c/N~(0.17071,0.17071) near q0 dist 143.736 kappa_pt=17/56
+   other: nverts=1 pt=(5975/56,29025/56) ~(106.6964,518.3036) c/N~(0.17071,0.82929) near q1 dist 143.736 kappa_pt=17/56
+   other: nverts=1 pt=(29025/56,5975/56) ~(518.3036,106.6964) c/N~(0.82929,0.17071) near q2 dist 143.736 kappa_pt=17/56
+   other: nverts=1 pt=(29025/56,29025/56) ~(518.3036,518.3036) c/N~(0.82929,0.82929) near q3 dist 143.736 kappa_pt=17/56
+level 5 N=3125: 5 components (0.1s)
+level 6 N=15625: 5 components (0.1s)

@@ -1,0 +1,53 @@
+== (C_2): x in P_1^(s), conj(x) rho^{2 sign} + nu in Sq_s, nu in Lambda_sign \ Z[i]; variables x1, x2, s
+ sign 1: thresholds over nu: nu=(-2/5,-1/5): s>=11/56, nu=(-1/5,2/5): s>=11/56, nu=(1/5,-2/5): s>=11/56, nu=(2/5,1/5): s>=11/56, nu=(-3/5,1/5): s>=45/154, nu=(-1/5,-3/5): s>=45/154 ...
+   minimum s = 11/56 at x = (-3/56, 11/56), nu = (-2/5, -1/5); certificate (multiplier * inequality):
+      3/7 * [ -[Re(conj(x) rho^2) + (-2/5)] <= s ]   i.e. (7/25)*x1 + (-24/25)*x2 + (-1)*s <= -2/5
+      25/56 * [ -Im(conj(x) rho^0) <= s ]   i.e. (1)*x2 + (-1)*s <= 0
+      1/8 * [ -[Im(conj(x) rho^2) + (-1/5)] <= s ]   i.e. (-24/25)*x1 + (-7/25)*x2 + (-1)*s <= -1/5
+ sign -1: thresholds over nu: nu=(-2/5,1/5): s>=11/56, nu=(-1/5,-2/5): s>=11/56, nu=(1/5,2/5): s>=11/56, nu=(2/5,-1/5): s>=11/56, nu=(-3/5,-1/5): s>=45/154, nu=(-1/5,3/5): s>=45/154 ...
+   minimum s = 11/56 at x = (-3/56, -11/56), nu = (-2/5, 1/5); certificate (multiplier * inequality):
+      1/8 * [ Im(conj(x) rho^-2) + (1/5) <= s ]   i.e. (-24/25)*x1 + (7/25)*x2 + (-1)*s <= -1/5
+      25/56 * [ Im(conj(x) rho^0) <= s ]   i.e. (-1)*x2 + (-1)*s <= 0
+      3/7 * [ -[Re(conj(x) rho^-2) + (-2/5)] <= s ]   i.e. (7/25)*x1 + (24/25)*x2 + (-1)*s <= -2/5
+
+== (Q_2): q in Q_25, y in Y_1(q), conj(q+y) rho^{2 sign} + nu in h + Sq_s + Z[i]; variables y1, y2, eps (r = 1/3 - eps)
+ q = 25/3*(1+1i), sign 1: values at q: j=-1: (Fraction(1, 3), Fraction(1, 3)), j=0: (Fraction(1, 3), Fraction(2, 3)), j=1: (Fraction(2, 3), Fraction(2, 3)), j=2: (Fraction(2, 3), Fraction(1, 3))
+   min eps = 5/168 (r = 17/56) at y = (-5/168, -5/168), nu = (-1/5, 2/5); certificate:
+      25/56 * [ Im(conj(y) rho^2) + (7/30) <= 1/6 + eps ]
+      1/8 * [ 2/3 + Im(conj(y) rho^0) <= 2/3 + eps ]
+      3/7 * [ 1/3 + Re(conj(y) rho^0) >= 1/3 - eps ]
+ q = 25/3*(1+1i), sign -1: values at q: j=-1: (Fraction(1, 3), Fraction(1, 3)), j=0: (Fraction(1, 3), Fraction(2, 3)), j=1: (Fraction(2, 3), Fraction(2, 3)), j=-2: (Fraction(2, 3), Fraction(1, 3))
+   min eps = 5/168 (r = 17/56) at y = (-5/168, -5/168), nu = (-2/5, 1/5); certificate:
+      25/56 * [ -[Re(conj(y) rho^-2) + (-7/30)] <= 1/6 + eps ]
+      3/7 * [ 2/3 + Im(conj(y) rho^0) <= 2/3 + eps ]
+      1/8 * [ 1/3 + Re(conj(y) rho^0) >= 1/3 - eps ]
+ q = 25/3*(1+2i), sign 1: values at q: j=-1: (Fraction(2, 3), Fraction(1, 3)), j=0: (Fraction(1, 3), Fraction(1, 3)), j=1: (Fraction(1, 3), Fraction(2, 3)), j=2: (Fraction(2, 3), Fraction(2, 3))
+   min eps = 5/168 (r = 17/56) at y = (-5/168, 5/168), nu = (-2/5, -1/5); certificate:
+      25/56 * [ -[Re(conj(y) rho^2) + (-7/30)] <= 1/6 + eps ]
+      3/7 * [ 1/3 + Im(conj(y) rho^0) >= 1/3 - eps ]
+      1/8 * [ 1/3 + Re(conj(y) rho^0) >= 1/3 - eps ]
+ q = 25/3*(1+2i), sign -1: values at q: j=-1: (Fraction(2, 3), Fraction(1, 3)), j=0: (Fraction(1, 3), Fraction(1, 3)), j=1: (Fraction(1, 3), Fraction(2, 3)), j=-2: (Fraction(2, 3), Fraction(2, 3))
+   min eps = 5/168 (r = 17/56) at y = (-5/168, 5/168), nu = (-1/5, -2/5); certificate:
+      25/56 * [ -[Im(conj(y) rho^-2) + (-7/30)] <= 1/6 + eps ]
+      1/8 * [ 1/3 + Im(conj(y) rho^0) >= 1/3 - eps ]
+      3/7 * [ 1/3 + Re(conj(y) rho^0) >= 1/3 - eps ]
+ q = 25/3*(2+1i), sign 1: values at q: j=-1: (Fraction(1, 3), Fraction(2, 3)), j=0: (Fraction(2, 3), Fraction(2, 3)), j=1: (Fraction(2, 3), Fraction(1, 3)), j=2: (Fraction(1, 3), Fraction(1, 3))
+   min eps = 5/168 (r = 17/56) at y = (5/168, -5/168), nu = (2/5, 1/5); certificate:
+      25/56 * [ Re(conj(y) rho^2) + (7/30) <= 1/6 + eps ]
+      3/7 * [ 2/3 + Im(conj(y) rho^0) <= 2/3 + eps ]
+      1/8 * [ 2/3 + Re(conj(y) rho^0) <= 2/3 + eps ]
+ q = 25/3*(2+1i), sign -1: values at q: j=-1: (Fraction(1, 3), Fraction(2, 3)), j=0: (Fraction(2, 3), Fraction(2, 3)), j=1: (Fraction(2, 3), Fraction(1, 3)), j=-2: (Fraction(1, 3), Fraction(1, 3))
+   min eps = 5/168 (r = 17/56) at y = (5/168, -5/168), nu = (1/5, 2/5); certificate:
+      25/56 * [ Im(conj(y) rho^-2) + (7/30) <= 1/6 + eps ]
+      1/8 * [ 2/3 + Im(conj(y) rho^0) <= 2/3 + eps ]
+      3/7 * [ 2/3 + Re(conj(y) rho^0) <= 2/3 + eps ]
+ q = 25/3*(2+2i), sign 1: values at q: j=-1: (Fraction(2, 3), Fraction(2, 3)), j=0: (Fraction(2, 3), Fraction(1, 3)), j=1: (Fraction(1, 3), Fraction(1, 3)), j=2: (Fraction(1, 3), Fraction(2, 3))
+   min eps = 5/168 (r = 17/56) at y = (5/168, 5/168), nu = (1/5, -2/5); certificate:
+      25/56 * [ -[Im(conj(y) rho^2) + (-7/30)] <= 1/6 + eps ]
+      1/8 * [ 1/3 + Im(conj(y) rho^0) >= 1/3 - eps ]
+      3/7 * [ 2/3 + Re(conj(y) rho^0) <= 2/3 + eps ]
+ q = 25/3*(2+2i), sign -1: values at q: j=-1: (Fraction(2, 3), Fraction(2, 3)), j=0: (Fraction(2, 3), Fraction(1, 3)), j=1: (Fraction(1, 3), Fraction(1, 3)), j=-2: (Fraction(1, 3), Fraction(2, 3))
+   min eps = 5/168 (r = 17/56) at y = (5/168, 5/168), nu = (2/5, -1/5); certificate:
+      25/56 * [ Re(conj(y) rho^-2) + (7/30) <= 1/6 + eps ]
+      3/7 * [ 1/3 + Im(conj(y) rho^0) >= 1/3 - eps ]
+      1/8 * [ 2/3 + Re(conj(y) rho^0) <= 2/3 + eps ]

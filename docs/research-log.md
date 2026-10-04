@@ -9915,3 +9915,33 @@ denominator `5^k`) decide three colours for every number field, not only for rea
   (the 'admissible' fields of the two-colour paper are a stronger notion than 'split above 2 and 3'), an overstated
   'first exact value' (now 'first non-integral value'), the citation for `χ(ℚ(√2, √3)²) = 4`, the theorem letters,
   'into' → 'onto' in Proposition C2, and a qualifier that Proposition C3 now removes.
+
+## A gap above 3 for the circular chromatic number (4 October, morning)
+
+- **Theorem D** (`notes/circular_planes.md` §5, `papers/three-colours/` Section 9). If `χ(F²) ≥ 4` for a number field
+  `F`, then `χ_c(F²) ≥ 56/17 ≈ 3.294`; with a computer-assisted step, `χ_c(F²) ≥ 10⁷/3001611 > 3.3315`. With
+  Corollary B6: the circular chromatic number of the plane over a number field is 2, 3 or larger than 3.3315.
+- **How.** The proof of Theorem B goes through with `[1/3, 2/3]` replaced by `[r, 1 − r]` as long as the probe
+  `S_N^(r)` (`N = 5^k`) keeps its shape: the type c component `c*_N + P_k^(s)` and the four type q components, now
+  hexagons of radius `√2(1/3 − r)` instead of points. A separate agent proved this for `17/56 < r ≤ 1/3` and every
+  `k` (Proposition D1: a base case of 25 classes, three of them excluded by three-term linear certificates, and two
+  induction lemmas whose thresholds are `(11 − 31s)/25 > s` and `ε < 5/168`, both equivalent to `r > 17/56`).
+  `17/56` is sharp for a statement valid for every `k` (extra isolated points at `N = 5, 25, 125, 625`), but the
+  theorem only needs large `k`: exact enumeration of `S_N^(r)` (unions of rational polygons) shows that at
+  `r = 0.3001611` only the main components remain from `k = 17` on, and the thresholds of the induction step are
+  below `0.30005568` for `k ≥ 12` and non-increasing.
+- **Referee.** Another agent rechecked everything with its own exact programs (`probe/indep/`, no shared code): no
+  error in Theorem D or Proposition D1. It found secondary errors, now fixed: one base-case threshold (`3/8`) holds
+  only for the minimal shifts, which is all that is needed since `s(1 + √2) < 3/5`; a wrong file reference; a too
+  broad 'values with denominator 56'; an undefined `Y_k(q)` and an elimination left implicit in Lemma Q; and the
+  claim that the probe 'cannot reach beyond 10/3', which is a limit of the present method, not of the probe. Its programs
+  confirm the computer-assisted extension to `3.3315` (the same component counts at every level `k ≤ 19` at
+  `r = 0.3001611`), and it pointed out that levels up to 6 already give `1106/333 ≈ 3.3213`.
+- **The limit at 10/3.** For every `k`, `c_k = c*_N + ρ^k/5 − 5^{k−1}(2 − i)` lies in `S_N^(3/10)` with
+  `min ‖ξ‖ = 3/10` exactly and far from all type points; I proved this for every `k` (it only uses
+  `(2 + i)^{2k+1} ≡ 2 + i (mod 5)`), which the agents had checked for `k ≤ 10`. So below `r = 3/10` a third, 5-adic,
+  type appears; on a whole field plane the places above 5 split in `F(i)` and should exclude it, but the method would
+  have to include it. The thresholds `r0(5^k)` (17/56 for `k ≤ 4`, then 333/1106, 3303/10981, …, 0.30016093 at
+  `k = 17`) suggest `r0 → 3/10`, which would give `χ_c ∉ (3, 10/3)`.
+- **Paper.** Section 9 of `papers/three-colours/` gives the complete proof of the first statement (Lemmas 8–11,
+  Proposition 6) and the computer-assisted step; Theorem D is stated in the introduction and the abstract.

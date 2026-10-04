@@ -23,8 +23,12 @@ including every retracted claim, is the research log,
   over a number field has `2 < χ_c < 3`; locally constant colourings of one completion give, below 4, only the bounds 2, 3 and `7/2`
   (Propositions C2, C3 and Corollary C4, with Weil's bound for Kloosterman sums); `χ_c = 7/2` for infinitely many
   number fields (Corollary C5).
-- **Paper draft `papers/three-colours/` (4 October).** Theorem B, Proposition B9, the corollaries, Theorem C and the
-  local circular values; refereed once (no mathematical error), fixes applied.
+- **A gap above 3 (4 October).** `notes/circular_planes.md` §5, Theorem D: if `χ(F²) ≥ 4` then `χ_c(F²) ≥ 56/17`, and
+  `χ_c(F²) > 3.3315` with a computer-assisted step (exact computations by two independent programs,
+  `data/number_fields/circular/probe/` and `probe/indep/`). Refereed by a separate agent (no error; its corrections
+  applied).
+- **Paper draft `papers/three-colours/` (4 October).** Theorem B, Proposition B9, the corollaries, Theorem C,
+  the local circular values and Theorem D (Section 9); refereed (no mathematical error), fixes applied.
 - **Literature sweep (4 October).** `notes/literature.md`, last section: what the systematic search of arXiv found for
   each result, and the relevant papers the project did not cite before.
 

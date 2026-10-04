@@ -1,0 +1,6 @@
+r = 333/1106 = 0.301084991: k=1: 13 pieces, junk 8; k=2: 33 pieces, junk 28; k=3: 41 pieces, junk 36; k=4: 25 pieces, junk 20; k=5: 13 pieces, junk 8; k=6: 5 pieces, junk 0  (9s)
+r = 3330001/11060000 = 0.301085081: k=1: 13 pieces, junk 8; k=2: 33 pieces, junk 28; k=3: 25 pieces, junk 20; k=4: 9 pieces, junk 4; k=5: 5 pieces, junk 0; k=6: 5 pieces, junk 0  (9s)
+r = 3329999/11060000 = 0.301084901: k=1: 13 pieces, junk 8; k=2: 33 pieces, junk 28; k=3: 41 pieces, junk 36; k=4: 25 pieces, junk 20; k=5: 13 pieces, junk 8; k=6: 5 pieces, junk 0  (10s)
+r = 3303/10981 = 0.300792278: k=1: 13 pieces, junk 8; k=2: 33 pieces, junk 28; k=3: 41 pieces, junk 36; k=4: 41 pieces, junk 36; k=5: 37 pieces, junk 32; k=6: 25 pieces, junk 20  (12s)
+r = 33030001/109810000 = 0.300792287: k=1: 13 pieces, junk 8; k=2: 33 pieces, junk 28; k=3: 41 pieces, junk 36; k=4: 25 pieces, junk 20; k=5: 13 pieces, junk 8; k=6: 5 pieces, junk 0  (10s)
+r = 33029999/109810000 = 0.300792268: k=1: 13 pieces, junk 8; k=2: 33 pieces, junk 28; k=3: 41 pieces, junk 36; k=4: 41 pieces, junk 36; k=5: 37 pieces, junk 32; k=6: 25 pieces, junk 20  (12s)

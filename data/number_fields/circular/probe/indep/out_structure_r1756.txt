@@ -1,0 +1,64 @@
+=== r = 17/56 (= 0.3035714), s = 11/56, eps = 5/168; lifting took 2.6s
+  k=1 N=5: 13 pieces; c-component x1; q-components x4 (distinct q: 4); junk 8 (8 isolated points)
+     max|x|^2 on P_k = 605/14112 <= 10 s^2/9 = 605/14112: True;  max|y|^2 on Y_k = 25/14112 <= 2 eps^2 = 25/14112: True;  #vertices P_k: 12
+     brute-force G_N (12 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     junk: 1 vertices, centroid (5/8, 75/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (5/8, 205/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (75/56, 5/8), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (75/56, 35/8), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (205/56, 5/8), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (205/56, 35/8), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (35/8, 75/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (35/8, 205/56), kappa(centroid) = 17/56
+     direct enumeration (0.0s): 13 pieces; identical to lifting: True
+  k=2 N=25: 25 pieces; c-component x1; q-components x4 (distinct q: 4); junk 20 (20 isolated points)
+     max|x|^2 on P_k = 125/3136 <= 10 s^2/9 = 605/14112: True;  max|y|^2 on Y_k = 15625/13561632 <= 2 eps^2 = 25/14112: True;  #vertices P_k: 20
+     brute-force G_N (20 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     junk: 1 vertices, centroid (5/8, 1195/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (5/8, 205/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (1195/56, 5/8), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (375/56, 375/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (375/56, 1025/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (1195/56, 195/8), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (137/56, 409/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (137/56, 991/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (409/56, 137/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (409/56, 1263/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (991/56, 137/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (991/56, 1263/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (1263/56, 409/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (1263/56, 991/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (205/56, 5/8), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (1025/56, 375/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (1025/56, 1025/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (205/56, 195/8), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (195/8, 1195/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (195/8, 205/56), kappa(centroid) = 17/56
+     direct enumeration (2.1s): 25 pieces; identical to lifting: True
+  k=3 N=125: 17 pieces; c-component x1; q-components x4 (distinct q: 4); junk 12 (12 isolated points)
+     max|x|^2 on P_k = 3025/76832 <= 10 s^2/9 = 605/14112: True;  max|y|^2 on Y_k = 125/112896 <= 2 eps^2 = 25/14112: True;  #vertices P_k: 28
+     brute-force G_N (28 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     junk: 1 vertices, centroid (805/8, 1195/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (805/8, 5805/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (1195/56, 805/8), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (5975/56, 5975/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (5975/56, 1025/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (1195/56, 195/8), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (5805/56, 805/8), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (1025/56, 5975/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (1025/56, 1025/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (5805/56, 195/8), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (195/8, 1195/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (195/8, 5805/56), kappa(centroid) = 17/56
+     direct enumeration (49.6s): 17 pieces; identical to lifting: True
+  k=4 N=625: 9 pieces; c-component x1; q-components x4 (distinct q: 4); junk 4 (4 isolated points)
+     max|x|^2 on P_k = 3025/76832 <= 10 s^2/9 = 605/14112: True;  max|y|^2 on Y_k = 125/112896 <= 2 eps^2 = 25/14112: True;  #vertices P_k: 36
+     brute-force G_N (36 rotations, equal to rho^j form): vertices+centroids not in S: 0
+     junk: 1 vertices, centroid (5975/56, 5975/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (5975/56, 29025/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (29025/56, 5975/56), kappa(centroid) = 17/56
+     junk: 1 vertices, centroid (29025/56, 29025/56), kappa(centroid) = 17/56
+
+real	0m54.725s
+user	0m43.752s
+sys	0m0.016s

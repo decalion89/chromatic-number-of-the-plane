@@ -1,6 +1,6 @@
 # Three colours for the plane over a number field
 
-[`three-colours.pdf`](three-colours.pdf) is an eleven-page draft (4 October 2026) about the graph on `F²`, for a
+[`three-colours.pdf`](three-colours.pdf) is a fifteen-page draft (4 October 2026) about the graph on `F²`, for a
 number field `F`, in which two points are adjacent when `(x − x′)² + (y − y′)² = 1`:
 
 - **Theorem B.** `χ(F²) ≤ 3` if and only if some prime of `F` above 2 ramifies in `F(i)` or some prime of `F` above 3
@@ -22,12 +22,17 @@ number field `F`, in which two points are adjacent when `(x − x′)² + (y −
   colourings of one completion give no upper bound on `χ_c` below 4 other than 2, 3 and `7/2` (Propositions 4 and 5,
   Corollary 5; Weil's bound for Kloosterman sums and a computation for `p < 3000`). Question 1 asks whether these are
   the only values below 4 for every number field.
+- **Theorem D.** If `χ(F²) ≥ 4`, then `χ_c(F²) ≥ 56/17 ≈ 3.294`; with a computer-assisted step (exact computations
+  by two independent programs, [`data/number_fields/circular/probe/`](../../data/number_fields/circular/probe/)),
+  `χ_c(F²) > 3.3315`. So `χ_c(F²)` is 2, 3 or larger than 3.3315. The proof (Section 9) shows that the probe of
+  Theorem B keeps its shape for the intervals `[θ, 1 − θ]` with `θ > 17/56` (Proposition 6); below `θ = 3/10` it has
+  5-adic characters, and the method stops at `10/3`.
 
 The working notes are [`notes/three_colours_number_fields.md`](../../notes/three_colours_number_fields.md) and
 [`notes/circular_planes.md`](../../notes/circular_planes.md); the programs and certificates are in
 [`data/number_fields/`](../../data/number_fields/), and the tests in `tests/test_three_colours.py`. Theorem B was
-refereed twice and the paper once (with a second look at the new Section 8) by separate AI agents with their own
-programs; no mathematician has checked it yet.
+refereed twice, the paper once (with a second look at Section 8), and Theorem D once, by separate AI agents with
+their own programs; no mathematician has checked it yet.
 
 [`three-colours.tex`](three-colours.tex) is the LaTeX source (`amsart`). To rebuild the PDF, run in this folder,
 with TeX Live:

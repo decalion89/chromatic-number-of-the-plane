@@ -1,6 +1,6 @@
 # Circular colourings of field planes: computations
 
-Companion to `notes/circular_planes.md` (Proposition C1, Theorem C). Uses `../three_colours/nf.py` and
+Companion to `notes/circular_planes.md` (Proposition C1, Theorems C and D). Uses `../three_colours/nf.py` and
 `../three_colours/gen_kappa.py`.
 
 | file | what it does |
@@ -17,3 +17,4 @@ Companion to `notes/circular_planes.md` (Proposition C1, Theorem C). Uses `../th
 | `kappa1_f1.py P` | `κ₁(p, 1)` for every prime `p ≡ 3 (mod 4)` below `P`, fast (Proposition C3 needs `P ≥ 1001`; we ran `P = 3000`) |
 | `torus_sums.py` | the sums over the norm-one torus against `2√q` (Weil, through Kloosterman sums) |
 | `chartypes.py k h thr`, `lift.py THR KMAX [types file]` | maps of the characters of `(1/N)ℤ[i]` that keep `G_N` in `[r, 1 − r]`, and their coherent lifts from `N` to `5N` (§5 of the note) |
+| [`probe/`](probe/) | Theorem D (§5 of the note, Section 9 of `papers/three-colours/`): exact computation of the probe sets `S_N^(r)` for `r < 1/3`, the lemmas of Proposition D1, the computer-assisted bound `3.3315`; [`probe/indep/`](probe/indep/) is a referee's implementation that shares no code with it. See [`probe/README.md`](probe/README.md) |

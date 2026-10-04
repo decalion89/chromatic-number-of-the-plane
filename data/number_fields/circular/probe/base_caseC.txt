@@ -1,0 +1,16 @@
+nu=(2/5,1/5) nu'=(2/5,-1/5): min s = 1/4 = 0.25000; corners solving at s=1/6: []; certificate: 3/8*[Re(conj x) <= s] + 5/16*[-[Re(conj x rho^1) - (2/5)] <= s] + 5/16*[-[Re(conj x rho^-1) - (2/5)] <= s]
+nu=(2/5,1/5) nu'=(-1/5,-2/5): min s = 1/6 = 0.16667; corners solving at s=1/6: [('1/6', '1/6')]  <-- feasible below 11/56
+nu=(2/5,1/5) nu'=(-2/5,1/5): min s = 2/7 = 0.28571; corners solving at s=1/6: []; certificate: 25/56*[-[Im(conj x rho^1) - (1/5)] <= s] + 1/8*[-[Im(conj x rho^-1) - (1/5)] <= s] + 3/7*[Re(conj x rho^-1) - (-2/5) <= s]
+nu=(2/5,1/5) nu'=(1/5,2/5): min s = 3/8 = 0.37500; corners solving at s=1/6: []; certificate: 1/8*[-[Im(conj x rho^1) - (1/5)] <= s] + 25/56*[-[Im(conj x rho^-1) - (2/5)] <= s] + 3/7*[-[Re(conj x rho^1) - (2/5)] <= s]
+nu=(-1/5,2/5) nu'=(2/5,-1/5): min s = 1/6 = 0.16667; corners solving at s=1/6: [('1/6', '-1/6')]  <-- feasible below 11/56
+nu=(-1/5,2/5) nu'=(-1/5,-2/5): min s = 2/7 = 0.28571; corners solving at s=1/6: []; certificate: 3/7*[-[Im(conj x rho^1) - (2/5)] <= s] + 25/56*[Re(conj x rho^-1) - (-1/5) <= s] + 1/8*[Re(conj x rho^1) - (-1/5) <= s]
+nu=(-1/5,2/5) nu'=(-2/5,1/5): min s = 3/8 = 0.37500; corners solving at s=1/6: []; certificate: 1/8*[Re(conj x rho^1) - (-1/5) <= s] + 3/7*[-[Im(conj x rho^1) - (2/5)] <= s] + 25/56*[Re(conj x rho^-1) - (-2/5) <= s]
+nu=(-1/5,2/5) nu'=(1/5,2/5): min s = 1/4 = 0.25000; corners solving at s=1/6: []; certificate: 3/8*[Im(conj x) <= s] + 5/16*[-[Im(conj x rho^1) - (2/5)] <= s] + 5/16*[-[Im(conj x rho^-1) - (2/5)] <= s]
+nu=(-2/5,-1/5) nu'=(2/5,-1/5): min s = 2/7 = 0.28571; corners solving at s=1/6: []; certificate: 25/56*[Im(conj x rho^1) - (-1/5) <= s] + 1/8*[Im(conj x rho^-1) - (-1/5) <= s] + 3/7*[-[Re(conj x rho^-1) - (2/5)] <= s]
+nu=(-2/5,-1/5) nu'=(-1/5,-2/5): min s = 3/8 = 0.37500; corners solving at s=1/6: []; certificate: 1/8*[Im(conj x rho^1) - (-1/5) <= s] + 25/56*[Im(conj x rho^-1) - (-2/5) <= s] + 3/7*[Re(conj x rho^1) - (-2/5) <= s]
+nu=(-2/5,-1/5) nu'=(-2/5,1/5): min s = 1/4 = 0.25000; corners solving at s=1/6: []; certificate: 5/16*[Re(conj x rho^1) - (-2/5) <= s] + 5/16*[Re(conj x rho^-1) - (-2/5) <= s] + 3/8*[-Re(conj x) <= s]
+nu=(-2/5,-1/5) nu'=(1/5,2/5): min s = 1/6 = 0.16667; corners solving at s=1/6: [('-1/6', '-1/6')]  <-- feasible below 11/56
+nu=(1/5,-2/5) nu'=(2/5,-1/5): min s = 3/8 = 0.37500; corners solving at s=1/6: []; certificate: 3/7*[Im(conj x rho^1) - (-2/5) <= s] + 1/8*[-[Re(conj x rho^1) - (1/5)] <= s] + 25/56*[-[Re(conj x rho^-1) - (2/5)] <= s]
+nu=(1/5,-2/5) nu'=(-1/5,-2/5): min s = 1/4 = 0.25000; corners solving at s=1/6: []; certificate: 5/16*[Im(conj x rho^1) - (-2/5) <= s] + 5/16*[Im(conj x rho^-1) - (-2/5) <= s] + 3/8*[-Im(conj x) <= s]
+nu=(1/5,-2/5) nu'=(-2/5,1/5): min s = 1/6 = 0.16667; corners solving at s=1/6: [('-1/6', '1/6')]  <-- feasible below 11/56
+nu=(1/5,-2/5) nu'=(1/5,2/5): min s = 2/7 = 0.28571; corners solving at s=1/6: []; certificate: 3/7*[Im(conj x rho^1) - (-2/5) <= s] + 25/56*[-[Re(conj x rho^-1) - (1/5)] <= s] + 1/8*[-[Re(conj x rho^1) - (1/5)] <= s]

@@ -1,0 +1,4 @@
+k=1 r=759/2500: 60000 samples in S_1; in S_N: c-type 1926, q-type 220, OUTSIDE claimed union 0
+k=2 r=759/2500: 150000 samples in S_1; in S_N: c-type 186, q-type 16, OUTSIDE claimed union 0
+k=1 r=31/100: 40000 samples in S_1; in S_N: c-type 1298, q-type 96, OUTSIDE claimed union 0
+k=2 r=997/3000: 100000 samples in S_1; in S_N: c-type 133, q-type 0, OUTSIDE claimed union 0
