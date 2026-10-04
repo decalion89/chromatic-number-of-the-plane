@@ -1,0 +1,19 @@
+N = 1625, r = 13/50 = 0.26000000: 84 rotations, 42 functionals up to sign; 420 points printed by vertex_enum
+420 distinct points, 13 components (distinct index vectors)
+type points lying in S^r: 13 ['7:2,3', '7:2,4', '7:3,2', '7:3,5', '7:4,2', '7:4,5', '7:5,3', '7:5,4', 'c', 'q11', 'q12', 'q21', 'q22']
+components by family: {'7': 8, 'c': 1, 'q': 4}
+  7:3,2      vertices 21  kappa = 2/7 (0.285714)  optimum (4875/7, 3250/7)  dual cert ok: True  [24/49*mu+(0, 1625); 25/98*mu+(455, -1560); 25/98*mu-(455, 1560)]
+  7:3,5      vertices 21  kappa = 2/7 (0.285714)  optimum (4875/7, 8125/7)  dual cert ok: True  [24/49*mu-(0, 1625); 25/98*mu-(455, -1560); 25/98*mu+(455, 1560)]
+  7:4,5      vertices 21  kappa = 2/7 (0.285714)  optimum (6500/7, 8125/7)  dual cert ok: True  [24/49*mu-(0, 1625); 25/98*mu-(455, -1560); 25/98*mu+(455, 1560)]
+  7:4,2      vertices 21  kappa = 2/7 (0.285714)  optimum (6500/7, 3250/7)  dual cert ok: True  [24/49*mu+(0, 1625); 25/98*mu+(455, -1560); 25/98*mu-(455, 1560)]
+  7:2,4      vertices 21  kappa = 2/7 (0.285714)  optimum (3250/7, 6500/7)  dual cert ok: True  [21125/50344*mu+(57, -1624); 8875/17864*mu+(57, 1624); 57/682*mu-(625, 1500)]
+  7:5,3      vertices 21  kappa = 2/7 (0.285714)  optimum (8125/7, 4875/7)  dual cert ok: True  [21125/50344*mu-(57, -1624); 8875/17864*mu-(57, 1624); 57/682*mu+(625, 1500)]
+  7:2,3      vertices 21  kappa = 2/7 (0.285714)  optimum (3250/7, 4875/7)  dual cert ok: True  [8875/17864*mu+(57, -1624); 21125/50344*mu+(57, 1624); 57/682*mu-(625, -1500)]
+  7:5,4      vertices 21  kappa = 2/7 (0.285714)  optimum (8125/7, 6500/7)  dual cert ok: True  [8875/17864*mu-(57, -1624); 21125/50344*mu-(57, 1624); 57/682*mu+(625, -1500)]
+  c          vertices 84  kappa = 1/2 (0.500000)  optimum (1625/2, 1625/2)  dual cert ok: True  [1/2*mu+(0, 1625); 1/2*mu-(0, 1625)]
+  q21        vertices 42  kappa = 1/3 (0.333333)  optimum (3250/3, 1625/3)  dual cert ok: True  [1624/3249*mu-(0, 1625); 1625/6498*mu-(57, -1624); 1625/6498*mu+(57, 1624)]
+  q22        vertices 42  kappa = 1/3 (0.333333)  optimum (3250/3, 3250/3)  dual cert ok: True  [1624/3249*mu+(0, 1625); 1625/6498*mu+(57, -1624); 1625/6498*mu-(57, 1624)]
+  q11        vertices 42  kappa = 1/3 (0.333333)  optimum (1625/3, 1625/3)  dual cert ok: True  [1624/3249*mu-(0, 1625); 1625/6498*mu-(57, -1624); 1625/6498*mu+(57, 1624)]
+  q12        vertices 42  kappa = 1/3 (0.333333)  optimum (1625/3, 3250/3)  dual cert ok: True  [1624/3249*mu+(0, 1625); 1625/6498*mu+(57, -1624); 1625/6498*mu-(57, 1624)]
+kappa summary (family, kappa): count -> {'7 2/7': 8, 'c 1/2': 1, 'q 1/3': 4}
+all dual certificates verified: True

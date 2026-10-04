@@ -1,0 +1,10 @@
+group one, orders up to 400: exact orders with an orbit of kappa > 2/7: [2, 3, 41, 76]
+  M=2: max kappa 1/2 (0.500000), orbit size 1, representative w=1+1i
+  M=3: max kappa 1/3 (0.333333), orbit size 4, representative w=1+1i
+  M=41: max kappa 12/41 (0.292683), orbit size 20, representative w=12+12i
+  M=76: max kappa 11/38 (0.289474), orbit size 20, representative w=22+27i
+largest kappa over all these orbits: 1/2
+group two, orders up to 400: exact orders with an orbit of kappa > 2/7: [2, 3]
+  M=2: max kappa 1/2 (0.500000), orbit size 1, representative w=1+1i
+  M=3: max kappa 1/3 (0.333333), orbit size 4, representative w=1+1i
+largest kappa over all these orbits: 1/2

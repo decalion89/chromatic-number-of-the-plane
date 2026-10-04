@@ -1,0 +1,8 @@
+  (1,0): 13 components (0s)
+  (1,1): 5 components (1s)
+  (2,1): 5 components (1s)
+  (3,1): 5 components (1s)
+  (4,1): 5 components (2s)
+  (5,1): 5 components (3s)
+r = 1429/5000, (k,m)=(5,1), N=40625: 5 comps {'Q': 4, 'C': 1}; 7-torsion points in S: 0
+max kappa of the other components: None

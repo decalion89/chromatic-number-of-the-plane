@@ -1,0 +1,7 @@
+  (1,0): 13 components (0s)
+  (1,1): 29 components (1s)
+  (2,1): 13 components (2s)
+  (3,1): 13 components (3s)
+  (4,1): 13 components (3s)
+r = 13/50, (k,m)=(4,1), N=8125: 13 comps {'7': 8, 'Q': 4, 'C': 1}; 7-torsion points in S: 8
+max kappa of the other components: None

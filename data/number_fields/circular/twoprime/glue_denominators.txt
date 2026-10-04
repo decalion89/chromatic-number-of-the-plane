@@ -1,0 +1,16 @@
+glue at t=1, level K=2: C_K in S_N^(3/10) (kappa = 3/10); least m with C_K in N*(1/(6*5^m))Z[i] + B(0,1/4): 2
+glue at t=1, level K=3: C_K in S_N^(3/10) (kappa = 3/10); least m with C_K in N*(1/(6*5^m))Z[i] + B(0,1/4): 3
+glue at t=1, level K=4: C_K in S_N^(3/10) (kappa = 3/10); least m with C_K in N*(1/(6*5^m))Z[i] + B(0,1/4): 4
+glue at t=1, level K=5: C_K in S_N^(3/10) (kappa = 3/10); least m with C_K in N*(1/(6*5^m))Z[i] + B(0,1/4): 5
+glue at t=1, level K=6: C_K in S_N^(3/10) (kappa = 3/10); least m with C_K in N*(1/(6*5^m))Z[i] + B(0,1/4): 6
+glue at t=1, level K=7: C_K in S_N^(3/10) (kappa = 3/10); least m with C_K in N*(1/(6*5^m))Z[i] + B(0,1/4): 7
+glue at t=1, level K=8: C_K in S_N^(3/10) (kappa = 3/10); least m with C_K in N*(1/(6*5^m))Z[i] + B(0,1/4): 8
+glue at t=1, level K=9: C_K in S_N^(3/10) (kappa = 3/10); least m with C_K in N*(1/(6*5^m))Z[i] + B(0,1/4): 9
+glue at t=2, level K=3: C_K in S_N^(3/10) (kappa = 3/10); least m with C_K in N*(1/(6*5^m))Z[i] + B(0,1/4): 2
+glue at t=2, level K=4: C_K in S_N^(3/10) (kappa = 3/10); least m with C_K in N*(1/(6*5^m))Z[i] + B(0,1/4): 3
+glue at t=2, level K=5: C_K in S_N^(3/10) (kappa = 3/10); least m with C_K in N*(1/(6*5^m))Z[i] + B(0,1/4): 4
+glue at t=2, level K=6: C_K in S_N^(3/10) (kappa = 3/10); least m with C_K in N*(1/(6*5^m))Z[i] + B(0,1/4): 5
+glue at t=2, level K=7: C_K in S_N^(3/10) (kappa = 3/10); least m with C_K in N*(1/(6*5^m))Z[i] + B(0,1/4): 6
+glue at t=2, level K=8: C_K in S_N^(3/10) (kappa = 3/10); least m with C_K in N*(1/(6*5^m))Z[i] + B(0,1/4): 7
+glue at t=2, level K=9: C_K in S_N^(3/10) (kappa = 3/10); least m with C_K in N*(1/(6*5^m))Z[i] + B(0,1/4): 8
+glue at t=2, level K=10: C_K in S_N^(3/10) (kappa = 3/10); least m with C_K in N*(1/(6*5^m))Z[i] + B(0,1/4): 9

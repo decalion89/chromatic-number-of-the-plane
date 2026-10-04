@@ -1,0 +1,6 @@
+r = 2501/10000, (k,m)=(1,2), N=845: 49 comps {'X': 44, 'Q': 4, 'C': 1}
+   X kappa = 2/7 = 0.285714: 8 components; an optimal point c = (845/7, 1690/7)
+   X kappa = 1267/4853 = 0.261076: 8 components; an optimal point c = (471445/14559, 789620/4853)
+   X kappa = 2131/8234 = 0.258805: 8 components; an optimal point c = (63713/8234, 3056703/4117)
+   X kappa = 101/392 = 0.257653: 12 components; an optimal point c = (8515/392, 263315/392)
+   X kappa = 2545/10038 = 0.253537: 8 components; an optimal point c = (1156805/1434, 6992375/10038)

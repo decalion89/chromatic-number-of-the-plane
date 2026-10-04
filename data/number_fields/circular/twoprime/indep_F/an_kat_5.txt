@@ -1,0 +1,19 @@
+N = 5, r = 17/56 = 0.30357143: 12 rotations, 6 functionals up to sign; 60 points printed by vertex_enum
+44 distinct points, 13 components (distinct index vectors)
+type points lying in S^r: 5 ['c', 'q11', 'q12', 'q21', 'q22']
+components by family: {'c': 1, 'other': 8, 'q': 4}
+  c          vertices 12  kappa = 1/2 (0.500000)  optimum (5/2, 5/2)  dual cert ok: True  [1/2*mu+(0, 5); 1/2*mu-(0, 5)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (35/8, 75/56)  dual cert ok: True  [3/7*mu-(3, 4); 1/8*mu-(4, -3); 25/56*mu+(4, 3)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (205/56, 35/8)  dual cert ok: True  [25/56*mu-(3, -4); 1/8*mu-(3, 4); 3/7*mu+(4, -3)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (5/8, 75/56)  dual cert ok: True  [3/7*mu+(3, -4); 25/56*mu-(4, -3); 1/8*mu+(4, 3)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (75/56, 35/8)  dual cert ok: True  [1/8*mu+(3, -4); 25/56*mu+(3, 4); 3/7*mu-(4, 3)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (35/8, 205/56)  dual cert ok: True  [3/7*mu-(3, -4); 25/56*mu+(4, -3); 1/8*mu-(4, 3)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (205/56, 5/8)  dual cert ok: True  [1/8*mu-(3, -4); 25/56*mu-(3, 4); 3/7*mu+(4, 3)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (5/8, 205/56)  dual cert ok: True  [3/7*mu+(3, 4); 1/8*mu+(4, -3); 25/56*mu-(4, 3)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (75/56, 5/8)  dual cert ok: True  [25/56*mu+(3, -4); 1/8*mu+(3, 4); 3/7*mu-(4, -3)]
+  q11        vertices  6  kappa = 1/3 (0.333333)  optimum (5/3, 5/3)  dual cert ok: True  [4/9*mu-(0, 5); 5/18*mu-(3, -4); 5/18*mu+(3, 4)]
+  q22        vertices  6  kappa = 1/3 (0.333333)  optimum (10/3, 10/3)  dual cert ok: True  [4/9*mu+(0, 5); 5/18*mu+(3, -4); 5/18*mu-(3, 4)]
+  q12        vertices  6  kappa = 1/3 (0.333333)  optimum (5/3, 10/3)  dual cert ok: True  [4/9*mu+(0, 5); 5/18*mu+(3, -4); 5/18*mu-(3, 4)]
+  q21        vertices  6  kappa = 1/3 (0.333333)  optimum (10/3, 5/3)  dual cert ok: True  [4/9*mu-(0, 5); 5/18*mu-(3, -4); 5/18*mu+(3, 4)]
+kappa summary (family, kappa): count -> {'c 1/2': 1, 'other 17/56': 8, 'q 1/3': 4}
+all dual certificates verified: True

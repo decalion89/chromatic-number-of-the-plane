@@ -1,0 +1,9 @@
+F_7-linear lam(x+yi)=ux+vy with lam(mu_8) in {2..5}: [(2, 3), (2, 4), (3, 2), (3, 5), (4, 2), (4, 5), (5, 3), (5, 4)]
+c=65(1+2i)/7: values 7*Re(conj(c)gamma) mod 7 over G(1,1): [2, 3, 4, 5] ; corresponds to lam(x+yi)=2x+4y ; in list: True
+c=65(1+5i)/7: values 7*Re(conj(c)gamma) mod 7 over G(1,1): [2, 3, 4, 5] ; corresponds to lam(x+yi)=2x+3y ; in list: True
+c=65(2+1i)/7: values 7*Re(conj(c)gamma) mod 7 over G(1,1): [2, 3, 4, 5] ; corresponds to lam(x+yi)=4x+2y ; in list: True
+c=65(2+6i)/7: values 7*Re(conj(c)gamma) mod 7 over G(1,1): [2, 3, 4, 5] ; corresponds to lam(x+yi)=4x+5y ; in list: True
+c=65(5+1i)/7: values 7*Re(conj(c)gamma) mod 7 over G(1,1): [2, 3, 4, 5] ; corresponds to lam(x+yi)=3x+2y ; in list: True
+c=65(5+6i)/7: values 7*Re(conj(c)gamma) mod 7 over G(1,1): [2, 3, 4, 5] ; corresponds to lam(x+yi)=3x+5y ; in list: True
+c=65(6+2i)/7: values 7*Re(conj(c)gamma) mod 7 over G(1,1): [2, 3, 4, 5] ; corresponds to lam(x+yi)=5x+4y ; in list: True
+c=65(6+5i)/7: values 7*Re(conj(c)gamma) mod 7 over G(1,1): [2, 3, 4, 5] ; corresponds to lam(x+yi)=5x+3y ; in list: True

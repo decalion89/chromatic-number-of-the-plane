@@ -30,12 +30,24 @@ including every retracted claim, is the research log,
   `χ_c(F²) > 3.3315` with a computer-assisted step (exact computations by three programs written separately,
   `data/number_fields/circular/probe/`, `probe/indep/` and `probe/indep2/`). Refereed twice by separate agents (no
   error; their corrections applied).
+- **The circular chromatic number below 4 (4 October).** `notes/circular_planes.md` §6, Theorems E and F: for every
+  number field `F`, `χ_c(F²)` is 2, 3, `7/2` or at least 4; it is `7/2` exactly when `χ(F²) ≥ 4` and some place of
+  `F` above 7 has residue degree 1. So `χ_c(ℚ(√23)²) = 7/2`, `χ_c(ℚ(√59)²) = 4` and `χ_c(ℚ(√47)²) ≥ 4`. The proof adds
+  the rotation `σ = (5 + 12i)/13` to the probe of Theorem D; one computer-assisted step for each theorem (exact
+  certificates for the windows modulo 65 and 325 with checkers written separately,
+  `data/number_fields/circular/twoprime/`). Found by a research agent and refereed by two others, each with two exact
+  methods of its own (no error; their corrections applied). Tests in `tests/test_two_primes.py`.
 - **Paper draft `papers/three-colours/` (4 October).** Theorem B, Proposition B9, the corollaries, Theorem C,
-  the local circular values and Theorem D (Section 9); refereed (no mathematical error), fixes applied.
+  the local circular values, Theorem D (Section 9, by hand) and Theorems E and F (Section 10); refereed (no
+  mathematical error), fixes applied; Section 10 not yet refereed in its form in the paper.
 - **Literature sweep (4 October).** `notes/literature.md`, last section: what the systematic search of arXiv found for
   each result, and the relevant papers the project did not cite before.
 
 ### Changed
+- **Theorem D in the paper (4 October).** It now states only the bound `56/17`, proved by hand; the computer-assisted
+  bound `3.3315` is a remark, as Theorem E supersedes it. `data/number_fields/circular/twoprime/seven_patterns.py`:
+  three checks that had produced the last lines of its stored output, but were missing from the stored program, were
+  written again.
 - **Credit for earlier work (28 September).** The upper bound of `χ(ℚ(√2, √3)²) = 4`
   and of Fischer's `χ(ℚ(√3, √11)²) = 4` is also a case of Corollary B′ of
   [hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction), a public,

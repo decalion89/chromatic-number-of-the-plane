@@ -9968,4 +9968,46 @@ denominator `5^k`) decide three colours for every number field, not only for rea
   stopped as redundant) is accepted by both checkers (`check_open.py`, 9 minutes; `check_open_indep.py`, which
   rebuilds `U` from `d`, 23 s). So `χ_c(ℚ(√59)²) ≥ 53/15 > 7/2` while `χ(ℚ(√59)²) = 4` (Theorem 1 and the inert place
   above 2): `ℚ(√11)` and `ℚ(√59)` have the same chromatic number and different circular chromatic numbers
-  (`notes/circular_planes.md`, Proposition C6; paper, Proposition 7).
+  (`notes/circular_planes.md`, Proposition C6; paper, Proposition 4).
+
+## Every circular value below 4 (4 October, morning)
+
+- **Theorems E and F** (`notes/circular_planes.md` §6, `papers/three-colours/` Section 10). If `χ(F²) ≥ 4`, then
+  `χ_c(F²) ≥ 7/2` (Theorem E, sharp by Theorem C). More precisely, if `F²` maps to `K_{p/q}` with `p/q < 4`, then (a)
+  or (b) of Theorem B holds, or some place of `F` above 7 has residue degree 1 (Theorem F). So `χ_c(F²)` is 2, 3,
+  `7/2` or at least 4 for every number field, decided by the places above 2, 3 and 7: the circular local–global
+  question of the earlier Question 1, answered. Examples: `χ_c(ℚ(√23)²) = χ_c(ℚ(√71)²) = 7/2`, `χ_c(ℚ(√59)²) = 4`,
+  `χ_c(ℚ(√47)²) ≥ 4`; for squarefree `d ≡ 11 (mod 12)`, `χ_c(ℚ(√d)²) = 7/2` if `(d/7) ≠ −1` and `≥ 4` otherwise.
+- **How.** The one-prime probe cannot pass `3/10`: there it has characters whose types need unbounded denominators
+  (a 'glue' at any position), and below it torsion characters of orders 41 and 76. A research agent added one rational
+  rotation with another prime, `σ = (5 + 12i)/13`. On the window `G(1, 1) = {iᵃρʲσˡ : |j|, |l| ≤ 1}` (modulus 65), an
+  exact computation shows that above `2/7` every point has the strip indices of a type point c or q; the only other
+  components at `7/25` are the 8 of the 7-adic colourings, with least margin exactly `2/7` (Proposition E1: a Farkas
+  tree over all 65² cells and three-term dual certificates). By hand, two consecutive digits of the probe at any level
+  then come from one window, so the digit word is pure and the probe has only the types c and q at every level
+  (Lemma E2); the proof of Theorem B does the rest. For Theorem F the window `G(2, 1)` (modulus 325) leaves, above
+  `1/4`, the types c, q and the 7-adic type (Proposition F1; the 16 other components are 2-adic, with least margin
+  exactly `1/4`), and compactness at 2, 3 and 7 with the analogues of Lemmas B2–B5 at 7 gives a place above 7 of
+  residue degree 1 (Lemmas F2–F7; Lemma F7 uses the Weil bound of Proposition C3).
+- **Referees.** One agent refereed Theorem E, another Theorem F, each with two exact methods of its own (Theorem E:
+  clipping cell by cell, enumeration of all 1 734 260 vertices of the line arrangement, exact primal and dual LP for
+  the 13 components, and Lemma E2's conclusion tested exactly up to `k = 7`; Theorem F: vertex enumeration in C with
+  128-bit integers rechecked with fractions, and lifting by rows). Both: proved, no error. Their corrections, all
+  applied: which strip indices a cell fixes; the digits of a point of the window defined explicitly; why components
+  are index vectors; the torsion orders (the list 82, 123, … were multiples of 41 and 76, counted again); the 180
+  extra components of the 'cross' are counted just above `2/7` (228 was the count at `7/25`); `χ(ℚ(√59)²) ≤ 4`
+  explained (`√59 ∈ ℚ₂(√3)`, and `ℚ₂(√3, i)` is unramified over `ℚ₂(√3)` with residue field `𝔽₄`); in Lemma F5 the
+  other places take values in `ℤ₄₉` and `𝒜₇ + ℤ₄₉ = 𝒜₇`; `ζ_j` fixed as a representative; strip indices at the 7-points
+  are floors; `i ∉ F` stated in Lemma F3. The referee of Theorem F also noted that Theorem E follows from the window
+  modulo 325 as well, so it has two computer-assisted proofs.
+- **Checks here.** I reran the three checkers of the agent (about a second, and 30 s for the window modulo 325), the
+  referees' programs, and every generator of `twoprime/`: all stored outputs reproduce exactly, the two certificate
+  trees byte for byte, except that the last three lines of `seven_patterns.txt` came from checks missing from the
+  stored `seven_patterns.py`; I wrote them again (the referee's `f49_and_digits.py` checks the same facts). New tests:
+  `tests/test_two_primes.py` (14 tests, one slow), including rejection of corrupted certificates.
+- **Paper.** Section 10 (Proposition 8, Lemmas 12–19, Proposition 9) with complete proofs; Theorem D now states only
+  the bound by hand, `56/17`, and its computer-assisted extension to `3.3315` is a remark; abstract, introduction and
+  questions updated (21 pages). Section 10 has not been refereed in its form in the paper yet. The paper's title, and
+  whether the circular results should form a separate paper, are for Sergi to decide.
+- **Stopped.** The exact certificate for `ℚ(√23)` at `7/2` (422 430 nodes after 4 h 20 min) was stopped as
+  redundant: Theorem F gives `χ_c(ℚ(√23)²) = 7/2`.

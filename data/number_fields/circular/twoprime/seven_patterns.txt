@@ -1,0 +1,14 @@
+(2, 3) digits (x5): [(2, 1), (0, 0), (1, -2), (0, 0), (-2, -1), (0, 0), (-1, 2), (0, 0)]
+(2, 4) digits (x5): [(0, 0), (-1, 2), (0, 0), (2, 1), (0, 0), (1, -2), (0, 0), (-2, -1)]
+(3, 2) digits (x5): [(0, 0), (2, 1), (0, 0), (1, -2), (0, 0), (-2, -1), (0, 0), (-1, 2)]
+(3, 5) digits (x5): [(-1, 2), (0, 0), (2, 1), (0, 0), (1, -2), (0, 0), (-2, -1), (0, 0)]
+(4, 2) digits (x5): [(1, -2), (0, 0), (-2, -1), (0, 0), (-1, 2), (0, 0), (2, 1), (0, 0)]
+(4, 5) digits (x5): [(0, 0), (-2, -1), (0, 0), (-1, 2), (0, 0), (2, 1), (0, 0), (1, -2)]
+(5, 3) digits (x5): [(0, 0), (1, -2), (0, 0), (-2, -1), (0, 0), (-1, 2), (0, 0), (2, 1)]
+(5, 4) digits (x5): [(-2, -1), (0, 0), (-1, 2), (0, 0), (2, 1), (0, 0), (1, -2), (0, 0)]
+no zero digit in any 7-pattern: False
+some 7-pattern contains a q-triple: False
+three consecutive digits determine (eta, position mod 8): False ; distinct triples: 8
+each 7-pattern is a shift of S (pattern of (2,3)): {(2, 3): [0], (2, 4): [5], (3, 2): [7], (3, 5): [6], (4, 2): [2], (4, 5): [3], (5, 3): [1], (5, 4): [4]} True
+three consecutive digits of S determine the shift mod 8: True
+every 3 consecutive digits of S contain a zero and a non-zero digit: True
