@@ -10494,3 +10494,15 @@ deletion runs were stopped by a restart of the machine and resumed from their sa
 in a set stays necessary in every subset (a colouring of `S − v` without tight cycles restricts to one of `S′ − v`), so
 only the vertices not yet tested were tested. How small a witness can be is open; all the witnesses so far come from
 the same two growths, and a new growth (which also lists the reverse of every tight cycle found) is being reduced.
+
+The referee's `referee_check.py`, run on the 155-vertex witness, reported that its cycle list repeated 563 of its
+1 836 cycles (the deletion program and the union of the witnesses appended cycles without removing repeats; no other
+stored witness has repeats). Harmless for the proof, but untidy: the repeats are removed (1 273 cycles, same points,
+edges, colouring and criticality certificates) and both formulas refuted and checked again (`kissat` in 23 s;
+`drat-trim` keeps 255 776 of 450 602 lemmas; the second encoding verified by `drat-trim` and `cake_lpr`). We then ran
+all the referee's programs, unchanged, on the new files (`indep_W/results/witness_q11b.log`): the points and all
+11 935 pairs (404 unit pairs, all listed), the colouring and the cycles; its own encoding and a third one with
+two-sided arc indicators, each refuted by `kissat` and checked by `drat-trim` and `cake_lpr`; its own lazy SAT loop,
+which rebuilds a cycle list from scratch (660 cycles, refuted and checked the same way); every formula clause by
+clause, the stored one included, and `drat-trim` and `cake_lpr` on the stored proof; and the 155 criticality
+certificates through explicit `(7N, 2N + 1)`-colourings with `N = 154` (`χ_c(H − v) ≤ 1078/309 < 7/2`). No error.

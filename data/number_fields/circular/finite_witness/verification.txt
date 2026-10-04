@@ -191,25 +191,28 @@ vertices without isomorphism tests: 1897 classes, 3 with chi_c = 3; an exhaustiv
 K_8/3; the proof by hand on all 126 colourings of M; the formulas clause by clause; kissat, drat-trim and cake_lpr;
 the reproduction over Q(sqrt7)). Its findings on wording and reproducibility are applied (see the README).
 
-witness_q11b: Q(sqrt11), denominator 30, (p, q) = (7, 2), 155 vertices, 404 edges, 1836 listed cycles (lengths 7 to
+witness_q11b: Q(sqrt11), denominator 30, (p, q) = (7, 2), 155 vertices, 404 edges, 1273 listed cycles (lengths 7 to
 28), fixed vertex 108 (degree 17). Found by deleting vertices, in a random order, from the union (170 vertices) of a
 157- and a 161-vertex witness, themselves found by deleting vertices, in two random orders, from the union (205
 vertices) of witness_q11 and a second 170-vertex witness (growth from q11.json with at most 100 new points per round:
-573 vertices). It replaces the 157-vertex graph stored under this name before (4 October 2026, night).
+573 vertices). It replaces the 157-vertex graph stored under this name before (4 October 2026, night). Its cycle
+list first had 1836 entries, 563 of them repeated (the deletion program and the union of the witnesses appended
+cycles without removing repeats; the referee's referee_check.py reports it); the repeats were removed and both
+formulas refuted and checked again (5 October 2026, night); the numbers below are for the list without repeats.
 1. python3 check_witness.py witness_q11b.json.gz witness_q11b.cnf.gz witness_q11b.drat drat-trim
    (1) 155 points, 404 edges, every edge at distance exactly 1; unit-distance pairs among the points: 404; not listed
        as edges: 0 (induced)
    (2) the colouring is a (7,2)-colouring: chi_c(H) <= 7/2
-   (3) 1836 cycles, all closed walks along edges (lengths 7..28)
-   (4) the CNF is the formula built from the edges and cycles; sha256 d413e37885a692b3d9b670be933cb5ab14b5397a93b9739650728309170c2e26
+   (3) 1273 cycles, all closed walks along edges (lengths 7..28)
+   (4) the CNF is the formula built from the edges and cycles; sha256 f20fa482ad90c78253d884be6007ac4527e636d502840dac14fbf2734891b8eb
    (5) drat-trim: s VERIFIED
-   kissat 4.0.4 (--seed=1) refuted the formula in about 20 s; drat-trim -l kept 236 546 of 451 597 lemmas (11 565 of
-   16 041 clauses in the core). Stored proof: the core proof, xz-compressed.
+   kissat 4.0.4 (--seed=1) refuted the formula in about 23 s; drat-trim -l kept 255 776 of 450 602 lemmas (11 645 of
+   15 478 clauses in the core). Stored proof: the core proof, xz-compressed.
 2. python3 verify_independent.py H.cnf witness_q11b.json.gz
    unit vectors with denominator 30: 108; unit pairs: 404 ; witness edges: 404 ; equal: True; (7,2)-colouring: yes;
-   1836 simple cycles along edges, lengths 7, 14, 21, 28; CNF: 1880 variables, 16041 clauses (sha256
-   fb5ef623f6b9096669ffe8e0d4c94e87c57b94c0480c8a1b4f831ebcca27180c)
-   kissat 4.0.4 (--seed=1): s UNSATISFIABLE; drat-trim: s VERIFIED (226 574 of 434 641 lemmas in the core), with an
+   1273 simple cycles along edges, lengths 7, 14, 21, 28; CNF: 1880 variables, 15478 clauses (sha256
+   7de83539a1f6fd0b266e3e60b8eb84018e917150e7e635cde0125f4cf6413db3)
+   kissat 4.0.4 (--seed=1): s UNSATISFIABLE; drat-trim: s VERIFIED (244 432 of 451 597 lemmas in the core), with an
    LRAT proof as output; cake_lpr on the LRAT proof: s VERIFIED UNSAT
 3. python3 critical.py and python3 check_critical.py witness_q11b.json.gz witness_q11b_critical.json.gz
    155 vertices: for every v, a (7,2)-colouring of H - v with an acyclic tight digraph, so chi_c(H - v) < 7/2; H is

@@ -17,7 +17,11 @@ including every retracted claim, is the research log,
   unit-distance graph with 155 vertices, 404 edges and `χ_c = 7/2`. It replaces the 157-vertex graph under the same
   file names and is certified the same way: both checkers, two encodings, `drat-trim` on both DRAT proofs, `cake_lpr`
   on the LRAT form of one, and criticality certificates for every `H − v`. The paper, the note, the READMEs and the
-  test of the grown witnesses now give 155.
+  test of the grown witnesses now give 155. Its cycle list first repeated 563 of its 1 836 cycles; the repeats are
+  removed (1 273 cycles) and both formulas refuted and checked again. The referee's programs (`indep_W/`), run by us
+  on it, confirm everything: the points and all unit pairs, a third encoding, cycle lists rebuilt from scratch, every
+  formula clause by clause, `kissat`, `drat-trim` and `cake_lpr` on all of them and on the stored proof, and the
+  criticality certificates through explicit `(7N, 2N + 1)`-colourings (`indep_W/results/witness_q11b.log`).
 - **A full reading of the three-colours paper (4 October, night).** A referee read the whole paper again, with
   priority on Section 10 and the Questions, and reran the cheap checks with programs of its own: no mathematical
   error. Its corrections are applied: the introduction now says that Lemma 19 also uses Proposition 6, in its case

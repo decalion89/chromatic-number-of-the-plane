@@ -743,7 +743,8 @@ form (`verification.txt`); `check_critical.py` checks the criticality certificat
 with 170, 175 and 293 vertices again with programs of its own (`finite_witness/indep_W/`: a third encoding, cycle
 lists rebuilt from scratch, `cake_lpr` on the stored proofs, the explicit homomorphisms `N·c + pos`), found no error,
 and reproduced `H₁₁` and the `ℚ(√455)` witness exactly; the one with 155 vertices, found afterwards, was checked by
-the two programs above. As `√11 ∈ ℚ₇`, `H₁₁` is an explicit witness for `ℚ₇` and for every finite
+the two programs above and, by us, with the referee's programs, with the same results
+(`indep_W/results/witness_q11b.log`). As `√11 ∈ ℚ₇`, `H₁₁` is an explicit witness for `ℚ₇` and for every finite
 extension `K` of `ℚ₇` with `χ_c(K²) < 4`. **A witness for 3 without
 unit triangles** (4 October, night; `check_small.py`, `small_triangle_free.py`, `nine_vertices.py`,
 `hexagon_search.py`): the same procedure with `K₃` in

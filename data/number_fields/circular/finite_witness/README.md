@@ -24,7 +24,7 @@ distance 1 is an edge), with `χ_c(H) = 7/2`.
 | witness | field | denominator | vertices | edges | listed cycles (lengths) | found by |
 |---|---|---|---|---|---|---|
 | `witness_q11` | `ℚ(√11)` | 30 | 170 | 468 | 879 (7, 14, 21, 28) | growth from the 76-vertex graph to 653 vertices, then vertex deletion |
-| `witness_q11b` | `ℚ(√11)` | 30 | 155 | 404 | 1 836 (7, 14, 21, 28) | deletion from unions of `witness_q11` and other 7/2 witnesses (below) |
+| `witness_q11b` | `ℚ(√11)` | 30 | 155 | 404 | 1 273 (7, 14, 21, 28) | deletion from unions of `witness_q11` and other 7/2 witnesses (below) |
 | `witness_q191` | `ℚ(√191)` | 240 | 293 | 803 | 489 (7 to 35) | growth from the 96-vertex graph to 3 258 vertices, then vertex deletion |
 | `witness_q455` | `ℚ(√455)` | 780 | 175 | 434 | 91 (7, 14, 28) | growth from the 71-vertex graph to 959 vertices, then vertex deletion |
 | `witness_q11sum` | `ℚ(√11)` | 30 | 2 237 | 11 300 | 180 (14 to 42) | the sumset `A + A` of the 76-vertex graph (the first one found) |
@@ -96,7 +96,8 @@ uses it by default). The tests are in `tests/test_two_primes.py` (`test_finite_w
 `test_finite_witness_grown`, `test_finite_witness_critical_rejects`; the proof checks are marked slow).
 
 **Referee** (`indep_W/`, with its report `REPORT.md`). A referee checked the three grown witnesses stored then
-(`witness_q11`, `witness_q191`, `witness_q455`; `witness_q11b` came later and is checked by the two checkers above)
+(`witness_q11`, `witness_q191`, `witness_q455`; `witness_q11b` came later: the two checkers above check it, and we ran
+the referee's programs, unchanged, on it with the same results, `indep_W/results/witness_q11b.log`)
 with programs of its own, written from the file format: all pairs of points (468, 803 and 434 unit pairs, none missing or extra), the
 colourings and the cycles; a third encoding (two-sided arc indicators, variables renamed and negated at random); cycle
 lists rebuilt from scratch by its own lazy SAT loop; a clause-by-clause validation of every formula, the stored ones
