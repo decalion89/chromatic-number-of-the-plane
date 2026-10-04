@@ -17,7 +17,8 @@ gives no bound on its size. Here is one.
   the formula "a `(7, 2)`-colouring in which every listed cycle has a non-tight arc" is unsatisfiable. Then
   Lemma 20 of the paper (the easy half of a characterisation of Guichard) gives `χ_c(H) ≥ 7/2`.
 
-So the graph attains the value of the whole plane. For comparison (Section 10 of the paper): the 76-vertex graph
+So the graph attains the value of the whole plane. As `√11 ∈ ℚ₇`, it is also an explicit witness for
+`χ_c(ℚ₇²) = 7/2` (Theorem C) and for every finite extension `K` of `ℚ₇` with `χ_c(K²) < 4`. For comparison (Section 10 of the paper): the 76-vertex graph
 itself has `χ_c = 16/5` (SAT, not certified), the 628-vertex union of nine rotated copies has `χ_c ∈ (16/5, 13/4]`,
 and the ball of radius 2 in the Cayley graph of the 140 vectors of Theorem C (9 941 vertices) has `χ_c = 5/2`.
 

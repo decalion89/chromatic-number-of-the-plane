@@ -721,7 +721,8 @@ of lengths 14 to 42; so `χ_c(H) = 7/2` by Lemma F9. The second fact is a SAT co
 search's own checker (`check_witness.py`) and a second one sharing no code with it (`verify_independent.py`) check the
 graph, the colouring and the cycles exactly and write the formula in two encodings; `drat-trim` verifies the stored
 DRAT proof of the first, and a new `kissat` proof of the second, which `cake_lpr` (a formally verified checker) also
-accepts in LRAT form (`verification.txt`). Lemmas F9–F11 were tested by two referees: on 291 small graphs and 766 tight relations; on 115
+accepts in LRAT form (`verification.txt`). As `√11 ∈ ℚ₇`, the same graph is an explicit witness for `ℚ₇` and for every
+finite extension `K` of `ℚ₇` with `χ_c(K²) < 4`. Lemmas F9–F11 were tested by two referees: on 291 small graphs and 766 tight relations; on 115
 random finite sets `S` in `ℤ`, `ℤ²` and `ℤ × ℤ/m` with `2 < χ_c < 4` (at all 409 optimal points, vertices of the optimal set and
 midpoints and centroids of them that stay optimal, the tight elements have a nonnegative relation;
 `indep_FW2/test_kappa_relations.py 1 180`); and by SAT on finite pieces of 13 such Cayley graphs, all with finite witnesses
