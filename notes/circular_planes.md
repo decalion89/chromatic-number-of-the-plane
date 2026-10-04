@@ -129,11 +129,13 @@ So the restriction to `F²` of a locally constant colouring of one completion `F
 ## 5. A gap above 3
 
 *Found by a separate agent (programs in `data/number_fields/circular/probe/`), refereed by another with its own exact
-programs (`probe/indep/`): no error in Theorem D or Proposition D1; its corrections are applied below.*
+programs (`probe/indep/`): no error in Theorem D or Proposition D1; its corrections are applied below. A third agent
+refereed the version in Section 9 of `papers/three-colours/` (complete proofs) with a third implementation
+(`probe/indep2/`): correct; its corrections are applied there.*
 
 > **Theorem D.** Let `F` be a number field with `χ(F²) ≥ 4`. Then (a) `χ_c(F²) ≥ 56/17 ≈ 3.294`, and (b)
-> (computer-assisted: exact computations by two independent programs) `χ_c(F²) ≥ 10⁷/3001611 > 3.3315`. Hence for
-> every number field `χ_c(F²) ∈ {2, 3}` or `χ_c(F²) ≥ 3.3315`.
+> (computer-assisted: exact computations by three programs written separately) `χ_c(F²) ≥ 10⁷/3001611 > 3.3315`.
+> Hence for every number field `χ_c(F²) ∈ {2, 3}` or `χ_c(F²) ≥ 56/17` (and, with (b), `χ_c(F²) > 3.3315`).
 
 *Proof.* If `i ∈ F` there is nothing to prove (`χ = ∞`, no homomorphism to any `K_{p/q}`). Let `F²` map to `K_{p/q}`
 with `p/q < 56/17` (for (b): `p/q < 10⁷/3001611`); we show `χ(F²) ≤ 3`. If `p/q ≤ 3`, then
@@ -208,8 +210,10 @@ Notation for the probe: `s = 1/2 − r`, `ε = 1/3 − r`, `h = (1 + i)/2`, `Sq_
   `13183/43924` at `k = 6`. So D1 holds for all `k ≥ 5` when `r > 333/1106`, and Theorem D(a) holds with
   `1106/333 ≈ 3.3213`. At `r = 0.3001611` both programs find only the main components at `k = 17, 18, 19` (and extra
   components at `r = 0.3001609` for these `k`), and the lemma thresholds are at most `0.30005568` and `0.30000928` for `k ≥ 12`; this
-  is Theorem D(b). (Both programs give the same number of components at every level `k ≤ 19` at `r = 0.3001611`:
-  `probe/levels3_r3001611_19.txt` and `probe/indep/out_deep.txt`.)
+  is Theorem D(b). (The three programs give the same number of components at every level `k ≤ 19` at
+  `r = 0.3001611`: `probe/levels3_r3001611_19.txt`, `probe/indep/out_deep.txt`, `probe/indep2/check5_levels_thetastar.txt`;
+  and the same thresholds, `probe/lemma_2_14.txt` for `k ≤ 14`, `probe/indep/out_thresholds.txt` and
+  `probe/indep2/check3_thresholds.txt` for `k ≤ 22`.)
 - For `r ≤ 3/10` a classification with types c and q only fails for every `k`: the 5-adic point
   `c_k = c*_N + ρ^k/5 − 5^{k−1}(2 − i)` lies in `S_N^(3/10)` and has `min‖·‖ = 3/10` exactly. Indeed
   `5^{k−1}(2 + i)ρ^j ∈ ℤ[i]` for `−k ≤ j < k`, while `(2 + i)^{2k+1} ≡ 2 + i (mod 5)` (it is `≡ 0` mod `2 + i` and

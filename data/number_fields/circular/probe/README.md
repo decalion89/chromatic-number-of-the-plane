@@ -7,8 +7,9 @@ and dual solutions. In the scripts, *Theorem A* is Proposition D1 of the note (P
 the end of the interval `[r, 1 − r]` (`θ` in the paper), `Sq_s = [−s, s]²` with `s = 1/2 − r`, `c*_N = N(1 + i)/2`,
 and `Q_N` is the set of type q points `(N/3)(a + bi)`, `a, b ∈ {1, 2}`.
 
-The subfolder [`indep/`](indep/) holds a referee's implementation, written from scratch and sharing no code with this
-folder, and its outputs; the two agree on every number quoted in the note and the paper.
+The subfolders [`indep/`](indep/) and [`indep2/`](indep2/) hold two referees' implementations, written from scratch,
+sharing no code with this folder or with each other, and their outputs; all three agree on every number quoted in the
+note and the paper.
 
 | file | what it does |
 |---|---|
@@ -43,6 +44,19 @@ Referee's implementation ([`indep/`](indep/)):
 | `r0check.py`, `deep_lift.py` → `out_r0.txt`, `out_lift_333.txt`, `out_deep.txt` | the thresholds `333/1106` (level 5) and `3303/10981` (level 6), and the levels up to 19 at `r = 0.3001611` and `0.3001609` |
 | `thresholds.py` → `out_thresholds.txt` | the thresholds of Lemmas C and Q with the full hypotheses for `2 ≤ k ≤ 22` |
 | `padic_family.py` → `out_padic.txt` | the 5-adic points `c_k` for `k ≤ 10` |
+
+Second referee's implementation ([`indep2/`](indep2/)), written for Section 9 of the paper, sharing no code with
+the two above:
+
+| file | what it does |
+|---|---|
+| `gauss.py`, `exactlp.py`, `levels.py` | Gaussian rationals, exact LP with certificates (checked against brute force), and the level-by-level polygons |
+| `check1_basic.py` → `check1_basic.txt` | Lemma 8 (congruences, the relations of the `η_j`), the base-case identities, the polygons `P` and `X(ε)`, the 5-adic points `c_k` for `k ≤ 15` |
+| `check2_basecase.py` → `check2_basecase.txt` | the 25 classes of the base case, with the shifts of the proof and with all shifts |
+| `check3_thresholds.py` → `check3_thresholds.txt` | the thresholds of the induction step for `2 ≤ k ≤ 22`, both signs, all shifts |
+| `check4_levels_small.txt`, `check5_levels_thetastar.txt` | `S_N^θ` at several `θ`, and at `θ* = 0.3001611` for `k ≤ 19` (the same counts as the other two programs) |
+| `check6_kappa.py` → `check6_kappa.txt` | the largest `κ` of an extra component, level by level (`0.3001609306…` at `k = 17`) |
+| `check7_direct.py` → `check7_direct.txt` | a direct, cell-by-cell computation of `S_N^θ` that agrees with the lifting for `k ≤ 3` |
 
 To rerun the main checks (a few minutes each):
 

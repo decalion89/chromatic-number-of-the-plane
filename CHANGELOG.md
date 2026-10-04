@@ -24,9 +24,9 @@ including every retracted claim, is the research log,
   (Propositions C2, C3 and Corollary C4, with Weil's bound for Kloosterman sums); `χ_c = 7/2` for infinitely many
   number fields (Corollary C5).
 - **A gap above 3 (4 October).** `notes/circular_planes.md` §5, Theorem D: if `χ(F²) ≥ 4` then `χ_c(F²) ≥ 56/17`, and
-  `χ_c(F²) > 3.3315` with a computer-assisted step (exact computations by two independent programs,
-  `data/number_fields/circular/probe/` and `probe/indep/`). Refereed by a separate agent (no error; its corrections
-  applied).
+  `χ_c(F²) > 3.3315` with a computer-assisted step (exact computations by three programs written separately,
+  `data/number_fields/circular/probe/`, `probe/indep/` and `probe/indep2/`). Refereed twice by separate agents (no
+  error; their corrections applied).
 - **Paper draft `papers/three-colours/` (4 October).** Theorem B, Proposition B9, the corollaries, Theorem C,
   the local circular values and Theorem D (Section 9); refereed (no mathematical error), fixes applied.
 - **Literature sweep (4 October).** `notes/literature.md`, last section: what the systematic search of arXiv found for

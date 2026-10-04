@@ -58,8 +58,8 @@ $b\equiv7\pmod8$ needs four colours), new examples such as $\chi(\Q(\sqrt2,\sqrt
 the first non-integral value of the circular chromatic number of the plane over a number field:
 $\chi_c(\Q(\sqrt{11})^2)=\chi_c(\Q(\sqrt{35})^2)=7/2$ (and $\chi_c(\Q_7^2)=7/2$), although these planes have chromatic
 number $4$. Locally constant colourings of one completion give no upper bound on $\chi_c$ below $4$ other than $2$, $3$ and
-$7/2$. Finally, $\chi_c(F^2)\ge56/17$ whenever $\chi(F^2)\ge4$ (and $\chi_c(F^2)>3.3315$ with a computer-assisted
-step), so the circular chromatic number of the plane over a number field never lies in $(3,3.3315]$.
+$7/2$. Finally, $\chi_c(F^2)\ge56/17$ whenever $\chi(F^2)\ge4$, so the circular chromatic number of the plane over a
+number field never lies in $(3,56/17)$; with a computer-assisted step, not even in $(3,3.3315]$.
 \end{abstract}
 
 \maketitle
@@ -117,11 +117,13 @@ Moreover no plane over a number field has circular chromatic number strictly bet
 
 \begin{theorem}\label{thm:D}
 Let $F$ be a number field with $\chi(F^2)\ge4$. Then $\chi_c(F^2)\ge56/17\approx3.294$. With a computer-assisted
-step \textup{(}exact computations, made by two independent programs\textup{)}, $\chi_c(F^2)\ge10^7/3001611>3.3315$.
+step \textup{(}exact computations, made by three programs written separately\textup{)},
+$\chi_c(F^2)\ge10^7/3001611>3.3315$.
 \end{theorem}
 
-So the circular chromatic number of the plane over a number field is $2$, $3$ or larger than $3.3315$; we do not
-know whether a value smaller than $7/2$ occurs (Section~\ref{sec:questions}).
+So the circular chromatic number of the plane over a number field is $2$, $3$ or at least $56/17$ (larger than
+$3.3315$, with the computer-assisted step); we do not know whether a value in $(3,7/2)$ occurs
+(Section~\ref{sec:questions}).
 
 The tools are those of \cite{FC}: a characterisation of $3$-colourings of Cayley graphs of abelian groups by
 characters (Theorem~W$^+$, Section~\ref{sec:prelim}), and the exact shape of the characters along the rational rotations whose
@@ -667,7 +669,7 @@ $4$, only the bounds $2$ (condition (a)), $3$ (condition (b)) and $7/2$ (a place
 
 By Corollary~\ref{cor:B6}, $\chi_c(F^2)$ is $2$, $3$ or larger than $3$. Theorem~\ref{thm:D} says that in the last
 case it stays away from $3$. Its proof is that of Theorem~\ref{thm:B} with $I=[1/3,2/3]$ replaced by a slightly
-narrower interval; the new ingredient is the shape of the characters along the probe for such intervals.
+wider interval; the new ingredient is the shape of the characters along the probe for such intervals.
 
 \emph{Notation.} In this section $N=5^k$ with $k\ge1$, $\rho=(3+4i)/5$, $h=(1+i)/2$ and
 $\Lambda_\pm=\frac{2\pm i}5\Z[i]$. For $\frac14<\theta\le\frac13$ let $S_N^\theta$ be defined as $S_N$ with
@@ -676,13 +678,14 @@ $[\theta,1-\theta]$ in place of $I$, and put
 s=\tfrac12-\theta,\qquad\delta=\tfrac13-\theta,\qquad B_s=\{a+bi:\ a,b\in\R,\ |a|,|b|\le s\},
 \]
 so that $s=\frac16+\delta$, and $P_k=\{x\in\C:\ \bar x\rho^j\in B_s\text{ for }|j|\le k\}$. For $\varepsilon\in E_q$
-and $|j|\le k$, Lemma~\ref{lem:values} gives $\eta_j(\varepsilon)\in\{\pm1\pm i\}$ with
-$\overline{N\varepsilon}\rho^j\in h+\eta_j(\varepsilon)/6+\Z[i]$; let
+and $|j|\le k$, Lemma~\ref{lem:values} below gives $\eta^N_j(\varepsilon)\in\{\pm1\pm i\}$ with
+$\overline{N\varepsilon}\rho^j\in h+\eta^N_j(\varepsilon)/6+\Z[i]$; for $1\le m\le k$ let
 \[
-Y_k(\varepsilon)=\{y\in\C:\ \eta_j(\varepsilon)/6+\bar y\rho^j\in B_s\text{ for }|j|\le k\}.
+Y^N_m(\varepsilon)=\{y\in\C:\ \eta^N_j(\varepsilon)/6+\bar y\rho^j\in B_s\text{ for }|j|\le m\},
 \]
-Both depend on $N$, and on $\varepsilon$ only modulo $\Z[i]$. We write $w_1=\operatorname{Re}w$ and
-$w_2=\operatorname{Im}w$.
+and $Y_k(\varepsilon)=Y^N_k(\varepsilon)$. These depend on $\theta$, on $N$, and on $\varepsilon$ only modulo
+$\Z[i]$; when $N$ is fixed we write $\eta_j(\varepsilon)$ for $\eta^N_j(\varepsilon)$. We write $w_1=\operatorname{Re}w$
+and $w_2=\operatorname{Im}w$.
 
 \begin{lemma}\label{lem:values}
 \textup{(i)} $G_N=\{i^a\rho^j:a\in\Z,\ |j|\le k\}$, and $c\in S_N^\theta$ if and only if $\bar c\rho^j\in
@@ -692,7 +695,9 @@ h+B_s+\Z[i]$ for every $|j|\le k$.
 
 \textup{(iii)} If $\varepsilon=\frac{\alpha+\beta i}3+t\in E_q$ and $|j|\le k$, then
 $\overline{N\varepsilon}\rho^j\equiv(-1)^k(-i)^j\frac{\alpha-\beta i}3\pmod{\Z[i]}$. This lies in
-$h+\eta/6+\Z[i]$ for a unique $\eta\in\{\pm1\pm i\}$, and $\eta_{j-2}(\varepsilon)=-\eta_j(\varepsilon)$.
+$h+\eta/6+\Z[i]$ for a unique $\eta\in\{\pm1\pm i\}$; moreover $\eta_{j-1}(\varepsilon)=i\,\eta_j(\varepsilon)$ for
+$1-k\le j\le k$ (so $\eta_{j-2}(\varepsilon)=-\eta_j(\varepsilon)$), and $\eta_j(\bar\varepsilon)=
+\overline{\eta_{-j}(\varepsilon)}$.
 
 \textup{(iv)} $N\varepsilon+P_k\subseteq S_N^\theta$ for $\varepsilon\in E_c$, and $N\varepsilon+Y_k(\varepsilon)\subseteq
 S_N^\theta$ for $\varepsilon\in E_q$.
@@ -710,8 +715,9 @@ $m\in\Z[i]$, and $\bar hN\rho^j=\bar h+m\equiv h$, as $\bar h=h-i$; and $\bar tN
 
 (iii) $\overline{N\varepsilon}\rho^j\equiv\frac{\alpha-\beta i}3N\rho^j$, and $N\rho^j\equiv(-1)^k(-i)^j\pmod3$,
 because $5\equiv-1$ and $3\pm4i\equiv\pm i\pmod3$. Modulo $\Z[i]$, $\frac{\alpha-\beta i}3$ times a unit has both
-coordinates in $\{\frac13,\frac23\}$, so it lies in $h+\frac{\pm1\pm i}6+\Z[i]$. Since $(-i)^{j-2}=-(-i)^j$ and
-$-h\equiv h$, $\eta_{j-2}=-\eta_j$.
+coordinates in $\{\frac13,\frac23\}$, so it lies in $h+\frac{\pm1\pm i}6+\Z[i]$. Since $(-i)^{j-1}=i(-i)^j$ and
+$ih\equiv h$, $\eta_{j-1}=i\eta_j$. Finally $\overline{N\bar\varepsilon}\rho^j$ is the conjugate of
+$\overline{N\varepsilon}\rho^{-j}$, and $\bar h\equiv h$.
 
 (iv) follows from (i)--(iii).
 \end{proof}
@@ -720,7 +726,7 @@ $-h\equiv h$, $\eta_{j-2}=-\eta_j$.
 \textup{(i)} $P_1=sP$, where $P$ is the $12$-gon with vertices $\pm1\pm\frac i3$, $\pm\frac13\pm i$ and
 $\frac57(\pm1\pm i)$; so $|x|\le s\sqrt{10}/3$ for $x\in P_k$.
 
-\textup{(ii)} $|y|\le\sqrt2\,\delta$ for $y\in Y_k(\varepsilon)$.
+\textup{(ii)} $|y|\le\sqrt2\,\delta$ for $y\in Y^N_m(\varepsilon)$, $1\le m\le k$.
 \end{lemma}
 
 \begin{proof}
@@ -731,12 +737,13 @@ Every vertex has modulus at most $\sqrt{10}/3$, and $P_k\subseteq P_1$.
 
 (ii) As $s=\frac16+\delta$, the condition $\eta_j/6+\bar y\rho^j\in B_s$ implies
 $\eta_{j,e}(\bar y\rho^j)_e\le\delta$ for $e=1,2$, where $\eta_j=\eta_{j,1}+\eta_{j,2}i$. So
-$Y_k(\varepsilon)\subseteq Y_1(\varepsilon)\subseteq\delta Z(\varepsilon)$, where $Z(\varepsilon)$ is defined by
-the six inequalities $\eta_{j,e}(\bar y\rho^j)_e\le1$, $|j|\le1$. By Lemma~\ref{lem:values}(iii) the
-$\eta_j(\varepsilon)$, $|j|\le1$, at level $N$ are those of $\pm\varepsilon$ at level $5$; replacing $\varepsilon$
-by $i\varepsilon$ replaces $\eta_j$ by $-i\eta_j$ and $Z$ by $iZ$, and multiplication by $i$ permutes the four
-classes of $E_q$ modulo $\Z[i]$ cyclically. So every $Z(\varepsilon)$ is a rotation of $Z(\frac{1+i}3)$ at level $5$,
-where $\eta_{-1}=1+i$, $\eta_0=1-i$, $\eta_1=-1-i$. This is the hexagon with vertices $-\frac54$, $-\frac54i$,
+$Y^N_m(\varepsilon)\subseteq Y^N_1(\varepsilon)\subseteq\delta X(\varepsilon)$, where $X(\varepsilon)$ is defined by
+the six inequalities $\eta^N_{j,e}(\bar y\rho^j)_e\le1$, $|j|\le1$ (for $\delta=0$ read $\delta X(\varepsilon)$ as
+$\{0\}$: as $X(\varepsilon)$ is bounded, the same inequalities with right-hand side $0$ have only the solution $0$).
+By Lemma~\ref{lem:values}(iii), $\eta^N_j(\varepsilon)=\eta^5_j(\pm\varepsilon)$ for $|j|\le1$; replacing
+$\varepsilon$ by $i\varepsilon$ replaces $\eta_j$ by $-i\eta_j$ and $X$ by $iX$, and multiplication by $i$ permutes
+the four classes of $E_q$ modulo $\Z[i]$ cyclically. So every $X(\varepsilon)$ is a rotation of $X(\frac{1+i}3)$ at
+level $5$, where $\eta_{-1}=1+i$, $\eta_0=1-i$, $\eta_1=-1-i$. This is the hexagon with vertices $-\frac54$, $-\frac54i$,
 $-\frac57(1+i)$, $1-\frac i2$, $1+i$ and $-\frac12+i$, of moduli at most $\sqrt2$.
 \end{proof}
 
@@ -752,9 +759,9 @@ $w_2=-(24u_1+7u_2)/25$. Suppose $u+\nu\in B_s+\Z[i]$; changing $\nu$ by a Gaussi
 $u+\nu\in B_s$. The non-zero classes of $\Lambda_+/\Z[i]$ are represented by $\pm\frac{2+i}5$ and
 $\pm\frac{-1+2i}5$, whose coordinates have absolute value at most $\frac25$; every other element of the class has a
 coordinate of absolute value at least $\frac35$, which $u_e+\nu_e\in[-s,s]$ excludes, as $|u_e|\le|x|\le s\sqrt2$ and
-$s(1+\sqrt2)<\frac35$. If $\nu=\sigma\frac{2+i}5$ with $\sigma=\pm1$, then $-\sigma u_1\ge\frac25-s$ and $-\sigma
-u_2\ge\frac15-s$, so $\sigma w_2=-\sigma(24u_1+7u_2)/25\ge(11-31s)/25$. If $\nu=\sigma\frac{-1+2i}5$, then $\sigma
-u_1\ge\frac15-s$ and $-\sigma u_2\ge\frac25-s$, so $-\sigma w_1=\sigma(7u_1-24u_2)/25\ge(11-31s)/25$. In both cases
+$s(1+\sqrt2)<\frac35$. If $\nu=\pm\frac{2+i}5$, then $\mp u_1\ge\frac25-s$ and $\mp u_2\ge\frac15-s$, so
+$\pm w_2=\mp(24u_1+7u_2)/25\ge(11-31s)/25$. If $\nu=\pm\frac{-1+2i}5$, then $\pm u_1\ge\frac15-s$ and $\mp
+u_2\ge\frac25-s$, so $\mp w_1=\pm(7u_1-24u_2)/25\ge(11-31s)/25$. In both cases
 $|w_e|\ge(11-31s)/25>s$, as $56s<11$, contradicting $w\in B_s$. The second statement follows by complex conjugation,
 which exchanges $\rho$ and $\rho^{-1}$, and $\Lambda_+$ and $\Lambda_-$, and preserves $B_s$ and $\Z[i]$ (apply the
 first to $\bar x$ and $\bar\nu$).
@@ -780,7 +787,8 @@ so $u_1\ge\frac1{15}-\delta$. On the other hand the hypothesis at $\rho^{k-2}$ s
 $u(-7-24i)/25$ are at least $-\delta$: $7u_1-24u_2\le25\delta$ and $24u_1+7u_2\le25\delta$. Adding $7$ times the
 first to $24$ times the second gives $625u_1\le775\delta$, that is $u_1\le\frac{31}{25}\delta$. Hence
 $\frac1{15}\le\frac{56}{25}\delta$, that is $\delta\ge\frac5{168}$, a contradiction. The second statement follows by
-complex conjugation, as in Lemma~\ref{lem:gapC} ($\bar\varepsilon\in E_q$, and $\bar h\equiv h$).
+complex conjugation, as in Lemma~\ref{lem:gapC}: $\bar\varepsilon\in E_q$, $\bar h\equiv h$, and
+$\eta_{k-2}(\bar\varepsilon)=\overline{\eta_{2-k}(\varepsilon)}$ by Lemma~\ref{lem:values}(iii).
 \end{proof}
 
 \begin{proposition}\label{prop:probe}
@@ -825,13 +833,13 @@ get $0\le49(s-\frac25)+7(s-\frac15)$, so $s\ge\frac38$.
 \item $\lambda=1+i$: then $c=5\varepsilon+y$ with $\varepsilon=\frac{2+2i}3\in E_q$ and $y=x+\frac{1+i}6$, so
 $|y|\le\sqrt2(s+\frac16)<0.52$. By Lemma~\ref{lem:values}(iii), $\bar c\rho^j\in h+\eta_j(\varepsilon)/6+\bar
 y\rho^j+\Z[i]$, and as $|\bar y\rho^j|<0.52$ and $\frac16+0.52<1-s$, the condition at $\rho^j$ says
-$\eta_j(\varepsilon)/6+\bar y\rho^j\in B_s$. So $y\in Y_1(\varepsilon)$.
+$\eta_j(\varepsilon)/6+\bar y\rho^j\in B_s$. So $y\in Y^5_1(\varepsilon)$.
 \end{itemize}
 The first three orbits are thus empty, as $s<11/56<\frac14$.
 
 \emph{The step from $k-1$ to $k\ge2$.} Let $c\in S_N^\theta$. As $G_{N/5}\subseteq G_N$, $c\in S_{N/5}^\theta$, and by
 induction $c=\frac N5\varepsilon'+x$ with $\varepsilon'\in E_c$ and $x\in P_{k-1}$, or with $\varepsilon'\in E_q$ and
-$x\in Y_{k-1}(\varepsilon')$ (at level $N/5$).
+$x\in Y^{N/5}_{k-1}(\varepsilon')$.
 
 If $\varepsilon'=h+t\in E_c$, then $\frac N5\varepsilon'=Nh+\frac N5(t-2-2i)$, so $c=Nh+x+\frac N5\lambda$ with
 $\lambda\in\Z[i]$. By Lemma~\ref{lem:values}(ii) the condition at $\rho^{\pm k}$ reads $\bar x\rho^{\pm k}+
@@ -843,7 +851,7 @@ If $\varepsilon'=\frac{\alpha'+\beta'i}3+t'\in E_q$, let $\alpha,\beta\in\{1,2\}
 $\beta\equiv2\beta'\pmod3$, and $\varepsilon=\frac{\alpha+\beta i}3$. Then $\frac N5\varepsilon'-N\varepsilon\in\frac
 N5\Z[i]$, because $\alpha'-5\alpha\equiv\alpha'-2\alpha\equiv0\pmod3$, and likewise for $\beta$; so
 $c=N\varepsilon+x+\frac N5\lambda$ with $\lambda\in\Z[i]$. For $|j|\le k-1$ we have $\frac N5\rho^j\in\Z[i]$, so
-$\eta_j(\varepsilon)$ at level $N$ equals $\eta_j(\varepsilon')$ at level $N/5$, and $x\in Y_{k-1}(\varepsilon)$. In
+$\eta^N_j(\varepsilon)=\eta^{N/5}_j(\varepsilon')$ for $|j|\le k-1$, and $x\in Y^N_{k-1}(\varepsilon)$. In
 particular $|x|\le\sqrt2\,\delta<\frac16$, and the hypotheses of Lemma~\ref{lem:gapQ} hold at $\rho^{\pm(k-2)}$. The
 condition at $\rho^{\pm k}$ says $\overline{N\varepsilon+x}\,\rho^{\pm k}+\nu_\pm(\lambda)\in h+B_s+\Z[i]$, so
 by Lemma~\ref{lem:gapQ} both $\nu_\pm(\lambda)$ are Gaussian integers, $5\mid\lambda$ and $c\in N\varepsilon+x+N\Z[i]$.
@@ -857,8 +865,9 @@ cannot happen, as then $\chi(F^2)=\infty$ (proof of Theorem~\ref{thm:B}). If $p/
 \chi(K_{p/q})\le3$. Otherwise $\theta=q/p\in(17/56,1/3)$, and we follow the proof of Lemma~\ref{lem:B1} for a finite
 $V\subset T$. Theorem~W$^+$ applies, as $p<4q$, and gives a character with $\xi(U)\subseteq[\theta,1-\theta]+\Z$; so
 $\varphi(v)\in S_N^\theta$ for $v\in V$, and Proposition~\ref{prop:probe} writes $\varphi(v)=N\varepsilon_v+x_v$ with
-$\varepsilon_v\in E$ and $|x_v|\le R=\max(s\sqrt{10}/3,\sqrt2\,\delta)$. Lemma~\ref{lem:exact} and its proof hold for
-such points with $R$ in place of $r$. So, choosing $N>6R\max_v(|D_v|+\sum_j|\mu_{v,j}|)$, we obtain $\beta\in L$ with
+$\varepsilon_v\in E$ and $|x_v|\le r_\theta=\max(s\sqrt{10}/3,\sqrt2\,\delta)$ (so $r_{1/3}=r$).
+Lemma~\ref{lem:exact} and its proof hold for such points with $r_\theta$ in place of $r$. So, choosing
+$N>6r_\theta\max_v(|D_v|+\sum_j|\mu_{v,j}|)$, we obtain $\beta\in L$ with
 $\Tr(\beta v)\in E$ for every $v\in V$: the conclusion of Lemma~\ref{lem:B1}. The proof of Lemma~\ref{lem:B2} uses
 the $3$-colouring only through this conclusion, and the rest of the proof of Theorem~\ref{thm:B} only through (c) or
 (q). So (a) or (b) holds, and $\chi(F^2)\le3$ by Theorem~\ref{thm:B}. Finally, if $\chi(F^2)\ge4$ and
@@ -867,26 +876,29 @@ $p/q<56/17$, which we have excluded.
 
 For the second statement let $\theta^*=0.3001611$, with $s^*$, $\delta^*$ its values of $s$, $\delta$. It suffices
 that for every $k\ge17$ the conclusion of Proposition~\ref{prop:probe} holds for $\theta^*$, so that every $c\in
-S_N^{\theta^*}$ is $N\varepsilon+x$ with $\varepsilon\in E$ and $|x|\le R^*=\max(s^*\sqrt{10}/3,\sqrt2\,\delta^*)<0.22$:
-then for $p/q<1/\theta^*$ the argument above applies with $\theta=q/p$, since $S_N^\theta\subseteq S_N^{\theta^*}$,
-with $R^*$ in place of $R$ and $k\ge17$. This is the computer-assisted step. We computed $S_N^{\theta^*}$ exactly, as a
-finite union of rational polygons modulo $N$, level by level, with two programs written separately (one of them by a
-referee): both find the same number of components at every level $k\le19$, and only the components of
-Proposition~\ref{prop:probe} for $k=17,18,19$. For $k\ge18$ the induction step of Proposition~\ref{prop:probe} goes
-through with Lemmas~\ref{lem:gapC} and~\ref{lem:gapQ} replaced by the same statements under the hypotheses $x\in
-P_{k-1}$, resp.\ $y\in Y_{k-1}(\varepsilon)$. The least $\theta$ for which these hold is an exact linear-programming
-value; it is non-increasing in $k$ (in the coordinates $\bar x\rho^k$, resp.\ $\bar y\rho^k$, the system at level
-$k+1$ contains the one at level $k$), and both programs find that it is at most $0.30005568<\theta^*$ for $k=12$, $13$
-and $14$ (one of them up to $k=22$).
+S_N^{\theta^*}$ is $N\varepsilon+x$ with $\varepsilon\in E$ and $|x|\le r_{\theta^*}<0.22$: then for
+$p/q<1/\theta^*$ the argument above applies with $\theta=q/p$, since $S_N^\theta\subseteq S_N^{\theta^*}$, with
+$r_{\theta^*}$ in place of $r_\theta$ and $k\ge17$. This is the computer-assisted step. We computed
+$S_N^{\theta^*}$ exactly, as a finite union of rational polygons modulo $N$, level by level, with three programs
+written separately (two of them by referees): all three find the same number of components at every level $k\le19$,
+and only the components of Proposition~\ref{prop:probe} for $k=17,18,19$. For $k\ge18$ the induction step of
+Proposition~\ref{prop:probe} goes through with Lemmas~\ref{lem:gapC} and~\ref{lem:gapQ} replaced by the same
+statements under the hypotheses $x\in P_{k-1}$, resp.\ $y\in Y^N_{k-1}(\varepsilon)$, for every shift
+$\nu\in\Lambda_\pm\setminus\Z[i]$ (the programs do not use the reduction to the shifts of the hand proofs). The
+infimum of the $\theta$ for which these statements hold is an exact linear-programming value. It is non-increasing in
+$k$: in the coordinates $\bar x\rho^k$, resp.\ $\bar y\rho^k$, and since $\eta_{k-m}=i^m\eta_k$
+(Lemma~\ref{lem:values}), the system at level $k+1$ contains the one at level $k$. All three programs find that it is
+at most $0.30005568<\theta^*$ for $k=12$, $13$ and $14$ (two of them up to $k=22$).
 \end{proof}
 
 \begin{remark}
 (1) For a statement valid for every $k$, the bound $17/56$ in Proposition~\ref{prop:probe} is best possible: for
 $\theta=17/56$, $S_N^\theta$ has further isolated points for $N=5$, $25$, $125$ and $625$ ($8$, $20$, $12$ and $4$
-of them), at which $\min_\gamma\|\operatorname{Re}(\bar c\gamma)\|=17/56$. But the constant of Theorem~\ref{thm:D}
+of them modulo $N\Z[i]$), at which $\min_\gamma\|\operatorname{Re}(\bar c\gamma)\|=17/56$. But the constant $56/17$
 comes from the first levels only: by the same computations, for $\theta>333/1106$ the set $S_{5^5}^\theta$ has only
-the components of Proposition~\ref{prop:probe}, and the threshold of the induction step is at most $3303/10981<333/1106$ for
-$k\ge6$; so a computation up to level $6$ already gives $\chi_c(F^2)\ge1106/333\approx3.3213$.
+the components of Proposition~\ref{prop:probe}, and the threshold of the induction step is $3303/10981<333/1106$ for
+$4\le k\le6$, hence at most that for $k\ge6$; so the levels $k\le5$ and the threshold at $k=6$ already give
+$\chi_c(F^2)\ge1106/333\approx3.3213$.
 
 (2) The method cannot reach beyond $10/3$. For every $k$ the point $c_k=Nh+\frac{\rho^k}5-5^{k-1}(2-i)$ lies in
 $S_N^{3/10}$, with $\min_\gamma\|\operatorname{Re}(\bar c_k\gamma)\|=\frac3{10}$: for $-k\le j<k$,
@@ -945,20 +957,21 @@ bound $|S(b)|\le2\sqrt q$ and the identity of $S(b)$ with a Kloosterman sum were
 $(p,f)$; Proposition~\ref{prop:levels} was checked on the finite models $O_w/\mathfrak m^k$ for $\Q_3$, $\Q_7$,
 $\Q_{11}$, $\Q_3(\sqrt3)$, $\Q_7(\sqrt7)$ and $\Q_{27}$.
 
-\emph{Theorem~\ref{thm:D}.} The programs are in \nolinkurl{data/number_fields/circular/probe/}, and a referee's
-implementation, which shares no code with them, is in its subfolder \nolinkurl{indep/}; both use exact rational
-arithmetic. They compute $S_N^\theta$ level by level as a union of convex rational polygons: each piece of level
-$k-1$, translated by the $25$ elements of $\frac N5\{0,\dots,4\}^2$, is cut along the strips where the coordinates of
-$\bar c\rho^{\pm k}$ lie in $[\theta,1-\theta]+\Z$. Linear-programming values (the thresholds of the induction step,
-the least $s$ in the base case, the value $\min_\gamma\|\operatorname{Re}(\bar c\gamma)\|$ on a component) are
-floating-point optima certified by exact primal and dual solutions. The two implementations agree on everything quoted
-in Section~\ref{sec:gap}: the base case (least $s$ equal to $0$, $11/56$ for the eight classes with exactly one
-integral $\nu_\pm$, and $1/4$, $2/7$, $3/8$, $1/6$ for the four orbits with the shifts of the proof; with all shifts
-the third value is $1/4$), the polygons $P$ and $Z(\varepsilon)$, the sets $S_N^\theta$ for $k\le4$ at five values of
-$\theta$ in $(17/56,1/3]$, the extra points at $\theta=17/56$, and the computations at $333/1106$ and at $\theta^*$
-(the same number of components at every level $k\le19$). The referee also tested membership in $S_N^\theta$ exactly
-at $350\,000$ random points ($N=5,25$), finding none outside the components of Proposition~\ref{prop:probe}, and
-checked the $5$-adic points $c_k$ of the Remark exactly for $k\le10$.
+\emph{Theorem~\ref{thm:D}.} The programs are in \nolinkurl{data/number_fields/circular/probe/}; two referees wrote
+their own implementations, which share no code with them or with each other, in its subfolders \nolinkurl{indep/} and
+\nolinkurl{indep2/}. All use exact rational arithmetic and compute $S_N^\theta$ level by level as a union of convex
+rational polygons: each piece of level $k-1$, translated by the $25$ elements of $\frac N5\{0,\dots,4\}^2$, is cut
+along the strips where the coordinates of $\bar c\rho^{\pm k}$ lie in $[\theta,1-\theta]+\Z$; a direct cell-by-cell
+computation agrees with this lifting for $k\le3$. Linear-programming values (the thresholds of the induction step,
+the least $s$ in the base case, the maximum of $\min_\gamma\|\operatorname{Re}(\bar c\gamma)\|$ over a component) are
+floating-point optima certified by exact primal and dual solutions. The implementations agree on everything quoted in
+Section~\ref{sec:gap}: the base case (least $s$ equal to $0$, $11/56$ for the eight classes with exactly one integral
+$\nu_\pm$, and $1/4$, $2/7$, $3/8$, $1/6$ for the four orbits with the shifts of the proof; with all shifts the third
+value is $1/4$), the polygons $P$ and $X(\varepsilon)$, the sets $S_N^\theta$ for small $k$ at several values of
+$\theta$ in $(17/56,1/3]$, the extra points at $\theta=17/56$, the thresholds of the induction step, and the
+computations at $333/1106$ and at $\theta^*$ (the same number of components at every level $k\le19$). One referee also
+tested membership in $S_N^\theta$ exactly at $350\,000$ random points ($N=5,25$), finding none outside the components
+of Proposition~\ref{prop:probe}; the $5$-adic points $c_k$ of the Remark were checked exactly for $k\le15$.
 
 \section{Questions}\label{sec:questions}
 
@@ -969,9 +982,10 @@ $\chi_c(F^2)\ge4$ when (a) and (b) fail and no such place exists? By Corollary~\
 local--global principle for circular colourings would say; Theorem~\ref{thm:B} with Corollary~\ref{cor:B6} is its
 part at $2$ and $3$. For $\Q(\sqrt{23})$, where $7$ splits, so that $\chi_c\le7/2$ by Proposition~\ref{prop:C1}, it
 predicts $\chi_c=7/2$; for $\Q(\sqrt{59})$, where $7$ is inert and $\chi=4$ \cite[Corollary~2]{FC}, it predicts $\chi_c=4$.
-Theorem~\ref{thm:D} is its part below $3.3315$. The method of Section~\ref{sec:gap} stops at $10/3$, because of the
-$5$-adic characters of the probe (Remark in Section~\ref{sec:gap}); a proof of the gap up to $7/2$ would have to
-include them, for instance by localising at the places above $5$, which split in $F(i)$.
+Theorem~\ref{thm:D} is its part below $56/17$ (below $3.3315$ with the computer-assisted step). The method of
+Section~\ref{sec:gap} cannot go beyond $10/3$, because of the $5$-adic characters of the probe (Remark in
+Section~\ref{sec:gap}); a proof along these lines of the gap up to $7/2$ would have to include them, for instance by
+localising at the places above $5$, which split in $F(i)$.
 \item \emph{Four colours.} Is $\chi(F^2)$, in general, the least number of colours of a locally constant colouring
 of one completion? (For real fields this is \cite[Question~8]{TC}, which also allows Borel colourings at the real
 places.) Theorem~\ref{thm:B} answers this at three colours. The first open case is $\Q(\sqrt{47})$, where

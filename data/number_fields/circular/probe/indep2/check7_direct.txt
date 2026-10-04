@@ -1,0 +1,15 @@
+theta=3001611/10000000 k=1: lifted 13 polygons, direct 13 polygons, identical sets: True
+theta=3001611/10000000 k=2: lifted 33 polygons, direct 33 polygons, identical sets: True
+theta=3001611/10000000 k=3: lifted 57 polygons, direct 57 polygons, identical sets: True
+theta=3036/10001 k=1: lifted 13 polygons, direct 13 polygons, identical sets: True
+theta=3036/10001 k=2: lifted 25 polygons, direct 25 polygons, identical sets: True
+theta=3036/10001 k=3: lifted 17 polygons, direct 17 polygons, identical sets: True
+theta = 17/56 + 1e-9: [(1, 5, 0), (2, 5, 0), (3, 5, 0), (4, 5, 0), (5, 5, 0), (6, 5, 0), (7, 5, 0), (8, 5, 0), (9, 5, 0), (10, 5, 0)] (level, polygons, extras)
+theta=97/300 k=1: type-c polygon - N h has 12 vertices; equals P_k: True
+theta=97/300 k=2: type-c polygon - N h has 20 vertices; equals P_k: True
+theta=97/300 k=3: type-c polygon - N h has 28 vertices; equals P_k: True
+theta=97/300 k=4: type-c polygon - N h has 36 vertices; equals P_k: True
+theta=3001611/10000000 k=1: type-c polygon - N h has 12 vertices; equals P_k: True
+theta=3001611/10000000 k=2: type-c polygon - N h has 20 vertices; equals P_k: True
+theta=3001611/10000000 k=3: type-c polygon - N h has 28 vertices; equals P_k: True
+theta=3001611/10000000 k=4: type-c polygon - N h has 36 vertices; equals P_k: True

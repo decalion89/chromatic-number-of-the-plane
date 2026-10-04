@@ -9920,7 +9920,8 @@ denominator `5^k`) decide three colours for every number field, not only for rea
 
 - **Theorem D** (`notes/circular_planes.md` §5, `papers/three-colours/` Section 9). If `χ(F²) ≥ 4` for a number field
   `F`, then `χ_c(F²) ≥ 56/17 ≈ 3.294`; with a computer-assisted step, `χ_c(F²) ≥ 10⁷/3001611 > 3.3315`. With
-  Corollary B6: the circular chromatic number of the plane over a number field is 2, 3 or larger than 3.3315.
+  Corollary B6: the circular chromatic number of the plane over a number field is 2, 3 or at least 56/17 (larger than
+  3.3315 with the computer-assisted step).
 - **How.** The proof of Theorem B goes through with `[1/3, 2/3]` replaced by `[r, 1 − r]` as long as the probe
   `S_N^(r)` (`N = 5^k`) keeps its shape: the type c component `c*_N + P_k^(s)` and the four type q components, now
   hexagons of radius `√2(1/3 − r)` instead of points. A separate agent proved this for `17/56 < r ≤ 1/3` and every
@@ -9945,3 +9946,12 @@ denominator `5^k`) decide three colours for every number field, not only for rea
   `k = 17`) suggest `r0 → 3/10`, which would give `χ_c ∉ (3, 10/3)`.
 - **Paper.** Section 9 of `papers/three-colours/` gives the complete proof of the first statement (Lemmas 8–11,
   Proposition 6) and the computer-assisted step; Theorem D is stated in the introduction and the abstract.
+- **Second referee (Section 9).** A third agent checked every step of Section 9 by hand and with a third
+  implementation (`probe/indep2/`, sharing no code with the other two): correct, and the first statement is a complete
+  proof by hand. It found one false sentence of mine (the interval `[θ, 1 − θ]` is wider than `[1/3, 2/3]`, not
+  narrower), an ambiguous notation (`Y_{k−1}` at level `N/5` versus `N`; the hexagon is not centrally symmetric, so
+  the level matters; now `Y^N_m`), small gaps (the conjugation relation `η_j(ε̄) = conj(η_{−j}(ε))`, the relation
+  `η_{j−1} = iη_j` behind the monotonicity of the thresholds, 'least' → 'infimum'), and an overstatement in the
+  abstract and the introduction, which said 'never in (3, 3.3315]' without saying that this needs the
+  computer-assisted step. All fixed. Its programs reproduce every number in Section 9, including the component
+  counts at every level `k ≤ 19` at `θ* = 0.3001611` and the thresholds for `k ≤ 22`.

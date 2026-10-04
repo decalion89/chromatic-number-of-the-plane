@@ -24,15 +24,15 @@ number field `F`, in which two points are adjacent when `(x − x′)² + (y −
   the only values below 4 for every number field.
 - **Theorem D.** If `χ(F²) ≥ 4`, then `χ_c(F²) ≥ 56/17 ≈ 3.294`; with a computer-assisted step (exact computations
   by two independent programs, [`data/number_fields/circular/probe/`](../../data/number_fields/circular/probe/)),
-  `χ_c(F²) > 3.3315`. So `χ_c(F²)` is 2, 3 or larger than 3.3315. The proof (Section 9) shows that the probe of
+  `χ_c(F²) > 3.3315`. So `χ_c(F²)` is 2, 3 or at least 56/17 (larger than 3.3315 with the computer-assisted step). The proof (Section 9) shows that the probe of
   Theorem B keeps its shape for the intervals `[θ, 1 − θ]` with `θ > 17/56` (Proposition 6); below `θ = 3/10` it has
   5-adic characters, and the method stops at `10/3`.
 
 The working notes are [`notes/three_colours_number_fields.md`](../../notes/three_colours_number_fields.md) and
 [`notes/circular_planes.md`](../../notes/circular_planes.md); the programs and certificates are in
 [`data/number_fields/`](../../data/number_fields/), and the tests in `tests/test_three_colours.py`. Theorem B was
-refereed twice, the paper once (with a second look at Section 8), and Theorem D once, by separate AI agents with
-their own programs; no mathematician has checked it yet.
+refereed twice, the paper once (with a second look at Section 8), and Theorem D twice (the note's version and
+Section 9), by separate AI agents with their own programs; no mathematician has checked it yet.
 
 [`three-colours.tex`](three-colours.tex) is the LaTeX source (`amsart`). To rebuild the PDF, run in this folder,
 with TeX Live:

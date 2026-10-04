@@ -1,0 +1,21 @@
+theta=17/56 level 1: 8 extra pieces, vertex counts [1], min_gamma ||.|| at them: {Fraction(17, 56)}
+theta=17/56 level 2: 20 extra pieces, vertex counts [1], min_gamma ||.|| at them: {Fraction(17, 56)}
+theta=17/56 level 3: 12 extra pieces, vertex counts [1], min_gamma ||.|| at them: {Fraction(17, 56)}
+theta=17/56 level 4: 4 extra pieces, vertex counts [1], min_gamma ||.|| at them: {Fraction(17, 56)}
+theta=601/2000: level 1: 8 extra polygons, max kappa = 17/56 ~ 0.30357142857142855
+    distinct kappas: ['17/56 (0.30357143)']
+theta=601/2000: level 2: 28 extra polygons, max kappa = 17/56 ~ 0.30357142857142855
+    distinct kappas: ['197/651 (0.30261137)', '17/56 (0.30357143)']
+theta=601/2000: level 3: 36 extra polygons, max kappa = 17/56 ~ 0.30357142857142855
+    distinct kappas: ['333/1106 (0.30108499)', '197/651 (0.30261137)', '17/56 (0.30357143)']
+theta=601/2000: level 4: 52 extra polygons, max kappa = 17/56 ~ 0.30357142857142855
+    distinct kappas: ['15767/52456 (0.30057572)', '3303/10981 (0.30079228)', '333/1106 (0.30108499)', '17/56 (0.30357143)']
+theta=601/2000: level 5: 56 extra polygons, max kappa = 333/1106 ~ 0.3010849909584087
+    distinct kappas: ['15767/52456 (0.30057572)', '3303/10981 (0.30079228)', '333/1106 (0.30108499)']
+theta=601/2000: level 6: 52 extra polygons, max kappa = 3303/10981 ~ 0.30079227757034877
+    distinct kappas: ['1046871/3483742 (0.30050187)', '15767/52456 (0.30057572)', '3303/10981 (0.30079228)']
+theta=6003/20000: level 16: 68 extra polygons, max kappa = 1803/6004 ~ 0.3002998001332445
+    distinct kappas: ['0.3001529062', '0.3001609306', '1803/6004 (0.30029980)']
+theta=6003/20000: level 17: 56 extra polygons, max kappa = 452452525229/1507366479208 ~ 0.30016093064954413
+    distinct kappas: ['0.3001529062', '0.3001609306']
+[19.9s]
