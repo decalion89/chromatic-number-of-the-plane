@@ -1,6 +1,6 @@
 # Three colours for the plane over a number field
 
-[`three-colours.pdf`](three-colours.pdf) is a 25-page draft (4 October 2026) about the graph on `F²`, for a
+[`three-colours.pdf`](three-colours.pdf) is a 26-page draft (4 October 2026) about the graph on `F²`, for a
 number field `F`, in which two points are adjacent when `(x − x′)² + (y − y′)² = 1`:
 
 - **Theorem B.** `χ(F²) ≤ 3` if and only if some prime of `F` above 2 ramifies in `F(i)` or some prime of `F` above 3
@@ -61,7 +61,10 @@ E and F; the sentence on `ℚ(√47)` now says `4 ≤ χ_c ≤ 19/4`; a remark a
 fields only (`ℚ(√−73)` is split above 2 and 3); and attributions (Isbell, Fischer 1994, the special cases of (a)),
 references and wording are corrected. A second agent refereed the hand proof of Lemma 13 with a program of its own
 (correct, no gap; `twoprime/indep_L13/`) and corrected one more sentence: Proposition 6 rests on a computation of
-`κ₁` for the primes `11 ≤ p < 1001`. The PDF has 25 pages.
+`κ₁` for the primes `11 ≤ p < 1001`. Section 10 now gives an explicit finite witness for Corollary 7 over
+`ℚ(√11)`: the unit-distance graph on `A + A`, `A` the vertex set of the 76-vertex graph (2 237 vertices), has
+`χ_c = 7/2`, certified by two DRAT proofs for two encodings (`data/number_fields/circular/finite_witness/`). The PDF
+has 26 pages.
 
 [`three-colours.tex`](three-colours.tex) is the LaTeX source (`amsart`). To rebuild the PDF, run in this folder,
 with TeX Live:

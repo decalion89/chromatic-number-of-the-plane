@@ -10189,3 +10189,28 @@ cosets of some `π^k O_w`; the Lean form of the answer to Question 3 of Glasscoc
 regenerated (`certify_w2.py`, 692 s: 24 relations, 98 300 nodes, 79 686 leaves), accepted by `check_w.py`, and is
 now stored as `data/quadratic_planes/winding/cert_83_510_min28.json.gz` and checked by the slow tests; the paper
 cites it instead of "checked but not kept". The PDF is rebuilt (12 pages, no warnings).
+
+## An explicit finite witness for `χ_c(ℚ(√11)²) = 7/2` (4 October, afternoon)
+
+Corollary 7 of `papers/three-colours/` (F12 in the note) says that some finite unit-distance graph over `ℚ(√11)` has
+circular chromatic number `7/2`, by compactness and with no bound on its size; the 76-vertex graph has `χ_c = 16/5`
+(SAT), the 628-vertex union of nine rotated copies stays at most `13/4`, and the ball of radius 2 in the Cayley graph
+of the 140 vectors of Theorem C has `χ_c = 5/2`. A separate search (a cloud session; branch
+`claude/finite-witness-share`) tried iterated Minkowski sums of the 76-vertex graph with lazy SAT (tight cycles added
+on demand) and found that the first sum already works: with `A` the vertex set of the 76-vertex graph, the
+unit-distance graph `H` on `A + A` (2 237 points with denominator 30, all 11 300 unit pairs) maps to `K_{7/2}` by a
+7-adic colouring, and every `(7, 2)`-colouring of `H` has a tight cycle among 180 listed cycles of lengths 14, 21, 28,
+35 and 42 (multiples of 7, as they must be: a tight cycle of length `m` winds `2m/7` times). By Lemma 20 of the paper
+(the easy half of Guichard's characterisation), `χ_c(H) = 7/2`.
+
+Checked here before anything was claimed. The search's own checker reruns the exact checks and `drat-trim` on its
+stored DRAT proof: VERIFIED (1 minute). A second checker written here from the file format alone, sharing no code,
+rebuilds `A + A` from `q11.json`, recomputes every unit pair from the 108 unit vectors with denominator 30 (all 11 300
+are edges, none missing), checks the colouring and the cycles, and writes the formula with its own variable layout;
+`kissat` refutes it in 57 s with a new DRAT proof, `drat-trim` verifies that proof (595 s) and converts it to LRAT,
+and `cake_lpr`, the formally verified checker, accepts the LRAT proof (13 s). So the lower bound rests on two
+independent encodings and proofs, one of them checked by a verified checker. The search continues, looking for a
+smaller witness inside `H`. Files: `data/number_fields/circular/finite_witness/` (the witness, the first formula and
+its proof, both checkers, `verification.txt`); tests: `tests/test_two_primes.py::test_finite_witness_q11` and the slow
+`test_finite_witness_q11_proof`. The paper now gives the witness in Section 10 and mentions it in the introduction,
+after Theorem C and in Question 3 ("How small can it be?").

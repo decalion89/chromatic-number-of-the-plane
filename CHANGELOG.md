@@ -12,6 +12,13 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- **An explicit finite witness for `χ_c(ℚ(√11)²) = 7/2` (4 October).** The unit-distance graph on `A + A`, where `A` is
+  the vertex set of the 76-vertex graph of `χ(ℚ(√11)²) = 4` (2 237 vertices, 11 300 edges), has circular chromatic
+  number exactly `7/2`: a 7-adic `(7, 2)`-colouring, and a SAT computation that every `(7, 2)`-colouring has a tight
+  cycle among 180 listed ones, certified twice (two checkers sharing no code, two encodings, `drat-trim` on both DRAT
+  proofs, `cake_lpr` on one in LRAT form). Corollary 7 of `papers/three-colours/` had shown only that a finite witness
+  exists. Found by a separate search (iterated Minkowski sums, lazy SAT); `data/number_fields/circular/finite_witness/`,
+  tests in `tests/test_two_primes.py`; paper (now 26 pages) and `notes/circular_planes.md` §6.8 updated.
 - **Three colours for every number field (4 October).** `notes/three_colours_number_fields.md`, Theorem B:
   `χ(F²) ≤ 3` iff a prime above 2 ramifies in `F(i)` or a prime above 3 has residue degree 1. It contains Theorem 1,
   proves the local–global question at three colours for every number field, and decides the local fields. Checked by

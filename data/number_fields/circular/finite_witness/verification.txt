@@ -1,0 +1,30 @@
+Verification of the finite witness over Q(sqrt11) (4 October 2026)
+
+1. The share's checker, check_witness.py, with the stored proof:
+   python3 check_witness.py witness_q11sum.json.gz witness_q11sum.cnf.gz witness_q11sum.drat drat-trim
+   (1) 2237 points, 11300 edges, every edge at distance exactly 1
+       unit-distance pairs among the points: 11300; not listed as edges: 0 (induced)
+   (2) the colouring is a (7,2)-colouring: chi_c(H) <= 7/2
+   (3) 180 cycles, all closed walks along edges (lengths 14..42)
+   (4) the CNF is the formula built from the edges and cycles; sha256
+       426f67eec64a80346c6df8c26672e1093870d38a5b3b417f426e667d406b9bca
+   (5) drat-trim: s VERIFIED  (about 1 minute)
+   => every (7,2)-colouring of H has a tight cycle, so chi_c(H) = 7/2
+
+2. An independent check, verify_independent.py (no code shared with check_witness.py):
+   A + A: 2237 points; witness points = A + A: yes
+   unit vectors with denominator 30: 108
+   unit pairs: 11300; witness edges: 11300; equal: True
+   (7,2)-colouring: yes
+   cycles: 180 simple cycles along edges; lengths [14, 21, 28, 35, 42]
+   listed cycles tight under the given colouring: 10
+   CNF (own variable layout): 17134 variables, 250042 clauses;
+       sha256 ee36797440e0c7b52f16592f2bfc18a4292853d65c1aefe744db1e0d432088ab
+   kissat 4.0.4 (--seed=1), with a new DRAT proof: s UNSATISFIABLE (57 s)
+   drat-trim on that proof: s VERIFIED (595 s; 176 037 of 250 042 clauses and 430 589 of 850 611 lemmas in the core),
+       with an LRAT proof as output (-L)
+   cake_lpr (the formally verified checker of CakeML) on the LRAT proof: s VERIFIED UNSAT (13 s)
+
+Files: witness_q11sum.drat.xz is the share's proof (xz; 57 466 663 bytes uncompressed,
+sha256 09a57383938c767c65292b6b8279c866f275d50d503912a6e48e71283dec3ee6). The second proof and its LRAT form
+(164 MB) are not stored; verify_independent.py OUT.cnf and the commands in its docstring regenerate them.

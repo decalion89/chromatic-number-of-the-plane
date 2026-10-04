@@ -1,11 +1,13 @@
 """Theorems E and F (notes/circular_planes.md §6, papers/three-colours Section 10): the computer-assisted steps and
 the finite facts at 7, rerun from the stored programs and certificates (data/number_fields/circular/twoprime/ and the
 referees' subfolders indep_E/, indep_F/, indep_S10/, indep_FW/ and indep_FW2/)."""
-import gzip, os, re, shutil, subprocess, sys
+import gzip, hashlib, lzma, os, re, shutil, subprocess, sys
 
 import pytest
 
 P = os.path.join(os.path.dirname(__file__), "..", "data", "number_fields", "circular", "twoprime")
+FW = os.path.join(os.path.dirname(__file__), "..", "data", "number_fields", "circular", "finite_witness")
+DRAT = shutil.which("drat-trim") or os.environ.get("DRAT_TRIM")
 
 
 def run(cwd, *args, timeout=900, check=True):
@@ -219,3 +221,37 @@ def test_finite_connection_sets_referee(tmp_path):
     out = run(d, "thmC_tight7.py").stdout
     assert out.count("all values in {2..5}/7: True;  tight-set sizes: [35]  positive relation found & verified exactly for all: True") == 2
 
+
+def _stage_witness(tmp_path):
+    for n in ["check_witness.py", "witness_q11sum.json.gz", "witness_q11sum.cnf.gz"]:
+        shutil.copy(os.path.join(FW, n), tmp_path / n)
+    return tmp_path
+
+
+def test_finite_witness_q11(tmp_path):
+    """The explicit finite witness for chi_c(Q(sqrt11)^2) = 7/2 (finite_witness/): both checkers, which share no code,
+    accept the graph (A + A for the 76-vertex graph, every unit-distance pair an edge), the (7,2)-colouring and the
+    180 cycles; the stored formula is the one check_witness.py builds, and the second encoding is the one that kissat,
+    drat-trim and cake_lpr refuted (verification.txt)."""
+    d = _stage_witness(tmp_path)
+    out = run(d, "check_witness.py", "witness_q11sum.json.gz", "witness_q11sum.cnf.gz").stdout
+    assert "(1) 2237 points, 11300 edges" in out and "not listed as edges: 0 (induced)" in out
+    assert "(2) the colouring is a (7,2)-colouring" in out and "(3) 180 cycles" in out
+    assert "(4) the CNF is the formula built from the edges and cycles; sha256 426f67eec64a8034" in out
+    out = run(FW, "verify_independent.py", str(tmp_path / "H.cnf")).stdout
+    assert "witness points = A + A: yes" in out and "unit pairs: 11300 ; witness edges: 11300 ; equal: True" in out
+    assert "(7,2)-colouring: yes" in out and "cycles: 180 simple cycles" in out
+    digest = hashlib.sha256((tmp_path / "H.cnf").read_bytes()).hexdigest()
+    assert digest == "ee36797440e0c7b52f16592f2bfc18a4292853d65c1aefe744db1e0d432088ab"
+
+
+@pytest.mark.slow
+@pytest.mark.skipif(not DRAT, reason="drat-trim not found (PATH or DRAT_TRIM)")
+def test_finite_witness_q11_proof(tmp_path):
+    """drat-trim verifies the stored DRAT proof that every (7,2)-colouring of the witness has a tight listed cycle."""
+    d = _stage_witness(tmp_path)
+    with lzma.open(os.path.join(FW, "witness_q11sum.drat.xz"), "rb") as src, open(d / "witness_q11sum.drat", "wb") as dst:
+        shutil.copyfileobj(src, dst)
+    out = run(d, "check_witness.py", "witness_q11sum.json.gz", "witness_q11sum.cnf.gz", "witness_q11sum.drat", DRAT,
+              timeout=3600).stdout
+    assert "(5) drat-trim: s VERIFIED" in out and "chi_c(H) = 7/2" in out
