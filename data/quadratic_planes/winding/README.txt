@@ -37,6 +37,12 @@ fastcert.py     the same with sampled branching candidates: python3 fastcert.py 
 check_w.py      independent checker (integers and fractions only; every failed check raises an error, so python -O
                 checks the same, and floats are rejected): python3 check_w.py OUT.json -> VERIFIED ... or REJECTED
 
+check_w_indep.py a second checker, written separately by a referee from the certificate format (integers and
+                 fractions; python-flint for ranks): units, relations, every branch and leaf, the rank of the units,
+                 whether the relations generate all relations, and whether U is all of U_D.
+                 python3 check_w_indep.py CERT.json.gz ... ; check_w_indep.out is its output on the 26 stored
+                 certificates (here and in family/)
+
 Certificates (cert_d_D*.json.gz; the table is in notes/winding_lemma.md): 11/30 (16 vectors), 83/510 (all 54
 vectors: cert_83_510_full; the 28 of min_83_510.json: cert_83_510_min28, 98 300 nodes, about 80 s to check),
 107/1170, 143/1740, 167/1560 and 203/1530.

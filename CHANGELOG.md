@@ -64,6 +64,20 @@ including every retracted claim, is the research log,
   each result, and the relevant papers the project did not cite before.
 
 ### Changed
+- **A full reading of `papers/four-colours/` and `papers/quadratic-planes/` (4 October, evening).** A separate agent
+  checked every proof step of Theorem 1 and its corollaries by hand and with its own exact programs (correct, no gap),
+  and every number and graph of the quadratic-planes draft against the data (all agree; CaDiCaL refutes all 27
+  formulas). Applied: the remark that the bound of Theorem 4(1) is sharp holds for `k ≤ 5` and not for `k ≥ 6`
+  (for `N = 5⁶` the 22 values `65 639 ≤ d ≤ 66 143` admit no character although `d ≥ 21N/5`; checked here with the
+  referee's exact decision, now `family/fc_case23.py`, and the binding rotation `ρ⁶` recomputed); "26 fields" was 27;
+  Moorhouse's Theorem 8.1 cited correctly; the checks section says which certificates use the `N` of the proof; the
+  second certificate checker the paper mentioned is now in the repository (`check_w_indep.py`, written separately by
+  a referee; it accepts all 26 stored certificates and rejects six kinds of corruption, also under `python -O`); a false
+  explanatory claim in the quadratic-planes draft (on denominators for `d = 83`) replaced by what holds; a gap in
+  its Hoffman remark closed (exact eigenvalues at 23 and 31); the quadratic-planes draft now records, in dated
+  remarks, what the later drafts proved; the repository pointers say the files are on the development branch;
+  references (Davies, de Bruijn–Erdős, Exoo–Ismailescu, Isbell, the title of MildlyMeticulous's repository) and
+  wording. Both PDFs rebuilt (6 and 7 pages, no warnings).
 - **A full reading of `papers/winding/` (4 October, afternoon).** A separate agent read the whole paper,
   reran every certificate and wrote its own checker and tests: no false theorem and no broken proof. Applied: Question
   14 no longer asks as open what `papers/four-colours/` proves (it now asks the four-colour local–global question);

@@ -228,7 +228,13 @@ where `|u|, |v| ≥ N/2`, or in `Q_N + Nℤ[i]` (`−Q_N ≡ Q_N`), where `|u|, 
 `d + 1 ≥ 28N/5`. If `d < 21N/5 = 21·5^{k−1}`, neither holds (`d + 1 < 21N/5 + 1 < 28N/5`). If `5^k ≥ d/4`, then
 `d ≤ 4N < 21N/5`. ∎
 
-**The bound is sharp.** An exact computation by the first referee (cells of `S_N`, Minkowski sums and the lattice
+**The bound is sharp for `k ≤ 5`, and not for `k ≥ 6`** (corrected 4 October, after a third reading). If
+`d ≥ 21N/5` and `k ≤ 5`, then `c*_N/d ∈ P_k`, as the conditions at `ρ^{±1}` are the binding ones, and this gives a
+character with all three types c. At `k = 6`, `(1 − i)ρ⁶ = (1457 − 22049i)/15625`, so `c*_N/d ∈ P_6` only when
+`d ≥ 66147N/15625`, and for `N = 5⁶` an exact decision (all type choices and all lattice points, given
+Proposition 1) finds no character for the 22 values `65 639 ≤ d ≤ 66 143` with `d ≡ 23 (mod 24)`, although
+`d ≥ 21N/5 = 65 625`; the first value with a character is `66 167` (`family/fc_case23.py`). An exact computation by the
+first referee (cells of `S_N`, Minkowski sums and the lattice
 points of `Nℤ[i]`, cross-checked by a second method, every feasible case with an explicit character checked on all of
 `U`) decided the question for every `d ≡ 23 (mod 24)` up to 1295 (`N = 5, 25, 125`) and up to 2999 (`N = 625`): the
 set of Theorem 1a has no character into `[1/3, 2/3]` exactly when `d < 21N/5`. For `N = 25` the infeasible values are
@@ -324,7 +330,8 @@ The scripts are in `data/quadratic_planes/winding/family/` (README there), the t
   `(c*_N + P_k) ∪ Q_N`; `P₁` has area `17/189`, vertices `(±1/6, ±1/18)`, `(±1/18, ±1/6)`, `(±5/42, ±5/42)`.
 - `family23.py d [k]` and `family11.py d [k] [n]` write the configurations in the format of `check_w.py`. Exact
   certificates (branch and bound with a rational Farkas vector at every leaf, `../certify_w2.py`), each checked by
-  `../check_w.py` and by the independent integer-only checker, with `N` smaller than the proofs need:
+  `../check_w.py` and by `../check_w_indep.py` (written separately; `check_w_indep.out`), with the `N` that the proof
+  of Theorem 1a needs and with `N` smaller than the proof of Theorem 1b needs:
   - Theorem 1a, `N = 25`: `d = 23, 47, 71, 95`; `N = 125`: `d = 119, 143, 167, 191, 215, 239, 263, 287, 311`;
   - Theorem 1b, `N = 25`: `d = 11, 35, 59` (`n = 19, 55, 19`); `N = 125`: `d = 83, 131, 155` (`n = 19`).
 - Floating-point solver (`../kapparel.py`, SCIP): all 47 squarefree `d ≡ 23 (mod 24)` below 1200 with `5^k` the least

@@ -10214,3 +10214,47 @@ smaller witness inside `H`. Files: `data/number_fields/circular/finite_witness/`
 its proof, both checkers, `verification.txt`); tests: `tests/test_two_primes.py::test_finite_witness_q11` and the slow
 `test_finite_witness_q11_proof`. The paper now gives the witness in Section 10 and mentions it in the introduction,
 after Theorem C and in Question 3 ("How small can it be?").
+
+## A full reading of the four-colours and quadratic-planes drafts (4 October, evening)
+
+A separate agent read `papers/four-colours/` and `papers/quadratic-planes/` in full, checked every step of Theorem 1,
+Corollaries 2 and 3, Theorem 4, Lemmas 5–10 and Proposition 9 of the first by hand and with exact programs of its
+own (`P₁, …, P₄` with 12, 20, 28 and 36 vertices and the stated areas; `S_N` from its definition for `N ≤ 625`; the
+infeasibility of both cases; the large-`N` criterion for the 191 squarefree `d ≡ 11 (mod 24)` below 5000), and
+every graph, number and claim of the second against the data (distinct points, all unit pairs, no triangle, the
+colourings, every formula equal to `Φ(G)`; CaDiCaL refutes all 27 formulas). **No error in a proof.** Findings, all
+applied after checking them here:
+
+- **The sharpness remark was false for large `k`.** For `d ≡ 23 (mod 24)` the bound `d < 21N/5` is sharp for
+  `k ≤ 5`: then the conditions at `ρ^{±1}` are the binding ones, so `c*_N/d ∈ P_k` when `d ≥ 21N/5`, which gives a
+  character with all types c. At `k = 6`, `(1 − i)ρ⁶ = (1457 − 22049i)/15625`, and for `N = 5⁶` the referee's exact
+  decision (all type choices, all lattice points, given Proposition 9) finds no character for the 22 values
+  `65 639 ≤ d ≤ 66 143` with `d ≡ 23 (mod 24)`; the first feasible value is `66 167`. Rerun here
+  (`family/fc_case23.py`, 4 s, stored output and a test), with the maximum of `|⟨1 + i, ν⟩|` over the normals
+  recomputed exactly for `k ≤ 8` (`7/5` up to `k = 5`, `22049/15625` from `k = 6`). The remark, the note, the README
+  and `family/README.txt` now say "sharp for `k ≤ 5`, not for `k ≥ 6`". No theorem used it.
+- **Counts and citations.** "26 fields" with explicit graphs is 27 (also on the front page); Moorhouse's Theorem
+  8.1 combines his bounds at 3 and 7 with his Lemma 8.4 and excludes `d ≡ 47, 59, 83 (mod 84)`; Davies,
+  de Bruijn–Erdős, Exoo–Ismailescu and Isbell are now cited where used; the range of primes covered by the graphs
+  is stated correctly; the Lean constants and files are described as they are (`exact3` assumes `N > 2Σ|m_j|` for
+  values `N/6·E + x` with `|x| ≤ 1/4`; `χ(ℚ₂²) = 2` and `χ(ℚ₃²) = 3` are in `lean/PadicPlanes.lean`).
+- **The checks section.** In case (1) the certificates use the `N` the proof needs (an independent check), not a
+  smaller one; only case (2) uses a smaller `N`. "Two independent checkers": the second, an integer-only checker,
+  was not in the repository. The winding referee's checker, written from the certificate format alone, is now
+  `data/quadratic_planes/winding/check_w_indep.py` (its `assert`s replaced by explicit errors, and integer types
+  checked); it accepts all 26 stored certificates (`check_w_indep.out`) and rejects six kinds of corruption, with
+  and without `python -O`; tests in `tests/test_winding_family.py`.
+- **The quadratic-planes draft.** A false explanatory claim (that for `d = 83` a direction with 3 in its denominator
+  also has 7, 11, 17 or 31 there; `(29/54, 5√83/54)` has denominator `2 · 3³`) is replaced by what was used and holds:
+  no vector of `U₁₂₃₀` has 3 in its reduced denominator (checked here). The Hoffman remark now uses the exact least
+  eigenvalue at 23 and 31 (ratios 0.2491 and 0.249997), as the bound `2√p` gives only 0.2855 and 0.2582 there. Dated
+  remarks record what the later drafts proved (Theorem 1 of the four-colours draft answers two of its open
+  questions; the winding draft settles 83, 107, 143, 203), and the `ℚ(√47)` question cites `4 ≤ χ_c ≤ 19/4`. Smaller
+  points: Fischer's Theorem 10 covers 491 and 851 too, the title of MildlyMeticulous's repository, the date.
+- **Repository pointers.** The public `main` branch and the archived release predate both drafts; their references
+  now say that the cited files are on the branch `claude/quadratic-planes` (pull request 35), as the three-colours
+  draft already did.
+
+Not done: the referee's completion of the remark "one vector cannot replace `u₁` and `u_n`" (an argument that
+`G_N ∪ G_N v ∪ G_N v̄` always has a character) was not checked here; the remark now states only what it shows, that
+the argument of Section 4 does not extend.

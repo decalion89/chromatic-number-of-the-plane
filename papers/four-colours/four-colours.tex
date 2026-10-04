@@ -49,8 +49,9 @@ $\chi(\Q(\sqrt d)^2)=2$ unless $d\equiv 3\pmod 4$, that $\chi(\Q(\sqrt d)^2)\ge3
 $\chi(\Q(\sqrt d)^2)\le 3$ unless $d\equiv 11\pmod{12}$. We prove that $\chi(\Q(\sqrt d)^2)\ge 4$ for every
 $d\equiv 11\pmod{12}$. So the plane over $\Q(\sqrt d)$ needs four colours exactly when $d\equiv11\pmod{12}$, and,
 with the upper bounds of Fischer and Moorhouse, $\chi(\Q(\sqrt d)^2)=4$ for all these $d$ except possibly
-$d\equiv 47,143,167\pmod{168}$. The proof exhibits, for each $d$, a finite set of unit vectors, made of one or two
-vectors and their rotations by the rational rotations whose denominators divide a power of $5$, and shows that no
+$d\equiv 47,143,167\pmod{168}$. The proof exhibits, for each $d$, a finite set of unit vectors, made of $(1,0)$, a
+vector and its mirror image, one more vector when $d\equiv11\pmod{24}$, and their rotations by the rational rotations
+whose denominators divide $5^k$ for a suitable $k$, and shows that no
 character of the group they generate maps all of them into $[1/3,2/3]$; a characterisation of $3$-colourable
 Cayley graphs of abelian groups by such characters then excludes $3$-colourings. The main step is an exact
 description of the characters of $\frac1N\Z[i]$, $N=5^k$, that keep every rational rotation with denominator
@@ -63,7 +64,8 @@ dividing $N$ in $[1/3,2/3]$.
 
 Let $F\subset\R$ be a field. The \emph{plane over $F$} is the graph on $F^2$ in which $x$ and $y$ are adjacent when
 $|x-y|=1$, and $\chi(F^2)$ is its chromatic number. For $F=\R$ this is the Hadwiger--Nelson problem, and
-$5\le\chi(\R^2)\le7$ \cite{deGrey}. For $F=\Q$, $\chi(\Q^2)=2$ \cite{Woodall}. For real quadratic fields
+$5\le\chi(\R^2)\le7$: the lower bound is due to de Grey \cite{deGrey} and to Exoo and Ismailescu \cite{EI}, the
+upper bound to Isbell (see \cite{Soifer}). For $F=\Q$, $\chi(\Q^2)=2$ \cite{Woodall}. For real quadratic fields
 $K=\Q(\sqrt d)$, $d\ge2$ squarefree, the following was known:
 \begin{itemize}
 \item $\chi(K^2)=2$ if $d\not\equiv3\pmod4$ \cite{Johnson1987,Fischer1990,Moorhouse};
@@ -73,10 +75,11 @@ $u=((1-d)/(1+d),\,2\sqrt d/(1+d))$ and its mirror image $\bar u$, the relation
 $\frac{d+1}4(u+\bar u)+\frac{d-1}2(1,0)=0$ is a closed walk of odd length $d$;
 \item $\chi(K^2)\le3$ if $d\not\equiv2\pmod3$ \cite[Thm.~9]{Fischer1990}, \cite[Cor.~8.3]{Moorhouse};
 \item $\chi(K^2)\le4$ if $d\equiv3\pmod8$ \cite[Thm.~10]{Fischer1990} or $d\equiv0,1,2,4\pmod7$
-\cite[Cor.~8.3]{Moorhouse}; Moorhouse's Theorem~8.1 combines these.
+\cite[Cor.~8.3]{Moorhouse}; Moorhouse's Theorem~8.1 combines his bounds at $3$ and $7$ with his Lemma~8.4:
+$\chi(K^2)\le4$ unless $d\equiv47,59,83\pmod{84}$.
 \end{itemize}
 So a real quadratic field can need four colours only when $d\equiv11\pmod{12}$. In the literature we found, the
-largest lower bound for a real quadratic field is $3$ \cite{Madore,Moorhouse,Fischer1990}; explicit graphs for $26$
+largest lower bound for a real quadratic field is $3$ \cite{Madore,Moorhouse,Fischer1990}; explicit graphs for $27$
 fields that need four colours are given in the companion draft \cite{QP}. Moorhouse
 asked what can be said about $\chi(\Q(\sqrt d)^2)$, and about $\chi(\Q(\sqrt{47})^2)$ in particular
 \cite{MoorhouseTalk}. Fischer \cite[Thm.~10(ii)]{Fischer1990} showed, with the vector $u$ above (up to sign and
@@ -116,8 +119,9 @@ $\chi(\Q_p^2)\ge\chi(\Q(\sqrt d)^2)\ge4$. For $p=2,3$ no $d\equiv11\pmod{12}$ is
 $\chi(\Q_2^2)=2$ and $\chi(\Q_3^2)=3$, following from \cite{Madore}.
 \end{proof}
 
-For $p\equiv1\pmod4$ this is weaker than $\chi(\Q_p^2)=\infty$, a consequence of a theorem of Davies; the new case is
-$p\equiv3\pmod4$, where explicit graphs over $27$ fields had given the bound only for $7\le p<2\,129\,503\,819$, and
+For $p\equiv1\pmod4$ this is weaker than $\chi(\Q_p^2)=\infty$, a consequence of a theorem of Davies \cite{Davies}; the
+new case is $p\equiv3\pmod4$, where explicit graphs over $27$ fields had given the bound for every such $p$ with
+$7\le p<2\,129\,503\,819$ but not for $p=2\,129\,503\,819$, and
 where no finite set of fields can give it for every $p$, by Chebotarev's theorem \cite{PA}. A finite $4$-chromatic
 unit-distance graph in $\Q_p^2$ exists, by compactness, but is not exhibited.
 
@@ -148,11 +152,11 @@ Theorem~\ref{thm:sets}, $\Cay(\Z U,\pm U)$ is not $3$-colourable. It is a subgra
 (If $d$ is not squarefree, its squarefree part is again $\equiv11\pmod{12}$, and the field is the same.)
 \end{proof}
 
-By the theorem of de Bruijn and Erd\H{o}s, each of these planes contains a finite unit-distance graph with no
+By the theorem of de Bruijn and Erd\H{o}s \cite{dBE}, each of these planes contains a finite unit-distance graph with no
 proper $3$-colouring, and deleting vertices one at a time gives one with chromatic number exactly $4$; it is
 triangle-free, since $\sqrt3\notin\Q(\sqrt d)$. We do not exhibit it: the
 direction ``$3$-colourable $\Rightarrow$ character'' of \cite[Theorem~1]{Winding} averages over the group with an
-invariant mean and is not constructive. For $26$ of these fields, explicit vertex-critical graphs with $71$ to
+invariant mean and is not constructive. For $27$ of these fields, explicit vertex-critical graphs with $71$ to
 $1\,404$ vertices and no proper $3$-colouring are given in \cite{QP}, with proofs that do not use characters.
 
 Section~\ref{sec:chars} turns characters into complex numbers, Section~\ref{sec:shape} describes the set $S_N$ of
@@ -327,10 +331,15 @@ $d\ge\frac{21N}5$, and the second needs $\frac{7N}3\le\frac{5(d+1)}{12}$, that i
 $d<21N/5$, neither holds. This proves Theorem~\ref{thm:sets}(1); and $5^k\ge d/4$ gives $d\le4N<21N/5$.
 
 \begin{remark}
-The bound is sharp. An exact computation (cells of $S_N$, Minkowski sums and the lattice points of $N\Z[i]$, with a
-second method as a cross-check and an explicit character in every feasible case) shows, for every
-$d\equiv23\pmod{24}$ up to $1295$ when $N=5,25,125$ and up to $2999$ when $N=625$, that the set of
-Theorem~\ref{thm:sets}(1) admits no such character exactly when $d<21N/5$.
+For $k\le5$ the bound is sharp: if $d\ge21N/5$, then $c^*_N/d\in P_k$, since for $k\le5$ the conditions at
+$\rho^{\pm1}$ are the binding ones, and this gives a character with all three types~c. An exact computation (cells of
+$S_N$, Minkowski sums and the lattice points of $N\Z[i]$, with a second method as a cross-check and an explicit
+character in every feasible case) confirms, for every $d\equiv23\pmod{24}$ up to $1295$ when $N=5,25,125$ and up to
+$2999$ when $N=625$, that the set of Theorem~\ref{thm:sets}(1) admits no such character exactly when $d<21N/5$. For
+$k\ge6$ the bound is not sharp: as $(1-i)\rho^6=(1457-22049i)/15625$, the point $c^*_N/d$ lies in $P_6$ only when
+$d\ge66147N/15625$, and for $N=5^6$ an exact decision (all choices of types and all lattice points) finds no
+character for the $22$ values $65\,639\le d\le66\,143$ with $d\equiv23\pmod{24}$, although $d\ge21N/5=65\,625$; the
+first value with a character is $66\,167$.
 \end{remark}
 
 \section{The case \texorpdfstring{$d\equiv11\pmod{24}$}{d = 11 mod 24}}\label{sec:11}
@@ -342,7 +351,7 @@ $X$ and $Y$ gives $(n^2+d)u_n=(n-1)(n+d)\cdot1+n(1+d)u_1$, so with $y=w_{u_n}$,
 \[
 a(w+w')+bz=0,\qquad(n^2+d)y-(n-1)(n+d)z-n(1+d)w=0.
 \]
-As $n\ge1$, all coefficients are nonnegative, and the sums of their absolute values are $2a+b=d$ and
+As $n\ge1$, $(n-1)(n+d)$ and $n(1+d)$ are nonnegative, and the sums of their absolute values are $2a+b=d$ and
 $2n(n+d)\ge d$. (For negative $n$ the second sum is larger, and the hypothesis on $N$ would have to change.) As
 $N>\frac{2\sqrt{10}}3n(n+d)=12r\,n(n+d)$, Lemma~\ref{lem:exact} applies to both relations: writing
 $z=N\varepsilon_z+x_z$ and so on,
@@ -370,8 +379,8 @@ $v_3(B''\varepsilon_z)\ge e+s-1\ge2s\ge2$. So $v_3(\varepsilon_y)=-1$ if and onl
 Steps 2 and 3 contradict each other whatever the type of $\varepsilon_w$. This proves Theorem~\ref{thm:sets}(2).
 
 \begin{remark}
-One vector cannot replace $u_1$ and $u_n$: if $v=(\mu+i\nu\sqrt d)/\tau$ with $\mu^2+d\nu^2=\tau^2$ in lowest terms
-and $d\equiv3\pmod8$, then $4\nmid\tau$ (if $\tau$ is even, $\mu,\nu$ are odd and $\mu^2+d\nu^2\equiv4\pmod8$), while the
+The argument of Section~\ref{sec:23} does not work with one vector in place of $u_1$ and $u_n$: if
+$v=(\mu+i\nu\sqrt d)/\tau$ with $\mu^2+d\nu^2=\tau^2$ in lowest terms and $d\equiv3\pmod8$, then $4\nmid\tau$ (if $\tau$ is even, $\mu,\nu$ are odd and $\mu^2+d\nu^2\equiv4\pmod8$), while the
 argument of Section~\ref{sec:23} needs the coefficient $\tau/\gcd(\tau,2\mu)$ of the relation $\tau(v+\bar v)=2\mu\cdot1$
 to be even. Correspondingly, $x^2+y^2$ is anisotropic over $\Q_2(\sqrt d)$ for $d\equiv3\pmod8$ and isotropic for
 $d\equiv7\pmod8$.
@@ -385,10 +394,11 @@ $k=1,2,3$ by exact polygon clipping (a $12$-, $20$- and $28$-gon around $c^*_N$ 
 $437/4977$, and the four points of $Q_N$), independently of the induction; a referee's own program confirmed
 Proposition~\ref{prop:shape} with equality for $k\le4$, and found no exception among $10^7$ sampled points for
 $k=1,2$. Exact certificates (branch and bound over the integer values of a basis of the relations, with a rational
-Farkas vector at every leaf), each checked by two independent checkers, show that the sets of
-Theorem~\ref{thm:sets} with smaller $N$ than the proof needs already have no such character: in case~(1),
-$d=23,47,71,95$ with $N=25$ and $d=119,143,\dots,311$ ($d\equiv23\pmod{24}$, squarefree) with $N=125$; in
-case~(2), $d=11,35,59$ with $N=25$ and $d=83,131,155$ with $N=125$. A floating-point solver confirms case~(2) with the $N$ that the proof needs for
+Farkas vector at every leaf), each accepted by two checkers written separately (\nolinkurl{check_w.py} and
+\nolinkurl{check_w_indep.py}), show that the sets of Theorem~\ref{thm:sets} have no such character: in case~(1),
+with the $N$ that the proof needs, $d=23,47,71,95$ with $N=25$ and $d=119,143,\dots,311$ ($d\equiv23\pmod{24}$,
+squarefree) with $N=125$, an independent check of Section~\ref{sec:23}; in case~(2), already with a smaller $N$
+than the proof needs, $d=11,35,59$ with $N=25$ and $d=83,131,155$ with $N=125$. A floating-point solver confirms case~(2) with the $N$ that the proof needs for
 $d=11,35,59,83,131,179$. Finally, for a finite set $\Delta$ of unit vectors, Proposition~\ref{prop:shape} and
 Lemma~\ref{lem:exact} reduce the question whether $G_N(\Delta\cup\{1\})$ admits such a character for all large $N$ to
 the existence of a character with values in $\{\frac13,\frac12,\frac23\}$, a computation in $(\Z/6)^4$; it confirms
@@ -396,23 +406,30 @@ Theorem~\ref{thm:sets}(2) for all $191$ squarefree $d\equiv11\pmod{24}$ below $5
 two vectors $(\mu+i\nu\sqrt{11})/\tau$ with $\nu\le7$, $\tau\le60$ suffice.
 
 \emph{Formal proof.} Theorem~\ref{thm:main} and Corollary~\ref{cor:padic} are also proved in Lean~4 with Mathlib
-(\texttt{lean/FourColours.lean} and \texttt{lean/PadicFour.lean} in \cite{Repo}, with Theorem~W for an arbitrary
-abelian group and a finite set $S$ in \texttt{lean/TheoremWInf.lean}, by averages over boxes and a limit along an
+(\nolinkurl{lean/FourColours.lean} and \nolinkurl{lean/PadicFour.lean} in \cite{Repo}, the values
+$\chi(\Q_2^2)=2$ and $\chi(\Q_3^2)=3$ in \nolinkurl{lean/PadicPlanes.lean}, and Theorem~W for an arbitrary abelian
+group and a finite set $S$ in \nolinkurl{lean/TheoremWInf.lean}, by averages over boxes and a limit along an
 ultrafilter); the files depend only on Lean's three standard axioms. The formal proof uses a cruder form of
 Proposition~\ref{prop:shape}, which suffices for Theorem~\ref{thm:main} but not for the bound
 $d<21\cdot5^{k-1}$: every $c\in S_N$ is $N(\frac{1+i}2+t)+x$ with $t\in\Z[i]$ and $|x|^2<\frac1{18}$, or
 $N(\frac{\alpha+\beta i}3+t)$ with $\alpha,\beta\in\{1,2\}$. This follows by the induction of
 Proposition~\ref{prop:shape} started at $k=0$, where $S_1=([\frac13,\frac23]+\Z)^2$ and the corners of the square are
 the points of type $q$; in the step, $\frac1{18}=(\frac7{30})^2+(\frac1{30})^2$ replaces the numbers of
-Lemma~\ref{lem:numbers}, and the points of type $q$ are handled by a congruence modulo $15$. Lemma~\ref{lem:exact}
-then needs $N>6\sum_j|m_j|$.
+Lemma~\ref{lem:numbers}, and the points of type $q$ are handled by a congruence modulo $15$. The formal analogue of Lemma~\ref{lem:exact}
+assumes $N>2\sum_j|m_j|$, for values written as $\frac N6E+x$ with $E$ an integer and $|x|\le\frac14$.
 
 \section*{Acknowledgements}
 The author thanks the authors of the works cited, whose questions and results this note builds on.
 
 \begin{thebibliography}{99}
+\bibitem{Davies} J. Davies, \emph{Chromatic number of spacetime}, arXiv:2308.16885 (2023, revised 2024).
+\bibitem{dBE} N. G. de Bruijn and P. Erd\H{o}s, \emph{A colour problem for infinite graphs and a problem in the
+theory of relations}, Nederl. Akad. Wetensch. Proc. Ser. A \textbf{54} = Indag. Math. \textbf{13} (1951),
+371--373.
 \bibitem{deGrey} A. D. N. J. de Grey, \emph{The chromatic number of the plane is at least 5}, Geombinatorics
 \textbf{28} (2018), 18--31; arXiv:1804.02385.
+\bibitem{EI} G. Exoo and D. Ismailescu, \emph{The chromatic number of the plane is at least $5$: a new proof},
+Discrete Comput. Geom. \textbf{64} (2020), 216--226; arXiv:1805.00157.
 \bibitem{Fischer1990} K. G. Fischer, \emph{Additive $K$-colorable extensions of the rational plane}, Discrete
 Math. \textbf{82} (1990), 181--195.
 \bibitem{Johnson1987} P. D. Johnson Jr., \emph{Two-colorings of real quadratic extensions of $\Q^2$ that forbid
@@ -428,9 +445,11 @@ many distances}, Congr. Numer. \textbf{60} (1987), 51--58.
 \texttt{papers/quadratic-planes/} in \cite{Repo}.
 \bibitem{Repo} S. Gal\'an, \emph{The Hadwiger--Nelson problem over number fields}, code, data and formal
 proofs, 2026. Archived at Zenodo, \href{https://doi.org/10.5281/zenodo.22976635}{doi:10.5281/zenodo.22976635}
-(all versions); source at \url{https://github.com/decalion89/chromatic-number-of-the-plane}; this note is
+(all versions); source at \url{https://github.com/decalion89/chromatic-number-of-the-plane}; a fuller account is
 \texttt{notes/four\_colours\_11\_mod\_12.md} there, and the programs are in
-\texttt{data/quadratic\_planes/winding/family/}.
+\texttt{data/quadratic\_planes/winding/family/}. These files and the Lean files cited here are on the branch
+\texttt{claude/quadratic-planes} (pull request~35), not yet in a release.
+\bibitem{Soifer} A. Soifer, \emph{The mathematical coloring book}, Springer, New York, 2009.
 \bibitem{Winding} S. Gal\'an, \emph{Circular colourings of abelian Cayley graphs below four come from
 characters}, draft, 2026, \texttt{papers/winding/} in \cite{Repo}.
 \bibitem{Woodall} D. R. Woodall, \emph{Distances realized by sets covering the plane}, J. Combin. Theory Ser. A

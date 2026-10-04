@@ -138,3 +138,38 @@ def test_certificates(path):
                          ids=lambda p: os.path.basename(p))
 def test_certificates_slow(path):
     _check_certificate(path)
+
+
+def test_sharpness_decision():
+    """The referee's exact decision for d = 23 (mod 24) (family/fc_case23.py, given the shape of S_N): the bound
+    d < 21N/5 is sharp for N = 5, ..., 3125 and not for N = 15625 (22 exceptions, 65 639 <= d <= 66 143)."""
+    out = subprocess.run([sys.executable, "-B", "fc_case23.py"], cwd=FDIR, capture_output=True, text=True,
+                         check=True, timeout=600).stdout
+    assert out == open(os.path.join(FDIR, "fc_case23.out")).read()
+    assert "N=3125: 21N/5 = 13125; first feasible d (d = 23 mod 24) in the window: 13127" in out
+    assert "N=15625: 21N/5 = 65625; first feasible d (d = 23 mod 24) in the window: 66167" in out
+    assert "[65639, 65663, 65687, 65711, 65735]... (22 values)" in out
+
+
+def _indep_lines():
+    with open(os.path.join(WDIR, "check_w_indep.out")) as fh:
+        return {line.split(" ", 1)[0]: line for line in fh}
+
+
+@pytest.mark.parametrize("name", ["family/cert_f23_23_k2.json.gz", "family/cert_f11_11_k2.json.gz",
+                                  "cert_11_30.json.gz"])
+def test_second_checker(name):
+    """check_w_indep.py, written separately from check_w.py, accepts the certificate with the stored output."""
+    out = subprocess.run([sys.executable, "-B", "check_w_indep.py", name], cwd=WDIR, capture_output=True,
+                         text=True, check=True, timeout=600).stdout
+    assert out == _indep_lines()[name]
+    assert "'rankU': 4" in out and "'saturated': True" in out
+
+
+@pytest.mark.slow
+def test_second_checker_all():
+    """check_w_indep.py on all 26 stored certificates reproduces check_w_indep.out (about a minute)."""
+    names = sorted(_indep_lines())
+    out = subprocess.run([sys.executable, "-B", "check_w_indep.py", *names], cwd=WDIR, capture_output=True,
+                         text=True, check=True, timeout=3600).stdout
+    assert sorted(out.splitlines(keepends=True)) == sorted(_indep_lines().values()) and len(names) == 26

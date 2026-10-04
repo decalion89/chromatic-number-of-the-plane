@@ -37,6 +37,7 @@ jobs:
           --deselect tests/test_threepoint_indep.py::test_other_certificates
           --deselect tests/test_winding.py::test_certificates_slow
           --deselect tests/test_winding_family.py::test_certificates_slow
+          --deselect tests/test_winding_family.py::test_second_checker_all
           tests/test_q23.py tests/test_q311.py tests/test_q35.py tests/test_q3q.py tests/test_split_places.py
           tests/test_decompositions.py tests/test_cli.py
           tests/test_biquadratic_bounds.py tests/test_finite_planes.py tests/test_g13.py tests/test_g13_audit.py tests/test_g13_chi.py tests/test_flat852.py tests/test_quadratic_planes.py tests/test_g17.py tests/test_threepoint.py tests/test_threepoint_indep.py

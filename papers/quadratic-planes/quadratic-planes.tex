@@ -35,7 +35,7 @@
 \thanks{These results were obtained with the assistance of an AI system (Claude, by Anthropic), which carried
 out the searches, the computations and the checks, and helped to draft this note. No mathematician has checked
 the note yet. The author is not a professional mathematician and submits it for independent verification.}
-\date{Draft, 2 October 2026}
+\date{Draft, 2 October 2026; remarks added 4 October 2026}
 \subjclass[2020]{Primary 05C15, 52C10; Secondary 11R11, 68V15}
 \keywords{Hadwiger--Nelson problem, chromatic number of the plane, unit-distance graph, real quadratic field,
 SAT solving, DRAT proofs}
@@ -56,7 +56,9 @@ separate code. For ten of the fields the whole theorem is also proved in Lean~4 
 (for $d=47$, the lower bound) the Lean proof assumes only that the colouring formula is unsatisfiable, which
 the verified checker \texttt{cake\_lpr} confirms. The upper bounds are reductions modulo a prime due to Moorhouse and Fischer. We also explain why
 some searches fail: when every direction is integral at certain primes above $2$, $3$ or $5$, reduction there
-colours every graph built from those directions with two or three colours.
+colours every graph built from those directions with two or three colours. (Added 4 October: a companion draft
+now proves $\chi(\Q(\sqrt d)^2)\ge4$ for every $d\equiv11\pmod{12}$ by hand, through characters; the graphs here
+remain an explicit and independent proof for these $27$ fields.)
 \end{abstract}
 
 \maketitle
@@ -101,6 +103,15 @@ For squarefree $2\le d<83$, $\chi(\Q(\sqrt d)^2)$ is $2$ if $d\equiv1,2\pmod4$, 
 $d\not\equiv2\pmod3$, and $4$ if $d\in\{11,23,35,59,71\}$. The only remaining value is $d=47$, with
 $4\le\chi\le5$.
 \end{corollary}
+
+\begin{remark}[added 4 October 2026]
+Later drafts go further. \cite{FC} proves $\chi(\Q(\sqrt d)^2)\ge4$ for every $d\equiv11\pmod{12}$, by hand, and
+\cite{Winding} proves $\chi(\Q(\sqrt d)^2)=4$ for $d=83,107,203$ and $4\le\chi(\Q(\sqrt{143})^2)\le5$ by exact
+certificates; so $\chi(\Q(\sqrt d)^2)$ is determined for every squarefree $d<143$ except $d=47$, and equals $4$ for
+every $d\equiv11\pmod{12}$ except possibly $d\equiv47,143,167\pmod{168}$. Those proofs go through characters and
+do not exhibit graphs; the graphs here remain an independent, explicit proof for the $27$ fields of
+Theorem~\ref{thm:main}.
+\end{remark}
 
 The upper bounds in Theorem~\ref{thm:main} are known (Section~\ref{sec:upper}). Each lower bound is a finite
 graph: a unit-distance graph with coordinates in $\Q(\sqrt d)$ that is not $3$-colourable. That it is not
@@ -211,7 +222,7 @@ $5$-colouring \cite[Lemma~4.5]{Madore}:
   modulo $7$ and
   $d=35$, 119, 455, 791, 959 are $\equiv0$ modulo $7$, so $\chi\le4$;
 \item $d=59,131,251$ are $\equiv3\pmod8$, so $\chi\le4$ by Fischer's Theorem~10 (which also covers $11$, $35$,
-  $155$, $179$, $443$ and $611$);
+  $155$, $179$, $443$, $491$, $611$ and $851$);
 \item $47\equiv5^2\pmod{11}$, so $\chi(\Q(\sqrt{47})^2)\le5$.
 \end{itemize}
 The repository stores a proper $4$-colouring of $\F_7^2$ and a proper $5$-colouring of $\F_{11}^2$, and the
@@ -232,7 +243,8 @@ splits in $\Q(\sqrt{11})$, and $x^m-7$ is Eisenstein at each prime above it; so 
 primes are totally ramified in $L$, with residue field $\F_7$.
 \end{proof}
 
-Fields of odd degree have $\chi(L^2)=2$ \cite[Theorem~7.1]{Moorhouse}.
+By \cite{FC}, the same holds for every such $L$ that contains $\sqrt d$ for some $d\equiv11\pmod{12}$ (added
+4 October). Fields of odd degree have $\chi(L^2)=2$ \cite[Theorem~7.1]{Moorhouse}.
 
 \section{How the graphs were found}\label{sec:search}
 
@@ -284,9 +296,9 @@ This gives three \emph{gates}, each closed whenever $p\nmid D$:
 \begin{itemize}
 \item at $2$, when $d\equiv7\pmod8$: the prime above $2$ splits in $K(i)$ with $q=2$, and $H_2$ is a perfect
   matching, so every graph built from the directions is bipartite;
-\item at $3$, since $d\equiv2\pmod3$: $q=9$. A divisor $3$ of $D$ is not always enough: for $d=83$ a
-  direction with $3$ in its denominator also has $7$, $11$, $17$ or $31$ there, so for $D=1230=2\cdot3\cdot5\cdot41$
-  every direction is still integral at the primes above $3$;
+\item at $3$, since $d\equiv2\pmod3$: $q=9$. A divisor $3$ of $D$ is not always enough: for $d=83$ and
+  $D=1230=2\cdot3\cdot5\cdot41$ no direction has $3$ in its reduced denominator, so every direction is still
+  integral at the primes above $3$;
 \item at $5$, when $d\equiv0,\pm1\pmod5$: $q=5$.
 \end{itemize}
 So $D$ must be divisible by $3$, by $2$ when $d\equiv7\pmod8$, and by $5$ when $d\equiv0,\pm1\pmod5$;
@@ -327,13 +339,17 @@ and have residues differing by $\pm1$.
   level $2$ with none, and the $29\,524$ points of level $3$ above it have none either (kissat and drat-trim). The same $11$-adic plane bounds $\chi(\Q(\sqrt3,\sqrt5)^2)$, since $\Q(\sqrt3,\sqrt5)$
   embeds in $\Q_{11}$ as well. No other place does better: where $-1$ is a square in $K_v$, no colouring of
   $K_v^2$ with finitely many colours is locally constant, and above a prime $p\equiv3\pmod4$ with $p\ge23$,
-  Hoffman's bound gives every level an independence ratio below $1/4$ (the eigenvalues of level $1$ are at
-  most $2\sqrt p$ \cite{MMST}, those new at higher levels at most $2/(p+1)$ of the degree), and so does the
-  ramified place above $47$. So a $4$-colouring by reduction would come from the $11$-adic plane at level $4$ or
-  more, or from the $19$-adic plane at level $2$ or more.
+  Hoffman's bound gives every level an independence ratio below $1/4$ (at level $1$ the exact least eigenvalue
+  gives the ratios $0.2491$ and $0.249997$ for $p=23$ and $31$, and for $p\ge43$ the bound $2\sqrt p$ on the
+  eigenvalues \cite{MMST} suffices; the eigenvalues new at higher levels are at most $2/(p+1)$ of the degree), and
+  so does the ramified place above $47$. So a $4$-colouring by reduction would come from the $11$-adic plane at level $4$ or
+  more, or from the $19$-adic plane at level $2$ or more. (Added 4 October: by \cite{TCol},
+  $4\le\chi_c(\Q(\sqrt{47})^2)\le19/4$.)
 \item Does every real quadratic field with $d\equiv11\pmod{12}$ need four colours? Our searches over
-  $\Q(\sqrt{83})$, $\Q(\sqrt{107})$ and $\Q(\sqrt{203})$ have so far found only $3$-colourable graphs.
-\item A uniform proof: a family of graphs, or an argument, covering all $d\equiv11\pmod{12}$ at once.
+  $\Q(\sqrt{83})$, $\Q(\sqrt{107})$ and $\Q(\sqrt{203})$ found only $3$-colourable graphs. (Answered since,
+  4 October: yes \cite{FC}; for these three fields $\chi=4$ \cite{Winding}. No explicit graph is known for them.)
+\item A uniform proof: a family of graphs, or an argument, covering all $d\equiv11\pmod{12}$ at once. (The argument
+  now exists \cite{FC}, and is not constructive; a uniform family of explicit graphs does not.)
 \item How small can a $4$-chromatic unit-distance graph over a real quadratic field be? The smallest of ours
   has $71$ vertices, for $d=455$; the one for $d=11$ has $76$.
 \end{itemize}
@@ -349,8 +365,15 @@ checking in CakeML}, TACAS 2021, Lecture Notes in Comput. Sci. \textbf{12652}, 2
 Math. \textbf{82} (1990), 181--195.
 \bibitem{Repo} S. Gal\'an, \emph{The Hadwiger--Nelson problem over number fields}, code, data and formal
 proofs, 2026. Archived at Zenodo, \href{https://doi.org/10.5281/zenodo.22976635}{doi:10.5281/zenodo.22976635}
-(all versions); source at \url{https://github.com/decalion89/chromatic-number-of-the-plane}; this note is
-\texttt{notes/quadratic\_planes.md} there.
+(all versions); source at \url{https://github.com/decalion89/chromatic-number-of-the-plane}; a fuller account is
+\texttt{notes/quadratic\_planes.md} there. These files and the Lean files cited here are on the branch
+\texttt{claude/quadratic-planes} (pull request~35), not yet in a release.
+\bibitem{FC} S. Gal\'an, \emph{Which real quadratic planes need four colours}, draft, 2026,
+\texttt{papers/four-colours/} in \cite{Repo}.
+\bibitem{TCol} S. Gal\'an, \emph{Three colours for the plane over a number field}, draft, 2026,
+\texttt{papers/three-colours/} in \cite{Repo}.
+\bibitem{Winding} S. Gal\'an, \emph{Circular colourings of abelian Cayley graphs below four come from
+characters}, draft, 2026, \texttt{papers/winding/} in \cite{Repo}.
 \bibitem{Johnson1987} P. D. Johnson Jr., \emph{Two-colorings of real quadratic extensions of $\Q^2$ that forbid
 many distances}, Congr. Numer. \textbf{60} (1987), 51--58.
 \bibitem{Madore} D. A. Madore, \emph{The Hadwiger--Nelson problem over certain fields}, arXiv:1509.07023 (2015).
@@ -361,7 +384,7 @@ Lecture Notes in Comput. Sci. \textbf{12699} (2021), 625--635.
 \bibitem{MMST} A. Medrano, P. Myers, H. M. Stark and A. Terras, \emph{Finite analogues of Euclidean space},
   J. Comput. Appl. Math. \textbf{68} (1996), 221--238.
 \bibitem{MM} MildlyMeticulous (GitHub account), \emph{A $2$-adic obstruction to $5$-chromatic unit-distance
-graphs, and the exact chromatic number of the plane over $\Q(\sqrt3,\sqrt{11})$}, code, logs and draft, July 2026,
+graphs}, code, logs and draft, July 2026,
 \url{https://github.com/MildlyMeticulous/hn-2adic-obstruction}.
 \bibitem{Moorhouse} G. E. Moorhouse, \emph{On the chromatic numbers of planes}, preliminary draft, revised
 3 March 2010, \url{https://www.ericmoorhouse.org/pub/chromatic.pdf}.

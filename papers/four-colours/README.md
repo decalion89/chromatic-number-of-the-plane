@@ -10,7 +10,7 @@
   rational rotations with denominators dividing `5^k` generate a group with no character mapping them into
   `[1/3, 2/3]`; Theorem W of [`papers/winding/`](../winding/) then excludes 3-colourings. The main step describes
   exactly the characters of `(1/5^k)ℤ[i]` that keep every such rotation in `[1/3, 2/3]`. For `d ≡ 23 (mod 24)` the
-  bound on `k` is sharp.
+  bound on `k` is sharp for `k ≤ 5` and not for `k ≥ 6` (a third reading, 4 October).
 
 [`four-colours.tex`](four-colours.tex) is its LaTeX source (`amsart`). To rebuild the PDF, run in this folder, with
 TeX Live:

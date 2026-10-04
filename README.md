@@ -201,7 +201,7 @@ outside the project has. **The theorem and the p-adic corollary are also proved 
 `lean/PadicFour.lean`, with Theorem W for every abelian group and finite S in `lean/TheoremWInf.lean`; only Lean's
 three standard axioms), through a cruder form of the key step that is enough for the theorem but not for the sharp
 bound. The lower bound rests on Theorem W, whose proof for infinite groups is not constructive, so no finite graph
-is exhibited; for 26 of the fields the explicit graphs below give it without Theorem W.
+is exhibited; for 27 of the fields the explicit graphs below give it without Theorem W.
 
 **Read:** [the paper (PDF, draft)](papers/four-colours/four-colours.pdf) ·
 [the note](notes/four_colours_11_mod_12.md) · **Check:**
