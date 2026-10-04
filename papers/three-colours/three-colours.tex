@@ -35,8 +35,8 @@
 \title{Three colours for the plane over a number field}
 \author{Sergi Gal\'an}
 \thanks{These results were obtained with the assistance of an AI system (Claude, by Anthropic), which found the
-proofs, wrote them and the programs that check them, and helped to draft this note. Separate AI agents refereed the
-proofs, with their own programs. No mathematician has checked the note yet. The author is not a professional
+proofs, wrote them and the programs that check them, and helped to draft this note. Separate AI agents, called independent
+checkers below, refereed the proofs with their own programs. No mathematician has checked the note yet. The author is not a professional
 mathematician and submits it for independent verification.}
 \date{Draft, 4 October 2026}
 \subjclass[2020]{Primary 05C15, 52C10; Secondary 11R04, 11S15, 05C25}
@@ -49,7 +49,7 @@ principle, circular chromatic number}
 For a field $F$ of characteristic $0$ let $\chi(F^2)$ be the chromatic number of the graph on $F^2$ that joins $x$
 and $y$ when $(x_1-y_1)^2+(x_2-y_2)^2=1$. We prove that for every number field $F$, $\chi(F^2)\le3$ if and only if
 some prime of $F$ above $2$ ramifies in $F(i)$ or some prime of $F$ above $3$ has residue degree $1$. The ``if'' part
-is classical (colourings through a residue field); the ``only if'' part extends to all number fields our earlier
+is known (colourings through a residue field); the ``only if'' part extends to all number fields our earlier
 result that $\chi(\Q(\sqrt d)^2)\ge4$ for $d\equiv11\pmod{12}$. It answers, for three colours, the question whether
 the chromatic number of the plane over a number field is decided by a single completion, and it classifies the
 finite extensions $K$ of $\Q_p$: $\chi(K^2)$ is $2$, $3$ or at least $4$ according to explicit local conditions. We
@@ -57,13 +57,12 @@ also give an elementary family (every real field containing $\sqrt a$ and $\sqrt
 $b\equiv7\pmod8$ needs four colours), new examples such as $\chi(\Q(\sqrt2,\sqrt7)^2)=4$, and, as far as we know,
 the first non-integral value of the circular chromatic number of the plane over a number field:
 $\chi_c(\Q(\sqrt{11})^2)=\chi_c(\Q(\sqrt{35})^2)=7/2$ (and $\chi_c(\Q_7^2)=7/2$), although these planes have chromatic
-number $4$. Locally constant colourings of one completion give no upper bound on $\chi_c$ below $4$ other than $2$, $3$ and
-$7/2$. We show that these are the only values below $4$: for every number field $F$, $\chi_c(F^2)$ is $2$, $3$,
+number $4$. Below $4$, the best upper bound on $\chi_c$ that a locally constant colouring of one completion gives is
+$2$, $3$ or $7/2$. We show that these are the only values below $4$: for every number field $F$, $\chi_c(F^2)$ is $2$, $3$,
 $7/2$ or at least $4$, and it is $7/2$ exactly when $\chi(F^2)\ge4$ and some prime of $F$ above $7$ has residue
 degree $1$; below $4$ it is the least circular chromatic number of the planes over the completions of $F$, and it is
-the circular chromatic number of some finite unit-distance graph in $F^2$. This proof
-has one
-computer-assisted step, an exact finite computation along the rational rotations whose denominators divide $325$;
+the circular chromatic number of some finite unit-distance graph in $F^2$. The proof of this
+classification has one computer-assisted step, an exact finite computation along the rational rotations whose denominators divide $325$;
 without it we show that $\chi_c(F^2)\ge56/17$ whenever $\chi(F^2)\ge4$.
 \end{abstract}
 
@@ -73,7 +72,8 @@ without it we show that $\chi_c(F^2)\ge56/17$ whenever $\chi(F^2)\ge4$.
 
 Let $F$ be a field of characteristic $0$. The \emph{plane over $F$} is the graph on $F^2$ in which $x$ and $y$ are
 adjacent when $(x_1-y_1)^2+(x_2-y_2)^2=1$, and $\chi(F^2)$ is its chromatic number. For $F=\R$ this is the
-Hadwiger--Nelson problem, and $5\le\chi(\R^2)\le7$ \cite{deGrey}. Over number fields the question goes back to
+Hadwiger--Nelson problem, and $5\le\chi(\R^2)\le7$: the lower bound is due to de Grey \cite{deGrey} and to Exoo and
+Ismailescu \cite{EI}, the upper bound to Isbell (see \cite{Soifer}). Over number fields the question goes back to
 Woodall ($\chi(\Q^2)=2$ \cite{Woodall}) and was studied by Johnson \cite{Johnson1987}, Fischer \cite{Fischer1990},
 Benda and Perles \cite{BP}, Moorhouse \cite{Moorhouse} and Madore \cite{Madore}. All upper bounds below $7$ known to us come from a colouring
 that is locally constant at one completion $F_v$: reduction modulo a power of a prime. Writing $L=F(i)$, the unit
@@ -81,13 +81,15 @@ vectors of $F^2$ are the elements of norm one of $L$, and at a place where $x^2+
 a finite group of roots of unity of the residue field. Two such reductions give colourings with at most three colours:
 \begin{itemize}
 \item[(a)] at a prime of $F$ above $2$ that ramifies in $F(i)$, every unit vector is $\equiv1$ modulo the maximal
-ideal, which gives a $2$-colouring (Johnson; Fischer \cite[Thm.~8]{Fischer1990}; Moorhouse \cite{Moorhouse};
-\cite[Theorem~A$'$]{MM});
+ideal, which gives a $2$-colouring (\cite[Theorem~A$'$]{MM}, \cite[Proposition~3]{TC}; earlier, for special classes of
+fields, Fischer \cite[Thm.~8]{Fischer1990}, Moorhouse \cite{Moorhouse} and Johnson \cite{Johnson1987}, whose paper we
+have not seen);
 \item[(b)] at a prime of $F$ above $3$ of residue degree $1$, the unit vectors reduce into $\mu_4\subset\F_9$, and
 $a+bi\mapsto a+b$ gives a $3$-colouring (Madore \cite[Cor.~3.4]{Madore}; for real quadratic fields Moorhouse
 \cite[Lemma~8.2 and Cor.~8.3]{Moorhouse} and Fischer \cite[Thm.~9]{Fischer1990}).
 \end{itemize}
-In \cite{TC} we proved that (a) is also necessary for $\chi(F^2)=2$. Here we prove the same at three colours.
+In \cite{TC} we proved that (a) is also necessary for $\chi(F^2)=2$; we call that result Theorem~A, which is why
+there is no Theorem~A here. Here we prove the same at three colours.
 
 \setcounter{theorem}{1}
 \begin{theorem}\label{thm:B}
@@ -107,9 +109,12 @@ $\chi(K^2)=3$ if $p=3$ and $K$ has residue degree $1$, and $\chi(K^2)\ge4$ other
 unramified cubic extension of $\Q_3$ needs at least four colours, although $x^2+y^2$ is anisotropic there, as over
 $\Q_3$.
 
-Two families of fields were known to need four colours: those containing $\sqrt d$ with $d\equiv11\pmod{12}$
-\cite{FC}, and those containing $\sqrt3$ and $\sqrt q$ with $q\equiv2\pmod3$, by chains of unit rhombi
-(\cite{Repo}, \nolinkurl{notes/local_colourings.md}, Section~11, Theorem~5). Theorem
+Besides the fields that contain $i$, whose planes need infinitely many colours, two families of fields were known to
+need four colours: those containing $\sqrt d$ with $d\equiv11\pmod{12}$ \cite{FC}, and those containing $\sqrt3$ and
+$\sqrt q$ with $q\equiv2\pmod3$, by chains of unit rhombi (\cite{Repo}, \nolinkurl{notes/local_colourings.md},
+Section~11, Theorem~5); the second family contains $\Q(\sqrt3,\sqrt{11})$, the field of the Moser spindle, whose plane
+has chromatic number $4$ by Fischer \cite{Fischer1994}, and $\Q(\sqrt2,\sqrt3)$, whose plane has chromatic number $4$
+by \cite{P4C}. Theorem
 \ref{thm:B} adds, for example, $\Q(\sqrt2,\sqrt7)$, $\Q(\sqrt2,\sqrt{31})$ and $\Q(\sqrt2,\sqrt{55})$, which contain
 no unit triangle and whose quadratic subfields all have $\chi\le3$, and $\Q(2\cos\frac{2\pi}7,\sqrt7)$, of degree
 $6$, where $3$ has residue degree $3$. For many fields an explicit proof is short (Proposition~\ref{prop:two}), and
@@ -141,8 +146,10 @@ $\chi_c(F^2)=7/2$ if \textup{(7)} holds and \textup{(a)}, \textup{(b)} fail; and
 
 Theorem~\ref{thm:E} rests on one computer-assisted step (Proposition~\ref{prop:window}), and Theorem~\ref{thm:F}
 on another (Proposition~\ref{prop:window7}), which also gives Theorem~\ref{thm:E} again: exact finite computations,
-whose certificates are checked by programs written separately from those that produced them, and which two referees
-confirmed by methods of their own. The rest of the proofs is by hand. Theorem~\ref{thm:D}, which
+whose certificates are checked by programs written separately from those that produced them, and which two
+independent checkers confirmed by methods of their own. The lower bounds of Theorem~\ref{thm:C} and
+Proposition~\ref{prop:fiftynine} are proved in Section~\ref{sec:circ} with exact certificates checked by computer (the
+former also follow from Theorem~\ref{thm:E}). The rest of the proofs are by hand. Theorem~\ref{thm:D}, which
 Theorem~\ref{thm:E} supersedes, is proved entirely by hand. So below $4$ the circular chromatic number of the plane
 over a number field takes only the values $2$, $3$ and $7/2$, each given by a locally constant colouring of one
 completion; more precisely, below $4$ it is the least circular chromatic number of the planes over its completions
@@ -152,8 +159,8 @@ $4$ the value is also the circular chromatic number of a finite unit-distance gr
 real quadratic field $\Q(\sqrt d)$, $d$ squarefree, (a) or (b) holds unless $d\equiv11\pmod{12}$. If
 $d\equiv11\pmod{12}$, then $\chi_c=7/2$ when $(d/7)\ne-1$ (for example $d=23$, $71$); $\chi_c=4$ when $(d/7)=-1$ and
 $d\equiv11\pmod{24}$ (for example $d=59$, $83$), as then the place above $2$ gives $\chi\le4$; and only when
-$(d/7)=-1$ and $d\equiv23\pmod{24}$ ($d=47$, $143$, $167$, $215$, \dots) do we know no more than $\chi_c\ge4$, with
-$\chi_c=4$ if and only if $\chi=4$.
+$(d/7)=-1$ and $d\equiv23\pmod{24}$ ($d=47$, $143$, $167$, $215$, \dots) do we not know whether $\chi_c=4$, which holds
+if and only if $\chi=4$ (for $d=47$, $4\le\chi_c\le19/4$; Section~\ref{sec:twoprimes}).
 
 The tools are those of \cite{FC}: a characterisation of $3$-colourings of Cayley graphs of abelian groups by
 characters (Theorem~W$^+$, Section~\ref{sec:prelim}), and the exact shape of the characters along the rational rotations whose
@@ -170,8 +177,8 @@ the theorems.
 
 Sections~\ref{sec:prelim}--\ref{sec:three} prove Theorem~\ref{thm:B}; Section~\ref{sec:cor} draws the consequences
 (circular colourings below $3$, fields split above $2$ and $3$, local fields); Section~\ref{sec:two} gives the
-explicit family; Section~\ref{sec:circ} proves Theorem~\ref{thm:C} and shows that the restrictions to $F^2$ of locally
-constant colourings of a completion $F_v^2$ give no upper bound on $\chi_c(F^2)$ below $4$ other than $2$, $3$ and
+explicit family; Section~\ref{sec:circ} proves Theorem~\ref{thm:C} and shows that, below $4$, the best upper bound on
+$\chi_c(F^2)$ given by the restriction to $F^2$ of a locally constant colouring of a completion $F_v^2$ is $2$, $3$ or
 $7/2$ (Corollary~\ref{cor:localvalues}); Section~\ref{sec:gap} proves Theorem~\ref{thm:D} and
 Section~\ref{sec:twoprimes} Theorems~\ref{thm:E} and~\ref{thm:F}, with the local fields and finite witnesses;
 Section~\ref{sec:checks} lists the computer checks,
@@ -216,8 +223,8 @@ $\varepsilon\in E_q$ and $x=0$.
 \end{proposition}
 
 \begin{lemma}[exact relations; cf.\ {\cite[Lemma~10]{FC}}]\label{lem:exact}
-Let $\sigma_j=N\varepsilon_j+x_j\in S_N$ be as in Proposition~\ref{prop:shape} \textup{(}$1\le j\le\ell$\textup{)},
-and let $\mu_1,\dots,\mu_\ell\in\Z[i]$ satisfy $\sum_j\mu_j\sigma_j=0$ and $N>6r\sum_j|\mu_j|$. Then
+Let $c_j=N\varepsilon_j+x_j\in S_N$ be as in Proposition~\ref{prop:shape} \textup{(}$1\le j\le\ell$\textup{)},
+and let $\mu_1,\dots,\mu_\ell\in\Z[i]$ satisfy $\sum_j\mu_jc_j=0$ and $N>6r\sum_j|\mu_j|$. Then
 $\sum_j\mu_j\varepsilon_j=0$.
 \end{lemma}
 
@@ -473,11 +480,12 @@ $19$, are split above $2$ and $3$.
 Every number field $F$ that is split above $2$ and $3$ has $\chi(F^2)\ge4$.
 \end{corollary}
 
-A real quadratic field $\Q(\sqrt d)$ is split above $2$ and $3$ exactly when $d\equiv23\pmod{24}$, so for quadratic
-fields Corollary~\ref{cor:B7} is contained in \cite{FC}. Of the biquadratic fields listed as admissible in the account
+A real quadratic field $\Q(\sqrt d)$ is split above $2$ and $3$ exactly when $d\equiv23\pmod{24}$, so for real
+quadratic fields Corollary~\ref{cor:B7} is contained in \cite{FC} (not for imaginary ones: $\Q(\sqrt{-73})$ is split
+above $2$ and $3$). Of the biquadratic fields listed as admissible in the account
 of \cite[\nolinkurl{notes/local_global.md}, Section~4]{Repo}, $\Q(\sqrt2,\sqrt{47})$, $\Q(\sqrt{11},\sqrt{13})$ and
 $\Q(\sqrt{10},\sqrt{38})$ (which contains $\sqrt{95}$) contain some $\sqrt d$ with $d\equiv11\pmod{12}$; for
-$\Q(\sqrt2,\sqrt{31})$ and $\Q(\sqrt2,\sqrt{55})$ the bound is new.
+$\Q(\sqrt2,\sqrt{31})$ and $\Q(\sqrt2,\sqrt{55})$ the bound is new, as far as we know.
 
 \begin{corollary}[local fields]\label{cor:local}
 Let $K$ be a finite extension of $\Q_p$. Then $\chi(K^2)=2$ if $p=2$ and $K(i)/K$ is ramified, $\chi(K^2)=3$ if
@@ -552,7 +560,10 @@ $\varepsilon_1$ has type~c. So $\varepsilon_1$ is not of type~c either, a contra
 For $a=b=d$ this is the case $d\equiv23\pmod{24}$ of \cite[Theorem~1]{FC}, where \cite[Theorem~4(1)]{FC} needs
 only $d<21\cdot5^{k-1}$. Proposition~\ref{prop:two} covers, for
 example, $\Q(\sqrt2,\sqrt7)$, $\Q(\sqrt2,\sqrt{31})$, $\Q(\sqrt5,\sqrt7)$, $\Q(\sqrt2,\sqrt{55})$ and
-$\Q(\sqrt3,\sqrt5)$ (with $b=15$), and every field containing one of them. In terms of Theorem~\ref{thm:B}, $\sqrt a$
+$\Q(\sqrt3,\sqrt5)$ (with $b=15$); every field containing one of them then has $\chi\ge4$ as well, as $\chi(F^2)$
+can only grow with $F$. For $\Q(\sqrt2,\sqrt7)$ the bound is sharp: $7$ splits in $\Q(\sqrt2)$, so a place above $7$
+has residue field $\F_7$, and Proposition~\ref{prop:C1} gives $\chi_c\le7/2$, hence $\chi(\Q(\sqrt2,\sqrt7)^2)=4$. In
+terms of Theorem~\ref{thm:B}, $\sqrt a$
 makes every place above $3$ have even residue degree, and $\sqrt b$ puts $i$ in every completion above $2$.
 
 \section{Circular colourings}\label{sec:circ}
@@ -564,8 +575,8 @@ triangle), and by Corollary~\ref{cor:B6} the planes with $\chi_c\le3$ are exactl
 earlier non-integral value. Theorem~\ref{thm:C} shows that $7/2$ occurs; its upper bound comes from a residue field.
 
 \begin{proposition}\label{prop:C1}
-Let $v$ be a place of $F$ whose residue field is $\F_p$, with $p\equiv3\pmod4$, and let $\lambda:\F_{p^2}\to\F_p$ be
-$\F_p$-linear with $\lambda(\mu_{p+1})\subseteq\{m,m+1,\dots,p-m\}$. Then $F_v^2$, hence $F^2$, has a homomorphism
+Let $v$ be a place of $F$ whose residue field is $\F_p$, with $p\equiv3\pmod4$, let $m\ge1$ be an integer, and let
+$\lambda:\F_{p^2}\to\F_p$ be $\F_p$-linear with $\lambda(\mu_{p+1})\subseteq\{m,m+1,\dots,p-m\}$. Then $F_v^2$, hence $F^2$, has a homomorphism
 to $K_{p/m}$. For $p=7$, $\lambda(a+bi)=2a+3b$ takes the values $2,3,4,5$ on $\mu_8\subset\F_{49}$, so $F^2$ maps to
 $K_{7/2}$, and $\chi_c(F^2)\le7/2$.
 \end{proposition}
@@ -574,7 +585,8 @@ $K_{7/2}$, and $\chi_c(F^2)\le7/2$.
 As $-1$ is not a square in $\F_p$, $i\notin F_v$, and $L_w=F_v(i)$ is unramified over $F_v$ with residue field
 $\F_{p^2}$. A unit vector $z$ has $z\bar z=1$, so it is a unit of $O_w$, and since the conjugation of $L_w/F_v$ reduces
 to the Frobenius $x\mapsto x^p$, its residue satisfies $\hat z^{p+1}=1$. A unit step preserves the class modulo
-$O_w$; fix a representative $\rho$ of each class and colour $z$ by $\lambda((z-\rho)\bmod\mathfrak m_w)\in\Z/p$. A unit
+$O_w$; fix a representative $x_A$ of each class $A$ and colour each $x\in A$ by
+$\lambda((x-x_A)\bmod\mathfrak m_w)\in\Z/p$. A unit
 step changes the colour by an element of $\{m,\dots,p-m\}$. For $p=7$, $\mu_8=\{\pm1,\pm i,\pm2\pm2i\}$, and $2a+3b$
 takes the values $2,5,3,4,3,5,2,4$ at $1,-1,i,-i,2+2i,2-2i,-2+2i,-2-2i$.
 \end{proof}
@@ -622,105 +634,106 @@ Proposition~\ref{prop:C1}, colouring each class of $L_w$ modulo $O_w$ by the res
 proper $4$-colouring (a bound of Fischer \cite{Fischer1990}).
 \end{proof}
 
-Theorem~\ref{thm:F} gives more: $\chi_c(\Q(\sqrt{59})^2)=4$. Proposition~\ref{prop:fiftynine} is a finite form of
+Theorem~\ref{thm:F} gives more: $\chi_c(\Q(\sqrt{59})^2)=4$. Proposition~\ref{prop:fiftynine} is an explicit form of
 the separation: $70$ explicit unit vectors already push $\chi_c$ above $7/2$.
 
 \begin{corollary}\label{cor:sevenhalves}
-$\chi_c(E^2)=7/2$ for every finite extension $E$ of $\Q_7$ with residue degree $1$, and $\chi_c(F^2)=7/2$ for every
+$\chi_c(K^2)=7/2$ for every finite extension $K$ of $\Q_7$ with residue degree $1$, and $\chi_c(F^2)=7/2$ for every
 number field $F$ that contains $\sqrt{11}$ or $\sqrt{35}$ and has a place above $7$ of residue degree $1$, for example
 $\Q(\sqrt7,\sqrt{11})$ and $\Q(\sqrt2,\sqrt{35})$.
 \end{corollary}
 
 \begin{proof}
-$E\supseteq\Q_7\supset\Q(\sqrt{11})$ and $F\supseteq\Q(\sqrt{11})$ or $\Q(\sqrt{35})$ give $\chi_c\ge7/2$ by
+$K\supseteq\Q_7\supset\Q(\sqrt{11})$ and $F\supseteq\Q(\sqrt{11})$ or $\Q(\sqrt{35})$ give $\chi_c\ge7/2$ by
 Theorem~\ref{thm:C}; the residue field $\F_7$ gives $\chi_c\le7/2$ by Proposition~\ref{prop:C1} (whose proof
-applies to $E$ itself).
+applies to $K$ itself).
 \end{proof}
 
 \subsection*{Locally constant colourings}
-The values $2$, $3$ and $7/2$ are the only ones below $4$ that colourings through a single completion can give
+Below $4$, the best upper bounds that colourings through a single completion can give are $2$, $3$ and $7/2$
 (Corollary~\ref{cor:localvalues}). Let
-$E$ be a finite extension of $\Q_p$ with $i\notin E$ and $E(i)/E$ unramified (for $p$ odd this always holds; for $p=2$
-it is the case where (a) fails), let $\F_q$ be the residue field of $E$ ($q=p^f$), $w$ the place of $L=E(i)$, and
+$K$ be a finite extension of $\Q_p$ with $i\notin K$ and $K(i)/K$ unramified (the second condition is automatic for $p$ odd;
+for $p=2$ it says that (a) fails), let $\F_q$ be the residue field of $K$ ($q=p^f$), $w$ the place of $L=K(i)$, and
 \[
-\kappa_1(E)=\max_\lambda\min_{z\in\mu_{q+1}}\|\lambda(z)\|,
+\kappa_1(K)=\max_\lambda\min_{z\in\mu_{q+1}}\|\lambda(z)\|,
 \]
 the maximum over the additive maps $\lambda:\F_{q^2}\to\frac1p\Z/\Z$.
 
 \begin{proposition}\label{prop:levels}
-Suppose $E^2$ has a locally constant homomorphism to $K_{P/Q}$, $P/Q<4$. Then $Q/P\le\kappa_1(E)$. Conversely $E^2$ maps to $K_{p/m}$ when $m/p=\kappa_1(E)>0$.
+Suppose $K^2$ has a locally constant homomorphism to $K_{P/Q}$, $P/Q<4$. Then $Q/P\le\kappa_1(K)$. Conversely $K^2$ maps to $K_{p/m}$ when $m/p=\kappa_1(K)>0$.
 \end{proposition}
 
 \begin{proof}
 The converse is the colouring of Proposition~\ref{prop:C1}, with $\F_q$ in place of $\F_p$. Let $\pi$ be a
-uniformiser of $E$ (also one of $L$) and $\sigma$ the non-trivial automorphism of $L/E$. On the compact set
+uniformiser of $K$ (also one of $L$) and $\sigma$ the non-trivial automorphism of $L/K$. On the compact set
 $O_w$ the homomorphism is constant on the cosets of some power $\mathfrak m^k$ of the maximal ideal, and only its
 restriction to $O_w$ is used. It induces a homomorphism from $\Cay(O_w/\mathfrak m^k,\bar T)$, where
-$\bar T$ is the image of $T(E)$, to $K_{P/Q}$; by Theorem~W$^+$ there is a character $\xi$ of
-$O_w/\mathfrak m^k$ with $\|\xi(z)\|\ge Q/P>1/4\ge1/(2p)$ for every $z\in T(E)$. We show that $\xi$ vanishes on
-$\mathfrak m$; then $\xi$ is a map $\lambda$ as in the definition of $\kappa_1$, and $Q/P\le\kappa_1(E)$, since $T(E)$
+$\bar T$ is the image of $T(K)$, to $K_{P/Q}$; by Theorem~W$^+$ there is a character $\xi$ of
+$O_w/\mathfrak m^k$ with $\|\xi(z)\|\ge Q/P>1/4\ge1/(2p)$ for every $z\in T(K)$. We show that $\xi$ vanishes on
+$\mathfrak m$; then $\xi$ is a map $\lambda$ as in the definition of $\kappa_1$, and $Q/P\le\kappa_1(K)$, since $T(K)$
 reduces onto $\mu_{q+1}$ (it contains the Teichm\"uller lifts of $\mu_{q+1}$, on which $\sigma$ acts as
 $x\mapsto x^q$). Suppose not, and let $J\ge1$ be the largest integer with $\xi(\mathfrak m^J)\ne0$. Through
 $x\mapsto(x/\pi^J)\bmod\mathfrak m$, $\xi$ induces a nonzero additive map $\lambda_J:\F_{q^2}\to\frac1p\Z/\Z$. For
-$x\in O_w$, $t=(1+\pi^Jx)/\sigma(1+\pi^Jx)$ lies in $T(E)$ and $t\equiv1+\pi^J(x-\sigma(x))\pmod{\mathfrak m^{J+1}}$,
-and the residues of $x-\sigma(x)$ fill the $\F_q$-line $D=\{y-y^q:y\in\F_{q^2}\}$. For $z\in T(E)$ with residue
+$x\in O_w$, $t=(1+\pi^Jx)/\sigma(1+\pi^Jx)$ lies in $T(K)$ and $t\equiv1+\pi^J(x-\sigma(x))\pmod{\mathfrak m^{J+1}}$,
+and the residues of $x-\sigma(x)$ fill the $\F_q$-line $D=\{y-y^q:y\in\F_{q^2}\}$. For $z\in T(K)$ with residue
 $\hat z$, $\xi(zt)=\xi(z)+\lambda_J(\hat zd)$, $d\in D$; the values $\lambda_J(\hat zD)$ form a subgroup of
-$\frac1p\Z/\Z$, and if it were the whole group, $\xi(T(E))$ would contain a coset of $\frac1p\Z/\Z$ and a point
+$\frac1p\Z/\Z$, and if it were the whole group, $\xi(T(K))$ would contain a coset of $\frac1p\Z/\Z$ and a point
 with $\|\cdot\|\le\frac1{2p}$. So $\lambda_J$ vanishes on $\hat zD$ for every $\hat z\in\mu_{q+1}$, hence on their
 additive span, which is $D$ times the $\F_q$-span of $\mu_{q+1}$, that is $\F_{q^2}$: a contradiction.
 \end{proof}
 
 \begin{proposition}\label{prop:residue}
-$\kappa_1(E)>1/4$ only when $p=3$ and $f=1$, where $\kappa_1=1/3$, or $p=7$ and $f=1$, where $\kappa_1=2/7$.
-In every other case with $i\notin E$ and $E(i)/E$ unramified, $\kappa_1(E)<1/4$; it is $0$ when $p=2$ or $f\ge3$.
+$\kappa_1(K)>1/4$ only when $p=3$ and $f=1$, where $\kappa_1=1/3$, or $p=7$ and $f=1$, where $\kappa_1=2/7$.
+In every other case with $i\notin K$ and $K(i)/K$ unramified, $\kappa_1(K)<1/4$; it is $0$ when $p=2$ or $f\ge3$.
 \end{proposition}
 
 \begin{proof}
 For $p=2$: if $\lambda(\mu_{q+1})=\{\frac12\}$, summing over $\mu_{q+1}$, whose elements add up to $0$, gives
 $\lambda(0)=\frac{q+1}2\equiv\frac12$, as $q+1$ is odd; so some $z$ has $\lambda(z)=0$.
 
-Let $p$ be odd; then $p\equiv3\pmod4$ and $f$ is odd, as $i\notin E$. Let $\psi(x)=e^{2\pi ix/p}$ on $\F_p$, and
+Let $p$ be odd; then $p\equiv3\pmod4$ and $f$ is odd, as $i\notin K$. Let $\psi(x)=e^{2\pi ix/p}$ on $\F_p$, and
 $S(b)=\sum_{z\in\mu_{q+1}}\psi(\Tr_{\F_{q^2}/\F_p}(bz))$ for $b\in\F_{q^2}^\times$. Every additive
 $\lambda:\F_{q^2}\to\frac1p\Z/\Z$ is $z\mapsto\frac1p\Tr(bz)$ for some $b$. Writing the indicator function of
-$\mu_{q+1}=\ker N_{\F_{q^2}/\F_q}$ with the multiplicative characters $\chi$ of $\F_q^\times$, and using the
+$\mu_{q+1}=\ker\mathrm N_{\F_{q^2}/\F_q}$ with the multiplicative characters $\chi$ of $\F_q^\times$, and using the
 Davenport--Hasse relation $G(\chi\circ N,\psi\circ\Tr)=-G(\chi,\psi_q)^2$ for Gauss sums \cite{DH}
 ($\psi_q=\psi\circ\Tr_{\F_q/\F_p}$; see \cite[Chapter~5]{LN}), one finds
 \[
-S(b)=\frac1{q-1}\sum_\chi\bar\chi(N(b))\,G(\chi\circ N,\psi\circ\Tr)=-\sum_{y\in\F_q^\times}\psi_q\Bigl(y+\frac{N(b)}y\Bigr),
+S(b)=\frac1{q-1}\sum_\chi\bar\chi(\mathrm N(b))\,G(\chi\circ\mathrm N,\psi\circ\Tr)=-\sum_{y\in\F_q^\times}\psi_q\Bigl(y+\frac{\mathrm N(b)}y\Bigr),
 \]
 minus a Kloosterman sum; so $|S(b)|\le2\sqrt q$ by Weil's bound \cite{Weil}. Hence, for $b\ne0$, the number of $z\in\mu_{q+1}$
 with $\Tr(bz)=0$ is $\frac1p\sum_{a\in\F_p}\sum_z\psi(a\Tr(bz))=\frac{q+1}p+\frac1p\sum_{a\ne0}S(ab)\ge\frac{q+1}p-
 \frac{p-1}p\,2\sqrt q$, which is positive when $f\ge3$ (then $\sqrt q\ge p^{3/2}>2(p-1)$); so $\kappa_1=0$ for $f\ge3$.
 
-Let $f=1$, $p=4k+3$, and $I=\{x:|x|\le k\}\subset\F_p$, the residues with $\|x/p\|<\frac14$. The number of
-$z\in\mu_{p+1}$ with $\Tr(bz)\in I$ is
+Let $f=1$, $p=4k+3$, and $\mathcal I=\{x:|x|\le k\}\subset\F_p$, the residues with $\|x/p\|<\frac14$. The number of
+$z\in\mu_{p+1}$ with $\Tr(bz)\in\mathcal I$ is
 \[
-\frac{(p+1)|I|}p+\frac1p\sum_{a\ne0}\Bigl(\sum_{x\in I}\psi(-ax)\Bigr)S(ab)
+\frac{(p+1)|\mathcal I|}p+\frac1p\sum_{a\ne0}\Bigl(\sum_{x\in\mathcal I}\psi(-ax)\Bigr)S(ab)
 \ \ge\ \frac{p^2-1}{2p}-\frac{2\sqrt p}p\sum_{a=1}^{p-1}\frac1{|\sin(\pi a/p)|}
 \ \ge\ \frac{p^2-1}{2p}-2\sqrt p\,(\ln p+1),
 \]
-because $|\sum_{x\in I}\psi(-ax)|=|\sin(\pi a(2k+1)/p)/\sin(\pi a/p)|\le1/|\sin(\pi a/p)|$, and, by the symmetry
+because $|\sum_{x\in\mathcal I}\psi(-ax)|=|\sin(\pi a(2k+1)/p)/\sin(\pi a/p)|\le1/|\sin(\pi a/p)|$, and, by the symmetry
 $a\leftrightarrow p-a$ and $\sin x\ge2x/\pi$ on $[0,\pi/2]$, $\sum_{a=1}^{p-1}1/|\sin(\pi a/p)|\le
 p\sum_{a\le(p-1)/2}1/a\le p(\ln p+1)$. The last expression is positive for $p=1001$ and increasing for $p\ge1001$
 (its derivative is $\frac12+\frac1{2p^2}-\frac{\ln p+3}{\sqrt p}>0$ there). For the primes $p\equiv3\pmod4$ with
 $11\le p<3000$ a direct computation
-(in $\F_{p^2}=\F_p(i)$, where $bz$ runs over the circle $s^2+t^2=N(b)$ and $\Tr(bz)=2s$) gives $\kappa_1<\frac14$;
+(in $\F_{p^2}=\F_p(i)$, where $bz$ runs over the circle $s^2+t^2=\mathrm N(b)$ and $\Tr(bz)=2s$) gives $\kappa_1<\frac14$;
 the largest value is $\frac4{19}$. For $p=3$ and $p=7$ a direct computation gives $\kappa_1=\frac13$ and
 $\kappa_1=\frac27$, attained by the maps of the proof of Theorem~\ref{thm:B} and of Proposition~\ref{prop:C1}.
 \end{proof}
 
 \begin{corollary}[local circular values]\label{cor:localvalues}
-Let $E$ be a finite extension of $\Q_p$. If $E^2$ has a locally constant homomorphism to $K_{P/Q}$ with $P/Q<4$, then
-either $p=2$ and $E(i)/E$ is ramified, or $(p,f)=(3,1)$ and $P/Q\ge3$, or $(p,f)=(7,1)$ and $P/Q\ge7/2$.
+Let $K$ be a finite extension of $\Q_p$. If $K^2$ has a locally constant homomorphism to $K_{P/Q}$ with $P/Q<4$, then
+either $p=2$ and $K(i)/K$ is ramified, or $(p,f)=(3,1)$ and $P/Q\ge3$, or $(p,f)=(7,1)$ and $P/Q\ge7/2$.
 \end{corollary}
 
 \begin{proof}
-If $i\in E$, then $\chi(E^2)=\infty$ \cite[Proposition~3]{PP}. Otherwise combine Propositions~\ref{prop:levels}
+If $i\in K$, then $\chi(K^2)=\infty$ \cite[Proposition~3]{PP}. Otherwise combine Propositions~\ref{prop:levels}
 and~\ref{prop:residue}.
 \end{proof}
 
-So the restriction to $F^2$ of a locally constant colouring of a completion $F_v^2$ of a number field gives, below
-$4$, only the bounds $2$ (condition (a)), $3$ (condition (b)) and $7/2$ (a place above $7$ of residue degree $1$).
+So, below $4$, the best upper bound on $\chi_c(F^2)$ given by the restriction to $F^2$ of a locally constant colouring
+of a completion $F_v^2$ of a number field is $2$ (condition (a)), $3$ (condition (b)) or $7/2$ (a place above $7$ of
+residue degree $1$).
 
 \section{A gap above \texorpdfstring{$3$}{3}}\label{sec:gap}
 
@@ -941,7 +954,7 @@ $N\varepsilon+x$ with $\varepsilon\in E$ and $|x|\le r_{\theta^*}<0.22$: then fo
 applies with $\theta=q/p$, since $S_N^\theta\subseteq S_N^{\theta^*}$, with $r_{\theta^*}$ in place of $r_\theta$ and
 $k\ge17$. We computed
 $S_N^{\theta^*}$ exactly, as a finite union of rational polygons modulo $N$, level by level, with three programs
-written separately (two of them by referees): all three find the same number of components at every level $k\le19$,
+written separately (two of them by independent checkers): all three find the same number of components at every level $k\le19$,
 and only the components of Proposition~\ref{prop:probe} for $k=17,18,19$. For $k\ge18$ the induction step of
 Proposition~\ref{prop:probe} goes through with Lemmas~\ref{lem:gapC} and~\ref{lem:gapQ} replaced by the same
 statements under the hypotheses $x\in P_{k-1}$, resp.\ $y\in Y^N_{k-1}(\varepsilon)$, for every shift
@@ -1138,15 +1151,15 @@ Proposition~\ref{prop:C1}. Let $\tilde\rho=2+5i$, and for $j\in\Z$ let $\zeta_j(
 for $j<0$ read through $\tilde\rho^{\,8}\equiv1\pmod 7$).
 
 \begin{lemma}\label{lem:seven}
-\textup{(i)} $A'_7=\{a+bi:\ (a,b)\in\{(2,3),(2,4),(3,2),(3,5),(4,2),(4,5),(5,3),(5,4)\}\}$. It is a single
-$\mu_8$-orbit, it is closed under conjugation, its elements add up to $0$, and $0\notin A'_7$.
+\textup{(i)} $A'_7=\{e\in\F_{49}:\ e\bar e=-1\}$, that is, $A'_7$ is the set of the $a+bi$ with
+$(a,b)\in\{(2,3),(2,4),(3,2),(3,5),(4,2),(4,5),(5,3),(5,4)\}$. It is a single $\mu_8$-orbit, it is closed under conjugation, its elements add up to $0$, and $0\notin A'_7$.
 
 \textup{(ii)} $A'_7$ contains no coset of a nonzero additive subgroup of $\F_{49}$.
 
 \textup{(iii)} $\operatorname{Re}(A'_7)=\{2,3,4,5\}$.
 
-\textup{(iv)} For $\varepsilon\in E_7$ the digits $\zeta_j(\varepsilon)-\rho\zeta_{j-1}(\varepsilon)$ form a sequence of
-period $8$ in which the digit $0$ alternates with digits $u\frac{2+i}5$, $u\in\mu_4\subset\C$; the eight classes of
+\textup{(iv)} For $\varepsilon\in E_7$, $\zeta_{j+2}(\varepsilon)=-i\zeta_j(\varepsilon)$, and the digits
+$\zeta_j(\varepsilon)-\rho\zeta_{j-1}(\varepsilon)$ form a sequence of period $8$ in which the digit $0$ alternates with digits $u\frac{2+i}5$, $u\in\mu_4\subset\C$; the eight classes of
 $E_7$ modulo $\Z[i]$ give its eight shifts, as $\zeta_t(\varepsilon')=\zeta_{t+j}(\varepsilon)$ when
 $7\varepsilon'\equiv7\varepsilon\,\overline{\tilde\rho}^{\,j}\pmod7$ \textup{(}$\tilde\rho\,\overline{\tilde\rho}\equiv1
 \pmod7$\textup{)}. Two consecutive digits, at given positions, of a sequence of type c \textup{(}all digits
@@ -1155,7 +1168,45 @@ type and its class.
 \end{lemma}
 
 \begin{proof}
-A direct computation in $\F_{49}$ (two programs written separately; Section~\ref{sec:checks}).
+Write $e=a+bi$ and $z=x+yi$ with $a,b,x,y\in\F_7$. Then $\operatorname{Re}(\bar ez)=ax+by$ and $e\bar e=a^2+b^2$,
+which vanishes only for $e=0$, as $-1$ is not a square modulo $7$; the nonzero squares modulo $7$ are $1$, $2$ and
+$4$.
+
+(i) The group $\mu_8$ is the conic $x^2+y^2=1$. Let $e\ne0$ and $t\in\F_7$. The points of the line $ax+by=t$ are
+$\frac t{e\bar e}(a,b)+s(-b,a)$, $s\in\F_7$, and such a point lies on the conic if and only if
+$(e\bar e)^2s^2=e\bar e-t^2$. So $t$ is a value of $z\mapsto\operatorname{Re}(\bar ez)$ on $\mu_8$ if and only if
+$e\bar e-t^2$ is $0$ or a square. Hence $e\in A'_7$ if and only if $e\ne0$ and neither $e\bar e$ nor $e\bar e-1$ is
+$0$ or a square (the values $t=0$ and $t=\pm1$), that is, $e\bar e$ and $e\bar e-1$ lie in $\{3,5,6\}$, which means
+$e\bar e=6=-1$. The solutions of $a^2+b^2=-1$ have $\{a^2,b^2\}=\{2,4\}$; they are the eight elements listed. As
+$(ez)\overline{(ez)}=e\bar e$ for $z\in\mu_8$, $A'_7=e_0\mu_8$ for every $e_0\in A'_7$. It is closed under
+conjugation, its elements add up to $e_0\sum_{z\in\mu_8}z=0$, as $\mu_8$ is the set of roots of $z^8-1$, and
+$0\notin A'_7$.
+
+(ii) A nonzero additive subgroup of $\F_{49}\cong\F_7^2$ is a line or all of $\F_{49}$, so each of its cosets contains
+a set $\{e+sd:\ s\in\F_7\}$ with $d\ne0$, which has $7$ elements. On it $(e+sd)\overline{(e+sd)}=e\bar e+s(e\bar d+\bar
+ed)+s^2d\bar d$ is a polynomial of degree $2$ in $s$, as $d\bar d\ne0$; so at most two of these elements lie in
+$A'_7$.
+
+(iii) This is read off the list in (i).
+
+(iv) By the list in (i), both coordinates of every element of $A'_7$ lie in $\{2,3,4,5\}$, and $7\bar\varepsilon
+\tilde\rho^{\,j}\bmod7$ lies in $A'_7$, which is closed under conjugation and stable under $\mu_8$; so
+$\zeta_j(\varepsilon)$ is defined. As $\tilde\rho^{\,2}=-21+20i\equiv-i\pmod7$ and $7\bar\varepsilon\in\Z[i]$,
+$\bar\varepsilon\tilde\rho^{\,j+2}\equiv-i\,\bar\varepsilon\tilde\rho^{\,j}\pmod{\Z[i]}$; as $-ih\equiv h\pmod{\Z[i]}$
+and $\{\pm\frac1{14},\pm\frac3{14}\}^2$ is stable under multiplication by $-i$, $\zeta_{j+2}(\varepsilon)=
+-i\zeta_j(\varepsilon)$. So the digits $\nu_j=\zeta_j(\varepsilon)-\rho\zeta_{j-1}(\varepsilon)$ satisfy
+$\nu_{j+2}=-i\nu_j$. For $7\varepsilon\equiv2+3i$ we have $7\bar\varepsilon\equiv2+4i$, $(2+4i)\tilde\rho\equiv5+4i$
+and $(2+4i)\tilde\rho^{\,2}\equiv4+5i\pmod7$, so $\zeta_0=\frac{-3+i}{14}$, $\zeta_1=\frac{3+i}{14}$ and
+$\zeta_2=\frac{1+3i}{14}$; as $\rho\zeta_0=-\frac{13+9i}{70}$ and $\rho\zeta_1=\frac{1+3i}{14}$, we get
+$\nu_1=\frac{2+i}5$ and $\nu_2=0$. Hence $\nu_{2m}=0$ and $\nu_{2m+1}=(-i)^m\frac{2+i}5$ for every $m$, a sequence
+of period $8$ of the stated form. If $7\varepsilon'\equiv7\varepsilon\,\overline{\tilde\rho}^{\,j}\pmod7$, then
+$\bar\varepsilon'\tilde\rho^{\,t}\equiv\bar\varepsilon\tilde\rho^{\,t+j}\pmod{\Z[i]}$, so
+$\zeta_t(\varepsilon')=\zeta_{t+j}(\varepsilon)$; as $\overline{\tilde\rho}\equiv\tilde\rho^{\,-1}$ generates $\mu_8$
+and $A'_7$ is one $\mu_8$-orbit, the eight classes of $E_7$ give the eight shifts $j=0,\dots,7$. Finally, two
+consecutive digits are both $0$ for type c, both nonzero for type q, and one $0$ and one nonzero for type $7$. For
+type q, one digit $\nu_j=-\frac{1+3i}{10}\eta_{j-1}$ determines $\eta_{j-1}$, hence the class, as in the proof of
+Lemma~\ref{lem:window}. For type $7$, the position of the nonzero digit $(-i)^m\frac{2+i}5$ and $m$ modulo $4$
+determine the shift modulo $8$, hence the class.
 \end{proof}
 
 The set $S^\theta(2,1)$ is invariant under $325\Z[i]$, and its \emph{type points} are the points of $325h+325\Z[i]$
@@ -1367,7 +1418,7 @@ corresponding place has the same value by the first part.
 For example $\chi_c(\Q_{19}^2)$ and $\chi_c(\Q(\sqrt{47})^2)$ lie in $[4,19/4]$: the lower bound is
 Corollary~\ref{cor:localF}, resp.\ Theorem~\ref{thm:F}, and the upper bound is Proposition~\ref{prop:C1} at $19$,
 where $\kappa_1=4/19$ (as $47\equiv3^2\pmod{19}$, $\sqrt{47}\in\Q_{19}$). The same holds for $\Q(\sqrt5,\sqrt7)$. So if
-$\chi(\Q(\sqrt{47})^2)=5$, which is open \cite{Moorhouse}, its circular chromatic number lies in $(4,19/4]$ and is not
+$\chi(\Q(\sqrt{47})^2)=5$, which is open \cite[Corollary~2]{FC}, its circular chromatic number lies in $(4,19/4]$ and is not
 an integer.
 
 
@@ -1390,7 +1441,9 @@ translate $c_k+Nm$ of the points $c_k$ of that Remark has least margin at most $
 
 \subsection*{Finite witnesses}
 By compactness, $\chi_c(F^2)$ is the supremum of $\chi_c(H)$ over the finite subgraphs $H$ of $F^2$: if every finite
-subgraph has a homomorphism to $K_{p/q}$, so does $F^2$. Below $4$ the supremum is attained. For a homomorphism $c$
+subgraph has a homomorphism to $K_{p/q}$, so does $F^2$. Below $4$ the supremum is attained
+(Corollary~\ref{cor:finite}). In this subsection $s$ denotes an element of a connection set, not the number
+$\frac12-\theta$. For a homomorphism $c$
 of a graph to $K_{p/q}$, the \emph{tight digraph} $D_c$ has an arc $x\to y$ for every edge $xy$ with
 $c(y)-c(x)\equiv q\pmod p$, and a \emph{tight cycle} of $c$ is a directed cycle of $D_c$. For a finite set $S$ in an
 abelian group let $\kappa(S)=\max_\xi\min_{s\in S}\|\xi(s)\|$, over the characters $\xi$ of $\Z S$ (a maximum, as the
@@ -1436,7 +1489,7 @@ same element give a closed walk. For the walk of the statement, $\Lambda(W,x)=q\
 of its $\sum_in_i$ terms is at least $q$; so every term is $q$. A closed walk in $D_c$ contains a directed cycle.
 \end{proof}
 
-\begin{lemma}\label{lem:finiteS}
+\begin{lemma}[{\cite[Corollary~16]{Winding}}]\label{lem:finiteS}
 Let $\Gamma$ be an abelian group, $S=-S\subseteq\Gamma$ finite with $\Gamma=\Z S$, and suppose that
 $\chi_c(\Cay(\Gamma,S))=p/q$ with $2<p/q<4$. Then every homomorphism of $\Cay(\Gamma,S)$ to $K_{p/q}$ has a tight
 cycle, and some finite subgraph of $\Cay(\Gamma,S)$ has circular chromatic number $p/q$.
@@ -1505,8 +1558,10 @@ The proof uses Proposition~\ref{prop:window7} only for $\theta>\frac27$, through
 not the certificates of value $\frac27$ themselves. For $\Q(\sqrt{11})$ and $\Q(\sqrt{35})$ one can take for $U$ the $140$ vectors of
 Theorem~\ref{thm:C}, whose certificates give $\kappa(U)\le\frac27$, while Proposition~\ref{prop:C1} gives
 $\kappa(U)\ge\frac27$: some finite subgraph of the Cayley graph of these $140$ explicit unit vectors has circular
-chromatic number $7/2$. The same holds for the local fields of Corollary~\ref{cor:localF} with $\chi_c<4$, as
-$K\supseteq\Q_7\supset\Q(\sqrt{11})$, resp.\ $K\supseteq\Q_3\supset\Q(\sqrt7)$. The proof, by compactness, gives no
+chromatic number $7/2$. A finite extension $K$ of $\Q_p$ with $\chi_c(K^2)<4$ (Corollary~\ref{cor:localF}) has
+finite witnesses too: an edge for the value $2$; for the value $3$, $p=3$ and $K\supseteq\Q_3\supset\Q(\sqrt7)$, where
+$\chi_c(\Q(\sqrt7)^2)=3$ by Theorem~\ref{thm:B} and Corollary~\ref{cor:B6}; for the value $7/2$, $p=7$ and
+$K\supseteq\Q_7\supset\Q(\sqrt{11})$. The proof, by compactness, gives no
 bound on the size of the subgraph. When $\sqrt3\in F$ and $\chi_c(F^2)=3$, a unit triangle is a witness. The Moser
 spindle, a unit-distance graph on $7$ vertices over $\Q(\sqrt3,\sqrt{11})$, maps to $K_{7/2}$ (the common vertex of
 its two rhombi coloured $0$, the far tips $6$ and $1$, and the others $2,4,3,5$), and its independence number is
@@ -1515,24 +1570,29 @@ $\Q(\sqrt{11})^2$ does not, and $\chi_c(\Q(\sqrt3,\sqrt{11})^2)\ge4$ by Theorem~
 $\chi(\Q(\sqrt3,\sqrt{11})^2)=4$ \cite{Fischer1994,MM}, and (7) fails, as $7$ is inert in $\Q(\sqrt3)$. By SAT
 computations, not certified, the $76$-vertex unit-distance graph over $\Q(\sqrt{11})$ with no $3$-colouring in
 \cite{Repo} (\nolinkurl{data/quadratic_planes/q11.json}) has circular chromatic number $16/5$, the union of its images
-under the nine rotations $\rho^j\sigma^l$, $|j|,|l|\le1$ ($628$ vertices) has circular chromatic number in
-$(16/5,13/4]$, and the ball of radius $2$ around $0$ in the Cayley graph of the $140$ vectors ($9\,941$ vertices) has
-circular chromatic number less than $7/2$.
+under the nine rotations $\rho^j\sigma^l$, $|j|,|l|\le1$ ($628$ vertices, and $1\,506$ edges when all pairs at distance $1$
+are joined; the nine copies have $1\,494$) has circular chromatic number in $(16/5,13/4]$. Exactly, the ball of radius
+$2$ around $0$ in the Cayley graph of the $140$ vectors ($9\,941$ vertices, $19\,600$ edges) is bipartite, and the
+unit-distance graph it induces ($216$ more edges) has circular chromatic number $5/2$: it contains a $5$-cycle and no
+triangle, and maps to $K_{5/2}$ (\nolinkurl{finite_ball.py}).
 
 \section{Computer checks}\label{sec:checks}
 
 The programs are in the folders \nolinkurl{data/number_fields/three_colours/} and
-\nolinkurl{data/number_fields/circular/} of \cite{Repo}, with tests in \nolinkurl{tests/test_three_colours.py}.
+\nolinkurl{data/number_fields/circular/} of \cite{Repo}, with tests in \nolinkurl{tests/test_three_colours.py},
+\nolinkurl{tests/test_gap_above_three.py} and \nolinkurl{tests/test_two_primes.py}.
 
-\emph{Lemma~\ref{lem:B1} as a test.} For a finite $V$, the possible values $z=6\varphi(v)$ form the lattice
-$\mathcal M=(\text{column space})\cap\Z^{2m}$, and the types are conditions on $z$ modulo $2$ and $3$; a program
+\emph{Lemma~\ref{lem:B1} as a test.} Let $V=\{v_1,\dots,v_m\}\subset T$ contain a $\Q(i)$-basis $b_1,\dots,b_n$ of
+$L$. As $\beta$ runs over $L$, the vectors $z=(6\Tr(\beta v_l))_{l\le m}$ fill the column space of the matrix
+$(6\Tr(b_jv_l))_{l,j}$ over $\Q(i)$, and those with every $\Tr(\beta v_l)\in E$ lie in the lattice $\mathcal M$ of its
+points in $\Z[i]^m=\Z^{2m}$; the types are conditions on $z$ modulo $2$ and $3$; a program
 enumerates $\mathcal M/2\mathcal M\times\mathcal M/3\mathcal M$ and decides whether some $\beta$ exists. A second implementation in PARI/GP
-\cite{PARI} uses another lattice routine, and a referee wrote a third, which agreed on all $78$ of its trials. The
-real quadratic cases of \cite{FC} come out infeasible; $\Q(\sqrt3)$ and $\Q(\sqrt7)$ stay feasible;
+\cite{PARI} uses another lattice routine, and an independent checker wrote a third, which agreed on all $78$ of its trials. The
+real quadratic cases of \cite{FC} tested ($d=11$, $23$, $35$, $47$, $59$) come out infeasible; $\Q(\sqrt3)$ and $\Q(\sqrt7)$ stay feasible;
 $\Q(\sqrt2,\sqrt7)$ is infeasible already with five vectors, $1$, $(7+4\sqrt2i)/9$, $(23+10\sqrt2i)/27$,
 $(1+3\sqrt7i)/8$ and $(9+5\sqrt7i)/16$; the sextic field $\Q(2\cos\frac{2\pi}7,\sqrt7)$ is infeasible with $44$
 vectors, the obstruction being that of Lemma~\ref{lem:B5} at its two places above $3$ of residue degree $3$;
-$\Q(\sqrt3,\sqrt7)$ stays feasible. A referee tested $23$ random quartic and sextic fields: every field predicted to
+$\Q(\sqrt3,\sqrt7)$ stays feasible. An independent checker tested $23$ random quartic and sextic fields: every field predicted to
 be $2$- or $3$-colourable stayed feasible, and infeasibility was found for all three quartic fields and four of the
 six sextic fields predicted to need four colours (for the other two the random search found no obstruction; the
 test is one-sided). The obstructions appear only when $V$ contains vectors that are large at the places above $2$
@@ -1552,19 +1612,19 @@ second one also rebuilds $U=G_{25}V$ from $d$. Both reject corrupted copies. The
 Proposition~\ref{prop:fiftynine} ($d=59$, the interval $(15/53,38/53)$) has $127\,181$ nodes and $105\,761$ leaves;
 both checkers accept it.
 
-\emph{The lemmas.} Lemma~\ref{lem:B5} was checked exhaustively for $f=1,3,5$, and by the referees with their own
-programs (for $f=3$ over all $3^{12}$ $\F_3$-linear maps); the uniqueness step for odd $f\le79$; Lemma~\ref{lem:B4}
+\emph{The lemmas.} Lemma~\ref{lem:B5} was checked exhaustively for $f=1,3,5$, and by the independent checkers with their
+own programs (for $f=3$ over all $3^{12}$ $\F_3$-linear maps); the uniqueness step for odd $f\le79$; Lemma~\ref{lem:B4}
 on the finite models $\F_{q^2}[\pi]/(\pi^e)$ ($f=1$, $e\le7$, and $f=3$, $e\le2$); Lemma~\ref{lem:B3} over all
 $\mu_4$-stable subsets of $\F_9$. For the criterion, a PARI/GP script computes (a) and (b) from a defining
 polynomial; for squarefree $|d|<200$ it reproduces the rule for quadratic fields, and it agrees with the known values
 $\chi(\Q(\sqrt3,\sqrt{11})^2)=4$ \cite{Fischer1994,MM} and $\chi(\Q(\sqrt2,\sqrt3)^2)=4$ \cite[Theorem~1]{P4C}. For
 Section~\ref{sec:circ}, two programs written separately compute $\kappa_1$ for every $(p,f)$ quoted there, and the
 bound $|S(b)|\le2\sqrt q$ and the identity of $S(b)$ with a Kloosterman sum were checked numerically for small
-$(p,f)$; Proposition~\ref{prop:levels} was checked on the finite models $O_w/\mathfrak m^k$ for $\Q_3$, $\Q_7$,
-$\Q_{11}$, $\Q_3(\sqrt3)$, $\Q_7(\sqrt7)$ and $\Q_{27}$.
+$(p,f)$; Proposition~\ref{prop:levels} was checked on the finite models $O_w/\mathfrak m^k$ for $\Q_7$ and $\Q_{27}$
+(\nolinkurl{level2.py}).
 
-\emph{Theorem~\ref{thm:D}.} The programs are in \nolinkurl{data/number_fields/circular/probe/}; two referees wrote
-their own implementations, which share no code with them or with each other, in its subfolders \nolinkurl{indep/} and
+\emph{Theorem~\ref{thm:D}.} The programs are in \nolinkurl{data/number_fields/circular/probe/}; two independent
+checkers wrote their own implementations, which share no code with them or with each other, in its subfolders \nolinkurl{indep/} and
 \nolinkurl{indep2/}. All use exact rational arithmetic and compute $S_N^\theta$ level by level as a union of convex
 rational polygons: each piece of level $k-1$, translated by the $25$ elements of $\frac N5\{0,\dots,4\}^2$, is cut
 along the strips where the coordinates of $\bar c\rho^{\pm k}$ lie in $[\theta,1-\theta]+\Z$; a direct cell-by-cell
@@ -1575,7 +1635,7 @@ Section~\ref{sec:gap}: the base case (least $s$ equal to $0$, $11/56$ for the ei
 $\nu_\pm$, and $1/4$, $2/7$, $3/8$, $1/6$ for the four orbits with the shifts of the proof; with all shifts the third
 value is $1/4$), the polygons $P$ and $X(\varepsilon)$, the sets $S_N^\theta$ for small $k$ at several values of
 $\theta$ in $(17/56,1/3]$, the extra points at $\theta=17/56$, the thresholds of the induction step, and the
-computations at $333/1106$ and at $\theta^*$ (the same number of components at every level $k\le19$). One referee also
+computations at $333/1106$ and at $\theta^*$ (the same number of components at every level $k\le19$). One of them also
 tested membership in $S_N^\theta$ exactly at $350\,000$ random points ($N=5,25$), finding none outside the components
 of Proposition~\ref{prop:probe}; the $5$-adic points $c_k$ of the Remark were checked exactly for $k\le15$.
 
@@ -1585,7 +1645,7 @@ exactly, by lifting (along the rotations $\rho^j$ and then $\sigma^l$, and in th
 enumeration over all cells. Their certificates (the two trees, with $15\,620$ and $550\,474$ branch nodes, and the type
 points and dual certificates of the leaves) are accepted by checkers that share no code with the programs that made
 them: they rebuild the rotations from $2\pm i$ and $3\pm2i$, recompute the possible strip indices from the corners of
-the cells, take about one and $45$ seconds, and reject corrupted copies. Two referees confirmed the propositions with
+the cells, take about one and $45$ seconds, and reject corrupted copies. Two independent checkers confirmed the propositions with
 methods of their own, which share no code with these programs. For Proposition~\ref{prop:window}: exact clipping of
 every cell by every strip; the enumeration of all $1\,734\,260$ vertices of the arrangement of strip boundaries in
 $[0,65)^2$; and the largest least margin of each component, by exact primal and dual linear programming ($\frac27$
@@ -1595,23 +1655,24 @@ $\frac13$. For Proposition~\ref{prop:window7}: the enumeration of the vertices o
 with $128$-bit integers, each point rechecked with exact fractions), and lifting by rows; both give the same $29$
 index vectors for $\theta=\frac{249}{1000}$ and the same $13$ for $\theta=\frac14+10^{-7}$. The eight dual
 certificates of value $\frac27$ for the vectors of type $7$ in Proposition~\ref{prop:window7} were added after the
-referees' reports, by a program of our own (an exact search among the margins that are active at the $7$-adic points),
-and are checked by a further program that rebuilds $325\rho^j\sigma^l$ as products of $2\pm i$ and $3\pm2i$; a referee
-had found the same value $\frac27$ by exact linear programming. For Lemma~\ref{lem:window7}, a
-referee lifted $S^\theta(k,1)$ exactly to the levels $k=6$ and $k=12$ and found only the components of the
+checkers' reports, by a program of our own (an exact search among the margins that are active at the $7$-adic points),
+and are checked by a further program that rebuilds $325\rho^j\sigma^l$ as products of $2\pm i$ and $3\pm2i$; an independent
+checker had found the same value $\frac27$ by exact linear programming. For Lemma~\ref{lem:window7}, an
+independent checker lifted $S^\theta(k,1)$ exactly to the levels $k=6$ and $k=12$ and found only the components of the
 stated form (and, at $k=5$, components of type $7$ not of that form, so the hypothesis $6\mid k$ is needed). The
 conclusion of
 Lemma~\ref{lem:window} was tested exactly at every level $k\le7$ for $\theta=\frac3{10}$ and $k\le6$ for
 $\theta=\frac{201}{700}$: modulo $13\cdot5^k$ there are exactly five components, all of the stated form, while for
-$\theta=\frac7{25}$ the test finds the eight components of type $7$ at each level $k\le3$. Lemma~\ref{lem:seven} was
-checked by two programs written separately; Lemma~\ref{lem:B5seven} directly for $f=3$ (no $\F_{49}$-linear map
+$\theta=\frac7{25}$ the test finds the eight components of type $7$ at each level $k\le3$. Lemma~\ref{lem:seven}, proved above by
+hand, was also checked by two programs written separately; Lemma~\ref{lem:B5seven} directly for $f=3$ (no $\F_{49}$-linear map
 $\F_{7^6}\to\F_{49}$ maps $\mu_{344}$ into $A'_7$), and Lemma~\ref{lem:B4seven} on the finite models
 $\F_{49}[\pi]/(\pi^e)$, $e\le3$. The torsion characters of the last Remark were found by two programs; for orders up
 to $400$, one of them counts each character at its exact order. For Corollary~\ref{cor:finite}, which needs no
-computation beyond those of Theorem~\ref{thm:F}, two referees tested Lemmas~\ref{lem:tight}--\ref{lem:finiteS}
+computation beyond those of Theorem~\ref{thm:F}, two independent checkers tested Lemmas~\ref{lem:tight}--\ref{lem:finiteS}
 with programs of their own: on $291$ small graphs and $766$ tight relations; on $115$ random finite sets $S$ in $\Z$,
-$\Z^2$ and $\Z\times\Z/m$ with $2<\chi_c<4$, whose $409$ optimal characters all have a nonnegative relation among
-their tight elements; and by SAT on finite pieces of $13$ such Cayley graphs, all of which have finite witnesses
+$\Z^2$ and $\Z\times\Z/m$ with $2<\chi_c<4$, at all of whose $409$ optimal points (vertices of the optimal set, and
+midpoints and centroids of them that stay optimal) the tight elements have a nonnegative relation
+(\nolinkurl{indep_FW2/test_kappa_relations.py 1 180}); and by SAT on finite pieces of $13$ such Cayley graphs, all of which have finite witnesses
 (for instance the segment $\{0,\dots,18\}$ of the distance graph with distances $3,4,9,12$, of circular chromatic
 number $7/2$). One of them clipped $S^{2/7}(2,1)$ exactly: $13$ components, one of type c, four of type q, and the
 eight points of type $7$, each a component by itself. As consistency checks, a program
@@ -1629,11 +1690,14 @@ homomorphism of one completion to a circular clique. Is this true above $4$? The
 homomorphism of a Cayley graph to $K_{p/q}$ with $p/q\ge4$ need not come from a character. In particular, is there a
 number field $F$ with $4<\chi_c(F^2)<5$? Every $F$ with $\chi(F^2)=5$ and a place of residue field $\F_{19}$ would be
 one, as $\kappa_1=4/19$ there gives $\chi_c\le19/4$; for example $\Q(\sqrt{47})$ if $\chi(\Q(\sqrt{47})^2)=5$. The
-$5$-chromatic unit-distance graphs we know lie over fields that contain $\sqrt3$, or $\sqrt{-3}$ and $\sqrt{-7}$,
+$5$-chromatic unit-distance graphs we know (those of de Grey \cite{deGrey}, Exoo and Ismailescu \cite{EI}, Heule
+\cite{Heule} and Parts \cite{Parts}, and one over $\Q(\sqrt{-3},\sqrt{-7},\sqrt{-11})$ in \cite{Repo},
+\nolinkurl{notes/local_colourings.md}, Section~5) lie over fields that contain $\sqrt3$, or $\sqrt{-3}$ and $\sqrt{-7}$,
 and $3$ and $-7$ are not squares modulo $19$.
 \item \emph{Four colours.} Is $\chi(F^2)$, in general, the least number of colours of a locally constant colouring
 of one completion? (For real fields this is \cite[Question~8]{TC}, which also allows Borel colourings at the real
-places.) Theorem~\ref{thm:B} answers this at three colours. The first open case is $\Q(\sqrt{47})$, where
+places.) Theorem~\ref{thm:B} answers this at three colours. Among real quadratic fields, ordered by $d$, the first open case
+is $\Q(\sqrt{47})$, where
 $4\le\chi\le5$ (\cite[Corollary~2]{FC} and \cite{Moorhouse}); by Theorem~\ref{thm:F}, $\chi_c(\Q(\sqrt{47})^2)\ge4$,
 so $\chi_c(\Q(\sqrt{47})^2)=4$ if and only if $\chi(\Q(\sqrt{47})^2)=4$ (if $\chi_c(F^2)=4$, every finite subgraph has
 $\chi_c\le4$, hence $\chi\le4$, and $\chi(F^2)\le4$ by the theorem of de Bruijn and Erd\H{o}s).
@@ -1649,9 +1713,9 @@ The author thanks the authors of the works cited, whose questions and results th
 \begin{thebibliography}{99}
 \bibitem{BP} M. Benda and M. Perles, \emph{Colorings of metric spaces}, Geombinatorics \textbf{9} (2000),
 113--126 (not seen by us).
-\bibitem{Davies} J. Davies, \emph{Chromatic number of spacetime}, arXiv:2308.16885 (2023, revised 2024).
 \bibitem{DH} H. Davenport and H. Hasse, \emph{Die Nullstellen der Kongruenzzetafunktionen in gewissen zyklischen
 F\"allen}, J. Reine Angew. Math. \textbf{172} (1935), 151--182.
+\bibitem{Davies} J. Davies, \emph{Chromatic number of spacetime}, arXiv:2308.16885 (2023, revised 2024).
 \bibitem{dBE} N. G. de Bruijn and P. Erd\H{o}s, \emph{A colour problem for infinite graphs and a problem in the
 theory of relations}, Nederl. Akad. Wetensch. Proc. Ser. A \textbf{54} = Indag. Math. \textbf{13} (1951),
 369--373.
@@ -1659,27 +1723,32 @@ theory of relations}, Nederl. Akad. Wetensch. Proc. Ser. A \textbf{54} = Indag. 
 \textbf{28} (2018), 18--31; arXiv:1804.02385.
 \bibitem{DeVos} M. DeVos, J. Ebrahimi, M. Ghebleh, L. Goddyn, B. Mohar and R. Naserasr, \emph{Circular coloring the
 plane}, SIAM J. Discrete Math. \textbf{21} (2007), 461--465.
+\bibitem{EI} G. Exoo and D. Ismailescu, \emph{The chromatic number of the plane is at least $5$: a new proof},
+Discrete Comput. Geom. \textbf{64} (2020), 216--226; arXiv:1805.00157.
 \bibitem{Fischer1990} K. G. Fischer, \emph{Additive $K$-colorable extensions of the rational plane}, Discrete
 Math. \textbf{82} (1990), 181--195.
 \bibitem{Fischer1994} K. G. Fischer, \emph{A planar geometric graph of chromatic number four}, Congr. Numer.
 \textbf{104} (1994), 73--79.
+\bibitem{Winding} S. Gal\'an, \emph{Circular colourings of abelian Cayley graphs below four come from
+characters}, draft, 2026, \texttt{papers/winding/} in \cite{Repo}.
+\bibitem{PP} S. Gal\'an, \emph{Colouring the $p$-adic plane}, draft, 2026, \texttt{papers/padic-planes/} in
+\cite{Repo}.
 \bibitem{Repo} S. Gal\'an, \emph{The Hadwiger--Nelson problem over number fields}, code, data and formal
 proofs, 2026. Archived at Zenodo, \href{https://doi.org/10.5281/zenodo.22976635}{doi:10.5281/zenodo.22976635}
 (all versions); source at \url{https://github.com/decalion89/chromatic-number-of-the-plane}; the account of this
-note is \texttt{notes/three\_colours\_number\_fields.md} and \texttt{notes/circular\_planes.md} there.
+note is \texttt{notes/three\_colours\_number\_fields.md} and \texttt{notes/circular\_planes.md} there. The files
+cited in this note are on the branch \texttt{claude/quadratic-planes} (pull request~35), not yet in a release.
 \bibitem{P4C} S. Gal\'an, \emph{A short proof that the planes over $\Q(\sqrt3,\sqrt{11})$ and $\Q(\sqrt2,\sqrt3)$ are
 $4$-chromatic},
 draft, 2026, \texttt{papers/planes-4-chromatic/} in \cite{Repo}.
-\bibitem{FC} S. Gal\'an, \emph{Which real quadratic planes need four colours}, draft, 2026,
-\texttt{papers/four-colours/} in \cite{Repo}.
-\bibitem{PP} S. Gal\'an, \emph{Colouring the $p$-adic plane}, draft, 2026, \texttt{papers/padic-planes/} in
-\cite{Repo}.
 \bibitem{TC} S. Gal\'an, \emph{Two-colourable planes over number fields}, draft, 2026,
 \texttt{papers/two-colour-planes/} in \cite{Repo}.
-\bibitem{Winding} S. Gal\'an, \emph{Circular colourings of abelian Cayley graphs below four come from
-characters}, draft, 2026, \texttt{papers/winding/} in \cite{Repo}.
+\bibitem{FC} S. Gal\'an, \emph{Which real quadratic planes need four colours}, draft, 2026,
+\texttt{papers/four-colours/} in \cite{Repo}.
 \bibitem{Guichard} D. R. Guichard, \emph{Acyclic graph coloring and the complexity of the star chromatic number},
 J. Graph Theory \textbf{17} (1993), 129--134.
+\bibitem{Heule} M. J. H. Heule, \emph{Computing small unit-distance graphs with chromatic number $5$},
+Geombinatorics \textbf{28} (2018), 32--50; arXiv:1805.12181.
 \bibitem{Johnson1987} P. D. Johnson Jr., \emph{Two-colorings of real quadratic extensions of $\Q^2$ that forbid
 many distances}, Congr. Numer. \textbf{60} (1987), 51--58 (not seen by us).
 \bibitem{LN} R. Lidl and H. Niederreiter, \emph{Finite fields}, 2nd ed., Encyclopedia of Mathematics and its
@@ -1690,7 +1759,10 @@ graphs, and the exact chromatic number of the plane over $\Q(\sqrt3,\sqrt{11})$}
 \url{https://github.com/MildlyMeticulous/hn-2adic-obstruction}.
 \bibitem{Moorhouse} G. E. Moorhouse, \emph{On the chromatic numbers of planes}, preliminary draft, revised
 3 March 2010, \url{https://www.ericmoorhouse.org/pub/chromatic.pdf}.
+\bibitem{Parts} J. Parts, \emph{Graph minimization, focusing on the example of $5$-chromatic unit-distance graphs in
+the plane}, Geombinatorics \textbf{29} (2020), 137--166; arXiv:2010.12665.
 \bibitem{PARI} The PARI Group, \emph{PARI/GP version 2.15.4}, Univ. Bordeaux, 2023, \url{https://pari.math.u-bordeaux.fr/}.
+\bibitem{Soifer} A. Soifer, \emph{The mathematical coloring book}, Springer, New York, 2009.
 \bibitem{Weil} A. Weil, \emph{On some exponential sums}, Proc. Nat. Acad. Sci. U.S.A. \textbf{34} (1948), 204--207.
 \bibitem{Woodall} D. R. Woodall, \emph{Distances realized by sets covering the plane}, J. Combin. Theory Ser. A
 \textbf{14} (1973), 187--200.

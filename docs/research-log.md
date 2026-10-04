@@ -10110,3 +10110,31 @@ denominator `5^k`) decide three colours for every number field, not only for rea
   the ball of radius 2 has 9 941 vertices and only 19 816 unit-distance edges; it has a `(7, 2)`-colouring with an
   acyclic tight digraph (found at once), so `χ_c < 7/2` there. The tight walks of the proof (length 42 or 140) need
   balls of radius about 4, with millions of points, so explicit witnesses are probably large.
+
+## A full reading of the paper (4 October, afternoon)
+
+A separate agent read all of `papers/three-colours/` (24 pages at the time), checked every proof and reran every
+quoted number from the stored programs. Verdict: minor revision, no mathematical error in a proof; 33 findings, all
+applied.
+
+- **Lemma 13 by hand.** The facts about `A′₇ ⊂ 𝔽₄₉` had been checked only by two programs, although the paper said
+  that everything but Propositions 8 and 9 was by hand. They now have a short proof: `Re(ēz) = ax + by`, the values
+  of a linear form on the conic `x² + y² = 1` are the `t` with `eē − t²` zero or a square, so `e ∈ A′₇` iff
+  `eē = −1`; a line meets that conic in at most two points; and `ρ̃² ≡ −i (mod 7)` gives `ζ_{j+2} = −iζ_j`, so two
+  digits computed by hand give the whole period-8 pattern. The theorems of the paper were not affected.
+- **Three false sentences.** "For `d = 47` we know no more than `χ_c ≥ 4`" (we know `4 ≤ χ_c ≤ 19/4`, by the place
+  above 19); "for quadratic fields Corollary 2 is contained in [FC]" (only real ones; `ℚ(√−73)` is split above 2
+  and 3); "locally constant colourings of one completion give no upper bound below 4 other than 2, 3 and `7/2`"
+  (literally false; the correct statement is that the best such bound below 4 is 2, 3 or `7/2`).
+- **The radius-2 ball, exactly.** The addendum above said only `χ_c < 7/2` there. In fact the ball of radius 2 in
+  the Cayley graph of the 140 vectors (9 941 points, 19 600 edges) is bipartite, and the unit-distance graph it
+  induces (216 more edges) has `χ_c = 5/2`: a 5-cycle, no triangle, and a homomorphism to `K_{5/2}`
+  (`twoprime/finite_ball.py`, 3 seconds, exact). The union of the nine rotated copies of the 76-vertex graph has
+  1 494 edges as a union and 1 506 with all unit-distance pairs; the SAT runs used the latter.
+- **Credit and wording.** `χ(ℝ²) ≤ 7` is Isbell's; the 2-colouring at a ramified place above 2 is
+  `[MM, Theorem A′]` and `[TC, Proposition 3]`, with earlier special cases (Fischer, Moorhouse, and Johnson, whose
+  paper we have not seen); `χ(ℚ(√3, √11)²) = 4` is Fischer's (1994); "referees" became "independent checkers" in the
+  paper, as no human has refereed it; the finite-model check of Proposition 5 is claimed only for `ℚ₇` and `ℚ₂₇`, the
+  cases deposited in `level2.py`; the lemma on finite connection sets is cited as Corollary 16 of the winding paper.
+- **Second check.** A further agent was asked to referee the new proof of Lemma 13 and every new mathematical sentence
+  of the diff, with its own program.

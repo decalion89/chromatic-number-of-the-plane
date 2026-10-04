@@ -1,9 +1,9 @@
 # The probe below `[1/3, 2/3]`: computations for Theorem D
 
 Companion to `notes/circular_planes.md` §5 (Theorem D, Proposition D1) and to Section 9 of
-`papers/three-colours/` (Theorem D, Proposition 6). All programs use exact rational arithmetic
+`papers/three-colours/` (Theorem D, Proposition 7). All programs use exact rational arithmetic
 (`fractions.Fraction`); linear-programming optima are found in floating point and then certified by exact primal
-and dual solutions. In the scripts, *Theorem A* is Proposition D1 of the note (Proposition 6 of the paper), `r` is
+and dual solutions. In the scripts, *Theorem A* is Proposition D1 of the note (Proposition 7 of the paper), `r` is
 the end of the interval `[r, 1 − r]` (`θ` in the paper), `Sq_s = [−s, s]²` with `s = 1/2 − r`, `c*_N = N(1 + i)/2`,
 and `Q_N` is the set of type q points `(N/3)(a + bi)`, `a, b ∈ {1, 2}`.
 

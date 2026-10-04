@@ -30,13 +30,13 @@ vectors has a character into `[q/p, 1 − q/p]`.
 ## 2. Upper bounds from residue planes
 
 > **Proposition C1.** Let `v` be a place of `F` whose residue field is `𝔽_p`, `p ≡ 3 (mod 4)` (any ramification), and
-> let `λ : 𝔽_{p²} → 𝔽_p` be `𝔽_p`-linear with `λ(μ_{p+1}) ⊆ {m, m + 1, …, p − m}`. Then `F²` maps to `K_{p/m}`, so
+> let `m ≥ 1` and `λ : 𝔽_{p²} → 𝔽_p` be `𝔽_p`-linear with `λ(μ_{p+1}) ⊆ {m, m + 1, …, p − m}`. Then `F²` maps to `K_{p/m}`, so
 > `χ_c(F²) ≤ p/m`.
 
 *Proof.* As `−1` is not a square in `𝔽_p`, `i ∉ F_v`, and `L_w = F_v(i)` is unramified over `F_v` with residue field
 `𝔽_{p²}`. A unit vector `z` has `z z̄ = 1`, so `w(z) = 0`; conjugation reduces to the Frobenius `x ↦ x^p` of
 `𝔽_{p²}/𝔽_p`, so the residue `ẑ` satisfies `ẑ^{p+1} = 1`. Unit steps preserve the classes of `L_w` modulo `O_w`; fix
-a representative `ρ` of each class and colour `z` by `λ((z − ρ) mod 𝔪_w) ∈ ℤ/p`. A unit step changes the colour by an
+a representative `x_A` of each class `A` and colour each `x ∈ A` by `λ((x − x_A) mod 𝔪_w) ∈ ℤ/p`. A unit step changes the colour by an
 element of `{m, …, p − m}`: a homomorphism `F_v² → K_{p/m}`, which restricts to `F²`. ∎
 
 The best `m` (`residue_circular.py`, and `kappa1` below): `p = 3`: `m = 1` (`K₃`, three colours); `p = 7`: `m = 2`,
@@ -87,7 +87,7 @@ vectors are units of `O_w` whose residues lie in `μ₃ = 𝔽₄^×`, so colour
 residue modulo `𝔪_w`, as in the proof of Proposition C1, is a proper 4-colouring (Fischer 1990;
 `notes/local_colourings.md`). ∎
 
-Theorem F (§6) gives more: `χ_c(ℚ(√59)²) = 4`. Proposition C6 is the finite form of the separation: 70 explicit unit
+Theorem F (§6) gives more: `χ_c(ℚ(√59)²) = 4`. Proposition C6 is an explicit form of the separation: 70 explicit unit
 vectors already push `χ_c` above `7/2`.
 
 The lower bound is about the infinite graph `Cay(ℤU, U)`: Theorem W⁺ is applied to it directly. Every finite subgraph
@@ -142,8 +142,8 @@ that is nonzero on `7O` gives `2/49 < 1/14`), and for `ℚ₂₇` no character o
 > homomorphism to some `K_{P/Q}` with `P/Q < 4`, then `p = 2` and `K(i)/K` is ramified (and `K²` is bipartite), or
 > `(p, f) = (3, 1)` (and `P/Q ≥ 3`), or `(p, f) = (7, 1)` (and `P/Q ≥ 7/2`).
 
-So the restriction to `F²` of a locally constant colouring of one completion `F_v²` gives, below 4, only the bounds 2
-(Theorem B, (a)), 3 (Theorem B, (b)) and `7/2` (a place above 7 with residue degree 1).
+So, below 4, the best upper bound on `χ_c(F²)` given by the restriction to `F²` of a locally constant colouring of
+one completion `F_v²` is 2 (Theorem B, (a)), 3 (Theorem B, (b)) or `7/2` (a place above 7 with residue degree 1).
 
 ## 5. A gap above 3
 
@@ -280,7 +280,8 @@ above 7 then contains `𝔽₄₉`, and `χ_c = χ = ∞`.)
 *Examples.* For squarefree `d ≡ 11 (mod 12)`, (a) and (b) fail, so `χ_c(ℚ(√d)²) = 7/2` if `(d/7) ≠ −1` and
 `χ_c(ℚ(√d)²) ≥ 4` if `(d/7) = −1`. If moreover `d ≡ 11 (mod 24)`, then `ℚ₂(√d) = ℚ₂(√3)` and the place above 2 gives
 `χ ≤ 4` (as in the proof of Proposition C6), so `χ_c = 4`; only for `(d/7) = −1` and `d ≡ 23 (mod 24)` (`d = 47`,
-`143`, `167`, `215`, `311`, …) do we know no more than `χ_c ≥ 4`. So `χ_c(ℚ(√23)²) = χ_c(ℚ(√71)²) = 7/2`,
+`143`, `167`, `215`, `311`, …) do we not know whether `χ_c = 4` (for `d = 47`,
+`4 ≤ χ_c ≤ 19/4`, §6.6). So `χ_c(ℚ(√23)²) = χ_c(ℚ(√71)²) = 7/2`,
 `χ_c(ℚ(√59)²) = χ_c(ℚ(√83)²) = 4`, and `χ_c(ℚ(√47)²) ≥ 4`.
 
 ### 6.1 The window (1, 1)
@@ -412,20 +413,36 @@ and `ρ² ≡ −i`). Put
     A′₇ = { e ∈ 𝔽₄₉ : Re(ē z) ∈ {2, 3, 4, 5} for every z ∈ μ₈ },
     E₇ = { e ∈ (1/7)ℤ[i] : 7e mod 7 ∈ A′₇ },   𝒜₇ = { e/7 : e ∈ ℤ₄₉, e mod 7 ∈ A′₇ } ⊂ ℚ₄₉.
 
-Exact enumeration of `𝔽₄₉` (`seven_local.py`; the referee's `indep_F/f49_and_digits.py`) gives:
-- (A1) `A′₇ = {2+3i, 2+4i, 3+2i, 3+5i, 4+2i, 4+5i, 5+3i, 5+4i}`, a single `μ₈`-orbit of 8 elements, closed under
-  conjugation, with sum 0; `0 ∉ A′₇`;
+Then:
+- (A1) `A′₇ = {e : e ē = −1} = {2+3i, 2+4i, 3+2i, 3+5i, 4+2i, 4+5i, 5+3i, 5+4i}`, a single `μ₈`-orbit of 8
+  elements, closed under conjugation, with sum 0; `0 ∉ A′₇`;
 - (A2) `A′₇` contains no coset of a non-zero additive subgroup of `𝔽₄₉`;
-- (A3) `Re` maps `A′₇` into `{2, 3, 4, 5}`.
+- (A3) `Re` maps `A′₇` onto `{2, 3, 4, 5}`.
+
+*Proof* (by hand; exact enumeration, `seven_local.py` and the referee's `indep_F/f49_and_digits.py`, agrees). For
+`e = a + bi`, `z = x + yi` (`a, b, x, y ∈ 𝔽₇`), `Re(ē z) = ax + by` and `e ē = a² + b²`, which vanishes only for
+`e = 0`, as `−1` is not a square modulo 7 (the non-zero squares are 1, 2, 4). `μ₈` is the conic `x² + y² = 1`. For
+`e ≠ 0` the points of the line `ax + by = t` are `(t/eē)(a, b) + s(−b, a)`, `s ∈ 𝔽₇`, and such a point lies on the
+conic iff `(eē)² s² = eē − t²`; so `t` is a value of `z ↦ Re(ē z)` on `μ₈` iff `eē − t²` is 0 or a square. Hence
+`e ∈ A′₇` iff `e ≠ 0` and neither `eē` nor `eē − 1` is 0 or a square (`t = 0, ±1`), i.e. both lie in `{3, 5, 6}`:
+`eē = 6 = −1`. The solutions of `a² + b² = −1` have `{a², b²} = {2, 4}`: the list. As the norm is multiplicative,
+`A′₇ = e₀μ₈`; it is closed under conjugation, and its sum is `e₀ Σ_{z ∈ μ₈} z = 0` (`μ₈` is the set of roots of
+`z⁸ − 1`). (A2): a coset of a non-zero additive subgroup contains a line `{e + sd : s ∈ 𝔽₇}`, `d ≠ 0`, on which
+`(e + sd)·conj(e + sd) = eē + s(ed̄ + ēd) + s²dd̄` is a polynomial of degree 2 in `s` (`dd̄ ≠ 0`), so at most 2 of
+its 7 points lie in `A′₇`. (A3) is read off the list. ∎
 
 For `e ∈ E₇` the character `a ↦ Re(ē ã) mod 1` of `ℤ_(7)[i]`, where `ã ∈ ℤ[i]` is congruent to `a` modulo
 `7ℤ_(7)[i]` (it factors through `𝔽₄₉`), takes values in `{2, …, 5}/7` at every rational rotation: these are the characters of the 7-adic colourings of Proposition C1.
 `2E_c`, `3E_q` and `7E₇` lie in `ℤ[i]`, so `42E′ ⊆ ℤ[i]` for `E′ = E_c ∪ E_q ∪ E₇`, and `E′` is closed under
 conjugation.
 
-*Digit patterns* (`seven_patterns.py`, `f49_and_digits.py`). The values of these characters at `ρʲ` are
-`h + ζ_j` with `ζ_j ∈ {±1/14, ±3/14}²`, and their digit words `ζ_j − ρζ_{j−1}` are the 8 shifts of one word `S` of
-period 8 with `S_{j+2} = −iS_j`, in which non-zero digits `u(2 + i)/5` (`u ∈ μ₄`) alternate with zeros. Type c has
+*Digit patterns* (by hand; `seven_patterns.py` and `f49_and_digits.py` agree). The values of these characters at
+`ρʲ` are `h + ζ_j` with `ζ_j ∈ {±1/14, ±3/14}²` (both coordinates of an element of `A′₇` lie in `{2, …, 5}`), and
+their digit words `ζ_j − ρζ_{j−1}` are the 8 shifts of one word `S` of period 8 with `S_{j+2} = −iS_j`, in which
+non-zero digits `u(2 + i)/5` (`u ∈ μ₄`) alternate with zeros. Indeed `ρ̃² = −21 + 20i ≡ −i (mod 7)` and `−ih ≡ h`
+(mod `ℤ[i]`), so `ζ_{j+2} = −iζ_j`; for `7e ≡ 2 + 3i`, `7ē ≡ 2 + 4i`, `(2 + 4i)ρ̃ ≡ 5 + 4i` and
+`(2 + 4i)ρ̃² ≡ 4 + 5i`, so `ζ₀ = (−3 + i)/14`, `ζ₁ = (3 + i)/14`, `ζ₂ = (1 + 3i)/14`, `ζ₁ − ρζ₀ = (2 + i)/5` and
+`ζ₂ − ρζ₁ = 0`; the other classes give the shifts, `ζ_t(e′) = ζ_{t+j}(e)` when `7e′ ≡ 7e·conj(ρ̃)^j (mod 7)`. Type c has
 the zero word and type q a word of non-zero digits (also of the form `u(2 + i)/5`). So two consecutive digits
 determine the family (c, q or 7) and the shift.
 
@@ -579,8 +596,9 @@ which (a), (b) and (7) fail, so `χ_c(K²) ≥ χ_c(F²) ≥ 4` by Theorem F. Fo
 
 For example `χ_c(ℚ₁₉²)`, `χ_c(ℚ(√47)²)` and `χ_c(ℚ(√5, √7)²)` lie in `[4, 19/4]`: the lower bounds are Corollary F8 and
 Theorem F, the upper bound Proposition C1 at 19 (`κ₁ = 4/19`; `47 ≡ 3² (mod 19)`, and 5 and 7 are squares modulo 19).
-So if `χ(ℚ(√47)²) = 5`, which is Moorhouse's open case, its circular chromatic number lies in `(4, 19/4]` and is not
-an integer; the same holds for `ℚ(√5, √7)`, where `4 ≤ χ ≤ 5` (Theorem B and the place above 19).
+So if `χ(ℚ(√47)²) = 5`, which is open (`4 ≤ χ ≤ 5`: Corollary 2 of `papers/four-colours/`, and Moorhouse), its
+circular chromatic number lies in `(4, 19/4]` and is not an integer; the same holds for `ℚ(√5, √7)`, where
+`4 ≤ χ ≤ 5` (Theorem B and the place above 19).
 
 Theorem E also follows from Proposition F1 (as the referee of Theorem F noted): for `r > 2/7` it leaves only the
 families c and q, so Lemma F2 (with `6 | k`) gives the conclusion of Lemma E2, and the proof of Theorem E goes through.
@@ -683,19 +701,22 @@ gives as in the proof of Corollary B6 points `φ(v) = Nε_v + x_v` with every `�
 The proof uses Proposition F1 only for `r > 2/7`, through Lemma F2, and not the certificates of value `2/7`
 themselves. For `ℚ(√11)` and `ℚ(√35)` one can take for `U` the 140 vectors of Theorem C (its certificates give
 `κ(U) ≤ 2/7`, the 7-adic character `κ(U) ≥ 2/7`): some finite subgraph of the Cayley graph of these 140 explicit unit
-vectors has `χ_c = 7/2`. The same holds for the local fields of Corollary F8 with `χ_c < 4` (`K ⊇ ℚ₇ ⊃ ℚ(√11)`,
-resp. `K ⊇ ℚ₃ ⊃ ℚ(√7)`). The proof gives no bound on the size of the subgraph; when `√3 ∈ F` and `χ_c(F²) = 3`, a
+vectors has `χ_c = 7/2`. A finite extension `K` of `ℚ_p` with `χ_c(K²) < 4` (Corollary F8) has finite
+witnesses too: an edge for the value 2; for 3, `p = 3` and `K ⊇ ℚ₃ ⊃ ℚ(√7)`, where `χ_c(ℚ(√7)²) = 3` (Theorem B and
+Corollary B6); for `7/2`, `p = 7` and `K ⊇ ℚ₇ ⊃ ℚ(√11)`. The proof gives no bound on the size of the subgraph; when `√3 ∈ F` and `χ_c(F²) = 3`, a
 unit triangle is a witness. The Moser spindle (7 vertices, over `ℚ(√3, √11)`) maps to `K_{7/2}` (the common vertex of
 its two rhombi coloured 0, the far tips 6 and 1, the others 2, 4, 3, 5), and its independence number is 2, so
 `χ_c ≥ χ_f ≥ 7/2` and `χ_c = 7/2`; but it has unit triangles, which `ℚ(√11)²` has not, and `χ_c(ℚ(√3, √11)²) ≥ 4` by
 Theorem F ((a) and (b) fail as `χ = 4` there, and 7 is inert in `ℚ(√3)`). Measurements (SAT, colourings checked,
 refutations not certified): the 76-vertex graph of `χ(ℚ(√11)²) = 4` has `χ_c = 16/5` (the decisive refutation, at
 `67/21`, took 22 minutes; a referee's run there did not finish); the union of its nine images under `ρʲσˡ`,
-`|j|, |l| ≤ 1` (628 vertices, 1 506 edges), maps to `K_{13/4}` and not to `K_{16/5}`; the ball of radius 2 in the
-Cayley graph of the 140 vectors (9 941 vertices, 19 816 edges) has a `(7, 2)`-colouring with an acyclic tight digraph,
-so `χ_c < 7/2` there. Lemmas F9–F11 were tested by two referees: on 291 small graphs and 766 tight relations; on 115
-random finite sets `S` in `ℤ`, `ℤ²` and `ℤ × ℤ/m` with `2 < χ_c < 4` (all 409 optimal characters have a nonnegative
-relation among their tight elements); and by SAT on finite pieces of 13 such Cayley graphs, all with finite witnesses
+`|j|, |l| ≤ 1` (628 vertices; 1 506 edges with all unit-distance pairs, 1 494 in the nine copies), maps to `K_{13/4}`
+and not to `K_{16/5}`. Exactly (`finite_ball.py`): the ball of radius 2 in the Cayley graph of the 140 vectors
+(9 941 vertices, 19 600 edges) is bipartite, and the unit-distance graph it induces (216 more edges) has `χ_c = 5/2`:
+it has a 5-cycle and no triangle, and maps to `K_{5/2}`. Lemmas F9–F11 were tested by two referees: on 291 small graphs and 766 tight relations; on 115
+random finite sets `S` in `ℤ`, `ℤ²` and `ℤ × ℤ/m` with `2 < χ_c < 4` (at all 409 optimal points, vertices of the optimal set and
+midpoints and centroids of them that stay optimal, the tight elements have a nonnegative relation;
+`indep_FW2/test_kappa_relations.py 1 180`); and by SAT on finite pieces of 13 such Cayley graphs, all with finite witnesses
 (for example `{0, …, 18}` for the distances `3, 4, 9, 12`, where `χ_c = 7/2`); `twoprime/indep_FW/`,
 `twoprime/indep_FW2/`.
 

@@ -20,7 +20,7 @@ including every retracted claim, is the research log,
   tests in `tests/test_three_colours.py`.
 - **A circular chromatic number (4 October).** `notes/circular_planes.md`: `χ_c(ℚ(√11)²) = χ_c(ℚ(√35)²) = χ_c(ℚ₇²) = 7/2`,
   by a 7-adic colouring and exact certificates (`data/number_fields/circular/`, two checkers) with Theorem W⁺; no plane
-  over a number field has `2 < χ_c < 3`; locally constant colourings of one completion give, below 4, only the bounds 2, 3 and `7/2`
+  over a number field has `2 < χ_c < 3`; below 4, the best upper bound from a locally constant colouring of one completion is 2, 3 or `7/2`
   (Propositions C2, C3 and Corollary C4, with Weil's bound for Kloosterman sums); `χ_c = 7/2` for infinitely many
   number fields (Corollary C5).
 - **`χ_c(ℚ(√59)²) ≥ 53/15` (4 October).** `notes/circular_planes.md`, Proposition C6: an exact certificate
@@ -57,6 +57,15 @@ including every retracted claim, is the research log,
   each result, and the relevant papers the project did not cite before.
 
 ### Changed
+- **A full reading of `papers/three-colours/` (4 October, afternoon).** A separate agent read the whole paper
+  and found no mathematical error in a proof; its corrections are applied. Lemma 13 (the arithmetic of `𝔽₄₉` at the
+  places above 7: `A′₇ = {e : eē = −1}`, no coset of a subgroup inside it, the digit patterns) now has a proof by hand
+  (note §6.4), so Propositions 8 and 9 are the only computer-assisted steps of Theorems E and F; the sentence on
+  `ℚ(√47)` now says `4 ≤ χ_c ≤ 19/4`; the remark that Corollary 2 is contained in `papers/four-colours/` holds for real
+  quadratic fields only (`ℚ(√−73)` is split above 2 and 3); `χ(ℚ(√2, √7)²) ≤ 4` is stated in Section 7; the radius-2
+  ball of the 140 vectors of Theorem C is now described exactly (`twoprime/finite_ball.py`: the Cayley part is
+  bipartite, the induced unit-distance graph has `χ_c = 5/2`); attributions (Isbell, Fischer 1994, the special cases
+  of (a)), references (Exoo–Ismailescu, Heule, Parts, Soifer), notation and wording are corrected.
 - **Theorem D in the paper (4 October).** It now states only the bound `56/17`, proved by hand; the computer-assisted
   bound `3.3315` is a remark, as Theorem E supersedes it. `data/number_fields/circular/twoprime/seven_patterns.py`:
   three checks that had produced the last lines of its stored output, but were missing from the stored program, were

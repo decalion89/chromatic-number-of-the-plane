@@ -175,6 +175,18 @@ def test_tight_walks(tmp_path):
     assert "proper 3-colourings: 0; a homomorphism to K_7/2: (0, 2, 4, 6, 3, 5, 1)" in out
 
 
+def test_finite_ball(tmp_path):
+    """Remark after the corollary on finite witnesses: the ball of radius 2 in the Cayley graph of the 140 vectors of
+    Theorem C is bipartite (19 600 edges), and the unit-distance graph it induces (216 more edges) has a 5-cycle, no
+    triangle and a homomorphism to K_{5/2}; the program reproduces its stored output."""
+    d = stage(tmp_path, ["finite_ball.py"])
+    out = run(d, "finite_ball.py").stdout
+    assert out == open(os.path.join(P, "finite_ball.txt")).read()
+    assert "9941 points; unit-distance pairs 19816; Cayley edges 19600; others 216" in out
+    assert "Cayley ball bipartite: True" in out and "no triangle" in out
+    assert "circular chromatic number 5/2" in out
+
+
 def test_finite_witness_referee(tmp_path):
     """The referee of the corollary on finite witnesses: its checks of the certificates, of type q, of the tight
     relations of the 7-adic colourings, of the Moser spindle and of the tight-cycle and winding lemmas reproduce."""

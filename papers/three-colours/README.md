@@ -1,10 +1,10 @@
 # Three colours for the plane over a number field
 
-[`three-colours.pdf`](three-colours.pdf) is a 22-page draft (4 October 2026) about the graph on `F²`, for a
+[`three-colours.pdf`](three-colours.pdf) is a 25-page draft (4 October 2026) about the graph on `F²`, for a
 number field `F`, in which two points are adjacent when `(x − x′)² + (y − y′)² = 1`:
 
 - **Theorem B.** `χ(F²) ≤ 3` if and only if some prime of `F` above 2 ramifies in `F(i)` or some prime of `F` above 3
-  has residue degree 1 (and `χ(F²) ≤ 2` exactly in the first case). The "if" part is classical (colourings through a
+  has residue degree 1 (and `χ(F²) ≤ 2` exactly in the first case). The "if" part is known (colourings through a
   residue field); the "only if" part is new: it extends to every number field the theorem that
   `χ(ℚ(√d)²) ≥ 4` for `d ≡ 11 (mod 12)` ([`papers/four-colours/`](../four-colours/)). So the local–global question
   is answered at three colours for every number field.
@@ -18,9 +18,9 @@ number field `F`, in which two points are adjacent when `(x − x′)² + (y −
 - **Theorem C.** `χ_c(ℚ(√11)²) = χ_c(ℚ(√35)²) = χ_c(ℚ₇²) = 7/2`, while the chromatic numbers are 4: as far as we
   know the first non-integral value of the circular chromatic number of such a plane. The lower bounds are computer
   proofs (exact certificates, accepted by two checkers that share no code, with Theorem W⁺ of
-  [`papers/winding/`](../winding/)); the upper bound is a colouring through the residue field `𝔽₇`. Locally constant
-  colourings of one completion give no upper bound on `χ_c` below 4 other than 2, 3 and `7/2` (Propositions 5 and 6,
-  Corollary 5; Weil's bound for Kloosterman sums and a computation for `p < 3000`). `χ_c(ℚ(√59)²) ≥ 53/15` with 70
+  [`papers/winding/`](../winding/)); the upper bound is a colouring through the residue field `𝔽₇`. Below 4, the best
+  upper bound on `χ_c` that a locally constant colouring of one completion gives is 2, 3 or `7/2` (Propositions 5
+  and 6, Corollary 5; Weil's bound for Kloosterman sums and a computation for `p < 3000`). `χ_c(ℚ(√59)²) ≥ 53/15` with 70
   explicit unit vectors (Proposition 4).
 - **Theorem D.** If `χ(F²) ≥ 4`, then `χ_c(F²) ≥ 56/17 ≈ 3.294`, by hand (Section 9): the probe of Theorem B keeps
   its shape for the intervals `[θ, 1 − θ]` with `θ > 17/56` (Proposition 7). Below `θ = 3/10` it has 5-adic
@@ -54,7 +54,12 @@ by eight new certificates, and smaller gaps) are applied. Corollary 6 was added 
 refereed separately, in two versions (no mathematical error; the expository gaps are closed; the second, simpler
 proof through Lemma 22 is the one in the paper); while preparing it we found that the
 paper had wrongly said that no finite unit-distance graph with circular chromatic number `7/2` was known: the Moser
-spindle is one (over `ℚ(√3, √11)`). The PDF has 24 pages.
+spindle is one (over `ℚ(√3, √11)`). A last reading of the whole paper by a separate agent found no mathematical
+error; its corrections are applied: Lemma 13 (the arithmetic of `𝔽₄₉` at the places above 7), until then checked
+only by computer, now has a proof by hand, so Propositions 8 and 9 are the only computer-assisted steps of Theorems
+E and F; the sentence on `ℚ(√47)` now says `4 ≤ χ_c ≤ 19/4`; a remark after Corollary 2 holds for real quadratic
+fields only (`ℚ(√−73)` is split above 2 and 3); and attributions (Isbell, Fischer 1994, the special cases of (a)),
+references and wording are corrected. The PDF has 25 pages.
 
 [`three-colours.tex`](three-colours.tex) is the LaTeX source (`amsart`). To rebuild the PDF, run in this folder,
 with TeX Live:
