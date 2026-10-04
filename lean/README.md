@@ -56,6 +56,12 @@ This directory holds proofs in Lean 4, with Mathlib, of:
   and more generally over every field of characteristic 0 containing a square root of some d ≡ 11 (mod 12). The
   proof is the transfer: X² − d is the minimal polynomial of √d, so ℚ(√d) maps into such a field, and for ℚ_[p]
   the Chinese remainder theorem and Hensel's lemma give such a d with d ≡ 1 (mod p) and √d ∈ ℤ_[p];
+- χ(K²) ≥ 4 for every subfield K of ℝ containing √a and √b, where a ≡ 2 (mod 3) and b ≡ 7 (mod 8) are natural
+  numbers (Proposition B9; `TwoRoots.lean`): the argument of Theorem 1 with U = G_N·{e, u_a, ū_a, u_b, ū_b},
+  u_c = ((1 − c)/(1 + c), 2√c/(1 + c)), and the relations (1 + c)(u_c + ū_c) = 2(1 − c)e. Passed to the integers
+  E, the relation for a forces 3 | E_e, so E_e is odd, and the relation for b forces E_e even. The same holds
+  for the graph of x² + y² = 1 over every field of characteristic 0 containing square roots of such a and b, since
+  ℚ(√a, √b) maps into it;
 
 ## The theorems
 
@@ -112,6 +118,13 @@ theorem FourColours.not_colorable_three (d : ℕ) (hd : d % 12 = 11) :
     ¬ (LocalColouring.unitDistGraph (QuadraticPlanes.L d)).Colorable 3
 -- and FourColours.no_character (the arithmetic half: no character maps U into [1/3, 2/3]) and
 -- FourColours.not_colorable_three_of (the same from the statement of Theorem W, FourColours.TheoremWStatement)
+-- four colours for every real field containing √a and √b, a ≡ 2 (mod 3), b ≡ 7 (mod 8) (Proposition B9):
+theorem TwoRoots.not_colorable_three (K : IntermediateField ℚ ℝ) (a b : ℕ) (ha : a % 3 = 2) (hb : b % 8 = 7)
+    (hsa : Real.sqrt a ∈ K) (hsb : Real.sqrt b ∈ K) :
+    ¬ (LocalColouring.unitDistGraph K).Colorable 3
+-- and TwoRoots.no_character and TwoRoots.not_colorable_three_of, as for FourColours;
+-- TwoRoots.not_colorable_three_of_sq, the same for sumSqGraph F, F of characteristic 0 with s² = a, t² = b;
+-- TwoRoots.not_colorable_three_23, the case d ≡ 23 (mod 24) of FourColours.not_colorable_three, from a = b = d
 -- three colours of Katznelson's question (Question 3 of Glasscock, Koutsogiannis and Richter):
 theorem GKR.question3 (c : ℕ → Fin 3) :
     ∃ α : ℝ, ∀ n : ℕ, 0 < n → |(n : ℝ) * α - round ((n : ℝ) * α)| < 1/3 →
@@ -154,7 +167,7 @@ says that no assignment satisfies every clause. When a file is built, `#guard` c
 `data/quadratic_planes/q{d}.cnf` is exactly `formula`, and `scripts/verify_quadratic_planes.py --cake-lpr` has
 cake_lpr check an LRAT proof that this file is unsatisfiable.
 
-The fifty-nine theorems depend only on Lean's three standard axioms, `propext`, `Classical.choice` and
+The sixty-four theorems depend only on Lean's three standard axioms, `propext`, `Classical.choice` and
 `Quot.sound`: `axioms.expected` records the output of `#print axioms`, and CI compares them.
 
 ## Checking the proofs
@@ -231,8 +244,9 @@ colourings exist but cannot be computed.
 | `TheoremWplus.lean` | Theorem W for circular cliques `K_{p/q}`, `p < 4q`: the lift `δ ∈ [q, p − q]`, squares (`dl_square`), the winding sums as in `TheoremW.lean`, the average `ξ₀(s) = F(s)/(p|H|)`, and the converse |
 | `TheoremWInf.lean` | Theorem W for three colours, every abelian group and finite `S`: averaging operators `avg n s f g = (1/(n+1)) ∑_{t ≤ n} f(g + t•s)` and box averages `avgs`, the averaged winding sums of closed walks (`closed_avg`), limits along `hyperfilter ℕ` (`exists_F`), and the character from any `ξ₀` with integer sums along closed walks (`exists_char`); the same for `K_{p/q}` (`theoremWplus`) |
 | `FourColours.lean` | χ(ℚ(√d)²) ≥ 4 for every `d ≡ 11 (mod 12)`: `(3 + 4i)^j` modulo 2, 3 and 5, the sets `S_N` and the structure lemma by induction on `k` (`rep_of_inS`), the vectors `e, u₁, ū₁, u_n` and their two relations (`rel1`, `rel2`), the lift of a character to `ℝ` (`exists_lift`), the exact relations among the integer parts (`exact3`) and the contradictions modulo 2 and 3 (`contra_23`, `contra_11`) |
+| `TwoRoots.lean` | χ(K²) ≥ 4 for every real field `K` containing `√a` and `√b`, `a ≡ 2 (mod 3)`, `b ≡ 7 (mod 8)`: the vectors `e, u_a, ū_a, u_b, ū_b` and the relation `(1 + c)(u_c + ū_c) = 2(1 − c)e` (`rel`), the lemmas of `FourColours.lean` for the rest, the contradiction at 3 and 2 (`contra`), and the transfer to fields of characteristic 0 (`not_colorable_three_of_sq`) |
 | `DistLiu.lean` | Theorem W⁺ for distance graphs `G(ℤ, D)` (a periodic window, `TheoremWplus` on `ZMod P`, the extension of the character), the converse colouring `⌊p · frac(xα)⌋`, the lonely runner theorem for three speeds (`exists_odd_window`), and Problem 3 of Liu's survey |
-| `PrintAxioms.lean`, `axioms.expected` | the axioms of the fifty-nine theorems |
+| `PrintAxioms.lean`, `axioms.expected` | the axioms of the sixty-four theorems |
 | `tools/q23_coefficients.py`, `tools/q311_coefficients.py` | sympy scripts that produce the coefficients of the `linear_combination` steps and the edge lists |
 | `tools/field_lean.py` | writes `Sqrt{d}.lean` from the data (`--check` compares, and checks the colouring of 𝔽₇² in `QuadraticPlanes.lean` against `finite_planes.json`; the tests run it) |
 
