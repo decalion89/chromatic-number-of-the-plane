@@ -1,1 +1,6 @@
-top: []
+M=41: best non-main kappa_inf = 0.292683 = 12/41 at c = (12 + 12 i)/41, period 5
+M=82: best non-main kappa_inf = 0.292683 = 24/82 at c = (24 + 24 i)/82, period 5
+M=123: best non-main kappa_inf = 0.292683 = 36/123 at c = (36 + 36 i)/123, period 20
+M=164: best non-main kappa_inf = 0.292683 = 48/164 at c = (48 + 48 i)/164, period 10
+M=246: best non-main kappa_inf = 0.292683 = 72/246 at c = (72 + 72 i)/246, period 20
+top: [(np.float64(0.292683), 246), (np.float64(0.292683), 164), (np.float64(0.292683), 123), (np.float64(0.292683), 82), (np.float64(0.292683), 41)]

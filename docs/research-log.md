@@ -9955,3 +9955,8 @@ denominator `5^k`) decide three colours for every number field, not only for rea
   abstract and the introduction, which said 'never in (3, 3.3315]' without saying that this needs the
   computer-assisted step. All fixed. Its programs reproduce every number in Section 9, including the component
   counts at every level `k ≤ 19` at `θ* = 0.3001611` and the thresholds for `k ≤ 22`.
+- **Correction.** `data/number_fields/circular/probe/torsion_260.txt` said that no torsion character of `ℤ[1/5][i]`
+  of order up to 260 has `κ ≥ 0.29` on the rotations `iᵃρʲ`; the probe's README repeated it. Both were wrong: the
+  same program, rerun with the arguments `260 0.29`, finds order 41 (and its multiples) with `κ = 12/41 ≈ 0.2927`
+  at `c = (12 + 12i)/41`. Found by a research agent; the file and the README are corrected. Theorem D does not use
+  it.

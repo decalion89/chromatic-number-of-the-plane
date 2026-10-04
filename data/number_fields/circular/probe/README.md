@@ -29,7 +29,7 @@ note and the paper.
 | `far_points.py` → `far_points.txt` | the 5-adic points `c_k = c*_N + ρ^k/5 − 5^{k−1}(2 − i)` of `S_N^(3/10)`, far from all type points (the limit of the method at `10/3`) |
 | `q1_tables.py`, `q1_compact.py` → `q1_k12.txt`, `q1_k3.txt`, `q1_compact.txt` | `S_N^(r)` for `N = 5, 25, 125` at several `r`, by two enumerations compared component by component |
 | `chain.py` → `chain_17_56.txt`, `genealogy.py` | following the extra components through the levels |
-| `torsion_search.py` → `torsion_260.txt` | torsion characters of `ℤ[1/5][i]` of order up to 260: none with `κ ≥ 0.29` |
+| `torsion_search.py` → `torsion_260.txt` | torsion characters of `ℤ[1/5][i]` of order up to 260 with `κ ≥ 0.29` (`python3 torsion_search.py 260 0.29`): order 41 and its multiples, with `κ = 12/41 ≈ 0.2927` at `c = (12 + 12i)/41`. (An earlier version of this file reported none; that was wrong.) So the one-prime probe has torsion characters above `2/7`, besides the 5-adic ones |
 | `chartypes_k3_002.txt` | output of `../chartypes.py` (the earlier grid search, grid `0.02`), kept for the record |
 
 Referee's implementation ([`indep/`](indep/)):
