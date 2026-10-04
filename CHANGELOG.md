@@ -66,6 +66,9 @@ including every retracted claim, is the research log,
   ball of the 140 vectors of Theorem C is now described exactly (`twoprime/finite_ball.py`: the Cayley part is
   bipartite, the induced unit-distance graph has `χ_c = 5/2`); attributions (Isbell, Fischer 1994, the special cases
   of (a)), references (Exoo–Ismailescu, Heule, Parts, Soifer), notation and wording are corrected.
+  A second agent then refereed the hand proof of Lemma 13 (correct, no gap; its programs in `twoprime/indep_L13/`,
+  with a test) and the new sentences; its corrections (Proposition 6 rests on a computation of `κ₁` for
+  `11 ≤ p < 1001`, now said in the introduction, and ten minor points) are applied.
 - **Theorem D in the paper (4 October).** It now states only the bound `56/17`, proved by hand; the computer-assisted
   bound `3.3315` is a remark, as Theorem E supersedes it. `data/number_fields/circular/twoprime/seven_patterns.py`:
   three checks that had produced the last lines of its stored output, but were missing from the stored program, were

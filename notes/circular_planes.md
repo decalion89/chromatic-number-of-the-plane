@@ -426,8 +426,7 @@ Then:
 conic iff `(eē)² s² = eē − t²`; so `t` is a value of `z ↦ Re(ē z)` on `μ₈` iff `eē − t²` is 0 or a square. Hence
 `e ∈ A′₇` iff `e ≠ 0` and neither `eē` nor `eē − 1` is 0 or a square (`t = 0, ±1`), i.e. both lie in `{3, 5, 6}`:
 `eē = 6 = −1`. The solutions of `a² + b² = −1` have `{a², b²} = {2, 4}`: the list. As the norm is multiplicative,
-`A′₇ = e₀μ₈`; it is closed under conjugation, and its sum is `e₀ Σ_{z ∈ μ₈} z = 0` (`μ₈` is the set of roots of
-`z⁸ − 1`). (A2): a coset of a non-zero additive subgroup contains a line `{e + sd : s ∈ 𝔽₇}`, `d ≠ 0`, on which
+`A′₇ = e₀μ₈`; it is closed under conjugation, and its sum is `e₀ Σ_{z ∈ μ₈} z = 0` (as `μ₈ = −μ₈`). (A2): a coset of a non-zero additive subgroup contains a line `{e + sd : s ∈ 𝔽₇}`, `d ≠ 0`, on which
 `(e + sd)·conj(e + sd) = eē + s(ed̄ + ēd) + s²dd̄` is a polynomial of degree 2 in `s` (`dd̄ ≠ 0`), so at most 2 of
 its 7 points lie in `A′₇`. (A3) is read off the list. ∎
 
@@ -702,15 +701,16 @@ The proof uses Proposition F1 only for `r > 2/7`, through Lemma F2, and not the 
 themselves. For `ℚ(√11)` and `ℚ(√35)` one can take for `U` the 140 vectors of Theorem C (its certificates give
 `κ(U) ≤ 2/7`, the 7-adic character `κ(U) ≥ 2/7`): some finite subgraph of the Cayley graph of these 140 explicit unit
 vectors has `χ_c = 7/2`. A finite extension `K` of `ℚ_p` with `χ_c(K²) < 4` (Corollary F8) has finite
-witnesses too: an edge for the value 2; for 3, `p = 3` and `K ⊇ ℚ₃ ⊃ ℚ(√7)`, where `χ_c(ℚ(√7)²) = 3` (Theorem B and
-Corollary B6); for `7/2`, `p = 7` and `K ⊇ ℚ₇ ⊃ ℚ(√11)`. The proof gives no bound on the size of the subgraph; when `√3 ∈ F` and `χ_c(F²) = 3`, a
+witnesses too: an edge for the value 2, and for 3 and `7/2` those of Corollary F12 for `ℚ(√7)`, resp. `ℚ(√11)`, as
+then `p = 3` and `K ⊇ ℚ₃ ⊃ ℚ(√7)`, where `χ_c(ℚ(√7)²) = 3` (Theorem B and Corollary B6), resp. `p = 7` and
+`K ⊇ ℚ₇ ⊃ ℚ(√11)`. The proof gives no bound on the size of the subgraph; when `√3 ∈ F` and `χ_c(F²) = 3`, a
 unit triangle is a witness. The Moser spindle (7 vertices, over `ℚ(√3, √11)`) maps to `K_{7/2}` (the common vertex of
 its two rhombi coloured 0, the far tips 6 and 1, the others 2, 4, 3, 5), and its independence number is 2, so
 `χ_c ≥ χ_f ≥ 7/2` and `χ_c = 7/2`; but it has unit triangles, which `ℚ(√11)²` has not, and `χ_c(ℚ(√3, √11)²) ≥ 4` by
 Theorem F ((a) and (b) fail as `χ = 4` there, and 7 is inert in `ℚ(√3)`). Measurements (SAT, colourings checked,
 refutations not certified): the 76-vertex graph of `χ(ℚ(√11)²) = 4` has `χ_c = 16/5` (the decisive refutation, at
-`67/21`, took 22 minutes; a referee's run there did not finish); the union of its nine images under `ρʲσˡ`,
-`|j|, |l| ≤ 1` (628 vertices; 1 506 edges with all unit-distance pairs, 1 494 in the nine copies), maps to `K_{13/4}`
+`67/21`, took 22 minutes; a referee's run there did not finish); the unit-distance graph induced on the union of its nine
+images under `ρʲσˡ`, `|j|, |l| ≤ 1` (628 vertices, 1 506 edges; the nine copies alone have 1 494), maps to `K_{13/4}`
 and not to `K_{16/5}`. Exactly (`finite_ball.py`): the ball of radius 2 in the Cayley graph of the 140 vectors
 (9 941 vertices, 19 600 edges) is bipartite, and the unit-distance graph it induces (216 more edges) has `χ_c = 5/2`:
 it has a 5-cycle and no triangle, and maps to `K_{5/2}`. Lemmas F9–F11 were tested by two referees: on 291 small graphs and 766 tight relations; on 115

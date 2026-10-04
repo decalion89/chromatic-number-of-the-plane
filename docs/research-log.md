@@ -10136,5 +10136,11 @@ applied.
   paper we have not seen); `χ(ℚ(√3, √11)²) = 4` is Fischer's (1994); "referees" became "independent checkers" in the
   paper, as no human has refereed it; the finite-model check of Proposition 5 is claimed only for `ℚ₇` and `ℚ₂₇`, the
   cases deposited in `level2.py`; the lemma on finite connection sets is cited as Corollary 16 of the winding paper.
-- **Second check.** A further agent was asked to referee the new proof of Lemma 13 and every new mathematical sentence
-  of the diff, with its own program.
+- **Second check.** A further agent refereed the new proof of Lemma 13 and every new sentence of the diff, with
+  programs of its own: the proof is correct, with no gap (68 exhaustive checks, among them all 13 digit sequences at
+  level 325 and the injectivity of two consecutive digits). It found one more inaccurate sentence of ours, "the rest of
+  the proofs are by hand": Proposition 6 rests on a computation of `κ₁` for the primes `11 ≤ p < 1001` (it serves only
+  Corollary 5; Theorem F does not need it); the introduction now says so. Its ten minor points (a leftover symbol,
+  which graph the SAT bound on the 628 vertices refers to, the level of `level2.py`, a simpler reason for the residue
+  field `𝔽₇` of `ℚ(√2, √7)`, the citation for `ℚ(√3, √11)`, which lies in both families, the order of two references,
+  and clarifications in the proof of Lemma 13) are applied.

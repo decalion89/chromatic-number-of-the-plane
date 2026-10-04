@@ -187,6 +187,16 @@ def test_finite_ball(tmp_path):
     assert "circular chromatic number 5/2" in out
 
 
+def test_lemma13_referee():
+    """The referee of the hand proof of Lemma 13 (twoprime/indep_L13/): Lemma 13 exhaustively, the new number-theoretic
+    sentences of the paper, the radius-2 ball and the 628-vertex union; each program reproduces its stored output."""
+    d = os.path.join(P, "indep_L13")
+    for name, passes in [("check_lemma13", 68), ("check_diff_claims", 26), ("check_ball", 13), ("check_628", 4)]:
+        out = run(d, name + ".py").stdout
+        assert out == open(os.path.join(d, name + ".out")).read()
+        assert out.count("PASS") == passes and out.rstrip().endswith("FAILED: none")
+
+
 def test_finite_witness_referee(tmp_path):
     """The referee of the corollary on finite witnesses: its checks of the certificates, of type q, of the tight
     relations of the 7-adic colourings, of the Moser spindle and of the tight-cycle and winding lemmas reproduce."""

@@ -59,7 +59,9 @@ error; its corrections are applied: Lemma 13 (the arithmetic of `𝔽₄₉` at 
 only by computer, now has a proof by hand, so Propositions 8 and 9 are the only computer-assisted steps of Theorems
 E and F; the sentence on `ℚ(√47)` now says `4 ≤ χ_c ≤ 19/4`; a remark after Corollary 2 holds for real quadratic
 fields only (`ℚ(√−73)` is split above 2 and 3); and attributions (Isbell, Fischer 1994, the special cases of (a)),
-references and wording are corrected. The PDF has 25 pages.
+references and wording are corrected. A second agent refereed the hand proof of Lemma 13 with a program of its own
+(correct, no gap; `twoprime/indep_L13/`) and corrected one more sentence: Proposition 6 rests on a computation of
+`κ₁` for the primes `11 ≤ p < 1001`. The PDF has 25 pages.
 
 [`three-colours.tex`](three-colours.tex) is the LaTeX source (`amsart`). To rebuild the PDF, run in this folder,
 with TeX Live:

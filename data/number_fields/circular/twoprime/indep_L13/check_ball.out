@@ -1,0 +1,18 @@
+PASS  |G_25| = 20 distinct rational rotations of norm 1
+PASS  V: 7 distinct unit vectors
+PASS  U = G_25 V has 140 elements, symmetric, all of norm 1
+common denominator D = 23250
+PASS  ball of radius 2 has 9941 vertices   [n = 9941, layers [1, 140, 9800]]
+PASS  the induced Cayley graph has 19600 edges   [19600]
+PASS  no Cayley edge joins two vertices of the same layer
+PASS  the Cayley ball is bipartite
+PASS  every Cayley edge is a unit-distance pair
+PASS  the induced unit-distance graph has 216 more edges   [216 extra]
+layers of the extra edges: Counter({(2, 2): 216})
+PASS  each extra edge: difference has norm exactly 1 and is not in U
+PASS  the unit-distance graph has no triangle
+PASS  the unit-distance graph contains a 5-cycle   [[2, 1, 0, 1, 2]]
+search nodes: 2075
+PASS  the unit-distance graph has a homomorphism to K_{5/2} (verified on all 19816 edges)   [core size 413]
+
+FAILED: none
