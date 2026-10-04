@@ -1613,7 +1613,7 @@ witness for $\Q_7$ and for every finite extension $K$ of $\Q_7$ with $\chi_c(K^2
 The same procedure with $K_3$ in place of $K_{7/2}$ (an arc is now tight when the colour increases by $1$ modulo
 $3$) gives a witness for the value $3$ in a plane without unit triangles. Over $\Q(\sqrt7)$, where $\chi_c=3$, it
 starts from $0$, the $204$ unit vectors with denominator $160$ and two more points that close a $5$-cycle, stops at
-$607$ vertices, and vertex deletion leaves nine points; translated so that one of them is $0$, they are
+$607$ vertices, and vertex deletion leaves nine points; translated by $(1,0)$, they are
 \begin{gather*}
 P_0=(-1,0),\quad P_1=\Bigl(-\frac{3+\sqrt7}8,-\frac{5+\sqrt7}8\Bigr),\quad P_2=\Bigl(\frac14,-\frac{\sqrt7}4\Bigr),
 \quad P_3=\Bigl(\frac{\sqrt7}4,\frac14\Bigr),\\
@@ -1623,26 +1623,37 @@ P_4=\Bigl(-\frac14,\frac{\sqrt7}4\Bigr),\quad P_5=\Bigl(\frac{3-\sqrt7}8,\frac{\
 The pairs at distance $1$ among them form the $8$-cycle $P_0P_1\cdots P_7$, the chords $P_0P_4$, $P_1P_5$, $P_2P_6$
 and the path $P_3SP_7$: their unit-distance graph $H_7$ is the Wagner graph, the M\"obius ladder on $8$ vertices,
 with one of its four chords subdivided. It contains the hexagon $P_0P_4P_3P_2P_6P_7$, the paths $P_0P_1P_2$,
-$P_4P_5P_6$ and $P_3SP_7$ that join its opposite vertices, and one more edge, $P_1P_5$. Already this subgraph $M$, a
-hexagon $v_0\cdots v_5$ whose three long diagonals $v_jv_{j+3}$ are subdivided by vertices $m_j$ (here
-$v_0,\dots,v_5=P_0,P_4,P_3,P_2,P_6,P_7$ and $m_0,m_1,m_2=P_1,P_5,S$), has a tight cycle in every proper
+$P_4P_5P_6$ and $P_3SP_7$ that join its opposite vertices, and one more edge, $P_1P_5$. The subgraph
+$M=H_7-P_1P_5$, a hexagon $v_0\cdots v_5$ whose three long diagonals $v_jv_{j+3}$ are subdivided by vertices $m_j$
+(here $v_0,\dots,v_5=P_0,P_4,P_3,P_2,P_6,P_7$ and $m_0,m_1,m_2=P_1,P_5,S$), already has a tight cycle in every proper
 $3$-colouring $c$. Indeed, for an arc $a\to b$ let $\delta(a,b)=\pm1$ with $c(b)-c(a)\equiv\delta(a,b)\pmod3$;
 along a closed walk the sum of $\delta$ is divisible by $3$, so it is $\pm3$ on a $5$-cycle, and on a $6$-cycle it is
 $0$ or $\pm6$, and $\pm6$ makes the cycle tight in one direction. Let $Z_k$ be the $5$-cycle
-$v_kv_{k+1}v_{k+2}v_{k+3}m_k$ (indices of $v$ modulo $6$, of $m$ modulo $3$). As $1$-chains, $Z_{k+1}-Z_k$ is the
-$6$-cycle $v_km_kv_{k+3}v_{k+4}m_{k+1}v_{k+1}$ and $Z_0+Z_3$ is the hexagon (each cycle read in the order written).
-If none of these six $6$-cycles is tight, the sums over $Z_0,\dots,Z_5$ are all equal, to $\pm3$, so the sum over
-the hexagon is $\pm6$ and the hexagon is tight. As $H_7$ is $3$-colourable, $\chi_c(M)=\chi_c(H_7)=3$ by
+$v_kv_{k+1}v_{k+2}v_{k+3}m_k$ (indices of $v$ modulo $6$, of $m$ modulo $3$). As $1$-chains, $C_k=Z_{k+1}-Z_k$ is the
+$6$-cycle $v_km_kv_{k+3}v_{k+4}m_{k+1}v_{k+1}$ and $Z_0+Z_3$ is the hexagon (each cycle read in the order written);
+$C_{k+3}$ is $C_k$ reversed, and $Z_3-Z_0=C_0+C_1+C_2$. If none of $C_0,C_1,C_2$ is tight in either direction, their
+sums are $0$, the sums over $Z_0$ and $Z_3$ are equal, to $\pm3$, and the hexagon, with sum $\pm6$, is tight. (In
+$H_7$ the cycle $C_0=P_0P_1P_2P_6P_5P_4$ has the chord $P_1P_5$ and is never tight; the cycles stored with $H_7$ are
+$C_1$, $C_2$ and the hexagon, in both directions.) As $H_7$ is $3$-colourable, $\chi_c(M)=\chi_c(H_7)=3$ by
 Lemma~\ref{lem:tight}. Equivalently, $H_7$ has no homomorphism to $K_{8/3}$, which is the Wagner graph itself (the
 vertices $0,3,6,1,4,7,2,5$ of $K_{8/3}$ form an $8$-cycle, and its other edges join opposite vertices): the
-circular chromatic number of a graph with $9$ vertices is a fraction with numerator at most $9$ \cite{Zhu}, and
+circular chromatic number of a graph with $9$ vertices is a fraction with numerator at most $9$
+\cite{Vince,BondyHell,Zhu}, and
 $8/3$ is the largest such fraction below $3$. The Wagner graph has $\chi_c=8/3$, $H_7$ is vertex-critical, and nine
 vertices are the fewest possible in a plane without unit triangles: every triangle-free graph with at most $8$
 vertices maps to $K_{8/3}$. More precisely, of the $1\,897$ triangle-free graphs with $9$ vertices, up to
-isomorphism, exactly three have $\chi_c=3$: $M$, $H_7=M+m_0m_1$, and $M+m_0m_1+m_1m_2$, which is the unit-distance graph of nine points of
-$\Q(\sqrt{31})^2$ found in the same way (\nolinkurl{witness_q31.json.gz}). These facts are checked by enumeration:
-\nolinkurl{check_small.py} checks the points of both witnesses, all $3^9$ colour maps, the absence of a homomorphism
-to $K_{8/3}$ and the vertex-criticality; \nolinkurl{small_triangle_free.py} runs over the $4\,682\,270$
+isomorphism, exactly three have $\chi_c=3$: $M$, $H_7=M+m_0m_1$ and $M+m_0m_1+m_1m_2$. All three are unit-distance
+graphs over $\Q(\sqrt7)$, and over $\Q(\sqrt{31})$. Without unit triangles, nine points with the twelve unit pairs of
+$M$ span $M$ or $M$ plus one or two edges between the $m_j$, as any other pair at distance $1$ would close a
+triangle, and a direct search for equilateral hexagons whose long diagonals are sums of two unit vectors
+(\nolinkurl{hexagon_search.py}) finds all three over both fields. For example, the points
+$v_0,\dots,v_5=(\frac{\sqrt7}4,\frac14)$, $(\frac{\sqrt7}4-1,\frac14)$, $(-\frac34,-\frac{\sqrt7}4)$, $(0,0)$,
+$(-1,0)$, $(-\frac14,\frac{\sqrt7}4)$ and $m_0,m_1,m_2=(0,1)$, $(\frac{\sqrt7}4-1,-\frac34)$,
+$(-\frac12-\frac{\sqrt7}4,\frac14)$ span $M$ itself (\nolinkurl{witness_q7m.json.gz}): a witness with the fewest
+vertices and, among those, the fewest edges. The growth over $\Q(\sqrt{31})$ gives nine points that span
+$M+m_0m_1+m_1m_2$ (\nolinkurl{witness_q31.json.gz}). These facts are checked by enumeration:
+\nolinkurl{check_small.py} checks the points of the three stored witnesses, all $3^9$ colour maps, the absence of a
+homomorphism to $K_{8/3}$ and the vertex-criticality; \nolinkurl{small_triangle_free.py} runs over the $4\,682\,270$
 triangle-free graphs on $8$ labelled vertices, and \nolinkurl{nine_vertices.py} over the triangle-free graphs on $9$
 vertices up to isomorphism, with two separate tests of $\chi_c=3$; certified SAT refutations confirm the tight
 cycles once more. As $\sqrt7\in\Q_3$, $H_7$ is also an explicit witness for $\Q_3$ and for every finite extension $K$
@@ -1779,7 +1790,8 @@ $\chi_c\le4$, hence $\chi\le4$, and $\chi(F^2)\le4$ by the theorem of de Bruijn 
 \item \emph{Finite witnesses.} By Corollary~\ref{cor:finite} some finite unit-distance graph in $\Q(\sqrt{11})^2$
 has circular chromatic number $7/2$; the proof, by compactness, gives no bound on its size, and the smallest we know
 has $170$ vertices and is vertex-critical (Section~\ref{sec:twoprimes}). How small can it be? (For the value $3$ in
-a plane without unit triangles the answer is nine, over $\Q(\sqrt7)$; Section~\ref{sec:twoprimes}.)
+a plane without unit triangles, nine vertices are needed, and they suffice over $\Q(\sqrt7)$ and $\Q(\sqrt{31})$;
+Section~\ref{sec:twoprimes}. Over other such planes, for example $\Q(\sqrt{15})$, the least number is open.)
 And when $\chi_c(F^2)=4$, is the value attained by a finite subgraph, for example for $\Q(\sqrt{59})$? Above $4$
 Lemma~\ref{lem:winding} is not available. When $\chi(F^2)=4$, compactness turns this into a question about the
 plane: some finite subgraph has $\chi_c=4$ if and only if every proper colouring $c\colon F^2\to\Z/4$ has a tight
@@ -1798,6 +1810,8 @@ The author thanks the authors of the works cited, whose questions and results th
 \begin{thebibliography}{99}
 \bibitem{BP} M. Benda and M. Perles, \emph{Colorings of metric spaces}, Geombinatorics \textbf{9} (2000),
 113--126 (not seen by us).
+\bibitem{BondyHell} J. A. Bondy and P. Hell, \emph{A note on the star chromatic number}, J. Graph Theory \textbf{14}
+(1990), 479--482.
 \bibitem{DH} H. Davenport and H. Hasse, \emph{Die Nullstellen der Kongruenzzetafunktionen in gewissen zyklischen
 F\"allen}, J. Reine Angew. Math. \textbf{172} (1935), 151--182.
 \bibitem{Davies} J. Davies, \emph{Chromatic number of spacetime}, arXiv:2308.16885 (2023, revised 2024).
@@ -1848,6 +1862,7 @@ graphs, and the exact chromatic number of the plane over $\Q(\sqrt3,\sqrt{11})$}
 \bibitem{Parts} J. Parts, \emph{Graph minimization, focusing on the example of $5$-chromatic unit-distance graphs in
 the plane}, Geombinatorics \textbf{29} (2020), 137--166; arXiv:2010.12665.
 \bibitem{Soifer} A. Soifer, \emph{The mathematical coloring book}, Springer, New York, 2009.
+\bibitem{Vince} A. Vince, \emph{Star chromatic number}, J. Graph Theory \textbf{12} (1988), 551--559.
 \bibitem{Weil} A. Weil, \emph{On some exponential sums}, Proc. Nat. Acad. Sci. U.S.A. \textbf{34} (1948), 204--207.
 \bibitem{Woodall} D. R. Woodall, \emph{Distances realized by sets covering the plane}, J. Combin. Theory Ser. A
 \textbf{14} (1973), 187--200.

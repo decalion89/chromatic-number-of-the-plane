@@ -1,0 +1,28 @@
+Q(sqrt15), D = 80: 132 unit vectors, 10920 directed 5-cycles through 0 with two extra points
+   seed 3423: grown 594 -> witness 19 vertices, 30 edges
+   seed 190: grown 783 -> witness 25 vertices, 41 edges
+   seed 8541: grown 664 -> witness 21 vertices, 32 edges
+   seed 592: grown 509 -> witness 21 vertices, 33 edges
+   seed 2588: grown 624 -> witness 25 vertices, 44 edges
+   seed 3914: grown 571 -> witness 13 vertices, 18 edges
+   276 no UNSAT: round 5: acyclic tight digraph and no candidate; stop [1s]
+   seed 900: grown 615 -> witness 18 vertices, 28 edges
+   seed 2412: grown 535 -> witness 25 vertices, 43 edges
+   6017 no UNSAT: round 6: acyclic tight digraph and no candidate; stop [2s]
+   seed 3927: grown 570 -> witness 19 vertices, 31 edges
+   seed 1919: grown 350 -> witness 13 vertices, 18 edges
+   sizes: {19: 2, 25: 3, 21: 2, 13: 2, 18: 1}
+Q(sqrt39), D = 80: 116 unit vectors, 5280 directed 5-cycles through 0 with two extra points
+   seed 1719: grown 974 -> witness 33 vertices, 55 edges
+   seed 2127: grown 644 -> witness 27 vertices, 42 edges
+   seed 3157: grown 771 -> witness 17 vertices, 26 edges
+   seed 212: grown 622 -> witness 32 vertices, 50 edges
+   seed 1597: grown 938 -> witness 36 vertices, 59 edges
+   seed 1806: grown 818 -> witness 22 vertices, 34 edges
+   seed 3240: grown 706 -> witness 24 vertices, 36 edges
+   seed 4609: grown 558 -> witness 18 vertices, 26 edges
+   seed 43: grown 915 -> witness 29 vertices, 48 edges
+   2086 no UNSAT: round 5: acyclic tight digraph and no candidate; stop [1s]
+   seed 2917: grown 560 -> witness 23 vertices, 35 edges
+   seed 1460: grown 655 -> witness 44 vertices, 76 edges
+   sizes: {33: 1, 27: 1, 17: 1, 32: 1, 36: 1, 22: 1, 24: 1, 18: 1, 29: 1, 23: 1, 44: 1}

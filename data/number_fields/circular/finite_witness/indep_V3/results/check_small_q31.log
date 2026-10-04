@@ -1,0 +1,10 @@
+(1) Q(sqrt31): 9 points, 14 edges, every edge at distance exactly 1, and no other unit pair (induced)
+(2) the colouring is a (3,1)-colouring: chi_c(H) <= 3/1
+(3) all 19683 maps V -> Z/3: 48 (3,1)-colourings, each with a tight cycle (one of the 4 listed cycles): chi_c(H) = 3/1 by Lemma 20
+(4) no homomorphism to K_8/3, the largest fraction below 3/1 with numerator <= 9: chi_c(H) = 3/1 again
+(5) for every vertex v, a (3,1)-colouring of H - v with an acyclic tight digraph: H is vertex-critical
+wrote ../q31.cnf
+
+real	0m0.231s
+user	0m0.037s
+sys	0m0.009s

@@ -1,0 +1,41 @@
+n = 9
+  cycle type 9: class size 40320, edge orbits 4, Fix = 4, Fix(no hom to K_8/3) = 0
+  cycle type 8 1: class size 45360, edge orbits 5, Fix = 9, Fix(no hom to K_8/3) = 0
+  cycle type 7 2: class size 25920, edge orbits 5, Fix = 9, Fix(no hom to K_8/3) = 0
+  cycle type 7 1 1: class size 25920, edge orbits 6, Fix = 13, Fix(no hom to K_8/3) = 0
+  cycle type 6 3: class size 20160, edge orbits 7, Fix = 14, Fix(no hom to K_8/3) = 3
+  cycle type 6 2 1: class size 30240, edge orbits 8, Fix = 46, Fix(no hom to K_8/3) = 0
+  cycle type 6 1 1 1: class size 10080, edge orbits 9, Fix = 62, Fix(no hom to K_8/3) = 0
+  cycle type 5 4: class size 18144, edge orbits 5, Fix = 10, Fix(no hom to K_8/3) = 0
+  cycle type 5 3 1: class size 24192, edge orbits 6, Fix = 11, Fix(no hom to K_8/3) = 0
+  cycle type 5 2 2: class size 9072, edge orbits 8, Fix = 54, Fix(no hom to K_8/3) = 0
+  cycle type 5 2 1 1: class size 18144, edge orbits 9, Fix = 66, Fix(no hom to K_8/3) = 0
+  cycle type 5 1 1 1 1: class size 3024, edge orbits 12, Fix = 470, Fix(no hom to K_8/3) = 0
+  cycle type 4 4 1: class size 11340, edge orbits 10, Fix = 139, Fix(no hom to K_8/3) = 8
+  cycle type 4 3 2: class size 15120, edge orbits 8, Fix = 31, Fix(no hom to K_8/3) = 0
+  cycle type 4 3 1 1: class size 15120, edge orbits 9, Fix = 55, Fix(no hom to K_8/3) = 0
+  cycle type 4 2 2 1: class size 11340, edge orbits 13, Fix = 681, Fix(no hom to K_8/3) = 0
+  cycle type 4 2 1 1 1: class size 7560, edge orbits 14, Fix = 985, Fix(no hom to K_8/3) = 0
+  cycle type 4 1 1 1 1 1: class size 756, edge orbits 17, Fix = 6565, Fix(no hom to K_8/3) = 0
+  cycle type 3 3 3: class size 2240, edge orbits 12, Fix = 214, Fix(no hom to K_8/3) = 27
+  cycle type 3 3 2 1: class size 10080, edge orbits 11, Fix = 162, Fix(no hom to K_8/3) = 0
+  cycle type 3 3 1 1 1: class size 3360, edge orbits 14, Fix = 1234, Fix(no hom to K_8/3) = 0
+  cycle type 3 2 2 2: class size 2520, edge orbits 13, Fix = 653, Fix(no hom to K_8/3) = 0
+  cycle type 3 2 2 1 1: class size 7560, edge orbits 14, Fix = 937, Fix(no hom to K_8/3) = 0
+  cycle type 3 2 1 1 1 1: class size 2520, edge orbits 17, Fix = 6177, Fix(no hom to K_8/3) = 0
+  cycle type 3 1 1 1 1 1 1: class size 168, edge orbits 22, Fix = 133501, Fix(no hom to K_8/3) = 0
+  cycle type 2 2 2 2 1: class size 945, edge orbits 20, Fix = 35611, Fix(no hom to K_8/3) = 240
+  cycle type 2 2 2 1 1 1: class size 1260, edge orbits 21, Fix = 43631, Fix(no hom to K_8/3) = 384
+  cycle type 2 2 1 1 1 1 1: class size 378, edge orbits 24, Fix = 256759, Fix(no hom to K_8/3) = 0
+  cycle type 2 1 1 1 1 1 1 1: class size 36, edge orbits 29, Fix = 4815771, Fix(no hom to K_8/3) = 0
+  cycle type 1 1 1 1 1 1 1 1 1: class size 1, edge orbits 36, Fix = 246348115, Fix(no hom to K_8/3) = 166320
+sum of class sizes = 362880 (n! = 362880)
+weighted sum 688383360, / n! = 1897 remainder 0  => triangle-free graphs up to isomorphism
+weighted sum 1088640, / n! = 3 remainder 0  => ... without a homomorphism to K_8/3
+identity: labelled triangle-free graphs by number of edges: 0:1 1:36 2:630 3:7056 4:56133 5:333396 6:1515276 7:5323680 8:14461326 9:30142308 10:47521656 11:55542060 12:46986660 13:28120428 14:11786076 15:3543624 16:823347 17:157752 18:24024 19:2520 20:126
+identity: labelled triangle-free graphs without a homomorphism to K_8/3, by number of edges: 12:30240 13:90720 14:45360
+identity: of these, not 3-colourable: 0; maximal triangle-free labelled graphs: 219747, of which without a homomorphism to K_8/3: 45360
+
+real	5m58.042s
+user	2m58.430s
+sys	0m0.048s

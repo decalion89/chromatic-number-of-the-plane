@@ -12,6 +12,20 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- **The subdivided hexagon over `ℚ(√7)`, and a referee's report on the value-3 witnesses (4 October, night).** `M`, the
+  hexagon with its three long diagonals subdivided (9 vertices, 12 edges), is the unit-distance graph of nine points
+  of `ℚ(√7)²` (`witness_q7m.json.gz`), and so are `M` plus one or two edges between midpoints: all three nine-vertex
+  graphs with `χ_c = 3` are unit-distance graphs over `ℚ(√7)`, and over `ℚ(√31)`. Found by `hexagon_search.py`
+  (equilateral hexagons whose long diagonals are sums of two unit vectors; exact arithmetic; it counts the
+  realisations of each graph); the stored witness is checked by enumeration (`check_small.py`) and by a SAT refutation
+  certified by `kissat`, `drat-trim` and `cake_lpr`. `M` is a witness with the fewest vertices and, among those, the
+  fewest edges. A referee checked the value-3 material with programs of its own (`finite_witness/indep_V3/`: all
+  `2^28` labelled graphs on 8 vertices, a Burnside count on 9 vertices, an exhaustive `8^8` homomorphism search, the
+  proof by hand on all 126 colourings of `M`, the formulas clause by clause): no error. Its findings are applied: the
+  seed of the `ℚ(√31)` growth is stored (`q31_seed.json`; the growth reproduces the witness exactly), the remark on
+  `ℚ(√15)` and `ℚ(√39)` is corrected, Vince and Bondy–Hell are cited for the numerator bound, the proof by hand names
+  the three 6-cycles it uses, and Question 3 is stated more precisely. Tests: `test_finite_witness_q7m`,
+  `test_finite_witness_q31_found_by_growth`, and (slow) `test_hexagon_search`.
 - **The triangle-free graphs with nine vertices and `χ_c = 3`, and a referee's report on the `7/2` witnesses
   (4 October, night).** Of the 1 897 triangle-free graphs with 9 vertices (up to isomorphism) exactly three have
   `χ_c = 3` (`nine_vertices.py`, two separate tests that agree on every graph): the hexagon with its three long

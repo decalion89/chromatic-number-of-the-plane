@@ -1,0 +1,32 @@
+== witness_q7.json.gz: d = 7, D = 160, p/q = 3/1, keys = ['colouring', 'critical_colourings', 'cycles', 'd', 'denominator', 'edges', 'p', 'points', 'q']
+   d squarefree: True  d not a square: True
+   n = 9  distinct: True
+   listed edges: 13  unit pairs: 13  equal (induced, all unit): True
+   no repeated edge: True
+   triangles among unit pairs: []
+   v0: x = -1 + 0 r, y = 0 + 0 r
+   v1: x = -3/8 + -1/8 r, y = -5/8 + -1/8 r
+   v2: x = 1/4 + 0 r, y = 0 + -1/4 r
+   v3: x = 0 + 1/4 r, y = 1/4 + 0 r
+   v4: x = -1/4 + 0 r, y = 0 + 1/4 r
+   v5: x = 3/8 + -1/8 r, y = -5/8 + 1/8 r
+   v6: x = 1 + 0 r, y = 0 + 0 r
+   v7: x = 0 + 0 r, y = 0 + 0 r
+   v8: x = 0 + 0 r, y = 1 + 0 r
+== witness_q31.json.gz: d = 31, D = 80, p/q = 3/1, keys = ['colouring', 'critical_colourings', 'cycles', 'd', 'denominator', 'edges', 'p', 'points', 'q']
+   d squarefree: True  d not a square: True
+   n = 9  distinct: True
+   listed edges: 14  unit pairs: 14  equal (induced, all unit): True
+   no repeated edge: True
+   triangles among unit pairs: []
+   v0: x = -8/5 + 0 r, y = -4/5 + 0 r
+   v1: x = -1 + 0 r, y = 0 + 0 r
+   v2: x = -3/4 + -3/80 r, y = 9/16 + -1/20 r
+   v3: x = -3/5 + 0 r, y = -4/5 + 0 r
+   v4: x = 0 + 0 r, y = 0 + 0 r
+   v5: x = 0 + 1/16 r, y = -15/16 + 0 r
+   v6: x = -3/4 + 1/40 r, y = -3/8 + -1/20 r
+   v7: x = -27/20 + -3/80 r, y = -19/80 + -1/20 r
+   v8: x = -1 + 1/16 r, y = -15/16 + 0 r
+paper coordinates P0..P7, S equal to the file (in order 0..8): True
+README coordinates of the Q(sqrt31) witness equal to the file: True

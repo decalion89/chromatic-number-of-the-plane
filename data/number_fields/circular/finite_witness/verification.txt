@@ -143,8 +143,9 @@ three long diagonals subdivided and two edges between the midpoints (hexagon 0, 
        3/1 by Lemma 20
    (4) no homomorphism to K_8/3, the largest fraction below 3/1 with numerator <= 9: chi_c(H) = 3/1 again
    (5) for every vertex v, a (3,1)-colouring of H - v with an acyclic tight digraph: H is vertex-critical
-2. q31.cnf (sha256 7c893b278d45a8f18edb60a22c75ed68b06a173ca3d3529e685f2d174830932d): kissat 4.0.4: s UNSATISFIABLE;
-   drat-trim: s VERIFIED, with an LRAT proof as output (-L); cake_lpr: s VERIFIED UNSAT.
+2. q31.cnf (47 variables, 115 clauses; sha256 7c893b278d45a8f18edb60a22c75ed68b06a173ca3d3529e685f2d174830932d):
+   kissat 4.0.4: s UNSATISFIABLE; drat-trim: s VERIFIED (115 of 115 clauses and 46 of 144 lemmas in the core), with
+   an LRAT proof as output (-L); cake_lpr: s VERIFIED UNSAT.
 3. python3 nine_vertices.py   (13 s; networkx 3.6.1)
    n = 2, ..., 9: 2, 3, 7, 14, 38, 107, 410, 1897 triangle-free graphs up to isomorphism (OEIS A006785), the two tests
    of chi_c = 3 agree on every graph; n <= 8: none with chi_c = 3; n = 9: three, with 12, 13 and 14 edges: the
@@ -158,3 +159,34 @@ formula, the stored ones included; kissat, drat-trim and cake_lpr on all of them
 the explicit (7N, 2N+1)-colourings of every H - v; exact reproduction of witness_q11 and witness_q455). After its
 report the checkers make every check explicitly (python -O used to skip them) and check_witness.py needs a line
 "s VERIFIED" from drat-trim; the outputs above are unchanged.
+
+witness_q31, reproduction (after the referee's report): grow.py q31_seed.json A G31 2000 200 3 1 (2 rounds: 200
+points with one colour left, then 8 blocked; 367 vertices, 7 cycles), minimise.py G31.json W31.json (9 vertices, 14
+edges, 4 cycles) and critical.py W31.json C31.json give exactly the stored points, edges, colouring, cycles and
+certificates, in the same order (tests/test_two_primes.py, test_finite_witness_q31_found_by_growth).
+
+witness_q7m: Q(sqrt7), denominator 80, (p, q) = (3, 1), 9 vertices, 12 edges: the subdivided hexagon M itself (hexagon
+vertices 0-5, midpoints 6, 7, 8 of the diagonals 0-3, 1-4, 2-5); 8 listed cycles (the hexagon in both directions and
+the six directed 6-cycles C_0, ..., C_5 of the proof by hand).
+1. python3 check_small.py witness_q7m.json.gz q7m.cnf
+   (1) Q(sqrt7): 9 points, 12 edges, every edge at distance exactly 1, and no other unit pair (induced)
+   (2) the colouring is a (3,1)-colouring: chi_c(H) <= 3/1
+   (3) all 19683 maps V -> Z/3: 126 (3,1)-colourings, each with a tight cycle (one of the 8 listed cycles): chi_c(H) =
+       3/1 by Lemma 20
+   (4) no homomorphism to K_8/3, the largest fraction below 3/1 with numerator <= 9: chi_c(H) = 3/1 again
+   (5) for every vertex v, a (3,1)-colouring of H - v with an acyclic tight digraph: H is vertex-critical
+2. q7m.cnf (51 variables, 125 clauses; sha256 28f92bedcc168b6d6640147c83273372e99051c80d75ea6397aca96196844592):
+   kissat 4.0.4: s UNSATISFIABLE; drat-trim: s VERIFIED (125 of 125 clauses and 61 of 248 lemmas in the core), with
+   an LRAT proof as output (-L); cake_lpr: s VERIFIED UNSAT.
+3. python3 hexagon_search.py 7 80 400 (63 s): 156 unit vectors; 400 realisations of M listed (the stored witness is
+   the 181st, translated); 62256 sets of nine points realise the twelve edges of M: 46512 span M itself, 4896 + 4896
+   + 4896 span M plus one edge between midpoints (m0m1, m0m2, m1m2), 528 + 360 + 168 span M plus two such edges
+   (m0m1 m0m2, m0m1 m1m2, m0m2 m1m2). python3 hexagon_search.py 31 80 400 (77 s): 4288 sets: 1728 M, 640 + 640 + 640
+   M plus one edge, 320 + 228 + 92 M plus two edges. With denominator 80 there are none over Q(sqrt15), Q(sqrt23) and
+   Q(sqrt39).
+
+Referee of the value-3 witnesses (4 October 2026, night; indep_V3/, REPORT.md there): every claim confirmed with
+programs of its own (exact arithmetic on the points; all 2^28 labelled graphs on 8 vertices; a Burnside count for 9
+vertices without isomorphism tests: 1897 classes, 3 with chi_c = 3; an exhaustive 8^8 search for homomorphisms to
+K_8/3; the proof by hand on all 126 colourings of M; the formulas clause by clause; kissat, drat-trim and cake_lpr;
+the reproduction over Q(sqrt7)). Its findings on wording and reproducibility are applied (see the README).

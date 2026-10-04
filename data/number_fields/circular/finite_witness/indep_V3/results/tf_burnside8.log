@@ -1,0 +1,29 @@
+n = 8
+  cycle type 8: class size 5040, edge orbits 4, Fix = 8, Fix(no hom to K_8/3) = 0
+  cycle type 7 1: class size 5760, edge orbits 4, Fix = 5, Fix(no hom to K_8/3) = 0
+  cycle type 6 2: class size 3360, edge orbits 6, Fix = 25, Fix(no hom to K_8/3) = 0
+  cycle type 6 1 1: class size 3360, edge orbits 6, Fix = 13, Fix(no hom to K_8/3) = 0
+  cycle type 5 3: class size 2688, edge orbits 4, Fix = 4, Fix(no hom to K_8/3) = 0
+  cycle type 5 2 1: class size 4032, edge orbits 6, Fix = 15, Fix(no hom to K_8/3) = 0
+  cycle type 5 1 1 1: class size 1344, edge orbits 8, Fix = 55, Fix(no hom to K_8/3) = 0
+  cycle type 4 4: class size 1260, edge orbits 8, Fix = 74, Fix(no hom to K_8/3) = 0
+  cycle type 4 3 1: class size 3360, edge orbits 6, Fix = 11, Fix(no hom to K_8/3) = 0
+  cycle type 4 2 2: class size 1260, edge orbits 10, Fix = 230, Fix(no hom to K_8/3) = 0
+  cycle type 4 2 1 1: class size 2520, edge orbits 10, Fix = 130, Fix(no hom to K_8/3) = 0
+  cycle type 4 1 1 1 1: class size 420, edge orbits 12, Fix = 470, Fix(no hom to K_8/3) = 0
+  cycle type 3 3 2: class size 1120, edge orbits 8, Fix = 33, Fix(no hom to K_8/3) = 0
+  cycle type 3 3 1 1: class size 1120, edge orbits 10, Fix = 137, Fix(no hom to K_8/3) = 0
+  cycle type 3 2 2 1: class size 1680, edge orbits 10, Fix = 121, Fix(no hom to K_8/3) = 0
+  cycle type 3 2 1 1 1: class size 1120, edge orbits 12, Fix = 429, Fix(no hom to K_8/3) = 0
+  cycle type 3 1 1 1 1 1: class size 112, edge orbits 16, Fix = 5789, Fix(no hom to K_8/3) = 0
+  cycle type 2 2 2 2: class size 105, edge orbits 16, Fix = 8638, Fix(no hom to K_8/3) = 0
+  cycle type 2 2 2 1 1: class size 420, edge orbits 16, Fix = 3970, Fix(no hom to K_8/3) = 0
+  cycle type 2 2 1 1 1 1: class size 210, edge orbits 18, Fix = 12214, Fix(no hom to K_8/3) = 0
+  cycle type 2 1 1 1 1 1 1: class size 28, edge orbits 22, Fix = 139290, Fix(no hom to K_8/3) = 0
+  cycle type 1 1 1 1 1 1 1 1: class size 1, edge orbits 28, Fix = 4682270, Fix(no hom to K_8/3) = 0
+sum of class sizes = 40320 (n! = 40320)
+weighted sum 16531200, / n! = 410 remainder 0  => triangle-free graphs up to isomorphism
+weighted sum 0, / n! = 0 remainder 0  => ... without a homomorphism to K_8/3
+identity: labelled triangle-free graphs by number of edges: 0:1 1:28 2:378 3:3220 4:19075 5:81900 6:258510 7:598000 8:996975 9:1163540 10:913528 11:462336 12:147728 13:31360 14:5040 15:616 16:35
+identity: labelled triangle-free graphs without a homomorphism to K_8/3, by number of edges:
+identity: of these, not 3-colourable: 0; maximal triangle-free labelled graphs: 15247, of which without a homomorphism to K_8/3: 0

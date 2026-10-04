@@ -414,6 +414,56 @@ def test_finite_witness_q31(tmp_path):
     assert {tuple(sorted(e)) for e in W["edges"]} == M | {(3, 4), (4, 5)}
 
 
+def test_finite_witness_q7m(tmp_path):
+    """The subdivided hexagon M itself as a witness over Q(sqrt7): nine points with exactly the twelve unit pairs of
+    M (hexagon 0..5, midpoints 6, 7, 8 of the diagonals 0-3, 1-4, 2-5), checked by check_small.py, whose formula is the
+    one that kissat, drat-trim and cake_lpr refuted (verification.txt)."""
+    out = run(FW, "check_small.py", "witness_q7m.json.gz", str(tmp_path / "q7m.cnf")).stdout
+    assert "(1) Q(sqrt7): 9 points, 12 edges, every edge at distance exactly 1, and no other unit pair" in out
+    assert "(3) all 19683 maps V -> Z/3: 126 (3,1)-colourings, each with a tight cycle (one of the 8 listed" in out
+    assert "(4) no homomorphism to K_8/3" in out and "H is vertex-critical" in out
+    digest = hashlib.sha256((tmp_path / "q7m.cnf").read_bytes()).hexdigest()
+    assert digest == "28f92bedcc168b6d6640147c83273372e99051c80d75ea6397aca96196844592"
+    W = json.load(gzip.open(os.path.join(FW, "witness_q7m.json.gz"), "rt"))
+    M = {tuple(sorted((i, (i + 1) % 6))) for i in range(6)} | {(j, 6 + j) for j in range(3)}
+    M |= {tuple(sorted((6 + j, j + 3))) for j in range(3)}
+    assert {tuple(sorted(e)) for e in W["edges"]} == M
+    canon = lambda c: tuple(c[c.index(min(c)):] + c[:c.index(min(c))])
+    assert len({canon(c) for c in W["cycles"]}) == len(W["cycles"]) == 8
+
+
+@pytest.mark.slow
+def test_hexagon_search():
+    """hexagon_search.py over Q(sqrt7) (about a minute): all three nine-vertex graphs with chi_c = 3 occur, nothing else
+    does, and the stored witness_q7m is a translate of one of the realisations of M it lists."""
+    out = run(FW, "hexagon_search.py", "7", "80", "400").stdout
+    assert "62256 sets of nine points realise the twelve edges of M" in out
+    assert re.findall(r"^ +(\d+)  (.+)$", out, re.M) == [
+        ("46512", "none (M itself)"), ("4896", "m0m1"), ("4896", "m0m2"), ("4896", "m1m2"),
+        ("528", "m0m1 m0m2"), ("360", "m0m1 m1m2"), ("168", "m0m2 m1m2")]
+    W = json.load(gzip.open(os.path.join(FW, "witness_q7m.json.gz"), "rt"))
+    S = sorted(map(tuple, W["points"]))
+    rows = [json.loads(line[3:]) for line in out.splitlines() if line.startswith("M: ")]
+    assert len(rows) == 400
+    assert any(sorted(tuple(p[k] - o[k] for k in range(4)) for p in r) == S for r in rows for o in r)
+
+
+def test_finite_witness_q31_found_by_growth(tmp_path):
+    """grow.py, minimise.py and critical.py with (p, q) = (3, 1), from q31_seed.json, give exactly the stored witness
+    over Q(sqrt31): the same points, edges, colouring, cycles and criticality certificates, in the same order."""
+    for f in ("grow.py", "minimise.py", "critical.py", "q31_seed.json"):
+        shutil.copy(os.path.join(FW, f), tmp_path / f)
+    out = run(tmp_path, "grow.py", "q31_seed.json", "A", "G31", "2000", "200", "3", "1").stdout
+    assert "UNSAT with 367 points" in out
+    run(tmp_path, "minimise.py", "G31.json", "W31.json")
+    run(tmp_path, "critical.py", "W31.json", "C31.json")
+    W = json.load(open(tmp_path / "W31.json")); C = json.load(open(tmp_path / "C31.json"))
+    S = json.load(gzip.open(os.path.join(FW, "witness_q31.json.gz"), "rt"))
+    for k in ("points", "edges", "colouring", "cycles"):
+        assert W[k] == S[k], k
+    assert C["critical_colourings"] == S["critical_colourings"]
+
+
 def test_nine_vertices():
     """nine_vertices.py: of the 1897 triangle-free graphs with 9 vertices (up to isomorphism) exactly three have
     chi_c = 3, by two separate tests that agree on every graph: M, M + one edge, M + two edges."""

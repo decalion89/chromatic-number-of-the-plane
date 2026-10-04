@@ -1,0 +1,16 @@
+Q(sqrt7) seed 21222: 9 points; distinct True ; edges 14 ; induced: True ; isomorphic to M + m0m1 + m1m2 (the q31 graph): True
+    (-54, -40, -72, 30)  = ((-54 + -40 sqrt7)/160, (-72 + 30 sqrt7)/160)
+    (-2, -19, -111, 58)  = ((-2 + -19 sqrt7)/160, (-111 + 58 sqrt7)/160)
+    (0, 0, 0, 0)  = ((0 + 0 sqrt7)/160, (0 + 0 sqrt7)/160)
+    (70, -49, -165, 18)  = ((70 + -49 sqrt7)/160, (-165 + 18 sqrt7)/160)
+    (91, -7, 13, 49)  = ((91 + -7 sqrt7)/160, (13 + 49 sqrt7)/160)
+    (124, -9, -93, -12)  = ((124 + -9 sqrt7)/160, (-93 + -12 sqrt7)/160)
+    (52, 21, -39, 28)  = ((52 + 21 sqrt7)/160, (-39 + 28 sqrt7)/160)
+    (163, -37, -41, 9)  = ((163 + -37 sqrt7)/160, (-41 + 9 sqrt7)/160)
+    (39, -28, 52, 21)  = ((39 + -28 sqrt7)/160, (52 + 21 sqrt7)/160)
+(1) Q(sqrt7): 9 points, 14 edges, every edge at distance exactly 1, and no other unit pair (induced)
+(2) the colouring is a (3,1)-colouring: chi_c(H) <= 3/1
+(3) all 19683 maps V -> Z/3: 48 (3,1)-colourings, each with a tight cycle (one of the 4 listed cycles): chi_c(H) = 3/1 by Lemma 20
+(4) no homomorphism to K_8/3, the largest fraction below 3/1 with numerator <= 9: chi_c(H) = 3/1 again
+(5) for every vertex v, a (3,1)-colouring of H - v with an acyclic tight digraph: H is vertex-critical
+ 

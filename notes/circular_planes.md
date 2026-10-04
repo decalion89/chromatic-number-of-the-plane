@@ -740,25 +740,35 @@ witnesses again with programs of its own (`finite_witness/indep_W/`: a third enc
 scratch, `cake_lpr` on the stored proofs, the explicit homomorphisms `N·c + pos`), found no error, and reproduced
 `H₁₁` and the `ℚ(√455)` witness exactly. As `√11 ∈ ℚ₇`, `H₁₁` is an explicit witness for `ℚ₇` and for every finite
 extension `K` of `ℚ₇` with `χ_c(K²) < 4`. **A witness for 3 without
-unit triangles** (4 October, night; `check_small.py`, `small_triangle_free.py`): the same procedure with `K₃` in
+unit triangles** (4 October, night; `check_small.py`, `small_triangle_free.py`, `nine_vertices.py`,
+`hexagon_search.py`): the same procedure with `K₃` in
 place of `K_{7/2}` (an arc is tight when the colour increases by 1 mod 3), over `ℚ(√7)`, from 0, the 204 unit vectors
 with denominator 160 and two points closing a 5-cycle, stops at 607 vertices, and deletion leaves nine points:
 `P₀ = (−1, 0)`, `P₁ = (−(3 + √7)/8, −(5 + √7)/8)`, `P₂ = (1/4, −√7/4)`, `P₃ = (√7/4, 1/4)`, `P₄ = (−1/4, √7/4)`,
 `P₅ = ((3 − √7)/8, (√7 − 5)/8)`, `P₆ = (1, 0)`, `P₇ = (0, 0)`, `S = (0, 1)`. Their unit pairs form the 8-cycle
 `P₀⋯P₇`, the chords `P₀P₄`, `P₁P₅`, `P₂P₆` and the path `P₃SP₇`: `H₇` is the Wagner graph (the Möbius ladder on 8
 vertices) with one chord subdivided. Each of its 84 proper 3-colourings has a tight 6-cycle, so `χ_c(H₇) = 3` by
-Lemma F9. By hand, already for `M = H₇ − P₁P₅`, the hexagon `v₀⋯v₅ = P₀P₄P₃P₂P₆P₇` with its long diagonals
+Lemma F9. By hand, already for the subgraph `M = H₇ − P₁P₅`, the hexagon `v₀⋯v₅ = P₀P₄P₃P₂P₆P₇` with its long diagonals
 `v_j v_{j+3}` subdivided by `m₀, m₁, m₂ = P₁, P₅, S`: put `δ(a, b) = ±1` with `c(b) − c(a) ≡ δ(a, b) (mod 3)` on each
 arc; along a closed walk the sum of `δ` is divisible by 3, so it is ±3 on a 5-cycle and 0 or ±6 on a 6-cycle (±6:
-tight in one direction). For the 5-cycles `Z_k = v_k v_{k+1} v_{k+2} v_{k+3} m_k`, as 1-chains `Z_{k+1} − Z_k` is the
-6-cycle `v_k m_k v_{k+3} v_{k+4} m_{k+1} v_{k+1}` and `Z₀ + Z₃` is the hexagon; if none of these 6-cycles is tight,
-all `Z_k` have the same sum ±3 and the hexagon has sum ±6, so it is tight. Equivalently `H₇` has no homomorphism to `K_{8/3}`, which is the Wagner graph itself (`χ_c` of a graph
-with 9 vertices is a fraction with numerator at most 9, and `8/3` is the largest one below 3). `H₇` is
+tight in one direction). For the 5-cycles `Z_k = v_k v_{k+1} v_{k+2} v_{k+3} m_k`, as 1-chains `C_k = Z_{k+1} − Z_k` is
+the 6-cycle `v_k m_k v_{k+3} v_{k+4} m_{k+1} v_{k+1}` and `Z₀ + Z₃` is the hexagon; `C_{k+3}` is `C_k` reversed, and
+`Z₃ − Z₀ = C₀ + C₁ + C₂`. If none of `C₀, C₁, C₂` is tight in either direction, their sums are 0, `Z₀` and `Z₃` have
+the same sum ±3, and the hexagon has sum ±6, so it is tight. (In `H₇`, `C₀ = P₀P₁P₂P₆P₅P₄` has the chord `P₁P₅` and is
+never tight; the cycles stored with `H₇` are `C₁`, `C₂` and the hexagon, in both directions.) Equivalently `H₇` has no homomorphism to `K_{8/3}`, which is the Wagner graph itself (`χ_c` of a graph
+with 9 vertices is a fraction with numerator at most 9, by Vince and by Bondy and Hell, and `8/3` is the largest one
+below 3). `H₇` is
 vertex-critical, and nine vertices are the fewest possible without unit triangles: every triangle-free graph with at
 most 8 vertices maps to `K_{8/3}` (checked over the 4 682 270 triangle-free graphs on 8 labelled vertices). Of the
 1 897 triangle-free graphs with 9 vertices (up to isomorphism) exactly three have `χ_c = 3` (`nine_vertices.py`, two
-separate tests): `M`, `H₇ = M + m₀m₁` and `M + m₀m₁ + m₁m₂`; the last is the unit-distance graph of nine points of
-`ℚ(√31)²`, found by the same growth (`witness_q31.json.gz`). All of this is checked by enumeration, the tight cycles
+separate tests): `M`, `H₇ = M + m₀m₁` and `M + m₀m₁ + m₁m₂`. All three are unit-distance graphs over `ℚ(√7)` and over
+`ℚ(√31)`: without unit triangles, nine points with the twelve unit pairs of `M` span `M` or `M` plus one or two
+edges between midpoints (any other unit pair would close a triangle), and a direct search for equilateral hexagons
+whose long diagonals are sums of two unit vectors (`hexagon_search.py`) finds all three over both fields. For
+example, the hexagon `(√7/4, 1/4)`, `(√7/4 − 1, 1/4)`, `(−3/4, −√7/4)`, `(0, 0)`, `(−1, 0)`, `(−1/4, √7/4)` with
+midpoints `(0, 1)`, `(√7/4 − 1, −3/4)`, `(−1/2 − √7/4, 1/4)` spans `M` itself (`witness_q7m.json.gz`), a witness with
+nine vertices and twelve edges; the growth over `ℚ(√31)` gives nine points spanning `M + m₀m₁ + m₁m₂`
+(`witness_q31.json.gz`, `q31_seed.json`). All of this is checked by enumeration, the tight cycles
 also by certified SAT refutations; as `√7 ∈ ℚ₃`, `H₇` is an explicit witness for `ℚ₃` and its finite extensions `K`
 with `χ_c(K²) < 4`. Lemmas F9–F11 were tested by two referees: on 291 small graphs and 766 tight relations; on 115
 random finite sets `S` in `ℤ`, `ℤ²` and `ℤ × ℤ/m` with `2 < χ_c < 4` (at all 409 optimal points, vertices of the optimal set and
@@ -779,7 +789,8 @@ midpoints and centroids of them that stay optimal, the tight elements have a non
    be one. The 5-chromatic unit-distance graphs we know lie over fields containing `√3`, or `√−3` and `√−7`, and 3
    and −7 are not squares modulo 19.
 2. *Finite witnesses.* By Corollary F12 some finite unit-distance graph in `ℚ(√11)²` has `χ_c = 7/2`; the proof
-   (compactness) gives no bound on its size, and the smallest we know has 170 vertices and is vertex-critical (§6.8). How small can it be? (For the value 3 in a plane without unit triangles the answer is nine, over `ℚ(√7)`; §6.8.) And when `χ_c(F²) = 4`, is the value attained by
+   (compactness) gives no bound on its size, and the smallest we know has 170 vertices and is vertex-critical (§6.8). How small can it be? (For the value 3 in a plane without unit triangles nine vertices are needed, and they suffice over `ℚ(√7)` and
+`ℚ(√31)`; §6.8. Over other such planes, for example `ℚ(√15)`, the least number is open.) And when `χ_c(F²) = 4`, is the value attained by
    a finite subgraph, for example for `ℚ(√59)`? Above 4 Lemmas F10 and F11 are not available. When `χ(F²) = 4`,
    compactness makes it a question about the plane: some finite subgraph has `χ_c = 4` if and only if every proper
    colouring `F² → ℤ/4` has a tight cycle (the colour increases by 1 at each step). If every colouring has one,

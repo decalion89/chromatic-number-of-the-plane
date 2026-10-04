@@ -1,0 +1,2 @@
+n=8: labelled graphs 268435456, triangle-free 4682270, maximal triangle-free 15247, maximal non-bipartite 15120
+  triangle-free without a homomorphism to K_8/3: 0; not 3-colourable: 0; without a homomorphism to K_5/2: 22680 (maximal ones: 2520)

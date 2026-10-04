@@ -1,0 +1,5 @@
+Q(sqrt7), D = 160: 204 unit vectors; irrational ones: 192
+Q(sqrt31), D = 80: 156 unit vectors; irrational ones: 144
+q7 seed 5-cycle closes: True ; (-3/4, -sqrt7/4) = (-120, 0, 0, -40)/160
+q7_seed.json = {0} + all unit vectors + the two extra points: True
+5-cycles 0, (-1,0), (-2,0), Q, R over Q(sqrt31) with denominator 80: 0

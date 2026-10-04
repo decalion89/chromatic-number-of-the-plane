@@ -10396,3 +10396,36 @@ Proposition 9), describes the second growth rule (points with one colour left, 3
 `ℚ(√455)`), and states the perturbation explicitly: if `pos` numbers the `N` vertices along a topological order of the
 tight digraph of a `(7, 2)`-colouring `c`, then `N·c + pos` is a `(7N, 2N + 1)`-colouring. The referee's programs and
 its report are stored with the witnesses.
+
+## The subdivided hexagon over `ℚ(√7)`, and the value-3 witnesses refereed (4 October, night)
+
+The classification left a question: is `M` itself, and not only `M` with one or two more edges, an induced
+unit-distance graph? Without unit triangles the question is only which of the three graphs occur: nine points with
+the twelve unit pairs of `M` have no other unit pair except between midpoints (a pair `v_i v_{i+2}` closes a triangle
+with `v_{i+1}`, a pair `v_i v_{i+3}` one with `m_i`, a pair `v_i m_j` one with `v_j` or `v_{j+3}`), and all three
+midpoint pairs would form a triangle. A direct search answers it. Put `v₀ = 0` and take the edges of the hexagon among
+the unit vectors with denominator 80; each long diagonal `v_{j+3} − v_j` must be a sum `c + c′` of two unit vectors,
+and then `m_j = v_j + c` is at distance 1 from `v_j` and `v_{j+3}`. Over `ℚ(√7)`, `hexagon_search.py 7 80 400` finds
+62 256 sets of nine points with the twelve unit pairs: 46 512 span `M`, 14 688 span `M` plus one edge and 1 056 span
+`M` plus two edges. Over `ℚ(√31)` the counts are 4 288, 1 728, 1 920 and 640; over `ℚ(√15)`, `ℚ(√23)` and `ℚ(√39)`
+there are none with denominator 80. So each of the three nine-vertex graphs with `χ_c = 3` is a unit-distance graph
+over `ℚ(√7)` and over `ℚ(√31)`, and `M`, with twelve edges, is a witness with the fewest vertices and, among those,
+the fewest edges. The stored `witness_q7m.json.gz` is one of the listed realisations of `M`, translated:
+`v₀, …, v₅ = (√7/4, 1/4), (√7/4 − 1, 1/4), (−3/4, −√7/4), (0, 0), (−1, 0), (−1/4, √7/4)` and
+`m₀, m₁, m₂ = (0, 1), (√7/4 − 1, −3/4), (−1/2 − √7/4, 1/4)`, with the hexagon and the six directed 6-cycles of the
+proof as its listed cycles (a first version listed each 6-cycle twice; the duplicates were removed before it was
+stored). `check_small.py` verifies it, and the SAT refutation of its formula is certified by `kissat`, `drat-trim` and
+`cake_lpr`.
+
+A referee checked the value-3 material at 17347f14 (`finite_witness/indep_V3/`) and confirmed every claim with
+programs of its own, among them all `2^28` labelled graphs on 8 vertices and a Burnside count of the triangle-free
+graphs on 9 vertices that uses no isomorphism test (`688 383 360 = 1 897 · 9!`; for "no homomorphism to `K_{8/3}`",
+`1 088 640 = 3 · 9!`). Its main finding: the `ℚ(√31)` growth could not be reproduced from its description, as the
+seed was not stored. The seed is now stored (`q31_seed.json`: 0, the 156 unit vectors with denominator 80, and two
+points closing a 5-cycle); the growth stops at 367 vertices and deletion gives exactly the stored nine points. The
+remark that the growth over `ℚ(√15)` and `ℚ(√39)` gave witnesses with 22 and 25 vertices was not reproducible either
+(the referee's samples gave 13–25 and 17–44 vertices, depending on the seed); it now says only that the size depends
+on the seed and that the least size there is open. The referee also realised all three graphs exactly (`M` and `H₇`
+over `ℚ(√31)`, `M + m₀m₁ + m₁m₂` over `ℚ(√7)`), as the search above does; asked for Vince's and Bondy–Hell's papers to be
+cited for the numerator bound; and asked for the proof by hand to name the three 6-cycles `C₀, C₁, C₂` it uses
+(`C_{k+3}` is `C_k` reversed). All of this is applied.

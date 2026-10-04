@@ -1,0 +1,41 @@
+K_{8/3}: edges 12 ; 0,3,6,1,4,7,2,5 is an 8-cycle: True ; its other edges join opposite vertices: True ; isomorphic to the Wagner graph: True
+largest fraction < 3 with numerator <= 9: 8/3 ; next fraction >= 3 with numerator <= 9: 3
+
+== witness_q7.json.gz: n = 9, edges = 13, degrees = [3, 3, 3, 3, 3, 3, 3, 3, 2]
+stored colouring proper: True
+listed cycles are simple cycles along edges; lengths [6, 6, 6, 6, 6, 6]
+proper 3-colourings: 84; with a tight cycle: 84; with a tight listed cycle: 84
+hom to K_{8/3} (SAT): False ; hom to K_3 (SAT): True
+fractions 2 <= p/q < 3 with p <= 30 admitting a homomorphism: []
+critical certificates: all proper, acyclic tight digraphs, N*c+pos is a hom to K_{24/9}=K_{8/3}: True
+each H - v maps to K_{8/3} (SAT, direct): True
+
+== witness_q31.json.gz: n = 9, edges = 14, degrees = [3, 3, 3, 3, 4, 3, 3, 3, 3]
+stored colouring proper: True
+listed cycles are simple cycles along edges; lengths [6, 6, 6, 6]
+proper 3-colourings: 48; with a tight cycle: 48; with a tight listed cycle: 48
+hom to K_{8/3} (SAT): False ; hom to K_3 (SAT): True
+fractions 2 <= p/q < 3 with p <= 30 admitting a homomorphism: []
+critical certificates: all proper, acyclic tight digraphs, N*c+pos is a hom to K_{24/9}=K_{8/3}: True
+each H - v maps to K_{8/3} (SAT, direct): True
+
+H7 equals (identically) the 8-cycle P0..P7 + chords P0P4, P1P5, P2P6 + path P3 S P7: True
+  Wagner with chord 0-4 subdivided isomorphic to H7: True
+  Wagner with chord 1-5 subdivided isomorphic to H7: True
+  Wagner with chord 2-6 subdivided isomorphic to H7: True
+  Wagner with chord 3-7 subdivided isomorphic to H7: True
+H7 = M + m0m1 with v = P0,P4,P3,P2,P6,P7 and m = P1,P5,S (identical edge sets): True
+witness_q31 = M + m0m1 + m1m2 with v = 0,1,8,7,2,6, m = 3,4,5 (identical edge sets): True
+|Aut| of M, H7, Q31 graph: [12, 4, 8]
+M + any one midpoint edge isomorphic to H7: True
+M + any two midpoint edges isomorphic to the q31 graph: True
+M is K_{3,3} with a perfect matching subdivided; hexagon + long diagonals is K_{3,3}: True
+
+hand proof: every Z_k is a 5-cycle of M: True
+every C_k is a 6-cycle of M: True
+Z_{k+1} - Z_k = C_k as 1-chains, k = 0..5: True
+Z_6 = Z_0: True ; Z_0 + Z_3 = hexagon: True
+C_{k+3} = -C_k (same 6-cycle reversed): True
+M: 126 proper 3-colourings; delta(Z_k) = +-3: True; delta(C_k) in {0, +-6}: True; identities hold numerically: True; if no C_k tight then hexagon delta = +-6: True; split {'C': 78, 'hex': 48}
+M: proper 3-colourings with a tight cycle (Kahn): 126 of 126
+M maps to K_{8/3} (SAT): False ; M is 3-colourable: True
