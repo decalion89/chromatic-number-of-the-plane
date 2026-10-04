@@ -2,7 +2,7 @@
 unit vector of U into the OPEN interval (Q/P, 1 - Q/P), for U in the plane over Q(sqrt d).
 A unit is an integer vector [x0, x1, y0, y1] meaning ((x0 + x1 sqrt d)/D, (y0 + y1 sqrt d)/D).  Checks:
 1. x0^2 + d x1^2 + y0^2 + d y1^2 = D^2 and x0 x1 + y0 y1 = 0 (length 1), d not a square;
-2. every relation r has sum_u r_u u = 0;
+2. every relation r is nonzero and has sum_u r_u u = 0 (a zero relation would have an empty open range);
 3. each branch on relation j covers every integer strictly between the minimum and the maximum of <r_j, f> over the
    closed box [Q/P, 1 - Q/P]^U (the values <r_j, f> takes on the open box), and each leaf's vector y satisfies:
    c = sum_k y_k r_{j_k} is zero and <y, z> != 0, or <y, z> >= max_{closed box} <c, f> or <= min_{closed box} <c, f>;
@@ -35,6 +35,7 @@ def check(path):
         need(x0 * x0 + d * x1 * x1 + y0 * y0 + d * y1 * y1 == D * D and x0 * x1 + y0 * y1 == 0, f"not a unit: {u}")
     for r in R:
         need(type(r) is list and len(r) == n and all(isint(x) for x in r), "bad relation")
+        need(any(r), "zero relation")   # a zero relation has an empty open range and would close any node
         need(all(sum(r[i] * U[i][c] for i in range(n)) == 0 for c in range(4)), "not a relation")
     nodes = leaves = 0
     stack = [(C["tree"], [])]

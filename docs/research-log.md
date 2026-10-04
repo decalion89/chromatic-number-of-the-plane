@@ -9874,3 +9874,23 @@ denominator `5^k`) decide three colours for every number field, not only for rea
 - **Open.** Is there a gap `(3, 7/2)` for every number field? Along the rotations alone there are characters with
   `min ‖ξ(γ)‖ = 3/10` at every level tried; they look 5-adic, which a whole field plane should kill. `ℚ(√35)`: solver
   value `2/7`, certificate under way. `ℚ(√23)`, `ℚ(√47)`: the solver did not finish in 300 s.
+
+## Circular colourings: referee, `ℚ(√35)`, and the local values below 4 (4 October, morning)
+
+- **Referee.** A separate agent checked Theorem C for `ℚ(√11)` and `ℚ₇` with its own exact checker (it rebuilds
+  `U = G_25 V` in its own arithmetic and checks that the 66 relations generate the whole relation lattice): correct.
+  It found one false statement in the note, which I had also noticed: 7 is not inert in `ℚ(√23)` but splits
+  (`23 ≡ 3² (mod 7)`), so `χ_c(ℚ(√23)²) ≤ 7/2`. It also found a hole in `check_open.py`: a zero relation has an empty
+  open range, so a branch on it with no children closed any node. The certificates contain no zero relation, so
+  nothing changes, but the checker and the builder now reject zero relations, and a test forges such a certificate.
+  Smaller points (Moorhouse's Corollary 8.3 is about real quadratic fields only; `χ_c(ℝ²) > 4` follows from de
+  Grey's theorem; "no earlier non-integral value") are fixed in the note.
+- **`χ_c(ℚ(√35)²) = 7/2`.** The certificate (14 199 nodes) is accepted by `check_open.py` and by the referee's
+  checker, generalised to any `d` (`check_open_indep.py`), which shares no code with it.
+- **Locally constant colourings give only 2, 3 and 7/2 below 4** (`notes/circular_planes.md`, Proposition C2, not
+  yet refereed). A character of `O_w/𝔪^k` that keeps the unit vectors farther than `1/(2p)` from 0 factors through the
+  residue field (the elements `(1 + π^J x)/σ(1 + π^J x)` move the values along a whole coset of `(1/p)ℤ/ℤ`
+  otherwise). At the residue level, `κ₁ = 1/3` at `(p, f) = (3, 1)`, `2/7` at `(7, 1)`, below `1/4` for every
+  `p ≡ 3 (mod 4)` from 11 to 383 with `f = 1`, and 0 for `(3, 3), (3, 5), (7, 3), (11, 3)`; at `p = 2` it is 0. This
+  suggests a circular local–global question: is `χ_c(F²) ∈ {2, 3, 7/2}` whenever it is below 4? It predicts
+  `χ_c(ℚ(√23)²) = 7/2` and `χ_c(ℚ(√59)²) = 4`.

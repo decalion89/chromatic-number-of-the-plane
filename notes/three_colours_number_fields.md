@@ -227,7 +227,7 @@ rational rotations of denominator `5^k` act as a probe: Proposition 1 says that 
 
 > **Corollary B6 (no circular chromatic number between 2 and 3).** For every number field `F`, `F²` has a
 > homomorphism to a circular clique `K_{p/q}` with `p/q < 3` only if `χ(F²) ≤ 2`. So `χ_c(F²) = 2`,
-> `χ_c(F²) = 3` or `χ_c(F²) > 3`, and `F²` maps to an odd cycle only when it is bipartite.
+> `χ_c(F²) = 3` or `χ_c(F²) > 3`, and `F²` maps to a cycle of odd length at least 5 only when it is bipartite.
 
 *Proof.* Theorem W⁺ (`notes/winding_lemma.md` §2) and compactness give a character with `ξ(T) ⊆ [q/p, 1 − q/p]`, an
 interval strictly inside `(1/3, 2/3)`. In the proof of Lemma B1, `φ(v)` then lies in the subset of `S_N` defined by

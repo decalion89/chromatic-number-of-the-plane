@@ -18,6 +18,7 @@ EPS = 1e-7          # float guide: closed box [LO + EPS, HI - EPS]
 
 def open_range(r):
     """integers strictly between the min and max of <r, f> over the closed box"""
+    assert any(r), "zero relation"
     mn = sum(c * (LO if c > 0 else HI) for c in r); mx = sum(c * (HI if c > 0 else LO) for c in r)
     lo = math.floor(mn) + 1; hi = math.ceil(mx) - 1
     return lo, hi

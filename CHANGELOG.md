@@ -18,9 +18,10 @@ including every retracted claim, is the research log,
   two separate agents (no error; two small gaps closed). New fields that need four colours, among them `ℚ(√2, √7)`,
   with an exact certificate (`data/number_fields/three_colours/`) and `χ = 4`; an elementary family (Proposition B9);
   tests in `tests/test_three_colours.py`.
-- **A circular chromatic number (4 October).** `notes/circular_planes.md`: `χ_c(ℚ(√11)²) = χ_c(ℚ₇²) = 7/2`, by a 7-adic
-  colouring and an exact certificate (`data/number_fields/circular/`) with Theorem W⁺; no plane over a number field has
-  `2 < χ_c < 3`.
+- **A circular chromatic number (4 October).** `notes/circular_planes.md`: `χ_c(ℚ(√11)²) = χ_c(ℚ(√35)²) = χ_c(ℚ₇²) = 7/2`,
+  by a 7-adic colouring and exact certificates (`data/number_fields/circular/`, two checkers) with Theorem W⁺; no plane
+  over a number field has `2 < χ_c < 3`; colourings locally constant at one place give, below 4, only 2, 3 and `7/2`
+  (Proposition C2, for the residue fields computed).
 - **Literature sweep (4 October).** `notes/literature.md`, last section: what the systematic search of arXiv found for
   each result, and the relevant papers the project did not cite before.
 

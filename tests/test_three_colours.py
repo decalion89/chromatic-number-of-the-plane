@@ -69,6 +69,32 @@ def test_circular_seven_halves_certificate():
     assert out.startswith("VERIFIED") and "(2/7, 5/7)" in out and "70 units" in out
 
 
+@pytest.mark.parametrize("d", [11, 35])
+def test_circular_certificates_independent_checker(d):
+    # the second checker shares no code with check_open.py and rebuilds U = G_25 V from d
+    cert = f"cert_sqrt{d}_open_7_2_N25.json.gz"
+    out = subprocess.run([sys.executable, "check_open.py", cert], cwd=CIRC,
+                         capture_output=True, text=True, check=True, timeout=1200).stdout
+    assert out.startswith("VERIFIED") and f"d = {d}" in out
+    out = subprocess.run([sys.executable, "check_open_indep.py", cert, f"{d},25,7,2,1,7,19"], cwd=CIRC,
+                         capture_output=True, text=True, check=True, timeout=1200).stdout
+    assert out.startswith("ACCEPTED") and "70 units (= G_25 V up to sign" in out
+
+
+def test_circular_checkers_reject_zero_relation(tmp_path):
+    # a zero relation has an empty open range; without the check it would close the root without proof
+    import gzip, json
+    with gzip.open(os.path.join(CIRC, "cert_sqrt11_open_7_2_N25.json.gz"), "rt") as fh:
+        C = json.load(fh)
+    C["relations"].append([0] * len(C["units"]))
+    C["tree"] = {"branch": len(C["relations"]) - 1, "lo": 1, "hi": -1, "kids": {}}
+    bad = tmp_path / "forged.json"
+    bad.write_text(json.dumps(C))
+    for cmd in (["check_open.py", str(bad)], ["check_open_indep.py", str(bad)]):
+        res = subprocess.run([sys.executable] + cmd, cwd=CIRC, capture_output=True, text=True, timeout=600)
+        assert res.returncode != 0 or not res.stdout.startswith(("VERIFIED", "ACCEPTED")), cmd
+
+
 def test_seven_adic_residue_colouring():
     # a + bi -> 2a + 3b takes only the values 2..5 on the norm-one elements of F_49 (Proposition C1, p = 7)
     p = 7
