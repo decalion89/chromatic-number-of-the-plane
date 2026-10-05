@@ -434,6 +434,34 @@ def test_finite_witness_q7m(tmp_path):
     assert len({canon(c) for c in W["cycles"]}) == len(W["cycles"]) == 8
 
 
+def test_finite_witness_q15(tmp_path):
+    """The 13-vertex witness for chi_c = 3 over Q(sqrt15): check_small.py enumerates all 3^13 maps, rules out a
+    homomorphism to K_11/4 and checks the criticality certificates; its formula is the one that kissat, drat-trim and
+    cake_lpr refuted (verification.txt)."""
+    out = run(FW, "check_small.py", "witness_q15.json.gz", str(tmp_path / "q15.cnf")).stdout
+    assert "(1) Q(sqrt15): 13 points, 18 edges, every edge at distance exactly 1, and no other unit pair" in out
+    assert "(3) all 1594323 maps V -> Z/3: 810 (3,1)-colourings, each with a tight cycle (one of the 12 listed" in out
+    assert "(4) no homomorphism to K_11/4" in out and "H is vertex-critical" in out
+    digest = hashlib.sha256((tmp_path / "q15.cnf").read_bytes()).hexdigest()
+    assert digest == "9349bb61775a69faf36bb6084d3600feef7c7d1d544686c5caee4cc1c7dde9f5"
+
+
+def test_finite_witness_q15_found_by_growth(tmp_path):
+    """grow.py, minimise.py and critical.py with (p, q) = (3, 1), from q15_seed.json, give exactly the stored witness
+    over Q(sqrt15): the same points, edges, colouring, cycles and criticality certificates, in the same order."""
+    for f in ("grow.py", "minimise.py", "critical.py", "q15_seed.json"):
+        shutil.copy(os.path.join(FW, f), tmp_path / f)
+    out = run(tmp_path, "grow.py", "q15_seed.json", "A", "G15", "3000", "200", "3", "1").stdout
+    assert "UNSAT with 540 points" in out
+    run(tmp_path, "minimise.py", "G15.json", "W15.json")
+    run(tmp_path, "critical.py", "W15.json", "C15.json")
+    W = json.load(open(tmp_path / "W15.json")); C = json.load(open(tmp_path / "C15.json"))
+    S = json.load(gzip.open(os.path.join(FW, "witness_q15.json.gz"), "rt"))
+    for k in ("points", "edges", "colouring", "cycles"):
+        assert W[k] == S[k], k
+    assert C["critical_colourings"] == S["critical_colourings"]
+
+
 @pytest.mark.slow
 def test_hexagon_search():
     """hexagon_search.py over Q(sqrt7) (about a minute): all three nine-vertex graphs with chi_c = 3 occur, nothing else

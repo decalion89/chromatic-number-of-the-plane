@@ -124,6 +124,8 @@ explicitly (an `assert` would be skipped under `python -O`), `check_witness.py` 
 | `small_triangle_free.py` | every triangle-free graph with at most 8 vertices maps to `K_{8/3}` |
 | `witness_q31.json.gz` | the nine-point witness for `χ_c = 3` over `ℚ(√31)` (same fields as `witness_q7`) |
 | `q31_seed.json` | the 159 points from which `grow.py` found it |
+| `witness_q15.json.gz` | a 13-vertex witness for `χ_c = 3` over `ℚ(√15)` (same fields as `witness_q7`) |
+| `q15_seed.json` | the 135 points from which `grow.py` found it |
 | `witness_q7m.json.gz` | the subdivided hexagon `M` itself over `ℚ(√7)`: nine points, twelve edges (same fields) |
 | `hexagon_search.py` | the search that found it: realisations of `M`, and of `M` plus one or two edges, over `ℚ(√d)` |
 | `nine_vertices.py` | the three triangle-free graphs with 9 vertices and `χ_c = 3` (needs networkx) |
@@ -200,14 +202,32 @@ unit vectors with denominator 80, and the two points `(−8/5, −4/5)` and `(�
     python3 minimise.py G31.json W31.json              # 9 vertices: the stored points, edges, colouring and cycles
     python3 critical.py W31.json C31.json              # the stored certificates
 
-The growth also finds witnesses over `ℚ(√15)` and `ℚ(√39)`, with sizes that depend on the seed (none stored); the
-least size there is open.
+The growth also finds witnesses over `ℚ(√15)` and `ℚ(√39)`, with sizes that depend on the seed. Over `ℚ(√15)`, from
+70 seeds (0, the unit vectors with denominator 80 or 160, and the points of one unit 5-cycle through 0; 63 of the
+growths ended with a witness) and 174 deletions (the lowest-degree order for the 63, and three random orders for each
+of the 37 from denominator 80), the smallest has 13 vertices and 18 edges, and the 30 of that size are all the same
+graph up to isomorphism: a vertex `a` joined by paths of length 2 to five vertices `b, c, d, e, f`,
+which are joined by the edges `bc`, `bd`, `de`, `ef` and the paths `b–f` and `c–e` of length 2 (every cycle of a
+minimum cycle basis has length 5). It is stored as `witness_q15.json.gz` and found from `q15_seed.json` (0, the 132 unit
+vectors with denominator 80, and the two points `((21 − √15)/40, (−7 − 3√15)/40)` and `((21 − 11√15)/40, (3 − 3√15)/40)`,
+which close the 5-cycle `0, (−√15/8, −7/8), ((21 − √15)/40, (−7 − 3√15)/40), ((21 − 11√15)/40, (3 − 3√15)/40),
+((3 − 4√15)/20, (4 + 3√15)/20)`):
+
+    python3 grow.py q15_seed.json A G15 3000 200 3 1   # 29 rounds, 540 vertices, 23 cycles
+    python3 minimise.py G15.json W15.json              # 13 vertices, 18 edges, 12 cycles: the stored ones
+    python3 critical.py W15.json C15.json              # the stored certificates
+
+None of the three nine-vertex graphs has a realisation over `ℚ(√15)` with coordinates of denominator 48, 68, 80, 104,
+112, 120, 136, 160, 208, 221, 240, 272 or 320 (`hexagon_search.py`), although `ℚ(√15)²` has unit 5-cycles (for example
+`2a + 2b + c = 0` with `a·b = −7/8`, which needs `√15`). So over `ℚ(√15)` the least size is between 9 and 13; over
+`ℚ(√39)` the smallest found (30 seeds) has 17 vertices.
 
 The checks are finite enumerations (`verification.txt`):
 
     python3 check_small.py witness_q7.json.gz q7.cnf    # points, unit pairs, all 3^9 maps, K_{8/3}, criticality
     python3 check_small.py witness_q31.json.gz q31.cnf  # the same for the witness over Q(sqrt31)
     python3 check_small.py witness_q7m.json.gz q7m.cnf  # and for M itself over Q(sqrt7)
+    python3 check_small.py witness_q15.json.gz q15.cnf  # the 13-vertex witness over Q(sqrt15) (all 3^13 maps)
     python3 hexagon_search.py 7 80 400                  # the realisations of M and of M plus one or two edges
     python3 small_triangle_free.py                      # the 4 682 270 triangle-free graphs on 8 labelled vertices
     python3 nine_vertices.py                            # the triangle-free graphs on 9 vertices (needs networkx)

@@ -796,7 +796,8 @@ midpoints and centroids of them that stay optimal, the tight elements have a non
    and −7 are not squares modulo 19.
 2. *Finite witnesses.* By Corollary F12 some finite unit-distance graph in `ℚ(√11)²` has `χ_c = 7/2`; the proof
    (compactness) gives no bound on its size, and the smallest we know has 155 vertices and is vertex-critical (§6.8). How small can it be? (For the value 3 in a plane without unit triangles nine vertices are needed, and they suffice over `ℚ(√7)` and
-`ℚ(√31)`; §6.8. Over other such planes, for example `ℚ(√15)`, the least number is open.) And when `χ_c(F²) = 4`, is the value attained by
+`ℚ(√31)`; §6.8. Over other such planes the least number is open; over `ℚ(√15)` the smallest witness we found has 13
+vertices (`witness_q15.json.gz`), and none of the three nine-vertex graphs appeared with the denominators we tried.) And when `χ_c(F²) = 4`, is the value attained by
    a finite subgraph, for example for `ℚ(√59)`? At 4 and above, Lemmas F10 and F11 are not available (F10 needs
 `p < 4q`). When `χ(F²) = 4`,
    compactness makes it a question about the plane: some finite subgraph has `χ_c = 4` if and only if every proper

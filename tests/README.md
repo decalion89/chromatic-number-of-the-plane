@@ -20,7 +20,7 @@ GitHub Actions (`.github/workflows/tests.yml`) runs the 43 files marked CI on ev
 `main`, on every pull request, and on manual dispatch: 657 tests. It skips the DRAT test in
 `test_certify.py`, because the workflow does not install drat-trim, and leaves out 24 slow
 certificate tests of `test_threepoint_indep.py`, `test_winding.py` and `test_winding_family.py`.
-The other fourteen files (347 tests, 25 of them marked `slow`) are run locally; in an earlier
+The other fourteen files (349 tests, 25 of them marked `slow`) are run locally; in an earlier
 local run, eleven of them without their slow tests took 32 minutes, 20 of them in one test of
 `test_two_tunings.py`. The eight slow tests of `test_threepoint_certificates.py` take about 15
 minutes together.

@@ -32,6 +32,12 @@ including every retracted claim, is the research log,
   fixes. The README of the witnesses records that the programs reproduce `witness_q191` exactly.
 
 ### Added
+- **A 13-vertex witness for `χ_c = 3` over `ℚ(√15)` (5 October, night).** The growth for the value 3 from 70 seeds over
+  `ℚ(√15)`, with 174 deletions, gives at best 13 vertices and 18 edges, always the same graph; it is stored
+  (`witness_q15.json.gz`, `q15_seed.json`), checked by `check_small.py` on all `3^13` maps and by a refutation that
+  `kissat`, `drat-trim` and `cake_lpr` certify, and reproduced by the programs (new tests). None of the three
+  nine-vertex graphs appears over `ℚ(√15)` with 13 denominators tried, so the least size there is between 9 and 13;
+  Question 3 of the paper and the note now say so.
 - **A smaller witness for `7/2` over `ℚ(√11)`: 157 vertices (4 October, night).** Deleting vertices, in a random
   order, from the union of the 170-vertex witness and a second one (from the same growth with at most 100 new points
   per round) leaves a vertex-critical unit-distance graph with 157 vertices, 409 edges and `χ_c = 7/2`

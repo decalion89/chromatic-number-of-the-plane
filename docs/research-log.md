@@ -10506,3 +10506,25 @@ two-sided arc indicators, each refuted by `kissat` and checked by `drat-trim` an
 which rebuilds a cycle list from scratch (660 cycles, refuted and checked the same way); every formula clause by
 clause, the stored one included, and `drat-trim` and `cake_lpr` on the stored proof; and the 155 criticality
 certificates through explicit `(7N, 2N + 1)`-colourings with `N = 154` (`χ_c(H − v) ≤ 1078/309 < 7/2`). No error.
+
+## Small witnesses for the value 3 over `ℚ(√15)` (5 October, night)
+
+Question 3 of the paper left the least size of a witness for `χ_c = 3` over `ℚ(√15)` open (nine vertices are needed in
+every plane without unit triangles; they suffice over `ℚ(√7)` and `ℚ(√31)`). The growth of `finite_witness/` with
+`(p, q) = (3, 1)` from 70 seeds (0, the unit vectors with denominator 80 or 160, and the five points of one unit 5-cycle
+through 0, a different 5-cycle each time; 63 growths ended with a witness) and 174 deletions (the lowest-degree order,
+and three random orders for each of the 37 growths from denominator 80) gave witnesses with 13 to 41 vertices; the 30 smallest all have 13 vertices and 18 edges and are one graph up to
+isomorphism (a vertex joined by paths of length 2 to the five branch vertices of a theta graph; every cycle of a
+minimum cycle basis has length 5). It is stored as `witness_q15.json.gz`, checked by `check_small.py` (all `3^13` maps:
+810 colourings, each with a listed tight cycle; no homomorphism to `K_{11/4}`; vertex-critical) and by a refutation
+certified by `kissat`, `drat-trim` and `cake_lpr`, and `grow.py`, `minimise.py` and `critical.py` reproduce it from
+`q15_seed.json`. The nine-vertex graphs do not appear: `hexagon_search.py` finds no realisation of the twelve edges of
+`M` over `ℚ(√15)` with denominators 48, 68, 80, 104, 112, 120, 136, 160, 208, 221, 240, 272 and 320, although unit
+5-cycles exist there (for example `2a + 2b + c = 0` with `a·b = −7/8`, which needs `√15`), and a 3-adic count (modulo `π⁶`,
+`π² = 15`) finds sums of five unit vectors equal to 0 there too. So over `ℚ(√15)` the least size is between 9 and 13 (a guide, not
+a result: the growth only uses some denominators). Over `ℚ(√39)` the smallest witness found (30 seeds) has 17 vertices.
+
+A side remark that turned out wrong: over `ℚ(√23)` no unit 5-cycle appears with the denominators 80, 160, 240, 320,
+480, 1120 and 1360, which suggested that there are none; with 1040 = 16 · 5 · 13 there are (they need unit vectors
+whose denominator contains 13), so the absence of the nine-vertex graphs over
+`ℚ(√23)` with denominator 80 says nothing either.

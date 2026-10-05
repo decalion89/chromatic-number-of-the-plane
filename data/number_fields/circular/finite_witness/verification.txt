@@ -222,3 +222,24 @@ witness_q191, reproduction (4 October 2026, night): grow.py ../../../quadratic_p
 rounds, UNSAT with 3258 points, 15238 unit pairs, 35 cycles), minimise.py G.json W.json (293 vertices, 803 edges, 489
 cycles; 2716 s) and critical.py W.json C.json give exactly the stored points, edges, colouring, cycles and criticality
 certificates, in the same order.
+
+witness_q15: Q(sqrt15), denominator 80, (p, q) = (3, 1), 13 vertices, 18 edges, 12 listed cycles (5 October 2026,
+night). Found by grow.py q15_seed.json A G15 3000 200 3 1 (29 rounds; 540 vertices, 1350 unit pairs, 23 cycles),
+minimise.py G15.json W15.json and critical.py W15.json C15.json, which give exactly the stored points, edges,
+colouring, cycles and certificates (tests/test_two_primes.py, test_finite_witness_q15_found_by_growth).
+1. python3 check_small.py witness_q15.json.gz q15.cnf (2 s)
+   (1) Q(sqrt15): 13 points, 18 edges, every edge at distance exactly 1, and no other unit pair (induced)
+   (2) the colouring is a (3,1)-colouring: chi_c(H) <= 3/1
+   (3) all 1594323 maps V -> Z/3: 810 (3,1)-colourings, each with a tight cycle (one of the 12 listed cycles):
+       chi_c(H) = 3/1 by Lemma 20
+   (4) no homomorphism to K_11/4, the largest fraction below 3/1 with numerator <= 13: chi_c(H) = 3/1 again
+   (5) for every vertex v, a (3,1)-colouring of H - v with an acyclic tight digraph: H is vertex-critical
+2. q15.cnf (75 variables, 187 clauses; sha256 9349bb61775a69faf36bb6084d3600feef7c7d1d544686c5caee4cc1c7dde9f5):
+   kissat 4.0.4: s UNSATISFIABLE; drat-trim: s VERIFIED (187 of 187 clauses and 243 of 300 lemmas in the core), with
+   an LRAT proof as output (-L); cake_lpr: s VERIFIED UNSAT.
+3. Smaller witnesses over Q(sqrt15): from 70 seeds (0, the unit vectors with denominator 80 or 160, and the points of
+   one unit 5-cycle through 0; 63 growths ended with a witness) and 174 deletions (lowest-degree order for the 63, three
+   random orders for each of the 37 from denominator 80), the smallest witness has 13 vertices (30 times), always this
+   graph up to isomorphism. hexagon_search.py 15 D finds no realisation of the twelve
+   edges of M for D = 48, 68, 80, 104, 112, 120, 136, 160, 208, 221, 240, 272, 320. Over Q(sqrt39) (30 seeds,
+   denominator 80) the smallest witness found has 17 vertices.
