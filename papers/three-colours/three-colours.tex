@@ -159,7 +159,8 @@ completion; more precisely, below $4$ it is the least circular chromatic number 
 (Corollary~\ref{cor:localF}): a circular local--global principle below $4$ that extends Theorem~\ref{thm:B}. Below
 $4$ the value is also the circular chromatic number of a finite unit-distance graph in $F^2$
 (Corollary~\ref{cor:finite}); the proof gives no bound on its size, but a computer search finds explicit ones,
-certified: over $\Q(\sqrt{11})$ one with $155$ vertices, and others over $\Q(\sqrt{455})$ and $\Q(\sqrt{191})$;
+certified: over $\Q(\sqrt{11})$ one with $155$ vertices, and others over $\Q(\sqrt{455})$, $\Q(\sqrt{191})$ and
+$\Q(\sqrt{911})$;
 for the value $3$, over $\Q(\sqrt7)$, whose plane has no unit triangle, one with nine vertices, the fewest possible
 by an exhaustive enumeration (Section~\ref{sec:twoprimes}). For a
 real quadratic field $\Q(\sqrt d)$, $d$ squarefree, (a) or (b) holds unless $d\equiv11\pmod{12}$. If
@@ -1609,9 +1610,13 @@ $170$ vertices; deleting vertices, in a random order, from the unit-distance gra
 union of these two ($170$ points) leaves a vertex-critical witness with $155$ vertices and $404$ edges, the smallest
 we know (\nolinkurl{witness_q11b.json.gz}). Started from the
 $4$-chromatic graphs of \cite{Repo} over $\Q(\sqrt{455})$ and $\Q(\sqrt{191})$ ($71$ and $96$ vertices; $D=780$ and
-$240$), the same procedure gives vertex-critical witnesses with $175$ and $293$ vertices ($434$ and $803$ edges). So
-$\chi_c=7/2$ for both planes without Proposition~\ref{prop:window7}: the witnesses give $\chi_c\ge7/2$, and
+$240$), the same procedure gives vertex-critical witnesses with $175$ and $293$ vertices ($434$ and $803$ edges);
+over $\Q(\sqrt{911})$ ($327$ vertices, $D=1560$) the growth stops at $873$ vertices, and deleting vertices with the
+cores of refutations (by \texttt{kissat}, extracted by \texttt{drat-trim}, and then by CaDiCaL) leaves a vertex-critical
+witness with $324$ vertices and $866$ edges. So
+$\chi_c=7/2$ for these planes without Proposition~\ref{prop:window7}: the witnesses give $\chi_c\ge7/2$, and
 Proposition~\ref{prop:C1} gives $\chi_c\le7/2$, as $7$ ramifies in $\Q(\sqrt{455})$ and splits in $\Q(\sqrt{191})$
+and $\Q(\sqrt{911})$
 (in agreement with Theorem~\ref{thm:F}, as (a) and (b) fail for $d\equiv11\pmod{12}$).
 
 Every refutation is certified: two programs that share no code check the graphs, the colourings and the cycles and write the formula

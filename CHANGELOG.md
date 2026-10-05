@@ -12,6 +12,12 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Changed
+- **A fourth field with an explicit `7/2` witness: `ℚ(√911)` (5 October).** The growth from the 327-vertex graph over
+  `ℚ(√911)` stops at 873 vertices; deleting vertices with the cores of `kissat` and then CaDiCaL refutations, in blocks
+  of adaptive size, leaves a vertex-critical unit-distance graph with 324 vertices, 866 edges and `χ_c = 7/2`
+  (`witness_q911.json.gz`), certified like the others (both checkers, two encodings, `drat-trim` on both DRAT proofs,
+  `cake_lpr` on the LRAT form of one, criticality certificates). The paper, the note, the READMEs and the test of the
+  grown witnesses include it.
 - **`witness_q11b` now has 155 vertices (5 October, night).** Deleting vertices, in a random order, from the union of
   the 157-vertex witness and a 161-vertex one (another order on the same 205-point union) leaves a vertex-critical
   unit-distance graph with 155 vertices, 404 edges and `χ_c = 7/2`. It replaces the 157-vertex graph under the same

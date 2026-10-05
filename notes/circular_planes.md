@@ -732,9 +732,12 @@ vertex-critical witness with 170 vertices; deletion from the union of the two, i
 157 and 161 vertices, and deletion from the union of these two leaves one with 155 vertices and 404 edges,
 `witness_q11b.json.gz`, the smallest we know.) From the 71-vertex
 graph over `ℚ(√455)` and the 96-vertex graph over `ℚ(√191)` the same procedure gives vertex-critical witnesses with 175
-vertices (434 edges) and 293 vertices (803 edges) (denominators 780 and 240). So `χ_c = 7/2` for both planes without
-Proposition F1: the witnesses give `≥ 7/2`, and the residue field `𝔽₇` gives `≤ 7/2`, as 7 ramifies in `ℚ(√455)` and
-splits in `ℚ(√191)` (in agreement with Theorem F: (a) and (b) fail for `d ≡ 11 mod 12`). Every lower bound is a SAT
+vertices (434 edges) and 293 vertices (803 edges) (denominators 780 and 240); over `ℚ(√911)` (327 vertices, denominator
+1560) the growth stops at 873 vertices, and deletion with the cores of `kissat` refutations (extracted by `drat-trim`)
+and then of CaDiCaL refutations leaves a vertex-critical witness with 324 vertices and 866 edges. So `χ_c = 7/2` for
+these planes without Proposition F1: the witnesses give `≥ 7/2`, and the residue field `𝔽₇` gives `≤ 7/2`, as 7
+ramifies in `ℚ(√455)` and splits in `ℚ(√191)` and `ℚ(√911)` (in agreement with Theorem F: (a) and (b) fail for
+`d ≡ 11 mod 12`). Every lower bound is a SAT
 computation, certified twice: the first checker (`check_witness.py`) and a second one sharing no code with it
 (`verify_independent.py`) check the graph, the colouring and the cycles exactly and write the formula with different
 variable numberings and arc indicators; `drat-trim` verifies the stored DRAT proof of the

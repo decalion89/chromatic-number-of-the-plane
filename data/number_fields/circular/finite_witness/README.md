@@ -27,9 +27,10 @@ distance 1 is an edge), with `χ_c(H) = 7/2`.
 | `witness_q11b` | `ℚ(√11)` | 30 | 155 | 404 | 1 273 (7, 14, 21, 28) | deletion from unions of `witness_q11` and other 7/2 witnesses (below) |
 | `witness_q191` | `ℚ(√191)` | 240 | 293 | 803 | 489 (7 to 35) | growth from the 96-vertex graph to 3 258 vertices, then vertex deletion |
 | `witness_q455` | `ℚ(√455)` | 780 | 175 | 434 | 91 (7, 14, 28) | growth from the 71-vertex graph to 959 vertices, then vertex deletion |
+| `witness_q911` | `ℚ(√911)` | 1560 | 324 | 866 | 494 (7, 14, 21, 28, 35) | growth from the 327-vertex graph to 873 vertices, then deletion with solver cores (below) |
 | `witness_q11sum` | `ℚ(√11)` | 30 | 2 237 | 11 300 | 180 (14 to 42) | the sumset `A + A` of the 76-vertex graph (the first one found) |
 
-The four grown witnesses are also *vertex-critical*: for every vertex `v`, `witness_*_critical.json.gz` gives a
+The five grown witnesses are also *vertex-critical*: for every vertex `v`, `witness_*_critical.json.gz` gives a
 `(7, 2)`-colouring `c` of `H − v` whose tight digraph has no directed cycle, so `χ_c(H − v) < 7/2` (the other half
 of Guichard's characterisation, explicitly: if `H − v` has `N` vertices and `pos` numbers them `0, …, N − 1` along a
 topological order of the tight digraph, then `N·c + pos` is a homomorphism to `K_{7N/(2N+1)}`), and no proper induced
@@ -72,6 +73,24 @@ vertices and 404 edges. These runs used the earlier working copies of the progra
 one selector literal per vertex as in `minimise.py`) and are not reproduced here; the witness is certified like the
 others (`verification.txt`), with `fixed_vertex` 108.
 
+`witness_q911` comes from the same growth: `python3 grow.py ../../../quadratic_planes/q911.json A G 12000 200`
+(63 rounds, 873 vertices, 54 cycles) reproduces that graph exactly. `kissat` refutes its formula in about a minute (with
+the colour of a vertex of largest degree fixed), but the working copy of `minimise.py` needed half an hour for its first
+refutation through python-sat and two hours to reach 747 vertices. The deletion therefore used `kissat` with DRAT
+proofs: refute the current vertex set and keep the vertices whose clause "has a colour" lies in the clausal core of the
+proof (`drat-trim -c`; from 873 vertices this alone left 730); then delete vertices, lowest degree first, one at a time
+(to 707) and then in blocks of adaptive size up to 32 (a block is halved when the rest has a `(7, 2)`-colouring with an
+acyclic tight digraph; the tight cycles of the colourings found are added to the list, as in `minimise.py`), keeping
+the core after each refutation (to 489). From there the same deletion in blocks ran with CaDiCaL instead (python-sat,
+one incremental solver for all calls, the failed-assumption core of each refutation in place of the `drat-trim` core,
+at most 3 million conflicts per call), which was faster at that size (to 334). Near the end each refutation took
+several minutes; splitting it into two cases made it much faster: with the colour of a vertex `r` of largest degree
+fixed to 0, a neighbour `w` of `r` has colour 2, 3, 4 or 5, and as the cycle list is kept closed under reversal, the
+reflection `c ↦ −c` exchanges the cases 2, 5 and 3, 4, so refuting the cases 2 and 3 suffices (from 334 vertices to
+324 in 43 minutes, every vertex but `r` and `w` shown needed by a colouring of the rest). These working programs are
+not stored; the witness is certified like the others, with the usual formula (`verification.txt`, `fixed_vertex`
+87), and `critical.py` wrote its criticality certificates.
+
 **Verification** (`verification.txt`): for every witness, two checks that share no code.
 1. `check_witness.py` (written for `witness_q11sum`; it reads `d` from the file): exact
    integer checks of the points, of every edge and of all unit pairs, of the colouring and of the cycles; rebuilds
@@ -84,7 +103,7 @@ others (`verification.txt`), with `fixed_vertex` 108.
 
 The stored proofs of the grown witnesses are the core proofs that `drat-trim -l` extracts from `kissat`'s proofs,
 verified again by `check_witness.py`. To recheck one witness (`W` = `witness_q11`, `witness_q11b`, `witness_q191`,
-`witness_q455`):
+`witness_q455`, `witness_q911`):
 
     xz -dk W.drat.xz
     python3 check_witness.py W.json.gz W.cnf.gz W.drat /path/to/drat-trim
