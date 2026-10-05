@@ -3,11 +3,11 @@
 Corollary 7 of `papers/three-colours/` (Corollary F12 of `notes/circular_planes.md`) says that below 4 the circular
 chromatic number of the plane over a number field `F` is the circular chromatic number of a finite unit-distance graph
 in `F²`; its proof, by compactness, gives no bound on the size. Here are explicit ones for `χ_c = 7/2`, over `ℚ(√11)`,
-`ℚ(√191)` and `ℚ(√455)`, and ones with nine vertices for `χ_c = 3` over `ℚ(√7)` and `ℚ(√31)`, whose planes have no
-unit triangle (last section). For the three fields `χ_c(ℚ(√d)²) = 7/2`: the witnesses give `≥ 7/2`, and Proposition 3
-of the paper (a place with residue field `𝔽₇`) gives `≤ 7/2`, as 7 splits in `ℚ(√11)` and `ℚ(√191)` and ramifies in
-`ℚ(√455)`; this agrees with Theorem F, as (a) and (b) fail for `d ≡ 11 (mod 12)`, and does not use its
-computer-assisted Proposition 9.
+`ℚ(√191)`, `ℚ(√455)` and `ℚ(√911)`, and ones with nine vertices for `χ_c = 3` over `ℚ(√7)` and `ℚ(√31)`, whose planes
+have no unit triangle (last section). For the four fields `χ_c(ℚ(√d)²) = 7/2`: the witnesses give `≥ 7/2`, and
+Proposition 3 of the paper (a place with residue field `𝔽₇`) gives `≤ 7/2`, as 7 splits in `ℚ(√11)`, `ℚ(√191)` and
+`ℚ(√911)` and ramifies in `ℚ(√455)`; this agrees with Theorem F, as (a) and (b) fail for `d ≡ 11 (mod 12)`, and does
+not use its computer-assisted Proposition 9.
 
 **The claim.** Each graph `H` below is a unit-distance graph in `ℚ(√d)²`, induced (every pair of its points at
 distance 1 is an edge), with `χ_c(H) = 7/2`.
@@ -35,9 +35,9 @@ The five grown witnesses are also *vertex-critical*: for every vertex `v`, `witn
 of Guichard's characterisation, explicitly: if `H − v` has `N` vertices and `pos` numbers them `0, …, N − 1` along a
 topological order of the tight digraph, then `N·c + pos` is a homomorphism to `K_{7N/(2N+1)}`), and no proper induced
 subgraph of `H` is a witness; `check_critical.py` checks them. As `√11 ∈ ℚ₇`, `witness_q11` is also an explicit
-witness for `ℚ₇` (Theorem C) and for every finite extension `K` of `ℚ₇` with `χ_c(K²) < 4`, and so is `witness_q191`
-(`√191 ∈ ℚ₇`). `witness_q455` is one for every finite extension of `ℚ₇` with residue degree 1 that contains `√455`, for
-example the ramified `ℚ₇(√455)` (Proposition 3 gives `χ_c ≤ 7/2` there).
+witness for `ℚ₇` (Theorem C) and for every finite extension `K` of `ℚ₇` with `χ_c(K²) < 4`, and so are `witness_q191`
+and `witness_q911` (`√191`, `√911 ∈ ℚ₇`). `witness_q455` is one for every finite extension of `ℚ₇` with residue
+degree 1 that contains `√455`, for example the ramified `ℚ₇(√455)` (Proposition 3 gives `χ_c ≤ 7/2` there).
 
 **How they were found.** `grow.py` (colouring-guided growth with lazy SAT): start from the vertex set `A` of the
 4-chromatic graph `data/quadratic_planes/q<d>.json`; ask a SAT solver for a `(7, 2)`-colouring in which every listed
@@ -115,8 +115,8 @@ uses it by default). The tests are in `tests/test_two_primes.py` (`test_finite_w
 `test_finite_witness_grown`, `test_finite_witness_critical_rejects`; the proof checks are marked slow).
 
 **Referee** (`indep_W/`, with its report `REPORT.md`). A referee checked the three grown witnesses stored then
-(`witness_q11`, `witness_q191`, `witness_q455`; `witness_q11b` came later: the two checkers above check it, and we ran
-the referee's programs, unchanged, on it with the same results, `indep_W/results/witness_q11b.log`)
+(`witness_q11`, `witness_q191`, `witness_q455`; `witness_q11b` and `witness_q911` came later: the two checkers above
+check them, and we ran the referee's programs, unchanged, on them with the same results, `indep_W/results/`)
 with programs of its own, written from the file format: all pairs of points (468, 803 and 434 unit pairs, none missing or extra), the
 colourings and the cycles; a third encoding (two-sided arc indicators, variables renamed and negated at random); cycle
 lists rebuilt from scratch by its own lazy SAT loop; a clause-by-clause validation of every formula, the stored ones

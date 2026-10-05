@@ -17,7 +17,8 @@ including every retracted claim, is the research log,
   of adaptive size, leaves a vertex-critical unit-distance graph with 324 vertices, 866 edges and `χ_c = 7/2`
   (`witness_q911.json.gz`), certified like the others (both checkers, two encodings, `drat-trim` on both DRAT proofs,
   `cake_lpr` on the LRAT form of one, criticality certificates). The paper, the note, the READMEs and the test of the
-  grown witnesses include it.
+  grown witnesses include it. The referee's programs (`indep_W/`), run by us on it, confirm it as they did
+  `witness_q11b` (`indep_W/results/witness_q911.log`).
 - **`witness_q11b` now has 155 vertices (5 October, night).** Deleting vertices, in a random order, from the union of
   the 157-vertex witness and a 161-vertex one (another order on the same 205-point union) leaves a vertex-critical
   unit-distance graph with 155 vertices, 404 edges and `χ_c = 7/2`. It replaces the 157-vertex graph under the same

@@ -745,10 +745,10 @@ first, and a new `kissat` proof of the second, which `cake_lpr` (a formally veri
 form (`verification.txt`); `check_critical.py` checks the criticality certificates. A referee checked the witnesses
 with 170, 175 and 293 vertices again with programs of its own (`finite_witness/indep_W/`: a third encoding, cycle
 lists rebuilt from scratch, `cake_lpr` on the stored proofs, the explicit homomorphisms `N·c + pos`), found no error,
-and reproduced `H₁₁` and the `ℚ(√455)` witness exactly; the one with 155 vertices, found afterwards, was checked by
-the two programs above and, by us, with the referee's programs, with the same results
-(`indep_W/results/witness_q11b.log`). As `√11 ∈ ℚ₇`, `H₁₁` is an explicit witness for `ℚ₇` and for every finite
-extension `K` of `ℚ₇` with `χ_c(K²) < 4`. **A witness for 3 without
+and reproduced `H₁₁` and the `ℚ(√455)` witness exactly; those with 155 and 324 vertices (over `ℚ(√11)` and `ℚ(√911)`),
+found afterwards, were checked by the two programs above and, by us, with the referee's programs, with the same
+results (`indep_W/results/witness_q11b.log`, `witness_q911.log`). As `√11 ∈ ℚ₇`, `H₁₁` is an explicit witness for `ℚ₇`
+and for every finite extension `K` of `ℚ₇` with `χ_c(K²) < 4`. **A witness for 3 without
 unit triangles** (4 October, night; `check_small.py`, `small_triangle_free.py`, `nine_vertices.py`,
 `hexagon_search.py`): the same procedure with `K₃` in
 place of `K_{7/2}` (an arc is tight when the colour increases by 1 mod 3), over `ℚ(√7)`, from 0, the 204 unit vectors

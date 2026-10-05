@@ -10533,21 +10533,33 @@ whose denominator contains 13), so the absence of the nine-vertex graphs over
 
 The growth from the 327-vertex 4-chromatic graph over `ℚ(√911)` (denominator 1560) stopped after 63 rounds at 873
 vertices with 54 listed cycles (`grow.py` reproduces it exactly: points, edges, colouring and cycles), and that graph
-is a witness: certified with both encodings (`kissat` refutes each in
-about 55 s with the colour of a vertex of largest degree fixed; `drat-trim` verifies both proofs, `cake_lpr` the LRAT
-form of the second). the working copy of `minimise.py` was too slow on it (half an hour for its first refutation through python-sat), so
-the deletion used `kissat` directly: refute the current set, keep the vertices whose "has a colour" clause is in the
-clausal core of the proof (`drat-trim -c`; a vertex outside the core can be dropped together with the cycles through it,
-which an uncoloured vertex satisfies), then delete the lowest-degree vertices one at a time and then in blocks of
-adaptive size (up to 32; a block is halved when the rest has a colouring with an acyclic tight digraph, after listing
-the tight cycles of the colourings found). The cores alone took 873 vertices to 730, single deletions to 707 and the
-blocks to 489; from there the same deletion in blocks with CaDiCaL (one incremental solver, failed-assumption cores,
-at most 3 million conflicts per call) was faster (two runs from the same 489 vertices: the `kissat` one, stopped, had
-430 vertices left when the CaDiCaL one had 413). Near the end each refutation took several minutes; splitting it into
-two cases (the colour of a neighbour `w` of the fixed vertex `r` is 2, 3, 4 or 5; with the cycle list kept closed
-under reversal, the reflection `c ↦ −c` exchanges 2, 5 and 3, 4, so the cases 2 and 3 suffice) made it much faster:
-from 334 vertices this run ended in 43 minutes with 324 vertices and 866 edges, every vertex but `r` and `w` shown
-needed by a colouring of the rest (the other run, stopped then, still had 327). The result is vertex-critical (`critical.py`,
-`check_critical.py`) and certified like the others; it is `witness_q911.json.gz`. With 7 split in `ℚ(√911)`
-(911 ≡ 1 mod 7), Proposition C1 gives `χ_c ≤ 7/2`, so the witness gives `χ_c(ℚ(√911)²) = 7/2` independently of
-Theorem F.
+is a witness: certified with both encodings (`kissat` refutes each in about 55 s with the colour of a vertex of
+largest degree fixed; `drat-trim` verifies both proofs, `cake_lpr` the LRAT form of the second). The working copy of
+`minimise.py` was too slow on it (half an hour for its first refutation through python-sat), so the deletion used
+`kissat` directly: refute the current set, keep the vertices whose "has a colour" clause is in the clausal core of the
+proof (`drat-trim -c`; a vertex outside the core can be dropped together with the cycles through it, which an
+uncoloured vertex satisfies), then delete the lowest-degree vertices one at a time and then in blocks of adaptive size
+(up to 32; a block is halved when the rest has a colouring with an acyclic tight digraph, after listing the tight
+cycles of the colourings found). The cores alone took 873 vertices to 730, single deletions to 707 and the blocks to
+489; from there the same deletion in blocks with CaDiCaL (one incremental solver, failed-assumption cores, at most 3
+million conflicts per call) was faster (two runs from the same 489 vertices: the `kissat` one, stopped, had 430
+vertices left when the CaDiCaL one had 413). Near the end each refutation took several minutes; splitting it into two
+cases (the colour of a neighbour `w` of the fixed vertex `r` is 2, 3, 4 or 5; with the cycle list kept closed under
+reversal, the reflection `c ↦ −c` exchanges 2, 5 and 3, 4, so the cases 2 and 3 suffice) made it much faster: from 334
+vertices this run ended in 43 minutes with 324 vertices and 866 edges, every vertex but `r` and `w` shown needed by a
+colouring of the rest (the other run, stopped then, still had 327). The result is vertex-critical (`critical.py`,
+`check_critical.py`) and certified like the others; it is `witness_q911.json.gz`. With 7 split in `ℚ(√911)` (911 ≡ 1
+mod 7), Proposition C1 gives `χ_c ≤ 7/2`, so the witness gives `χ_c(ℚ(√911)²) = 7/2` independently of Theorem F.
+
+The referee's programs (`indep_W/`), run by us, unchanged, on `witness_q911` (`indep_W/results/witness_q911.log`)
+found no error: the points and all 52 326 pairs (866 unit pairs, all listed; 58 unit vectors occur as edge
+differences), the colouring and the 494 cycles (4 of them tight under the stored colouring); its own encoding (3 710
+variables, 35 903 clauses) and a third one with two-sided arc indicators (45 997 clauses), each refuted by `kissat` and
+checked by `drat-trim` (549 897 of 1 500 471 and 426 833 of 1 248 741 lemmas in the core) and `cake_lpr`; its own lazy
+SAT loop, which rebuilds a cycle list from scratch (unsatisfiable after 134 iterations, with 380 cycles of lengths 7
+to 28, in 795 s), refuted and checked the same way (2 058 959 of 5 833 449 lemmas); every formula clause by clause, the
+stored one included, and `drat-trim` and `cake_lpr` on the stored proof; and the 324 criticality certificates through
+explicit `(7N, 2N + 1)`-colourings with `N = 323` (`χ_c(H − v) ≤ 2261/647 < 7/2`). It took four runs, all in the log:
+a restart of the machine cut the first and the third, and in the second the disk filled up while `kissat` wrote the
+proof of the rebuilt formula, so that proof was cut short and could not be checked; the third and fourth runs repeated
+the steps from that proof on with the proofs kept in memory (`/dev/shm`).
