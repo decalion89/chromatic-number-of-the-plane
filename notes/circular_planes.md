@@ -953,6 +953,18 @@ graphs on `ℤ` (`finite_witness/indep_W4/remark_check.py`): `S` leaves no `p`, 
 Lemma F17 shows that every proper 4-colouring of `G` has a tight cycle; in 10 of the cases the chains of the basis
 alone do not suffice.
 
+**A second explicit witness at 4, over `ℚ(√2, √3)`** (6 October, night). The plane over `ℚ(√2, √3)` is the field
+`ℚ(ζ₂₄)`, `ζ₂₄ = e^{iπ/12}`, and the same construction starts there from the 60 unit vectors `ζ₂₄^j s^l` (`|l| ≤ 2`, one
+of each pair `±u`), where `s = (1 + 2√−2)/3` is the rotation with cosine `1/3`. Already the relations with `Σ n_u² ≤ 8`
+leave no `p`; the walks of 279 of them span 2 220 points, and clausal cores reduce them to an induced unit-distance
+graph `H₄′` with 1 657 vertices and 6 238 edges (`finite_witness/witness_q2_3.json.gz`, denominator 36). It has a proper
+4-colouring, and every proper 4-colouring has a tight cycle among 6 062 listed ones (of lengths 4 and 8), by a SAT
+refutation that drat-trim checks (`check_witness4.py`, which now reads the field from the file) and that a referee's own
+two encodings confirm with `cake_lpr` (`finite_witness/indep_W4b/`). So `χ_c(H₄′) = χ(H₄′) = 4`. As `χ(ℚ(√2, √3)²) = 4`,
+this gives `χ_c(ℚ(√2, √3)²) = 4` with an explicit finite graph, without Theorems E and F (which give it too: no prime
+above 7 has residue degree 1, as 3 is not a square modulo 7). `finite_witness/construction_q2_3/` reproduces the witness
+byte for byte.
+
 ## 7. Questions
 
 1. *Above 4.* Theorem F decides `χ_c(F²)` below 4: there it is the least value of `χ_c(F_v²)` over the completions
@@ -971,9 +983,10 @@ alone do not suffice.
    we found has 13 vertices (`witness_q15.json.gz`), and none of the three nine-vertex graphs appeared with the
    denominators we tried.) When `χ_c(F²) = 4` the value is attained as well (Theorem F16), and the proof, made effective
    by the remark at the end of §6.9, gives no explicit bound on the size of a witness; over `ℚ(√3, √11)` one has 1 874
-   vertices (§6.9), over `ℚ(√59)` we know none: how small can one be? By the converse in §6.9 its edge vectors `U` must
-   satisfy `κ(U) ≤ 1/4`, which excludes those with denominator 210 (`at_four/theta59_210.json`). Over `ℚ(√3, √11)` an
-   explicit set with `κ = 1/4` has 27 vectors (§6.9), and the witness found in its Cayley graph has not been minimised.
+   vertices and over `ℚ(√2, √3)` one has 1 657 (§6.9), over `ℚ(√59)` we know none: how small can one be? By the converse
+   in §6.9 its edge vectors `U` must satisfy `κ(U) ≤ 1/4`, which excludes those with denominator 210
+   (`at_four/theta59_210.json`). Over `ℚ(√3, √11)` an explicit set with `κ = 1/4` has 27 vectors (§6.9), and the witness
+   found in its Cayley graph has not been minimised.
 3. *The one-prime probe.* Does `r0(5^k)` tend to `3/10` (the conjecture of §5)? Theorem E no longer needs it.
 
 Measurements (floating-point MIP, not proofs): for `U = G_25{1, u_n, ū_n : n = 1, 7, 19}`, `max_ξ min_u ‖ξ(u)‖` is

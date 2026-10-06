@@ -1,0 +1,86 @@
+{
+ "reasons": [],
+ "n": 1657,
+ "exact_edges": 6238,
+ "edge_extra": [],
+ "edge_missing": [],
+ "float": {
+  "pairs": 1371996,
+  "float_edges": 6238,
+  "disagreements": 0,
+  "max_edge_margin": 7.771561172376096e-16,
+  "min_nonedge_margin": 9.101682546419632e-06,
+  "min_nonedge_pair": [
+   1263,
+   1600
+  ],
+  "nonedge_pairs_within_1e-12_of_min": 7,
+  "nonedge_below_1e-3": 532,
+  "nonedge_below_1e-6": 0,
+  "min_dist": 0.006086764885734389
+ },
+ "degree_range": [
+  2,
+  71
+ ],
+ "monochromatic": [],
+ "cycle_nonedge": [],
+ "cycle_length_bad": [],
+ "cycle_not_simple": [],
+ "tight_given": 389,
+ "cnf": {
+  "vars": 6628,
+  "clauses": 60800,
+  "sha256": "e572a24243a926b977c07e16c15430e08bf68e930ae384dae744e958267ee754",
+  "colour_vars": 6628,
+  "arc_vars": 0,
+  "base_clauses": 36552,
+  "arc_clauses": 0,
+  "cycle_clauses": 24248
+ },
+ "sat": {
+  "kissat": {
+   "exit": 20,
+   "time": 34.273238133013365,
+   "s_lines": [
+    "s UNSATISFIABLE"
+   ]
+  },
+  "drat_bytes": 17330973,
+  "drat-trim": {
+   "exit": 0,
+   "time": 19.42603970700293,
+   "s_lines": [
+    "s VERIFIED"
+   ]
+  },
+  "lrat_bytes": 38363519,
+  "cake_lpr": {
+   "exit": 0,
+   "time": 7.62074484200275,
+   "lines": [
+    "s VERIFIED UNSAT"
+   ]
+  },
+  "hashes": [
+   [
+    "before kissat",
+    "e572a24243a926b977c07e16c15430e08bf68e930ae384dae744e958267ee754"
+   ],
+   [
+    "after kissat",
+    "e572a24243a926b977c07e16c15430e08bf68e930ae384dae744e958267ee754"
+   ],
+   [
+    "after drat-trim",
+    "e572a24243a926b977c07e16c15430e08bf68e930ae384dae744e958267ee754"
+   ],
+   [
+    "after cake_lpr",
+    "e572a24243a926b977c07e16c15430e08bf68e930ae384dae744e958267ee754"
+   ]
+  ],
+  "unchanged": true
+ },
+ "result": "PASS"
+}

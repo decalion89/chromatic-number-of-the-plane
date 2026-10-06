@@ -63,7 +63,7 @@ $7/2$ or at least $4$, and it is $7/2$ exactly when $\chi(F^2)\ge4$ and some pri
 degree $1$; below $4$ it is the least circular chromatic number of the planes over the completions of $F$, and it is
 the circular chromatic number of some finite unit-distance graph in $F^2$; so is the value $4$, when it occurs (for
 example over $\Q(\sqrt{59})$), as at four colours the winding argument fails only on tight $4$-cycles; over
-$\Q(\sqrt3,\sqrt{11})$ we give an explicit such graph, with $1\,874$ vertices. The proof of this
+$\Q(\sqrt3,\sqrt{11})$ and $\Q(\sqrt2,\sqrt3)$ we give explicit such graphs, with $1\,874$ and $1\,657$ vertices. The proof of this
 classification has one computer-assisted step, an exact finite computation along the rational rotations whose denominators divide $325$;
 without it we show that $\chi_c(F^2)\ge56/17$ whenever $\chi(F^2)\ge4$.
 \end{abstract}
@@ -163,7 +163,8 @@ $4$ the value is also the circular chromatic number of a finite unit-distance gr
 (Corollary~\ref{cor:finite}), and so is the value $4$ when $\chi_c(F^2)=4$ (Theorem~\ref{thm:finite4}). The proofs give
 no explicit bound on the size of such a graph (for the value $4$ the remark after Lemma~\ref{lem:periods} replaces
 compactness by a finite construction), but computer searches find explicit ones, certified: for the value $4$, over
-$\Q(\sqrt3,\sqrt{11})$, one with $1\,874$ vertices (found with base-point periods, Lemma~\ref{lem:periods}); for
+$\Q(\sqrt3,\sqrt{11})$ and $\Q(\sqrt2,\sqrt3)$, ones with $1\,874$ and $1\,657$ vertices (found with base-point
+periods, Lemma~\ref{lem:periods}); for
 $7/2$, over $\Q(\sqrt{11})$, one with $155$ vertices, and others over $\Q(\sqrt{455})$, $\Q(\sqrt{191})$ and
 $\Q(\sqrt{911})$;
 for the value $3$, over $\Q(\sqrt7)$, whose plane has no unit triangle, one with nine vertices, the fewest possible
@@ -1838,7 +1839,13 @@ proper $4$-colouring has a tight cycle among $4\,992$ listed ones, of lengths $4
 that \texttt{drat-trim} checks and that an independent encoding, written by a referee from the file format alone,
 confirms with the verified checker \texttt{cake\_lpr}; Lemma~\ref{lem:tight} gives $\chi_c(H_4)\ge4$. So
 $\chi_c(H_4)=\chi(H_4)=4$, and the value $4$ of Theorem~\ref{thm:finite4} is attained by an explicit graph over
-$\Q(\sqrt3,\sqrt{11})$. An independent referee checked Lemma~\ref{lem:periods} and this use of it, with a numerical
+$\Q(\sqrt3,\sqrt{11})$. Over $\Q(\sqrt2,\sqrt3)$, whose plane is the field $\Q(\zeta_{24})$ with $\zeta_{24}=e^{i\pi/12}$, the
+same construction starts from the $60$ unit vectors $\zeta_{24}^js^l$ ($|l|\le2$, one of each pair $\pm u$), with
+$s=\frac{1+2\sqrt{-2}}3$; already the relations with $\sum_un_u^2\le8$ leave no $p$, and it gives an induced
+unit-distance graph $H_4'$ with $1\,657$ vertices and $6\,238$ edges
+(\nolinkurl{data/number_fields/circular/finite_witness/witness_q2_3.json.gz}), with $\chi_c(H_4')=\chi(H_4')=4$ by a
+SAT refutation checked in the same two ways (the referee's for this graph has two encodings of its own). As
+$\chi(\Q(\sqrt2,\sqrt3)^2)=4$, this gives $\chi_c(\Q(\sqrt2,\sqrt3)^2)=4$ with an explicit finite graph. An independent referee checked Lemma~\ref{lem:periods} and this use of it, with a numerical
 test on random small instances (\nolinkurl{data/number_fields/circular/finite_witness/indep_W4/}). The same search
 over $\Q(\sqrt{59})$ found no infeasible system with relations of length up to $33$.
 
@@ -2007,7 +2014,7 @@ Section~\ref{sec:twoprimes}. Over other such planes the least number is open; ov
 witness we found has $13$ vertices (\nolinkurl{witness_q15.json.gz}), and none of the three nine-vertex graphs
 appeared with the denominators we tried.)
 When $\chi_c(F^2)=4$ the value is attained as well (Theorem~\ref{thm:finite4}), and the proof, made effective by the
-remark after Lemma~\ref{lem:periods}, gives no explicit bound on the size of a witness; over $\Q(\sqrt3,\sqrt{11})$ we found one with $1\,874$ vertices (Lemma~\ref{lem:periods} and the
+remark after Lemma~\ref{lem:periods}, gives no explicit bound on the size of a witness; over $\Q(\sqrt3,\sqrt{11})$ and $\Q(\sqrt2,\sqrt3)$ we found ones with $1\,874$ and $1\,657$ vertices (Lemma~\ref{lem:periods} and the
 remarks after it), and over $\Q(\sqrt{59})$ we know none: how small can one be? Its edge vectors $U$ must satisfy $\kappa(U)\le\frac14$, which excludes those with denominator $210$ (Section~\ref{sec:twoprimes}).
 \end{enumerate}
 

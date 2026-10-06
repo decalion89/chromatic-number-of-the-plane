@@ -1,0 +1,20 @@
+$ drat-trim ref_z.cnf ref_z.drat -L ref_z.lrat
+
+c turning on binary mode checking
+
+c parsing input formula with 15452 variables and 77910 clauses
+
+c finished parsing, read 44709809 bytes from proof file
+
+c detected empty clause; start verification via backward checking
+
+c 55857 of 77910 clauses in core                            
+
+c 274721 of 795069 lemmas in core using 9550269 resolution steps
+
+c 181 RAT lemmas in core; 0 redundant literals in core lemmas
+
+s VERIFIED
+
+c verification time: 53.963 seconds
+[exit code 0, wall time 54.00 s]

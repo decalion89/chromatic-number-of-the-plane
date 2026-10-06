@@ -1,0 +1,166 @@
+Sanity tests (task 6)
+witness: witness_q2_3.json.gz, n = 1657, exact edges = 6238
+
+== Part A: corrupted witnesses (checker run with --no-sat) ==
+
+  case original: unchanged witness
+    exit code 0, 6.3 s, reasons []
+  [ok] original: accepted 
+  [ok] moved_point_on_cycle: float view, moved vertex has no unit neighbour (neighbours [])
+
+  case moved_point_on_cycle: vertex 0 (on 2 cycles) moved by +1/36 in x
+    exit code 1, 6.0 s, reasons ['cycle_nonedge', 'edge_mismatch']
+      edge_mismatch: 4 declared non-unit pairs [(0, 1), (0, 5), (0, 21), (0, 22)], 0 undeclared unit pairs []
+      cycle_nonedge: 2 cycles use a non-edge, e.g. cycle #0 step 0 of 4
+  [ok] moved_point_on_cycle: rejected 
+  [ok] moved_point_on_cycle: reasons exactly ['cycle_nonedge', 'edge_mismatch'] 
+  [ok] moved_point_on_cycle: mismatched pairs all contain 0 
+  [ok] moved_point_off_cycle: float view, moved vertex has no unit neighbour (neighbours [])
+
+  case moved_point_off_cycle: vertex 188 (on no cycle, degree 4) moved by +1/36 in x
+    exit code 1, 5.7 s, reasons ['edge_mismatch']
+      edge_mismatch: 4 declared non-unit pairs [(182, 188), (188, 189), (188, 397), (188, 420)], 0 undeclared unit pairs []
+  [ok] moved_point_off_cycle: rejected 
+  [ok] moved_point_off_cycle: reasons exactly ['edge_mismatch'] 
+  [ok] moved_point_off_cycle: mismatched pairs all contain 188 
+  [ok] tiny_move_off_cycle: float view, moved vertex has no unit neighbour (neighbours [])
+
+  case tiny_move_off_cycle: vertex 188 moved by (19601-13860*sqrt2)/36 = 7.086e-07 along x (min neighbour offset 0.106)
+    exit code 1, 5.5 s, reasons ['edge_mismatch']
+      edge_mismatch: 4 declared non-unit pairs [(182, 188), (188, 189), (188, 397), (188, 420)], 0 undeclared unit pairs []
+  [ok] tiny_move_off_cycle: rejected 
+  [ok] tiny_move_off_cycle: reasons exactly ['edge_mismatch'] 
+  [ok] tiny_move_off_cycle: mismatched pairs all contain 188 
+
+  case improper_colouring: colour of 0 set to colour of neighbour 1
+    exit code 1, 5.8 s, reasons ['colouring_improper']
+      colouring_improper: 2 monochromatic edges, e.g. [(0, 1), (0, 21)]
+  [ok] improper_colouring: rejected 
+  [ok] improper_colouring: reasons exactly ['colouring_improper'] 
+  [ok] improper_colouring: reported monochromatic edge contains 0-1 
+
+  case cycle_nonedge_inner: cycle #0: vertex 149 replaced by non-neighbour 1 of 5
+    exit code 1, 6.1 s, reasons ['cycle_nonedge']
+      cycle_nonedge: 1 cycles use a non-edge, e.g. cycle #0 step 1 of 4
+  [ok] cycle_nonedge_inner: rejected 
+  [ok] cycle_nonedge_inner: reasons exactly ['cycle_nonedge'] 
+  [ok] cycle_nonedge_inner: first bad step reported as cycle #0 step 1 
+
+  case cycle_nonedge_closing: cycle #89 replaced by path [19, 22, 72, 383] whose closing step is a non-edge
+    exit code 1, 5.2 s, reasons ['cycle_nonedge']
+      cycle_nonedge: 1 cycles use a non-edge, e.g. cycle #89 step 3 of 4 (closing step)
+  [ok] cycle_nonedge_closing: rejected 
+  [ok] cycle_nonedge_closing: reasons exactly ['cycle_nonedge'] 
+  [ok] cycle_nonedge_closing: reported as cycle #89 step 3 of 4 (closing) 
+
+  case cycle_not_simple: appended closed walk [0,1,0,1]
+    exit code 1, 5.5 s, reasons ['cycle_not_simple']
+      cycle_not_simple: 1 cycles repeat a vertex, e.g. #6062
+  [ok] cycle_not_simple: rejected 
+  [ok] cycle_not_simple: reasons exactly ['cycle_not_simple'] 
+
+  case cycle_length_3: appended triangle [0, 1, 22]
+    exit code 1, 5.8 s, reasons ['cycle_length']
+      cycle_length: 1 cycles with length < 4 or not divisible by 4, e.g. #6062
+  [ok] cycle_length_3: rejected 
+  [ok] cycle_length_3: reasons exactly ['cycle_length'] 
+
+  case edge_removed: first declared edge [0, 1] removed
+    exit code 1, 5.0 s, reasons ['edge_mismatch']
+      edge_mismatch: 0 declared non-unit pairs [], 1 undeclared unit pairs [(0, 1)]
+  [ok] edge_removed: rejected 
+  [ok] edge_removed: reasons exactly ['edge_mismatch'] 
+
+  case edge_added: non-edge (115,595) with | |d|-1 | = 9.10e-06 declared as edge
+    exit code 1, 4.6 s, reasons ['edge_mismatch']
+      edge_mismatch: 1 declared non-unit pairs [(115, 595)], 0 undeclared unit pairs []
+  [ok] edge_added: rejected 
+  [ok] edge_added: reasons exactly ['edge_mismatch'] 
+
+  case duplicate_point: point 1281 replaced by a copy of point 1 (same colour)
+    exit code 1, 5.1 s, reasons ['edge_mismatch', 'points_not_distinct']
+      points_not_distinct: 1 repeated tuples, e.g. [-48, 0, 0, -6, 0, -6, 48, 0]
+      edge_mismatch: 6 declared non-unit pairs [(822, 1281), (832, 1281), (1274, 1281), (1280, 1281), (1281, 1323)], 3 undeclared unit pairs [(0, 1281), (2, 1281), (22, 1281)]
+  [ok] duplicate_point: rejected 
+  [ok] duplicate_point: reasons exactly ['edge_mismatch', 'points_not_distinct'] 
+
+  case fixed_not_origin: fixed_vertex set to 0
+    exit code 1, 5.6 s, reasons ['fixed_not_origin']
+      fixed_not_origin: fixed vertex 0 is not the origin
+  [ok] fixed_not_origin: rejected 
+  [ok] fixed_not_origin: reasons exactly ['fixed_not_origin'] 
+
+  case float_coordinate: a coordinate replaced by a float
+    exit code 1, 0.2 s, reasons ['format']
+      format: points must be lists of 8 integers
+  [ok] float_coordinate: rejected 
+  [ok] float_coordinate: reasons exactly ['format'] 
+
+  case colour_out_of_range: a colour set to 4
+    exit code 1, 5.6 s, reasons ['colouring_malformed']
+      colouring_malformed: colouring must be n integers in {0,1,2,3}
+  [ok] colour_out_of_range: rejected 
+  [ok] colour_out_of_range: reasons exactly ['colouring_malformed'] 
+
+== Part B: encoding tests ==
+
+  B1 formula without cycle clauses: 6628 vars, 36552 clauses, sha256 7aa53dddc4f3251808745d06d9654bd6748a2f79e631cd0fb3f2da1d7d919f88
+    run 0: exit 10 ['s SATISFIABLE']; decoded=True proper=True fixed colour=0; listed cycles tight under this colouring: 394
+  [ok] B1 run 0: SAT (exit 10) 
+  [ok] B1 run 0: model is a proper 4-colouring, fixed vertex colour 0 
+  [ok] B1 run 0: model has a tight listed cycle (as UNSAT predicts) 
+    run 1: exit 10 ['s SATISFIABLE']; decoded=True proper=True fixed colour=0; listed cycles tight under this colouring: 371
+  [ok] B1 run 1: SAT (exit 10) 
+  [ok] B1 run 1: model is a proper 4-colouring, fixed vertex colour 0 
+  [ok] B1 run 1: model has a tight listed cycle (as UNSAT predicts) 
+    run 2: exit 10 ['s SATISFIABLE']; decoded=True proper=True fixed colour=0; listed cycles tight under this colouring: 357
+  [ok] B1 run 2: SAT (exit 10) 
+  [ok] B1 run 2: model is a proper 4-colouring, fixed vertex colour 0 
+  [ok] B1 run 2: model has a tight listed cycle (as UNSAT predicts) 
+    run 3: exit 10 ['s SATISFIABLE']; decoded=True proper=True fixed colour=0; listed cycles tight under this colouring: 381
+  [ok] B1 run 3: SAT (exit 10) 
+  [ok] B1 run 3: model is a proper 4-colouring, fixed vertex colour 0 
+  [ok] B1 run 3: model has a tight listed cycle (as UNSAT predicts) 
+    run 4: exit 10 ['s SATISFIABLE']; decoded=True proper=True fixed colour=0; listed cycles tight under this colouring: 362
+  [ok] B1 run 4: SAT (exit 10) 
+  [ok] B1 run 4: model is a proper 4-colouring, fixed vertex colour 0 
+  [ok] B1 run 4: model has a tight listed cycle (as UNSAT predicts) 
+    run 5: exit 10 ['s SATISFIABLE']; decoded=True proper=True fixed colour=0; listed cycles tight under this colouring: 356
+  [ok] B1 run 5: SAT (exit 10) 
+  [ok] B1 run 5: model is a proper 4-colouring, fixed vertex colour 0 
+  [ok] B1 run 5: model has a tight listed cycle (as UNSAT predicts) 
+    run 6: exit 10 ['s SATISFIABLE']; decoded=True proper=True fixed colour=0; listed cycles tight under this colouring: 348
+  [ok] B1 run 6: SAT (exit 10) 
+  [ok] B1 run 6: model is a proper 4-colouring, fixed vertex colour 0 
+  [ok] B1 run 6: model has a tight listed cycle (as UNSAT predicts) 
+    run 7: exit 10 ['s SATISFIABLE']; decoded=True proper=True fixed colour=0; listed cycles tight under this colouring: 413
+  [ok] B1 run 7: SAT (exit 10) 
+  [ok] B1 run 7: model is a proper 4-colouring, fixed vertex colour 0 
+  [ok] B1 run 7: model has a tight listed cycle (as UNSAT predicts) 
+    run 8: exit 10 ['s SATISFIABLE']; decoded=True proper=True fixed colour=0; listed cycles tight under this colouring: 376
+  [ok] B1 run 8: SAT (exit 10) 
+  [ok] B1 run 8: model is a proper 4-colouring, fixed vertex colour 0 
+  [ok] B1 run 8: model has a tight listed cycle (as UNSAT predicts) 
+    run 9: exit 10 ['s SATISFIABLE']; decoded=True proper=True fixed colour=0; listed cycles tight under this colouring: 316
+  [ok] B1 run 9: SAT (exit 10) 
+  [ok] B1 run 9: model is a proper 4-colouring, fixed vertex colour 0 
+  [ok] B1 run 9: model has a tight listed cycle (as UNSAT predicts) 
+    distinct colourings found: 10; fewest tight listed cycles: 316
+  [ok] B1: the runs found more than one colouring 
+  [ok] B2 arc: replicated arc count equals encoder count 
+
+  B2 (arc) rotated given colouring: 389 clauses violated, 389 of them cycle clauses; tight cycles 389
+  [ok] B2 arc: all colouring/edge/arc clauses satisfied 
+  [ok] B2 arc: violated cycle clauses == tight cycles 
+  [ok] B2 direct: each tight cycle violates exactly one of its 4 clauses 
+
+  B2 (direct) rotated given colouring: 389 clauses violated, 389 of them cycle clauses; tight cycles 389
+  [ok] B2 direct: all colouring/edge/arc clauses satisfied 
+  [ok] B2 direct: violated cycle clauses == tight cycles 
+
+  B3 5673 cycles kept (389 dropped): exit 10 ['s SATISFIABLE']; proper=True fixed colour=0; tight kept cycles 0
+  [ok] B3: SAT 
+  [ok] B3: model proper, fixed vertex 0, no kept cycle tight 
+
+77 checks, 0 failures
+TESTS: ALL PASSED

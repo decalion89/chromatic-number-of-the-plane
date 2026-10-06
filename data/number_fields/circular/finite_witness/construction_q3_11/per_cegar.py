@@ -1,5 +1,5 @@
 """per_cegar.py REL.json ITER OUT.json: counterexample-guided search for a finite set S of relations whose base-point
-period system (Lemma P) is infeasible.  S starts as the relations in REL.json; each round solves for an integer
+period system (Lemma F17) is infeasible.  S starts as the relations in REL.json; each round solves for an integer
 homomorphism p (p_j = p(r_j)) inside every open range of S, then adds the shortest relation w (l1 norm, CP-SAT) with
 p(w) outside its open range.  Prints the lengths of the added relations and the LP margin t* of each p."""
 import json, sys, time, gzip, os

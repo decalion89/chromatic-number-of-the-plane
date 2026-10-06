@@ -10727,3 +10727,25 @@ without a bound on the size.
   unit vectors (`μ₂₄` times `s^l`, `|l| ≤ 2`, `s = (1 + 2√−2)/3`, one of each pair `±u`): kissat refutes the formula
   on 2 220 points, and clausal cores are shrinking it; it needs two checkers and a referee before any claim. Over
   `ℚ(√59)` the exact certificate for 50 vectors of denominator 1050 is still running.
+
+## A second explicit graph with `χ_c = 4`, over `ℚ(√2, √3)` (6 October, night)
+
+- **Result (certified, refereed).** `finite_witness/witness_q2_3.json.gz`: an induced unit-distance graph in
+  `ℚ(√2, √3)²` with 1 657 vertices (denominator 36) and 6 238 edges, a proper 4-colouring, and 6 062 listed cycles
+  (5 494 of length 4, 568 of length 8) such that every proper 4-colouring has a tight one. The formula of
+  `check_witness4.py` (sha256 `cd6382b7…`) is refuted by kissat 4.0.4 in 38 seconds, and drat-trim verifies the proof.
+  A referee wrote its own programs from the file format (`indep_W4b/`): all 1 371 996 pairs exactly and in floating
+  point (smallest margin of a non-edge `9.1·10⁻⁶`); its own encoding (15 452 variables, 77 910 clauses) and a second
+  one without auxiliary variables, both `s VERIFIED UNSAT` with `cake_lpr`; 77 sanity checks pass. So
+  `χ_c(H) = χ(H) = 4`, and with `χ(ℚ(√2, √3)²) = 4`, `χ_c(ℚ(√2, √3)²) = 4` with an explicit graph.
+- **How.** The plane is `ℚ(ζ₂₄)`, `ζ₂₄ = e^{iπ/12}`; `U` = the 60 unit vectors `ζ₂₄^j s^l` (`|l| ≤ 2`, one of each
+  `±u`), `s = (1 + 2√−2)/3`, with a relation lattice of rank 52 (`κ(U) ≈ 1/6` by a floating-point MILP). The 1 552
+  relations with `Σ n_u² ≤ 8` already leave the period system infeasible (no counterexample search); a minimal core has
+  279 relations of length 8; their walks and bubble-sort chains span 2 220 points (7 854 cycles), and twelve rounds of
+  drat-trim clausal cores give 1 657. The whole construction (`construction_q2_3/`) was rerun twice from scratch, from
+  the scratch copies and from the repository copies: every intermediate file and the witness are byte for byte the same.
+  The formula built in `ℚ(ζ₂₄)` arithmetic equals the one built from the plane coordinates.
+- **Contrast with `ℚ(√59)`.** There every unit set tried has `κ ≥ 1/4`: for the 150 vectors with denominator 1050
+  the character of `at_four/theta59_1050.json` has margin exactly `1/4`, and whether `κ = 1/4` is still being
+  certified. If it is, that is the boundary case of the remark after Lemma F17, where the refuting relations can be
+  long (the search found none up to length 33); over `ℚ(√2, √3)`, with `κ ≈ 1/6`, short relations do.

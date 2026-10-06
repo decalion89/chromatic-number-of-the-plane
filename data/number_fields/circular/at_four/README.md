@@ -13,7 +13,8 @@ proves:
   by a finite unit-distance graph whenever it is at most 4.
 
 The proof gives no bound on the size of such a graph. Over `ℚ(√3, √11)` an explicit one, with 1 874 vertices, is
-`../finite_witness/witness_q3_11.json.gz`; over `ℚ(√59)` we know none. The files here concern `ℚ(√59)` and
+`../finite_witness/witness_q3_11.json.gz`, and over `ℚ(√2, √3)` one with 1 657 vertices is
+`../finite_witness/witness_q2_3.json.gz`; over `ℚ(√59)` we know none. The files here concern `ℚ(√59)` and
 `ℚ(√3, √11)`.
 
 A unit vector with denominator `D` is `u = ((a + b√59)/D, (c + e√59)/D)` with `a² + 59b² + c² + 59e² = D²` and

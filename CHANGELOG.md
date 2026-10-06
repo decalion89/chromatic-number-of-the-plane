@@ -12,6 +12,14 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Changed
+- **A second explicit graph with `χ_c = 4`, over `ℚ(√2, √3)` (6 October, night).**
+  `data/number_fields/circular/finite_witness/witness_q2_3.json.gz`: 1 657 points (denominator 36), all 6 238 unit pairs
+  as edges, `χ_c = χ = 4`; so `χ_c(ℚ(√2, √3)²) = 4` with an explicit graph. Certified by `check_witness4.py` (which now
+  reads the field from the file) with drat-trim, and by a referee's own programs (`indep_W4b/`: two encodings, kissat,
+  drat-trim, `cake_lpr`, 77 sanity checks). Found with base-point periods from 60 unit vectors `ζ₂₄^j s^l` of `ℚ(ζ₂₄)`,
+  `ζ₂₄ = e^{iπ/12}`, `s = (1 + 2√−2)/3`; `construction_q2_3/` reproduces it byte for byte. The docstrings of the
+  construction scripts now say Lemma F17 (they said Lemma P). Note, paper (abstract, introduction, Section 10, Question
+  3), README files, research log, `tests/test_at_four.py`.
 - **The construction by base-point periods always works (6 October, night).** A remark after Lemma F17 (note §6.9;
   after Lemma 24 in the paper): if `κ(U) ≤ 1/4`, some finite set of relations leaves the period system without a
   solution (one relation `ρ_p` for each of the finitely many `p` allowed by the basis, from an integer point of a

@@ -1,13 +1,13 @@
 """per_build.py CORE.json POOL.json [POOL2.json ...] OUT.json: a finite point set H in which the base-point periods of
-the core relations are tied to the 23 basis relations by homotopies (Lemma F17), built as follows.
+the core relations are tied to the basis relations by homotopies (Lemma F17), built as follows.
 
-Walk of a relation vector v (27 integers): from 0, |v_u| steps of sign(v_u) u for u = 0..26 in ascending order.  A
+Walk of a relation vector v (one integer per vector): from 0, |v_u| steps of sign(v_u) u for u in ascending order.  A
 chain from 0 to each core relation adds or subtracts one basis relation r_j at a time, staying inside the pool of
 short relations (BFS).  Each chain step rho' = rho + s r_j is a triple: the walk W_rho W_{r_j}^s is bubble-sorted into
 W_{rho'} (a swap of adjacent steps adds the fourth corner of a square to H; adjacent opposite steps cancel).  So
 per(W_{rho'}) = per(W_rho) + s per(W_{r_j}) for every 4-colouring of H without tight cycles.  H = all vertices met.
 Then CP-SAT checks that the integer system (one variable per relation met; the open range of Lemma F17 for each; one
-equation per triple) is infeasible, which proves chi_c(H) >= 4 if Lemma F17 holds; the SAT check of H is separate."""
+equation per triple) is infeasible, which proves chi_c(H) >= 4 by Lemma F17; the SAT check of H is separate."""
 import json, sys, time, gzip, os
 from fractions import Fraction as Fr
 from math import floor, ceil
@@ -15,7 +15,7 @@ from collections import deque
 from ortools.sat.python import cp_model
 
 t0 = time.time()
-C = json.load(gzip.open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "at_four", "cert311_open_4.json.gz"), "rt")); U = C["units"]; Rb = [tuple(r) for r in C["relations"]]
+C = json.load(open(os.environ["CFG"])); U = C["units"]; Rb = [tuple(r) for r in C["relations"]]
 m = len(U); dim = len(U[0])
 core = [tuple(r["rho"]) for r in json.load(open(sys.argv[1]))]
 pool = set()

@@ -292,3 +292,30 @@ Verification of the witness for chi_c = 4 over Q(sqrt3, sqrt11), witness_q3_11 (
    kissat: s UNSATISFIABLE (30 s); drat-trim -L: s VERIFIED (22 s); cake_lpr on the LRAT proof: s VERIFIED UNSAT (18 s)
    python3 ref_tests4.py ../witness_q3_11.json.gz OUT: TESTS: ALL PASSED (a moved point, an improper colouring and a
    cycle through a non-edge are rejected; without the cycle clauses the formula is satisfiable)
+
+Verification of the witness for chi_c = 4 over Q(sqrt2, sqrt3), witness_q2_3 (6 October 2026)
+
+1. python3 check_witness4.py witness_q2_3.json.gz witness_q2_3.cnf.gz witness_q2_3.drat drat-trim
+   (1) Q(sqrt2, sqrt3): 1657 points, 6238 edges, every edge at distance exactly 1
+       unit-distance pairs among the points: 6238; not listed as edges: 0 (induced)
+   (2) the colouring is a proper 4-colouring: chi(H) <= 4, chi_c(H) <= 4
+   (3) 6062 cycles, all closed walks along edges (lengths 4..8, divisible by 4)
+   (4) the CNF is the formula built from the edges, cycles and fixed vertex; sha256
+       cd6382b7729db29c82b046dfd047b74a98b42bba41048007906aebf3ed5beff2
+   (5) drat-trim: s VERIFIED  (the whole check takes about 22 s)
+   => every 4-colouring of H has a tight cycle, so chi_c(H) = chi(H) = 4
+   kissat 4.0.4 (--seed=1) refuted the formula in 38 s; the stored proof is its DRAT output, xz-compressed
+   (20 598 725 bytes uncompressed, sha256 471a1d11dd3c99c0fbb67036f10a106abf34d4e53b3461b40657060c43848520).
+   The formula is byte for byte the one certify_z24.py (construction_q2_3/) built from the points in Q(zeta_24).
+2. The referee's programs (indep_W4b/, written from the file format, no code shared with check_witness4.py):
+   python3 ref_check_z.py      (tool paths from KISSAT, DRAT_TRIM, CAKE_LPR; the witness from the parent folder)
+   exact all-pairs scan: 1 371 996 pairs, 6238 unit-distance pairs, equal to the declared edges; a floating-point scan
+   agrees (smallest |d - 1| on a non-edge 9.1e-6); proper 4-colouring; 6062 simple cycles along edges (5494 of length
+   4, 568 of length 8)
+   CNF (own layout, one variable per tight arc): 15 452 variables, 77 910 clauses;
+       sha256 a8e9d4bdee31892b03d2f6bbe4e865f38414434cd72be38768e3a65bf2483553
+   kissat: s UNSATISFIABLE (102 s); drat-trim -L: s VERIFIED (53 s); cake_lpr on the LRAT proof: s VERIFIED UNSAT (24 s)
+   a second encoding without auxiliary variables (6628 variables, 60 800 clauses): the same three lines
+   python3 ref_tests_z.py: 77 checks, 0 failures (moved points, an improper colouring, cycles through non-edges, a
+   missing or an extra edge, a duplicated point, malformed entries; without the cycle clauses the formula is
+   satisfiable, and the given colouring violates exactly the clauses of its 389 tight cycles)

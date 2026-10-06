@@ -132,6 +132,62 @@ def test_witness_q3_11_checker_rejects_a_moved_point(tmp_path):
     assert r.returncode != 0 and "not a unit-distance edge" in r.stderr
 
 
+W4B = ["check_witness4.py", "witness_q2_3.json.gz", "witness_q2_3.cnf.gz"]
+
+
+def test_witness_q2_3_checker(tmp_path):
+    """The second explicit graph with chi_c = 4, over Q(sqrt2, sqrt3) (finite_witness/README.md): 1657 points over
+    the basis (1, sqrt2, sqrt3, sqrt6) with denominator 36, all 6238 unit pairs as edges, a proper 4-colouring, 6062
+    cycles of lengths 4 and 8, and the stored formula is the one check_witness4.py builds."""
+    for n in W4B:
+        shutil.copy(os.path.join(FW4, n), tmp_path / n)
+    out = subprocess.run([sys.executable, "check_witness4.py", W4B[1], W4B[2]], cwd=tmp_path, capture_output=True,
+                         text=True, check=True, timeout=900).stdout
+    assert "(1) Q(sqrt2, sqrt3): 1657 points, 6238 edges, every edge at distance exactly 1" in out
+    assert "not listed as edges: 0 (induced)" in out
+    assert "(2) the colouring is a proper 4-colouring" in out and "(3) 6062 cycles" in out and "(lengths 4..8" in out
+    assert "sha256 cd6382b7729db29c82b046dfd047b74a98b42bba41048007906aebf3ed5beff2" in out
+
+
+def test_witness_q2_3_referee_encoding(tmp_path):
+    """The referee's program for the second witness (indep_W4b/), written from the file format alone, recomputes all
+    1 371 996 pairs and writes its own encoding, the formula that kissat, drat-trim and cake_lpr refuted."""
+    r = subprocess.run([sys.executable, os.path.join(FW4, "indep_W4b", "ref_check_z.py"), "--no-sat",
+                        "--cnf", str(tmp_path / "ref_z.cnf"), "--results", str(tmp_path / "res")],
+                       capture_output=True, text=True, timeout=900)
+    assert r.returncode == 0, r.stdout[-2000:]
+    assert "RESULT: PASS (tasks 1-4, solver runs skipped)" in r.stdout
+    assert hashlib.sha256((tmp_path / "ref_z.cnf").read_bytes()).hexdigest() == \
+        "a8e9d4bdee31892b03d2f6bbe4e865f38414434cd72be38768e3a65bf2483553"
+
+
+def test_witness_q2_3_checker_rejects_a_moved_point(tmp_path):
+    """A point moved by 1/36 in one coordinate breaks an edge: check_witness4.py rejects the file."""
+    shutil.copy(os.path.join(FW4, W4B[0]), tmp_path / W4B[0])
+    W = json.load(gzip.open(os.path.join(FW4, W4B[1]), "rt"))
+    v = W["edges"][0][1]
+    W["points"][v][0] += 1
+    with gzip.open(tmp_path / "bad.json.gz", "wt") as f:
+        json.dump(W, f)
+    r = subprocess.run([sys.executable, W4B[0], "bad.json.gz"], cwd=tmp_path, capture_output=True, text=True,
+                       timeout=900)
+    assert r.returncode != 0 and "not a unit-distance edge" in r.stderr
+
+
+@pytest.mark.slow
+@pytest.mark.skipif(not DRAT, reason="drat-trim not found (PATH or DRAT_TRIM)")
+def test_witness_q2_3_proof(tmp_path):
+    """drat-trim verifies the stored DRAT proof for the second witness: chi_c = chi = 4 over Q(sqrt2, sqrt3)."""
+    for n in W4B:
+        shutil.copy(os.path.join(FW4, n), tmp_path / n)
+    with lzma.open(os.path.join(FW4, "witness_q2_3.drat.xz"), "rb") as src, \
+            open(tmp_path / "witness_q2_3.drat", "wb") as dst:
+        shutil.copyfileobj(src, dst)
+    out = subprocess.run([sys.executable, W4B[0], W4B[1], W4B[2], "witness_q2_3.drat", DRAT], cwd=tmp_path,
+                         capture_output=True, text=True, check=True, timeout=3600).stdout
+    assert "(5) drat-trim: s VERIFIED" in out and "chi_c(H) = chi(H) = 4" in out
+
+
 KISSAT = shutil.which("kissat") or os.environ.get("KISSAT")
 
 

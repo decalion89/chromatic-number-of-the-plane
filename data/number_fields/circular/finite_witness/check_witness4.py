@@ -1,21 +1,24 @@
-"""Stand-alone checker for the finite witnesses of chi_c = 4 over F = Q(sqrt3, sqrt11).
+"""Stand-alone checker for the finite witnesses of chi_c = 4 over F = Q(sqrt3, sqrt11) and F = Q(sqrt2, sqrt3).
 
 usage: python3 check_witness4.py WITNESS.json.gz [CNF] [PROOF.drat] [path/to/drat-trim]
 
 The witness file contains
+  field        "Q(sqrt3, sqrt11)" or "Q(sqrt2, sqrt3)", that is F = Q(sa, sb) with (a, b) = (3, 11) or (2, 3)
+  basis        "(1, sqrt3, sqrt11, sqrt33)" or "(1, sqrt2, sqrt3, sqrt6)", that is (1, sa, sb, sab), sab = sqrt(ab)
   denominator  D (an integer)
   points       integer 8-tuples [a0, a1, a2, a3, b0, b1, b2, b3]: the point
-               ((a0 + a1 s3 + a2 s11 + a3 s33)/D, (b0 + b1 s3 + b2 s11 + b3 s33)/D) of F^2,
-               where s3 = sqrt3, s11 = sqrt11 and s33 = sqrt33
+               ((a0 + a1 sa + a2 sb + a3 sab)/D, (b0 + b1 sa + b2 sb + b3 sab)/D) of F^2
+               (for Q(sqrt3, sqrt11): sa = sqrt3, sb = sqrt11, sab = sqrt33)
   edges        pairs [i, j]
   colouring    a map V -> Z/4
   cycles       lists [v_0, ..., v_{m-1}] of vertices, m divisible by 4
   fixed_vertex a vertex v_0 whose colour the formula fixes to 0
 The checker verifies, with Python integers only:
   (1) the points are distinct and every edge joins two points at Euclidean distance exactly 1: for the difference
-      (x0, ..., x3, y0, ..., y3), (x0 + x1 s3 + x2 s11 + x3 s33)^2 + (y0 + ...)^2 = D^2, computed in the basis
-      (1, s3, s11, s33) with s3 s11 = s33, s3 s33 = 3 s11, s11 s33 = 11 s3 (four integer equations); it also reports
-      whether `edges` is the set of ALL pairs at distance 1 (the induced unit-distance graph);
+      (x0, ..., x3, y0, ..., y3), (x0 + x1 sa + x2 sb + x3 sab)^2 + (y0 + ...)^2 = D^2, computed in the basis
+      (1, sa, sb, sab) with sa sb = sab, sa sab = a sb, sb sab = b sa (four integer equations; the basis is
+      independent over Q, as a, b and ab are not rational squares and F has degree 4); it also reports whether
+      `edges` is the set of ALL pairs at distance 1 (the induced unit-distance graph);
   (2) the colouring is a proper 4-colouring (so chi(H) <= 4 and chi_c(H) <= 4);
   (3) every listed cycle is a closed walk v_0 -> v_1 -> ... -> v_{m-1} -> v_0 along edges of H, with distinct
       vertices and m divisible by 4;
@@ -51,15 +54,19 @@ def load(path):
         return json.load(f)
 
 
-def square(x0, x1, x2, x3):
-    """(x0 + x1 s3 + x2 s11 + x3 s33)^2 in the basis (1, s3, s11, s33)."""
-    return (x0 * x0 + 3 * x1 * x1 + 11 * x2 * x2 + 33 * x3 * x3, 2 * x0 * x1 + 22 * x2 * x3,
-            2 * x0 * x2 + 6 * x1 * x3, 2 * x0 * x3 + 2 * x1 * x2)
+FIELDS = {'Q(sqrt3, sqrt11)': (3, 11, '(1, sqrt3, sqrt11, sqrt33)'),
+          'Q(sqrt2, sqrt3)': (2, 3, '(1, sqrt2, sqrt3, sqrt6)')}
 
 
-def unit(p, q, D):
+def square(x0, x1, x2, x3, a=3, b=11):
+    """(x0 + x1 sa + x2 sb + x3 sab)^2 in the basis (1, sa, sb, sab), sa = sqrt(a), sb = sqrt(b), sab = sqrt(ab)."""
+    return (x0 * x0 + a * x1 * x1 + b * x2 * x2 + a * b * x3 * x3, 2 * x0 * x1 + 2 * b * x2 * x3,
+            2 * x0 * x2 + 2 * a * x1 * x3, 2 * x0 * x3 + 2 * x1 * x2)
+
+
+def unit(p, q, D, a=3, b=11):
     d = [q[k] - p[k] for k in range(8)]
-    s, t = square(*d[:4]), square(*d[4:])
+    s, t = square(*d[:4], a, b), square(*d[4:], a, b)
     return (s[0] + t[0], s[1] + t[1], s[2] + t[2], s[3] + t[3]) == (D * D, 0, 0, 0)
 
 
@@ -86,6 +93,10 @@ def main():
     D, P, E, col, cycles, fixed = (W['denominator'], W['points'], W['edges'], W['colouring'], W['cycles'],
                                    W['fixed_vertex'])
     n = len(P)
+    field = W.get('field')
+    _req(field in FIELDS, 'unknown field', field)
+    a, b, basis = FIELDS[field]
+    _req(W.get('basis') == basis, 'the basis should be', basis)
     _req(isinstance(D, int) and D > 0, 'bad denominator')
     _req(all(len(p) == 8 and all(isinstance(t, int) for t in p) for p in P), 'bad points')
     _req(isinstance(fixed, int) and 0 <= fixed < n, 'bad fixed_vertex')
@@ -93,10 +104,10 @@ def main():
     Es = set()
     for i, j in E:
         _req(isinstance(i, int) and isinstance(j, int) and 0 <= i < n and 0 <= j < n and i != j, 'bad edge', i, j)
-        _req(unit(P[i], P[j], D), 'not a unit-distance edge', i, j)
+        _req(unit(P[i], P[j], D, a, b), 'not a unit-distance edge', i, j)
         Es.add((min(i, j), max(i, j)))
     _req(len(Es) == len(E), 'repeated edge')
-    print(f'(1) Q(sqrt3, sqrt11): {n} points, {len(E)} edges, every edge at distance exactly 1')
+    print(f'(1) {field}: {n} points, {len(E)} edges, every edge at distance exactly 1')
     # all unit pairs, exactly; the filter compares the rational parts of the squared lengths, which must be D^2
     allpairs = missing = 0
     for i in range(n):
@@ -104,11 +115,11 @@ def main():
         for j in range(i + 1, n):
             pj = P[j]
             d = [pj[k] - pi[k] for k in range(8)]
-            r = (d[0] * d[0] + 3 * d[1] * d[1] + 11 * d[2] * d[2] + 33 * d[3] * d[3] + d[4] * d[4] + 3 * d[5] * d[5]
-                 + 11 * d[6] * d[6] + 33 * d[7] * d[7])
+            r = (d[0] * d[0] + a * d[1] * d[1] + b * d[2] * d[2] + a * b * d[3] * d[3] + d[4] * d[4] + a * d[5] * d[5]
+                 + b * d[6] * d[6] + a * b * d[7] * d[7])
             if r != D * D:
                 continue
-            if unit(pi, pj, D):
+            if unit(pi, pj, D, a, b):
                 allpairs += 1
                 if (i, j) not in Es:
                     missing += 1
