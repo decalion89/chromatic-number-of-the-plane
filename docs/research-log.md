@@ -10635,8 +10635,8 @@ without a bound on the size.
   As far as we know the averaging under "no tight squares" and the attainment at 4 are new; the fact that a
   4-cycle winds at `p/q = 4` only when it is tight is elementary, and we did not search the literature for it.
 - **The growths over `ℚ(√59)`.** The colouring-guided growths with `PQ = 4/1` and the unit vectors of denominator
-  `D = 210`, `2730` and `1050` stopped at 12 099 and 8 016 points (at their limits) and, for `D = 1050`, were at
-  11 882 points when this was written, all without a witness (nothing here is a result). For `D = 210` no witness
+  `D = 210`, `2730` and `1050` stopped at their limits, at 12 099, 8 016 and 12 061 points, all without a witness
+  (nothing here is a result). For `D = 210` no witness
   exists: the character `θ = (89/118, 1/2, 89/118, 1/2)` keeps all 108 unit vectors with denominator 210 at margin
   at least `15/59 > 1/4` (exact, by enumeration; the referee found another one, `−15a/59 − b/2 + 29c/118`, with the
   same margin), so every graph built from them has `χ_c ≤ 59/15`. For `D = 1050` the character
@@ -10647,3 +10647,30 @@ without a bound on the size.
 - **Files.** `notes/circular_planes.md` §6.9 and §7, `papers/three-colours/` (subsection "Finite witnesses at four",
   abstract, introduction, Question 3), `papers/winding/` (Proposition `prop:four` in the section on finite witnesses),
   `data/number_fields/circular/at_four/`, `tests/test_at_four.py`.
+
+## Explicit unit vectors with `κ = 1/4` over `ℚ(√3, √11)` (6 October, evening)
+
+- **Exact.** The 27 unit vectors `R₆₀ʲ R_Aᵏ R_Gˡ (1, 0)` (`j, k, l ∈ {−1, 0, 1}`; `R_A`: cosine 5/6, sine √11/6, the
+  angle of the Moser spindle; `R_G`: cosine 11/14, sine 5√3/14) have `κ = 1/4`: the character
+  `θ311 = (5/24, 5/12, 0, 1/2, 7/12, 1/2, 7/24, 0)` on the coordinates over `(1, √3, √11, √33)/84` has least
+  distance exactly `1/4` (values `1/4, 1/3, 1/2, 2/3, 3/4`), and the open-interval certificate (23 relations,
+  12 073 nodes, 8 519 leaves, one minute) is accepted by both checkers, now extended to this biquadratic plane
+  (`check_open.py` also accepts `P/Q = 4`). By Corollary F14 a finite `χ_c = 4` witness lies in the Cayley graph of
+  these 54 vectors; with Theorem W⁺, `χ_c(ℚ(√3, √11)²) ≥ 4` without Theorem F. Floating point (MILP): without `R_G`
+  the margin is `3/11` (for 15, 21 and 27 vectors with `|k| ≤ 2, 3, 4`), with `R₆₀` and `R_G` alone `1/3`, and
+  replacing `R_G` by the rational rotation `(3/5, 4/5)` or by `(4/7, √33/7)` gives `34/121` and `62/221`. Of the
+  27 vectors, three can be dropped (float). The tight vectors of `θ311` have a positive relation of length 8,
+  `R_A⁻¹` times the Eisenstein relation `3ζ̄ + g + ζ − 3ζ̄g = 0` (`ζ = e^{iπ/3}`, `g = (8 + 5ω)/7` the rotation
+  `R_G` as a complex number).
+- **The witness.** A colouring-guided growth (`PQ = 4/1`, lazy SAT on tight cycles, from the ball of radius 2 in
+  the Cayley graph) is running; nothing found yet.
+- **Other attempts at an explicit witness for 4 (no result).** (1) Periods at one base point: for a 4-colouring of
+  a finite `H` without tight cycles, the period `Λ(W)/4 − #(steps in −U)` of a closed walk at `0` is an integer,
+  additive, unchanged by backtracks and by exchanging two steps whose square lies in `H`, and strictly inside
+  `(mn(ρ), mx(ρ))` for the walk of a relation `ρ` that uses each vector with one sign; so an infeasible integer
+  system on periods, with the homotopies inside `H`, proves `χ_c(H) = 4` without averaging. Over `ℚ(√59)` (the 50
+  vectors) the system stayed feasible with 2 926 relations of `l1` norm up to 33: the box `[1/4, 3/4]` of the
+  certificate is the limit of these constraints over all relations and needs long ones. (2) Distance graphs on
+  `ℤ` with `κ = 1/4` have witnesses on intervals of 8–12 points (with triangles) and 16–29 points (triangle-free),
+  of the order of the largest distance; our lattices have rank 4. (3) The points `(a, e√59)/D` of `ℚ(√59)²`
+  (norm-one elements of `ℚ(√−59)`) have `κ ≈ 29/59`: nearly bipartite.

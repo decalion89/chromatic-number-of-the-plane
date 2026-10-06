@@ -12,6 +12,13 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Changed
+- **27 explicit unit vectors with `κ = 1/4` over `ℚ(√3, √11)` (6 October, evening).** `R₆₀ʲ R_Aᵏ R_Gˡ (1, 0)`,
+  `j, k, l ∈ {−1, 0, 1}` (`R_A` the Moser angle, `R_G` cosine 11/14): a character of order 12 at exactly `1/4`
+  and an exact certificate (12 073 nodes) that none maps them into `(1/4, 3/4)`, so a finite `χ_c = 4` witness lies
+  in their Cayley graph (Corollary F14) without Theorem F; the witness is not known yet.
+  `data/number_fields/circular/at_four/` (`q3_11.py`, `theta311.json`, `cert311_open_4.json.gz`,
+  `cert_open_units.py`); `check_open.py` and `check_open_indep.py` accept this biquadratic plane and `P/Q = 4`.
+  Note §6.9, paper, research log, `tests/test_at_four.py`.
 - **Finite witnesses at four colours (6 October).** At `p/q = 4` the winding argument of Theorem W⁺ fails only on a
   *tight square* `x → x + s → x + s + t → x + t → x`, which is itself a tight cycle; so a 4-colouring without tight
   squares gives a character into `[1/4, 3/4]`, and conversely (Lemma F13). Hence, for a finite connection set with

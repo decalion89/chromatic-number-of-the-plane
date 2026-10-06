@@ -10,7 +10,8 @@ from fractions import Fraction as Fr
 import pytest
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-AT4 = os.path.join(ROOT, "data", "number_fields", "circular", "at_four")
+CIRC = os.path.join(ROOT, "data", "number_fields", "circular")
+AT4 = os.path.join(CIRC, "at_four")
 sys.path.insert(0, AT4)
 from check_theta import least_margin, units  # noqa: E402
 
@@ -51,3 +52,33 @@ def test_lemma_F13_on_small_groups(group):
                          capture_output=True, text=True, check=True, timeout=900).stdout
     last = out.strip().splitlines()[-1]
     assert last.startswith("# summary") and last.endswith("BAD=0")
+
+
+def test_q3_11_vectors_and_character_at_a_quarter():
+    """the 27 vectors of Q(sqrt3, sqrt11)^2 are those of the certificate; theta311 has least distance exactly 1/4."""
+    out = subprocess.run([sys.executable, "q3_11.py", "cert311_open_4.json.gz"], cwd=AT4,
+                         capture_output=True, text=True, check=True, timeout=600).stdout
+    assert "pairwise distinct up to sign" in out
+    assert "the certificate's units are these vectors up to sign: True" in out
+    assert "least distance to Z over the 27 vectors: 1/4" in out
+
+
+@pytest.mark.parametrize("checker", ["check_open.py", "check_open_indep.py"])
+def test_q3_11_open_certificate_both_checkers(checker):
+    """kappa <= 1/4 for the 27 vectors: no character maps them into (1/4, 3/4)."""
+    out = subprocess.run([sys.executable, checker, os.path.join("at_four", "cert311_open_4.json.gz")], cwd=CIRC,
+                         capture_output=True, text=True, check=True, timeout=1800).stdout
+    assert out.startswith(("VERIFIED", "ACCEPTED")) and "3,11" in out and "27 units" in out
+    assert "12073 nodes" in out
+
+
+def test_checkers_reject_a_wrong_unit_over_q3_11(tmp_path):
+    import gzip
+    with gzip.open(os.path.join(AT4, "cert311_open_4.json.gz"), "rt") as fh:
+        C = json.load(fh)
+    C["units"][0] = [x + (1 if k == 0 else 0) for k, x in enumerate(C["units"][0])]
+    bad = tmp_path / "bad.json"
+    bad.write_text(json.dumps(C))
+    for cmd in (["check_open.py", str(bad)], ["check_open_indep.py", str(bad)]):
+        res = subprocess.run([sys.executable] + cmd, cwd=CIRC, capture_output=True, text=True, timeout=600)
+        assert res.returncode != 0 or not res.stdout.startswith(("VERIFIED", "ACCEPTED")), cmd

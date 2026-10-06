@@ -100,19 +100,31 @@ def check(path, config=None, verbose=True):
     # A/B: format and parameters
     req(type(C) is dict and set(C.keys()) == {"d", "N", "D", "P", "Q", "units", "relations", "tree"}, "top-level keys")
     d, N, D, P, Q = C["d"], C["N"], C["D"], C["P"], C["Q"]
-    req(all(is_int(x) for x in (d, N, D, P, Q)), "parameters must be ints")
-    req(d >= 2 and isqrt(d) ** 2 != d, "d not a non-square")
+    req(all(is_int(x) for x in (N, D, P, Q)), "parameters must be ints")
+    BIQ = d == "3,11"         # the plane over Q(sqrt3, sqrt11): 8 coordinates over (1, r3, r11, r33)
+    req(BIQ or (is_int(d) and d >= 2 and isqrt(d) ** 2 != d), "d not a non-square")
+    req(not (BIQ and config is not None), "no configuration check over Q(sqrt3, sqrt11)")
     req(D >= 1, "D must be positive")
     req(Q >= 1 and 2 * Q <= P, "need P/Q >= 2")
-    DD = d
+    DD = None if BIQ else d
     if config is not None:
         req((d, N, P, Q) == tuple(config[:4]), f"parameters (d, N, P, Q) = {(d, N, P, Q)} differ from the claimed {tuple(config[:4])}")
     U, R = C["units"], C["relations"]
     req(type(U) is list and len(U) > 0 and type(R) is list, "units/relations must be lists")
     n = len(U)
     # C: unit vectors
+    def bmul(a, b):    # Q(sqrt3, sqrt11): r3 r11 = r33, r3 r33 = 3 r11, r11 r33 = 11 r3
+        return (a[0]*b[0] + 3*a[1]*b[1] + 11*a[2]*b[2] + 33*a[3]*b[3],
+                a[0]*b[1] + a[1]*b[0] + 11*a[2]*b[3] + 11*a[3]*b[2],
+                a[0]*b[2] + a[2]*b[0] + 3*a[1]*b[3] + 3*a[3]*b[1],
+                a[0]*b[3] + a[3]*b[0] + a[1]*b[2] + a[2]*b[1])
+    DIM = 8 if BIQ else 4
     for u in U:
-        req(type(u) is list and len(u) == 4 and all(is_int(x) for x in u), f"bad unit {u}")
+        req(type(u) is list and len(u) == DIM and all(is_int(x) for x in u), f"bad unit {u}")
+        if BIQ:
+            xx, yy = bmul(u[:4], u[:4]), bmul(u[4:], u[4:])
+            req(tuple(p + q for p, q in zip(xx, yy)) == (D * D, 0, 0, 0), f"length != 1: {u}")
+            continue
         x0, x1, y0, y1 = u
         req(x0 * x0 + d * x1 * x1 + y0 * y0 + d * y1 * y1 == D * D, f"length != 1: {u}")
         req(x0 * x1 + y0 * y1 == 0, f"irrational part of length nonzero: {u}")
@@ -127,7 +139,7 @@ def check(path, config=None, verbose=True):
     for r in R:
         req(type(r) is list and len(r) == n and all(is_int(x) for x in r), "bad relation format")
         req(any(x != 0 for x in r), "zero relation")
-        for k in range(4):
+        for k in range(DIM):
             req(sum(r[i] * U[i][k] for i in range(n) if r[i]) == 0, "not a relation")
     m = len(R)
     # F: the tree, iteratively

@@ -876,6 +876,16 @@ For `D = 210` this was bound to happen: the character `θ = (89/118, 1/2, 89/118
 unit vectors with denominator 210 at distance at least `15/59` from `ℤ`, so every graph built from them maps to
 `K_{59/15}` (checked by enumeration, and by the referee with another character).
 
+**An explicit set at `1/4` over `ℚ(√3, √11)`.** Let `R₆₀` be the rotation by 60°, `R_A` the rotation with cosine `5/6`
+and sine `√11/6` (the angle of the Moser spindle) and `R_G` the rotation with cosine `11/14` and sine `5√3/14`. The 27
+unit vectors `R₆₀ʲ R_Aᵏ R_Gˡ (1, 0)`, `j, k, l ∈ {−1, 0, 1}` (pairwise distinct up to sign), have `κ = 1/4`: a
+character of order 12 on the coordinates over `(1, √3, √11, √33)/84` keeps them at distance at least `1/4` from `ℤ`
+(`at_four/theta311.json`), and an exact certificate (`cert311_open_4.json.gz`, 12 073 nodes; both checkers) shows that
+no character maps them into the open interval `(1/4, 3/4)`. So the Cayley graph of these 54 unit vectors contains a
+finite subgraph with `χ_c = 4` (Corollary F14), without Theorem F or Proposition F15, and `χ_c(ℚ(√3, √11)²) ≥ 4`
+directly. Without `R_G` the same construction has `κ = 3/11` (an 11-adic character), and with `R₆₀` and `R_G` alone
+`κ = 1/3`. The subgraph itself is not known.
+
 ## 7. Questions
 
 1. *Above 4.* Theorem F decides `χ_c(F²)` below 4: there it is the least value of `χ_c(F_v²)` over the completions
@@ -893,7 +903,8 @@ unit vectors with denominator 210 at distance at least `15/59` from `ℤ`, so ev
 vertices (`witness_q15.json.gz`), and none of the three nine-vertex graphs appeared with the denominators we tried.) When `χ_c(F²) = 4` the value is
    attained as well (Theorem F16, for example over `ℚ(√59)`), but the proof gives no bound on the size of a witness,
    and we know none: how small can one be over `ℚ(√59)`? By the converse in §6.9 its edge vectors `U` must satisfy
-   `κ(U) ≤ 1/4`, which excludes those with denominator 210 (`at_four/theta59_210.json`).
+   `κ(U) ≤ 1/4`, which excludes those with denominator 210 (`at_four/theta59_210.json`). Over `ℚ(√3, √11)` an explicit
+   set with `κ = 1/4` has 27 vectors (§6.9), so a witness lies in its Cayley graph; how small can it be?
 3. *The one-prime probe.* Does `r0(5^k)` tend to `3/10` (the conjecture of §5)? Theorem E no longer needs it.
 
 Measurements (floating-point MIP, not proofs): for `U = G_25{1, u_n, ū_n : n = 1, 7, 19}`, `max_ξ min_u ‖ξ(u)‖` is
