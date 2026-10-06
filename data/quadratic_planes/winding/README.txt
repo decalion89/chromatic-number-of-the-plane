@@ -43,6 +43,15 @@ check_w_indep.py a second checker, written separately by a referee from the cert
                  python3 check_w_indep.py CERT.json.gz ... ; check_w_indep.out is its output on the 26 stored
                  certificates (here and in family/)
 
+single_scan.py  floating-point search, for each d: every D <= 6000 with 6 | D and at least 24 unit vectors, fewest
+                vectors first, until the relation-space test is infeasible: python3 single_scan.py d1,d2,... TL NPROC
+union_search.py the same over unions of the unit vectors of the richest denominators (each one, pairs and triples):
+                python3 union_search.py d N TL NPROC
+union_cert.py   writes the union of U_D1, U_D2, ... over their least common multiple, certifies it with certify_w2.py
+                and checks it with check_w.py: python3 union_cert.py d D1,D2,... [OUTDIR]
+scan/           one certificate for each squarefree d = 11 (mod 12) below 2000, and the table of those between 2000
+                and 10 000 (README.md there)
+
 Certificates (cert_d_D*.json.gz; the table is in notes/winding_lemma.md): 11/30 (16 vectors), 83/510 (all 54
 vectors: cert_83_510_full; the 28 of min_83_510.json: cert_83_510_min28, 98 300 nodes, about 80 s to check),
 107/1170, 143/1740, 167/1560 and 203/1530.

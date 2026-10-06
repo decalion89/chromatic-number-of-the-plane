@@ -403,7 +403,11 @@ $d=11,35,59,83,131,179$. Finally, for a finite set $\Delta$ of unit vectors, Pro
 Lemma~\ref{lem:exact} reduce the question whether $G_N(\Delta\cup\{1\})$ admits such a character for all large $N$ to
 the existence of a character with values in $\{\frac13,\frac12,\frac23\}$, a computation in $(\Z/6)^4$; it confirms
 Theorem~\ref{thm:sets}(2) for all $191$ squarefree $d\equiv11\pmod{24}$ below $5000$, and shows that for $d=11$ no
-two vectors $(\mu+i\nu\sqrt{11})/\tau$ with $\nu\le7$, $\tau\le60$ suffice.
+two vectors $(\mu+i\nu\sqrt{11})/\tau$ with $\nu\le7$, $\tau\le60$ suffice. Independently of the proof, a computer
+search over denominators found a certificate of the same kind, for other sets of unit vectors, for each of the
+$155$ squarefree $d\equiv11\pmod{12}$ below $2000$ and for $593$ of the $611$ between $2000$ and $10\,000$; both
+checkers accept all of them, except two of more than $50$ MB, which were checked once and not kept
+(\nolinkurl{data/quadratic_planes/winding/scan} in \cite{Repo}).
 
 \emph{Formal proof.} Theorem~\ref{thm:main} and Corollary~\ref{cor:padic} are also proved in Lean~4 with Mathlib
 (\nolinkurl{lean/FourColours.lean} and \nolinkurl{lean/PadicFour.lean} in \cite{Repo}, the values

@@ -201,7 +201,9 @@ outside the project has. **The theorem and the p-adic corollary are also proved 
 `lean/PadicFour.lean`, with Theorem W for every abelian group and finite S in `lean/TheoremWInf.lean`; only Lean's
 three standard axioms), through a cruder form of the key step that is enough for the theorem but not for the sharp
 bound. The lower bound rests on Theorem W, whose proof for infinite groups is not constructive, so no finite graph
-is exhibited; for 27 of the fields the explicit graphs below give it without Theorem W.
+is exhibited; for 27 of the fields the explicit graphs below give it without Theorem W. Field by field, exact
+Theorem W certificates found by computer (not by the proof) exist for every squarefree d ≡ 11 (mod 12) below 2000
+and for 593 of the 611 between 2000 and 10 000 ([`data/quadratic_planes/winding/scan`](data/quadratic_planes/winding/scan/README.md)).
 
 **Read:** [the paper (PDF, draft)](papers/four-colours/four-colours.pdf) ·
 [the note](notes/four_colours_11_mod_12.md) · **Check:**
@@ -364,6 +366,7 @@ sh scripts/worker_setup.sh                   # kissat and drat-trim, for the sea
 | χ(ℚ(√3, √11)²) = 4 | `python3 -m pytest -q tests/test_q311.py` | seconds |
 | χ = 4 for ℚ(√d)² with d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455, 491, 599, 611, 791, 851, 911, 935, 959, and 4 ≤ χ(ℚ(√47)²) ≤ 5: the exact edges, the colourings, the stored formulas and the upper bounds; with `--kissat` and `--drat-trim` it writes the formulas again, solves them and checks the proofs, and with `--cake-lpr` the verified checker cake_lpr checks them too (log: `data/quadratic_planes/cake_lpr_checks.txt`) | `python3 scripts/verify_quadratic_planes.py` | about a second; about a minute with the solvers |
 | χ(ℚ(√d)²) ≥ 4 for every d ≡ 11 (mod 12): the exact facts behind the proof, and the certificates for small d | `python3 data/quadratic_planes/winding/family/structure_lemma.py 6 3` and `python3 -m pytest -q tests/test_winding_family.py` | 20 s; about 10 min |
+| χ(ℚ(√d)²) ≥ 4 for each squarefree d ≡ 11 (mod 12) below 2000, field by field (155 Theorem W certificates), and the table of the certificates up to 10 000 | `python3 -m pytest -q tests/test_winding_scan.py` | about an hour |
 | χ(ℚ(√d)²) ≥ 4 for d = 83, 107, 143, 167, 203 (Theorem W): the unit vectors, the integer relations, the branch-and-bound tree and every Farkas vector, in exact arithmetic | `python3 data/quadratic_planes/winding/check_w.py data/quadratic_planes/winding/cert_83_510_full.json.gz` (and the other `cert_*.json.gz`) | 3 s to 1 min each |
 | both theorems, formally (needs [elan](https://github.com/leanprover/elan)) | `cd lean && lake exe cache get && lake build && lake env lean PrintAxioms.lean` | minutes |
 | four and five colours suffice for the fields ℚ(√−3, √−11) and ℚ(√−3, √−11, √−247) | `python3 -m pytest -q tests/test_moser_field.py tests/test_reduce11.py` | seconds |

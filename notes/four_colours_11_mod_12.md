@@ -349,3 +349,8 @@ The scripts are in `data/quadratic_planes/winding/family/` (README there), the t
   `S_N` outside `(c*_N + P_k) ∪ Q_N`, none missing), and computed the best character for the sets of Theorem 1a:
   `max_ξ min_{s ∈ U} ‖ξ(s)‖ = 17/56 < 1/3` for `d = 23, 47, 71` (`N = 25`) and `d = 119, 143, 167` (`N = 125`), and
   `6/19` for `d = 95` (`N = 25`).
+- **Field by field, without the proof.** Independently of Theorem 1, a search over denominators found an exact
+  Theorem W certificate (other sets of unit vectors, found by computer) for every squarefree `d ≡ 11 (mod 12)` below
+  2000 (`data/quadratic_planes/winding/scan/`, 155 certificates, each accepted by `../check_w.py` and
+  `../check_w_indep.py`) and for 593 of the 611 between 2000 and 10 000 (`beyond2000.tsv` there). For the other 18 the
+  search found no infeasible set; Theorem 1 covers them.

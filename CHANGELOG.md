@@ -12,6 +12,16 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Changed
+- **The Theorem W scan up to 10 000 (6 October).** `data/quadratic_planes/winding/scan` now holds an exact Theorem W
+  certificate for each of the 155 squarefree `d ≡ 11 (mod 12)` below 2000 (the smallest file found for each `d`; 50 MB,
+  31 MB of it for `d = 443`), each accepted by both checkers (`scan/checks.txt`), with a README. Between 2000 and 10 000
+  the search certified 593 of the 611 values; `scan/beyond2000.tsv` lists all 611, with the branch, git blob id and
+  sha256 of the 591 stored certificates (both checkers accept all of them; they stay on the branches
+  `claude/winding-share-z1` and `claude/winding-share-z2`, 327 MB) and the two that were checked once and not kept (over
+  50 MB). The search tools `single_scan.py`, `union_search.py` and `union_cert.py` are added;
+  `tests/test_winding_scan.py` checks the coverage, three certificates (all 155 when slow tests run) and the table.
+  Theorem 1 already proves the bound for every `d ≡ 11 (mod 12)`; the scan is an independent check, field by field,
+  through Theorem W alone.
 - **A fourth field with an explicit `7/2` witness: `ℚ(√911)` (5 October).** The growth from the 327-vertex graph over
   `ℚ(√911)` stops at 873 vertices; deleting vertices with the cores of `kissat` and then CaDiCaL refutations, in blocks
   of adaptive size, leaves a vertex-critical unit-distance graph with 324 vertices, 866 edges and `χ_c = 7/2`

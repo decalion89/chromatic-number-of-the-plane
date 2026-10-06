@@ -10563,3 +10563,46 @@ explicit `(7N, 2N + 1)`-colourings with `N = 323` (`χ_c(H − v) ≤ 2261/647 <
 a restart of the machine cut the first and the third, and in the second the disk filled up while `kissat` wrote the
 proof of the rebuilt formula, so that proof was cut short and could not be checked; the third and fourth runs repeated
 the steps from that proof on with the proofs kept in memory (`/dev/shm`).
+
+## The Theorem W scan up to 10 000 (6 October)
+
+- **Below 2000.** Every squarefree `d ≡ 11 (mod 12)` below 2000 (155 values) has an exact Theorem W certificate, now in
+  `data/quadratic_planes/winding/scan` (the smallest file any run found for each `d`; 50 MB in all). Most of them come
+  from share Y (every `D ≤ 6000` with `6 | D` and at least 24 unit vectors, fewest vectors first), the others from the
+  earlier shares and from this machine. Six are unions of denominators: 1523, 1643 and 1763, for which the
+  floating-point search found no infeasible single denominator, and 1787, 1883 and 1907, where a union gave the smallest
+  file. Both checkers accept all 155 on this machine (`scan/checks.txt`). Since Theorem 1 covers every
+  `d ≡ 11 (mod 12)`, the scan is now a check of it field by field that uses Theorem W but not the proof of Theorem 1.
+- **Between 2000 and 10 000.** Shares Z1 and Z2 ran the same search (every single denominator `D ≤ 6000` with `6 | D`
+  and at least 24 unit vectors, fewest vectors first; then unions of two or three of the richest) over all 611
+  squarefree `d ≡ 11 (mod 12)` with `2000 < d < 10 000`. They certified 593: 509 with a single denominator and 84 with a
+  union (`D` the least common multiple). For the other 18
+  (`4787, 5507, 5843, 6827, 7235, 7283, 7451, 7883, 8123, 8363, 8387, 8627, 8747, 8843, 8903, 9203, 9323, 9587`) the
+  floating-point search found no infeasible set; that says nothing about these fields, which Theorem 1 covers. 591 of
+  the certificates (327 MB) stay on the shares' branches `claude/winding-share-z1` and `claude/winding-share-z2`;
+  `scan/beyond2000.tsv` lists all 611 values with `D`, the sizes, the branch, the git blob id and sha256 of each stored
+  file, and the verdicts. Both checkers accept all 591 here: `check_w.py` in 24 369 s in all (the longest, `d = 8867`
+  with `D = 882 180` and 317 824 nodes, in 1 569 s), `check_w_indep.py` in 2 723 s (the longest, `d = 2207` with
+  `D = 3432`, in 239 s). The other two were checked once, by `check_w.py` on the machine that wrote them, and not kept,
+  being over the 50 MB per file that those machines allowed themselves: `d = 5207` (`D = 3996`, 34 vectors, 4 165 215
+  nodes, 113 MB) and `d = 7763` (`D = 1 062 270`, a union, 66 vectors, 1 029 909 nodes, 92 MB; writing it took about
+  15.5 hours, after two attempts cut by restarts of that machine).
+- **The two cases of Theorem 1 show in the search.** Of the 306 values `d ≡ 23 (mod 24)` between 2000 and 10 000, 304
+  have a certificate with a single denominator (one, 8903, has none; one needed a union). Of the 305 values
+  `d ≡ 11 (mod 24)`, only 205 do: 83 needed a union and 17 have none. Below 2000 the three values that needed a union,
+  1523, 1643 and 1763, are `≡ 11 (mod 24)` as well. This matches the proof: for `d ≡ 11 (mod 24)` the vectors `u₁, ū₁`
+  and their rational rotations have a character into `[1/3, 2/3]` for every `N`, and Theorem 1b needs a third vector (an
+  observation about this search, nothing more).
+- **Sizes.** The certificates grow with `d` but unevenly: half of those between 2000 and 10 000 have at most 3 381
+  nodes; a few need millions. A certificate with fewer vectors is not a smaller file: for `d = 1643` a union with 186
+  vectors (`D = 33 538 186 500`) gives 84 766 nodes and 3.9 MB, against 565 086 nodes and 15.8 MB for the union of two
+  denominators with 66 vectors (`D = 460 362`). For `d = 443` the only certificate found (`D = 3042`, 50 vectors,
+  1 120 623 nodes) takes 31 MB, most of the directory; a union of two denominators with 194 vectors (`D = 51 714`) is
+  being certified here, to replace it if its file is smaller.
+- **Search tools.** `single_scan.py`, `union_search.py` and `union_cert.py` (the shares' scripts; `union_cert.py` now
+  takes an output directory and calls `check_w.py`, identical to the shares' `check_w_hard.py`) are in
+  `data/quadratic_planes/winding/`.
+- **`ℚ(√11)`, a smaller witness for `7/2`: none.** Deleting vertices in 21 random orders from the 288-point graph
+  `u11_r4` (each run with the case split) gave vertex-critical witnesses with 179 to 206 vertices; none is below 155.
+- **Tests.** The slow tests of this branch all pass: 47 at the first run; the 6 that need `drat-trim` were skipped there
+  (not on the path) and pass with `DRAT_TRIM` set.
