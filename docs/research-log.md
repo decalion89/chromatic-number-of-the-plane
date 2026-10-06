@@ -10704,3 +10704,26 @@ without a bound on the size.
   relations of squared norm at most 12 the period system was feasible. Over `ℚ(√59)` the same search stayed feasible
   (2 926 relations of length up to 33).
 - A deletion minimisation of `H₄` is running; nothing is claimed about it yet.
+
+## The construction by base-point periods is complete (6 October, night)
+
+- **Result (proved, refereed).** If `κ(U) ≤ 1/4` (over all characters of `ℤU`), the period system of Lemma F17
+  becomes infeasible on a finite set of relations, so the construction that found `H₄` always succeeds in principle:
+  the ranges of a ℤ-basis `r_1, …, r_k` of the relation lattice leave a finite set `Π` of candidate values; for each
+  `p ∈ Π` the affine space `{f : Rf = p}` misses the open box `(1/4, 3/4)^U` (otherwise `f` would give a character
+  with values in `(1/4, 3/4)`), a separating form is `⟨yR, ·⟩`, and the cone `C_p` of such `y` is rational, so an
+  integer `y` gives a nonzero relation `ρ_p = yR` with `p(ρ_p) ≥ (3P − N)/4`. With `S = {r_j} ∪ {ρ_p : p ∈ Π}`, the
+  subgraph of `Cay(ℤU, U ∪ −U)` induced by `0`, the walks of the chains and the corners of the swaps has a tight
+  cycle in every proper 4-colouring. So Corollary F14 is effective, without compactness, and some finite subgraph of
+  `Cay(ℤU, U ∪ −U)` has `χ_c ≥ 4` if and only if `κ(U) ≤ 1/4`.
+- **Referee.** Correct under the stated hypotheses; fixes applied (`P`, `N` as sums of absolute values; the character
+  well defined; the sign of `y` fixed before the cone; `G` defined as an induced subgraph). It noted that `κ` must
+  run over all characters of `ℤU`, not only the continuous characters of the plane. Its program `remark_check.py`
+  ran the construction on 15 distance sets `D ⊂ ℤ` with `κ(D) ≤ 1/4`: `ρ_p` exists for every `p` (max-norm of `y` up
+  to 9, for `D = {2, 6, 9, 11}`), the system on `S` is infeasible, and a SAT encoding without the lemma shows a tight
+  cycle in every proper 4-colouring of `G` (9 to 128 vertices); the basis chains alone fail in 10 of the 15 cases.
+  The stored copy was rerun (`results/remark_check_all.log`, all 15 pass).
+- **Other searches, nothing claimed yet.** Over `ℚ(√2, √3)` a second witness is being built in the same way from 60
+  unit vectors (`μ₂₄` times `s^l`, `|l| ≤ 2`, `s = (1 + 2√−2)/3`, one of each pair `±u`): kissat refutes the formula
+  on 2 220 points, and clausal cores are shrinking it; it needs two checkers and a referee before any claim. Over
+  `ℚ(√59)` the exact certificate for 50 vectors of denominator 1050 is still running.

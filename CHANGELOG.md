@@ -12,6 +12,13 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Changed
+- **The construction by base-point periods always works (6 October, night).** A remark after Lemma F17 (note §6.9;
+  after Lemma 24 in the paper): if `κ(U) ≤ 1/4`, some finite set of relations leaves the period system without a
+  solution (one relation `ρ_p` for each of the finitely many `p` allowed by the basis, from an integer point of a
+  rational cone), and the subgraph of `Cay(ℤU, U ∪ −U)` on the walks of its chains has a tight cycle in every proper
+  4-colouring. This replaces the compactness step of Corollary F14 by a finite construction. Refereed (correct;
+  wording fixes applied) and tested on 15 distance graphs on `ℤ` (`finite_witness/indep_W4/remark_check.py`, two
+  logs). Note, paper (remark, introduction, Question 3; 31 pages), README files, research log.
 - **An explicit graph with `χ_c = 4` over `ℚ(√3, √11)` (6 October, night).**
   `data/number_fields/circular/finite_witness/witness_q3_11.json.gz`: 1 874 points, all 8 085 unit pairs as edges,
   `χ_c = χ = 4`, so the value 4 of Theorem F16 is attained by an explicit graph. Certified by `check_witness4.py`

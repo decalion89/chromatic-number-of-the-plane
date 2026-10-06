@@ -159,7 +159,7 @@ explicitly (an `assert` would be skipped under `python -O`), `check_witness.py` 
 | `witness_q3_11.cnf.gz`, `witness_q3_11.drat.xz` | its formula (the one `check_witness4.py` builds) and a DRAT proof of unsatisfiability |
 | `check_witness4.py` | the checker for the value 4 (see its docstring for the encoding and the logic) |
 | `construction_q3_11/` | the programs that found it (last section) |
-| `indep_W4/` | a referee's programs, results and report for it (last section) |
+| `indep_W4/` | a referee's programs, results and report for it, for the lemma on base-point periods and for the finite construction (last section) |
 
 ## The value 3: nine points over `ℚ(√7)` and `ℚ(√31)`
 
@@ -343,3 +343,15 @@ with all 18 138 relations of squared norm at most 14 but without them a solution
 system to 37 relations of length 8, whose walks and chains give 4 134 points, but kissat did not refute that formula
 in ten minutes. The integer solver (CP-SAT) only guided the construction; the proof of `χ_c(H₄) = 4` is the SAT
 refutation above.
+
+**The construction always works** (the remark at the end of §6.9 of the note, after Lemma 24 in the paper). When
+`κ(U) ≤ 1/4` (over all characters of `ℤU`), some finite set of relations leaves no `p`: the ranges of the basis
+relations allow finitely many `p`, and for each an integer point of a rational cone gives a relation `ρ_p` outside
+whose range `p` falls. The subgraph of `Cay(ℤU, U ∪ −U)` induced by `0`, the walks along the chains to the basis
+and to the `ρ_p`, and the corners of the swaps then has a tight cycle in every proper 4-colouring, so this replaces
+the compactness step of Corollary F14 by a finite construction. The referee checked the remark
+(`indep_W4/REPORT.md`, last section) and tested it with `indep_W4/remark_check.py` on 15 sets of integer
+distances: for each, the system on `S` has no solution, and a SAT encoding that does not use the lemma shows that
+every proper 4-colouring of the graph has a tight cycle; in 10 of them the chains of the basis alone are not
+enough. `results/remark_check_all.log` is a rerun from this copy (`KISSAT` names the binary), and
+`results/remark_check_referee.log` the referee's own run.

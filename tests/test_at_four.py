@@ -132,6 +132,25 @@ def test_witness_q3_11_checker_rejects_a_moved_point(tmp_path):
     assert r.returncode != 0 and "not a unit-distance edge" in r.stderr
 
 
+KISSAT = shutil.which("kissat") or os.environ.get("KISSAT")
+
+
+@pytest.mark.skipif(not KISSAT, reason="kissat not found (PATH or KISSAT)")
+def test_effective_construction_on_a_distance_graph():
+    """The remark after Lemma F17 (note, end of 6.9), run by the referee's program (indep_W4/remark_check.py) for
+    U = D = {2, 3, 5, 6} in Z, where kappa(D) <= 1/4: the relations rho_p from the rational cones leave the period
+    system without a solution, and every proper 4-colouring of the graph G on their chains has a tight cycle, by a SAT
+    check that does not use the lemma; the chains of the basis alone give a 4-colouring without tight cycles."""
+    r = subprocess.run([sys.executable, os.path.join(FW4, "indep_W4", "remark_check.py"), "2", "3", "5", "6"],
+                       capture_output=True, text=True, timeout=600, env=dict(os.environ, KISSAT=KISSAT))
+    assert r.returncode == 0, r.stderr
+    assert "|Pi| = 4" in r.stdout and "(iii) p in a box of 448 candidates satisfying every range on S: 0" in r.stdout
+    assert "G_S: |H| = 26, |E| = 86, CNF 926 vars 6310 clauses -> ['s UNSATISFIABLE']" in r.stdout
+    assert "G_basis_only: |H| = 9, |E| = 15, CNF 138 vars 576 clauses -> ['s SATISFIABLE']" in r.stdout
+    assert "RESULT: every proper 4-colouring of G has a tight cycle" in r.stdout
+    assert "(23,6)-colourability of G" in r.stdout and "['s UNSATISFIABLE'] ; 4-colourable: ['s SATISFIABLE']" in r.stdout
+
+
 @pytest.mark.slow
 @pytest.mark.skipif(not DRAT, reason="drat-trim not found (PATH or DRAT_TRIM)")
 def test_witness_q3_11_proof(tmp_path):

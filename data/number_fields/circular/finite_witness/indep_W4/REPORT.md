@@ -152,8 +152,42 @@ it), in the form: for a proper 4-colouring without tight cycles of a graph whose
 The note and the paper state the lemma with `U ∩ (−U) = ∅`, the ranges for `ρ ≠ 0`, the chain steps in both
 directions with a ℤ-basis, and "infeasibility implies `κ(U) ≤ 1/4`".
 
+## The remark after the lemma: a finite construction (a later check)
+
+The remark at the end of §6.9 of the note (after Lemma 24 in the paper) claims the converse of the use paragraph for
+a suitable finite set: if `κ(U) ≤ 1/4`, with `κ` over all characters of `ℤU`, then
+`S = {r_1, …, r_k} ∪ {ρ_p : p ∈ Π}` leaves no `p`, where `Π` is the finite set of `p ∈ ℤ^k` allowed by the ranges of
+the basis relations and `ρ_p = yR` for a nonzero integer `y` in the cone
+`C_p = {y : ⟨y, p − Rb⟩ ≥ 0 for every vertex b ∈ {1/4, 3/4}^U}`; and the subgraph `G` of `Cay(ℤU, U ∪ −U)` induced
+by `0`, the vertices of the walks along the chains and the fourth corners of the swaps has a tight cycle in every
+proper 4-colouring, so `χ_c(G) ≥ 4`, with equality if and only if `G` is 4-colourable.
+
+- **Verdict: correct**, under exactly the stated hypotheses (`U` finite, `0 ∉ U`, `U ∩ (−U) = ∅`, `(r_j)` a ℤ-basis
+  of the relation lattice, `κ` over all characters of `ℤU`). The separation step and the cone step are both right.
+- **Wording fixes, all applied:** `P = Σ_{n_u>0} n_u` and `N = Σ_{n_u<0} |n_u|` (not a negative sum); the map
+  `Σ n_u u ↦ Σ n_u f(u) mod 1` is a well-defined character because `Σ n_u f(u) = p(ρ) ∈ ℤ` for every relation; the
+  sign of `y` is fixed before the cone is defined (with "or at most the minimum" the set of good `y` would be
+  `C_p ∪ −C_p`, not a cone); `G` is defined as an induced subgraph instead of "the points spanned".
+- **Remarks:** with only the continuous characters of the plane in place of all characters of `ℤU` the hypothesis
+  is weaker and does not suffice; `U ∩ (−U) = ∅` is a normalisation; torsion is harmless; `κ(U) ≤ 1/4` forces a
+  nonzero relation lattice (otherwise `f ≡ 1/2` is a character); 4-colourability is not needed for `χ_c(G) ≥ 4`;
+  `ρ_p` can be large (for `D = {2, 6, 9, 11}` and `p = (3, −1, −1)` the least `y` has max-norm 9,
+  `ρ_p = 11e_9 − 9e_11`).
+- **Computational check** (`remark_check.py`): distance graphs on `ℤ`, with `U = D` a set of positive integers, for
+  every `D` with `|D| ≤ 4`, largest element at most 13, no `K₄` in `Cay(ℤ, ±D)` and `κ(D) ≤ 1/4` (checked exactly),
+  and `{1, 2, 3}`: 15 sets. For every `p ∈ Π` a `ρ_p` was found and the cone inequalities hold at every vertex of the
+  box; no `p` in a box around `Π` satisfies all the ranges on `S`; `G` has 9 to 128 vertices. A SAT encoding that
+  does not use Lemma 24 (a proper 4-colouring whose tight arcs admit a strictly increasing rank function) is
+  unsatisfiable for every `G`, and satisfiable, that is some 4-colouring has no tight cycle, for the graph built from
+  the chains of the basis alone in 10 of the 15 cases. Every `G` is 4-colourable, and for those with at most 64
+  vertices (`Q = ⌊(|H| + 1)/4⌋`) no `(4Q − 1, Q)`-colouring exists, which gives `χ_c(G) ≥ 4` from the definition.
+  `results/remark_check_referee.log` is the referee's run (its first attempt for `{2, 6, 9, 11}` stopped at the search
+  bound 8 for `y`, then passed with bound 15, and the `(4Q − 1, Q)` check ran up to 102 vertices);
+  `results/remark_check_all.log` is a rerun of the stored program from the repository copy (all 15 pass).
+
 ## Files
 
-`ref_check4.py`, `ref_tests4.py`, `lemmaP_check.py`; `results/main_run.log`, `results/tests_run.log`,
-`results/summary.json`, `results/kissat.log`, `results/drat_trim.log`, `results/cake_lpr.log`,
-`results/lemmaP_check_run1.log`, `results/lemmaP_check_run2.log`.
+`ref_check4.py`, `ref_tests4.py`, `lemmaP_check.py`, `remark_check.py`; `results/main_run.log`,
+`results/tests_run.log`, `results/summary.json`, `results/kissat.log`, `results/drat_trim.log`,
+`results/cake_lpr.log`, `results/lemmaP_check_run1.log`, `results/lemmaP_check_run2.log`,
+`results/remark_check_all.log`, `results/remark_check_referee.log`.

@@ -161,7 +161,8 @@ completion; more precisely, below $4$ it is the least circular chromatic number 
 (Corollary~\ref{cor:localF}): a circular local--global principle below $4$ that extends Theorem~\ref{thm:B}. Below
 $4$ the value is also the circular chromatic number of a finite unit-distance graph in $F^2$
 (Corollary~\ref{cor:finite}), and so is the value $4$ when $\chi_c(F^2)=4$ (Theorem~\ref{thm:finite4}). The proofs give
-no bound on the size of such a graph, but computer searches find explicit ones, certified: for the value $4$, over
+no explicit bound on the size of such a graph (for the value $4$ the remark after Lemma~\ref{lem:periods} replaces
+compactness by a finite construction), but computer searches find explicit ones, certified: for the value $4$, over
 $\Q(\sqrt3,\sqrt{11})$, one with $1\,874$ vertices (found with base-point periods, Lemma~\ref{lem:periods}); for
 $7/2$, over $\Q(\sqrt{11})$, one with $155$ vertices, and others over $\Q(\sqrt{455})$, $\Q(\sqrt{191})$ and
 $\Q(\sqrt{911})$;
@@ -1787,7 +1788,8 @@ Theorem~\ref{thm:F}; for $\Q(\sqrt3,\sqrt{11})$, $\chi=4$ and (7) fails, as $7$ 
 
 An independent checker refereed this subsection with two programs of its own, which test Lemma~\ref{lem:square},
 Corollary~\ref{cor:finiteS4} and the four-colour form of Theorem~W$^+$ on every abelian group of order at most $16$
-(\nolinkurl{data/number_fields/circular/at_four/indep/}). The proof gives no bound on the size of the witness; over
+(\nolinkurl{data/number_fields/circular/at_four/indep/}). The proof gives no explicit bound on the size of the witness
+(the remark after Lemma~\ref{lem:periods} replaces its compactness step by a finite construction); over
 $\Q(\sqrt{59})$ we know none. Colouring-guided growths over $\Q(\sqrt{59})$ with the unit vectors of denominator $210$, $1050$ and
 $2730$ stopped at their limits; for $210$ this was bound to happen, as the character
 $\frac{(89a+59b+89c+59e)}{118}\bmod1$ of the points $(\frac{a+b\sqrt{59}}{210},\frac{c+e\sqrt{59}}{210})$ keeps all
@@ -1839,6 +1841,35 @@ $\chi_c(H_4)=\chi(H_4)=4$, and the value $4$ of Theorem~\ref{thm:finite4} is att
 $\Q(\sqrt3,\sqrt{11})$. An independent referee checked Lemma~\ref{lem:periods} and this use of it, with a numerical
 test on random small instances (\nolinkurl{data/number_fields/circular/finite_witness/indep_W4/}). The same search
 over $\Q(\sqrt{59})$ found no infeasible system with relations of length up to $33$.
+
+\begin{remark}[Corollary~\ref{cor:finiteS4} made effective]
+Conversely, if $\kappa(U)\le\frac14$, with $\kappa$ taken over all characters of $\Z U$, some finite $S$ leaves no
+such $p$, and the construction gives the finite subgraph of Corollary~\ref{cor:finiteS4} explicitly, without
+compactness. For a relation $\rho=\sum_un_uu$ let $P=\sum_{n_u>0}n_u$ and $N=\sum_{n_u<0}|n_u|$; then $\frac{P-3N}4$
+and $\frac{3P-N}4$ are the least and the largest value of $\sum_un_ub_u$ on the box $[\frac14,\frac34]^U$. Let $R$ be
+the matrix with rows $r_1,\dots,r_k$, and $\Pi$ the finite set of $p\in\Z^k$ with $p_j$ in the range of $r_j$ for
+every $j$. For $p\in\Pi$ no $f\in(\frac14,\frac34)^U$ has $Rf=p$: otherwise $\sum_un_uu\mapsto\sum_un_uf(u)\bmod1$
+would be a well-defined character of $\Z U$ (as $\sum_un_uf(u)$ is an integer for every relation) with
+representatives in $(\frac14,\frac34)$. So the affine space $\{f:Rf=p\}$ misses the open box; a linear form that
+separates them is constant on it, so it is $\langle yR,\cdot\rangle$ with $yR\ne0$, and replacing $y$ by $-y$ if
+necessary, $\langle y,p\rangle\ge\max_b\langle yR,b\rangle$ over the closed box. The set $C_p$ of all $y\in\R^k$ with
+this property is $\{y:\langle y,p-Rb\rangle\ge0\text{ for every vertex }b\in\{\frac14,\frac34\}^U\}$, a polyhedral
+cone defined over $\Q$; it is not $\{0\}$, so it contains a nonzero integer vector $y$, and $yR\ne0$ as the $r_j$ are
+linearly independent. Then $\rho_p=yR$ is a nonzero relation with $p(\rho_p)=\langle y,p\rangle\ge\frac{3P-N}4$,
+outside its range, and $S=\{r_1,\dots,r_k\}\cup\{\rho_p:p\in\Pi\}$ leaves no $p$. Let $H$ consist of $0$, all
+vertices of the walks $W_\rho$ and $W_{r_j}$ along chains from $0$ to the elements of $S$ (with $x_0=0$), and all
+fourth corners added by the swaps, and let $G$ be the subgraph of $\Cay(\Z U,U\cup-U)$ induced by $H$. By
+Lemma~\ref{lem:periods} and the paragraph after it, every proper $4$-colouring of $G$ has a tight cycle; so
+$\chi_c(G)\ge4$, with equality if and only if $G$ is $4$-colourable (Lemma~\ref{lem:tight}), for instance if
+$\Cay(\Z U,U\cup-U)$ is. As a character with values in $(\frac14,\frac34)$ gives a homomorphism of
+$\Cay(\Z U,U\cup-U)$ to some $K_{p/q}$ with $p/q<4$ (as in the converse after Corollary~\ref{cor:finiteS4}), some
+finite subgraph of $\Cay(\Z U,U\cup-U)$ has $\chi_c\ge4$ if and only if $\kappa(U)\le\frac14$, and then this
+construction finds one. The referee checked the remark by computer on $15$ sets $D$ of positive integers with
+$\kappa(D)\le\frac14$, as distance graphs on $\Z$
+(\nolinkurl{data/number_fields/circular/finite_witness/indep_W4/remark_check.py}): $S$ leaves no $p$, and a SAT
+encoding that does not use Lemma~\ref{lem:periods} shows that every proper $4$-colouring of $G$ has a tight cycle; in
+$10$ of the cases the chains of the basis alone do not suffice.
+\end{remark}
 
 \section{Computer checks}\label{sec:checks}
 
@@ -1975,8 +2006,8 @@ a plane without unit triangles, nine vertices are needed, and they suffice over 
 Section~\ref{sec:twoprimes}. Over other such planes the least number is open; over $\Q(\sqrt{15})$ the smallest
 witness we found has $13$ vertices (\nolinkurl{witness_q15.json.gz}), and none of the three nine-vertex graphs
 appeared with the denominators we tried.)
-When $\chi_c(F^2)=4$ the value is attained as well (Theorem~\ref{thm:finite4}), but the proof gives no bound on the
-size of a witness; over $\Q(\sqrt3,\sqrt{11})$ we found one with $1\,874$ vertices (Lemma~\ref{lem:periods} and the
+When $\chi_c(F^2)=4$ the value is attained as well (Theorem~\ref{thm:finite4}), and the proof, made effective by the
+remark after Lemma~\ref{lem:periods}, gives no explicit bound on the size of a witness; over $\Q(\sqrt3,\sqrt{11})$ we found one with $1\,874$ vertices (Lemma~\ref{lem:periods} and the
 remarks after it), and over $\Q(\sqrt{59})$ we know none: how small can one be? Its edge vectors $U$ must satisfy $\kappa(U)\le\frac14$, which excludes those with denominator $210$ (Section~\ref{sec:twoprimes}).
 \end{enumerate}
 
