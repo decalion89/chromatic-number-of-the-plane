@@ -1,4 +1,4 @@
-# Explicit finite witnesses for `χ_c = 7/2` and `χ_c = 3`
+# Explicit finite witnesses for `χ_c = 4`, `χ_c = 7/2` and `χ_c = 3`
 
 Corollary 7 of `papers/three-colours/` (Corollary F12 of `notes/circular_planes.md`) says that below 4 the circular
 chromatic number of the plane over a number field `F` is the circular chromatic number of a finite unit-distance graph
@@ -8,6 +8,10 @@ have no unit triangle (last section). For the four fields `χ_c(ℚ(√d)²) = 7
 Proposition 3 of the paper (a place with residue field `𝔽₇`) gives `≤ 7/2`, as 7 splits in `ℚ(√11)`, `ℚ(√191)` and
 `ℚ(√911)` and ramifies in `ℚ(√455)`; this agrees with Theorem F, as (a) and (b) fail for `d ≡ 11 (mod 12)`, and does
 not use its computer-assisted Proposition 9.
+
+Theorem F16 of the note (Theorem G of the paper) adds the value 4: when `χ_c(F²) = 4`, some finite unit-distance
+graph in `F²` has `χ_c = 4`, again with no bound on its size. The last section gives an explicit one over
+`ℚ(√3, √11)`, with 1 874 vertices.
 
 **The claim.** Each graph `H` below is a unit-distance graph in `ℚ(√d)²`, induced (every pair of its points at
 distance 1 is an edge), with `χ_c(H) = 7/2`.
@@ -151,6 +155,11 @@ explicitly (an `assert` would be skipped under `python -O`), `check_witness.py` 
 | `indep_W/` | a referee's programs and report for the three `7/2` witnesses (below) |
 | `indep_V3/` | a referee's programs and report for the value-3 witnesses (below) |
 | `verification.txt` | the outputs of both checks for every witness |
+| `witness_q3_11.json.gz` | the witness for `χ_c = 4` over `ℚ(√3, √11)`: the denominator 84, the points (eight integers each, last section), the edges, a proper 4-colouring, the cycles and `fixed_vertex` (the origin) |
+| `witness_q3_11.cnf.gz`, `witness_q3_11.drat.xz` | its formula (the one `check_witness4.py` builds) and a DRAT proof of unsatisfiability |
+| `check_witness4.py` | the checker for the value 4 (see its docstring for the encoding and the logic) |
+| `construction_q3_11/` | the programs that found it (last section) |
+| `indep_W4/` | a referee's programs, results and report for it (last section) |
 
 ## The value 3: nine points over `ℚ(√7)` and `ℚ(√31)`
 
@@ -274,3 +283,63 @@ the formulas clause by clause; and the reproduction over `ℚ(√7)`. It found n
 seed of the `ℚ(√31)` growth is stored, the remark on `ℚ(√15)` and `ℚ(√39)` is corrected, all three graphs are shown to
 be unit-distance graphs, Vince and Bondy–Hell are cited, the proof by hand names the cycles it uses, and Question 3
 is worded more precisely.
+
+## The value 4: a witness over `ℚ(√3, √11)`
+
+`witness_q3_11.json.gz` is an induced unit-distance graph `H₄` in `ℚ(√3, √11)²` with 1 874 vertices and 8 085 edges,
+and `χ_c(H₄) = χ(H₄) = 4`. A point is `[a0, a1, a2, a3, b0, b1, b2, b3]`, meaning
+`((a0 + a1√3 + a2√11 + a3√33)/84, (b0 + b1√3 + b2√11 + b3√33)/84)`; distance 1 is four integer equations in the basis
+`(1, √3, √11, √33)`. As `χ(ℚ(√3, √11)²) = 4`, `χ_c(ℚ(√3, √11)²) = 4`, and `H₄` attains it; Theorem F16 says that some
+finite graph does, without a bound.
+
+- *Upper bound.* A proper 4-colouring (stored).
+- *Lower bound.* Every proper 4-colouring of `H₄` has a tight cycle (colour difference `1 mod 4` along every arc)
+  among the 4 992 listed ones (4 916 of length 4, 52 of length 8, 24 of length 12): the formula of `check_witness4.py`
+  ("a proper 4-colouring, the origin coloured 0, in which no listed cycle is tight"; no auxiliary variables) is
+  unsatisfiable, and Lemma 20 of the paper (Guichard) gives `χ_c(H₄) ≥ 4`.
+- *Verification.* `xz -dk witness_q3_11.drat.xz` and
+  `python3 check_witness4.py witness_q3_11.json.gz witness_q3_11.cnf.gz witness_q3_11.drat drat-trim` check the points,
+  all 1 755 001 pairs, the colouring, the cycles and the formula (sha256 `febd6b3d…`), and drat-trim prints
+  `s VERIFIED` (about 15 seconds). The referee's programs (`indep_W4/`, report `REPORT.md`, outputs in `results/`)
+  share no code with it: they recompute every unit pair exactly and in floating point, write their own encoding
+  (variables `x(v, k) = kn + v + 1` and one per tight arc), and kissat, `drat-trim -L` and `cake_lpr` print
+  `s UNSATISFIABLE`, `s VERIFIED` and `s VERIFIED UNSAT`; their tests reject a moved point, an improper colouring and a
+  cycle through a non-edge, and find the formula satisfiable without the cycle clauses.
+- `H₄` has not been minimised (74 of its vertices lie on no listed cycle).
+
+**How it was found** (`construction_q3_11/`; Lemma F17 of the note, base-point periods). Let `U` be the 27 unit
+vectors `R₆₀ʲ R_Aᵏ R_Gˡ (1, 0)` of `../at_four/q3_11.py`, and `c` a proper 4-colouring without tight cycles of a finite
+graph whose edges are differences in `±U`. For a closed walk `W` let `Λ(W)` be the sum of the representatives in
+`{1, 2, 3}` of the colour differences along it, and `per(W) = Λ(W)/4 − N(W)`, with `N(W)` the number of steps in
+`−U` (no vector of `U` is the negative of another). Then `per` is an integer, additive, unchanged by backtracks and by
+exchanging two consecutive steps whose square lies in the graph (otherwise the square is a tight cycle), and
+`(P − 3N)/4 < per(W) < (3P − N)/4` when `W` has `P` steps in `U` and `N` in `−U`, `P + N ≥ 1` (otherwise `W` or its
+reverse is tight). Walks of relations `ρ = Σ n_u u = 0` joined by such moves to the walks of a ℤ-basis of the
+relation lattice make `per` an integer homomorphism `p` on it with `p(ρ)` strictly inside these ranges for `ρ ≠ 0`; a
+character of `ℤU` with representatives in `(1/4, 3/4)` would give one, so if none exists, `κ(U) ≤ 1/4`. With python-sat
+1.9 (CaDiCaL 1.5.3), OR-Tools 9.15, PARI/GP 2.15, kissat 4.0.4 and drat-trim, run in a scratch folder (`KISSAT` and
+`DRAT_TRIM` name the binaries for `iter_shrink.sh`; `C` is this folder),
+
+    python3 $C/short_rel.py 12 rel_B12.json                  # the 4 641 relations with Σ n_u² ≤ 12
+    python3 $C/per_cegar.py rel_B12.json 400 added_B12.json  # 41 more, of length 8; then no p is left
+    python3 $C/per_ilp.py rel_B12.json added_B12.json        # core.json: 256 of them leave none
+    python3 $C/short_rel.py 14 rel_B14.json                  # the pool of the chains
+    python3 $C/per_build.py core.json rel_B14.json added_B12.json H_core1.json   # 13 230 points
+    python3 $C/cycles_of.py H_core1.json Wc_core1.json       # 37 290 directed cycles
+    cp $C/certify4.py $C/shrink_core.py $C/iter_shrink.sh .
+    python3 certify4.py Wc_core1.json core1.cnf              # kissat refutes it in about a minute
+    kissat --seed=1 core1.cnf core1.drat; drat-trim core1.cnf core1.drat -c core1.core
+    python3 shrink_core.py Wc_core1.json core1.core W_s1.json; python3 certify4.py W_s1.json s1.cnf   # 2 688 points
+    ./iter_shrink.sh s1 6; PFX=j ./iter_shrink.sh it6 5      # eleven more clausal cores: 1 874 points
+    python3 $C/make_final4.py W_j5.json witness_q3_11
+
+reproduce `witness_q3_11.json.gz` and its formula exactly (checked again from these copies). Each round of
+`iter_shrink.sh` refutes the current formula with kissat and keeps the vertices that occur in the clausal core
+(`drat-trim -c`). Each of the 41 added relations lies among the vectors with one value of `k`, so it is `R_A^k`
+times a relation among the 18 vectors `ζ^j g^l` (`ζ = e^{iπ/3}`, `g = (11 + 5√−3)/14`, the rotation `R_G`); each has
+length 8 and a coefficient 2 or 3 (absolute coefficients 3, 3, 1, 1 for 17 of them, such as `3ζ̄ + ζ + g − 3ζ̄g = 0`;
+3, 2, 1, 1, 1 for 14; 3, 2, 2, 1 for 10), so its squared norm (20, 16 or 18) exceeds the bound 12 of the enumeration;
+with all 18 138 relations of squared norm at most 14 but without them a solution `p` exists. `core_min.py` reduces the infeasible
+system to 37 relations of length 8, whose walks and chains give 4 134 points, but kissat did not refute that formula
+in ten minutes. The integer solver (CP-SAT) only guided the construction; the proof of `χ_c(H₄) = 4` is the SAT
+refutation above.

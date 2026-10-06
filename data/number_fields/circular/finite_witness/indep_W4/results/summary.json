@@ -1,0 +1,61 @@
+{
+ "witness": "../witness_q3_11.json.gz",
+ "n_points": 1874,
+ "n_edges_recomputed": 8085,
+ "float_crosscheck": [
+  8085,
+  0,
+  0.00017636865754444564
+ ],
+ "colour_classes": [
+  504,
+  460,
+  447,
+  463
+ ],
+ "n_cycles": 4992,
+ "cycle_lengths": {
+  "4": 4916,
+  "8": 52,
+  "12": 24
+ },
+ "n_arcs": 8848,
+ "edges_compare": {
+  "declared": 8085,
+  "malformed": 0,
+  "duplicates": 0,
+  "missing": 0,
+  "extra": 0
+ },
+ "cnf": {
+  "path": "OUT/main/ref4_main.cnf",
+  "vars": 16344,
+  "clauses": 85843,
+  "sha256": "1f28389f2aec69a069146c82b7c1a7870a5955fa72a380e21a8d3335efcdcde6"
+ },
+ "kissat": {
+  "exit": 20,
+  "s": [
+   "s UNSATISFIABLE"
+  ],
+  "wall": 29.52611804008484,
+  "cpu": 21.66796
+ },
+ "drat_trim": {
+  "exit": 0,
+  "s": [
+   "s VERIFIED"
+  ],
+  "wall": 21.50865340232849,
+  "cpu": 15.251818999999998
+ },
+ "cake_lpr": {
+  "exit": 0,
+  "s": [
+   "s VERIFIED UNSAT"
+  ],
+  "wall": 18.412887573242188,
+  "cpu": 11.530058
+ },
+ "verdict": "REFEREE: ACCEPTED"
+}

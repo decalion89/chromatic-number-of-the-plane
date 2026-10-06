@@ -12,6 +12,13 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Changed
+- **An explicit graph with `χ_c = 4` over `ℚ(√3, √11)` (6 October, night).**
+  `data/number_fields/circular/finite_witness/witness_q3_11.json.gz`: 1 874 points, all 8 085 unit pairs as edges,
+  `χ_c = χ = 4`, so the value 4 of Theorem F16 is attained by an explicit graph. Certified by `check_witness4.py`
+  with drat-trim and by a referee's own programs (`indep_W4/`: second encoding, kissat, drat-trim, `cake_lpr`).
+  Found with base-point periods (Lemma F17 of the note, with proof, refereed; `construction_q3_11/` reproduces it). Note
+  §6.9 and Question 2, paper (the lemma on base-point periods, abstract, introduction, Question 3), README files,
+  research log, `tests/test_at_four.py`.
 - **27 explicit unit vectors with `κ = 1/4` over `ℚ(√3, √11)` (6 October, evening).** `R₆₀ʲ R_Aᵏ R_Gˡ (1, 0)`,
   `j, k, l ∈ {−1, 0, 1}` (`R_A` the Moser angle, `R_G` cosine 11/14): a character of order 12 at exactly `1/4`
   and an exact certificate (12 073 nodes) that none maps them into `(1/4, 3/4)`, so a finite `χ_c = 4` witness lies

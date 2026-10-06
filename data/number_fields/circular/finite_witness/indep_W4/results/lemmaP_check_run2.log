@@ -1,0 +1,42 @@
+P1 instances                                                 80
+P1 proper colourings (c(x0)=0)                               118764
+P1 tight-cycle-free colourings                               97080
+P1-control[U meets -U] moves del                             38
+P1-control[U meets -U] moves ins                             357
+P1-control[U meets -U] moves swap                            41
+P1-control[U meets -U] moves swap_degenerate                 30
+P1-control[U meets -U] violations a                          0
+P1-control[U meets -U] violations b                          17
+P1-control[U meets -U] violations c                          198
+P1-control[U meets -U] violations c_deg                      0
+P1-control[U meets -U] violations d                          17
+P1-control[U meets -U] walks                                 20
+P1-control[has tight cycle] moves del                        9652
+P1-control[has tight cycle] moves ins                        115612
+P1-control[has tight cycle] moves swap                       8766
+P1-control[has tight cycle] moves swap_degenerate            4768
+P1-control[has tight cycle] violations a                     0
+P1-control[has tight cycle] violations b                     0
+P1-control[has tight cycle] violations c                     3996
+P1-control[has tight cycle] violations c_deg                 0
+P1-control[has tight cycle] violations d                     119
+P1-control[has tight cycle] walks                            5475
+P1[no tight cycle] moves del                                 18482
+P1[no tight cycle] moves ins                                 181611
+P1[no tight cycle] moves swap                                13264
+P1[no tight cycle] moves swap_degenerate                     8479
+P1[no tight cycle] violations a                              0
+P1[no tight cycle] violations b                              0
+P1[no tight cycle] violations c                              0
+P1[no tight cycle] violations c_deg                          0
+P1[no tight cycle] violations d                              0
+P1[no tight cycle] walks                                     9600
+P2 bubble-sort walks checked                                 11528
+P2 character claim tested                                    3364
+P2 instances                                                 17
+P2 instances skipped (no character found)                    3
+P2 mcmc accepted recolourings                                2698
+P2 per(W_rho) == sum n_u f(u) (character colouring)          132
+P2 relations rho in S                                        264
+P2 triples                                                   822
+P2 |H| total                                                 2304

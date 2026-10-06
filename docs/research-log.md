@@ -10674,3 +10674,33 @@ without a bound on the size.
   `ℤ` with `κ = 1/4` have witnesses on intervals of 8–12 points (with triangles) and 16–29 points (triangle-free),
   of the order of the largest distance; our lattices have rank 4. (3) The points `(a, e√59)/D` of `ℚ(√59)²`
   (norm-one elements of `ℚ(√−59)`) have `κ ≈ 29/59`: nearly bipartite.
+
+## An explicit graph with `χ_c = 4` over `ℚ(√3, √11)` (6 October, night)
+
+- **Result (certified).** `finite_witness/witness_q3_11.json.gz`: 1 874 points of `ℚ(√3, √11)²` (denominator 84),
+  all 8 085 unit pairs as edges, a proper 4-colouring, and 4 992 listed cycles (4 916 of length 4, 52 of length 8, 24
+  of length 12) such that every proper 4-colouring has a tight one: the formula of `check_witness4.py` (sha256
+  `febd6b3d…`) is refuted by kissat 4.0.4 in 16 seconds and drat-trim checks the proof. A referee wrote its own
+  programs from the file format (`indep_W4/`): all 1 755 001 pairs recomputed exactly and in floating point; its own
+  encoding (16 344 variables, 85 843 clauses, one variable per tight arc); kissat `s UNSATISFIABLE`, `drat-trim -L`
+  `s VERIFIED`, `cake_lpr` `s VERIFIED UNSAT`; its tests reject a moved point, an improper colouring and a cycle
+  through a non-edge, and find the formula satisfiable without the cycle clauses. So `χ_c(H₄) = χ(H₄) = 4`: the value
+  4 of Theorem F16 is attained by an explicit graph.
+- **How (base-point periods, Lemma F17 of the note).** For the 27 vectors of `at_four/q3_11.py`, the integer system
+  "an integer homomorphism `p` on the relation lattice with `p(ρ)` strictly inside `((P − 3N)/4, (3P − N)/4)`" is
+  still feasible with all 18 138 relations of squared norm at most 14, but a counterexample search (`per_cegar.py`:
+  each solution refuted by a shortest relation outside its range, CP-SAT) added to the 4 641 relations of squared norm
+  at most 12 41 relations of length 8, after which no `p` is left (33 seconds): each is `R_A^k` times a relation among
+  the vectors `ζ^j g^l` with a coefficient 2 or 3 (absolute coefficients 3, 3, 1, 1 for 17, such as
+  `3ζ̄ + ζ + g − 3ζ̄g = 0`; 3, 2, 1, 1, 1 for 14; 3, 2, 2, 1 for 10), of squared norm 20, 16 or 18; an infeasible core
+  has 256 relations (37 after deletion). The walks of the 256, tied to the basis relations by bubble-sort chains: 13
+  230 points (926 chain steps, 27 351 swaps), period system infeasible; the 37 290 cycles that Lemma F17 uses (squares
+  and relation walks, both orientations) give a formula that kissat refutes in about a minute; twelve rounds of
+  drat-trim clausal cores reduced it to 1 874 points. From the 37-relation core the walks give 4 134 points, but
+  kissat did not refute that formula in ten minutes (stopped; its proof file had reached 0.8 GB). The construction is
+  reproduced exactly from the stored programs (`construction_q3_11/`).
+- **Before (same evening).** A blind colouring-guided growth in the Cayley graph of the 27 vectors (`grow8b`, adding
+  blocked or one-colour candidates) reached 19 859 points in 47 rounds without a witness and was paused; on all 4 641
+  relations of squared norm at most 12 the period system was feasible. Over `ℚ(√59)` the same search stayed feasible
+  (2 926 relations of length up to 33).
+- A deletion minimisation of `H₄` is running; nothing is claimed about it yet.

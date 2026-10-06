@@ -870,11 +870,12 @@ Corollary F14 gives a finite subgraph `H` with `χ_c(H) = 4`; the unit-distance 
 `χ_c = 4`, as `4 = χ_c(H) ≤ χ_c ≤ χ_c(F²) = 4`. For `ℚ(√59)` and `ℚ(√83)` see the examples after Theorem F; for
 `ℚ(√3, √11)`, `χ = 4` and (7) fails, as 7 is inert in `ℚ(√3)`. ∎
 
-The proof gives no bound on the size of the witness, and we have not found one: the growths of the research log (6
-October), with the unit vectors of denominator `D = 210`, `1050` and `2730` over `ℚ(√59)`, stopped at their limits.
-For `D = 210` this was bound to happen: the character `θ = (89/118, 1/2, 89/118, 1/2)` of `at_four/` keeps all 108
-unit vectors with denominator 210 at distance at least `15/59` from `ℤ`, so every graph built from them maps to
-`K_{59/15}` (checked by enumeration, and by the referee with another character).
+The proof gives no bound on the size of the witness. Over `ℚ(√59)` we have not found one (over `ℚ(√3, √11)` see
+below): the growths of the research log (6 October), with the unit vectors of denominator `D = 210`, `1050` and `2730`
+over `ℚ(√59)`, stopped at their limits. For `D = 210` this was bound to happen: the character
+`θ = (89/118, 1/2, 89/118, 1/2)` of `at_four/` keeps all 108 unit vectors with denominator 210 at distance at least
+`15/59` from `ℤ`, so every graph built from them maps to `K_{59/15}` (checked by enumeration, and by the referee with
+another character).
 
 **An explicit set at `1/4` over `ℚ(√3, √11)`.** Let `R₆₀` be the rotation by 60°, `R_A` the rotation with cosine `5/6`
 and sine `√11/6` (the angle of the Moser spindle) and `R_G` the rotation with cosine `11/14` and sine `5√3/14`. The 27
@@ -884,7 +885,49 @@ character of order 12 on the coordinates over `(1, √3, √11, √33)/84` keeps
 no character maps them into the open interval `(1/4, 3/4)`. So the Cayley graph of these 54 unit vectors contains a
 finite subgraph with `χ_c = 4` (Corollary F14), without Theorem F or Proposition F15, and `χ_c(ℚ(√3, √11)²) ≥ 4`
 directly. Without `R_G` the same construction has `κ = 3/11` (an 11-adic character), and with `R₆₀` and `R_G` alone
-`κ = 1/3`. The subgraph itself is not known.
+`κ = 1/3`.
+
+**An explicit witness at `4` over `ℚ(√3, √11)`** (6 October). `finite_witness/witness_q3_11.json.gz` is an induced
+unit-distance graph `H₄` in `ℚ(√3, √11)²` with 1 874 vertices and 8 085 edges, and `χ_c(H₄) = χ(H₄) = 4`: it has a
+proper 4-colouring, and every proper 4-colouring has a tight cycle among 4 992 listed ones (of lengths 4, 8 and 12),
+by a SAT refutation that drat-trim checks (`check_witness4.py`) and that a referee's own encoding confirms with the
+verified checker `cake_lpr` (`finite_witness/indep_W4/`); Lemma F9 gives `χ_c(H₄) ≥ 4`. So the value 4 of Theorem F16
+is attained by an explicit graph over this field. It was found with base-point periods:
+
+> **Lemma F17 (base-point periods).** Let `G` be a graph on a finite set of points whose edges join `x` and `x + s`
+> with `s ∈ U ∪ −U` (`U` a finite set of nonzero vectors with `U ∩ −U = ∅`), and `c` a proper 4-colouring of `G`
+> without tight cycles. For a closed walk `W` in `G` let `Λ(W)` be the sum, over its arcs `x → y`, of the
+> representative in `{1, 2, 3}` of `c(y) − c(x)`, and `per(W) = Λ(W)/4 − N(W)`, where `N(W)` is the number of steps in
+> `−U`. Then `per(W)` is an integer; `per` is additive under concatenation and `per(W⁻¹) = −per(W)`; it does not
+> change when a backtrack is inserted or deleted, or when two consecutive steps `s ≠ ±t` are exchanged inside a square
+> of `G`; and if `W` has `P` steps in `U` and `N` in `−U`, `P + N ≥ 1`, then `(P − 3N)/4 < per(W) < (3P − N)/4`.
+
+*Proof.* The colour differences along `W` sum to 0 mod 4, so `4 | Λ(W)`. `Λ` and `N` are additive; reversing `W`
+replaces each representative `δ` by `4 − δ` and exchanges the steps in `U` and `−U`, so, with `L = P + N`,
+`per(W⁻¹) = (4L − Λ(W))/4 − P = −per(W)`. A backtrack adds `δ + (4 − δ) = 4` to `Λ` and one step in `−U`. The paths
+`x → x + s → x + s + t` and `x → x + t → x + s + t` have sums of representatives in `{2, …, 6}` that agree mod 4; if
+they differed, one would be 2 and the other 6, and the square `x → x + s → x + s + t → x + t → x`, or its reverse,
+would be a tight cycle (its four points are distinct as `s, t ≠ 0` and `s ≠ ±t`). Finally `L ≤ Λ(W) ≤ 3L`; if
+`Λ(W) = L`, every arc of `W` is tight, and the closed walk `W` contains a directed cycle of tight arcs, of length at
+least 3 as an arc and its reverse are not both tight; if `Λ(W) = 3L`, the same holds for `W⁻¹`. So `L < Λ(W) < 3L`,
+which is the last claim. ∎
+
+So suppose that `G` contains the walk `W_ρ` from a point `x₀` (with `|n_u|` steps `sign(n_u) u` in a fixed order of
+`U`) of each relation `ρ = Σ n_u u = 0` in a finite set `S`, and that each `ρ ∈ S` is joined to `0` by chain steps
+`ρ′ = ρ″ ± r_j` (`r_1, …, r_k` a ℤ-basis of the relation lattice), each realised inside `G` by turning
+`W_ρ″ W_{r_j}^{±1}` into `W_ρ′` with such moves. Then `per(W_ρ) = p(ρ)` for an integer homomorphism `p` on the
+relation lattice (the empty walk has period 0), with `(P − 3N)/4 < p(ρ) < (3P − N)/4` for every `ρ ≠ 0` met; if no
+such `p` exists, every proper 4-colouring of `G` has a tight cycle. A character `χ` of `ℤU` whose values have
+representatives `f(u) ∈ (1/4, 3/4)` would give such a `p`, `p(ρ) = Σ n_u f(u)` (an integer, as
+`Σ n_u χ(u) = χ(0) = 0`), so the infeasibility of the system implies `κ(U) ≤ 1/4`, with finitely many relations. For
+the 27 vectors above, the relations with `Σ n_u² ≤ 12` and 41 of length 8 found by a counterexample search (each
+`R_A^k` times a relation among the vectors `ζ^j g^l`, `ζ = e^{iπ/3}`, `g = (11 + 5√−3)/14` the rotation `R_G`, with a
+coefficient 2 or 3, such as `3ζ̄ + ζ + g − 3ζ̄g = 0`) already leave no such `p` (an integer-programming computation
+that only guided the construction). The walks of 256 of them, tied to a basis by bubble sorts, span 13 230 points, and
+clausal cores of SAT refutations reduced these to `H₄` (`finite_witness/construction_q3_11/`). A referee checked Lemma
+F17 and this use of it, with a numerical test on random small instances (`finite_witness/indep_W4/REPORT.md`); the
+hypothesis `U ∩ −U = ∅` and the ranges only for `ρ ≠ 0` are its corrections. The same search over `ℚ(√59)` (50 unit
+vectors with denominator 1050) found no infeasible system with relations of length up to 33.
 
 ## 7. Questions
 
@@ -898,13 +941,15 @@ directly. Without `R_G` the same construction has `κ = 3/11` (an 11-adic charac
    be one. The 5-chromatic unit-distance graphs we know lie over fields containing `√3`, or `√−3` and `√−7`, and 3
    and −7 are not squares modulo 19.
 2. *Finite witnesses.* By Corollary F12 some finite unit-distance graph in `ℚ(√11)²` has `χ_c = 7/2`; the proof
-   (compactness) gives no bound on its size, and the smallest we know has 155 vertices and is vertex-critical (§6.8). How small can it be? (For the value 3 in a plane without unit triangles nine vertices are needed, and they suffice over `ℚ(√7)` and
-`ℚ(√31)`; §6.8. Over other such planes the least number is open; over `ℚ(√15)` the smallest witness we found has 13
-vertices (`witness_q15.json.gz`), and none of the three nine-vertex graphs appeared with the denominators we tried.) When `χ_c(F²) = 4` the value is
-   attained as well (Theorem F16, for example over `ℚ(√59)`), but the proof gives no bound on the size of a witness,
-   and we know none: how small can one be over `ℚ(√59)`? By the converse in §6.9 its edge vectors `U` must satisfy
-   `κ(U) ≤ 1/4`, which excludes those with denominator 210 (`at_four/theta59_210.json`). Over `ℚ(√3, √11)` an explicit
-   set with `κ = 1/4` has 27 vectors (§6.9), so a witness lies in its Cayley graph; how small can it be?
+   (compactness) gives no bound on its size, and the smallest we know has 155 vertices and is vertex-critical (§6.8).
+   How small can it be? (For the value 3 in a plane without unit triangles nine vertices are needed, and they suffice
+   over `ℚ(√7)` and `ℚ(√31)`; §6.8. Over other such planes the least number is open; over `ℚ(√15)` the smallest
+   witness we found has 13 vertices (`witness_q15.json.gz`), and none of the three nine-vertex graphs appeared with
+   the denominators we tried.) When `χ_c(F²) = 4` the value is attained as well (Theorem F16), but the proof gives no
+   bound on the size of a witness; over `ℚ(√3, √11)` one has 1 874 vertices (§6.9), over `ℚ(√59)` we know none: how
+   small can one be? By the converse in §6.9 its edge vectors `U` must satisfy `κ(U) ≤ 1/4`, which excludes those with
+   denominator 210 (`at_four/theta59_210.json`). Over `ℚ(√3, √11)` an explicit set with `κ = 1/4` has 27 vectors
+   (§6.9), and the witness found in its Cayley graph has not been minimised.
 3. *The one-prime probe.* Does `r0(5^k)` tend to `3/10` (the conjecture of §5)? Theorem E no longer needs it.
 
 Measurements (floating-point MIP, not proofs): for `U = G_25{1, u_n, ū_n : n = 1, 7, 19}`, `max_ξ min_u ‖ξ(u)‖` is

@@ -1,0 +1,25 @@
+== Task 1: points and unit-distance graph ==
+points n = 1874, denominator D = 84, max |integer coordinate| = 227
+all 1874 points are distinct
+exact all-pairs scan: 1755001 pairs examined, 8085 unit-distance pairs (1.0 s)
+float cross-check: 8085 pairs with |d^2-1| < 1e-6, 0 disagreements with the exact set; min |d^2-1| over the other pairs = 0.000176
+degrees: min 2, max 36, isolated vertices 0
+== Task 2: the colouring ==
+proper 4-colouring of the recomputed graph; colour class sizes [504, 460, 447, 463]
+== Task 3: the listed cycles ==
+4992 cycles, all simple closed walks along recomputed edges; lengths {4: 4916, 8: 52, 12: 24}
+distinct directed arcs used: 8848; vertices touched: 1800
+== Task 1 (end): comparison with the declared 'edges' field ==
+declared entries 8085 (malformed 0, duplicates 0, distinct 8085); recomputed 8085
+unit pairs missing from declared list: 0 []
+declared pairs that are NOT at unit distance: 0 []
+declared edge set == recomputed edge set
+(consistency) listed cycles tight under the given colouring: 304
+== Task 4: CNF ==
+CNF OUT/main/ref4_main.cnf: 16344 variables (7496 colour + 8848 tight-arc), 85843 clauses, sha256 1f28389f2aec69a069146c82b7c1a7870a5955fa72a380e21a8d3335efcdcde6
+== Task 5: kissat -> drat-trim (LRAT) -> cake_lpr ==
+kissat: exit 20, ['s UNSATISFIABLE'], wall 29.5 s, cpu 21.7 s, proof 13180261 bytes
+drat-trim: exit 0, ['s VERIFIED'], wall 21.5 s, cpu 15.3 s, LRAT 50682427 bytes
+cake_lpr: exit 0, ['s VERIFIED UNSAT'], wall 18.4 s, cpu 11.5 s
+CNF sha256 1f28389f2aec69a069146c82b7c1a7870a5955fa72a380e21a8d3335efcdcde6 unchanged during the run
+REFEREE: ACCEPTED

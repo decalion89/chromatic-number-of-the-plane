@@ -62,7 +62,8 @@ $2$, $3$ or $7/2$. We show that these are the only values below $4$: for every n
 $7/2$ or at least $4$, and it is $7/2$ exactly when $\chi(F^2)\ge4$ and some prime of $F$ above $7$ has residue
 degree $1$; below $4$ it is the least circular chromatic number of the planes over the completions of $F$, and it is
 the circular chromatic number of some finite unit-distance graph in $F^2$; so is the value $4$, when it occurs (for
-example over $\Q(\sqrt{59})$), as at four colours the winding argument fails only on tight $4$-cycles. The proof of this
+example over $\Q(\sqrt{59})$), as at four colours the winding argument fails only on tight $4$-cycles; over
+$\Q(\sqrt3,\sqrt{11})$ we give an explicit such graph, with $1\,874$ vertices. The proof of this
 classification has one computer-assisted step, an exact finite computation along the rational rotations whose denominators divide $325$;
 without it we show that $\chi_c(F^2)\ge56/17$ whenever $\chi(F^2)\ge4$.
 \end{abstract}
@@ -160,8 +161,9 @@ completion; more precisely, below $4$ it is the least circular chromatic number 
 (Corollary~\ref{cor:localF}): a circular local--global principle below $4$ that extends Theorem~\ref{thm:B}. Below
 $4$ the value is also the circular chromatic number of a finite unit-distance graph in $F^2$
 (Corollary~\ref{cor:finite}), and so is the value $4$ when $\chi_c(F^2)=4$ (Theorem~\ref{thm:finite4}). The proofs give
-no bound on the size of such a graph; for the value $4$ we know none, but for $7/2$ a computer search finds explicit
-ones, certified: over $\Q(\sqrt{11})$ one with $155$ vertices, and others over $\Q(\sqrt{455})$, $\Q(\sqrt{191})$ and
+no bound on the size of such a graph, but computer searches find explicit ones, certified: for the value $4$, over
+$\Q(\sqrt3,\sqrt{11})$, one with $1\,874$ vertices (found with base-point periods, Lemma~\ref{lem:periods}); for
+$7/2$, over $\Q(\sqrt{11})$, one with $155$ vertices, and others over $\Q(\sqrt{455})$, $\Q(\sqrt{191})$ and
 $\Q(\sqrt{911})$;
 for the value $3$, over $\Q(\sqrt7)$, whose plane has no unit triangle, one with nine vertices, the fewest possible
 by an exhaustive enumeration (Section~\ref{sec:twoprimes}). For a
@@ -1785,12 +1787,58 @@ Theorem~\ref{thm:F}; for $\Q(\sqrt3,\sqrt{11})$, $\chi=4$ and (7) fails, as $7$ 
 
 An independent checker refereed this subsection with two programs of its own, which test Lemma~\ref{lem:square},
 Corollary~\ref{cor:finiteS4} and the four-colour form of Theorem~W$^+$ on every abelian group of order at most $16$
-(\nolinkurl{data/number_fields/circular/at_four/indep/}). The proof gives no bound on the size of the witness, and we
-know none. Colouring-guided growths over $\Q(\sqrt{59})$ with the unit vectors of denominator $210$, $1050$ and
+(\nolinkurl{data/number_fields/circular/at_four/indep/}). The proof gives no bound on the size of the witness; over
+$\Q(\sqrt{59})$ we know none. Colouring-guided growths over $\Q(\sqrt{59})$ with the unit vectors of denominator $210$, $1050$ and
 $2730$ stopped at their limits; for $210$ this was bound to happen, as the character
 $\frac{(89a+59b+89c+59e)}{118}\bmod1$ of the points $(\frac{a+b\sqrt{59}}{210},\frac{c+e\sqrt{59}}{210})$ keeps all
 $108$ unit vectors with denominator $210$ at distance at least $\frac{15}{59}$ from $\Z$, so that every graph built
-from them maps to $K_{59/15}$. Over $\Q(\sqrt3,\sqrt{11})$ an explicit set at $\frac14$ is small: with $R_{60}$ the rotation by $60^\circ$, $R_A$ the rotation with cosine $\frac56$ and sine $\frac{\sqrt{11}}6$ (the angle of the Moser spindle) and $R_G$ the one with cosine $\frac{11}{14}$ and sine $\frac{5\sqrt3}{14}$, the $27$ unit vectors $R_{60}^jR_A^kR_G^l(1,0)$, $j,k,l\in\{-1,0,1\}$, have $\kappa=\frac14$: a character of order $12$ keeps them at distance at least $\frac14$ from $\Z$, and an exact certificate ($12\,073$ nodes, checked by two programs; \nolinkurl{data/number_fields/circular/at_four/}) shows that none maps them into $(\frac14,\frac34)$. So Corollary~\ref{cor:finiteS4} gives a finite subgraph with $\chi_c=4$ of the Cayley graph of these $54$ vectors directly, without Theorem~\ref{thm:F}; we have not found it.
+from them maps to $K_{59/15}$. Over $\Q(\sqrt3,\sqrt{11})$ an explicit set at $\frac14$ is small: with $R_{60}$ the rotation by $60^\circ$, $R_A$ the rotation with cosine $\frac56$ and sine $\frac{\sqrt{11}}6$ (the angle of the Moser spindle) and $R_G$ the one with cosine $\frac{11}{14}$ and sine $\frac{5\sqrt3}{14}$, the $27$ unit vectors $R_{60}^jR_A^kR_G^l(1,0)$, $j,k,l\in\{-1,0,1\}$, have $\kappa=\frac14$: a character of order $12$ keeps them at distance at least $\frac14$ from $\Z$, and an exact certificate ($12\,073$ nodes, checked by two programs; \nolinkurl{data/number_fields/circular/at_four/}) shows that none maps them into $(\frac14,\frac34)$. So Corollary~\ref{cor:finiteS4} gives a finite subgraph with $\chi_c=4$ of the Cayley graph of these $54$ vectors directly, without Theorem~\ref{thm:F}; a construction based on the following lemma found one.
+
+\begin{lemma}[base-point periods]\label{lem:periods}
+Let $G$ be a graph on a finite set of points whose edges join $x$ and $x+s$ with $s\in U\cup-U$, for a finite set $U$
+of nonzero vectors with $U\cap(-U)=\emptyset$, and let $c$ be a proper $4$-colouring of $G$ without tight cycles. For a closed walk $W$ in $G$ let
+$\Lambda(W)$ be the sum, over its arcs $x\to y$, of the representative in $\{1,2,3\}$ of $c(y)-c(x)$, and
+$\mathrm{per}(W)=\Lambda(W)/4-N(W)$, where $N(W)$ is the number of steps of $W$ in $-U$. Then $\mathrm{per}(W)\in\Z$;
+$\mathrm{per}$ is additive under concatenation and $\mathrm{per}(W^{-1})=-\mathrm{per}(W)$; it does not change when a
+backtrack is inserted or deleted, or when two consecutive steps $s\ne\pm t$ are exchanged inside a square of $G$; and if
+$W$ has $P$ steps in $U$ and $N$ in $-U$, $P+N\ge1$, then $\frac{P-3N}4<\mathrm{per}(W)<\frac{3P-N}4$.
+\end{lemma}
+
+\begin{proof}
+The colour differences along $W$ sum to $0$ modulo $4$, so $4\mid\Lambda(W)$. $\Lambda$ and $N$ are additive; reversing
+$W$ replaces each representative $\delta$ by $4-\delta$ and exchanges the steps in $U$ and $-U$, so, with $L=P+N$,
+$\mathrm{per}(W^{-1})=(4L-\Lambda(W))/4-P=-\mathrm{per}(W)$. A backtrack adds $\delta+(4-\delta)=4$ to $\Lambda$ and one
+step in $-U$. The paths $x\to x+s\to x+s+t$ and $x\to x+t\to x+s+t$ have sums of representatives in $\{2,\dots,6\}$
+that agree modulo $4$; if they differed, one would be $2$ and the other $6$, and the square
+$x\to x+s\to x+s+t\to x+t\to x$, or its reverse, would be a tight cycle (its four points are distinct as $s,t\ne0$ and
+$s\ne\pm t$). Finally $L\le\Lambda(W)\le3L$; if $\Lambda(W)=L$, every arc of $W$ is tight, and the closed walk $W$
+contains a directed cycle of tight arcs, of length at least $3$ as an arc and its reverse are not both tight; if
+$\Lambda(W)=3L$, the same holds for $W^{-1}$. So $L<\Lambda(W)<3L$, which is the last claim.
+\end{proof}
+
+So suppose that $G$ contains the walk $W_\rho$ from a point $x_0$ (with $|n_u|$ steps $\mathrm{sign}(n_u)u$, in a fixed
+order of $U$) of each relation $\rho=\sum_un_uu=0$ in a finite set $S$, and that each $\rho\in S$ is joined to $0$ by
+chain steps $\rho'=\rho''\pm r_j$, where $r_1,\dots,r_k$ is a $\Z$-basis of the relation lattice, each realised inside
+$G$ by turning $W_{\rho''}W_{r_j}^{\pm1}$ into $W_{\rho'}$ with such moves. Then $\mathrm{per}(W_\rho)=p(\rho)$ for an
+integer homomorphism $p$ on the relation lattice (the empty walk has period $0$), with
+$\frac{P-3N}4<p(\rho)<\frac{3P-N}4$ for every $\rho\ne0$ met; if no such $p$ exists, every proper $4$-colouring of
+$G$ has a tight cycle. A character $\chi$ of $\Z U$ whose values have representatives $f(u)\in(\frac14,\frac34)$ would
+give such a $p$, namely $p(\rho)=\sum_un_uf(u)$, an integer as $\sum_un_u\chi(u)=0$; so the infeasibility of the
+system implies $\kappa(U)\le\frac14$, with finitely many relations. For the $27$ vectors above, the relations with $\sum_un_u^2\le12$ and $41$ of length $8$ found by a
+counterexample search (each $R_A^k$ times a relation among the vectors $\zeta^jg^l$, with $\zeta=e^{i\pi/3}$ and
+$g=\frac{11+5\sqrt{-3}}{14}$ the rotation $R_G$, with a coefficient $2$ or $3$, such as $3\bar\zeta+\zeta+g-3\bar\zeta g=0$)
+already leave no such $p$ (an integer-programming computation, which
+only guided the construction). The walks of $256$ of them, tied to a basis by bubble sorts, span $13\,230$ points, and
+clausal cores of SAT refutations reduced these to the graph $H_4$ of
+\nolinkurl{data/number_fields/circular/finite_witness/witness_q3_11.json.gz}: $1\,874$ points of
+$\Q(\sqrt3,\sqrt{11})^2$, with all $8\,085$ pairs at distance $1$ as edges. It has a proper $4$-colouring, and every
+proper $4$-colouring has a tight cycle among $4\,992$ listed ones, of lengths $4$, $8$ and $12$, by a SAT refutation
+that \texttt{drat-trim} checks and that an independent encoding, written by a referee from the file format alone,
+confirms with the verified checker \texttt{cake\_lpr}; Lemma~\ref{lem:tight} gives $\chi_c(H_4)\ge4$. So
+$\chi_c(H_4)=\chi(H_4)=4$, and the value $4$ of Theorem~\ref{thm:finite4} is attained by an explicit graph over
+$\Q(\sqrt3,\sqrt{11})$. An independent referee checked Lemma~\ref{lem:periods} and this use of it, with a numerical
+test on random small instances (\nolinkurl{data/number_fields/circular/finite_witness/indep_W4/}). The same search
+over $\Q(\sqrt{59})$ found no infeasible system with relations of length up to $33$.
 
 \section{Computer checks}\label{sec:checks}
 
@@ -1927,9 +1975,9 @@ a plane without unit triangles, nine vertices are needed, and they suffice over 
 Section~\ref{sec:twoprimes}. Over other such planes the least number is open; over $\Q(\sqrt{15})$ the smallest
 witness we found has $13$ vertices (\nolinkurl{witness_q15.json.gz}), and none of the three nine-vertex graphs
 appeared with the denominators we tried.)
-When $\chi_c(F^2)=4$ the value is attained as well (Theorem~\ref{thm:finite4}, for example over $\Q(\sqrt{59})$), but the
-proof gives no bound on the size of a witness, and we know none: how small can one be over $\Q(\sqrt{59})$? Its edge
-vectors $U$ must satisfy $\kappa(U)\le\frac14$, which excludes those with denominator $210$ (Section~\ref{sec:twoprimes}).
+When $\chi_c(F^2)=4$ the value is attained as well (Theorem~\ref{thm:finite4}), but the proof gives no bound on the
+size of a witness; over $\Q(\sqrt3,\sqrt{11})$ we found one with $1\,874$ vertices (Lemma~\ref{lem:periods} and the
+remarks after it), and over $\Q(\sqrt{59})$ we know none: how small can one be? Its edge vectors $U$ must satisfy $\kappa(U)\le\frac14$, which excludes those with denominator $210$ (Section~\ref{sec:twoprimes}).
 \end{enumerate}
 
 \section*{Acknowledgements}

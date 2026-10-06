@@ -269,3 +269,26 @@ the colour of a neighbour of the fixed vertex (-> 324) (see the README).
 3. python3 critical.py and python3 check_critical.py witness_q911.json.gz witness_q911_critical.json.gz
    324 vertices: for every v, a (7,2)-colouring of H - v with an acyclic tight digraph, so chi_c(H - v) < 7/2; H is
    vertex-critical for chi_c = 7/2
+
+Verification of the witness for chi_c = 4 over Q(sqrt3, sqrt11), witness_q3_11 (6 October 2026)
+
+1. python3 check_witness4.py witness_q3_11.json.gz witness_q3_11.cnf.gz witness_q3_11.drat drat-trim
+   (1) Q(sqrt3, sqrt11): 1874 points, 8085 edges, every edge at distance exactly 1
+       unit-distance pairs among the points: 8085; not listed as edges: 0 (induced)
+   (2) the colouring is a proper 4-colouring: chi(H) <= 4, chi_c(H) <= 4
+   (3) 4992 cycles, all closed walks along edges (lengths 4..12, divisible by 4)
+   (4) the CNF is the formula built from the edges, cycles and fixed vertex; sha256
+       febd6b3d96bb8bd43962882ab3bf09bea13a9f8cb3ff563f2691dc340d3dd26f
+   (5) drat-trim: s VERIFIED  (about 15 s)
+   => every 4-colouring of H has a tight cycle, so chi_c(H) = chi(H) = 4
+   kissat 4.0.4 (--seed=1) refuted the formula in about 16 s; the stored proof is its DRAT output, xz-compressed
+   (9 844 869 bytes uncompressed, sha256 eaacd9fd31a3c9653aab7629a484390484dc8ba02f6caaaf7e9b35129ba06203).
+2. The referee's programs (indep_W4/, no code shared with check_witness4.py):
+   python3 ref_check4.py ../witness_q3_11.json.gz OUT     (tool paths from KISSAT, DRAT_TRIM, CAKE_LPR)
+   exact all-pairs scan: 1 755 001 pairs, 8085 unit-distance pairs, equal to the declared edges; a floating-point scan
+   agrees; proper 4-colouring; 4992 simple cycles along edges (4916 of length 4, 52 of length 8, 24 of length 12)
+   CNF (own layout, one variable per tight arc): 16 344 variables, 85 843 clauses;
+       sha256 1f28389f2aec69a069146c82b7c1a7870a5955fa72a380e21a8d3335efcdcde6
+   kissat: s UNSATISFIABLE (30 s); drat-trim -L: s VERIFIED (22 s); cake_lpr on the LRAT proof: s VERIFIED UNSAT (18 s)
+   python3 ref_tests4.py ../witness_q3_11.json.gz OUT: TESTS: ALL PASSED (a moved point, an improper colouring and a
+   cycle through a non-edge are rejected; without the cycle clauses the formula is satisfiable)
