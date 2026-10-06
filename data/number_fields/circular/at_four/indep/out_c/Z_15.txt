@@ -1,0 +1,42 @@
+# group Z/15  n=15  exponent M=15  |Aut|=8  classes=7
+S=(1)(14) |S|=2 kappa=7/15 col=3587226 acyc=3587226 noT4=3587226 noSq=3587226 ABeq=3587226 T4butABeq=0 ABneq_charfail=0 chars_ge=8 hom15/4=1 ok
+S=(1)(2)(13)(14) |S|=4 kappa=5/15 col=7986 acyc=786 noT4=786 noSq=786 ABeq=786 T4butABeq=0 ABneq_charfail=7200 chars_ge=4 hom15/4=1 ok
+S=(1)(3)(12)(14) |S|=4 kappa=6/15 col=119670 acyc=54270 noT4=54270 noSq=54270 ABeq=54270 T4butABeq=0 ABneq_charfail=64260 chars_ge=2 hom15/4=1 ok
+S=(2)(3)(12)(13) |S|=4 kappa=6/15 col=64170 acyc=22350 noT4=22350 noSq=22350 ABeq=22350 T4butABeq=0 ABneq_charfail=41820 chars_ge=4 hom15/4=1 ok
+S=(1)(2)(3)(12)(13)(14) |S|=6 kappa=3/15 not4col
+S=(1)(4)(11)(14) |S|=4 kappa=6/15 col=66966 acyc=23046 noT4=23046 noSq=23046 ABeq=23046 T4butABeq=0 ABneq_charfail=43920 chars_ge=4 hom15/4=1 ok
+S=(1)(2)(4)(11)(13)(14) |S|=6 kappa=5/15 col=666 acyc=306 noT4=306 noSq=306 ABeq=306 T4butABeq=0 ABneq_charfail=360 chars_ge=2 hom15/4=1 ok
+S=(1)(3)(4)(11)(12)(14) |S|=6 kappa=3/15 col=180 acyc=0 noT4=0 noSq=0 ABeq=0 T4butABeq=0 ABneq_charfail=180 chars_ge=0 hom15/4=0 ok
+S=(2)(3)(4)(11)(12)(13) |S|=6 kappa=4/15 col=300 acyc=30 noT4=30 noSq=30 ABeq=30 T4butABeq=0 ABneq_charfail=270 chars_ge=2 hom15/4=1 ok
+S=(1)(2)(3)(4)(11)(12)(13)(14) |S|=8 kappa=3/15 not4col
+S=(1)(5)(10)(14) |S|=4 kappa=5/15 col=41196 acyc=8766 noT4=8766 noSq=8766 ABeq=8766 T4butABeq=0 ABneq_charfail=32430 chars_ge=6 hom15/4=1 ok
+S=(1)(2)(5)(10)(13)(14) |S|=6 kappa=5/15 col=906 acyc=336 noT4=336 noSq=336 ABeq=336 T4butABeq=0 ABneq_charfail=570 chars_ge=4 hom15/4=1 ok
+S=(3)(5)(10)(12) |S|=4 kappa=5/15 col=38940 acyc=7680 noT4=7680 noSq=7680 ABeq=7680 T4butABeq=0 ABneq_charfail=31260 chars_ge=4 hom15/4=1 ok
+S=(1)(3)(5)(10)(12)(14) |S|=6 kappa=5/15 col=6690 acyc=2700 noT4=2700 noSq=2700 ABeq=2700 T4butABeq=0 ABneq_charfail=3990 chars_ge=2 hom15/4=1 ok
+S=(2)(3)(5)(10)(12)(13) |S|=6 kappa=4/15 col=90 acyc=30 noT4=30 noSq=30 ABeq=30 T4butABeq=0 ABneq_charfail=60 chars_ge=2 hom15/4=1 ok
+S=(1)(2)(3)(5)(10)(12)(13)(14) |S|=8 kappa=3/15 not4col
+S=(1)(4)(5)(10)(11)(14) |S|=6 kappa=5/15 col=636 acyc=306 noT4=306 noSq=306 ABeq=306 T4butABeq=0 ABneq_charfail=330 chars_ge=2 hom15/4=1 ok
+S=(1)(2)(4)(5)(10)(11)(13)(14) |S|=8 kappa=5/15 col=366 acyc=216 noT4=216 noSq=216 ABeq=216 T4butABeq=0 ABneq_charfail=150 chars_ge=2 hom15/4=1 ok
+S=(1)(3)(4)(5)(10)(11)(12)(14) |S|=8 kappa=2/15 not4col
+S=(2)(3)(4)(5)(10)(11)(12)(13) |S|=8 kappa=4/15 col=90 acyc=30 noT4=30 noSq=30 ABeq=30 T4butABeq=0 ABneq_charfail=60 chars_ge=2 hom15/4=1 ok
+S=(1)(2)(3)(4)(5)(10)(11)(12)(13)(14) |S|=10 kappa=2/15 not4col
+S=(1)(3)(6)(9)(12)(14) |S|=6 kappa=3/15 not4col
+S=(1)(2)(3)(6)(9)(12)(13)(14) |S|=8 kappa=3/15 not4col
+S=(1)(4)(6)(9)(11)(14) |S|=6 kappa=6/15 col=18690 acyc=10200 noT4=10200 noSq=10200 ABeq=10200 T4butABeq=0 ABneq_charfail=8490 chars_ge=2 hom15/4=1 ok
+S=(1)(2)(4)(6)(9)(11)(13)(14) |S|=8 kappa=3/15 not4col
+S=(1)(3)(4)(6)(9)(11)(12)(14) |S|=8 kappa=3/15 not4col
+S=(1)(2)(3)(4)(6)(9)(11)(12)(13)(14) |S|=10 kappa=3/15 not4col
+S=(3)(5)(6)(9)(10)(12) |S|=6 kappa=3/15 not4col
+S=(1)(3)(5)(6)(9)(10)(12)(14) |S|=8 kappa=3/15 not4col
+S=(1)(2)(3)(5)(6)(9)(10)(12)(13)(14) |S|=10 kappa=3/15 not4col
+S=(1)(4)(5)(6)(9)(10)(11)(14) |S|=8 kappa=2/15 not4col
+S=(1)(2)(4)(5)(6)(9)(10)(11)(13)(14) |S|=10 kappa=2/15 not4col
+S=(1)(3)(4)(5)(6)(9)(10)(11)(12)(14) |S|=10 kappa=2/15 not4col
+S=(1)(2)(3)(4)(5)(6)(9)(10)(11)(12)(13)(14) |S|=12 kappa=2/15 not4col
+S=(1)(2)(4)(7)(8)(11)(13)(14) |S|=8 kappa=5/15 col=396 acyc=216 noT4=216 noSq=216 ABeq=216 T4butABeq=0 ABneq_charfail=180 chars_ge=2 hom15/4=1 ok
+S=(1)(2)(3)(4)(7)(8)(11)(12)(13)(14) |S|=10 kappa=3/15 not4col
+S=(1)(2)(4)(5)(7)(8)(10)(11)(13)(14) |S|=10 kappa=5/15 col=276 acyc=186 noT4=186 noSq=186 ABeq=186 T4butABeq=0 ABneq_charfail=90 chars_ge=2 hom15/4=1 ok
+S=(1)(2)(3)(4)(5)(7)(8)(10)(11)(12)(13)(14) |S|=12 kappa=1/15 not4col
+S=(1)(2)(3)(4)(6)(7)(8)(9)(11)(12)(13)(14) |S|=12 kappa=3/15 not4col
+S=(1)(2)(3)(4)(5)(6)(7)(8)(9)(10)(11)(12)(13)(14) |S|=14 kappa=1/15 not4col
+# summary: generating S classes=40, 4-colourable=19, colourings(c(0)=0)=3955440, BAD=0

@@ -1,0 +1,21 @@
+S=(1)(10) kappa=5/11 col=44286 acyc=44286 noT4=44286 noSq=44286 ABeq=44286 hom11/3=1 ok
+S=(2)(9) kappa=5/11 col=44286 acyc=44286 noT4=44286 noSq=44286 ABeq=44286 hom11/3=1 ok
+S=(3)(8) kappa=5/11 col=44286 acyc=44286 noT4=44286 noSq=44286 ABeq=44286 hom11/3=1 ok
+S=(4)(7) kappa=5/11 col=44286 acyc=44286 noT4=44286 noSq=44286 ABeq=44286 hom11/3=1 ok
+S=(5)(6) kappa=5/11 col=44286 acyc=44286 noT4=44286 noSq=44286 ABeq=44286 hom11/3=1 ok
+S=(1)(2)(9)(10) kappa=3/11 col=462 acyc=44 noT4=44 noSq=44 ABeq=44 hom11/3=1 ok
+S=(1)(3)(8)(10) kappa=4/11 col=2838 acyc=1364 noT4=1364 noSq=1364 ABeq=1364 hom11/3=1 ok
+S=(1)(4)(7)(10) kappa=4/11 col=2838 acyc=1364 noT4=1364 noSq=1364 ABeq=1364 hom11/3=1 ok
+S=(1)(5)(6)(10) kappa=3/11 col=462 acyc=44 noT4=44 noSq=44 ABeq=44 hom11/3=1 ok
+S=(2)(3)(8)(9) kappa=4/11 col=2838 acyc=1364 noT4=1364 noSq=1364 ABeq=1364 hom11/3=1 ok
+S=(2)(4)(7)(9) kappa=3/11 col=462 acyc=44 noT4=44 noSq=44 ABeq=44 hom11/3=1 ok
+S=(2)(5)(6)(9) kappa=4/11 col=2838 acyc=1364 noT4=1364 noSq=1364 ABeq=1364 hom11/3=1 ok
+S=(3)(4)(7)(8) kappa=3/11 col=462 acyc=44 noT4=44 noSq=44 ABeq=44 hom11/3=1 ok
+S=(3)(5)(6)(8) kappa=3/11 col=462 acyc=44 noT4=44 noSq=44 ABeq=44 hom11/3=1 ok
+S=(4)(5)(6)(7) kappa=4/11 col=2838 acyc=1364 noT4=1364 noSq=1364 ABeq=1364 hom11/3=1 ok
+S=(1)(2)(4)(7)(9)(10) kappa=3/11 col=66 acyc=22 noT4=22 noSq=22 ABeq=22 hom11/3=1 ok
+S=(1)(2)(5)(6)(9)(10) kappa=3/11 col=66 acyc=22 noT4=22 noSq=22 ABeq=22 hom11/3=1 ok
+S=(1)(3)(5)(6)(8)(10) kappa=3/11 col=66 acyc=22 noT4=22 noSq=22 ABeq=22 hom11/3=1 ok
+S=(2)(3)(4)(7)(8)(9) kappa=3/11 col=66 acyc=22 noT4=22 noSq=22 ABeq=22 hom11/3=1 ok
+S=(3)(4)(5)(6)(7)(8) kappa=3/11 col=66 acyc=22 noT4=22 noSq=22 ABeq=22 hom11/3=1 ok
+# summary Z/[11]: generating S=31, 4-colourable=20, BAD=0

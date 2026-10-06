@@ -624,7 +624,7 @@ or 3.
 ### 6.8 Finite witnesses
 
 By compactness `χ_c(F²)` is the supremum of `χ_c(H)` over the finite subgraphs `H` of `F²` (if every finite subgraph
-maps to `K_{p/q}`, so does `F²`). Below 4 the supremum is attained. For a homomorphism `c` of a graph to `K_{p/q}`,
+maps to `K_{p/q}`, so does `F²`). Below 4 the supremum is attained (Corollary F12), and at 4 as well (§6.9). For a homomorphism `c` of a graph to `K_{p/q}`,
 the *tight digraph* `D_c` has an arc `x → y` for every edge `xy` with `c(y) − c(x) ≡ q (mod p)`; a *tight cycle* is a
 directed cycle of `D_c`. For a finite set `S` in an abelian group, `κ(S) = max_ξ min_{s∈S} ‖ξ(s)‖` over the characters
 of `ℤS` (a maximum, as the dual group is compact); if `χ_c(Cay(ℤS, S)) < 4`, then `χ_c = 1/κ(S)` (Corollary 2 of the
@@ -786,6 +786,96 @@ midpoints and centroids of them that stay optimal, the tight elements have a non
 (for example `{0, …, 18}` for the distances `3, 4, 9, 12`, where `χ_c = 7/2`); `twoprime/indep_FW/`,
 `twoprime/indep_FW2/`.
 
+### 6.9 Finite witnesses at 4
+
+*Refereed (6 October) by an independent checker, with two programs of its own on all abelian groups of order at
+most 16 (`at_four/finite_groups/`): no error; its corrections are applied below.*
+
+At `p = 4q` the proof of Lemma F10 breaks in one place only, and what breaks it is itself a tight cycle. For a
+homomorphism `c` of `Cay(Γ, S)` to `K_4 = K_{4/1}`, with `ℓ(x, s) ∈ {1, 2, 3}` as in Lemma F10, a *tight square* is
+a tight cycle `x → x + s → x + s + t → x + t → x` with `s, t ∈ S`, that is, `ℓ(x, s) = ℓ(x + s, t) = 1` and
+`ℓ(x, t) = ℓ(x + t, s) = 3`. Its four vertices have the colours `c(x)`, `c(x) + 1`, `c(x) + 2`, `c(x) + 3`, so they
+are distinct.
+
+> **Lemma F13 (at 4: a tight square or a character).** Let `Γ` be an abelian group, `S = −S ⊆ Γ ∖ {0}` with
+> `Γ = ℤS`, and `c` a homomorphism of `Cay(Γ, S)` to `K_4` without tight squares. With `a(s) = M_x ℓ(x, s)` as in
+> Lemma F10, the conclusions of Lemma F10 hold with `p = 4`, `q = 1`: `ξ(s) = a(s)/4` defines a character of `Γ` with
+> `ξ(S) ⊆ [1/4, 3/4]`, and if `u_1, …, u_r ∈ S` and positive integers `n_i` satisfy `Σ n_i u_i = 0` and `a(u_i) = 1`,
+> then `c` has a tight cycle. Conversely, if a character `ξ` maps `S` into `[1/4, 3/4]`, then
+> `c(x) = ⌊4ξ̃(x)⌋ mod 4` (`ξ̃(x) ∈ [0, 1)` the lift of `ξ(x)`) is a homomorphism to `K_4` without tight squares.
+
+*Proof.* For `x ∈ Γ` and `s, t ∈ S` the integers `A = ℓ(x, s) + ℓ(x + s, t)` and `B = ℓ(x, t) + ℓ(x + t, s)` are
+congruent modulo 4 and lie in `[2, 6]`. So `A = B` or `{A, B} = {2, 6}`; exchanging `s` and `t` exchanges `A` and
+`B`, and `A = 2`, `B = 6` says exactly that `x → x + s → x + s + t → x + t → x` is a tight square (as
+`ℓ(y + u, −u) = 4 − ℓ(y, u)`). So without tight squares `A = B` for all `x, s, t`, which is all that the proof of
+Lemma F10 uses of `p < 4q`; the rest of that proof (independence of the base point, the invariant mean, the closed
+walks) applies word for word. Conversely, for `s ∈ S` let `σ ∈ [1/4, 3/4]` be the lift of `ξ(s)`. As
+`ξ̃(x + s) − ξ̃(x) − σ ∈ ℤ`, `ℓ(x, s) = ⌊4ξ̃(x) + 4σ⌋ − ⌊4ξ̃(x)⌋ ∈ {⌊4σ⌋, ⌊4σ⌋ + 1}` (it is 3 if `4σ = 3`), which
+lies in `[1, 3]`; so `c` is a homomorphism to `K_4`, while a tight square would need `ℓ(x, s) = 1` and
+`ℓ(x + t, s) = 3`. ∎
+
+So at 4 Theorem W⁺ holds for homomorphisms without tight squares: `Cay(Γ, S)` has a homomorphism to `K_4` without
+tight squares if and only if some character maps `S` into `[1/4, 3/4]`. Finiteness of `S` is not used, and the same
+proof works for `K_{4q/q}` with any `q` (tight arcs are those of difference `q`). In the example
+`K_4 = Cay((ℤ/2)², (ℤ/2)² ∖ {0})` of the winding paper every 4-colouring is a tight square. A tight 4-cycle need not
+be a square: for `Γ = ℤ/8`, `S = {±1, ±2}` and `c(2k) = k`, `c(2k + 1) = k + 2`, the cycle `0 → 2 → 4 → 6 → 0` is
+tight, there is no tight square, and `a/4` is the character `x ↦ 5x/8`, with `κ(S) = 1/4`.
+
+> **Corollary F14 (finite connection sets at 4).** Let `Γ`, `S` be as in Lemma F13 with `S` finite, `Cay(Γ, S)`
+> 4-colourable and `κ(S) ≤ 1/4`. Then every homomorphism of `Cay(Γ, S)` to `K_4` has a tight cycle, and some finite
+> subgraph of `Cay(Γ, S)` has circular chromatic number 4. If `κ(S) < 1/4`, every such homomorphism has a tight square.
+
+*Proof.* Let `c` be a homomorphism without tight cycles, `ξ`, `a` as in Lemma F13, and `T₁ = {s ∈ S : a(s) = 1}`
+(disjoint from `−T₁`, as `a(−s) = 4 − a(s)`). If nonnegative integers `n_t`, not all 0, gave
+`Σ_{t∈T₁} n_t t = 0`, Lemma F13 would give a tight cycle. Otherwise, as in the proof of Lemma F11 (the cone of
+nonnegative real relations among the images of `T₁` in `Γ ⊗ ℝ` is rational, and a nonzero integral point `(n_t)` of
+it has `Σ n_t t` torsion, killed by some `m ≥ 1`), Gordan's theorem gives a homomorphism `h : Γ → ℝ` with `h > 0` on
+`T₁` (any `h` if `T₁` is empty). For small `ε > 0`, `ξ + εh` maps every `s ∈ S` into `(1/4, 3/4) + ℤ`: if `a(s) = 1`
+it gives `1/4 + εh(s)`; if `a(s) = 3`, then `−s ∈ T₁` and it gives `3/4 − εh(−s)`; otherwise `ξ(s)` is already
+inside. So `κ(S) > 1/4`, a contradiction. The rest is the compactness argument of Lemma F11, with Lemma F9 for
+`p/q = 4`. If `κ(S) < 1/4`, Lemma F13 itself excludes homomorphisms without tight squares. ∎
+
+Conversely, if a finite subgraph `H` of `F²` has `χ_c(H) = 4`, then `κ(U_H) ≤ 1/4` for the set `U_H` of its edge
+vectors and their negatives: each component of `H` lies in a coset of `ℤU_H`, and if `κ(U_H) > 1/4`, then for a
+rational `q/p ∈ (1/4, κ(U_H)]` a character with `ξ(U_H) ⊆ [q/p, 1 − q/p]` gives a homomorphism of `H` to `K_{p/q}`
+(the *if* direction of Theorem W⁺ holds for every `p/q ≥ 2`), so `χ_c(H) ≤ p/q < 4`. So, when `χ(F²) ≤ 4`, some
+finite subgraph of `F²` has `χ_c = 4` if and only if some finite `U ⊂ T` has `κ(U) ≤ 1/4`.
+
+> **Proposition F15 (a finite set at 1/4).** Let `F` be a number field with `i ∉ F` for which (a), (b) and (7) fail.
+> Then some finite `U ⊂ T` has `κ(U) ≤ 1/4`: no character of `ℤU` maps every element of `U` into the open interval
+> `(1/4, 3/4)`.
+
+*Proof.* As in the proof of Corollary F12 for `7/2`. If for every finite `V ⊇ {b_j}` there were `β ∈ L` with
+`Tr(βv) ∈ E′` for every `v ∈ V`, the proof of Lemma F4, which uses Lemma F3 only through this conclusion (such a `β`
+lies in `K₂ × K₃ × K₇`, and the types of the `Tr(βv)` give `τ`), and Lemmas F5–F7 would give (c), (q) or (7′), hence
+(a), (b) or (7). So some finite `V_0 ⊇ {b_j}` has no such `β`. Let `k` be the least multiple of 6 with
+`5^k > 42R′ max_{v ∈ V_0}(|D_v| + Σ_j |μ_{v,j}|)` (in the fixed basis; `R′` does not depend on `r`), `N = 5^k`, and
+`U_0 = G(k, 1)V_0`, a finite symmetric subset of `T`. If `κ(U_0) > 1/4`, take `r` with
+`1/4 < r ≤ min(κ(U_0), 1/3)` and a character `ξ` of `ℤU_0` with `ξ(U_0) ⊆ [r, 1 − r] + ℤ`; the proof of Lemma F3,
+which uses the homomorphism only through such a character (Proposition F1 excludes its 16 extra vectors for each
+`r > 1/4`, and Lemma F2 needs only `s = 1/2 − r < 1/4`), gives `β` with `Tr(βv) ∈ E′` on `V_0`: impossible. So
+`κ(U_0) ≤ 1/4`. ∎
+
+(For `i ∉ F` the converse holds as well: if (a), (b) or (7) holds, the corresponding colouring and Theorem W⁺ give
+`κ(U) ≥ 2/7` for every finite `U ⊂ T`.)
+
+> **Theorem F16 (finite witnesses up to 4).** For every number field `F` with `χ_c(F²) ≤ 4`, some finite
+> unit-distance graph in `F²` has circular chromatic number `χ_c(F²)`. In particular the value 4 is attained by
+> finite unit-distance graphs over `ℚ(√59)`, `ℚ(√83)` and `ℚ(√3, √11)`.
+
+*Proof.* Below 4 this is Corollary F12. If `χ_c(F²) = 4`, every finite subgraph has `χ_c ≤ 4`, hence `χ ≤ 4`, and
+`χ(F²) ≤ 4` by the theorem of de Bruijn and Erdős; so `i ∉ F`, and (a), (b) and (7) fail by Theorem F, as otherwise
+`χ_c(F²) < 4`. Proposition F15 gives a finite `U ⊂ T` with `κ(U) ≤ 1/4`, `Cay(ℤU, U) ⊆ F²` is 4-colourable, and
+Corollary F14 gives a finite subgraph `H` with `χ_c(H) = 4`; the unit-distance graph induced on its vertices also has
+`χ_c = 4`, as `4 = χ_c(H) ≤ χ_c ≤ χ_c(F²) = 4`. For `ℚ(√59)` and `ℚ(√83)` see the examples after Theorem F; for
+`ℚ(√3, √11)`, `χ = 4` and (7) fails, as 7 is inert in `ℚ(√3)`. ∎
+
+The proof gives no bound on the size of the witness, and we have not found one: the growths of the research log (6
+October), with the unit vectors of denominator `D = 210`, `1050` and `2730` over `ℚ(√59)`, stopped at their limits.
+For `D = 210` this was bound to happen: the character `θ = (89/118, 1/2, 89/118, 1/2)` of `at_four/` keeps all 108
+unit vectors with denominator 210 at distance at least `15/59` from `ℤ`, so every graph built from them maps to
+`K_{59/15}` (checked by enumeration, and by the referee with another character).
+
 ## 7. Questions
 
 1. *Above 4.* Theorem F decides `χ_c(F²)` below 4: there it is the least value of `χ_c(F_v²)` over the completions
@@ -800,15 +890,10 @@ midpoints and centroids of them that stay optimal, the tight elements have a non
 2. *Finite witnesses.* By Corollary F12 some finite unit-distance graph in `ℚ(√11)²` has `χ_c = 7/2`; the proof
    (compactness) gives no bound on its size, and the smallest we know has 155 vertices and is vertex-critical (§6.8). How small can it be? (For the value 3 in a plane without unit triangles nine vertices are needed, and they suffice over `ℚ(√7)` and
 `ℚ(√31)`; §6.8. Over other such planes the least number is open; over `ℚ(√15)` the smallest witness we found has 13
-vertices (`witness_q15.json.gz`), and none of the three nine-vertex graphs appeared with the denominators we tried.) And when `χ_c(F²) = 4`, is the value attained by
-   a finite subgraph, for example for `ℚ(√59)`? At 4 and above, Lemmas F10 and F11 are not available (F10 needs
-`p < 4q`). When `χ(F²) = 4`,
-   compactness makes it a question about the plane: some finite subgraph has `χ_c = 4` if and only if every proper
-   colouring `F² → ℤ/4` has a tight cycle (the colour increases by 1 at each step). If every colouring has one,
-   finitely many cycles meet every colouring, and some finite subgraph has no 4-colouring avoiding them (Lemma F9
-   then gives `χ_c = 4`); if one colouring has none, every finite subgraph inherits an acyclic tight digraph, and
-   perturbing along a topological order gives fewer than 4 colours. The 2-adic 4-colourings of `ℚ(√59)²` do not
-   decide it: for every cyclic order of `𝔽₄` they have a tight unit rhombus.
+vertices (`witness_q15.json.gz`), and none of the three nine-vertex graphs appeared with the denominators we tried.) When `χ_c(F²) = 4` the value is
+   attained as well (Theorem F16, for example over `ℚ(√59)`), but the proof gives no bound on the size of a witness,
+   and we know none: how small can one be over `ℚ(√59)`? By the converse in §6.9 its edge vectors `U` must satisfy
+   `κ(U) ≤ 1/4`, which excludes those with denominator 210 (`at_four/theta59_210.json`).
 3. *The one-prime probe.* Does `r0(5^k)` tend to `3/10` (the conjecture of §5)? Theorem E no longer needs it.
 
 Measurements (floating-point MIP, not proofs): for `U = G_25{1, u_n, ū_n : n = 1, 7, 19}`, `max_ξ min_u ‖ξ(u)‖` is

@@ -34,7 +34,7 @@
 out the computations and the checks and helped to draft this note. A separate AI agent refereed the draft, with
 its own checker and tests, and its findings are incorporated. No mathematician has checked it yet. The author is
 not a professional mathematician and submits it for independent verification.}
-\date{Draft, 3 and 4 October 2026}
+\date{Draft, 3, 4 and 6 October 2026}
 \subjclass[2020]{Primary 05C15; Secondary 05C25, 11R11, 52C10}
 \keywords{Cayley graph, abelian group, $3$-colouring, circular colouring, distance graph, unit-distance graph,
 Hadwiger--Nelson problem}
@@ -221,7 +221,9 @@ exponent-$4$ case of Krebs and Sankar \cite{KS}. Section~\ref{sec:dist} treats d
 Section~\ref{sec:planes} applies the theorem to the unit-distance graph of the plane over a number field, the
 setting that led to it, and Section~\ref{sec:four} records that nothing of the kind holds for four colours, and
 that periodicity fails for many colours. Section~\ref{sec:finite} shows that below $4$ the circular chromatic number
-of a Cayley graph with a finite connection set is attained by a finite subgraph.
+of a Cayley graph with a finite connection set is attained by a finite subgraph, and so is the value $4$ when the
+graph is $4$-colourable: at four colours Step~1 fails only on tight squares, and the theorem holds for the
+homomorphisms to $K_4$ without them.
 
 \section{Proof of Theorem~\ref{thm:main}}\label{sec:proof}
 
@@ -532,7 +534,8 @@ $4$-colouring (for $\Q(\sqrt{167})$, as said above, no place does).
 
 Step~1 fails for $K_4=K_{4/1}$, and so does the theorem: $K_4=\Cay((\Z/2)^2,(\Z/2)^2\setminus\{0\})$ is
 $4$-colourable, but every character of $(\Z/2)^2$ vanishes on some nonzero element, so none maps the three
-generators into $[1/4,3/4]$. So the bound $p<4q$ in Theorem~\ref{thm:main} is sharp.
+generators into $[1/4,3/4]$. So the bound $p<4q$ in Theorem~\ref{thm:main} is sharp. (Here every $4$-colouring is
+a tight square; Proposition~\ref{prop:four} shows that this is the only way Step~1 can fail.)
 The \emph{if} direction of Theorem~\ref{thm:main} holds for every $p/q\ge2$, so a character with
 $\xi(S)\subseteq[1/4,3/4]$ still gives a $4$-colouring. For the $108$ unit vectors of $\Q(\sqrt{47})$ with denominator $240$, which underlie the search for
 a five-chromatic triangle-free unit-distance graph in \cite{LG}, a floating-point computation finds none; we have
@@ -616,6 +619,37 @@ $K_{17/5}$. For
 the planes over number fields, where $S$ is infinite, the conclusion holds below $4$ because a finite set of unit
 vectors already has $\kappa=1/\chi_c$ \cite[Corollary~7]{TCol}; for $\Q(\sqrt{11})$, where $\chi_c=7/2$, an
 explicit finite witness with $155$ vertices, found by computer and certified by DRAT proofs, is given there.
+
+At $p/q=4$ Step~1 breaks in one place only, and what breaks it is itself a tight cycle. For a homomorphism $c$ to
+$K_4=K_{4/1}$ call a \emph{tight square} a tight cycle $g\to g+s\to g+s+t\to g+t\to g$ with $s,t\in S$, that is,
+$\delta(g,s)=\delta(g+s,t)=1$ and $\delta(g,t)=\delta(g+t,s)=3$; its four vertices have the colours $c(g),\dots,
+c(g)+3$, so they are distinct.
+
+\begin{proposition}\label{prop:four}
+\textup{(i)} $\Cay(\Gamma,S)$ has a homomorphism to $K_4$ without tight squares if and only if some character maps
+every element of $S$ into $[1/4,3/4]$.
+\textup{(ii)} If $S$ is finite, $\Cay(\Gamma,S)$ is $4$-colourable and $\kappa(S)\le1/4$, then every homomorphism of
+$\Cay(\Gamma,S)$ to $K_4$ has a tight cycle, and some finite subgraph has circular chromatic number $4$. So for a
+finite connection set and $\chi(\Cay(\Gamma,S))\le4$, the circular chromatic number is attained by a finite subgraph.
+\end{proposition}
+
+\begin{proof}
+(i) In Step~1 the two integers lie in $[2,6]$ and are congruent modulo $4$, so they are equal unless one is $2$ and
+the other $6$; exchanging $s$ and $t$, this says exactly that the square at $(g,s,t)$ is tight, as
+$\delta(g+u,-u)=4-\delta(g,u)$. Without tight squares Steps~2--4 apply unchanged. Conversely, for the colouring
+$c=\lfloor4\xi\rfloor$ of the \emph{if} direction, $\delta(\cdot,s)$ takes at most two consecutive values, while a tight
+square needs $\delta(g,s)=1$ and $\delta(g+t,s)=3$. (ii) A homomorphism without tight cycles has no tight squares, so
+(i) gives $f$ and $\xi$ as in Steps~3 and~4 with $\xi(S)\subseteq[1/4,3/4]$; the proof of
+Corollary~\ref{cor:finite} with $T=\{s:f(s)=1\}$ then gives a tight cycle or a character with
+$\xi(S)\subseteq(1/4,3/4)+\Z$, contradicting $\kappa(S)\le1/4$, and compactness gives the finite subgraph. If
+$\kappa(S)>1/4$, then $\chi_c=1/\kappa(S)<4$ by Corollary~\ref{cor:chic}, and Corollary~\ref{cor:finite} applies (an
+edge is a witness when $\chi_c=2$).
+\end{proof}
+
+The same proof works for $K_{4q/q}$ with any $q$. A tight $4$-cycle need not be a square: for $\Gamma=\Z/8$,
+$S=\{\pm1,\pm2\}$, $c(2k)=k$ and $c(2k+1)=k+2$, the cycle $0\to2\to4\to6\to0$ is tight, there is no tight square, and
+$f/4$ is the character $n\mapsto5n/8$. For the planes over number fields, \cite{TCol} deduces that the value $4$ of the
+circular chromatic number, when it occurs, is attained by a finite unit-distance graph, for example over $\Q(\sqrt{59})$.
 
 \section{Literature}\label{sec:lit}
 

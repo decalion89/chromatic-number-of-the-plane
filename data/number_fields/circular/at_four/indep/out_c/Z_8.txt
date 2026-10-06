@@ -1,0 +1,10 @@
+# group Z/8  n=8  exponent M=8  |Aut|=4  classes=4
+S=(1)(7) |S|=2 kappa=4/8 col=1641 acyc=1639 noT4=1641 noSq=1641 ABeq=1641 T4butABeq=0 ABneq_charfail=0 chars_ge=5 hom7/2=1 ok
+S=(1)(2)(6)(7) |S|=4 kappa=2/8 col=42 acyc=0 noT4=2 noSq=6 ABeq=6 T4butABeq=4 ABneq_charfail=36 chars_ge=4 hom7/2=0 ok
+S=(1)(3)(5)(7) |S|=4 kappa=4/8 col=453 acyc=355 noT4=355 noSq=357 ABeq=357 T4butABeq=2 ABneq_charfail=72 chars_ge=3 hom7/2=1 ok
+S=(1)(2)(3)(5)(6)(7) |S|=6 kappa=2/8 col=6 acyc=0 noT4=0 noSq=2 ABeq=2 T4butABeq=2 ABneq_charfail=4 chars_ge=2 hom7/2=0 ok
+S=(1)(4)(7) |S|=3 kappa=3/8 col=540 acyc=324 noT4=324 noSq=324 ABeq=324 T4butABeq=0 ABneq_charfail=216 chars_ge=2 hom7/2=1 ok
+S=(1)(2)(4)(6)(7) |S|=5 kappa=2/8 col=12 acyc=0 noT4=0 noSq=4 ABeq=4 T4butABeq=4 ABneq_charfail=8 chars_ge=2 hom7/2=0 ok
+S=(1)(3)(4)(5)(7) |S|=5 kappa=1/8 col=24 acyc=0 noT4=0 noSq=0 ABeq=0 T4butABeq=0 ABneq_charfail=24 chars_ge=0 hom7/2=0 ok
+S=(1)(2)(3)(4)(5)(6)(7) |S|=7 kappa=1/8 not4col
+# summary: generating S classes=8, 4-colourable=7, colourings(c(0)=0)=2718, BAD=0

@@ -1,0 +1,9 @@
+# group Z/11  n=11  exponent M=11  |Aut|=10  classes=5
+S=(1)(10) |S|=2 kappa=5/11 col=44286 acyc=44286 noT4=44286 noSq=44286 ABeq=44286 T4butABeq=0 ABneq_charfail=0 chars_ge=6 hom11/3=1 ok
+S=(1)(2)(9)(10) |S|=4 kappa=3/11 col=462 acyc=44 noT4=44 noSq=44 ABeq=44 T4butABeq=0 ABneq_charfail=418 chars_ge=4 hom11/3=1 ok
+S=(1)(3)(8)(10) |S|=4 kappa=4/11 col=2838 acyc=1364 noT4=1364 noSq=1364 ABeq=1364 T4butABeq=0 ABneq_charfail=1474 chars_ge=2 hom11/3=1 ok
+S=(1)(2)(3)(8)(9)(10) |S|=6 kappa=2/11 not4col
+S=(1)(2)(4)(7)(9)(10) |S|=6 kappa=3/11 col=66 acyc=22 noT4=22 noSq=22 ABeq=22 T4butABeq=0 ABneq_charfail=44 chars_ge=2 hom11/3=1 ok
+S=(1)(2)(3)(4)(7)(8)(9)(10) |S|=8 kappa=2/11 not4col
+S=(1)(2)(3)(4)(5)(6)(7)(8)(9)(10) |S|=10 kappa=1/11 not4col
+# summary: generating S classes=7, 4-colourable=4, colourings(c(0)=0)=47652, BAD=0

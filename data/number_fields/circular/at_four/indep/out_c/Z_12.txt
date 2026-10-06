@@ -1,0 +1,40 @@
+# group Z/12  n=12  exponent M=12  |Aut|=4  classes=6
+S=(1)(11) |S|=2 kappa=6/12 col=132861 acyc=132859 noT4=132861 noSq=132861 ABeq=132861 T4butABeq=0 ABneq_charfail=0 chars_ge=7 hom11/3=1 ok
+S=(1)(2)(10)(11) |S|=4 kappa=4/12 col=990 acyc=210 noT4=212 noSq=212 ABeq=212 T4butABeq=0 ABneq_charfail=778 chars_ge=4 hom11/3=1 ok
+S=(1)(3)(9)(11) |S|=4 kappa=6/12 col=12303 acyc=8443 noT4=8443 noSq=8457 ABeq=8457 T4butABeq=14 ABneq_charfail=3252 chars_ge=5 hom11/3=1 ok
+S=(2)(3)(9)(10) |S|=4 kappa=4/12 col=4152 acyc=1050 noT4=1050 noSq=1064 ABeq=1064 T4butABeq=14 ABneq_charfail=3088 chars_ge=4 hom11/3=1 ok
+S=(1)(2)(3)(9)(10)(11) |S|=6 kappa=3/12 col=6 acyc=0 noT4=0 noSq=2 ABeq=2 T4butABeq=2 ABneq_charfail=4 chars_ge=2 hom11/3=0 ok
+S=(1)(4)(8)(11) |S|=4 kappa=4/12 col=3522 acyc=1104 noT4=1104 noSq=1104 ABeq=1104 T4butABeq=0 ABneq_charfail=2418 chars_ge=4 hom11/3=1 ok
+S=(1)(2)(4)(8)(10)(11) |S|=6 kappa=4/12 col=204 acyc=114 noT4=114 noSq=114 ABeq=114 T4butABeq=0 ABneq_charfail=90 chars_ge=2 hom11/3=1 ok
+S=(3)(4)(8)(9) |S|=4 kappa=4/12 col=4122 acyc=1386 noT4=1386 noSq=1398 ABeq=1398 T4butABeq=12 ABneq_charfail=2724 chars_ge=6 hom11/3=1 ok
+S=(1)(3)(4)(8)(9)(11) |S|=6 kappa=3/12 col=18 acyc=0 noT4=0 noSq=6 ABeq=6 T4butABeq=6 ABneq_charfail=12 chars_ge=2 hom11/3=0 ok
+S=(2)(3)(4)(8)(9)(10) |S|=6 kappa=4/12 col=642 acyc=306 noT4=306 noSq=306 ABeq=306 T4butABeq=0 ABneq_charfail=336 chars_ge=2 hom11/3=1 ok
+S=(1)(2)(3)(4)(8)(9)(10)(11) |S|=8 kappa=2/12 not4col
+S=(1)(5)(7)(11) |S|=4 kappa=6/12 col=13227 acyc=9103 noT4=9103 noSq=9105 ABeq=9105 T4butABeq=2 ABneq_charfail=3486 chars_ge=5 hom11/3=1 ok
+S=(1)(2)(5)(7)(10)(11) |S|=6 kappa=4/12 col=234 acyc=114 noT4=114 noSq=116 ABeq=116 T4butABeq=2 ABneq_charfail=118 chars_ge=4 hom11/3=1 ok
+S=(1)(3)(5)(7)(9)(11) |S|=6 kappa=6/12 col=7221 acyc=5299 noT4=5299 noSq=5301 ABeq=5301 T4butABeq=2 ABneq_charfail=1650 chars_ge=3 hom11/3=1 ok
+S=(1)(2)(3)(5)(7)(9)(10)(11) |S|=8 kappa=3/12 col=6 acyc=0 noT4=0 noSq=2 ABeq=2 T4butABeq=2 ABneq_charfail=4 chars_ge=2 hom11/3=0 ok
+S=(1)(4)(5)(7)(8)(11) |S|=6 kappa=4/12 col=204 acyc=114 noT4=114 noSq=114 ABeq=114 T4butABeq=0 ABneq_charfail=90 chars_ge=2 hom11/3=1 ok
+S=(1)(2)(4)(5)(7)(8)(10)(11) |S|=8 kappa=4/12 col=132 acyc=90 noT4=90 noSq=90 ABeq=90 T4butABeq=0 ABneq_charfail=42 chars_ge=2 hom11/3=1 ok
+S=(1)(3)(4)(5)(7)(8)(9)(11) |S|=8 kappa=2/12 not4col
+S=(1)(2)(3)(4)(5)(7)(8)(9)(10)(11) |S|=10 kappa=2/12 not4col
+S=(1)(6)(11) |S|=3 kappa=5/12 col=28866 acyc=15684 noT4=15686 noSq=15686 ABeq=15686 T4butABeq=0 ABneq_charfail=11068 chars_ge=4 hom11/3=1 ok
+S=(1)(2)(6)(10)(11) |S|=5 kappa=3/12 col=186 acyc=0 noT4=2 noSq=2 ABeq=2 T4butABeq=0 ABneq_charfail=184 chars_ge=2 hom11/3=0 ok
+S=(1)(3)(6)(9)(11) |S|=5 kappa=3/12 col=210 acyc=0 noT4=0 noSq=14 ABeq=14 T4butABeq=14 ABneq_charfail=196 chars_ge=4 hom11/3=0 ok
+S=(2)(3)(6)(9)(10) |S|=5 kappa=3/12 col=222 acyc=0 noT4=0 noSq=14 ABeq=14 T4butABeq=14 ABneq_charfail=208 chars_ge=2 hom11/3=0 ok
+S=(1)(2)(3)(6)(9)(10)(11) |S|=7 kappa=3/12 col=6 acyc=0 noT4=0 noSq=2 ABeq=2 T4butABeq=2 ABneq_charfail=4 chars_ge=2 hom11/3=0 ok
+S=(1)(4)(6)(8)(11) |S|=5 kappa=4/12 col=1770 acyc=774 noT4=774 noSq=774 ABeq=774 T4butABeq=0 ABneq_charfail=996 chars_ge=2 hom11/3=1 ok
+S=(1)(2)(4)(6)(8)(10)(11) |S|=7 kappa=2/12 not4col
+S=(3)(4)(6)(8)(9) |S|=5 kappa=3/12 col=144 acyc=0 noT4=0 noSq=12 ABeq=12 T4butABeq=12 ABneq_charfail=132 chars_ge=4 hom11/3=0 ok
+S=(1)(3)(4)(6)(8)(9)(11) |S|=7 kappa=3/12 col=18 acyc=0 noT4=0 noSq=6 ABeq=6 T4butABeq=6 ABneq_charfail=12 chars_ge=2 hom11/3=0 ok
+S=(2)(3)(4)(6)(8)(9)(10) |S|=7 kappa=2/12 not4col
+S=(1)(2)(3)(4)(6)(8)(9)(10)(11) |S|=9 kappa=2/12 not4col
+S=(1)(5)(6)(7)(11) |S|=5 kappa=3/12 col=96 acyc=0 noT4=0 noSq=2 ABeq=2 T4butABeq=2 ABneq_charfail=94 chars_ge=2 hom11/3=0 ok
+S=(1)(2)(5)(6)(7)(10)(11) |S|=7 kappa=3/12 col=6 acyc=0 noT4=0 noSq=2 ABeq=2 T4butABeq=2 ABneq_charfail=4 chars_ge=2 hom11/3=0 ok
+S=(1)(3)(5)(6)(7)(9)(11) |S|=7 kappa=3/12 col=96 acyc=0 noT4=0 noSq=2 ABeq=2 T4butABeq=2 ABneq_charfail=94 chars_ge=2 hom11/3=0 ok
+S=(1)(2)(3)(5)(6)(7)(9)(10)(11) |S|=9 kappa=3/12 col=6 acyc=0 noT4=0 noSq=2 ABeq=2 T4butABeq=2 ABneq_charfail=4 chars_ge=2 hom11/3=0 ok
+S=(1)(4)(5)(6)(7)(8)(11) |S|=7 kappa=1/12 not4col
+S=(1)(2)(4)(5)(6)(7)(8)(10)(11) |S|=9 kappa=1/12 not4col
+S=(1)(3)(4)(5)(6)(7)(8)(9)(11) |S|=9 kappa=1/12 not4col
+S=(1)(2)(3)(4)(5)(6)(7)(8)(9)(10)(11) |S|=11 kappa=1/12 not4col
+# summary: generating S classes=38, 4-colourable=28, colourings(c(0)=0)=211470, BAD=0

@@ -1,0 +1,6 @@
+character on Z^4 coordinates (a,b,c,e): [Fraction(-15, 59), Fraction(-1, 2), Fraction(29, 118), Fraction(0, 1)]
+108 unit vectors (same list as kappaD.units)
+least margin over U_210: 15/59 > 1/4 : True
+det B = 4
+
+[exited with code 144]

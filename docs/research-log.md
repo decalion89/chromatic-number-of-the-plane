@@ -10597,8 +10597,9 @@ the steps from that proof on with the proofs kept in memory (`/dev/shm`).
   nodes; a few need millions. A certificate with fewer vectors is not a smaller file: for `d = 1643` a union with 186
   vectors (`D = 33 538 186 500`) gives 84 766 nodes and 3.9 MB, against 565 086 nodes and 15.8 MB for the union of two
   denominators with 66 vectors (`D = 460 362`). For `d = 443` the only certificate found (`D = 3042`, 50 vectors,
-  1 120 623 nodes) takes 31 MB, most of the directory; a union of two denominators with 194 vectors (`D = 51 714`) is
-  being certified here, to replace it if its file is smaller.
+  1 120 623 nodes) takes 31 MB, most of the directory; a union of two denominators with 194 vectors (`D = 51 714`) was
+  given 6 hours to be certified here, in case its file was smaller, and did not finish (for 55 minutes of that time it
+  was paused to free a core for other work); the 31 MB file stays.
 - **Search tools.** `single_scan.py`, `union_search.py` and `union_cert.py` (the shares' scripts; `union_cert.py` now
   takes an output directory and calls `check_w.py`, identical to the shares' `check_w_hard.py`) are in
   `data/quadratic_planes/winding/`.
@@ -10606,3 +10607,43 @@ the steps from that proof on with the proofs kept in memory (`/dev/shm`).
   `u11_r4` (each run with the case split) gave vertex-critical witnesses with 179 to 206 vertices; none is below 155.
 - **Tests.** The slow tests of this branch all pass: 47 at the first run; the 6 that need `drat-trim` were skipped there
   (not on the path) and pass with `DRAT_TRIM` set.
+
+## Finite witnesses at four colours (6 October)
+
+Question 3 of the paper asked whether `χ_c = 4`, when it is the value for a plane (for example over `ℚ(√59)`), is
+attained by a finite unit-distance graph; the probes of 4 October were negative. The answer is yes, in general, but
+without a bound on the size.
+
+- **A tight square or a character (Lemma F13).** In the proof of Theorem W⁺ the only use of `p < 4q` is that the
+  two sides of a square, `ℓ(x, s) + ℓ(x + s, t)` and `ℓ(x, t) + ℓ(x + t, s)`, are equal. For a 4-colouring they lie
+  in `[2, 6]` and are congruent modulo 4, so they can differ only as `2` and `6`, and that says exactly that
+  `x → x + s → x + s + t → x + t → x` is a *tight square*, a tight cycle. So a 4-colouring without tight squares
+  still gives a character with all generators in `[1/4, 3/4]`, and conversely (`⌊4ξ⌋` has none). With the
+  perturbation argument of Lemma F11: if `S` is finite, `κ(S) ≤ 1/4` and the Cayley graph is 4-colourable, every
+  4-colouring has a tight cycle, and by compactness a finite subgraph has `χ_c = 4` (Corollary F14). Conversely a
+  finite witness `H` needs `κ(U_H) ≤ 1/4` for its edge vectors.
+- **A finite set at 1/4 (Proposition F15).** As in the proof of Corollary F12 for `7/2`: when (a), (b) and (7) fail,
+  the proof of Theorem F, run one finite set at a time, gives a finite `U` with `κ(U) ≤ 1/4`. So whenever
+  `χ_c(F²) = 4`, some finite unit-distance graph in `F²` has `χ_c = 4` (Theorem F16), for example over `ℚ(√59)`,
+  `ℚ(√83)` and `ℚ(√3, √11)`; with Corollary F12, `χ_c(F²)` is attained whenever it is at most 4.
+- **Referee.** An independent checker found no error and two programs of its own (C and Python, no shared code)
+  found no counterexample on every abelian group of order at most 16 (and `ℤ/18`, `ℤ/3 × ℤ/6`): 474 classes of
+  connection sets with a 4-colourable Cayley graph, 163 613 685 colourings. Its corrections are applied: the lemma's
+  hypothesis is "no tight square" (a tight 4-cycle need not be a square: `ℤ/8`, `S = {±1, ±2}`, `c(2k) = k`,
+  `c(2k + 1) = k + 2`), the integral form of the relations, rational `q/p` in the converse, the choice of `k` in
+  F15, and the induced subgraph in F16. Its programs are in `data/number_fields/circular/at_four/indep/`.
+  As far as we know the averaging under "no tight squares" and the attainment at 4 are new; the fact that a
+  4-cycle winds at `p/q = 4` only when it is tight is elementary, and we did not search the literature for it.
+- **The growths over `ℚ(√59)`.** The colouring-guided growths with `PQ = 4/1` and the unit vectors of denominator
+  `D = 210`, `2730` and `1050` stopped at 12 099 and 8 016 points (at their limits) and, for `D = 1050`, were at
+  11 882 points when this was written, all without a witness (nothing here is a result). For `D = 210` no witness
+  exists: the character `θ = (89/118, 1/2, 89/118, 1/2)` keeps all 108 unit vectors with denominator 210 at margin
+  at least `15/59 > 1/4` (exact, by enumeration; the referee found another one, `−15a/59 − b/2 + 29c/118`, with the
+  same margin), so every graph built from them has `χ_c ≤ 59/15`. For `D = 1050` the character
+  `θ = (3/8, 5/8, 5/8, 5/8)` has margin exactly `1/4`, and a floating-point MILP finds none with margin `0.2501`
+  (infeasible at `51/200`, `251/1000` and `2501/10000`); an exact certificate that no character maps these 150
+  vectors into the open interval `(1/4, 3/4)` is being computed. For `D = 2730`: feasible at `1/4`, infeasible at
+  `13/50`, and undecided at `51/200` within 30 minutes.
+- **Files.** `notes/circular_planes.md` §6.9 and §7, `papers/three-colours/` (subsection "Finite witnesses at four",
+  abstract, introduction, Question 3), `papers/winding/` (Proposition `prop:four` in the section on finite witnesses),
+  `data/number_fields/circular/at_four/`, `tests/test_at_four.py`.

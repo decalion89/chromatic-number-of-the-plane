@@ -12,6 +12,19 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Changed
+- **Finite witnesses at four colours (6 October).** At `p/q = 4` the winding argument of Theorem W⁺ fails only on a
+  *tight square* `x → x + s → x + s + t → x + t → x`, which is itself a tight cycle; so a 4-colouring without tight
+  squares gives a character into `[1/4, 3/4]`, and conversely (Lemma F13). Hence, for a finite connection set with
+  `κ(S) ≤ 1/4` and a 4-colourable Cayley graph, some finite subgraph has `χ_c = 4` (Corollary F14), and, with a finite
+  form of Theorem F (Proposition F15), whenever `χ_c(F²) = 4` some finite unit-distance graph in `F²` has `χ_c = 4`
+  (Theorem F16; for example over `ℚ(√59)`, `ℚ(√83)`, `ℚ(√3, √11)`). This answers the question of the note and of
+  Question 3 of the paper, without a bound on the size. Refereed by an independent checker, with two programs of
+  its own on every abelian group of order at most 16 (`data/number_fields/circular/at_four/indep/`): no error.
+  `notes/circular_planes.md` §6.9, `papers/three-colours/` (subsection "Finite witnesses at four", abstract,
+  introduction, Question 3), `papers/winding/` (Proposition `prop:four`). Also: the character
+  `θ = (89/118, 1/2, 89/118, 1/2)` keeps the 108 unit vectors of `ℚ(√59)²` with denominator 210 at margin `15/59`, so
+  the growth with `D = 210` could not reach `χ_c = 4`; `θ = (3/8, 5/8, 5/8, 5/8)` gives margin exactly `1/4` for
+  denominator 1050 (`at_four/`, `check_theta.py`, `tests/test_at_four.py`).
 - **The Theorem W scan up to 10 000 (6 October).** `data/quadratic_planes/winding/scan` now holds an exact Theorem W
   certificate for each of the 155 squarefree `d ≡ 11 (mod 12)` below 2000 (the smallest file found for each `d`; 50 MB,
   31 MB of it for `d = 443`), each accepted by both checkers (`scan/checks.txt`), with a README. Between 2000 and 10 000

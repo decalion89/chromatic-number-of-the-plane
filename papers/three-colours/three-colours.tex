@@ -38,7 +38,7 @@
 proofs, wrote them and the programs that check them, and helped to draft this note. Separate AI agents, called independent
 checkers below, refereed the proofs with their own programs. No mathematician has checked the note yet. The author is not a professional
 mathematician and submits it for independent verification.}
-\date{Draft, 4 October 2026}
+\date{Draft, 6 October 2026}
 \subjclass[2020]{Primary 05C15, 52C10; Secondary 11R04, 11S15, 05C25}
 \keywords{Hadwiger--Nelson problem, chromatic number of the plane, unit-distance graph, number field, local--global
 principle, circular chromatic number}
@@ -61,7 +61,8 @@ number $4$. Below $4$, the best upper bound on $\chi_c$ that a locally constant 
 $2$, $3$ or $7/2$. We show that these are the only values below $4$: for every number field $F$, $\chi_c(F^2)$ is $2$, $3$,
 $7/2$ or at least $4$, and it is $7/2$ exactly when $\chi(F^2)\ge4$ and some prime of $F$ above $7$ has residue
 degree $1$; below $4$ it is the least circular chromatic number of the planes over the completions of $F$, and it is
-the circular chromatic number of some finite unit-distance graph in $F^2$. The proof of this
+the circular chromatic number of some finite unit-distance graph in $F^2$; so is the value $4$, when it occurs (for
+example over $\Q(\sqrt{59})$), as at four colours the winding argument fails only on tight $4$-cycles. The proof of this
 classification has one computer-assisted step, an exact finite computation along the rational rotations whose denominators divide $325$;
 without it we show that $\chi_c(F^2)\ge56/17$ whenever $\chi(F^2)\ge4$.
 \end{abstract}
@@ -158,8 +159,9 @@ over a number field takes only the values $2$, $3$ and $7/2$, each given by a lo
 completion; more precisely, below $4$ it is the least circular chromatic number of the planes over its completions
 (Corollary~\ref{cor:localF}): a circular local--global principle below $4$ that extends Theorem~\ref{thm:B}. Below
 $4$ the value is also the circular chromatic number of a finite unit-distance graph in $F^2$
-(Corollary~\ref{cor:finite}); the proof gives no bound on its size, but a computer search finds explicit ones,
-certified: over $\Q(\sqrt{11})$ one with $155$ vertices, and others over $\Q(\sqrt{455})$, $\Q(\sqrt{191})$ and
+(Corollary~\ref{cor:finite}), and so is the value $4$ when $\chi_c(F^2)=4$ (Theorem~\ref{thm:finite4}). The proofs give
+no bound on the size of such a graph; for the value $4$ we know none, but for $7/2$ a computer search finds explicit
+ones, certified: over $\Q(\sqrt{11})$ one with $155$ vertices, and others over $\Q(\sqrt{455})$, $\Q(\sqrt{191})$ and
 $\Q(\sqrt{911})$;
 for the value $3$, over $\Q(\sqrt7)$, whose plane has no unit triangle, one with nine vertices, the fewest possible
 by an exhaustive enumeration (Section~\ref{sec:twoprimes}). For a
@@ -1452,7 +1454,7 @@ translate $c_k+Nm$ of the points $c_k$ of that Remark has least margin at most $
 \subsection*{Finite witnesses}
 By compactness, $\chi_c(F^2)$ is the supremum of $\chi_c(H)$ over the finite subgraphs $H$ of $F^2$: if every finite
 subgraph has a homomorphism to $K_{p/q}$, so does $F^2$. Below $4$ the supremum is attained
-(Corollary~\ref{cor:finite}). In this subsection $s$ denotes an element of a connection set, not the number
+(Corollary~\ref{cor:finite}), and at $4$ as well (Theorem~\ref{thm:finite4}). In this subsection $s$ denotes an element of a connection set, not the number
 $\frac12-\theta$. For a homomorphism $c$
 of a graph to $K_{p/q}$, the \emph{tight digraph} $D_c$ has an arc $x\to y$ for every edge $xy$ with
 $c(y)-c(x)\equiv q\pmod p$, and a \emph{tight cycle} of $c$ is a directed cycle of $D_c$. For a finite set $S$ in an
@@ -1678,6 +1680,118 @@ vertices up to isomorphism, with two separate tests of $\chi_c=3$; certified SAT
 cycles once more. As $\sqrt7\in\Q_3$, $H_7$ is also an explicit witness for $\Q_3$ and for every finite extension $K$
 of $\Q_3$ with $\chi_c(K^2)<4$.
 
+\subsection*{Finite witnesses at four}
+At $p=4q$ the proof of Lemma~\ref{lem:winding} breaks in one place only, and what breaks it is itself a tight cycle.
+For a homomorphism $c$ of $\Cay(\Gamma,S)$ to $K_4=K_{4/1}$, with $\ell$ as in Lemma~\ref{lem:winding}, a
+\emph{tight square} is a tight cycle $x\to x+s\to x+s+t\to x+t\to x$ with $s,t\in S$, that is,
+$\ell(x,s)=\ell(x+s,t)=1$ and $\ell(x,t)=\ell(x+t,s)=3$; its four vertices have the colours $c(x),c(x)+1,c(x)+2,
+c(x)+3$, so they are distinct.
+
+\begin{lemma}\label{lem:square}
+Let $\Gamma$ be an abelian group, $S=-S\subseteq\Gamma\setminus\{0\}$ with $\Gamma=\Z S$, and $c$ a homomorphism of
+$\Cay(\Gamma,S)$ to $K_4$ without tight squares. With $a(s)=\mathrm M_x\,\ell(x,s)$ as in Lemma~\ref{lem:winding},
+the conclusions of Lemma~\ref{lem:winding} hold with $p=4$ and $q=1$: $\xi(s)=a(s)/4$ defines a character of
+$\Gamma$ with $\xi(S)\subseteq[\frac14,\frac34]$, and if $u_1,\dots,u_r\in S$ and positive integers $n_i$ satisfy
+$\sum_in_iu_i=0$ and $a(u_i)=1$, then $c$ has a tight cycle. Conversely, if a character $\xi$ maps $S$ into
+$[\frac14,\frac34]$, then $x\mapsto\lfloor4\tilde\xi(x)\rfloor\bmod4$, where $\tilde\xi(x)\in[0,1)$ is the lift of
+$\xi(x)$, is a homomorphism of $\Cay(\Gamma,S)$ to $K_4$ without tight squares.
+\end{lemma}
+
+\begin{proof}
+For $x\in\Gamma$ and $s,t\in S$ the integers $A=\ell(x,s)+\ell(x+s,t)$ and $B=\ell(x,t)+\ell(x+t,s)$ are congruent
+modulo $4$ and lie in $[2,6]$. So $A=B$ or $\{A,B\}=\{2,6\}$; exchanging $s$ and $t$ exchanges $A$ and $B$, and
+$A=2$, $B=6$ says exactly, as $\ell(y+u,-u)=4-\ell(y,u)$, that $x\to x+s\to x+s+t\to x+t\to x$ is a tight square.
+So $A=B$ for all $x$, $s$, $t$, and this is all that the proof of Lemma~\ref{lem:winding} uses of $p<4q$; the rest
+of that proof applies word for word. Conversely, for $s\in S$ let $\sigma\in[\frac14,\frac34]$ be the lift of
+$\xi(s)$. As $\tilde\xi(x+s)-\tilde\xi(x)-\sigma\in\Z$, the integer congruent to $c(x+s)-c(x)$ that the lemma
+calls $\ell(x,s)$ is $\lfloor4\tilde\xi(x)+4\sigma\rfloor-\lfloor4\tilde\xi(x)\rfloor\in\{\lfloor4\sigma\rfloor,
+\lfloor4\sigma\rfloor+1\}$ (it is $3$ if $4\sigma=3$), which lies in $[1,3]$; so $c$ is a homomorphism to $K_4$,
+while a tight square would need $\ell(x,s)=1$ and $\ell(x+t,s)=3$.
+\end{proof}
+
+So at four colours Theorem~W$^+$ holds for homomorphisms without tight squares: $\Cay(\Gamma,S)$ has a homomorphism
+to $K_4$ without tight squares if and only if some character maps $S$ into $[\frac14,\frac34]$. Finiteness of $S$
+is not used, and the same proof works for $K_{4q/q}$ for every $q$. In the example
+$K_4=\Cay((\Z/2)^2,(\Z/2)^2\setminus\{0\})$ of \cite{Winding} every $4$-colouring is a tight square. A tight
+$4$-cycle need not be a square: for $\Gamma=\Z/8$, $S=\{\pm1,\pm2\}$, $c(2k)=k$ and $c(2k+1)=k+2$, the cycle
+$0\to2\to4\to6\to0$ is tight, there is no tight square, and $a/4$ is the character $x\mapsto5x/8$.
+
+\begin{corollary}\label{cor:finiteS4}
+Let $\Gamma$, $S$ be as in Lemma~\ref{lem:square}, with $S$ finite, $\Cay(\Gamma,S)$ $4$-colourable and
+$\kappa(S)\le\frac14$. Then every homomorphism of $\Cay(\Gamma,S)$ to $K_4$ has a tight cycle, and some finite
+subgraph of $\Cay(\Gamma,S)$ has circular chromatic number $4$. If $\kappa(S)<\frac14$, every such homomorphism
+has a tight square.
+\end{corollary}
+
+\begin{proof}
+Let $c$ be a homomorphism without tight cycles, $\xi$ and $a$ as in Lemma~\ref{lem:square}, and
+$S_1=\{s\in S:a(s)=1\}$, which is disjoint from $-S_1$ as $a(-s)=4-a(s)$. If nonnegative integers $n_t$, not all
+$0$, gave $\sum_{t\in S_1}n_tt=0$, Lemma~\ref{lem:square} would give a tight cycle. Otherwise, as in the proof of
+Lemma~\ref{lem:finiteS} (where a nonnegative real relation among the images of $S_1$ in $\Gamma\otimes\R$ is
+replaced by an integral one, and torsion by a multiple), there is a homomorphism $h\colon\Gamma\to\R$ with $h>0$ on
+$S_1$ (any $h$ if $S_1$ is empty), and for small $\varepsilon>0$ the character $\xi+\varepsilon h$ maps $S$ into
+$(\frac14,\frac34)+\Z$: if $a(s)=1$ it gives $\frac14+\varepsilon h(s)$, if $a(s)=3$ then $-s\in S_1$ and it gives
+$\frac34-\varepsilon h(-s)$, and otherwise $\xi(s)$ is already inside. So $\kappa(S)>\frac14$, a contradiction. The
+rest is the compactness argument of Lemma~\ref{lem:finiteS}, with Lemma~\ref{lem:tight} for $p/q=4$. If
+$\kappa(S)<\frac14$, Lemma~\ref{lem:square} itself excludes homomorphisms without tight squares.
+\end{proof}
+
+Conversely, if a finite subgraph $H$ of $F^2$ has $\chi_c(H)=4$, then $\kappa(U_H)\le\frac14$ for the set $U_H$ of its
+edge vectors and their negatives: each component of $H$ lies in a coset of $\Z U_H$, and if $\kappa(U_H)>\frac14$,
+then for a rational $q/p\in(\frac14,\kappa(U_H)]$ a character with $\xi(U_H)\subseteq[q/p,1-q/p]$ gives a
+homomorphism of $H$ to $K_{p/q}$ (the \emph{if} direction of Theorem~W$^+$ holds for every $p/q\ge2$), so
+$\chi_c(H)\le p/q<4$. So, when $\chi(F^2)\le4$, some finite subgraph of $F^2$ has circular chromatic number $4$ if and
+only if some finite $U\subset T$ has $\kappa(U)\le\frac14$.
+
+\begin{proposition}\label{prop:quarter}
+Let $F$ be a number field with $i\notin F$ for which \textup{(a)}, \textup{(b)} and \textup{(7)} fail. Then some
+finite $U\subset T$ has $\kappa(U)\le\frac14$: no character of $\Z U$ maps every element of $U$ into the open
+interval $(\frac14,\frac34)$.
+\end{proposition}
+
+\begin{proof}
+As in the proof of Corollary~\ref{cor:finite} for $7/2$. If for every finite $V\supseteq\{b_j\}$ there were
+$\beta\in L$ with $\Tr(\beta v)\in E'$ for every $v\in V$, the proof of Lemma~\ref{lem:B2seven}, which uses
+Lemma~\ref{lem:B1seven} only through this conclusion (such a $\beta$ lies in $K_2\times K_3\times K_7$, and the
+types of the $\Tr(\beta v)$ give $\tau$), and Lemmas~\ref{lem:B3seven}--\ref{lem:B5seven} would give (c), (q) or
+(7$'$), hence (a), (b) or (7). So some finite $V_0\supseteq\{b_j\}$ has no such $\beta$. Let $k$ be the least
+multiple of $6$ with $5^k>42r'\max_{v\in V_0}(|D_v|+\sum_j|\mu_{v,j}|)$ (in the fixed basis; $r'$ does not depend
+on $\theta$), $N=5^k$, and $U_0=G(k,1)V_0$, a finite symmetric subset of $T$. If $\kappa(U_0)>\frac14$, take $\theta$
+with $\frac14<\theta\le\min(\kappa(U_0),\frac13)$ and a character $\xi$ of $\Z U_0$ with
+$\xi(U_0)\subseteq[\theta,1-\theta]+\Z$; the proof of Lemma~\ref{lem:B1seven}, which uses the homomorphism only
+through such a character (Proposition~\ref{prop:window7} excludes its sixteen extra vectors for every
+$\theta>\frac14$, and Lemma~\ref{lem:window7} needs only $\frac12-\theta<\frac14$), gives $\beta$ with
+$\Tr(\beta v)\in E'$ for every $v\in V_0$: impossible. So $\kappa(U_0)\le\frac14$.
+\end{proof}
+
+For $i\notin F$ the converse holds too: if (a), (b) or (7) holds, the corresponding colouring and Theorem~W$^+$ give
+$\kappa(U)\ge\frac27$ for every finite $U\subset T$.
+
+\begin{theorem}\label{thm:finite4}
+For every number field $F$ with $\chi_c(F^2)\le4$, some finite unit-distance graph in $F^2$ has circular chromatic
+number $\chi_c(F^2)$. In particular the value $4$ is attained by finite unit-distance graphs over $\Q(\sqrt{59})$,
+$\Q(\sqrt{83})$ and $\Q(\sqrt3,\sqrt{11})$.
+\end{theorem}
+
+\begin{proof}
+Below $4$ this is Corollary~\ref{cor:finite}. If $\chi_c(F^2)=4$, every finite subgraph has $\chi_c\le4$, hence
+$\chi\le4$, and $\chi(F^2)\le4$ by the theorem of de Bruijn and Erd\H{o}s; so $i\notin F$, and (a), (b) and (7)
+fail by Theorem~\ref{thm:F}, as otherwise $\chi_c(F^2)<4$. Proposition~\ref{prop:quarter} gives a finite $U\subset T$
+with $\kappa(U)\le\frac14$, $\Cay(\Z U,U)\subseteq F^2$ is $4$-colourable, and Corollary~\ref{cor:finiteS4} gives a
+finite subgraph $H$ with $\chi_c(H)=4$; the unit-distance graph induced on its vertices also has $\chi_c=4$, as
+$4=\chi_c(H)\le\chi_c\le\chi_c(F^2)=4$. For $\Q(\sqrt{59})$ and $\Q(\sqrt{83})$, $\chi_c=4$ by the discussion after
+Theorem~\ref{thm:F}; for $\Q(\sqrt3,\sqrt{11})$, $\chi=4$ and (7) fails, as $7$ is inert in $\Q(\sqrt3)$.
+\end{proof}
+
+An independent checker refereed this subsection with two programs of its own, which test Lemma~\ref{lem:square},
+Corollary~\ref{cor:finiteS4} and the four-colour form of Theorem~W$^+$ on every abelian group of order at most $16$
+(\nolinkurl{data/number_fields/circular/at_four/indep/}). The proof gives no bound on the size of the witness, and we
+know none. Colouring-guided growths over $\Q(\sqrt{59})$ with the unit vectors of denominator $210$, $1050$ and
+$2730$ stopped at their limits; for $210$ this was bound to happen, as the character
+$\frac{(89a+59b+89c+59e)}{118}\bmod1$ of the points $(\frac{a+b\sqrt{59}}{210},\frac{c+e\sqrt{59}}{210})$ keeps all
+$108$ unit vectors with denominator $210$ at distance at least $\frac{15}{59}$ from $\Z$, so that every graph built
+from them maps to $K_{59/15}$.
+
 \section{Computer checks}\label{sec:checks}
 
 The programs are in the folders \nolinkurl{data/number_fields/three_colours/} and
@@ -1813,16 +1927,9 @@ a plane without unit triangles, nine vertices are needed, and they suffice over 
 Section~\ref{sec:twoprimes}. Over other such planes the least number is open; over $\Q(\sqrt{15})$ the smallest
 witness we found has $13$ vertices (\nolinkurl{witness_q15.json.gz}), and none of the three nine-vertex graphs
 appeared with the denominators we tried.)
-And when $\chi_c(F^2)=4$, is the value attained by a finite subgraph, for example for $\Q(\sqrt{59})$? At $4$ and
-above, Lemma~\ref{lem:winding} is not available (it needs $p<4q$). When $\chi(F^2)=4$, compactness turns this into a question about the
-plane: some finite subgraph has $\chi_c=4$ if and only if every proper colouring $c\colon F^2\to\Z/4$ has a tight
-cycle (a directed cycle along which $c$ increases by $1$ at each step). Indeed, if every colouring has one, finitely
-many cycles already meet every colouring, and by compactness every $4$-colouring of some finite subgraph $H$ makes
-one of them tight, so $\chi_c(H)=4$ by Lemma~\ref{lem:tight}; if some colouring has none, its restriction to any
-finite subgraph has an acyclic tight digraph, and perturbing the colours along a topological order of that digraph
-gives a circular colouring with fewer than $4$ colours. The $2$-adic $4$-colourings of $\Q(\sqrt{59})^2$ (residues in
-$\mathbb F_4$) do not decide it: for every cyclic order of $\mathbb F_4$ they have a tight $4$-cycle, a unit rhombus
-whose two directions have suitable different residues.
+When $\chi_c(F^2)=4$ the value is attained as well (Theorem~\ref{thm:finite4}, for example over $\Q(\sqrt{59})$), but the
+proof gives no bound on the size of a witness, and we know none: how small can one be over $\Q(\sqrt{59})$? Its edge
+vectors $U$ must satisfy $\kappa(U)\le\frac14$, which excludes those with denominator $210$ (Section~\ref{sec:twoprimes}).
 \end{enumerate}
 
 \section*{Acknowledgements}

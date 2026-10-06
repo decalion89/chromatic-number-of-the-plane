@@ -1,0 +1,5 @@
+S=(0,1)(1,0) kappa=1/2 col=21 acyc=19 noT4=19 noSq=19 ABeq=19 hom3/1=1 ok
+S=(0,1)(1,1) kappa=1/2 col=21 acyc=19 noT4=19 noSq=19 ABeq=19 hom3/1=1 ok
+S=(1,0)(1,1) kappa=1/2 col=21 acyc=19 noT4=19 noSq=19 ABeq=19 hom3/1=1 ok
+S=(0,1)(1,0)(1,1) kappa=0 col=6 acyc=0 noT4=0 noSq=0 ABeq=0 hom3/1=0 ok
+# summary Z/[2, 2]: generating S=4, 4-colourable=4, BAD=0

@@ -1,0 +1,29 @@
+2 rc=0 1s # summary: generating S classes=1, 4-colourable=1, colourings(c(0)=0)=3, BAD=0
+3 rc=0 0s # summary: generating S classes=1, 4-colourable=1, colourings(c(0)=0)=6, BAD=0
+4 rc=0 0s # summary: generating S classes=2, 4-colourable=2, colourings(c(0)=0)=27, BAD=0
+5 rc=0 0s # summary: generating S classes=2, 4-colourable=1, colourings(c(0)=0)=60, BAD=0
+6 rc=0 0s # summary: generating S classes=5, 4-colourable=4, colourings(c(0)=0)=378, BAD=0
+7 rc=0 0s # summary: generating S classes=3, 4-colourable=2, colourings(c(0)=0)=588, BAD=0
+8 rc=0 0s # summary: generating S classes=8, 4-colourable=7, colourings(c(0)=0)=2718, BAD=0
+9 rc=0 0s # summary: generating S classes=6, 4-colourable=4, colourings(c(0)=0)=5508, BAD=0
+10 rc=0 0s # summary: generating S classes=16, 4-colourable=8, colourings(c(0)=0)=29382, BAD=0
+11 rc=0 0s # summary: generating S classes=7, 4-colourable=4, colourings(c(0)=0)=47652, BAD=0
+12 rc=0 1s # summary: generating S classes=38, 4-colourable=28, colourings(c(0)=0)=211470, BAD=0
+13 rc=0 1s # summary: generating S classes=13, 4-colourable=5, colourings(c(0)=0)=428064, BAD=0
+14 rc=0 5s # summary: generating S classes=43, 4-colourable=20, colourings(c(0)=0)=1879392, BAD=0
+15 rc=0 11s # summary: generating S classes=40, 4-colourable=19, colourings(c(0)=0)=3955440, BAD=0
+16 rc=0 45s # summary: generating S classes=76, 4-colourable=45, colourings(c(0)=0)=13718229, BAD=0
+2 2 rc=0 0s # summary: generating S classes=2, 4-colourable=2, colourings(c(0)=0)=27, BAD=0
+2 4 rc=0 0s # summary: generating S classes=10, 4-colourable=9, colourings(c(0)=0)=1707, BAD=0
+2 2 2 rc=0 0s # summary: generating S classes=6, 4-colourable=5, colourings(c(0)=0)=1200, BAD=0
+3 3 rc=0 0s # summary: generating S classes=3, 4-colourable=2, colourings(c(0)=0)=324, BAD=0
+2 6 rc=0 0s # summary: generating S classes=30, 4-colourable=20, colourings(c(0)=0)=82041, BAD=0
+2 8 rc=0 22s # summary: generating S classes=120, 4-colourable=81, colourings(c(0)=0)=4075311, BAD=0
+4 4 rc=0 32s # summary: generating S classes=40, 4-colourable=29, colourings(c(0)=0)=588489, BAD=0
+2 2 4 rc=0 39s # summary: generating S classes=92, 4-colourable=68, colourings(c(0)=0)=1604256, BAD=0
+2 2 2 2 rc=0 36s # summary: generating S classes=36, 4-colourable=26, colourings(c(0)=0)=891657, BAD=0
+18 rc=0 633s # summary: generating S classes=178, 4-colourable=57, colourings(c(0)=0)=130924920, BAD=0
+3 6 rc=0 39s # summary: generating S classes=59, 4-colourable=24, colourings(c(0)=0)=5164836, BAD=0
+20 rc=124 1100s 
+Terminated
+2 10 rc=143 97s 

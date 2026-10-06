@@ -1,0 +1,32 @@
+# group Z/2 x Z/6  n=12  exponent M=6  |Aut|=12  classes=7
+S=(1,0)(0,1)(0,5) |S|=3 kappa=3/6 col=29961 acyc=17791 noT4=17791 noSq=17791 ABeq=17791 T4butABeq=0 ABneq_charfail=8544 chars_ge=3 hom11/3=1 ok
+S=(0,1)(1,1)(0,5)(1,5) |S|=4 kappa=3/6 col=13227 acyc=9103 noT4=9103 noSq=9103 ABeq=9103 T4butABeq=0 ABneq_charfail=3468 chars_ge=3 hom11/3=1 ok
+S=(1,0)(0,1)(1,1)(0,5)(1,5) |S|=5 kappa=1/6 col=96 acyc=0 noT4=0 noSq=0 ABeq=0 T4butABeq=0 ABneq_charfail=96 chars_ge=0 hom11/3=0 ok
+S=(1,0)(0,1)(0,2)(0,4)(0,5) |S|=5 kappa=2/6 col=732 acyc=330 noT4=330 noSq=330 ABeq=330 T4butABeq=0 ABneq_charfail=402 chars_ge=2 hom11/3=1 ok
+S=(0,1)(1,1)(0,2)(0,4)(0,5)(1,5) |S|=6 kappa=2/6 col=204 acyc=114 noT4=114 noSq=114 ABeq=114 T4butABeq=0 ABneq_charfail=90 chars_ge=2 hom11/3=1 ok
+S=(1,0)(0,1)(1,1)(0,2)(0,4)(0,5)(1,5) |S|=7 kappa=1/6 not4col
+S=(1,0)(0,1)(1,2)(1,4)(0,5) |S|=5 kappa=3/6 col=8427 acyc=6097 noT4=6097 noSq=6097 ABeq=6097 T4butABeq=0 ABneq_charfail=1800 chars_ge=1 hom11/3=1 ok
+S=(0,1)(1,1)(1,2)(1,4)(0,5)(1,5) |S|=6 kappa=2/6 col=234 acyc=114 noT4=114 noSq=114 ABeq=114 T4butABeq=0 ABneq_charfail=120 chars_ge=2 hom11/3=1 ok
+S=(1,0)(0,1)(1,1)(1,2)(1,4)(0,5)(1,5) |S|=7 kappa=1/6 col=6 acyc=0 noT4=0 noSq=0 ABeq=0 T4butABeq=0 ABneq_charfail=6 chars_ge=0 hom11/3=0 ok
+S=(1,0)(0,1)(0,2)(1,2)(0,4)(1,4)(0,5) |S|=7 kappa=1/6 not4col
+S=(0,1)(1,1)(0,2)(1,2)(0,4)(1,4)(0,5)(1,5) |S|=8 kappa=2/6 col=132 acyc=90 noT4=90 noSq=90 ABeq=90 T4butABeq=0 ABneq_charfail=42 chars_ge=2 hom11/3=1 ok
+S=(1,0)(0,1)(1,1)(0,2)(1,2)(0,4)(1,4)(0,5)(1,5) |S|=9 kappa=1/6 not4col
+S=(1,0)(0,1)(0,3)(0,5) |S|=4 kappa=3/6 col=12315 acyc=8443 noT4=8443 noSq=8443 ABeq=8443 T4butABeq=0 ABneq_charfail=2172 chars_ge=1 hom11/3=1 ok
+S=(1,0)(1,1)(0,3)(1,5) |S|=4 kappa=2/6 col=4152 acyc=1050 noT4=1050 noSq=1050 ABeq=1050 T4butABeq=0 ABneq_charfail=3102 chars_ge=2 hom11/3=1 ok
+S=(1,0)(0,1)(1,1)(0,3)(0,5)(1,5) |S|=6 kappa=1/6 col=96 acyc=0 noT4=0 noSq=0 ABeq=0 T4butABeq=0 ABneq_charfail=96 chars_ge=0 hom11/3=0 ok
+S=(1,0)(0,2)(0,3)(0,4) |S|=4 kappa=2/6 col=4122 acyc=1386 noT4=1386 noSq=1386 ABeq=1386 T4butABeq=0 ABneq_charfail=2724 chars_ge=2 hom11/3=1 ok
+S=(1,0)(0,1)(0,2)(0,3)(0,4)(0,5) |S|=6 kappa=1/6 not4col
+S=(1,0)(1,1)(0,2)(0,3)(0,4)(1,5) |S|=6 kappa=2/6 col=642 acyc=306 noT4=306 noSq=306 ABeq=306 T4butABeq=0 ABneq_charfail=336 chars_ge=2 hom11/3=1 ok
+S=(1,0)(0,1)(1,1)(0,2)(0,3)(0,4)(0,5)(1,5) |S|=8 kappa=1/6 not4col
+S=(1,0)(0,1)(1,2)(0,3)(1,4)(0,5) |S|=6 kappa=3/6 col=7221 acyc=5299 noT4=5299 noSq=5299 ABeq=5299 T4butABeq=0 ABneq_charfail=1464 chars_ge=1 hom11/3=1 ok
+S=(1,0)(0,1)(1,1)(1,2)(0,3)(1,4)(0,5)(1,5) |S|=8 kappa=1/6 col=6 acyc=0 noT4=0 noSq=0 ABeq=0 T4butABeq=0 ABneq_charfail=6 chars_ge=0 hom11/3=0 ok
+S=(1,0)(0,1)(0,2)(1,2)(0,3)(0,4)(1,4)(0,5) |S|=8 kappa=1/6 not4col
+S=(1,0)(0,1)(1,1)(0,2)(1,2)(0,3)(0,4)(1,4)(0,5)(1,5) |S|=10 kappa=1/6 not4col
+S=(1,0)(0,1)(0,3)(1,3)(0,5) |S|=5 kappa=0/6 col=222 acyc=0 noT4=0 noSq=0 ABeq=0 T4butABeq=0 ABneq_charfail=222 chars_ge=0 hom11/3=0 ok
+S=(1,0)(0,1)(1,1)(0,3)(1,3)(0,5)(1,5) |S|=7 kappa=0/6 col=96 acyc=0 noT4=0 noSq=0 ABeq=0 T4butABeq=0 ABneq_charfail=96 chars_ge=0 hom11/3=0 ok
+S=(1,0)(0,2)(0,3)(1,3)(0,4) |S|=5 kappa=0/6 col=144 acyc=0 noT4=0 noSq=0 ABeq=0 T4butABeq=0 ABneq_charfail=144 chars_ge=0 hom11/3=0 ok
+S=(1,0)(0,1)(0,2)(0,3)(1,3)(0,4)(0,5) |S|=7 kappa=0/6 not4col
+S=(1,0)(0,1)(1,1)(0,2)(0,3)(1,3)(0,4)(0,5)(1,5) |S|=9 kappa=0/6 not4col
+S=(1,0)(0,1)(1,1)(1,2)(0,3)(1,3)(1,4)(0,5)(1,5) |S|=9 kappa=0/6 col=6 acyc=0 noT4=0 noSq=0 ABeq=0 T4butABeq=0 ABneq_charfail=6 chars_ge=0 hom11/3=0 ok
+S=(1,0)(0,1)(1,1)(0,2)(1,2)(0,3)(1,3)(0,4)(1,4)(0,5)(1,5) |S|=11 kappa=0/6 not4col
+# summary: generating S classes=30, 4-colourable=20, colourings(c(0)=0)=82041, BAD=0
