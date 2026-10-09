@@ -80,7 +80,10 @@ by a finite construction (tested on 15 distance graphs on `ℤ`). A second witne
 it is certified the same two ways, the referee's with two encodings of its own and `cake_lpr`
 (`finite_witness/indep_W4b/`), so `χ_c(ℚ(√2, √3)²) = 4` with an explicit graph. Their subgraphs in the Cayley graphs of
 the 54 and 120 unit vectors they were built from (7 887 and 6 199 edges) also have `χ_c = 4`, with more listed cycles;
-the first is the finite subgraph that Corollary 8 promises for the 54 vectors, here explicit. The PDF has 31 pages.
+the first is the finite subgraph that Corollary 8 promises for the 54 vectors, here explicit. Proposition 11 (9 October)
+gives, over every field with a place `v ∣ 2` with `F_v ≅ ℚ₂(√3)`, a homomorphism of `ℤT` to `ℤ/4` with values 1, 2, 3 on
+the unit vectors (for `ℚ(√d)` it is Fischer's colouring of 1990), so there `κ(U) ≥ 1/4` for every finite `U` and the
+tight-square alternative of Corollary 8 never applies (`at_four/quarter_character.py`). The PDF has 32 pages.
 
 [`three-colours.tex`](three-colours.tex) is the LaTeX source (`amsart`). To rebuild the PDF, run in this folder,
 with TeX Live:

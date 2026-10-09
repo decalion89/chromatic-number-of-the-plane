@@ -1772,6 +1772,58 @@ $\Tr(\beta v)\in E'$ for every $v\in V_0$: impossible. So $\kappa(U_0)\le\frac14
 
 For $i\notin F$ the converse holds too: if (a), (b) or (7) holds, the corresponding colouring and Theorem~W$^+$ give
 $\kappa(U)\ge\frac27$ for every finite $U\subset T$.
+At $\frac14$ a place above $2$ of a particular kind gives the corresponding lower bound.
+
+\begin{proposition}\label{prop:quarterchar}
+Let $F$ be a number field with a place $v$ above $2$ such that $F_v\cong\Q_2(\sqrt3)$. Then some homomorphism
+$c\colon\Z T\to\Z/4$ maps $T$ into $\{1,2,3\}$. Hence $\kappa(U)\ge\frac14$ for every finite $U\subset T$, and
+$F_v^2$, hence $F^2$, has a homomorphism to $K_4$ without tight squares.
+\end{proposition}
+
+\begin{proof}
+Let $w$ be the place of $L$ above $v$, as in Proposition~\ref{prop:C1}, and fix $\sqrt3\in F_v$; let
+$O_v=\Z_2[\sqrt3]$ be the ring of integers of $F_v$. Then $L_w=F_v(i)=\Q_2(\zeta_{12})$ with
+$\zeta_{12}=\frac{\sqrt3+i}2$, a primitive $12$th root of unity; $O_w=\Z_2[\zeta_{12}]$, with
+$\zeta_{12}^4=\zeta_{12}^2-1$; $L_w/F_v$ is unramified, and its conjugation maps $\zeta_{12}$ to $\zeta_{12}^{-1}$. A unit
+vector $z$ is a unit of $O_w$ with $z\bar z=1$. The ring $O_w/4O_w$ has $256$ elements, $192$ of them units. As the
+norm maps $O_w^\times$ onto $O_v^\times$, the homomorphism $r\mapsto r\bar r$ maps these units onto the $8$ units of
+$O_v/4O_v$, so its kernel has $24$ elements: the residues of $\zeta_{12}^k$ and $(1+2i)\zeta_{12}^k$,
+$k\in\Z/12$. Let $\lambda\colon O_w\to\Z/4$ be the additive map
+$\lambda(z_0+z_1\zeta_{12}+z_2\zeta_{12}^2+z_3\zeta_{12}^3)=z_0+z_1+2z_2+3z_3\bmod4$ ($z_j\in\Z_2$). It takes the values
+$1,1,2,3,1,2,3,3,2,1,3,2$ at $\zeta_{12}^0,\dots,\zeta_{12}^{11}$, and $\lambda((1+2i)\zeta_{12}^k)=-\lambda(\zeta_{12}^k)$;
+so $\lambda$ does not vanish on the residues of $T$, and as $T\subset O_w$, $c=\lambda|_{\Z T}$ will do. (These finite
+computations are checked by \nolinkurl{data/number_fields/circular/at_four/quarter_character.py}.) For finite
+$U\subset T$, $c/4$ is a character of $\Z U$ that maps $U$ into $\{\frac14,\frac12,\frac34\}$. Finally, as in the
+proof of Proposition~\ref{prop:C1}, colour each $x$ in a class $A$ of $L_w$ modulo $O_w$ by $\lambda(x-x_A)$: a unit
+step $x\to x+u$ changes the colour by $\lambda(u)\ne0$, and along a square $x\to x+s\to x+s+t\to x+t\to x$ the
+representatives in $\{1,2,3\}$ of $\lambda(s)$, $\lambda(t)$, $-\lambda(s)$, $-\lambda(t)$ add up to $8$, so no square is
+tight.
+\end{proof}
+
+For $F=\Q(\sqrt d)$, $d\ne1$ squarefree, such a place exists exactly when $d\equiv3\pmod8$. For real quadratic fields,
+$d>1$, Fischer \cite[Theorem~10(i)]{Fischer1990} had already given such a map: a linear form with values in
+$\Z_{(2)}$, the rationals with odd denominator, reduced modulo $4$. As $v$ is then the only place of $F$ above $2$,
+$\Z T$ is dense in $O_w$ and its residues modulo $4O_w$ include all $24$ above (Lemma~\ref{lem:WA}), so the twelve maps
+$z\mapsto\lambda(\zeta_{12}^kz)$ are all the homomorphisms $\Z T\to\Z/4$ that map $T$ into $\{1,2,3\}$; his map is one of
+them, and over $\Q(\sqrt{59})$ and $\Q(\sqrt{83})$ the bound $\kappa(U)\ge\frac14$ already follows from his theorem.
+(The residues in $\F_4$ used above for $\chi(\Q(\sqrt{59})^2)\le4$ form a group of exponent $2$ and give no such bound.)
+For $d=59$, embed $F$ by $\sqrt{59}\mapsto\eta\sqrt3$ with $\eta\in\Z_2$, $\eta^2=\frac{59}3$ and $\eta\equiv5\pmod8$;
+then for $(x_1+x_2\sqrt{59},y_1+y_2\sqrt{59})\in\Z T$ (indeed whenever $x+iy\in O_w$) the number
+$x_1-5x_2+3y_1+15y_2$ lies in $\Z_{(2)}$, and $c$ is its residue modulo $4$. The proposition also applies to
+$\Q(\sqrt3,\sqrt{11})$, as $\sqrt{33}\in\Q_2$ (compare \cite{Fischer1994}), but not to $\Q(\sqrt2,\sqrt3)$: there
+$F_v=\Q_2(\sqrt2,\sqrt3)$, the $384$ residues $r$ of $O_w/4O_w$ with $r\bar r=1$ are all residues of unit vectors, and
+$\Z T/4\Z T=O_w/4O_w$ as $\mu_{24}\subset T$, but no additive map $O_w/4O_w\to\Z/4$ is nonzero on all of them; so no
+homomorphism $\Z T\to\Z/4$ maps $T$ into $\{1,2,3\}$ there. Hence over $\Q(\sqrt{59})$, $\Q(\sqrt{83})$ and
+$\Q(\sqrt3,\sqrt{11})$ every finite $U\subset T$ with $\kappa(U)\le\frac14$, such as the set of
+Proposition~\ref{prop:quarter}, has $\kappa(U)=\frac14$, and the last sentence of Corollary~\ref{cor:finiteS4} never
+applies there. Moreover a finite subgraph $H$ of $\Cay(\Z U,U)$ with $\chi_c(H)=4$ contains, for each of the twelve maps
+$z\mapsto\lambda(\zeta_{12}^kz)$ at a fixed place $v$ (six up to sign; each is nonzero on $T$, as $\zeta_{12}^kT$ lies
+in the norm-one group of $L_w$, whose residues modulo $4O_w$ are the $24$ above), a cycle all of whose steps $u$ have
+the value $1$: otherwise this colouring $c'$ of $H$ has no tight cycle, and if $\mathrm{pos}$ numbers the $N$ vertices of
+$H$ along a topological order of its tight digraph, $Nc'+\mathrm{pos}$ is a homomorphism of $H$ to $K_{4N/(N+1)}$ (the
+other half of Guichard's characterisation \cite{Guichard}), so $\chi_c(H)<4$. The length of such a cycle is a multiple
+of $4$, as the values of its steps add up to $0$ modulo $4$, and at least $8$, as four unit vectors with sum $0$ include
+two opposite ones, whose values are $1$ and $3$.
 
 \begin{theorem}\label{thm:finite4}
 For every number field $F$ with $\chi_c(F^2)\le4$, some finite unit-distance graph in $F^2$ has circular chromatic
@@ -1798,7 +1850,8 @@ know none. Colouring-guided growths over $\Q(\sqrt{59})$ with the unit vectors o
 $2730$ stopped at their limits; for $210$ this was bound to happen, as the character
 $\frac{(89a+59b+89c+59e)}{118}\bmod1$ of the points $(\frac{a+b\sqrt{59}}{210},\frac{c+e\sqrt{59}}{210})$ keeps all
 $108$ unit vectors with denominator $210$ at distance at least $\frac{15}{59}$ from $\Z$, so that every graph built
-from them maps to $K_{59/15}$. Over $\Q(\sqrt3,\sqrt{11})$ an explicit set at $\frac14$ is small: with $R_{60}$ the rotation by $60^\circ$, $R_A$ the rotation with cosine $\frac56$ and sine $\frac{\sqrt{11}}6$ (the angle of the Moser spindle) and $R_G$ the one with cosine $\frac{11}{14}$ and sine $\frac{5\sqrt3}{14}$, the $27$ unit vectors $R_{60}^jR_A^kR_G^l(1,0)$, $j,k,l\in\{-1,0,1\}$, have $\kappa=\frac14$: a character of order $12$ keeps them at distance at least $\frac14$ from $\Z$, and an exact certificate ($12\,073$ nodes, checked by two programs; \nolinkurl{data/number_fields/circular/at_four/}) shows that none maps them into $(\frac14,\frac34)$. So Corollary~\ref{cor:finiteS4} gives a finite subgraph with $\chi_c=4$ of the Cayley graph of these $54$ vectors
+from them maps to $K_{59/15}$. Over $\Q(\sqrt3,\sqrt{11})$ an explicit set at $\frac14$ is small: with $R_{60}$ the rotation by $60^\circ$, $R_A$ the rotation with cosine $\frac56$ and sine $\frac{\sqrt{11}}6$ (the angle of the Moser spindle) and $R_G$ the one with cosine $\frac{11}{14}$ and sine $\frac{5\sqrt3}{14}$, the $27$ unit vectors $R_{60}^jR_A^kR_G^l(1,0)$, $j,k,l\in\{-1,0,1\}$, have $\kappa=\frac14$: a character of order $12$ keeps them at distance at least $\frac14$ from $\Z$ (so does $c/4$, of
+order $4$, by Proposition~\ref{prop:quarterchar}), and an exact certificate ($12\,073$ nodes, checked by two programs; \nolinkurl{data/number_fields/circular/at_four/}) shows that none maps them into $(\frac14,\frac34)$. So Corollary~\ref{cor:finiteS4} gives a finite subgraph with $\chi_c=4$ of the Cayley graph of these $54$ vectors
 (which is $4$-colourable, as $\chi(\Q(\sqrt3,\sqrt{11})^2)=4$) directly, without Theorem~\ref{thm:F}. A construction
 based on the following lemma found one, with $1\,874$ vertices (the graph $H_4^\circ$ below).
 

@@ -859,6 +859,48 @@ which uses the homomorphism only through such a character (Proposition F1 exclud
 (For `i ∉ F` the converse holds as well: if (a), (b) or (7) holds, the corresponding colouring and Theorem W⁺ give
 `κ(U) ≥ 2/7` for every finite `U ⊂ T`.)
 
+At `1/4` a place above 2 of a particular kind gives the corresponding lower bound.
+
+> **Proposition F15′ (a character at a place above 2).** Let `F` be a number field with a place `v` above 2 such
+> that `F_v ≅ ℚ₂(√3)`. Then some homomorphism `c: ℤT → ℤ/4` maps `T` into `{1, 2, 3}`. Hence `κ(U) ≥ 1/4` for every
+> finite `U ⊂ T`, and `F_v²`, hence `F²`, has a homomorphism to `K₄` without tight squares.
+
+*Proof.* Let `w` be the place of `L` above `v`, as in Proposition C1, fix `√3 ∈ F_v`, and let `O_v = ℤ₂[√3]` be the
+ring of integers of `F_v`. Then `L_w = F_v(i) = ℚ₂(ζ₁₂)` with `ζ₁₂ = (√3 + i)/2`, a primitive 12th root of unity;
+`O_w = ℤ₂[ζ₁₂]`, with `ζ₁₂⁴ = ζ₁₂² − 1`; `L_w/F_v` is unramified, and its conjugation maps `ζ₁₂` to `ζ₁₂⁻¹`. A unit
+vector `z` is a unit of `O_w` with `z z̄ = 1`. The ring `O_w/4O_w` has 256 elements, 192 of them units. As the norm maps
+`O_w^×` onto `O_v^×`, `r ↦ r r̄` maps these units onto the 8 units of `O_v/4O_v`, so its kernel has 24 elements: the
+residues of `ζ₁₂ᵏ` and `(1 + 2i)ζ₁₂ᵏ`, `k ∈ ℤ/12`. Let `λ: O_w → ℤ/4` be the additive map
+`λ(z₀ + z₁ζ₁₂ + z₂ζ₁₂² + z₃ζ₁₂³) = z₀ + z₁ + 2z₂ + 3z₃ mod 4` (`z_j ∈ ℤ₂`). It takes the values
+`1, 1, 2, 3, 1, 2, 3, 3, 2, 1, 3, 2` at `ζ₁₂⁰, …, ζ₁₂¹¹`, and `λ((1 + 2i)ζ₁₂ᵏ) = −λ(ζ₁₂ᵏ)`; so `λ` does not vanish on
+the residues of `T`, and as `T ⊂ O_w`, `c = λ|_{ℤT}` will do (`at_four/quarter_character.py` checks these finite
+computations). For finite `U ⊂ T`, `c/4` is a character of `ℤU` that maps `U` into `{1/4, 1/2, 3/4}`. Finally, as in
+the proof of Proposition C1, colour each `x` in a class `A` of `L_w` modulo `O_w` by `λ(x − x_A)`: a unit step
+`x → x + u` changes the colour by `λ(u) ≠ 0`, and along a square `x → x + s → x + s + t → x + t → x` the
+representatives in `{1, 2, 3}` of `λ(s)`, `λ(t)`, `−λ(s)`, `−λ(t)` add up to 8, so no square is tight. ∎
+
+For `F = ℚ(√d)`, `d ≠ 1` squarefree, such a place exists exactly when `d ≡ 3 (mod 8)`. For real quadratic fields,
+`d > 1`, Fischer (1990, Theorem 10(i)) had already given such a map: a linear form with values in `ℤ_(2)`, the
+rationals with odd denominator, reduced modulo 4. As `v` is then the only place of `F` above 2, `ℤT` is dense in `O_w`
+and its residues modulo `4O_w` include all 24 above (Lemma WA), so the twelve maps `z ↦ λ(ζ₁₂ᵏz)` are all the
+homomorphisms `ℤT → ℤ/4` that map `T` into `{1, 2, 3}`; his map is one of them, and over `ℚ(√59)` and `ℚ(√83)` the
+bound `κ(U) ≥ 1/4` already follows from his theorem. (The residues in `𝔽₄` used in §3 for `χ(ℚ(√59)²) ≤ 4` form a
+group of exponent 2 and give no such bound.) For `d = 59`, embed `F` by `√59 ↦ η√3` with `η ∈ ℤ₂`, `η² = 59/3` and
+`η ≡ 5 (mod 8)`; then for `(x₁ + x₂√59, y₁ + y₂√59) ∈ ℤT` (indeed whenever `x + iy ∈ O_w`) the number
+`x₁ − 5x₂ + 3y₁ + 15y₂` lies in `ℤ_(2)`, and `c` is its residue modulo 4. The proposition also applies to
+`ℚ(√3, √11)`, as `√33 ∈ ℚ₂` (compare Fischer 1994), but not to `ℚ(√2, √3)`: there `F_v = ℚ₂(√2, √3)`, the 384
+residues `r` of `O_w/4O_w` with `r r̄ = 1` are all residues of unit vectors, and `ℤT/4ℤT = O_w/4O_w` as `μ₂₄ ⊂ T`,
+but no additive map `O_w/4O_w → ℤ/4` is nonzero on all of them (`quarter_character.py --q2_3`); so no homomorphism
+`ℤT → ℤ/4` maps `T` into `{1, 2, 3}` there. Hence over `ℚ(√59)`, `ℚ(√83)` and `ℚ(√3, √11)` every finite `U ⊂ T` with
+`κ(U) ≤ 1/4`, such as the set of Proposition F15, has `κ(U) = 1/4`, and the last sentence of Corollary F14 never
+applies there. Moreover a finite subgraph `H` of `Cay(ℤU, U)` with `χ_c(H) = 4` contains, for each of the twelve maps
+`z ↦ λ(ζ₁₂ᵏz)` at a fixed place `v` (six up to sign; each is nonzero on `T`, as `ζ₁₂ᵏT` lies in the norm-one group of
+`L_w`, whose residues modulo `4O_w` are the 24 above), a cycle all of whose steps `u` have the value 1: otherwise this
+colouring `c′` of `H` has no tight cycle, and if `pos` numbers the `N` vertices of `H` along a topological order of its
+tight digraph, `Nc′ + pos` is a homomorphism of `H` to `K_{4N/(N+1)}` (the other half of Guichard's characterisation),
+so `χ_c(H) < 4`. The length of such a cycle is a multiple of 4, as the values of its steps add up to 0 modulo 4, and at
+least 8, as four unit vectors with sum 0 include two opposite ones, whose values are 1 and 3.
+
 > **Theorem F16 (finite witnesses up to 4).** For every number field `F` with `χ_c(F²) ≤ 4`, some finite
 > unit-distance graph in `F²` has circular chromatic number `χ_c(F²)`. In particular the value 4 is attained by
 > finite unit-distance graphs over `ℚ(√59)`, `ℚ(√83)` and `ℚ(√3, √11)`.

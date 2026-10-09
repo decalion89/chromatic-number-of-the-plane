@@ -12,6 +12,13 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Changed
+- **A character with values in `ℤ/4` at a place above 2 (9 October).** Proposition F15′ (paper, Proposition 11): if
+  `F` has a place `v ∣ 2` with `F_v ≅ ℚ₂(√3)`, some homomorphism `ℤT → ℤ/4` maps `T` into `{1, 2, 3}`; so `κ(U) ≥ 1/4`
+  for every finite `U` over `ℚ(√59)`, `ℚ(√83)` and `ℚ(√3, √11)` (for quadratic fields the colouring is Fischer's,
+  1990, Theorem 10(i)), the tight-square alternative of Corollary 8 never applies there, and a finite witness at 4
+  contains a cycle of length at least 8 for each of the twelve such maps. Not so over `ℚ(√2, √3)` modulo 4. Refereed
+  (own programs, no error; wording findings applied). `at_four/quarter_character.py`, tests, paper (Section 10), note
+  §6.9, research log (including a corrected floating-point value for the 60 vectors of `H₄′`: `κ = 1/4`, not 0.178).
 - **Explicit subgraphs of the Cayley graphs with `χ_c = 4` (9 October).** `finite_witness/witness_q3_11_cayley` (1 874
   points, the 7 887 pairs that differ by one of the 54 vectors of the construction, 3 389 cycles) and
   `finite_witness/witness_q2_3_cayley` (1 657 points, 6 199 pairs, 120 vectors, 5 264 cycles) have `χ_c = 4`: drat-trim

@@ -10816,3 +10816,51 @@ without a bound on the size.
   through LRAT with `cake_lpr`); 29 mutations of each file are rejected; no discrepancy. It notes that only 18 of the 27
   directions and 36 of the 60 occur among the edges, and that the stored colourings are proper on the full unit-distance
   graphs on the same points. Its programs, rerun from the repository copy, give the same formulas and verdicts.
+
+## A character with values in `ℤ/4` at the place above 2 (9 October)
+
+- **Result (refereed; the colouring itself is Fischer's for quadratic fields).** Proposition F15′ (paper, Proposition
+  11): if a number field `F` has a place `v | 2` with `F_v ≅ ℚ₂(√3)`, then `c(x, y) = λ(x + iy)`, where `λ(z₀ + z₁ζ +
+  z₂ζ² + z₃ζ³) = z₀ + z₁ + 2z₂ + 3z₃ mod 4` on `O_w = ℤ₂[ζ]`, `ζ = (√3 + i)/2`, is a homomorphism of `ℤT` to `ℤ/4`
+  with `c(T) ⊆ {1, 2, 3}`. So `κ(U) ≥ 1/4` for every finite `U ⊂ T`, and `F²` has a homomorphism to `K₄` without tight
+  squares. The proof is a finite computation in `O_w/4O_w` (256 residues, 192 units, 24 of norm one: `ζᵏ` and `(1 +
+  2i)ζᵏ`), checked by `at_four/quarter_character.py`; exactly twelve additive maps `O_w/4O_w → ℤ/4` vanish on none of
+  the 24, the maps `z ↦ λ(ζᵏz)`.
+- **What is not new.** For `ℚ(√d)`, `d ≡ 3 (mod 8)`, such a colouring is Fischer's (1990, Theorem 10(i)): a linear
+  form into `ℤ_(2)` reduced modulo 4. For `ℚ(√59)` it is `x₁ − 5x₂ + 3y₁ + 15y₂ mod 4` (`√59 ↦ s√3`, `s ≡ 5 mod 8`).
+  For `ℚ(√p, √q)` Fischer (1994) proved that additive 4-colourings into `ℤ/4` exist under congruences modulo 16 and
+  32; the proposition needs only the place. When `v` is the only place above 2, as for `ℚ(√d)`, the twelve maps are
+  all the homomorphisms `ℤT → ℤ/4` with values in `{1, 2, 3}` on `T` (the residues of `T` modulo 4 are all 24, by weak
+  approximation), so Fischer's map is one of them. What is new is the circular reading, `κ(U) ≥ 1/4` for every `U`,
+  and the statement for every field with such a place.
+- **Consequences.** Over `ℚ(√59)`, `ℚ(√83)` and `ℚ(√3, √11)` every finite `U` with `κ(U) ≤ 1/4` has `κ(U) = 1/4` (the
+  27 vectors over `ℚ(√3, √11)`, and `U_1050` over `ℚ(√59)` once its certificate is checked), and the tight-square
+  alternative of Corollary 8 never applies. A finite subgraph with `χ_c = 4` of a Cayley graph of unit vectors must
+  contain, for each of the twelve maps, a cycle whose steps all have value 1; its length is a multiple of 4 and at
+  least 8. For `U_1050` the 300 vectors take the values 1, 2, 3 on 96, 108, 96 of them for eight of the maps (on 108,
+  84, 108 for the other four), and a MILP (HiGHS) finds nonnegative relations of length 8, the least possible, among
+  the vectors of value 1 for all twelve maps (for two of them only with 25 minutes instead of 30 seconds) and for `θ =
+  (3/8, 5/8, 5/8, 5/8)`.
+- **The period method over `ℚ(√59)`.** The period systems of Lemma 24 can only become infeasible through relations
+  that are tight for every character at `1/4`; over `ℚ(√59)` characters at exactly `1/4` exist for every `U` (the
+  twelve above, and others such as `θ`), so the systems sit on the boundary.
+- **`ℚ(√2, √3)` (corrected the same day).** There no homomorphism `ℤT → ℤ/4` maps `T` into `{1, 2, 3}`
+  (`quarter_character.py --q2_3`: 384 residues of norm one modulo 4, all residues of unit vectors, and no additive map
+  to `ℤ/4` nonzero on them). We first wrote, from a floating-point MILP, that the 60 vectors of `H₄′` have `κ ≈ 0.178
+  < 1/4`; that number was the incumbent of a run stopped by its time limit, not the optimum. The exact certificate
+  generator refuted it at once (a character maps the 60 vectors into `(1/5, 4/5)`), and the MILP run to optimality
+  gives `κ = 1/4`, attained by a character with values `1/4, 1/2, 3/4` (27, 20 and 13 of the vectors) that satisfies
+  all 52 relations of the PARI basis exactly. With the certified witness `H₄′°` this gives `κ(U₆₀) = 1/4`. Whether
+  some finite `U` over `ℚ(√2, √3)` has `κ(U) < 1/4` is open; nothing in the paper uses the wrong number.
+- **Also checked.** The twelve maps on all unit vectors with denominators 30 to 2730 over `ℚ(√59)` (14 denominators, 3
+  288 vectors) and several over `ℚ(√83)`; over `ℚ(√3, √11)` on the 27 vectors and all edges of `H₄` and `H₄°`. A SAT
+  check: the Cayley witnesses `H₄°` and `H₄′°` both have proper 4-colourings without tight squares (as they must for
+  `H₄°`; for `H₄′°` the compactness behind Corollary 8 needs a larger graph).
+- **Referee.** An independent referee, with exact programs of its own (the residues of `ℚ₂(ζ₁₂)` and `ℚ₂(ζ₂₄)` modulo
+  4, the norm map and Hilbert 90; all unit vectors of `ℚ(√59)`, `ℚ(√83)`, `ℚ(√11)` and `ℚ(√3)` up to denominator 400
+  and more; the 27 vectors and both witnesses over `ℚ(√3, √11)` at both places above 2, where every one of the 24
+  colourings has a tight cycle (closed tight walks up to length 16 have lengths 8, 12 and 16 only), found no
+  mathematical error. Its findings on wording are applied: `d` squarefree, Theorem 10(i) and real fields for Fischer,
+  the points where the `d = 59` formula is 2-integral, the sentence on `ℚ(√2, √3)`, the explicit form of the other
+  half of Guichard's characterisation, and the names `ζ₁₂` and `η`. It could not reach Fischer's paper (the
+  publisher's site refused the download) and judged the attribution against the repository's notes.

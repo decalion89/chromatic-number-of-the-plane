@@ -314,3 +314,37 @@ def test_cayley_witness_proof(which, tmp_path):
     out = subprocess.run([sys.executable, "check_witness4.py", name + ".json.gz", name + ".cnf.gz", name + ".drat",
                           DRAT], cwd=tmp_path, capture_output=True, text=True, check=True, timeout=3600).stdout
     assert "(5) drat-trim: s VERIFIED" in out and "chi_c(H) = chi(H) = 4" in out
+
+
+def test_quarter_character_residues_and_maps():
+    """Proposition F15': in Z_2[zeta_12]/4 exactly 24 residues have r rbar = 1 (zeta^k and (1 + 2i) zeta^k), they are
+    the residues of the norm-one elements, and exactly twelve additive maps to Z/4 vanish on none of them."""
+    import quarter_character as qc
+    n1, nunits, same, chars, rot, kern = qc.part1()
+    assert (n1, nunits, same, len(chars), rot, kern) == (24, 192, True, 12, True, True)
+    assert qc.L0 in chars
+
+
+def test_quarter_character_on_unit_vectors():
+    """c = lambda(x + iy) is 1, 2 or 3 on every unit vector with the given denominators over Q(sqrt59) and Q(sqrt83)
+    (and agrees there with the closed formula x1 + 3 y1 + s (3 y2 - x2) mod 4)."""
+    import quarter_character as qc
+    out = qc.part2_quadratic(59, [210, 1050])
+    assert out[210] == {0: 0, 1: 34, 2: 40, 3: 34} and out[1050] == {0: 0, 1: 96, 2: 108, 3: 96}
+    out = qc.part2_quadratic(83, [210, 630])
+    assert all(cnt[0] == 0 for cnt in out.values()) and sum(out[630].values()) == 60
+
+
+def test_quarter_character_q3_11():
+    """the same over Q(sqrt3, sqrt11): the 27 vectors and the edges of witness_q3_11 and of its Cayley subgraph."""
+    import quarter_character as qc
+    res = qc.part2_q3_11()
+    assert set(res) == {"27", "witness_q3_11", "witness_q3_11_cayley"}
+    assert all(cnt[0] == 0 for cnt in res.values())
+    assert sum(res["witness_q3_11"].values()) == 8085 and sum(res["witness_q3_11_cayley"].values()) == 7887
+
+
+def test_quarter_character_has_no_analogue_over_q2_3():
+    """over Q_2(sqrt2, sqrt3): 384 norm-one residues modulo 4, and no additive map to Z/4 is nonzero on all of them."""
+    import quarter_character as qc
+    assert qc.part3_q2_3() == (384, 0)
