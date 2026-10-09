@@ -10865,6 +10865,23 @@ without a bound on the size.
   half of Guichard's characterisation, and the names `ζ₁₂` and `η`. It could not reach Fischer's paper (the
   publisher's site refused the download) and judged the attribution against the repository's notes.
 
+## `κ(U_1050) = 1/4` over `ℚ(√59)`, certified (9 October)
+
+- **The statement.** Over `ℚ(√59)`, the 300 unit vectors with denominator 1050, `U_1050`, have `κ = 1/4` exactly: the
+  character `θ = (3/8, 5/8, 5/8, 5/8)` of `at_four/` keeps them at distance at least `1/4` from `ℤ` (equality for
+  some), and no character maps them into the open interval `(1/4, 3/4)`. By Corollary F14 (paper, Corollary 8), some
+  finite subgraph of `Cay(ℤU_1050, U_1050)` has `χ_c = 4`; none is known explicitly, and the growth with these vectors
+  (11 882 points) has not found one. Proposition F15′ of this morning gives `κ(U) ≥ 1/4` for every finite `U` over
+  `ℚ(√59)`, so `1/4` is reached here.
+- **The certificate.** `at_four/cert59_1050_open_4.json.gz` (30 MB): 150 units (one of each pair `±u`), 146 nonzero
+  relations, a tree of 1 997 203 nodes and 1 428 192 leaves, depth 48. The repository checker `check_open.py` printed
+  VERIFIED after 13 502 s (exact fractions); the separate checker `check_open_indep.py` ACCEPTED it in 336 s;
+  `check_theta.py 59 1050 theta59_1050.json cert59_1050_open_4.json.gz` checks that its units are all of `U_1050` and
+  that the least margin of `θ` is `1/4`.
+- **Where.** `notes/circular_planes.md` (after the `D = 210` sentence), the paper's paragraph on explicit sets at
+  `1/4` (PDF rebuilt), `at_four/README.md`, and two slow tests in `tests/test_at_four.py` (the units, and the separate
+  checker; the 4-hour run of `check_open.py` is not repeated there).
+
 ## OpenAI's proof that `χ(ℝ²) ≥ 6`, rebuilt in Lean (9 October)
 
 - **What.** The repository [openai/math](https://github.com/openai/math) collects 719 manuscripts in 372 families

@@ -918,7 +918,11 @@ step of Corollary F14 by a finite construction; the set `U` of Proposition F15 s
 vectors of denominator `D = 210`, `1050` and `2730` over `ℚ(√59)`, stopped at their limits. For `D = 210` this was bound
 to happen: the character `θ = (89/118, 1/2, 89/118, 1/2)` of `at_four/` keeps all 108 unit vectors with denominator 210
 at distance at least `15/59` from `ℤ`, so every graph built from them maps to `K_{59/15}` (checked by enumeration, and
-by the referee with another character).
+by the referee with another character). For `D = 1050` it was not: the 300 unit vectors with denominator 1050 have
+`κ = 1/4` exactly, as `θ = (3/8, 5/8, 5/8, 5/8)` keeps them at distance at least `1/4` from `ℤ`, with equality for some
+(`at_four/theta59_1050.json`), and an exact certificate (`at_four/cert59_1050_open_4.json.gz`: 146 relations, 1 997 203
+nodes, 1 428 192 leaves; both checkers) shows that no character maps them into `(1/4, 3/4)`. So a finite subgraph of
+their Cayley graph has `χ_c = 4` (Corollary F14); we have not found one.
 
 **An explicit set at `1/4` over `ℚ(√3, √11)`.** Let `R₆₀` be the rotation by 60°, `R_A` the rotation with cosine `5/6`
 and sine `√11/6` (the angle of the Moser spindle) and `R_G` the rotation with cosine `11/14` and sine `5√3/14`. The 27

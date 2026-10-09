@@ -1851,7 +1851,12 @@ know none. Colouring-guided growths over $\Q(\sqrt{59})$ with the unit vectors o
 $2730$ stopped at their limits; for $210$ this was bound to happen, as the character
 $\frac{(89a+59b+89c+59e)}{118}\bmod1$ of the points $(\frac{a+b\sqrt{59}}{210},\frac{c+e\sqrt{59}}{210})$ keeps all
 $108$ unit vectors with denominator $210$ at distance at least $\frac{15}{59}$ from $\Z$, so that every graph built
-from them maps to $K_{59/15}$. Over $\Q(\sqrt3,\sqrt{11})$ an explicit set at $\frac14$ is small: with $R_{60}$ the rotation by $60^\circ$, $R_A$ the rotation with cosine $\frac56$ and sine $\frac{\sqrt{11}}6$ (the angle of the Moser spindle) and $R_G$ the one with cosine $\frac{11}{14}$ and sine $\frac{5\sqrt3}{14}$, the $27$ unit vectors $R_{60}^jR_A^kR_G^l(1,0)$, $j,k,l\in\{-1,0,1\}$, have $\kappa=\frac14$: a character of order $12$ keeps them at distance at least $\frac14$ from $\Z$ (so does $c/4$, of
+from them maps to $K_{59/15}$. For $1050$ it was not: the $300$ unit vectors with denominator $1050$ have
+$\kappa=\frac14$ exactly, as the character $\frac{3a+5b+5c+5e}8\bmod1$ of the points
+$(\frac{a+b\sqrt{59}}{1050},\frac{c+e\sqrt{59}}{1050})$ keeps them at distance at least $\frac14$ from $\Z$, with
+equality for some, and an exact certificate ($1\,997\,203$ nodes, accepted by two programs;
+\nolinkurl{data/number_fields/circular/at_four/}) shows that no character maps them into $(\frac14,\frac34)$. So a
+finite subgraph of their Cayley graph has $\chi_c=4$ (Corollary~\ref{cor:finiteS4}); we have not found one. Over $\Q(\sqrt3,\sqrt{11})$ an explicit set at $\frac14$ is small: with $R_{60}$ the rotation by $60^\circ$, $R_A$ the rotation with cosine $\frac56$ and sine $\frac{\sqrt{11}}6$ (the angle of the Moser spindle) and $R_G$ the one with cosine $\frac{11}{14}$ and sine $\frac{5\sqrt3}{14}$, the $27$ unit vectors $R_{60}^jR_A^kR_G^l(1,0)$, $j,k,l\in\{-1,0,1\}$, have $\kappa=\frac14$: a character of order $12$ keeps them at distance at least $\frac14$ from $\Z$ (so does $c/4$, of
 order $4$, by Proposition~\ref{prop:quarterchar}), and an exact certificate ($12\,073$ nodes, checked by two programs; \nolinkurl{data/number_fields/circular/at_four/}) shows that none maps them into $(\frac14,\frac34)$. So Corollary~\ref{cor:finiteS4} gives a finite subgraph with $\chi_c=4$ of the Cayley graph of these $54$ vectors
 (which is $4$-colourable, as $\chi(\Q(\sqrt3,\sqrt{11})^2)=4$) directly, without Theorem~\ref{thm:F}. A construction
 based on the following lemma found one, with $1\,874$ vertices (the graph $H_4^\circ$ below).

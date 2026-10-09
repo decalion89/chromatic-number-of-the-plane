@@ -12,6 +12,11 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Changed
+- **`κ(U_1050) = 1/4` over `ℚ(√59)`, certified (9 October).** An exact certificate (1 997 203 nodes; both checkers
+  accept it) shows that no character maps the 300 unit vectors with denominator 1050 into `(1/4, 3/4)`; with the
+  character `θ` of `at_four/`, `κ(U_1050) = 1/4`, so a finite subgraph of their Cayley graph has `χ_c = 4` (Corollary
+  F14). `at_four/cert59_1050_open_4.json.gz`, `check_theta.py` (now checks a certificate's units), note, paper (PDF
+  rebuilt), README, two slow tests, research log.
 - **`χ(ℝ²) ≥ 6` (OpenAI, September 2026), rebuilt in Lean (9 October).** OpenAI's proof that the plane is not
   5-colourable ([openai/math](https://github.com/openai/math), family 158) is non-constructive and formalized in Lean
   4.34.1 with the Mathlib commit of `lean/`. We compiled the 70 modules of its import closure against our Mathlib

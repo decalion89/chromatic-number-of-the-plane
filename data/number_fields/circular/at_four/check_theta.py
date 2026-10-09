@@ -5,7 +5,12 @@ Lists ALL unit vectors u = ((a + b sqrt d)/D, (c + e sqrt d)/D) of Q(sqrt d)^2 w
 character  x = ((a + b sqrt d)/D, (c + e sqrt d)/D) -> theta_1 a + theta_2 b + theta_3 c + theta_4 e  (mod 1)
 of the group (1/D)Z^4 of such points, the least margin m = min_u ||xi(u)||.  If m > 0, every graph on points of
 this group whose edges are unit vectors with denominator D maps to K_{p/q} for every rational p/q with q/p <= m
-(Theorem W+, 'if' direction), so its circular chromatic number is at most 1/m."""
+(Theorem W+, 'if' direction), so its circular chromatic number is at most 1/m.
+
+check_theta.py d D THETA.json CERT.json.gz: also checks that the units of the open-interval certificate CERT (keys d,
+D, units [a, b, c, e]) are exactly the unit vectors with denominator D, one of each pair +-u; with the certificate
+(check_open.py, check_open_indep.py: no character maps them into the open interval (Q/P, 1 - Q/P)) and a least margin
+of exactly Q/P, kappa(U_D) = Q/P."""
 import sys, json
 from fractions import Fraction as Fr
 from math import isqrt
@@ -49,3 +54,17 @@ if __name__ == "__main__":
     n, m = least_margin(d, D, theta)
     rel = "  > 1/4" if m > Fr(1, 4) else ("  = 1/4" if m == Fr(1, 4) else "")
     print(f"d={d} D={D}: {n} unit vectors (both signs); theta={theta}; least margin {m} = {float(m):.6f}{rel}")
+    if len(sys.argv) > 4:
+        import gzip
+        op = gzip.open if sys.argv[4].endswith('.gz') else open
+        with op(sys.argv[4], 'rt') as f:
+            C = json.load(f)
+        if (C['d'], C['D']) != (d, D):
+            sys.exit(f"REJECTED: the certificate is for d={C['d']}, D={C['D']}")
+        U = units(d, D)
+        mine = {min(u, tuple(-t for t in u)) for u in U}
+        theirs = [min(tuple(u), tuple(-t for t in u)) for u in C['units']]
+        if len(theirs) != len(set(theirs)) or set(theirs) != mine:
+            sys.exit('REJECTED: the units of the certificate are not the unit vectors with denominator D, one per +- pair')
+        print(f"the {len(theirs)} units of the certificate are the {n} unit vectors with denominator {D}, one of each "
+              f"pair +-u (P/Q = {C['P']}/{C['Q']})")

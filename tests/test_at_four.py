@@ -37,6 +37,25 @@ def test_theta_1050_margin_is_a_quarter():
     assert n == 300 and m == Fr(1, 4)
 
 
+@pytest.mark.slow
+def test_u1050_certificate_units_are_all_of_u1050():
+    """The 150 units of the open-interval certificate are the 300 unit vectors with denominator 1050, up to sign."""
+    out = subprocess.run([sys.executable, "check_theta.py", "59", "1050", "theta59_1050.json",
+                          "cert59_1050_open_4.json.gz"], cwd=AT4, capture_output=True, text=True, check=True,
+                         timeout=1800).stdout
+    assert "least margin 1/4" in out
+    assert "the 150 units of the certificate are the 300 unit vectors with denominator 1050" in out
+
+
+@pytest.mark.slow
+def test_u1050_open_certificate_independent_checker():
+    """kappa(U_1050) <= 1/4 over Q(sqrt59): no character maps U_1050 into (1/4, 3/4) (about 6 minutes; the
+    repository checker check_open.py takes about 4 hours on the same file and is not run here)."""
+    out = subprocess.run([sys.executable, "check_open_indep.py", os.path.join("at_four", "cert59_1050_open_4.json.gz")],
+                         cwd=CIRC, capture_output=True, text=True, check=True, timeout=3600).stdout
+    assert out.startswith("ACCEPTED") and "d = 59" in out and "D = 1050" in out and "1997203 nodes" in out
+
+
 def test_brute_force_units_match_the_enumerator():
     sys.path.insert(0, os.path.join(ROOT, "data", "quadratic_planes", "winding"))
     from kappaD import units as kunits
