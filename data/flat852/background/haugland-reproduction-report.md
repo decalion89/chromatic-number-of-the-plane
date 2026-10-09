@@ -1,7 +1,7 @@
 # Haugland's heptagon construction: reproduction and a small test of a third vector orbit
 
 Paper: J. K. Haugland, arXiv 2608.04542v4, Sections 2–4.
-All heavy runs used nice -n 19, one at a time, at most about 20 minutes each.
+The heavy runs took at most about 20 minutes each.
 Notation: z = exp(iπ/21), a primitive 42nd root of unity; K = Q(z), of degree 12; L = Z⟨u_0..u_83⟩; U = {u_j}; μ_42 = the 42nd roots of unity.
 
 ## Summary
@@ -126,7 +126,7 @@ Every SAT model is decoded and checked on the whole graph (the 4-core colouring 
 - In these runs the larger T6 was refuted in 486 s while its subgraph G1 was not, so a T6-sized test for U+W_−1, or cube-and-conquer, is the natural next step.
 - Side fact: every unit-distance graph with vertices in K is Moser-spindle-free. A spindle needs a rotation with cos φ = 5/6, which would put √−11 in K, but K's only quadratic subfields are Q(√−3), Q(√−7) and Q(√21).
 
-## 5. Files (D = record_hept)
+## 5. Files (in the working directory of this reproduction, not published)
 **Modules.**
 - field.py: exact arithmetic in K.
 - hept.py: H and the u_j, numeric and exact, plus Table 1.

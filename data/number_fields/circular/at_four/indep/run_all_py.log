@@ -1,0 +1,16 @@
+2 rc=0 1s # summary Z/[2]: generating S=1, 4-colourable=1, BAD=0
+3 rc=0 0s # summary Z/[3]: generating S=1, 4-colourable=1, BAD=0
+4 rc=0 1s # summary Z/[4]: generating S=2, 4-colourable=2, BAD=0
+5 rc=0 0s # summary Z/[5]: generating S=3, 4-colourable=2, BAD=0
+6 rc=0 1s # summary Z/[6]: generating S=5, 4-colourable=4, BAD=0
+7 rc=0 2s # summary Z/[7]: generating S=7, 4-colourable=6, BAD=0
+8 rc=0 5s # summary Z/[8]: generating S=12, 4-colourable=11, BAD=0
+9 rc=0 20s # summary Z/[9]: generating S=14, 4-colourable=10, BAD=0
+10 rc=0 70s # summary Z/[10]: generating S=27, 4-colourable=14, BAD=0
+2 2 rc=0 0s # summary Z/[2, 2]: generating S=4, 4-colourable=4, BAD=0
+2 4 rc=0 6s # summary Z/[2, 4]: generating S=20, 4-colourable=19, BAD=0
+2 2 2 rc=0 37s # summary Z/[2, 2, 2]: generating S=92, 4-colourable=91, BAD=0
+3 3 rc=0 4s # summary Z/[3, 3]: generating S=11, 4-colourable=10, BAD=0
+11 rc=0 363s # summary Z/[11]: generating S=31, 4-colourable=20, BAD=0
+12 rc=0 733s # summary Z/[12]: generating S=54, 4-colourable=41, BAD=0
+2 6 rc=0 1030s # summary Z/[2, 6]: generating S=104, 4-colourable=67, BAD=0

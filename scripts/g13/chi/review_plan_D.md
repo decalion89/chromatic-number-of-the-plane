@@ -1,6 +1,6 @@
 # Review of plan D: "G_13 has no proper 5-colouring"
 
-This is an independent, adversarial review of `run_plan_D.sh` and the code it calls. I read `g13.py`, `g13cnf.py`, `enum_cert.py`, `plan_C.py`, `cuber2.py`, `certify.py`, `cnc_case.sh`, `resplit.sh` and `summarize.py`. I also compared the plan with `scripts/g17_alpha.py` and `scripts/g17_part_b.py` in the repository. Every claim below was checked against the code and, where possible, tested (section 5).
+This is an adversarial review, written inside the project (not independent of it), of `run_plan_D.sh` and the code it calls. I read `g13.py`, `g13cnf.py`, `enum_cert.py`, `plan_C.py`, `cuber2.py`, `certify.py`, `cnc_case.sh`, `resplit.sh` and `summarize.py`. I also compared the plan with `scripts/g17_alpha.py` and `scripts/g17_part_b.py` in the repository. Every claim below was checked against the code and, where possible, tested (section 5).
 
 ## Verdict
 

@@ -1,0 +1,4 @@
+ref_check_z.py --no-sat: exit 0
+ref_check_z.py (arc encoding, full): exit 0
+ref_check_z.py --encoding direct (full): exit 0
+ref_tests_z.py: exit 0

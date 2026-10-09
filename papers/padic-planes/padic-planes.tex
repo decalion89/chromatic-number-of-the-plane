@@ -1,0 +1,523 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage[hyphens]{url}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
+\usepackage[margin=2.5cm]{geometry}
+
+\hypersetup{
+  pdftitle={Colouring the p-adic plane},
+  pdfauthor={Sergi Gal\'an},
+  pdfsubject={The Hadwiger-Nelson problem over the p-adic numbers},
+  pdfkeywords={Hadwiger-Nelson problem, p-adic numbers, unit-distance graph, Borel chromatic number,
+  measurable chromatic number, Kloosterman sums}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{question}{Question}
+
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Oo}{\mathcal{O}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\N}{\operatorname{N}}
+\newcommand{\chiB}{\chi_{\mathrm{B}}}
+\newcommand{\chiM}{\chi_{\mathrm{m}}}
+
+\title{Colouring the $p$-adic plane}
+\author{Sergi Gal\'an}
+\thanks{These results were obtained with the assistance of an AI system (Claude, by Anthropic), which carried
+out the computations and the checks, and helped to draft this note. No mathematician has checked the note yet.
+The author is not a professional mathematician and submits it for independent verification.}
+\date{Draft, 2 October 2026}
+\subjclass[2020]{Primary 05C15; Secondary 11S80, 11L05, 05C63, 52C10}
+\keywords{Hadwiger--Nelson problem, $p$-adic numbers, unit-distance graph, Borel chromatic number, measurable
+chromatic number, Kloosterman sums}
+
+\begin{document}
+
+\begin{abstract}
+Let $\chi(\Q_p^2)$ be the chromatic number of the graph on $\Q_p^2$ in which $(x,y)$ and $(x',y')$ are adjacent
+when $(x-x')^2+(y-y')^2=1$. Bardestani and Mallahi-Karai showed that its Borel chromatic number is finite
+exactly when $p=2$ or $p\equiv 3\pmod 4$, and asked whether it is bounded independently of $p$. It is not: for
+$p\equiv3\pmod4$ every proper colouring with Haar-measurable colour classes uses at least
+$1+(p+1)/(2\sqrt p)$ colours. The proof is the Delsarte--Hoffman bound on the compact group $\Z_p^2$, where the
+Fourier coefficients of the unit circle are Kloosterman sums at the first level and at most $2/(p+1)$ at every
+deeper level. We also show $\chi(\Q_7^2)=4$, for ordinary and for Borel colourings, while $\chi(\Q_2^2)=2$ and
+$\chi(\Q_3^2)=3$ follow from results of Madore. A theorem of Davies shows that the graph of every non-degenerate
+isotropic form over a field of characteristic $0$ has infinite chromatic number, so the dichotomy of Bardestani and
+Mallahi-Karai holds for ordinary colourings too; in particular $\chi(\Q_p^2)=\infty$ for $p\equiv1\pmod4$. Finally,
+unit-distance graphs over $27$ real quadratic fields give $\chi(\Q_p^2)\ge4$ for every prime $p\equiv3\pmod4$ with
+$7\le p<2\,129\,503\,819$, and a Chebotarev argument shows that no finite set of number fields gives this bound
+for every such $p$. In every dimension $n$ we determine when $\chi(\Q_p^n)$ is finite, and show
+$\chi(\Q_2^4)=4$ through the residue field $\F_4$ of the $2$-adic quaternions.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+For a field $F$ let $G(F)$ be the graph on $F^2$ in which $v$ and $w$ are adjacent when $Q(v-w)=1$, with
+$Q(x,y)=x^2+y^2$, and write $\chi(F^2)$ for its chromatic number. For $F=\R$ this is the Hadwiger--Nelson
+problem, and $6\le\chi(\R^2)\le7$: the bound $\chi(\R^2)\ge5$ is due to de Grey \cite{deGrey} and to Exoo and Ismailescu
+\cite{EI}, the bound $\chi(\R^2)\ge6$ to a recent non-constructive proof \cite{OpenAI}, and the upper bound to
+Isbell (see \cite{Soifer}). Woodall showed $\chi(\Q^2)=2$ \cite{Woodall}, and the
+planes over number fields have been studied by Johnson \cite{Johnson1987}, Fischer \cite{Fischer1990}, Madore
+\cite{Madore}, Moorhouse \cite{Moorhouse} and others. Madore observed that reduction modulo a prime gives
+$\chi(\Q_p^2)\le\chi(\F_p^2)$ for $p\equiv3\pmod4$ \cite[\P1.5 and Remark~3.6]{Madore}.
+
+Bardestani and Mallahi-Karai \cite{BMK} studied the graphs of quadratic forms over local fields. For a local
+field $F$ of characteristic $0$ they proved that the \emph{Borel} chromatic number of the graph of a
+non-degenerate form is infinite if and only if the form is isotropic, using the spectral bound of
+Bachoc, DeCorte, Oliveira and Vallentin \cite{BDOV}. Over $\Q_p$ the form $x^2+y^2$ is anisotropic exactly when
+$-1$ is not a square, that is for $p=2$ and $p\equiv3\pmod4$. For $p\equiv3\pmod4$ they noted that the Borel
+chromatic number $\chiB(\Q_p^2)$ is $O(p^2)$, and asked:
+
+\begin{question}[{\cite[Question~1]{BMK}}, the $p$-adic Hadwiger--Nelson problem]
+Is there a constant $B$ with $\chiB(\Q_p^2)\le B$ for every prime $p\equiv3\pmod4$?
+\end{question}
+
+Write $\chiM$ for the measurable chromatic number (colour classes measurable for the Haar measure), so that
+$\chi\le\chiM\le\chiB$. Our first result answers the question in the negative. We have not found another answer
+in the literature, including the later papers of the same authors \cite{BMK2,BMK3}.
+
+\begin{theorem}\label{thm:A}
+For every prime $p\equiv3\pmod4$,
+\[
+  1+\frac{p+1}{2\sqrt p}\;\le\;\chiM(\Q_p^2)\;\le\;\chiB(\Q_p^2)\;\le\;\chi(\F_p^2),
+\]
+and $\chi(\F_p^2)\le(p+1)/2$ for $p>3$. In particular $\chiB(\Q_p^2)\to\infty$.
+\end{theorem}
+
+Here $\F_p^2$ denotes the graph $G(\F_p)$. Le Anh Vinh \cite[Theorem~1]{Vinh} showed
+$(\tfrac12+o(1))\sqrt q\le\chi(\F_q^2)\le(q+q/r)/2$ for powers $q>3$ of an odd prime $r$; the upper bound in
+Theorem~\ref{thm:A} is his. The lower bound of Theorem~\ref{thm:A} has the same leading term as his, but it holds
+for all measurable colourings of the $p$-adic plane, not only for those that factor through $\F_p^2$. The exact
+Fourier coefficients give better values for small $p$ (Table~\ref{tab:meas}): at least $5$ colours from $p=23$,
+$6$ for $p=59$ and every $p\ge67$, $7$ for $p=71$ and every $p\ge103$.
+
+For the ordinary chromatic number:
+
+\begin{theorem}\label{thm:B}
+$\chi(\Q_7^2)=\chiB(\Q_7^2)=4$. Moreover $\chi(\Q_2^2)=\chiB(\Q_2^2)=2$ and $\chi(\Q_3^2)=\chiB(\Q_3^2)=3$.
+\end{theorem}
+
+The upper bounds are Madore's reductions \cite[Propositions~3.2 and 3.8]{Madore}, which give locally constant
+colourings, and the values $2$ and $3$ follow at once from his results (his $9$-cycle over $\Q(\sqrt7)$
+\cite[Proposition~4.3]{Madore} lies in $\Q_3^2$). The new value is $\chi(\Q_7^2)=4$. Since $3$ is not a square
+modulo $7$, the plane $\Q_7^2$ contains no unit equilateral triangle (the third vertex of a unit triangle on
+$0$ and $(a,b)$ is $(\frac a2-\frac{\sqrt3}2b,\frac b2+\frac{\sqrt3}2a)$, which forces $\sqrt3$ into the field),
+so the classical $4$-chromatic graphs, built from triangles, do not embed; we use a triangle-free $76$-vertex graph
+over $\Q(\sqrt{11})$ with no proper $3$-colouring \cite{QP}, as $11\equiv2^2\pmod7$. The three ordinary values are
+also proved in Lean~4 with Mathlib \cite{Lean,mathlib}, in \texttt{lean/PadicPlanes.lean} of \cite{Repo}; for
+instance \texttt{(QuadraticPlanes.sumSqGraph $\Q$\_[7]).chromaticNumber = 4}.
+
+In the isotropic case the ordinary chromatic number is infinite as well, by a theorem of Davies \cite{Davies}:
+
+\begin{proposition}\label{prop:C}
+Let $F$ be a field of characteristic $0$ and $Q$ a non-degenerate isotropic quadratic form on $F^n$, $n\ge2$.
+Then the graph on $F^n$ in which $v,w$ are adjacent when $Q(v-w)=1$ has infinite chromatic number. In particular
+$\chi(F^2)=\infty$ when $-1$ is a square in $F$, and $\chi(\Q_p^2)=\infty$ for $p\equiv1\pmod4$.
+\end{proposition}
+
+\begin{corollary}\label{cor:dich}
+Let $F$ be a local field of characteristic $0$ and $Q$ a non-degenerate quadratic form in at least two
+variables over $F$. Then the chromatic number of its graph is finite if and only if $Q$ is anisotropic, if and
+only if its Borel chromatic number is finite. In particular $\chi(\Q_p^2)$ is finite exactly when $p=2$ or
+$p\equiv3\pmod4$.
+\end{corollary}
+
+\begin{proof}
+If $Q$ is anisotropic, \cite[Theorem~1.1]{BMK} gives $\chi\le\chiB<\infty$; if it is isotropic,
+Proposition~\ref{prop:C} gives $\chiB\ge\chi=\infty$.
+\end{proof}
+
+In all dimensions (Proposition~\ref{prop:dim} in \S\ref{sec:dim}), $\chi(\Q_p^n)$ is finite exactly when $n=1$, or
+$n=2$ and $p\not\equiv1\pmod4$, or $p=2$ and $n\le4$; $\chi(\Q_2^4)=4$, and $\chiB(\Q_p^1)=3>\chi(\Q_p^1)$ for odd $p$.
+
+Finally, every number field $K$ with an embedding $K\hookrightarrow\Q_p$ gives $\chi(\Q_p^2)\ge\chi(K^2)$.
+Unit-distance graphs with no proper $3$-colouring over $27$ real quadratic fields \cite{QP} give:
+
+\begin{theorem}\label{thm:D}
+$\chi(\Q_p^2)\ge4$ for every prime $p\equiv3\pmod4$ with $7\le p<2\,129\,503\,819$. Moreover
+$\chi(\Q_{83}^2)\ge5$.
+\end{theorem}
+
+\begin{remark}[added 3 October 2026]
+A later draft \cite{FC} proves $\chi(\Q(\sqrt d)^2)\ge4$ for every $d\equiv11\pmod{12}$, using a characterisation of
+$3$-colourable abelian Cayley graphs by characters. Choosing $d\equiv11\pmod{12}$ with $d\equiv1\pmod p$ gives
+$\chi(\Q_p^2)\ge4$ for every prime $p\ge5$; a finite witness exists by compactness but is not exhibited. The
+Chebotarev obstruction below concerns finite sets of fields; there $d$ depends on $p$.
+\end{remark}
+
+No finite set of number fields can do this for every $p$:
+
+\begin{proposition}\label{prop:E}
+Let $\mathcal K$ be a finite set of number fields with $\chi(K^2)\ge4$ for every $K\in\mathcal K$. Then there are
+infinitely many primes $p\equiv3\pmod4$ such that no $K\in\mathcal K$ embeds in $\Q_p$.
+\end{proposition}
+
+For the $27$ fields of Theorem~\ref{thm:D} the first such prime after $3$ is $2\,129\,503\,819$. Below $3\cdot10^{10}$
+there are seventeen, $3$ included (the next is $3\,502\,762\,979$), where the density $2^{-25}$ given by Chebotarev's
+theorem predicts about $19$: the $27$ values of $d$ span a subgroup of rank $25$ of $\Q^\times/\Q^{\times2}$, with relations
+$11\cdot35\cdot119\cdot935=6545^2$ and $35\cdot47\cdot455\cdot611=21385^2$ of four factors each. The proposition
+is about graphs over fixed fields; a single abstract graph might be realised in $\Q_p^2$ over different fields for
+different $p$.
+
+\section{Reduction modulo \texorpdfstring{$p$}{p}: upper bounds}
+
+\begin{lemma}[Madore {\cite[Propositions~3.2 and 3.8]{Madore}}]\label{lem:integral}
+Let $p=2$ or $p\equiv3\pmod4$. If $x,y\in\Q_p$ and $x^2+y^2=1$, then $x,y\in\Z_p$, and $(x,y)\bmod p$ is a
+nonzero point of the circle $C_p=\{(a,b)\in\F_p^2: a^2+b^2=1\}$.
+\end{lemma}
+
+\begin{proof}
+Suppose $-k=\min(v_p(x),v_p(y))<0$. If only one of $x,y$ had valuation $-k$, then $v_p(x^2+y^2)=-2k\ne0$. So
+$x=p^{-k}a$, $y=p^{-k}b$ with $a,b\in\Z_p^\times$ and $a^2+b^2=p^{2k}$. For odd $p$ this gives
+$(a/b)^2\equiv-1\pmod p$, impossible for $p\equiv3\pmod4$. For $p=2$, odd squares are $1\bmod8$, so
+$v_2(a^2+b^2)=1$, while $v_2(p^{2k})$ is even. Hence $x,y\in\Z_p$, and reducing $x^2+y^2=1$ gives the rest.
+\end{proof}
+
+\begin{proposition}[cf.\ {\cite[Remark~3.6]{Madore}}]\label{prop:upper}
+If $p=2$ or $p\equiv3\pmod4$, then $\chiB(\Q_p^2)\le\chi(\F_p^2)$, by a locally constant colouring.
+\end{proposition}
+
+\begin{proof}
+Let $r(v)$ be the representative of $v+\Z_p^2$ whose coordinates are sums $\sum_{j<0}a_jp^j$ with
+$0\le a_j<p$; it is locally constant. Given a proper colouring $\kappa$ of $\F_p^2$, put
+$c(v)=\kappa\bigl((v-r(v))\bmod p\bigr)$. If $v$ and $w$ are adjacent, $v-w\in\Z_p^2$ by
+Lemma~\ref{lem:integral}, so $r(v)=r(w)$, and $(v-r(v))-(w-r(w))=v-w$ reduces to a point of $C_p$; hence
+$c(v)\ne c(w)$. The colouring is locally constant, so it is Borel.
+\end{proof}
+
+For $p=2$, $C_2=\{(1,0),(0,1)\}$ and $\kappa(a,b)=a+b$ is a proper $2$-colouring; for $p=3$,
+$C_3=\{(\pm1,0),(0,\pm1)\}$ and $\kappa(a,b)=a+b\bmod3$ is a proper $3$-colouring. For $p=7$ the graph
+$\F_7^2$ is $4$-colourable (Moorhouse \cite{Moorhouse}, Vinh \cite{Vinh}; a colouring is stored in \cite{Repo}).
+
+\section{Measurable colourings: proof of \texorpdfstring{Theorem~\ref{thm:A}}{Theorem 1}}
+
+The following lemma is the ratio bound of Bachoc, DeCorte, Oliveira and Vallentin \cite{BDOV}, which
+\cite[Theorem~2.5]{BMK} states on $\Q_p^n$; we include the short proof for completeness. The new input is
+Lemma~\ref{lem:levels}.
+
+\begin{lemma}[Delsarte--Hoffman on a compact group]\label{lem:DH}
+Let $\Gamma$ be a compact abelian group with Haar probability measure $\mu$, and $\sigma$ a probability measure
+on a closed set $S\subset\Gamma$ with $S=-S$, $0\notin S$ and $\sigma$ invariant under $s\mapsto-s$. For a
+character $\psi$ of $\Gamma$ put $\hat\sigma(\psi)=\int\psi\,d\sigma$, which is real, and let
+$m=\inf\{\hat\sigma(\psi):\psi\ne1\}$, the infimum over the nontrivial characters; suppose $m<0$. If
+$A\subset\Gamma$ is measurable and $A\cap(A+s)=\emptyset$ for every $s\in S$, then $\mu(A)\le -m/(1-m)$.
+\end{lemma}
+
+\begin{proof}
+The function $f(x)=\mu(A\cap(A-x))$ is continuous and positive definite, with $\hat f(\psi)=|\hat 1_A(\psi)|^2\ge0$,
+$\hat f(1)=\mu(A)^2$ and $\sum_\psi\hat f(\psi)=\|1_A\|_2^2=\mu(A)$ (Parseval); so $f=\sum_\psi\hat f(\psi)\psi$
+uniformly. By hypothesis $f=0$ on $S$, hence
+\[
+0=\int f\,d\sigma=\sum_\psi\hat f(\psi)\hat\sigma(\psi)\ge\mu(A)^2+m\bigl(\mu(A)-\mu(A)^2\bigr),
+\]
+which gives the bound.
+\end{proof}
+
+Let $p\equiv3\pmod4$. Identify $\Z_p^2$ with the ring $\Oo=\Z_p[i]$ of integers of the unramified quadratic
+extension $E=\Q_p(i)$ by $(x,y)\mapsto x+iy$; then $Q$ becomes the norm $\N z=z\bar z$, and the unit circle is the
+compact group $S=\{z\in\Oo:\N z=1\}$, with its Haar probability measure $\sigma$. Since $E/\Q_p$ is unramified and
+$p$ is odd, the norm maps $\Oo^\times$ onto $\Z_p^\times$ and $1+p^r\Oo$ onto $1+p^r\Z_p$ for every $r\ge1$; so
+the image of $S$ in $(\Oo/p^r)^\times$ is the whole norm-one subgroup, of order $(p+1)p^{r-1}$, and the classes of
+$S$ modulo $p^r$ all have measure $1/((p+1)p^{r-1})$. Write $e(t)=\exp(2\pi it)$ and $e_p(t)=e(\{t\}_p)$ for
+$t\in\Q_p$. The characters of $\Oo$ are $\psi_\xi(z)=e_p(\Tr(\xi z))$ for $\xi\in E/\Oo$ (the different of $E/\Q_p$
+is trivial), the trivial one being $\xi=0$; call $\ell=-v_p(\xi)$ the \emph{level} of $\psi_\xi$. Since $-1\in S$
+and $\bar S=S$, every $\hat\sigma(\xi)=\int_S\psi_\xi\,d\sigma$ is real.
+
+\begin{lemma}\label{lem:levels}
+Let $\xi=p^{-\ell}\xi_0$ with $\xi_0\in\Oo^\times$.
+\begin{enumerate}
+\item If $\ell=1$, then $\hat\sigma(\xi)=\lambda/(p+1)$, where $\lambda$ is an eigenvalue of the graph
+$\F_p^2$; more precisely $\lambda=-K(n)$ with $n=\N\xi_0\bmod p$ and the Kloosterman sum
+$K(n)=\sum_{x\in\F_p^\times}e\bigl((x+n/x)/p\bigr)$, so $|\lambda|\le2\sqrt p$.
+\item If $\ell\ge2$, then $|\hat\sigma(\xi)|\le 2/\bigl((p+1)p^{\lfloor\ell/2\rfloor-1}\bigr)\le2/(p+1)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) The character factors through $\Oo/p\Oo=\F_{p^2}$, and $S$ maps onto the norm-one group
+$\bar C=\{z\in\F_{p^2}:z\bar z=1\}$, of order $p+1$, with fibres of equal measure. So
+$\hat\sigma(\xi)=\frac1{p+1}\sum_{z\in\bar C}\psi(\Tr(cz))$ with $c=\xi_0\bmod p$ and $\psi(t)=e(t/p)$, the
+eigenvalue of $\F_p^2$ at the corresponding character. That these eigenvalues are Kloosterman sums is due to
+Medrano, Myers, Stark and Terras \cite{MMST}; here is the short argument. With $n=\N c\ne0$, $w=cz$ gives
+$\sum_{z\in\bar C}\psi(\Tr(cz))=\sum_{\N w=n}\psi(\Tr w)$. An element $w$ with $\N w=n$ and $\Tr w=t$ is a root of
+$X^2-tX+n$, and conversely each root outside $\F_p$ has this norm and trace, while a root $w\in\F_p$ has norm
+$w^2$ and trace $2w$, which fits only when $t^2=4n$. So there are $1-\eta(t^2-4n)$ such $w$, where $\eta$ is the
+quadratic character of $\F_p$. Similarly $x+n/x=t$ has $1+\eta(t^2-4n)$ solutions $x\in\F_p^\times$. As
+$\sum_t\psi(t)=0$, the first sum is $-\sum_t\psi(t)\eta(t^2-4n)=-K(n)$, and Weil's bound \cite{Weil} gives
+$|K(n)|\le2\sqrt p$.
+
+(2) Let $j=\lceil\ell/2\rceil$, $r=\ell-j=\lfloor\ell/2\rfloor\ge1$, and $S_j=\{s\in S:s\equiv1\bmod p^j\}$. For
+$s_0\in S$, the function $s\mapsto\psi_\xi(s_0s)/\psi_\xi(s_0)=e_p(\Tr(\xi s_0(s-1)))$ is a character of $S_j$,
+because $(1+p^jt)(1+p^jt')=1+p^j(t+t')+p^{2j}tt'$ and $v_p(\xi p^{2j})\ge0$. Its average over $S_j$ is $0$
+unless it is trivial. The elements $(1+p^jia/2)/(1-p^jia/2)$, $a\in\Z_p$, lie in $S_j$ and are
+$\equiv1+p^jia\pmod{p^{2j}}$, so triviality forces $e_p(\Tr(i\,p^{j-\ell}a\,\xi_0s_0))=1$ for all $a\in\Z_p$, that
+is, $\Tr(i\xi_0s_0)=-2\operatorname{Im}(\xi_0s_0)\equiv0\pmod{p^r}$. Then $\xi_0s_0\equiv u\pmod{p^r}$ for some
+$u\in\Z_p$ with $u^2\equiv\N\xi_0\pmod{p^r}$, so $s_0$ lies in one of at most two classes modulo $p^r$, each of
+measure $1/((p+1)p^{r-1})$; and the cosets of $S_j$ refine these classes since $j\ge r$. Averaging over the cosets
+of $S_j$ first gives the bound.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:A}]
+The upper bounds are Proposition~\ref{prop:upper} and \cite[Theorem~1]{Vinh}. For the lower bound, let $c$ be a
+proper colouring of $\Q_p^2$ with $k$ measurable classes. Their traces on $\Z_p^2$ cover it, so one of them, $A$,
+has $\mu(A)\ge1/k$, and since $S\subset\Z_p^2$ no two points of $A$ differ by an element of $S$. By
+Lemma~\ref{lem:levels}, $m\ge-\max(2\sqrt p,2)/(p+1)=-2\sqrt p/(p+1)$, and $m<0$ because the eigenvalues of
+$\F_p^2$ sum to $0$; so Lemma~\ref{lem:DH} gives $1/k\le\mu(A)\le|m|/(1+|m|)$, that is,
+$k\ge1+1/|m|\ge1+(p+1)/(2\sqrt p)$.
+\end{proof}
+
+With the exact least eigenvalue $\lambda_{\min}$ of $\F_p^2$, the same proof gives
+$\chiM(\Q_p^2)\ge1+(p+1)/\max(|\lambda_{\min}|,2)$. We computed $\lambda_{\min}$ in interval arithmetic
+(\texttt{padic\_measurable.py} in \cite{Repo}); Table~\ref{tab:meas} shows the result. Weil's bound alone gives
+at least $6$ colours for $p\ge62$, $7$ for $p\ge98$, $8$ for $p\ge142$ and $9$ for $p\ge194$; with the exact
+spectra (computed for $p<200$), $\chiM(\Q_p^2)\ge6$ already for $p=59$, $\ge7$ for $p=71$, $\ge8$ for every
+$p\ge131$, and $\ge9$ for $p=191$.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrr}
+$p$ & $\lambda_{\min}$ & $1+1/|m|$ & $\chiM(\Q_p^2)\ge$\\\hline
+3 & $-2.0000$ & $3.0000$ & 3\\
+7 & $-4.4940$ & $2.7802$ & 3\\
+11 & $-4.7958$ & $3.5022$ & 4\\
+19 & $-7.6097$ & $3.6282$ & 4\\
+23 & $-7.9607$ & $4.0148$ & 5\\
+31 & $-10.6665$ & $4.000044$ & 5\\
+43 & $-11.9622$ & $4.6782$ & 5\\
+47 & $-12.8465$ & $4.7364$ & 5\\
+59 & $-14.9176$ & $5.0221$ & 6\\
+67 & $-15.0567$ & $5.5163$ & 6\\
+71 & $-14.1728$ & $6.0801$ & 7\\
+79 & $-17.1019$ & $5.6778$ & 6\\
+83 & $-17.7087$ & $5.7434$ & 6\\
+103 & $-20.0322$ & $6.1916$ & 7\\
+107 & $-19.0495$ & $6.6694$ & 7\\
+\end{tabular}
+\caption{Lower bounds for the measurable chromatic number of $\Q_p^2$, $p\equiv3\pmod4$, from the least eigenvalue
+of $\F_p^2$ (rounded; the bounds are rigorous lower ends of 120-bit intervals).}
+\label{tab:meas}
+\end{table}
+
+Together with Theorem~\ref{thm:B}, $\chiM(\Q_p^2)=\chiB(\Q_p^2)=\chi(\Q_p^2)$ for $p=2,3,7$, while
+$4\le\chiM(\Q_p^2)\le\chiB(\Q_p^2)\le5$ for $p=11,19$, where $\chi(\F_p^2)=5$ (\cite{Repo} stores $5$-colourings of
+$\F_{11}^2$ and $\F_{19}^2$, and certificates that $4$ colours do not suffice).
+
+\section{Lower bounds from number fields}
+
+If $K$ is a field and $\iota:K\hookrightarrow\Q_p$, then $(x,y)\mapsto(\iota x,\iota y)$ is an injective
+homomorphism $G(K)\to G(\Q_p)$, so $\chi(\Q_p^2)\ge\chi(K^2)$. For odd $p$ and $p\nmid d$, Hensel's lemma gives
+$\Q(\sqrt d)\subset\Q_p$ exactly when $d$ is a square modulo $p$.
+
+\begin{proof}[Proof of Theorem~\ref{thm:B}]
+The upper bounds are Proposition~\ref{prop:upper}. The graph has edges, so $\chi(\Q_2^2)\ge2$. For $p=3$, besides
+Madore's $9$-cycle, the unit vectors
+\[
+(1,0),\quad(0,1),\quad\Bigl(\tfrac{-1+\sqrt7}4,\tfrac{-1-\sqrt7}4\Bigr),\quad
+\Bigl(-\tfrac{\sqrt7}4,-\tfrac34\Bigr),\quad\Bigl(-\tfrac34,\tfrac{\sqrt7}4\Bigr)
+\]
+sum to $0$, and their partial sums $0$, $(1,0)$, $(1,1)$, $(\frac{3+\sqrt7}4,\frac{3-\sqrt7}4)$,
+$(\frac34,-\frac{\sqrt7}4)$ are distinct, so $G(\Q(\sqrt7))$ contains a $5$-cycle; as $7\equiv1\pmod3$,
+$\sqrt7\in\Q_3$ and $\chi(\Q_3^2)\ge3$. Finally $11\equiv2^2\pmod7$, so $\sqrt{11}\in\Q_7$, and the
+$76$-vertex unit-distance graph over $\Q(\sqrt{11})$ of \cite{QP} has no proper $3$-colouring (a DRAT proof
+checked by \texttt{drat-trim} and by the verified checker \texttt{cake\_lpr}, and a proof in Lean); so
+$\chi(\Q_7^2)\ge4$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:D}]
+Let
+\begin{gather*}
+\mathcal D=\{11,23,35,47,59,71,95,119,131,155,179,191,239,251,\\
+263,359,431,443,455,491,599,611,791,851,911,935,959\}.
+\end{gather*}
+For each $d\in\mathcal D$, \cite{QP} gives a unit-distance graph over $\Q(\sqrt d)$ with no proper
+$3$-colouring. A segmented sieve with Jacobi symbols (\texttt{padic\_reach.c} in \cite{Repo}, about half a
+minute) shows that for every prime $p\equiv3\pmod4$ with $7\le p<2\,129\,503\,819$ some $d\in\mathcal D$ is a
+nonzero square modulo $p$, so $\Q(\sqrt d)\subset\Q_p$ and $\chi(\Q_p^2)\ge4$; a separate script checks every
+prime below $10^7$ again with Euler's criterion. The prime $2\,129\,503\,819$ is the first after $3$ at which every
+$d\in\mathcal D$ is a non-square. For $p=83$, the numbers $3$, $11$ and $247$ are squares modulo $83$, and
+\cite{Repo} contains a $5$-chromatic unit-distance graph over $\Q(\sqrt3,\sqrt{11},\sqrt{247})$.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:E}]
+Let $M$ be the Galois closure of the compositum of $\Q(i)$ and the fields in $\mathcal K$, $G=\operatorname{Gal}(M/\Q)$,
+$D\subset G$ the decomposition group of a prime of $M$ above $3$, $I\subset D$ its inertia group, and $\sigma\in D$
+an element mapping to the Frobenius generator of $D/I$, so that $D=\langle\sigma\rangle I$. By Chebotarev's
+theorem infinitely many primes $p$, unramified in $M$, have Frobenius conjugate to $\sigma$. Since $3$ is inert in
+$\Q(i)$, $\sigma$ acts on the residue field $\F_9$ of $\Q(i)$ at $3$ by $x\mapsto x^3$ and so moves $i$; hence
+$p\equiv3\pmod4$. Suppose $K=M^H\in\mathcal K$ embeds in $\Q_p$. Then a prime of $K$ above $p$ has residue degree
+$1$, so the Frobenius at $p$, and with it $\sigma$, which has the same cycle type on $G/H$, fixes a coset $gH$;
+and $D\cdot gH=I\langle\sigma\rangle\cdot gH=I\cdot gH$. The primes of $K$ above $3$ correspond to the $D$-orbits
+on $G/H$, with residue degree the number of $I$-orbits in the orbit (see \cite[Chapter~I, \S9]{Neukirch}); so the
+prime given by $D\cdot gH$ has residue field $\F_3$, in which $-1$ is not a square. The argument of
+Lemma~\ref{lem:integral} and Proposition~\ref{prop:upper}, with a uniformiser in place of $p$ and
+$\kappa(a,b)=a+b\bmod 3$, then gives $\chi(K^2)\le3$, a contradiction.
+\end{proof}
+
+For quadratic fields this is Fischer's theorem that $\chi(\Q(\sqrt N)^2)\le3$ when $N\equiv0,1\pmod3$
+\cite{Fischer1990}. A uniform bound $\chi(\Q_p^2)\ge4$ for all $p\ge7$ would follow, for example, from
+$\chi(\Q(\sqrt q)^2)\ge4$ for every prime $q\equiv11\pmod{12}$: by Dirichlet's theorem every prime
+$p\equiv3\pmod4$ has such a $q$ with $q\equiv1\pmod p$, so that $\Q(\sqrt q)\subset\Q_p$.
+
+\section{The isotropic case}
+
+\begin{proof}[Proof of Proposition~\ref{prop:C}]
+Let $HG(F)$ be the graph on $F^2$ in which $(x,y)$ and $(x',y')$ are adjacent when $(x-x')(y-y')=1$. By
+\cite[Lemma~2.7]{BMK}, $HG(F)$ is an induced subgraph of the graph of any isotropic form over $F$, and it contains
+$HG(\Q)$. The map $(x,y)\mapsto(x-y,x+y)$ sends the graph of $x^2-y^2$ on $\Q^2$ onto $HG(\Q)$, because
+$(\Delta x)^2-(\Delta y)^2=(\Delta x-\Delta y)(\Delta x+\Delta y)$. Davies \cite[Theorem~3]{Davies}, from a
+theorem of Graham, proved that every finite colouring of $\Q^2$ has a monochromatic pair with
+$(x-x')^2-(y-y')^2=1$. Hence no finite colouring is proper. The form $x^2+y^2$ is isotropic over $F$ exactly when
+$-1$ is a square in $F$, and over $\Q_p$ this happens exactly when $p\equiv1\pmod4$.
+\end{proof}
+
+Madore had observed that $\chi(\R^{1,1})=\infty$ would give $\chi(\C^2)=\infty$ \cite[\P6.4]{Madore}, and Davies
+recorded this consequence of his theorem; the proposition is the same remark for any field of characteristic
+$0$.
+
+\section{Lines and higher dimensions}\label{sec:dim}
+
+For $n\ge1$ let $\chi(\Q_p^n)$ be the chromatic number of the graph on $\Q_p^n$ joining $v$ and $w$ when
+$\sum_i(v_i-w_i)^2=1$, and $\chiB(\Q_p^n)$, $\chiM(\Q_p^n)$ its Borel and measurable versions.
+
+\begin{proposition}\label{prop:dim}
+$\chi(\Q_p^n)$ is finite if and only if $n=1$, or $n=2$ and $p\not\equiv1\pmod4$, or $p=2$ and $n\le4$. Moreover:
+\begin{enumerate}
+\item $\chi(\Q_p^1)=2$ for every $p$, while $\chiB(\Q_2^1)=2$ and $\chiB(\Q_p^1)=\chiM(\Q_p^1)=3$ for odd $p$;
+\item $\chi(\Q_2^2)=\chi(\Q_2^3)=2$ and $\chi(\Q_2^4)=4$, and the Borel chromatic numbers are the same.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Over $\Q_p$ every form in at least five variables is isotropic \cite[Chapter~IV, Theorem~6]{Serre}, and so is
+$x_1^2+x_2^2+x_3^2$ for odd $p$: it has a nonsingular zero modulo $p$ by the Chevalley--Warning theorem, which lifts
+by Hensel's lemma. For $p=2$ the forms $x_1^2+\dots+x_n^2$ with $n\le4$ are anisotropic: a primitive zero
+$(a_1,\dots,a_4)\in\Z_2^4$ would have $t\ge1$ odd entries with $t\equiv\sum_ia_i^2\equiv0\pmod4$, so $t=4$, and then
+$\sum_ia_i^2\equiv4\pmod8$. Proposition~\ref{prop:C} gives $\chi=\infty$ in the isotropic cases, and Corollary~\ref{cor:dich} treats
+$n=2$.
+
+(1) The neighbours of $x$ are $x\pm1$, so each coset of $\Z$ in $\Q_p$ is a two-way infinite path, and colouring it
+by the parity of the offset from a chosen representative gives $\chi(\Q_p^1)=2$. For a Borel colouring use the
+cosets of $\Z_p$ instead: $x\mapsto(x-r(x))\bmod p$, with $r$ as in the proof of Proposition~\ref{prop:upper},
+maps the graph to the cycle
+$\Z/p$ with steps $\pm1$, which needs $2$ colours for $p=2$ and $3$ for odd $p$. Conversely, for odd $p$ a
+measurable $2$-colouring $c$ would satisfy $c(x+2)=c(x)$; since $2$ generates a dense subgroup of $\Z_p$, the
+translation by $2$ is ergodic on $\Z_p$, so $c$ would be almost everywhere constant on $\Z_p$, which contradicts
+$c(x+1)\ne c(x)$.
+
+(2) The graph has edges, and $0$, $(1,0,0,0)$, $(\frac12,\frac12,\frac12,\frac12)$, $(\frac12,\frac12,\frac12,-\frac12)$
+are pairwise at distance $1$, so $\chi(\Q_2^4)\ge4$. For $n\le3$, if $\sum_ix_i^2=1$ with $\min_iv_2(x_i)=-k<0$,
+then $\sum_ia_i^2=4^k$ with $a_i=2^kx_i\in\Z_2$ not all even; but a sum of at most three squares of which
+$t\ge1$ are odd is $\equiv t\not\equiv0\pmod4$. So unit vectors are integral, and as $\sum_ix_i^2\equiv1\pmod8$
+exactly one coordinate is odd; colouring each coset of $\Z_2^n$ by the parity of the coordinate sum (after
+subtracting its representative) gives $\chi(\Q_2^n)=2$ for $n=2,3$. For $n=4$ identify $\Q_2^4$ with Hamilton's
+quaternions $H$ over $\Q_2$ by $x\mapsto x_1+x_2i+x_3j+x_4k$, so that the form becomes the reduced norm $\N$. As
+$\N$ is anisotropic, $H$ is a division algebra; its valuation ring $\Oo_H=\{x:\N x\in\Z_2\}$ (the $2$-adic Hurwitz
+order, $\Z_2^4\cup(h+\Z_2^4)$ with $h=(\frac12,\frac12,\frac12,\frac12)$) has the maximal ideal
+$P=\{x:\N x\in2\Z_2\}=\{x\in\Z_2^4:\sum_ix_i\in2\Z_2\}$ and the residue field $\Oo_H/P\cong\F_4$
+\cite[Proposition~13.3.4 and Theorem~13.3.11]{Voight}. A unit vector lies in $\Oo_H\setminus P$, so adjacent points
+lie in one coset of $\Oo_H$ and their difference is nonzero in $\Oo_H/P$; fixing a representative $r(v)$ of each
+coset (the cosets are open) and colouring $v$ by $(v-r(v))\bmod P\in\F_4$ gives $\chi(\Q_2^4)\le4$. All these
+colourings are locally constant.
+\end{proof}
+
+The values for $n=3,4$ are the $2$-adic forms of Benda and Perles's $\chi(\Q^3)=2$ and $\chi(\Q^4)=4$ \cite{BP},
+as cited in \cite[\P1.6]{Madore} (see also \cite[\S\S11.3--11.4]{Soifer}); we have not read their proofs. Since
+$\Q^n\subset\Q_2^n$ and the tetrahedron above is rational, the proposition proves both values again. By
+Corollary~\ref{cor:dich}, and in one variable because the graph of $ax^2$ is empty or is $x\sim x\pm b$, which
+$x\mapsto x/b$ turns into $x\sim x\pm1$ with a Borel colouring in at most three colours (through the residue field
+as in (1), or by $\lfloor\operatorname{Re}x\rfloor\bmod2$ over $\R$ and $\C$), a non-degenerate quadratic graph over
+a local field of characteristic $0$ never has finite chromatic number and infinite Borel chromatic number, the
+behaviour that \cite[Remark~1.3]{BMK} asks about; on the $p$-adic line with $p$ odd the two differ by one, as for
+the graphs of irrational rotations.
+
+\section{Questions}
+
+\begin{enumerate}
+\item For $p\equiv3\pmod4$, $\chiB(\Q_p^2)\to\infty$, but the ordinary $\chi(\Q_p^2)$ is only known to be at
+least $4$ for $7\le p<2\,129\,503\,819$ (Theorem~\ref{thm:D}) and at least $5$ at $p=83$. Is it bounded? A finite
+subgraph whose coordinates generate a field with a real embedding lies in $\R^2$, so more than seven colours would
+need a field with no real embedding. If $\chi(K^2)$ is unbounded over number fields $K$ in which $-1$ is not a
+square, then so is $\chi(\Q_p^2)$ over $p\equiv3\pmod4$, since by Chebotarev's theorem each such $K$ embeds in
+$\Q_p$ for infinitely many $p\equiv3\pmod4$. If $\chi(\Q_p^2)$ is bounded, the $p$-adic planes are a quantitative
+analogue, along a family, of the gap between ordinary and Borel chromatic numbers that \cite[Remark~1.3]{BMK}
+asks about (whose own instance, for indefinite real forms, is ruled out by Davies's theorem).
+\item Is $\chi(\Q_{11}^2)$ equal to $4$ or $5$? Since $47$, $3$ and $5$ are squares modulo $11$, the field
+$\Q_{11}$ contains $\Q(\sqrt{47})$ and $\Q(\sqrt3,\sqrt5)$; so $\chi(\Q_{11}^2)=4$ would give
+$\chi(\Q(\sqrt{47})^2)=4$, a case Moorhouse asked about \cite{MoorhouseTalk} that is still open \cite{QP}, and
+$\chi(\Q(\sqrt3,\sqrt5)^2)\le4$. The colourings of $\Q_{11}^2$ that are constant on the cosets of $11^k\Z_{11}^2$
+need five colours for $k=1,2,3$ \cite{Repo}. At $p=19$ the question about $\Q(\sqrt{47})$ is the same, as
+$47\equiv3^2\pmod{19}$, but $\Q(\sqrt3,\sqrt5)$ does not embed in $\Q_{19}$; there we only know that the
+colourings constant on the cosets of $19\Z_{19}^2$ need five colours.
+\item How fast does $\chiB(\Q_p^2)$ grow? Theorem~\ref{thm:A} places it between $(\frac12+o(1))\sqrt p$ and
+$(p+1)/2$.
+\end{enumerate}
+
+\begin{thebibliography}{99}
+\bibitem{BP} M. Benda and M. Perles, \emph{Colorings of metric spaces}, Geombinatorics \textbf{9} (2000), 113--126.
+\bibitem{BDOV} C. Bachoc, E. DeCorte, F. M. de Oliveira Filho and F. Vallentin, \emph{Spectral bounds for the
+independence ratio and the chromatic number of an operator}, Israel J. Math. \textbf{202} (2014), 227--254.
+\bibitem{BMK} M. Bardestani and K. Mallahi-Karai, \emph{On a generalization of the Hadwiger--Nelson problem},
+Israel J. Math. \textbf{217} (2017), 313--335; arXiv:1507.05300 (we quote the arXiv version).
+\bibitem{BMK2} M. Bardestani and K. Mallahi-Karai, \emph{On the chromatic number of structured Cayley graphs},
+arXiv:1511.02427 (2015, revised 2018).
+\bibitem{BMK3} M. Bardestani and K. Mallahi-Karai, \emph{Polynomial configurations in sets of positive upper
+density over local fields}, J. Anal. Math. (2020); arXiv:1701.06024.
+\bibitem{Davies} J. Davies, \emph{Chromatic number of spacetime}, arXiv:2308.16885 (2023, revised 2024).
+\bibitem{deGrey} A. D. N. J. de Grey, \emph{The chromatic number of the plane is at least 5}, Geombinatorics
+\textbf{28} (2018), 18--31; arXiv:1804.02385.
+\bibitem{EI} G. Exoo and D. Ismailescu, \emph{The chromatic number of the plane is at least $5$: a new proof},
+Discrete Comput. Geom. \textbf{64} (2020), 216--226.
+\bibitem{Fischer1990} K. G. Fischer, \emph{Additive $K$-colorable extensions of the rational plane}, Discrete
+Math. \textbf{82} (1990), 181--195.
+\bibitem{Repo} S. Gal\'an, \emph{The Hadwiger--Nelson problem over number fields}, code, data and formal
+proofs, 2026. Archived at Zenodo, \href{https://doi.org/10.5281/zenodo.22976635}{doi:10.5281/zenodo.22976635}
+(all versions); source at \url{https://github.com/decalion89/chromatic-number-of-the-plane}; the scripts cited here
+are in \texttt{data/quadratic\_planes/scripts/}, and the account is \texttt{notes/quadratic\_planes.md}, \S5.
+\bibitem{FC} S. Gal\'an, \emph{Which real quadratic planes need four colours}, draft, 2026,
+\texttt{papers/four-colours/} in \cite{Repo}.
+\bibitem{QP} S. Gal\'an, \emph{Real quadratic planes that need four colours}, draft, 2026, in \cite{Repo}
+(\texttt{papers/quadratic-planes/}).
+\bibitem{Johnson1987} P. D. Johnson Jr., \emph{Two-colorings of real quadratic extensions of $\Q^2$ that forbid
+many distances}, Congr. Numer. \textbf{60} (1987), 51--58.
+\bibitem{Madore} D. A. Madore, \emph{The Hadwiger--Nelson problem over certain fields}, arXiv:1509.07023 (2015).
+\bibitem{mathlib} The mathlib Community, \emph{The Lean mathematical library}, CPP 2020, 367--381;
+arXiv:1910.09336.
+\bibitem{Lean} L. de Moura and S. Ullrich, \emph{The Lean 4 theorem prover and programming language}, CADE 28,
+Lecture Notes in Comput. Sci. \textbf{12699} (2021), 625--635.
+\enlargethispage{2\baselineskip}
+\bibitem{MMST} A. Medrano, P. Myers, H. M. Stark and A. Terras, \emph{Finite analogues of Euclidean space},
+J. Comput. Appl. Math. \textbf{68} (1996), 221--238.
+\bibitem{Moorhouse} G. E. Moorhouse, \emph{On the chromatic numbers of planes}, preliminary draft, revised
+3 March 2010, \url{https://www.ericmoorhouse.org/pub/chromatic.pdf}.
+\bibitem{MoorhouseTalk} G. E. Moorhouse, \emph{Colouring the plane}, talk at Designs, Codes \& Geometries
+2010, slides at \url{https://www.ericmoorhouse.org/slides/ebertfest.pdf}.
+\bibitem{Neukirch} J. Neukirch, \emph{Algebraic number theory}, Grundlehren Math. Wiss. \textbf{322}, Springer,
+Berlin, 1999.
+\bibitem{OpenAI} OpenAI, \emph{The Euclidean plane is not five-colorable}, preprint (23 September 2026), with a
+formalization in Lean, \url{https://github.com/openai/math}.
+\bibitem{Serre} J.-P. Serre, \emph{A course in arithmetic}, Grad. Texts in Math. \textbf{7}, Springer, New York, 1973.
+\bibitem{Soifer} A. Soifer, \emph{The mathematical coloring book}, Springer, New York, 2009.
+\bibitem{Vinh} L. A. Vinh, \emph{On chromatic number of unit-quadrance graphs (finite Euclidean graphs)},
+arXiv:math/0510092 (2005).
+\bibitem{Voight} J. Voight, \emph{Quaternion algebras}, Grad. Texts in Math. \textbf{288}, Springer, Cham, 2021.
+\bibitem{Weil} A. Weil, \emph{On some exponential sums}, Proc. Nat. Acad. Sci. U.S.A. \textbf{34} (1948),
+204--207.
+\bibitem{Woodall} D. R. Woodall, \emph{Distances realized by sets covering the plane}, J. Combin. Theory Ser. A
+\textbf{14} (1973), 187--200.
+\end{thebibliography}
+
+\end{document}

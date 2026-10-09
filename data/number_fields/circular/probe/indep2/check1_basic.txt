@@ -1,0 +1,31 @@
+Lemma 8(i) k=1: |G_N|=12 equals {i^a rho^j}: True
+Lemma 8(i) k=2: |G_N|=20 equals {i^a rho^j}: True
+Lemma 8(i) k=3: |G_N|=28 equals {i^a rho^j}: True
+Lemma 8(ii),(iii) congruences checked for k<=12, |j|<=k
+eta at level 5 for (1+i)/3: j=-1,0,1 -> [(1+1i), (1-1i), (-1-1i)]
+orbit of (1+i)/3 under i (classes mod Z[i]): [(Fraction(1, 3), Fraction(1, 3)), (Fraction(2, 3), Fraction(1, 3)), (Fraction(2, 3), Fraction(2, 3)), (Fraction(1, 3), Fraction(2, 3)), (Fraction(1, 3), Fraction(1, 3))]
+Lambda_+/Z[i] classes (centred reps): [(-2/5-1/5i), (-1/5+2/5i), (0+0i), (1/5-2/5i), (2/5+1/5i)]
+nu_pm(lambda) facts checked for k<=6, all lambda mod 5
+7(zr)_1+25(zr^-1)_1-24(zr)_2 = 0 and 25(zr)_2-24(zr^-1)_1+7(zr^-1)_2 = 0: verified on R-basis
+lambda=(1+0i): nu_+ = (-2/5-1/5i), nu_- = (-2/5+1/5i)
+lambda=(2+0i): nu_+ = (1/5-2/5i), nu_- = (1/5+2/5i)
+lambda=(2+2i): nu_+ = (-1/5+2/5i), nu_- = (-2/5+1/5i)
+16 classes, orbits under i: [[(0, 1), (4, 0), (0, 4), (1, 0)], [(0, 2), (3, 0), (0, 3), (2, 0)], [(1, 1), (4, 1), (4, 4), (1, 4)], [(2, 2), (3, 2), (3, 3), (2, 3)]]
+(2+i)^(2k+1) = 2+i mod 5 for k<60
+sqrt2*(11/56+1/6) = 0.5134942101473738 < 0.52;  1/6+0.52 = 0.6866666666666666 < 1-11/56 = 0.8035714285714286
+P: 12 vertices [('-1', '-1/3'), ('-5/7', '-5/7'), ('-1/3', '-1'), ('1/3', '-1'), ('5/7', '-5/7'), ('1', '-1/3'), ('1', '1/3'), ('5/7', '5/7'), ('1/3', '1'), ('-1/3', '1'), ('-5/7', '5/7'), ('-1', '1/3')]
+P vertices equal the claimed 12: True ; max |x|^2 = 10/9
+x=1+i/3: conj(x)rho = (13/15+3/5i)  conj(x)rho^-1 = (1/3-1i)
+Z: 6 vertices [('-5/7', '-5/7'), ('0', '-5/4'), ('1', '-1/2'), ('1', '1'), ('-1/2', '1'), ('-5/4', '0')]
+Z vertices equal the claimed 6: True ; max |y|^2 = 2
+Z((1/3+1/3i)) = i^0 Z((1+i)/3)
+Z((1/3+2/3i)) = i^3 Z((1+i)/3)
+Z((2/3+1/3i)) = i^1 Z((1+i)/3)
+Z((2/3+2/3i)) = i^2 Z((1+i)/3)
+c_1: in S^(3/10), min ||.|| = 3/10; dist to N E_c = 2.2091 >= 2.0361; to N E_q = 1.0965 >= 0.9667
+c_2: in S^(3/10), min ||.|| = 3/10; dist to N E_c = 11.3172 >= 10.9803; to N E_q = 5.9779 >= 5.6333
+c_3: in S^(3/10), min ||.|| = 3/10; dist to N E_c = 56.1006 >= 55.7017; to N E_q = 29.6581 >= 28.9667
+c_4: in S^(3/10), min ||.|| = 3/10; dist to N E_c = 279.6113 >= 279.3085; to N E_q = 147.4657 >= 145.6333
+c_15: in S^(3/10), min ||.|| = 3/10; dist to N E_c = 13647875839.2789 >= 13647875839.0321; to N E_q = 7193062145.8421 >= 7120768228.9667
+c_k checked exactly for k <= 15
+ALL OK

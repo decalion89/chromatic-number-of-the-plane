@@ -1,0 +1,14 @@
+theta = 3/10 = 0.300000000
+level k=1 (N=5, period 65): 5 components mod 65Z[i]; failing Lemma 12's conclusion: 0 ; types {"('q', 2, 2)": 1, "('q', 2, 1)": 1, 'c': 1, "('q', 1, 2)": 1, "('q', 1, 1)": 1} 
+level k=2 (N=25, period 325): 5 components mod 325Z[i]; failing Lemma 12's conclusion: 0 ; types {"('q', 2, 2)": 1, "('q', 2, 1)": 1, 'c': 1, "('q', 1, 2)": 1, "('q', 1, 1)": 
+level k=3 (N=125, period 1625): 5 components mod 1625Z[i]; failing Lemma 12's conclusion: 0 ; types {"('q', 2, 2)": 1, "('q', 2, 1)": 1, 'c': 1, "('q', 1, 2)": 1, "('q', 1, 1)
+level k=4 (N=625, period 8125): 5 components mod 8125Z[i]; failing Lemma 12's conclusion: 0 ; types {"('q', 2, 2)": 1, "('q', 2, 1)": 1, 'c': 1, "('q', 1, 2)": 1, "('q', 1, 1)
+level k=5 (N=3125, period 40625): 5 components mod 40625Z[i]; failing Lemma 12's conclusion: 0 ; types {"('q', 2, 2)": 1, "('q', 2, 1)": 1, 'c': 1, "('q', 1, 2)": 1, "('q', 1,
+level k=6 (N=15625, period 203125): 5 components mod 203125Z[i]; failing Lemma 12's conclusion: 0 ; types {"('q', 2, 2)": 1, "('q', 2, 1)": 1, 'c': 1, "('q', 1, 2)": 1, "('q',
+level k=7 (N=78125, period 1015625): 5 components mod 1015625Z[i]; failing Lemma 12's conclusion: 0 ; types {"('q', 2, 2)": 1, "('q', 2, 1)": 1, 'c': 1, "('q', 1, 2)": 1, "('q
+theta = 1429/5000 = 0.285800000
+level k=1 (N=5, period 65): 5 components mod 65Z[i]; failing Lemma 12's conclusion: 0 ; types {"('q', 2, 2)": 1, "('q', 2, 1)": 1, 'c': 1, "('q', 1, 2)": 1, "('q', 1, 1)": 1} 
+level k=2 (N=25, period 325): 5 components mod 325Z[i]; failing Lemma 12's conclusion: 0 ; types {"('q', 2, 2)": 1, "('q', 2, 1)": 1, 'c': 1, "('q', 1, 2)": 1, "('q', 1, 1)": 
+level k=3 (N=125, period 1625): 5 components mod 1625Z[i]; failing Lemma 12's conclusion: 0 ; types {"('q', 2, 2)": 1, "('q', 2, 1)": 1, 'c': 1, "('q', 1, 2)": 1, "('q', 1, 1)
+level k=4 (N=625, period 8125): 5 components mod 8125Z[i]; failing Lemma 12's conclusion: 0 ; types {"('q', 2, 2)": 1, "('q', 2, 1)": 1, 'c': 1, "('q', 1, 2)": 1, "('q', 1, 1)
+level k=5 (N=3125, period 40625): 5 components mod 40625Z[i]; failing Lemma 12's conclusion: 0 ; types {"('q', 2, 2)": 1, "('q', 2, 1)": 1, 'c': 1, "('q', 1, 2)": 1, "('q', 1,

@@ -1,0 +1,12 @@
+referee_check  | point coordinate +1              | rejected=True | FAIL: edge set != unit-distance pairs
+referee_check  | edge removed (not induced)       | rejected=True | FAIL: edge set != unit-distance pairs
+referee_check  | non-unit pair added as edge      | rejected=True | FAIL: edge set != unit-distance pairs
+referee_check  | colour changed                   | rejected=True | FAIL: not a (7,2)-colouring
+referee_check  | cycle vertices swapped           | rejected=True | FAIL: cycle step 21->38 is not an edge
+referee_check  | duplicate point                  | rejected=True | FAIL: repeated point
+referee_check  | d not squarefree                 | rejected=True | FAIL: d not a squarefree integer > 1
+referee_critical | stored colouring as c_0 (tight cycle) | rejected=True | AssertionError: vertex 0: tight digraph has a directed cycle
+referee_critical | improper c_0 | rejected=True | AssertionError: vertex 0: edge 1-12 has difference 0
+referee_critical | c_3(3) != -1 | rejected=True | AssertionError: vertex 3: c_v(v) != -1
+referee_critical | one certificate missing | rejected=True | AssertionError: need one certificate per vertex
+ALL MUTATIONS REJECTED

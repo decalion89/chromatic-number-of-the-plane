@@ -1,0 +1,320 @@
+{
+ "res": {
+  "basis_string_matches": true,
+  "denominator_positive_int": true,
+  "generators_are_int8": true,
+  "points_are_int8": true,
+  "points_distinct": true,
+  "claim12_generators_match_construction": true,
+  "claim3_generators_unit_length": true,
+  "claim3_no_zero_generator": true,
+  "edges_well_formed": true,
+  "edges_no_duplicates": true,
+  "claim3_listed_edges_are_generator_differences": true,
+  "claim3_every_cayley_pair_is_listed": true,
+  "fixed_vertex_in_range": true,
+  "claim3_fixed_vertex_is_origin": true,
+  "claim3_all_points_reachable": true,
+  "colouring_length_n": true,
+  "colouring_values_in_0123": true,
+  "claim4_proper_4_colouring": true,
+  "claim5_cycles_valid": true,
+  "allpairs_generator_difference_count_equals_edges": true,
+  "all_edges_unit_distance": true
+ },
+ "stats": {
+  "n_points": 1657,
+  "n_edges_listed": 6199,
+  "n_generators": 60,
+  "n_cycles": 5264,
+  "n_distinct_points": 1657,
+  "construction_info": {
+   "zeta_norm_is_1": true,
+   "w_norm_is_1": true,
+   "zeta^2 == (sqrt3/2, 1/2)": true,
+   "zeta^12 == -1": true,
+   "zeta^24 == 1": true,
+   "zeta primitive 24th root": true,
+   "float zeta angle deg": 14.999999999999998,
+   "float w": [
+    0.3333333333333333,
+    0.9428090415820634
+   ]
+  },
+  "construction_compare": {
+   "num_generators": 60,
+   "num_distinct_generator_pairs": 60,
+   "num_constructed": 120,
+   "num_distinct_constructed_vectors": 120,
+   "num_distinct_constructed_pairs": 60,
+   "constructed_closed_under_negation": true,
+   "generator_pairs_minus_constructed": 0,
+   "constructed_pairs_minus_generator": 0,
+   "ok": true
+  },
+  "n_signed_generators": 120,
+  "n_cayley_pairs_by_generator_search": 6199,
+  "n_duplicate_edges": 0,
+  "n_listed_edges_not_cayley": 0,
+  "n_cayley_pairs_not_listed": 0,
+  "n_listed_edges_with_bad_difference": 0,
+  "n_reachable_from_fixed_vertex": 1657,
+  "degree_min_max": [
+   2,
+   71
+  ],
+  "n_monochromatic_edges": 0,
+  "colour_class_sizes": [
+   331,
+   365,
+   489,
+   472
+  ],
+  "cycle_length_histogram": {
+   "4": 4705,
+   "8": 559
+  },
+  "cycle_defects": {
+   "format": 0,
+   "empty": 0,
+   "len_not_div4": 0,
+   "repeated_vertex": 0,
+   "non_edge_step": 0
+  },
+  "n_identical_duplicate_cycles": 0,
+  "n_cycles_whose_reverse_is_also_listed": 4986,
+  "n_distinct_cycles_up_to_rotation": 5264,
+  "allpairs_n_pairs_with_generator_difference": 6199,
+  "n_unit_distance_pairs": 6238,
+  "n_unit_distance_pairs_not_edges": 39,
+  "n_edges_not_unit_distance": 0,
+  "n_distinct_extra_unit_differences_up_to_sign": 17,
+  "extra_unit_differences_up_to_sign": [
+   [
+    [
+     0,
+     18,
+     6,
+     0,
+     18,
+     0,
+     0,
+     -6
+    ],
+    6
+   ],
+   [
+    [
+     0,
+     0,
+     0,
+     12,
+     0,
+     0,
+     12,
+     0
+    ],
+    4
+   ],
+   [
+    [
+     0,
+     0,
+     12,
+     0,
+     0,
+     0,
+     0,
+     -12
+    ],
+    4
+   ],
+   [
+    [
+     0,
+     0,
+     12,
+     6,
+     0,
+     0,
+     -12,
+     6
+    ],
+    4
+   ],
+   [
+    [
+     0,
+     18,
+     -6,
+     0,
+     18,
+     0,
+     0,
+     6
+    ],
+    4
+   ],
+   [
+    [
+     6,
+     15,
+     -2,
+     5,
+     6,
+     -15,
+     2,
+     5
+    ],
+    2
+   ],
+   [
+    [
+     0,
+     0,
+     20,
+     0,
+     0,
+     0,
+     0,
+     4
+    ],
+    2
+   ],
+   [
+    [
+     18,
+     9,
+     6,
+     -3,
+     -18,
+     9,
+     6,
+     3
+    ],
+    2
+   ],
+   [
+    [
+     18,
+     -9,
+     -6,
+     -3,
+     18,
+     9,
+     6,
+     -3
+    ],
+    2
+   ],
+   [
+    [
+     0,
+     6,
+     -10,
+     0,
+     -30,
+     0,
+     0,
+     -2
+    ],
+    2
+   ],
+   [
+    [
+     30,
+     0,
+     0,
+     2,
+     0,
+     6,
+     -10,
+     0
+    ],
+    1
+   ],
+   [
+    [
+     0,
+     0,
+     12,
+     -6,
+     0,
+     0,
+     12,
+     6
+    ],
+    1
+   ],
+   [
+    [
+     18,
+     9,
+     -6,
+     3,
+     -18,
+     9,
+     -6,
+     -3
+    ],
+    1
+   ],
+   [
+    [
+     6,
+     -15,
+     2,
+     5,
+     -6,
+     -15,
+     2,
+     -5
+    ],
+    1
+   ],
+   [
+    [
+     18,
+     -9,
+     6,
+     3,
+     18,
+     9,
+     -6,
+     3
+    ],
+    1
+   ],
+   [
+    [
+     18,
+     0,
+     0,
+     6,
+     0,
+     -18,
+     6,
+     0
+    ],
+    1
+   ],
+   [
+    [
+     0,
+     0,
+     4,
+     -10,
+     0,
+     0,
+     -4,
+     -10
+    ],
+    1
+   ]
+  ],
+  "unit_check_seconds": 3.3,
+  "float_crosscheck_unit_pairs": 6238,
+  "seconds": 4.3
+ },
+ "overall": true
+}

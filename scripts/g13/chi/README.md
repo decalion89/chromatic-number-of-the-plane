@@ -5,12 +5,12 @@ anisotropic plane over `𝔽₁₃`, has no proper 5-colouring. The note is `not
 the argument, and says what was computed and how to check it.
 
 The files come from the directory `g13-plan-d/` of commit `97047ff3` (the branch of plan D,
-27 September 2026), the version that the last shares ran. They are copied unchanged, byte for byte and
+27 September 2026, in the private development repository; not in the public history), the version that the last shares ran. They are copied unchanged, byte for byte and
 at the same relative paths, so that `share_driver.py` and `verify_plan_D.py` run here as they ran
 there. No path had to change. New files: `pack_certificates.py`; the helpers `help_driver.py` and `sub_help.py`, and
 the re-splits of leaf 430, `hard430.py` and `hard430c.py` with `work/vars_c12_lex.txt` and `work/vars_c012_lex.txt`
 (added after the run, as they ran, except that `hard430.py` no longer names the machine's directory); and this README, which
-replaces the README of the plan and keeps its account of the shares. The independent review
+replaces the README of the plan and keeps its account of the shares. The internal review
 `review_plan_D.md` is added as it was written; `verify_plan_D.py` cites it.
 
 ## The files
@@ -32,7 +32,7 @@ replaces the README of the plan and keeps its account of the shares. The indepen
 | `cases/SHA256SUMS` | the SHA-256 of the eight case formulas |
 | `work/vars_c0_lex.txt`, `work/vars_s_lex.txt` | the variables the cube trees branch on: `x(v, 0)`, or `s_v`, for the vertices `v` along `lex_order()` |
 | `work/vars_c12_lex.txt`, `work/vars_c012_lex.txt` | the variables of colours 1 and 2, and of colours 0, 1 and 2, in the same order, for the re-splits of leaf 430 |
-| `review_plan_D.md` | the independent review of the plan, written before the run and before plan E |
+| `review_plan_D.md` | the internal review of the plan (written inside the project), written before the run and before plan E |
 | `.gitignore` | the formulas and proofs that a run writes here |
 | `pack_certificates.py` | new: packs the merged logs into `certificates/g13_chi_certlogs.tar.gz` |
 

@@ -1,0 +1,16 @@
+/usr/local/lib/python3.11/dist-packages/networkx/algorithms/graph_hashing.py:211: UserWarning: The hashes produced for graphs without node or edge attributes changed in v3.5 due to a bugfix (see documentation).
+  node_labels = _init_node_labels(G, edge_attr, node_attr)
+n = 2: 2 triangle-free graphs up to isomorphism, 0 with chi_c = 3 (both tests agree)
+n = 3: 3 triangle-free graphs up to isomorphism, 0 with chi_c = 3 (both tests agree)
+n = 4: 7 triangle-free graphs up to isomorphism, 0 with chi_c = 3 (both tests agree)
+n = 5: 14 triangle-free graphs up to isomorphism, 0 with chi_c = 3 (both tests agree)
+n = 6: 38 triangle-free graphs up to isomorphism, 0 with chi_c = 3 (both tests agree)
+n = 7: 107 triangle-free graphs up to isomorphism, 0 with chi_c = 3 (both tests agree)
+n = 8: 410 triangle-free graphs up to isomorphism, 0 with chi_c = 3 (both tests agree)
+n = 9: 1897 triangle-free graphs up to isomorphism, 3 with chi_c = 3 (both tests agree)
+the triangle-free graphs with 9 vertices and chi_c = 3: [12, 13, 14] edges
+they are the hexagon with its long diagonals subdivided, and it with one or two edges between the midpoints
+
+real	0m23.232s
+user	0m9.969s
+sys	0m0.083s

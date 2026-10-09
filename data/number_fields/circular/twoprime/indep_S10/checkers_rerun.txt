@@ -1,0 +1,3 @@
+tree verified: 4225 cells, 15620 branch nodes, 4364 Farkas-closed branches, 13 leaves = the 13 index vectors of prop7_certificates.txt
+verified: 5 main components (type points with the listed indices), 8 extra components with kappa = 2/7 exactly (dual certificates and 7-torsion points)
+window (K,M)=(2,1), N=325, r0=249/1000: tree verified (105625 cells, 550474 branch nodes, 199920 Farkas-closed branches, 29 leaves); labels {'7': 8, 'extra': 16, 'Q': 4, 'C': 1}; largest kappa of the EXTRA components = 1/4

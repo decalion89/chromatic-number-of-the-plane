@@ -1,0 +1,4 @@
+# group Z/4  n=4  exponent M=4  |Aut|=2  classes=2
+S=(1)(3) |S|=2 kappa=2/4 col=21 acyc=19 noT4=19 noSq=21 ABeq=21 T4butABeq=2 ABneq_charfail=0 chars_ge=3 hom3/1=1 ok
+S=(1)(2)(3) |S|=3 kappa=1/4 col=6 acyc=0 noT4=0 noSq=2 ABeq=2 T4butABeq=2 ABneq_charfail=4 chars_ge=2 hom3/1=0 ok
+# summary: generating S classes=2, 4-colourable=2, colourings(c(0)=0)=27, BAD=0

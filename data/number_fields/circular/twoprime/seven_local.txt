@@ -1,0 +1,7 @@
+mu_8 = [(0, 1), (0, 6), (1, 0), (2, 2), (2, 5), (5, 2), (5, 5), (6, 0)]
+E7 (7*epsilon mod 7) = [(2, 3), (2, 4), (3, 2), (3, 5), (4, 2), (4, 5), (5, 3), (5, 4)]  size 8
+one mu_8-orbit: True
+0 in E7: False ; first coordinates: [2, 3, 4, 5]
+cosets of non-zero subgroups inside E7: none
+classes c/65 of the 7-torsion points of S(1,1) (expected (1,2),(1,5),(2,1),(2,6),(5,1),(5,6),(6,2),(6,5)): [(1, 2), (1, 5), (2, 1), (2, 6), (5, 1), (5, 6), (6, 2), (6, 5)]
+sum of E7: (0, 0)

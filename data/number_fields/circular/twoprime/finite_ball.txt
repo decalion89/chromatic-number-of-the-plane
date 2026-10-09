@@ -1,0 +1,5 @@
+ball of radius 2: 9941 points; unit-distance pairs 19816; Cayley edges 19600; others 216
+Cayley ball bipartite: True (2-colouring rechecked)
+induced unit-distance graph: not bipartite, no triangle
+5-cycle: [35, 1383, 576, 3021, 1798]
+homomorphism to K_{5/2} = C_5: found and rechecked; circular chromatic number 5/2

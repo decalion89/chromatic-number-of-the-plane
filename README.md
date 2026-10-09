@@ -10,15 +10,23 @@
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
 
 The Hadwiger–Nelson problem asks for the chromatic number χ(ℝ²) of the plane: the least number of
-colours such that no two points at distance exactly 1 share a colour. It has been known since 2018 that
-χ(ℝ²) is 5, 6 or 7.
+colours such that no two points at distance exactly 1 share a colour. It was known from 2018 that χ(ℝ²) is 5, 6
+or 7. In September 2026 OpenAI published a proof that χ(ℝ²) ≥ 6, formalized in Lean
+([*The Euclidean plane is not five-colorable*](https://github.com/openai/math/blob/main/preprints/The-Euclidean-plane-is-not-five-colorable-September-23-2026/paper.pdf)), so χ(ℝ²) is 6 or 7. That proof is not constructive: no finite
+unit-distance graph without a proper 5-colouring is known. We rebuilt its formal proof (see
+[Towards an explicit graph for six](#towards-an-explicit-graph-for-six)). We also ran it over a smaller field: already
+the points constructible with ruler and compass cannot be 5-coloured. We checked this in Lean
+([`notes/six_over_fields.md`](notes/six_over_fields.md)).
 
 | bound | who, when | how |
 |---|---|---|
 | χ(ℝ²) ≥ 4 | Nelson, 1950; L. and W. Moser, 1961 | the 7-vertex Moser spindle |
 | χ(ℝ²) ≥ 5 | de Grey, 2018 | a 1581-vertex unit-distance graph with no 4-colouring |
 | χ(ℝ²) ≥ 5 | Parts, 2020 | the same property on 509 vertices |
+| χ(ℝ²) ≥ 6 | OpenAI, 2026 | a non-constructive proof (ergodic averaging, then measure-theoretic interfaces), formalized in Lean; no explicit graph |
+| χ ≥ 6 already for the points constructible with ruler and compass, and so over every Euclidean field | this repository, October 2026 | OpenAI's proof run over the constructible numbers, where only square roots are available; formalized in Lean (the step to Euclidean fields on paper); no explicit graph |
 | χ(ℝ²) ≤ 7 | Isbell, 1950 | a hexagonal tiling |
+| χ(ℝ²) ∈ {6, 7}, both bounds checked in Lean in the statement of Erdős Problem 508 in Google DeepMind's [formal-conjectures](https://github.com/google-deepmind/formal-conjectures) | the formalization: this repository, October 2026 | χ(ℝ²) ≤ 7 by a brick colouring (the mathematics is classical); χ(ℝ²) ≥ 6 is OpenAI's theorem, moved to that statement |
 
 Soifer's book (2024) tells the history of the problem and of these bounds.
 
@@ -28,7 +36,7 @@ This repository studies the problem through exact arithmetic in number fields:
   DRAT proofs checked by an independent program (`drat-trim`);
 - the two theorems below are also proved in Lean 4.
 
-**Status (September 2026):** AI-assisted research; nothing here has been refereed yet. Each result states
+**Status (October 2026):** AI-assisted research; nothing here has been refereed yet. Each result states
 its evidence, with the statuses of [Results](#results).
 
 ## Main result
@@ -125,6 +133,130 @@ no edge joins two points of the same colour.</sub></p>
 chain of three unit rhombi over ℚ(√2, √3). In a 3-colouring the dashed edge would join two
 points of the same colour.</sub></p>
 
+## Three colours and characters (3 October 2026)
+
+> **Theorem W.** A Cayley graph of an abelian group is 3-colourable if and only if some character (a homomorphism
+> to ℝ/ℤ) maps every generator into the closed arc [1/3, 2/3]. More generally, it maps to the odd cycle C₂ₖ₊₁ if and
+> only if some character maps every generator into [k/(2k+1), (k+1)/(2k+1)].
+
+The proof lifts a 3-colouring to signs ±1 on the edges. Squares have zero winding, so closed walks have a winding
+number: this part is the discrete winding number of Krebs and Sankar (2024/2026), and for circular cliques below 4
+the wind of Brewster, McGuinness, Moore and Noel (2016) and Brewster and Moore (2023). Averaging the signs over the
+group with an invariant mean gives the character; that step, and the theorem, are new as far as we know. It gives
+a uniform proof of Payan's theorem (cube-like graphs are never 3-chromatic) and of the exponent-4 case of Krebs
+and Sankar; for
+distance graphs it says that G(ℤ, D) is 3-colourable exactly when κ(D) ≥ 1/3, which reproduces Zhu's list of the
+4-chromatic sets with three distances.
+
+> **Theorem W⁺ (circular colourings below four).** For p/q < 4, a Cayley graph of an abelian group maps to the
+> circular clique K_{p/q} if and only if some character maps every generator into [q/p, 1 − q/p]. So its circular
+> chromatic number, when it is less than 4, equals 1/κ(S); the bound 4 is sharp (K₄).
+
+The same proof works with the edges lifted to integers in [q, p − q]: for p < 4q the two sides of a square cannot
+differ by a whole turn. Consequence: for every distance graph with three distances, χ_c(G(ℤ, D)) = 1/κ(D) and
+χ(G(ℤ, D)) = ⌈1/κ(D)⌉ (with the lonely runner theorem for three speeds), a negative answer to Problem 3 of Liu's
+survey on distance graphs (Taiwanese J. Math. 2008). Also: no Cayley graph of an abelian group of exponent 2 or 4
+has 2 < χ_c < 4. Formally verified in Lean for finite groups (`lean/TheoremWplus.lean`) and, in the direction
+homomorphism ⟹ character, for every abelian group and finite S (`lean/TheoremWInf.lean`), and the answer to
+Liu's Problem 3 for distance graphs, with a short proof of the lonely runner theorem for three speeds
+(`lean/DistLiu.lean`).
+
+> **Katznelson's question for three colours.** For every 3-colouring ℕ = A₁ ∪ A₂ ∪ A₃ there is an α with
+> (A₁ − A₁) ∪ (A₂ − A₂) ∪ (A₃ − A₃) ⊇ {n : ‖nα‖ < 1/3}. So every set of Bohr recurrence is a set of 3-chromatic
+> recurrence, in every abelian group.
+
+This answers Question 3 of Glasscock, Koutsogiannis and Richter (Bull. Amer. Math. Soc. 59 (2022)), who proved the
+case of two colours; Katznelson's question itself, for any number of colours, remains open, and a counterexample now
+needs at least four colours. Also: a 3-colourable Cayley graph of ℤ^d has a periodic 3-colouring, and
+3-colourability of these graphs is decidable (for lattices this was asked by Vallentin, Weißbach and Zimmermann).
+
+Over ℚ(√d) the unit vectors with a fixed denominator generate a group of rank 4, so 3-colourability becomes a
+question on a 4-dimensional torus, which a branch-and-bound certificate with exact Farkas vectors settles. This
+decides every field that the graph searches could not:
+
+> χ(ℚ(√d)²) = 4 for d = 83, 107 and 203; 4 ≤ χ(ℚ(√143)²) ≤ 5; χ(ℚ(√167)²) ≥ 4.
+
+ℚ(√167) is the first admissible field (no locally constant 4-colouring at any place). With these, χ(ℚ(√d)²) is
+known for every squarefree d < 143 except 47. For ℚ(√83) the obstruction does not lie in a small ball:
+colouring-guided growth with the same directions stopped at 6 008 points because a 3-colouring of the 2-ball
+extended to every candidate point. Refereed inside the project by a separate agent (corrections applied), not yet
+outside it. Since the evening of 3 October these five fields are special cases of the theorem in the next section,
+which covers every d ≡ 11 (mod 12).
+
+**Read:** [the note](notes/winding_lemma.md) · **Check:** `python3 data/quadratic_planes/winding/check_w.py
+data/quadratic_planes/winding/cert_83_510_full.json.gz` (about 10 s; likewise the other `cert_*.json.gz`) ·
+`tests/test_winding.py`
+
+## Which real quadratic planes need four colours (3 October 2026)
+
+> **Theorem.** χ(ℚ(√d)²) ≥ 4 for every d ≡ 11 (mod 12). So, for squarefree d ≥ 2, the plane over ℚ(√d) needs
+> four colours exactly when d ≡ 11 (mod 12); with the upper bounds of Fischer (1990) and Moorhouse (2010),
+> χ(ℚ(√d)²) = 4 for all these d except possibly d ≡ 47, 143, 167 (mod 168), and 4 ≤ χ(ℚ(√47)²) ≤ 5.
+
+It was known that χ(ℚ(√d)²) = 2 unless d ≡ 3 (mod 4), that χ ≥ 3 for d ≡ 3 (mod 4), and that χ ≤ 3 unless
+d ≡ 11 (mod 12); no real quadratic field was known to need four colours before the graphs below. The proof is by
+hand, for every d at once. For d ≡ 23 (mod 24), take the classical unit vector u = ((1 − d)/(1 + d), 2√d/(1 + d)),
+its mirror image, and their rotations by the 4(2k + 1) rational rotations whose denominators divide 5^k, with
+d < 21·5^(k−1) (a sharp bound); for d ≡ 11 (mod 24) add one more vector, (n + i√d)²/(n² + d) with n > 0,
+n ≡ 3 (mod 4) and n ≡ 1 (mod 3^(s+1)), s = v₃(d + 1). No character of the group these generate maps all of them into [1/3, 2/3], so by
+Theorem W above the graph is not 3-colourable. A corollary (checked by the second referee): χ(ℚ_p²) ≥ 4 for every
+prime p ≥ 5, since some d ≡ 11 (mod 12) is a square modulo p and ℚ(√d) then embeds in ℚ_p; before, explicit graphs
+gave this only for p < 2 129 503 819. The key step describes exactly the characters of (1/5^k)ℤ[i] that keep
+every rotation in [1/3, 2/3]: a polygon around the bipartite character and four points of order 3. Fischer (1990,
+Theorem 10(ii)) had used the same vector to exclude *additive* colourings with at most six colours when
+d ≡ 23 (mod 24). Two internal referees (separate AI agents with their own programs) checked the proofs; nobody
+outside the project has. **The theorem and the p-adic corollary are also proved in Lean 4** (`lean/FourColours.lean`,
+`lean/PadicFour.lean`, with Theorem W for every abelian group and finite S in `lean/TheoremWInf.lean`; only Lean's
+three standard axioms), through a cruder form of the key step that is enough for the theorem but not for the sharp
+bound. The lower bound rests on Theorem W, whose proof for infinite groups is not constructive, so no finite graph
+is exhibited; for 27 of the fields the explicit graphs below give it without Theorem W. Field by field, exact
+Theorem W certificates found by computer (not by the proof) exist for every squarefree d ≡ 11 (mod 12) below 2000
+and for 593 of the 611 between 2000 and 10 000 ([`data/quadratic_planes/winding/scan`](data/quadratic_planes/winding/scan/README.md)).
+
+**Read:** [the paper (PDF, draft)](papers/four-colours/four-colours.pdf) ·
+[the note](notes/four_colours_11_mod_12.md) · **Check:**
+`python3 data/quadratic_planes/winding/family/structure_lemma.py 6 3` (exact checks behind the proof, about 20 s)
+and `python3 -m pytest tests/test_winding_family.py` (19 exact certificates for small d, and the valuations of
+the proof for every d ≡ 11 (mod 24) below 20 000); the formal proof: `cd lean && lake build FourColours PadicFour`
+(see `lean/README.md`)
+
+## Real quadratic planes (1–2 October 2026)
+
+> **Theorem.** χ(ℚ(√d)²) = 4 for d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455, 491, 599, 611, 791, 851, 911, 935, 959, and 4 ≤ χ(ℚ(√47)²) ≤ 5.
+
+For real quadratic fields only the values 2 and 3 were known, and a field can need four colours only if
+d ≡ 11 (mod 12). With the known results, χ(ℚ(√d)²) was then known for every squarefree d < 83 except 47 (since
+3 October, d < 143: see Theorem W above).
+Each lower bound is a triangle-free unit-distance graph with coordinates in ℚ(√d) and no 3-colouring,
+with 71 to 1 404 vertices: a computer proof, by SAT with DRAT proofs checked by drat-trim, for two
+separate encodings. The upper bounds are reductions modulo a prime (Moorhouse 2010, Fischer 1990). For the
+first field and nine more (d = 11, 119, 131, 179, 191, 251, 431, 455, 911, 935), χ(ℚ(√d)²) = 4 is also proved in
+Lean 4 with Mathlib ([`lean/`](lean/README.md)): the kernel checks each graph's SAT certificate and the reduction
+at 7 or at 2. For the other seventeen graphs the Lean files check everything but the unsatisfiability of the
+graph's colouring formula, which they take as a hypothesis and which the verified checker cake_lpr checked. As
+far as we found, these are the first real quadratic fields known to need four colours. A
+corollary: a real number field containing one of these √d and having a place with residue field 𝔽₇ also has
+χ = 4, for example ℚ(√11, 7^{1/m}), of degree 2m; fields of odd degree have χ = 2 (Moorhouse). Not yet refereed.
+
+<p align="center">
+  <img src="docs/figures/quadratic_q11.svg" width="560"
+       alt="The 76-vertex unit-distance graph over Q(sqrt11), which has no 3-colouring, shown with a 4-colouring">
+</p>
+<p align="center"><sub><b>Figure 3.</b> The first field, ℚ(√11): 76 points of the plane and the 172 segments of
+length 1 between them. No 3-colouring exists; one 4-colouring is shown.</sub></p>
+
+**Read:** [the paper (PDF, draft)](papers/quadratic-planes/quadratic-planes.pdf) ·
+[the note](notes/quadratic_planes.md) · **Check:** `python3 scripts/verify_quadratic_planes.py`
+(about a second; with `--kissat` and `--drat-trim` it solves the formulas again and checks the proofs)
+
+**The p-adic plane (2 October 2026).** The same graphs give χ(ℚ₇²) = 4; with Madore's reductions (2015),
+χ(ℚ₂²) = 2 and χ(ℚ₃²) = 3 (all three also in Lean, [`lean/PadicPlanes.lean`](lean/PadicPlanes.lean)). For
+p ≡ 3 (mod 4) every measurable colouring of ℚ_p² needs at least 1 + (p + 1)/(2√p) colours, which answers
+Question 1 of Bardestani and Mallahi-Karai (the "p-adic Hadwiger–Nelson problem") in the negative; with a
+theorem of Davies, χ(ℚ_p²) = ∞ for p ≡ 1 (mod 4). In four dimensions χ(ℚ₂⁴) = 4, through the residue field 𝔽₄ of
+the 2-adic quaternions. **Read:** [the draft (PDF)](papers/padic-planes/padic-planes.pdf).
+Not yet refereed.
+
 ## Results
 
 None of these results has been refereed. Each has one or more of these statuses:
@@ -141,8 +273,16 @@ None of these results has been refereed. Each has one or more of these statuses:
 |---|---|---|
 | **χ(ℚ(√2, √3)²) = 4.** Voronov's second case. The upper bound is also a case of Corollary B′ of [hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction) (July 2026), which we found after our note; the explicit value is not stated there. | Proved; formally verified | [The note](papers/planes-4-chromatic/planes-4-chromatic.pdf), [`lean/Q23.lean`](lean/Q23.lean), [`notes/local_colourings.md`](notes/local_colourings.md) §10, `tests/test_q23.py`. The lower bound was already implicit in Voronov–Neopryatnaya–Dergachev; a 10-vertex chain of unit rhombi gives a short one (`certificates/chain23_no3coloring.json`). |
 | **χ(ℚ(√3, √11)²) = 4**, K. G. Fischer's theorem (1994) | Known; a new short proof, proved and formally verified | [The note](papers/planes-4-chromatic/planes-4-chromatic.pdf), [`lean/Q311.lean`](lean/Q311.lean), [`notes/local_colourings.md`](notes/local_colourings.md) §8, `hn/adelic.py`, `tests/test_q311.py` |
+| **χ(ℚ(√d)²) ≥ 4 for every d ≡ 11 (mod 12).** So a real quadratic plane needs four colours exactly when d ≡ 11 (mod 12), and χ(ℚ(√d)²) = 4 for all these d except possibly d ≡ 47, 143, 167 (mod 168). | Proved, and formally verified in Lean 4 (with Theorem W, also formal); two internal referees; not refereed outside the project | [`lean/FourColours.lean`](lean/FourColours.lean) and [`lean/TheoremWInf.lean`](lean/TheoremWInf.lean) (formal proof), [`notes/four_colours_11_mod_12.md`](notes/four_colours_11_mod_12.md), draft [`papers/four-colours/`](papers/four-colours/four-colours.pdf): explicit sets of unit vectors (one or two vectors rotated by the rational rotations with denominators dividing 5^k) with no character into [1/3, 2/3]. `data/quadratic_planes/winding/family/structure_lemma.py` checks the computations behind the proof in exact arithmetic; 19 exact certificates for small d; `tests/test_winding_family.py` |
+| **χ(ℚ(√d)²) = 4 for d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455, 491, 599, 611, 791, 851, 911, 935, 959, and 4 ≤ χ(ℚ(√47)²) ≤ 5.** The first real quadratic fields known to need four colours, as far as we found: the values known before were 2 and 3. With the known results, χ(ℚ(√d)²) is now known for every squarefree d < 83 except 47. Each lower bound is a triangle-free, vertex-critical unit-distance graph, with 71 to 1 404 vertices. | Computer proof (lower bounds); known (upper bounds); formally verified for d = 11, 119, 131, 179, 191, 251, 431, 455, 911, 935, and for the other graphs given the unsatisfiability of their formulas (checked by cake_lpr) | [`notes/quadratic_planes.md`](notes/quadratic_planes.md): exact unit edges, a stored 4-colouring, 3-colourings of every vertex-deleted graph, and no 3-colouring, by kissat with DRAT proofs checked by drat-trim, twice with separate encodings (`data/quadratic_planes/`). The upper bounds are Moorhouse's reduction at 7, Fischer's Theorem 10 and the reduction at 11. `scripts/verify_quadratic_planes.py`, `tests/test_quadratic_planes.py`. For d = 11, 119, 131, 179, 191, 251, 431, 455, 911 and 935 the theorem is also formally verified: [`lean/Sqrt11.lean`](lean/Sqrt11.lean) and the other `lean/Sqrt{d}.lean`, with the upper bounds in [`lean/QuadraticPlanes.lean`](lean/QuadraticPlanes.lean). For the other fields `lean/Sqrt{d}.lean` proves the theorem from the unsatisfiability of the stored formula ([`lean/ColouringFormula.lean`](lean/ColouringFormula.lean)), which cake_lpr checked |
+| **Theorem W: an abelian Cayley graph is 3-colourable iff a character maps every generator into [1/3, 2/3]** (and maps to C₂ₖ₊₁ iff into [k/(2k+1), (k+1)/(2k+1)]); **Theorem W⁺: for p/q < 4 it maps to K_{p/q} iff a character maps the generators into [q/p, 1 − q/p], so χ_c = 1/κ below 4**, attained by a finite subgraph when the connection set is finite; at 4, a homomorphism to K₄ without tight squares exists iff a character maps the generators into [1/4, 3/4], so χ_c is attained by a finite subgraph whenever χ ≤ 4 and the connection set is finite; and χ_c(G(ℤ, D)) = 1/κ(D) for three distances (answers Problem 3 of Liu's 2008 survey). Consequences: every set of Bohr recurrence is a set of 3-chromatic recurrence (Katznelson's question for three colours; answers Question 3 of Glasscock–Koutsogiannis–Richter, Bull. AMS 2022); 3-colourable Cayley graphs of ℤ^d have periodic 3-colourings and 3-colourability is decidable; Payan's theorem and the exponent-4 case of Krebs–Sankar at once (the winding number in the proof is theirs; the averaging is new); G(ℤ, D) is 3-colourable iff κ(D) ≥ 1/3; **χ(ℚ(√d)²) = 4 for d = 83, 107, 203, 4 ≤ χ(ℚ(√143)²) ≤ 5 and χ(ℚ(√167)²) ≥ 4**, the fields the graph searches could not settle. | Proved (the theorem; formally verified in Lean for finite groups, and for every abelian group with finite S in the direction a colouring gives a character); computer proof (the five fields: exact certificates); not refereed outside the project | [`notes/winding_lemma.md`](notes/winding_lemma.md), [`lean/TheoremW.lean`](lean/TheoremW.lean), [`lean/TheoremWplus.lean`](lean/TheoremWplus.lean), [`lean/TheoremWInf.lean`](lean/TheoremWInf.lean), `data/quadratic_planes/winding/` (certificates, `check_w.py`, `certify_w2.py`), `tests/test_winding.py` |
+| **The p-adic Hadwiger–Nelson problem.** For p ≡ 3 (mod 4) the measurable (hence Borel) chromatic number of ℚ_p² is at least 1 + (p + 1)/(2√p), so it is unbounded: Question 1 of Bardestani and Mallahi-Karai answered in the negative. χ(ℚ₇²) = 4 (and, from Madore's results, χ(ℚ₂²) = 2, χ(ℚ₃²) = 3); χ(ℚ_p²) ≥ 4 for every prime p ≡ 3 (mod 4) with 7 ≤ p < 2 129 503 819 from explicit graphs, and since 3 October for every prime p ≥ 5 from the theorem on d ≡ 11 (mod 12) (no finite witness exhibited; formally verified); χ(ℚ_p²) = ∞ for p ≡ 1 (mod 4) (from Davies's theorem); in every dimension n, χ(ℚ_p^n) is finite exactly when n = 1, or n = 2 and p ≢ 1 (mod 4), or p = 2 and n ≤ 4, and χ(ℚ₂⁴) = 4. | Proved; the three exact values and χ(ℚ_p²) ≥ 4 for p ≥ 5 formally verified | [The draft](papers/padic-planes/padic-planes.pdf), [`lean/PadicPlanes.lean`](lean/PadicPlanes.lean), [`lean/PadicFour.lean`](lean/PadicFour.lean), [`notes/quadratic_planes.md`](notes/quadratic_planes.md) §5, `padic_planes.py`, `padic_measurable.py`, `padic_reach.c`, `tests/test_quadratic_planes.py` |
+| **Two colours, for every number field.** χ(F²) = 2 if and only if some prime of F above 2 ramifies in F(i). The "if" half is Theorem A′ of [hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction) (July 2026; also our Proposition A), and the reduction to a ring homomorphism is Fischer's (1990, Theorem 1(iii)); the converse, an odd cycle whenever no prime above 2 ramifies, is new as far as we know. It contains Fischer's theorem for quadratic fields (1990), Moorhouse's Theorem 7.1 (odd degree) and the multiquadratic case, and it is the two-colour case of a local–global question: is χ(F²) always the least chromatic number of a locally constant colouring at one place? At four colours that question would give a triangle-free 5-chromatic unit-distance graph in the plane (open), through ℚ(√167). | Proved (two colours; refereed by separate agents); open (the question) | [The draft paper](papers/two-colour-planes/two-colour-planes.pdf), [`notes/local_global.md`](notes/local_global.md), `two_colour_criterion.gp`, `odd_walks.gp`, `admissible.py`, `tests/test_quadratic_planes.py` |
+| **Three colours, for every number field.** χ(F²) ≤ 3 if and only if some prime of F above 2 ramifies in F(i) or some prime of F above 3 has residue degree 1 (Theorem B). It contains the theorem on d ≡ 11 (mod 12), answers the local–global question at three colours for every number field, and decides the local fields: χ(K²) = 2, 3 or ≥ 4 for every finite extension K of ℚ_p (for example χ(ℚ₂₇²) ≥ 4). New fields that need four colours include ℚ(√2, √7), ℚ(√2, √31), ℚ(√2, √55) and ℚ(2cos(2π/7), √7); for ℚ(√2, √7) an exact certificate (50 unit vectors) proves χ ≥ 4 independently of the general proof, and χ = 4. An elementary special case: every real field containing √a and √b with a ≡ 2 (mod 3), b ≡ 7 (mod 8) needs four colours (Proposition B9). The "if" half is known (Madore, Moorhouse, Fischer; Theorem A). | Proved; checked by two separate agents (no error found); certificates checked exactly | [`notes/three_colours_number_fields.md`](notes/three_colours_number_fields.md), [`papers/three-colours/`](papers/three-colours/README.md), [`data/number_fields/three_colours/`](data/number_fields/three_colours/), `tests/test_three_colours.py` |
+| **The circular chromatic number below 4.** χ_c(ℚ(√11)²) = χ_c(ℚ(√35)²) = χ_c(ℚ₇²) = 7/2, while χ = 4 for the three planes: the first non-integral value of the circular chromatic number of a field plane that we know of (Theorem C). **For every number field F, χ_c(F²) is 2, 3, 7/2 or at least 4**: 2 or 3 as χ (Theorem B), 7/2 exactly when χ(F²) ≥ 4 and some prime of F above 7 has residue degree 1, and at least 4 otherwise (Theorems E and F); below 4 it is the least circular chromatic number of the planes over the completions of F; **whenever χ_c(F²) ≤ 4 it is attained by a finite subgraph of F²**, also at 4 (for example over ℚ(√59), ℚ(√83) and ℚ(√3, √11)), because at four colours the winding argument fails only on tight squares (by compactness, and at 4 also by a finite construction with base-point periods; for 4 explicit witnesses over ℚ(√3, √11) and ℚ(√2, √3), induced unit-distance graphs with 1 874 and 1 657 vertices and χ_c = χ = 4, found with base-point periods (a lemma: for a 4-colouring without tight cycles, Λ(W)/4 − N(W) is an integer on closed walks, invariant under square swaps and strictly bounded) and each certified by DRAT twice, once through a referee's own encoding checked by cake_lpr (so χ_c(ℚ(√2, √3)²) = 4 with an explicit graph); below 4, explicit ones found by a colouring-guided search: over ℚ(√11) a vertex-critical unit-distance graph with 155 vertices and χ_c = 7/2, and ones with 175, 293 and 324 vertices over ℚ(√455), ℚ(√191) and ℚ(√911), each certified by DRAT twice; for χ_c = 3 over ℚ(√7), which has no unit triangle, nine points, the fewest possible: exactly three triangle-free graphs with nine vertices have χ_c = 3, and all three are unit-distance graphs over ℚ(√7) and over ℚ(√31)). So χ_c(ℚ(√23)²) = 7/2 and χ_c(ℚ(√59)²) = 4, although both planes have χ = 4, and 4 ≤ χ_c(ℚ(√47)²) ≤ 19/4. By hand alone, χ_c(F²) ≥ 56/17 whenever χ(F²) ≥ 4 (Theorem D). | Proved; Theorems C, E and F each have one computer-assisted step (exact certificates, accepted by checkers written separately, with Theorem W⁺); Theorem C refereed for ℚ(√11) and ℚ₇, Theorem D twice, Theorems E and F once each and again in the paper, the finite-witness corollary once and its form at four colours once, the two explicit witnesses for 4, the lemma on base-point periods and the finite construction once each (with numerical tests), by separate agents with their own programs (no error in a proof) | [`notes/circular_planes.md`](notes/circular_planes.md), [`papers/three-colours/`](papers/three-colours/README.md), [`data/number_fields/circular/`](data/number_fields/circular/README.md), `tests/test_three_colours.py`, `tests/test_gap_above_three.py`, `tests/test_two_primes.py`, `tests/test_at_four.py` |
 | χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, for the whole complex fields | Known; new local proofs | The first follows from Fischer's theorem, the second from Madore's reduction at 11 and Exoo–Ismailescu's graph. Our proofs reduce at the primes 2 and 11 ([`notes/local_colourings.md`](notes/local_colourings.md) §3, [`notes/rigidity.md`](notes/rigidity.md)); the lower bound graph `five_247_c` has a DRAT proof (`certificates/five_247_c_no4coloring.json`). |
 | Necessary local conditions for a field to hold a 6-chromatic unit-distance graph | Proved | [`notes/local_colourings.md`](notes/local_colourings.md) §5–§9, `scripts/fieldscreen.py` |
+| **Six colours on the ruler-and-compass plane.** Every colouring of the points of the plane constructible with ruler and compass with five colours gives the same colour to two points at distance 1. So some finite unit-distance graph with constructible coordinates has no proper 5-colouring (also in Lean, by Mathlib's compactness theorem); we know of none. Since the real constructible numbers embed in every Euclidean field, the plane over every Euclidean field, Archimedean or not, is not 5-colourable either (on paper). This is OpenAI's proof that χ(ℝ²) ≥ 6, run over the constructible numbers. Square roots suffice: a lemma on elements of order 2 and a triple average taken at the exponents −1, 0, 1 replace the two uses of higher roots. The origami and radical planes were done first. | Formally verified, off CI (OpenAI's proof with the field changed); refereed twice inside the project, as a note and as a paper (no error in the proof); the Euclidean-field corollary and a remark that OpenAI's rigidity theorem fails over the Pythagorean closure of ℚ, once each (no error; one overclaim corrected) | [`notes/six_over_fields.md`](notes/six_over_fields.md), [the paper](papers/ruler-compass/ruler-compass.pdf); [`lean/external/openai-five/fields/`](lean/external/openai-five/fields/README.md): patches against openai/math, the statements, and `#print axioms` (only `propext`, `Classical.choice`, `Quot.sound`) |
 | **Six colours for finite planes.** χ(G_q) ≥ 6 for every prime q ≥ 29 except 31, and χ(𝔽_q²) ≥ 6 for q = 37, 41, 43, 47, 59 and every prime q ≥ 67; χ(𝔽₄₁²) ∈ {6, 7}. Here 𝔽_q² is the plane x² + y² (Moorhouse's table stops at q = 17), and G_q the anisotropic plane, a local plane of number fields. | Computer proof; proved for large q | For 𝔽₃₇², 𝔽₄₁², 𝔽₄₃², 𝔽₄₇², G₂₉, G₃₇ and G₄₁, Schrijver's three-point bound gives α < q²/5, and each dual certificate is checked in interval and exact rational arithmetic, and again by an independent checker. The other cases follow from Proposition B and Hoffman's bound, with Weil's estimate or the exact spectrum. [`notes/local_colourings.md`](notes/local_colourings.md) §14, [`data/threepoint/`](data/threepoint/README.md), `scripts/threepoint_verify.py`, `scripts/threepoint_verify_indep.py` |
 | **α(G₁₃) = 36.** The anisotropic plane over 𝔽₁₃ has no 37 independent points, so its fractional chromatic number is 169/36. χ(G₁₃) = 6: see the next row. | Computer proof | [`notes/g13.md`](notes/g13.md): a case split, then four formulas and the 4 822 leaves of a cube tree, each refuted by kissat with a DRAT proof checked by drat-trim, and every proof and the cover checked again by cake_lpr, a checker verified in HOL4 (`certificates/g13_*`); an audit checks every clause of the formulas from their text alone (`scripts/g13/g13_audit.py`). `scripts/verify_g13.py`, `tests/test_g13.py` |
 | **χ(G₁₃) = 6.** The anisotropic plane over 𝔽₁₃ has no proper 5-colouring, although its fractional chromatic number is 169/36 < 5. | Computer proof | [`notes/g13_chi.md`](notes/g13_chi.md): a case split on the size of the largest colour class (34, 35 or 36 points, since α(G₁₃) = 36), one formula for each size with the symmetry broken, and cube and conquer: 136 548 leaves, each refuted by kissat with a DRAT proof checked by drat-trim (`certificates/g13_chi_*`). `scripts/verify_g13_chi.py`, `tests/test_g13_chi.py` |
@@ -156,14 +296,37 @@ None of these results has been refereed. Each has one or more of these statuses:
 
 **In progress.** G₁₇, the anisotropic plane over 𝔽₁₇, is a local plane of ℚ(√−3, √−7, √−11); χ(G₁₇) is 5
 or 6, and α(G₁₇) ≤ 57 would make it 6. The first part of that bound is checked
-(`scripts/g17_alpha.py`, `certificates/g17_part_a_checks.txt`); the certification of the second part is
-running.
+(`scripts/g17_alpha.py`, `certificates/g17_part_a_checks.txt`); the second part is open (its certification
+was started and not finished).
 
-## Towards χ(ℝ²) ≥ 6
+## Towards an explicit graph for six
 
-**χ(ℝ²) ≥ 6 has not been proved.** By the de Bruijn–Erdős theorem, it holds exactly when some finite
-unit-distance graph has no proper 5-colouring. A finite object can be searched for, and anyone can check it
-once found. No such graph has been found.
+**χ(ℝ²) ≥ 6 was proved by OpenAI in September 2026, without an explicit graph.** The proof
+([paper](https://github.com/openai/math/blob/main/preprints/The-Euclidean-plane-is-not-five-colorable-September-23-2026/paper.pdf); Lean formalization in [openai/math](https://github.com/openai/math), file `lean/OAI/Geometry/PlaneColoring/Five.lean`) passes
+from an arbitrary 5-colouring to a measurable one by averaging over the algebraic plane, and excludes measurable
+5-colourings by an argument on colour interfaces that ends with the Moser spindle. Its formalization uses Lean 4.34.1
+and the same Mathlib commit as `lean/` here; we compiled the 70 modules of its import closure against our Mathlib
+build (18 minutes, no errors), found no `sorry` or added axiom in them, restated the theorem ourselves
+(`¬ ∃ c : ℂ → Fin 5, ∀ p q, ‖p − q‖ = 1 → c p ≠ c q`), and `#print axioms` lists only `propext`, `Classical.choice`
+and `Quot.sound` (research log, 9 October). We also proved χ(ℝ²) ≤ 7 in Lean, by a brick colouring
+([`lean/PlaneSeven.lean`](lean/PlaneSeven.lean)), in the formulation of Erdős Problem 508 in Google DeepMind's
+[formal-conjectures](https://github.com/google-deepmind/formal-conjectures), whose statement of that bound had no proof,
+and derived 6 ≤ χ(ℝ²) in the same formulation from OpenAI's theorem. So `χ(ℝ²) = 6 ∨ χ(ℝ²) = 7` is checked in Lean
+there ([`lean/external/openai-five/`](lean/external/openai-five/README.md)). By the de Bruijn–Erdős theorem some finite unit-distance graph has no
+proper 5-colouring, but none is known; finding one is now the open problem, and the searches below were made for it.
+
+**Smaller fields.** OpenAI's proof uses only a colouring of the algebraic points of the plane. We ran it over three
+smaller fields and checked the results in Lean. Already the points constructible with ruler and compass cannot be
+5-coloured: these are the points whose coordinates are obtained from ℚ by square roots
+([`notes/six_over_fields.md`](notes/six_over_fields.md)). The origami and radical planes were done first. Every
+Euclidean field contains a copy of the real constructible numbers, so the plane over every Euclidean field is not
+5-colourable either. Over the Pythagorean closure of ℚ the analogue of OpenAI's rigidity theorem is false, so the
+method, as it stands, stops there ([`papers/ruler-compass/`](papers/ruler-compass/README.md)).
+
+OpenAI's formal proof uses roots of every order in two steps, and we changed both. One is the finite-image lemma of their
+Lemma 2.4. The other is the triple average of their Lemma 3.3, now taken at the exponents −1, 0, 1. So an explicit
+graph for six can be looked for among points with coordinates in a tower of square roots, where one exists. By
+contrast, the planes over ℚ(√2, √3) and ℚ(√3, √11) are 4-colourable.
 
 The route searched in September 2026 is the reduction of Exoo and Ismailescu, which Polymath16 calls
 clamping onto "virtual edges":
@@ -172,8 +335,8 @@ clamping onto "virtual edges":
 2. a **gadget** for each `d`: a unit-distance graph in which two points at
    distance `d` always get different colours.
 
-The 187-point graph of [Results](#results) is such a witness: it would prove χ(ℝ²) ≥ 6 if a gadget
-existed for its orbit of distances.
+The 187-point graph of [Results](#results) is such a witness: with a gadget for its orbit of distances it would give
+an explicit unit-distance graph with no proper 5-colouring.
 
 Two observations that guided the search:
 - **Repulsive distances.** Some distances, such as 2/√3, are coloured alike
@@ -211,9 +374,10 @@ construction stops at five".
   an exact rational positive-definiteness test, and again by a second checker written from the
   definitions. Spectral (Hoffman) bounds need no certificate: `scripts/finite_hoffman.py` recomputes every
   eigenvalue in interval arithmetic.
-- **Formal proofs.** The two theorems on ℚ(√2, √3) and ℚ(√3, √11) are also proved in Lean 4
-  ([`lean/`](lean/README.md)). CI builds the proofs, checks that they use only Lean's standard axioms,
-  and replays them in Lean's kernel.
+- **Formal proofs.** The two theorems on ℚ(√2, √3) and ℚ(√3, √11), and χ(ℚ(√d)²) = 4 for ten real
+  quadratic fields, are also proved in Lean 4 ([`lean/`](lean/README.md)); for the other real quadratic
+  fields Lean proves the theorem from the unsatisfiability of the graph's formula, which cake_lpr checks. CI
+  builds the proofs, checks that they use only Lean's standard axioms, and replays them in Lean's kernel.
 - **Corrections stay visible.** Withdrawn claims are kept, with the reason, in the research log.
 
 ## Reproducing
@@ -232,6 +396,10 @@ sh scripts/worker_setup.sh                   # kissat and drat-trim, for the sea
 |---|---|---|
 | χ(ℚ(√2, √3)²) = 4 | `python3 -m pytest -q tests/test_q23.py` | seconds |
 | χ(ℚ(√3, √11)²) = 4 | `python3 -m pytest -q tests/test_q311.py` | seconds |
+| χ = 4 for ℚ(√d)² with d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455, 491, 599, 611, 791, 851, 911, 935, 959, and 4 ≤ χ(ℚ(√47)²) ≤ 5: the exact edges, the colourings, the stored formulas and the upper bounds; with `--kissat` and `--drat-trim` it writes the formulas again, solves them and checks the proofs, and with `--cake-lpr` the verified checker cake_lpr checks them too (log: `data/quadratic_planes/cake_lpr_checks.txt`) | `python3 scripts/verify_quadratic_planes.py` | about a second; about a minute with the solvers |
+| χ(ℚ(√d)²) ≥ 4 for every d ≡ 11 (mod 12): the exact facts behind the proof, and the certificates for small d | `python3 data/quadratic_planes/winding/family/structure_lemma.py 6 3` and `python3 -m pytest -q tests/test_winding_family.py` | 20 s; about 10 min |
+| χ(ℚ(√d)²) ≥ 4 for each squarefree d ≡ 11 (mod 12) below 2000, field by field (155 Theorem W certificates), and the table of the certificates up to 10 000 | `python3 -m pytest -q tests/test_winding_scan.py` | about an hour |
+| χ(ℚ(√d)²) ≥ 4 for d = 83, 107, 143, 167, 203 (Theorem W): the unit vectors, the integer relations, the branch-and-bound tree and every Farkas vector, in exact arithmetic | `python3 data/quadratic_planes/winding/check_w.py data/quadratic_planes/winding/cert_83_510_full.json.gz` (and the other `cert_*.json.gz`) | 3 s to 1 min each |
 | both theorems, formally (needs [elan](https://github.com/leanprover/elan)) | `cd lean && lake exe cache get && lake build && lake env lean PrintAxioms.lean` | minutes |
 | four and five colours suffice for the fields ℚ(√−3, √−11) and ℚ(√−3, √−11, √−247) | `python3 -m pytest -q tests/test_moser_field.py tests/test_reduce11.py` | seconds |
 | six colours for a finite plane, e.g. 𝔽₄₇²: it prints the rigorous bound α ≤ 371.41…, below 47²/5 = 441.8, so χ ≥ 6 | `python3 scripts/threepoint_verify.py data/threepoint/std47.npz` | 3–5 minutes |
@@ -253,7 +421,7 @@ cvxopt 1.3.3 (DSDP) and clarabel 0.11.1; checking them needs only numpy, scipy a
 their contents. `requirements-lock.txt` lists the exact versions of the Python packages used for the
 results and of their dependencies, and `scripts/worker_setup.sh` builds the pinned kissat and drat-trim.
 
-GitHub Actions runs the fast part of the suite, 506 tests in 40 files
+GitHub Actions runs the fast part of the suite, 657 tests in 43 files
 ([`tests.yml`](.github/workflows/tests.yml)), and builds and checks the Lean proofs
 ([`lean.yml`](.github/workflows/lean.yml)), on pushes to `main` and on pull requests.
 
@@ -263,24 +431,25 @@ GitHub Actions runs the fast part of the suite, 506 tests in 40 files
 |---|---|
 | [`papers/`](papers/README.md) | the papers, in LaTeX and PDF |
 | [`hn/`](hn/) | the Python library: exact number fields, geometry, unit-distance graphs, SAT colouring, certificates, local (adelic) colourings |
-| [`lean/`](lean/README.md) | formal proofs in Lean 4 of the two theorems |
+| [`lean/`](lean/README.md) | formal proofs in Lean 4 of the two theorems, of χ(ℚ(√d)²) ≥ 4 for every d ≡ 11 (mod 12) and χ(ℚ_p²) ≥ 4 for every prime p ≥ 5, of Theorem W, and of χ(ℚ(√d)²) = 4 for d = 11, 119, 131, 179, 191, 251, 431, 455, 911, 935, and for the other quadratic fields given the unsatisfiability of their graph's formula |
 | [`notes/`](notes/README.md) | technical notes: local colourings, rigidity, the literature, the search jobs |
 | [`data/`](data/README.md) | graphs and witnesses in exact coordinates (JSON), and the three-point certificates |
 | [`certificates/`](certificates/README.md) | colourings, DRAT verification logs and non-colourability claims |
 | [`scripts/`](scripts/README.md) | maintained tools: verification, search, figures; `scripts/experiments/` keeps the 734 one-off experiments behind the research log |
-| [`tests/`](tests/README.md) | the test suite: 749 tests, 24 of them marked slow |
+| [`tests/`](tests/README.md) | the test suite: 1 222 tests, 215 of them marked slow |
 | [`docs/`](docs/README.md) | the research log, the full chronological record, and the figures |
 
-Each of these folders has a README describing its contents. Until release 1.1.0 the project sat in
-`research/hadwiger-nelson/`; version 5 of the note gives its paths in that layout.
+Each of these folders has a README describing its contents. Up to release 1.1.0 the project sat in
+`research/hadwiger-nelson/`; versions 5 and 6 of the note give its paths in that layout.
 
 ## Citing
 
 Cite a tagged release, so that the reader finds the version you read; the changes between releases are in
 [`CHANGELOG.md`](CHANGELOG.md). Zenodo archives each release with its own DOI: version 1.0.0 is
 [10.5281/zenodo.22976636](https://doi.org/10.5281/zenodo.22976636), version 1.1.0 is
-[10.5281/zenodo.22985036](https://doi.org/10.5281/zenodo.22985036), and
-[10.5281/zenodo.22976635](https://doi.org/10.5281/zenodo.22976635) always resolves to the latest version.
+[10.5281/zenodo.22985036](https://doi.org/10.5281/zenodo.22985036), version 1.2.0 has its own DOI on its
+Zenodo record, and [10.5281/zenodo.22976635](https://doi.org/10.5281/zenodo.22976635) always resolves to the
+latest version.
 For the repository as a whole, use GitHub's "Cite this repository" button, which reads
 [`CITATION.cff`](CITATION.cff):
 
@@ -288,10 +457,10 @@ For the repository as a whole, use GitHub's "Cite this repository" button, which
 @software{galan2026hn,
   author  = {Gal{\'a}n, Sergi},
   title   = {The {H}adwiger--{N}elson problem over number fields},
-  version = {1.1.0},
+  version = {1.2.0},
   year    = {2026},
-  doi     = {10.5281/zenodo.22985036},
-  url     = {https://github.com/decalion89/chromatic-number-of-the-plane/releases/tag/v1.1.0},
+  doi     = {10.5281/zenodo.22976635},
+  url     = {https://github.com/decalion89/chromatic-number-of-the-plane/releases/tag/v1.2.0},
   note    = {AI-assisted research; not peer reviewed}
 }
 ```
@@ -304,7 +473,7 @@ For the note on the two 4-chromatic planes:
   title  = {A short proof that the planes over {$\mathbb{Q}(\sqrt{3},\sqrt{11})$}
             and {$\mathbb{Q}(\sqrt{2},\sqrt{3})$} are 4-chromatic},
   year   = {2026},
-  note   = {Version 5, 27 September 2026. Preprint, not refereed. AI-assisted},
+  note   = {Version 7, 9 October 2026. Preprint, not refereed. AI-assisted},
   url    = {https://github.com/decalion89/chromatic-number-of-the-plane}
 }
 ```
@@ -342,6 +511,8 @@ Code, data and text are released under the [MIT License](LICENSE).
 - N. G. de Bruijn, P. Erdős, *A colour problem for infinite graphs and a problem
   in the theory of relations*, Indag. Math. 13 (1951) 371–373
   ([doi](https://doi.org/10.1016/S1385-7258(51)50053-7))
+- OpenAI, *The Euclidean plane is not five-colorable*, OpenAI Math Release preprint,
+  23 September 2026 ([pdf](https://github.com/openai/math/blob/main/preprints/The-Euclidean-plane-is-not-five-colorable-September-23-2026/paper.pdf); Lean formalization in [openai/math](https://github.com/openai/math))
 - A. D. N. J. de Grey, *The chromatic number of the plane is at least 5*,
   Geombinatorics 28(1) (2018) 18–31; [arXiv:1804.02385](https://arxiv.org/abs/1804.02385)
 - G. Exoo, D. Ismailescu, *The chromatic number of the plane is at least 5: a
@@ -462,8 +633,21 @@ Code, data and text are released under the [MIT License](LICENSE).
 
 ## Resumen en español
 
-Este repositorio estudia el problema de Hadwiger–Nelson: el número cromático del plano, que se sabe que
-está entre 5 y 7. Se trabaja con aritmética exacta en cuerpos de números. Las afirmaciones de que un
+Este repositorio estudia el problema de Hadwiger–Nelson: el número cromático del plano. Desde septiembre de 2026
+se sabe que vale 6 o 7: OpenAI publicó una prueba, formalizada en Lean, de que el plano no se puede colorear con 5
+colores ([artículo](https://github.com/openai/math/blob/main/preprints/The-Euclidean-plane-is-not-five-colorable-September-23-2026/paper.pdf)); la hemos recompilado y comprobado sus axiomas. La prueba no da ningún grafo finito
+explícito, y encontrar uno sigue abierto. Nuevo (9 de octubre): la prueba de OpenAI funciona también sobre un cuerpo
+mucho más pequeño. Ya los puntos que se pueden construir con regla y compás no se pueden colorear con 5 colores; lo
+hemos verificado en Lean ([nota](notes/six_over_fields.md), [artículo](papers/ruler-compass/ruler-compass.pdf)).
+Bastan las raíces cuadradas con dos cambios: un lema sobre los elementos de orden 2 y una media triple de la prueba
+tomada con los exponentes −1, 0, 1 en lugar de 0, 1, 2. Por tanto existe un grafo finito de distancia unidad, con
+coordenadas construibles con regla y compás, que no se puede colorear con 5 colores (también verificado en Lean),
+aunque no se conoce ninguno. Como los números construibles reales se encajan en todo cuerpo euclídeo, tampoco se
+puede colorear con 5 colores el plano sobre ningún cuerpo euclídeo, arquimediano o no. También hemos demostrado en
+Lean que χ(ℝ²) ≤ 7 (con un coloreado por ladrillos) en el enunciado del problema 508 de Erdős de
+[formal-conjectures](https://github.com/google-deepmind/formal-conjectures) (Google DeepMind), y con el teorema de
+OpenAI, que χ(ℝ²) vale 6 o 7 en ese mismo enunciado.
+Se trabaja con aritmética exacta en cuerpos de números. Las afirmaciones de que un
 grafo no se puede colorear se deciden con resolutores SAT, y las principales van acompañadas de una
 prueba DRAT verificada por un programa independiente.
 
@@ -476,6 +660,19 @@ coordenadas para que el argumento de reducción de Madore funcione módulo 2. Es
 Nota del 28 de septiembre: la cota superior también se deduce de un trabajo público anterior, el
 repositorio [hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction) (julio de 2026,
 sin revisión por pares), que encontramos después de escribir la nota; allí no aparece el caso ℚ(√2, √3).
-También se demuestra, con certificados verificados por dos programas independientes, que siete planos
-finitos necesitan seis colores. Es un trabajo hecho con ayuda de IA y todavía no ha sido revisado por
+Nuevo (1 y 2 de octubre): los planos sobre ℚ(√d) con d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455,
+491, 599, 611, 791, 851, 911,
+935 y 959 necesitan exactamente 4 colores,
+y el de ℚ(√47) necesita 4 o 5. Hasta donde hemos encontrado, no se conocía ningún cuerpo cuadrático
+real que necesitara 4 colores: los valores conocidos eran 2 y 3. Así, χ(ℚ(√d)²) se conoce ya para todo d < 83
+libre de cuadrados salvo d = 47. Cada cota inferior es un grafo de distancia
+unidad sin triángulos, con pruebas DRAT verificadas por drat-trim
+([`notes/quadratic_planes.md`](notes/quadratic_planes.md)). Como consecuencia, hay cuerpos reales de todo
+grado par que necesitan 4 colores, por ejemplo ℚ(√11, 7^{1/m}), de grado 2m; los de grado impar necesitan 2
+(Moorhouse).
+Nuevo (3 de octubre): un grafo de Cayley de un grupo abeliano se puede colorear con 3 colores si y solo si algún carácter lleva todos los generadores al arco [1/3, 2/3] (Teorema W, [`notes/winding_lemma.md`](notes/winding_lemma.md)). Con certificados exactos resuelve los cuerpos que las búsquedas de grafos no resolvían: χ(ℚ(√d)²) = 4 para d = 83, 107 y 203, 4 ≤ χ(ℚ(√143)²) ≤ 5 y χ(ℚ(√167)²) ≥ 4; así χ(ℚ(√d)²) se conoce para todo d < 143 libre de cuadrados salvo d = 47. Además, todo conjunto de recurrencia de Bohr es de recurrencia 3-cromática: el caso de tres colores de la pregunta de Katznelson, que responde la Pregunta 3 de Glasscock, Koutsogiannis y Richter (Bull. Amer. Math. Soc., 2022). Y su extensión, el Teorema W⁺: para p/q < 4, el grafo va al clique circular K_{p/q} si y solo si un carácter lleva los generadores a [q/p, 1 − q/p]; así el número cromático circular, si es menor que 4, es 1/κ, y para grafos de distancias con tres distancias χ_c = 1/κ(D), lo que responde negativamente al Problema 3 de la panorámica de Liu (2008).
+También se demuestra, con certificados verificados por dos programas independientes, que muchos planos
+finitos necesitan seis colores: el plano anisótropo G_q para todo primo q ≥ 29 salvo q = 31 (y χ(G₁₃) = 6), y 𝔽_q²
+para q = 37, 41, 43, 47, 59 y todo primo q ≥ 67. Hay además un grafo de distancia unidad de 852 vértices, sin huso
+de Moser, que necesita cinco colores. Es un trabajo hecho con ayuda de IA y todavía no ha sido revisado por
 pares.

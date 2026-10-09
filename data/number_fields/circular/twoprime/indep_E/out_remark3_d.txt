@@ -1,0 +1,3 @@
+window 221 (D=221, 18 functionals), theta=2/7: components 25, of which contain a type point: 5, extra: 20
+  exact kappa of the extra components (value: count): {'2/7': 8, '3/10': 8, '2/5': 4}
+  max kappa among extras: 2/5

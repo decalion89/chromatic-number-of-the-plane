@@ -1,0 +1,3 @@
+## NEG1: cake_lpr on q3_11 CNF WITHOUT cycle clauses (satisfiable) + full LRAT proof
+c Checking failed at line: 1. Reason: clause index unavailable: 44668
+exit 0

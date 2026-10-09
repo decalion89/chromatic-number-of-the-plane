@@ -1,0 +1,16 @@
+# two-prime window (1,1), N = 65, r = 7/25; 13 components
+# functionals (j, l, Re/Im): (-1,-1,Re) (-1,-1,Im) (-1,0,Re) (-1,0,Im) (-1,1,Re) (-1,1,Im) (0,-1,Re) (0,-1,Im) (0,0,Re) (0,0,Im) (0,1,Re) (0,1,Im) (1,-1,Re) (1,-1,Im) (1,0,Re) (1,0,Im) (1,1,Re) (1,1,Im)
+component 0: indices -69 -25 -4 -73 65 -32 -22 -70 55 -47 64 33 42 -59 70 16 11 71 | EXTRA kappa = 2/7 ; optimum (390/7, 325/7) ; seven-point (390/7, 325/7) ; cert -1 -1 Re - 325/1904 ; 1 0 Im - 33/85 ; 1 1 Re - 247/560
+component 1: indices -45 -39 18 -56 58 -5 4 -59 55 -19 38 44 49 -32 48 33 -13 57 | EXTRA kappa = 2/7 ; optimum (390/7, 130/7) ; seven-point (390/7, 130/7) ; cert -1 1 Im - 425/882 ; 1 -1 Im + 169/882 ; 1 1 Re - 16/49
+component 2: indices -72 -12 -17 -71 58 -43 -34 -65 46 -56 69 21 31 -66 72 3 24 68 | EXTRA kappa = 2/7 ; optimum (325/7, 390/7) ; seven-point (325/7, 390/7) ; cert -1 -1 Im + 17/35 ; -1 0 Re + 13/60 ; 1 -1 Re + 25/84
+component 3: indices -30 -8 -5 -31 26 -16 -12 -29 21 -22 28 11 15 -27 30 4 7 29 | MAIN Q11 m = 0 0
+component 4: indices -49 3 -22 -44 31 -37 -32 -37 21 -44 48 3 10 -48 47 -9 26 40 | MAIN Q12 m = 0 0
+component 5: indices -32 -36 20 -43 47 2 9 -47 46 -10 26 39 42 -21 35 31 -16 44 | EXTRA kappa = 2/7 ; optimum (325/7, 65/7) ; seven-point (325/7, 65/7) ; cert -1 0 Im + 5/28 ; 0 -1 Re + 13/35 ; 0 0 Im - 9/20
+component 6: indices -45 -12 -7 -46 39 -24 -18 -43 32 -33 42 17 23 -40 45 6 11 44 | MAIN C m = 0 0
+component 7: indices -58 12 -34 -49 31 -50 -45 -39 18 -56 58 -5 4 -59 55 -19 38 44 | EXTRA kappa = 2/7 ; optimum (130/7, 390/7) ; seven-point (130/7, 390/7) ; cert -1 1 Re - 425/882 ; 1 -1 Re + 169/882 ; 1 1 Im + 16/49
+component 8: indices -41 -27 8 -48 47 -11 -4 -49 43 -22 36 31 36 -32 43 21 -4 48 | MAIN Q21 m = 0 0
+component 9: indices -60 -16 -9 -61 52 -32 -24 -57 43 -44 56 23 31 -53 60 8 15 59 | MAIN Q22 m = 0 0
+component 10: indices -18 -12 3 -21 20 -5 -2 -21 18 -10 15 13 15 -14 18 9 -2 20 | EXTRA kappa = 2/7 ; optimum (130/7, 65/7) ; seven-point (130/7, 65/7) ; cert -1 -1 Im - 17/35 ; -1 0 Re - 13/60 ; 1 -1 Re - 25/84
+component 11: indices -45 15 -32 -36 20 -43 -40 -27 9 -47 46 -10 -3 -48 42 -21 35 31 | EXTRA kappa = 2/7 ; optimum (65/7, 325/7) ; seven-point (65/7, 325/7) ; cert -1 -1 Re + 65/378 ; 0 0 Re + 31/70 ; 0 1 Im - 52/135
+component 12: indices -21 1 -10 -19 13 -16 -14 -16 9 -19 20 1 4 -21 20 -4 11 17 | EXTRA kappa = 2/7 ; optimum (65/7, 130/7) ; seven-point (65/7, 130/7) ; cert -1 0 Re - 16/55 ; -1 1 Im + 299/630 ; 1 -1 Im - 325/1386
+# 5 main, 8 extra

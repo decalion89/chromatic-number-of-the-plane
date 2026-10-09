@@ -1,0 +1,19 @@
+N = 325, r = 2500001/10000000 = 0.25000010: 60 rotations, 30 functionals up to sign; 300 points printed by vertex_enum
+300 distinct points, 13 components (distinct index vectors)
+type points lying in S^r: 13 ['7:1,3', '7:1,4', '7:3,1', '7:3,6', '7:4,1', '7:4,6', '7:6,3', '7:6,4', 'c', 'q11', 'q12', 'q21', 'q22']
+components by family: {'7': 8, 'c': 1, 'q': 4}
+  7:3,6      vertices 15  kappa = 2/7 (0.285714)  optimum (975/7, 1950/7)  dual cert ok: True  [75/154*mu+(36, 323); 5/22*mu+(80, -315); 2/7*mu-(125, 300)]
+  7:6,4      vertices 15  kappa = 2/7 (0.285714)  optimum (1950/7, 1300/7)  dual cert ok: True  [24/49*mu-(0, 325); 25/98*mu-(91, -312); 25/98*mu+(91, 312)]
+  7:3,1      vertices 15  kappa = 2/7 (0.285714)  optimum (975/7, 325/7)  dual cert ok: True  [75/154*mu+(36, -323); 5/22*mu+(80, 315); 2/7*mu-(125, -300)]
+  7:6,3      vertices 15  kappa = 2/7 (0.285714)  optimum (1950/7, 975/7)  dual cert ok: True  [24/49*mu+(0, 325); 25/98*mu+(91, -312); 25/98*mu-(91, 312)]
+  7:1,4      vertices 15  kappa = 2/7 (0.285714)  optimum (325/7, 1300/7)  dual cert ok: True  [24/49*mu-(0, 325); 25/98*mu-(91, -312); 25/98*mu+(91, 312)]
+  7:4,6      vertices 15  kappa = 2/7 (0.285714)  optimum (1300/7, 1950/7)  dual cert ok: True  [75/154*mu-(36, -323); 5/22*mu-(80, 315); 2/7*mu+(125, -300)]
+  7:4,1      vertices 15  kappa = 2/7 (0.285714)  optimum (1300/7, 325/7)  dual cert ok: True  [75/154*mu-(36, 323); 5/22*mu-(80, -315); 2/7*mu+(125, 300)]
+  7:1,3      vertices 15  kappa = 2/7 (0.285714)  optimum (325/7, 975/7)  dual cert ok: True  [24/49*mu+(0, 325); 25/98*mu+(91, -312); 25/98*mu-(91, 312)]
+  c          vertices 60  kappa = 1/2 (0.500000)  optimum (325/2, 325/2)  dual cert ok: True  [1/2*mu+(0, 325); 1/2*mu-(0, 325)]
+  q21        vertices 30  kappa = 1/3 (0.333333)  optimum (650/3, 325/3)  dual cert ok: True  [323/648*mu+(0, 325); 325/1296*mu+(36, -323); 325/1296*mu-(36, 323)]
+  q22        vertices 30  kappa = 1/3 (0.333333)  optimum (650/3, 650/3)  dual cert ok: True  [323/648*mu-(0, 325); 325/1296*mu-(36, -323); 325/1296*mu+(36, 323)]
+  q11        vertices 30  kappa = 1/3 (0.333333)  optimum (325/3, 325/3)  dual cert ok: True  [323/648*mu+(0, 325); 325/1296*mu+(36, -323); 325/1296*mu-(36, 323)]
+  q12        vertices 30  kappa = 1/3 (0.333333)  optimum (325/3, 650/3)  dual cert ok: True  [323/648*mu-(0, 325); 325/1296*mu-(36, -323); 325/1296*mu+(36, 323)]
+kappa summary (family, kappa): count -> {'7 2/7': 8, 'c 1/2': 1, 'q 1/3': 4}
+all dual certificates verified: True

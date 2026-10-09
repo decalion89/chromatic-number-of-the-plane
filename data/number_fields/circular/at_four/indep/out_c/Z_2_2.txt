@@ -1,0 +1,4 @@
+# group Z/2 x Z/2  n=4  exponent M=2  |Aut|=6  classes=3
+S=(1,0)(0,1) |S|=2 kappa=1/2 col=21 acyc=19 noT4=19 noSq=19 ABeq=19 T4butABeq=0 ABneq_charfail=0 chars_ge=1 hom3/1=1 ok
+S=(1,0)(0,1)(1,1) |S|=3 kappa=0/2 col=6 acyc=0 noT4=0 noSq=0 ABeq=0 T4butABeq=0 ABneq_charfail=6 chars_ge=0 hom3/1=0 ok
+# summary: generating S classes=2, 4-colourable=2, colourings(c(0)=0)=27, BAD=0

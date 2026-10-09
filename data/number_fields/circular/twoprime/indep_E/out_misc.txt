@@ -1,0 +1,11 @@
+(1) one-prime orbit of 12+12i mod 41: size 20, min distance*41 = 12
+(1) two-prime orbit of 12+12i mod 41: size 40, min distance*41 = 0
+(2) remove class (j,l)=(-1, -1): components at 2/7: 13 ; non-type components surviving above 2/7: 0 ; max kappa among them: None
+(2) remove class (j,l)=(-1, 0): components at 2/7: 13 ; non-type components surviving above 2/7: 0 ; max kappa among them: None
+(2) remove class (j,l)=(-1, 1): components at 2/7: 13 ; non-type components surviving above 2/7: 0 ; max kappa among them: None
+(2) remove class (j,l)=(0, -1): components at 2/7: 21 ; non-type components surviving above 2/7: 8 ; max kappa among them: 203/656
+(2) remove class (j,l)=(0, 0): components at 2/7: 21 ; non-type components surviving above 2/7: 8 ; max kappa among them: 5/17
+(2) remove class (j,l)=(0, 1): components at 2/7: 21 ; non-type components surviving above 2/7: 8 ; max kappa among them: 203/656
+(2) remove class (j,l)=(1, -1): components at 2/7: 13 ; non-type components surviving above 2/7: 0 ; max kappa among them: None
+(2) remove class (j,l)=(1, 0): components at 2/7: 13 ; non-type components surviving above 2/7: 0 ; max kappa among them: None
+(2) remove class (j,l)=(1, 1): components at 2/7: 13 ; non-type components surviving above 2/7: 0 ; max kappa among them: None

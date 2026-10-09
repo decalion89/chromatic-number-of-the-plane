@@ -1,0 +1,342 @@
+{
+ "11": [
+  {
+   "place_root": 2,
+   "e": [
+    2,
+    3
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    5,
+    10163537829,
+    25114264700
+   ]
+  },
+  {
+   "place_root": 2,
+   "e": [
+    2,
+    4
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    5,
+    146686761,
+    465904509
+   ]
+  },
+  {
+   "place_root": 2,
+   "e": [
+    3,
+    2
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    4,
+    247,
+    679
+   ]
+  },
+  {
+   "place_root": 2,
+   "e": [
+    3,
+    5
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    3,
+    9,
+    21
+   ]
+  },
+  {
+   "place_root": 2,
+   "e": [
+    4,
+    2
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    5,
+    170593713,
+    722511650
+   ]
+  },
+  {
+   "place_root": 2,
+   "e": [
+    4,
+    5
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    3,
+    837,
+    1750
+   ]
+  },
+  {
+   "place_root": 2,
+   "e": [
+    5,
+    3
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    3,
+    837,
+    1750
+   ]
+  },
+  {
+   "place_root": 2,
+   "e": [
+    5,
+    4
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    5,
+    93871875,
+    314315589
+   ]
+  },
+  {
+   "place_root": 5,
+   "e": [
+    2,
+    3
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    5,
+    10163537829,
+    25114264700
+   ]
+  },
+  {
+   "place_root": 5,
+   "e": [
+    2,
+    4
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    5,
+    6442479,
+    17347505
+   ]
+  },
+  {
+   "place_root": 5,
+   "e": [
+    3,
+    2
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    4,
+    247,
+    679
+   ]
+  },
+  {
+   "place_root": 5,
+   "e": [
+    3,
+    5
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    5,
+    17052575,
+    43960637
+   ]
+  },
+  {
+   "place_root": 5,
+   "e": [
+    4,
+    2
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    5,
+    170593713,
+    722511650
+   ]
+  },
+  {
+   "place_root": 5,
+   "e": [
+    4,
+    5
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    3,
+    837,
+    1750
+   ]
+  },
+  {
+   "place_root": 5,
+   "e": [
+    5,
+    3
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    3,
+    837,
+    1750
+   ]
+  },
+  {
+   "place_root": 5,
+   "e": [
+    5,
+    4
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    5,
+    93871875,
+    314315589
+   ]
+  }
+ ],
+ "35": [
+  {
+   "place_root": 0,
+   "e": [
+    2,
+    3
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    5,
+    232960,
+    573118
+   ]
+  },
+  {
+   "place_root": 0,
+   "e": [
+    2,
+    4
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    4,
+    900,
+    2156
+   ]
+  },
+  {
+   "place_root": 0,
+   "e": [
+    3,
+    2
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    5,
+    118975,
+    314734
+   ]
+  },
+  {
+   "place_root": 0,
+   "e": [
+    3,
+    5
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    5,
+    118975,
+    314734
+   ]
+  },
+  {
+   "place_root": 0,
+   "e": [
+    4,
+    2
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    4,
+    900,
+    2156
+   ]
+  },
+  {
+   "place_root": 0,
+   "e": [
+    4,
+    5
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    5,
+    232960,
+    573118
+   ]
+  },
+  {
+   "place_root": 0,
+   "e": [
+    5,
+    3
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    5,
+    118975,
+    314734
+   ]
+  },
+  {
+   "place_root": 0,
+   "e": [
+    5,
+    4
+   ],
+   "tight": 35,
+   "relation_found": true,
+   "support_maxcoef_length": [
+    5,
+    16380,
+    36764
+   ]
+  }
+ ]
+}

@@ -1,0 +1,2 @@
+two-prime group sizes / kappa*M of (12+12i)/41: {41: (40, 0), 76: (80, None), 82: (80, None), 123: (160, None)}
+orders M <= 300 prime to 65 with a character of kappa > 2/7 over <i, rho, sigma> other than c, q: none

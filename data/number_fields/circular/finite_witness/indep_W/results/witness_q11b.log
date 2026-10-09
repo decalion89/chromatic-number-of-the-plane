@@ -1,0 +1,71 @@
+# The referee's programs of this folder, unchanged, run by us (not by the referee) on the 155-vertex witness_q11b
+# (5 October 2026, night, UTC times), in the order of the reproduction list of REPORT.md: referee_check.py,
+# referee_encode2.py, referee_cegar.py, run_proof.sh on the three formulas (kissat --seed=7, drat-trim -L, cake_lpr),
+# validate_e1.py, validate_stored.py and run_stored.sh (drat-trim and cake_lpr on the stored formula and proof),
+# referee_critical.py.  Proofs were deleted after the checks.
+== referee_check 23:39:48
+== witness_q11b: d=11, D=30
+(1) 155 points, all distinct integer 4-tuples; d squarefree, so distinct tuples = distinct points
+    404 listed edges; unit-distance pairs among all 11935 pairs: 404; listed edges not at distance 1: 0; unit pairs not listed: 0
+    => every edge has length exactly 1 and H is the induced unit-distance graph on its points; 60 distinct unit vectors occur as edge differences
+    min degree 2, max degree 17, connected: True
+(2) colouring values in 0..6; edges violating the (7,2) condition: 0
+(3) 1273 cycles; every step is an edge of H; non-simple: 0; lengths {7: 572, 14: 613, 21: 81, 28: 7}; lengths not divisible by 7: 0
+    distinct as sequences: 1273; distinct up to rotation: 1273; directed arcs used: 795
+    listed cycles tight under the stored colouring: 3 (must be >= 1 if the claim holds)
+    fixed_vertex 108: degree 17; max degree 17; first vertex of max degree: 108
+    CNF cnf/witness_q11b.ref.cnf: 1880 variables, 18733 clauses; sha256 22bd426727c19c7c870eb7a136086f5959b1c207831469d757bb5f4421e33168; unit clause fixes vertex 108 to colour 0
+== referee_encode2 23:39:49
+E2 cnf/witness_q11b_E2.ref.cnf: 1880 variables (1085 colour, 795 arc), 24298 clauses, seed 20261004, sha256 fc5e0827a5ca5d7abffdeaf6ff5434d5221b9242e96fb0b43297c2d1792e5d52
+== referee_cegar 23:39:49
+  iteration 50: 119 cycles, 1.0 s
+  iteration 100: 247 cycles, 2.7 s
+  iteration 150: 386 cycles, 5.6 s
+  iteration 200: 498 cycles, 10.9 s
+  iteration 250: 613 cycles, 25.3 s
+UNSAT after 271 iterations, 660 cycles of lengths [7, 14, 21, 28], 162.2 s (solver cadical153, fixed vertex 0)
+wrote cnf/witness_q11b_cegar.ref.cnf: 1882 variables, 18134 clauses, sha256 78c2436cd45fb2bbe703ce54c078af2e9105ca0b32b27f770c70392b58b3f099
+== proofs witness_q11b 23:42:31
+DONE witness_q11b
+s UNSATISFIABLE
+kissat exit 20
+c 151541 of 282907 lemmas in core using 10361863 resolution steps
+c 6222 RAT lemmas in core; 0 redundant literals in core lemmas
+s VERIFIED
+drat-trim exit 0
+s VERIFIED UNSAT
+cake_lpr exit 0
+== proofs witness_q11b_E2 23:43:20
+DONE witness_q11b_E2
+s UNSATISFIABLE
+kissat exit 20
+c 184481 of 342108 lemmas in core using 12346404 resolution steps
+c 6711 RAT lemmas in core; 17 redundant literals in core lemmas
+s VERIFIED
+drat-trim exit 0
+s VERIFIED UNSAT
+cake_lpr exit 0
+== proofs witness_q11b_cegar 23:44:21
+DONE witness_q11b_cegar
+s UNSATISFIABLE
+kissat exit 20
+c 953625 of 1826366 lemmas in core using 68810287 resolution steps
+c 7315 RAT lemmas in core; 0 redundant literals in core lemmas
+s VERIFIED
+drat-trim exit 0
+s VERIFIED UNSAT
+cake_lpr exit 0
+== validate_e1 23:50:27
+witness_q11b.ref.cnf: 1880 vars, 18733 clauses: {'ALO': 155, 'AMO': 3255, 'EDGE': 8484, 'NDEF': 5565, 'CYC': 1273, 'UNIT': 1}; CYC clauses that are exactly one simple directed cycle: 1273; unexplained clauses: 0
+== validate_stored 23:50:27
+witness_q11b: stored CNF 289725 bytes uncompressed, sha256 f20fa482ad90c78253d884be6007ac4527e636d502840dac14fbf2734891b8eb
+witness_q11b: stored DRAT 47318718 bytes uncompressed, sha256 0202709650640085524303321b8f49a0ab56440be3d25e7de350d265b97127a4, text? format
+witness_q11b: 1880 variables, 15478 clauses: {'ALO': 155, 'EDGE': 8484, 'TDEF': 5565, 'CYC': 1273, 'UNIT': 1}; unexplained clauses: 0; listed cycles covered by CYC clauses: 1273 of 1273
+DONE witness_q11b
+s VERIFIED
+drat-trim exit 0
+s VERIFIED UNSAT
+cake_lpr exit 0
+== referee_critical 23:51:11
+witness_q11b.json.gz: 155 certificates OK: each c_v is a (7,2)-colouring of H-v with an acyclic tight digraph; explicit (7N,2N+1)-colourings with N=154 verified, so chi_c(H-v) <= 1078/309 = 3.488673 < 3.5 for every v; average tight arcs per certificate 224.2
+== done 23:51:11

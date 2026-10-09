@@ -1,0 +1,34 @@
+mu8 = [(0, 1), (0, 6), (1, 0), (2, 2), (2, 5), (5, 2), (5, 5), (6, 0)] size 8
+A'_7 = [(2, 3), (2, 4), (3, 2), (3, 5), (4, 2), (4, 5), (5, 3), (5, 4)] size 8
+(F1) single mu8-orbit: True ; 0 not in A'_7: True
+(F1) equals the list in the note: True
+(F2) cosets of non-zero subgroups inside A'_7: none
+(F3) first coordinates of A'_7: [2, 3, 4, 5]
+conjugation-stable: True
+sum of A'_7 = (0, 0)
+rho mod 7 = (2, 5)  order 8  rho^2 mod 7 = (0, 6)  sigma mod 7 = (2, 2)
+325 mod 7 = 3  325^{-1} mod 7 = 5  5^6 mod 7 = 1  order of 5 mod 7 = 6
+powers of rho mod 7 = mu8: True
+g-values of the 7-adic characters: [Fraction(-3, 14), Fraction(-1, 14), Fraction(1, 14), Fraction(3, 14)]
+S (x5) for e = (2, 3) : [(0, 0), (2, 1), (0, 0), (1, -2), (0, 0), (-2, -1), (0, 0), (-1, 2)]
+zeros and non-zeros alternate: True ; non-zero digits are u(2+i)/5: True ; S_{j+2} = -i S_j: True
+each 7-pattern is a shift of S (shift amounts): {(2, 3): [0], (2, 4): [5], (3, 2): [7], (3, 5): [6], (4, 2): [2], (4, 5): [3], (5, 3): [1], (5, 4): [4]}
+the 8 shifts are distinct and exhaust Z/8: True
+q digits all non-zero of the form u(2+i)/5: True
+at every position, 3 consecutive digits determine the pattern among the 13 (c, 4 q, 8 seven): True
+(for comparison) 2 consecutive digits suffice: True
+rotations with denominator dividing 325: 60
+type c: point/325 = (1/2, 1/2); min margin over the 60 rotations = 1/2; values mod 1 = [Fraction(1, 2)]; matching (pattern, shift): [(('c',), 0), (('c',), 1), (('c',), 2)]
+type ('q', 1, 1): point/325 = (1/3, 1/3); min margin over the 60 rotations = 1/3; values mod 1 = [Fraction(1, 3), Fraction(2, 3)]; matching (pattern, shift): [(('q', (1, 1)), 3), (('q', (1, 1)), 7), (('q', (1, -1)), 2)]
+type ('q', 1, 2): point/325 = (1/3, 2/3); min margin over the 60 rotations = 1/3; values mod 1 = [Fraction(1, 3), Fraction(2, 3)]; matching (pattern, shift): [(('q', (1, 1)), 2), (('q', (1, 1)), 6), (('q', (1, -1)), 1)]
+type ('q', 2, 1): point/325 = (2/3, 1/3); min margin over the 60 rotations = 1/3; values mod 1 = [Fraction(1, 3), Fraction(2, 3)]; matching (pattern, shift): [(('q', (1, 1)), 0), (('q', (1, 1)), 4), (('q', (1, -1)), 3)]
+type ('q', 2, 2): point/325 = (2/3, 2/3); min margin over the 60 rotations = 1/3; values mod 1 = [Fraction(1, 3), Fraction(2, 3)]; matching (pattern, shift): [(('q', (1, 1)), 1), (('q', (1, 1)), 5), (('q', (1, -1)), 0)]
+type ('7', (2, 3)): point/325 = (3/7, 1/7); min margin over the 60 rotations = 2/7; values mod 1 = [Fraction(2, 7), Fraction(3, 7), Fraction(4, 7), Fraction(5, 7)]; matching (pattern, shift): [(('7', (2, 3)), 0), (('7', (2, 4)), 3), (('7', (3, 2)), 1)] digits = those of character e: True; values = character e at all 60 rotations: True
+type ('7', (2, 4)): point/325 = (3/7, 6/7); min margin over the 60 rotations = 2/7; values mod 1 = [Fraction(2, 7), Fraction(3, 7), Fraction(4, 7), Fraction(5, 7)]; matching (pattern, shift): [(('7', (2, 3)), 5), (('7', (2, 4)), 0), (('7', (3, 2)), 6)] digits = those of character e: True; values = character e at all 60 rotations: True
+type ('7', (3, 2)): point/325 = (1/7, 3/7); min margin over the 60 rotations = 2/7; values mod 1 = [Fraction(2, 7), Fraction(3, 7), Fraction(4, 7), Fraction(5, 7)]; matching (pattern, shift): [(('7', (2, 3)), 7), (('7', (2, 4)), 2), (('7', (3, 2)), 0)] digits = those of character e: True; values = character e at all 60 rotations: True
+type ('7', (3, 5)): point/325 = (1/7, 4/7); min margin over the 60 rotations = 2/7; values mod 1 = [Fraction(2, 7), Fraction(3, 7), Fraction(4, 7), Fraction(5, 7)]; matching (pattern, shift): [(('7', (2, 3)), 6), (('7', (2, 4)), 1), (('7', (3, 2)), 7)] digits = those of character e: True; values = character e at all 60 rotations: True
+type ('7', (4, 2)): point/325 = (6/7, 3/7); min margin over the 60 rotations = 2/7; values mod 1 = [Fraction(2, 7), Fraction(3, 7), Fraction(4, 7), Fraction(5, 7)]; matching (pattern, shift): [(('7', (2, 3)), 2), (('7', (2, 4)), 5), (('7', (3, 2)), 3)] digits = those of character e: True; values = character e at all 60 rotations: True
+type ('7', (4, 5)): point/325 = (6/7, 4/7); min margin over the 60 rotations = 2/7; values mod 1 = [Fraction(2, 7), Fraction(3, 7), Fraction(4, 7), Fraction(5, 7)]; matching (pattern, shift): [(('7', (2, 3)), 3), (('7', (2, 4)), 6), (('7', (3, 2)), 4)] digits = those of character e: True; values = character e at all 60 rotations: True
+type ('7', (5, 3)): point/325 = (4/7, 1/7); min margin over the 60 rotations = 2/7; values mod 1 = [Fraction(2, 7), Fraction(3, 7), Fraction(4, 7), Fraction(5, 7)]; matching (pattern, shift): [(('7', (2, 3)), 1), (('7', (2, 4)), 4), (('7', (3, 2)), 2)] digits = those of character e: True; values = character e at all 60 rotations: True
+type ('7', (5, 4)): point/325 = (4/7, 6/7); min margin over the 60 rotations = 2/7; values mod 1 = [Fraction(2, 7), Fraction(3, 7), Fraction(4, 7), Fraction(5, 7)]; matching (pattern, shift): [(('7', (2, 3)), 4), (('7', (2, 4)), 7), (('7', (3, 2)), 5)] digits = those of character e: True; values = character e at all 60 rotations: True
+7-type points consistent with the characters: True

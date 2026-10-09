@@ -1,0 +1,2 @@
+wrote cnf/ref_q3_11.cnf: 7496 vars, 58223 clauses (vertices 1874, edges 7887, cycles 3389, cycle clauses 13556, no_cycles=False)
+wrote cnf/ref_q3_11_nocycles.cnf: 7496 vars, 44667 clauses (vertices 1874, edges 7887, cycles 0, cycle clauses 0, no_cycles=True)

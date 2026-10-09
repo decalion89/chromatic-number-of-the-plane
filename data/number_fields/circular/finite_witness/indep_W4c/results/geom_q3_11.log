@@ -1,0 +1,56 @@
+file: ../cayfin/witness_q3_11_cayley.json.gz
+field: Q(sqrt3, sqrt11) basis: (1, sqrt3, sqrt11, sqrt33) D: 84
+  CHECK basis_string_matches                                    PASS
+  CHECK denominator_positive_int                                PASS
+  CHECK generators_are_int8                                     PASS
+  CHECK points_are_int8                                         PASS
+  CHECK points_distinct                                         PASS
+  CHECK claim12_generators_match_construction                   PASS
+  CHECK claim3_generators_unit_length                           PASS
+  CHECK claim3_no_zero_generator                                PASS
+  CHECK edges_well_formed                                       PASS
+  CHECK edges_no_duplicates                                     PASS
+  CHECK claim3_listed_edges_are_generator_differences           PASS
+  CHECK claim3_every_cayley_pair_is_listed                      PASS
+  CHECK fixed_vertex_in_range                                   PASS
+  CHECK claim3_fixed_vertex_is_origin                           PASS
+  CHECK claim3_all_points_reachable                             PASS
+  CHECK colouring_length_n                                      PASS
+  CHECK colouring_values_in_0123                                PASS
+  CHECK claim4_proper_4_colouring                               PASS
+  CHECK claim5_cycles_valid                                     PASS
+  CHECK allpairs_generator_difference_count_equals_edges        PASS
+  CHECK all_edges_unit_distance                                 PASS
+  STAT n_points: 1874
+  STAT n_edges_listed: 7887
+  STAT n_generators: 27
+  STAT n_cycles: 3389
+  STAT n_distinct_points: 1874
+  STAT construction_info: {'R60_norm_is_1': True, 'RA_norm_is_1': True, 'RG_norm_is_1': True, 'float_angles_deg': {'R60': 59.99999999999999, 'RA': 33.55730976192071, 'RG': 38.21321070173819}}
+  STAT construction_compare: {'num_generators': 27, 'num_distinct_generator_pairs': 27, 'num_constructed': 27, 'num_distinct_constructed_vectors': 27, 'num_distinct_constructed_pairs': 27, 'generator_pairs_minus_constructed': 0, 'constructed_pairs_minus_generator': 0, 'ok': True}
+  STAT n_signed_generators: 54
+  STAT n_cayley_pairs_by_generator_search: 7887
+  STAT n_duplicate_edges: 0
+  STAT n_listed_edges_not_cayley: 0
+  STAT n_cayley_pairs_not_listed: 0
+  STAT n_listed_edges_with_bad_difference: 0
+  STAT n_reachable_from_fixed_vertex: 1874
+  STAT degree_min_max: (2, 36)
+  STAT n_monochromatic_edges: 0
+  STAT colour_class_sizes: [504, 460, 447, 463]
+  STAT cycle_length_histogram: {4: 3370, 8: 19}
+  STAT cycle_defects: {'format': 0, 'empty': 0, 'len_not_div4': 0, 'repeated_vertex': 0, 'non_edge_step': 0}
+  STAT n_identical_duplicate_cycles: 0
+  STAT n_cycles_whose_reverse_is_also_listed: 3006
+  STAT n_distinct_cycles_up_to_rotation: 3389
+  STAT allpairs_n_pairs_with_generator_difference: 7887
+  STAT n_unit_distance_pairs: 8085
+  STAT n_unit_distance_pairs_not_edges: 198
+  STAT n_edges_not_unit_distance: 0
+  STAT n_distinct_extra_unit_differences_up_to_sign: 12
+  STAT extra_unit_differences_up_to_sign: (12 entries, first 10) [[[15, 0, 0, -11, 0, 11, 15, 0], 52], [[0, 0, 0, 14, 0, 14, 0, 0], 35], [[15, 0, 0, 11, 0, 11, -15, 0], 25], [[0, 0, 0, 14, 0, -14, 0, 0], 23], [[9, 0, 0, 13, 0, -13, 9, 0], 18], [[21, 0, 0, 7, 0, 7, -21, 0], 16], [[21, 0, 0, 7, 0, -7, 21, 0], 8], [[24, 0, 0, -2, 0, -2, -24, 0], 6], [[24, 0, 0, 2, 0, -2, 24, 0], 6], [[21, 0, 0, -7, 0, 7, 21, 0], 4]]
+  STAT unit_check_seconds: 2.9
+  STAT float_crosscheck_unit_pairs: 8085
+  STAT seconds: 3.7
+OVERALL: PASS
+exit 0

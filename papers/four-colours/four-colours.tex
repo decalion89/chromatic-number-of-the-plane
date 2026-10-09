@@ -1,0 +1,466 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage[hyphens]{url}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
+\usepackage[margin=2.5cm]{geometry}
+
+\hypersetup{
+  pdftitle={Which real quadratic planes need four colours},
+  pdfauthor={Sergi Gal\'an},
+  pdfsubject={The Hadwiger-Nelson problem over real quadratic fields},
+  pdfkeywords={Hadwiger-Nelson problem, chromatic number of the plane, unit-distance graph, real quadratic field,
+  Cayley graph, character}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Cay}{\operatorname{Cay}}
+\newcommand{\Sq}{\mathrm{Sq}}
+
+\title{Which real quadratic planes need four colours}
+\author{Sergi Gal\'an}
+\thanks{These results were obtained with the assistance of an AI system (Claude, by Anthropic), which found the
+construction, wrote the proofs and the programs that check them, and helped to draft this note. Separate AI agents
+refereed the proofs, with their own programs. No mathematician has checked the note yet. The author is not a
+professional mathematician and submits it for independent verification.}
+\date{Draft, 3 October 2026}
+\subjclass[2020]{Primary 05C15, 52C10; Secondary 11R11, 05C25}
+\keywords{Hadwiger--Nelson problem, chromatic number of the plane, unit-distance graph, real quadratic field,
+Cayley graph, character}
+
+\begin{document}
+
+\begin{abstract}
+For a subfield $F\subset\R$ let $\chi(F^2)$ be the chromatic number of the graph on $F^2$ that joins two points at
+Euclidean distance $1$. For a real quadratic field $\Q(\sqrt d)$, $d$ squarefree, it is known that
+$\chi(\Q(\sqrt d)^2)=2$ unless $d\equiv 3\pmod 4$, that $\chi(\Q(\sqrt d)^2)\ge3$ if $d\equiv3\pmod 4$, and that
+$\chi(\Q(\sqrt d)^2)\le 3$ unless $d\equiv 11\pmod{12}$. We prove that $\chi(\Q(\sqrt d)^2)\ge 4$ for every
+$d\equiv 11\pmod{12}$. So the plane over $\Q(\sqrt d)$ needs four colours exactly when $d\equiv11\pmod{12}$, and,
+with the upper bounds of Fischer and Moorhouse, $\chi(\Q(\sqrt d)^2)=4$ for all these $d$ except possibly
+$d\equiv 47,143,167\pmod{168}$. The proof exhibits, for each $d$, a finite set of unit vectors, made of $(1,0)$, a
+vector and its mirror image, one more vector when $d\equiv11\pmod{24}$, and their rotations by the rational rotations
+whose denominators divide $5^k$ for a suitable $k$, and shows that no
+character of the group they generate maps all of them into $[1/3,2/3]$; a characterisation of $3$-colourable
+Cayley graphs of abelian groups by such characters then excludes $3$-colourings. The main step is an exact
+description of the characters of $\frac1N\Z[i]$, $N=5^k$, that keep every rational rotation with denominator
+dividing $N$ in $[1/3,2/3]$.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+Let $F\subset\R$ be a field. The \emph{plane over $F$} is the graph on $F^2$ in which $x$ and $y$ are adjacent when
+$|x-y|=1$, and $\chi(F^2)$ is its chromatic number. For $F=\R$ this is the Hadwiger--Nelson problem, and
+$6\le\chi(\R^2)\le7$: the bound $\chi(\R^2)\ge5$ is due to de Grey \cite{deGrey} and to Exoo and Ismailescu
+\cite{EI}, the bound $\chi(\R^2)\ge6$ to a recent non-constructive proof \cite{OpenAI}, and the upper bound to
+Isbell (see \cite{Soifer}). For $F=\Q$, $\chi(\Q^2)=2$ \cite{Woodall}. For real quadratic fields
+$K=\Q(\sqrt d)$, $d\ge2$ squarefree, the following was known:
+\begin{itemize}
+\item $\chi(K^2)=2$ if $d\not\equiv3\pmod4$ \cite{Johnson1987,Fischer1990,Moorhouse};
+\item $\chi(K^2)\ge3$ if $d\equiv3\pmod4$ \cite[Thm.~8]{Fischer1990} (and \cite[Thm.~8.6]{Moorhouse} when $K$
+contains $\sqrt p$ for a prime $p\equiv3\pmod4$); for
+$u=((1-d)/(1+d),\,2\sqrt d/(1+d))$ and its mirror image $\bar u$, the relation
+$\frac{d+1}4(u+\bar u)+\frac{d-1}2(1,0)=0$ is a closed walk of odd length $d$;
+\item $\chi(K^2)\le3$ if $d\not\equiv2\pmod3$ \cite[Thm.~9]{Fischer1990}, \cite[Cor.~8.3]{Moorhouse};
+\item $\chi(K^2)\le4$ if $d\equiv3\pmod8$ \cite[Thm.~10]{Fischer1990} or $d\equiv0,1,2,4\pmod7$
+\cite[Cor.~8.3]{Moorhouse}; Moorhouse's Theorem~8.1 combines his bounds at $3$ and $7$ with his Lemma~8.4:
+$\chi(K^2)\le4$ unless $d\equiv47,59,83\pmod{84}$.
+\end{itemize}
+So a real quadratic field can need four colours only when $d\equiv11\pmod{12}$. In the literature we found, the
+largest lower bound for a real quadratic field is $3$ \cite{Madore,Moorhouse,Fischer1990}; explicit graphs for $27$
+fields that need four colours are given in the companion draft \cite{QP}. Moorhouse
+asked what can be said about $\chi(\Q(\sqrt d)^2)$, and about $\chi(\Q(\sqrt{47})^2)$ in particular
+\cite{MoorhouseTalk}. Fischer \cite[Thm.~10(ii)]{Fischer1990} showed, with the vector $u$ above (up to sign and
+mirror image), that for $d\equiv-1\pmod{24}$ the vectors $(\frac12,0)$ and $(\frac13,0)$ are sums of unit vectors,
+so that the plane has no \emph{additive} $k$-colouring for $k\le6$: none induced by a homomorphism from the group
+$C_0$ generated by the unit vectors to a group of order $k$ (his Theorem~1 extends colourings of $C_0$ to the plane by
+cosets).
+
+\begin{theorem}\label{thm:main}
+$\chi(\Q(\sqrt d)^2)\ge4$ for every positive integer $d\equiv11\pmod{12}$.
+\end{theorem}
+
+\begin{corollary}\label{cor:classification}
+For squarefree $d\ge2$, $\chi(\Q(\sqrt d)^2)\ge4$ if and only if $d\equiv11\pmod{12}$. For these $d$,
+$\chi(\Q(\sqrt d)^2)=4$ unless $d\equiv47,143,167\pmod{168}$; in particular $4\le\chi(\Q(\sqrt{47})^2)\le5$.
+\end{corollary}
+
+\begin{proof}
+The first statement is Theorem~\ref{thm:main} and the bounds listed above. Among $d\equiv11\pmod{12}$, those not
+covered by Fischer's or Moorhouse's bound $4$ satisfy $d\equiv7\pmod8$ and $d\equiv3,5,6\pmod7$, that is,
+$d\equiv47,143,167\pmod{168}$. For $d=47$, the bound $5$ comes from reduction at a prime above $11$, which splits
+in $\Q(\sqrt{47})$, and $\chi(\F_{11}^2)=5$ \cite[Lemma~8.2 and Table~6.1]{Moorhouse}.
+\end{proof}
+
+\begin{corollary}\label{cor:padic}
+For every prime $p\ge5$, $\chi(\Q_p^2)\ge4$, where $\Q_p^2$ is the graph joining $x,y\in\Q_p^2$ when
+$(x_1-y_1)^2+(x_2-y_2)^2=1$. So $\chi(\Q_p^2)\ge4$ exactly for $p\ge5$.
+\end{corollary}
+
+\begin{proof}
+As $\gcd(p,12)=1$, some positive integer $d$ satisfies $d\equiv11\pmod{12}$ and $d\equiv1\pmod p$ (it need not be
+squarefree; Theorem~\ref{thm:main} covers it). By Hensel's lemma $d$ has a square root in $\Z_p^\times$, so
+$\sqrt d\mapsto s$ defines a field embedding $\sigma\colon\Q(\sqrt d)\to\Q_p$. Being an injective ring homomorphism
+fixing $\Q$, $\sigma$ preserves the relation $(x_1-y_1)^2+(x_2-y_2)^2=1$ in both directions, so applied coordinatewise
+it maps the plane over $\Q(\sqrt d)$ isomorphically onto an induced subgraph of $\Q_p^2$, and
+$\chi(\Q_p^2)\ge\chi(\Q(\sqrt d)^2)\ge4$. For $p=2,3$ no $d\equiv11\pmod{12}$ is a square in $\Q_p$, and indeed
+$\chi(\Q_2^2)=2$ and $\chi(\Q_3^2)=3$, following from \cite{Madore}.
+\end{proof}
+
+For $p\equiv1\pmod4$ this is weaker than $\chi(\Q_p^2)=\infty$, a consequence of a theorem of Davies \cite{Davies}; the
+new case is $p\equiv3\pmod4$, where explicit graphs over $27$ fields had given the bound for every such $p$ with
+$7\le p<2\,129\,503\,819$ but not for $p=2\,129\,503\,819$, and
+where no finite set of fields can give it for every $p$, by Chebotarev's theorem \cite{PA}. A finite $4$-chromatic
+unit-distance graph in $\Q_p^2$ exists, by compactness, but is not exhibited.
+
+The proof is explicit. Let $G_N$ be the set of the $4(2k+1)$ rational unit vectors whose denominators divide
+$N=5^k$ (Lemma~\ref{lem:GN}), and for an integer $n$ let
+\[
+u_n=\frac{(n+i\sqrt d)^2}{n^2+d}=\Bigl(\frac{n^2-d}{n^2+d},\ \frac{2n\sqrt d}{n^2+d}\Bigr),
+\]
+a unit vector of $\Q(\sqrt d)^2$, with mirror image $\bar u_n$. Rotating a vector $v$ by $\gamma\in G_N$ gives a
+unit vector $\gamma v$ of $\Q(\sqrt d)^2$.
+
+\begin{theorem}\label{thm:sets}
+Let $d\equiv11\pmod{12}$, $N=5^k$, and let $U$ be the following set of unit vectors.
+\begin{enumerate}
+\item If $d\equiv23\pmod{24}$ and $d<21\cdot5^{k-1}$ (for example $5^k\ge d/4$): $U=G_N\cup G_Nu_1\cup G_N\bar u_1$.
+\item If $d\equiv11\pmod{24}$, $s=v_3(d+1)$, $n$ is a positive integer with $n\equiv3\pmod4$ and
+$n\equiv1\pmod{3^{s+1}}$ (for example
+$n=1+2\cdot3^{s+1}$), and $5^k>\frac{2\sqrt{10}}3\,n(n+d)$: $U=G_N\cup G_Nu_1\cup G_N\bar u_1\cup G_Nu_n$.
+\end{enumerate}
+Then no homomorphism $\xi$ from the group $\Z U$ generated by $U$ to $\R/\Z$ maps every vector of $U$ into the arc
+$[1/3,2/3]$.
+\end{theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+By \cite[Theorem~1]{Winding}, a Cayley graph $\Cay(\Gamma,S)$ of an abelian group $\Gamma$, with $S=-S$, is
+$3$-colourable if and only if some character $\xi\colon\Gamma\to\R/\Z$ maps $S$ into $[1/3,2/3]$. By
+Theorem~\ref{thm:sets}, $\Cay(\Z U,\pm U)$ is not $3$-colourable. It is a subgraph of the plane over $\Q(\sqrt d)$.
+(If $d$ is not squarefree, its squarefree part is again $\equiv11\pmod{12}$, and the field is the same.)
+\end{proof}
+
+By the theorem of de Bruijn and Erd\H{o}s \cite{dBE}, each of these planes contains a finite unit-distance graph with no
+proper $3$-colouring, and deleting vertices one at a time gives one with chromatic number exactly $4$; it is
+triangle-free, since $\sqrt3\notin\Q(\sqrt d)$. We do not exhibit it: the
+direction ``$3$-colourable $\Rightarrow$ character'' of \cite[Theorem~1]{Winding} averages over the group with an
+invariant mean and is not constructive. For $27$ of these fields, explicit vertex-critical graphs with $71$ to
+$1\,404$ vertices and no proper $3$-colouring are given in \cite{QP}, with proofs that do not use characters.
+
+Section~\ref{sec:chars} turns characters into complex numbers, Section~\ref{sec:shape} describes the set $S_N$ of
+characters of $\frac1N\Z[i]$ that are allowed on $G_N$, and Sections~\ref{sec:23} and~\ref{sec:11} prove the two
+cases of Theorem~\ref{thm:sets}. The bound on $k$ is generous: for $d=11$ the theorem needs $5^k=3125$, but $5^k=25$
+(40 vectors up to sign) already works, as an exact certificate checked by computer shows (Section~\ref{sec:checks}).
+
+\section{Characters as complex numbers}\label{sec:chars}
+
+Identify $\Q^2$ with $\Q(i)$, and write a vector of $\Q(\sqrt d)^2$ as $X+\sqrt dY$ with $X,Y\in\Q(i)$: the vector
+$(X_1+\sqrt dY_1,\,X_2+\sqrt dY_2)$ corresponds to $X=X_1+iX_2$, $Y=Y_1+iY_2$. For $\gamma\in\Q(i)$ with $|\gamma|=1$,
+multiplying $X$ and $Y$ by $\gamma$ is the rotation by $\gamma$, an isometry of $\Q(\sqrt d)^2$. In this notation
+$u_n=X+\sqrt dY$ with $X=(n^2-d)/(n^2+d)$ and $Y=2ni/(n^2+d)$.
+
+Let $U$ be one of the sets of Theorem~\ref{thm:sets} and $T$ the least common multiple of the denominators $n^2+d$
+of the vectors $u_n$ used. Every vector of $U$ lies in $\Gamma'=M+\sqrt dM$, $M=\frac1{NT}\Z[i]$, because
+$N\gamma\in\Z[i]$ for $\gamma\in G_N$ and $u_n=X+\sqrt dY$ with $X,Y\in\frac1T\Z[i]$. Every character $\xi$ of $\Z U$
+extends to $\Gamma'$, since $\R/\Z$ is divisible. The characters of $\Gamma'\cong\Z^4$ are
+$X+\sqrt dY\mapsto\operatorname{Re}(\bar c_1X)+\operatorname{Re}(\bar c_2Y)\bmod 1$ with $c_1,c_2\in\C$ (on the basis
+$\frac1{NT},\frac i{NT}$ of $M$ these take the arbitrary real values $\frac{\operatorname{Re}c}{NT}$,
+$\frac{\operatorname{Im}c}{NT}$). For a
+vector $v=X+\sqrt dY$ put $w_v=c_1\bar X+c_2\bar Y\in\C$. Then
+\begin{equation}\label{eq:wv}
+\xi(\gamma v)=\operatorname{Re}(\bar w_v\gamma)\bmod1\qquad(\gamma\in G_N),
+\end{equation}
+and $v\mapsto w_v$ is $\Q$-linear, so every linear relation with rational coefficients among vectors holds,
+exactly in $\C$, among the corresponding numbers $w_v$. Let $I=[1/3,2/3]$ and
+\[
+S_N=\{c\in\C:\ \operatorname{Re}(\bar c\gamma)\in I+\Z\ \text{for every }\gamma\in G_N\}.
+\]
+If $\xi(U)\subseteq I+\Z$, then $w_v\in S_N$ for each $v\in\{1,u_1,\bar u_1,u_n\}$, where $1=(1,0)$. The set $S_N$
+is invariant under $N\Z[i]$ (as $N\gamma\in\Z[i]$), under $c\mapsto-c$ and under multiplication by $i$.
+
+\section{The shape of \texorpdfstring{$S_N$}{S\_N}}\label{sec:shape}
+
+The definitions of $G_N$ and $S_N$ make sense for every $k\ge0$; $G_1=\{\pm1,\pm i\}$. Let $\rho=(3+4i)/5=(2+i)/(2-i)$,
+$c^*_N=N(1+i)/2$, $Q_N=\{\frac N3(\alpha+\beta i):\alpha,\beta\in\{1,2\}\}$,
+$\Sq_0=\{x+iy:|x|,|y|\le1/6\}$, and for $k\ge0$
+\[
+P_k=\{x\in\C:\ \bar x\rho^j\in\Sq_0\ \text{for all integers }|j|\le k\},
+\]
+a closed convex polygon; $P_0=\Sq_0$ and $P_k\subseteq P_1$ for $k\ge1$. Let $\Lambda_\pm=\frac{2\pm i}5\Z[i]$; both
+contain $\Z[i]$ with index~$5$.
+
+\begin{lemma}\label{lem:GN}
+$G_N=\{\varepsilon\rho^j:\varepsilon\in\{\pm1,\pm i\},\ |j|\le k\}$, a set of $4(2k+1)$ elements.
+\end{lemma}
+
+\begin{proof}
+Let $\gamma\in G_N$, $\gamma=\alpha/5^t$ with $\alpha\in\Z[i]$ and $t\le k$ least. Then $|\alpha|^2=25^t$, so
+$\alpha=\varepsilon(2+i)^e(2-i)^f$ with $e+f=2t$; if $t\ge1$, minimality excludes $e,f\ge1$, so
+$\gamma=\varepsilon(2\pm i)^{2t}/5^t=\varepsilon\rho^{\pm t}$. These elements are distinct, since $\rho^j$ has exact
+denominator $5^{|j|}$.
+\end{proof}
+
+\begin{lemma}\label{lem:points}
+\textup{(a)} $\bar c^*_N\gamma\in\frac{1+i}2+\Z[i]$ for every $\gamma\in G_N$. Hence $c^*_N+x\in S_N$ if and only if
+$\bar x\gamma\in\Sq_0+\Z[i]$ for every $\gamma\in G_N$; in particular $c^*_N+P_k\subseteq S_N$.
+\textup{(b)} $Q_N\subseteq S_N$.
+\end{lemma}
+
+\begin{proof}
+(a) By Lemma~\ref{lem:GN}, $\bar c^*_N\gamma=\frac{5^{k-|j|}}2(1-i)\varepsilon\pi$ with $\pi=(2\pm i)^{2|j|}$. As
+$\varepsilon\pi$ has odd norm, $\varepsilon\pi\equiv1\pmod{1+i}$ and $(1-i)\varepsilon\pi\equiv1-i\pmod2$, so both
+coordinates are odd. Since $I=\frac12+[-\frac16,\frac16]$, the conditions for $\gamma$ and $i\gamma$ together say
+$\bar x\gamma\in\Sq_0+\Z[i]$.
+(b) For $q=\frac N3(\alpha+\beta i)$, $\bar q\gamma=\frac{5^{k-|j|}}3(\alpha-\beta i)\varepsilon\pi$. In
+$\Z[i]/3=\F_9$, the elements with both coordinates nonzero, $\pm1\pm i$, are the non-squares, since $1+i$
+generates $\F_9^\times$ and $(1+i)\mu_4=\{\pm1\pm i\}$. Now $\alpha-\beta i$ is a non-square and $\varepsilon\pi$ a
+nonzero square, so both coordinates of $(\alpha-\beta i)\varepsilon\pi$ are prime to $3$, and those of $\bar q\gamma$
+lie in $\{\frac13,\frac23\}+\Z$.
+\end{proof}
+
+\begin{lemma}\label{lem:numbers}
+\textup{(a)} $\max_{x\in P_1}|x|=\sqrt{10}/18\approx0.1757$.
+\textup{(b)} Every point of $(\Lambda_+\cup\Lambda_-)\setminus\Z[i]$ is at distance at least
+$\sqrt2/6\approx0.2357$ from $\Sq_0+\Z[i]$, and none lies in $[-\frac13,\frac13]^2+\Z[i]$.
+\end{lemma}
+
+\begin{proof}
+(a) $P_1$ is cut out by the six slabs $|\langle x,\nu\rangle|\le\frac16$, $\nu\in\{1,i,\rho,i\rho,\bar\rho,i\bar\rho\}$,
+whose directions modulo $180^\circ$ are $0^\circ$, $\theta$, $90^\circ-\theta$, $90^\circ$, $90^\circ+\theta$,
+$180^\circ-\theta$ with $\theta=\arccos\frac45$. So $P_1$ is a $12$-gon circumscribed about the circle of radius
+$\frac16$; consecutive normals make angles $\theta$ (four times) and $90^\circ-2\theta$ (twice), and the vertices
+are at distance $\frac16/\cos\frac\theta2=\frac16\cdot\frac{\sqrt{10}}3$, for example $(\frac16,\frac1{18})$, or
+closer.
+(b) The nonzero classes of $\Lambda_+/\Z[i]$ are those of $\pm\frac{2+i}5$ and $\pm\frac{-1+2i}5$, whose
+representatives in $(-\frac12,\frac12)^2$ have one coordinate $\pm\frac25$ and the other $\pm\frac15$. The point of
+$\Sq_0$ nearest to $\frac25+\frac i5$ is $\frac16+\frac i6$, at distance $\sqrt{(7/30)^2+(1/30)^2}=\sqrt2/6$; other
+translates of $\Sq_0$ are farther. The coordinate $\pm\frac25$ is at distance $\frac25>\frac13$ from $\Z$.
+$\Lambda_-$ is the mirror image of $\Lambda_+$.
+\end{proof}
+
+\begin{lemma}[unique lifts]\label{lem:lifts}
+Let $k\ge1$, $N=5^k$, $N'=5^{k-1}$. If $c,c'\in S_N$ and $c'-c\in N'\Z[i]$, then $c'-c\in N\Z[i]$.
+\end{lemma}
+
+\begin{proof}
+Write $c'=c+N'\lambda$. Then $\bar c'\rho^k-\bar c\rho^k=N'\bar\lambda\rho^k=\bar\lambda(2+i)^{2k-1}/(2-i)\in\Lambda_+$.
+Both $\bar c\rho^k$ and $\bar c'\rho^k$ lie in $(I+\Z)+i(I+\Z)$ (the conditions for $\rho^k$ and $i\rho^k$), so the
+difference lies in $[-\frac13,\frac13]^2+\Z[i]$, hence in $\Z[i]$ by Lemma~\ref{lem:numbers}(b): that is,
+$(2-i)\mid\bar\lambda$, or $(2+i)\mid\lambda$. With $\rho^{-k}$ and $\Lambda_-$, $(2-i)\mid\lambda$. So $5\mid\lambda$.
+\end{proof}
+
+\begin{proposition}\label{prop:shape}
+For every $k\ge1$, $S_{5^k}=(c^*_N+P_k+N\Z[i])\cup(Q_N+N\Z[i])$. So every $c\in S_N$ is $c=e+x$ with either
+$e\in c^*_N+N\Z[i]$ and $|x|\le\sqrt{10}/18$, or $e\in Q_N+N\Z[i]$ and $x=0$.
+\end{proposition}
+
+\begin{proof}
+``$\supseteq$'' is Lemma~\ref{lem:points}. For ``$\subseteq$'' we induct on $k$; write $N'=5^{k-1}$ and note that
+$S_N\subseteq S_{N'}$ and $c^*_N-c^*_{N'}=2N'(1+i)\in N'\Z[i]$.
+
+\emph{$k=1$.} $S_1=\frac{1+i}2+\Sq_0+\Z[i]$, so $c\in S_5$ is $c=c^*_5+x+\lambda$ with $x\in\Sq_0$, $\lambda\in\Z[i]$.
+By Lemma~\ref{lem:points}(a), the conditions at $\rho$ say $\bar x\rho+\bar\lambda\rho\in\Sq_0+\Z[i]$, where
+$\bar\lambda\rho\in\Lambda_+$. If $\bar\lambda\rho\notin\Z[i]$, Lemma~\ref{lem:numbers}(b) gives
+$|x|=|\bar x\rho|\ge\sqrt2/6$, and as $x\in\Sq_0$, $x$ is a corner $(\pm1\pm i)/6$; likewise with $\bar\rho$. If $x$
+is not a corner, then $(2+i)\mid\lambda$ and $(2-i)\mid\lambda$, so $c\equiv c^*_5+x\pmod{5\Z[i]}$, and
+$\bar x\rho^{\pm1}\in\Sq_0+\Z[i]$ with $|x|<\frac56$ gives $\bar x\rho^{\pm1}\in\Sq_0$: $x\in P_1$. If $x$ is a
+corner, $c\equiv\frac{1+i}2+\frac{\pm1\pm i}6=\frac{\alpha+\beta i}3\pmod{\Z[i]}$ with $\alpha,\beta\in\{1,2\}$; the
+point $q=\frac53(\alpha'+\beta'i)\in Q_5$ with $\alpha'\equiv2\alpha$, $\beta'\equiv2\beta\pmod3$ lies in $S_5$ and
+$q\equiv c\pmod{\Z[i]}$, so $c\in q+5\Z[i]$ by Lemma~\ref{lem:lifts}.
+
+\emph{$k\ge2$.} Let $c\in S_N\subseteq S_{N'}$. If $c\equiv\frac{N'}3(\alpha+\beta i)\pmod{N'\Z[i]}$, then
+$q=\frac N3(\alpha'+\beta'i)\in Q_N$ with $\alpha'\equiv2\alpha$, $\beta'\equiv2\beta\pmod3$ satisfies
+$q\equiv c\pmod{N'\Z[i]}$ and $q\in S_N$, so $c\in q+N\Z[i]$ by Lemma~\ref{lem:lifts}. Otherwise
+$c=c^*_N+x+N'\lambda$ with $x\in P_{k-1}\subseteq P_1$ and $\lambda\in\Z[i]$, and the conditions at $\rho^k$ say
+$\bar x\rho^k+\mu\in\Sq_0+\Z[i]$ with $\mu=N'\bar\lambda\rho^k\in\Lambda_+$. If $\mu\notin\Z[i]$,
+Lemma~\ref{lem:numbers} gives $\sqrt2/6\le|x|\le\sqrt{10}/18$, which is impossible. So $(2+i)\mid\lambda$, likewise
+$(2-i)\mid\lambda$, hence $c\equiv c^*_N+x\pmod{N\Z[i]}$, and $\bar x\rho^{\pm k}\in\Sq_0$, so $x\in P_k$.
+\end{proof}
+
+\emph{Types.} By Proposition~\ref{prop:shape} write each $c\in S_N$ as $c=N\varepsilon+x$ with
+$|x|\le r:=\sqrt{10}/18$ and $\varepsilon$ of \emph{type~c}, $\varepsilon\in\frac{1+i}2+\Z[i]$, or of \emph{type~q},
+$\varepsilon\in\frac{\alpha+\beta i}3+\Z[i]$ with $\alpha,\beta\in\{1,2\}$; in both cases
+$N\varepsilon\in\frac N6\Z[i]$. Let $\Z_{(p)}[i]$ be the elements of $\Q(i)$ whose denominators are prime to $p$,
+and $v_3$ the $3$-adic valuation of $\Q(i)$ ($3$ is inert in $\Z[i]$). Then: $\varepsilon$ has type~q if and only
+if $v_3(\varepsilon)=-1$; type~c if and only if $\varepsilon\notin\Z_{(2)}[i]$, and then
+$\varepsilon\equiv h:=\frac{1+i}2\pmod{\Z_{(2)}[i]}$; $mh\equiv h$ for odd $m$, and $2h\in\Z[i]$.
+
+\begin{lemma}[exact relations]\label{lem:exact}
+Let $\sigma_1,\dots,\sigma_\ell\in S_N$, $\sigma_j=N\varepsilon_j+x_j$, and let $m_1,\dots,m_\ell\in\Z$ with
+$\sum m_j\sigma_j=0$. If
+$N>6r\sum|m_j|$, then $\sum m_j\varepsilon_j=0$.
+\end{lemma}
+
+\begin{proof}
+$\sum m_jN\varepsilon_j=-\sum m_jx_j$; the left side lies in $\frac N6\Z[i]$, whose nonzero elements have modulus
+at least $\frac N6$, and the right side has modulus at most $r\sum|m_j|<\frac N6$.
+\end{proof}
+
+\section{The case \texorpdfstring{$d\equiv23\pmod{24}$}{d = 23 mod 24}}\label{sec:23}
+
+Let $a=\frac{d+1}4$ and $b=\frac{d-1}2$: here $a\equiv0\pmod6$, $b$ is odd and $3\nmid b$. The relation
+$a(u_1+\bar u_1)+b\cdot1=0$ gives, for $z=w_1$, $w=w_{u_1}$, $w'=w_{\bar u_1}$ in $S_N$,
+\[
+a(w+w')+bz=0.
+\]
+By Proposition~\ref{prop:shape} write $w=e_1+x_1$, $w'=e_2+x_2$, $z=e_3+y$, with
+$e_j\in(c^*_N+N\Z[i])\cup(Q_N+N\Z[i])$, $x_1,x_2,y\in P_k$, and the corresponding $x_j$ or $y$ equal to $0$ when
+$e_j\in Q_N+N\Z[i]$. Then
+\[
+a(e_1+e_2)+be_3=-(ax_1+ax_2+by).
+\]
+As $a$ is even and $3\mid a$, $ac^*_N=\frac a2N(1+i)$ and $a\frac N3(\alpha+\beta i)$ lie in $N\Z[i]$; as $b$ is odd
+and $3\nmid b$, $be_3$ lies in $c^*_N+N\Z[i]$ or in $Q_N+N\Z[i]$ with $e_3$. So the left side $u+iv$ lies in
+$c^*_N+N\Z[i]$, where $|u|,|v|\ge\frac N2$, or in $Q_N+N\Z[i]$ ($-Q_N\equiv Q_N$), where $|u|,|v|\ge\frac N3$. As
+$P_k$ is convex and symmetric, the right side lies in $(2a+b)P_k=dP_k$ in the first case and in
+$2aP_k=\frac{d+1}2P_k$ in the second ($y=0$). On $P_1\supseteq P_k$ the conditions at $\rho$ and $\bar\rho$ give
+$|3u\pm4v|\le\frac56$, so $3|u|+4|v|\le\frac56$. Hence the first case needs $\frac{7N}2\le\frac{5d}6$, that is
+$d\ge\frac{21N}5$, and the second needs $\frac{7N}3\le\frac{5(d+1)}{12}$, that is $d+1\ge\frac{28N}5$. If
+$d<21N/5$, neither holds. This proves Theorem~\ref{thm:sets}(1); and $5^k\ge d/4$ gives $d\le4N<21N/5$.
+
+\begin{remark}
+For $k\le5$ the bound is sharp: if $d\ge21N/5$, then $c^*_N/d\in P_k$, since for $k\le5$ the conditions at
+$\rho^{\pm1}$ are the binding ones, and this gives a character with all three types~c. An exact computation (cells of
+$S_N$, Minkowski sums and the lattice points of $N\Z[i]$, with a second method as a cross-check and an explicit
+character in every feasible case) confirms, for every $d\equiv23\pmod{24}$ up to $1295$ when $N=5,25,125$ and up to
+$2999$ when $N=625$, that the set of Theorem~\ref{thm:sets}(1) admits no such character exactly when $d<21N/5$. For
+$k\ge6$ the bound is not sharp: as $(1-i)\rho^6=(1457-22049i)/15625$, the point $c^*_N/d$ lies in $P_6$ only when
+$d\ge66147N/15625$, and for $N=5^6$ an exact decision (all choices of types and all lattice points) finds no
+character for the $22$ values $65\,639\le d\le66\,143$ with $d\equiv23\pmod{24}$, although $d\ge21N/5=65\,625$; the
+first value with a character is $66\,167$.
+\end{remark}
+
+\section{The case \texorpdfstring{$d\equiv11\pmod{24}$}{d = 11 mod 24}}\label{sec:11}
+
+Now $a$ is odd, and the argument fails: $a+b$ is even and $3\mid a$, so $a(c^*_N+q)+bc^*_N\in N\Z[i]$ for $q\in Q_N$,
+and since $\gcd(a,b)=1$ suitable lifts $z=c^*_N+N\lambda_3$, $w=c^*_N+N\lambda_1$, $w'=q+N\lambda_2$ solve
+$a(w+w')+bz=0$ exactly. So $G_N\cup G_Nu_1\cup G_N\bar u_1$ admits such a character for every $k$. The vector $u_n$ excludes it. Comparing
+$X$ and $Y$ gives $(n^2+d)u_n=(n-1)(n+d)\cdot1+n(1+d)u_1$, so with $y=w_{u_n}$,
+\[
+a(w+w')+bz=0,\qquad(n^2+d)y-(n-1)(n+d)z-n(1+d)w=0.
+\]
+As $n\ge1$, $(n-1)(n+d)$ and $n(1+d)$ are nonnegative, and the sums of their absolute values are $2a+b=d$ and
+$2n(n+d)\ge d$. (For negative $n$ the second sum is larger, and the hypothesis on $N$ would have to change.) As
+$N>\frac{2\sqrt{10}}3n(n+d)=12r\,n(n+d)$, Lemma~\ref{lem:exact} applies to both relations: writing
+$z=N\varepsilon_z+x_z$ and so on,
+\begin{equation}\label{eq:exact11}
+a(\varepsilon_w+\varepsilon_{w'})=-b\varepsilon_z,\qquad
+(n^2+d)\varepsilon_y=(n-1)(n+d)\varepsilon_z+n(1+d)\varepsilon_w,
+\end{equation}
+exactly in $\Q(i)$.
+
+\emph{Step 1: $\varepsilon_z$ has type~c and $v_3(\varepsilon_z)\ge s-1$.} We have $v_3(a)=s\ge1$, $3\nmid b$, and
+$v_3(\varepsilon_w+\varepsilon_{w'})\ge-1$, so $v_3(\varepsilon_z)\ge s-1\ge0$.
+
+\emph{Step 2 (at $2$): $\varepsilon_y$ has type~c if and only if $\varepsilon_w$ has type~q.} As $d\equiv3\pmod8$
+and $n\equiv3\pmod4$, each of $n^2+d$, $(n-1)(n+d)$ and $n(1+d)$ is $4$ times an odd integer; write the second
+relation as $A'\varepsilon_y=B'\varepsilon_z+C'\varepsilon_w$ with $A',B',C'$ odd. Modulo $\Z_{(2)}[i]$,
+$B'\varepsilon_z\equiv h$, and $C'\varepsilon_w\equiv h$ or $0$ according as $\varepsilon_w$ has type~c or~q. So
+$A'\varepsilon_y\in\Z_{(2)}[i]$ exactly when $\varepsilon_w$ has type~c.
+
+\emph{Step 3 (at $3$): $\varepsilon_y$ has type~q if and only if $\varepsilon_w$ has type~q.} Let
+$e=v_3(n-1)\ge s+1$; $3\nmid n(n+1)$. Then $n^2+d=(n-1)(n+1)+(d+1)$ and $n+d=(n-1)+(d+1)$ have valuation $s$, so do
+$n(1+d)$, and $v_3((n-1)(n+d))=e+s$. Dividing the second relation by $3^s$ gives
+$A''\varepsilon_y=B''\varepsilon_z+C''\varepsilon_w$ with $3\nmid A''C''$ and
+$v_3(B''\varepsilon_z)\ge e+s-1\ge2s\ge2$. So $v_3(\varepsilon_y)=-1$ if and only if $v_3(\varepsilon_w)=-1$.
+
+Steps 2 and 3 contradict each other whatever the type of $\varepsilon_w$. This proves Theorem~\ref{thm:sets}(2).
+
+\begin{remark}
+The argument of Section~\ref{sec:23} does not work with one vector in place of $u_1$ and $u_n$: if
+$v=(\mu+i\nu\sqrt d)/\tau$ with $\mu^2+d\nu^2=\tau^2$ in lowest terms and $d\equiv3\pmod8$, then $4\nmid\tau$ (if $\tau$ is even, $\mu,\nu$ are odd and $\mu^2+d\nu^2\equiv4\pmod8$), while the
+argument of Section~\ref{sec:23} needs the coefficient $\tau/\gcd(\tau,2\mu)$ of the relation $\tau(v+\bar v)=2\mu\cdot1$
+to be even. Correspondingly, $x^2+y^2$ is anisotropic over $\Q_2(\sqrt d)$ for $d\equiv3\pmod8$ and isotropic for
+$d\equiv7\pmod8$.
+\end{remark}
+
+\section{Checks}\label{sec:checks}
+
+Every computation that the proofs use is checked in exact arithmetic by a program in \cite{Repo}: Lemmas
+\ref{lem:GN} and \ref{lem:points} for $k\le6$, both numbers of Lemma~\ref{lem:numbers}, and $S_{5^k}$ itself for
+$k=1,2,3$ by exact polygon clipping (a $12$-, $20$- and $28$-gon around $c^*_N$ of areas $17/189$, $61/693$ and
+$437/4977$, and the four points of $Q_N$), independently of the induction; a referee's own program confirmed
+Proposition~\ref{prop:shape} with equality for $k\le4$, and found no exception among $10^7$ sampled points for
+$k=1,2$. Exact certificates (branch and bound over the integer values of a basis of the relations, with a rational
+Farkas vector at every leaf), each accepted by two checkers written separately (\nolinkurl{check_w.py} and
+\nolinkurl{check_w_indep.py}), show that the sets of Theorem~\ref{thm:sets} have no such character: in case~(1),
+with the $N$ that the proof needs, $d=23,47,71,95$ with $N=25$ and $d=119,143,\dots,311$ ($d\equiv23\pmod{24}$,
+squarefree) with $N=125$, an independent check of Section~\ref{sec:23}; in case~(2), already with a smaller $N$
+than the proof needs, $d=11,35,59$ with $N=25$ and $d=83,131,155$ with $N=125$. A floating-point solver confirms case~(2) with the $N$ that the proof needs for
+$d=11,35,59,83,131,179$. Finally, for a finite set $\Delta$ of unit vectors, Proposition~\ref{prop:shape} and
+Lemma~\ref{lem:exact} reduce the question whether $G_N(\Delta\cup\{1\})$ admits such a character for all large $N$ to
+the existence of a character with values in $\{\frac13,\frac12,\frac23\}$, a computation in $(\Z/6)^4$; it confirms
+Theorem~\ref{thm:sets}(2) for all $191$ squarefree $d\equiv11\pmod{24}$ below $5000$, and shows that for $d=11$ no
+two vectors $(\mu+i\nu\sqrt{11})/\tau$ with $\nu\le7$, $\tau\le60$ suffice. Independently of the proof, a computer
+search over denominators found a certificate of the same kind, for other sets of unit vectors, for each of the
+$155$ squarefree $d\equiv11\pmod{12}$ below $2000$ and for $593$ of the $611$ between $2000$ and $10\,000$; both
+checkers accept all of them, except two of more than $50$ MB, which were checked once and not kept
+(\nolinkurl{data/quadratic_planes/winding/scan} in \cite{Repo}).
+
+\emph{Formal proof.} Theorem~\ref{thm:main} and Corollary~\ref{cor:padic} are also proved in Lean~4 with Mathlib
+(\nolinkurl{lean/FourColours.lean} and \nolinkurl{lean/PadicFour.lean} in \cite{Repo}, the values
+$\chi(\Q_2^2)=2$ and $\chi(\Q_3^2)=3$ in \nolinkurl{lean/PadicPlanes.lean}, and Theorem~W for an arbitrary abelian
+group and a finite set $S$ in \nolinkurl{lean/TheoremWInf.lean}, by averages over boxes and a limit along an
+ultrafilter); the files depend only on Lean's three standard axioms. The formal proof uses a cruder form of
+Proposition~\ref{prop:shape}, which suffices for Theorem~\ref{thm:main} but not for the bound
+$d<21\cdot5^{k-1}$: every $c\in S_N$ is $N(\frac{1+i}2+t)+x$ with $t\in\Z[i]$ and $|x|^2<\frac1{18}$, or
+$N(\frac{\alpha+\beta i}3+t)$ with $\alpha,\beta\in\{1,2\}$. This follows by the induction of
+Proposition~\ref{prop:shape} started at $k=0$, where $S_1=([\frac13,\frac23]+\Z)^2$ and the corners of the square are
+the points of type $q$; in the step, $\frac1{18}=(\frac7{30})^2+(\frac1{30})^2$ replaces the numbers of
+Lemma~\ref{lem:numbers}, and the points of type $q$ are handled by a congruence modulo $15$. The formal analogue of Lemma~\ref{lem:exact}
+assumes $N>2\sum_j|m_j|$, for values written as $\frac N6E+x$ with $E$ an integer and $|x|\le\frac14$.
+
+\section*{Acknowledgements}
+The author thanks the authors of the works cited, whose questions and results this note builds on.
+
+\begin{thebibliography}{99}
+\bibitem{Davies} J. Davies, \emph{Chromatic number of spacetime}, arXiv:2308.16885 (2023, revised 2024).
+\bibitem{dBE} N. G. de Bruijn and P. Erd\H{o}s, \emph{A colour problem for infinite graphs and a problem in the
+theory of relations}, Nederl. Akad. Wetensch. Proc. Ser. A \textbf{54} = Indag. Math. \textbf{13} (1951),
+371--373.
+\bibitem{deGrey} A. D. N. J. de Grey, \emph{The chromatic number of the plane is at least 5}, Geombinatorics
+\textbf{28} (2018), 18--31; arXiv:1804.02385.
+\bibitem{EI} G. Exoo and D. Ismailescu, \emph{The chromatic number of the plane is at least $5$: a new proof},
+Discrete Comput. Geom. \textbf{64} (2020), 216--226; arXiv:1805.00157.
+\bibitem{Fischer1990} K. G. Fischer, \emph{Additive $K$-colorable extensions of the rational plane}, Discrete
+Math. \textbf{82} (1990), 181--195.
+\bibitem{Johnson1987} P. D. Johnson Jr., \emph{Two-colorings of real quadratic extensions of $\Q^2$ that forbid
+many distances}, Congr. Numer. \textbf{60} (1987), 51--58.
+\bibitem{Madore} D. A. Madore, \emph{The Hadwiger--Nelson problem over certain fields}, arXiv:1509.07023 (2015).
+\bibitem{Moorhouse} G. E. Moorhouse, \emph{On the chromatic numbers of planes}, preliminary draft, revised
+3 March 2010, \url{https://www.ericmoorhouse.org/pub/chromatic.pdf}.
+\bibitem{MoorhouseTalk} G. E. Moorhouse, \emph{Colouring the plane}, talk at Designs, Codes \& Geometries
+2010, slides at \url{https://www.ericmoorhouse.org/slides/ebertfest.pdf}.
+\bibitem{OpenAI} OpenAI, \emph{The Euclidean plane is not five-colorable}, preprint (23 September 2026), with a
+formalization in Lean, \url{https://github.com/openai/math}.
+\bibitem{PA} S. Gal\'an, \emph{Colouring the $p$-adic plane}, draft, 2026, \texttt{papers/padic-planes/} in
+\cite{Repo}.
+\bibitem{QP} S. Gal\'an, \emph{Real quadratic planes that need four colours}, draft, 2026,
+\texttt{papers/quadratic-planes/} in \cite{Repo}.
+\bibitem{Repo} S. Gal\'an, \emph{The Hadwiger--Nelson problem over number fields}, code, data and formal
+proofs, 2026. Archived at Zenodo, \href{https://doi.org/10.5281/zenodo.22976635}{doi:10.5281/zenodo.22976635}
+(all versions); source at \url{https://github.com/decalion89/chromatic-number-of-the-plane}; a fuller account is
+\texttt{notes/four\_colours\_11\_mod\_12.md} there, and the programs are in
+\texttt{data/quadratic\_planes/winding/family/}. These files and the Lean files cited here are on the branch
+\texttt{claude/quadratic-planes} (pull request~35), not yet in a release.
+\bibitem{Soifer} A. Soifer, \emph{The mathematical coloring book}, Springer, New York, 2009.
+\bibitem{Winding} S. Gal\'an, \emph{Circular colourings of abelian Cayley graphs below four come from
+characters}, draft, 2026, \texttt{papers/winding/} in \cite{Repo}.
+\bibitem{Woodall} D. R. Woodall, \emph{Distances realized by sets covering the plane}, J. Combin. Theory Ser. A
+\textbf{14} (1973), 187--200.
+\end{thebibliography}
+
+\end{document}

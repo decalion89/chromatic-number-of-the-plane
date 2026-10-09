@@ -1,0 +1,14 @@
+N=5 r=3001/10000: 4000000 samples, 23258 with kappa >= r+1e-9 (expected ~23422.0); not in any computed component: 0; low-kappa points inside a component: 0
+   component 0: hits 22, expected 18.0
+   component 1: hits 20, expected 18.0
+   component 2: hits 17, expected 18.0
+   component 3: hits 638, expected 643.7
+   component 4: hits 636, expected 643.7
+   component 5: hits 20, expected 18.0
+   component 6: hits 20539, expected 20703.1
+   component 7: hits 22, expected 18.0
+   component 8: hits 621, expected 643.7
+   component 9: hits 681, expected 643.7
+   component 10: hits 14, expected 18.0
+   component 11: hits 16, expected 18.0
+   component 12: hits 12, expected 18.0

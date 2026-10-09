@@ -1,0 +1,8 @@
+k=1: least margin over G_N = 3/10; dist to NE_c = 2.2091 >= 2.0361: True; dist to NE_q = 1.0965 >= 0.9667: True
+k=2: least margin over G_N = 3/10; dist to NE_c = 11.3172 >= 10.9803: True; dist to NE_q = 5.9779 >= 5.6333: True
+k=3: least margin over G_N = 3/10; dist to NE_c = 56.1006 >= 55.7017: True; dist to NE_q = 29.6581 >= 28.9667: True
+k=4: least margin over G_N = 3/10; dist to NE_c = 279.6113 >= 279.3085: True; dist to NE_q = 147.4657 >= 145.6333: True
+k=5: least margin over G_N = 3/10; dist to NE_c = 1397.4669 >= 1397.3425: True; dist to NE_q = 736.5564 >= 728.9667: True
+k=6: least margin over G_N = 3/10; dist to NE_c = 6987.5189 >= 6987.5124: True; dist to NE_q = 3682.6803 >= 3645.6333: True
+k=7: least margin over G_N = 3/10; dist to NE_c = 34938.4056 >= 34938.3621: True; dist to NE_q = 18414.0512 >= 18228.9667: True
+k=8: least margin over G_N = 3/10; dist to NE_c = 174692.8163 >= 174692.6107: True; dist to NE_q = 92071.1376 >= 91145.6333: True

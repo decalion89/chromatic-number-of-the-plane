@@ -1,0 +1,8 @@
+  iteration 50: 110 cycles, 3.7 s
+  iteration 100: 234 cycles, 7.5 s
+  iteration 150: 358 cycles, 12.0 s
+  iteration 200: 466 cycles, 17.2 s
+  iteration 250: 592 cycles, 33.8 s
+UNSAT after 279 iterations, 659 cycles of lengths [7, 14, 21, 28, 35], 63.7 s (solver cadical153, fixed vertex 0)
+wrote cnf/witness_q11_cegar.ref.cnf: 2100 variables, 20598 clauses, sha256 33551a4eb69a6ddff1b9b3336efd95f02d766026aec2ca9b8f8206081d9e26ac
+exit 0

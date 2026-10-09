@@ -1,0 +1,251 @@
+{
+ "res": {
+  "basis_string_matches": true,
+  "denominator_positive_int": true,
+  "generators_are_int8": true,
+  "points_are_int8": true,
+  "points_distinct": true,
+  "claim12_generators_match_construction": true,
+  "claim3_generators_unit_length": true,
+  "claim3_no_zero_generator": true,
+  "edges_well_formed": true,
+  "edges_no_duplicates": true,
+  "claim3_listed_edges_are_generator_differences": true,
+  "claim3_every_cayley_pair_is_listed": true,
+  "fixed_vertex_in_range": true,
+  "claim3_fixed_vertex_is_origin": true,
+  "claim3_all_points_reachable": true,
+  "colouring_length_n": true,
+  "colouring_values_in_0123": true,
+  "claim4_proper_4_colouring": true,
+  "claim5_cycles_valid": true,
+  "allpairs_generator_difference_count_equals_edges": true,
+  "all_edges_unit_distance": true
+ },
+ "stats": {
+  "n_points": 1874,
+  "n_edges_listed": 7887,
+  "n_generators": 27,
+  "n_cycles": 3389,
+  "n_distinct_points": 1874,
+  "construction_info": {
+   "R60_norm_is_1": true,
+   "RA_norm_is_1": true,
+   "RG_norm_is_1": true,
+   "float_angles_deg": {
+    "R60": 59.99999999999999,
+    "RA": 33.55730976192071,
+    "RG": 38.21321070173819
+   }
+  },
+  "construction_compare": {
+   "num_generators": 27,
+   "num_distinct_generator_pairs": 27,
+   "num_constructed": 27,
+   "num_distinct_constructed_vectors": 27,
+   "num_distinct_constructed_pairs": 27,
+   "generator_pairs_minus_constructed": 0,
+   "constructed_pairs_minus_generator": 0,
+   "ok": true
+  },
+  "n_signed_generators": 54,
+  "n_cayley_pairs_by_generator_search": 7887,
+  "n_duplicate_edges": 0,
+  "n_listed_edges_not_cayley": 0,
+  "n_cayley_pairs_not_listed": 0,
+  "n_listed_edges_with_bad_difference": 0,
+  "n_reachable_from_fixed_vertex": 1874,
+  "degree_min_max": [
+   2,
+   36
+  ],
+  "n_monochromatic_edges": 0,
+  "colour_class_sizes": [
+   504,
+   460,
+   447,
+   463
+  ],
+  "cycle_length_histogram": {
+   "4": 3370,
+   "8": 19
+  },
+  "cycle_defects": {
+   "format": 0,
+   "empty": 0,
+   "len_not_div4": 0,
+   "repeated_vertex": 0,
+   "non_edge_step": 0
+  },
+  "n_identical_duplicate_cycles": 0,
+  "n_cycles_whose_reverse_is_also_listed": 3006,
+  "n_distinct_cycles_up_to_rotation": 3389,
+  "allpairs_n_pairs_with_generator_difference": 7887,
+  "n_unit_distance_pairs": 8085,
+  "n_unit_distance_pairs_not_edges": 198,
+  "n_edges_not_unit_distance": 0,
+  "n_distinct_extra_unit_differences_up_to_sign": 12,
+  "extra_unit_differences_up_to_sign": [
+   [
+    [
+     15,
+     0,
+     0,
+     -11,
+     0,
+     11,
+     15,
+     0
+    ],
+    52
+   ],
+   [
+    [
+     0,
+     0,
+     0,
+     14,
+     0,
+     14,
+     0,
+     0
+    ],
+    35
+   ],
+   [
+    [
+     15,
+     0,
+     0,
+     11,
+     0,
+     11,
+     -15,
+     0
+    ],
+    25
+   ],
+   [
+    [
+     0,
+     0,
+     0,
+     14,
+     0,
+     -14,
+     0,
+     0
+    ],
+    23
+   ],
+   [
+    [
+     9,
+     0,
+     0,
+     13,
+     0,
+     -13,
+     9,
+     0
+    ],
+    18
+   ],
+   [
+    [
+     21,
+     0,
+     0,
+     7,
+     0,
+     7,
+     -21,
+     0
+    ],
+    16
+   ],
+   [
+    [
+     21,
+     0,
+     0,
+     7,
+     0,
+     -7,
+     21,
+     0
+    ],
+    8
+   ],
+   [
+    [
+     24,
+     0,
+     0,
+     -2,
+     0,
+     -2,
+     -24,
+     0
+    ],
+    6
+   ],
+   [
+    [
+     24,
+     0,
+     0,
+     2,
+     0,
+     -2,
+     24,
+     0
+    ],
+    6
+   ],
+   [
+    [
+     21,
+     0,
+     0,
+     -7,
+     0,
+     7,
+     21,
+     0
+    ],
+    4
+   ],
+   [
+    [
+     21,
+     0,
+     0,
+     -7,
+     0,
+     -7,
+     -21,
+     0
+    ],
+    4
+   ],
+   [
+    [
+     9,
+     0,
+     0,
+     -13,
+     0,
+     -13,
+     -9,
+     0
+    ],
+    1
+   ]
+  ],
+  "unit_check_seconds": 2.9,
+  "float_crosscheck_unit_pairs": 8085,
+  "seconds": 3.7
+ },
+ "overall": true
+}

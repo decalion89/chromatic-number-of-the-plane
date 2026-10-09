@@ -1,0 +1,5 @@
+k=1: min margin of c_k over G_N = 3/10 ; max over m of min margin of c_k+Nm over G(k,1) = 41/250
+k=2: min margin of c_k over G_N = 3/10 ; max over m of min margin of c_k+Nm over G(k,1) = 12169/81250
+k=3: min margin of c_k over G_N = 3/10 ; max over m of min margin of c_k+Nm over G(k,1) = 11/130
+k=4: min margin of c_k over G_N = 3/10 ; max over m of min margin of c_k+Nm over G(k,1) = 11/130
+k=5: min margin of c_k over G_N = 3/10 ; max over m of min margin of c_k+Nm over G(k,1) = 11/130

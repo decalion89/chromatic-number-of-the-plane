@@ -25,8 +25,9 @@
 **How many colours does the plane need, so that no two points at distance exactly 1
 share a colour?**
 
-Posed around 1950. Still open. The answer, written χ(ℝ²), is known only to lie in
-**{5, 6, 7}**.
+Posed around 1950. *Update, October 2026:* OpenAI proved χ(ℝ²) ≥ 6 in September 2026 (non-constructively), so
+χ(ℝ²) ∈ {6, 7}; no explicit graph for six is known. The text below records the state when this log began: the
+answer, written χ(ℝ²), was known only to lie in **{5, 6, 7}**.
 
 | bound | value | who, when | how |
 |---|---|---|---|
@@ -35,7 +36,7 @@ Posed around 1950. Still open. The answer, written χ(ℝ²), is known only to l
 | lower | ≥ 5 | Jaan Parts, 2020 | the same, down to 509 vertices |
 | upper | ≤ 7 | Isbell, 1950 | a hexagonal tiling of diameter just under 1 |
 
-Nothing has moved since.
+Nothing had moved since, until OpenAI's proof of September 2026.
 
 ## What this is
 
@@ -2047,8 +2048,10 @@ weighting them is a *fractional colouring* of total weight `1/m_1`. Hence
 The fractional chromatic number of the plane is **below five**. This bound is not
 new: it is R. Hochberg and P. O'Donnell's (*A large independent set in the unit
 distance graph*, Geombinatorics 2(4) (1993) 83–84). Every LP and
-SDP relaxation is bounded by `chi_f`, so no relaxation can see `chi >= 5`, let
-alone `chi >= 6`. That is why de Grey's 2018 result had to be an integral
+SDP relaxation is bounded by `chi_f`, so no relaxation can see `chi >= 6`. *[Corrected 9 October 2026: this
+sentence said "cannot see `chi >= 5`", which is wrong. Since `chi >= ⌈chi_f⌉`, a fractional bound `chi_f > 4`
+gives `chi >= 5`, and Dúcz and Varga (arXiv:2606.28157) proved `chi_f(R^2) > 4`. The rest of the paragraph is about
+reaching five for `chi_f`, which stays out of reach.]* That is why de Grey's 2018 result had to be an integral
 combinatorial argument, and why the LP line, which has kept advancing (to
 `chi_f(R^2) >= 4`: M. Matolcsi, I. Z. Ruzsa, D. Varga, P. Zsámboki,
 [arXiv:2311.10069](https://arxiv.org/abs/2311.10069)), cannot reach five, however
@@ -7233,7 +7236,8 @@ plane can be proper along the finitely many unit directions of `M`.
    measure. ∎
 
 So the rigidity of any finite-direction module would already imply that the
-**measurable** chromatic number of the plane is at least 6, which is open.
+**measurable** chromatic number of the plane is at least 6, which is open. *[9 October 2026: no longer open;
+it follows from OpenAI's proof that χ(ℝ²) ≥ 6.]*
 Conversely, a measurable 5-colouring along a module's directions would refute
 its rigidity. The torus gate searched for pixelated ones along the 803
 directions and found none.
@@ -8742,7 +8746,8 @@ of the plane is larger than 4.
 We tried to beat Parts' record, a 5-chromatic unit-distance graph with 509 vertices
 ([arXiv:2010.12665](https://arxiv.org/abs/2010.12665)). **No route got below 509.** The work is on the branch
 `claude/record-parts` (not merged; its `record-attempt/README.md` lists every file), with one branch per route,
-`claude/record-r1` to `claude/record-r9`.
+`claude/record-r1` to `claude/record-r9`. (These working branches are in the private development repository
+and are not published.)
 
 - **Parts' construction, rebuilt** from the paper's definitions alone: `L727 ∪ ρS361` (1 087 points, no
   4-colouring, drat-trim VERIFIED), and from his orbit tables the region `W = W_L ∪ ρW_S` (775 points) that
@@ -8829,3 +8834,2252 @@ J. K. Haugland's heptagon graph ([arXiv 2608.04542](https://arxiv.org/abs/2608.0
 Not done: vertex-by-vertex minimisation (a first pass, with one selector per vertex, did not finish in 33
 minutes and was stopped), so the graph is not known to be vertex-critical. Nobody outside the project has
 refereed it.
+
+## Real quadratic planes that need four colours (1 October)
+
+For squarefree `d`, the plane over `ℚ(√d)` needs 2 colours when `d ≡ 1, 2 (mod 4)` (Johnson 1987;
+Moorhouse 2010, §8), and at most 3 when `d ≡ 0, 1 (mod 3)` (Fischer 1990). So only `d ≡ 11 (mod 12)` can
+need four, and for those the known lower bound was 3. `ℚ(√47)`, with `3 ≤ χ ≤ 5`, had resisted our
+experiments of 25 September (balls of up to 2 248 121 points were 3-colourable). We asked whether a richer
+set of directions changes that (`notes/quadratic_planes.md`).
+
+- **The method.** A point is `((a + b√d)/D, (c + e√d)/D)` with integers `a, b, c, e`; two points are at
+  distance 1 exactly when two integer identities hold. For a denominator `D` we took every unit vector with
+  denominator dividing `D`: 108 of them for `d = 11, 23, 47, 59, 191` (`D = 30, 120, 240, 210, 240`), 140 for
+  `d = 71` (`D = 120`), 148 for `d = 119` (`D = 240`), 132 for `d = 239` (`D = 480`), 140 for `d = 359` (`D =
+  600`), 116 for `d = 431` (`D = 600`), 196 for `d = 131`, 212 for `d = 179` (`D = 390`) and 276 for `d = 35`
+  (`D = 390`). Colouring-guided growth: start from the sums of at most two directions, 3-colour the graph
+  (tabucol, else kissat), add the points whose neighbours already see all three colours, repeat.
+- **The gates.** The first runs over `ℚ(√47)`, with the 44 vectors `s/s̄` for `s` with coefficients in
+  `{−1, 0, 1}`, built only bipartite graphs. For `d ≡ 7 (mod 8)` such vectors are integral at a place
+  above 2 with residue field `𝔽₂`, where the unit graph is a perfect matching. At 3, when `d ≡ 2 (mod 3)`,
+  integral vectors map to `H₉`, which is 3-colourable. The sets above contain vectors that are integral at
+  neither place, such as `(1 + 7i√47)/48`, from Pell's equation `48² − 47·7² = 1`.
+- **The growth.** kissat found no 3-colouring after 1 round for `d = 11` (5 941 points), 12 for `d = 23`
+  (7 539), 30 for `d = 47` (9 139), 18 for `d = 59` (7 972), 12 for `d = 71` (12 004), 7 for `d = 119`
+  (12 211), 5 for `d = 191` (6 684), 26 for `d = 239` (10 682), 30 for `d = 359` (11 901), 96 for `d = 431`
+  (10 217), 14 for `d = 131` (21 895), 8 for `d = 179` (24 785) and 4 for `d = 35` (39 265); each run took
+  under four minutes. For `d = 35, 131, 179, 239, 359, 431` we used a variant (`grow3r.py`): when no candidate
+  is blocked, it 3-colours the graph again from scratch, and if still none is blocked it adds candidates whose
+  neighbours see two colours. We kept the vertices whose clauses lie in the drat-trim core of a checked proof,
+  then deleted vertices one at a time while the rest stayed not 3-colourable. This left vertex-critical graphs
+  with 106, 686, 872, 462, 674, 469, 143, 394, 650, 511, 741, 344 and 361 vertices. For `d = 431` a faster
+  shrinking (`min3fast.py`: several solver seeds per core, the two vertices of the fixed edge always kept in
+  the core, tabu search before kissat) took nine minutes.
+- **The checks.** For each graph: every point and edge in exact integer arithmetic, the edges are all the
+  unit pairs, there is no triangle, a proper 4-colouring, a proper 3-colouring of the graph minus each
+  vertex, and no 3-colouring, twice: kissat answered UNSATISFIABLE and drat-trim VERIFIED the proof, for the
+  stored formula and for a second encoding written by separate code. `scripts/verify_quadratic_planes.py`
+  repeats all of it.
+- **Upper bounds.** `11, 23, 71, 95, 155, 179, 191, 239, 263, 359, 431, 599, 935` are squares modulo 7 and `35 = 5 · 7`, `119 = 7 ·
+  17`, `455 = 5 · 7 · 13`, `959 = 7 · 137`, so Moorhouse's reduction modulo a prime of norm 7 (his Lemma 8.2) gives `χ ≤ χ(𝔽₇²) = 4`; `59, 131, 251 ≡ 3
+  (mod 8)` give `χ ≤ 4` by Fischer's Theorem 10; `47 ≡ 5² (mod 11)` gives `χ ≤ χ(𝔽₁₁²) = 5`. So `χ = 4` for `d
+  = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 455, 599, 935, 959`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`. With the known results,
+  `χ(ℚ(√d)²)` is now known for every squarefree `d < 83` except `d = 47`.
+- **An incident.** The first certification runs for `d = 23` and `d = 47` ran at the same time and wrote
+  their DRAT proofs to the same temporary file. We stopped both, gave the temporary files distinct names,
+  and ran both certifications again from the start. The certification of `d = 11` had run alone.
+- **The literature.** We found no real quadratic field known to need four colours. hn-2adic-obstruction
+  proves the upper bound 4 for `d ≡ 3 (mod 8)` again and finds odd cycles over `ℚ(√11)`. Cohen's
+  conjecture (University of Chicago REU paper, 2007) that `ℚ[α] ⊂ ℂ` is 3-colourable for every quadratic
+  `α` is about a set of dimension 2 over `ℚ`; reduction at a ramified prime proves it, so the theorem above
+  does not contradict it. A second pass the same day added Moorhouse's talk of 2010 (which asks what can
+  be said about `χ(ℚ(√d)²)` and about `χ(ℚ(√47)²)`), Axenovich et al. (2014, Theorem 2.2: the upper
+  bounds), Currie and Eggleton, Bardestani and Mallahi-Karai, arXiv abstracts, MathOverflow and
+  Mathematics Stack Exchange. None of them has a lower bound above 3 for a real quadratic field. Johnson
+  (1987), Chilakamarri (1993), Benda and Perles (2000) and Soifer's book (2024) we could not read; the list
+  is in `notes/quadratic_planes.md` §1.
+- **Where it fails.** In the first runs, for `d = 35, 83, 95, 107, 131, 155, 179, 203`, with one to six
+  denominators each (60 to 212 directions), the growth stopped: the 3-colouring extended to every candidate
+  point (or, for `d = 179`, the starting graph was already larger than the limit of the run). Two of these
+  failures have a reason. A third gate, at 5, works like the one at 3 when `d ≡ 0, 1, 4 (mod 5)`: the
+  residue graph is `H₅`, which is 3-colourable. For `d = 35` and `D = 174` every direction is integral at
+  the places above 5, and for `d = 83` and `D = 410` at the places above 3. The others we did not
+  understand; the runs for `d = 23` and `d = 59` had started from graphs of the same shape and gone on.
+- **Larger direction sets.** With the 276 directions of denominator dividing 390, the variant reached a graph
+  over `ℚ(√35)` with no 3-colouring in 4 rounds, and with 196 and 212 directions ones over `ℚ(√131)` and
+  `ℚ(√179)` in 14 and 8 rounds (above). So the failures were, at least for these three fields, a limit of the
+  search.
+- **Smaller witnesses.** A second shrinking, with one incremental SAT solver (CaDiCaL 1.5.3 through PySAT: a
+  selector literal per vertex, each test a solve under assumptions, and the core of failed assumptions of
+  every refutation as the new vertex set) and up to 400 random deletion orders per grown graph
+  (`min3multi.py`), gave smaller vertex-critical graphs, which replace the first ones: 106 → 94 vertices for
+  `d = 11`, 686 → 660 for `d = 23`, 650 → 580 for `d = 35`, 462 → 406 for `d = 59`, 674 → 611 for `d = 71`,
+  469 → 399 for `d = 119`, 511 → 356 for `d = 131`, 361 → 259 for `d = 179`, 143 → 100 for `d = 191`, 394 →
+  355 for `d = 239`, 741 → 715 for `d = 359`, 344 → 331 for `d = 431` and 872 → 816 for `d = 47`. Each was
+  certified again from scratch by `certify_q.py`, and checked again by the checker with the solvers. On
+  `ℚ(√431)` the incremental solver took 18 seconds where `min3fast.py` had taken nine minutes.
+- **`ℚ(√155)`, the same evening.** The growth with `D = 390` (148 directions, the variant `grow3r.py`) stopped
+  after 46 rounds at 19 061 points with no 3-colouring. One pass of `min3inc.py` gave a vertex-critical graph
+  with 1 813 vertices and 5 041 edges. Its certification first called kissat once per vertex for the
+  3-colourings of `G − v`; at about a minute per vertex, under load, that would have taken more than a day.
+  So `certify_q.py` now finds them with one incremental CaDiCaL solver, with a selector per vertex as in
+  `min3inc.py`, and by rotation: if in a 3-colouring of `G − v` exactly one neighbour `w` of `v` has colour
+  `k`, giving `v` colour `k` and dropping `w` 3-colours `G − w`. Every colouring is checked before it is
+  stored, and the checker checks them all again. Here this took 753 solver calls and 15 minutes; on the
+  816-vertex graph over `ℚ(√47)`, 315 calls and 21 seconds. Certified: both encodings unsatisfiable with
+  drat-trim VERIFIED, and the checker, run with the solvers, wrote its own formula and verified it again
+  (40 seconds). `155 ≡ 1 (mod 7)` is a nonzero square, so Moorhouse's Lemma 8.2 gives `χ ≤ 4` (and
+  `155 ≡ 3 (mod 8)`, so does Fischer's Theorem 10). So `χ(ℚ(√155)²) = 4`. A second shrinking, of the graph
+  grown with `D = 510` (148 directions; 38 rounds, 15 913 points), gave a vertex-critical graph with 1 281
+  vertices and 3 526 edges, certified in the same way (519 solver calls) and checked again by the checker
+  with the solvers. It replaces the first as the published witness.
+- **`ℚ(√95)`.** The graph grown at noon with `D = 480` (132 directions, `grow3r.py`; 43 rounds, 12 477
+  points) was shrunk by `min3inc.py` to a vertex-critical graph with 1 404 vertices and 3 780 edges and
+  certified (both encodings unsatisfiable, drat-trim VERIFIED; 613 solver calls for the colourings of
+  `G − v`). The checker, run with the solvers and cake_lpr, verified it again. `95 ≡ 4 (mod 7)` is a nonzero
+  square, so `χ ≤ 4`, and `χ(ℚ(√95)²) = 4`: the fourteenth field.
+- **Why `d = 83, 107` resist.** Three more direction sets fail at the gate at 3 (`d = 83` with `D = 410` and
+  `1230`, `d = 107` with `D = 870`; for the last two, `Cay(M/3M, U)` is 3-colourable). A divisor 3 of `D` is
+  not enough: a direction with 3 in its denominator needs a partner prime (7, 11, 17 or 31 for `d = 83`; 11,
+  13, 19 or 23 for `d = 107`), because the primes above 3 are not principal in `ℚ(√−d)`. Without a gate,
+  runs with `D = 714, 1122, 1428, 1530` (`d = 83`) and `D = 1170, 2442` (`d = 107`) still stopped with a
+  colouring that extends to every candidate. Those colourings are not periodic modulo `mM` for `m ≤ 60`.
+  The shortest odd cycle has length 9 for `d = 83, D = 510` and `d = 107, D = 390`, and 5 or 7 for every
+  direction set that succeeded; the share of points at 3 steps that are also at 4 steps (each closes an odd
+  walk of length 7) is 0.03–1.6 % for the failed sets of `d = 83, 107`, against 0.6–78 % for the successful
+  ones; the ranges overlap, so this is no criterion (`oddmitm.py`, `oddcount.py` and `colstruct.py` in
+  `data/quadratic_planes/scripts/`).
+- **`d = 83, 107, 203`.** Growth runs with up to 180 directions found only 3-colourable graphs. For `d = 83`
+  no gate explains it: with `D = 510` (108 directions) there is no proper 3-colouring periodic modulo `mM`,
+  where `M` is the lattice the directions span, for `m ≤ 10` or `m = 12`, nor with `D = 1530` (180
+  directions) for `m ≤ 8` (`periodicq.py`). A run for `d = 107` with `D = 1170` (180 directions), which had
+  stopped on the collision of keys, ran again and found only 3-colourable graphs (121 rounds, 20 356 points).
+  Runs with 324 directions (`d = 83`: `D = 2958, 3570`; `d = 107`: `D = 2262, 2886`), and longer runs with 60
+  soft rounds (`d = 83`, `D = 1122`; `d = 107`, `D = 2442`; up to 26 535 points), stopped in the same way.
+- **More fields (night of 1 to 2 October).** `prescreen.py` looked at fifteen more `d ≡ 11 (mod 12)` with a
+  known upper bound 4 (227, 251, 263, 287, 299, 323, 347, 371, 395, 407, 419, 443, 455, 467, 491), with 13
+  denominators each: the number of directions, the gates of §3 of the note, and the shortest odd closed walk.
+  For eight of them some denominator has every gate open and an odd closed walk of length at most 7. The
+  first run, `d = 251` with `D = 390` (116 directions), found a graph with no 3-colouring in 9 rounds (9 209
+  points, under two minutes); `min3inc.py` shrank it in 4 seconds to a vertex-critical graph with 291 vertices
+  and 715 edges, certified like the others and checked again by the checker with cake_lpr. `251 ≡ 3 (mod 8)`,
+  so Fischer's Theorem 10 gives `χ ≤ 4`, and `χ(ℚ(√251)²) = 4`. The others ran with `scan_r5.sh` and
+  `shrink_worker.sh`. `d = 455 = 5 · 7 · 13` with `D = 780` (68 directions, the smallest set we used) found a
+  graph with no 3-colouring in 16 rounds (2 930 points, 21 seconds). `min3inc.py` shrank it to 77 vertices;
+  `min3multi.py` with 400 random orders to 74 vertices and 161 edges (4 000 orders found nothing smaller),
+  certified like the others and checked again with cake_lpr. It is the smallest of the graphs. `455 ≡ 0
+  (mod 7)`, so Moorhouse's Lemma 8.2 gives `χ ≤ 4`, and `χ(ℚ(√455)²) = 4`. `d = 287, 407, 263` (`D = 780`) ran
+  out of time with 3-colourable graphs of 21 854 to 27 895 points, and `d = 491` (`D = 390`), `323` and `299`
+  stopped with no blocked candidate. Of the pairs prescreened, exactly two have a closed walk of length 5 among
+  their directions, five unit vectors with sum 0: `d = 251` with `D = 390` (and 780) and `d = 455` with
+  `D = 780`, the two quick successes; for every other pair it checked, the prescreen found none shorter than 7.
+- **Short odd cycles (2 October).** Five unit vectors with sum 0 give the plane graph a 5-cycle; with no
+  triangles that is the shortest possible odd cycle. `odd_published.py`: of the published graphs, those with
+  `d = 11, 35, 71, 119, 131, 191, 251, 455, 935` have one (and their `U_D` closes one), among them the three
+  smallest (74, 94 and 100 vertices); the other nine have no odd cycle shorter than 7 and are on average
+  twice as large. `scan5.py` lists, for each `d`, the denominators `D ≤ 4 000` with prime factors at most
+  61, 40 to 400 directions, every gate open and a 5-cycle. There are none for `d = 83, 107, 203` (nor for 47,
+  155, 179, 359, 227, 287, 323, 347, 371, 395, 419, 443, 467, 491 and most `d` up to 995); there are 14 for
+  `d = 263` (from `D = 204`), three each for 299 and 407, two each for 599, 935 and 959, and some for 23,
+  59, 95, 239 and 431. A 5-cycle is not enough: `d = 263` with `D = 816`, `299` with `D = 1110` and `2220`,
+  and `407` with `D = 888` and `1776` stopped with no blocked candidate (4 009 to 10 714 points). But
+  `d = 935 = 5 · 11 · 17` with `D = 1020` (84 directions) gave a graph with no 3-colouring in 24 rounds
+  (6 496 points, 91 seconds); `min3inc.py` shrank it to 275 vertices and `min3multi.py` (400 orders) to 257
+  vertices and 612 edges, certified like the others and checked again with cake_lpr. `935 ≡ 2² (mod 7)`, so
+  `χ(ℚ(√935)²) = 4`. Then three more with 5-cycle denominators: `d = 263` with `D = 1020` (156 directions;
+  12 rounds, 15 537 points, 183 seconds; shrunk to 438 vertices, then to 394 over 250 orders), `d = 599` with
+  `D = 1020` (252 directions; 27 rounds, 35 439 points, 616 seconds; 710, then 659 vertices) and `d = 959 =
+  7 · 137` with `D = 2460` (156 directions; 57 rounds, 18 149 points, 524 seconds; 551, then 513 vertices).
+  `263 ≡ 599 ≡ 2² (mod 7)` and `959 ≡ 0 (mod 7)`, so `χ = 4` for all three. Every graph found in the scan
+  has a 5-cycle, and so do the three new ones.
+- **A figure.** `papers/quadratic-planes/make_figure.py` draws the graph over `ℚ(√11)` for the paper (Figure
+  1), and `scripts/make_figures.py` for the front page (Figure 3): 94 points, 214 unit segments, and the
+  stored 4-colouring as marker shapes. The point at the origin has 32 neighbours, all on its unit circle.
+- **Smaller witnesses for 11 and 23, and spindles (2 October).** Over `ℚ(√23)` the 5-cycle denominator `D = 156`
+  (180 directions) gave a graph with no 3-colouring in 11 rounds (18 041 points, 125 seconds), shrunk to 393
+  vertices (`min3multi.py`), which replaces the 660-vertex graph. Over `ℚ(√11)` we tried a spindle: if `0` and
+  `m` have the same colour in every 3-colouring of `G` and `4|m|² − 1 = t²` with `t ∈ K`, the rotation by `u =
+  (t + i)/(t − i)` moves `m` by exactly 1, so `G`, `uG` and the edge `{m, um}` have no 3-colouring (the Moser
+  spindle has `|m|² = 3`, `t = √11`). `targets.py` found pairs two steps apart at such distances for `D = 30`
+  (`|m|² = (47 ∓ 12√11)/25`), and `growforce.py` (the growth with `0` and `m` required to differ) reported each
+  of the two forced in its first round, on the 11 612 points within two steps of `0` or of `m` (about four
+  minutes). **Corrected before publishing:** that graph has no 3-colouring by itself (CaDiCaL, 0.1 seconds), so
+  nothing was forced; `growforce.py` did not check it. Indeed already the 5 941 points within two steps of `0`
+  have none (where the plain growth stopped, in its first round; a scan of all 430 symmetry classes of `m`
+  within two steps found every union of two balls without a 3-colouring for that reason). It still gave the new
+  graph: shrinking it directly over 400 random orders gave 94 and 95 vertices, while `spin.py` shrank its union
+  with the copy rotated by `u` (22 481 points, denominator 750; `m = [−15, 0, 24, −9]`, `t = (8 − 3√11)/5`),
+  over 300 orders, to 76 vertices and 172 edges, all in the rotated copy (2 000 orders found the same graph; the
+  pair at the other distance gave 84 over 1 500 orders). Rotated back by `ū` they lie in the first graph, with
+  `D = 30` (75 of them within two steps of `0`); certified again from scratch (kissat, drat-trim, and cake_lpr
+  in the full check of all 21 graphs), they replace the 94-vertex graph, and Figures 1 and 3 now show them (172
+  segments; the origin has 26 neighbours). The 82 vertices over `ℚ(√455)` and 598 over `ℚ(√119)` came from the
+  same mistake. `growforce.py` now solves the graph again without the pair, and `spin.py` refuses a graph with
+  no 3-colouring (unless `PLAIN=1`) and writes its result rotated back when it lies in the copy. Genuinely
+  forced pairs came out over `ℚ(√455)` (5 690 points), `ℚ(√119)` (23 084) and `ℚ(√935)` (9 082 and 9 937
+  points); their spindles shrank to 139 (1 500 orders), 802, 488 and 521 vertices, above the published 74, 399
+  and 257. Over `ℚ(√83)` it failed: no pair two steps apart is at a spindle distance for any of 13 denominators
+  (two steps `u₁ + u₂` are exactly when `(15 − s²)(1 + s²)` is a square in `K`, with `u₁ū₂ = (1 − s² + 2is)/(1 +
+  s²)`, a curve of genus 1), forcing growth towards the three kinds of targets three steps away stopped with no
+  blocked candidate (14 746 to 15 630 points), and unions of a stopped 17 222-point graph with rotated copies
+  sharing up to 4 305 points stayed 3-colourable. `pentagons.py` found no unit pentagon over `ℚ(√47)`, `ℚ(√83)`,
+  `ℚ(√107)` or `ℚ(√203)` with three consecutive sides in `U_D` for the denominators tried, whatever the other
+  two sides; the colourings of the stopped graphs over `ℚ(√83)` show no bias along any direction (between 50 and
+  71 % of the edges along a direction step the colour the same way), so they are not periodic in disguise
+  either.
+- **`χ(ℚ(√11)²) = 4` in Lean (2 October).** `lean/Q11.lean` (now `lean/Sqrt11.lean`, see the next item), written
+  from the data by `lean/tools/q11_lean.py`, proves `Q11.chromaticNumber_eq_four` with Mathlib v4.34.1, using only
+  `propext`, `Classical.choice` and `Quot.sound`. Lower bound: `checkEdges_E` (the kernel evaluates the two
+  integer identities for the 172 edges), `adj_pt` (they give distance 1, since `r11² = 11`), and Mathlib's
+  `lrat_proof` on `q11.cnf` with the LRAT proof `q11.lrat` (126 lines, from kissat and `drat-trim -L`), which
+  yields a 228-variable propositional theorem; a 3-colouring, its colours renamed so that the fixed edge has
+  colours 0 and 1, refutes each of its 594 disjuncts. Upper bound: Moorhouse's reduction at 7 from a valuation
+  subring with 7 in its maximal ideal (Chevalley), its residue field `𝔽₇` (one of `±√11 − 2` lies in `𝔪`; Hensel's
+  lemma gives integers `bₖ ≡ √11 (mod 7ᵏ⁺¹)`), the integrality of unit vectors (`−1` is not a square mod 7) and
+  the stored 4-colouring of `𝔽₇²`. The file compiles in about a minute. Two practical points: with all of Mathlib
+  imported, `decide +kernel` on statements with `^` and `Prop`-level membership in lists of tuples ran out of
+  memory (6 GB), while the same checks as Boolean recursions with products took 2 seconds; and the names that
+  `lrat_proof` gives its auxiliary definitions are private, so the proof uses the propositional theorem itself.
+- **Lean for nine fields (2 October).** The `d = 11` proof became a library, `lean/QuadraticPlanes.lean`, and
+  one generated file per field, `lean/Sqrt{d}.lean` (named so, since `Q23` is already `ℚ(√2, √3)`), from
+  `lean/tools/field_lean.py`. The library proves the three upper bounds the fields use, for every `d`: the
+  reduction at 7 when `d ≡ s² (mod 7)` with `7 ∤ s` (Hensel's lemma), the reduction at 7 when `d = 7d′` with
+  `7 ∤ d′` (then `√d ∈ 𝔪`, and if `N₀ + N₁√d ∈ 7O` then 7 divides both, which gives the descent), and the
+  reduction at 2 when `d ≡ 3 (mod 8)`: with `a = x + y/√d`, `b = 2y/√d` the squared length is
+  `a² − ab + κb²`, `κ = (d + 1)/4` odd, and the residue field at 2 is `𝔽₂` because `π = √d − 1` has
+  `π² = 2((d + 1)/2 − √d)` and `N₀ + N₁π ∈ 2O` forces both `Nᵢ` even. The fields with a Lean proof are those
+  whose LRAT proof is small enough: 11 (13 KB of LRAT; 25 s to compile, 0.5 GB), 455 (11 KB; 33 s), 191 (25 KB;
+  31 s), 935 (125 KB; 205 s, 1.1 GB), 251 (86 KB; 261 s, 1.1 GB), 179 (422 KB; 270 s, 2.5 GB), 131 (114 KB;
+  365 s, 1.4 GB), 431 (177 KB; 398 s, 1.4 GB) and 119 (330 KB; 616 s, 2.2 GB), on a shared 4-core machine.
+  The time grows with the number of clauses (each clause is one goal after `casesm*`) and the memory with the
+  LRAT proof. The other fields have LRAT proofs from 0.7 MB (`d = 263`, the best of eight kissat seeds; the
+  seeds changed the size by at most 30 %) to 70 MB (`d = 95`), so they stay with drat-trim and cake_lpr.
+- **Three more fields: `d = 611, 791, 911` (2 October).** Scan Q8 (`scan_r5.sh`, the variant growth `grow3r.py`
+  with radius-2 seeds, 1 500 s per field) tried denominators not used before for the fields still open. It stopped
+  with 3-colourable graphs for `83:1020`, `203:1020`, `107:1560`, `83:2040`, `287:1560`, `407:1560`, `287:2040`
+  and `491:1020`, and kissat found no 3-colouring for `611:1020` (round 7, 10 580 points, 65 s), `695:1020` (round
+  90, 16 158 points), `791:1020` (round 46, 17 750 points) and `911:1560` (round 8, 40 198 points). The
+  incremental shrink (`min3inc.py`) gave vertex-critical graphs with 715, 977 and 329 vertices, and random
+  deletion orders for 40 minutes (`min3multi.py`: 5, 27 and 60 orders) 712, 898 and 327. `certify_q.py` certified
+  each from scratch: exact unit edges and no others, no triangle, kissat UNSATISFIABLE with drat-trim VERIFIED for
+  both encodings, a 4-colouring, and a 3-colouring of every vertex-deleted graph; the checker with kissat,
+  drat-trim and cake_lpr then confirmed all 24 graphs (`data/quadratic_planes/cake_lpr_checks.txt`). The upper
+  bounds are the reduction at 7: `611 ≡ 3²` and `911 ≡ 1² (mod 7)`, and `791 = 7 · 113`. Unlike the six fields of
+  the previous scan, these direction sets close no 5-cycle, and the graphs' shortest odd cycles have length 7; so
+  a 5-cycle helps but is not needed. For `d = 695` the incremental shrink was too slow (one test took 540 s on a
+  9 630-point core), and `min3fast.py` (kissat cores) is still shrinking it. The 327-vertex graph over `ℚ(√911)`
+  has a 214 KB LRAT proof (kissat's default seed; the other five seeds gave up to 312 KB), so it got a Lean file
+  too, `lean/Sqrt911.lean`: 343 s to build and 120 s to replay with `leanchecker` on the shared machine. The
+  graphs over `ℚ(√611)` and `ℚ(√791)` have LRAT proofs of 7.7 and 3.0 MB.
+- **Smaller graphs for `d = 455` and `191` (2 October).** 3 000 random deletion orders from the grown graphs
+  (`min3multi.py`) had given 74 and 100 vertices again. `min3fast2.py` is `min3fast.py` (rounds of drat-trim cores
+  with several kissat seeds, then deletion with tabu search first), but it saves the vertex set after every core
+  round, and in the deletion phase it takes the drat-trim core of each refutation as the new vertex set. On the
+  grown graph of `d = 455` (2 930 points, 3-core 1 310) the core rounds gave 157, 98, 91, 85, 81 and 78 vertices,
+  and its deletion phase 72; on that of `d = 191` (6 684 points, 3-core 1 963), 134, 122 and 120, and 102. Random
+  orders started from these cores did better than from the grown graphs, whose first cores of failed assumptions
+  have 234 and 438 vertices: for `d = 455` every core of at most 98 vertices gave 71 (from the 78-vertex core, 980
+  of 3 000 orders), and for `d = 191` the 122-vertex core gave 96 (394 of 1 000 orders; the 120-vertex core gave
+  102). `certify_q.py` certified both from scratch: exact unit edges and no others, no triangle, kissat
+  UNSATISFIABLE with drat-trim VERIFIED for both encodings, a 4-colouring, and a 3-colouring of every
+  vertex-deleted graph. They replace the published graphs, and the checker with kissat, drat-trim and cake_lpr
+  confirmed all 24 graphs again (`cake_lpr_checks.txt`); both still contain 5-cycles. Their Lean files were
+  written again from the data: LRAT proofs of 23 and 12 KB (the same for twelve kissat seeds), 69 and 35 s to
+  build, 18 s each to replay with `leanchecker`, and the same three axioms. The same method is running on the
+  other fields.
+- **Fields of every even degree (2 October).** A first idea for something new was a cubic field that needs four
+  colours, since a field of odd degree contains no `√d` and no `√3`. Moorhouse's Theorem 7.1 rules it out: a
+  field of odd degree has a place above 2 with `e·f` odd, and that place 2-colours its plane. The quadratic
+  fields give the even degrees instead. If a real number field `L` contains `√d` for one of the twenty-three `d`
+  and has a place with residue field `𝔽₇`, then `χ(L²) = 4`: the graph lies in `L²`, unit vectors are integral
+  at the place (`−1` is not a square in `𝔽₇`), and reduction gives `χ(L²) ≤ χ(𝔽₇²) = 4`. For
+  `L = ℚ(√11, 7^{1/m})`, 7 splits in `ℚ(√11)` and `x^m − 7` is Eisenstein at each prime above it, so
+  `[L : ℚ] = 2m` and those primes are totally ramified in `L`, with residue field `𝔽₇`. So every even degree
+  occurs for real number fields with `χ = 4`, and no odd degree does. The note (§5) and the paper (Corollary 4)
+  say so.
+- **Every graph in Lean, the larger ones given their formula's unsatisfiability (2 October).** Other kissat
+  configurations (`--unsat`, `--plain`, `--sat`, seeds, no probing, other tiers) changed the LRAT proofs of the
+  other fields by at most about 25 % (`d = 263`: 0.83 to 1.0 MB), far from the 0.4 MB that `lrat_proof` handles in
+  minutes. So those fields now have Lean files of another kind. `lean/ColouringFormula.lean` defines the colouring
+  formula as a Lean object, `colourCNF E u₀ v₀` (lists of DIMACS literals, in the order of `q{d}.cnf`), and proves
+  `not_colorable_of_unsatisfiable`: if no assignment satisfies it, the graph is not 3-colourable. Each of the other
+  files proves `chromaticNumber_eq_four_of_unsatisfiable` (for `d = 47`, `not_colorable_three_of_unsatisfiable`)
+  with the hypothesis `Unsatisfiable formula`, and checks with `#guard`, when it is built, that `parseDimacs` reads
+  exactly `formula` from `q{d}.cnf`. The checker, with `--cake-lpr`, now also has cake_lpr check an LRAT proof of
+  the stored file itself (before, only of its own encoding), so the hypothesis is checked by a verified checker.
+  Two changes made the files fast. The coordinates are written with their type, `(-1430 : ℤ)`: without it Lean
+  took 236 s to elaborate the 394 points of `q263.json`, with it about 2 s. And the points sit in a balanced tree
+  (`PtTree`), so that the kernel finds a point in about log₂ n steps instead of n: for `d = 95` (1 404 points,
+  3 780 edges) the kernel check of the edges went from 187 s and 10.5 GB to about 60 s and 2 GB. The ten files
+  with `lrat_proof` were written again in the same form. The edge lists come in pieces of at most 500, since one
+  list of 3 780 pairs exceeded the elaborator's recursion depth. Locally, on the shared four-core machine, all 30
+  modules built one at a time in 41 minutes (the conditional files in 36 to 110 s and at most 2.3 GB; `d = 119`,
+  the slowest with `lrat_proof`, in 354 s instead of 616 s), `leanchecker` replayed every module in 27 minutes,
+  and the 27 theorems depend only on `propext`, `Classical.choice` and `Quot.sound`.
+- **A new field: `d = 443` (2 October).** Scan Q14 grows each open field with the denominator that `gatescan.py`
+  ranks first: every gate open, and the most directions (`scan_r8.sh`, two copies sharing a list of finished
+  fields). For `d = 443` that is `D = 2652` (212 directions), and the variant growth found no 3-colouring at round
+  15, with 25 429 points, after 794 s. The shrink worker (`min3inc.py`) gave a vertex-critical graph with 726
+  vertices, which `certify_q.py` certified; random deletion orders (`min3multi.py`, 35 orders in 20 minutes) gave 703
+  vertices and 1 765 edges, certified again from scratch: exact unit edges and no others, no triangle, kissat
+  UNSATISFIABLE with drat-trim VERIFIED for both encodings, a 4-colouring, and a 3-colouring of every
+  vertex-deleted graph. The upper bound is the reduction at 7, since `443 ≡ 3² (mod 7)`; `443 ≡ 3 (mod 8)`, so
+  Fischer's Theorem 10 gives it too. The directions close no 5-cycle, so the graph has no odd cycle shorter
+  than 7. The other fields of the scan so far (`d = 227, 287, 299, 323, 347, 371, 395, 407, 419, 467, 491`)
+  reached the 25-minute limit with graphs that were still 3-colourable. A first 40-minute run of random orders
+  reached 703 vertices but was stopped by an outer time limit equal to its own, before it wrote its result; the
+  run was repeated with a shorter limit of its own.
+  The sweep of drat-trim cores and random orders over the other fields (`min3fast2.py`, `min3multi.py`) gave
+  smaller graphs for `d = 935` (257 → 252 vertices) and `d = 239` (355 → 339), both certified. `lean/Sqrt443.lean`
+  proves the theorem given the unsatisfiability of its formula, like the other large graphs; cake_lpr checked
+  all 25 graphs again, each in both encodings.
+- **A smaller graph for `d = 239`, and corrections after a referee's reading (2 October).** The random orders
+  from the 449-vertex drat-trim core of `d = 239` gave 338 vertices and 840 edges (29 of 729 orders), certified
+  from scratch by `certify_q.py`; it replaces the 339-vertex graph. `lean/Sqrt239.lean` was written again from
+  the data (built and replayed locally in 45 s and 20 s), and cake_lpr checked all 25 graphs again, each in both
+  encodings and on the stored formula. A subagent then read the paper as a referee would, recomputed every
+  number from the data (with CaDiCaL as a second solver) and checked the citations it could reach. Corrected:
+  - **An error.** The note and the paper gave the 44 vectors `s/s̄` (`s` with coefficients in `{−1, 0, 1}`) over
+    `ℚ(√47)` as an example of the gate at 2. Eight of them, `±(23 ± i√47)/24` and their quarter turns, are not
+    integral at 2, and `12z + 12z̄ + 23 = 0` for `z = (−23 + i√47)/24` is a closed walk of odd length 47: the
+    graphs built from them were bipartite only because they were small (the research log of 25 September drew
+    the wrong conclusion). The gates are now stated with the rule they imply: a gate at `p` closes whenever
+    `p ∤ D`, so `3 | D`, `2 | D` when `d ≡ 7 (mod 8)` and `5 | D` when `d ≡ 0, ±1 (mod 5)`; every published
+    denominator meets it, and the non-trivial example is `d = 83`, `D = 1230`.
+  - Four published graphs (`d = 191, 239, 455, 935`), not two, came from random orders started at a drat-trim
+    core. The stored DRAT proofs have 1.4 kB to 17 MB (kissat's binary format; 42 MB in text form for
+    `d = 95`) and each drat-trim check at most 18 s, not "a few megabytes". The growth ended with up to
+    40 198 points (`d = 911`), not 39 265. `χ(𝔽₇²) = 4` is Moorhouse's Table 6.1 (§6), not §7. The citation of
+    hn-2adic-obstruction names the file (`RESULTS.md`, §0, item 3; its "Corollary D" is in `NOTES.md`), and
+    the reference to Soifer's book, which we have not read, is gone. The paper's abstract now says what is
+    proved in Lean (for `d = 47`, the lower bound); its Lean paragraph says that `#guard` compares the formula
+    with the stored file by evaluation, not in the kernel; the reduction argument cites Moorhouse's Lemma 4.2
+    (every component is a translate of the component of the origin).
+  - The intro gives a direct proof of `χ ≥ 3` for `d ≡ 3 (mod 4)` (the referee's remark):
+    `((d + 1)/4)(z + z̄) + ((d − 1)/2)·1 = 0` for `z = (1 + i√d)/(1 − i√d)` is a closed walk of odd length `d`.
+  - The checker now reports the girth (4 for every graph) and prints the SHA-256 hash of each stored formula,
+    and a test checks that the log of the cake_lpr run names the formulas as they are now (before, a stale log
+    would have passed).
+  The LRAT proofs of the fifteen conditional graphs (kissat seed 0, `drat-trim -L`) have from 1.0 MB
+  (`d = 263`; 0.67 MB with the best of eight seeds) to 70 MB (`d = 95`).
+- **Moorhouse's `ℚ(√47)`: the 11-adic plane (2 October).** The upper bound 5 is the reduction at a prime above
+  11, where `ℚ(√47)` embeds in `ℚ₁₁` (and so does `ℚ(√3, √5)`, Voronov's case, whose bound 5 has the same
+  source). Every finite level `G_k = Cay((ℤ/11^k)², T_k)` of the 11-adic plane bounds `χ`, and `χ(G_k)` does not
+  increase with `k`, so a 4-colouring of some `G_k` would give `χ(ℚ(√47)²) = χ(ℚ(√3, √5)²) = 4`. `G₁` and `G₂`
+  have none. At level 3 (1 771 561 points, 1 452 unit vectors) we looked for colourings constant on the orbits of
+  a group of automorphisms that fixes no edge (`data/quadratic_planes/scripts/level3.py`):
+  - the rotations `t ≡ 1 (mod 11)`: 15 961 orbits, 9 864 756 edges, kissat UNSAT (a unit triangle pinned);
+  - the rotations `t ≡ 1 (mod 121)` and the translations by `121·(ℤ/11)·(1, 0)`: 27 951 orbits, 2 576 816
+    edges, UNSAT.
+  The same construction at level 2 is UNSAT, as it must be. A 4-colouring of `ℚ(√47)²` would therefore have to
+  be finer than these 11-adic ones. We also tried splitting the edges by the 2-adic place, which splits in
+  `ℚ(√47, i)`: the edge vectors integral there give a bipartite graph (the gate at 2), so if the others did too, a
+  product of two 2-colourings would 4-colour the plane. In the 816-vertex graph 451 of the 2 134 edges are
+  integral at 2 and the other 1 683 contain an odd cycle, so this fails. In the other direction `χ = 5` would
+  need a triangle-free 5-chromatic unit-distance graph in the plane, itself an open problem; a growth at four
+  colours over `ℚ(√47)` (`grow4r.py`, `D = 240`, from the points within two steps of `0`) reached 12 799 points
+  and 46 599 edges in 212 rounds, 4-colourable throughout and with about two blocked candidates per round, and
+  was stopped.
+- **The other places of `ℚ(√47)` (2 October).** A colouring by reduction at a place `v` is locally constant on
+  `K_v²`. Where `−1` is a square in `K_v` (the places above 2, 3, 5, 7, 13, 17, …) there is no such colouring with
+  finitely many colours: in the coordinates `z = x + iy`, `w = x − iy` the unit steps are
+  `(z, w) ↦ (z + t, w + 1/t)`, and if `c` is constant on a ball of radius `r` around `(z₂, w)`, then for
+  `|z₂ − z₁| > 1/r` the point `(z₁, w)` is adjacent to `(z₂, w + 1/(z₂ − z₁))`, which has the colour of `(z₂, w)`.
+  So on each line `w = const` every colour class is bounded, and finitely many bounded sets do not cover `K_v`
+  (Bardestani and Mallahi-Karai show more: the hyperbola graph of `ℚ_p` has infinite Borel chromatic number).
+  The other places lie above the primes `p ≡ 3 (mod 4)` with `(47/p) = 1` (11, 19, 23, 31, 43, 67, 107, …) and
+  above 47, which ramifies. At a place above such a `p` the colouring factors through some level
+  `G_k = Cay((ℤ/p^k)², T_k)`, and Hoffman's bound settles every level at once when `p ≥ 23`:
+  - the eigenvalues of `G_k` are the sums `Σ_{t ∈ T_k} e(⟨ξ, t⟩/p^k)`. For `ξ` of level 1 they are `p^{k−1}`
+    times those of `G₁`, which are Kloosterman sums of absolute value at most `2√p` (Medrano, Myers, Stark and
+    Terras). For `ξ` of exact level `ℓ ≥ 2`, write the rotations as `t₀(1 + i p^m s)` with `m = ⌈ℓ/2⌉` and sum
+    over `s` first: only the `t₀` with `ξ̄ t₀` real modulo `p^{ℓ−m}` survive, so the sum is 0 when `|ξ|²` is not
+    a square modulo `p` and at most `2p^m` in any case, at most `2/(p + 1)` of the degree `(p + 1)p^{ℓ−1}`;
+  - so the smallest eigenvalue, as a fraction `μ` of the degree, is that of level 1 at every level, and Hoffman's
+    ratio `−μ/(1 − μ)` bounds the independence ratio of every `G_k`. It is 0.2855 for `p = 11`, 0.2756 for 19,
+    0.24908 for 23, 0.249997 for 31, 0.2138 for 43 and 0.1813 for 67, and below `1/4` for every `p ≥ 37` by
+    the bound `2√p`. Below `1/4` no level has a proper 4-colouring. Among the primes `p ≡ 3 (mod 4)` below 700
+    only 3, 7, 11 and 19 have a ratio of at least `1/4` (`hoffman_padic.py`; `spectrum.py` computed every level
+    up to 4 for `p = 11`, 3 for 19 and 2 for 23, 31, 43 and 67; at level 2 the largest new eigenvalue
+    comes within 0.1% of `2/(p + 1)`).
+  - The same argument works at the ramified place above 47: there `O[i]` is unramified over `O`, the
+    uniformiser `π = √47` lies in `O`, and the levels are `(O/π^k)²`, so the new eigenvalues are again at most
+    `2/(q + 1)` of the degree, with `q = 47`. The level-1 plane is `𝔽₄₇²` (ratio 0.2111), so every level is
+    excluded. (At level 2, `O/π² ≅ 𝔽₄₇[ε]` with `ε² = 0`, this is visible directly: a unit vector is `u₀ + εu₁`
+    with `u₁ ⊥ u₀`, and summing over `u₁` leaves at most two `u₀`.)
+
+  So reduction at one place can give `χ(ℚ(√47)²) = 4` only through the 11-adic plane at level 3 or higher or
+  the 19-adic plane at level 2 or higher. Several places at once do not
+  obviously help: such a colouring colours the tensor product of the levels, whose fractional chromatic number
+  is the smallest of theirs (Zhu), and that is above 4 at every place with Hoffman ratio below `1/4`. On the two
+  open places:
+  - at 19, level 1 needs five colours (`notes/local_colourings.md` §13). Level 2 (130 321 points, 380 unit
+    vectors) has no 4-colouring constant on the orbits of the rotations `t ≡ 1 (mod 19)`: 7 201 orbits and
+    1 245 070 edges, kissat UNSAT within a minute, with an edge pinned (`√3 ∉ ℚ₁₉`, so there is no triangle;
+    `levelp.py`), nor one invariant under the translations by `19·(1, 0)` (6 859 classes, 1 179 748 edges,
+    UNSAT; `levelt.py`). The whole of level 2 (24 760 990 edges, 99 million clauses) is with kissat;
+  - at 11, `α(G₁) = 28` (CP-SAT), a ratio of 0.231, and among the rotation-invariant independent sets of `G₂`
+    CP-SAT found none larger than the lifts of level 1 (`28 · 121 = 3 388`) in 900 seconds (bound 4 651).
+- **The 11-adic plane at level 3 needs five colours (2 October).** A proper 4-colouring of a level restricts to the
+  preimage of any set of points of the level below, so a set with no proper 4-colouring at one level gives a
+  smaller search at the next: refute its preimage (`p²` points above each point). `liftcore.py` does this with
+  kissat, has drat-trim check the proof, and shrinks to the drat-trim core (the points whose "some colour" clause
+  the proof uses), which again has no proper 4-colouring; `crit4.py` then makes the set vertex-critical with one
+  incremental CaDiCaL solver.
+  - Level 1: the drat-trim cores of `𝔽₁₁²` end at 69 points (287 edges) with no proper 4-colouring.
+  - Level 2: their preimage (8 349 points, 381 997 edges) has none (kissat about 15 minutes), and its cores end
+    at 364 points; `crit4.py` makes that 244 points and 1 269 edges, vertex-critical.
+  - Level 3: the preimage of the 364 points (44 044 points, 3 584 383 edges of `G₃`, whose 1 452 unit vectors are
+    the circle modulo 1 331) has no proper 4-colouring: kissat UNSAT and drat-trim VERIFIED within four minutes. So
+    does the preimage of the 244 points (29 524 points, 1 689 039 edges; nine minutes).
+  - `check_lift.py`, written separately (the unit vectors by a direct search, the points listed one by one, the
+    colour-major encoding, another pinned triangle), agrees on both counts and both answers, and its logs are in
+    `data/quadratic_planes/padic11.logs/`. The 69 and 244 points are in `data/quadratic_planes/padic11.json`, and a
+    test refutes both levels again with CaDiCaL in under a second.
+
+  So `Cay((ℤ/1331)², T₃)` has no proper 4-colouring. This says nothing yet about level 4: each level maps onto
+  the one below, so colourings pass up the levels and obstructions do not. A 4-colouring of `ℚ(√47)²` or of
+  `ℚ(√3, √5)²` by reduction above 11 would need level 4 or more. Lifting again
+  needs a smaller level-3 set: the cores of the 44 044 points reached 15 876 points, and `crit4.py` was shrinking
+  them further when this was written. At 19 the same method has no small start: the drat-trim core of `𝔽₁₉²` is
+  all 361 points, so its preimage is the whole of level 2 (130 321 points), where kissat stopped after 90
+  minutes without an answer; subsets with 19 random points in each fibre were also undecided within 10 minutes.
+- **`ℚ(√491)`: a twenty-fifth field (2 October).** The Q15 scan (`scan_r8.sh`, each field with a gate-open
+  denominator rich in directions) found at 15:16 UTC a graph over `ℚ(√491)` with no 3-colouring: `D = 2340`
+  (180 directions, no 5-cycle among them), 27 rounds of `grow3r.py`, 22 135 points and 60 670 edges. The shrink
+  worker (`min3inc.py`, one incremental CaDiCaL solver) made it vertex-critical in four minutes: 835 vertices,
+  2 023 edges, degrees 3 to 91, 154 of the 180 directions used, shortest odd cycle 7. `certify_q.py` certified it
+  from scratch (exact edges and no other unit pairs, no triangle, kissat UNSAT and drat-trim VERIFIED for both
+  encodings, a proper 4-colouring, and a 3-colouring of every vertex-deleted graph). Since `491 ≡ 1 (mod 7)`,
+  Moorhouse's reduction at 7 gives `χ ≤ 4`, so `χ(ℚ(√491)²) = 4`. Its Lean file is conditional on the
+  unsatisfiability of `q491.cnf`, like the other large graphs, and the run with cake_lpr was repeated for all
+  twenty-six graphs. Writing the field lists we noticed that the note's list of the `d` that are nonzero squares
+  modulo 7 had missed 443 (added with this field; the paper's list had it).
+- **`ℚ(√851)`: a twenty-sixth field (2 October).** In the Q14 scan the field had stayed 3-colourable (with
+  `D = 2550`, 268 directions, the growth stopped at 4 104 points with no blocked candidate), and in Q15 `D = 1530`
+  (164 directions) went 80 rounds to 16 640 points while adding only a few points per round. With `D = 2460`
+  (132 directions) the Q15 scan found at 18:06 UTC a graph with no 3-colouring: 11 rounds of `grow3r.py`,
+  10 992 points and 27 911 edges. `min3inc.py` made it vertex-critical in 94 seconds: 538 vertices, 1 368 edges,
+  degrees 3 to 63, 98 of the 132 directions used, shortest odd cycle 7. `certify_q.py` certified it from scratch
+  (exact edges and no other unit pairs, no triangle, kissat UNSAT and drat-trim VERIFIED for both encodings, a
+  proper 4-colouring, and a 3-colouring of every vertex-deleted graph). Since `851 = 23 · 37 ≡ 2² (mod 7)`,
+  Moorhouse's reduction at 7 gives `χ ≤ 4`, so `χ(ℚ(√851)²) = 4`. Its Lean file is conditional on the
+  unsatisfiability of `q851.cnf`, like the other large graphs, and the run with cake_lpr was repeated for all
+  twenty-seven graphs.
+- **Planes over `ℚ_p` (2 October).** The two halves of the argument above also work over the complete fields
+  `ℚ_p`. Bardestani and Mallahi-Karai proved that the Borel chromatic number of `ℚ_p²` (for `x² + y²`) is finite
+  exactly when the form is anisotropic, but we found no exact value in the literature. For `p = 2` and
+  `p ≡ 3 (mod 4)` unit vectors are integral, so a colouring of `𝔽_p²` colours `ℚ_p²` coset by coset; and every
+  certified graph over `ℚ(√d)` with `d` a square mod `p` is a subgraph of `ℚ_p²`. This gives `χ(ℚ₂²) = 2`,
+  `χ(ℚ₃²) = 3` (a 5-cycle over `ℚ(√7)`, checked exactly), `χ(ℚ₇²) = 4` (the 76-vertex graph over `ℚ(√11)`, since
+  `11 ≡ 2² mod 7`), `4 ≤ χ(ℚ_p²) ≤ 5` for `p = 11, 19`, `χ(ℚ_p²) ≥ 4` for all `p ≡ 3 (mod 4)` from 7 to 79, and
+  `χ(ℚ₈₃²) ≥ 5` from the 803-vertex graph over `ℚ(√3, √11, √247)` (`padic_planes.py`; note §5). The same values
+  hold for Borel colourings. `ℚ₁₁` contains both `ℚ(√47)` and Voronov's `ℚ(√3, √5)`, so one number, `χ(ℚ₁₁²)`,
+  sits above both open questions: if it is 4, both fields have `χ ≤ 4`; a 5-chromatic graph over any number field
+  inside `ℚ₁₁` makes it 5. The three exact values are also proved in Lean (`lean/PadicPlanes.lean`, written by a
+  separate agent and checked here again: built from scratch, replayed by `leanchecker`, axioms
+  `[propext, Classical.choice, Quot.sound]`). The upper bound at 7 is `QuadraticPlanes.sumSqGraph_colorable` for
+  the valuation subring `ℤ_[7]`; the lower bound sends the graph of `Sqrt11.lean` into `ℚ_[7]²` through a square
+  root of 11 from Mathlib's Hensel's lemma, and holds in any field of characteristic 0 containing one.
+- **Measurable colourings of `ℚ_p²` (2 October).** Asked for a theorem nobody had stated, we turned the eigenvalue
+  bounds of §6 into one about measurable colourings: for `p ≡ 3 (mod 4)` a measurable colouring of `ℚ_p²` has a
+  class of measure at least `1/k` in the compact group `ℤ_p²`, and the Delsarte–Hoffman argument on that group
+  bounds it by `−m/(1 − m)`, `m` the least Fourier coefficient of the circle measure: the least eigenvalue of
+  `𝔽_p²` over its degree at level 1, and at most `2/(p + 1)` at deeper levels. So `χ_m(ℚ_p²) ≥ 1 + (p + 1)/(2√p)`
+  (Weil), which is unbounded, and from the exact spectra in interval arithmetic (`padic_measurable.py`, 120 bits):
+  at least 5 colours for `p = 23, 31, 43, 47` (4.000044 for `p = 31`), 6 for `p = 59` and every `p ≥ 67`, 7 for
+  `p = 71` and every `p ≥ 103`, 8 for every `p ≥ 131`, 9 for `p = 191` and every `p ≥ 199`. In the real plane
+  six measurable colours is open. A side computation: tabu search finds 8-colourings of `𝔽₂₃²` at once but no
+  7-colouring in 120 million steps, and kissat with 5 colours gave no answer in 30 minutes; whether the table's
+  `5–8` for `q = 23` is really 8 is being tested with kissat (a triangle pinned, 7 and then 6 colours).
+- **`ℚ(√83)` again (2 October).** With `D = 2958` (324 directions, the most of any gate-open denominator up to
+  3 000) the growth stopped at 2 788 points with no blocked candidate. Two explanations are ruled out: no proper
+  3-colouring of `Cay(M/mM, U)` exists for `m ≤ 13` (`periodicq.py`), so there is no periodic colouring with a
+  small period; and there is no colouring `c(P) = ⌊3{t·P/2997}⌋` with `t ∈ ℤ⁴` (CP-SAT: infeasible), so none
+  by a character of that resolution. The shortest odd cycles have length 7 for `D = 2958` and `1530`, and 9 for
+  `D = 2040` (`oddmitm.py`).
+
+- **The `p`-adic Hadwiger–Nelson problem (2 October, evening).** Rereading Bardestani and Mallahi-Karai
+  (arXiv 1507.05300, §1): their Question 1 asks whether the Borel chromatic number of `ℚ_p²` is bounded by a
+  constant independent of `p ≡ 3 (mod 4)`. The measurable bound above answers it: no, since
+  `χ_Bor ≥ χ_m ≥ 1 + (p + 1)/(2√p)`. The coset colouring gives `χ_Bor(ℚ_p²) ≤ χ(𝔽_p²) ≤ p + 1` (Brooks; Vinh's `(p + 1)/2` is better, see below), where
+  they had `O(p²)`. We looked for a later answer (their 2017 paper on polynomial configurations, arXiv
+  1701.06024; Davies 2023; web searches) and found none. Davies (arXiv 2308.16885, Theorem 3, from a theorem of
+  Graham) proved that every finite colouring of `ℚ²` has a monochromatic pair with
+  `(x − x′)² − (y − y′)² = 1`; through `(x, y) ↦ (x, iy)` this gives `χ(ℚ_p²) = ∞` for `p ≡ 1 (mod 4)`, a
+  one-line consequence we have not seen stated. So `χ(ℚ_p²)` is finite exactly for `p = 2` and `p ≡ 3 (mod 4)`.
+  Last, a remark with Chebotarev's theorem: no finite set of number fields with 4-chromatic graphs gives `χ(ℚ_p²) ≥ 4` for every
+  `p ≡ 3 (mod 4)`, because a prime whose Frobenius copies the one at 3 only sees fields with a place of residue
+  field `𝔽₃`, and those are 3-colourable (note §5). For our 27 fields the first prime that escapes is
+  `2 129 503 819` (`padic_reach.c`, a sieve with Jacobi symbols, 21 s; `padic_reach.py` checks it by Miller–Rabin
+  and Euler's criterion, and every prime below `10⁷` again), so `χ(ℚ_p²) ≥ 4` for every prime `p ≡ 3 (mod 4)`
+  from 7 below it, where the table had stopped at 79. The proofs are short and use known tools
+  (Delsarte–Hoffman, Weil, Chebotarev); nobody outside the project has checked them. They are written up as a
+  draft, *Colouring the p-adic plane* (`papers/padic-planes/`), with a self-contained proof that the
+  level-1 Fourier coefficients are minus Kloosterman sums, `λ = −K((a² + b²)/4)` (checked numerically for
+  `p ≤ 31`).
+- **A referee's reading of the p-adic draft, and a correction (2 October, night).** A separate agent refereed
+  `papers/padic-planes/` against the sources and recomputed every number (the Kloosterman identity for
+  `p ≤ 59`, Table 1, the Weil thresholds, the exact spectra up to 200, the 5-cycle, the sieve to `2.2·10⁹` with
+  its own Legendre symbols, all 27 graphs, `five_247_c.json`, the 11-adic obstruction sets). It found no
+  mathematical error; Theorem 1 and the negative answer to Question 1 stand. It corrected the attributions:
+  Madore (arXiv 1509.07023, ¶1.5, Remark 3.6, Propositions 3.2, 3.8 and 4.3) had already stated
+  `χ(ℚ_p²) ≤ χ(𝔽_p²)` for `p ≡ 3 (mod 4)`, the reduction giving `χ(ℚ₂²) ≤ 2`, and a 9-cycle over `ℚ(√7) ⊂ ℚ₃`,
+  so `χ(ℚ₂²) = 2` and `χ(ℚ₃²) = 3` follow from his paper: **our earlier claim that the three values were the
+  first exact values known was wrong**; the new value is `χ(ℚ₇²) = 4` (the plane `ℚ₇²` has no unit triangle, as
+  3 is not a square mod 7, so a triangle-free graph such as the one over `ℚ(√11)` is needed). Lemma 8 is the ratio
+  bound of Bachoc–DeCorte–Oliveira–Vallentin (stated on `ℚ_p^n` in BMK's Theorem 2.5), the Kloosterman eigenvalues
+  are due to Medrano–Myers–Stark–Terras, and Vinh's Theorem 1 gives `χ(𝔽_p²) ≤ (p + 1)/2`. We read BMK's other
+  paper, arXiv 1511.02427 (non-singular and hyperbola graphs over finite rings): it does not treat Question 1.
+  Other fixes: Proposition 5 is about finitely many number fields, not about finitely many abstract graphs;
+  "first such prime" is "first such prime after 3"; and Davies's theorem with BMK's Lemma 2.7 gives the general
+  statement that the graph of every isotropic form over a field of characteristic 0 has infinite chromatic
+  number, so BMK's dichotomy holds for ordinary colourings too. The referee also asked for evidence that
+  `χ(𝔽₁₉²) = 5`: `finite_planes.json` now stores a 5-colouring of `𝔽₁₉²`, and `finite19.logs/` the formula with
+  one edge fixed, kissat UNSAT (8 s) and drat-trim VERIFIED (5.5 s); a new test refutes it again with CaDiCaL.
+- **The search over `ℚ(√47)` at 70 000 points (2 October, night).** Three of the four four-colour forced-pair growths
+  with `D = 240` stopped at a one-hour kissat time-out: `b240` at round 9 (72 997 points, 371 369 edges) and, on the
+  cloud machine of share A, `a12` (72 179 points) and `a13` (76 482 points); `a11` went on (77 490 points, its last
+  colouring took 35 minutes). The formulas were rebuilt from the saved states (`mkcnf_state.py`, the same
+  encoding as `growforce4.py`) and are being decided with longer runs: kissat for 8 hours here, a portfolio of
+  four solvers on `b240` (share C) and kissat in its `--sat` and `--unsat` modes on `a12` and `a13` (share D), up
+  to 20 hours each. The growths become slow at this size whether or not a forced pair is near, so a time-out is
+  no evidence either way; an UNSATISFIABLE answer would have to be shrunk to a small forcing core, spun, and
+  certified with drat-trim before it means anything. The `s4080` growth (`D = 4080`) was stopped by the kernel's
+  memory limit at round 11 (77 800 points, 10 GB, 63 million candidate points), and the scans Q15a/Q15b finished at
+  22:01 UTC with no new field beyond 491 and 851. Whether `𝔽₂₃²` has a 7-colouring (a triangle pinned) was left
+  undecided by kissat after two hours.
+- **Lines and higher dimensions, and a second reading (2 October, night).** The draft has a new section: `χ(ℚ_p^n)`
+  is finite exactly when `n = 1`, or `n = 2` and `p ≢ 1 (mod 4)`, or `p = 2` and `n ≤ 4`; `χ(ℚ₂³) = 2` and
+  `χ(ℚ₂⁴) = 4`, the upper bound by colouring the cosets of the 2-adic Hurwitz order through its residue field `𝔽₄`;
+  and `χ(ℚ_p¹) = 2` but `χ_B(ℚ_p¹) = 3` for odd `p`. A second referee, again a separate agent, found the section
+  correct, with one gap: the closing remark (no non-degenerate quadratic graph over a local field of
+  characteristic 0 has `χ` finite and `χ_B` infinite) rested on a corollary stated for two or more variables, and
+  the one-variable case needed its own line. That line, a citation to Serre for forms in five variables, the
+  pinned references to Voight's book (Proposition 13.3.4 and Theorem 13.3.11, read in the open-access edition)
+  and Madore's ¶1.6 for Benda and Perles (read in his paper) are in.
+- **How many primes escape the 27 fields (2 October, night).** `padic_reach.c` run to `3·10¹⁰` finds 17 primes
+  `p ≡ 3 (mod 4)` at which no `d` is a nonzero square: 3, `2 129 503 819`, `3 502 762 979`, `3 625 331 999`, …,
+  `29 059 558 867` (six minutes; `padic_reach.py` checks all 17 again by Euler's criterion and Miller–Rabin). Chebotarev's
+  theorem predicts about 19.4: the 27 values of `d` span a subgroup of rank 25 of `ℚ^×/ℚ^×²` (relations
+  `11·35·119·935 = 6545²` and `35·47·455·611 = 21385²`, four factors each), so these primes have density `2⁻²⁵` among
+  the primes `≡ 3 (mod 4)`. A first run, asked for four primes, stopped at the fourth and still printed its limit
+  `3·10¹⁰`; for a moment we took that for "only three primes below `3·10¹⁰`" (said in conversation, never written
+  here), and the full run above replaced it.
+- **`ℚ(√47)`: the hard formula `b240` is satisfiable, and the 19-adic plane at level 2 (2 October, night).** Share C
+  decided `b240_r9` SATISFIABLE in 36 minutes (kissat 4.0.4 with `--seed=7`, one of four solvers; the default seed had
+  run here for over an hour without an answer). Its model, checked here against the graph (72 997 points, 371 369
+  edges, no monochromatic edge, `c(0) ≠ c(m)`), restarted the growth at round 10. The first share D never started its
+  solvers (its session ended its turn first); a new session, D2, runs kissat with seeds 3 and 7 on `a12` and `a13`,
+  and decided `a12` SATISFIABLE in eight minutes (seed 3). Share A's three runs had all ended at kissat time-outs
+  (`a11` at 80 490 points); a new session, A2, resumes `a12` from D2's colouring (checked here: 363 419 edges, none
+  monochromatic), decides `a11`'s formula before resuming it, and starts a fresh seed. So far every hard formula of
+  these growths has been satisfiable once a solver with another seed was given time: the time-outs mark solver
+  difficulty, not forcing.
+  The other way to settle the question is a 4-colouring of `ℚ₁₉²` that factors through level 2, that is, of
+  `Cay((ℤ/361)², U₂)`: it would colour `ℚ(√47)²` with four colours, since `47 ≡ 3² (mod 19)`. No such colouring is
+  invariant under the rotations `t ≡ 1 (mod 19)`, under the translations by `19·(1, 0)`, or under those by
+  `19·(1, 1)` (the two classes of directions, by norm residue; kissat UNSAT each time, the last also drat-trim
+  VERIFIED). The full formula (795 644 variables, 5 617 523 clauses, the line encoding of `liftline.py`) runs here
+  and on share E (four more solvers); share E's `verify_model.py` checks any model against the definition of the
+  graph. For calibration, tabu search finds no 4-colouring of `𝔽₁₉²` with fewer than 114 monochromatic edges (three
+  seeds), while it 5-colours it at once.
+
+- **A local–global question, and two colours for every number field (3 October).** Every upper bound for `χ(F²)`
+  that we know comes from a locally constant colouring at one place. `notes/local_global.md` asks whether that is all:
+  is `χ(F²)` the least of the local values `χ_loc(v)` (`∞` where `x² + y²` is isotropic, the least chromatic number of a
+  finite level where it is anisotropic, `χ_B(ℝ²)` at a real place)? Moorhouse's draft (2010) remarks that several
+  places at once cannot beat one place without a counterexample to Hedetniemi's conjecture (his §9) and suspects
+  `χ(ℝ²) = 7`, but we found no statement of the question itself.
+  - **Two colours, proved.** For every number field `F`, `χ(F²) = 2` iff some prime of `F` above 2 ramifies in `F(i)`.
+    The unit vectors form a group, so their additive span `A` is a ring, and a 2-colouring is a ring homomorphism
+    `A → 𝔽₂`; Chevalley's extension theorem puts its kernel at a place `w | 2`, and weak approximation on the circle
+    rules out the split and the inert places. The "if" half was already the corollary of Proposition A in
+    `notes/local_colourings.md` (Madore's Proposition 3.9 is `ℚ(√2)`); the converse is new as far as we know. This
+    contains Fischer's Theorem 8 and Moorhouse's Theorem 7.1 (odd degree); `two_colour_criterion.gp` (PARI/GP) agrees
+    on 242 quadratic, nine odd-degree and 1 522 biquadratic fields, and `odd_walks.gp` finds exact odd closed walks in
+    three quartic fields where no quadratic subfield explains them.
+  - **Three colours.** For `ℚ(√d)` the fields with no local 3-colouring are exactly `d ≡ 11 (mod 12)` (above 2 the
+    plane is isotropic or contains the graph of `ℚ(√11)`; levels 1 to 3 of the ramified `ℚ₇(√7)`, which occurs for
+    `d = 203`, have no 3-colouring, `ramified_levels.py`). `χ ≥ 4` is proved for 27 of them and open for 83, 107,
+    143, 167 and 203.
+  - **Four colours, a prediction.** A real field with `√3 ∉ F` whose places above 2, 3, 7, 11 and 19 all contain `i`
+    has no local 4-colouring and no unit triangle. So the four-colour case of the question would give a triangle-free
+    5-chromatic unit-distance graph in the plane, which is open (Soifer 2024; de Grey has one in `ℝ³`). The first such
+    quadratic fields are `ℚ(√d)` for `d = 167, 887, 1055, 1319, 1823`, and biquadratic ones include `ℚ(√2, √31)`,
+    `ℚ(√2, √47)` and `ℚ(√11, √13)` (`admissible.py`). With the real place, the question also predicts
+    `χ(ℝ²) = χ_B(ℝ²)`.
+  - **`ℚ(√167)` in practice.** Its unit vectors have large denominators. The three-colour growth with the gate-open
+    denominators 2784 and 3480 (172 and 276 directions) was 3-colourable at 17 000 and 41 000 points after eight
+    minutes. At four colours, with the pair `0, m` at distance `1/2` (a half-turn spindles it; 16 such `m` lie four
+    steps from 0 for `D = 2784` and `D = 4176`), `growforce4.py` stalled at 34 358 points with average degree 4.5,
+    against 10 for `ℚ(√47)` at `D = 240`. `χ(H₂₅) ≥ 5` (`hyperbola_plane.py`), so the places above 5 are no gate at
+    four colours.
+  - **Referee.** A separate agent refereed `notes/local_global.md`: Theorem A is true as stated, for every number
+    field, and it found odd walks in twelve quartic fields (eight with Galois group `S₄`). It asked for small fixes,
+    all applied: why `φ(u) = 1` (`u` is a unit of `A`); Zorn's lemma and `V ⊇ O_L` in the Chevalley step; the
+    attribution of the "if" half to our Proposition A; levels `O_w/𝔪_w^r` at 2-adic places; Hedetniemi
+    (Shitov 2019; El-Zahar–Sauer 1985 for three colours); "the first real quadratic field with no local
+    4-colouring" was an overclaim (for `d = 47` and `143` the places above 11 are undecided), now "the first
+    admissible field"; the thin Hoffman margin at 31 (0.2499973); the real-place clause marked as the speculative
+    part (the smallest `d` in the `χ_B(ℝ²)` argument is 635 087); and citations limited to what we read (Soifer's
+    chapter 55 through its abstract, de Grey's `ℝ³` graph through MathWorld). Benda–Perles and Johnson's 2000
+    survey are still unread.
+  - **A restart.** The machine restarted at 23:57 UTC and stopped every local run. The local kissat run on the 19-adic
+    level 2 (3 h 45 min) was lost; share E's four solvers continue. The 695 shrink resumed from its 4 393-point core.
+
+- **A short paper on two colours (3 October).** `papers/two-colour-planes/` (5 pages, `amsart`) states and proves
+  Theorem A for every number field (Theorem 1), with Corollary 5 for multiquadratic fields (`F²` is 2-colourable
+  exactly when every quadratic subfield's plane is; for `G` the square classes generated, no prime above 2 ramifies
+  in `F(i)` exactly when `G` contains `−1` or `−5`), the odd-degree case, the same statement for every
+  nondegenerate binary form `x² + c y²` with `F(√−c)`, the quartic examples of `odd_walks.gp`, and the
+  local–global question as its last section.
+  - **Credit corrected before publication.** The first draft credited the "if" direction to Madore and to our
+    Proposition A. A referee found that Madore's Propositions 3.2 and 3.8 do not reach ramified places above 2.
+    Checking the sources again, we found that the general statement, with the same proof, is Theorem A′ of
+    hn-2adic-obstruction (July 2026), whose Corollary B is also the 2-colourable half of Corollary 5. We had
+    cited that repository for the 4-colour bounds since 28 September, but not here. We also found that Lemma 2 (a
+    2-colouring is a ring homomorphism) is Fischer's Theorem 1(iii) (1990), which he used for quadratic fields in
+    his Theorem 8. The draft now says so. What is ours is the converse for every number field (Proposition 4: Chevalley's
+    theorem and the density of the circle in its completions), Remark 6 and Section 4.
+  - **Section 4 by restriction.** A place `v` above `p` has `F_v ⊇ ℚ_p`, so `χ_loc(v) ≥ χ_M(ℚ_p²)` for every number
+    field. This replaces an eigenvalue argument at ramified places, and the admissibility statement now holds for
+    every number field. The three-colour claim (a place with `χ_loc ≤ 3` exactly when `d ≢ 11 (mod 12)`) is
+    argued in full: `√11` lies in `ℚ₂(√3)` and in `ℚ₇`. The real-place example improves to `d = 186 023`,
+    because `χ_M(ℚ₇₁²) ≥ 7`.
+  - **Third referee pass.** A separate agent refereed the revised draft against the local copies of the sources and
+    found no mathematical error. Its small fixes are applied: the credit in Corollary 5 and in the abstract is for
+    real fields; Moorhouse's Theorem 8.6 covers `ℚ(√p)` with `p` prime; Fischer's odd cycle uses his Theorem 7;
+    Fischer's Example 4 had singled out `ℚ(√167)` (no additive `k`-colouring for `k < 11`); de Bruijn–Erdős is cited;
+    and Soifer's and de Grey's statements are marked as known through the chapter abstract and MathWorld.
+  - **Disk full (02:07 UTC).** The proof file of the local `α(𝔽₁₉²) ≤ 90` run reached 4 GB and, with a 2 GB file left
+    from the run cut at 23:57, filled the session's disk. That run, the `ℚ(√167)` forced-pair run (its state file was
+    truncated) and the 695 shrink stopped. The two proof files were deleted; the 695 shrink resumed from its last
+    intact core (4 253 points) and the `ℚ(√167)` run restarted from scratch. No result was affected.
+
+- **A signature of the place above 19 in the solvers' colourings (3 October, 03:00 UTC).** *Retracted at 03:40 UTC:
+  see the next item.* The SAT solvers'
+  4-colourings of the large growth graphs over `ℚ(√47)` lean towards being locally constant at 19.
+  `padic_signature.py` groups the points by their residue modulo `p^r` at a place above `p` and counts how often
+  two points in one class have the same colour (1 for a colouring that factors through the level; the sum of the
+  squared colour frequencies, 0.25 here, for one unrelated to the place).
+  - `b240` (74 497 points): at 19, levels 1/2/3 give 0.26 / 0.40–0.41 / 0.48–0.51 (the two places above 19); at
+    11, 0.26 / 0.27 / 0.21–0.23; at 23, 0.26 / 0.24–0.25 / 0.26–0.28; at 17, 31 and 43 the level-2 values are
+    0.24 to 0.31.
+  - Share F's `a13` (76 482 points, another solver seed, another growth): at 19, 0.26 / 0.42–0.43 / 0.48–0.52; at
+    11 and 23, as above.
+  - Level 2 has about 95 000 pairs per place, level 3 about 130 (error about 0.04).
+  This is what `notes/local_global.md` predicts if a 4-colouring of `ℚ(√47)²` comes from the place above 19:
+  level 1 there needs five colours, the 11-adic levels 1 to 3 need five, and every other place contains `i` or
+  has `χ_loc ≥ 5`. It is evidence, not a proof.
+  - A tabu search for a 4-colouring of the 19-adic level 2 (`level_tabu.c`, 130 321 vertices, neighbours computed
+    from the 380 unit vectors) fell within a minute, from a random start and from a start seeded with the `b240`
+    colours, to 781 926 = 114 · 6 859 monochromatic edges and stayed there: the lift of the best 4-colouring of
+    level 1 (114 bad edges), constant on the fibres. The solvers' colourings over `ℚ(√47)` are not of that kind
+    (their level-1 agreement is 0.26), so local search of this sort cannot reach them; the full formula stays with
+    share E's solvers.
+
+- **Retracted: the 19-adic signature was an artifact of the directions (3 October, 03:40 UTC).** Split by distance
+  in the graph, the same-class pairs at 19 (level 2, one place) agree 0.537 at distance 2 (30 662 pairs), 0.459 at
+  distance 4 (33 990) and 0.232 at distance 5 or more (31 584); at 11, 0.530 at distance 2 (11 574), 0.065 at
+  distance 3 (3 996), 0.442 at distance 4 (18 185) and 0.242 beyond (167 045). Colours agree more at even distance
+  in any colouring. The 108 directions of `D = 240` fall into only 60 classes modulo `19²`, with 128 ordered pairs
+  `u + u′ ≡ 0 (mod 19²)`, `u′ ≠ −u`; modulo `23²` and `31²` all 108 are distinct. So at 19 more same-class pairs
+  are close in the graph, and nothing is left at long range: the colourings do not lean towards the place above
+  19. `padic_signature.py` now has `--by-distance`, and the note (§5) says so.
+  - **The method, split by distance, does detect a real local colouring.** Control over `ℚ(√7)`: a three-colour
+    growth (`D = 520`) stalls at 2 652 points, that is, its last 3-colouring extends to every candidate point; the
+    plane has a 3-colouring at each place above 3. At one place above 3, level 1, the same-class pairs agree 0.797
+    at distance 2, 0.696 at distance 3, 0.696 at distance 4 and 0.479 at distance 5 or more, against 0.336 by
+    chance; at the other place, 0.479 / 0.248 / 0.347 / 0.323, and at 29, 0.28 to 0.34 beyond distance 4. So that
+    colouring is close to the reduction at one place above 3, at odd and at long distance. The 4-colourings over
+    `ℚ(√47)` show nothing of the kind at 11 or 19, levels 1 and 2 (0.232 and 0.242 beyond distance 4): they are not
+    close to a colouring that factors through those levels.
+Not done: whether `χ(ℚ(√47)²)` is 4 or 5; the fields `d = 83, 107, 143, 167, 203, …` (settled on 3 October by
+Theorem W, below); the four-colour case of the local–global question (`ℚ(√167)`); smaller witnesses (the
+smallest graphs have 71 vertices, for `d = 455`, and 76, for `d = 11`). Nobody outside the project has
+refereed this.
+
+## Three colours and characters: Theorem W (3 October)
+
+- **Theorem W** (`notes/winding_lemma.md`): a Cayley graph of an abelian group maps to the odd cycle `C_{2k+1}` if
+  and only if some character sends every generator into `[k/(2k+1), (k+1)/(2k+1)]`; for `k = 1`, it is 3-colourable
+  if and only if some character sends every generator into `[1/3, 2/3]`. The proof lifts a 3-colouring to signs
+  `±1` on the edges, notes that squares have zero winding, and averages the signs over the group; the averages
+  define the character. The first two steps (squares do not wind; the winding of a closed walk) are the discrete
+  winding number of Krebs and Sankar (arXiv:2410.11028), which we had missed at first; the averaging and the
+  characterisation are new as far as we know. It gives Payan's theorem and the exponent-4 case of Krebs and Sankar
+  at once, and the three-colour case of Katznelson's question: every set of Bohr recurrence is a set of 3-chromatic
+  recurrence (not stated in Griesmer, arXiv:2108.02190, Host–Kra–Maass 2016 or arXiv:2603.05490; Katznelson's own
+  paper we could not read).
+  - **Checks.** 3 888 random Cayley graphs of `ℤ/m × ℤ/n` (SAT against the character criterion; `circ_test.py`);
+    all 1 747 distance graphs `G(ℤ, D)` with `D ⊆ [1, 24]`, `|D| = 3`, against SAT on long segments, which also
+    reproduces Zhu's list of the 74 sets that need four colours (`distgraph_test.py`); 40 pairs `(d, D)` over fields
+    known to be 2- or 3-colourable, all feasible. `tests/test_winding.py` repeats smaller versions.
+  - **The test for a plane.** Over `F = ℚ(√d)` the unit vectors with denominator `D` generate a group of rank at most
+    4, so the character question lives on a 4-torus. In the coordinates `(a, b, c, e)` the strips are thin (up to
+    364 periods across the torus for `d = 83`, `D = 510`), and SCIP did not decide the formulation in `θ` within
+    10 minutes; in relation space (`f_u ∈ [1/3, 2/3]` per unit vector, `⟨r, f⟩ ∈ ℤ` for an LLL-reduced basis of the
+    integer relations, `ℓ¹`-norm at most 17 there) it decides in about a second (`kapparel.py`).
+  - **Exact certificates.** `certify_w2.py` branches on the integer values `⟨r, f⟩` (fail-first) and stores a rational
+    Farkas vector at every leaf; `check_w.py` rechecks a certificate with integers and fractions only. A first
+    version that branched in a fixed order made no visible progress in 13 minutes and was stopped. The minimal
+    infeasible subset found by greedy deletion (28 of the 54 vectors for `d = 83`) gave the largest tree (98 300
+    nodes, 20 minutes); the full set of 54 gave 6 886 nodes in 5 minutes: more constraints, smaller tree.
+  - **Results.** Infeasible and certified: `d = 83` (`D = 510`), `107` (`1170`), `143` (`1740`), `167` (`1560` and
+    `1680`), `203` (`1530`), every field that `notes/local_global.md` listed as open for three colours. So
+    `χ(ℚ(√d)²) = 4` for `d = 83, 107, 203` (with Fischer's bound for `d ≡ 3 (mod 8)`), `4 ≤ χ(ℚ(√143)²) ≤ 5`, and
+    `χ(ℚ(√167)²) ≥ 4`; `χ(ℚ(√d)²)` is known for every squarefree `d < 143` except 47. The certificates for 107, 143
+    and 167 were computed by a cloud worker (share J) and rechecked here.
+  - **Why the growth searches failed.** For `d = 83, D = 510`, growth stopped at 6 008 points because a 3-colouring of
+    the 2-ball extended to all 215 478 candidates, although `Cay(ℤU, U)` is not 3-colourable: the obstruction does
+    not lie in a small ball. The relations used have length up to 17, and the proof averages over all translates;
+    our guess (not a result) is that finite witnesses with these directions are large.
+  - **`D` must be even.** For odd `D`, `a + b + c + e` is odd for every unit vector, so the character
+    `½(a + b + c + e)` takes the value 1/2 on all of them. The control `D = 1105` used at first proves nothing about
+    the fields: its unit vectors are all rational. The infeasible denominators found are all multiples of 6, but
+    some multiples of 6 are feasible (`D = 1170` for `d = 203`), and so are the even controls with irrational
+    vectors `(107, 1450)`, `(143, 1752)`, `(167, 1820)`, `(203, 1590)`.
+  - **Four colours.** The analogue fails (`K₄` as a Cayley graph of `(ℤ/2)²`). As a sufficient test for
+    4-colourability (a character into `[1/4, 3/4]`), the `D = 240` directions of `ℚ(√47)` are infeasible in floating
+    point: no 4-colouring of the growth module is induced by a character. Other 4-colourings are not excluded
+    (Theorem W fails at four colours), so this does not rule out those searches either way.
+  - **Referee.** A separate agent refereed the note (theorem, proof, certificates, literature). Verdict: the theorem
+    and the five field results hold. Corrections applied: the attribution of steps 1–2 to Krebs and Sankar; an
+    invariant mean in place of the ergodic measure; the `κ(D)` endpoint statement; the `D = 1105` control;
+    `check_w.py` now raises errors instead of asserting and accepts only integers and exact fractions (a new test
+    feeds it mutated certificates). Its own tests: 132 874 symmetric connection sets on 42 groups of order at most 27
+    and 24 240 random ones, for `C₃`, `C₅` and `C₇`, with no mismatch; an independent checker agrees on every
+    certificate.
+  - **Under way.** `scan_all.py` runs the test with certificates over every squarefree `d ≡ 11 (mod 12)` up to 2000
+    (shares K, L, M and N); see the next section.
+  - **Two more corollaries** (added to the note and the paper). (i) In every abelian group a set of Bohr recurrence
+    is a set of 3-chromatic recurrence: the case of three colours of Katznelson's question, which is open in general
+    (Griesmer, arXiv:2108.02190, notes that the answer is not known for any countably infinite abelian group). The
+    exact statement is a characterisation: `S` is 3-chromatically recurrent iff it meets `{g : ‖ξ(g)‖ < 1/3}` for
+    every character `ξ`. (ii) A 3-colourable Cayley graph of a finitely generated abelian group (for example of
+    `ℤ^d`) has a periodic 3-colouring, and 3-colourability is decidable: the good characters form a finite union of
+    rational polytopes. This answers Problem 4.6 of Abrishami, Esperet, Giocanti, Hamann, Knappe and Möller
+    (arXiv:2411.01951) for abelian Cayley graphs with `χ ≤ 3`; they had answered it for 2-ended graphs (yes) and
+    some ∞-ended ones (no).
+  - **Literature check by a separate agent (12:00).** It found neither corollary nor Theorem W in the literature,
+    and three places where they answer something that was asked (each quote checked here in the source):
+    Glasscock, Koutsogiannis and Richter (Bull. Amer. Math. Soc. 59 (2022), arXiv:2106.11393), Question 3: "Is it
+    true that for all 3-colorings N = A1 ∪ A2 ∪ A3, the set (A1 − A1) ∪ (A2 − A2) ∪ (A3 − A3) is a Bohr0 set?" (they
+    prove two colours, Theorem 4.9). Corollary (i) answers yes, with one frequency and radius 1/3. Alweiss
+    (arXiv:2511.21680, §3): "at least 3 colors are necessary for any example answering Katznelson's Question in the
+    negative"; now at least 4. Vallentin, Weißbach and Zimmermann (arXiv:2407.03513): "it is not known whether
+    χ(Λ) is computable", and they ask whether a periodic colouring with χ(Λ) colours always exists; corollary (ii)
+    settles both when χ(Λ) ≤ 3. Katznelson's 2001 paper could not be read (paywall; the author's copy returns 403).
+
+## Five and six directions: Eng, Harris, Krebs, Meeks and Schmidt's question (3 October, exploratory)
+
+- Eng, Harris, Krebs, Meeks and Schmidt (arXiv:2511.10813, November 2025) define `χ_max(n)`, the largest chromatic
+  number of a Cayley graph generated by `n` plane unit vectors, prove `χ_max(3) = χ_max(4) = 3` and ask about
+  `n ≥ 5` (the Moser spindle, with seven directions, gives `χ_max(7) ≥ 4`). By Theorem W a configuration is
+  3-colourable iff its relation lattice `R` admits `f ∈ [1/3, 2/3]^n` with `⟨r, f⟩ ∈ ℤ` for all `r ∈ R`. When `R`
+  has rank 2 and `c_1, …, c_n ∈ ℤ²` are the columns of a basis, this reads: some `y ∈ Σ c_j + 2ℤ²` has
+  `3y ∈ Σ [−c_j, c_j]`.
+- `chimax/cols.py` (scratch): all saturated rank-2 lattices with columns in `[−3, 3]²` for `n = 5` (370 without a
+  character) and `[−2, 2]²` for `n = 6` (98 without a character): none is realised by unit vectors with distinct
+  directions (least squares from 40 random starts each; a numerical search, not a proof). Rank-2 groups (all
+  vectors in one lattice, on one ellipse): every 5- and 6-subset of the vectors of norm `N < 400` of 14 binary forms
+  has a character. Evidence for `χ_max(5) = χ_max(6) = 3`, not a proof. The only quadratic orders where the local
+  argument at 2 or 3 does not already give a character are `ℚ(√−m)` with `m ≡ 11 (mod 12)`.
+
+## Theorem W in Lean, a referee of the corollaries, and aperiodic colourings (3 October)
+
+- **Lean.** A separate agent formalised the case `k = 1` of Theorem W for finite abelian groups
+  (`lean/TheoremW.lean`): a proper 3-colouring `c : G → ZMod 3` of `Cay(G, S)`, `S` symmetric, gives a character
+  `ξ : closure S →+ AddCircle 1` with every `ξ s` represented by a real number in `[1/3, 2/3]`. The proof follows the
+  note: winding sums of walks, squares do not wind (so the sum is invariant under permutations of the steps), and
+  the average `ξ₀(s) = (F(s)/(3|H|) + 1)/2` over `H = closure S`. No `sorry`; only `propext`, `Classical.choice`
+  and `Quot.sound`. Rebuilt here from the source (16 s against the shared Mathlib), replayed with `leanchecker`, and
+  `PrintAxioms.lean` matches `axioms.expected`. Commit 5b6c92a2.
+- **Referee of the two corollaries** (a separate agent; its scripts stay in the scratch area). Verdict: both
+  correct as stated in the corollaries; the fixes, all applied to the note and the paper:
+  - the abstract and the text around the periodicity corollary omitted "finite connection set", without which the
+    statement is false (for irrational `α` and `S = {n : ‖nα‖ ≥ 1/3}`, `Cay(ℤ, S)` is 3-colourable but `S` meets
+    every `Mℤ`, so no proper colouring is periodic); the case `χ = 2` needs the parity character (now said);
+  - "for `ℤ` optimal colourings are periodic" is false as worded (`G(ℤ, {1, 4})` has about `1.38^L` 3-colourings of
+    a segment of length `L`): now "there are periodic optimal colourings";
+  - the argument that the radius `1/3` is sharp only showed that the union of difference sets is
+    `U = {n : ‖nα‖ < 1/3}`, not that `U` contains no `{n : ‖nβ‖ < δ}` with `δ > 1/3`; the referee's argument through
+    the closure `H` of the multiples of `(α, β)` in `𝕋²` is now in both texts;
+  - smaller points: define Bohr neighbourhoods (Griesmer, Definition 1.2); `S = −S` and `0 ∉ S` in the proof for
+    `ℕ`; "locally finite graph" in Problem 4.6 of Abrishami et al.; decidability for lattices assumes the strict
+    Voronoi vectors are given in lattice coordinates.
+  - Its computations: all 3-colourings of `ℤ/P`, `P ≤ 16` (about 6.5·10⁷), read as periodic colourings of `ℕ`,
+    satisfy the corollary with `α = j/P`; 708 SAT colourings with `17 ≤ P ≤ 100`; 23 968 rotation codings
+    `n ↦ colour({nθ})` over 3-coloured arcs (every valid `α` is then `mθ`; all pass with `1 ≤ m ≤ 6`); for the golden
+    `θ` and 50 001 values of `β` with `δ = 1/3 + 10⁻⁴`, a witness `n ≤ 562` every time. These test periodic colourings
+    and rotation codings only. A web search found no earlier answer to Question 3 of Glasscock, Koutsogiannis and
+    Richter.
+- **Many colours: periodicity fails** (Proposition in the note and the paper). For finite `F` and
+  `S_F = (F − F) ∖ {0}`, the proper `|F|`-colourings of `Cay(Γ, S_F)` are exactly the tilings by `F` (each translate
+  `x + F` is a clique of size `|F|`, so it meets every colour class once). With Greenfeld and Tao's counterexample to
+  the periodic tiling conjecture (Ann. of Math. 200 (2024), 301–363; in `ℤ² × G₀` and in `ℤ^d`), some Cayley graphs
+  of `ℤ^d` have no periodic proper colouring with `χ` colours. Since every automorphism of a connected Cayley graph of
+  `ℤ^d` is affine (Morris, Morris and Verret, New York J. Math. 22 (2016), after Ryabchenko), this gives a negative
+  answer to Problem 4.6 of Abrishami et al. for Cayley graphs of `ℤ^d`, against the positive answer for `χ ≤ 3`. We
+  found no earlier statement (web searches; the June 2025 version of Abrishami et al. does not mention tilings); it
+  is a direct translation of Greenfeld and Tao's theorem. Open: the least such `k` (at least 4), periodicity for
+  Cayley graphs of `ℤ²` (single tiles of `ℤ²` tile periodically, Bhattacharya 2020), and decidability of
+  `k`-colourability for `k ≥ 4` (Greenfeld and Tao's undecidability of monotiling is for periodic subsets).
+- **The answer to Question 3 of Glasscock, Koutsogiannis and Richter, in Lean** (`lean/Recurrence.lean`). A
+  separate agent proved `GKR.question3` (for every `c : ℕ → Fin 3` there is `α : ℝ` such that every `n > 0` with
+  `|nα − round(nα)| < 1/3` has some `m` with `c m = c (m + n)`) and `GKR.chromatic_recurrence` (the form for `ℤ` and
+  any `S ⊆ ℤ ∖ {0}` meeting every `{s : ‖sα‖ < 1/3}`), from `TheoremW.theoremW_finite`: two equal colour windows
+  (pigeonhole) make the colouring periodic, the induced colouring of `ZMod P` is proper for the forbidden steps,
+  Theorem W gives a character on the subgroup they generate, it extends to `ZMod P` because ℝ/ℤ is divisible
+  (Baer's criterion in Mathlib), and compactness of `UnitAddCircle` gives one `α` for all steps. Rebuilt here from
+  the source (11 s), replayed with `leanchecker`, axioms `[propext, Classical.choice, Quot.sound]`.
+- **Circular cliques below 4** (in progress when written). Doubling the colour of a `K_{p/q}`-colouring
+  (`σ = 2δ − p`) made squares rigid for odd `p` and `p/q < 4`, which extends Theorem W to every circular clique below
+  4; a separate agent formalising it found a simpler argument with the lift `δ ∈ [q, p − q]` itself (any `p`): two
+  sides of a square differ by a multiple of `p` of size at most `2(p − 2q) < p`. `lean/TheoremWplus.lean` proves it
+  for finite abelian groups, with the converse; rebuilt here (20 s), replayed with `leanchecker`, standard axioms.
+  Computer tests before the proof: no counterexample to `χ_c = 1/κ` among circulants up to 20 vertices (`χ_c < 4`),
+  several groups `ℤ/a × ℤ/b`, and 2 400 random graphs for eight cliques. The bound 4 is sharp (`K₄`). A referee
+  agent is checking the proof and the literature (in particular Problem 3 of Liu's 2008 survey on distance graphs).
+
+## Theorem W⁺ refereed: circular colourings below 4, and Liu's Problem 3 (3 October)
+
+- **Statement.** For `p ≥ 2q ≥ 2` with `p < 4q`, an abelian Cayley graph `Cay(Γ, S)` maps to `K_{p/q}` if and only if
+  a character maps `S` into `[q/p, 1 − q/p]`. So `χ_c = 1/κ(S)` whenever `χ_c < 4`, and the bound 4 is sharp (`K₄`).
+  The paper `papers/winding` is rewritten around it (now *Circular colourings of abelian Cayley graphs below four
+  come from characters*, 9 pages) and the note has a section on it.
+- **Referee** (a separate agent with its own code; its scripts stay in the scratch area). Verdict: correct for every
+  abelian `Γ`, every symmetric `S` (finite or infinite) and every `2 ≤ p/q < 4`; the `δ`-proof needs neither odd `p`
+  nor the even-`p` approximation of the first draft. Points made explicit in both texts: average over `⟨S⟩`, not
+  over `Γ` (counterexample: `ℤ/5 × ℤ/2`, `S = {±(1, 0)}`, `c(i, 0) = 2i`, `c(i, 1) = 3i` into `K_{5/2}`; the average
+  over `Γ` gives `1/2`, not a character value); the character is well defined because closed walks sum to integers;
+  for infinite groups the mean is a Banach limit (or reduce to finitely generated subgroups by compactness).
+  Its computations: 14 922 tests on Cayley graphs of finite abelian groups (every symmetric `S` up to automorphism for
+  cyclic groups of order 3 to 28 and 23 non-cyclic groups, 12 428 classes; and 4 079 random sparse sets), with no
+  counterexample; 6 899 linear colourings `⌊pξ⌋` into `K_{1/κ}` verified; exact `χ_c` for 1 706 classes: all 528 with
+  `χ_c < 4` have `χ_c = 1/κ` (37 distinct values, 66 with even numerator); 231 have `4 ≤ χ_c < 1/κ`, as expected
+  above the threshold (Paley `P₁₃`: `χ_c = 5`, `1/κ = 13/2`).
+- **Liu's Problem 3 answered.** Liu's survey (Taiwanese J. Math. 12 (2008)) asks: "Does there exist a 3-element set D
+  with χ_c(Z, D) < 1/κ(D)?" No: if `χ_c < 4` by Theorem W⁺, and otherwise `4 ≤ χ_c ≤ 1/κ ≤ 4` by the lonely runner
+  theorem for three speeds (Betke–Wills 1972, Cusick 1973). Hence `χ(G(ℤ, D)) = ⌈1/κ(D)⌉` for `|D| = 3`, and
+  `χ_c = 4` exactly for `{k, 2k, 3k}` (Cusick's tight instances). Checked: `⌈1/κ⌉` agrees with Zhu's formula for `χ` on
+  all 28 876 sets `D ⊆ [1, 60]` (reproduced here; the test does `D ⊆ [1, 30]`). The referee also compared Theorem W
+  with Liu and Sutedja's classification of `χ(G(ℤ, {2, 3, x, y}))` (tables from Sutedja's thesis): all 6 785 pairs
+  `4 ≤ x < y ≤ 120` agree; we have not checked its transcription of the tables, so the paper does not cite it.
+- **Literature.** No publication states Theorem W⁺ or answers Problem 3 (Perarnau–Serra 2024 and Liu–Robinson 2020
+  do not mention a solution; Liu–Robinson's Conjecture 3, `κ = μ` for `|D| = 3`, confirmed for `max D ≤ 25`, would
+  give `χ_f = χ_c = 1/κ` there). Related: Krebs–Sankar (exponent 4; implied, and strengthened to "no `χ_c` in
+  `(2, 4)`"); Payan 1992 with Simonyi–Tardos 2006 (cube-like graphs whose chromatic number 4 is topological); the
+  same threshold 4 in circular-colouring reconfiguration (Brewster, McGuinness, Moore and Noel 2016; Brewster and
+  Moore, mixing for `p/q < 4` via the wind of cycles). All cited in the paper.
+- **Liu's Problem 3 in Lean** (`lean/DistLiu.lean`). A separate agent proved, from `TheoremWplus.theoremWplus_general`,
+  Theorem W⁺ for distance graphs `G(ℤ, D)` with `D` finite (one periodic window by pigeonhole, the induced colouring of
+  `ZMod P`, the extension of the character because ℝ/ℤ is divisible), the converse colouring `⌊p · frac(xα)⌋`, and
+  the lonely runner theorem for three real speeds with a short argument of its own (the fastest runner at distance
+  exactly 1/4 at `t = x/(4c)`, `x` odd; a case analysis on `b/a` with the fallbacks `x = 3, 5, 9`; checked
+  numerically first for all speeds below 160). So `DistLiu.liu_problem3_iff_unconditional`: for `|D| = 3`, `G(ℤ, D)`
+  maps to `K_{p/q}` iff `κ(D) ≥ q/p`, with no hypothesis. Rebuilt here against the repository's `TheoremWplus`
+  (18 s), axioms `[propext, Classical.choice, Quot.sound]` for all nine theorems, replayed with `leanchecker`. The
+  short proof of the three-speed case is in the paper as Lemma 10; the result itself is Betke–Wills' and Cusick's.
+- **A second referee of the paper** (a separate agent; its scripts stay in the scratch area). Verdict: the mathematics
+  is correct (Theorem 1 against SAT on 13 212 instances in 21 groups for 12 ratios, 0 mismatches; Zhu's formula on all
+  28 876 three-distance sets up to 60; Liu's family of Theorem 17: `χ_c = 1/κ` in all 60 cases with `χ_c < 4`; the five
+  certificates of the table; the Lean files compiled). The problems were attribution and description, all fixed:
+  - Steps 1 and 2 for `K_{p/q}` are not ours: the integer lift with cycle sums in `pℤ` is Brewster, McGuinness, Moore
+    and Noel (2016, §2.1), and the wind, with 4-cycles of wind 2 for `p/q < 4`, is Brewster and Moore (J. Graph Theory
+    102 (2023), §2). Krebs and Sankar's Definition 3.5 and Proposition 3.6 are for `K₃` only. The paper and the note
+    now credit them; what is claimed as new (hedged) is the averaging and the characterisation.
+  - Corollary 7 is a uniform proof of known facts: for exponent 2, Payan's proof gives a generalised Mycielski graph of
+    an odd cycle (Beaudou, Naserasr and Tardif, Theorem 1.4), which has `χ_c = 4` by Simonyi and Tardos; for exponent 4,
+    Krebs and Sankar's argument run with the wind gives `χ_c ≥ 4`.
+  - What is formalised is now stated exactly (the first two assertions of Corollary 9; the non-trivial direction of
+    the first statement of Corollary 3 for `ℤ`; `TheoremW.lean` has the "only if" direction). The extension of the
+    character from `⟨S⟩` to `G` was missing in Lean and is now `TheoremWplus.theoremWplus_extended` (a separate agent;
+    rebuilt here, the fifty axioms match, `leanchecker` replays `TheoremWplus` and `DistLiu`).
+  - Citations: Haralambis (1977) for the conjecture `κ = μ`; Perarnau–Serra §§4 and 6.2; Alon's proof and remark;
+    García-Marco–Knauer–Menara's proof of Theorem 2.3; Griesmer's Definitions 1.1–1.2; the reference to Axenovich et
+    al. dropped; journal data for seven entries; Naserasr–Pujol–Wang, Brewster–Noel, Beaudou–Naserasr–Tardif and
+    Boshernitzan–Glasner added. Corollary 4 now states the periodic homomorphism to `K_{χ_c}` that the abstract
+    promised. Smaller fixes: `S ≠ ∅`, `σ = 3 − 2δ`, the conditions for `χ(ℚ(√d)²) ≤ 3`, "our searches".
+  - Not done: Katznelson's paper (2001) could not be read; Glasscock, Koutsogiannis and Richter, who cite it, say three
+    colours is open.
+
+## Six: the September hard instances fall to local repair (3 October)
+
+- **The frontier.** In September, four colouring-guided growths at the witness orbit `d² = (9 ∓ √33)/6`
+  (worker g0737, `MODE=apart`: `c(A) = c(B)` imposed, so UNSAT would be a gadget) stopped on instances that kissat
+  could not decide in 6 hours at half a core: 15–20 thousand points in `L16`.
+- **Local repair.** Free the last 40 points and every vertex within graph distance `r` of them, fix every other
+  vertex to the previous colouring, and solve the restricted formula. At `r = 3`, three of the four instances
+  (`n = 20 000`, `19 560`, `19 440`) were satisfiable in 1 to 56 seconds. Each colouring was checked against every
+  exact unit edge, with `c(A) = c(B)`. The fourth (`n = 16 920`) could not be repaired at `r ≤ 3`, but
+  `kissat --sat --seed=1` on the full formula found a colouring in 35 minutes. So none of the four graphs is a
+  gadget. An UNSAT at radius `r` says only that the old colouring cannot be repaired there; only the full formula
+  decides.
+- **Not really local.** These graphs are compact: radius about 4.5 around the pair, and `r = 3` already frees two
+  thirds of the vertices. Within a few steps the growth met instances again where `r = 3` fails (`n ≈ 19 600 –
+  20 120`), and the workers fell back to `r = 4` and full-formula portfolios.
+- **Growth resumed** with local repair before full kissat in every hard step (four cloud workers, branches
+  `claude/six-gadget-*`, each with a STATUS.md and a table of every solver call). By 16:00 UTC all four were
+  again at hard steps, at 16 960 to 20 120 points (local repair UNSAT for `r ≤ 3`, `r = 4` undecided after 30 to
+  60 minutes), with full-formula portfolios running. No UNSAT anywhere.
+- **The split-place gate, again.** The 934 growth directions have denominators only at 2, 3, 5 and 7, so they are
+  integral at every place above every other prime. The first split place of degree 1 is above 37, where
+  `H₃₇ ≅ 𝔽₃₇²` needs six colours (`notes/local_colourings.md`, §14); places of degree 2 give `H_{p²}`, which needs
+  at least seven. So no reduction modulo a prime 5-colours these growths, as recorded in September.
+
+## Four colours for every d ≡ 11 (mod 12) (3 October, evening)
+
+- **From the certificates to a family.** The smallest Theorem W certificates of the scan (fewest vectors first) were
+  made of one vector `(m + i n√d)/t` (`m² + d n² = k t²`) and the rational rotations with denominators 5, 25, ….
+  For `d ≡ 23 (mod 24)` the classical vector `u₁ = (1 + i√d)²/(1 + d)` (Fischer 1990, Theorem 10(ii), who used it
+  for additive colourings; it gives the odd closed walk of length `d`) with its mirror image and the rotations `G_N`,
+  `N = 5^k`, has no character into `[1/3, 2/3]`: floating-point solver, all 47 squarefree `d ≡ 23 (mod 24)` below
+  1200 with `N` the least power of 5 `≥ d`.
+- **Why.** A character is a pair `(c₁, c₂) ∈ ℂ²`, and its values on `G_N v` are `Re(w̄_v γ)` with
+  `w_v = c₁X̄ + c₂Ȳ` (`v = X + √d Y`), ℚ-linear in `v`. The allowed `w` form the set `S_N`; by exact polygon clipping
+  `S_5`, `S_25`, `S_125` are a 12-, 20-, 28-gon around the bipartite point `N(1 + i)/2` plus the four 3-torsion points
+  `(N/3)(±1 ± i)`. Induction on `k` proves this for every `k` (lifts are unique, because the new conditions at
+  `ρ^{±k}` move by `Λ±`, whose nonzero classes are `√2/6` away from the allowed squares, while `P₁` has radius
+  `√10/18`). Then `a(w + w′) + bz = 0` with `a = (d+1)/4 ≡ 0 (mod 6)`, `b = (d−1)/2` odd and prime to 3 has no
+  solution once `5^k ≥ d/4`: the bipartite and 3-torsion parts are killed exactly as in Fischer's "1/2 and 1/3 are
+  sums of unit vectors", and the small parts are too small. Nearly sharp: `N = 25` works for `d ≤ 95` and fails for
+  `d = 119, …, 215` (the proof allows `d ≤ 100`).
+- **d ≡ 11 (mod 24).** There `a` is odd and `{u₁, ū₁}` fails: types c, c, q for `z, w, w′` solve the relation exactly
+  after choosing lifts, so that set has a character for every `k`. `limit.py` decides
+  the large-`N` question for any finite set of vectors (a character with values in `{1/3, 1/2, 2/3}`, a computation in
+  `(ℤ/6)⁴`); for `d = 11` no pair of vectors works and 20 triples do. The uniform choice: add `u_n` with
+  `n ≡ 3 (mod 4)` and `n ≡ 1 (mod 3^{s+1})`, `s = v₃(d + 1)`, e.g. `n = 1 + 2·3^{s+1}`. Proof: Lemma 5 (an integer
+  relation among elements of `S_N` holds exactly for their torsion parts when `N > 6r Σ|m_j|`), then at 3 the
+  rational slice is bipartite, at 2 the slice of `u_n` is bipartite iff that of `u₁` is 3-torsion, and at 3 the slice
+  of `u_n` is 3-torsion iff that of `u₁` is: contradiction. `limit.py`: infeasible for all 191 squarefree
+  `d ≡ 11 (mod 24)` below 5000.
+- **Result** (`notes/four_colours_11_mod_12.md`, draft `papers/four-colours/`): `χ(ℚ(√d)²) ≥ 4` for every
+  `d ≡ 11 (mod 12)`; so a real quadratic plane needs four colours exactly when `d ≡ 11 (mod 12)`, and with Fischer's
+  and Moorhouse's bounds `χ = 4` for all these `d` except possibly `d ≡ 47, 143, 167 (mod 168)`. It rests on Theorem W
+  (not constructive) and a hand proof; no explicit finite graph is given.
+- **Checks.** `structure_lemma.py` (exact: Lemmas 1–3, `S_{5^k}` for `k ≤ 3`); exact certificates checked by both
+  checkers for `d = 23, 47, 71, 95` (`N = 25`), `119, 143, 167, 191, 215` (`N = 125`) and, for `d ≡ 11 (mod 24)`,
+  `d = 11, 35, 59` (`N = 25`) and `83, 131, 155` (`N = 125`); floating-point solver at the proof's `N` for
+  `d = 11, 35, 59, 83, 131, 179` (for `107` and `227` it did not finish in 600 s); `d = 1643`, the value the scan
+  could not certify, is infeasible with `N = 3125` (88 vectors). The local union certificate for 1643 (six
+  denominators) stopped at its 6-hour limit without a certificate.
+- **Two referees** (separate AI agents, each with its own exact code; their scripts stay in the scratch area).
+  - *Theorem 1a.* Proved, assuming Theorem W; no error and no gap; 12 minor points (title, de Bruijn–Erdős gives
+    `χ ≥ 4` and then `χ = 4` by deleting vertices, Fischer's "additive" means a homomorphism from the group `C₀`
+    generated by the unit vectors, his Theorem 8 versus Moorhouse's Theorem 8.6, two one-line justifications in §2,
+    distinctness in Lemma 1, `k = 0` in the base case, paths, the lifts that make `{u₁, ū₁}` feasible for every `k`
+    when `d ≡ 11 (mod 24)`, lowest terms). It recomputed `S_{5^k}` exactly for `k ≤ 4` (equality in Proposition 1),
+    sampled `10⁷` points, and found the strengthening `d < 21N/5` (`3|u| + 4|v| ≤ 5/6` on `P₁` against
+    `3|u| + 4|v| ≥ 7N/2` on the bipartite coset), which its exact decision of the question for `N = 5, 25, 125, 625`
+    shows to be sharp: infeasible exactly for `d ≤ 95`, `503`, `2615`. Best character for `d = 23, 47, 71`
+    (`N = 25`): `max min ‖ξ‖ = 17/56 < 1/3`.
+  - *Theorem 1b.* Theorem 1 proved in both cases, assuming Theorem W and the quoted upper bounds; Steps 1–3
+    re-derived; the type logic decided completely by two methods (the mod-6 image of the relation lattice, and a full
+    period box) for every `d ≡ 11 (mod 24)` below 20 000; `N = 25` for `d = 11` decided exactly (infeasible, best
+    margin `−2/105`). One real error, in the statement only: Theorem 1b allowed every integer `n`, and for negative
+    `n` the coefficient sum is not `2n(n + d)`; exact counterexample `d = 59`, `n = −17`, `N = 5`. Now "positive
+    integer `n`" (the theorem uses `n = 1 + 2·3^{s+1}`). Also: `b ≡ 2 (mod 3)`, not 1; 28 infeasible triples for
+    `d = 11`, not 20 (our search had stopped at 20); the conditions on `n` are sufficient, not necessary.
+  - Both sets of fixes are in the note and the paper.
+- **A p-adic corollary.** `χ(ℚ_p²) ≥ 4` for every prime `p ≥ 5`: by the Chinese remainder theorem some
+  `d ≡ 11 (mod 12)` has `d ≡ 1 (mod p)`, so (Hensel) `ℚ(√d)` embeds in `ℚ_p` and its plane is an induced subgraph of
+  `ℚ_p²`. Before, the 27 explicit graphs gave this only for `7 ≤ p < 2 129 503 819`, and Chebotarev's theorem shows
+  that no finite set of fields can do better; here `d` depends on `p` (for `p = 2 129 503 819`, `d = 21 295 038 191`).
+  The second referee checked it (no error, no gap; 671 primes checked, and the set of Theorem 1b for `d = 11`,
+  `N = 25`, embedded in `ℚ₅²` to precision `5⁴⁰`); its wording points are applied. A finite witness exists
+  (de Bruijn–Erdős, or König's lemma) but is not exhibited. Note added to the p-adic draft.
+
+## Theorem 1 in Lean (3 October, night)
+
+- **What is proved.** `lean/FourColours.lean`: `FourColours.not_colorable_three` — for every positive integer
+  `d ≡ 11 (mod 12)` the unit-distance graph of `ℚ(√d)²` is not 3-colourable — with `FourColours.no_character` (the
+  arithmetic half: for the explicit set `U = G_N·{e, u₁, ū₁, u_n}` no character of `ℤU` maps `U` into `[1/3, 2/3]`).
+  `lean/TheoremWInf.lean`: Theorem W for every abelian group and finite `S` (and for `K_{p/q}`, `p < 4q`), in the
+  direction colouring ⟹ character. `lean/PadicFour.lean`: Corollary 3, `χ(ℚ_p²) ≥ 4` for every prime `p ≥ 5`, and the
+  same over every field of characteristic 0 containing a square root of some `d ≡ 11 (mod 12)`. Only `propext`,
+  `Classical.choice` and `Quot.sound`.
+- **How.** Three cloud shares, one per file, from a written plan; each built its file against Mathlib, checked the
+  axioms and replayed it with `leanchecker` before pushing. The integration (the unconditional p-adic statements,
+  the combined registrations, commit ec7b021a) was checked by running the Lean workflow's commands on a separate
+  machine — full build of the 40 libraries, empty axiom diff, `leanchecker` on all 40 modules
+  (`lean/VERIFY_ec7b021a.md`) — because the repository's GitHub Actions minutes for the month were used up (the CI
+  run on ec7b021a was cancelled to avoid charges).
+- **A cruder structure lemma.** The formal proof does not use the polygon `P_k`. By induction from `k = 0`: every
+  point of `S_{5^k}` is `N((1 + i)/2 + t) + x` with `|x|² < 1/18`, or `N((α + βi)/3 + t)`. At `k = 0`, `S_1` is the
+  square `([1/3, 2/3] + ℤ)²`, whose corners are the points of type `q`; in the step, the new conditions at `ρ^{±(k+1)}`
+  shift by `(3 ± 4i)^{k+1} t̄/5`, which is `(a + bi)/5` with `a ≡ ±2b (mod 5)`, and a nonzero class is at squared
+  distance at least `1/18 = (7/30)² + (1/30)²` from the allowed square, while the type `q` points are excluded by a
+  congruence modulo 15. This proves Theorem 1 with a larger `N`, not the sharp bound of Theorem 1a.
+  `data/quadratic_planes/winding/family/crude_check.py` rechecks the numerical facts in exact arithmetic.
+- **The theorem W for infinite groups** averages the winding sums over boxes `{Σ t_j s_j : 0 ≤ t_j ≤ n}` (the shift
+  by a generator changes a box sum by at most a face) and takes the limit along an ultrafilter on `ℕ`; the share
+  also did `K_{p/q}`.
+
+## Six: where the graph can hide, and the geometric chromatic number (3 October, night)
+
+- **Where it cannot be.** A unit-distance graph with a representation over a field `L` (a map to `L²` preserving the
+  relation `(x − x′)² + (y − y′)² = 1`) is coloured by any colouring of `L²`. So a 6-chromatic graph has no
+  representation over `ℚ₂, ℚ₃, ℚ₇, ℚ₁₁, ℚ₂(√3)` or any other field whose plane is 5-colourable; in a number field
+  this is the field screen of `notes/local_colourings.md`. Fields with no local obstruction (`L16` and the like) are
+  where the searches already run.
+- **A different certificate.** If the plane were 5-colourable, the isometry group (amenable as a discrete group)
+  would give a random 5-colouring whose law is invariant under isometries, so `P(c(x) = c(y))` would depend only on
+  `|x − y|` (and, in the plane over a number field, only on the Galois orbit of the squared distance). A finite graph
+  `G` with weights `w` on pairs, summing to zero in each distance class, such that every 5-colouring of `G` has
+  `Σ w_p [p monochromatic] < 0`, would therefore prove `χ(ℝ²) ≥ 6`; the check is one UNSAT proof. The rotated copies
+  that de Grey's construction pays for in vertices come free. Matolcsi, Ruzsa, Varga and Zsámboki (arXiv:2311.10069)
+  use the same amenability for the fractional chromatic number (a 27-vertex graph with geometric fractional
+  chromatic number 4). Toy case: the unit rhombus forces its tips (distance `√3`) alike in every 3-colouring; one
+  more point at distance `√3` from one tip and 1 from the other gives a pair at distance `√3` that is never alike, so
+  five points prove `χ ≥ 4` this way.
+- **Under way.** A cloud share (branch `claude/six-geometric`) checks the literature for the integral version,
+  builds the LP (column generation with CP-SAT pricing) and an independent certificate checker, calibrates on
+  `χ ≥ 5` (how small a graph suffices, against 509), and then runs it at five colours on the project's graphs. No
+  result yet.
+
+## Three colours for every number field (4 October, early morning)
+
+Question: does the machinery of Theorem 1 (Theorem W, and the shape of the characters along the rational rotations of
+denominator `5^k`) decide three colours for every number field, not only for real quadratic ones? Answer: yes
+(`notes/three_colours_number_fields.md`, Theorem B).
+
+- **The reduction (Lemma B1).** For a number field `F` with `i ∉ F`, a 3-colouring of `F²` gives, for every finite
+  set `V` of unit vectors, an element `β ∈ L = F(i)` with `Tr_{L/ℚ(i)}(βv) ∈ E` for all `v ∈ V`, where `E` is the set
+  of the types c and q of Proposition 1. The proof is that of Theorem 1, with Lemma 5 applied to `ℤ[i]`-relations.
+- **Localisation (Lemma B2).** By compactness and weak approximation for the norm-one torus, either a 2-adic
+  half-character works on all unit vectors of `F ⊗ ℚ₂` (then `χ ≤ 2`, and Theorem A gives a ramified prime above 2),
+  or a 3-adic one with values in `{(±1 ± i)/3} + ℤ₉` works on all unit vectors of `F ⊗ ℚ₃`.
+- **The places above 3 (Lemmas B3–B5).** The 3-adic case comes from a single place and from its residue field, and
+  exists only when the residue degree is 1: for odd `f ≥ 3` no `𝔽₉`-linear map `𝔽_{3^{2f}} → 𝔽₉` sends the
+  `(3^f + 1)`-th roots of unity into the non-squares of `𝔽₉` (elementary proof through `λ⁴ = −1` and the
+  independence of characters; exhaustive checks for `f = 3, 5`).
+- **Theorem B.** `χ(F²) ≤ 3` iff a prime above 2 ramifies in `F(i)` or a prime above 3 has residue degree 1. It
+  contains Theorem 1, gives `LG₃` for every number field, and decides the local fields (`χ(ℚ₂₇²) ≥ 4`, for instance).
+- **Explicit family (Proposition B9).** Every real field containing `√a` and `√b`, `a ≡ 2 (mod 3)`,
+  `b ≡ 7 (mod 8)`, needs four colours: the relations `(1 + c)(u_c + ū_c) = 2(1 − c)` for `c = a, b` force the vector 1
+  out of type q at 3 and out of type c at 2. For `a = b` this is Theorem 1a. A Lean share (branch
+  `claude/lean-two-roots`) formalises it.
+- **Computer checks through Lemma B1 alone** (exact, three implementations: Python with PARI's `matrixqz`, PARI/GP
+  alone with `matkerint`, and the first referee's with `matsolvemod`): `ℚ(√2, √7)` (27 vectors, then 5 after greedy
+  deletion), `ℚ(2cos(2π/7), √7)` (44 vectors), `ℚ(√3, √5)`; controls stay feasible. Exact certificates for
+  `ℚ(√2, √7)` (50 and 70 vectors) are accepted by a separate checker. With the 7-adic colouring, `χ(ℚ(√2, √7)²) = 4`.
+- **Referees.** Two separate agents checked the proof with their own programs. Neither found an error. Both found
+  the same two small gaps (why the `ℚ(i)`-span of `T` is a field; the parity of `[K : ℚ₂]` in Corollary B8), now
+  closed, and several wording points, now fixed. The second referee caught an overclaim in a draft corollary: of the
+  five admissible biquadratic fields listed, three already contain some `√d` with `d ≡ 11 (mod 12)`; only
+  `ℚ(√2, √31)` and `ℚ(√2, √55)` are new. The first referee pointed out that fields containing `√3` and some `√q`,
+  `q ≡ 2 (mod 3)`, were already known to need four colours (`notes/local_colourings.md` §11, Theorem 5); the note now
+  names both earlier families. The first referee also tested 23 random quartic and sextic fields with an independent
+  implementation: every prediction checked agreed with Theorem B.
+
+## Circular chromatic number of a field plane (4 October, early morning)
+
+- **Upper bounds from residue planes (Proposition C1).** At a place with residue field `𝔽₇`, the map
+  `a + bi ↦ 2a + 3b` takes only the values 2, 3, 4, 5 on the norm-one elements of `𝔽₄₉`, so `F²` maps to the circular
+  clique `K_{7/2}`. Only `p = 3` and `p = 7` give bounds below 4 at level 1.
+- **`χ_c(ℚ(√11)²) = χ_c(ℚ₇²) = 7/2`** (`notes/circular_planes.md`, Theorem C), while `χ = 4` for both. The lower
+  bound: 70 unit vectors `G_25{1, u_1, ū_1, u_7, ū_7, u_19, ū_19}` admit no character into the open interval
+  `(2/7, 5/7)`; exact certificate (17 744 nodes), separate exact checker, then Theorem W⁺. A MIP solver had returned
+  exactly `2/7` as the best value. A referee (separate agent) is checking it.
+- **No value between 2 and 3** (Corollary B6): the proof of Theorem B shows that a homomorphism to `K_{p/q}` with
+  `p/q < 3` forces case (c).
+- **Open.** Is there a gap `(3, 7/2)` for every number field? Along the rotations alone there are characters with
+  `min ‖ξ(γ)‖ = 3/10` at every level tried; they look 5-adic, which a whole field plane should kill. `ℚ(√35)`: solver
+  value `2/7`, certificate under way. `ℚ(√23)`, `ℚ(√47)`: the solver did not finish in 300 s.
+
+## Circular colourings: referee, `ℚ(√35)`, and the local values below 4 (4 October, morning)
+
+- **Referee.** A separate agent checked Theorem C for `ℚ(√11)` and `ℚ₇` with its own exact checker (it rebuilds
+  `U = G_25 V` in its own arithmetic and checks that the 66 relations generate the whole relation lattice): correct.
+  It found one false statement in the note, which I had also noticed: 7 is not inert in `ℚ(√23)` but splits
+  (`23 ≡ 3² (mod 7)`), so `χ_c(ℚ(√23)²) ≤ 7/2`. It also found a hole in `check_open.py`: a zero relation has an empty
+  open range, so a branch on it with no children closed any node. The certificates contain no zero relation, so
+  nothing changes, but the checker and the builder now reject zero relations, and a test forges such a certificate.
+  Smaller points (Moorhouse's Corollary 8.3 is about real quadratic fields only; `χ_c(ℝ²) > 4` follows from de
+  Grey's theorem; "no earlier non-integral value") are fixed in the note.
+- **`χ_c(ℚ(√35)²) = 7/2`.** The certificate (14 199 nodes) is accepted by `check_open.py` and by the referee's
+  checker, generalised to any `d` (`check_open_indep.py`), which shares no code with it.
+- **Locally constant colourings give only 2, 3 and 7/2 below 4** (`notes/circular_planes.md`, Proposition C2, not
+  yet refereed). A character of `O_w/𝔪^k` that keeps the unit vectors farther than `1/(2p)` from 0 factors through the
+  residue field (the elements `(1 + π^J x)/σ(1 + π^J x)` move the values along a whole coset of `(1/p)ℤ/ℤ`
+  otherwise). At the residue level, `κ₁ = 1/3` at `(p, f) = (3, 1)`, `2/7` at `(7, 1)`, below `1/4` for every
+  `p ≡ 3 (mod 4)` from 11 to 383 with `f = 1`, and 0 for `(3, 3), (3, 5), (7, 3), (11, 3)`; at `p = 2` it is 0. This
+  suggests a circular local–global question: is `χ_c(F²) ∈ {2, 3, 7/2}` whenever it is below 4? It predicts
+  `χ_c(ℚ(√23)²) = 7/2` and `χ_c(ℚ(√59)²) = 4`.
+- **The residue-field values for every `(p, f)`** (Proposition C3). The sum of `e(Tr(bz)/p)` over the norm-one torus
+  `μ_{q+1}` is minus a Kloosterman sum (Davenport–Hasse), so it is at most `2√q` (Weil). Hence every functional
+  vanishes somewhere on `μ_{q+1}` when `f ≥ 3`, and for `f = 1` some value lies within `1/4` of 0 once
+  `p ≥ 1001`; a computation covers `11 ≤ p < 3000`. So `κ₁ > 1/4` only at `(3, 1)` and `(7, 1)`, and Corollary C4
+  holds for every local field: a locally constant colouring of one completion gives, below 4, only the bounds 2, 3 or
+  `7/2`.
+  (The referee proposed the same route for `f ≥ 3`, and checked `f = 1` up to 5000 with the count
+  `#{N(x) = c, Tr x = a} = 1 − η(a² − 4c)`.)
+- **Infinitely many fields with `χ_c = 7/2`** (Corollary C5): every number field containing `√11` or `√35` with a
+  place above 7 of residue degree 1, such as `ℚ(√7, √11)` and `ℚ(√2, √35)`, and every finite extension of `ℚ₇` with
+  residue degree 1.
+- **`ℚ(√23)` and `ℚ(√59)` numerically.** With an LLL-reduced relation basis, SCIP gives `max_ξ min_U ‖ξ‖ = 2/7` for
+  `ℚ(√23)` (the 70-vector set of Theorem C); the exact certificate is being built. For `ℚ(√59)` the same set gives
+  0.2638 (a generic character with irrational-looking values), so it does not reach `χ_c ≥ 4`; a larger set is
+  needed. Without the LLL step the solver had failed on these fields (the referee saw SCIP report a wrong 0 on an
+  unreduced basis), so the earlier 'did not finish' entries were numerical, not mathematical.
+- **Paper.** `papers/three-colours/` (eleven pages): Theorem B, Proposition B9, the corollaries, Theorem C and the
+  local values. A referee read it with its own programs: no mathematical error; the fixes concern attributions
+  (the 'admissible' fields of the two-colour paper are a stronger notion than 'split above 2 and 3'), an overstated
+  'first exact value' (now 'first non-integral value'), the citation for `χ(ℚ(√2, √3)²) = 4`, the theorem letters,
+  'into' → 'onto' in Proposition C2, and a qualifier that Proposition C3 now removes.
+
+## A gap above 3 for the circular chromatic number (4 October, morning)
+
+- **Theorem D** (`notes/circular_planes.md` §5, `papers/three-colours/` Section 9). If `χ(F²) ≥ 4` for a number field
+  `F`, then `χ_c(F²) ≥ 56/17 ≈ 3.294`; with a computer-assisted step, `χ_c(F²) ≥ 10⁷/3001611 > 3.3315`. With
+  Corollary B6: the circular chromatic number of the plane over a number field is 2, 3 or at least 56/17 (larger than
+  3.3315 with the computer-assisted step).
+- **How.** The proof of Theorem B goes through with `[1/3, 2/3]` replaced by `[r, 1 − r]` as long as the probe
+  `S_N^(r)` (`N = 5^k`) keeps its shape: the type c component `c*_N + P_k^(s)` and the four type q components, now
+  hexagons of radius `√2(1/3 − r)` instead of points. A separate agent proved this for `17/56 < r ≤ 1/3` and every
+  `k` (Proposition D1: a base case of 25 classes, three of them excluded by three-term linear certificates, and two
+  induction lemmas whose thresholds are `(11 − 31s)/25 > s` and `ε < 5/168`, both equivalent to `r > 17/56`).
+  `17/56` is sharp for a statement valid for every `k` (extra isolated points at `N = 5, 25, 125, 625`), but the
+  theorem only needs large `k`: exact enumeration of `S_N^(r)` (unions of rational polygons) shows that at
+  `r = 0.3001611` only the main components remain from `k = 17` on, and the thresholds of the induction step are
+  below `0.30005568` for `k ≥ 12` and non-increasing.
+- **Referee.** Another agent rechecked everything with its own exact programs (`probe/indep/`, no shared code): no
+  error in Theorem D or Proposition D1. It found secondary errors, now fixed: one base-case threshold (`3/8`) holds
+  only for the minimal shifts, which is all that is needed since `s(1 + √2) < 3/5`; a wrong file reference; a too
+  broad 'values with denominator 56'; an undefined `Y_k(q)` and an elimination left implicit in Lemma Q; and the
+  claim that the probe 'cannot reach beyond 10/3', which is a limit of the present method, not of the probe. Its programs
+  confirm the computer-assisted extension to `3.3315` (the same component counts at every level `k ≤ 19` at
+  `r = 0.3001611`), and it pointed out that levels up to 6 already give `1106/333 ≈ 3.3213`.
+- **The limit at 10/3.** For every `k`, `c_k = c*_N + ρ^k/5 − 5^{k−1}(2 − i)` lies in `S_N^(3/10)` with
+  `min ‖ξ‖ = 3/10` exactly and far from all type points; I proved this for every `k` (it only uses
+  `(2 + i)^{2k+1} ≡ 2 + i (mod 5)`), which the agents had checked for `k ≤ 10`. So below `r = 3/10` a third, 5-adic,
+  type appears; on a whole field plane the places above 5 split in `F(i)` and should exclude it, but the method would
+  have to include it. The thresholds `r0(5^k)` (17/56 for `k ≤ 4`, then 333/1106, 3303/10981, …, 0.30016093 at
+  `k = 17`) suggest `r0 → 3/10`, which would give `χ_c ∉ (3, 10/3)`.
+- **Paper.** Section 9 of `papers/three-colours/` gives the complete proof of the first statement (Lemmas 8–11,
+  Proposition 6) and the computer-assisted step; Theorem D is stated in the introduction and the abstract.
+- **Second referee (Section 9).** A third agent checked every step of Section 9 by hand and with a third
+  implementation (`probe/indep2/`, sharing no code with the other two): correct, and the first statement is a complete
+  proof by hand. It found one false sentence of mine (the interval `[θ, 1 − θ]` is wider than `[1/3, 2/3]`, not
+  narrower), an ambiguous notation (`Y_{k−1}` at level `N/5` versus `N`; the hexagon is not centrally symmetric, so
+  the level matters; now `Y^N_m`), small gaps (the conjugation relation `η_j(ε̄) = conj(η_{−j}(ε))`, the relation
+  `η_{j−1} = iη_j` behind the monotonicity of the thresholds, 'least' → 'infimum'), and an overstatement in the
+  abstract and the introduction, which said 'never in (3, 3.3315]' without saying that this needs the
+  computer-assisted step. All fixed. Its programs reproduce every number in Section 9, including the component
+  counts at every level `k ≤ 19` at `θ* = 0.3001611` and the thresholds for `k ≤ 22`.
+- **Correction.** `data/number_fields/circular/probe/torsion_260.txt` said that no torsion character of `ℤ[1/5][i]`
+  of order up to 260 has `κ ≥ 0.29` on the rotations `iᵃρʲ`; the probe's README repeated it. Both were wrong: the
+  same program, rerun with the arguments `260 0.29`, finds order 41 (and its multiples) with `κ = 12/41 ≈ 0.2927`
+  at `c = (12 + 12i)/41`. Found by a research agent; the file and the README are corrected. Theorem D does not use
+  it.
+
+## `χ_c(ℚ(√59)²) > 7/2` (4 October, morning)
+
+- The MIP had given `κ ≈ 0.2638 < 2/7` for the 70 vectors `G_25{1, u_n, ū_n : n = 1, 7, 19}` over `ℚ(√59)`. An exact
+  certificate at `P/Q = 53/15` (127 181 nodes, 105 761 leaves, 73 minutes; a run at `18/5`, with less margin, was
+  stopped as redundant) is accepted by both checkers (`check_open.py`, 9 minutes; `check_open_indep.py`, which
+  rebuilds `U` from `d`, 23 s). So `χ_c(ℚ(√59)²) ≥ 53/15 > 7/2` while `χ(ℚ(√59)²) = 4` (Theorem 1 and the inert place
+  above 2): `ℚ(√11)` and `ℚ(√59)` have the same chromatic number and different circular chromatic numbers
+  (`notes/circular_planes.md`, Proposition C6; paper, Proposition 4).
+
+## Every circular value below 4 (4 October, morning)
+
+- **Theorems E and F** (`notes/circular_planes.md` §6, `papers/three-colours/` Section 10). If `χ(F²) ≥ 4`, then
+  `χ_c(F²) ≥ 7/2` (Theorem E, sharp by Theorem C). More precisely, if `F²` maps to `K_{p/q}` with `p/q < 4`, then (a)
+  or (b) of Theorem B holds, or some place of `F` above 7 has residue degree 1 (Theorem F). So `χ_c(F²)` is 2, 3,
+  `7/2` or at least 4 for every number field, decided by the places above 2, 3 and 7: the circular local–global
+  question of the earlier Question 1, answered. Examples: `χ_c(ℚ(√23)²) = χ_c(ℚ(√71)²) = 7/2`, `χ_c(ℚ(√59)²) = 4`,
+  `χ_c(ℚ(√47)²) ≥ 4`; for squarefree `d ≡ 11 (mod 12)`, `χ_c(ℚ(√d)²) = 7/2` if `(d/7) ≠ −1` and `≥ 4` otherwise.
+- **How.** The one-prime probe cannot pass `3/10`: there it has characters whose types need unbounded denominators
+  (a 'glue' at any position), and below it torsion characters of orders 41 and 76. A research agent added one rational
+  rotation with another prime, `σ = (5 + 12i)/13`. On the window `G(1, 1) = {iᵃρʲσˡ : |j|, |l| ≤ 1}` (modulus 65), an
+  exact computation shows that above `2/7` every point has the strip indices of a type point c or q; the only other
+  components at `7/25` are the 8 of the 7-adic colourings, with least margin exactly `2/7` (Proposition E1: a Farkas
+  tree over all 65² cells and three-term dual certificates). By hand, two consecutive digits of the probe at any level
+  then come from one window, so the digit word is pure and the probe has only the types c and q at every level
+  (Lemma E2); the proof of Theorem B does the rest. For Theorem F the window `G(2, 1)` (modulus 325) leaves, above
+  `1/4`, the types c, q and the 7-adic type (Proposition F1; the 16 other components are 2-adic, with least margin
+  exactly `1/4`), and compactness at 2, 3 and 7 with the analogues of Lemmas B2–B5 at 7 gives a place above 7 of
+  residue degree 1 (Lemmas F2–F7; Lemma F7 uses the Weil bound of Proposition C3).
+- **Referees.** One agent refereed Theorem E, another Theorem F, each with two exact methods of its own (Theorem E:
+  clipping cell by cell, enumeration of all 1 734 260 vertices of the line arrangement, exact primal and dual LP for
+  the 13 components, and Lemma E2's conclusion tested exactly up to `k = 7`; Theorem F: vertex enumeration in C with
+  128-bit integers rechecked with fractions, and lifting by rows). Both: proved, no error. Their corrections, all
+  applied: which strip indices a cell fixes; the digits of a point of the window defined explicitly; why components
+  are index vectors; the torsion orders (the list 82, 123, … were multiples of 41 and 76, counted again); the 180
+  extra components of the 'cross' are counted just above `2/7` (228 was the count at `7/25`); `χ(ℚ(√59)²) ≤ 4`
+  explained (`√59 ∈ ℚ₂(√3)`, and `ℚ₂(√3, i)` is unramified over `ℚ₂(√3)` with residue field `𝔽₄`); in Lemma F5 the
+  other places take values in `ℤ₄₉` and `𝒜₇ + ℤ₄₉ = 𝒜₇`; `ζ_j` fixed as a representative; strip indices at the 7-points
+  are floors; `i ∉ F` stated in Lemma F3. The referee of Theorem F also noted that Theorem E follows from the window
+  modulo 325 as well, so it has two computer-assisted proofs.
+- **Checks here.** I reran the three checkers of the agent (about a second, and 30 s for the window modulo 325), the
+  referees' programs, and every generator of `twoprime/`: all stored outputs reproduce exactly, the two certificate
+  trees byte for byte, except that the last three lines of `seven_patterns.txt` came from checks missing from the
+  stored `seven_patterns.py`; I wrote them again (the referee's `f49_and_digits.py` checks the same facts). New tests:
+  `tests/test_two_primes.py` (14 tests, one slow), including rejection of corrupted certificates.
+- **Paper.** Section 10 (Proposition 8, Lemmas 12–19, Proposition 9) with complete proofs; Theorem D now states only
+  the bound by hand, `56/17`, and its computer-assisted extension to `3.3315` is a remark; abstract, introduction and
+  questions updated (21 pages). Section 10 has not been refereed in its form in the paper yet. The paper's title, and
+  whether the circular results should form a separate paper, are for Sergi to decide.
+- **Stopped.** The exact certificate for `ℚ(√23)` at `7/2` (422 430 nodes after 4 h 20 min) was stopped as
+  redundant: Theorem F gives `χ_c(ℚ(√23)²) = 7/2`.
+- **Third referee (Section 10 of the paper).** A separate agent read Section 10 as written, with programs of its own
+  (exact clipping of both windows, the exact lifting of `S^θ(k, 1)` to the levels `k = 6` and `12`, the facts at 7,
+  and an automaton for the overlap argument): no error in a proof. Corrections, all applied: two sentences about the
+  7-adic characters were false as written (the character is `a ↦ Re(ē ã)` with `ã` a Gaussian integer congruent to
+  `a` modulo 7, not `Re(ē a)`; and these characters are not those of points of `ℂ` on all of `ℚ(i)` — the bound
+  `2/7` is still optimal for every finite set of rotations, by a point `Dd(s + ti)/7`); Lemma 14 quoted from Lemma 12
+  a bound `|x| < 0.23` that fails near `θ = 1/4` (explicit counterexample at `k = 6`; the lemma has its own bound);
+  Theorem F used Theorem E, so it rested on both propositions, and the claim that the window modulo 325 also gives
+  Theorem E needed upper bounds that no stored certificate covered. I added them: eight dual certificates of value
+  `2/7` for the vectors of family 7 there (`cert_K2M1_seven.txt`, found by an exact search among the active margins and
+  checked by `verify_seven_K2M1.py`, which shares no code with the generator and rejects a corrupted copy). They use
+  margins at `ρ^{−2}σˡ`, so they are not those of the window modulo 65. Now Theorem F rests on Proposition 9 alone and
+  Theorem E on either proposition. Smaller gaps closed: why 18 (or 30) functionals determine all strip indices, the
+  alignment of the 7-adic windows, compactness behind "`χ_c = 4` iff `χ = 4`", and notation clashes. The referee's programs are in `twoprime/indep_S10/` and are rerun by
+  `tests/test_two_primes.py` (16 tests, one slow).
+- **Local fields and a local–global form** (paper Corollary 6, note Corollary F8). For a finite extension `K` of
+  `ℚ_p`, `χ_c(K²)` is 2 (`p = 2`, `K(i)/K` ramified), 3 (`p = 3`, residue degree 1), `7/2` (`p = 7`, residue degree 1)
+  or at least 4 (the Krasner construction of the corollary on local fields, with `ℚ₇` added, gives a number field
+  inside `K` where (a), (b) and (7) fail). So `min(χ_c(F²), 4) = min(4, min_v χ_c(F_v²))` for every number field.
+  Examples: `χ_c(ℚ₁₉²)`, `χ_c(ℚ(√47)²)` and `χ_c(ℚ(√5, √7)²)` lie in `[4, 19/4]`; if `χ(ℚ(√47)²) = 5`, its circular
+  chromatic number is not an integer. For real quadratic fields `χ_c` is now known except when `d ≡ 23 (mod 24)` and
+  `(d/7) = −1` (`d = 47, 143, 167, 215, …`), where `χ_c ≥ 4` and `χ_c = 4` iff `χ = 4`; for `d ≡ 11 (mod 24)` with
+  `(d/7) = −1` (59, 83, 131, …) the place above 2 gives `χ = χ_c = 4`.
+- **A measurement.** The 76-vertex graph of `χ(ℚ(√11)²) = 4` has `χ_c = 16/5` by SAT (CaDiCaL through pysat,
+  colourings checked, the refutations not certified), far below `7/2`; the stored graphs for `d = 47, 59, 131, 251`
+  all map to `K_{7/2}`. The question whether some finite subgraph of `ℚ(√11)²` has `χ_c = 7/2` stays open (answered,
+  without an explicit graph, in the next section).
+
+## Finite witnesses below 4 (4 October, late morning)
+
+- **Corollary** (paper Corollary 7, note Corollary F11, renumbered F12 in the next section). If `χ_c(F²) < 4`, some finite subgraph of `F²` has circular
+  chromatic number `χ_c(F²)`. This answers the question left open in the morning (whether `7/2` is attained in
+  `ℚ(√11)²`). The proof is not constructive:
+  - *Tight cycles.* For a finite graph, if every homomorphism to `K_{p/q}` has a tight cycle (a directed cycle of
+    edges with colour difference exactly `q`), then `χ_c = p/q` (Guichard 1993; Zhu's survey; the direction we use
+    is proved in four lines by rounding an optimal circular colouring). With compactness it suffices that every
+    homomorphism of `F²` to `K_{p/q}` has a tight cycle.
+  - *Winding.* In the proof of Theorem W⁺ the lifted colour differences satisfy a square identity (`p < 4q`), so the
+    total lift of a closed walk does not depend on its starting point, and its mean over an invariant mean is the sum
+    of the averaged lifts `a(s)`. If a positive integer relation `Σ n_i u_i = 0` holds among steps with `a(u_i) = q`,
+    every such walk is tight at every step.
+  - *At 7/2.* The averaged character of a homomorphism without tight cycles keeps `G(k, 1)V` in `[2/7, 5/7]`. By
+    Proposition 9 at `θ = 2/7` every window has type c, q or 7. A window of type 7 is impossible: its dual certificate
+    of value `2/7` (the eight certificates added after the third referee's report) has three positive multipliers, so
+    by complementary slackness its three margins are exactly `2/7`, and the cancellation of their linear parts is a
+    positive integer relation among tight unit vectors (multiplicities `63, 52, 25` or `13, 14, 15`, closed walks of
+    length 140 or 42). So all windows have type c or q, and Lemmas 14, 15, 4 and the proof of Theorem B give (a) or
+    (b), which fail.
+  - *At 3.* A window of type q has values exactly `1/3` or `2/3`, and the tight rotations of `G_5` contain a relation
+    with multiplicities `3, 4, 5`; so all windows have type c, which gives (a).
+  - `twoprime/tight_walks.py` checks the finite facts; `tests/test_two_primes.py` reruns it.
+  - *Referee.* A separate agent checked the draft with its own exact programs (`twoprime/indep_FW/`): the two lemmas
+    on 291 small graphs and 766 tight relations, the certificates and relations with conventions derived from
+    scratch, and its own clipping of `S^(2/7)(2, 1)` (13 components; the eight of family 7 are single points).
+    Verdict: correct with gaps, no mathematical error. Applied: the positivity of the multipliers is now stated in
+    Proposition 9; the type-7 windows are excluded one by one before the overlap argument of Lemma 14 is used; the
+    proof of Lemma B2 (not its statement) is cited; the existence of a homomorphism to `K_{7/2}` (Proposition 3) is
+    said; Lemma A no longer assumes that the infimum is attained; notation and wording.
+- **A false sentence corrected.** The paper said, after the proof of Theorem C, that we know no finite unit-distance
+  graph with circular chromatic number exactly `7/2`. The Moser spindle is one: it maps to `K_{7/2}` (colours
+  `0, 2, 4, 6, 3, 5, 1`) and has `χ = 4`, and a graph on 7 vertices has `χ_c = p/q` with `p ≤ 7`. It lies over
+  `ℚ(√3, √11)`, whose plane has `χ_c ≥ 4` by Theorem F, and it has unit triangles, which `ℚ(√11)²` has not. The
+  sentence now refers to finite subgraphs of `ℚ(√11)²`.
+- **Measurements (SAT, not certified).** The union of the nine images of the 76-vertex graph under `ρʲσˡ`,
+  `|j|, |l| ≤ 1` (628 vertices, 1 506 edges) maps to `K_{13/4}` and not to `K_{16/5}`; a lazy search (a `(7, 2)`-colouring
+  whose tight digraph is acyclic, cycles forbidden one by one) finds such a colouring after 40 rounds. Explicit
+  witnesses for `7/2` are probably large; their size is a question of the paper.
+
+## Finite witnesses: a simpler proof, and a general lemma (4 October, midday)
+
+- **Lemma** (paper Lemma 22, note Lemma F11, winding paper Section 7, Corollary 16). For an abelian group `Γ` and a
+  finite `S = −S` with `2 < χ_c(Cay(Γ, S)) = p/q < 4`, every homomorphism to `K_{p/q}` has a tight cycle, so some
+  finite subgraph has `χ_c = p/q`. Proof: the averaged character `ξ` of a homomorphism (Theorem W⁺) is optimal, as
+  `κ(S) = q/p`; if its tight elements had no nonnegative relation, Gordan's theorem would give a homomorphism
+  `h : Γ → ℝ` positive on them, and `ξ + εh` would keep the finite `S` strictly inside `(q/p, 1 − q/p)`, so
+  `κ(S) > q/p`. So a relation exists, the walk along it winds by exactly `q` per step at every start, and compactness
+  with the easy half of Guichard's lemma gives the finite subgraph.
+- **A simpler proof of Corollary 7.** For a field with `χ_c(F²) = 7/2`, the compactness argument of Lemma B2 gives a
+  finite `V_0` for which no `β` of types c and q exists; with `U_0 = G(k, 1)V_0`, the proof of Theorem F's Lemma 15
+  (for `θ > 2/7`) gives `κ(U_0) ≤ 2/7`, and the 7-adic colouring gives `κ(U_0) ≥ 2/7`. So
+  `χ_c(Cay(ℤU_0, U_0)) = 7/2` and the lemma applies. The same with `G_N V_0` for the value 3. This replaces the
+  argument through the certificates of value `2/7` (which stays correct; `tight_walks.py` keeps its checks as
+  consistency checks). For `ℚ(√11)` and `ℚ(√35)` the 140 vectors of Theorem C already have `κ = 2/7`, so a finite
+  witness lies in the Cayley graph of these explicit vectors.
+- **Referee.** A separate agent checked the lemma and the new proof with programs of its own
+  (`twoprime/indep_FW2/`): exact `κ(S)` by vertex enumeration on 115 random finite sets in `ℤ`, `ℤ²` and `ℤ × ℤ/m`
+  with `2 < χ_c < 4` (all 409 optimal characters have a nonnegative relation among their tight elements; as a
+  control, most non-optimal ones do not); SAT on finite pieces of 13 such Cayley graphs, all with finite witnesses
+  (for instance `{0, …, 18}` for the distances 3, 4, 9, 12, with `χ_c = 7/2`); 244 random periodic homomorphisms; the
+  radii of Lemma 9 (`sup r_θ = √10/14 < 0.23` on `(2/7, 1/3]`); and the 7-adic characters on the 140 vectors of
+  Theorem C. Verdict: correct, minor gaps; all applied (the compactness argument written into the lemma, `κ(S)` and
+  `χ_c = 1/κ(S)` cited from the winding paper, `a(−s) = p − a(s)` stated, the choice of `θ` and `k`, `i ∉ F`, the
+  value 2, printed numbers). A brief literature search found no earlier statement of the lemma.
+- **Explicit witnesses** stay open; see the addendum below.
+- **Explicit witnesses: a first look.** In the Cayley graph of the 140 vectors of Theorem C, the ball of radius 1 is
+  a star (141 vertices, 140 edges: no two of the vectors are at distance 1, as `ℚ(√11)²` has no unit triangle) and
+  the ball of radius 2 has 9 941 vertices and only 19 816 unit-distance edges; it has a `(7, 2)`-colouring with an
+  acyclic tight digraph (found at once), so `χ_c < 7/2` there. The tight walks of the proof (length 42 or 140) need
+  balls of radius about 4, with millions of points, so explicit witnesses are probably large.
+
+## A full reading of the paper (4 October, afternoon)
+
+A separate agent read all of `papers/three-colours/` (24 pages at the time), checked every proof and reran every
+quoted number from the stored programs. Verdict: minor revision, no mathematical error in a proof; 33 findings, all
+applied.
+
+- **Lemma 13 by hand.** The facts about `A′₇ ⊂ 𝔽₄₉` had been checked only by two programs, although the paper said
+  that everything but Propositions 8 and 9 was by hand. They now have a short proof: `Re(ēz) = ax + by`, the values
+  of a linear form on the conic `x² + y² = 1` are the `t` with `eē − t²` zero or a square, so `e ∈ A′₇` iff
+  `eē = −1`; a line meets that conic in at most two points; and `ρ̃² ≡ −i (mod 7)` gives `ζ_{j+2} = −iζ_j`, so two
+  digits computed by hand give the whole period-8 pattern. The theorems of the paper were not affected.
+- **Three false sentences.** "For `d = 47` we know no more than `χ_c ≥ 4`" (we know `4 ≤ χ_c ≤ 19/4`, by the place
+  above 19); "for quadratic fields Corollary 2 is contained in [FC]" (only real ones; `ℚ(√−73)` is split above 2
+  and 3); "locally constant colourings of one completion give no upper bound below 4 other than 2, 3 and `7/2`"
+  (literally false; the correct statement is that the best such bound below 4 is 2, 3 or `7/2`).
+- **The radius-2 ball, exactly.** The addendum above said only `χ_c < 7/2` there. In fact the ball of radius 2 in
+  the Cayley graph of the 140 vectors (9 941 points, 19 600 edges) is bipartite, and the unit-distance graph it
+  induces (216 more edges) has `χ_c = 5/2`: a 5-cycle, no triangle, and a homomorphism to `K_{5/2}`
+  (`twoprime/finite_ball.py`, 3 seconds, exact). The union of the nine rotated copies of the 76-vertex graph has
+  1 494 edges as a union and 1 506 with all unit-distance pairs; the SAT runs used the latter.
+- **Credit and wording.** `χ(ℝ²) ≤ 7` is Isbell's; the 2-colouring at a ramified place above 2 is
+  `[MM, Theorem A′]` and `[TC, Proposition 3]`, with earlier special cases (Fischer, Moorhouse, and Johnson, whose
+  paper we have not seen); `χ(ℚ(√3, √11)²) = 4` is Fischer's (1994); "referees" became "independent checkers" in the
+  paper, as no human has refereed it; the finite-model check of Proposition 5 is claimed only for `ℚ₇` and `ℚ₂₇`, the
+  cases deposited in `level2.py`; the lemma on finite connection sets is cited as Corollary 16 of the winding paper.
+- **Second check.** A further agent refereed the new proof of Lemma 13 and every new sentence of the diff, with
+  programs of its own: the proof is correct, with no gap (68 exhaustive checks, among them all 13 digit sequences at
+  level 325 and the injectivity of two consecutive digits). It found one more inaccurate sentence of ours, "the rest of
+  the proofs are by hand": Proposition 6 rests on a computation of `κ₁` for the primes `11 ≤ p < 1001` (it serves only
+  Corollary 5; Theorem F does not need it); the introduction now says so. Its ten minor points (a leftover symbol,
+  which graph the SAT bound on the 628 vertices refers to, the level of `level2.py`, a simpler reason for the residue
+  field `𝔽₇` of `ℚ(√2, √7)`, the citation for `ℚ(√3, √11)`, which lies in both families, the order of two references,
+  and clarifications in the proof of Lemma 13) are applied.
+
+## A full reading of the winding paper (4 October, afternoon)
+
+A separate agent read all of `papers/winding/`, reran every certificate of Theorem 12 with the stored checker and
+with a checker of its own, tested Theorem 1 on 400 random finite abelian Cayley graphs at ten values of `p/q < 4`
+(no mismatch; the expected failures at 4, 9/2 and 5), rechecked the distance-graph classifications, Lemma 10 and the
+example `{3, 4, 9, 12}`, read the cited sources it could fetch and the Lean statements. Verdict: no false theorem
+and no broken proof; Theorem 1 holds in both directions for every abelian group. Applied:
+
+- **An internal contradiction.** Question 14 still asked whether `χ(ℚ(√d)²) ≥ 4` for every `d ≡ 11 (mod 12)`,
+  which `papers/four-colours/` proves (and Lean checks). It now asks the four-colour local–global question.
+- **A false sentence.** "This wind does not change under homotopy" is false for the raw sum of the lifts: a
+  backtrack adds `p`. It is invariant under exchanging two steps (a 4-cycle has wind 2); the argument for groups of
+  exponent 4 now uses the normalised wind `(2Σδ − p·length)/p`, which is also invariant under backtracks. No proof
+  of the paper used the false form.
+- **A missing step.** A locally constant colouring at a place gives a character only after one notes that the unit
+  vectors are integral there (the place of `L` above it is unique when `i ∉ F_v`); now written.
+- **Literature.** Wrochna and Matsushita (walks modulo 4-cycles), Gao–Jackson–Krohne–Seward (the winding of
+  3-colourings of `ℤ²`), Heuberger (circulants), Gujgiczer–Naserasr–S–Taruni, Ryabchenko (the case of `ℤ^d` of the
+  affine automorphism theorem), Berger and Robinson (aperiodic tilings), Youngs (projective quadrangulations) and Day
+  (invariant means); every reference was checked against its publisher or arXiv page. Katznelson (2001) is still
+  unread (not open access; its abstract concerns lacunary sequences).
+- **Self-contained Theorem 12.** The 5-colouring of the plane over `𝔽₁₁` used for `ℚ(√143)` is now printed in the
+  proof (eleven words of eleven digits, checked on its 726 edges).
+- Smaller points: `ℕ = {1, 2, …}`, the empty connection set, the formalised statements of the Liu corollary, the
+  local Lean check, the definition of tight arcs for any graph, the finite witness for `{3, 4, 9, 12}` (`χ_c = 7/2`
+  is rigorous, only the witness rests on SAT), the input model of the decision procedure, the bibliography (the
+  pages of de Bruijn–Erdős, 371–373, also corrected in two other papers).
+
+A second reading of the changes (a fresh agent, diffing the revised source against the version read above) found no
+error and one gap, now closed: the exponent-4 argument of Krebs and Sankar needs their homotopy move, which replaces
+two consecutive steps `s, t` by any `s′, t′ ∈ S` with `s + t = s′ + t′` (for exponent 4 they use `(s, s) → (−s, −s)`),
+and exchanges with backtracks alone do not suffice (in `ℤ/4` with `S = {±1, 2}` the odd closed walk `(1, 1, 2)` has
+no trivial power under them). The normalised wind is invariant under the general move by the argument of Step 1 (both
+sums lie in `[2q, 2p − 2q]` and agree modulo `p`); the sentence now says so. Smaller points applied: Question 14 says
+that for `ℚ(√47)` it is not known whether the places above 11 and 19 give locally constant 4-colourings (which
+removes an apparent conflict with "`ℚ(√167)` is the first admissible field") and assumes `i ∉ F`; Ryabchenko's
+theorem is the case `ℤ^d` (with torsion it fails: `K_n` has non-affine automorphisms), and Morris, Morris and
+Verret extend it to torsion-free nilpotent groups; `d ≡ 0 (mod 7)` is formalised too
+(`QuadraticPlanes.colorable_four_ramified`); "finite place", and why a locally constant colouring is constant on the
+cosets of some `π^k O_w`; the Lean form of the answer to Question 3 of Glasscock, Koutsogiannis and Richter colours
+`{0, 1, 2, …}`, equivalent by a shift; wording. The certificate for the 28 vectors of `min_83_510.json` was
+regenerated (`certify_w2.py`, 692 s: 24 relations, 98 300 nodes, 79 686 leaves), accepted by `check_w.py`, and is
+now stored as `data/quadratic_planes/winding/cert_83_510_min28.json.gz` and checked by the slow tests; the paper
+cites it instead of "checked but not kept". The PDF is rebuilt (12 pages, no warnings).
+
+## An explicit finite witness for `χ_c(ℚ(√11)²) = 7/2` (4 October, afternoon)
+
+Corollary 7 of `papers/three-colours/` (F12 in the note) says that some finite unit-distance graph over `ℚ(√11)` has
+circular chromatic number `7/2`, by compactness and with no bound on its size; the 76-vertex graph has `χ_c = 16/5`
+(SAT), the 628-vertex union of nine rotated copies stays at most `13/4`, and the ball of radius 2 in the Cayley graph
+of the 140 vectors of Theorem C has `χ_c = 5/2`. A separate search (a cloud session; branch
+`claude/finite-witness-share`) tried iterated Minkowski sums of the 76-vertex graph with lazy SAT (tight cycles added
+on demand) and found that the first sum already works: with `A` the vertex set of the 76-vertex graph, the
+unit-distance graph `H` on `A + A` (2 237 points with denominator 30, all 11 300 unit pairs) maps to `K_{7/2}` by a
+7-adic colouring, and every `(7, 2)`-colouring of `H` has a tight cycle among 180 listed cycles of lengths 14, 21, 28,
+35 and 42 (multiples of 7, as they must be: a tight cycle of length `m` winds `2m/7` times). By Lemma 20 of the paper
+(the easy half of Guichard's characterisation), `χ_c(H) = 7/2`.
+
+Checked here before anything was claimed. The search's own checker reruns the exact checks and `drat-trim` on its
+stored DRAT proof: VERIFIED (1 minute). A second checker written here from the file format alone, sharing no code,
+rebuilds `A + A` from `q11.json`, recomputes every unit pair from the 108 unit vectors with denominator 30 (all 11 300
+are edges, none missing), checks the colouring and the cycles, and writes the formula with its own variable layout;
+`kissat` refutes it in 57 s with a new DRAT proof, `drat-trim` verifies that proof (595 s) and converts it to LRAT,
+and `cake_lpr`, the formally verified checker, accepts the LRAT proof (13 s). So the lower bound rests on two
+independent encodings and proofs, one of them checked by a verified checker. The search continues, looking for a
+smaller witness inside `H`. Files: `data/number_fields/circular/finite_witness/` (the witness, the first formula and
+its proof, both checkers, `verification.txt`); tests: `tests/test_two_primes.py::test_finite_witness_q11` and the slow
+`test_finite_witness_q11_proof`. The paper now gives the witness in Section 10 and mentions it in the introduction,
+after Theorem C and in Question 3 ("How small can it be?").
+
+## A full reading of the four-colours and quadratic-planes drafts (4 October, evening)
+
+A separate agent read `papers/four-colours/` and `papers/quadratic-planes/` in full, checked every step of Theorem 1,
+Corollaries 2 and 3, Theorem 4, Lemmas 5–10 and Proposition 9 of the first by hand and with exact programs of its
+own (`P₁, …, P₄` with 12, 20, 28 and 36 vertices and the stated areas; `S_N` from its definition for `N ≤ 625`; the
+infeasibility of both cases; the large-`N` criterion for the 191 squarefree `d ≡ 11 (mod 24)` below 5000), and
+every graph, number and claim of the second against the data (distinct points, all unit pairs, no triangle, the
+colourings, every formula equal to `Φ(G)`; CaDiCaL refutes all 27 formulas). **No error in a proof.** Findings, all
+applied after checking them here:
+
+- **The sharpness remark was false for large `k`.** For `d ≡ 23 (mod 24)` the bound `d < 21N/5` is sharp for
+  `k ≤ 5`: then the conditions at `ρ^{±1}` are the binding ones, so `c*_N/d ∈ P_k` when `d ≥ 21N/5`, which gives a
+  character with all types c. At `k = 6`, `(1 − i)ρ⁶ = (1457 − 22049i)/15625`, and for `N = 5⁶` the referee's exact
+  decision (all type choices, all lattice points, given Proposition 9) finds no character for the 22 values
+  `65 639 ≤ d ≤ 66 143` with `d ≡ 23 (mod 24)`; the first feasible value is `66 167`. Rerun here
+  (`family/fc_case23.py`, 4 s, stored output and a test), with the maximum of `|⟨1 + i, ν⟩|` over the normals
+  recomputed exactly for `k ≤ 8` (`7/5` up to `k = 5`, `22049/15625` from `k = 6`). The remark, the note, the README
+  and `family/README.txt` now say "sharp for `k ≤ 5`, not for `k ≥ 6`". No theorem used it.
+- **Counts and citations.** "26 fields" with explicit graphs is 27 (also on the front page); Moorhouse's Theorem
+  8.1 combines his bounds at 3 and 7 with his Lemma 8.4 and excludes `d ≡ 47, 59, 83 (mod 84)`; Davies,
+  de Bruijn–Erdős, Exoo–Ismailescu and Isbell are now cited where used; the range of primes covered by the graphs
+  is stated correctly; the Lean constants and files are described as they are (`exact3` assumes `N > 2Σ|m_j|` for
+  values `N/6·E + x` with `|x| ≤ 1/4`; `χ(ℚ₂²) = 2` and `χ(ℚ₃²) = 3` are in `lean/PadicPlanes.lean`).
+- **The checks section.** In case (1) the certificates use the `N` the proof needs (an independent check), not a
+  smaller one; only case (2) uses a smaller `N`. "Two independent checkers": the second, an integer-only checker,
+  was not in the repository. The winding referee's checker, written from the certificate format alone, is now
+  `data/quadratic_planes/winding/check_w_indep.py` (its `assert`s replaced by explicit errors, and integer types
+  checked); it accepts all 26 stored certificates (`check_w_indep.out`) and rejects six kinds of corruption, with
+  and without `python -O`; tests in `tests/test_winding_family.py`.
+- **The quadratic-planes draft.** A false explanatory claim (that for `d = 83` a direction with 3 in its denominator
+  also has 7, 11, 17 or 31 there; `(29/54, 5√83/54)` has denominator `2 · 3³`) is replaced by what was used and holds:
+  no vector of `U₁₂₃₀` has 3 in its reduced denominator (checked here). The Hoffman remark now uses the exact least
+  eigenvalue at 23 and 31 (ratios 0.2491 and 0.249997), as the bound `2√p` gives only 0.2855 and 0.2582 there. Dated
+  remarks record what the later drafts proved (Theorem 1 of the four-colours draft answers two of its open
+  questions; the winding draft settles 83, 107, 143, 203), and the `ℚ(√47)` question cites `4 ≤ χ_c ≤ 19/4`. Smaller
+  points: Fischer's Theorem 10 covers 491 and 851 too, the title of MildlyMeticulous's repository, the date.
+- **Repository pointers.** The public `main` branch and the archived release predate both drafts; their references
+  now say that the cited files are on the branch `claude/quadratic-planes` (pull request 35), as the three-colours
+  draft already did.
+
+Not done: the referee's completion of the remark "one vector cannot replace `u₁` and `u_n`" (an argument that
+`G_N ∪ G_N v ∪ G_N v̄` always has a character) was not checked here; the remark now states only what it shows, that
+the argument of Section 4 does not extend.
+
+## Smaller witnesses for `χ_c = 7/2`, and the first over other fields (4 October, evening)
+
+The search for a witness inside `A + A` (2 237 vertices) was replaced by a *colouring-guided growth* with lazy SAT
+(`data/number_fields/circular/finite_witness/grow.py`). Start from `A`, the vertex set of the 4-chromatic graph of
+`data/quadratic_planes/q<d>.json`. Ask CaDiCaL for a `(7, 2)`-colouring in which every listed directed cycle has a
+non-tight arc. If the colouring has tight cycles, list them (a shortest one through a vertex of each nontrivial strong
+component of the tight digraph) and ask again. If its tight digraph is acyclic, the graph grows: among the points
+`x + u` (`x` a vertex, `u` a unit vector with the same denominator), add those whose neighbours leave no colour (every
+colour `k` has a neighbour `y` with `k − c(y) ∈ {0, ±1} mod 7`), most neighbours first, at most 200 a round. When no
+such colouring exists, every `(7, 2)`-colouring has a tight listed cycle, and the graph is a witness by Lemma 20 (it
+always has a `(7, 2)`-colouring, written out at the end). Over `ℚ(√11)` this stops after 52 rounds, in 15 seconds, at
+653 vertices (2 528 edges, 32 cycles of lengths 7, 14 and 21). `minimise.py` then deletes vertices, lowest degree
+first, while the formula stays unsatisfiable (one selector literal per vertex in an incremental CaDiCaL, dropping at
+once every vertex outside the unsat core, and listing the tight cycles it meets); no call reached its conflict budget,
+so every vertex left is needed: 170 vertices and 468 edges. `critical.py` stores, for every vertex `v`, a
+`(7, 2)`-colouring of `H − v` with an acyclic tight digraph, so `χ_c(H − v) < 7/2` (perturb the colours along a
+topological order of the tight digraph: the other half of Guichard's characterisation), and `check_critical.py`
+checks them: the witness is vertex-critical.
+
+The same growth, unchanged, works over other fields where Theorem F gives `χ_c = 7/2`: from the 71-vertex graph over
+`ℚ(√455)` it stops after 71 rounds at 959 vertices (deleted down to 175 vertices, 434 edges), and from the 96-vertex
+graph over `ℚ(√191)` after 89 rounds at 3 258 vertices (deleted down to 293 vertices, 803 edges); both are
+vertex-critical. Over `ℚ(√935)`, `ℚ(√239)` and `ℚ(√431)` it reached the cap of 12 000 points without a witness;
+`ℚ(√23)`, `ℚ(√35)`, `ℚ(√71)` and `ℚ(√179)` are still growing. The relation-space MIP of `kapparel.py` (SCIP; a guide,
+not a proof) finds no character with all values in `[0.2858, 0.7142]` on the unit sets used here (`d/D` = 11/30,
+23/156, 35/390, 71/120, 95/480, 119/240, 155/510, 179/390, 191/240, 239/480, 263/1020, 359/600, 431/600, 455/780,
+911/1560, 935/1020), consistent with `κ(U_D) = 2/7`, which a witness inside `Cay(ℤU_D, U_D)` needs.
+
+Certified before anything was claimed, for every witness kept: `check_witness.py` (the first checker, now reading
+`d` from the file) and `verify_independent.py` (the second, now reading `d` and the denominator from the file) accept
+the graph, every unit pair an edge, the colouring and the cycles; `kissat` refutes both encodings, `drat-trim`
+verifies both proofs, and `cake_lpr` accepts the LRAT form of the second (`verification.txt`). The minimal witnesses
+are harder for the solver than the graphs they came from: without symmetry breaking `kissat` needed 7 minutes and a
+250 MB proof for the 170-vertex formula (53 s for the 653-vertex one). Both checkers now accept an optional
+`fixed_vertex`, whose colour the formula fixes to 0 (rotating the colours keeps a `(7, 2)`-colouring and all its
+colour differences, so nothing is lost); with a vertex of largest degree fixed, the proofs are about ten times
+shorter (the stored core proofs: 3.9, 3.2 and 0.5 MB compressed). The 170- and 175-vertex formulas were also refuted
+and checked without the fixed vertex, in both encodings, and the grown graphs before deletion (653, 959 and 3 258
+vertices) in the second encoding. `grow.py`, `minimise.py` and `critical.py` reproduce the stored `ℚ(√455)` witness
+and its certificates exactly (python-sat 1.9, CaDiCaL 1.5.3), and `grow.py` the 653-vertex graph over `ℚ(√11)`.
+
+Also tried, not results: `A + A` with lazy SAT for the other fields gave acyclic colourings at once for most of them
+(the `A + A` graph of `ℚ(√179)`, 24 643 points, gave a formula that `kissat` was still refuting after 50 minutes when
+its DRAT proof reached 1.3 GB and was stopped for disk). A `(4, 1)` version of the growth over `ℚ(√59)`, where
+`χ_c = 4` (Question 3 of the paper: is the value attained by a finite subgraph?), stopped at its 100-minute limit
+with 30 546 listed tight 4-colour cycles at 4 361 points, without an answer. By compactness, `χ_c(F²) = 4` (with
+`χ(F²) = 4`) is attained by a finite subgraph if and only if every 4-colouring of `F²` has a tight cycle (a directed
+cycle along which the colour increases by 1 mod 4): if none has one, every finite subgraph has `χ_c < 4` by the
+perturbation argument; if all have one, finitely many cycles serve all colourings, and a finite subgraph containing
+them on which no 4-colouring avoids them exists. The 2-adic 4-colourings of `ℚ(√59)²` (residues in `𝔽₄`) do have
+tight cycles for every cyclic order of the colours: a unit rhombus whose two directions have suitable distinct
+residues in `μ₃`. So they do not decide it. Nor do rhombi alone force the answer on small pieces: the 406-point
+4-chromatic graph of `ℚ(√59)` and the ball of radius 2 in the Cayley graph of its 108 unit vectors (5 941 points,
+5 724 four-cycles) both have 4-colourings without a tight 4-cycle (SAT, `rhomb4.py`, not stored). The criterion is
+now stated after Question 3 of the paper.
+
+Files: `data/number_fields/circular/finite_witness/` (the witnesses, their formulas, proofs and criticality
+certificates, both checkers, `check_critical.py`, `grow.py`, `minimise.py`, `critical.py`, `verification.txt`); tests:
+`tests/test_two_primes.py` (`test_finite_witness_grown` for the three witnesses, `test_finite_witness_critical_rejects`,
+and the slow `test_finite_witness_grown_proof`).
+
+## A nine-point witness for `χ_c = 3` without unit triangles (4 October, night)
+
+When `√3 ∈ F` and `χ_c(F²) = 3`, a unit triangle is a finite witness for Corollary 7 of the three-colours paper.
+`ℚ(√7)` is the natural test without triangles: `χ_c(ℚ(√7)²) = 3` (Theorem B and Corollary B6), `√3 ∉ ℚ(√7)`, and
+`√7 ∈ ℚ₃`, so a witness there also serves `ℚ₃`. The growth of the previous section, run with `K₃` in place of
+`K_{7/2}` (an arc is tight when the colour increases by 1 mod 3; `grow.py ... 3 1`), from 0, the 204 unit vectors with
+denominator 160 and two points closing a 5-cycle (207 points, `finite_witness/q7_seed.json`), stops after two growth
+rounds at 607 vertices with 7 listed cycles, in a few seconds; deletion (`minimise.py`) leaves nine vertices and
+`critical.py` finds all nine certificates. The nine points, translated so that one of them is 0, are `P₀ = (−1, 0)`,
+`P₁ = (−(3 + √7)/8, −(5 + √7)/8)`, `P₂ = (1/4, −√7/4)`, `P₃ = (√7/4, 1/4)`, `P₄ = (−1/4, √7/4)`,
+`P₅ = ((3 − √7)/8, (√7 − 5)/8)`, `P₆ = (1, 0)`, `P₇ = (0, 0)` and `S = (0, 1)`, and their 13 unit pairs form the
+8-cycle `P₀⋯P₇`, the chords `P₀P₄`, `P₁P₅`, `P₂P₆` and the path `P₃SP₇`: the Wagner graph with one chord subdivided
+(found by matching against the Wagner graph after contracting the degree-2 vertex). The seed's 5-cycle is
+`P₆P₇P₀P₁P₂`.
+
+Why `3`: each of the 84 proper 3-colourings has a tight 6-cycle (three of the four 6-cycles suffice, each in both
+directions), so `χ_c = 3` by Lemma 20. A second view needs no tight cycles: a graph with 9 vertices has `χ_c = p/q`
+with `p ≤ 9`, the largest such fraction below 3 is `8/3`, and `K_{8/3}` is the Wagner graph itself (`0, 3, 6, 1, 4,
+7, 2, 5` is an 8-cycle and difference 4 joins opposite vertices); so `χ_c(H₇) = 3` says that subdividing one chord of
+the Wagner graph destroys every homomorphism to the Wagner graph, which a backtracking search confirms. Nine vertices
+are the fewest possible in a plane without unit triangles: every triangle-free graph with at most 8 vertices maps to
+`K_{8/3}`. `small_triangle_free.py` generates the 4 682 270 triangle-free graphs on 8 labelled vertices (vertex `v`
+joined to an independent set of the earlier ones) and searches a homomorphism for the 15 247 maximal ones (the
+15 120 that are not bipartite need a search); none fails. Its counts for 3 to 6 vertices (7, 41, 388, 5 789) agree
+with a direct enumeration of all graphs.
+
+Checked by enumeration with Python integers (`check_small.py`: points, all unit pairs, all `3⁹` maps, no
+homomorphism to `K_{8/3}`, the nine criticality certificates), and the first fact again by a SAT refutation of the
+formula in the layout of `check_witness.py` (51 variables, 126 clauses): `kissat` refutes it, `drat-trim` verifies the
+proof and `cake_lpr` its LRAT form, for the stored labelling and for the graph as found. A hand proof followed: with
+`δ = ±1` the colour step along an arc (mod 3), the sum of `δ` vanishes on the two 4-cycles `Q₀ = P₀P₁P₅P₄` and
+`Q₁ = P₁P₂P₆P₅`, is ±3 on the 5-cycle `Z = P₀P₁P₂P₆P₇`, and is 0 or ±6 on each 6-cycle; the 1-chain identity
+`2Z = Q₀ + Q₁ + A + B − C` for the three listed 6-cycles `A = P₃P₄P₅P₆P₇S`, `B = P₇P₀P₁P₂P₃S`,
+`C = P₀P₇P₆P₂P₃P₄` then forces one of them to have sum ±6, i.e. to be tight (the fourth 6-cycle is `Q₀ + Q₁` and is
+never tight). The paper now gives this proof; the identity is a test.
+
+Not a result: seeds made of 0 and the unit vectors of one denominator, which gave the nine points for the value 3, do
+not start the growth for `7/2` over `ℚ(√11)` (denominators 30, 90, 150; 108, 180 and 300 unit vectors): the first
+`(7, 2)`-colouring leaves every candidate point at least two colours, so `grow.py` stops at once. With three colours
+two neighbours of different colours already leave one; with seven, a neighbour excludes only three.
+
+`grow.py`, `minimise.py` and `critical.py` now take any `p/q` (`grow.py ... p q`; the others read `p` and `q` from the
+file, `7/2` when absent); for `7/2` they build the same clauses in the same order, and they reproduce the stored
+`ℚ(√455)` witness and its certificates exactly, as before. Files: `finite_witness/witness_q7.json.gz`,
+`q7_seed.json`, `check_small.py`, `small_triangle_free.py`, `verification.txt`; tests: `test_finite_witness_q7`,
+`test_finite_witness_q7_rejects` (four corruptions), `test_finite_witness_q7_found_by_growth`,
+`test_small_triangle_free_six` and the slow `test_small_triangle_free_eight`.
+
+## Nine vertices classified, and a referee's report on the `7/2` witnesses (4 October, night)
+
+The nine-point witness over `ℚ(√7)` is not edge-critical: without the chord `P₁P₅` it still has `χ_c = 3`. What is
+left, `M`, is the hexagon `P₀P₄P₃P₂P₆P₇` with its three long diagonals subdivided by `P₁`, `P₅`, `S`, and it has a
+shorter proof by hand: with `δ = ±1` the colour steps (mod 3), the 5-cycles `Z_k = v_k v_{k+1} v_{k+2} v_{k+3} m_k`
+have sums ±3, `Z_{k+1} − Z_k` is a 6-cycle and `Z₀ + Z₃` is the hexagon, so either some 6-cycle `Z_{k+1} − Z_k` has
+sum ±6 (tight) or all `Z_k` have the same sum and the hexagon has sum ±6. The paper now gives this proof.
+
+Growth with `K₃` over other real quadratic fields, from 0, the unit vectors of one denominator and a 5-cycle (where
+one exists among them; the plain ball seed never starts the growth): `ℚ(√7)` (denominator 80) gives the same nine
+points, `ℚ(√31)` (80) a different nine-point witness with 14 edges, `ℚ(√15)` and `ℚ(√39)` witnesses with 22 and 25
+vertices after one deletion order. Among 22 fields `d ≤ 43` tried, 5-cycles with these denominators exist only for
+`d = 7, 15, 31, 39`, all `≡ 7 (mod 8)`. The `ℚ(√31)` graph contains `H₇` plus one edge between midpoints, which
+suggested the classification: `nine_vertices.py` generates the triangle-free graphs on up to 9 vertices up to
+isomorphism (1, 2, 3, 7, 14, 38, 107, 410, 1 897, as in OEIS A006785) and tests `χ_c = 3` twice, by the absence of a
+homomorphism to `K_{8/3}` and by tight cycles in every 3-colouring; the tests agree everywhere, and exactly three graphs
+on 9 vertices have `χ_c = 3`: `M` and `M` with one or two edges between the midpoints (all three would close a
+triangle). So two of the three are realised as induced unit-distance graphs, over `ℚ(√7)` and `ℚ(√31)`.
+
+The referee of the three `7/2` witnesses (`finite_witness/indep_W/REPORT.md`) confirmed every claim with programs of
+its own and found twelve points of wording and robustness, now applied. One was a real weakness of the checkers: they
+used `assert`, which `python -O` removes, so a corrupted witness passed and an unverified proof was followed by the
+conclusion; every check is now explicit, and a test runs the checkers with `-O` on corrupted files. The paper now
+derives `χ_c = 7/2` over `ℚ(√191)` and `ℚ(√455)` from the witnesses and Proposition 3 alone (no computer-assisted
+Proposition 9), describes the second growth rule (points with one colour left, 382 of the 888 points added over
+`ℚ(√455)`), and states the perturbation explicitly: if `pos` numbers the `N` vertices along a topological order of the
+tight digraph of a `(7, 2)`-colouring `c`, then `N·c + pos` is a `(7N, 2N + 1)`-colouring. The referee's programs and
+its report are stored with the witnesses.
+
+## The subdivided hexagon over `ℚ(√7)`, and the value-3 witnesses refereed (4 October, night)
+
+The classification left a question: is `M` itself, and not only `M` with one or two more edges, an induced
+unit-distance graph? Without unit triangles the question is only which of the three graphs occur: nine points with
+the twelve unit pairs of `M` have no other unit pair except between midpoints (a pair `v_i v_{i+2}` closes a triangle
+with `v_{i+1}`, a pair `v_i v_{i+3}` one with `m_i`, a pair `v_i m_j` one with `v_j` or `v_{j+3}`), and all three
+midpoint pairs would form a triangle. A direct search answers it. Put `v₀ = 0` and take the edges of the hexagon among
+the unit vectors with denominator 80; each long diagonal `v_{j+3} − v_j` must be a sum `c + c′` of two unit vectors,
+and then `m_j = v_j + c` is at distance 1 from `v_j` and `v_{j+3}`. Over `ℚ(√7)`, `hexagon_search.py 7 80 400` finds
+62 256 sets of nine points with the twelve unit pairs: 46 512 span `M`, 14 688 span `M` plus one edge and 1 056 span
+`M` plus two edges. Over `ℚ(√31)` the counts are 4 288, 1 728, 1 920 and 640; over `ℚ(√15)`, `ℚ(√23)` and `ℚ(√39)`
+there are none with denominator 80. So each of the three nine-vertex graphs with `χ_c = 3` is a unit-distance graph
+over `ℚ(√7)` and over `ℚ(√31)`, and `M`, with twelve edges, is a witness with the fewest vertices and, among those,
+the fewest edges. The stored `witness_q7m.json.gz` is one of the listed realisations of `M`, translated:
+`v₀, …, v₅ = (√7/4, 1/4), (√7/4 − 1, 1/4), (−3/4, −√7/4), (0, 0), (−1, 0), (−1/4, √7/4)` and
+`m₀, m₁, m₂ = (0, 1), (√7/4 − 1, −3/4), (−1/2 − √7/4, 1/4)`, with the hexagon and the six directed 6-cycles of the
+proof as its listed cycles (a first version listed each 6-cycle twice; the duplicates were removed before it was
+stored). `check_small.py` verifies it, and the SAT refutation of its formula is certified by `kissat`, `drat-trim` and
+`cake_lpr`.
+
+A referee checked the value-3 material at 17347f14 (`finite_witness/indep_V3/`) and confirmed every claim with
+programs of its own, among them all `2^28` labelled graphs on 8 vertices and a Burnside count of the triangle-free
+graphs on 9 vertices that uses no isomorphism test (`688 383 360 = 1 897 · 9!`; for "no homomorphism to `K_{8/3}`",
+`1 088 640 = 3 · 9!`). Its main finding: the `ℚ(√31)` growth could not be reproduced from its description, as the
+seed was not stored. The seed is now stored (`q31_seed.json`: 0, the 156 unit vectors with denominator 80, and two
+points closing a 5-cycle); the growth stops at 367 vertices and deletion gives exactly the stored nine points. The
+remark that the growth over `ℚ(√15)` and `ℚ(√39)` gave witnesses with 22 and 25 vertices was not reproducible either
+(the referee's samples gave 13–25 and 17–44 vertices, depending on the seed); it now says only that the size depends
+on the seed and that the least size there is open. The referee also realised all three graphs exactly (`M` and `H₇`
+over `ℚ(√31)`, `M + m₀m₁ + m₁m₂` over `ℚ(√7)`), as the search above does; asked for Vince's and Bondy–Hell's papers to be
+cited for the numerator bound; and asked for the proof by hand to name the three 6-cycles `C₀, C₁, C₂` it uses
+(`C_{k+3}` is `C_k` reversed). All of this is applied.
+
+## A 157-vertex witness for `7/2` over `ℚ(√11)` (4 October, night)
+
+The growth from the 76-vertex graph over `ℚ(√11)` with at most 100 new points per round (instead of 200) stopped after
+51 rounds at 573 vertices, and deletion left a second vertex-critical witness with 170 vertices (458 edges), different
+from `witness_q11`. The two share 135 vertices; their union has 205. Deleting vertices from the union in a random
+order (the deletion program with seed 1, 105 minutes) left 157 vertices and 409 edges: `witness_q11b.json.gz`. It is
+vertex-critical (`critical.py`, `check_critical.py`), and its lower bound is certified like the others: `kissat`,
+`drat-trim` on the stored core proof (`check_witness.py`), and the second encoding (`verify_independent.py`) refuted
+again by `kissat`, verified by `drat-trim` and, in LRAT form, by `cake_lpr`. So the smallest known witness for
+`χ_c(ℚ(√11)²) = 7/2` has 157 vertices; other random orders are running.
+
+## A full reading of the three-colours paper, and the 191 witness reproduced (4 October, night)
+
+A referee read the whole paper at 84307c57, with priority on what changed today (Section 10, the Questions), checked
+the new points, cycles and 1-chain identities, reran `check_small.py`, `small_triangle_free.py`, `nine_vertices.py`,
+`hexagon_search.py`, the window checkers and the computation of `κ₁` (largest value `4/19` for `11 ≤ p < 3000`), and
+found no mathematical error. One sentence of the introduction was false: Proposition 6 is not used only for Corollary
+5, since Lemma 19 uses its case `f ≥ 3` (proved by hand from Weil's bound); only its case `f = 1`, `p ≥ 11` rests on
+the computation. The sentence on the referee of the `7/2` witnesses had become stale (it does not cover the
+157-vertex witness), Question 3 said "above 4" where Lemma 21 already fails at 4, and the bound `19/4` now comes with
+an explicit map, `4a + 5b`, which takes the values 4, …, 15 on the twenty elements of norm 1 of `𝔽₃₆₁`. All applied.
+
+The programs of `finite_witness/` reproduce `witness_q191` exactly, as they do `witness_q455`: 89 growth rounds to
+3 258 points, deletion to the stored 293 vertices (45 minutes), and the same criticality certificates.
+
+## Is `χ_c(ℚ(√59)²) = 4` attained? Two probes, both negative (4 October, night)
+
+Question 3 of the paper asks whether some finite unit-distance graph over `ℚ(√59)` has `χ_c = 4`; by compactness this
+holds if and only if every proper colouring `c: F² → ℤ/4` has a tight cycle. Two kinds of colourings that would
+answer it in the negative were tested, without success (nothing here is a result).
+
+*Characters.* If a character `φ` of `F²` maps every unit vector into `[1/4, 3/4]`, then `c = ⌊4φ⌋` is a proper
+4-colouring, and an arc `x → x + u` is tight for every `x` exactly when `φ(u) = 1/4`; a tight cycle of `c` is a
+nonnegative relation among the unit vectors `u` with `φ(u) = 1/4`. When `φ` is locally constant at finitely many
+places, that set is open in the adelic topology of the circle, hence dense in both real circles, and a nonnegative
+relation exists (the convex hull of the torus of the two complex places contains 0 inside); so these colourings have
+tight cycles (a sketch, not refereed).
+
+*Monotone colourings.* If some linear height `h` on `F² ⊗ ℝ` makes `c(y) − c(x) ∈ {1, 2}` for every unit pair with
+`h(y − x) > 0`, every tight arc goes up and there is no tight cycle. On the 406-point 4-chromatic graph of
+`data/quadratic_planes/q59.json` such a colouring exists for no height through one real embedding (68 types) and
+for 4 of 1 000 random heights through both; on its union with one rotated copy (790 points, 1 953 edges) for none of
+the 122 types and 300 random heights tried (`monotone.py`, `rotunion.py`; the radius-2 ball of the unit vectors with
+denominator 210, 5 941 points, is too sparse to say anything: every height works there).
+
+The 2-adic colourings (residues in `𝔽₄`) have tight 4-cycles, and at levels 2 and 4 the 2-adic plane also has
+4-colourings that do not factor through `𝔽₄` (`level.py`); whether the periodic ones always have tight cycles in the
+plane, and what an aperiodic colouring without tight cycles could look like, is open.
+
+## A 155-vertex witness for `7/2` over `ℚ(√11)` (5 October, night)
+
+Two more random orders on the 205-point union of the two 170-vertex witnesses left 173 and 161 vertices. The 157- and
+161-vertex witnesses together span 170 points (462 edges), and deleting vertices from that union in random orders left
+155 vertices and 404 edges (one order), 156 (two orders) and 157 (one order). The 155-vertex graph is vertex-critical
+(`critical.py`, `check_critical.py`), and its lower bound is certified like the others: `kissat` refutes the formula
+of `check_witness.py` (with the colour of `fixed_vertex` 108, of degree 17, fixed) in about 20 s, `drat-trim` keeps
+236 546 of 451 597 lemmas (11 565 of 16 041 clauses in the core), and `check_witness.py` verifies the stored core
+proof; the second encoding (`verify_independent.py`, 1 880 variables) is refuted again by `kissat`, its proof is
+verified by `drat-trim` (226 574 of 434 641 lemmas in the core) and, in LRAT form, by `cake_lpr`. It replaces the
+157-vertex graph as `witness_q11b.json.gz` (same file names; paper, note, READMEs and test updated). Two of the
+deletion runs were stopped by a restart of the machine and resumed from their saved states: a vertex shown necessary
+in a set stays necessary in every subset (a colouring of `S − v` without tight cycles restricts to one of `S′ − v`), so
+only the vertices not yet tested were tested. How small a witness can be is open; all the witnesses so far come from
+the same two growths, and a new growth (which also lists the reverse of every tight cycle found) is being reduced.
+
+The referee's `referee_check.py`, run on the 155-vertex witness, reported that its cycle list repeated 563 of its
+1 836 cycles (the deletion program and the union of the witnesses appended cycles without removing repeats; no other
+stored witness has repeats). Harmless for the proof, but untidy: the repeats are removed (1 273 cycles, same points,
+edges, colouring and criticality certificates) and both formulas refuted and checked again (`kissat` in 23 s;
+`drat-trim` keeps 255 776 of 450 602 lemmas; the second encoding verified by `drat-trim` and `cake_lpr`). We then ran
+all the referee's programs, unchanged, on the new files (`indep_W/results/witness_q11b.log`): the points and all
+11 935 pairs (404 unit pairs, all listed), the colouring and the cycles; its own encoding and a third one with
+two-sided arc indicators, each refuted by `kissat` and checked by `drat-trim` and `cake_lpr`; its own lazy SAT loop,
+which rebuilds a cycle list from scratch (660 cycles, refuted and checked the same way); every formula clause by
+clause, the stored one included, and `drat-trim` and `cake_lpr` on the stored proof; and the 155 criticality
+certificates through explicit `(7N, 2N + 1)`-colourings with `N = 154` (`χ_c(H − v) ≤ 1078/309 < 7/2`). No error.
+
+## Small witnesses for the value 3 over `ℚ(√15)` (5 October, night)
+
+Question 3 of the paper left the least size of a witness for `χ_c = 3` over `ℚ(√15)` open (nine vertices are needed in
+every plane without unit triangles; they suffice over `ℚ(√7)` and `ℚ(√31)`). The growth of `finite_witness/` with
+`(p, q) = (3, 1)` from 70 seeds (0, the unit vectors with denominator 80 or 160, and the five points of one unit 5-cycle
+through 0, a different 5-cycle each time; 63 growths ended with a witness) and 174 deletions (the lowest-degree order,
+and three random orders for each of the 37 growths from denominator 80) gave witnesses with 13 to 41 vertices; the 30 smallest all have 13 vertices and 18 edges and are one graph up to
+isomorphism (a vertex joined by paths of length 2 to the five branch vertices of a theta graph; every cycle of a
+minimum cycle basis has length 5). It is stored as `witness_q15.json.gz`, checked by `check_small.py` (all `3^13` maps:
+810 colourings, each with a listed tight cycle; no homomorphism to `K_{11/4}`; vertex-critical) and by a refutation
+certified by `kissat`, `drat-trim` and `cake_lpr`, and `grow.py`, `minimise.py` and `critical.py` reproduce it from
+`q15_seed.json`. The nine-vertex graphs do not appear: `hexagon_search.py` finds no realisation of the twelve edges of
+`M` over `ℚ(√15)` with denominators 48, 68, 80, 104, 112, 120, 136, 160, 208, 221, 240, 272 and 320, although unit
+5-cycles exist there (for example `2a + 2b + c = 0` with `a·b = −7/8`, which needs `√15`), and a 3-adic count (modulo `π⁶`,
+`π² = 15`) finds sums of five unit vectors equal to 0 there too. So over `ℚ(√15)` the least size is between 9 and 13 (a guide, not
+a result: the growth only uses some denominators). Over `ℚ(√39)` the smallest witness found (30 seeds) has 17 vertices.
+
+A side remark that turned out wrong: over `ℚ(√23)` no unit 5-cycle appears with the denominators 80, 160, 240, 320,
+480, 1120 and 1360, which suggested that there are none; with 1040 = 16 · 5 · 13 there are (they need unit vectors
+whose denominator contains 13), so the absence of the nine-vertex graphs over
+`ℚ(√23)` with denominator 80 says nothing either.
+
+## A witness for `7/2` over `ℚ(√911)` (5 October)
+
+The growth from the 327-vertex 4-chromatic graph over `ℚ(√911)` (denominator 1560) stopped after 63 rounds at 873
+vertices with 54 listed cycles (`grow.py` reproduces it exactly: points, edges, colouring and cycles), and that graph
+is a witness: certified with both encodings (`kissat` refutes each in about 55 s with the colour of a vertex of
+largest degree fixed; `drat-trim` verifies both proofs, `cake_lpr` the LRAT form of the second). The working copy of
+`minimise.py` was too slow on it (half an hour for its first refutation through python-sat), so the deletion used
+`kissat` directly: refute the current set, keep the vertices whose "has a colour" clause is in the clausal core of the
+proof (`drat-trim -c`; a vertex outside the core can be dropped together with the cycles through it, which an
+uncoloured vertex satisfies), then delete the lowest-degree vertices one at a time and then in blocks of adaptive size
+(up to 32; a block is halved when the rest has a colouring with an acyclic tight digraph, after listing the tight
+cycles of the colourings found). The cores alone took 873 vertices to 730, single deletions to 707 and the blocks to
+489; from there the same deletion in blocks with CaDiCaL (one incremental solver, failed-assumption cores, at most 3
+million conflicts per call) was faster (two runs from the same 489 vertices: the `kissat` one, stopped, had 430
+vertices left when the CaDiCaL one had 413). Near the end each refutation took several minutes; splitting it into two
+cases (the colour of a neighbour `w` of the fixed vertex `r` is 2, 3, 4 or 5; with the cycle list kept closed under
+reversal, the reflection `c ↦ −c` exchanges 2, 5 and 3, 4, so the cases 2 and 3 suffice) made it much faster: from 334
+vertices this run ended in 43 minutes with 324 vertices and 866 edges, every vertex but `r` and `w` shown needed by a
+colouring of the rest (the other run, stopped then, still had 327). The result is vertex-critical (`critical.py`,
+`check_critical.py`) and certified like the others; it is `witness_q911.json.gz`. With 7 split in `ℚ(√911)` (911 ≡ 1
+mod 7), Proposition C1 gives `χ_c ≤ 7/2`, so the witness gives `χ_c(ℚ(√911)²) = 7/2` independently of Theorem F.
+
+The referee's programs (`indep_W/`), run by us, unchanged, on `witness_q911` (`indep_W/results/witness_q911.log`)
+found no error: the points and all 52 326 pairs (866 unit pairs, all listed; 58 unit vectors occur as edge
+differences), the colouring and the 494 cycles (4 of them tight under the stored colouring); its own encoding (3 710
+variables, 35 903 clauses) and a third one with two-sided arc indicators (45 997 clauses), each refuted by `kissat` and
+checked by `drat-trim` (549 897 of 1 500 471 and 426 833 of 1 248 741 lemmas in the core) and `cake_lpr`; its own lazy
+SAT loop, which rebuilds a cycle list from scratch (unsatisfiable after 134 iterations, with 380 cycles of lengths 7
+to 28, in 795 s), refuted and checked the same way (2 058 959 of 5 833 449 lemmas); every formula clause by clause, the
+stored one included, and `drat-trim` and `cake_lpr` on the stored proof; and the 324 criticality certificates through
+explicit `(7N, 2N + 1)`-colourings with `N = 323` (`χ_c(H − v) ≤ 2261/647 < 7/2`). It took four runs, all in the log:
+a restart of the machine cut the first and the third, and in the second the disk filled up while `kissat` wrote the
+proof of the rebuilt formula, so that proof was cut short and could not be checked; the third and fourth runs repeated
+the steps from that proof on with the proofs kept in memory (`/dev/shm`).
+
+## The Theorem W scan up to 10 000 (6 October)
+
+- **Below 2000.** Every squarefree `d ≡ 11 (mod 12)` below 2000 (155 values) has an exact Theorem W certificate, now in
+  `data/quadratic_planes/winding/scan` (the smallest file any run found for each `d`; 50 MB in all). Most of them come
+  from share Y (every `D ≤ 6000` with `6 | D` and at least 24 unit vectors, fewest vectors first), the others from the
+  earlier shares and from this machine. Six are unions of denominators: 1523, 1643 and 1763, for which the
+  floating-point search found no infeasible single denominator, and 1787, 1883 and 1907, where a union gave the smallest
+  file. Both checkers accept all 155 on this machine (`scan/checks.txt`). Since Theorem 1 covers every
+  `d ≡ 11 (mod 12)`, the scan is now a check of it field by field that uses Theorem W but not the proof of Theorem 1.
+- **Between 2000 and 10 000.** Shares Z1 and Z2 ran the same search (every single denominator `D ≤ 6000` with `6 | D`
+  and at least 24 unit vectors, fewest vectors first; then unions of two or three of the richest) over all 611
+  squarefree `d ≡ 11 (mod 12)` with `2000 < d < 10 000`. They certified 593: 509 with a single denominator and 84 with a
+  union (`D` the least common multiple). For the other 18
+  (`4787, 5507, 5843, 6827, 7235, 7283, 7451, 7883, 8123, 8363, 8387, 8627, 8747, 8843, 8903, 9203, 9323, 9587`) the
+  floating-point search found no infeasible set; that says nothing about these fields, which Theorem 1 covers. 591 of
+  the certificates (327 MB) stay on the shares' branches `claude/winding-share-z1` and `claude/winding-share-z2`;
+  `scan/beyond2000.tsv` lists all 611 values with `D`, the sizes, the branch, the git blob id and sha256 of each stored
+  file, and the verdicts. Both checkers accept all 591 here: `check_w.py` in 24 369 s in all (the longest, `d = 8867`
+  with `D = 882 180` and 317 824 nodes, in 1 569 s), `check_w_indep.py` in 2 723 s (the longest, `d = 2207` with
+  `D = 3432`, in 239 s). The other two were checked once, by `check_w.py` on the machine that wrote them, and not kept,
+  being over the 50 MB per file that those machines allowed themselves: `d = 5207` (`D = 3996`, 34 vectors, 4 165 215
+  nodes, 113 MB) and `d = 7763` (`D = 1 062 270`, a union, 66 vectors, 1 029 909 nodes, 92 MB; writing it took about
+  15.5 hours, after two attempts cut by restarts of that machine).
+- **The two cases of Theorem 1 show in the search.** Of the 306 values `d ≡ 23 (mod 24)` between 2000 and 10 000, 304
+  have a certificate with a single denominator (one, 8903, has none; one needed a union). Of the 305 values
+  `d ≡ 11 (mod 24)`, only 205 do: 83 needed a union and 17 have none. Below 2000 the three values that needed a union,
+  1523, 1643 and 1763, are `≡ 11 (mod 24)` as well. This matches the proof: for `d ≡ 11 (mod 24)` the vectors `u₁, ū₁`
+  and their rational rotations have a character into `[1/3, 2/3]` for every `N`, and Theorem 1b needs a third vector (an
+  observation about this search, nothing more).
+- **Sizes.** The certificates grow with `d` but unevenly: half of those between 2000 and 10 000 have at most 3 381
+  nodes; a few need millions. A certificate with fewer vectors is not a smaller file: for `d = 1643` a union with 186
+  vectors (`D = 33 538 186 500`) gives 84 766 nodes and 3.9 MB, against 565 086 nodes and 15.8 MB for the union of two
+  denominators with 66 vectors (`D = 460 362`). For `d = 443` the only certificate found (`D = 3042`, 50 vectors,
+  1 120 623 nodes) takes 31 MB, most of the directory; a union of two denominators with 194 vectors (`D = 51 714`) was
+  given 6 hours to be certified here, in case its file was smaller, and did not finish (for 55 minutes of that time it
+  was paused to free a core for other work); the 31 MB file stays.
+- **Search tools.** `single_scan.py`, `union_search.py` and `union_cert.py` (the shares' scripts; `union_cert.py` now
+  takes an output directory and calls `check_w.py`, identical to the shares' `check_w_hard.py`) are in
+  `data/quadratic_planes/winding/`.
+- **`ℚ(√11)`, a smaller witness for `7/2`: none.** Deleting vertices in 21 random orders from the 288-point graph
+  `u11_r4` (each run with the case split) gave vertex-critical witnesses with 179 to 206 vertices; none is below 155.
+- **Tests.** The slow tests of this branch all pass: 47 at the first run; the 6 that need `drat-trim` were skipped there
+  (not on the path) and pass with `DRAT_TRIM` set.
+
+## Finite witnesses at four colours (6 October)
+
+Question 3 of the paper asked whether `χ_c = 4`, when it is the value for a plane (for example over `ℚ(√59)`), is
+attained by a finite unit-distance graph; the probes of 4 October were negative. The answer is yes, in general, but
+without a bound on the size.
+
+- **A tight square or a character (Lemma F13).** In the proof of Theorem W⁺ the only use of `p < 4q` is that the
+  two sides of a square, `ℓ(x, s) + ℓ(x + s, t)` and `ℓ(x, t) + ℓ(x + t, s)`, are equal. For a 4-colouring they lie
+  in `[2, 6]` and are congruent modulo 4, so they can differ only as `2` and `6`, and that says exactly that
+  `x → x + s → x + s + t → x + t → x` is a *tight square*, a tight cycle. So a 4-colouring without tight squares
+  still gives a character with all generators in `[1/4, 3/4]`, and conversely (`⌊4ξ⌋` has none). With the
+  perturbation argument of Lemma F11: if `S` is finite, `κ(S) ≤ 1/4` and the Cayley graph is 4-colourable, every
+  4-colouring has a tight cycle, and by compactness a finite subgraph has `χ_c = 4` (Corollary F14). Conversely a
+  finite witness `H` needs `κ(U_H) ≤ 1/4` for its edge vectors.
+- **A finite set at 1/4 (Proposition F15).** As in the proof of Corollary F12 for `7/2`: when (a), (b) and (7) fail,
+  the proof of Theorem F, run one finite set at a time, gives a finite `U` with `κ(U) ≤ 1/4`. So whenever
+  `χ_c(F²) = 4`, some finite unit-distance graph in `F²` has `χ_c = 4` (Theorem F16), for example over `ℚ(√59)`,
+  `ℚ(√83)` and `ℚ(√3, √11)`; with Corollary F12, `χ_c(F²)` is attained whenever it is at most 4.
+- **Referee.** An independent checker found no error and two programs of its own (C and Python, no shared code)
+  found no counterexample on every abelian group of order at most 16 (and `ℤ/18`, `ℤ/3 × ℤ/6`): 474 classes of
+  connection sets with a 4-colourable Cayley graph, 163 613 685 colourings. Its corrections are applied: the lemma's
+  hypothesis is "no tight square" (a tight 4-cycle need not be a square: `ℤ/8`, `S = {±1, ±2}`, `c(2k) = k`,
+  `c(2k + 1) = k + 2`), the integral form of the relations, rational `q/p` in the converse, the choice of `k` in
+  F15, and the induced subgraph in F16. Its programs are in `data/number_fields/circular/at_four/indep/`.
+  As far as we know the averaging under "no tight squares" and the attainment at 4 are new; the fact that a
+  4-cycle winds at `p/q = 4` only when it is tight is elementary, and we did not search the literature for it.
+- **The growths over `ℚ(√59)`.** The colouring-guided growths with `PQ = 4/1` and the unit vectors of denominator
+  `D = 210`, `2730` and `1050` stopped at their limits, at 12 099, 8 016 and 12 061 points, all without a witness
+  (nothing here is a result). For `D = 210` no witness
+  exists: the character `θ = (89/118, 1/2, 89/118, 1/2)` keeps all 108 unit vectors with denominator 210 at margin
+  at least `15/59 > 1/4` (exact, by enumeration; the referee found another one, `−15a/59 − b/2 + 29c/118`, with the
+  same margin), so every graph built from them has `χ_c ≤ 59/15`. For `D = 1050` the character
+  `θ = (3/8, 5/8, 5/8, 5/8)` has margin exactly `1/4`, and a floating-point MILP finds none with margin `0.2501`
+  (infeasible at `51/200`, `251/1000` and `2501/10000`); an exact certificate that no character maps these 150
+  vectors into the open interval `(1/4, 3/4)` is being computed. For `D = 2730`: feasible at `1/4`, infeasible at
+  `13/50`, and undecided at `51/200` within 30 minutes.
+- **Files.** `notes/circular_planes.md` §6.9 and §7, `papers/three-colours/` (subsection "Finite witnesses at four",
+  abstract, introduction, Question 3), `papers/winding/` (Proposition `prop:four` in the section on finite witnesses),
+  `data/number_fields/circular/at_four/`, `tests/test_at_four.py`.
+
+## Explicit unit vectors with `κ = 1/4` over `ℚ(√3, √11)` (6 October, evening)
+
+- **Exact.** The 27 unit vectors `R₆₀ʲ R_Aᵏ R_Gˡ (1, 0)` (`j, k, l ∈ {−1, 0, 1}`; `R_A`: cosine 5/6, sine √11/6, the
+  angle of the Moser spindle; `R_G`: cosine 11/14, sine 5√3/14) have `κ = 1/4`: the character
+  `θ311 = (5/24, 5/12, 0, 1/2, 7/12, 1/2, 7/24, 0)` on the coordinates over `(1, √3, √11, √33)/84` has least
+  distance exactly `1/4` (values `1/4, 1/3, 1/2, 2/3, 3/4`), and the open-interval certificate (23 relations,
+  12 073 nodes, 8 519 leaves, one minute) is accepted by both checkers, now extended to this biquadratic plane
+  (`check_open.py` also accepts `P/Q = 4`). By Corollary F14 a finite `χ_c = 4` witness lies in the Cayley graph of
+  these 54 vectors; with Theorem W⁺, `χ_c(ℚ(√3, √11)²) ≥ 4` without Theorem F. Floating point (MILP): without `R_G`
+  the margin is `3/11` (for 15, 21 and 27 vectors with `|k| ≤ 2, 3, 4`), with `R₆₀` and `R_G` alone `1/3`, and
+  replacing `R_G` by the rational rotation `(3/5, 4/5)` or by `(4/7, √33/7)` gives `34/121` and `62/221`. Of the
+  27 vectors, three can be dropped (float). The tight vectors of `θ311` have a positive relation of length 8,
+  `R_A⁻¹` times the Eisenstein relation `3ζ̄ + g + ζ − 3ζ̄g = 0` (`ζ = e^{iπ/3}`, `g = (8 + 5ω)/7` the rotation
+  `R_G` as a complex number).
+- **The witness.** A colouring-guided growth (`PQ = 4/1`, lazy SAT on tight cycles, from the ball of radius 2 in
+  the Cayley graph) is running; nothing found yet.
+- **Other attempts at an explicit witness for 4 (no result).** (1) Periods at one base point: for a 4-colouring of
+  a finite `H` without tight cycles, the period `Λ(W)/4 − #(steps in −U)` of a closed walk at `0` is an integer,
+  additive, unchanged by backtracks and by exchanging two steps whose square lies in `H`, and strictly inside
+  `(mn(ρ), mx(ρ))` for the walk of a relation `ρ` that uses each vector with one sign; so an infeasible integer
+  system on periods, with the homotopies inside `H`, proves `χ_c(H) = 4` without averaging. Over `ℚ(√59)` (the 50
+  vectors) the system stayed feasible with 2 926 relations of `l1` norm up to 33: the box `[1/4, 3/4]` of the
+  certificate is the limit of these constraints over all relations and needs long ones. (2) Distance graphs on
+  `ℤ` with `κ = 1/4` have witnesses on intervals of 8–12 points (with triangles) and 16–29 points (triangle-free),
+  of the order of the largest distance; our lattices have rank 4. (3) The points `(a, e√59)/D` of `ℚ(√59)²`
+  (norm-one elements of `ℚ(√−59)`) have `κ ≈ 29/59`: nearly bipartite.
+
+## An explicit graph with `χ_c = 4` over `ℚ(√3, √11)` (6 October, night)
+
+- **Result (certified).** `finite_witness/witness_q3_11.json.gz`: 1 874 points of `ℚ(√3, √11)²` (denominator 84),
+  all 8 085 unit pairs as edges, a proper 4-colouring, and 4 992 listed cycles (4 916 of length 4, 52 of length 8, 24
+  of length 12) such that every proper 4-colouring has a tight one: the formula of `check_witness4.py` (sha256
+  `febd6b3d…`) is refuted by kissat 4.0.4 in 16 seconds and drat-trim checks the proof. A referee wrote its own
+  programs from the file format (`indep_W4/`): all 1 755 001 pairs recomputed exactly and in floating point; its own
+  encoding (16 344 variables, 85 843 clauses, one variable per tight arc); kissat `s UNSATISFIABLE`, `drat-trim -L`
+  `s VERIFIED`, `cake_lpr` `s VERIFIED UNSAT`; its tests reject a moved point, an improper colouring and a cycle
+  through a non-edge, and find the formula satisfiable without the cycle clauses. So `χ_c(H₄) = χ(H₄) = 4`: the value
+  4 of Theorem F16 is attained by an explicit graph.
+- **How (base-point periods, Lemma F17 of the note).** For the 27 vectors of `at_four/q3_11.py`, the integer system
+  "an integer homomorphism `p` on the relation lattice with `p(ρ)` strictly inside `((P − 3N)/4, (3P − N)/4)`" is
+  still feasible with all 18 138 relations of squared norm at most 14, but a counterexample search (`per_cegar.py`:
+  each solution refuted by a shortest relation outside its range, CP-SAT) added to the 4 641 relations of squared norm
+  at most 12 41 relations of length 8, after which no `p` is left (33 seconds): each is `R_A^k` times a relation among
+  the vectors `ζ^j g^l` with a coefficient 2 or 3 (absolute coefficients 3, 3, 1, 1 for 17, such as
+  `3ζ̄ + ζ + g − 3ζ̄g = 0`; 3, 2, 1, 1, 1 for 14; 3, 2, 2, 1 for 10), of squared norm 20, 16 or 18; an infeasible core
+  has 256 relations (37 after deletion). The walks of the 256, tied to the basis relations by bubble-sort chains: 13
+  230 points (926 chain steps, 27 351 swaps), period system infeasible; the 37 290 cycles that Lemma F17 uses (squares
+  and relation walks, both orientations) give a formula that kissat refutes in about a minute; twelve rounds of
+  drat-trim clausal cores reduced it to 1 874 points. From the 37-relation core the walks give 4 134 points, but
+  kissat did not refute that formula in ten minutes (stopped; its proof file had reached 0.8 GB). The construction is
+  reproduced exactly from the stored programs (`construction_q3_11/`).
+- **Before (same evening).** A blind colouring-guided growth in the Cayley graph of the 27 vectors (`grow8b`, adding
+  blocked or one-colour candidates) reached 19 859 points in 47 rounds without a witness and was paused; on all 4 641
+  relations of squared norm at most 12 the period system was feasible. Over `ℚ(√59)` the same search stayed feasible
+  (2 926 relations of length up to 33).
+- A deletion minimisation of `H₄` is running; nothing is claimed about it yet.
+
+## The construction by base-point periods is complete (6 October, night)
+
+- **Result (proved, refereed).** If `κ(U) ≤ 1/4` (over all characters of `ℤU`), the period system of Lemma F17
+  becomes infeasible on a finite set of relations, so the construction that found `H₄` always succeeds in principle:
+  the ranges of a ℤ-basis `r_1, …, r_k` of the relation lattice leave a finite set `Π` of candidate values; for each
+  `p ∈ Π` the affine space `{f : Rf = p}` misses the open box `(1/4, 3/4)^U` (otherwise `f` would give a character
+  with values in `(1/4, 3/4)`), a separating form is `⟨yR, ·⟩`, and the cone `C_p` of such `y` is rational, so an
+  integer `y` gives a nonzero relation `ρ_p = yR` with `p(ρ_p) ≥ (3P − N)/4`. With `S = {r_j} ∪ {ρ_p : p ∈ Π}`, the
+  subgraph of `Cay(ℤU, U ∪ −U)` induced by `0`, the walks of the chains and the corners of the swaps has a tight
+  cycle in every proper 4-colouring. So Corollary F14 is effective, without compactness, and some finite subgraph of
+  `Cay(ℤU, U ∪ −U)` has `χ_c ≥ 4` if and only if `κ(U) ≤ 1/4`.
+- **Referee.** Correct under the stated hypotheses; fixes applied (`P`, `N` as sums of absolute values; the character
+  well defined; the sign of `y` fixed before the cone; `G` defined as an induced subgraph). It noted that `κ` must
+  run over all characters of `ℤU`, not only the continuous characters of the plane. Its program `remark_check.py`
+  ran the construction on 15 distance sets `D ⊂ ℤ` with `κ(D) ≤ 1/4`: `ρ_p` exists for every `p` (max-norm of `y` up
+  to 9, for `D = {2, 6, 9, 11}`), the system on `S` is infeasible, and a SAT encoding without the lemma shows a tight
+  cycle in every proper 4-colouring of `G` (9 to 128 vertices); the basis chains alone fail in 10 of the 15 cases.
+  The stored copy was rerun (`results/remark_check_all.log`, all 15 pass).
+- **Other searches, nothing claimed yet.** Over `ℚ(√2, √3)` a second witness is being built in the same way from 60
+  unit vectors (`μ₂₄` times `s^l`, `|l| ≤ 2`, `s = (1 + 2√−2)/3`, one of each pair `±u`): kissat refutes the formula
+  on 2 220 points, and clausal cores are shrinking it; it needs two checkers and a referee before any claim. Over
+  `ℚ(√59)` the exact certificate for 50 vectors of denominator 1050 is still running.
+
+## A second explicit graph with `χ_c = 4`, over `ℚ(√2, √3)` (6 October, night)
+
+- **Result (certified, refereed).** `finite_witness/witness_q2_3.json.gz`: an induced unit-distance graph in
+  `ℚ(√2, √3)²` with 1 657 vertices (denominator 36) and 6 238 edges, a proper 4-colouring, and 6 062 listed cycles
+  (5 494 of length 4, 568 of length 8) such that every proper 4-colouring has a tight one. The formula of
+  `check_witness4.py` (sha256 `cd6382b7…`) is refuted by kissat 4.0.4 in 38 seconds, and drat-trim verifies the proof.
+  A referee wrote its own programs from the file format (`indep_W4b/`): all 1 371 996 pairs exactly and in floating
+  point (smallest margin of a non-edge `9.1·10⁻⁶`); its own encoding (15 452 variables, 77 910 clauses) and a second
+  one without auxiliary variables, both `s VERIFIED UNSAT` with `cake_lpr`; 77 sanity checks pass. So
+  `χ_c(H) = χ(H) = 4`, and with `χ(ℚ(√2, √3)²) = 4`, `χ_c(ℚ(√2, √3)²) = 4` with an explicit graph.
+- **How.** The plane is `ℚ(ζ₂₄)`, `ζ₂₄ = e^{iπ/12}`; `U` = the 60 unit vectors `ζ₂₄^j s^l` (`|l| ≤ 2`, one of each
+  `±u`), `s = (1 + 2√−2)/3`, with a relation lattice of rank 52 (`κ(U) ≈ 1/6` by a floating-point MILP). The 1 552
+  relations with `Σ n_u² ≤ 8` already leave the period system infeasible (no counterexample search); a minimal core has
+  279 relations of length 8; their walks and bubble-sort chains span 2 220 points (7 854 cycles), and twelve rounds of
+  drat-trim clausal cores give 1 657. The whole construction (`construction_q2_3/`) was rerun twice from scratch, from
+  the scratch copies and from the repository copies: every intermediate file and the witness are byte for byte the same.
+  The formula built in `ℚ(ζ₂₄)` arithmetic equals the one built from the plane coordinates.
+- **Contrast with `ℚ(√59)`.** There every unit set tried has `κ ≥ 1/4`: for the 150 vectors with denominator 1050
+  the character of `at_four/theta59_1050.json` has margin exactly `1/4`, and whether `κ = 1/4` is still being
+  certified. If it is, that is the boundary case of the remark after Lemma F17, where the refuting relations can be
+  long (the search found none up to length 33); over `ℚ(√2, √3)`, with `κ ≈ 1/6`, short relations do.
+
+## Audit of the base-point periods passages (6–7 October, night)
+
+- **Audit (no mathematical error).** An independent reader checked Lemma 24 of the paper (Lemma F17 of the note), the
+  paragraph after it, the remark after it, Corollary 8 with its converse, and the two explicit witnesses at 4,
+  recomputing every count from the data files with an exact-integer script of its own (all pairs, edges, colourings,
+  cycles, denominators, the fixed vertex, the 27 and the 60 vectors) and rerunning the integer-programming steps of the
+  constructions; it did not rerun the SAT proofs. Every step of the proofs is correct, including the "if and only if" of
+  the remark.
+- **A factual error, corrected.** The paper said that the construction found a finite subgraph with `χ_c = 4` of the
+  Cayley graph of the 27 vectors over `ℚ(√3, √11)`. It did not: the points of `H₄` lie in `ℤU`, but 198 of its 8 085
+  edges are unit vectors outside `±U` (12 directions up to sign), because the clausal cores were taken with all unit
+  pairs as edges (`certify4.py`, `make_final4.py`); only 18 of the 27 directions occur among the other 7 887 edges.
+  Likewise 39 edges of `H₄′` (17 directions) lie outside the 120 vectors over `ℚ(√2, √3)`. Checked here again with exact
+  arithmetic. The sentence now says what was found.
+- **Other corrections.** Only the compactness step of Corollary 8 is made effective; the set of Proposition 10 still
+  comes from compactness (introduction, after Theorem G, Question 3, note). The remark needs `S = U ∪ −U` with
+  `U ∩ −U = ∅` (no element of order 2, automatic in `F²`); its construction is effective rather than explicit (`Π` can
+  be very large); and if `G` is not 4-colourable, `χ_c(G) > χ(G) − 1 ≥ 4`. The abstract says tight squares, and that the
+  computer-assisted step is also used for the attainment of 4. The length and the range of a relation are defined before
+  use. The `ℚ(√59)` sentence says what was run: 50 of the 150 vectors with denominator 1050, a search that stopped with
+  a feasible system of 2 926 relations of length at most 33. Only `χ(ℚ(√2, √3)²) ≤ 4` is used (a residue colouring at
+  the prime above 2), and `H₄′` reproves `χ ≥ 4`; Theorem E does not give `χ_c = 4` (note). Notation: `ξ` for the
+  character, `K_{a/b}`, `r_1, …, r_m`, `𝒮` for the set of relations, `|W|` for the length of a walk, `w = (1 + 2√−2)/3`,
+  `A` for the matrix, `X` for the point set. Smaller: "each with a coefficient ±3", `j ∈ ℤ/24`, "written from scratch by
+  a referee without repository code", "its use for `ℚ(√3, √11)`".
+- **The Cayley subgraphs (certified; to be integrated).** On the same points, with only the edges in the construction's
+  directions (7 887 and 6 199 edges), the formula with the listed cycles is satisfiable; adding the tight cycles of each
+  satisfying colouring (751 and 422 in three and two rounds) makes it unsatisfiable, three rounds of clausal cores leave
+  3 389 and 5 264 cycles, kissat refutes both formulas (14 and 26 seconds), and drat-trim and `cake_lpr` verify both
+  proofs. So the subgraph of the Cayley graph of the 54 vectors induced on the points of `H₄` has `χ_c = 4`, and
+  likewise for the 120 vectors over `ℚ(√2, √3)`: the original sentence holds for these subgraphs. They will be stored as
+  witness files after an independent check.
+- **`ℚ(√59)`, nothing claimed.** A floating-point MILP finds a character with margin at least `1/4` also on
+  `U_1050 ∪ U_390` (not the `θ` of `theta59_1050.json`, whose margin on `U_390` is `1/52`), so this union gives nothing:
+  every unit set tried over `ℚ(√59)` has `κ ≥ 1/4`, the boundary case of the remark. The counterexample search for
+  periods on all 150 vectors with denominator 1050 (a basis of 146 relations, of lengths 6 to 18) stayed feasible for 12
+  rounds (2 hours). The exact certificate for `κ(U_1050) = 1/4` (about 2 million nodes, 30 MB compressed) is assembled;
+  its two checkers were running when the machine restarted (9 October, 08:30 UTC). Started again, the independent one
+  (`check_open_indep.py`) accepted it in 336 seconds (format, the 150 units, the 146 relations and the tree of 1 997 203
+  nodes; that the units are all of `U_1050` is a separate check); the other is still running.
+
+## Explicit subgraphs of the Cayley graphs with `χ_c = 4` (9 October)
+
+- **Result (certified).** `finite_witness/witness_q3_11_cayley.json.gz`: the 1 874 points of `H₄` with only the 7 887
+  pairs that differ by one of the 54 vectors `±R₆₀ʲR_AᵏR_Gˡ(1, 0)` as edges, and 3 389 listed cycles (lengths 4 and 8);
+  `finite_witness/witness_q2_3_cayley.json.gz`: the 1 657 points of `H₄′` with the 6 199 pairs that differ by one of the
+  120 vectors `±ζ₂₄^j w^l`, and 5 264 cycles. Every proper 4-colouring has a tight listed cycle: kissat refutes both
+  formulas, drat-trim verifies the proofs, and `cake_lpr` accepts their LRAT forms. `check_witness4.py` now also checks
+  a `generators` key: unit vectors, distinct up to sign, the edges exactly the pairs that differ by one of them or its
+  negative, and every point joined to the origin. So the subgraph of the Cayley graph of the 54 vectors induced on the
+  points of `H₄` has `χ_c = 4`: the finite subgraph of Corollary 8 for these vectors, explicit, and the sentence of the
+  paper that the audit corrected holds for it.
+- **How** (`construction_cayley/`). With the listed cycles only, the restricted formulas are satisfiable; three rounds
+  (two for `H₄′`) of adding every tight cycle that a depth-first search finds in the tight arcs of the satisfying
+  colouring (349 + 133 + 269, and 165 + 257) make them unsatisfiable, and three rounds of clausal cores leave 3 389 and
+  5 264 cycles, all of length 4 or 8. Rerun from the repository copies, the construction gives both witness files, both
+  formulas and both DRAT proofs byte for byte.
+- **Not a route over `ℚ(√59)`.** The leaves of the certificate for `κ(U_1050) = 1/4` give the relations of the remark
+  directly (a leaf's `y` combines the relations fixed on its path into one outside its range), but they are long: among
+  the first 300 000 leaves there are 139 517 distinct ones, of median length 88, and only 2 785 of length at most 12.
+- **Referee.** An independent referee (`finite_witness/indep_W4c/`, programs written from the file format) rebuilt the
+  27 and the 60 vectors in its own arithmetic, checked the Cayley pairs, the colourings and the cycles exactly, and
+  refuted its own encoding of both formulas with kissat, drat-trim and `cake_lpr` (it also checked the stored proofs,
+  through LRAT with `cake_lpr`); 29 mutations of each file are rejected; no discrepancy. It notes that only 18 of the 27
+  directions and 36 of the 60 occur among the edges, and that the stored colourings are proper on the full unit-distance
+  graphs on the same points. Its programs, rerun from the repository copy, give the same formulas and verdicts.
+
+## A character with values in `ℤ/4` at the place above 2 (9 October)
+
+- **Result (refereed; the colouring itself is Fischer's for quadratic fields).** Proposition F15′ (paper, Proposition
+  11): if a number field `F` has a place `v | 2` with `F_v ≅ ℚ₂(√3)`, then `c(x, y) = λ(x + iy)`, where `λ(z₀ + z₁ζ +
+  z₂ζ² + z₃ζ³) = z₀ + z₁ + 2z₂ + 3z₃ mod 4` on `O_w = ℤ₂[ζ]`, `ζ = (√3 + i)/2`, is a homomorphism of `ℤT` to `ℤ/4`
+  with `c(T) ⊆ {1, 2, 3}`. So `κ(U) ≥ 1/4` for every finite `U ⊂ T`, and `F²` has a homomorphism to `K₄` without tight
+  squares. The proof is a finite computation in `O_w/4O_w` (256 residues, 192 units, 24 of norm one: `ζᵏ` and `(1 +
+  2i)ζᵏ`), checked by `at_four/quarter_character.py`; exactly twelve additive maps `O_w/4O_w → ℤ/4` vanish on none of
+  the 24, the maps `z ↦ λ(ζᵏz)`.
+- **What is not new.** For `ℚ(√d)`, `d ≡ 3 (mod 8)`, such a colouring is Fischer's (1990, Theorem 10(i)): a linear
+  form into `ℤ_(2)` reduced modulo 4. For `ℚ(√59)` it is `x₁ − 5x₂ + 3y₁ + 15y₂ mod 4` (`√59 ↦ s√3`, `s ≡ 5 mod 8`).
+  For `ℚ(√p, √q)` Fischer (1994) proved that additive 4-colourings into `ℤ/4` exist under congruences modulo 16 and
+  32; the proposition needs only the place. When `v` is the only place above 2, as for `ℚ(√d)`, the twelve maps are
+  all the homomorphisms `ℤT → ℤ/4` with values in `{1, 2, 3}` on `T` (the residues of `T` modulo 4 are all 24, by weak
+  approximation), so Fischer's map is one of them. What is new is the circular reading, `κ(U) ≥ 1/4` for every `U`,
+  and the statement for every field with such a place.
+- **Consequences.** Over `ℚ(√59)`, `ℚ(√83)` and `ℚ(√3, √11)` every finite `U` with `κ(U) ≤ 1/4` has `κ(U) = 1/4` (the
+  27 vectors over `ℚ(√3, √11)`, and `U_1050` over `ℚ(√59)` once its certificate is checked), and the tight-square
+  alternative of Corollary 8 never applies. A finite subgraph with `χ_c = 4` of a Cayley graph of unit vectors must
+  contain, for each of the twelve maps, a cycle whose steps all have value 1; its length is a multiple of 4 and at
+  least 8. For `U_1050` the 300 vectors take the values 1, 2, 3 on 96, 108, 96 of them for eight of the maps (on 108,
+  84, 108 for the other four), and a MILP (HiGHS) finds nonnegative relations of length 8, the least possible, among
+  the vectors of value 1 for all twelve maps (for two of them only with 25 minutes instead of 30 seconds) and for `θ =
+  (3/8, 5/8, 5/8, 5/8)`.
+- **The period method over `ℚ(√59)`.** The period systems of Lemma 24 can only become infeasible through relations
+  that are tight for every character at `1/4`; over `ℚ(√59)` characters at exactly `1/4` exist for every `U` (the
+  twelve above, and others such as `θ`), so the systems sit on the boundary.
+- **`ℚ(√2, √3)` (corrected the same day).** There no homomorphism `ℤT → ℤ/4` maps `T` into `{1, 2, 3}`
+  (`quarter_character.py --q2_3`: 384 residues of norm one modulo 4, all residues of unit vectors, and no additive map
+  to `ℤ/4` nonzero on them). We first wrote, from a floating-point MILP, that the 60 vectors of `H₄′` have `κ ≈ 0.178
+  < 1/4`; that number was the incumbent of a run stopped by its time limit, not the optimum. The exact certificate
+  generator refuted it at once (a character maps the 60 vectors into `(1/5, 4/5)`), and the MILP run to optimality
+  gives `κ = 1/4`, attained by a character with values `1/4, 1/2, 3/4` (27, 20 and 13 of the vectors) that satisfies
+  all 52 relations of the PARI basis exactly. With the certified witness `H₄′°` this gives `κ(U₆₀) = 1/4`. Whether
+  some finite `U` over `ℚ(√2, √3)` has `κ(U) < 1/4` is open; nothing in the paper uses the wrong number.
+- **Also checked.** The twelve maps on all unit vectors with denominators 30 to 2730 over `ℚ(√59)` (14 denominators, 3
+  288 vectors) and several over `ℚ(√83)`; over `ℚ(√3, √11)` on the 27 vectors and all edges of `H₄` and `H₄°`. A SAT
+  check: the Cayley witnesses `H₄°` and `H₄′°` both have proper 4-colourings without tight squares (as they must for
+  `H₄°`; for `H₄′°` the compactness behind Corollary 8 needs a larger graph).
+- **Referee.** An independent referee, with exact programs of its own (the residues of `ℚ₂(ζ₁₂)` and `ℚ₂(ζ₂₄)` modulo
+  4, the norm map and Hilbert 90; all unit vectors of `ℚ(√59)`, `ℚ(√83)`, `ℚ(√11)` and `ℚ(√3)` up to denominator 400
+  and more; the 27 vectors and both witnesses over `ℚ(√3, √11)` at both places above 2, where every one of the 24
+  colourings has a tight cycle (closed tight walks up to length 16 have lengths 8, 12 and 16 only), found no
+  mathematical error. Its findings on wording are applied: `d` squarefree, Theorem 10(i) and real fields for Fischer,
+  the points where the `d = 59` formula is 2-integral, the sentence on `ℚ(√2, √3)`, the explicit form of the other
+  half of Guichard's characterisation, and the names `ζ₁₂` and `η`. It could not reach Fischer's paper (the
+  publisher's site refused the download) and judged the attribution against the repository's notes.
+
+## `κ(U_1050) = 1/4` over `ℚ(√59)`, certified (9 October)
+
+- **The statement.** Over `ℚ(√59)`, the 300 unit vectors with denominator 1050, `U_1050`, have `κ = 1/4` exactly: the
+  character `θ = (3/8, 5/8, 5/8, 5/8)` of `at_four/` keeps them at distance at least `1/4` from `ℤ` (equality for
+  some), and no character maps them into the open interval `(1/4, 3/4)`. By Corollary F14 (paper, Corollary 8), some
+  finite subgraph of `Cay(ℤU_1050, U_1050)` has `χ_c = 4`; none is known explicitly, and the growth with these vectors
+  (11 882 points) has not found one. Proposition F15′ of this morning gives `κ(U) ≥ 1/4` for every finite `U` over
+  `ℚ(√59)`, so `1/4` is reached here.
+- **The certificate.** `at_four/cert59_1050_open_4.json.gz` (30 MB): 150 units (one of each pair `±u`), 146 nonzero
+  relations, a tree of 1 997 203 nodes and 1 428 192 leaves, depth 48. The repository checker `check_open.py` printed
+  VERIFIED after 13 502 s (exact fractions); the separate checker `check_open_indep.py` ACCEPTED it in 336 s;
+  `check_theta.py 59 1050 theta59_1050.json cert59_1050_open_4.json.gz` checks that its units are all of `U_1050` and
+  that the least margin of `θ` is `1/4`.
+- **Where.** `notes/circular_planes.md` (after the `D = 210` sentence), the paper's paragraph on explicit sets at
+  `1/4` (PDF rebuilt), `at_four/README.md`, and two slow tests in `tests/test_at_four.py` (the units, and the separate
+  checker; the 4-hour run of `check_open.py` is not repeated there).
+
+## OpenAI's proof that `χ(ℝ²) ≥ 6`, rebuilt in Lean (9 October)
+
+- **What.** The repository [openai/math](https://github.com/openai/math) collects 719 manuscripts in 372 families
+  produced by an internal OpenAI model (its README; about 42% of the top-line results are formalized in Lean, and
+  three manuscripts were withdrawn on 7 October for a sign error). Family 158, *The Euclidean plane is not
+  five-colorable* (23 September 2026), proves `χ(ℝ²) ≥ 6`, with no regularity assumption on the colour classes; so
+  `χ(ℝ²)` is 6 or 7. The proof is not constructive. An arbitrary proper colouring is averaged over the translations
+  and rotations of the plane of real algebraic points; a rigidity theorem (every rotation-invariant probability on the
+  dual of that discrete group with no mass on the continuous characters is Haar measure, proved with
+  Furstenberg–Zimmer compact extensions) turns the average into a measurable colouring with null exceptions; and an
+  argument on colour interfaces, ending with the Moser spindle, excludes such colourings with five colours. It gives
+  no finite graph.
+- **Our check.** Its formal statement, `OAI.EuclideanFiveColor.no_proper_five_coloring` (`¬ ∃ coloring : ℂ → Fin 5,
+  ProperColoring 5 coloring`), is proved in `lean/OAI/Geometry/PlaneColoring/Five.lean` of that repository, with Lean
+  4.34.1 and Mathlib d13f23b7, the versions of `lean/` here. We copied the 70 modules of its import closure at commit
+  `fd4aeeb2` (30 336 lines, in `Analysis/PlaneSpectrum`, `Geometry/PlaneColoring` and `MeasureTheory/CompactFactors`;
+  no other library besides Mathlib), found no `sorry`, `admit`, `axiom`, `native_decide` or `implemented_by` in them,
+  and compiled them against our Mathlib build (18 minutes, no error). We then stated the theorem ourselves, without
+  its definitions, `¬ ∃ c : ℂ → Fin 5, ∀ p q : ℂ, ‖p − q‖ = 1 → c p ≠ c q` (and the same for any `k ≤ 5` colours),
+  proved it from theirs, and `#print axioms` lists only `propext`, `Classical.choice` and `Quot.sound`. The procedure
+  is in `lean/external/openai-five/` (not part of the build of `lean/`).
+- **What it changes here.** The README and the introductions of the six papers now say that `χ(ℝ²)` is 6 or 7, and the
+  section on six becomes the search for an explicit graph, which is still open. By compactness some finite
+  unit-distance graph has no proper 5-colouring; moving its vertices to real algebraic points that keep its unit
+  distances (Tarski–Seidenberg) gives a real number field `F` with `χ(F²) ≥ 6`, a question of
+  `notes/local_colourings.md` §5 until now; by that section such an `F` has no non-split place with a 5-colourable
+  local plane. `χ_B(ℝ²)` and `χ_hom(ℝ²)` (`notes/rigidity.md` §7) are at least 6 as well. Nothing proved in this
+  repository is contradicted: our theorems concern planes over number fields with at most five colours, and the
+  conditional statements of the notes had hypotheses that are now known to fail.
+- **Also relevant.** Family 155: a finite tile of `ℤ³` that tiles but has no fully periodic tiling (also formalized;
+  we have not rebuilt it). With it, the proposition "aperiodic colourings" of `papers/winding` holds for `Γ = ℤ³`, the
+  least possible rank (a tile of `ℤ²` always tiles periodically, by Bhattacharya). Families 157 (Hadwiger's conjecture
+  on clique minors, a different problem), 167 (counting unit distances) and 172 (Euclidean Ramsey configurations) are
+  related but change nothing here; we found nothing on number-field planes, circular chromatic numbers or the other
+  questions of this repository.
+
+## Six colours on the ruler-and-compass plane (9 October)
+
+- **Result.** OpenAI's proof that `χ(ℝ²) ≥ 6` works over the constructible numbers `E_c`, the smallest subfield of ℂ
+  closed under square roots. Every 5-colouring of the points of the plane constructible with ruler and compass gives
+  the same colour to two points at distance 1. Formally verified in Lean: the theorem
+  `sqrtClosure_plane_not_five_colourable` states it with the field written out, and its axioms are `propext`,
+  `Classical.choice` and `Quot.sound`. The proof is OpenAI's. Ours are the change of field, the observation that square
+  roots suffice, and the formal check. OpenAI's paper does not state this. A web search on 9 October found no
+  statement of it elsewhere, and the openai/math repository has not changed since 7 October.
+- **Why it was worth trying.** OpenAI's transfer theorem uses only a colouring of the algebraic points: their Lean type
+  of colourings is `E → Fin k` with `E` the algebraic numbers. So any smaller countable field with the properties the
+  proof uses gives a stronger theorem. A colouring of a larger plane restricts to a smaller one, so a smaller field
+  means a stronger statement.
+- **What the proof uses of its field** (`notes/six_over_fields.md`):
+  1. `E` is countable, algebraic, closed under conjugation, and contains `i`;
+  2. `F = E ∩ ℝ` is closed under square roots of nonnegative elements;
+  3. the unit circle `K` of `E` is divisible: in Lemma 2.4, and in Lemma 3.2 through the power maps of the multiple
+     averages.
+- **Three fields, in order.**
+  - The numbers expressible by radicals (`solvableByRad ℚ ℂ`): `K` is still divisible, so only the field interface
+    changed. A new `Field.lean`, with ten files adapted.
+  - The origami numbers (square and cube roots): exponents of the form `2^a 3^b` suffice. Lemma 2.4 needs only an
+    element of order 2, the rotation `−1`. A new lemma, `finite_image_involution`, handles it: a finite image of a
+    commutative group in which every element is a square kills every element of order 2. In our origami version the
+    triple average at the exponents 0, 1, 2 is shifted by 1, to 1, 2 and 3, which cube roots allow.
+  - The constructible numbers (square roots only). Here `u ↦ u³` is not onto `K`: angle trisection; for example
+    `(3 + 4i)/5` has no constructible cube root. So the triple average had to change. Since `U_u` is unitary and
+    commutes with the projection (and is multiplicative), the average at 0, 1, 2 equals the average at −1, 0, 1. There the fixed middle factor
+    is handled apart:
+    - a term whose only centred factor is the middle one projects to zero;
+    - the other terms reduce, on the relative product, to the two exponents ±1, whose difference is 2.
+
+    Two new Lean lemmas do this, `centered_conditional_mean_zero_fixed` and `conditional_multiple_mean_zero_fixed`.
+- **Lean.** The first build of the constructible case failed in `Energy.lean`, on two errors of form:
+  - an application of `Family.const … * …` needed a type ascription;
+  - a rewriting lemma was stated for families over `X` only, and the product of the projections lives over `Y`.
+
+  Both were fixed, and nothing in the mathematics changed. Then the build passed: 72 modules, none failed (OpenAI's 70,
+  `Field.lean` and the statement file), each taking about 10 to 100 s. Then three more checks:
+  - **Clean rebuild.** A fresh copy of OpenAI's sources was patched and built into an empty directory with
+    `build_closure.py`: 72 modules, none failed, in 1 174 s on 2 cores. The compiler printed three linter warnings
+    about style, in `Field.lean` and `Basic.lean`, and no error.
+  - **Kernel replay.** `leanchecker` replayed all 72 modules of the clean build in the kernel. Every one exited 0, in
+    687 s in all.
+  - **Referee.** A separate agent read the paper, the patch and the note, and found no mathematical error. It
+    corrected two descriptions of the code:
+    - OpenAI's formalization chooses its shift using that every power map is onto; it does not "add 1";
+    - the second use of the involution lemma is in `wild_line_null`.
+
+    It also asked for clarifications: the use of `L = √(AB)` in Lemma 3.3, the ergodicity of `R`, and the wording of
+    the Corollary. All are applied to the note.
+- **Consequences.**
+  - By de Bruijn–Erdős, some finite unit-distance graph with constructible coordinates has no proper 5-colouring.
+    Its coordinates lie in a field obtained from ℚ by finitely many square roots. We know of none.
+  - The planes over ℚ(√2, √3) and ℚ(√3, √11) have chromatic number 4. Along a suitable tower of square roots over
+    ℚ(√2, √3), one that eventually contains the coordinates of such a graph, the chromatic number rises to at least 6
+    at some finite stage. We do not know which.
+  - The method needs `F` Euclidean, and the real constructible numbers form the smallest Euclidean field. So `E_c` is
+    the end of this road. The Pythagorean closure of ℚ, or any explicitly given field of finite degree, would need a
+    different argument.
+- **Files.**
+  - `notes/six_over_fields.md`.
+  - `lean/external/openai-five/fields/`: the three patches against openai/math `fd4aeeb2`, the three statement files,
+    `build_field.sh` and a copy of OpenAI's Apache 2.0 licence.
+  - README, `lean/README.md`, `notes/README.md`, CHANGELOG.
+
+## The ruler-and-compass result: the finite form in Lean, and a short paper (9 October)
+
+- **Finite form.** `ConstructibleFinite.lean` proves `sqrtClosure_finite_set_not_five_colourable`: some finite set of
+  constructible points has no proper 5-colouring. It is derived from the infinite statement with Mathlib's compactness
+  theorem `SimpleGraph.nonempty_hom_of_forall_finite_subgraph_hom`, which gives homomorphisms to the complete graph on
+  `Fin 5`. The axioms are `propext`, `Classical.choice` and `Quot.sound`, and `leanchecker` passes. A first attempt
+  destructured an existential inside a definition, which Lean rejects; `Classical.choose` fixed it.
+- **Paper.** `papers/ruler-compass/` is a draft, *The ruler-and-compass plane is not 5-colourable* (four pages, five
+  after the review below). Its two lemmas are the order-2 lemma and the triple average at the exponents −1, 0, 1. It
+  also describes the formal proof, states the limit of the method, and lists two open questions: the Pythagorean
+  closure of ℚ, and how many square roots a field needs before its plane stops being 5-colourable. OpenAI is credited
+  for the proof.
+- **Paper referee.** A second AI-assisted reading, of the paper itself, found no mathematical error in the proof of
+  Theorem 1, and confirmed Lemmas 3 and 4. It found one wrong side claim, which also stood in the previous entry: that
+  any shift of the exponents 0, 1, 2 needs cube roots.
+  - This holds for the formalization's single shift, with every shifted exponent onto.
+  - It fails for the paper's argument read closely. The shift at (3.9) can be chosen for each term, and the proof of
+    (3.5) needs surjectivity only at the centred factor's exponent and at differences. Shifting by 1, or by −3 when
+    the centred factor sits at exponent 2, needs only `±1, ±2`.
+
+  So "the triple average had to change" in the previous entry is too strong: it had to change in the formal proof.
+  The exponents −1, 0, 1 are one convenient way to do it, and need no shift at all.
+
+  The other findings were wording and faithfulness, and all are applied to the paper and the note:
+  - the proof goes through OpenAI's Proposition 4.2 and Theorem 1.4, not their Theorem 1.3 as a whole;
+  - the origami and radical cases had incremental builds only;
+  - the Lean lemmas are stated for invariant means;
+  - Mathlib was prebuilt and not replayed.
+- **Script test.** `build_field.sh origami` ran from scratch as a test of the published script, with one job: 72
+  modules built, none failed, in 1 550 s, and the axioms are as above. The script was edited while that run was in
+  progress (to add the finite form), so the run ended with a shell syntax error after printing the axioms. The edited
+  script passes `sh -n`. The final script was then run from scratch on the constructible field, with two jobs: 72
+  modules built, none failed, in 1 196 s; it printed the axioms of the three theorems (the same three axioms) and
+  exited normally.
+- **Search path.** The clean builds and the first replay ran with the unpatched build on the search path, after the
+  new directory. `build_closure.py` compiles a module only after every module it imports is in the new directory, and
+  all 111 import lines of the patched sources are plain `import` lines that its pattern reads, so the unpatched files
+  were never read. To make sure, the build of the script test was replayed with a search path of that build and
+  Mathlib only: `leanchecker -v` exited 0 on all 72 modules (627 s in all) and on `ConstructibleFinite.lean`.
+
+
+## Every Euclidean field, and where the method stops (9 October)
+
+- **Euclidean fields.** Every Euclidean field `F` contains a copy of the real constructible numbers `F_c`: they are
+  the union of a chain of square-root extensions with positive radicands, and an order-preserving embedding extends
+  along each step to the positive square root in `F`. So `E_c = F_c(i)` maps into `F²`, keeping the pairs at distance
+  1, and the plane over every Euclidean field, Archimedean or not, has no proper 5-colouring (Corollary 5 of
+  `papers/ruler-compass/`, on paper).
+- **Referee of Corollary 5.** No mathematical error. One overclaim in the draft, corrected before publication: it
+  said that for Euclidean fields that are not real closed the corollary needs Theorem 1. The Euclidean closure of
+  ℝ(t) is a counterexample, since it contains ℝ. The dividing line is whether `F` contains a copy of the real
+  algebraic numbers: then OpenAI's proof, which already excludes the algebraic plane, gives the corollary by the same
+  embedding, with no need for Tarski's transfer; if not, as for `F_c`, the corollary rests on Theorem 1. The other
+  findings (the full sign rule, `E_c = F_c(i)`, embedding all of `E_c` instead of a finite set, notation) are applied.
+- **The Pythagorean closure.** Over the smallest subfield `P` of ℝ closed under `√(a² + b²)`, the analogue of
+  OpenAI's rigidity theorem (their Theorem 2.3, used only in the proof of Proposition 4.2) is false. `P` is totally
+  real, so `√2 ↦ −√2` extends to an embedding `σ: P → ℝ`; the characters `z ↦ e^{iξ·σ(z)}` form a copy of ℝ² in the
+  dual group on which `K` acts by rotations, and the uniform measure on a circle there is `K`-invariant, gives the
+  continuous characters measure zero, and has Fourier coefficient `J₀(ρ) ≠ 0` at every `u ∈ K`. So the first step
+  cannot be run over `P` as it stands. For Euclidean subfields of ℝ the construction gives nothing, since their only
+  real embedding is the inclusion. Whether the plane over `P` is 5-colourable stays open. Refereed once (correct;
+  presentation fixes applied).
+- **The six-witness kissat run.** The 48-hour kissat run on the W-growth instance `r20_w3` (7 200 points, the
+  `{1, d, d′}`-graph at the orbit `(14 ∓ 2√33)/3`, 36 000 variables, 288 993 clauses) ended after about 2.6 hours:
+  satisfiable. The model satisfies every clause (checked separately), so this graph is 5-colourable and is not a
+  witness. The growth was resumed from it with that colouring (R = 20, near weight 3, kissat 12 hours per hard step).
+- **Full test suite on a fresh clone.** Started at 15:10 UTC on a clone of the published head `99dd1b05`, with the
+  slow tests and drat-trim; the result goes in the next entry.
+
+
+## χ(ℝ²) is 6 or 7, in the statement of formal-conjectures (9 October)
+
+- **The statement.** Google DeepMind's formal-conjectures states the bounds of Erdős Problem 508 for
+  `χ(ℝ²) = SimpleGraph.chromaticNumber (UnitDistancePlaneGraph Set.univ)` on `EuclideanSpace ℝ (Fin 2)`. On 9 October
+  (commit `b3f26411`) `HadwigerNelsonAtLeastThree` had a proof there, `HadwigerNelsonAtLeast4` pointed to an outside
+  formal proof, and `HadwigerNelsonAtMostSeven` and `HadwigerNelsonAtLeastFive` were `sorry`. We found no formal proof
+  of `χ(ℝ²) ≤ 7` elsewhere.
+- **χ(ℝ²) ≤ 7.** `lean/PlaneSeven.lean`, a brick colouring: in units of 7/10, row `j` is `j ≤ y < j + 1`, brick `i` of
+  row `j` is `i ≤ x − (11/20)j < i + 1`, colour `i + 3j` mod 7. One brick has diameter below 1 (`0.49 + 0.49 < 1`).
+  Two bricks of one colour in the same row are at least six bricks apart; in adjacent rows the colour forces the
+  column difference to be at least 3 or 4 bricks in the direction that matters, and the gap is at least 1.45 bricks,
+  that is 1.015; two rows apart the horizontal gap is at least 1.1 bricks and the vertical gap at least one, so the
+  distance exceeds `√(0.77² + 0.7²) ≈ 1.04`; three rows apart the vertical gap alone is 1.4. In Lean the arithmetic is
+  one lemma (`brick_key`) on reals and integers: `omega` splits the row and column differences, `linarith` and
+  `nlinarith` give the gaps. The copied definition differs from formal-conjectures' only in writing `Dist.dist` and
+  `_root_.dist_comm`, because under `import Mathlib` the bare names inside `namespace SimpleGraph` mean the graph
+  distance. Built in 29 s; axioms `propext`, `Classical.choice`, `Quot.sound`; `leanchecker` passes.
+- **6 ≤ χ(ℝ²) there.** `lean/external/openai-five/PlaneSixOrSeven.lean`: a 5-colouring of the graph composed with
+  `Complex.orthonormalBasisOneI.repr` (a linear isometry `ℂ ≃ ℝ²`) is a 5-colouring of `ℂ`, which OpenAI's
+  `no_proper_five_coloring` excludes; then `χ(ℝ²) = 6 ∨ χ(ℝ²) = 7`, and the statements at least five and at least four.
+  Same three axioms; `leanchecker` passes. Both files were rebuilt from the repository copies.
+- **Not done.** We built against Lean 4.34.1 and Mathlib d13f23b7, not formal-conjectures' Lean 4.33.1 and Mathlib
+  `0df444a3`, and have not proposed anything to that repository.
+

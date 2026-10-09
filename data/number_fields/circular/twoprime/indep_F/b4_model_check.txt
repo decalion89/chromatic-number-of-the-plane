@@ -1,0 +1,3 @@
+e = 1: |T mod 7O| = 8 (expected 8*7^(e-1) = 8); maps with lambda(T) in A'_7: 8; all kill the maximal ideal: True; their c_0 = A'_7: True
+e = 2: |T mod 7O| = 56 (expected 8*7^(e-1) = 56); maps with lambda(T) in A'_7: 8; all kill the maximal ideal: True; their c_0 = A'_7: True
+e = 3: |T mod 7O| = 392 (expected 8*7^(e-1) = 392); maps with lambda(T) in A'_7: 8; all kill the maximal ideal: True; their c_0 = A'_7: True

@@ -1,0 +1,4 @@
+stored colouring: c(fixed) = 0 ; tight listed cycles: 227 ; after shift to c(fixed)=0: 227 ; first few: [4, 10, 23, 25, 43]
+referee clauses violated by shifted stored colouring: {'alo': 0, 'amo': 0, 'edge': 0, 'unit': 0, 'cycle': 227}
+cycles with a violated cycle clause == tight cycles: True
+WITNESS COLOURING CHECK: PASS

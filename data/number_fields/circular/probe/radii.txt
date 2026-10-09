@@ -1,0 +1,13 @@
+P_1^(1): 12 vertices, max |x|^2 = 10/9 = 1.111111, radius 1.054093
+P_2^(1): 20 vertices, max |x|^2 = 125/121 = 1.033058, radius 1.016395
+P_3^(1): 28 vertices, max |x|^2 = 50/49 = 1.020408, radius 1.010153
+P_4^(1): 36 vertices, max |x|^2 = 50/49 = 1.020408, radius 1.010153
+P_5^(1): 44 vertices, max |x|^2 = 50/49 = 1.020408, radius 1.010153
+P_6^(1): 52 vertices, max |x|^2 = 78125/77284 = 1.010882, radius 1.005426
+
+Y_1(q)/eps: 6 vertices, max |y|^2/eps^2 = 2 = 2.000000, radius/eps 1.414214 (max sigma*L/eps = 7/5)
+Y_2(q)/eps: 10 vertices, max |y|^2/eps^2 = 1250/961 = 1.300728, radius/eps 1.140495 (max sigma*L/eps = 35/31)
+Y_3(q)/eps: 14 vertices, max |y|^2/eps^2 = 5/4 = 1.250000, radius/eps 1.118034 (max sigma*L/eps = 139/125)
+Y_4(q)/eps: 18 vertices, max |y|^2/eps^2 = 5/4 = 1.250000, radius/eps 1.118034 (max sigma*L/eps = 139/125)
+Y_5(q)/eps: 22 vertices, max |y|^2/eps^2 = 31250/25921 = 1.205586, radius/eps 1.097992 (max sigma*L/eps = 22049/20125)
+Y_6(q)/eps: 26 vertices, max |y|^2/eps^2 = 31250/25921 = 1.205586, radius/eps 1.097992 (max sigma*L/eps = 22049/20125)

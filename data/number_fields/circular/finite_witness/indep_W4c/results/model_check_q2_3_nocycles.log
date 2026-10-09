@@ -1,0 +1,4 @@
+solver status line: s SATISFIABLE
+decoded colouring: monochromatic edges = 0  c(fixed) = 0
+tight listed cycles in this model: 321 (first few: [3, 11, 17, 18, 19] )
+MODEL CHECK: PASS

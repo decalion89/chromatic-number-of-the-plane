@@ -1,0 +1,5 @@
+# group Z/3 x Z/3  n=9  exponent M=3  |Aut|=48  classes=4
+S=(1,0)(2,0)(0,1)(0,2) |S|=4 kappa=1/3 col=264 acyc=120 noT4=120 noSq=120 ABeq=120 T4butABeq=0 ABneq_charfail=144 chars_ge=4 hom7/2=1 ok
+S=(1,0)(2,0)(0,1)(1,1)(0,2)(2,2) |S|=6 kappa=1/3 col=60 acyc=42 noT4=42 noSq=42 ABeq=42 T4butABeq=0 ABneq_charfail=18 chars_ge=2 hom7/2=1 ok
+S=(1,0)(2,0)(0,1)(1,1)(2,1)(0,2)(1,2)(2,2) |S|=8 kappa=0/3 not4col
+# summary: generating S classes=3, 4-colourable=2, colourings(c(0)=0)=324, BAD=0

@@ -1,0 +1,92 @@
+Referee check (tasks 1-5)
+witness: witness_q2_3.json.gz
+witness sha256: c84d17f4c97e488b1bc82df7d43334714117717e2423d8a76f1a8f0c2d359c05
+python 3.11.15
+
+== Task 1a: field arithmetic ==
+  derived multiplication table (row * column):
+    1      | 1          sqrt2      sqrt3      sqrt6    
+    sqrt2  | sqrt2      2*1        sqrt6      2*sqrt3  
+    sqrt3  | sqrt3      sqrt6      3*1        3*sqrt2  
+    sqrt6  | sqrt6      2*sqrt3    3*sqrt2    6*1      
+  table vs real roots: max |error| = 8.88e-16
+  fast square == generic product on grid {-1,0,1,2}^4 (proves identity): True
+  n = 1657 points, denominator D = 36, field 'Q(sqrt2, sqrt3)', basis '(1, sqrt2, sqrt3, sqrt6)'
+  max |coefficient| = 76
+
+== Task 1b: distinct points ==
+  distinct 8-tuples: 1657 of 1657
+
+== Task 1c: exact distance test on all pairs ==
+  pairs tested: 1371996 (= n(n-1)/2 = 1371996), time 3.4 s
+  unit-distance pairs found: 6238
+  pairs with rational part = D^2 but nonzero irrational part: 4734
+
+== Task 1d: compare with the declared edges ==
+  declared edges: 6238 entries, 6238 distinct valid pairs
+  declared but not at distance 1: 0
+  at distance 1 but not declared: 0
+  declared edge set == exact unit-distance pairs: True
+
+== Task 1e: floating-point cross-check ==
+  pairs: 1371996
+  float_edges: 6238
+  disagreements: 0
+  max_edge_margin: 7.771561172376096e-16
+  min_nonedge_margin: 9.101682546419632e-06
+  min_nonedge_pair: (1263, 1600)
+  nonedge_pairs_within_1e-12_of_min: 7
+  nonedge_below_1e-3: 532
+  nonedge_below_1e-6: 0
+  min_dist: 0.006086764885734389
+  closest non-edge pair (1263, 1600): D^2*|d|^2 = 3312 + 144*sqrt2 + 144*sqrt3 + -1008*sqrt6
+  |d|^2 to 60 digits = 0.999981796717747294994238504752703411305649418287848644689298
+  | |d|^2 - 1 | = 1.820328e-05
+
+== Task 1f: fixed vertex ==
+  fixed vertex 725 has coordinates [0, 0, 0, 0, 0, 0, 0, 0]
+  fixed vertex is the origin: True
+
+== Task 1g: degrees (recomputed graph) ==
+  min degree 2, max degree 71, average 7.529, isolated vertices 0
+
+== Task 2: colouring ==
+  colour counts: {0: 331, 1: 365, 2: 489, 3: 472}
+  monochromatic edges: 0
+  colouring is proper on the recomputed edges: True
+
+== Task 3: cycles ==
+  cycles listed: 6062
+  length distribution: {4: 5494, 8: 568}
+  all cycles simple, length >= 4 and = 0 mod 4, all steps are edges: True
+  distinct directed cycles up to rotation: 6062
+  directed cycles whose reverse is also listed: 6062
+  vertices on at least one cycle: 1650 of 1657
+  cycles tight under the given colouring: 389 (lengths {4: 389})
+
+== Task 4: CNF encoding (arc) ==
+  file: work/ref_z.cnf
+  colour_vars: 6628
+  arc_vars: 8824
+  base_clauses: 36552
+  arc_clauses: 35296
+  cycle_clauses: 6062
+  variables: 15452, clauses: 77910
+  clause length distribution: {1: 1, 2: 34894, 3: 35296, 4: 7151, 8: 568}
+  re-read file equals generated clauses: True
+  sha256: a8e9d4bdee31892b03d2f6bbe4e865f38414434cd72be38768e3a65bf2483553
+
+== Task 5: kissat -> drat-trim -L -> cake_lpr ==
+  kissat: exit code 20, 109.02 s, lines ['s UNSATISFIABLE']
+  DRAT proof size: 44709809 bytes
+  drat-trim: exit code 0, 54.00 s, lines ['s VERIFIED']
+  LRAT proof size: 88741487 bytes
+  cake_lpr: exit code 0, 27.06 s, output ['s VERIFIED UNSAT']
+  formula sha256 before kissat     a8e9d4bdee31892b03d2f6bbe4e865f38414434cd72be38768e3a65bf2483553
+  formula sha256 after kissat      a8e9d4bdee31892b03d2f6bbe4e865f38414434cd72be38768e3a65bf2483553
+  formula sha256 after drat-trim   a8e9d4bdee31892b03d2f6bbe4e865f38414434cd72be38768e3a65bf2483553
+  formula sha256 after cake_lpr    a8e9d4bdee31892b03d2f6bbe4e865f38414434cd72be38768e3a65bf2483553
+  formula unchanged across runs: True
+  proof files deleted
+
+RESULT: PASS (tasks 1-5)

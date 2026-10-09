@@ -1,0 +1,12 @@
+== q7.cnf: header 51 vars 126 clauses; parsed 126 clauses (126 distinct)
+   tight variables one per arc, distinct: True ; arcs with a tight variable == arcs of listed cycles: True (24 arcs)
+   variables used = 3n + #arcs: True ; clause set == expected set exactly: True ; no duplicates: True
+   without cycle clauses: SAT = True
+   full formula (glucose4): SAT = False
+   dropping listed cycle k makes it SAT (k = 0..): [True, True, True, True, True, True]
+== q31.cnf: header 47 vars 115 clauses; parsed 115 clauses (115 distinct)
+   tight variables one per arc, distinct: True ; arcs with a tight variable == arcs of listed cycles: True (20 arcs)
+   variables used = 3n + #arcs: True ; clause set == expected set exactly: True ; no duplicates: True
+   without cycle clauses: SAT = True
+   full formula (glucose4): SAT = False
+   dropping listed cycle k makes it SAT (k = 0..): [True, True, True, True]

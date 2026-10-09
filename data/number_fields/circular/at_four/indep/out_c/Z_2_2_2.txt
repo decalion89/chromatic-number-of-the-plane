@@ -1,0 +1,8 @@
+# group Z/2 x Z/2 x Z/2  n=8  exponent M=2  |Aut|=168  classes=7
+S=(1,0,0)(0,1,0)(0,0,1) |S|=3 kappa=1/2 col=663 acyc=495 noT4=495 noSq=495 ABeq=495 T4butABeq=0 ABneq_charfail=0 chars_ge=1 hom7/2=1 ok
+S=(1,0,0)(0,1,0)(1,1,0)(0,0,1) |S|=4 kappa=0/2 col=54 acyc=0 noT4=0 noSq=0 ABeq=0 T4butABeq=0 ABneq_charfail=54 chars_ge=0 hom7/2=0 ok
+S=(0,1,0)(1,1,0)(0,0,1)(1,0,1) |S|=4 kappa=1/2 col=453 acyc=355 noT4=355 noSq=355 ABeq=355 T4butABeq=0 ABneq_charfail=0 chars_ge=1 hom7/2=1 ok
+S=(1,0,0)(0,1,0)(1,1,0)(0,0,1)(1,0,1) |S|=5 kappa=0/2 col=24 acyc=0 noT4=0 noSq=0 ABeq=0 T4butABeq=0 ABneq_charfail=24 chars_ge=0 hom7/2=0 ok
+S=(1,0,0)(0,1,0)(1,1,0)(0,0,1)(1,0,1)(0,1,1) |S|=6 kappa=0/2 col=6 acyc=0 noT4=0 noSq=0 ABeq=0 T4butABeq=0 ABneq_charfail=6 chars_ge=0 hom7/2=0 ok
+S=(1,0,0)(0,1,0)(1,1,0)(0,0,1)(1,0,1)(0,1,1)(1,1,1) |S|=7 kappa=0/2 not4col
+# summary: generating S classes=6, 4-colourable=5, colourings(c(0)=0)=1200, BAD=0

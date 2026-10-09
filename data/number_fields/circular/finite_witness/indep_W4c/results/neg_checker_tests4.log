@@ -1,0 +1,3 @@
+## NEG4: cake_lpr on full q3_11 CNF + LRAT whose empty-clause step lost its last (conflict) hint
+c Checking failed at line: 197838. Reason: pivot must be non-zero
+exit 0

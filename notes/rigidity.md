@@ -171,9 +171,11 @@ all `m ∈ u₀ + 5M`, for some unit `u₀`. Coset colourings do this. Then no
 Lebesgue-measurable 5-colouring of the plane is proper along the directions
 `U`. Consequently, the rigidity of any module that is dense in the plane, with
 finitely many unit directions, implies that the measurable chromatic number of
-the plane is at least 6, which is open (it is at least 5: K. J. Falconer, *The
+the plane is at least 6. When this was written that was open (it is at least 5: K. J. Falconer, *The
 realization of distances in measurable subsets covering ℝⁿ*, J. Combin. Theory
-Ser. A 31 (1981) 184–189).
+Ser. A 31 (1981) 184–189); since OpenAI's proof that χ(ℝ²) ≥ 6 (September 2026) it is known, because the
+measurable chromatic number is at least χ(ℝ²). The proposition still shows that rigidity is not easier than
+that bound.
 
 *Proof.* `M` is dense in the plane, so `5M` is too, and `u₀ + 5M` contains vectors
 `mⱼ → 0`. For almost every `y`, the colouring `m ↦ f(y + m)` of `G(M, U)` is
@@ -196,7 +198,8 @@ For `φ ∈ Hom(M, ℝ/ℤ)`, `c(x) = ⌊5·frac(φ(x))⌋` is proper iff
 `F(M) = {φ : frac(φ(U)) ⊂ [1/5, 4/5]}` is nonempty, every unit-distance graph
 with edges in `M` is 5-colourable. By compactness of the dual of the discrete
 group ℝ², and because characters extend from subgroups: if `F(span U′) ≠ ∅`
-for every finite set `U′` of unit vectors, then `χ(ℝ²) = 5`.
+for every finite set `U′` of unit vectors, then `χ(ℝ²) = 5`. (By OpenAI's theorem of 2026, `χ(ℝ²) ≥ 6`, this
+hypothesis fails for some finite `U′`.)
 
 **Results** (MILP `scripts/circgate.py`, exact check `scripts/circverify.py`):
 - **`803 ∪ λ(803)`:** slack 387/31250 > 0. The 46 496-point grown graph is
@@ -243,7 +246,8 @@ divisible. ∎
   field, proves `χ_hom(ℝ²) ≥ 6`: *no 5-colouring of the plane is of the form
   `⌊5·frac(φ(x))⌋` with `φ` additive.*
 - If instead every finite set passes at `k = 6`, then `χ(ℝ²) ≤ 6`, and at
-  `k = 5`, then `χ(ℝ²) = 5`.
+  `k = 5`, then `χ(ℝ²) = 5`. (OpenAI's theorem of 2026, `χ(ℝ²) ≥ 6`, see the README, shows that some finite set
+  fails at `k = 5`; so `χ_hom(ℝ²) ≥ 6`. It does not say which.)
 
 The circular gate computes exactly this, set by set. What it has found so far:
 - **`k = 4`:** the 803-graph fails, so `χ_hom ≥ 5`, as it must be.

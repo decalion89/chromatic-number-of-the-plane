@@ -1,0 +1,19 @@
+unit-distance non-edge differences (up to sign), with multiplicity:
+  [0, 18, 6, 0, 18, 0, 0, -6]            x6   angle    5.2644 deg   not of the form +-zeta^j w^l in the searched exponent range
+  [0, 0, 0, 12, 0, 0, 12, 0]             x4   angle   35.2644 deg   not of the form +-zeta^j w^l in the searched exponent range
+  [0, 0, 12, 0, 0, 0, 0, -12]            x4   angle  -54.7356 deg   not of the form +-zeta^j w^l in the searched exponent range
+  [0, 0, 12, 6, 0, 0, -12, 6]            x4   angle   -9.7356 deg   not of the form +-zeta^j w^l in the searched exponent range
+  [0, 18, -6, 0, 18, 0, 0, 6]            x4   angle   65.2644 deg   not of the form +-zeta^j w^l in the searched exponent range
+  [6, 15, -2, 5, 6, -15, 2, 5]           x2   angle    0.7932 deg   not of the form +-zeta^j w^l in the searched exponent range
+  [0, 0, 20, 0, 0, 0, 0, 4]              x2   angle   15.7932 deg   not of the form +-zeta^j w^l in the searched exponent range
+  [18, 9, 6, -3, -18, 9, 6, 3]           x2   angle   20.2644 deg   not of the form +-zeta^j w^l in the searched exponent range
+  [18, -9, -6, -3, 18, 9, 6, -3]         x2   angle  110.2644 deg   not of the form +-zeta^j w^l in the searched exponent range
+  [0, 6, -10, 0, -30, 0, 0, -2]          x2   angle -104.2068 deg   not of the form +-zeta^j w^l in the searched exponent range
+  [30, 0, 0, 2, 0, 6, -10, 0]            x1   angle  -14.2068 deg   not of the form +-zeta^j w^l in the searched exponent range
+  [0, 0, 12, -6, 0, 0, 12, 6]            x1   angle   80.2644 deg   not of the form +-zeta^j w^l in the searched exponent range
+  [18, 9, -6, 3, -18, 9, -6, -3]         x1   angle  -39.7356 deg   not of the form +-zeta^j w^l in the searched exponent range
+  [6, -15, 2, 5, -6, -15, 2, -5]         x1   angle  -89.2068 deg   not of the form +-zeta^j w^l in the searched exponent range
+  [18, -9, 6, 3, 18, 9, -6, 3]           x1   angle   50.2644 deg   not of the form +-zeta^j w^l in the searched exponent range
+  [18, 0, 0, 6, 0, -18, 6, 0]            x1   angle  -24.7356 deg   not of the form +-zeta^j w^l in the searched exponent range
+  [0, 0, 4, -10, 0, 0, -4, -10]          x1   angle -119.2068 deg   not of the form +-zeta^j w^l in the searched exponent range
+total unit non-edge pairs: 39

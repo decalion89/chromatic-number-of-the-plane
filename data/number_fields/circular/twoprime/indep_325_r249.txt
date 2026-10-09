@@ -1,0 +1,11 @@
+r = 249/1000: 60 rotations, 30 distinct functionals (up to sign)
+29 components (594s)
+labels: {'X': 24, 'Q': 4, 'C': 1}
+   extra component, a point: (Fraction(325, 8), Fraction(201704260043, 2482515000))  min||.|| at that point = 620545043/2482515000
+   extra component, a point: (Fraction(325, 8), Fraction(605113114957, 2482515000))  min||.|| at that point = 620545043/2482515000
+   extra component, a point: (Fraction(364983062604733913, 7860616709400000), Fraction(364957530970598071, 2620205569800000))  min||.|| at that point = 55507497746195213/196515417735000000
+   extra component, a point: (Fraction(364983062604733913, 7860616709400000), Fraction(486609279214401929, 2620205569800000))  min||.|| at that point = 55507497746195213/196515417735000000
+   extra component, a point: (Fraction(201704260043, 2482515000), Fraction(325, 8))  min||.|| at that point = 620545043/2482515000
+   extra component, a point: (Fraction(28173183797694983, 346746687787500), Fraction(28173183797694983, 346746687787500))  min||.|| at that point = 61903636430017/247676205562500
+   extra component, a point: (Fraction(8162471114219, 100461075000), Fraction(325, 2))  min||.|| at that point = 25262010781/101083125000
+   extra component, a point: (Fraction(28173183797694983, 346746687787500), Fraction(84519489733242517, 346746687787500))  min||.|| at that point = 61903636430017/247676205562500

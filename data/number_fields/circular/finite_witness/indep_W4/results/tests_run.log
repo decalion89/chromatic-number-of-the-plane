@@ -1,0 +1,15 @@
+(a) vertex 6: coordinate a0 -170 -> -169
+(a1) REFEREE: REJECTED cycle 0 uses non-edge 0 -> 6  [exit 1]  -> PASS
+(a2) REFEREE: REJECTED cycle 0 uses non-edge 0 -> 6  [exit 1]  -> PASS
+(a3) vertex 10 (on no listed cycle, degree 6): coordinate a0 -160 -> -159
+(a3) REFEREE: REJECTED declared edges differ from recomputed unit-distance graph (malformed 0, duplicates 0, missing 0, non-unit 6)  [exit 1]  -> PASS
+(b) edge 0-1: colour of 1 set to 0
+(b) REFEREE: REJECTED colouring not proper: edge 0-1 both coloured 0  [exit 1]  -> PASS
+(c) cycle 0 [0, 6, 141, 13] -> [0, 2, 141, 13] (0-2 is not an edge)
+(c) REFEREE: REJECTED cycle 0 uses non-edge 0 -> 2  [exit 1]  -> PASS
+(d) CNF without cycle clauses: 16344 vars, 80851 clauses; kissat exit 10 ['s SATISFIABLE'] (wall 3.5 s, cpu 2.3 s)
+(d) model satisfies all clauses: True; decoded colouring proper: True; colour(fixed) = 0; listed cycles tight under it: 332
+(d) -> PASS
+(e) induced assignment of the given colouring (rotated by 0): 304 violated clauses, all of them cycle clauses: True; they are exactly the 304 tight listed cycles: True; every rotation c+s keeps properness and the tight set: True -> PASS
+TESTS: ALL PASSED
+done 19:55:07

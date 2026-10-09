@@ -1,0 +1,4 @@
+# group Z/5  n=5  exponent M=5  |Aut|=4  classes=2
+S=(1)(4) |S|=2 kappa=2/5 col=60 acyc=60 noT4=60 noSq=60 ABeq=60 T4butABeq=0 ABneq_charfail=0 chars_ge=2 hom3/1=1 ok
+S=(1)(2)(3)(4) |S|=4 kappa=1/5 not4col
+# summary: generating S classes=2, 4-colourable=1, colourings(c(0)=0)=60, BAD=0

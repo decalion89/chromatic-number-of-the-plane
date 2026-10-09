@@ -1,0 +1,3 @@
+$ kissat ref_z_direct.cnf ref_z_direct.drat
+s UNSATISFIABLE
+[exit code 20, wall time 34.27 s]

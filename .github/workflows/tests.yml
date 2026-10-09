@@ -35,9 +35,12 @@ jobs:
         run: >-
           python -m pytest -q
           --deselect tests/test_threepoint_indep.py::test_other_certificates
+          --deselect tests/test_winding.py::test_certificates_slow
+          --deselect tests/test_winding_family.py::test_certificates_slow
+          --deselect tests/test_winding_family.py::test_second_checker_all
           tests/test_q23.py tests/test_q311.py tests/test_q35.py tests/test_q3q.py tests/test_split_places.py
           tests/test_decompositions.py tests/test_cli.py
-          tests/test_biquadratic_bounds.py tests/test_finite_planes.py tests/test_g13.py tests/test_g13_audit.py tests/test_g13_chi.py tests/test_flat852.py tests/test_g17.py tests/test_threepoint.py tests/test_threepoint_indep.py
+          tests/test_biquadratic_bounds.py tests/test_finite_planes.py tests/test_g13.py tests/test_g13_audit.py tests/test_g13_chi.py tests/test_flat852.py tests/test_quadratic_planes.py tests/test_g17.py tests/test_threepoint.py tests/test_threepoint_indep.py
           tests/test_moser_field.py tests/test_reduce11.py tests/test_small_plane_colourings.py
           tests/test_field.py tests/test_geometry.py tests/test_graph_coloring.py tests/test_certify.py
           tests/test_density.py tests/test_quadext.py tests/test_spindle.py tests/test_transfer.py
@@ -45,3 +48,4 @@ jobs:
           tests/test_ring_geometry.py tests/test_tight_four.py tests/test_fast_agrees.py
           tests/test_neighbourhoods_are_bipartite.py tests/test_kappa.py tests/test_transversal.py
           tests/test_forced.py tests/test_multispindle.py tests/test_mixed.py
+          tests/test_winding.py tests/test_winding_family.py

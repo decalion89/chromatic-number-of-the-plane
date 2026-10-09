@@ -2,7 +2,8 @@
 
 A working note on the parallel searches of September 2026. It is a status
 record, not a result: nothing here proves `χ(ℝ²) ≥ 6`. It says what would, and
-how to check it.
+how to check it. (Update, 9 October 2026: OpenAI has since proved `χ(ℝ²) ≥ 6` without an explicit graph; see the
+README. These searches would give an explicit one.)
 
 ## The reduction
 

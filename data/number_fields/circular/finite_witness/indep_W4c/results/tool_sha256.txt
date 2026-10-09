@@ -1,0 +1,4 @@
+cc4aa4bae19851f0e59d8a61a676e12983aac522e69d191c8cb1149f558b0f79  ../kissat/build/kissat
+fcc6f026604615b98830dc70e62dcea2518a0437c6df3673ffa0d41e473cd9d7  ../drat-trim/drat-trim
+b25551c853c7b7fe6a9059bcddd81a46fb4ed952b842e1080697f8122ee0c8ca  ../verify/cake_lpr/cake_lpr
+4.0.4

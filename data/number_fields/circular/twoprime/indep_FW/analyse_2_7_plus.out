@@ -1,0 +1,21 @@
+type point c: least margin 1/2
+type point q:(1+1i)/3: least margin 1/3
+type point q:(1+2i)/3: least margin 1/3
+type point q:(2+1i)/3: least margin 1/3
+type point q:(2+2i)/3: least margin 1/3
+type point 7:(1+3i)/7: least margin 2/7
+type point 7:(1+4i)/7: least margin 2/7
+type point 7:(3+1i)/7: least margin 2/7
+type point 7:(3+6i)/7: least margin 2/7
+type point 7:(4+1i)/7: least margin 2/7
+type point 7:(4+6i)/7: least margin 2/7
+type point 7:(6+3i)/7: least margin 2/7
+type point 7:(6+4i)/7: least margin 2/7
+comp_2_7_plus.txt: 5 components
+  cell (108,108) 30-gon   index vector = type point ['q:(1+1i)/3']; stored label: MAIN
+  cell (108,216) 30-gon   index vector = type point ['q:(1+2i)/3']; stored label: MAIN
+  cell (162,162) 60-gon   index vector = type point ['c']; stored label: MAIN
+  cell (216,108) 30-gon   index vector = type point ['q:(2+1i)/3']; stored label: MAIN
+  cell (216,216) 30-gon   index vector = type point ['q:(2+2i)/3']; stored label: MAIN
+type points matched: 5 of 13; every component matched: True
+all component vectors among the 29 stored: True

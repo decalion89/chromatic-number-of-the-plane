@@ -1,0 +1,20 @@
+S=(0,1)(0,3)(1,0) kappa=1/2 col=663 acyc=495 noT4=495 noSq=501 ABeq=501 hom7/2=1 ok
+S=(0,1)(0,3)(1,1)(1,3) kappa=1/2 col=453 acyc=355 noT4=355 noSq=359 ABeq=359 hom7/2=1 ok
+S=(0,1)(0,3)(1,2) kappa=1/2 col=663 acyc=495 noT4=495 noSq=501 ABeq=501 hom7/2=1 ok
+S=(1,0)(1,1)(1,3) kappa=1/2 col=663 acyc=495 noT4=495 noSq=501 ABeq=501 hom7/2=1 ok
+S=(1,1)(1,2)(1,3) kappa=1/2 col=663 acyc=495 noT4=495 noSq=501 ABeq=501 hom7/2=1 ok
+S=(0,1)(0,2)(0,3)(1,0) kappa=1/4 col=54 acyc=0 noT4=0 noSq=6 ABeq=6 hom7/2=0 ok
+S=(0,1)(0,2)(0,3)(1,1)(1,3) kappa=1/4 col=24 acyc=0 noT4=0 noSq=4 ABeq=4 hom7/2=0 ok
+S=(0,1)(0,2)(0,3)(1,2) kappa=1/4 col=54 acyc=0 noT4=0 noSq=6 ABeq=6 hom7/2=0 ok
+S=(0,1)(0,3)(1,0)(1,1)(1,3) kappa=1/4 col=24 acyc=0 noT4=0 noSq=2 ABeq=2 hom7/2=0 ok
+S=(0,1)(0,3)(1,0)(1,2) kappa=1/2 col=453 acyc=355 noT4=355 noSq=355 ABeq=355 hom7/2=1 ok
+S=(0,1)(0,3)(1,1)(1,2)(1,3) kappa=1/4 col=24 acyc=0 noT4=0 noSq=2 ABeq=2 hom7/2=0 ok
+S=(0,2)(1,0)(1,1)(1,3) kappa=1/4 col=54 acyc=0 noT4=0 noSq=6 ABeq=6 hom7/2=0 ok
+S=(0,2)(1,1)(1,2)(1,3) kappa=1/4 col=54 acyc=0 noT4=0 noSq=6 ABeq=6 hom7/2=0 ok
+S=(1,0)(1,1)(1,2)(1,3) kappa=1/2 col=453 acyc=355 noT4=355 noSq=355 ABeq=355 hom7/2=1 ok
+S=(0,1)(0,2)(0,3)(1,0)(1,1)(1,3) kappa=1/4 col=6 acyc=0 noT4=0 noSq=2 ABeq=2 hom7/2=0 ok
+S=(0,1)(0,2)(0,3)(1,0)(1,2) kappa=0 col=24 acyc=0 noT4=0 noSq=0 ABeq=0 hom7/2=0 ok
+S=(0,1)(0,2)(0,3)(1,1)(1,2)(1,3) kappa=1/4 col=6 acyc=0 noT4=0 noSq=2 ABeq=2 hom7/2=0 ok
+S=(0,1)(0,3)(1,0)(1,1)(1,2)(1,3) kappa=0 col=6 acyc=0 noT4=0 noSq=0 ABeq=0 hom7/2=0 ok
+S=(0,2)(1,0)(1,1)(1,2)(1,3) kappa=0 col=24 acyc=0 noT4=0 noSq=0 ABeq=0 hom7/2=0 ok
+# summary Z/[2, 4]: generating S=20, 4-colourable=19, BAD=0

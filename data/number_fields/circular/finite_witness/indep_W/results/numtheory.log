@@ -1,0 +1,9 @@
+d=11: d mod 12 = 11; (a) holds: False; (b) holds: False; 7 splits in Q(sqrt11) (Legendre (11/7) = 1); condition (7): True; sqrt11 in Q_7: True; Prop. C1 (residue field F_7) applies: True
+d=191: d mod 12 = 11; (a) holds: False; (b) holds: False; 7 splits in Q(sqrt191) (Legendre (191/7) = 1); condition (7): True; sqrt191 in Q_7: True; Prop. C1 (residue field F_7) applies: True
+d=455: d mod 12 = 11; (a) holds: False; (b) holds: False; 7 ramifies in Q(sqrt455) (Legendre (455/7) = 0); condition (7): True; sqrt455 in Q_7: False; Prop. C1 (residue field F_7) applies: True
+  sqrt11 mod 7^10 = 130649598; check (r^2 - d) mod 7^10 = 0
+  sqrt191 mod 7^10 = 93933066; check (r^2 - d) mod 7^10 = 0
+  455 = 5*7*13: v_7(455) = 1 is odd, so 455 is not a square in Q_7; Q_7(sqrt455) is ramified of degree 2 (residue degree 1)
+seed q11.json: 76 points, D = 30, 172 unit pairs (file lists 172), 3-colourable: False; seed points in witness_q11: 50 of 76; witness D = 30
+seed q191.json: 96 points, D = 240, 212 unit pairs (file lists 212), 3-colourable: False; seed points in witness_q191: 75 of 96; witness D = 240
+seed q455.json: 71 points, D = 780, 150 unit pairs (file lists 150), 3-colourable: False; seed points in witness_q455: 50 of 71; witness D = 780

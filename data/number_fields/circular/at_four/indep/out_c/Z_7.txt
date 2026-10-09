@@ -1,0 +1,5 @@
+# group Z/7  n=7  exponent M=7  |Aut|=6  classes=3
+S=(1)(6) |S|=2 kappa=3/7 col=546 acyc=546 noT4=546 noSq=546 ABeq=546 T4butABeq=0 ABneq_charfail=0 chars_ge=4 hom7/2=1 ok
+S=(1)(2)(5)(6) |S|=4 kappa=2/7 col=42 acyc=14 noT4=14 noSq=14 ABeq=14 T4butABeq=0 ABneq_charfail=28 chars_ge=2 hom7/2=1 ok
+S=(1)(2)(3)(4)(5)(6) |S|=6 kappa=1/7 not4col
+# summary: generating S classes=3, 4-colourable=2, colourings(c(0)=0)=588, BAD=0

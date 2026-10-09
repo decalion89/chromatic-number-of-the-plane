@@ -1,0 +1,10 @@
+theta=7/25 order seed None: 13 leaves, 17063 nodes
+theta=7/25 order seed 1: 13 leaves, 17921 nodes
+theta=7/25 order seed 2: 13 leaves, 18523 nodes
+theta=7/25 order seed 3: 13 leaves, 19401 nodes
+  all orders give the same set of index vectors: True
+theta=201/700 order seed None: 5 leaves, 16047 nodes
+theta=201/700 order seed 1: 5 leaves, 17039 nodes
+theta=201/700 order seed 2: 5 leaves, 17293 nodes
+theta=201/700 order seed 3: 5 leaves, 18075 nodes
+  all orders give the same set of index vectors: True

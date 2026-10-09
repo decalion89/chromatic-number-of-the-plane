@@ -1,0 +1,18 @@
+# group Z/10  n=10  exponent M=10  |Aut|=4  classes=5
+S=(1)(9) |S|=2 kappa=5/10 col=14763 acyc=14763 noT4=14763 noSq=14763 ABeq=14763 T4butABeq=0 ABneq_charfail=0 chars_ge=5 hom7/2=1 ok
+S=(1)(2)(8)(9) |S|=4 kappa=3/10 col=300 acyc=70 noT4=70 noSq=70 ABeq=70 T4butABeq=0 ABneq_charfail=230 chars_ge=2 hom7/2=1 ok
+S=(1)(3)(7)(9) |S|=4 kappa=5/10 col=2343 acyc=1723 noT4=1723 noSq=1723 ABeq=1723 T4butABeq=0 ABneq_charfail=520 chars_ge=1 hom7/2=1 ok
+S=(2)(3)(7)(8) |S|=4 kappa=4/10 col=1530 acyc=980 noT4=980 noSq=980 ABeq=980 T4butABeq=0 ABneq_charfail=550 chars_ge=2 hom7/2=1 ok
+S=(1)(2)(3)(7)(8)(9) |S|=6 kappa=2/10 not4col
+S=(1)(2)(4)(6)(8)(9) |S|=6 kappa=2/10 not4col
+S=(1)(2)(3)(4)(6)(7)(8)(9) |S|=8 kappa=2/10 not4col
+S=(1)(5)(9) |S|=3 kappa=5/10 col=4383 acyc=2913 noT4=2913 noSq=2913 ABeq=2913 T4butABeq=0 ABneq_charfail=1040 chars_ge=3 hom7/2=1 ok
+S=(2)(5)(8) |S|=3 kappa=4/10 col=4020 acyc=2340 noT4=2340 noSq=2340 ABeq=2340 T4butABeq=0 ABneq_charfail=1480 chars_ge=2 hom7/2=1 ok
+S=(1)(2)(5)(8)(9) |S|=5 kappa=3/10 col=210 acyc=70 noT4=70 noSq=70 ABeq=70 T4butABeq=0 ABneq_charfail=140 chars_ge=2 hom7/2=1 ok
+S=(1)(3)(5)(7)(9) |S|=5 kappa=5/10 col=1833 acyc=1383 noT4=1383 noSq=1383 ABeq=1383 T4butABeq=0 ABneq_charfail=360 chars_ge=1 hom7/2=1 ok
+S=(2)(3)(5)(7)(8) |S|=5 kappa=2/10 not4col
+S=(1)(2)(3)(5)(7)(8)(9) |S|=7 kappa=1/10 not4col
+S=(2)(4)(5)(6)(8) |S|=5 kappa=2/10 not4col
+S=(1)(2)(4)(5)(6)(8)(9) |S|=7 kappa=2/10 not4col
+S=(1)(2)(3)(4)(5)(6)(7)(8)(9) |S|=9 kappa=1/10 not4col
+# summary: generating S classes=16, 4-colourable=8, colourings(c(0)=0)=29382, BAD=0

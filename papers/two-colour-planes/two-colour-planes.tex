@@ -1,0 +1,370 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage[hyphens]{url}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
+\usepackage[margin=2.5cm]{geometry}
+
+\hypersetup{
+  pdftitle={Two-colourable planes over number fields},
+  pdfauthor={Sergi Gal\'an},
+}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Oo}{\mathcal{O}}
+\newcommand{\m}{\mathfrak{m}}
+\newcommand{\N}{\operatorname{N}}
+\newcommand{\chiB}{\chi_{\mathrm{B}}}
+\newcommand{\chiM}{\chi_{\mathrm{M}}}
+\newcommand{\chiloc}{\chi_{\mathrm{loc}}}
+
+\title{Two-colourable planes over number fields}
+\author{Sergi Gal\'an}
+\thanks{These results were obtained with the assistance of an AI system (Claude, by Anthropic), which carried
+out the computations and the checks and helped to draft this note. Two further sessions of the same system,
+given only the manuscript, refereed it; no mathematician has checked it yet. The author is not a professional
+mathematician and submits it for independent verification.}
+\date{Draft, 3 October 2026}
+\subjclass[2020]{Primary 05C15; Secondary 11R04, 11S15, 52C10}
+\keywords{Hadwiger--Nelson problem, unit-distance graph, number field, ramification, local--global principle}
+
+\begin{document}
+
+\begin{abstract}
+For a number field $F$, let $\chi(F^2)$ be the chromatic number of the graph on $F^2$ in which $(x,y)$ and
+$(x',y')$ are adjacent when $(x-x')^2+(y-y')^2=1$. We show that $\chi(F^2)=2$ if and only if some prime of $F$
+above $2$ ramifies in $F(i)$. That such a prime gives a $2$-colouring, by reduction, was known; we prove the
+converse: if no prime above $2$ ramifies in $F(i)$, the graph has an odd cycle. The proof combines Fischer's
+observation that a $2$-colouring is a ring homomorphism with Chevalley's extension theorem for valuation rings.
+The criterion contains the known cases of real quadratic and real multiquadratic fields and of fields of odd
+degree, and it holds for the plane of any nondegenerate binary form $x^2+cy^2$, with $F(\sqrt{-c})$ in place of
+$F(i)$. We then ask whether, for a real number field, $\chi(F^2)$ is always the least number of colours of a
+colouring of a single completion $F_v^2$ that is locally constant (Borel at a real place); the theorem is the case
+of two colours. For three colours the question
+predicts $\chi(\Q(\sqrt d)^2)\ge4$ for every squarefree $d\equiv11\pmod{12}$ (proved since, in a later draft), and
+for four colours a positive
+answer for $\Q(\sqrt{167})$ would give a triangle-free $5$-chromatic unit-distance graph in the plane.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+The Hadwiger--Nelson problem asks for the chromatic number $\chi(\R^2)$ of the unit-distance graph of the plane;
+it is $6$ or $7$: at least $5$ by \cite{deGrey,EI}, at least $6$ by a recent non-constructive
+proof \cite{OpenAI}, and at most $7$ (see \cite{Soifer}). For a subfield $F\subset\R$ the plane $F^2$ is a subgraph, and
+since the adjacency $(x-x')^2+(y-y')^2=1$ is algebraic, $\chi(F^2)$ makes sense for every field $F$. Woodall
+showed $\chi(\Q^2)=2$ \cite{Woodall}. For real quadratic fields, $\chi(\Q(\sqrt N)^2)=2$ exactly when
+$N\not\equiv3\pmod 4$: Johnson proved that these planes are $2$-colourable \cite{Johnson1987} (we know his paper
+through \cite{Fischer1990,Payne}), and Fischer proved both directions \cite[Theorem~8]{Fischer1990}. Moorhouse
+gave proofs of the $2$-colourable cases and showed $\chi(F^2)=2$ for every field of odd degree
+\cite[Theorem~7.1, Lemma~8.4, Theorem~8.5]{Moorhouse}.
+
+The colourings of Woodall, Fischer and Moorhouse are reductions modulo a prime above $2$. Madore's reduction
+argument \cite[Proposition~3.2, \P6.6]{Madore} needs $x^2+y^2$ to stay anisotropic modulo the prime, which never
+happens above $2$, where $x^2+y^2\equiv(x+y)^2$. For primes above $2$ he gave a version modulo the square of the
+prime, which applies when a prime above $2$ is unramified over $\Q$ \cite[\P3.7, Proposition~3.8]{Madore}, and a separate argument for
+$\Q(\sqrt2)$ \cite[Proposition~3.9]{Madore}. Writing points as $z=x+iy\in F(i)$, a public repository of July
+2026 \cite{MM} proved the general statement: if a prime of $F$ above $2$ ramifies in $F(i)$, reduction modulo
+the prime above it gives a $2$-colouring \cite[Theorem~A$'$]{MM}. We recall its short proof as
+Proposition~\ref{prop:if}, in the slightly stronger form of a locally constant colouring of the completion; the
+argument is the same.
+
+The other direction, an odd cycle whenever no prime above $2$ ramifies in $F(i)$, had been proved field by field.
+For real quadratic fields Fischer proved it with the ring homomorphism attached to a $2$-colouring
+\cite[Theorems~1, 7 and~8]{Fischer1990}, and Moorhouse, for $\Q(\sqrt p)$ with $p$ prime, with a cycle from Pell's
+equation \cite[Theorem~8.6]{Moorhouse}; it follows for every field with such a quadratic subfield. We prove it for every number field, by combining
+Fischer's ring homomorphism with Chevalley's extension theorem.
+
+\begin{theorem}\label{thm:main}
+Let $F$ be a number field. Then $\chi(F^2)=2$ if and only if some prime of $F$ above $2$ ramifies in $F(i)$.
+\end{theorem}
+
+The \emph{only if} direction, Proposition~\ref{prop:onlyif}, is the new part. We have not found it in the
+literature we could consult, but we have not seen Johnson's paper \cite{Johnson1987}, his survey
+\cite{Johnson2006} or the paper of Benda and Perles \cite{BP}. Section~\ref{sec:proof} proves the theorem,
+Section~\ref{sec:cor} draws the consequences, and Section~\ref{sec:lg} puts it in a local--global frame.
+
+\section{Proof}\label{sec:proof}
+
+Let $L=F[t]/(t^2+1)$; it is the field $F(i)$ if $i\notin F$, and $F\times F$ if $i\in F$. Identify $F^2$ with
+$L$ by $(x,y)\mapsto x+ty$; then $x^2+y^2$ is the norm $\N(z)=z\bar z$, and the unit vectors are
+\[
+T=\{z\in L:\ z\bar z=1\}.
+\]
+$T$ is a group under multiplication, so its additive span $A=\Z[T]$ is a subring of $L$. The graph is the Cayley
+graph of the additive group $L$ with connection set $T$, so it is a disjoint union of translates of $A$, each a copy
+of the Cayley graph $\mathrm{Cay}(A,T)$. Every $u\in T$ is a unit of $A$, since $u^{-1}=\bar u\in T$.
+
+\begin{lemma}[Fischer {\cite[Theorem~1(iii)]{Fischer1990}}, for $F\subset\R$]\label{lem:ring}
+$\chi(F^2)=2$ if and only if there is a ring homomorphism $\varphi:A\to\F_2$.
+\end{lemma}
+
+\begin{proof}
+Since $-1\in T$, every element of $A$ is a sum of unit vectors. If $\mathrm{Cay}(A,T)$ is bipartite, let
+$\varphi(a)$ be the parity of the length of a walk from $0$ to $a$; it is well defined and additive. It is also
+multiplicative: if $a$ is a sum of $m$ unit vectors and $b$ a sum of $n$, then $ab$ is a sum of $mn$ products of
+unit vectors, which are unit vectors. Conversely, a ring homomorphism sends each $u\in T$, a unit of $A$, to
+$1\in\F_2^\times$, so $\varphi(a+u)=\varphi(a)+1$ and $\varphi$ is a proper $2$-colouring of $\mathrm{Cay}(A,T)$,
+which extends to the translates. (The graph has edges, so $\chi\ge2$.)
+\end{proof}
+
+\begin{proposition}[{\cite[Theorem~A$'$]{MM}}; cf.\ {\cite[Propositions~3.2, 3.8 and~3.9]{Madore}}]\label{prop:if}
+If a prime $v$ of $F$ above $2$ ramifies in $L$, then $F_v^2$, and hence $F^2$, has a $2$-colouring that is
+locally constant for the topology of $F_v$.
+\end{proposition}
+
+\begin{proof}
+Let $w$ be the place of $L$ above $v$. It is the only one, so conjugation preserves $|\cdot|_w$; a unit vector
+$u$ of $F_v^2=L_w$ therefore satisfies $|u|_w^2=|u\bar u|_w=1$, so $u\in\Oo_w^\times$. Since $L_w/F_v$ is
+ramified, the residue fields of $w$ and $v$ agree and conjugation acts trivially on them; reducing $u\bar u=1$
+gives $u^2\equiv1\pmod{\m_w}$, and in characteristic $2$ this is $u\equiv1\pmod{\m_w}$. Choose an additive map
+$\lambda$ from the residue field to $\F_2$ with $\lambda(1)=1$. Unit steps preserve the cosets of $\Oo_w$ in $L_w$;
+fix a representative $r$ of each coset and colour $z$ by $\lambda\bigl((z-r)\bmod\m_w\bigr)$. A unit step changes
+the colour. The colouring is constant on the cosets of $\m_w$.
+\end{proof}
+
+\begin{proposition}\label{prop:onlyif}
+If there is a ring homomorphism $\varphi:A\to\F_2$, then some prime of $F$ above $2$ ramifies in $L$.
+\end{proposition}
+
+\begin{proof}
+Suppose first that $i\in F$, so $L=F\times F$ and $T=\{(s,1/s):s\in F^\times\}$. For $s\neq0,1$ the sum of
+$(s,1/s)$ and $(1-s,1/(1-s))$ is $(1,1/(s(1-s)))$; the difference of the sums for $s=2$ and $s=3$ is
+$(0,-1/3)\in A$. The set $\{x\in F:(0,x)\in A\}$ is an ideal of the second projection of $A$, which contains
+$F^\times$ and is therefore $F$; this ideal is non-zero, so $A\supseteq 0\times F$, by symmetry $A=F\times F$,
+and $F\times F$ has no homomorphism to $\F_2$ because $2$ is invertible. So $i\notin F$ and $L$ is a field.
+
+By Zorn's lemma the pairs $(B,\psi)$ of a subring $B\supseteq A$ of $L$ and a homomorphism $\psi$ from $B$ to an
+algebraic closure of $\F_2$ extending $\varphi$ have a maximal element $(V,\psi)$, and by Chevalley's theorem
+\cite[Lemma~5.19 and Theorem~5.21]{AM} $V$ is a valuation ring of $L$ with maximal ideal $\ker\psi$, which meets
+$A$ in $\ker\varphi$. As $V$ contains $\Z$ and is integrally closed, $V\supseteq\Oo_L$; as $2\in\ker\varphi$,
+$V\neq L$. So $V$ is the valuation ring of a place $w$ of $L$ above $2$, and every $u\in T$ satisfies
+$u\equiv1\pmod{\m_w}$. Let $v$ be the place of $F$ below $w$.
+
+The map $p\mapsto(p+t)/(p-t)$ is a homeomorphism from $F_v$ minus the roots of $p^2+1$ onto $T(F_v)\setminus\{1\}$,
+where $T(F_v)$ is the group of norm-one elements of $L\otimes_F F_v$, and it maps $F$ onto $T\setminus\{1\}$; so
+$T$ is dense in $T(F_v)$.
+\begin{itemize}
+\item If $v$ splits in $L$, then $L\otimes_F F_v=F_v\times F_v$ and $z\mapsto z_w$ identifies $T(F_v)$ with
+$F_v^\times$, which is unbounded; so some element of $T$ is not integral at $w$, a contradiction.
+\item If $v$ is inert in $L$, with residue field $\F_q$, then conjugation acts on the residue field $\F_{q^2}$ of
+$w$ as $x\mapsto x^q$, and the unit vectors $y/\bar y$ with $y\in\Oo_w^\times$ reduce to $y^{1-q}$, which runs
+through all $q+1\ge3$ roots of $x^{q+1}=1$. Each residue class is open, so some element of $T$ is not
+$\equiv1\pmod{\m_w}$, a contradiction.
+\end{itemize}
+Hence $v$ ramifies in $L$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Combine Lemma~\ref{lem:ring} with Propositions~\ref{prop:if} and~\ref{prop:onlyif}.
+\end{proof}
+
+\section{Consequences}\label{sec:cor}
+
+For a multiquadratic field the condition is a computation in the group $\Q_2^\times/\Q_2^{\times2}$, of order
+$8$, generated by $-1$, $5$ and $2$, and written multiplicatively. For a subgroup $H$ let $\Q_2(\sqrt H)$ be the
+field generated over $\Q_2$ by square roots of representatives of the elements of $H$; then $\Q_2(\sqrt5)$ is the
+only unramified quadratic extension of $\Q_2$.
+
+\begin{corollary}\label{cor:multi}
+Let $F=\Q(\sqrt{a_1},\dots,\sqrt{a_k})$ with nonzero integers $a_j$. Then $\chi(F^2)=2$ unless some quadratic
+subfield $\Q(\sqrt c)$, with $c\neq1$ a squarefree integer, has $c\equiv3\pmod4$; that is, $F^2$ is
+$2$-colourable exactly when the plane of every quadratic subfield is.
+\end{corollary}
+
+For real $F$ this is not new: the \emph{if} half is \cite[Corollary~B]{MM}, and the \emph{only if} half follows
+from Fischer's theorem, since $F^2$ contains the plane of each subfield. For non-real $F$ the same reasoning works
+with Theorem~\ref{thm:main} in place of those results. We include the corollary to show how Theorem~\ref{thm:main}
+reads in this case.
+
+\begin{proof}
+The primes of $F$ above $2$ are conjugate. Let $G$ be the image of $\langle a_1,\dots,a_k\rangle$ in
+$\Q_2^\times/\Q_2^{\times2}$ and $G'=G\langle-1\rangle$, so that $F_v=\Q_2(\sqrt G)$ and $F_v(i)=\Q_2(\sqrt{G'})$.
+For a subgroup $H$ the ramification index of $\Q_2(\sqrt H)/\Q_2$ is $|H|/|H\cap\langle5\rangle|$. If $-1\in G$ the
+extension $F_v(i)/F_v$ is trivial. Otherwise $|G'|=2|G|$, and $F_v(i)/F_v$ is unramified exactly when
+$|G'\cap\langle5\rangle|=2|G\cap\langle5\rangle|$, that is, when $5\in G'\setminus G$, that is, when $-5\in G$. So
+no prime above $2$ ramifies exactly when $G$ contains $-1$ or $-5$, that is, when the squarefree representative
+$c\neq1$ of some element of the group generated by the $a_j$ modulo squares is $\equiv7$ or $\equiv3\pmod8$.
+These $c$ are those of the quadratic subfields.
+\end{proof}
+
+For real quadratic fields Theorem~\ref{thm:main} is Fischer's theorem \cite[Theorem~8]{Fischer1990}. For $F$ of odd
+degree, some prime $v$ above $2$ has odd degree over $\Q_2$; then $i\notin F_v$, and since $\Q_2(i)/\Q_2$ has
+ramification index $2$ and $F_v/\Q_2$ an odd one, $F_v(i)/F_v$ is ramified, which is Moorhouse's Theorem~7.1
+\cite{Moorhouse}.
+
+\begin{remark}\label{rem:forms}
+Nothing in the proof uses the particular form $x^2+y^2$. Let $c\in F^\times$ and $q=x^2+cy^2$. With
+$L=F[t]/(t^2+c)$ and $\N(x+ty)=x^2+cy^2$, the same argument shows that the graph $q(x-x',y-y')=1$ on $F^2$ is
+bipartite if and only if some prime of $F$ above $2$ ramifies in $F(\sqrt{-c})$. Every nondegenerate binary form
+that represents $1$ is equivalent to such a form, and a form that does not represent $1$ gives a graph without
+edges. Nondegeneracy is needed: for $q=x^2$ the components are the sets $(x_0+\Z)\times F$, and the graph is
+bipartite over every $F$.
+\end{remark}
+
+\begin{example}\label{ex:quartic}
+Theorem~\ref{thm:main} also decides fields that are not multiquadratic. Let $F$ be generated by a root of
+$\alpha^4-2\alpha^3-2\alpha-3$ (Galois group $S_4$, so that $F$ has no quadratic subfield), of
+$\alpha^4-6\alpha^2+4\alpha+2$ (whose only quadratic subfield is $\Q(\sqrt2)$) or of $\alpha^4-5\alpha^2-7$ (whose
+only quadratic subfield is $\Q(\sqrt{53})$). In each case no prime above $2$ ramifies in $F(i)$, so $F^2$ has an
+odd cycle, although the planes of $\Q(\sqrt2)$ and $\Q(\sqrt{53})$ are $2$-colourable. Exact integer relations
+$\sum_k c_ku_k=0$ among unit vectors $u_k=z_k/\bar z_k$ with $\sum_k c_k$ odd, which are closed walks of odd length
+$\sum_k|c_k|$, are found in these three fields by the script \texttt{odd\_walks.gp} of \cite{Repo}; for three
+fields in which a prime above $2$ ramifies, the same search finds only relations with even sum. The script
+\texttt{two\_colour\_criterion.gp} checks the criterion against Fischer's theorem for the $242$ squarefree $N$
+with $2\le N\le400$, against Moorhouse's theorem for nine fields of degree $3$, $5$ and $7$, and against
+Corollary~\ref{cor:multi} for $1\,522$ biquadratic fields.
+\end{example}
+
+\section{A local--global question}\label{sec:lg}
+
+Call a number field \emph{real} if it has a real place. For a place $v$ of a real number field $F$, let
+$\chiloc(v)$ be the least number of colours of a proper colouring of $F_v^2$ that is locally constant or, at an
+archimedean place, Borel. At a real place this is the Borel chromatic number $\chiB(\R^2)$, which is at least $5$
+by Falconer's theorem \cite{Falconer} and at most $7$ by the hexagonal colouring. At a complex place, and at a
+finite place where $-1$ is a square in $F_v$, the form $x^2+y^2$ is isotropic and even the ordinary chromatic
+number of $F_v^2$ is infinite, by a theorem of Davies \cite{Davies} (see \cite[Proposition~3]{PP}); there
+$\chiloc(v)=\infty$. At a finite place where $x^2+y^2$ is anisotropic, the unit vectors are integral, and
+$\chiloc(v)$ is the least chromatic number of the finite graphs $\mathrm{Cay}(\Oo_w/\m_w^r,\ T_r)$, where $w$ is
+the place of $F(i)$ above $v$ and $T_r$ is the image of the norm-one units: unit steps preserve the cosets of
+$\Oo_w$, which can be coloured independently, and a locally constant colouring of the compact set $\Oo_w$ is
+constant on the cosets of some $\m_w^r$. Restriction gives
+\[
+\chi(F^2)\le\min_v\chiloc(v),
+\]
+and every upper bound below $7$ that we know for a plane over a number field is of this kind: reductions at one
+finite place \cite{Fischer1990,Madore,MM,Moorhouse}.
+
+\begin{question}\label{q:lg}
+Is $\chi(F^2)=\min_v\chiloc(v)$ for every real number field $F$?
+\end{question}
+
+Theorem~\ref{thm:main} answers Question~\ref{q:lg} whenever one side is $2$: if $\chi(F^2)=2$,
+Lemma~\ref{lem:ring} and Proposition~\ref{prop:onlyif} give a prime $v$ above $2$ that ramifies in $F(i)$, and
+Proposition~\ref{prop:if} gives $\chiloc(v)=2$.
+
+Two facts bound the local side from below. First, if $v$ lies above a prime $p$, then $F_v\supseteq\Q_p$, and a locally
+constant colouring of $F_v^2$ restricts to a locally constant, hence measurable, colouring of $\Q_p^2$; so
+$\chiloc(v)\ge\chiM(\Q_p^2)$, the measurable chromatic number. For $p\equiv3\pmod4$, the ratio bound of Delsarte
+and Hoffman on the compact group $\Z_p[i]$ gives $\chiM(\Q_p^2)\ge4$ for $p\ge11$, $\chiM(\Q_p^2)\ge5$ for
+$p\ge23$, and $\chiM(\Q_p^2)\ge7$ for $p=71$ and for $p\ge103$ \cite[Theorem~1 and Table~1]{PP}. Second, if a
+field $K$ embeds in $F_v$, then $\chiloc(v)\ge\chi(K^2)$.
+
+\textbf{Three colours.} For squarefree $d\ge2$, the field $\Q(\sqrt d)$ has a place with $\chiloc(v)\le3$ exactly
+when $d\not\equiv11\pmod{12}$. If $d\not\equiv3\pmod4$, Proposition~\ref{prop:if} gives two colours at $2$. If
+$d\not\equiv2\pmod3$, a place $v$ above $3$ has residue field $\F_3$, the place above it has residue field $\F_9$,
+and the norm-one units reduce to $\{\pm1,\pm i\}$; so $a+bi\mapsto a+b\bmod3$ colours the first level with three
+colours (cf.\ \cite[Proposition~3.2]{Madore}, \cite[Theorem~9]{Fischer1990}). Conversely, let
+$d\equiv11\pmod{12}$. The real places have $\chiloc\ge5$. The prime $3$ is inert, and the places above $3$, the
+places above primes $p\equiv1\pmod4$, and the place above $2$ when $d\equiv7\pmod8$ contain $i$. When
+$d\equiv3\pmod8$, the place above $2$ has $F_v=\Q_2(\sqrt3)$, which contains $\sqrt{11}$ because $33$ is a square
+in $\Q_2$; and a place above $7$ has $F_v\supseteq\Q_7$, which contains $\sqrt{11}$ because $11\equiv2^2\pmod7$.
+In both cases $\chiloc(v)\ge\chi(\Q(\sqrt{11})^2)=4$ \cite{QP}. Above a prime $p\equiv3\pmod4$ with $p\ge11$,
+$\chiloc(v)\ge\chiM(\Q_p^2)\ge4$. So Question~\ref{q:lg} predicts
+$\chi(\Q(\sqrt d)^2)\ge4$ for every squarefree $d\equiv11\pmod{12}$. This has been checked, by unit-distance
+graphs with certified proofs of non-$3$-colourability, for $27$ values of $d$ \cite{QP}; no counterexample is
+known. \emph{[Added 3 October 2026.]} A later draft \cite{FC} proves $\chi(\Q(\sqrt d)^2)\ge4$ for every
+$d\equiv11\pmod{12}$. So for three colours the answer to Question~\ref{q:lg} is positive for every real quadratic
+field: $\chi(\Q(\sqrt d)^2)\le3$ exactly when a place above $2$ or $3$ has a locally constant $3$-colouring.
+
+Colourings that are locally constant at several anisotropic finite places colour a categorical product of finite
+level graphs, since $T$ is dense in the product of the local groups $T(F_v)$; they can do better than every
+single place only through a counterexample to Hedetniemi's conjecture, as Moorhouse observed
+\cite[\S9]{Moorhouse}. Such counterexamples exist with many colours \cite{Shitov}, so for large numbers of colours
+Question~\ref{q:lg} is a genuine restriction to single places; with three colours they do not exist \cite{EZS}.
+
+\textbf{Four colours.} Call a number field $F$ \emph{admissible} if $\sqrt3\notin F$ and $i\in F_v$ for every
+place $v$ of $F$ above $2$, $3$, $7$, $11$ and $19$. A real admissible field has $\chiloc(v)\ge5$ at every
+place $v$: $\chiloc\ge5$ at the real places; $\chiloc=\infty$ at the complex places, at the
+places above $2$, $3$, $7$, $11$ and $19$ and at those above primes $p\equiv1\pmod4$; and at a place above a
+prime $p\equiv3\pmod4$ with $p\ge23$, $\chiloc(v)\ge\chiM(\Q_p^2)\ge5$. The margins are small: the ratio bound
+on the density of a colour class is $0.24908$ at $p=23$ and $0.2499973$ at $p=31$, against $1/4$
+\cite[Table~1]{PP}. An admissible field also has no unit triangle, since the third vertex of a unit equilateral
+triangle on $0$ and $(a,b)$ is $(\frac a2-\frac{\sqrt3}2b,\frac b2+\frac{\sqrt3}2a)$. The smallest admissible real
+quadratic field is $\Q(\sqrt{167})$; the next are $d=887$, $1055$, $1319$ and $1823$. Fischer had singled out the
+same field: $\Q(\sqrt{167})^2$ has no additive $k$-colouring for $k<11$ \cite[Example~4]{Fischer1990}. So a positive answer to
+Question~\ref{q:lg} for $\Q(\sqrt{167})$ would give $\chi(\Q(\sqrt{167})^2)\ge5$, and by the theorem of de Bruijn
+and Erd\H{o}s \cite{dBE} a finite triangle-free $5$-chromatic unit-distance graph in the plane. According to the
+abstract of \cite[Chapter~55]{Soifer2}, Soifer asked for such graphs in a problem paper of 2019; according to
+\cite{MW}, de Grey has found one in $\R^3$. We have not found a planar one in the literature we could consult. The searches of \cite{Repo} have not
+found one over $\Q(\sqrt{167})$: its unit vectors have large denominators, and the graphs grown there stay sparse.
+
+\textbf{The real place.} If Question~\ref{q:lg} had a positive answer for every real quadratic field, then
+$\chi(\R^2)=\chiB(\R^2)$. Take a prime $d\equiv7\pmod8$ that is a quadratic non-residue modulo every prime
+$p\equiv3\pmod4$ below $100$ other than $71$; the smallest is $d=186\,023$. In $\Q(\sqrt d)$ the places above
+$2$, above the primes $p\equiv1\pmod4$ and above those primes $p\equiv3\pmod4$ contain $i$, and every other finite
+place lies above $71$ or above a prime $p\ge103$, so $\chiloc(v)\ge\chiM(\Q_p^2)\ge7$. The question would then give
+$\chi(\Q(\sqrt d)^2)=\chiB(\R^2)$, while $\chi(\Q(\sqrt d)^2)\le\chi(\R^2)\le\chiB(\R^2)$. Whether
+$\chi(\R^2)=\chiB(\R^2)$ is open, so this part of the question is the most speculative.
+
+\begin{thebibliography}{99}
+\bibitem{AM} M. F. Atiyah and I. G. Macdonald, \emph{Introduction to commutative algebra}, Addison-Wesley,
+Reading, Mass., 1969.
+\bibitem{BP} M. Benda and M. Perles, \emph{Colorings of metric spaces}, Geombinatorics \textbf{9} (2000),
+113--126 (not seen by us).
+\bibitem{Davies} J. Davies, \emph{Chromatic number of spacetime}, arXiv:2308.16885 (2023, revised 2024).
+\bibitem{dBE} N. G. de Bruijn and P. Erd\H{o}s, \emph{A colour problem for infinite graphs and a problem in the
+theory of relations}, Nederl. Akad. Wetensch. Proc. Ser. A \textbf{54} = Indag. Math. \textbf{13} (1951),
+371--373.
+\bibitem{deGrey} A. D. N. J. de Grey, \emph{The chromatic number of the plane is at least 5}, Geombinatorics
+\textbf{28} (2018), 18--31; arXiv:1804.02385.
+\bibitem{EZS} M. El-Zahar and N. Sauer, \emph{The chromatic number of the product of two $4$-chromatic graphs is
+$4$}, Combinatorica \textbf{5} (1985), 121--126.
+\bibitem{EI} G. Exoo and D. Ismailescu, \emph{The chromatic number of the plane is at least $5$: a new proof},
+Discrete Comput. Geom. \textbf{64} (2020), 216--226.
+\bibitem{Falconer} K. J. Falconer, \emph{The realization of distances in measurable subsets covering $\R^n$},
+J. Combin. Theory Ser. A \textbf{31} (1981), 184--189.
+\bibitem{Fischer1990} K. G. Fischer, \emph{Additive $K$-colorable extensions of the rational plane}, Discrete
+Math. \textbf{82} (1990), 181--195.
+\bibitem{Repo} S. Gal\'an, \emph{The Hadwiger--Nelson problem over number fields}, code, data and formal
+proofs, 2026. Archived at Zenodo, \href{https://doi.org/10.5281/zenodo.22976635}{doi:10.5281/zenodo.22976635}
+(all versions); source at \url{https://github.com/decalion89/chromatic-number-of-the-plane}; the scripts cited here
+are in \texttt{data/quadratic\_planes/scripts/}, and the account is \texttt{notes/local\_global.md}.
+\bibitem{FC} S. Gal\'an, \emph{Which real quadratic planes need four colours}, draft, 2026,
+\texttt{papers/four-colours/} in \cite{Repo}.
+\bibitem{PP} S. Gal\'an, \emph{Colouring the $p$-adic plane}, draft, 2026, in \cite{Repo}
+(\texttt{papers/padic-planes/}).
+\bibitem{QP} S. Gal\'an, \emph{Real quadratic planes that need four colours}, draft, 2026, in \cite{Repo}
+(\texttt{papers/quadratic-planes/}).
+\bibitem{Johnson1987} P. D. Johnson Jr., \emph{Two-colorings of real quadratic extensions of $\Q^2$ that forbid
+many distances}, Congr. Numer. \textbf{60} (1987), 51--58 (not seen by us).
+\bibitem{Johnson2006} P. D. Johnson Jr., \emph{Coloring the rational points to forbid the distance one---a
+tentative history and compendium}, Geombinatorics \textbf{16} (2006), 209--218 (not seen by us).
+\bibitem{Madore} D. A. Madore, \emph{The Hadwiger--Nelson problem over certain fields}, arXiv:1509.07023 (2015).
+\bibitem{MM} MildlyMeticulous (GitHub account), \emph{A $2$-adic obstruction to $5$-chromatic unit-distance
+graphs, and the exact chromatic number of the plane over $\Q(\sqrt3,\sqrt{11})$}, code, logs and draft, July 2026,
+\url{https://github.com/MildlyMeticulous/hn-2adic-obstruction} (file \texttt{RESULTS.md}, \S1).
+\bibitem{Moorhouse} G. E. Moorhouse, \emph{On the chromatic numbers of planes}, preliminary draft, revised
+3 March 2010, \url{https://www.ericmoorhouse.org/pub/chromatic.pdf}.
+\bibitem{OpenAI} OpenAI, \emph{The Euclidean plane is not five-colorable}, preprint (23 September 2026), with a
+formalization in Lean, \url{https://github.com/openai/math}.
+\bibitem{Payne} M. S. Payne, \emph{Unit distance graphs with ambiguous chromatic number}, Electron. J. Combin.
+\textbf{16} (2009), Note 31; arXiv:0707.1177.
+\bibitem{Shitov} Y. Shitov, \emph{Counterexamples to Hedetniemi's conjecture}, Ann. of Math. (2) \textbf{190}
+(2019), 663--667.
+\bibitem{Soifer} A. Soifer, \emph{The mathematical coloring book}, Springer, New York, 2009.
+\bibitem{Soifer2} A. Soifer, \emph{The new mathematical coloring book}, 2nd ed., Springer, New York, 2024
+(we have read only the abstract of Chapter~55, ``Triangle-free 5-chromatic unit distance graphs'').
+\bibitem{MW} E. W. Weisstein, \emph{Gr\"otzsch graph}, MathWorld, \url{https://mathworld.wolfram.com/GroetzschGraph.html},
+citing A. D. N. J. de Grey, \emph{A 5-chromatic, triangle-free unit-distance graph in $\R^3$ with 61 vertices},
+Geombinatorics \textbf{35} (2026).
+\bibitem{Woodall} D. R. Woodall, \emph{Distances realized by sets covering the plane}, J. Combin. Theory Ser. A
+\textbf{14} (1973), 187--200.
+\end{thebibliography}
+
+\end{document}

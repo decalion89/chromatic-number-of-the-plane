@@ -1,0 +1,11 @@
+S=(1)(8) kappa=4/9 col=4920 acyc=4920 noT4=4920 noSq=4920 ABeq=4920 hom7/2=1 ok
+S=(2)(7) kappa=4/9 col=4920 acyc=4920 noT4=4920 noSq=4920 ABeq=4920 hom7/2=1 ok
+S=(4)(5) kappa=4/9 col=4920 acyc=4920 noT4=4920 noSq=4920 ABeq=4920 hom7/2=1 ok
+S=(1)(2)(7)(8) kappa=1/3 col=132 acyc=60 noT4=60 noSq=60 ABeq=60 hom7/2=1 ok
+S=(1)(3)(6)(8) kappa=1/3 col=396 acyc=198 noT4=198 noSq=198 ABeq=198 hom7/2=1 ok
+S=(1)(4)(5)(8) kappa=1/3 col=132 acyc=60 noT4=60 noSq=60 ABeq=60 hom7/2=1 ok
+S=(2)(3)(6)(7) kappa=1/3 col=396 acyc=198 noT4=198 noSq=198 ABeq=198 hom7/2=1 ok
+S=(2)(4)(5)(7) kappa=1/3 col=132 acyc=60 noT4=60 noSq=60 ABeq=60 hom7/2=1 ok
+S=(3)(4)(5)(6) kappa=1/3 col=396 acyc=198 noT4=198 noSq=198 ABeq=198 hom7/2=1 ok
+S=(1)(2)(4)(5)(7)(8) kappa=1/3 col=60 acyc=42 noT4=42 noSq=42 ABeq=42 hom7/2=1 ok
+# summary Z/[9]: generating S=14, 4-colourable=10, BAD=0

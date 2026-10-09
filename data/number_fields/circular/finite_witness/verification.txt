@@ -1,0 +1,367 @@
+Verification of the finite witness over Q(sqrt11) (4 October 2026)
+
+1. The share's checker, check_witness.py, with the stored proof:
+   python3 check_witness.py witness_q11sum.json.gz witness_q11sum.cnf.gz witness_q11sum.drat drat-trim
+   (1) 2237 points, 11300 edges, every edge at distance exactly 1
+       unit-distance pairs among the points: 11300; not listed as edges: 0 (induced)
+   (2) the colouring is a (7,2)-colouring: chi_c(H) <= 7/2
+   (3) 180 cycles, all closed walks along edges (lengths 14..42)
+   (4) the CNF is the formula built from the edges and cycles; sha256
+       426f67eec64a80346c6df8c26672e1093870d38a5b3b417f426e667d406b9bca
+   (5) drat-trim: s VERIFIED  (about 1 minute)
+   => every (7,2)-colouring of H has a tight cycle, so chi_c(H) = 7/2
+
+2. An independent check, verify_independent.py (no code shared with check_witness.py):
+   A + A: 2237 points; witness points = A + A: yes
+   unit vectors with denominator 30: 108
+   unit pairs: 11300; witness edges: 11300; equal: True
+   (7,2)-colouring: yes
+   cycles: 180 simple cycles along edges; lengths [14, 21, 28, 35, 42]
+   listed cycles tight under the given colouring: 10
+   CNF (own variable layout): 17134 variables, 250042 clauses;
+       sha256 ee36797440e0c7b52f16592f2bfc18a4292853d65c1aefe744db1e0d432088ab
+   kissat 4.0.4 (--seed=1), with a new DRAT proof: s UNSATISFIABLE (57 s)
+   drat-trim on that proof: s VERIFIED (595 s; 176 037 of 250 042 clauses and 430 589 of 850 611 lemmas in the core),
+       with an LRAT proof as output (-L)
+   cake_lpr (the formally verified checker of CakeML) on the LRAT proof: s VERIFIED UNSAT (13 s)
+
+Files: witness_q11sum.drat.xz is the share's proof (xz; 57 466 663 bytes uncompressed,
+sha256 09a57383938c767c65292b6b8279c866f275d50d503912a6e48e71283dec3ee6). The second proof and its LRAT form
+(164 MB) are not stored; verify_independent.py OUT.cnf and the commands in its docstring regenerate them.
+
+Verification of the grown witnesses (4 October 2026, evening)
+
+Both checkers build formulas that fix the colour of one vertex (fixed_vertex, a vertex of largest degree) to 0; this
+loses nothing, as rotating the colours keeps a (7,2)-colouring and all its colour differences. Each stored proof is
+the core proof that drat-trim -l extracted from a kissat 4.0.4 (--seed=1) proof of the first formula; times are wall
+clock on a shared machine.
+
+witness_q11: Q(sqrt11), denominator 30, 170 vertices, 468 edges, 879 cycles; fixed vertex 34 (degree 20)
+1. python3 check_witness.py witness_q11.json.gz witness_q11.cnf.gz witness_q11.drat drat-trim
+   (1) 170 points, 468 edges, every edge at distance exactly 1
+       unit-distance pairs among the points: 468; not listed as edges: 0 (induced)
+   (2) the colouring is a (7,2)-colouring: chi_c(H) <= 7/2
+   (3) 879 cycles, all closed walks along edges (lengths 7..28)
+   (4) the CNF is the formula built from the edges and cycles; sha256
+       f36a7e6a79e5459d6c7f735be8143129af0b16651278b3f27e02d7c8a6f68517
+   (5) drat-trim: s VERIFIED
+   kissat refuted the formula in 43 s; drat-trim -l kept 161 744 of 309 450 lemmas. Stored proof: 28 824 442 bytes
+   uncompressed, sha256 6258c2409bccf870ce1cae6974ba219bac5567e62a93b940bd52984967d731cc
+2. python3 verify_independent.py H.cnf witness_q11.json.gz
+   points of A in the witness: 50 of 76; unit vectors with denominator 30: 108
+   unit pairs: 468; witness edges: 468; equal: True; (7,2)-colouring: yes
+   cycles: 879 simple cycles along edges; lengths [7, 14, 21, 28]; fixed vertex: 34 (colour 0)
+   CNF: 2092 variables, 17192 clauses; sha256 f8b9ac2dc0113f731406c1715521b4ba4c1c554a749182dd37856d4ab5d9186d
+   kissat: s UNSATISFIABLE (45 s); drat-trim: s VERIFIED (46 s; 199 548 of 360 771 lemmas in the core), with an LRAT
+   proof as output; cake_lpr on the LRAT proof: s VERIFIED UNSAT (17 s)
+3. python3 check_critical.py witness_q11.json.gz witness_q11_critical.json.gz
+   170 vertices: for every v, a (7,2)-colouring of H - v with an acyclic tight digraph, so chi_c(H - v) < 7/2
+Also refuted without the fixed vertex: the formula of check_witness.py (sha256
+9c802d50c04ed1f01883c7893a9c3d14692aefa7a8e9f422460603d46198b7e3) by kissat in 7 minutes, drat-trim: s VERIFIED
+(1 178 751 of 2 424 206 lemmas in the core), and check_witness.py with that core proof: s VERIFIED; the formula of
+verify_independent.py (sha256 454946c1683503fc5a04905bb251bab0fc567fdd4eff539ad08b7677b35555a2) by kissat in 7 minutes,
+drat-trim: s VERIFIED (9 minutes), cake_lpr: s VERIFIED UNSAT. Those proofs (250 MB each) are not stored.
+
+witness_q191: Q(sqrt191), denominator 240, 293 vertices, 803 edges, 489 cycles; fixed vertex 56 (degree 34)
+1. check_witness.py with the stored proof:
+   (1) Q(sqrt191): 293 points, 803 edges, every edge at distance exactly 1
+       unit-distance pairs among the points: 803; not listed as edges: 0 (induced)
+   (2) the colouring is a (7,2)-colouring: chi_c(H) <= 7/2
+   (3) 489 cycles, all closed walks along edges (lengths 7..35)
+   (4) the CNF is the formula built from the edges and cycles; sha256
+       e62238610df1e6ec1899e619ecb94d8968d67dbc527dfc7dfa272866d4f7e9fd
+   (5) drat-trim: s VERIFIED
+   kissat refuted the formula in 38 s; drat-trim -l kept 144 126 of 270 355 lemmas. Stored proof: 22 573 623 bytes
+   uncompressed, sha256 a6f51b09e7a82748cc85569743c8924355f3a540157a05276d68e5b1943d04b8
+2. verify_independent.py: points of A in the witness: 75 of 96; unit vectors with denominator 240: 108
+   unit pairs: 803; witness edges: 803; equal: True; (7,2)-colouring: yes
+   cycles: 489 simple cycles along edges; lengths [7, 14, 21, 28, 35]; fixed vertex: 56 (colour 0)
+   CNF: 3386 variables, 26991 clauses; sha256 2c343503bcc20307c4bf16edcf1d98afbfd52a535efdaff441e2400d3644229c
+   kissat: s UNSATISFIABLE (34 s); drat-trim: s VERIFIED (38 s; 140 034 of 271 929 lemmas in the core);
+   cake_lpr: s VERIFIED UNSAT (13 s)
+3. check_critical.py: 293 vertices: for every v, a (7,2)-colouring of H - v with an acyclic tight digraph
+
+witness_q455: Q(sqrt455), denominator 780, 175 vertices, 434 edges, 91 cycles; fixed vertex 34 (degree 16)
+1. check_witness.py with the stored proof:
+   (1) Q(sqrt455): 175 points, 434 edges, every edge at distance exactly 1
+       unit-distance pairs among the points: 434; not listed as edges: 0 (induced)
+   (2) the colouring is a (7,2)-colouring: chi_c(H) <= 7/2
+   (3) 91 cycles, all closed walks along edges (lengths 7..28)
+   (4) the CNF is the formula built from the edges and cycles; sha256
+       0e06b8498615d6dea0bc54cbd39ad7ae979134369c1288587768550b61663839
+   (5) drat-trim: s VERIFIED
+   kissat refuted the formula in 4 s; drat-trim -l kept 27 684 of 58 654 lemmas. Stored proof: 3 553 814 bytes
+   uncompressed, sha256 2c2738b19cf39d5d0679964aeae0e9250fa0f61bffa89236e92da18e307ca9d6
+2. verify_independent.py: points of A in the witness: 50 of 71; unit vectors with denominator 780: 68
+   unit pairs: 434; witness edges: 434; equal: True; (7,2)-colouring: yes
+   cycles: 91 simple cycles along edges; lengths [7, 14, 28]; fixed vertex: 34 (colour 0)
+   CNF: 1841 variables, 13693 clauses; sha256 9994a1a50544107d07c5fa8677c9e9e1c6bf27c609ccc276c2ff2aff43afa022
+   kissat: s UNSATISFIABLE (4 s); drat-trim: s VERIFIED (5 s; 31 348 of 58 785 lemmas in the core);
+   cake_lpr: s VERIFIED UNSAT (2 s)
+3. check_critical.py: 175 vertices: for every v, a (7,2)-colouring of H - v with an acyclic tight digraph
+Also refuted without the fixed vertex: the formula of check_witness.py (sha256
+3c373263d560f578fcf71a1636fe84bf54523e7e1d9fb5891f7f35ffb5bc9277) by kissat in 46 s, drat-trim: s VERIFIED, and
+check_witness.py with that core proof: s VERIFIED; the formula of verify_independent.py (sha256
+68641af226ed24fcead9300f06b2d42b504a880cc341f8c5d17e85103c07a3f4) by kissat in 57 s, drat-trim: s VERIFIED (53 s),
+cake_lpr: s VERIFIED UNSAT (62 s).
+
+The grown graphs before deletion were refuted too (kissat, drat-trim: s VERIFIED, cake_lpr: s VERIFIED UNSAT, in the
+second encoding without a fixed vertex): 653 vertices over Q(sqrt11) (also in the first encoding), 959 over Q(sqrt455),
+3 258 over Q(sqrt191) (drat-trim 52 minutes). They are not stored; grow.py rebuilds them.
+
+Verification of the witness for the value 3 over Q(sqrt7) (4 October 2026, night)
+
+witness_q7: Q(sqrt7), denominator 160, (p, q) = (3, 1), 9 vertices, 13 edges, 6 listed cycles (three 6-cycles, each
+in both directions); the Wagner graph with one chord subdivided. Every check is a finite enumeration with Python
+integers; the SAT refutation is a second, redundant check of (3).
+1. python3 check_small.py witness_q7.json.gz q7.cnf   (under a second)
+   (1) Q(sqrt7): 9 points, 13 edges, every edge at distance exactly 1, and no other unit pair (induced)
+   (2) the colouring is a (3,1)-colouring: chi_c(H) <= 3/1
+   (3) all 19683 maps V -> Z/3: 84 (3,1)-colourings, each with a tight cycle (one of the 6 listed cycles): chi_c(H) =
+       3/1 by Lemma 20
+   (4) no homomorphism to K_8/3, the largest fraction below 3/1 with numerator <= 9: chi_c(H) = 3/1 again
+   (5) for every vertex v, a (3,1)-colouring of H - v with an acyclic tight digraph: H is vertex-critical
+2. The formula q7.cnf written by check_small.py (51 variables, 126 clauses; sha256
+   258bcc7fc1dea349bc33aa8c896dda337e42e8b90074c5f1e32c09434d8ee6fb):
+   kissat 4.0.4: s UNSATISFIABLE; drat-trim: s VERIFIED (126 of 126 clauses and 49 of 158 lemmas in the core), with
+   an LRAT proof as output (-L); cake_lpr: s VERIFIED UNSAT. The proofs are not stored; kissat rebuilds them at once.
+   The same three checks passed on the formula of the graph as found (before the translation and the relabelling).
+3. python3 small_triangle_free.py   (23 s)
+   triangle-free graphs on 8 labelled vertices: 4682270; maximal: 15247; not bipartite: 15120; without a homomorphism
+   to K_8/3: 0
+   For N = 3, 4, 5, 6 the counts 7, 41, 388, 5789 agree with a direct enumeration of all graphs on N vertices.
+4. Reproduction: grow.py q7_seed.json A G7 2000 200 3 1 (607 vertices, 7 cycles), minimise.py G7.json W7.json and
+   critical.py W7.json C7.json give the stored points translated by (-1, 0), and the same edges, colouring, cycles and
+   certificates under that correspondence (tests/test_two_primes.py, test_finite_witness_q7_found_by_growth).
+
+witness_q31: Q(sqrt31), denominator 80, (p, q) = (3, 1), 9 vertices, 14 edges, 4 listed cycles; the hexagon with its
+three long diagonals subdivided and two edges between the midpoints (hexagon 0, 1, 8, 7, 2, 6; midpoints 3, 4, 5).
+1. python3 check_small.py witness_q31.json.gz q31.cnf
+   (1) Q(sqrt31): 9 points, 14 edges, every edge at distance exactly 1, and no other unit pair (induced)
+   (2) the colouring is a (3,1)-colouring: chi_c(H) <= 3/1
+   (3) all 19683 maps V -> Z/3: 48 (3,1)-colourings, each with a tight cycle (one of the 4 listed cycles): chi_c(H) =
+       3/1 by Lemma 20
+   (4) no homomorphism to K_8/3, the largest fraction below 3/1 with numerator <= 9: chi_c(H) = 3/1 again
+   (5) for every vertex v, a (3,1)-colouring of H - v with an acyclic tight digraph: H is vertex-critical
+2. q31.cnf (47 variables, 115 clauses; sha256 7c893b278d45a8f18edb60a22c75ed68b06a173ca3d3529e685f2d174830932d):
+   kissat 4.0.4: s UNSATISFIABLE; drat-trim: s VERIFIED (115 of 115 clauses and 46 of 144 lemmas in the core), with
+   an LRAT proof as output (-L); cake_lpr: s VERIFIED UNSAT.
+3. python3 nine_vertices.py   (13 s; networkx 3.6.1)
+   n = 2, ..., 9: 2, 3, 7, 14, 38, 107, 410, 1897 triangle-free graphs up to isomorphism (OEIS A006785), the two tests
+   of chi_c = 3 agree on every graph; n <= 8: none with chi_c = 3; n = 9: three, with 12, 13 and 14 edges: the
+   hexagon with its long diagonals subdivided, and it with one or two edges between the midpoints.
+4. The proof by hand of the paper (1-chain identities for the subdivided hexagon M = witness_q7 minus P1P5) is checked
+   by tests/test_two_primes.py (test_finite_witness_q7_hand_proof), with all 126 proper 3-colourings of M.
+
+Referee of the 7/2 witnesses (4 October 2026, night; indep_W/, REPORT.md there): all claims confirmed with programs of
+its own (all pairs of points; a third encoding; cycle lists rebuilt from scratch; clause-by-clause validation of every
+formula, the stored ones included; kissat, drat-trim and cake_lpr on all of them and cake_lpr on the stored proofs;
+the explicit (7N, 2N+1)-colourings of every H - v; exact reproduction of witness_q11 and witness_q455). After its
+report the checkers make every check explicitly (python -O used to skip them) and check_witness.py needs a line
+"s VERIFIED" from drat-trim; the outputs above are unchanged.
+
+witness_q31, reproduction (after the referee's report): grow.py q31_seed.json A G31 2000 200 3 1 (2 rounds: 200
+points with one colour left, then 8 blocked; 367 vertices, 7 cycles), minimise.py G31.json W31.json (9 vertices, 14
+edges, 4 cycles) and critical.py W31.json C31.json give exactly the stored points, edges, colouring, cycles and
+certificates, in the same order (tests/test_two_primes.py, test_finite_witness_q31_found_by_growth).
+
+witness_q7m: Q(sqrt7), denominator 80, (p, q) = (3, 1), 9 vertices, 12 edges: the subdivided hexagon M itself (hexagon
+vertices 0-5, midpoints 6, 7, 8 of the diagonals 0-3, 1-4, 2-5); 8 listed cycles (the hexagon in both directions and
+the six directed 6-cycles C_0, ..., C_5 of the proof by hand).
+1. python3 check_small.py witness_q7m.json.gz q7m.cnf
+   (1) Q(sqrt7): 9 points, 12 edges, every edge at distance exactly 1, and no other unit pair (induced)
+   (2) the colouring is a (3,1)-colouring: chi_c(H) <= 3/1
+   (3) all 19683 maps V -> Z/3: 126 (3,1)-colourings, each with a tight cycle (one of the 8 listed cycles): chi_c(H) =
+       3/1 by Lemma 20
+   (4) no homomorphism to K_8/3, the largest fraction below 3/1 with numerator <= 9: chi_c(H) = 3/1 again
+   (5) for every vertex v, a (3,1)-colouring of H - v with an acyclic tight digraph: H is vertex-critical
+2. q7m.cnf (51 variables, 125 clauses; sha256 28f92bedcc168b6d6640147c83273372e99051c80d75ea6397aca96196844592):
+   kissat 4.0.4: s UNSATISFIABLE; drat-trim: s VERIFIED (125 of 125 clauses and 61 of 248 lemmas in the core), with
+   an LRAT proof as output (-L); cake_lpr: s VERIFIED UNSAT.
+3. python3 hexagon_search.py 7 80 400 (63 s): 156 unit vectors; 400 realisations of M listed (the stored witness is
+   the 181st, translated); 62256 sets of nine points realise the twelve edges of M: 46512 span M itself, 4896 + 4896
+   + 4896 span M plus one edge between midpoints (m0m1, m0m2, m1m2), 528 + 360 + 168 span M plus two such edges
+   (m0m1 m0m2, m0m1 m1m2, m0m2 m1m2). python3 hexagon_search.py 31 80 400 (77 s): 4288 sets: 1728 M, 640 + 640 + 640
+   M plus one edge, 320 + 228 + 92 M plus two edges. With denominator 80 there are none over Q(sqrt15), Q(sqrt23) and
+   Q(sqrt39).
+
+Referee of the value-3 witnesses (4 October 2026, night; indep_V3/, REPORT.md there): every claim confirmed with
+programs of its own (exact arithmetic on the points; all 2^28 labelled graphs on 8 vertices; a Burnside count for 9
+vertices without isomorphism tests: 1897 classes, 3 with chi_c = 3; an exhaustive 8^8 search for homomorphisms to
+K_8/3; the proof by hand on all 126 colourings of M; the formulas clause by clause; kissat, drat-trim and cake_lpr;
+the reproduction over Q(sqrt7)). Its findings on wording and reproducibility are applied (see the README).
+
+witness_q11b: Q(sqrt11), denominator 30, (p, q) = (7, 2), 155 vertices, 404 edges, 1273 listed cycles (lengths 7 to
+28), fixed vertex 108 (degree 17). Found by deleting vertices, in a random order, from the union (170 vertices) of a
+157- and a 161-vertex witness, themselves found by deleting vertices, in two random orders, from the union (205
+vertices) of witness_q11 and a second 170-vertex witness (growth from q11.json with at most 100 new points per round:
+573 vertices). It replaces the 157-vertex graph stored under this name before (4 October 2026, night). Its cycle
+list first had 1836 entries, 563 of them repeated (the deletion program and the union of the witnesses appended
+cycles without removing repeats; the referee's referee_check.py reports it); the repeats were removed and both
+formulas refuted and checked again (5 October 2026, night); the numbers below are for the list without repeats.
+1. python3 check_witness.py witness_q11b.json.gz witness_q11b.cnf.gz witness_q11b.drat drat-trim
+   (1) 155 points, 404 edges, every edge at distance exactly 1; unit-distance pairs among the points: 404; not listed
+       as edges: 0 (induced)
+   (2) the colouring is a (7,2)-colouring: chi_c(H) <= 7/2
+   (3) 1273 cycles, all closed walks along edges (lengths 7..28)
+   (4) the CNF is the formula built from the edges and cycles; sha256 f20fa482ad90c78253d884be6007ac4527e636d502840dac14fbf2734891b8eb
+   (5) drat-trim: s VERIFIED
+   kissat 4.0.4 (--seed=1) refuted the formula in about 23 s; drat-trim -l kept 255 776 of 450 602 lemmas (11 645 of
+   15 478 clauses in the core). Stored proof: the core proof, xz-compressed.
+2. python3 verify_independent.py H.cnf witness_q11b.json.gz
+   unit vectors with denominator 30: 108; unit pairs: 404 ; witness edges: 404 ; equal: True; (7,2)-colouring: yes;
+   1273 simple cycles along edges, lengths 7, 14, 21, 28; CNF: 1880 variables, 15478 clauses (sha256
+   7de83539a1f6fd0b266e3e60b8eb84018e917150e7e635cde0125f4cf6413db3)
+   kissat 4.0.4 (--seed=1): s UNSATISFIABLE; drat-trim: s VERIFIED (244 432 of 451 597 lemmas in the core), with an
+   LRAT proof as output; cake_lpr on the LRAT proof: s VERIFIED UNSAT
+3. python3 critical.py and python3 check_critical.py witness_q11b.json.gz witness_q11b_critical.json.gz
+   155 vertices: for every v, a (7,2)-colouring of H - v with an acyclic tight digraph, so chi_c(H - v) < 7/2; H is
+   vertex-critical for chi_c = 7/2
+
+witness_q191, reproduction (4 October 2026, night): grow.py ../../../quadratic_planes/q191.json A G 12000 200 (89
+rounds, UNSAT with 3258 points, 15238 unit pairs, 35 cycles), minimise.py G.json W.json (293 vertices, 803 edges, 489
+cycles; 2716 s) and critical.py W.json C.json give exactly the stored points, edges, colouring, cycles and criticality
+certificates, in the same order.
+
+witness_q15: Q(sqrt15), denominator 80, (p, q) = (3, 1), 13 vertices, 18 edges, 12 listed cycles (5 October 2026,
+night). Found by grow.py q15_seed.json A G15 3000 200 3 1 (29 rounds; 540 vertices, 1350 unit pairs, 23 cycles),
+minimise.py G15.json W15.json and critical.py W15.json C15.json, which give exactly the stored points, edges,
+colouring, cycles and certificates (tests/test_two_primes.py, test_finite_witness_q15_found_by_growth).
+1. python3 check_small.py witness_q15.json.gz q15.cnf (2 s)
+   (1) Q(sqrt15): 13 points, 18 edges, every edge at distance exactly 1, and no other unit pair (induced)
+   (2) the colouring is a (3,1)-colouring: chi_c(H) <= 3/1
+   (3) all 1594323 maps V -> Z/3: 810 (3,1)-colourings, each with a tight cycle (one of the 12 listed cycles):
+       chi_c(H) = 3/1 by Lemma 20
+   (4) no homomorphism to K_11/4, the largest fraction below 3/1 with numerator <= 13: chi_c(H) = 3/1 again
+   (5) for every vertex v, a (3,1)-colouring of H - v with an acyclic tight digraph: H is vertex-critical
+2. q15.cnf (75 variables, 187 clauses; sha256 9349bb61775a69faf36bb6084d3600feef7c7d1d544686c5caee4cc1c7dde9f5):
+   kissat 4.0.4: s UNSATISFIABLE; drat-trim: s VERIFIED (187 of 187 clauses and 243 of 300 lemmas in the core), with
+   an LRAT proof as output (-L); cake_lpr: s VERIFIED UNSAT.
+3. Smaller witnesses over Q(sqrt15): from 70 seeds (0, the unit vectors with denominator 80 or 160, and the points of
+   one unit 5-cycle through 0; 63 growths ended with a witness) and 174 deletions (lowest-degree order for the 63, three
+   random orders for each of the 37 from denominator 80), the smallest witness has 13 vertices (30 times), always this
+   graph up to isomorphism. hexagon_search.py 15 D finds no realisation of the twelve
+   edges of M for D = 48, 68, 80, 104, 112, 120, 136, 160, 208, 221, 240, 272, 320. Over Q(sqrt39) (30 seeds,
+   denominator 80) the smallest witness found has 17 vertices.
+
+witness_q911: Q(sqrt911), denominator 1560, (p, q) = (7, 2), 324 vertices, 866 edges, 494 listed cycles (lengths
+7, 14, 21, 28, 35), fixed vertex 87 (degree 28). Grown from q911.json with 12000 200 (grow.py
+reproduces the graph exactly): 63 rounds, 873 vertices, 2781 unit pairs, 54 cycles; that graph was itself certified
+(both encodings, kissat about 55 s each, drat-trim, cake_lpr). Then deletion with kissat refutations and drat-trim
+cores: cores alone (873 -> 730 vertices), single vertices (-> 707), blocks of adaptive size (-> 489); then blocks
+with the failed-assumption cores of CaDiCaL (-> 334), the last ones with every refutation split into two cases by
+the colour of a neighbour of the fixed vertex (-> 324) (see the README).
+1. python3 check_witness.py witness_q911.json.gz witness_q911.cnf.gz witness_q911.drat drat-trim
+   (1) 324 points, 866 edges, every edge at distance exactly 1; unit-distance pairs among the points: 866; not listed
+       as edges: 0 (induced)
+   (2) the colouring is a (7,2)-colouring: chi_c(H) <= 7/2
+   (3) 494 cycles, all closed walks along edges (lengths 7..35)
+   (4) the CNF is the formula built from the edges and cycles; sha256 106613c460e770d9583a7456b39ce30b1768272eef82b67f744d5997725353a8
+   (5) drat-trim: s VERIFIED
+   kissat 4.0.4 (--seed=1) refuted the formula in about 122 s; drat-trim -l kept 718 547 of 1 935 806 lemmas
+   (20 167 of 29 099 clauses in the core). Stored proof: the core proof, xz-compressed.
+2. python3 verify_independent.py H.cnf witness_q911.json.gz
+   unit vectors with denominator 1560: 276; unit pairs: 866 ; witness edges: 866 ; equal: True; (7,2)-colouring: yes;
+   494 simple cycles along edges, lengths 7, 14, 21, 28, 35; CNF: 3710 variables, 29099 clauses (sha256
+   352b16d210894d0103c867deb9376f99b262a1b004372cf7927643286dccd514)
+   kissat 4.0.4 (--seed=1): s UNSATISFIABLE; drat-trim: s VERIFIED (708 760 of 1 869 084 lemmas in the core), with an
+   LRAT proof as output; cake_lpr on the LRAT proof: s VERIFIED UNSAT
+3. python3 critical.py and python3 check_critical.py witness_q911.json.gz witness_q911_critical.json.gz
+   324 vertices: for every v, a (7,2)-colouring of H - v with an acyclic tight digraph, so chi_c(H - v) < 7/2; H is
+   vertex-critical for chi_c = 7/2
+
+Verification of the witness for chi_c = 4 over Q(sqrt3, sqrt11), witness_q3_11 (6 October 2026)
+
+1. python3 check_witness4.py witness_q3_11.json.gz witness_q3_11.cnf.gz witness_q3_11.drat drat-trim
+   (1) Q(sqrt3, sqrt11): 1874 points, 8085 edges, every edge at distance exactly 1
+       unit-distance pairs among the points: 8085; not listed as edges: 0 (induced)
+   (2) the colouring is a proper 4-colouring: chi(H) <= 4, chi_c(H) <= 4
+   (3) 4992 cycles, all closed walks along edges (lengths 4..12, divisible by 4)
+   (4) the CNF is the formula built from the edges, cycles and fixed vertex; sha256
+       febd6b3d96bb8bd43962882ab3bf09bea13a9f8cb3ff563f2691dc340d3dd26f
+   (5) drat-trim: s VERIFIED  (about 15 s)
+   => every 4-colouring of H has a tight cycle, so chi_c(H) = chi(H) = 4
+   kissat 4.0.4 (--seed=1) refuted the formula in about 16 s; the stored proof is its DRAT output, xz-compressed
+   (9 844 869 bytes uncompressed, sha256 eaacd9fd31a3c9653aab7629a484390484dc8ba02f6caaaf7e9b35129ba06203).
+2. The referee's programs (indep_W4/, no code shared with check_witness4.py):
+   python3 ref_check4.py ../witness_q3_11.json.gz OUT     (tool paths from KISSAT, DRAT_TRIM, CAKE_LPR)
+   exact all-pairs scan: 1 755 001 pairs, 8085 unit-distance pairs, equal to the declared edges; a floating-point scan
+   agrees; proper 4-colouring; 4992 simple cycles along edges (4916 of length 4, 52 of length 8, 24 of length 12)
+   CNF (own layout, one variable per tight arc): 16 344 variables, 85 843 clauses;
+       sha256 1f28389f2aec69a069146c82b7c1a7870a5955fa72a380e21a8d3335efcdcde6
+   kissat: s UNSATISFIABLE (30 s); drat-trim -L: s VERIFIED (22 s); cake_lpr on the LRAT proof: s VERIFIED UNSAT (18 s)
+   python3 ref_tests4.py ../witness_q3_11.json.gz OUT: TESTS: ALL PASSED (a moved point, an improper colouring and a
+   cycle through a non-edge are rejected; without the cycle clauses the formula is satisfiable)
+
+Verification of the witness for chi_c = 4 over Q(sqrt2, sqrt3), witness_q2_3 (6 October 2026)
+
+1. python3 check_witness4.py witness_q2_3.json.gz witness_q2_3.cnf.gz witness_q2_3.drat drat-trim
+   (1) Q(sqrt2, sqrt3): 1657 points, 6238 edges, every edge at distance exactly 1
+       unit-distance pairs among the points: 6238; not listed as edges: 0 (induced)
+   (2) the colouring is a proper 4-colouring: chi(H) <= 4, chi_c(H) <= 4
+   (3) 6062 cycles, all closed walks along edges (lengths 4..8, divisible by 4)
+   (4) the CNF is the formula built from the edges, cycles and fixed vertex; sha256
+       cd6382b7729db29c82b046dfd047b74a98b42bba41048007906aebf3ed5beff2
+   (5) drat-trim: s VERIFIED  (the whole check takes about 22 s)
+   => every 4-colouring of H has a tight cycle, so chi_c(H) = chi(H) = 4
+   kissat 4.0.4 (--seed=1) refuted the formula in 38 s; the stored proof is its DRAT output, xz-compressed
+   (20 598 725 bytes uncompressed, sha256 471a1d11dd3c99c0fbb67036f10a106abf34d4e53b3461b40657060c43848520).
+   The formula is byte for byte the one certify_z24.py (construction_q2_3/) built from the points in Q(zeta_24).
+2. The referee's programs (indep_W4b/, written from the file format, no code shared with check_witness4.py):
+   python3 ref_check_z.py      (tool paths from KISSAT, DRAT_TRIM, CAKE_LPR; the witness from the parent folder)
+   exact all-pairs scan: 1 371 996 pairs, 6238 unit-distance pairs, equal to the declared edges; a floating-point scan
+   agrees (smallest |d - 1| on a non-edge 9.1e-6); proper 4-colouring; 6062 simple cycles along edges (5494 of length
+   4, 568 of length 8)
+   CNF (own layout, one variable per tight arc): 15 452 variables, 77 910 clauses;
+       sha256 a8e9d4bdee31892b03d2f6bbe4e865f38414434cd72be38768e3a65bf2483553
+   kissat: s UNSATISFIABLE (102 s); drat-trim -L: s VERIFIED (53 s); cake_lpr on the LRAT proof: s VERIFIED UNSAT (24 s)
+   a second encoding without auxiliary variables (6628 variables, 60 800 clauses): the same three lines
+   python3 ref_tests_z.py: 77 checks, 0 failures (moved points, an improper colouring, cycles through non-edges, a
+   missing or an extra edge, a duplicated point, malformed entries; without the cycle clauses the formula is
+   satisfiable, and the given colouring violates exactly the clauses of its 389 tight cycles)
+
+Verification of the Cayley subgraphs witness_q3_11_cayley and witness_q2_3_cayley (9 October 2026)
+
+1. python3 check_witness4.py witness_q3_11_cayley.json.gz witness_q3_11_cayley.cnf.gz witness_q3_11_cayley.drat drat-trim
+   (1) Q(sqrt3, sqrt11): 1874 points, 7887 edges, every edge at distance exactly 1
+       unit-distance pairs among the points: 8085; not listed as edges: 198 (not induced)
+   (1b) 27 generators U: unit vectors, pairwise distinct up to sign; the edges are exactly the pairs of points that
+       differ by an element of U u -U; 1874 of the 1874 points are joined to the fixed vertex (the origin) inside H
+   (2) the colouring is a proper 4-colouring: chi(H) <= 4, chi_c(H) <= 4
+   (3) 3389 cycles, all closed walks along edges (lengths 4..8, divisible by 4)
+   (4) the CNF is the formula built from the edges, cycles and fixed vertex; sha256
+       b394ee9342158c22354cb00fa0d7b373aa98b48d33a0795f62993ecf6b531230
+   (5) drat-trim: s VERIFIED
+   => every 4-colouring of H has a tight cycle, so chi_c(H) = chi(H) = 4
+   kissat 4.0.4 (default options) refuted the formula in 14 s; the stored proof is its DRAT output, xz-compressed
+   (10 298 512 bytes uncompressed, sha256 d8f7b0c700626c257f1ea46554bd16a11ae9d27a6414fb4f6cecec0923505d07);
+   drat-trim -L wrote an LRAT proof (35 391 121 bytes) that cake_lpr accepts: s VERIFIED UNSAT.
+2. python3 check_witness4.py witness_q2_3_cayley.json.gz witness_q2_3_cayley.cnf.gz witness_q2_3_cayley.drat drat-trim
+   (1) Q(sqrt2, sqrt3): 1657 points, 6199 edges, every edge at distance exactly 1
+       unit-distance pairs among the points: 6238; not listed as edges: 39 (not induced)
+   (1b) 60 generators U: unit vectors, pairwise distinct up to sign; the edges are exactly the pairs of points that
+       differ by an element of U u -U; 1657 of the 1657 points are joined to the fixed vertex (the origin) inside H
+   (2) the colouring is a proper 4-colouring: chi(H) <= 4, chi_c(H) <= 4
+   (3) 5264 cycles, all closed walks along edges (lengths 4..8, divisible by 4)
+   (4) the CNF is the formula built from the edges, cycles and fixed vertex; sha256
+       802921acb1e509aa3ab79f3ba9efaed50b036cb3d9d7277027ee5bb918b0b85b
+   (5) drat-trim: s VERIFIED
+   => every 4-colouring of H has a tight cycle, so chi_c(H) = chi(H) = 4
+   kissat 4.0.4 (default options) refuted the formula in 26 s; the stored proof is its DRAT output, xz-compressed
+   (20 974 784 bytes uncompressed, sha256 66a71e245a4ef937fbf136572c0a0a0860e40d3a44c32b153eccf6d480de02a0);
+   drat-trim -L wrote an LRAT proof (45 610 211 bytes) that cake_lpr accepts: s VERIFIED UNSAT.
+3. construction_cayley/ (cayley.py init, shrink_cayley.sh), rerun in a fresh folder from the repository copies,
+   reproduces both witness files, both formulas and both DRAT proofs byte for byte.
+4. The referee's programs (indep_W4c/, written from the file format, no code shared with check_witness4.py or
+   construction_cayley/): check_geom.py rebuilds the 27 vectors R60^j RA^k RG^l (1,0) and the 120 vectors zeta^j w^l in
+   its own arithmetic (0 mismatches with the generators), finds every Cayley pair exactly (7887 and 6199, none missing,
+   none extra; an all-pairs scan agrees), the colourings proper, the cycles simple closed walks along edges;
+   make_cnf.py (colour-major variables): q3_11 7496 variables, 58 223 clauses, sha256
+   2528ba27e21f1769f9f19f409dbb7f02e6f48edc806ad027b43db0c0f0d8bf2b; q2_3 6628 variables, 57 452 clauses, sha256
+   7987ccdbd5587bfda27b3e2a3d29d39495453bade329d8d61bbf1962babceeeb; after renaming, the same clauses as the stored
+   formulas;
+   kissat: s UNSATISFIABLE (12 s, 22 s); drat-trim -L: s VERIFIED; cake_lpr: s VERIFIED UNSAT (both); the stored
+   proofs: drat-trim s VERIFIED, and cake_lpr accepts their LRAT forms;
+   sanity_tests.py: 29 of 29 mutations rejected for each file; without the cycle clauses both formulas are satisfiable.
+   Rerun from the repository copy (results/repo_rerun.log): the same formulas, s UNSATISFIABLE, s VERIFIED,
+   s VERIFIED UNSAT.

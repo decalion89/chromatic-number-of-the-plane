@@ -90,7 +90,7 @@ certificate of §4 settles.
 - The drawing fits in a disc of radius 2.53.
 
 The code is in `data/flat852/scripts/`, and the account of the search in
-`data/flat852/REPORT-growth-agent.md`.
+`data/flat852/search-log.md`.
 
 ## 4. The certificate
 
@@ -131,7 +131,7 @@ copy of the Moser spindle as a subgraph. The sizes we found:
 | Haugland's heptagon graph | 2 131 | [arXiv 2608.04542](https://arxiv.org/abs/2608.04542) (August 2026) |
 | the earlier example cited there | 1 441 | cited in arXiv 2608.04542 |
 | a graph posted on 9 September 2026 | 1 435 | [ruturajr-raval/hadwiger-nelson-spindle-free](https://github.com/ruturajr-raval/hadwiger-nelson-spindle-free/releases/tag/v0.1.0) |
-| a graph posted on GitHub by zach7036 | 1 299 | found in our survey of GitHub, 28 September 2026 |
+| a graph posted on GitHub by zach7036 | 1 299 | found in our survey of GitHub, 28 September 2026 (we did not record the link, so this row is not re-checkable) |
 | `core852` | 852 | this note |
 
 The smallest 5-chromatic unit-distance graph known, with spindles allowed, is

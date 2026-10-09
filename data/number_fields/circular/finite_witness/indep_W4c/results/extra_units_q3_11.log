@@ -1,0 +1,14 @@
+unit-distance non-edge differences (up to sign), with multiplicity:
+  [15, 0, 0, -11, 0, 11, 15, 0]          x52  angle  125.0081 deg   not of the form +-R60^j RA^k RG^l in the searched exponent range
+  [0, 0, 0, 14, 0, 14, 0, 0]             x35  angle   16.7787 deg   not of the form +-R60^j RA^k RG^l in the searched exponent range
+  [15, 0, 0, 11, 0, 11, -15, 0]          x25  angle  -21.4346 deg   not of the form +-R60^j RA^k RG^l in the searched exponent range
+  [0, 0, 0, 14, 0, -14, 0, 0]            x23  angle  -16.7787 deg   not of the form +-R60^j RA^k RG^l in the searched exponent range
+  [9, 0, 0, 13, 0, -13, 9, 0]            x18  angle    5.0081 deg   not of the form +-R60^j RA^k RG^l in the searched exponent range
+  [21, 0, 0, 7, 0, 7, -21, 0]            x16  angle  -43.2213 deg   not of the form +-R60^j RA^k RG^l in the searched exponent range
+  [21, 0, 0, 7, 0, -7, 21, 0]            x8   angle   43.2213 deg   not of the form +-R60^j RA^k RG^l in the searched exponent range
+  [24, 0, 0, -2, 0, -2, -24, 0]          x6   angle  -81.4346 deg   not of the form +-R60^j RA^k RG^l in the searched exponent range
+  [24, 0, 0, 2, 0, -2, 24, 0]            x6   angle   65.0081 deg   not of the form +-R60^j RA^k RG^l in the searched exponent range
+  [21, 0, 0, -7, 0, 7, 21, 0]            x4   angle  103.2213 deg   not of the form +-R60^j RA^k RG^l in the searched exponent range
+  [21, 0, 0, -7, 0, -7, -21, 0]          x4   angle -103.2213 deg   not of the form +-R60^j RA^k RG^l in the searched exponent range
+  [9, 0, 0, -13, 0, -13, -9, 0]          x1   angle -141.4346 deg   not of the form +-R60^j RA^k RG^l in the searched exponent range
+total unit non-edge pairs: 198

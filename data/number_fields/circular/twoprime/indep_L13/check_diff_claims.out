@@ -1,0 +1,28 @@
+PASS  Q(sqrt -73): i lies in every completion above 2
+PASS  Q(sqrt -73): i lies in every completion above 3
+PASS  -73 is squarefree and -73 = 23 mod 24
+PASS  imaginary quadratic fields split above 2 and 3 (|m|<400): m = 23 mod 24; first after Q(i) is -73   [[-1, -73, -97, -145, -193, -217, -241, -265, -313, -337, -385]]
+PASS  real quadratic Q(sqrt d), d squarefree < 2000: split above 2 and 3 iff d = 23 mod 24
+PASS  2 is a square mod 7 (7 splits in Q(sqrt2)); sqrt2 in Q_7
+PASS  so Q(sqrt2,sqrt7) embeds in Q_7(sqrt7), residue field F_7 (place above 7 of residue degree 1)
+PASS  Prop. 2 hypotheses for Q(sqrt2,sqrt7): a=2 = 2 mod 3, b=7 = 7 mod 8
+PASS  Prop. 3, p=7: 2a+3b on mu_8 = {+-1,+-i,+-2+-2i} takes values 2,5,3,4,3,5,2,4
+PASS  sqrt7 in Q_3 (7 = 1 mod 3)
+PASS  sqrt11 in Q_7 (11 = 2^2 mod 7)
+PASS  Q(sqrt7): (a) fails (7 = 3 mod 4), (b) holds (7 = 1 mod 3), so chi = 3
+PASS  sqrt3 not in Q_3 (no unit triangle in Q_3^2)
+PASS  squarefree d<=215 with d=23 mod 24 and (d/7)=-1: 47,143,167,215   [[47, 143, 167, 215]]
+PASS  examples: (23/7),(71/7) != -1; 59, 83 have (d/7)=-1, d=11 mod 24
+PASS  47 = 3^2 mod 19 (sqrt47 in Q_19)
+PASS  5 and 7 are squares mod 19 (Q(sqrt5,sqrt7) embeds in Q_19)
+PASS  3 and -7 are not squares mod 19 (but -3 is)
+PASS  FC Cor. 2 open classes 47,143,167 mod 168 = {d=23 mod 24, (d/7)=-1}
+PASS  kappa_1(Q_3) = 1/3
+PASS  kappa_1(Q_7) = 2/7
+PASS  kappa_1(Q_19) = 4/19
+PASS  max kappa_1 over primes p = 3 mod 4, 11 <= p < 3000 is 4/19 (attained only at 19), all < 1/4   [216 primes]
+PASS  Prop. 6 bound at p=1001: (p^2-1)/(2p) - 2 sqrt p (ln p + 1) > 0   [0.0559]
+PASS  sanity f=1: some F_49-linear map F_49 -> F_49 maps mu_8 into A'_7 (exactly one class of b mod mu_8)   [classes of b: 1 of 6]
+PASS  Lemma 19, f=3, directly: no F_49-linear map F_{7^6} -> F_49 maps mu_344 into A'_7   [342 classes of b tested (b up to mu_344), b=0 trivially fails]
+
+FAILED: none

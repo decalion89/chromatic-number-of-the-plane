@@ -1,0 +1,4 @@
+r = 2501/10000, (k,m)=(1,1), N=65: 29 comps {'X': 24, 'Q': 4, 'C': 1}
+   X kappa = 2/7 = 0.285714: 8 components; an optimal point c = (390/7, 325/7)
+   X kappa = 11/42 = 0.261905: 8 components; an optimal point c = (325/42, 4615/168)
+   X kappa = 25/96 = 0.260417: 8 components; an optimal point c = (2561/96, 559/12)

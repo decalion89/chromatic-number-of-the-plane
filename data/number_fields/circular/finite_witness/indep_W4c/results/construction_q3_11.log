@@ -1,0 +1,30 @@
+(j,k,l)=(-1, -1, -1) vector*84 = [-10, 0, 0, -8, 0, -40, 2, 0]            matches generator #23 with sign +
+(j,k,l)=(-1, -1, 0)  vector*84 = [35, 0, 0, -7, 0, -35, -7, 0]            matches generator #20 with sign -
+(j,k,l)=(-1, -1, 1)  vector*84 = [65, 0, 0, -3, 0, -15, -13, 0]           matches generator #10 with sign -
+(j,k,l)=(-1, 0, -1)  vector*84 = [-12, 0, 0, 0, 0, -48, 0, 0]             matches generator #21 with sign +
+(j,k,l)=(-1, 0, 0)   vector*84 = [42, 0, 0, 0, 0, -42, 0, 0]              matches generator #16 with sign -
+(j,k,l)=(-1, 0, 1)   vector*84 = [78, 0, 0, 0, 0, -18, 0, 0]              matches generator #2 with sign -
+(j,k,l)=(-1, 1, -1)  vector*84 = [-10, 0, 0, 8, 0, -40, -2, 0]            matches generator #25 with sign +
+(j,k,l)=(-1, 1, 0)   vector*84 = [35, 0, 0, 7, 0, -35, 7, 0]              matches generator #18 with sign -
+(j,k,l)=(-1, 1, 1)   vector*84 = [65, 0, 0, 3, 0, -15, 13, 0]             matches generator #8 with sign -
+(j,k,l)=(0, -1, -1)  vector*84 = [55, 0, 0, -5, 0, -25, -11, 0]           matches generator #14 with sign -
+(j,k,l)=(0, -1, 0)   vector*84 = [70, 0, 0, 0, 0, 0, -14, 0]              matches generator #4 with sign -
+(j,k,l)=(0, -1, 1)   vector*84 = [55, 0, 0, 5, 0, 25, -11, 0]             matches generator #11 with sign -
+(j,k,l)=(0, 0, -1)   vector*84 = [66, 0, 0, 0, 0, -30, 0, 0]              matches generator #6 with sign -
+(j,k,l)=(0, 0, 0)    vector*84 = [84, 0, 0, 0, 0, 0, 0, 0]                matches generator #0 with sign -
+(j,k,l)=(0, 0, 1)    vector*84 = [66, 0, 0, 0, 0, 30, 0, 0]               matches generator #5 with sign -
+(j,k,l)=(0, 1, -1)   vector*84 = [55, 0, 0, 5, 0, -25, 11, 0]             matches generator #12 with sign -
+(j,k,l)=(0, 1, 0)    vector*84 = [70, 0, 0, 0, 0, 0, 14, 0]               matches generator #3 with sign -
+(j,k,l)=(0, 1, 1)    vector*84 = [55, 0, 0, -5, 0, 25, 11, 0]             matches generator #13 with sign -
+(j,k,l)=(1, -1, -1)  vector*84 = [65, 0, 0, 3, 0, 15, -13, 0]             matches generator #7 with sign -
+(j,k,l)=(1, -1, 0)   vector*84 = [35, 0, 0, 7, 0, 35, -7, 0]              matches generator #17 with sign -
+(j,k,l)=(1, -1, 1)   vector*84 = [-10, 0, 0, 8, 0, 40, 2, 0]              matches generator #26 with sign +
+(j,k,l)=(1, 0, -1)   vector*84 = [78, 0, 0, 0, 0, 18, 0, 0]               matches generator #1 with sign -
+(j,k,l)=(1, 0, 0)    vector*84 = [42, 0, 0, 0, 0, 42, 0, 0]               matches generator #15 with sign -
+(j,k,l)=(1, 0, 1)    vector*84 = [-12, 0, 0, 0, 0, 48, 0, 0]              matches generator #22 with sign +
+(j,k,l)=(1, 1, -1)   vector*84 = [65, 0, 0, -3, 0, 15, 13, 0]             matches generator #9 with sign -
+(j,k,l)=(1, 1, 0)    vector*84 = [35, 0, 0, -7, 0, 35, 7, 0]              matches generator #19 with sign -
+(j,k,l)=(1, 1, 1)    vector*84 = [-10, 0, 0, -8, 0, 40, -2, 0]            matches generator #24 with sign +
+generators matched: 27 of 27; constructed vectors: 27; unmatched constructed: 0
+info: {'R60_norm_is_1': True, 'RA_norm_is_1': True, 'RG_norm_is_1': True, 'float_angles_deg': {'R60': 59.99999999999999, 'RA': 33.55730976192071, 'RG': 38.21321070173819}}
+exit 0

@@ -7,7 +7,10 @@ either run's certificate for a leaf.
 
 usage (in g13-plan-d/):  python3 help_driver.py S I1,I2,...  [--jobs N]
 KISSAT and DRAT_TRIM (environment) as for share_driver.py. At the end it writes DONE, or SAT / FAILED as
-share_driver.py does. Resumable: rerun it with the same arguments."""
+share_driver.py does. Resumable: rerun it with the same arguments.
+
+The share branches it fetches lived in the private development repository and are not published; in the public
+repository this script documents how the run was made."""
 import argparse
 import json
 import os

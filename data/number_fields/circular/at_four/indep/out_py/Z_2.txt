@@ -1,0 +1,2 @@
+S=(1) kappa=1/2 col=3 acyc=3 noT4=3 noSq=3 ABeq=3 hom3/1=1 ok
+# summary Z/[2]: generating S=1, 4-colourable=1, BAD=0

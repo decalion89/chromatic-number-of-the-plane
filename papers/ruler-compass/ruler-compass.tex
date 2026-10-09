@@ -1,0 +1,410 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage[hyphens]{url}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
+\usepackage[margin=2.5cm]{geometry}
+
+\hypersetup{
+  pdftitle={The ruler-and-compass plane is not 5-colourable},
+  pdfauthor={Sergi Gal\'an},
+  pdfsubject={The Hadwiger-Nelson problem},
+  pdfkeywords={Hadwiger-Nelson problem, chromatic number of the plane, unit-distance graph, constructible numbers,
+  formal verification}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Ec}{E_{\mathrm{c}}}
+
+\title{The ruler-and-compass plane is not 5-colourable}
+\author{Sergi Gal\'an}
+\thanks{These results were obtained with the assistance of an AI system (Claude, by Anthropic), which modified the
+formal proof, ran the checks and helped to draft this note. The proof is OpenAI's \cite{OpenAI}; this note shows
+that it works over a smaller field. No mathematician has checked the note yet. The author is not a professional
+mathematician and submits it for independent verification.}
+\date{Draft, 9 October 2026}
+\subjclass[2020]{Primary 05C15, 52C10; Secondary 12F05, 37A15, 68V20}
+\keywords{Hadwiger--Nelson problem, chromatic number of the plane, unit-distance graph, constructible numbers,
+formal verification}
+
+
+\begin{document}
+
+\begin{abstract}
+OpenAI recently proved that every colouring of the Euclidean plane with five colours gives the same colour to two
+points at distance $1$, and formalized the proof in Lean. The proof works with the plane of algebraic points and
+assumes that every algebraic number of modulus $1$ has roots of every order. We observe that square roots are
+enough. Hence the plane of points constructible with ruler and compass is not $5$-colourable. These are the points
+of the smallest subfield of $\C$ closed under square roots. By the de~Bruijn--Erd\H{o}s theorem, some finite
+unit-distance graph with constructible vertices has no proper $5$-colouring. Two observations suffice: a
+group-theoretic lemma about elements of order~$2$, and a choice of exponents in one multiple ergodic average that
+needs no shift. We checked the modified proof in Lean~4. The kernel accepts it, and only the standard axioms are
+used. A short argument on paper then extends the result to the plane over every Euclidean field, Archimedean or
+not: the real constructible numbers embed in every Euclidean field.
+\end{abstract}
+
+\maketitle
+
+\section{The result}
+
+The Hadwiger--Nelson problem asks for the least number $\chi(\R^2)$ of colours needed to colour the plane so that
+points at distance $1$ get different colours. Isbell's hexagonal colouring gives $\chi(\R^2)\le7$, and de Grey
+\cite{deGrey} proved $\chi(\R^2)\ge5$; see Soifer \cite{Soifer} for the history. OpenAI \cite{OpenAI} proved
+$\chi(\R^2)\ge6$, with no regularity assumption on the colour classes. Their proof is not constructive, and we know
+of no finite unit-distance graph without a proper $5$-colouring.
+
+Identify the plane with $\C$. For a subset $S\subset\C$, a proper colouring of $S$ is a colouring in which points of
+$S$ at distance $1$ get different colours. Let $\Ec$ be the field of \emph{constructible numbers}: the smallest
+subfield of $\C$ closed under square roots, whose elements are the points constructible with ruler and compass from
+$0$ and $1$ \cite[Ch.~10]{Cox}.
+
+\begin{theorem}\label{thm:main}
+$\Ec$ has no proper $5$-colouring.
+\end{theorem}
+
+So the unit-distance graph on $\Ec$ has chromatic number $6$ or $7$. Larger planes contain $\Ec$, so the theorem
+also holds for them. Examples are the origami numbers (closed under square and cube roots \cite{Alperin}), the
+numbers expressible by radicals, the algebraic numbers and $\C$ itself. Section~\ref{sec:euclid} extends the theorem to the plane $F^2$
+over every Euclidean field $F$.
+
+\begin{corollary}\label{cor:finite}
+Some finite set of constructible points has no proper $5$-colouring.
+\end{corollary}
+
+\begin{proof}
+A graph is $5$-colourable if all its finite subgraphs are, by the de~Bruijn--Erd\H{o}s theorem
+\cite{deBruijnErdos}.
+\end{proof}
+
+The coordinates of such a set lie in a field obtained from $\Q$ by finitely many square roots. We know of no such
+set. By contrast, the planes over $\Q(\sqrt2,\sqrt3)$ and $\Q(\sqrt3,\sqrt{11})$ have chromatic number $4$
+\cite{P4C,Fischer}.
+
+OpenAI's proof has two steps:
+\begin{itemize}
+\item \cite[Prop.~4.2]{OpenAI}, the forward half of their transfer theorem, turns a proper colouring of the plane into
+a weak measurable colouring. Its proof first restricts the colouring to the countable plane $E$ of algebraic
+points, and uses nothing else about it.
+\item \cite[Thm.~1.4]{OpenAI} shows that the plane has no weak measurable $5$-colouring. It does not involve $E$.
+\end{itemize}
+We run the first step with $\Ec$ in place of the algebraic numbers. Section~\ref{sec:field} lists what that step uses
+of its field. Sections~\ref{sec:involution} and~\ref{sec:triple} show that $\Ec$ has what it needs. Section~\ref{sec:lean}
+describes the formal proof.
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Suppose $\Ec$ had a proper $5$-colouring. By Sections~\ref{sec:field}--\ref{sec:triple}, the proof of
+\cite[Prop.~4.2]{OpenAI} goes through with $\Ec$ in place of the algebraic numbers. It gives a weak measurable
+$5$-colouring of the plane, and \cite[Thm.~1.4]{OpenAI} excludes one.
+\end{proof}
+
+\section{What the proof uses of the field}\label{sec:field}
+
+OpenAI work with $E=\overline{\Q}\subset\C$, its real points $F=E\cap\R$, and the group $K=\{u\in E:|u|=1\}$
+\cite[Def.~2.1]{OpenAI}. Their proof uses three properties of $E$:
+\begin{enumerate}
+\item[(E1)] $E$ is a countable subfield of $\C$, algebraic over $\Q$, closed under complex conjugation, and contains
+$i$. Since $\Q(i)\subset E$, $E$ is dense in $\C$, $F$ in $\R$ and $K$ in the circle. These density facts are used
+in \cite[Lemma~2.5, Lemma~4.1, Prop.~4.2]{OpenAI}.
+\item[(E2)] $F$ is closed under square roots of its nonnegative elements. This is used in four places:
+  \begin{itemize}
+  \item the decomposition $x=k+\bar k$ with $k=x/2+i\sqrt{1-x^2/4}$ in \cite[Lemma~2.7]{OpenAI};
+  \item the number $L=\sqrt{AB}$ in \cite[Lemma~3.3]{OpenAI};
+  \item the points $t+i\sqrt{1-t^2}$ in \cite[\S3.5]{OpenAI};
+  \item the moduli $|z|\in F$ of the elements $z\in E$.
+  \end{itemize}
+\item[(E3)] $K$ is divisible. It is used in three places:
+  \begin{itemize}
+  \item \cite[Lemma~2.4]{OpenAI} uses that a finite image of $K$ is trivial;
+  \item \cite[Lemma~3.2]{OpenAI} uses that the power maps $u\mapsto u^n$ in its multiple averages are onto;
+  \item \cite[Lemma~3.3]{OpenAI} uses directly the square map, in (3.15), and $u\mapsto u^{-2}$, in (3.13).
+  \end{itemize}
+\end{enumerate}
+For $\Ec$, (E1) and (E2) hold, but (E3) holds only for the exponents $\pm2^k$.
+
+The map $u\mapsto u^2$ is onto $K$: the square roots of $a+bi$, with $a^2+b^2=1$, have coordinates
+$\pm\sqrt{(1+a)/2}$ and $\pm\sqrt{(1-a)/2}$. The map $u\mapsto u^3$ is not onto. Take
+$u=(3+4i)/5=(2+i)/(2-i)$. It has valuation $1$ at the prime $2+i$ of $\Z[i]$, so it is not a cube in $\Q(i)$.
+Hence $z^3-u$ is irreducible over $\Q(i)$, and its roots, of degree $3$ over $\Q(i)$, are not constructible.
+
+\section{Elements of order two}\label{sec:involution}
+
+In \cite[Lemma~2.4]{OpenAI}, a coset $d+C$ of positive mass is fixed by some rotation $u\ne1$. Then $(u-1)d\in C$,
+and so $d\in C$. The formalization takes $u=-1$. That $-1$ fixes the coset follows from the next lemma, applied to
+the action of $K$ on the finite orbit of the coset.
+
+\begin{lemma}\label{lem:involution}
+Let $G$ be a commutative group in which every element is a square, and let $f\colon G\to H$ be a homomorphism with
+finite image. Then $f(g)=1$ for every $g\in G$ with $g^2=1$.
+\end{lemma}
+
+\begin{proof}
+Squaring maps the finite group $f(G)$ onto itself, because every element of $G$ is a square. So squaring is
+injective on $f(G)$. Since $f(g)^2=f(g^2)=1=1^2$, it follows that $f(g)=1$.
+\end{proof}
+
+The same lemma also gives the second use of divisibility in the formal proof. In the null-set statement for lines in
+\cite[Lemma~2.4]{OpenAI}, it shows that $K$ is infinite: if $K$ were finite, the identity map of $K$ would send $-1$
+to $1$.
+
+\section{The triple average at the exponents \texorpdfstring{$-1,0,1$}{-1, 0, 1}}\label{sec:triple}
+
+We use the notation of \cite[\S3]{OpenAI}:
+\begin{itemize}
+\item $X$ is an ergodic standard probability-preserving $K$-system, and $Y$ is a factor with $R=X\times_YX$ ergodic,
+as in \cite[Lemma~3.2]{OpenAI};
+\item $P=\mathbb{E}(\,\cdot\mid Y)$;
+\item $U_u$ is the Koopman operator of $u\in K$. It is unitary, multiplicative, and commutes with $P$;
+\item averages are taken along a F{\o}lner sequence of $K$.
+\end{itemize}
+The radial inequality $m(A)m(B)\le m(|A-B|)$ of \cite[Lemma~3.3]{OpenAI} rests on two facts:
+\begin{itemize}
+\item the identity $|A-Bu^2|=|-L+(A-B)u+Lu^2|$, for $L=\sqrt{AB}$ and $|u|=1$;
+\item the multiple average of \cite[Lemma~3.2]{OpenAI} for the characters
+$\psi_{-L}\cdot U_u\psi_{A-B}\cdot U_{u^2}\psi_L$, at the exponents $0,1,2$.
+\end{itemize}
+In the proof of \cite[Lemma~3.2]{OpenAI}, at (3.9), a common integer is added to the exponents of each term so that
+none is zero. The formalization uses one shift for all terms and requires every shifted exponent to be onto. For
+$0,1,2$, one of three consecutive nonzero integers is a nonzero multiple of~$3$, so this needs cube roots. A shift
+chosen separately for each term would avoid them; we avoid the shift altogether.
+
+Since $|u|=1$,
+\[
+|-L+(A-B)u+Lu^2|=|-Lu^{-1}+(A-B)+Lu|,
+\]
+and, since $U_u$ is unitary, multiplicative and commutes with $P$,
+\[
+\|P(a\cdot U_ub\cdot U_{u^2}c)\|=\|P(U_{u^{-1}}a\cdot b\cdot U_uc)\|.
+\]
+So it is enough to prove the conclusion~(3.2) of \cite[Lemma~3.2]{OpenAI} at the exponents $-1,0,1$, where the
+middle factor is fixed.
+
+\begin{lemma}\label{lem:triple}
+Let $X$, $Y$ and $R$ be as above, and suppose that $u\mapsto u^2$ is onto $K$. For bounded functions $a,b,c$ on $X$,
+\[
+\operatorname{Avg}_u\bigl\|P(U_{u^{-1}}a\cdot b\cdot U_uc)-U_{u^{-1}}Pa\cdot Pb\cdot U_uPc\bigr\|_2^2\longrightarrow0
+\]
+along every F{\o}lner sequence.
+\end{lemma}
+
+\begin{proof}
+Write each factor as $v=Pv+(v-Pv)$ and expand. The term with no centred factor is $U_{u^{-1}}Pa\cdot Pb\cdot U_uPc$.
+It is $Y$-measurable, so $P$ fixes it.
+
+Consider a term whose only centred factor is $b-Pb$. Its other two factors are $Y$-measurable, so its projection is
+$U_{u^{-1}}Pa\cdot U_uPc\cdot P(b-Pb)=0$.
+
+In every remaining term a centred factor sits at the exponent $-1$ or $1$. Let $W_u=U_{u^{-1}}a'\cdot b'\cdot U_uc'$
+be such a term. By conditional independence,
+\[
+\|PW_u\|_2^2=\int_R\Phi\cdot G_u\,d\mu_R,\qquad \Phi=b'\otimes\bar b',\quad
+G_u=U_{u^{-1}}(a'\otimes\bar a')\cdot U_u(c'\otimes\bar c').
+\]
+One of the two factors of $G_u$ is centred over $Y$, because $\mathbb{E}(w\otimes\bar w\mid Y)=|Pw|^2$.
+
+Statement~(3.5) of \cite{OpenAI}, applied on $R$ to the two distinct nonzero exponents $-1$ and $1$, says that
+$\operatorname{Avg}_uG_u\to0$ in $L^2(R)$. Its proof uses three facts:
+\begin{itemize}
+\item $R$ is ergodic;
+\item the pair criterion~(3.3) holds on $R$ at $d=\pm1$;
+\item the case $l=1$ holds through the power maps $u\mapsto u^{\pm2}$, which are onto.
+\end{itemize}
+The function $\Phi$ does not depend on $u$, so
+$\bigl|\operatorname{Avg}_u\int_R\Phi\,G_u\,d\mu_R\bigr|\le\|\Phi\|_2\,\|\operatorname{Avg}_uG_u\|_2\to0$. This is
+where it matters that the middle factor is fixed. There are finitely many terms, and the lemma follows.
+\end{proof}
+
+The power maps used are $u\mapsto u^{\pm1}$ and $u\mapsto u^{\pm2}$. The other two averages in
+\cite[Lemma~3.3]{OpenAI} need only the square map:
+\begin{itemize}
+\item the pair at the exponents $0,2$ is the pair criterion~(3.3) with $d=2$;
+\item the pair at the exponents $1,-1$ needs no shift, and its difference is $2$.
+\end{itemize}
+With Lemmas~\ref{lem:involution} and~\ref{lem:triple}, the rest of the proof of \cite[Prop.~4.2]{OpenAI} goes
+through over $\Ec$ unchanged. This completes the proof of Theorem~\ref{thm:main}.
+
+\section{The formal proof}\label{sec:lean}
+
+OpenAI's formalization \cite{OpenAI} uses Lean~4 \cite{Lean4} with Mathlib \cite{Mathlib}; we used the same versions,
+Lean~4.34.1 and Mathlib at commit \texttt{d13f23b7}. The proof is the import closure of their file
+\texttt{Five.lean}: 70 modules of their library, on top of Mathlib. We changed it in two ways:
+\begin{itemize}
+\item a new file defines the field. It proves that the field is algebraic and closed under conjugation, contains $i$,
+and satisfies~(E2). Countability and the square roots in $K$ are derived from these facts in other files. Eleven
+files of the closure were adapted.
+\item Two new lemmas in \texttt{Energy.lean} prove Lemma~\ref{lem:triple}, and the radial inequality uses it. Like
+the rest of the formal proof, they are stated for invariant means rather than F{\o}lner sequences, so Lean proves the
+invariant-mean form of Lemma~\ref{lem:triple}.
+\end{itemize}
+The final statement writes the field out, so the reader does not need to trust our definitions. In abbreviated form:
+\begin{flushleft}\small
+\texttt{theorem sqrtClosure\_plane\_not\_five\_colourable :}\\
+\quad$\neg\,\exists\,c : (\mathtt{sInf}\ \{s : \mathtt{IntermediateField}\ \Q\ \C \mid
+\forall x : \C,\ x^{2}\in s \to x\in s\}) \to \mathtt{Fin}\ 5,$\\
+\qquad$\forall\,x\ y,\ \|(x:\C)-(y:\C)\| = 1 \to c\ x \ne c\ y$
+\end{flushleft}
+\verb|#print axioms| lists only \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}. A second file
+proves Corollary~\ref{cor:finite} from it, with Mathlib's compactness theorem for graph homomorphisms; the axioms are
+the same.
+
+We also checked the proof in two further ways:
+\begin{itemize}
+\item a fresh copy of OpenAI's sources (commit \texttt{fd4aeeb2}) was patched and built from scratch: the 72 modules
+of the closure, namely their 70, the field file and the statement file, with none failing. Mathlib was prebuilt;
+\item \texttt{leanchecker} replayed these 72 modules in the kernel. Mathlib was not replayed.
+\end{itemize}
+An AI-assisted review of an earlier version of these changes found no mathematical error.
+
+Before the constructible case we built the origami and radical cases and checked their axioms. The origami case was
+also rebuilt from scratch with the published script. The patches, the statements and a build script are in
+\nolinkurl{lean/external/openai-five/fields/} of~\cite{Repo}, with a copy of OpenAI's licence (Apache~2.0).
+
+\section{Every Euclidean field}\label{sec:euclid}
+
+A \emph{Euclidean field} is an ordered field in which every positive element is a square. For a field $F$, call two
+points $(x,y)$ and $(x',y')$ of $F^2$ \emph{at distance $1$} if $(x-x')^2+(y-y')^2=1$.
+
+\begin{corollary}\label{cor:euclid}
+Let $F$ be a Euclidean field. Every colouring of $F^2$ with five colours gives the same colour to two points at
+distance~$1$.
+\end{corollary}
+
+\begin{proof}
+Let $F_{\mathrm c}=\Ec\cap\R$. It is the smallest subfield of $\R$ closed under square roots of positive elements.
+Indeed, it is closed under them: if $0<a\in F_{\mathrm c}$, then $\sqrt a\in\Ec\cap\R$. Conversely, let $L\subseteq\R$ be a field closed under them. Then $L(i)$ is closed
+under square roots: the square roots of $a+bi$, with $a,b\in L$ and $r=\sqrt{a^2+b^2}$, are
+$\pm\bigl(\sqrt{(r+a)/2}+i\varepsilon\sqrt{(r-a)/2}\bigr)$, where $\varepsilon=1$ if $b\ge0$ and $\varepsilon=-1$
+otherwise. So $\Ec\subseteq L(i)$, and $F_{\mathrm c}\subseteq L(i)\cap\R=L$. With $L=F_{\mathrm c}$
+this also gives $\Ec=F_{\mathrm c}(i)$.
+
+Hence $F_{\mathrm c}$ is the union of the fields $\Q(\sqrt{a_1},\dots,\sqrt{a_n})\subseteq\R$ in which each $a_j$ is
+a positive element of $\Q(\sqrt{a_1},\dots,\sqrt{a_{j-1}})$: this union is a field, closed under square roots of
+positive elements, and contained in $F_{\mathrm c}$. As $F_{\mathrm c}$ is countable, it is also the union of one chain
+$\Q=L_0\subseteq L_1\subseteq\cdots$ with $L_j=L_{j-1}(\sqrt{a_j})$ and $0<a_j\in L_{j-1}$. To build it, list the
+elements of $F_{\mathrm c}$, and adjoin, one by one, the square roots that a field of the above form containing the
+next element uses.
+
+We define order-preserving field homomorphisms $\sigma_j\colon L_j\to F$, each extending the previous one. Let
+$\sigma_0$ be the inclusion of $\Q$. Given $\sigma_{j-1}$, the element $\sigma_{j-1}(a_j)$ is positive, so it equals
+$b^2$ for some $b>0$ in $F$. If $\sqrt{a_j}\in L_{j-1}$, let $\sigma_j=\sigma_{j-1}$. Otherwise each element of $L_j$
+is $u+v\sqrt{a_j}$ with unique $u,v\in L_{j-1}$, and we let $\sigma_j(u+v\sqrt{a_j})=\sigma_{j-1}(u)+\sigma_{j-1}(v)b$.
+This is a field homomorphism, because $b^2=\sigma_{j-1}(a_j)$. It preserves the order, by the following rule,
+valid in every ordered field for $a>0$ and $s>0$ with $s^2=a$. The sign of $u+vs$ is the sign of $u$ if $v=0$ or if
+$u$ and $v$ have the same sign; it is the sign of $v$ if $u=0$; and it is the sign of $u$ times the sign of
+$u^2-av^2$ if $u$ and $v$ are nonzero with opposite signs. Apply the rule to $s=\sqrt{a_j}$ in $L_j$ and to $s=b$ in
+$F$. Since $\sigma_{j-1}$ preserves the signs of $u$, $v$ and $u^2-a_jv^2$, and
+$\sigma_{j-1}(u)^2-b^2\sigma_{j-1}(v)^2=\sigma_{j-1}(u^2-a_jv^2)$, the elements $u+v\sqrt{a_j}$ and
+$\sigma_j(u+v\sqrt{a_j})$ have the same sign. Together the $\sigma_j$ define a field homomorphism $\sigma\colon F_{\mathrm c}\to F$.
+
+The map $\Ec=F_{\mathrm c}(i)\to F^2$, $x+iy\mapsto(\sigma(x),\sigma(y))$, is injective. If $z=x+iy$ and $z'=x'+iy'$
+in $\Ec$ satisfy $|z-z'|=1$, then $(x-x')^2+(y-y')^2=1$, and applying $\sigma$ shows that their images are at
+distance $1$. So a colouring of $F^2$ with five colours and no two points at distance $1$ of the same colour would
+restrict to a proper $5$-colouring of $\Ec$, against Theorem~\ref{thm:main}.
+\end{proof}
+
+Examples of Euclidean fields are $\R$, the real algebraic numbers, $F_{\mathrm c}$ itself and every real closed field,
+such as a field of real Puiseux series or a field of hyperreal numbers. OpenAI's proof is written for $\R^2$, with
+Lebesgue measure, but it shows that already the plane of algebraic points has no proper $5$-colouring
+(Section~1). So if $F$ contains a copy of the real algebraic numbers, as every real closed field does, the embedding
+argument applied to the algebraic plane gives the corollary without Theorem~\ref{thm:main}. If $F$ contains no such
+copy, as for $F_{\mathrm c}$, the corollary rests on Theorem~\ref{thm:main}; for $F_{\mathrm c}$ it is
+Theorem~\ref{thm:main}, since $\Ec=F_{\mathrm c}(i)$. Corollary~\ref{cor:euclid} also holds with $(x-x')^2+(y-y')^2=c$ for any fixed
+$c>0$ in $F$ in place of $1$: since $F$ is Euclidean, $c=r^2$ with $r>0$, and scaling by $r$ maps the pairs at
+distance $1$ onto these pairs. Finally, the Hilbert planes
+that satisfy the parallel axiom and the circle--circle intersection property, which Hartshorne calls Euclidean
+planes, are up to isomorphism the planes $F^2$ over Euclidean fields $F$ \cite{Hartshorne}; congruence of segments
+becomes equality of $(x-x')^2+(y-y')^2$. So in every such plane, whichever segment is taken as unit, the points
+cannot be $5$-coloured without two points at unit distance of the same colour.
+
+\section{Remarks}
+
+Property~(E2) says that the field $F=E\cap\R$ of Section~\ref{sec:field} is Euclidean, and the method needs it: with $B=1$,
+\cite[Lemma~3.3]{OpenAI} uses $\sqrt A$ for every $A\ge0$ in $F$. Every Euclidean subfield of $\R$ contains
+$F_{\mathrm c}=\Ec\cap\R$ (proof of Corollary~\ref{cor:euclid}). So $\Ec$ is the smallest field of the form $F(i)$ to which the proof applies in this form.
+
+Two questions remain open:
+\begin{itemize}
+\item Does the plane over the Pythagorean closure of $\Q$ have a proper $5$-colouring? There $K$ is still
+$2$-divisible, because $(1\pm a)/2=((1\pm a)/2)^2+(b/2)^2$ is a sum of squares. Of (E1)--(E3), only (E2) fails there.
+\item How many square roots must be adjoined to $\Q$ to obtain a field whose plane has no proper $5$-colouring?
+Corollary~\ref{cor:finite} says that finitely many suffice.
+\end{itemize}
+An explicit finite unit-distance graph with no proper $5$-colouring would bound the answer to the second question. It
+would also give an explicit witness for $\chi(\R^2)\ge6$.
+
+\begin{remark}
+Over the Pythagorean closure $P$ of $\Q$, the smallest subfield of $\R$ that contains $\sqrt{a^2+b^2}$ whenever it
+contains $a$ and $b$, the failure of (E2) is not just a gap in the proof. We use the notation of
+\cite[Def.~2.1 and~2.2]{OpenAI} with $\overline{\Q}$ replaced by $E=P(i)$. Thus $F=E\cap\R=P$,
+$K=\{u\in E:u\bar u=1\}$, $D$ is the compact group of characters of the discrete group $E$, on which $a\in E$ acts by
+$(ad)(z)=d(az)$, and $C=j(\R^2)$, where $j(\eta)(z)=e^{i\eta\cdot z}$. A $K$-invariant Borel probability measure $\nu$
+on $D$ is wild if $\nu(C)=0$, and its Fourier coefficients are $f_\nu(z)=\int_D d(z)\,d\nu(d)$. The analogue of
+\cite[Thm.~2.3]{OpenAI} for $E=P(i)$, that every wild $K$-invariant probability measure on $D$ is Haar measure, is
+false. That theorem is applied only in the proof of \cite[Prop.~4.2]{OpenAI}, to make such Fourier coefficients
+vanish, at the elements of $K$ in particular. So the first step cannot be run over $P$ as it stands. This does not
+decide the first question above.
+
+The totally real algebraic numbers form a subfield of $\R$ closed under $(a,b)\mapsto\sqrt{a^2+b^2}$: each conjugate
+of $\sqrt{a^2+b^2}$ is $\pm\sqrt{\tau(a)^2+\tau(b)^2}$ for some embedding $\tau$ of $\Q(a,b)$ into $\R$, hence real. So
+every element of $P$ is totally real. As $\sqrt2=\sqrt{1^2+1^2}\in P$, the embedding of $\Q(\sqrt2)$ into $\R$ with
+$\sqrt2\mapsto-\sqrt2$ extends to an embedding $\sigma$ of the algebraic extension $P$ into $\C$, and $\sigma(P)\subset\R$
+because $P$ is totally real. In particular $P$ is not Euclidean: $\sqrt2-1>0$, but $\sigma(\sqrt2-1)<0$, so $\sqrt2-1$
+is not a square in $P$. Extend $\sigma$ to $E$ by $\sigma(i)=i$. Then $\sigma(\bar z)=\overline{\sigma(z)}$, so
+$|\sigma(u)|=1$ for $u\in K$.
+
+For $\xi\in\R^2$ let $j_\sigma(\xi)\in D$ be the character $z\mapsto e^{i\xi\cdot\sigma(z)}$. The map
+$j_\sigma\colon\R^2\to D$ is continuous, and $u\in K$ maps $j_\sigma(\xi)$ to $j_\sigma(\xi')$, where $\xi'$ is $\xi$
+rotated by $\sigma(u)^{-1}$. So for $\rho>0$ the image $\nu$ under $j_\sigma$ of the uniform probability measure on the
+circle $|\xi|=\rho$ is a $K$-invariant Borel probability measure on $D$. It is wild. Indeed, if $j_\sigma(\xi)=j(\eta)$,
+the continuous character $(z,w)\mapsto e^{i(\xi\cdot w-\eta\cdot z)}$ of $\C^2$ is trivial on the set
+$\{(z,\sigma(z)):z\in E\}$. This set is dense in $\C^2$, because $x\mapsto(x,\sigma(x))$ maps $\Q(\sqrt2)$ onto a dense
+subset of $\R^2$, the image of $\Q^2$ under the invertible linear map $(a,b)\mapsto(a+b\sqrt2,a-b\sqrt2)$. So
+$\xi=\eta=0$. Hence $j_\sigma^{-1}(C)=\{0\}$, which the circle misses, and $\nu(C)=0$. But $\nu$ is not Haar measure.
+Its Fourier coefficient at $z$ is $J_0(\rho|\sigma(z)|)$, where $J_0(r)=\frac1{2\pi}\int_0^{2\pi}e^{ir\cos\theta}\,
+d\theta$. At every $u\in K$ it is $J_0(\rho)$, which is not zero for $0<\rho<2.4$, whereas the Fourier coefficients of
+Haar measure vanish at every $z\neq0$.
+
+By contrast, a Euclidean subfield of $\R$ has no embedding into $\R$ other than the inclusion: an embedding maps
+squares to squares, so it preserves the order, and it fixes $\Q$, which is dense in $\R$. So for $\overline{\Q}$ and
+for $\Ec$ an embedding of $E$ that commutes with complex conjugation is the identity or complex conjugation, $j_\sigma(\R^2)=C$,
+and the construction gives nothing.
+\end{remark}
+
+\begin{thebibliography}{99}
+
+\bibitem{Alperin} R. C. Alperin, \emph{A mathematical theory of origami constructions and numbers}, New York J.
+Math. \textbf{6} (2000), 119--133.
+\bibitem{Cox} D. A. Cox, \emph{Galois Theory}, 2nd ed., Wiley, Hoboken, NJ, 2012.
+\bibitem{deBruijnErdos} N. G. de Bruijn and P. Erd\H{o}s, \emph{A colour problem for infinite graphs and a problem
+in the theory of relations}, Indag. Math. \textbf{13} (1951), 371--373.
+\bibitem{deGrey} A. D. N. J. de Grey, \emph{The chromatic number of the plane is at least 5}, Geombinatorics
+\textbf{28} (2018), 18--31; arXiv:1804.02385.
+\bibitem{Fischer} K. G. Fischer, \emph{A planar geometric graph of chromatic number four}, Congr. Numer.
+\textbf{104} (1994), 73--79.
+\bibitem{Hartshorne} R. Hartshorne, \emph{Geometry: Euclid and Beyond}, Undergraduate Texts in Mathematics,
+Springer, New York, 2000.
+\bibitem{Lean4} L. de Moura and S. Ullrich, \emph{The Lean 4 theorem prover and programming language}, Automated
+Deduction -- CADE 28, Lecture Notes in Comput. Sci., vol. 12699, Springer, 2021, pp.~625--635.
+\bibitem{Mathlib} The mathlib Community, \emph{The Lean mathematical library}, Proceedings of the 9th ACM SIGPLAN
+International Conference on Certified Programs and Proofs (CPP 2020), ACM, 2020, pp.~367--381.
+\bibitem{OpenAI} OpenAI, \emph{The Euclidean plane is not five-colorable}, preprint (23 September 2026), with a
+formalization in Lean, \url{https://github.com/openai/math}, commit \texttt{fd4aeeb2}.
+\bibitem{P4C} S. Gal\'an, \emph{A short proof that the planes over $\Q(\sqrt3,\sqrt{11})$ and $\Q(\sqrt2,\sqrt3)$
+are $4$-chromatic}, version~6, 2026, not yet refereed, \texttt{papers/planes-4-chromatic/} in \cite{Repo}.
+\bibitem{Repo} S. Gal\'an, \emph{The Hadwiger--Nelson problem over number fields}, code, data and formal proofs,
+2026. Archived at Zenodo, \href{https://doi.org/10.5281/zenodo.22976635}{doi:10.5281/zenodo.22976635} (all
+versions); source at \url{https://github.com/decalion89/chromatic-number-of-the-plane}.
+\bibitem{Soifer} A. Soifer, \emph{The New Mathematical Coloring Book}, Springer, 2024.
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,6 @@
+PASS  76 vertices; the stored edges are exactly the unit-distance pairs   [172 edges]
+PASS  union of the nine copies has 628 vertices   [628]
+PASS  the nine copies have 1494 edges   [1494]
+PASS  1506 edges when all pairs at distance 1 are joined   [1506]
+
+FAILED: none

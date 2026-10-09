@@ -1,0 +1,5 @@
+triangle-free graphs on 8 labelled vertices: 4682270; maximal: 15247; not bipartite: 15120; without a homomorphism to K_8/3: 0
+
+real	0m26.588s
+user	0m11.596s
+sys	0m0.002s

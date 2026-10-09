@@ -12,7 +12,7 @@ This note compares the project with the published record. Sources are:
 "New" means only that none of these sources has it. Nothing here has been
 refereed.
 
-## The strategy for six, and who had it
+## The strategy for an explicit graph for six, and who had it
 
 The main route is the reduction of Exoo and Ismailescu, which Polymath16 calls
 clamping onto a virtual edge:
@@ -30,11 +30,13 @@ The route is **not ours**.
 | Which sets of distances `d` are the range of a two-distance graph (the semialgebraic sets with positive lower and upper bounds) | Ágoston | [arXiv 2601.07828](https://arxiv.org/abs/2601.07828) |
 | Colouring-guided growth and minimisation, at 4 colours | Heule; Parts | [arXiv 1805.12181](https://arxiv.org/abs/1805.12181), [1907.00929](https://arxiv.org/abs/1907.00929), [2010.12665](https://arxiv.org/abs/2010.12665) |
 | Unions of paths as a construction | Haugland (Moser-spindle-free, 2 131 vertices) | [arXiv 2608.04542](https://arxiv.org/abs/2608.04542) |
-| Reduction of `F²` modulo a prime, for number fields `F`, and extension from a subgroup or a ring to the whole field by cosets | Woodall (`ℚ²` modulo 2); Fischer (1990, Thm 1: cosets of the component of the origin); Moorhouse (Lemma 4.2, Lemma 8.2); Madore (Cor. 3.4, Prop. 3.2, 3.8, ¶6.6) | Woodall: J. Combin. Theory Ser. A 14 (1973) 187–200; [Moorhouse 2010](https://www.ericmoorhouse.org/pub/chromatic.pdf), [arXiv 1509.07023](https://arxiv.org/abs/1509.07023) |
+| Reduction of `F²` modulo a prime, for number fields `F`, and extension from a subgroup or a ring to the whole field by cosets | Woodall (`ℚ²` modulo 2); Fischer (1990, Thm 1: cosets of the component of the origin); Moorhouse (Lemma 4.2, Lemma 8.2); Madore (Cor. 3.4, Prop. 3.2, 3.8, ¶6.6; he also states `χ(ℚ_p²) ≤ χ(𝔽_p²)` for `p ≡ 3 (mod 4)`, ¶1.5 and Remark 3.6) | Woodall: J. Combin. Theory Ser. A 14 (1973) 187–200; [Moorhouse 2010](https://www.ericmoorhouse.org/pub/chromatic.pdf), [arXiv 1509.07023](https://arxiv.org/abs/1509.07023) |
 | `χ(ℚ(√N)²) = 2` for `N ≡ 1, 2 (mod 4)` | Johnson (1987) | Congr. Numer. 60, 51–58; see [Payne](https://arxiv.org/abs/0707.1177) |
 | `χ(ℚ(√N)²) ≤ 3` for `N ≡ 0, 1 (mod 3)`, `≤ 4` for `N ≡ 3 (mod 8)` (Thms 9, 10; the second is a reduction at 2 into `ℤ/4`); colouring the plane through the component of the origin (Thm 1) | Fischer (1990) | Discrete Math. 82, 181–195 (read in full); see also [Payne](https://arxiv.org/abs/0707.1177) |
 | No additive `k`-colouring of `ℚ(√N)²` for `k ≤ 6` when `N ≡ −1 (mod 24)`, for example `N = 47`, because `1/2` and `1/3` are sums of unit vectors | Fischer (1990), Thm 10(ii) | Discrete Math. 82, 181–195 |
 | **`χ(ℚ(√3, √11)²) = 4`**; more generally an additive 4-colouring of `ℚ(√p, √q)²` for squarefree, relatively prime `p ≡ 3`, `q ≡ 11 (mod 16)` with `pq ≡ 1 (mod 32)` | Fischer (1994) | Congr. Numer. 104, 73–79; [Zbl 0836.05030](https://zbmath.org/?q=an:0836.05030) |
+| `χ(ℚ², x² − y²) = ∞`: every finite colouring of `ℚ²` has a monochromatic pair with `(x − x′)² − (y − y′)² = 1`; so `χ(ℝ^{1,1}) = ∞`, `χ(ℂ²) = ∞` (Madore's remark), and `χ(ℚ_p²) = ∞` for `p ≡ 1 (mod 4)` (`notes/quadratic_planes.md` §5) | Davies (2023), from a theorem of Graham | [arXiv 2308.16885](https://arxiv.org/abs/2308.16885) |
+| The Borel chromatic number of the graph of a quadratic form over a local field of characteristic 0 is infinite exactly when the form is isotropic; their Question 1 asks whether `χ_Bor(ℚ_p²)` is bounded for `p ≡ 3 (mod 4)` (no: `notes/quadratic_planes.md` §5) | Bardestani–Mallahi-Karai | [arXiv 1507.05300](https://arxiv.org/abs/1507.05300) |
 | The connected component of the origin in `ℚ(√N₁, …, √N_d)²` | Fischer (1990) | Congr. Numer. 72, 213–221; [Zbl 0733.05048](https://zbmath.org/?q=an:0733.05048) |
 | A survey, as of 2000, of problems on colourings of `ℚⁿ` and its algebraic extensions, posed in or arising from Benda–Perles, *Colorings of metric spaces* | Johnson (2000); we have not seen it | Geombinatorics 9(4), 170–179; [Zbl 0974.05029](https://zbmath.org/?q=an:0974.05029); Benda–Perles: Geombinatorics 9(3), 113–126, [Zbl 0951.05037](https://zbmath.org/?q=an:0951.05037) |
 | 2-adic 4-colourings of the Moser ring, with colours in `𝔽₄` | Speyer (thread 2, April 2018); Hubai's analysis and computer search, reported by Gibbs: all have period 8 (thread 3); Dúcz (2026) | [thread 2](https://dustingmixon.wordpress.com/2018/04/22/polymath16-second-thread-what-does-it-take-to-be-5-chromatic/#comment-4013), [thread 3](https://dustingmixon.wordpress.com/2018/05/01/polymath16-third-thread-is-6-chromatic-within-reach/), [arXiv 2606.12325](https://arxiv.org/abs/2606.12325) |
@@ -186,18 +188,79 @@ The route is **not ours**.
    directions alone are 4-colourable is the reduction of Theorem A of
    hn-2adic-obstruction, applied to them; we found no earlier statement of it for
    this family. We searched arXiv and GitHub on 28 and 29 September 2026.
+8. **Real quadratic planes that need four colours** (`notes/quadratic_planes.md`):
+   `χ(ℚ(√d)²) = 4` for `d = 11, 23, 35, 59, 71, 95, 119, 131, 155, 179, 191, 239, 251, 263, 359, 431, 443, 455, 491, 599, 611, 791, 851, 911, 935, 959`, and `4 ≤ χ(ℚ(√47)²) ≤ 5`. For real
+   quadratic fields the values in the literature are 2 (Johnson 1987; Moorhouse
+   2010, §8) and 3 (Fischer 1990; Madore 2015); for `d ≡ 3 (mod 4)` the lower
+   bound was 3 (Fischer 1990, Theorem 8). The upper bounds are known (Moorhouse's
+   Corollary 8.3, Fischer's Theorem 10, reduction at 11); the lower bounds of four
+   are ours. hn-2adic-obstruction (item 1) proves the upper bound 4 for
+   `d ≡ 3 (mod 8)` again and finds odd cycles over `ℚ(√11)`; it gives no lower
+   bound of four. D. Cohen (University of Chicago REU paper, 2007) conjectured
+   that `ℚ[α] ⊂ ℂ` is 3-colourable for every quadratic `α`. That set has dimension
+   2 over `ℚ`, not 4 like the plane `ℚ(√d)²`; reduction at a ramified prime
+   proves the conjecture (`notes/quadratic_planes.md` §1). Moorhouse asked in a
+   talk in 2010 what can be said about `χ(ℚ(√d)²)`, and about `χ(ℚ(√47)²)` in
+   particular. We searched on 1 October 2026; the sources we read, and those we
+   could not read, are listed in `notes/quadratic_planes.md` §1.
 
 ## What this means
 
-The strategy for six is the known one. The new pieces are:
+The strategy for an explicit graph for six is the known one. The new pieces are:
 - the choice of distance;
 - the arithmetic that rules fields out for six;
 - the theorem χ(ℚ(√2, √3)²) = 4, and a short proof of Fischer's
   χ(ℚ(√3, √11)²) = 4 (1994), which later work had treated as open. The upper
   bounds, and the reduction of `z = x + iy` at 2 behind them, are also in a
   public repository of July 2026 that we found on 28 September (item 1);
-- lower bounds of six for finite planes, from the three-point bound.
+- lower bounds of six for finite planes, from the three-point bound;
+- real quadratic planes that need four colours (item 8).
 
 All are modest. Voronov raised the case ℚ(√2, √3) in a Polymath16 comment.
 The questions about ℚ(√3, √11) asked in print, by Exoo–Ismailescu and by
 Cranston–Rabern, had been settled by Fischer.
+
+## The systematic sweep (4 October 2026)
+
+A separate agent searched the metadata of all of arXiv math, cs.DM and cs.CG (43 queries on a full-text index),
+read the full text of the top hits and followed Semantic Scholar citations; a second agent read its 11 reports and
+checked the quotes below against the arXiv full texts. Gaps: Fischer (1990), Payan and the Polymath16 threads are not
+on Semantic Scholar, so papers citing them were not followed. Findings, by result:
+
+- **A real quadratic field whose plane needs four colours** (Theorem 1): not found. Madore
+  ([arXiv 1509.07023](https://arxiv.org/abs/1509.07023)) gets 2 and 3 over real quadratic fields and writes that
+  "practically the only two useful graphs which are known in this context are the triangle and Moser's spindle";
+  Exoo–Ismailescu ([arXiv 1805.00157](https://arxiv.org/abs/1805.00157)) ask for the smallest subfield of `E²` that
+  needs five colours; Cervantes–Krebs ([arXiv 2303.06262](https://arxiv.org/abs/2303.06262)) get `χ = 3` for a
+  Cayley graph over `ℚ(√39)` and ask whether some algebraic `ω` makes the Cayley graph of `ℂ` generated by the
+  non-negative powers of `ω` non-3-colourable; Eng et al. ([arXiv 2511.10813](https://arxiv.org/abs/2511.10813)): four
+  unit directions always give a 3-colourable graph.
+- **Theorem W**: the statement was not found, but its winding step is close to known work. Gao, Jackson, Krohne and
+  Seward ([arXiv 1803.03872](https://arxiv.org/abs/1803.03872)) use "any 4-cycle in K₃ has winding number zero" and a
+  weighting vanishing on 4-cycles that "induces a group homomorphism" to show that tiles of `ℤ²` are not
+  3-colourable; Wrochna ([arXiv 1408.2812](https://arxiv.org/abs/1408.2812)) treats homomorphisms to every graph
+  without 4-cycles through "the fundamental groupoid"; Gujgiczer, Naserasr, S and Taruni
+  ([arXiv 2307.04652](https://arxiv.org/abs/2307.04652)) use winding for circular chromatic number 4. The converse
+  direction, from a character to a colouring, is García-Marco–Knauer–Menara (cited) and Tung
+  ([arXiv 2606.23762](https://arxiv.org/abs/2606.23762)); Barajas and Serra
+  ([arXiv 0710.4495](https://arxiv.org/abs/0710.4495)) study the "regular chromatic number" of distance graphs, the
+  number given by a single multiplier, which Theorem W makes equal to `χ` when `χ ≤ 3`. So the averaging step and the
+  characterisation are what we did not find; the winding idea itself is not ours.
+- **`χ(ℚ_p²) ≥ 4` for every `p ≥ 5`** (Corollary 3): for `p ≡ 1 (mod 4)` it already follows from Davies
+  ([arXiv 2308.16885](https://arxiv.org/abs/2308.16885)), which gives `χ = ∞` there (as the project had noted); for
+  `p ≡ 3 (mod 4)` nothing was found. Madore has only `χ(ℚ_p²) ≤ χ(𝔽_p²)` for `p ≡ 3 (mod 4)`; Bardestani and
+  Mallahi-Karai ([arXiv 1507.05300](https://arxiv.org/abs/1507.05300)) treat Borel colourings.
+- **Invariant random colourings and per-graph LPs** (the six-colour route of `notes/geometric_chromatic.md` on branch
+  `claude/six-geometric`): known, as that branch says. Besides Polymath16 and Matolcsi–Ruzsa–Varga–Zsámboki
+  ([arXiv 2311.10069](https://arxiv.org/abs/2311.10069)): Bourgeat, Heinrich, Melotti and Robert
+  ([arXiv 1501.02441](https://arxiv.org/abs/1501.02441), 2015, random needles on measurable colourings); Gwyn and
+  Stavrianos ([arXiv 2008.07987](https://arxiv.org/abs/2008.07987): "Since E(2) … is amenable, we can define a
+  finitely additive measure µT on E(2) invariant under group action"); Dúcz and Varga
+  ([arXiv 2606.28157](https://arxiv.org/abs/2606.28157)), whose per-graph LP shows that the fractional chromatic
+  number of the plane is strictly larger than 4; Czifra, Dúcz, Matolcsi, Varga and Zsámboki
+  ([arXiv 2605.28709](https://arxiv.org/abs/2605.28709)) on the sphere.
+
+Relevant papers the project did not cite before this sweep: 1803.03872, 1408.2812, 2307.04652, 2606.23762,
+0710.4495, 2511.10813, 2607.23841 (Ahmed et al.), 2607.10125 (three-colourable (0,2)-graphs), 1501.02441,
+2008.07987, 2606.28157, 2605.28709, 2405.19543 (García-Marco and Knauer, minimal Cayley graphs), and the measurable
+LP/SDP bounds 0808.1822, 0801.1059 and 1401.6140.

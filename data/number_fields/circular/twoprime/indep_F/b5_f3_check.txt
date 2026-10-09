@@ -1,0 +1,5 @@
+F_49 non-cube a = (0, 2) ; number of cubes: 16
+7^6 - 1 = 117648 prime factors [2, 3, 19, 43]
+generator found: True
+f = 3: checked 342 classes of b (b != 0, modulo mu_344); maps with lambda(mu_344) in A'_7: 0
+f = 1: e*mu_8 subset of A'_7 for e in A'_7: True

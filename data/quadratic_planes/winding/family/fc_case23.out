@@ -1,0 +1,7 @@
+N=5: infeasible d = [] (largest None); exceptions to 'infeasible iff d < 21N/5': []
+N=25: infeasible d = [23, 47, 71, 95] (largest 95); exceptions to 'infeasible iff d < 21N/5': []
+N=125: infeasible d = [23, 47, 71, 95, 119, 143]... (largest 503); exceptions to 'infeasible iff d < 21N/5': []
+N=625: infeasible d = [23, 47, 71, 95, 119, 143]... (largest 2615); exceptions to 'infeasible iff d < 21N/5': []
+N=3125: 21N/5 = 13125; first feasible d (d = 23 mod 24) in the window: 13127; exceptions to 'infeasible iff d < 21N/5': [] (0 values)
+N=15625: 21N/5 = 65625; first feasible d (d = 23 mod 24) in the window: 66167; exceptions to 'infeasible iff d < 21N/5': [65639, 65663, 65687, 65711, 65735]... (22 values)
+(1 - i) rho^6 = (Fraction(1457, 15625), Fraction(-22049, 15625)) ; (1 - i) rho = (Fraction(7, 5), Fraction(1, 5))

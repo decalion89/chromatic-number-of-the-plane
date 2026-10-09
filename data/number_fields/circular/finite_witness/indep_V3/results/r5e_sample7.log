@@ -1,0 +1,27 @@
+directed 5-cycles through 0 with two extra points, denominator 160: 41760
+21222 grown 213 -> 9 vertices, 14 edges, iso M: False
+9886 grown 224 -> 10 vertices, 14 edges, iso M: False
+25875 grown 229 -> 9 vertices, 13 edges, iso M: False
+3164 grown 229 -> 9 vertices, 14 edges, iso M: False
+4747 grown 229 -> 9 vertices, 14 edges, iso M: False
+35119 grown 216 -> 10 vertices, 14 edges, iso M: False
+6168 grown 213 -> 9 vertices, 14 edges, iso M: False
+23965 grown 263 -> 9 vertices, 14 edges, iso M: False
+38193 grown 244 -> 9 vertices, 13 edges, iso M: False
+3801 grown 213 -> 9 vertices, 13 edges, iso M: False
+33255 grown 247 -> 12 vertices, 18 edges, iso M: False
+14070 grown 410 -> 9 vertices, 14 edges, iso M: False
+2457 grown 231 -> 9 vertices, 14 edges, iso M: False
+5632 grown 226 -> 9 vertices, 14 edges, iso M: False
+28419 grown 607 -> 9 vertices, 13 edges, iso M: False
+27405 grown 234 -> 9 vertices, 13 edges, iso M: False
+4578 grown 229 -> 9 vertices, 14 edges, iso M: False
+15772 grown 407 -> 9 vertices, 13 edges, iso M: False
+5944 grown 219 -> 9 vertices, 14 edges, iso M: False
+36113 grown 217 -> 9 vertices, 14 edges, iso M: False
+27821 grown 421 -> 10 vertices, 14 edges, iso M: False
+3873 grown 234 -> 10 vertices, 14 edges, iso M: False
+37057 grown 234 -> 10 vertices, 14 edges, iso M: False
+8113 grown 247 -> 10 vertices, 14 edges, iso M: False
+14630 grown 230 -> 9 vertices, 13 edges, iso M: False
+Counter({(9, 14, False): 11, (9, 13, False): 7, (10, 14, False): 6, (12, 18, False): 1})

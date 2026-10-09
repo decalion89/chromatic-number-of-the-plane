@@ -1,0 +1,8 @@
+d = 7: 3d = 21 square: False -> sqrt3 in Q(sqrt7): False; (a) [d != 3 mod 4]: False; (b) [d != 2 mod 3]: True; so chi = 3
+d = 31: 3d = 93 square: False -> sqrt3 in Q(sqrt31): False; (a) [d != 3 mod 4]: False; (b) [d != 2 mod 3]: True; so chi = 3
+d = 15: 3d = 45 square: False -> sqrt3 in Q(sqrt15): False; (a) [d != 3 mod 4]: False; (b) [d != 2 mod 3]: True; so chi = 3
+d = 39: 3d = 117 square: False -> sqrt3 in Q(sqrt39): False; (a) [d != 3 mod 4]: False; (b) [d != 2 mod 3]: True; so chi = 3
+Lagrange identity det^2 = |u|^2|v|^2 - (u.v)^2 holds on 1000 random pairs: True -> unit triangle gives det^2 = 1 - 1/4 = 3/4, so sqrt3 = 2 det in F
+sqrt7 in Z_3: x = 974363769092319412 mod 3^40, x^2 - 7 divisible by 3^40: True
+sqrt31 in Z_3: x = 11663003445064504171 mod 3^40, x^2 - 31 divisible by 3^40: True
+3 is not a square in Q_3 (odd valuation), so Q_3 has no sqrt3 and its plane no unit triangle

@@ -1,0 +1,10 @@
+reproduced keys: ['colouring', 'cycles', 'd', 'denominator', 'edges', 'p', 'points', 'q', 'seed'] ; certificate file keys: ['critical_colourings', 'not_critical']
+d, D, p, q equal: True
+translation found = stored + (-1.0,): matched 9 of 9
+map found -> stored: {0: 0, 1: 1, 2: 7, 3: 2, 4: 5, 5: 6, 6: 8, 7: 4, 8: 3}
+edges correspond: True
+colouring corresponds: True
+cycles correspond (as sets of rotated directed cycles): True
+cycles correspond in the same order: True
+   certificate file field not_critical : []
+criticality certificates correspond: True

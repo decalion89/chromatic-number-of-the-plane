@@ -1,0 +1,15 @@
+N = 625, r = 17/56 = 0.30357143: 36 rotations, 18 functionals up to sign; 132 points printed by vertex_enum
+112 distinct points, 9 components (distinct index vectors)
+type points lying in S^r: 5 ['c', 'q11', 'q12', 'q21', 'q22']
+components by family: {'c': 1, 'other': 4, 'q': 4}
+  c          vertices 36  kappa = 1/2 (0.500000)  optimum (625/2, 625/2)  dual cert ok: True  [1/2*mu+(0, 625); 1/2*mu-(0, 625)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (29025/56, 29025/56)  dual cert ok: True  [3/7*mu+(0, 625); 25/56*mu-(175, 600); 1/8*mu+(625, 0)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (5975/56, 5975/56)  dual cert ok: True  [3/7*mu-(0, 625); 25/56*mu+(175, 600); 1/8*mu-(625, 0)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (29025/56, 5975/56)  dual cert ok: True  [3/7*mu-(0, 625); 25/56*mu-(175, -600); 1/8*mu+(625, 0)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (5975/56, 29025/56)  dual cert ok: True  [3/7*mu+(0, 625); 25/56*mu+(175, -600); 1/8*mu-(625, 0)]
+  q21        vertices 18  kappa = 1/3 (0.333333)  optimum (1250/3, 625/3)  dual cert ok: True  [23/48*mu+(0, 625); 25/73*mu-(175, 600); 625/3504*mu+(336, -527)]
+  q22        vertices 18  kappa = 1/3 (0.333333)  optimum (1250/3, 1250/3)  dual cert ok: True  [23/48*mu-(0, 625); 25/73*mu-(175, -600); 625/3504*mu+(336, 527)]
+  q12        vertices 18  kappa = 1/3 (0.333333)  optimum (625/3, 1250/3)  dual cert ok: True  [23/48*mu-(0, 625); 25/73*mu+(175, 600); 625/3504*mu-(336, -527)]
+  q11        vertices 18  kappa = 1/3 (0.333333)  optimum (625/3, 625/3)  dual cert ok: True  [23/48*mu+(0, 625); 25/73*mu+(175, -600); 625/3504*mu-(336, 527)]
+kappa summary (family, kappa): count -> {'c 1/2': 1, 'other 17/56': 4, 'q 1/3': 4}
+all dual certificates verified: True

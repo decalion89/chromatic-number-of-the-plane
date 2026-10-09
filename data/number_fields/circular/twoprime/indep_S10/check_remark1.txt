@@ -1,0 +1,3 @@
+     16 EXTRA -> not among the 13 (1,1)-vectors
+      5 MAIN -> MAIN
+      8 SEVEN -> EXTRA

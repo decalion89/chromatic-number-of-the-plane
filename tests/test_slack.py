@@ -16,7 +16,8 @@ f(k) >= k + 1 exactly.
 At s >= 1 no local configuration exhausts anything -- a spare colour always
 remains -- so forcing must be assembled combinatorially across many vertices,
 and f jumps.  The historical record reads the same way: s = 0 was settled in
-1961, s = 1 took until 2018 and needed 1581 vertices, s = 2 is open.
+1961, s = 1 took until 2018 and needed 1581 vertices, s = 2 is open (OpenAI
+proved chi >= 6 in 2026 without a graph, so the explicit graph is what is open).
 
 These tests pin the anchors.  f(4) itself is measured by
 scripts/measure_fk.py rather than here, being far too slow for a suite.

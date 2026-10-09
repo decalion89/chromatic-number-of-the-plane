@@ -1,0 +1,3 @@
+$ cake_lpr ref_z_direct.cnf ref_z_direct.lrat
+s VERIFIED UNSAT
+[exit code 0, wall time 7.62 s]

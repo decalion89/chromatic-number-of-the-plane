@@ -1,0 +1,3 @@
+# group Z/3  n=3  exponent M=3  |Aut|=2  classes=1
+S=(1)(2) |S|=2 kappa=1/3 col=6 acyc=6 noT4=6 noSq=6 ABeq=6 T4butABeq=0 ABneq_charfail=0 chars_ge=2 hom3/1=1 ok
+# summary: generating S classes=1, 4-colourable=1, colourings(c(0)=0)=6, BAD=0

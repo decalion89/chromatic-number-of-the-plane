@@ -7,7 +7,10 @@ re-split files, so verify_plan_D.py accepts either run's certificate.
 
 usage (in g13-plan-d/):  python3 sub_help.py S LEAF JOBS I1,I2,...
 KISSAT and DRAT_TRIM (environment) as for share_driver.py. Writes DONE, or SAT / FAILED as share_driver.py does.
-Resumable: rerun it with the same arguments."""
+Resumable: rerun it with the same arguments.
+
+The share branches it fetches lived in the private development repository and are not published; in the public
+repository this script documents how the run was made."""
 import os
 import subprocess
 import sys

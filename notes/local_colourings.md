@@ -3,6 +3,9 @@
 A self-contained account of the arithmetic found on 24 September 2026. It does
 not prove `χ(ℝ²) ≥ 6`. It explains why the searches for six in the field of
 `five_rho7` could never succeed, and it says which fields are still in play.
+(Update, 9 October 2026: OpenAI has proved `χ(ℝ²) ≥ 6`, without an explicit graph; see the README. So some real
+number field carries a finite unit-distance graph with no proper 5-colouring, and by §5 such a field has no
+non-split place whose local plane is 5-colourable. No such graph is known.)
 Proofs of the finite-field facts are computer proofs (SAT, exact arithmetic).
 Each one names the script that reproduces it.
 
@@ -917,7 +920,9 @@ pairs.
   5-chromatic graph over `ℚ(√5, √7)`. That plane does have odd cycles. With
   `τ = (2 + i√5)/3` and `σ = (1 + i√35)/6`, `1 + 2 Re σ = 2 Re τ`, so the unit
   steps `1, σ̄, −τ, σ, −τ̄` close up into a 5-cycle. Hence
-  `3 ≤ χ(ℚ(√5, √7)²) ≤ 5`.
+  `3 ≤ χ(ℚ(√5, √7)²) ≤ 5`. (Later: `χ ≥ 4` by Theorem B of `notes/three_colours_number_fields.md`, as no place
+  above 2 ramifies in `F(i)` and the places above 3 have residue degree 2; and `4 ≤ χ_c ≤ 19/4` by Theorem F and the
+  place above 19, `notes/circular_planes.md` §6.)
 - **Where a fourth colour must come from.** The places above 3 split in `K`.
   Since `√7 ∈ ℚ₃`, the local field is `ℚ₃(√5)`, the unramified quadratic
   extension. It contains `i`, and its residue field is `𝔽₉`.
@@ -1082,5 +1087,5 @@ With Proposition B and the spectral bound:
   to 64.545; `𝔽₂₃²`: 108.547 to 108.542) (research log;
   `scripts/experiments/threepoint_colouring.py`).
 
-So over the prime fields, `χ(G_q) ≥ 6` is open only for `q = 13, 17, 23, 31`;
+So over the prime fields, `χ(G_q) ≥ 6` is open only for `q = 17, 23, 31` (`χ(G₁₃) = 6`, see the table above);
 for `q = 2, 3, 5, 7, 11, 19` five colours or fewer suffice (§4).

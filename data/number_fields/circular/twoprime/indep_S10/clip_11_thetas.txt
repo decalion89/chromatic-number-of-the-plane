@@ -1,0 +1,10 @@
+(K,M)=(1,1) N=65 r0=2/7: 13 index vectors with nonempty polygons, 15396 nonempty branch nodes, 2s
+same set of index vectors as the certificate: True | labels: {'MAIN': 5, 'EXTRA': 8}
+(K,M)=(1,1) N=65 r0=2857143/10000000: 5 index vectors with nonempty polygons, 14002 nonempty branch nodes, 2s
+same set of index vectors as the certificate: False | labels: {'MAIN': 5, 'EXTRA': 8}
+(K,M)=(1,1) N=65 r0=1429/5000: 5 index vectors with nonempty polygons, 14002 nonempty branch nodes, 2s
+same set of index vectors as the certificate: False | labels: {'EXTRA': 8, 'MAIN': 5}
+(K,M)=(1,1) N=65 r0=3/10: 5 index vectors with nonempty polygons, 12772 nonempty branch nodes, 2s
+same set of index vectors as the certificate: False | labels: {'EXTRA': 8, 'MAIN': 5}
+(K,M)=(1,1) N=65 r0=1/3: 5 index vectors with nonempty polygons, 8846 nonempty branch nodes, 1s
+same set of index vectors as the certificate: False | labels: {'MAIN': 5, 'EXTRA': 8}

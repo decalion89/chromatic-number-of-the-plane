@@ -1,0 +1,31 @@
+N = 25, r = 17/56 = 0.30357143: 20 rotations, 10 functionals up to sign; 132 points printed by vertex_enum
+80 distinct points, 25 components (distinct index vectors)
+type points lying in S^r: 5 ['c', 'q11', 'q12', 'q21', 'q22']
+components by family: {'c': 1, 'other': 20, 'q': 4}
+  c          vertices 20  kappa = 1/2 (0.500000)  optimum (25/2, 25/2)  dual cert ok: True  [1/2*mu+(0, 25); 1/2*mu-(0, 25)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (195/8, 205/56)  dual cert ok: True  [3/7*mu-(15, -20); 25/56*mu+(20, -15); 1/8*mu-(20, 15)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (137/56, 991/56)  dual cert ok: True  [25/56*mu-(0, 25); 3/7*mu-(7, -24); 1/8*mu+(24, 7)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (195/8, 1195/56)  dual cert ok: True  [3/7*mu-(15, 20); 1/8*mu-(20, -15); 25/56*mu+(20, 15)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (205/56, 5/8)  dual cert ok: True  [1/8*mu-(15, -20); 25/56*mu-(15, 20); 3/7*mu+(20, 15)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (375/56, 375/56)  dual cert ok: True  [3/7*mu-(0, 25); 25/56*mu+(7, 24); 1/8*mu-(25, 0)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (991/56, 1263/56)  dual cert ok: True  [1/8*mu+(7, -24); 3/7*mu+(24, 7); 25/56*mu-(25, 0)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (1263/56, 991/56)  dual cert ok: True  [25/56*mu-(0, 25); 3/7*mu+(7, 24); 1/8*mu-(24, -7)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (1025/56, 375/56)  dual cert ok: True  [3/7*mu-(0, 25); 25/56*mu-(7, -24); 1/8*mu+(25, 0)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (137/56, 409/56)  dual cert ok: True  [25/56*mu+(0, 25); 3/7*mu-(7, 24); 1/8*mu+(24, -7)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (1195/56, 5/8)  dual cert ok: True  [25/56*mu+(15, -20); 1/8*mu+(15, 20); 3/7*mu-(20, -15)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (409/56, 137/56)  dual cert ok: True  [1/8*mu-(7, -24); 3/7*mu-(24, 7); 25/56*mu+(25, 0)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (1263/56, 409/56)  dual cert ok: True  [25/56*mu+(0, 25); 3/7*mu+(7, -24); 1/8*mu-(24, 7)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (205/56, 195/8)  dual cert ok: True  [25/56*mu-(15, -20); 1/8*mu-(15, 20); 3/7*mu+(20, -15)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (409/56, 1263/56)  dual cert ok: True  [1/8*mu-(7, 24); 3/7*mu-(24, -7); 25/56*mu+(25, 0)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (375/56, 1025/56)  dual cert ok: True  [3/7*mu+(0, 25); 25/56*mu+(7, -24); 1/8*mu-(25, 0)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (1025/56, 1025/56)  dual cert ok: True  [3/7*mu+(0, 25); 25/56*mu-(7, 24); 1/8*mu+(25, 0)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (1195/56, 195/8)  dual cert ok: True  [1/8*mu+(15, -20); 25/56*mu+(15, 20); 3/7*mu-(20, 15)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (5/8, 205/56)  dual cert ok: True  [3/7*mu+(15, 20); 1/8*mu+(20, -15); 25/56*mu-(20, 15)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (5/8, 1195/56)  dual cert ok: True  [3/7*mu+(15, -20); 25/56*mu-(20, -15); 1/8*mu+(20, 15)]
+  other      vertices  1  kappa = 17/56 (0.303571)  optimum (991/56, 137/56)  dual cert ok: True  [1/8*mu+(7, 24); 3/7*mu+(24, -7); 25/56*mu-(25, 0)]
+  q12        vertices 10  kappa = 1/3 (0.333333)  optimum (25/3, 50/3)  dual cert ok: True  [10/21*mu-(0, 25); 5/14*mu+(7, 24); 1/6*mu-(15, -20)]
+  q21        vertices 10  kappa = 1/3 (0.333333)  optimum (50/3, 25/3)  dual cert ok: True  [10/21*mu+(0, 25); 5/14*mu-(7, 24); 1/6*mu+(15, -20)]
+  q11        vertices 10  kappa = 1/3 (0.333333)  optimum (25/3, 25/3)  dual cert ok: True  [10/21*mu+(0, 25); 5/14*mu+(7, -24); 1/6*mu-(15, 20)]
+  q22        vertices 10  kappa = 1/3 (0.333333)  optimum (50/3, 50/3)  dual cert ok: True  [10/21*mu-(0, 25); 5/14*mu-(7, -24); 1/6*mu+(15, 20)]
+kappa summary (family, kappa): count -> {'c 1/2': 1, 'other 17/56': 20, 'q 1/3': 4}
+all dual certificates verified: True

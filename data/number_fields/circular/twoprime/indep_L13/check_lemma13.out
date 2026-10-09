@@ -1,0 +1,70 @@
+PASS  nonzero squares mod 7 are {1,2,4}   [[1, 2, 4]]
+PASS  -1 is not a square mod 7
+PASS  |mu_8| = 8   [[(0, 1), (0, 6), (1, 0), (2, 2), (2, 5), (5, 2), (5, 5), (6, 0)]]
+PASS  mu_8 = roots of z^8 - 1 (norm one <=> z^8 = 1)
+PASS  conjugation is Frobenius z -> z^7 on F_49
+PASS  rho = (3+4i)/5 = 2+5i mod 7  (5*(2+5i) = 3+4i mod 7)
+PASS  rho~ has norm 1 (29 = 1 mod 7)
+PASS  rho~^2 = -21+20i (as integers)
+PASS  rho~^2 = -i mod 7
+PASS  rho~ has order 8 (generates mu_8)
+PASS  conj(rho~) = rho~^{-1} mod 7
+PASS  (i) A'_7 (from its definition) equals the listed 8 elements   [[(2, 3), (2, 4), (3, 2), (3, 5), (4, 2), (4, 5), (5, 3), (5, 4)]]
+PASS  (i) A'_7 = {e : e ebar = -1}
+PASS  (i) Re(ebar z) = ax + by
+PASS  (i) solutions of a^2+b^2=-1 have {a^2,b^2}={2,4}
+PASS  (i) the line ax+by=t is {t/(e ebar)(a,b) + s(-b,a)} (7 points), all e!=0, t
+PASS  (i) such a point is on x^2+y^2=1 iff (e ebar)^2 s^2 = e ebar - t^2, all e!=0, t, s
+PASS  (i) t is a value of Re(ebar z) on mu_8 iff e ebar - t^2 is 0 or a square, all e!=0, t
+PASS  (i) e in A'_7 iff e!=0 and e ebar, e ebar - 1 both in {3,5,6}
+PASS  (i) A'_7 = e0*mu_8 for every e0 in A'_7 (single mu_8-orbit)
+PASS  (i) A'_7 is closed under conjugation
+PASS  (i) the elements of A'_7 add up to 0
+PASS  (i) sum of mu_8 is 0
+PASS  (i) 0 not in A'_7
+PASS  (ii) number of nonzero additive subgroups is 9 (8 lines + whole)
+PASS  (ii) no coset of a nonzero additive subgroup lies in A'_7
+PASS  (ii) every affine line meets A'_7 in at most 2 points   [max = 2]
+PASS  (ii) N(e+sd) = e ebar + s(e dbar + ebar d) + s^2 d dbar, all e, d!=0, s
+PASS  (iii) Re(A'_7) = {2,3,4,5}
+PASS  both coordinates of every element of A'_7 lie in {2,3,4,5}
+PASS  each value 2,3,4,5 is attained by Re(ebar z) on mu_8, for every e in A'_7 (least margin 2/7)
+PASS  (iv) zeta_j(eps) is defined (in {+-1/14,+-3/14}^2) for all 8 classes and -24<=j<=24
+PASS  (iv) zeta_{j+2} = -i zeta_j for all classes, -24<=j<=22
+PASS  (iv) {+-1/14,+-3/14}^2 is stable under multiplication by -i
+PASS  (iv) -i h = h mod Z[i]
+PASS  (iv) nu_{j+2} = -i nu_j for all classes
+PASS  (iv) conj(2+3i) = 2+4i mod 7
+PASS  (iv) (2+4i) rho~ = 5+4i mod 7
+PASS  (iv) (2+4i) rho~^2 = 4+5i mod 7
+PASS  (iv) (2+4i)(2+5i) = -16+18i exactly
+PASS  (iv) zeta_0 = (-3+i)/14   [(-3/14 + 1/14 i)]
+PASS  (iv) zeta_1 = (3+i)/14   [(3/14 + 1/14 i)]
+PASS  (iv) zeta_2 = (1+3i)/14   [(1/14 + 3/14 i)]
+PASS  (iv) rho zeta_0 = -(13+9i)/70   [(-13/70 - 9/70 i)]
+PASS  (iv) rho zeta_1 = (1+3i)/14   [(1/14 + 3/14 i)]
+PASS  (iv) nu_1 = (2+i)/5
+PASS  (iv) nu_2 = 0
+PASS  (iv) nu_{2m} = 0 and nu_{2m+1} = (-i)^m (2+i)/5, -12<=m<12
+PASS  (iv) every class: period 8, 0 alternates with digits u(2+i)/5, u in mu_4
+PASS  (iv) exact period is 8 (not 4) for every class
+PASS  (iv) zeta_t(eps') = zeta_{t+j}(eps) when 7eps' = 7eps conj(rho~)^j mod 7
+PASS  (iv) every class is (2+3i)conj(rho~)^j for exactly one j mod 8 (8 classes <-> 8 shifts)
+PASS  (iv) the 8 classes give 8 distinct digit sequences
+PASS  type point 325h has digits 0,0,0,0 at t=-1..2
+PASS  type-q points (325/3)(a+bi): digits (nu,-i nu,-nu,i nu), nu!=0, = digits of the proof of Lemma 12
+PASS  type-7 points (325/7)(a+bi), 3(a+bi) in A'_7: 8 classes, digits = zeta-digits of eps, 7eps=3(a+bi)
+PASS  325 = 3 mod 7 and 325 = 1 mod 3
+PASS  level 65: type c digits (0,0); type q digits (nu,-i nu) of the q family
+PASS  the 7-torsion points (65/7)(a+bi) listed after Prop. 8 are exactly those with 2(a+bi) in A'_7
+PASS  lambda(a+bi)=2a+3b corresponds to (65/7)(1+5i): 2(1+5i) = 2+3i mod 7
+PASS  (iv) for every position t in [-12,12], (nu_t, nu_{t+1}) determines type and class among the 13 sequences
+PASS  Lemma 14: the type-7 window at j+1 has class 7eps conj(rho~) (its digits are the shifted ones)
+PASS  5^6 = 1 mod 7
+PASS  5^12 = 1 mod 7
+PASS  N rho^j in Z[i] and N rho^j = rho~^j mod 7 for N=5^6, 5^12, |j|<=k
+PASS  r' = (1/4+3/14) sqrt2 < 0.66   [r'^2 = 169/392]
+PASS  |zeta| <= 3 sqrt2/14 for all zeta values
+PASS  Lemma 17 core: c + mu_8 w in A'_7 with w != 0 forces c = 0 (all c, w)
+
+FAILED: none

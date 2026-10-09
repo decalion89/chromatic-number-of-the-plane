@@ -1,0 +1,115 @@
+# The referee's programs of this folder, unchanged, run by us (not by the referee) on witness_q911
+# (5 October 2026, UTC times), in the order of the reproduction list of REPORT.md: referee_check.py,
+# referee_encode2.py, referee_cegar.py, run_proof.sh on the three formulas (kissat --seed=7, drat-trim -L, cake_lpr),
+# validate_e1.py, validate_stored.py and run_stored.sh (drat-trim and cake_lpr on the stored formula and proof),
+# referee_critical.py.  Proofs were deleted after the checks.  It took four runs, all recorded below:
+# run 1 was cut by a restart of the machine during referee_cegar.py; run 2 went through the first two proofs, but
+# the disk filled up while kissat wrote the DRAT proof of the third formula (witness_q911_cegar), so that proof was
+# cut short and could not be checked: in run 2 the drat-trim log of that proof stayed empty, and the cake_lpr log
+# read "c Checking failed at line: 1898120. Reason: failed to parse line (uncompressed format)" (the "cake_lpr
+# exit 0" below is the exit code of the program; only an "s VERIFIED UNSAT" line means a checked proof); we
+# stopped run 2 during run_stored.sh, after drat-trim had verified the stored proof and before cake_lpr finished;
+# run 3 repeated, with the same commands and the proofs kept in memory (/dev/shm), every step from the third proof
+# on, and was cut by another restart of the machine while drat-trim checked that proof; run 4 repeated those steps.
+#
+# ---- run 1 (cut by a restart of the machine) ----
+== referee_check 08:48:59
+== witness_q911: d=911, D=1560
+(1) 324 points, all distinct integer 4-tuples; d squarefree, so distinct tuples = distinct points
+    866 listed edges; unit-distance pairs among all 52326 pairs: 866; listed edges not at distance 1: 0; unit pairs not listed: 0
+    => every edge has length exactly 1 and H is the induced unit-distance graph on its points; 58 distinct unit vectors occur as edge differences
+    min degree 2, max degree 28, connected: True
+(2) colouring values in 0..6; edges violating the (7,2) condition: 0
+(3) 494 cycles; every step is an edge of H; non-simple: 0; lengths {7: 114, 14: 314, 21: 56, 28: 8, 35: 2}; lengths not divisible by 7: 0
+    distinct as sequences: 494; distinct up to rotation: 494; directed arcs used: 1442
+    listed cycles tight under the stored colouring: 4 (must be >= 1 if the claim holds)
+    fixed_vertex 87: degree 28; max degree 28; first vertex of max degree: 87
+    CNF cnf/witness_q911.ref.cnf: 3710 variables, 35903 clauses; sha256 eee1592f3fd0cf04cc45de37230244a8fb90fde8db47db5e5d2f2635bf57d336; unit clause fixes vertex 87 to colour 0
+== referee_encode2 08:48:59
+E2 cnf/witness_q911_E2.ref.cnf: 3710 variables (2268 colour, 1442 arc), 45997 clauses, seed 20261004, sha256 20b95f465d8908faa31da69b0ede9eaec416f93a044437a584cd806bad0c108f
+== referee_cegar 08:48:59
+
+# ---- run 2 (the disk filled up during the third proof; stopped during run_stored.sh) ----
+== referee_check 09:22:33
+== witness_q911: d=911, D=1560
+(1) 324 points, all distinct integer 4-tuples; d squarefree, so distinct tuples = distinct points
+    866 listed edges; unit-distance pairs among all 52326 pairs: 866; listed edges not at distance 1: 0; unit pairs not listed: 0
+    => every edge has length exactly 1 and H is the induced unit-distance graph on its points; 58 distinct unit vectors occur as edge differences
+    min degree 2, max degree 28, connected: True
+(2) colouring values in 0..6; edges violating the (7,2) condition: 0
+(3) 494 cycles; every step is an edge of H; non-simple: 0; lengths {7: 114, 14: 314, 21: 56, 28: 8, 35: 2}; lengths not divisible by 7: 0
+    distinct as sequences: 494; distinct up to rotation: 494; directed arcs used: 1442
+    listed cycles tight under the stored colouring: 4 (must be >= 1 if the claim holds)
+    fixed_vertex 87: degree 28; max degree 28; first vertex of max degree: 87
+    CNF cnf/witness_q911.ref.cnf: 3710 variables, 35903 clauses; sha256 eee1592f3fd0cf04cc45de37230244a8fb90fde8db47db5e5d2f2635bf57d336; unit clause fixes vertex 87 to colour 0
+== referee_encode2 09:22:33
+E2 cnf/witness_q911_E2.ref.cnf: 3710 variables (2268 colour, 1442 arc), 45997 clauses, seed 20261004, sha256 20b95f465d8908faa31da69b0ede9eaec416f93a044437a584cd806bad0c108f
+== referee_cegar 09:22:33
+  iteration 50: 138 cycles, 8.6 s
+  iteration 100: 281 cycles, 42.1 s
+UNSAT after 134 iterations, 380 cycles of lengths [7, 14, 21, 28], 795.0 s (solver cadical153, fixed vertex 0)
+wrote cnf/witness_q911_cegar.ref.cnf: 3521 variables, 34466 clauses, sha256 fd337c95fb4302688adf8ea162e7c8c50e9e5e6bed64d534df95d25b7f06b74c
+== proofs witness_q911 09:35:48
+DONE witness_q911
+s UNSATISFIABLE
+kissat exit 20
+c 549897 of 1500471 lemmas in core using 43638802 resolution steps
+c 13144 RAT lemmas in core; 0 redundant literals in core lemmas
+s VERIFIED
+drat-trim exit 0
+s VERIFIED UNSAT
+cake_lpr exit 0
+== proofs witness_q911_E2 09:39:53
+DONE witness_q911_E2
+s UNSATISFIABLE
+kissat exit 20
+c 426833 of 1248741 lemmas in core using 35808974 resolution steps
+c 14643 RAT lemmas in core; 2 redundant literals in core lemmas
+s VERIFIED
+drat-trim exit 0
+s VERIFIED UNSAT
+cake_lpr exit 0
+== proofs witness_q911_cegar 09:43:28
+run_proof.sh: line 18: echo: write error: No space left on device
+DONE witness_q911_cegar
+s UNSATISFIABLE
+kissat exit 20
+cake_lpr exit 0
+== validate_e1 10:02:08
+witness_q911.ref.cnf: 3710 vars, 35903 clauses: {'ALO': 324, 'AMO': 6804, 'EDGE': 18186, 'NDEF': 10094, 'CYC': 494, 'UNIT': 1}; CYC clauses that are exactly one simple directed cycle: 494; unexplained clauses: 0
+== validate_stored 10:02:08
+witness_q911: stored CNF 466102 bytes uncompressed, sha256 106613c460e770d9583a7456b39ce30b1768272eef82b67f744d5997725353a8
+witness_q911: stored DRAT 204704693 bytes uncompressed, sha256 8db8ddcb2a4f7d04ae5fc5b7d49e1b1c45f101417ccc266be6b0a8cdcad74b56, text? format
+witness_q911: 3710 variables, 29099 clauses: {'ALO': 324, 'EDGE': 18186, 'TDEF': 10094, 'CYC': 494, 'UNIT': 1}; unexplained clauses: 0; listed cycles covered by CYC clauses: 494 of 494
+Terminated
+s VERIFIED
+drat-trim exit 0
+
+# ---- run 3 (the steps from the third proof on; proofs in /dev/shm; cut by a restart of the machine) ----
+== proofs witness_q911_cegar 10:06:17
+
+# ---- run 4 (the steps from the third proof on; proofs in /dev/shm) ----
+== proofs witness_q911_cegar 10:18:37
+DONE witness_q911_cegar
+s UNSATISFIABLE
+kissat exit 20
+c 2058959 of 5833449 lemmas in core using 224858174 resolution steps
+c 15226 RAT lemmas in core; 0 redundant literals in core lemmas
+s VERIFIED
+drat-trim exit 0
+s VERIFIED UNSAT
+cake_lpr exit 0
+== validate_e1 10:36:54
+witness_q911.ref.cnf: 3710 vars, 35903 clauses: {'ALO': 324, 'AMO': 6804, 'EDGE': 18186, 'NDEF': 10094, 'CYC': 494, 'UNIT': 1}; CYC clauses that are exactly one simple directed cycle: 494; unexplained clauses: 0
+== validate_stored 10:36:54
+witness_q911: stored CNF 466102 bytes uncompressed, sha256 106613c460e770d9583a7456b39ce30b1768272eef82b67f744d5997725353a8
+witness_q911: stored DRAT 204704693 bytes uncompressed, sha256 8db8ddcb2a4f7d04ae5fc5b7d49e1b1c45f101417ccc266be6b0a8cdcad74b56, text? format
+witness_q911: 3710 variables, 29099 clauses: {'ALO': 324, 'EDGE': 18186, 'TDEF': 10094, 'CYC': 494, 'UNIT': 1}; unexplained clauses: 0; listed cycles covered by CYC clauses: 494 of 494
+DONE witness_q911
+s VERIFIED
+drat-trim exit 0
+s VERIFIED UNSAT
+cake_lpr exit 0
+== referee_critical 10:38:57
+witness_q911.json.gz: 324 certificates OK: each c_v is a (7,2)-colouring of H-v with an acyclic tight digraph; explicit (7N,2N+1)-colourings with N=323 verified, so chi_c(H-v) <= 2261/647 = 3.494590 < 3.5 for every v; average tight arcs per certificate 481.9
+== done 10:38:57

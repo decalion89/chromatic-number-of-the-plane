@@ -1,0 +1,5 @@
+check (data/quadratic_planes/scripts/check_lift.py 11 3 data/quadratic_planes/padic11.json): p=11 level 3: 29524 points, 1689039 edges, 1452 unit vectors
+pinned triangle (29522, 25112, 2735)
+formula sha256 9f2458f38a699ae6337475cb2fdb2cab710c20499b0ef82b819d60eee23d120d
+kissat: ['s UNSATISFIABLE']
+drat-trim: ['s VERIFIED']

@@ -1,0 +1,127 @@
+== D = 1 2 3
+|Pi| = 2
+rho_p found for every p in Pi; max |y_j| = 2
+(iii) p in a box of 56 candidates satisfying every range on S: 0
+G_S: |H| = 9, |E| = 21, CNF 150 vars 756 clauses -> ['s UNSATISFIABLE']
+G_basis_only: |H| = 4, |E| = 6, CNF 40 vars 156 clauses -> ['s UNSATISFIABLE']
+RESULT: every proper 4-colouring of G has a tight cycle (chi_c(G) >= 4)
+independent check: (7,2)-colourability of G (largest fraction < 4 with numerator <= |H|): ['s UNSATISFIABLE'] ; 4-colourable: ['s SATISFIABLE']
+== D = 2 3 5 6
+|Pi| = 4
+rho_p found for every p in Pi; max |y_j| = 3
+(iii) p in a box of 448 candidates satisfying every range on S: 0
+G_S: |H| = 26, |E| = 86, CNF 926 vars 6310 clauses -> ['s UNSATISFIABLE']
+G_basis_only: |H| = 9, |E| = 15, CNF 138 vars 576 clauses -> ['s SATISFIABLE']
+RESULT: every proper 4-colouring of G has a tight cycle (chi_c(G) >= 4)
+independent check: (23,6)-colourability of G (largest fraction < 4 with numerator <= |H|): ['s UNSATISFIABLE'] ; 4-colourable: ['s SATISFIABLE']
+== D = 1 2 6 7
+|Pi| = 24
+rho_p found for every p in Pi; max |y_j| = 3
+(iii) p in a box of 720 candidates satisfying every range on S: 0
+G_S: |H| = 21, |E| = 68, CNF 640 vars 4218 clauses -> ['s UNSATISFIABLE']
+G_basis_only: |H| = 8, |E| = 16, CNF 120 vars 552 clauses -> ['s UNSATISFIABLE']
+RESULT: every proper 4-colouring of G has a tight cycle (chi_c(G) >= 4)
+independent check: (19,5)-colourability of G (largest fraction < 4 with numerator <= |H|): ['s UNSATISFIABLE'] ; 4-colourable: ['s SATISFIABLE']
+== D = 1 3 6 7
+|Pi| = 12
+rho_p found for every p in Pi; max |y_j| = 4
+(iii) p in a box of 630 candidates satisfying every range on S: 0
+G_S: |H| = 49, |E| = 179, CNF 2906 vars 22336 clauses -> ['s UNSATISFIABLE']
+G_basis_only: |H| = 8, |E| = 15, CNF 118 vars 524 clauses -> ['s SATISFIABLE']
+RESULT: every proper 4-colouring of G has a tight cycle (chi_c(G) >= 4)
+independent check: (47,12)-colourability of G (largest fraction < 4 with numerator <= |H|): ['s UNSATISFIABLE'] ; 4-colourable: ['s SATISFIABLE']
+== D = 2 5 6 7
+|Pi| = 8
+rho_p found for every p in Pi; max |y_j| = 5
+(iii) p in a box of 560 candidates satisfying every range on S: 0
+G_S: |H| = 52, |E| = 172, CNF 3204 vars 22916 clauses -> ['s UNSATISFIABLE']
+G_basis_only: |H| = 11, |E| = 19, CNF 192 vars 822 clauses -> ['s SATISFIABLE']
+RESULT: every proper 4-colouring of G has a tight cycle (chi_c(G) >= 4)
+independent check: (51,13)-colourability of G (largest fraction < 4 with numerator <= |H|): ['s UNSATISFIABLE'] ; 4-colourable: ['s SATISFIABLE']
+== D = 2 6 7 9
+|Pi| = 8
+rho_p found for every p in Pi; max |y_j| = 7
+(iii) p in a box of 560 candidates satisfying every range on S: 0
+G_S: |H| = 86, |E| = 288, CNF 8230 vars 60818 clauses -> ['s UNSATISFIABLE']
+G_basis_only: |H| = 13, |E| = 23, CNF 254 vars 1108 clauses -> ['s SATISFIABLE']
+RESULT: every proper 4-colouring of G has a tight cycle (chi_c(G) >= 4)
+independent check: (83,21)-colourability of G (largest fraction < 4 with numerator <= |H|): ['s UNSATISFIABLE'] ; 4-colourable: ['s SATISFIABLE']
+== D = 1 6 7 10
+|Pi| = 72
+rho_p found for every p in Pi; max |y_j| = 5
+(iii) p in a box of 1080 candidates satisfying every range on S: 0
+G_S: |H| = 61, |E| = 220, CNF 4344 vars 33506 clauses -> ['s UNSATISFIABLE']
+G_basis_only: |H| = 11, |E| = 20, CNF 194 vars 856 clauses -> ['s SATISFIABLE']
+RESULT: every proper 4-colouring of G has a tight cycle (chi_c(G) >= 4)
+independent check: (59,15)-colourability of G (largest fraction < 4 with numerator <= |H|): ['s UNSATISFIABLE'] ; 4-colourable: ['s SATISFIABLE']
+== D = 1 2 6 11
+|Pi| = 40
+rho_p found for every p in Pi; max |y_j| = 3
+(iii) p in a box of 880 candidates satisfying every range on S: 0
+G_S: |H| = 29, |E| = 96, CNF 1120 vars 7706 clauses -> ['s UNSATISFIABLE']
+G_basis_only: |H| = 12, |E| = 28, CNF 236 vars 1212 clauses -> ['s UNSATISFIABLE']
+RESULT: every proper 4-colouring of G has a tight cycle (chi_c(G) >= 4)
+independent check: (27,7)-colourability of G (largest fraction < 4 with numerator <= |H|): ['s UNSATISFIABLE'] ; 4-colourable: ['s SATISFIABLE']
+== D = 2 5 6 11
+|Pi| = 8
+rho_p found for every p in Pi; max |y_j| = 7
+(iii) p in a box of 560 candidates satisfying every range on S: 0
+G_S: |H| = 102, |E| = 380, CNF 11470 vars 92994 clauses -> ['s UNSATISFIABLE']
+G_basis_only: |H| = 11, |E| = 19, CNF 192 vars 822 clauses -> ['s SATISFIABLE']
+RESULT: every proper 4-colouring of G has a tight cycle (chi_c(G) >= 4)
+independent check: (99,25)-colourability of G (largest fraction < 4 with numerator <= |H|): ['s UNSATISFIABLE'] ; 4-colourable: ['s SATISFIABLE']
+== D = 2 6 9 11
+|Pi| = 12
+Traceback (most recent call last):
+  File "remark_check.py", line 92, in <module>
+    assert found, ("no rho_p found for", p)
+           ^^^^^
+AssertionError: ('no rho_p found for', (3, -1, -1))
+== D = 1 3 4 9
+|Pi| = 10
+rho_p found for every p in Pi; max |y_j| = 3
+(iii) p in a box of 616 candidates satisfying every range on S: 0
+G_S: |H| = 19, |E| = 59, CNF 536 vars 3406 clauses -> ['s UNSATISFIABLE']
+G_basis_only: |H| = 10, |E| = 23, CNF 176 vars 886 clauses -> ['s UNSATISFIABLE']
+RESULT: every proper 4-colouring of G has a tight cycle (chi_c(G) >= 4)
+independent check: (19,5)-colourability of G (largest fraction < 4 with numerator <= |H|): ['s UNSATISFIABLE'] ; 4-colourable: ['s SATISFIABLE']
+== D = 1 3 8 9
+|Pi| = 20
+rho_p found for every p in Pi; max |y_j| = 6
+(iii) p in a box of 770 candidates satisfying every range on S: 0
+G_S: |H| = 97, |E| = 367, CNF 10434 vars 85496 clauses -> ['s UNSATISFIABLE']
+G_basis_only: |H| = 10, |E| = 19, CNF 168 vars 758 clauses -> ['s SATISFIABLE']
+RESULT: every proper 4-colouring of G has a tight cycle (chi_c(G) >= 4)
+independent check: (95,24)-colourability of G (largest fraction < 4 with numerator <= |H|): ['s UNSATISFIABLE'] ; 4-colourable: ['s SATISFIABLE']
+== D = 3 5 8 9
+|Pi| = 6
+rho_p found for every p in Pi; max |y_j| = 4
+(iii) p in a box of 504 candidates satisfying every range on S: 0
+G_S: |H| = 59, |E| = 211, CNF 4080 vars 31206 clauses -> ['s UNSATISFIABLE']
+G_basis_only: |H| = 9, |E| = 14, CNF 136 vars 546 clauses -> ['s SATISFIABLE']
+RESULT: every proper 4-colouring of G has a tight cycle (chi_c(G) >= 4)
+independent check: (59,15)-colourability of G (largest fraction < 4 with numerator <= |H|): ['s UNSATISFIABLE'] ; 4-colourable: ['s SATISFIABLE']
+== D = 1 3 4 12
+|Pi| = 12
+rho_p found for every p in Pi; max |y_j| = 4
+(iii) p in a box of 672 candidates satisfying every range on S: 0
+G_S: |H| = 25, |E| = 80, CNF 860 vars 5710 clauses -> ['s UNSATISFIABLE']
+G_basis_only: |H| = 13, |E| = 32, CNF 272 vars 1450 clauses -> ['s UNSATISFIABLE']
+RESULT: every proper 4-colouring of G has a tight cycle (chi_c(G) >= 4)
+independent check: (23,6)-colourability of G (largest fraction < 4 with numerator <= |H|): ['s UNSATISFIABLE'] ; 4-colourable: ['s SATISFIABLE']
+== D = 1 4 5 12
+|Pi| = 36
+rho_p found for every p in Pi; max |y_j| = 5
+(iii) p in a box of 864 candidates satisfying every range on S: 0
+G_S: |H| = 51, |E| = 182, CNF 3118 vars 23604 clauses -> ['s UNSATISFIABLE']
+G_basis_only: |H| = 13, |E| = 30, CNF 268 vars 1374 clauses -> ['s SATISFIABLE']
+RESULT: every proper 4-colouring of G has a tight cycle (chi_c(G) >= 4)
+independent check: (51,13)-colourability of G (largest fraction < 4 with numerator <= |H|): ['s UNSATISFIABLE'] ; 4-colourable: ['s SATISFIABLE']
+== D = 2 6 9 11 (bound 15)
+|Pi| = 12
+rho_p found for every p in Pi; max |y_j| = 9
+(iii) p in a box of 672 candidates satisfying every range on S: 0
+G_S: |H| = 128, |E| = 436, CNF 17640 vars 133872 clauses -> ['s UNSATISFIABLE']
+G_basis_only: |H| = 15, |E| = 27, CNF 324 vars 1434 clauses -> ['s SATISFIABLE']
+RESULT: every proper 4-colouring of G has a tight cycle (chi_c(G) >= 4)
+independent (4Q-1,Q) check skipped (|H| > 64); 4-colourable: ['s SATISFIABLE']

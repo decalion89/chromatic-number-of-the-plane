@@ -13,5 +13,5 @@ The data of `notes/flat852.md` (29 September 2026). The graph is not known to be
 - `independent-check/verify852.py`: a second, independent check (exact unit distances with sympy in Q(zeta21),
   50-digit numerics, its own CNF encoding).
 - `scripts/`: the growth, minimisation and certification code (paths written as SC = the working directory).
-- `REPORT-growth-agent.md`: how the graph was found (Haugland's lattice L plus its mirror image; colouring-guided
+- `search-log.md`: how the graph was found (Haugland's lattice L plus its mirror image; colouring-guided
   growth from H ∪ conj(H)).

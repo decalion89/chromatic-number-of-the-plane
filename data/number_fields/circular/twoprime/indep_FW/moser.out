@@ -1,0 +1,13 @@
+(1) unit-distance pairs among the 7 points (exact, Q(sqrt3,sqrt11)): [('A', 'B'), ('A', 'C'), ('A', 'E'), ('A', 'F'), ('B', 'C'), ('B', 'D'), ('C', 'D'), ('D', 'G'), ('E', 'F'), ('E', 'G'), ('F', 'G')] -> exactly the 11 spindle edges
+    A = ({}, {})
+    B = ({'r11': Fraction(1, 4), 'r3': Fraction(-1, 12)}, {'1': Fraction(1, 4), 'r33': Fraction(1, 12)})
+    C = ({'r11': Fraction(1, 4), 'r3': Fraction(1, 12)}, {'1': Fraction(1, 4), 'r33': Fraction(-1, 12)})
+    D = ({'r11': Fraction(1, 2)}, {'1': Fraction(1, 2)})
+    E = ({'r11': Fraction(1, 4), 'r3': Fraction(1, 12)}, {'1': Fraction(-1, 4), 'r33': Fraction(1, 12)})
+    F = ({'r11': Fraction(1, 4), 'r3': Fraction(-1, 12)}, {'1': Fraction(-1, 4), 'r33': Fraction(-1, 12)})
+    G = ({'r11': Fraction(1, 2)}, {'1': Fraction(-1, 2)})
+(2) alpha = 2, chi = 4
+(3) least p/q (p <= 14) with a (p,q)-colouring: 7/2; fractions < 7/2 with a colouring: []
+(4) the draft's colouring A..G = 0,2,4,6,3,5,1 is a (7,2)-colouring: OK
+(5) number of (7,2)-colourings: 56; without a tight cycle: 0
+MOSER: chi_c = 7/2 confirmed (and every (7,2)-colouring has a tight cycle)

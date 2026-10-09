@@ -1,0 +1,3 @@
+window cross65 (D=65, 10 functionals), theta=7/25: components 233, of which contain a type point: 5, extra: 228
+  exact kappa of the extra components (value: count): {'173/616': 8, '2/7': 40, '7/24': 4, '5/17': 8, '3/10': 24, '101/336': 24, '53/176': 4, '17/56': 48, '27/88': 4, '13/42': 16, '5/16': 16, '11/34': 4, '1/3': 16, '67/176': 4, '55/144': 8}
+  max kappa among extras: 55/144
