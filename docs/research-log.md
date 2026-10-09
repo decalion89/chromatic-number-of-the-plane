@@ -11024,3 +11024,31 @@ without a bound on the size.
   were never read. To make sure, the build of the script test was replayed with a search path of that build and
   Mathlib only: `leanchecker -v` exited 0 on all 72 modules (627 s in all) and on `ConstructibleFinite.lean`.
 
+
+## Every Euclidean field, and where the method stops (9 October)
+
+- **Euclidean fields.** Every Euclidean field `F` contains a copy of the real constructible numbers `F_c`: they are
+  the union of a chain of square-root extensions with positive radicands, and an order-preserving embedding extends
+  along each step to the positive square root in `F`. So `E_c = F_c(i)` maps into `F²`, keeping the pairs at distance
+  1, and the plane over every Euclidean field, Archimedean or not, has no proper 5-colouring (Corollary 5 of
+  `papers/ruler-compass/`, on paper).
+- **Referee of Corollary 5.** No mathematical error. One overclaim in the draft, corrected before publication: it
+  said that for Euclidean fields that are not real closed the corollary needs Theorem 1. The Euclidean closure of
+  ℝ(t) is a counterexample, since it contains ℝ. The dividing line is whether `F` contains a copy of the real
+  algebraic numbers: then OpenAI's proof, which already excludes the algebraic plane, gives the corollary by the same
+  embedding, with no need for Tarski's transfer; if not, as for `F_c`, the corollary rests on Theorem 1. The other
+  findings (the full sign rule, `E_c = F_c(i)`, embedding all of `E_c` instead of a finite set, notation) are applied.
+- **The Pythagorean closure.** Over the smallest subfield `P` of ℝ closed under `√(a² + b²)`, the analogue of
+  OpenAI's rigidity theorem (their Theorem 2.3, used only in the proof of Proposition 4.2) is false. `P` is totally
+  real, so `√2 ↦ −√2` extends to an embedding `σ: P → ℝ`; the characters `z ↦ e^{iξ·σ(z)}` form a copy of ℝ² in the
+  dual group on which `K` acts by rotations, and the uniform measure on a circle there is `K`-invariant, gives the
+  continuous characters measure zero, and has Fourier coefficient `J₀(ρ) ≠ 0` at every `u ∈ K`. So the first step
+  cannot be run over `P` as it stands. For Euclidean subfields of ℝ the construction gives nothing, since their only
+  real embedding is the inclusion. Whether the plane over `P` is 5-colourable stays open. Refereed once (correct;
+  presentation fixes applied).
+- **The six-witness kissat run.** The 48-hour kissat run on the W-growth instance `r20_w3` (7 200 points, the
+  `{1, d, d′}`-graph at the orbit `(14 ∓ 2√33)/3`, 36 000 variables, 288 993 clauses) ended after about 2.6 hours:
+  satisfiable. The model satisfies every clause (checked separately), so this graph is 5-colourable and is not a
+  witness. The growth was resumed from it with that colouring (R = 20, near weight 3, kissat 12 hours per hard step).
+- **Full test suite on a fresh clone.** Started at 15:10 UTC on a clone of the published head `99dd1b05`, with the
+  slow tests and drat-trim; the result goes in the next entry.

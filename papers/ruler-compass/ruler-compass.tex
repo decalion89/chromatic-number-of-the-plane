@@ -49,7 +49,8 @@ of the smallest subfield of $\C$ closed under square roots. By the de~Bruijn--Er
 unit-distance graph with constructible vertices has no proper $5$-colouring. Two observations suffice: a
 group-theoretic lemma about elements of order~$2$, and a choice of exponents in one multiple ergodic average that
 needs no shift. We checked the modified proof in Lean~4. The kernel accepts it, and only the standard axioms are
-used.
+used. A short argument on paper then extends the result to the plane over every Euclidean field, Archimedean or
+not: the real constructible numbers embed in every Euclidean field.
 \end{abstract}
 
 \maketitle
@@ -73,7 +74,8 @@ $\Ec$ has no proper $5$-colouring.
 
 So the unit-distance graph on $\Ec$ has chromatic number $6$ or $7$. Larger planes contain $\Ec$, so the theorem
 also holds for them. Examples are the origami numbers (closed under square and cube roots \cite{Alperin}), the
-numbers expressible by radicals, the algebraic numbers and $\C$ itself.
+numbers expressible by radicals, the algebraic numbers and $\C$ itself. Section~\ref{sec:euclid} extends the theorem to the plane $F^2$
+over every Euclidean field $F$.
 
 \begin{corollary}\label{cor:finite}
 Some finite set of constructible points has no proper $5$-colouring.
@@ -266,21 +268,116 @@ Before the constructible case we built the origami and radical cases and checked
 also rebuilt from scratch with the published script. The patches, the statements and a build script are in
 \nolinkurl{lean/external/openai-five/fields/} of~\cite{Repo}, with a copy of OpenAI's licence (Apache~2.0).
 
+\section{Every Euclidean field}\label{sec:euclid}
+
+A \emph{Euclidean field} is an ordered field in which every positive element is a square. For a field $F$, call two
+points $(x,y)$ and $(x',y')$ of $F^2$ \emph{at distance $1$} if $(x-x')^2+(y-y')^2=1$.
+
+\begin{corollary}\label{cor:euclid}
+Let $F$ be a Euclidean field. Every colouring of $F^2$ with five colours gives the same colour to two points at
+distance~$1$.
+\end{corollary}
+
+\begin{proof}
+Let $F_{\mathrm c}=\Ec\cap\R$. It is the smallest subfield of $\R$ closed under square roots of positive elements.
+Indeed, it is closed under them: if $0<a\in F_{\mathrm c}$, then $\sqrt a\in\Ec\cap\R$. Conversely, let $L\subseteq\R$ be a field closed under them. Then $L(i)$ is closed
+under square roots: the square roots of $a+bi$, with $a,b\in L$ and $r=\sqrt{a^2+b^2}$, are
+$\pm\bigl(\sqrt{(r+a)/2}+i\varepsilon\sqrt{(r-a)/2}\bigr)$, where $\varepsilon=1$ if $b\ge0$ and $\varepsilon=-1$
+otherwise. So $\Ec\subseteq L(i)$, and $F_{\mathrm c}\subseteq L(i)\cap\R=L$. With $L=F_{\mathrm c}$
+this also gives $\Ec=F_{\mathrm c}(i)$.
+
+Hence $F_{\mathrm c}$ is the union of the fields $\Q(\sqrt{a_1},\dots,\sqrt{a_n})\subseteq\R$ in which each $a_j$ is
+a positive element of $\Q(\sqrt{a_1},\dots,\sqrt{a_{j-1}})$: this union is a field, closed under square roots of
+positive elements, and contained in $F_{\mathrm c}$. As $F_{\mathrm c}$ is countable, it is also the union of one chain
+$\Q=L_0\subseteq L_1\subseteq\cdots$ with $L_j=L_{j-1}(\sqrt{a_j})$ and $0<a_j\in L_{j-1}$. To build it, list the
+elements of $F_{\mathrm c}$, and adjoin, one by one, the square roots that a field of the above form containing the
+next element uses.
+
+We define order-preserving field homomorphisms $\sigma_j\colon L_j\to F$, each extending the previous one. Let
+$\sigma_0$ be the inclusion of $\Q$. Given $\sigma_{j-1}$, the element $\sigma_{j-1}(a_j)$ is positive, so it equals
+$b^2$ for some $b>0$ in $F$. If $\sqrt{a_j}\in L_{j-1}$, let $\sigma_j=\sigma_{j-1}$. Otherwise each element of $L_j$
+is $u+v\sqrt{a_j}$ with unique $u,v\in L_{j-1}$, and we let $\sigma_j(u+v\sqrt{a_j})=\sigma_{j-1}(u)+\sigma_{j-1}(v)b$.
+This is a field homomorphism, because $b^2=\sigma_{j-1}(a_j)$. It preserves the order, by the following rule,
+valid in every ordered field for $a>0$ and $s>0$ with $s^2=a$. The sign of $u+vs$ is the sign of $u$ if $v=0$ or if
+$u$ and $v$ have the same sign; it is the sign of $v$ if $u=0$; and it is the sign of $u$ times the sign of
+$u^2-av^2$ if $u$ and $v$ are nonzero with opposite signs. Apply the rule to $s=\sqrt{a_j}$ in $L_j$ and to $s=b$ in
+$F$. Since $\sigma_{j-1}$ preserves the signs of $u$, $v$ and $u^2-a_jv^2$, and
+$\sigma_{j-1}(u)^2-b^2\sigma_{j-1}(v)^2=\sigma_{j-1}(u^2-a_jv^2)$, the elements $u+v\sqrt{a_j}$ and
+$\sigma_j(u+v\sqrt{a_j})$ have the same sign. Together the $\sigma_j$ define a field homomorphism $\sigma\colon F_{\mathrm c}\to F$.
+
+The map $\Ec=F_{\mathrm c}(i)\to F^2$, $x+iy\mapsto(\sigma(x),\sigma(y))$, is injective. If $z=x+iy$ and $z'=x'+iy'$
+in $\Ec$ satisfy $|z-z'|=1$, then $(x-x')^2+(y-y')^2=1$, and applying $\sigma$ shows that their images are at
+distance $1$. So a colouring of $F^2$ with five colours and no two points at distance $1$ of the same colour would
+restrict to a proper $5$-colouring of $\Ec$, against Theorem~\ref{thm:main}.
+\end{proof}
+
+Examples of Euclidean fields are $\R$, the real algebraic numbers, $F_{\mathrm c}$ itself and every real closed field,
+such as a field of real Puiseux series or a field of hyperreal numbers. OpenAI's proof is written for $\R^2$, with
+Lebesgue measure, but it shows that already the plane of algebraic points has no proper $5$-colouring
+(Section~1). So if $F$ contains a copy of the real algebraic numbers, as every real closed field does, the embedding
+argument applied to the algebraic plane gives the corollary without Theorem~\ref{thm:main}. If $F$ contains no such
+copy, as for $F_{\mathrm c}$, the corollary rests on Theorem~\ref{thm:main}; for $F_{\mathrm c}$ it is
+Theorem~\ref{thm:main}, since $\Ec=F_{\mathrm c}(i)$. Corollary~\ref{cor:euclid} also holds with $(x-x')^2+(y-y')^2=c$ for any fixed
+$c>0$ in $F$ in place of $1$: since $F$ is Euclidean, $c=r^2$ with $r>0$, and scaling by $r$ maps the pairs at
+distance $1$ onto these pairs. Finally, the Hilbert planes
+that satisfy the parallel axiom and the circle--circle intersection property, which Hartshorne calls Euclidean
+planes, are up to isomorphism the planes $F^2$ over Euclidean fields $F$ \cite{Hartshorne}; congruence of segments
+becomes equality of $(x-x')^2+(y-y')^2$. So in every such plane, whichever segment is taken as unit, the points
+cannot be $5$-coloured without two points at unit distance of the same colour.
+
 \section{Remarks}
 
-Property~(E2) says that $F$ is a Euclidean field, and the method needs it: with $B=1$,
-\cite[Lemma~3.3]{OpenAI} uses $\sqrt A$ for every $A\ge0$ in $F$. Every Euclidean subfield of $\R$ contains the real
-constructible numbers. So $\Ec$ is the smallest field of the form $F(i)$ to which the proof applies in this form.
+Property~(E2) says that the field $F=E\cap\R$ of Section~\ref{sec:field} is Euclidean, and the method needs it: with $B=1$,
+\cite[Lemma~3.3]{OpenAI} uses $\sqrt A$ for every $A\ge0$ in $F$. Every Euclidean subfield of $\R$ contains
+$F_{\mathrm c}=\Ec\cap\R$ (proof of Corollary~\ref{cor:euclid}). So $\Ec$ is the smallest field of the form $F(i)$ to which the proof applies in this form.
 
 Two questions remain open:
 \begin{itemize}
 \item Does the plane over the Pythagorean closure of $\Q$ have a proper $5$-colouring? There $K$ is still
-$2$-divisible, because $(1\pm a)/2=((1\pm a)/2)^2+(b/2)^2$ is a sum of squares. So only (E2) fails.
+$2$-divisible, because $(1\pm a)/2=((1\pm a)/2)^2+(b/2)^2$ is a sum of squares. Of (E1)--(E3), only (E2) fails there.
 \item How many square roots must be adjoined to $\Q$ to obtain a field whose plane has no proper $5$-colouring?
 Corollary~\ref{cor:finite} says that finitely many suffice.
 \end{itemize}
 An explicit finite unit-distance graph with no proper $5$-colouring would bound the answer to the second question. It
 would also give an explicit witness for $\chi(\R^2)\ge6$.
+
+\begin{remark}
+Over the Pythagorean closure $P$ of $\Q$, the smallest subfield of $\R$ that contains $\sqrt{a^2+b^2}$ whenever it
+contains $a$ and $b$, the failure of (E2) is not just a gap in the proof. We use the notation of
+\cite[Def.~2.1 and~2.2]{OpenAI} with $\overline{\Q}$ replaced by $E=P(i)$. Thus $F=E\cap\R=P$,
+$K=\{u\in E:u\bar u=1\}$, $D$ is the compact group of characters of the discrete group $E$, on which $a\in E$ acts by
+$(ad)(z)=d(az)$, and $C=j(\R^2)$, where $j(\eta)(z)=e^{i\eta\cdot z}$. A $K$-invariant Borel probability measure $\nu$
+on $D$ is wild if $\nu(C)=0$, and its Fourier coefficients are $f_\nu(z)=\int_D d(z)\,d\nu(d)$. The analogue of
+\cite[Thm.~2.3]{OpenAI} for $E=P(i)$, that every wild $K$-invariant probability measure on $D$ is Haar measure, is
+false. That theorem is applied only in the proof of \cite[Prop.~4.2]{OpenAI}, to make such Fourier coefficients
+vanish, at the elements of $K$ in particular. So the first step cannot be run over $P$ as it stands. This does not
+decide the first question above.
+
+The totally real algebraic numbers form a subfield of $\R$ closed under $(a,b)\mapsto\sqrt{a^2+b^2}$: each conjugate
+of $\sqrt{a^2+b^2}$ is $\pm\sqrt{\tau(a)^2+\tau(b)^2}$ for some embedding $\tau$ of $\Q(a,b)$ into $\R$, hence real. So
+every element of $P$ is totally real. As $\sqrt2=\sqrt{1^2+1^2}\in P$, the embedding of $\Q(\sqrt2)$ into $\R$ with
+$\sqrt2\mapsto-\sqrt2$ extends to an embedding $\sigma$ of the algebraic extension $P$ into $\C$, and $\sigma(P)\subset\R$
+because $P$ is totally real. In particular $P$ is not Euclidean: $\sqrt2-1>0$, but $\sigma(\sqrt2-1)<0$, so $\sqrt2-1$
+is not a square in $P$. Extend $\sigma$ to $E$ by $\sigma(i)=i$. Then $\sigma(\bar z)=\overline{\sigma(z)}$, so
+$|\sigma(u)|=1$ for $u\in K$.
+
+For $\xi\in\R^2$ let $j_\sigma(\xi)\in D$ be the character $z\mapsto e^{i\xi\cdot\sigma(z)}$. The map
+$j_\sigma\colon\R^2\to D$ is continuous, and $u\in K$ maps $j_\sigma(\xi)$ to $j_\sigma(\xi')$, where $\xi'$ is $\xi$
+rotated by $\sigma(u)^{-1}$. So for $\rho>0$ the image $\nu$ under $j_\sigma$ of the uniform probability measure on the
+circle $|\xi|=\rho$ is a $K$-invariant Borel probability measure on $D$. It is wild. Indeed, if $j_\sigma(\xi)=j(\eta)$,
+the continuous character $(z,w)\mapsto e^{i(\xi\cdot w-\eta\cdot z)}$ of $\C^2$ is trivial on the set
+$\{(z,\sigma(z)):z\in E\}$. This set is dense in $\C^2$, because $x\mapsto(x,\sigma(x))$ maps $\Q(\sqrt2)$ onto a dense
+subset of $\R^2$, the image of $\Q^2$ under the invertible linear map $(a,b)\mapsto(a+b\sqrt2,a-b\sqrt2)$. So
+$\xi=\eta=0$. Hence $j_\sigma^{-1}(C)=\{0\}$, which the circle misses, and $\nu(C)=0$. But $\nu$ is not Haar measure.
+Its Fourier coefficient at $z$ is $J_0(\rho|\sigma(z)|)$, where $J_0(r)=\frac1{2\pi}\int_0^{2\pi}e^{ir\cos\theta}\,
+d\theta$. At every $u\in K$ it is $J_0(\rho)$, which is not zero for $0<\rho<2.4$, whereas the Fourier coefficients of
+Haar measure vanish at every $z\neq0$.
+
+By contrast, a Euclidean subfield of $\R$ has no embedding into $\R$ other than the inclusion: an embedding maps
+squares to squares, so it preserves the order, and it fixes $\Q$, which is dense in $\R$. So for $\overline{\Q}$ and
+for $\Ec$ an embedding of $E$ that commutes with complex conjugation is the identity or complex conjugation, $j_\sigma(\R^2)=C$,
+and the construction gives nothing.
+\end{remark}
 
 \begin{thebibliography}{99}
 
@@ -293,6 +390,8 @@ in the theory of relations}, Indag. Math. \textbf{13} (1951), 371--373.
 \textbf{28} (2018), 18--31; arXiv:1804.02385.
 \bibitem{Fischer} K. G. Fischer, \emph{A planar geometric graph of chromatic number four}, Congr. Numer.
 \textbf{104} (1994), 73--79.
+\bibitem{Hartshorne} R. Hartshorne, \emph{Geometry: Euclid and Beyond}, Undergraduate Texts in Mathematics,
+Springer, New York, 2000.
 \bibitem{Lean4} L. de Moura and S. Ullrich, \emph{The Lean 4 theorem prover and programming language}, Automated
 Deduction -- CADE 28, Lecture Notes in Comput. Sci., vol. 12699, Springer, 2021, pp.~625--635.
 \bibitem{Mathlib} The mathlib Community, \emph{The Lean mathematical library}, Proceedings of the 9th ACM SIGPLAN

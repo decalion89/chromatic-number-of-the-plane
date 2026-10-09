@@ -12,6 +12,15 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Changed
+- **Every Euclidean field, and where the method stops (9 October).** `papers/ruler-compass/` (now six pages),
+  Section 6: for every Euclidean field `F`, every 5-colouring of `F²` has two points at distance 1 of the same colour
+  (Corollary 5), because the real constructible numbers embed in `F`. For fields that contain a copy of the real
+  algebraic numbers, such as the real closed fields, this already follows from OpenAI's proof; for the others, such as
+  the real constructible numbers, it rests on the ruler-and-compass theorem. On paper, not in Lean. A remark in
+  Section 7 shows that the analogue of OpenAI's rigidity theorem is false over the Pythagorean closure of ℚ, so their
+  first step cannot be run there as it stands. Each refereed once (AI-assisted; no mathematical error; one overclaim
+  corrected before publication). Note, README (results, state of the art, Spanish summary), papers index, research
+  log.
 - **The ruler-and-compass result: a five-page paper and the finite form in Lean (9 October).**
   `papers/ruler-compass/` (*The ruler-and-compass plane is not 5-colourable*, draft) presents the result of the next
   entry, with OpenAI credited for the proof. `lean/external/openai-five/fields/ConstructibleFinite.lean` proves that some

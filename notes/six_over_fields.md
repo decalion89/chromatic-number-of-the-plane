@@ -184,6 +184,62 @@ smallest field to which the proof applies in this form.
 Smaller planes need a different argument. Examples are the plane over the Pythagorean closure of ℚ, or over any
 explicitly given field of finite degree.
 
+**Over the Pythagorean closure the key theorem fails.** Let `P` be the smallest subfield of ℝ that contains
+`√(a² + b²)` whenever it contains `a` and `b`, and `E = P(i)`. There `K` is still 2-divisible, since
+`(1 ± a)/2 = ((1 ± a)/2)² + (b/2)²`, so of (E1)–(E3) only (E2) fails. But more breaks than a step of the proof: the
+analogue of OpenAI's rigidity theorem (Theorem 2.3: every `K`-invariant probability measure on the dual group `D` of
+`E` that gives the continuous characters `C` measure zero is Haar measure) is false for `P(i)`. That theorem is used,
+only in the proof of their Proposition 4.2, to make Fourier coefficients vanish at the elements of `K`.
+1. Every element of `P` is totally real, because the totally real numbers form a field closed under
+   `(a, b) ↦ √(a² + b²)`. So `σ: √2 ↦ −√2` extends to an embedding `σ: P → ℝ`, and to `E` with `σ(i) = i`; it commutes
+   with complex conjugation, and `|σ(u)| = 1` for `u ∈ K`. (`P` is not Euclidean: `√2 − 1 > 0` but
+   `σ(√2 − 1) < 0`.)
+2. The characters `j_σ(ξ): z ↦ e^{iξ·σ(z)}`, `ξ ∈ ℝ²`, form a copy of ℝ² in `D` on which `u ∈ K` acts as the
+   rotation by `σ(u)⁻¹`. So the image `ν` of the uniform measure on a circle `|ξ| = ρ` is `K`-invariant.
+3. `ν(C) = 0`, because `z ↦ (z, σ(z))` has dense image in ℂ², so `j_σ(ξ) ∈ C` only for `ξ = 0`.
+4. `ν` is not Haar measure: its Fourier coefficient at `u ∈ K` is `J₀(ρ) ≠ 0` for `0 < ρ < 2.4`.
+
+A Euclidean subfield of ℝ has no embedding into ℝ other than the inclusion, so for `ℚ̄` and `E_c` this construction
+gives nothing. The remark does not decide whether the plane over `P` is 5-colourable. It is a remark in
+[`papers/ruler-compass/`](../papers/ruler-compass/README.md), refereed once (correct).
+
+## Every Euclidean field
+
+A *Euclidean field* is an ordered field in which every positive element is a square. For a field `F`, call two points
+`(x, y)` and `(x′, y′)` of `F²` at distance 1 if `(x − x′)² + (y − y′)² = 1`.
+
+**Corollary (Euclidean fields).** For every Euclidean field `F`, every colouring of `F²` with five colours gives the
+same colour to two points at distance 1.
+
+*Proof.*
+1. `F_c = E_c ∩ ℝ` is the smallest subfield of ℝ closed under square roots of positive elements. If `L ⊆ ℝ` is such a
+   field, then `L(i)` is closed under square roots, because the square roots of `a + bi` are
+   `±(√((r + a)/2) + iε√((r − a)/2))` with `r = √(a² + b²)` and `ε = 1` if `b ≥ 0`, `ε = −1` otherwise. So
+   `E_c ⊆ L(i)` and `F_c ⊆ L`. With `L = F_c` this gives `E_c = F_c(i)`.
+2. So `F_c` is the union of the fields `ℚ(√a₁, …, √aₙ) ⊆ ℝ` with each `aⱼ > 0` in `ℚ(√a₁, …, √aⱼ₋₁)`, and, being
+   countable, the union of one chain `ℚ = L₀ ⊆ L₁ ⊆ ⋯` with `Lⱼ = Lⱼ₋₁(√aⱼ)` and `0 < aⱼ ∈ Lⱼ₋₁`.
+3. An order-preserving field homomorphism `σ: Lⱼ₋₁ → F` extends to `Lⱼ` by sending `√aⱼ` to the positive square root
+   `b` of `σ(aⱼ)` in `F`. The extension preserves the order. In every ordered field, for `s > 0` with `s² = a`, the
+   sign of `u + vs` is the sign of `u` if `v = 0` or if `u` and `v` have the same sign, the sign of `v` if `u = 0`, and
+   the sign of `u` times that of `u² − av²` if `u` and `v` are nonzero with opposite signs; and
+   `σ(u)² − b²σ(v)² = σ(u² − av²)`.
+4. The union of these homomorphisms is a field homomorphism `σ: F_c → F`, and `x + iy ↦ (σ(x), σ(y))` maps
+   `E_c = F_c(i)` injectively into `F²`, keeping the pairs at distance 1. A 5-colouring of `F²` with no two points at
+   distance 1 of the same colour would restrict to a proper 5-colouring of `E_c`, against the theorem above. ∎
+
+Examples are ℝ, the real algebraic numbers, `F_c` itself and every real closed field, for instance fields of real
+Puiseux series or of hyperreal numbers. OpenAI's proof is written for `ℝ²` with Lebesgue measure, but it shows that
+already the plane of algebraic points has no proper 5-colouring. So if `F` contains a copy of the real algebraic
+numbers, as every real closed field does, the same embedding argument applied to the algebraic plane gives the
+corollary without the constructible theorem. If `F` contains no such copy, as for `F_c`, the corollary rests on the
+constructible theorem; for `F_c` it is that theorem, since `E_c = F_c(i)`. The same holds with
+`(x − x′)² + (y − y′)² = c` for any fixed `c > 0` in `F`: scale by `√c`. Hartshorne calls the Hilbert planes with the
+parallel axiom and the circle–circle intersection property *Euclidean planes*; up to isomorphism they are the planes
+`F²` over Euclidean fields (R. Hartshorne, *Geometry: Euclid and Beyond*, Springer, 2000). So in each of them, with
+any segment as unit, the points cannot be 5-coloured without two points at unit distance of the same colour.
+
+This step is not formally verified; it is on paper only (`papers/ruler-compass/`, Corollary 5, refereed once).
+
 ## References
 
 - OpenAI, *The Euclidean plane is not five-colorable*, OpenAI Math Release preprint, 23 September 2026, and its Lean
@@ -194,3 +250,4 @@ explicitly given field of finite degree.
 - N. G. de Bruijn, P. Erdős, *A colour problem for infinite graphs and a problem in the theory of relations*,
   Indag. Math. 13 (1951), 371–373 ([doi](https://doi.org/10.1016/S1385-7258(51)50053-7)).
 - K. G. Fischer, *A planar geometric graph of chromatic number four*, Congr. Numer. 104 (1994), 73–79.
+- R. Hartshorne, *Geometry: Euclid and Beyond*, Undergraduate Texts in Mathematics, Springer, New York, 2000.
