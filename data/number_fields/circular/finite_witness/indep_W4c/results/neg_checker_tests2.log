@@ -1,0 +1,3 @@
+## NEG2: cake_lpr on full q3_11 CNF + LRAT with final empty-clause line removed
+c empty clause not derived at end of proof
+exit 0

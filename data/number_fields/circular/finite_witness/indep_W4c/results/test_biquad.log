@@ -1,0 +1,3 @@
+A=3 B=11: identities ok, 20000 random products agree with floats (max rel err 3.85e-13)
+A=2 B=3: identities ok, 20000 random products agree with floats (max rel err 3.50e-13)
+biquad self-test PASSED

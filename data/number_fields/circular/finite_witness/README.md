@@ -10,8 +10,9 @@ Proposition 3 of the paper (a place with residue field `𝔽₇`) gives `≤ 7/2
 not use its computer-assisted Proposition 9.
 
 Theorem F16 of the note (Theorem G of the paper) adds the value 4: when `χ_c(F²) = 4`, some finite unit-distance
-graph in `F²` has `χ_c = 4`, again with no bound on its size. The last two sections give explicit ones over
-`ℚ(√3, √11)` and `ℚ(√2, √3)`, with 1 874 and 1 657 vertices.
+graph in `F²` has `χ_c = 4`, again with no bound on its size. The last three sections give explicit ones over
+`ℚ(√3, √11)` and `ℚ(√2, √3)`, with 1 874 and 1 657 vertices, and their subgraphs in the Cayley graphs of the unit
+vectors they were built from, which still have `χ_c = 4`.
 
 **The claim.** Each graph `H` below is a unit-distance graph in `ℚ(√d)²`, induced (every pair of its points at
 distance 1 is an edge), with `χ_c(H) = 7/2`.
@@ -415,3 +416,47 @@ pair exactly, and writes the formula of `check_witness4.py`; it is byte for byte
 built in the arithmetic of `ℚ(ζ₂₄)`, so the two computations of the unit pairs agree. `per_ilp.py`, `core_min.py`,
 `cycles_of.py` and `shrink_core.py` are copies of those in `construction_q3_11/`; `short_rel.py` and `per_build.py`
 read the vectors and the basis from `$CFG`.
+
+## Inside the Cayley graphs: `witness_q3_11_cayley` and `witness_q2_3_cayley`
+
+`H₄` and `H₄′` take all unit pairs among their points as edges, and some of these are not differences in `±U` for the
+unit vectors `U` of their constructions: 198 of the 8 085 edges of `H₄` (12 directions up to sign) and 39 of the 6 238
+edges of `H₄′` (17 directions). Their subgraphs `H₄°` and `H₄′°` on the same points, with only the pairs that differ by
+an element of `U ∪ −U` as edges, still have `χ_c = 4`, with more listed cycles:
+
+| witness | field | vertices | edges | generators `U` | listed cycles (lengths) | sha256 of the formula |
+|---|---|---|---|---|---|---|
+| `witness_q3_11_cayley` | `ℚ(√3, √11)` | 1 874 | 7 887 | the 27 vectors of `../at_four/q3_11.py` | 3 389 (4, 8) | `b394ee93…` |
+| `witness_q2_3_cayley` | `ℚ(√2, √3)` | 1 657 | 6 199 | the 60 vectors `ζ₂₄^j w^l` | 5 264 (4, 8) | `802921ac…` |
+
+So `H₄°` is a finite subgraph of the Cayley graph of the 54 vectors `±U` with `χ_c = 4`: the graph that Corollary 8 of
+the paper (Corollary F14 of the note) gives for these vectors, here explicit. Every point is joined to the origin by
+steps in `±U` inside the graph, so all points lie in `ℤU`. The files have one more key, `generators` (one vector of each
+pair `±u`, in the coordinates of the points), and `check_witness4.py` then also checks (1b): the generators are unit
+vectors, pairwise distinct up to sign; the edges are exactly the pairs of points that differ by an element of `U ∪ −U`;
+and every point is joined to the fixed vertex (the origin) by edges. The formula is the same as for the other witnesses.
+
+- *Verification.* `xz -dk witness_q3_11_cayley.drat.xz` and
+  `python3 check_witness4.py witness_q3_11_cayley.json.gz witness_q3_11_cayley.cnf.gz witness_q3_11_cayley.drat drat-trim`
+  (about 10 seconds; the same for `witness_q2_3_cayley`, about 20 seconds). kissat 4.0.4 refutes the two formulas in
+  about 15 and 25 seconds, and `drat-trim -L` turns the stored proofs into LRAT proofs that `cake_lpr` accepts
+  (`s VERIFIED UNSAT`). `tests/test_at_four.py` checks the generators against `../at_four/q3_11.py` and against the 60
+  vectors rebuilt in its own arithmetic, and that an extra edge in another direction is rejected. A referee's programs
+  (`indep_W4c/`, report `REPORT.md`, outputs in `results/`) share no code with these: they rebuild the 27 and the 60
+  vectors in their own arithmetic, check the Cayley pairs, the colouring and the cycles exactly, write their own
+  encoding, and kissat, `drat-trim -L` and `cake_lpr` print `s UNSATISFIABLE`, `s VERIFIED` and `s VERIFIED UNSAT` for
+  both files; their 29 mutations of each file are all rejected. They also show that the stored colourings are proper on
+  the full unit-distance graphs on the same points (with the 198 and 39 other unit pairs).
+- *How they were found* (`construction_cayley/`). On the points of `H₄` (`H₄′`) with the Cayley edges only, the formula
+  with the listed cycles is satisfiable. `cayley.py init` repeats: kissat finds a proper 4-colouring without a tight
+  listed cycle, and every tight directed cycle that a depth-first search finds among the tight arcs of that colouring is
+  added to the list; after three rounds (751 cycles added; for `H₄′` two rounds, 422) the formula is unsatisfiable.
+  Three rounds of clausal cores (`shrink_cayley.sh`) then keep 3 389 (5 264) cycles, all of length 4 or 8. In a scratch
+  folder, with `KISSAT` and `DRAT_TRIM` naming the binaries and `C` this folder's `construction_cayley/`,
+
+    python3 $C/cayley.py init q3_11 cay_q3_11.json                 # 349 + 133 + 269 tight cycles, then unsatisfiable
+    $C/shrink_cayley.sh cay_q3_11.json 3 witness_q3_11_cayley     # 5 743 -> 4 013 -> 3 617 -> 3 389 cycles
+    python3 $C/cayley.py init q2_3 cay_q2_3.json                   # 165 + 257 tight cycles
+    $C/shrink_cayley.sh cay_q2_3.json 3 witness_q2_3_cayley       # 6 484 -> 5 678 -> 5 420 -> 5 264 cycles
+
+reproduce both files, their formulas and their DRAT proofs byte for byte (kissat 4.0.4; checked from these copies).

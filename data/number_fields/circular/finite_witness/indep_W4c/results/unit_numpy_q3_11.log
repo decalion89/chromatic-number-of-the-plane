@@ -1,0 +1,3 @@
+max |coord| = 227, a-priori bound on norm components = 19787136 (< 2^62)
+unit-distance pairs: 8085; with generator difference: 7887; listed edges among them: 7887; unit non-edges: 198; edges not unit: 0
+exit 0

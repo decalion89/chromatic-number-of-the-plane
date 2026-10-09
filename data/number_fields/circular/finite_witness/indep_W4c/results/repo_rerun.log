@@ -1,0 +1,17 @@
+== test_biquad.py, check_geom.py and make_cnf.py on the repository copies (9 October 2026)
+A=2 B=3: identities ok, 20000 random products agree with floats (max rel err 3.50e-13)
+biquad self-test PASSED
+  STAT unit_check_seconds: 1.7
+OVERALL: PASS
+q3_11 CNF sha256 2528ba27e21f1769f9f19f409dbb7f02e6f48edc806ad027b43db0c0f0d8bf2b
+  STAT unit_check_seconds: 1.7
+OVERALL: PASS
+q2_3 CNF sha256 7987ccdbd5587bfda27b3e2a3d29d39495453bade329d8d61bbf1962babceeeb
+== kissat 4.0.4, drat-trim -L and cake_lpr on the two formulas of make_cnf.py
+q3_11 kissat: s UNSATISFIABLE (exit 20, 12 s)
+q3_11 drat-trim -L: s VERIFIED (10 s)
+q3_11 cake_lpr: s VERIFIED UNSAT (4 s)
+q2_3 kissat: s UNSATISFIABLE (exit 20, 23 s)
+q2_3 drat-trim -L: s VERIFIED (14 s)
+q2_3 cake_lpr: s VERIFIED UNSAT (7 s)
+ALLDONE

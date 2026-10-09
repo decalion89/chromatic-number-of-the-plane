@@ -885,8 +885,8 @@ of order 12 on the coordinates over `(1, √3, √11, √33)/84` keeps them at d
 (`at_four/theta311.json`), and an exact certificate (`cert311_open_4.json.gz`, 12 073 nodes; both checkers) shows that
 no character maps them into the open interval `(1/4, 3/4)`. So the Cayley graph of these 54 unit vectors, which is
 4-colourable as `χ(ℚ(√3, √11)²) = 4`, contains a finite subgraph with `χ_c = 4` (Corollary F14), without Theorem F or
-Proposition F15, and `χ_c(ℚ(√3, √11)²) ≥ 4` directly. Without `R_G` the same construction has `κ = 3/11` (an 11-adic
-character), and with `R₆₀` and `R_G` alone `κ = 1/3`.
+Proposition F15, and `χ_c(ℚ(√3, √11)²) ≥ 4` directly; an explicit one, `H₄°` below, has 1 874 vertices. Without `R_G`
+the same construction has `κ = 3/11` (an 11-adic character), and with `R₆₀` and `R_G` alone `κ = 1/3`.
 
 **An explicit witness at `4` over `ℚ(√3, √11)`** (6 October). `finite_witness/witness_q3_11.json.gz` is an induced
 unit-distance graph `H₄` in `ℚ(√3, √11)²` with 1 874 vertices and 8 085 edges (on points of `ℤU` for the 27 vectors
@@ -894,7 +894,12 @@ above; 198 of the edges are unit vectors other than the 54), and `χ_c(H₄) = �
 every proper 4-colouring has a tight cycle among 4 992 listed ones (of lengths 4, 8 and 12), by a SAT refutation that
 drat-trim checks (`check_witness4.py`) and that a referee's own encoding confirms with the verified checker `cake_lpr`
 (`finite_witness/indep_W4/`); Lemma F9 gives `χ_c(H₄) ≥ 4`. So the value 4 of Theorem F16 is attained by an explicit
-graph over this field. It was found with base-point periods:
+graph over this field. Its subgraph `H₄°` on the same points, with only the 7 887 pairs that differ by one of the 54
+vectors as edges (`finite_witness/witness_q3_11_cayley.json.gz`), is an explicit finite subgraph of their Cayley graph
+with `χ_c = 4`, as in Corollary F14: with the listed cycles it has proper 4-colourings without tight ones, but the tight
+cycles of such colourings (751, in three rounds) and clausal cores again leave 3 389 cycles, of lengths 4 and 8, that
+every proper 4-colouring meets in a tight one (drat-trim and `cake_lpr`, and a referee's own encoding,
+`finite_witness/indep_W4c/`; `finite_witness/construction_cayley/` reproduces it). It was found with base-point periods:
 
 > **Lemma F17 (base-point periods).** Let `G` be a graph on a finite set of points whose edges join `x` and `x + s`
 > with `s ∈ U ∪ −U` (`U` a finite set of nonzero vectors with `U ∩ −U = ∅`), and `c` a proper 4-colouring of `G`
@@ -968,10 +973,11 @@ vertices and 6 238 edges (`finite_witness/witness_q2_3.json.gz`, denominator 36;
 than the 120). It has a proper 4-colouring, and every proper 4-colouring has a tight cycle among 6 062 listed ones (of
 lengths 4 and 8), by a SAT refutation that drat-trim checks (`check_witness4.py`, which now reads the field from the
 file) and that a referee's own two encodings confirm with `cake_lpr` (`finite_witness/indep_W4b/`). So
-`χ_c(H₄′) = χ(H₄′) = 4`. As `χ(ℚ(√2, √3)²) ≤ 4` (a residue colouring at the prime above 2;
-`papers/planes-4-chromatic/`), this gives `χ_c(ℚ(√2, √3)²) = 4` with an explicit finite graph, without Theorem F (which
-gives it too: no prime above 7 has residue degree 1, as 3 is not a square modulo 7), and `H₄′` reproves
-`χ(ℚ(√2, √3)²) ≥ 4`. `finite_witness/construction_q2_3/` reproduces the witness byte for byte.
+`χ_c(H₄′) = χ(H₄′) = 4`. Its subgraph in the Cayley graph of the 120 vectors (6 199 edges, 5 264 cycles;
+`finite_witness/witness_q2_3_cayley.json.gz`) also has `χ_c = 4`, checked the same way. As `χ(ℚ(√2, √3)²) ≤ 4` (a
+residue colouring at the prime above 2; `papers/planes-4-chromatic/`), this gives `χ_c(ℚ(√2, √3)²) = 4` with an explicit
+finite graph, without Theorem F (which gives it too: no prime above 7 has residue degree 1, as 3 is not a square modulo
+7), and `H₄′` reproves `χ(ℚ(√2, √3)²) ≥ 4`. `finite_witness/construction_q2_3/` reproduces the witness byte for byte.
 
 ## 7. Questions
 
@@ -994,8 +1000,7 @@ gives it too: no prime above 7 has residue degree 1, as 3 is not a square modulo
    effective); over `ℚ(√3, √11)` one has 1 874 vertices and over `ℚ(√2, √3)` one has 1 657 (§6.9); over `ℚ(√59)` we know
    none: how small can one be? By the converse after Corollary F14 the set `U` of its edge vectors has `κ(U) ≤ 1/4`, so
    they cannot all have denominator 210 (`at_four/theta59_210.json`). Over `ℚ(√3, √11)` an explicit set with `κ = 1/4`
-   has 27 vectors (§6.9), and the witness `H₄` (on points of its Cayley graph, with all unit pairs as edges, 198 of them
-   outside the 54 vectors) has not been minimised.
+   has 27 vectors (§6.9), and the witness `H₄°` in its Cayley graph (1 874 vertices) has not been minimised.
 3. *The one-prime probe.* Does `r0(5^k)` tend to `3/10` (the conjecture of §5)? Theorem E no longer needs it.
 
 Measurements (floating-point MIP, not proofs): for `U = G_25{1, u_n, ū_n : n = 1, 7, 19}`, `max_ξ min_u ‖ξ(u)‖` is

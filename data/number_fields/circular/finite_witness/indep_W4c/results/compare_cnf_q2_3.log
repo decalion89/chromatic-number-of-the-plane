@@ -1,0 +1,7 @@
+ref header ['p', 'cnf', '6628', '57452'] parsed clauses 57452
+stored header ['p', 'cnf', '6628', '57452'] parsed clauses 57452
+distinct clauses: ref 57452, stored 57452
+clauses only in ref (after renaming): 0
+clauses only in stored: 0
+stored: tautological clauses 0, clauses with repeated literal 0, max var 6628
+IDENTICAL AS CLAUSE MULTISETS UNDER RENAMING: True

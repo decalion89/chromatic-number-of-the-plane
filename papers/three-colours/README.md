@@ -71,15 +71,16 @@ with a proof by hand; it is vertex-critical, no triangle-free graph with fewer v
 three triangle-free graphs with nine vertices have `χ_c = 3`, all three unit-distance graphs over `ℚ(√7)` and over
 `ℚ(√31)` (the subdivided hexagon itself, with twelve edges, is stored too). A referee checked the `7/2` witnesses again
 with programs of its own (no error; its remarks applied: `χ_c = 7/2` over `ℚ(√191)` and `ℚ(√455)` now follows from the
-witnesses and Proposition 3, without Proposition 9), and another the value-3 witnesses (no error; its remarks
-applied). For the value 4 the same section now gives an explicit witness over `ℚ(√3, √11)`: an induced
-unit-distance graph with 1 874 vertices and `χ_c = χ = 4`, found with base-point periods (Lemma 24, with proof)
-and certified by two DRAT proofs for two encodings, one of them written by a referee and checked by `cake_lpr`;
-the referee also checked Lemma 24, with a numerical test (`finite_witness/indep_W4/`), and the remark after it,
-which replaces the compactness step of Corollary 8 by a finite construction (tested on 15 distance graphs on `ℤ`).
-A second witness, over `ℚ(√2, √3)`, has 1 657 vertices; it is certified the same two ways, the referee's with two
-encodings of its own and `cake_lpr` (`finite_witness/indep_W4b/`), so `χ_c(ℚ(√2, √3)²) = 4` with an explicit graph.
-The PDF has 31 pages.
+witnesses and Proposition 3, without Proposition 9), and another the value-3 witnesses (no error; its remarks applied).
+For the value 4 the same section now gives an explicit witness over `ℚ(√3, √11)`: an induced unit-distance graph with
+1 874 vertices and `χ_c = χ = 4`, found with base-point periods (Lemma 24, with proof) and certified by two DRAT proofs
+for two encodings, one of them written by a referee and checked by `cake_lpr`; the referee also checked Lemma 24, with a
+numerical test (`finite_witness/indep_W4/`), and the remark after it, which replaces the compactness step of Corollary 8
+by a finite construction (tested on 15 distance graphs on `ℤ`). A second witness, over `ℚ(√2, √3)`, has 1 657 vertices;
+it is certified the same two ways, the referee's with two encodings of its own and `cake_lpr`
+(`finite_witness/indep_W4b/`), so `χ_c(ℚ(√2, √3)²) = 4` with an explicit graph. Their subgraphs in the Cayley graphs of
+the 54 and 120 unit vectors they were built from (7 887 and 6 199 edges) also have `χ_c = 4`, with more listed cycles;
+the first is the finite subgraph that Corollary 8 promises for the 54 vectors, here explicit. The PDF has 31 pages.
 
 [`three-colours.tex`](three-colours.tex) is the LaTeX source (`amsart`). To rebuild the PDF, run in this folder,
 with TeX Live:

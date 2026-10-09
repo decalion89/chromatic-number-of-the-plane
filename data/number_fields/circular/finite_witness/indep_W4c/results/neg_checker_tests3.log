@@ -1,0 +1,11 @@
+## NEG3: drat-trim on q3_11 CNF WITHOUT cycle clauses + full DRAT proof (full log: neg/neg3_full.log)
+warnings: 11587
+c parsing input formula with 7496 variables and 44667 clauses
+c finished parsing, read 11190735 bytes from proof file
+c detected empty clause; start verification via backward checking
+c RAT check failed on all possible pivots
+c failed at proof line 423718 (modulo deletion errors)
+
+s NOT VERIFIED
+c verification time: 0.778 seconds
+exit 1

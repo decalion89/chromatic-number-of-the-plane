@@ -1800,8 +1800,7 @@ $\frac{(89a+59b+89c+59e)}{118}\bmod1$ of the points $(\frac{a+b\sqrt{59}}{210},\
 $108$ unit vectors with denominator $210$ at distance at least $\frac{15}{59}$ from $\Z$, so that every graph built
 from them maps to $K_{59/15}$. Over $\Q(\sqrt3,\sqrt{11})$ an explicit set at $\frac14$ is small: with $R_{60}$ the rotation by $60^\circ$, $R_A$ the rotation with cosine $\frac56$ and sine $\frac{\sqrt{11}}6$ (the angle of the Moser spindle) and $R_G$ the one with cosine $\frac{11}{14}$ and sine $\frac{5\sqrt3}{14}$, the $27$ unit vectors $R_{60}^jR_A^kR_G^l(1,0)$, $j,k,l\in\{-1,0,1\}$, have $\kappa=\frac14$: a character of order $12$ keeps them at distance at least $\frac14$ from $\Z$, and an exact certificate ($12\,073$ nodes, checked by two programs; \nolinkurl{data/number_fields/circular/at_four/}) shows that none maps them into $(\frac14,\frac34)$. So Corollary~\ref{cor:finiteS4} gives a finite subgraph with $\chi_c=4$ of the Cayley graph of these $54$ vectors
 (which is $4$-colourable, as $\chi(\Q(\sqrt3,\sqrt{11})^2)=4$) directly, without Theorem~\ref{thm:F}. A construction
-based on the following lemma, run in this Cayley graph, found an explicit finite unit-distance graph with $\chi_c=4$
-on points of $\Z U$, with all unit pairs as edges (some of them in other directions).
+based on the following lemma found one, with $1\,874$ vertices (the graph $H_4^\circ$ below).
 
 \begin{lemma}[base-point periods]\label{lem:periods}
 Let $G$ be a graph on a finite set of points whose edges join $x$ and $x+s$ with $s\in U\cup-U$, for a finite set $U$
@@ -1848,14 +1847,22 @@ $54$ vectors). It has a proper $4$-colouring, and every proper $4$-colouring has
 ones, of lengths $4$, $8$ and $12$, by a SAT refutation that \texttt{drat-trim} checks and that an independent
 encoding, written from scratch by a referee without repository code, confirms with the verified checker
 \texttt{cake\_lpr}; Lemma~\ref{lem:tight} gives $\chi_c(H_4)\ge4$. So $\chi_c(H_4)=\chi(H_4)=4$, and the value $4$ of
-Theorem~\ref{thm:finite4} is attained by an explicit graph over $\Q(\sqrt3,\sqrt{11})$. Over $\Q(\sqrt2,\sqrt3)$,
+Theorem~\ref{thm:finite4} is attained by an explicit graph over $\Q(\sqrt3,\sqrt{11})$. Its subgraph $H_4^\circ$ on
+the same points, with only the $7\,887$ pairs that differ by one of the $54$ vectors as edges, is an explicit finite
+subgraph of the Cayley graph of these vectors with $\chi_c=4$, as in Corollary~\ref{cor:finiteS4}: with the listed
+cycles it has proper $4$-colourings without tight ones, but the tight cycles of such colourings ($751$, in three
+rounds) and clausal cores again leave $3\,389$ cycles, of lengths $4$ and $8$, that every proper $4$-colouring meets
+in a tight one, by a SAT refutation checked by \texttt{drat-trim} and \texttt{cake\_lpr} and confirmed by a referee's own
+encoding (\nolinkurl{data/number_fields/circular/finite_witness/witness_q3_11_cayley.json.gz},
+\nolinkurl{data/number_fields/circular/finite_witness/indep_W4c/}). Over $\Q(\sqrt2,\sqrt3)$,
 whose plane is the field $\Q(\zeta_{24})$ with $\zeta_{24}=e^{i\pi/12}$, the same construction starts from the $60$
 unit vectors $\zeta_{24}^jw^l$ ($j\in\Z/24$, $|l|\le2$, one of each pair $\pm u$), with $w=\frac{1+2\sqrt{-2}}3$;
 already the relations with $\sum_un_u^2\le8$ leave no $p$ (again an integer-programming computation that only guided
 the construction), and it gives an induced unit-distance graph $H_4'$ with $1\,657$ vertices and $6\,238$ edges
 (\nolinkurl{data/number_fields/circular/finite_witness/witness_q2_3.json.gz}; $39$ of the edges are in directions
-other than the $120$ vectors), with $\chi_c(H_4')=\chi(H_4')=4$ by a SAT refutation checked in the same two ways (the
-referee's for this graph has two encodings of its own). As $\chi(\Q(\sqrt2,\sqrt3)^2)\le4$ (a residue colouring at the
+other than the $120$ vectors), with $\chi_c(H_4')=\chi(H_4')=4$ by a SAT refutation checked in the same two ways (the referee's for this graph has two encodings of its own); its subgraph in the Cayley graph of the $120$ vectors
+($6\,199$ edges, $5\,264$ cycles) also has $\chi_c=4$, checked in the same way
+(\nolinkurl{data/number_fields/circular/finite_witness/witness_q2_3_cayley.json.gz}). As $\chi(\Q(\sqrt2,\sqrt3)^2)\le4$ (a residue colouring at the
 prime above $2$; \cite{P4C}), this gives $\chi_c(\Q(\sqrt2,\sqrt3)^2)=4$ with an explicit finite graph, and $H_4'$
 reproves $\chi(\Q(\sqrt2,\sqrt3)^2)\ge4$. An independent referee checked Lemma~\ref{lem:periods} and its use for
 $\Q(\sqrt3,\sqrt{11})$, with a numerical test on random small instances

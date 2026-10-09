@@ -12,6 +12,13 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Changed
+- **Explicit subgraphs of the Cayley graphs with `χ_c = 4` (9 October).** `finite_witness/witness_q3_11_cayley` (1 874
+  points, the 7 887 pairs that differ by one of the 54 vectors of the construction, 3 389 cycles) and
+  `finite_witness/witness_q2_3_cayley` (1 657 points, 6 199 pairs, 120 vectors, 5 264 cycles) have `χ_c = 4`: drat-trim
+  and `cake_lpr` verify the refutations. The first is the finite subgraph of Corollary 8 for the 54 vectors, explicit.
+  `check_witness4.py` checks the new `generators` key; `construction_cayley/` reproduces both files and proofs byte for
+  byte; tests in `tests/test_at_four.py`. Refereed (`indep_W4c/`: own encoding, kissat, drat-trim, `cake_lpr`, 29
+  mutations per file; no discrepancy). Paper (Section 10), note §6.9 and Question 2, README files, research log.
 - **Audit of the base-point periods passages (6–7 October, night).** No mathematical error. Corrected: `H₄` is not a
   subgraph of the Cayley graph of the 27 vectors (198 of its edges are other unit vectors, as its clausal cores used all
   unit pairs; 39 edges of `H₄′` lie outside its 120 vectors); the remark replaces only the compactness step of Corollary

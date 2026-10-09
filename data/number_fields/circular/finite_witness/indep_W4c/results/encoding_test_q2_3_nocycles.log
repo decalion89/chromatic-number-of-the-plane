@@ -1,0 +1,8 @@
+CNF file: cnf/ref_q2_3_nocycles.cnf | cycles in DIRECT: False
+colourings tested: 386; CNF_viol == DIRECT_viol on 386; disagreements 0
+CNF-true: 130, DIRECT-true: 130; violation counts range 0..1638
+proper colourings with c(fixed)=0 among them: 130; min #tight listed cycles among those: 0
+two-colours-on-a-vertex assignment falsifies a new clause: True
+no-colour-on-a-vertex assignment falsifies a new clause: True
+ENCODING TEST: PASS
+exit 0

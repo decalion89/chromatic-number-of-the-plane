@@ -319,3 +319,49 @@ Verification of the witness for chi_c = 4 over Q(sqrt2, sqrt3), witness_q2_3 (6 
    python3 ref_tests_z.py: 77 checks, 0 failures (moved points, an improper colouring, cycles through non-edges, a
    missing or an extra edge, a duplicated point, malformed entries; without the cycle clauses the formula is
    satisfiable, and the given colouring violates exactly the clauses of its 389 tight cycles)
+
+Verification of the Cayley subgraphs witness_q3_11_cayley and witness_q2_3_cayley (9 October 2026)
+
+1. python3 check_witness4.py witness_q3_11_cayley.json.gz witness_q3_11_cayley.cnf.gz witness_q3_11_cayley.drat drat-trim
+   (1) Q(sqrt3, sqrt11): 1874 points, 7887 edges, every edge at distance exactly 1
+       unit-distance pairs among the points: 8085; not listed as edges: 198 (not induced)
+   (1b) 27 generators U: unit vectors, pairwise distinct up to sign; the edges are exactly the pairs of points that
+       differ by an element of U u -U; 1874 of the 1874 points are joined to the fixed vertex (the origin) inside H
+   (2) the colouring is a proper 4-colouring: chi(H) <= 4, chi_c(H) <= 4
+   (3) 3389 cycles, all closed walks along edges (lengths 4..8, divisible by 4)
+   (4) the CNF is the formula built from the edges, cycles and fixed vertex; sha256
+       b394ee9342158c22354cb00fa0d7b373aa98b48d33a0795f62993ecf6b531230
+   (5) drat-trim: s VERIFIED
+   => every 4-colouring of H has a tight cycle, so chi_c(H) = chi(H) = 4
+   kissat 4.0.4 (default options) refuted the formula in 14 s; the stored proof is its DRAT output, xz-compressed
+   (10 298 512 bytes uncompressed, sha256 d8f7b0c700626c257f1ea46554bd16a11ae9d27a6414fb4f6cecec0923505d07);
+   drat-trim -L wrote an LRAT proof (35 391 121 bytes) that cake_lpr accepts: s VERIFIED UNSAT.
+2. python3 check_witness4.py witness_q2_3_cayley.json.gz witness_q2_3_cayley.cnf.gz witness_q2_3_cayley.drat drat-trim
+   (1) Q(sqrt2, sqrt3): 1657 points, 6199 edges, every edge at distance exactly 1
+       unit-distance pairs among the points: 6238; not listed as edges: 39 (not induced)
+   (1b) 60 generators U: unit vectors, pairwise distinct up to sign; the edges are exactly the pairs of points that
+       differ by an element of U u -U; 1657 of the 1657 points are joined to the fixed vertex (the origin) inside H
+   (2) the colouring is a proper 4-colouring: chi(H) <= 4, chi_c(H) <= 4
+   (3) 5264 cycles, all closed walks along edges (lengths 4..8, divisible by 4)
+   (4) the CNF is the formula built from the edges, cycles and fixed vertex; sha256
+       802921acb1e509aa3ab79f3ba9efaed50b036cb3d9d7277027ee5bb918b0b85b
+   (5) drat-trim: s VERIFIED
+   => every 4-colouring of H has a tight cycle, so chi_c(H) = chi(H) = 4
+   kissat 4.0.4 (default options) refuted the formula in 26 s; the stored proof is its DRAT output, xz-compressed
+   (20 974 784 bytes uncompressed, sha256 66a71e245a4ef937fbf136572c0a0a0860e40d3a44c32b153eccf6d480de02a0);
+   drat-trim -L wrote an LRAT proof (45 610 211 bytes) that cake_lpr accepts: s VERIFIED UNSAT.
+3. construction_cayley/ (cayley.py init, shrink_cayley.sh), rerun in a fresh folder from the repository copies,
+   reproduces both witness files, both formulas and both DRAT proofs byte for byte.
+4. The referee's programs (indep_W4c/, written from the file format, no code shared with check_witness4.py or
+   construction_cayley/): check_geom.py rebuilds the 27 vectors R60^j RA^k RG^l (1,0) and the 120 vectors zeta^j w^l in
+   its own arithmetic (0 mismatches with the generators), finds every Cayley pair exactly (7887 and 6199, none missing,
+   none extra; an all-pairs scan agrees), the colourings proper, the cycles simple closed walks along edges;
+   make_cnf.py (colour-major variables): q3_11 7496 variables, 58 223 clauses, sha256
+   2528ba27e21f1769f9f19f409dbb7f02e6f48edc806ad027b43db0c0f0d8bf2b; q2_3 6628 variables, 57 452 clauses, sha256
+   7987ccdbd5587bfda27b3e2a3d29d39495453bade329d8d61bbf1962babceeeb; after renaming, the same clauses as the stored
+   formulas;
+   kissat: s UNSATISFIABLE (12 s, 22 s); drat-trim -L: s VERIFIED; cake_lpr: s VERIFIED UNSAT (both); the stored
+   proofs: drat-trim s VERIFIED, and cake_lpr accepts their LRAT forms;
+   sanity_tests.py: 29 of 29 mutations rejected for each file; without the cycle clauses both formulas are satisfiable.
+   Rerun from the repository copy (results/repo_rerun.log): the same formulas, s UNSATISFIABLE, s VERIFIED,
+   s VERIFIED UNSAT.

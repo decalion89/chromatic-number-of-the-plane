@@ -220,3 +220,97 @@ def test_witness_q3_11_proof(tmp_path):
     out = subprocess.run([sys.executable, W4[0], W4[1], W4[2], "witness_q3_11.drat", DRAT], cwd=tmp_path,
                          capture_output=True, text=True, check=True, timeout=3600).stdout
     assert "(5) drat-trim: s VERIFIED" in out and "chi_c(H) = chi(H) = 4" in out
+
+
+# The subgraphs of H4 and H4' in the Cayley graphs of their construction's unit vectors (finite_witness/README.md):
+# file stem, field, points, edges, generators, cycles, unit pairs among the points, sha256 of the formula
+CAY = {"q3_11": ("witness_q3_11_cayley", "Q(sqrt3, sqrt11)", 1874, 7887, 27, 3389, 8085,
+                 "b394ee9342158c22354cb00fa0d7b373aa98b48d33a0795f62993ecf6b531230"),
+       "q2_3": ("witness_q2_3_cayley", "Q(sqrt2, sqrt3)", 1657, 6199, 60, 5264, 6238,
+                "802921acb1e509aa3ab79f3ba9efaed50b036cb3d9d7277027ee5bb918b0b85b")}
+
+
+@pytest.mark.parametrize("which", ["q3_11", "q2_3"])
+def test_cayley_witness_checker(which, tmp_path):
+    """The same points as H4 (H4'), with only the pairs that differ by one of the construction's unit vectors or its
+    negative as edges: check_witness4.py checks the generators, that the edges are exactly these pairs, that every point
+    is joined to the origin, the colouring, the cycles and the stored formula."""
+    name, field, n, e, g, c, allpairs, sha = CAY[which]
+    for f in ("check_witness4.py", name + ".json.gz", name + ".cnf.gz"):
+        shutil.copy(os.path.join(FW4, f), tmp_path / f)
+    out = subprocess.run([sys.executable, "check_witness4.py", name + ".json.gz", name + ".cnf.gz"], cwd=tmp_path,
+                         capture_output=True, text=True, check=True, timeout=900).stdout
+    assert f"(1) {field}: {n} points, {e} edges, every edge at distance exactly 1" in out
+    assert f"unit-distance pairs among the points: {allpairs}; not listed as edges: {allpairs - e} (not induced)" in out
+    assert f"(1b) {g} generators U" in out and f"{n} of the {n} points are joined to the fixed vertex (the origin)" in out
+    assert "(2) the colouring is a proper 4-colouring" in out and f"(3) {c} cycles" in out and f"sha256 {sha}" in out
+
+
+def _units_q2_3(D):
+    """the 120 vectors zeta_24^j w^l (j mod 24, |l| <= 2), w = (1 + 2 sqrt(-2))/3, over (1, sqrt2, sqrt3, sqrt6)/D"""
+    def mul(p, q):
+        return (p[0] * q[0] + 2 * p[1] * q[1] + 3 * p[2] * q[2] + 6 * p[3] * q[3],
+                p[0] * q[1] + p[1] * q[0] + 3 * (p[2] * q[3] + p[3] * q[2]),
+                p[0] * q[2] + p[2] * q[0] + 2 * (p[1] * q[3] + p[3] * q[1]),
+                p[0] * q[3] + p[3] * q[0] + p[1] * q[2] + p[2] * q[1])
+
+    def cmul(z, w):
+        re = tuple(s - t for s, t in zip(mul(z[0], w[0]), mul(z[1], w[1])))
+        im = tuple(s + t for s, t in zip(mul(z[0], w[1]), mul(z[1], w[0])))
+        return re, im
+    q = Fr(1, 4)
+    zeta, one = ((0, q, 0, q), (0, -q, 0, q)), ((1, 0, 0, 0), (0, 0, 0, 0))
+    w, wb = ((Fr(1, 3), 0, 0, 0), (0, Fr(2, 3), 0, 0)), ((Fr(1, 3), 0, 0, 0), (0, Fr(-2, 3), 0, 0))
+    pw = [cmul(wb, wb), wb, one, w, cmul(w, w)]
+    out, z = set(), one
+    for _ in range(24):
+        for v in pw:
+            u = [Fr(t) * D for t in cmul(z, v)[0] + cmul(z, v)[1]]
+            assert all(t.denominator == 1 for t in u)
+            out.add(tuple(int(t) for t in u))
+        z = cmul(z, zeta)
+    return out
+
+
+def test_cayley_witness_generators():
+    """The stored generators are the construction's vectors up to sign: the 27 of at_four/q3_11.py, and the 60
+    vectors zeta_24^j w^l (one of each pair +-u), rebuilt here."""
+    from q3_11 import units_311
+    sign = lambda S: {min(tuple(u), tuple(-t for t in u)) for u in S}
+    W = json.load(gzip.open(os.path.join(FW4, "witness_q3_11_cayley.json.gz"), "rt"))
+    assert len(W["generators"]) == 27 and sign(W["generators"]) == sign(units_311())
+    W = json.load(gzip.open(os.path.join(FW4, "witness_q2_3_cayley.json.gz"), "rt"))
+    U = _units_q2_3(W["denominator"])
+    assert len(U) == 120 and len(W["generators"]) == 60 and sign(W["generators"]) == sign(U)
+
+
+def test_cayley_witness_checker_rejects_a_foreign_edge(tmp_path):
+    """Adding to the Cayley subgraph one of the 198 unit pairs of H4 in another direction breaks the generator check."""
+    shutil.copy(os.path.join(FW4, "check_witness4.py"), tmp_path / "check_witness4.py")
+    W = json.load(gzip.open(os.path.join(FW4, "witness_q3_11_cayley.json.gz"), "rt"))
+    H = json.load(gzip.open(os.path.join(FW4, "witness_q3_11.json.gz"), "rt"))
+    assert W["points"] == H["points"]
+    have = {tuple(e) for e in W["edges"]}
+    extra = next(e for e in H["edges"] if (min(e), max(e)) not in have)
+    W["edges"].append(extra)
+    with gzip.open(tmp_path / "bad.json.gz", "wt") as f:
+        json.dump(W, f)
+    r = subprocess.run([sys.executable, "check_witness4.py", "bad.json.gz"], cwd=tmp_path, capture_output=True,
+                       text=True, timeout=900)
+    assert r.returncode != 0 and "the edges are not the pairs of points that differ by an element" in r.stderr
+
+
+@pytest.mark.slow
+@pytest.mark.skipif(not DRAT, reason="drat-trim not found (PATH or DRAT_TRIM)")
+@pytest.mark.parametrize("which", ["q3_11", "q2_3"])
+def test_cayley_witness_proof(which, tmp_path):
+    """drat-trim verifies the stored DRAT proof: every proper 4-colouring of the Cayley subgraph has a tight listed
+    cycle, so chi_c = chi = 4."""
+    name = CAY[which][0]
+    for f in ("check_witness4.py", name + ".json.gz", name + ".cnf.gz"):
+        shutil.copy(os.path.join(FW4, f), tmp_path / f)
+    with lzma.open(os.path.join(FW4, name + ".drat.xz"), "rb") as src, open(tmp_path / (name + ".drat"), "wb") as dst:
+        shutil.copyfileobj(src, dst)
+    out = subprocess.run([sys.executable, "check_witness4.py", name + ".json.gz", name + ".cnf.gz", name + ".drat",
+                          DRAT], cwd=tmp_path, capture_output=True, text=True, check=True, timeout=3600).stdout
+    assert "(5) drat-trim: s VERIFIED" in out and "chi_c(H) = chi(H) = 4" in out

@@ -13,12 +13,17 @@ The witness file contains
   colouring    a map V -> Z/4
   cycles       lists [v_0, ..., v_{m-1}] of vertices, m divisible by 4
   fixed_vertex a vertex v_0 whose colour the formula fixes to 0
+  generators   (optional) integer 8-tuples over D: a set U of unit vectors, one of each pair +-u
 The checker verifies, with Python integers only:
   (1) the points are distinct and every edge joins two points at Euclidean distance exactly 1: for the difference
       (x0, ..., x3, y0, ..., y3), (x0 + x1 sa + x2 sb + x3 sab)^2 + (y0 + ...)^2 = D^2, computed in the basis
       (1, sa, sb, sab) with sa sb = sab, sa sab = a sb, sb sab = b sa (four integer equations; the basis is
       independent over Q, as a, b and ab are not rational squares and F has degree 4); it also reports whether
       `edges` is the set of ALL pairs at distance 1 (the induced unit-distance graph);
+  (1b) if `generators` is given: every generator is a unit vector, no two are equal or opposite, and `edges` is
+      exactly the set of pairs of points that differ by an element of U u -U, so that H is the subgraph of the
+      Cayley graph Cay(F^2, U u -U) induced on the points; it also reports whether every point is joined to the
+      fixed vertex by such steps inside H (then, if the fixed vertex is the origin, H lies in Cay(ZU, U u -U));
   (2) the colouring is a proper 4-colouring (so chi(H) <= 4 and chi_c(H) <= 4);
   (3) every listed cycle is a closed walk v_0 -> v_1 -> ... -> v_{m-1} -> v_0 along edges of H, with distinct
       vertices and m divisible by 4;
@@ -125,6 +130,38 @@ def main():
                     missing += 1
     print(f'    unit-distance pairs among the points: {allpairs}; not listed as edges: {missing}'
           f' ({"induced" if missing == 0 else "not induced"})')
+    gens = W.get('generators')
+    if gens is not None:
+        _req(isinstance(gens, list) and len(gens) > 0 and all(
+            isinstance(g, list) and len(g) == 8 and all(isinstance(t, int) for t in g) for g in gens), 'bad generators')
+        for g in gens:
+            _req(unit([0] * 8, g, D, a, b), 'a generator is not a unit vector', g)
+        S = set()
+        for g in gens:
+            for h in (tuple(g), tuple(-t for t in g)):
+                _req(h not in S, 'two generators are equal or opposite', g)
+                S.add(h)
+        idx = {tuple(p): k for k, p in enumerate(P)}
+        cay = set()
+        for k, p in enumerate(P):
+            for h in S:
+                j = idx.get(tuple(p[t] + h[t] for t in range(8)))
+                if j is not None:
+                    cay.add((min(k, j), max(k, j)))
+        _req(cay == Es, 'the edges are not the pairs of points that differ by an element of U u -U')
+        adj = [[] for _ in range(n)]
+        for i, j in Es:
+            adj[i].append(j)
+            adj[j].append(i)
+        seen, stack = {fixed}, [fixed]
+        while stack:
+            for v in adj[stack.pop()]:
+                if v not in seen:
+                    seen.add(v)
+                    stack.append(v)
+        print(f'(1b) {len(gens)} generators U: unit vectors, pairwise distinct up to sign; the edges are exactly the pairs '
+              f'of points that differ by an element of U u -U; {len(seen)} of the {n} points are joined to the fixed '
+              f'vertex (the {"origin" if P[fixed] == [0] * 8 else "point " + str(P[fixed])}) inside H')
     _req(len(col) == n and all(isinstance(c, int) and 0 <= c < 4 for c in col), 'bad colouring')
     for i, j in E:
         _req(col[i] != col[j], 'the colouring is not proper', i, j)

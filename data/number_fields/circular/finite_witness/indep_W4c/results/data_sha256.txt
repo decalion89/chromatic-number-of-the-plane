@@ -1,0 +1,10 @@
+cd3ada49739eee37cd5d6d7411239f323579ebd715eb26f6c5a47c83ee404ad5  ../cayfin/witness_q2_3_cayley.cnf.gz
+66a71e245a4ef937fbf136572c0a0a0860e40d3a44c32b153eccf6d480de02a0  ../cayfin/witness_q2_3_cayley.drat
+a55b1a4b7f284b26911a319ec1fbc0ecfa078d151c527aab51c74f3a0c2bbc6e  ../cayfin/witness_q2_3_cayley.drat.xz
+997b2a2c8130211d86542a3ed0cf6b102fb68190124f4f6c4b3538b4d3c63e2d  ../cayfin/witness_q2_3_cayley.json.gz
+e5f201603e6ac470749b371a9b379ca3147a4dee5acb0f6ee3d1f42a88d0fd67  ../cayfin/witness_q3_11_cayley.cnf.gz
+d8f7b0c700626c257f1ea46554bd16a11ae9d27a6414fb4f6cecec0923505d07  ../cayfin/witness_q3_11_cayley.drat
+59812f47c83be210988f0a3505405f4e8cb6353ff61c2ccf775b10a0629e188b  ../cayfin/witness_q3_11_cayley.drat.xz
+b24950821bd8ddd8951cb162a51108b11f0273163addde6235e2da7472ef64fd  ../cayfin/witness_q3_11_cayley.json.gz
+xz-decompressed witness_q3_11_cayley.drat.xz: d8f7b0c700626c257f1ea46554bd16a11ae9d27a6414fb4f6cecec0923505d07  -
+xz-decompressed witness_q2_3_cayley.drat.xz: 66a71e245a4ef937fbf136572c0a0a0860e40d3a44c32b153eccf6d480de02a0  -

@@ -1,0 +1,17 @@
+5f76cd813f0c9c310fde70f193c04d8bbb6cec0df3ec66848139978894f3933d  proofs/ref_q3_11.drat
+6ee0d7a343fae468b0e327ce04ba7dd75170df2eb5fc6588aaff5d2248ecb784  proofs/ref_q3_11.lrat
+422329572777af9f3a9cee6b52029ad91d62bd5390df5689ac899f0ae57fdf59  proofs/ref_q2_3.drat
+2e1e168d960f9a38e2c0536ac046a98351dd48795f35c1fc39d8ab46fce0bc0f  proofs/ref_q2_3.lrat
+dc07af2cc00132a77aa072a6385275fd0b86dc770f8cb375618d4493ccd67bb6  proofs/stored_q3_11.lrat
+f703501be49519a01ef8a71d8cba4c1f05a085805bd2f859e5e0f1a6a0761963  proofs/stored_q2_3.lrat
+total 203060
+drwxr-xr-x 2 root root     4096 Oct  9 08:52 .
+drwxr-xr-x 7 root root     4096 Oct  9 08:58 ..
+-rw-r--r-- 1 root root 20623327 Oct  9 08:50 ref_q2_3.drat
+-rw-r--r-- 1 root root 51931316 Oct  9 08:51 ref_q2_3.lrat
+-rw-r--r-- 1 root root 11190735 Oct  9 08:48 ref_q3_11.drat
+-rw-r--r-- 1 root root 43166559 Oct  9 08:50 ref_q3_11.lrat
+-rw-r--r-- 1 root root 45610211 Oct  9 08:52 stored_q2_3.lrat
+-rw-r--r-- 1 root root 35391121 Oct  9 08:52 stored_q3_11.lrat
+ca80732f74dcfbcc72f3df70965c570692a3d59293514b886e74e50493cb0480  neg/ref_q3_11_truncated.lrat
+cf12b48b60fbea2cbd71580d4dc9fbde96046e65faeb781ae936d93f50d1102b  neg/ref_q3_11_badhint.lrat

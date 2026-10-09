@@ -10790,3 +10790,29 @@ without a bound on the size.
   its two checkers were running when the machine restarted (9 October, 08:30 UTC). Started again, the independent one
   (`check_open_indep.py`) accepted it in 336 seconds (format, the 150 units, the 146 relations and the tree of 1 997 203
   nodes; that the units are all of `U_1050` is a separate check); the other is still running.
+
+## Explicit subgraphs of the Cayley graphs with `χ_c = 4` (9 October)
+
+- **Result (certified).** `finite_witness/witness_q3_11_cayley.json.gz`: the 1 874 points of `H₄` with only the 7 887
+  pairs that differ by one of the 54 vectors `±R₆₀ʲR_AᵏR_Gˡ(1, 0)` as edges, and 3 389 listed cycles (lengths 4 and 8);
+  `finite_witness/witness_q2_3_cayley.json.gz`: the 1 657 points of `H₄′` with the 6 199 pairs that differ by one of the
+  120 vectors `±ζ₂₄^j w^l`, and 5 264 cycles. Every proper 4-colouring has a tight listed cycle: kissat refutes both
+  formulas, drat-trim verifies the proofs, and `cake_lpr` accepts their LRAT forms. `check_witness4.py` now also checks
+  a `generators` key: unit vectors, distinct up to sign, the edges exactly the pairs that differ by one of them or its
+  negative, and every point joined to the origin. So the subgraph of the Cayley graph of the 54 vectors induced on the
+  points of `H₄` has `χ_c = 4`: the finite subgraph of Corollary 8 for these vectors, explicit, and the sentence of the
+  paper that the audit corrected holds for it.
+- **How** (`construction_cayley/`). With the listed cycles only, the restricted formulas are satisfiable; three rounds
+  (two for `H₄′`) of adding every tight cycle that a depth-first search finds in the tight arcs of the satisfying
+  colouring (349 + 133 + 269, and 165 + 257) make them unsatisfiable, and three rounds of clausal cores leave 3 389 and
+  5 264 cycles, all of length 4 or 8. Rerun from the repository copies, the construction gives both witness files, both
+  formulas and both DRAT proofs byte for byte.
+- **Not a route over `ℚ(√59)`.** The leaves of the certificate for `κ(U_1050) = 1/4` give the relations of the remark
+  directly (a leaf's `y` combines the relations fixed on its path into one outside its range), but they are long: among
+  the first 300 000 leaves there are 139 517 distinct ones, of median length 88, and only 2 785 of length at most 12.
+- **Referee.** An independent referee (`finite_witness/indep_W4c/`, programs written from the file format) rebuilt the
+  27 and the 60 vectors in its own arithmetic, checked the Cayley pairs, the colourings and the cycles exactly, and
+  refuted its own encoding of both formulas with kissat, drat-trim and `cake_lpr` (it also checked the stored proofs,
+  through LRAT with `cake_lpr`); 29 mutations of each file are rejected; no discrepancy. It notes that only 18 of the 27
+  directions and 36 of the 60 occur among the edges, and that the stored colourings are proper on the full unit-distance
+  graphs on the same points. Its programs, rerun from the repository copy, give the same formulas and verdicts.
