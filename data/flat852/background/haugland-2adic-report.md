@@ -1,6 +1,6 @@
 # Haugland's heptagon family at the places above 2 (28 September 2026)
 
-Subject: the 84 unit vectors of J. K. Haugland, arXiv 2608.04542v4, §§2–3 (graph H, Tables 1–2, the graphs G1, G2, G3 with 740, 1066 and 2131 vertices). The tool is the reduction principle: joins.md Theorem 1, and local_colourings.md Propositions A and C. Everything was computed in record_hept2/. §7 separates what is proved from what is not.
+Subject: the 84 unit vectors of J. K. Haugland, arXiv 2608.04542v4, §§2–3 (graph H, Tables 1–2, the graphs G1, G2, G3 with 740, 1066 and 2131 vertices). The tool is the reduction principle of notes/local_colourings.md (Propositions A and C). The computations were made in a working directory that is not published. §7 separates what is proved from what is not.
 
 ## 0. Summary
 - **Fields.** The coordinates of H generate K = ℚ(ζ84)⁺ = ℚ(cos 2π/7, √3, √7), of degree 12, and K(i) = ℚ(ζ84). H itself (as complex numbers) and all 84 unit vectors lie in the index-2 subfield F = ℚ(ζ21), which does not contain i.

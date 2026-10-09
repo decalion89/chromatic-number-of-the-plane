@@ -28,7 +28,8 @@ methods rather than from a graph.
 construction is a measurable 1-avoiding set of density about 0.2293, so by the
 same averaging in reverse, alpha(G)/n >= 0.2293 for *every* finite
 unit-distance graph.  Since 0.2293 > 1/5, no graph can ever bring the ratio
-under 0.2, and chi_m(R^2) >= 6 cannot be reached this way at all.  The most
+under 0.2, and chi_m(R^2) >= 6 cannot be reached this way at all (it holds, since
+chi_m >= chi >= 6 by OpenAI's 2026 theorem, but not by counting).  The most
 this argument yields is 1/0.2293 = 4.36, so chi_m >= 5 -- true, and already
 known both from here and from de Grey.
 
@@ -40,10 +41,9 @@ gives a *fractional colouring* of total weight 1/m_1.  Hence
     chi_f(R^2) <= 1 / m_1 <= 1 / 0.2293 = 4.36 < 5.
 
 The fractional chromatic number of the plane is below five.  Every LP and SDP
-relaxation is bounded by chi_f, so **no relaxation can see chi >= 5, let alone
-chi >= 6** -- which is why de Grey's 2018 result had to be an integral
-combinatorial argument, and why the LP line had stalled for decades without it
-being a shortage of computation.  The only route to six is integral, and the
+relaxation is bounded by chi_f, so **no relaxation can give chi >= 6**.  It can
+give chi >= 5, since chi >= ceil(chi_f) and chi_f(R^2) > 4 (Ducz and Varga,
+arXiv:2606.28157).  The only route to an explicit graph for six is integral, and the
 same is true of the object: a 6-chromatic unit-distance graph has independent
 sets of at least 0.2293 n, so five of them cover 1.1465 n with room to spare,
 and whatever stops it colouring is never counting.

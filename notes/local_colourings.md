@@ -1087,5 +1087,5 @@ With Proposition B and the spectral bound:
   to 64.545; `𝔽₂₃²`: 108.547 to 108.542) (research log;
   `scripts/experiments/threepoint_colouring.py`).
 
-So over the prime fields, `χ(G_q) ≥ 6` is open only for `q = 13, 17, 23, 31`;
+So over the prime fields, `χ(G_q) ≥ 6` is open only for `q = 17, 23, 31` (`χ(G₁₃) = 6`, see the table above);
 for `q = 2, 3, 5, 7, 11, 19` five colours or fewer suffice (§4).

@@ -20,7 +20,7 @@ GitHub Actions (`.github/workflows/tests.yml`) runs the 43 files marked CI on ev
 `main`, on every pull request, and on manual dispatch: 657 tests. It skips the DRAT test in
 `test_certify.py`, because the workflow does not install drat-trim, and leaves out 24 slow
 certificate tests of `test_threepoint_indep.py`, `test_winding.py` and `test_winding_family.py`.
-The other fourteen files (351 tests, 26 of them marked `slow`) are run locally; in an earlier
+The other sixteen files (541 tests, 188 of them marked `slow`) are run locally; in an earlier
 local run, eleven of them without their slow tests took 32 minutes, 20 of them in one test of
 `test_two_tunings.py`. The eight slow tests of `test_threepoint_certificates.py` take about 15
 minutes together.
@@ -35,7 +35,7 @@ minutes together.
 | `test_degrey.py` |  | De Grey's graph rebuilt from his 39-point set S has 39, 397 and 1581 vertices at the three stages and 7877 edges, and (marked `slow`) no proper 4-colouring. |
 | `test_denominator_five.py` |  | Exoo–Ismailescu's graph rebuilt from their 23 points, the arithmetic of their rotation λ, the fact that a denominator of 5 blocks coset colourings while the integral 803-vertex graph admits them, and a 61-point graph on the Eisenstein lattice with edges at squared lengths 3, 4 and 7 that is 6-chromatic. |
 | `test_dense_family.py` |  | The dense 5-chromatic graphs `five_dense_2.json` and `five_dense_10.json`, recomputed from their coordinates: the tuning angle, the vertex and edge counts, their structure as two copies of one carrier, and the absence of a proper 4-colouring. |
-| `test_density.py` | ✓ | Independence ratios of unit-distance graphs (2/7 for the Moser spindle), and the consequence of Croft's 1-avoiding set of density 0.2293 (H. T. Croft, *Incidence incidents*, Eureka 30 (1967) 22–26) that an independence-ratio argument cannot give χ ≥ 6 and a fractional one cannot give χ ≥ 5 (for the fractional case, R. Hochberg and P. O'Donnell, Geombinatorics 2(4) (1993) 83–84). |
+| `test_density.py` | ✓ | Independence ratios of unit-distance graphs (2/7 for the Moser spindle), and the consequence of Croft's 1-avoiding set of density 0.2293 (H. T. Croft, *Incidence incidents*, Eureka 30 (1967) 22–26) that neither an independence-ratio argument nor a fractional one can give χ ≥ 6, since χ_f(ℝ²) ≤ 4.36 < 5 (for the fractional case, R. Hochberg and P. O'Donnell, Geombinatorics 2(4) (1993) 83–84). A fractional argument can give χ ≥ 5, because χ ≥ ⌈χ_f⌉ and χ_f(ℝ²) > 4 (Dúcz and Varga, arXiv:2606.28157). |
 | `test_disjunctive_spindle.py` | ✓ | The three- and six-copy disjunctive spindles, which need only c(v) = c(q₁) or c(v) = c(q₂) instead of a forced pair, checked in exact arithmetic and by an exhaustive sweep over the choices of the copies. |
 | `test_fast_agrees.py` | ✓ | The vectorised integer arithmetic of `hn/fast.py` agrees with exact rational arithmetic on points, unit vectors, walks and edge sets. |
 | `test_field.py` | ✓ | Exact arithmetic in multiquadratic fields: admissible generators, products of radicals, inverses through the Galois conjugates, exact equality and hashing. |

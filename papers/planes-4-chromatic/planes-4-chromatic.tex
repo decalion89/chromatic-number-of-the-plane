@@ -33,7 +33,7 @@ planes over $\Q(\sqrt3,\sqrt{11})$ and $\Q(\sqrt2,\sqrt3)$ are $4$-chromatic}
 out the computations, the checks and the formalisation in Lean, and helped to draft this note. No mathematician
 has checked the note yet. The author is not a professional mathematician and submits it for independent
 verification.}
-\date{Version 6, 28 September 2026}
+\date{Version 7, 9 October 2026}
 \subjclass[2020]{Primary 05C15, 52C10; Secondary 11R16, 68V20}
 \keywords{Hadwiger--Nelson problem, chromatic number of the plane, unit-distance graph, number field, formal verification}
 
@@ -269,8 +269,7 @@ is used.
 \cite{Fischer1994}, and Johnson's paper \cite{Johnson1987} through its zbMATH entry and Payne's summary
 \cite{Payne}. We have not seen the full texts of \cite{Fischer1990b}, \cite{Fischer1994} and
 \cite{Johnson1987}, nor Johnson's survey \cite{Johnson2000} of problems in this area.
-\item \emph{Code and data.} Everything above is in release 1.1.0 of the repository \cite{Repo}, in the
-folder \path{research/hadwiger-nelson}: the formal proofs are \path{lean/LocalColouring.lean},
+\item \emph{Code and data.} Everything above is in release 1.2.0 of the repository \cite{Repo}: the formal proofs are \path{lean/LocalColouring.lean},
 \path{lean/Q23.lean} and \path{lean/Q311.lean}; the Python tests \path{tests/test_q23.py} and
 \path{tests/test_q311.py} check the computations used in the proofs; and the PARI/GP script
 \path{scripts/decompositions.gp} recomputes the decompositions of~$2$.
@@ -295,7 +294,7 @@ $\Q(\sqrt{N_1},\dots,\sqrt{N_d})^2$}, Congr. Numer. \textbf{72} (1990), 213--221
 \bibitem{Fischer1994} K. G. Fischer, \emph{A planar geometric graph of chromatic number four}, Congr. Numer.
 \textbf{104} (1994), 73--79 (Zbl 0836.05030).
 \bibitem{Repo} S. Gal\'an, \emph{The Hadwiger--Nelson problem over number fields}, code, data and formal
-proofs, release 1.1.0, 2026. Archived at Zenodo,
+proofs, release 1.2.0, 2026. Archived at Zenodo,
 \href{https://doi.org/10.5281/zenodo.22976635}{doi:10.5281/zenodo.22976635} (all versions); source at
 \url{https://github.com/decalion89/chromatic-number-of-the-plane}.
 \bibitem{Heule} M. J. H. Heule, \emph{Computing small unit-distance graphs with chromatic number 5},

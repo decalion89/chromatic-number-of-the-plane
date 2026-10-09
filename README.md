@@ -296,8 +296,8 @@ None of these results has been refereed. Each has one or more of these statuses:
 
 **In progress.** G₁₇, the anisotropic plane over 𝔽₁₇, is a local plane of ℚ(√−3, √−7, √−11); χ(G₁₇) is 5
 or 6, and α(G₁₇) ≤ 57 would make it 6. The first part of that bound is checked
-(`scripts/g17_alpha.py`, `certificates/g17_part_a_checks.txt`); the certification of the second part is
-running.
+(`scripts/g17_alpha.py`, `certificates/g17_part_a_checks.txt`); the second part is open (its certification
+was started and not finished).
 
 ## Towards an explicit graph for six
 
@@ -421,7 +421,7 @@ cvxopt 1.3.3 (DSDP) and clarabel 0.11.1; checking them needs only numpy, scipy a
 their contents. `requirements-lock.txt` lists the exact versions of the Python packages used for the
 results and of their dependencies, and `scripts/worker_setup.sh` builds the pinned kissat and drat-trim.
 
-GitHub Actions runs the fast part of the suite, 598 tests in 41 files
+GitHub Actions runs the fast part of the suite, 657 tests in 43 files
 ([`tests.yml`](.github/workflows/tests.yml)), and builds and checks the Lean proofs
 ([`lean.yml`](.github/workflows/lean.yml)), on pushes to `main` and on pull requests.
 
@@ -436,19 +436,20 @@ GitHub Actions runs the fast part of the suite, 598 tests in 41 files
 | [`data/`](data/README.md) | graphs and witnesses in exact coordinates (JSON), and the three-point certificates |
 | [`certificates/`](certificates/README.md) | colourings, DRAT verification logs and non-colourability claims |
 | [`scripts/`](scripts/README.md) | maintained tools: verification, search, figures; `scripts/experiments/` keeps the 734 one-off experiments behind the research log |
-| [`tests/`](tests/README.md) | the test suite: 887 tests, 24 of them marked slow |
+| [`tests/`](tests/README.md) | the test suite: 1 222 tests, 215 of them marked slow |
 | [`docs/`](docs/README.md) | the research log, the full chronological record, and the figures |
 
-Each of these folders has a README describing its contents. Until release 1.1.0 the project sat in
-`research/hadwiger-nelson/`; version 5 of the note gives its paths in that layout.
+Each of these folders has a README describing its contents. Up to release 1.1.0 the project sat in
+`research/hadwiger-nelson/`; versions 5 and 6 of the note give its paths in that layout.
 
 ## Citing
 
 Cite a tagged release, so that the reader finds the version you read; the changes between releases are in
 [`CHANGELOG.md`](CHANGELOG.md). Zenodo archives each release with its own DOI: version 1.0.0 is
 [10.5281/zenodo.22976636](https://doi.org/10.5281/zenodo.22976636), version 1.1.0 is
-[10.5281/zenodo.22985036](https://doi.org/10.5281/zenodo.22985036), and
-[10.5281/zenodo.22976635](https://doi.org/10.5281/zenodo.22976635) always resolves to the latest version.
+[10.5281/zenodo.22985036](https://doi.org/10.5281/zenodo.22985036), version 1.2.0 has its own DOI on its
+Zenodo record, and [10.5281/zenodo.22976635](https://doi.org/10.5281/zenodo.22976635) always resolves to the
+latest version.
 For the repository as a whole, use GitHub's "Cite this repository" button, which reads
 [`CITATION.cff`](CITATION.cff):
 
@@ -456,10 +457,10 @@ For the repository as a whole, use GitHub's "Cite this repository" button, which
 @software{galan2026hn,
   author  = {Gal{\'a}n, Sergi},
   title   = {The {H}adwiger--{N}elson problem over number fields},
-  version = {1.1.0},
+  version = {1.2.0},
   year    = {2026},
-  doi     = {10.5281/zenodo.22985036},
-  url     = {https://github.com/decalion89/chromatic-number-of-the-plane/releases/tag/v1.1.0},
+  doi     = {10.5281/zenodo.22976635},
+  url     = {https://github.com/decalion89/chromatic-number-of-the-plane/releases/tag/v1.2.0},
   note    = {AI-assisted research; not peer reviewed}
 }
 ```
@@ -472,7 +473,7 @@ For the note on the two 4-chromatic planes:
   title  = {A short proof that the planes over {$\mathbb{Q}(\sqrt{3},\sqrt{11})$}
             and {$\mathbb{Q}(\sqrt{2},\sqrt{3})$} are 4-chromatic},
   year   = {2026},
-  note   = {Version 5, 27 September 2026. Preprint, not refereed. AI-assisted},
+  note   = {Version 7, 9 October 2026. Preprint, not refereed. AI-assisted},
   url    = {https://github.com/decalion89/chromatic-number-of-the-plane}
 }
 ```
@@ -670,6 +671,8 @@ unidad sin triángulos, con pruebas DRAT verificadas por drat-trim
 grado par que necesitan 4 colores, por ejemplo ℚ(√11, 7^{1/m}), de grado 2m; los de grado impar necesitan 2
 (Moorhouse).
 Nuevo (3 de octubre): un grafo de Cayley de un grupo abeliano se puede colorear con 3 colores si y solo si algún carácter lleva todos los generadores al arco [1/3, 2/3] (Teorema W, [`notes/winding_lemma.md`](notes/winding_lemma.md)). Con certificados exactos resuelve los cuerpos que las búsquedas de grafos no resolvían: χ(ℚ(√d)²) = 4 para d = 83, 107 y 203, 4 ≤ χ(ℚ(√143)²) ≤ 5 y χ(ℚ(√167)²) ≥ 4; así χ(ℚ(√d)²) se conoce para todo d < 143 libre de cuadrados salvo d = 47. Además, todo conjunto de recurrencia de Bohr es de recurrencia 3-cromática: el caso de tres colores de la pregunta de Katznelson, que responde la Pregunta 3 de Glasscock, Koutsogiannis y Richter (Bull. Amer. Math. Soc., 2022). Y su extensión, el Teorema W⁺: para p/q < 4, el grafo va al clique circular K_{p/q} si y solo si un carácter lleva los generadores a [q/p, 1 − q/p]; así el número cromático circular, si es menor que 4, es 1/κ, y para grafos de distancias con tres distancias χ_c = 1/κ(D), lo que responde negativamente al Problema 3 de la panorámica de Liu (2008).
-También se demuestra, con certificados verificados por dos programas independientes, que siete planos
-finitos necesitan seis colores. Es un trabajo hecho con ayuda de IA y todavía no ha sido revisado por
+También se demuestra, con certificados verificados por dos programas independientes, que muchos planos
+finitos necesitan seis colores: el plano anisótropo G_q para todo primo q ≥ 29 salvo q = 31 (y χ(G₁₃) = 6), y 𝔽_q²
+para q = 37, 41, 43, 47, 59 y todo primo q ≥ 67. Hay además un grafo de distancia unidad de 852 vértices, sin huso
+de Moser, que necesita cinco colores. Es un trabajo hecho con ayuda de IA y todavía no ha sido revisado por
 pares.

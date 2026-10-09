@@ -1,10 +1,8 @@
-REPORT: 5-chromatic unit-distance graphs with all edges in the 126 directions U of Q(zeta21)
+Search log: 5-chromatic unit-distance graphs with all edges in the 126 directions U of Q(zeta21)
 
-Everything is in SC/record_flat/ (SC = SC).
-- No git commands were run.
-- Proofs and temporary CNFs lived only in /dev/shm and are deleted; /dev/shm holds none of my files.
-- All solvers ran under nice -n 19, with at most 2 of my solver processes at a time. Once, one kissat was paused with SIGSTOP for a few seconds so that a 5-colouring check could run.
-- I stopped only my own processes. Wall time was about 3 h 05 min.
+The search that found the graph, as recorded at the time (September 2026). File names below are those of the
+working directory; the published files are in `data/flat852/` (see its README). The solvers were kissat 4.0.4 and
+drat-trim; the search took about 3 hours.
 
 HEADLINE
 Two certified graphs; neither is vertex-critical yet (deletion minimisation was not run).
@@ -17,7 +15,7 @@ Two certified graphs; neither is vertex-critical yet (deletion minimisation was 
    - kissat UNSAT in 1577 s, 982 MiB proof; drat-trim VERIFIED in 2233 s.
    - Verified 5-colouring; chromatic number 5.
 - Both graphs have coordinates in Q(zeta84)^+ and no Moser spindle. A spindle would need sqrt(-11) in Q(zeta21), and a direct search in G1023 finds none.
-- Sizes quoted in the brief: 509 (Parts), 1299 (smallest known without Moser spindles), 2131 (Haugland). 852 is below the last two; I did not check the literature beyond those numbers.
+- Sizes used for comparison: 509 (Parts), 1299 (smallest known without Moser spindles), 2131 (Haugland). 852 is below the last two; the literature comparison is in notes/flat852.md.
 
 1. EXACT MODEL (task 1: flat.py, task1_model.py, task1_model.log, directions.json)
 - Representation:
@@ -88,7 +86,7 @@ Shape of core852 in M/O = F7·omega ⊕ F7·conj(omega):
 - 92 more lie in that conj(L)-coset, and 2 elsewhere.
 - Edges: 2252 in mu42, 1848 in omega·mu42, 387 in conj(omega)·mu42.
 - Degrees 4–34 (mean 10.5); all 42 seed points are kept; the drawing fits in a disc of radius 2.53.
-- This is exactly the "L-patch plus conj(L)-patch sharing a Z[zeta21]-coset" picture that the brief's argument predicts.
+- This is exactly the "L-patch plus conj(L)-patch sharing a Z[zeta21]-coset" picture that the construction was designed around.
 
 6. OBSERVATIONS
 - In a flat rhombus (two unit triangles), opposite sides carry the same colour-pair label exactly when the tips, at distance √3, get different colours.
@@ -103,7 +101,7 @@ Shape of core852 in M/O = F7·omega ⊕ F7·conj(omega):
 - Other seeds, and symmetric (zeta7-invariant) versions.
 - A literature check of the size comparison.
 
-FILES (SC/record_flat/)
+FILES (working directory of the search; see data/flat852/README.md for what is published)
 - Best graph: core852a.json (vertices as "exact7" = [c0..c11] over 7 plus float x, y for z -> exp(2 pi i/21); edges [a, b, j] with v_b - v_a = U[j]; U list; fixed triangle; certificate fields), core852a.edges, core852a.cnf, core852a.kissat.log, core852a.drat-trim.log, core852.5colouring.json, core852_pts.npy, gpcheck_core852.log, certify_core852a.out.
 - G1023: g1023.json, g1023.edges, g1023.cnf, g1023.kissat.log, g1023.drat-trim.log, g1023.core.cnf, g1023.5colouring.json, g1023_cert_pts.npy, gpcheck_g1023.log.
 - Logs: task1_model.log, grow_H1.log, grow_H3.log, grow_G1.log, BD2.kissat.log, R5M*.kissat.log, g806.kissat.log, g1023_lns.log, g1023_phase.log, min_g1023m.log.

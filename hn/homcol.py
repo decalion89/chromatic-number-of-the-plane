@@ -15498,7 +15498,8 @@ THE_IDEAL_QUOTIENT_RESULTS_ARE_FOLDING_ARTIFACTS = True
 # direction, a module whose 5-colourings all split x, x + m for m in u0 + 5M (as
 # coset colourings do) admits no measurable 5-colouring of the plane along its
 # directions (u0 + 5M is dense, and translation is continuous in L^1), so such
-# rigidity would already give measurable chromatic number >= 6, an open problem.
+# rigidity would already give measurable chromatic number >= 6 (open when this was
+# written; it now follows from OpenAI's 2026 proof that chi(R^2) >= 6).
 # Unbiased tabu colourings of the complete 2-ball colour the 5M pairs alike 25.6%
 # of the time, exactly like every other pair (scripts/ballr.py).
 THE_EI_CLOSURE_NEEDS_ONLY_INVARIANT_MEASURES = True

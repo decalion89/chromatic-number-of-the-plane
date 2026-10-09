@@ -3,7 +3,8 @@
 
 If a pair (p, q) at a spindle-able distance is monochromatic in *every*
 k-colouring of G, then G union rho_p(G) is not k-colourable at all.  For k=4
-that reproduces chi(R^2) >= 5; for k=5 it would settle the open problem.
+that reproduces chi(R^2) >= 5; for k=5 it would give an explicit graph for six
+(chi(R^2) >= 6 itself was proved without one by OpenAI in 2026).
 
 Forcing is monotone -- a pair forced in a subgraph stays forced in any
 supergraph -- so the search wants the largest ball it can afford, not a clever

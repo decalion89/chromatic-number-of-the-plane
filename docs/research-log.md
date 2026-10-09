@@ -25,8 +25,9 @@
 **How many colours does the plane need, so that no two points at distance exactly 1
 share a colour?**
 
-Posed around 1950. Still open. The answer, written χ(ℝ²), is known only to lie in
-**{5, 6, 7}**.
+Posed around 1950. *Update, October 2026:* OpenAI proved χ(ℝ²) ≥ 6 in September 2026 (non-constructively), so
+χ(ℝ²) ∈ {6, 7}; no explicit graph for six is known. The text below records the state when this log began: the
+answer, written χ(ℝ²), was known only to lie in **{5, 6, 7}**.
 
 | bound | value | who, when | how |
 |---|---|---|---|
@@ -35,7 +36,7 @@ Posed around 1950. Still open. The answer, written χ(ℝ²), is known only to l
 | lower | ≥ 5 | Jaan Parts, 2020 | the same, down to 509 vertices |
 | upper | ≤ 7 | Isbell, 1950 | a hexagonal tiling of diameter just under 1 |
 
-Nothing has moved since.
+Nothing had moved since, until OpenAI's proof of September 2026.
 
 ## What this is
 
@@ -2047,8 +2048,10 @@ weighting them is a *fractional colouring* of total weight `1/m_1`. Hence
 The fractional chromatic number of the plane is **below five**. This bound is not
 new: it is R. Hochberg and P. O'Donnell's (*A large independent set in the unit
 distance graph*, Geombinatorics 2(4) (1993) 83–84). Every LP and
-SDP relaxation is bounded by `chi_f`, so no relaxation can see `chi >= 5`, let
-alone `chi >= 6`. That is why de Grey's 2018 result had to be an integral
+SDP relaxation is bounded by `chi_f`, so no relaxation can see `chi >= 6`. *[Corrected 9 October 2026: this
+sentence said "cannot see `chi >= 5`", which is wrong. Since `chi >= ⌈chi_f⌉`, a fractional bound `chi_f > 4`
+gives `chi >= 5`, and Dúcz and Varga (arXiv:2606.28157) proved `chi_f(R^2) > 4`. The rest of the paragraph is about
+reaching five for `chi_f`, which stays out of reach.]* That is why de Grey's 2018 result had to be an integral
 combinatorial argument, and why the LP line, which has kept advancing (to
 `chi_f(R^2) >= 4`: M. Matolcsi, I. Z. Ruzsa, D. Varga, P. Zsámboki,
 [arXiv:2311.10069](https://arxiv.org/abs/2311.10069)), cannot reach five, however
@@ -7233,7 +7236,8 @@ plane can be proper along the finitely many unit directions of `M`.
    measure. ∎
 
 So the rigidity of any finite-direction module would already imply that the
-**measurable** chromatic number of the plane is at least 6, which is open.
+**measurable** chromatic number of the plane is at least 6, which is open. *[9 October 2026: no longer open;
+it follows from OpenAI's proof that χ(ℝ²) ≥ 6.]*
 Conversely, a measurable 5-colouring along a module's directions would refute
 its rigidity. The torus gate searched for pixelated ones along the 803
 directions and found none.
@@ -8742,7 +8746,8 @@ of the plane is larger than 4.
 We tried to beat Parts' record, a 5-chromatic unit-distance graph with 509 vertices
 ([arXiv:2010.12665](https://arxiv.org/abs/2010.12665)). **No route got below 509.** The work is on the branch
 `claude/record-parts` (not merged; its `record-attempt/README.md` lists every file), with one branch per route,
-`claude/record-r1` to `claude/record-r9`.
+`claude/record-r1` to `claude/record-r9`. (These working branches are in the private development repository
+and are not published.)
 
 - **Parts' construction, rebuilt** from the paper's definitions alone: `L727 ∪ ρS361` (1 087 points, no
   4-colouring, drat-trim VERIFIED), and from his orbit tables the region `W = W_L ∪ ρW_S` (775 points) that

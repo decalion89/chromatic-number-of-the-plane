@@ -11,154 +11,7 @@ including every retracted claim, is the research log,
 
 ## [Unreleased]
 
-### Changed
-- **χ(ℝ²) is 6 or 7, in Lean, in the statement of formal-conjectures (9 October).** `lean/PlaneSeven.lean` proves
-  `χ(ℝ²) ≤ 7` in the statement of Erdős Problem 508 (`HadwigerNelsonAtMostSeven`) in Google DeepMind's
-  formal-conjectures, with their definition of `UnitDistancePlaneGraph`, by a brick colouring (bricks 0.7 × 0.7, each
-  row shifted by 0.385, colour `i + 3j` mod 7). It is part of the build of `lean/` (sixty-five theorems in
-  `axioms.expected`; the CI replay list includes it). `lean/external/openai-five/PlaneSixOrSeven.lean` derives
-  `6 ≤ χ(ℝ²)` in the same statement from OpenAI's theorem, along the isometry `ℂ ≃ ℝ²`, and so
-  `χ(ℝ²) = 6 ∨ χ(ℝ²) = 7`. Both files use only the three standard axioms and pass `leanchecker`. The mathematics of
-  the upper bound is classical (Isbell); the lower bound is OpenAI's. README, Lean README, research log.
-- **Every Euclidean field, and where the method stops (9 October).** `papers/ruler-compass/` (now six pages),
-  Section 6: for every Euclidean field `F`, every 5-colouring of `F²` has two points at distance 1 of the same colour
-  (Corollary 5), because the real constructible numbers embed in `F`. For fields that contain a copy of the real
-  algebraic numbers, such as the real closed fields, this already follows from OpenAI's proof; for the others, such as
-  the real constructible numbers, it rests on the ruler-and-compass theorem. On paper, not in Lean. A remark in
-  Section 7 shows that the analogue of OpenAI's rigidity theorem is false over the Pythagorean closure of ℚ, so their
-  first step cannot be run there as it stands. Each refereed once (AI-assisted; no mathematical error; one overclaim
-  corrected before publication). Note, README (results, state of the art, Spanish summary), papers index, research
-  log.
-- **The ruler-and-compass result: a five-page paper and the finite form in Lean (9 October).**
-  `papers/ruler-compass/` (*The ruler-and-compass plane is not 5-colourable*, draft) presents the result of the next
-  entry, with OpenAI credited for the proof. `lean/external/openai-five/fields/ConstructibleFinite.lean` proves that some
-  finite set of constructible points has no proper 5-colouring, from the infinite statement and Mathlib's compactness
-  theorem for graph homomorphisms. The axioms are the same three, and `leanchecker` passes. `build_field.sh` compiles
-  the file for the constructible field, and was tested from scratch on two fields. A review of the paper found no
-  mathematical error. It corrected one side claim, in the note and the research log too: only the single shift of the
-  formal proof needs cube roots. Note, README, papers index, research log.
-- **Six colours on the ruler-and-compass plane (9 October).** OpenAI's proof that χ(ℝ²) ≥ 6 runs over the
-  constructible numbers, the smallest subfield of ℂ closed under square roots. Every 5-colouring of the points
-  constructible with ruler and compass has two points at distance 1 with the same colour, so some finite unit-distance
-  graph with constructible coordinates has no proper 5-colouring. Formally verified in Lean, off CI; the axioms are
-  `propext`, `Classical.choice` and `Quot.sound`. The origami numbers (square and cube roots) and the numbers expressible
-  by radicals were done first.
-  - The changes to OpenAI's proof: a finite-image lemma that needs only square roots, and the triple average of its
-    radial inequality taken at the exponents −1, 0, 1, with two new lemmas for the fixed middle factor.
-  - Files: `notes/six_over_fields.md`; `lean/external/openai-five/fields/` (patches against openai/math `fd4aeeb2`, the
-    statements, `build_field.sh`, a copy of OpenAI's Apache 2.0 licence); README (state of the art, results, the
-    section on six, Spanish summary); `lean/README.md`; `notes/README.md`; research log.
-- **`κ(U_1050) = 1/4` over `ℚ(√59)`, certified (9 October).** An exact certificate (1 997 203 nodes; both checkers
-  accept it) shows that no character maps the 300 unit vectors with denominator 1050 into `(1/4, 3/4)`; with the
-  character `θ` of `at_four/`, `κ(U_1050) = 1/4`, so a finite subgraph of their Cayley graph has `χ_c = 4` (Corollary
-  F14). `at_four/cert59_1050_open_4.json.gz`, `check_theta.py` (now checks a certificate's units), note, paper (PDF
-  rebuilt), README, two slow tests, research log.
-- **`χ(ℝ²) ≥ 6` (OpenAI, September 2026), rebuilt in Lean (9 October).** OpenAI's proof that the plane is not
-  5-colourable ([openai/math](https://github.com/openai/math), family 158) is non-constructive and formalized in Lean
-  4.34.1 with the Mathlib commit of `lean/`. We compiled the 70 modules of its import closure against our Mathlib
-  build, restated the theorem ourselves and checked its axioms (`propext`, `Classical.choice`, `Quot.sound`).
-  `lean/external/openai-five/` (the procedure). README (state of the art, the section on six, which is now the search
-  for an explicit graph, the Spanish summary), the introductions and bibliographies of the six papers (PDFs rebuilt,
-  same page counts), `notes/local_global.md`, `notes/local_colourings.md`, `notes/worker_jobs.md`,
-  `notes/rigidity.md`, research log.
-- **A character with values in `ℤ/4` at a place above 2 (9 October).** Proposition F15′ (paper, Proposition 11): if
-  `F` has a place `v ∣ 2` with `F_v ≅ ℚ₂(√3)`, some homomorphism `ℤT → ℤ/4` maps `T` into `{1, 2, 3}`; so `κ(U) ≥ 1/4`
-  for every finite `U` over `ℚ(√59)`, `ℚ(√83)` and `ℚ(√3, √11)` (for quadratic fields the colouring is Fischer's,
-  1990, Theorem 10(i)), the tight-square alternative of Corollary 8 never applies there, and a finite witness at 4
-  contains a cycle of length at least 8 for each of the twelve such maps. Not so over `ℚ(√2, √3)` modulo 4. Refereed
-  (own programs, no error; wording findings applied). `at_four/quarter_character.py`, tests, paper (Section 10), note
-  §6.9, research log (including a corrected floating-point value for the 60 vectors of `H₄′`: `κ = 1/4`, not 0.178).
-- **Explicit subgraphs of the Cayley graphs with `χ_c = 4` (9 October).** `finite_witness/witness_q3_11_cayley` (1 874
-  points, the 7 887 pairs that differ by one of the 54 vectors of the construction, 3 389 cycles) and
-  `finite_witness/witness_q2_3_cayley` (1 657 points, 6 199 pairs, 120 vectors, 5 264 cycles) have `χ_c = 4`: drat-trim
-  and `cake_lpr` verify the refutations. The first is the finite subgraph of Corollary 8 for the 54 vectors, explicit.
-  `check_witness4.py` checks the new `generators` key; `construction_cayley/` reproduces both files and proofs byte for
-  byte; tests in `tests/test_at_four.py`. Refereed (`indep_W4c/`: own encoding, kissat, drat-trim, `cake_lpr`, 29
-  mutations per file; no discrepancy). Paper (Section 10), note §6.9 and Question 2, README files, research log.
-- **Audit of the base-point periods passages (6–7 October, night).** No mathematical error. Corrected: `H₄` is not a
-  subgraph of the Cayley graph of the 27 vectors (198 of its edges are other unit vectors, as its clausal cores used all
-  unit pairs; 39 edges of `H₄′` lie outside its 120 vectors); the remark replaces only the compactness step of Corollary
-  8 (not the one behind Proposition 10) and needs `S` without elements of order 2; the abstract (tight squares; the
-  computer-assisted step is also used for the attainment of 4); the `ℚ(√59)` search sentence; only `χ(ℚ(√2, √3)²) ≤ 4`
-  is used, and `H₄′` reproves `χ ≥ 4`; definitions before use and notation (`ξ`, `K_{a/b}`, `r_m`, `𝒮`, `|W|`, `w`).
-  Paper (31 pages), note §6.9 and Question 2, `finite_witness/README.md`, research log.
-- **A second explicit graph with `χ_c = 4`, over `ℚ(√2, √3)` (6 October, night).**
-  `data/number_fields/circular/finite_witness/witness_q2_3.json.gz`: 1 657 points (denominator 36), all 6 238 unit pairs
-  as edges, `χ_c = χ = 4`; so `χ_c(ℚ(√2, √3)²) = 4` with an explicit graph. Certified by `check_witness4.py` (which now
-  reads the field from the file) with drat-trim, and by a referee's own programs (`indep_W4b/`: two encodings, kissat,
-  drat-trim, `cake_lpr`, 77 sanity checks). Found with base-point periods from 60 unit vectors `ζ₂₄^j s^l` of `ℚ(ζ₂₄)`,
-  `ζ₂₄ = e^{iπ/12}`, `s = (1 + 2√−2)/3`; `construction_q2_3/` reproduces it byte for byte. The docstrings of the
-  construction scripts now say Lemma F17 (they said Lemma P). Note, paper (abstract, introduction, Section 10, Question
-  3), README files, research log, `tests/test_at_four.py`.
-- **The construction by base-point periods always works (6 October, night).** A remark after Lemma F17 (note §6.9;
-  after Lemma 24 in the paper): if `κ(U) ≤ 1/4`, some finite set of relations leaves the period system without a
-  solution (one relation `ρ_p` for each of the finitely many `p` allowed by the basis, from an integer point of a
-  rational cone), and the subgraph of `Cay(ℤU, U ∪ −U)` on the walks of its chains has a tight cycle in every proper
-  4-colouring. This replaces the compactness step of Corollary F14 by a finite construction. Refereed (correct;
-  wording fixes applied) and tested on 15 distance graphs on `ℤ` (`finite_witness/indep_W4/remark_check.py`, two
-  logs). Note, paper (remark, introduction, Question 3; 31 pages), README files, research log.
-- **An explicit graph with `χ_c = 4` over `ℚ(√3, √11)` (6 October, night).**
-  `data/number_fields/circular/finite_witness/witness_q3_11.json.gz`: 1 874 points, all 8 085 unit pairs as edges,
-  `χ_c = χ = 4`, so the value 4 of Theorem F16 is attained by an explicit graph. Certified by `check_witness4.py`
-  with drat-trim and by a referee's own programs (`indep_W4/`: second encoding, kissat, drat-trim, `cake_lpr`).
-  Found with base-point periods (Lemma F17 of the note, with proof, refereed; `construction_q3_11/` reproduces it). Note
-  §6.9 and Question 2, paper (the lemma on base-point periods, abstract, introduction, Question 3), README files,
-  research log, `tests/test_at_four.py`.
-- **27 explicit unit vectors with `κ = 1/4` over `ℚ(√3, √11)` (6 October, evening).** `R₆₀ʲ R_Aᵏ R_Gˡ (1, 0)`,
-  `j, k, l ∈ {−1, 0, 1}` (`R_A` the Moser angle, `R_G` cosine 11/14): a character of order 12 at exactly `1/4`
-  and an exact certificate (12 073 nodes) that none maps them into `(1/4, 3/4)`, so a finite `χ_c = 4` witness lies
-  in their Cayley graph (Corollary F14) without Theorem F; the witness is not known yet.
-  `data/number_fields/circular/at_four/` (`q3_11.py`, `theta311.json`, `cert311_open_4.json.gz`,
-  `cert_open_units.py`); `check_open.py` and `check_open_indep.py` accept this biquadratic plane and `P/Q = 4`.
-  Note §6.9, paper, research log, `tests/test_at_four.py`.
-- **Finite witnesses at four colours (6 October).** At `p/q = 4` the winding argument of Theorem W⁺ fails only on a
-  *tight square* `x → x + s → x + s + t → x + t → x`, which is itself a tight cycle; so a 4-colouring without tight
-  squares gives a character into `[1/4, 3/4]`, and conversely (Lemma F13). Hence, for a finite connection set with
-  `κ(S) ≤ 1/4` and a 4-colourable Cayley graph, some finite subgraph has `χ_c = 4` (Corollary F14), and, with a finite
-  form of Theorem F (Proposition F15), whenever `χ_c(F²) = 4` some finite unit-distance graph in `F²` has `χ_c = 4`
-  (Theorem F16; for example over `ℚ(√59)`, `ℚ(√83)`, `ℚ(√3, √11)`). This answers the question of the note and of
-  Question 3 of the paper, without a bound on the size. Refereed by an independent checker, with two programs of
-  its own on every abelian group of order at most 16 (`data/number_fields/circular/at_four/indep/`): no error.
-  `notes/circular_planes.md` §6.9, `papers/three-colours/` (subsection "Finite witnesses at four", abstract,
-  introduction, Question 3), `papers/winding/` (Proposition `prop:four`). Also: the character
-  `θ = (89/118, 1/2, 89/118, 1/2)` keeps the 108 unit vectors of `ℚ(√59)²` with denominator 210 at margin `15/59`, so
-  the growth with `D = 210` could not reach `χ_c = 4`; `θ = (3/8, 5/8, 5/8, 5/8)` gives margin exactly `1/4` for
-  denominator 1050 (`at_four/`, `check_theta.py`, `tests/test_at_four.py`).
-- **The Theorem W scan up to 10 000 (6 October).** `data/quadratic_planes/winding/scan` now holds an exact Theorem W
-  certificate for each of the 155 squarefree `d ≡ 11 (mod 12)` below 2000 (the smallest file found for each `d`; 50 MB,
-  31 MB of it for `d = 443`), each accepted by both checkers (`scan/checks.txt`), with a README. Between 2000 and 10 000
-  the search certified 593 of the 611 values; `scan/beyond2000.tsv` lists all 611, with the branch, git blob id and
-  sha256 of the 591 stored certificates (both checkers accept all of them; they stay on the branches
-  `claude/winding-share-z1` and `claude/winding-share-z2`, 327 MB) and the two that were checked once and not kept (over
-  50 MB). The search tools `single_scan.py`, `union_search.py` and `union_cert.py` are added;
-  `tests/test_winding_scan.py` checks the coverage, three certificates (all 155 when slow tests run) and the table.
-  Theorem 1 already proves the bound for every `d ≡ 11 (mod 12)`; the scan is an independent check, field by field,
-  through Theorem W alone.
-- **A fourth field with an explicit `7/2` witness: `ℚ(√911)` (5 October).** The growth from the 327-vertex graph over
-  `ℚ(√911)` stops at 873 vertices; deleting vertices with the cores of `kissat` and then CaDiCaL refutations, in blocks
-  of adaptive size, leaves a vertex-critical unit-distance graph with 324 vertices, 866 edges and `χ_c = 7/2`
-  (`witness_q911.json.gz`), certified like the others (both checkers, two encodings, `drat-trim` on both DRAT proofs,
-  `cake_lpr` on the LRAT form of one, criticality certificates). The paper, the note, the READMEs and the test of the
-  grown witnesses include it. The referee's programs (`indep_W/`), run by us on it, confirm it as they did
-  `witness_q11b` (`indep_W/results/witness_q911.log`).
-- **`witness_q11b` now has 155 vertices (5 October, night).** Deleting vertices, in a random order, from the union of
-  the 157-vertex witness and a 161-vertex one (another order on the same 205-point union) leaves a vertex-critical
-  unit-distance graph with 155 vertices, 404 edges and `χ_c = 7/2`. It replaces the 157-vertex graph under the same
-  file names and is certified the same way: both checkers, two encodings, `drat-trim` on both DRAT proofs, `cake_lpr`
-  on the LRAT form of one, and criticality certificates for every `H − v`. The paper, the note, the READMEs and the
-  test of the grown witnesses now give 155. Its cycle list first repeated 563 of its 1 836 cycles; the repeats are
-  removed (1 273 cycles) and both formulas refuted and checked again. The referee's programs (`indep_W/`), run by us
-  on it, confirm everything: the points and all unit pairs, a third encoding, cycle lists rebuilt from scratch, every
-  formula clause by clause, `kissat`, `drat-trim` and `cake_lpr` on all of them and on the stored proof, and the
-  criticality certificates through explicit `(7N, 2N + 1)`-colourings (`indep_W/results/witness_q11b.log`).
-- **A full reading of the three-colours paper (4 October, night).** A referee read the whole paper again, with
-  priority on Section 10 and the Questions, and reran the cheap checks with programs of its own: no mathematical
-  error. Its corrections are applied: the introduction now says that Lemma 19 also uses Proposition 6, in its case
-  `f ≥ 3`, which is proved by hand (only the case `f = 1`, `p ≥ 11` rests on a computation, used only for Corollary 5);
-  the sentence on the referee of the `7/2` witnesses no longer covers the 157-vertex witness, which only the two
-  checkers checked; Lemma 21 needs `p < 4q`, so it is unavailable already at 4; the notation of Lemma 22 no longer
-  clashes with `T`; the bound `19/4` now has an explicit map (`4a + 5b` on `μ₂₀ ⊂ 𝔽₃₆₁`); and small presentation
-  fixes. The README of the witnesses records that the programs reproduce `witness_q191` exactly.
+## [1.2.0] - 2026-10-09
 
 ### Added
 - **A 13-vertex witness for `χ_c = 3` over `ℚ(√15)` (5 October, night).** The growth for the value 3 from 70 seeds over
@@ -274,67 +127,6 @@ including every retracted claim, is the research log,
   mathematical error), fixes applied; Section 10 refereed separately as written (no error in a proof; fixes applied).
 - **Literature sweep (4 October).** `notes/literature.md`, last section: what the systematic search of arXiv found for
   each result, and the relevant papers the project did not cite before.
-
-### Changed
-- **A full reading of `papers/four-colours/` and `papers/quadratic-planes/` (4 October, evening).** A separate agent
-  checked every proof step of Theorem 1 and its corollaries by hand and with its own exact programs (correct, no gap),
-  and every number and graph of the quadratic-planes draft against the data (all agree; CaDiCaL refutes all 27
-  formulas). Applied: the remark that the bound of Theorem 4(1) is sharp holds for `k ≤ 5` and not for `k ≥ 6`
-  (for `N = 5⁶` the 22 values `65 639 ≤ d ≤ 66 143` admit no character although `d ≥ 21N/5`; checked here with the
-  referee's exact decision, now `family/fc_case23.py`, and the binding rotation `ρ⁶` recomputed); "26 fields" was 27;
-  Moorhouse's Theorem 8.1 cited correctly; the checks section says which certificates use the `N` of the proof; the
-  second certificate checker the paper mentioned is now in the repository (`check_w_indep.py`, written separately by
-  a referee; it accepts all 26 stored certificates and rejects six kinds of corruption, also under `python -O`); a false
-  explanatory claim in the quadratic-planes draft (on denominators for `d = 83`) replaced by what holds; a gap in
-  its Hoffman remark closed (exact eigenvalues at 23 and 31); the quadratic-planes draft now records, in dated
-  remarks, what the later drafts proved; the repository pointers say the files are on the development branch;
-  references (Davies, de Bruijn–Erdős, Exoo–Ismailescu, Isbell, the title of MildlyMeticulous's repository) and
-  wording. Both PDFs rebuilt (6 and 7 pages, no warnings).
-- **A full reading of `papers/winding/` (4 October, afternoon).** A separate agent read the whole paper,
-  reran every certificate and wrote its own checker and tests: no false theorem and no broken proof. Applied: Question
-  14 no longer asks as open what `papers/four-colours/` proves (it now asks the four-colour local–global question);
-  the raw wind is not invariant under backtracks, so the exponent-4 argument uses the normalised wind, invariant
-  under backtracks and under every replacement of two consecutive steps by two with the same sum (the move of Krebs
-  and Sankar's homotopy; a second reading found that exchanges alone do not suffice); the remark that a locally constant colouring at a place gives a character now proves integrality at the
-  place; related literature added and checked (Wrochna, Matsushita, Gao–Jackson–Krohne–Seward, Heuberger,
-  Gujgiczer–Naserasr–S–Taruni, Ryabchenko, Berger, Robinson, Youngs, Day); an explicit 5-colouring of the plane over
-  `𝔽₁₁` in Theorem 12; bibliography (de Bruijn–Erdős pages, also in two other papers); the abstract's novelty claim
-  hedged; the certificate for 28 of the 54 vectors for `d = 83` regenerated, checked and stored
-  (`data/quadratic_planes/winding/cert_83_510_min28.json.gz`, in the slow tests); smaller points. The PDF is rebuilt
-  (12 pages).
-- **A full reading of `papers/three-colours/` (4 October, afternoon).** A separate agent read the whole paper
-  and found no mathematical error in a proof; its corrections are applied. Lemma 13 (the arithmetic of `𝔽₄₉` at the
-  places above 7: `A′₇ = {e : eē = −1}`, no coset of a subgroup inside it, the digit patterns) now has a proof by hand
-  (note §6.4), so Propositions 8 and 9 are the only computer-assisted steps of Theorems E and F; the sentence on
-  `ℚ(√47)` now says `4 ≤ χ_c ≤ 19/4`; the remark that Corollary 2 is contained in `papers/four-colours/` holds for real
-  quadratic fields only (`ℚ(√−73)` is split above 2 and 3); `χ(ℚ(√2, √7)²) ≤ 4` is stated in Section 7; the radius-2
-  ball of the 140 vectors of Theorem C is now described exactly (`twoprime/finite_ball.py`: the Cayley part is
-  bipartite, the induced unit-distance graph has `χ_c = 5/2`); attributions (Isbell, Fischer 1994, the special cases
-  of (a)), references (Exoo–Ismailescu, Heule, Parts, Soifer), notation and wording are corrected.
-  A second agent then refereed the hand proof of Lemma 13 (correct, no gap; its programs in `twoprime/indep_L13/`,
-  with a test) and the new sentences; its corrections (Proposition 6 rests on a computation of `κ₁` for
-  `11 ≤ p < 1001`, now said in the introduction, and ten minor points) are applied.
-- **Theorem D in the paper (4 October).** It now states only the bound `56/17`, proved by hand; the computer-assisted
-  bound `3.3315` is a remark, as Theorem E supersedes it. `data/number_fields/circular/twoprime/seven_patterns.py`:
-  three checks that had produced the last lines of its stored output, but were missing from the stored program, were
-  written again.
-- **Credit for earlier work (28 September).** The upper bound of `χ(ℚ(√2, √3)²) = 4`
-  and of Fischer's `χ(ℚ(√3, √11)²) = 4` is also a case of Corollary B′ of
-  [hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction), a public,
-  unrefereed repository of July 2026, whose Theorem A is the same reduction of
-  `z = x + iy` at a place over 2. We found it after our note. The front page,
-  `notes/literature.md` and the note (version 6) now say so; what remains ours is
-  the explicit case `ℚ(√2, √3)` with its lower bound, and the Lean proofs.
-
-### Changed
-
-- **The winding paper after a second referee** (3 October). Correct mathematics; attribution fixed: Steps 1–2 for
-  `K_{p/q}` are the wind of Brewster, McGuinness, Moore and Noel and of Brewster and Moore (for `K₃`, Krebs and Sankar);
-  the exponent-2/4 corollary is a uniform proof of known facts; the formal-proof remark says exactly what Lean checks;
-  citations and journal data updated; the character on all of `G` added in Lean (`theoremWplus_extended`).
-
-### Added
-
 - **Theorem 1 and Corollary 3 in Lean** (3 October, night). `lean/FourColours.lean` proves
   `χ(ℚ(√d)²) ≥ 4` for every `d ≡ 11 (mod 12)` (`FourColours.not_colorable_three`), `lean/PadicFour.lean` proves
   `χ(ℚ_p²) ≥ 4` for every prime `p ≥ 5` and for every field of characteristic 0 containing a square root of some
@@ -532,7 +324,7 @@ including every retracted claim, is the research log,
   from their text alone that every clause holds in the intended models;
   `scripts/verify_g13.py` checks everything again; `tests/test_g13.py` checks
   the encodings by brute force and every formula against the logs, and
-  `tests/test_g13_audit.py` the audit. `χ(G₁₃)` stays 5 or 6.
+  `tests/test_g13_audit.py` the audit. `χ(G₁₃)` stayed 5 or 6 at this stage (settled later: `χ(G₁₃) = 6`).
 - `data/small_plane_colourings.json` and `tests/test_small_plane_colourings.py`:
   the colourings behind the upper bounds for the small finite planes (`G_q` for
   `q = 3, 4, 5, 7, 8, 13`, `H_q` for `q ≤ 16`), found by SAT and until now
@@ -552,6 +344,206 @@ including every retracted claim, is the research log,
   and in the README's BibTeX entry.
 
 ### Changed
+- **χ(ℝ²) is 6 or 7, in Lean, in the statement of formal-conjectures (9 October).** `lean/PlaneSeven.lean` proves
+  `χ(ℝ²) ≤ 7` in the statement of Erdős Problem 508 (`HadwigerNelsonAtMostSeven`) in Google DeepMind's
+  formal-conjectures, with their definition of `UnitDistancePlaneGraph`, by a brick colouring (bricks 0.7 × 0.7, each
+  row shifted by 0.385, colour `i + 3j` mod 7). It is part of the build of `lean/` (sixty-five theorems in
+  `axioms.expected`; the CI replay list includes it). `lean/external/openai-five/PlaneSixOrSeven.lean` derives
+  `6 ≤ χ(ℝ²)` in the same statement from OpenAI's theorem, along the isometry `ℂ ≃ ℝ²`, and so
+  `χ(ℝ²) = 6 ∨ χ(ℝ²) = 7`. Both files use only the three standard axioms and pass `leanchecker`. The mathematics of
+  the upper bound is classical (Isbell); the lower bound is OpenAI's. README, Lean README, research log.
+- **Every Euclidean field, and where the method stops (9 October).** `papers/ruler-compass/` (now six pages),
+  Section 6: for every Euclidean field `F`, every 5-colouring of `F²` has two points at distance 1 of the same colour
+  (Corollary 5), because the real constructible numbers embed in `F`. For fields that contain a copy of the real
+  algebraic numbers, such as the real closed fields, this already follows from OpenAI's proof; for the others, such as
+  the real constructible numbers, it rests on the ruler-and-compass theorem. On paper, not in Lean. A remark in
+  Section 7 shows that the analogue of OpenAI's rigidity theorem is false over the Pythagorean closure of ℚ, so their
+  first step cannot be run there as it stands. Each refereed once (AI-assisted; no mathematical error; one overclaim
+  corrected before publication). Note, README (results, state of the art, Spanish summary), papers index, research
+  log.
+- **The ruler-and-compass result: a five-page paper and the finite form in Lean (9 October).**
+  `papers/ruler-compass/` (*The ruler-and-compass plane is not 5-colourable*, draft) presents the result of the next
+  entry, with OpenAI credited for the proof. `lean/external/openai-five/fields/ConstructibleFinite.lean` proves that some
+  finite set of constructible points has no proper 5-colouring, from the infinite statement and Mathlib's compactness
+  theorem for graph homomorphisms. The axioms are the same three, and `leanchecker` passes. `build_field.sh` compiles
+  the file for the constructible field, and was tested from scratch on two fields. A review of the paper found no
+  mathematical error. It corrected one side claim, in the note and the research log too: only the single shift of the
+  formal proof needs cube roots. Note, README, papers index, research log.
+- **Six colours on the ruler-and-compass plane (9 October).** OpenAI's proof that χ(ℝ²) ≥ 6 runs over the
+  constructible numbers, the smallest subfield of ℂ closed under square roots. Every 5-colouring of the points
+  constructible with ruler and compass has two points at distance 1 with the same colour, so some finite unit-distance
+  graph with constructible coordinates has no proper 5-colouring. Formally verified in Lean, off CI; the axioms are
+  `propext`, `Classical.choice` and `Quot.sound`. The origami numbers (square and cube roots) and the numbers expressible
+  by radicals were done first.
+  - The changes to OpenAI's proof: a finite-image lemma that needs only square roots, and the triple average of its
+    radial inequality taken at the exponents −1, 0, 1, with two new lemmas for the fixed middle factor.
+  - Files: `notes/six_over_fields.md`; `lean/external/openai-five/fields/` (patches against openai/math `fd4aeeb2`, the
+    statements, `build_field.sh`, a copy of OpenAI's Apache 2.0 licence); README (state of the art, results, the
+    section on six, Spanish summary); `lean/README.md`; `notes/README.md`; research log.
+- **`κ(U_1050) = 1/4` over `ℚ(√59)`, certified (9 October).** An exact certificate (1 997 203 nodes; both checkers
+  accept it) shows that no character maps the 300 unit vectors with denominator 1050 into `(1/4, 3/4)`; with the
+  character `θ` of `at_four/`, `κ(U_1050) = 1/4`, so a finite subgraph of their Cayley graph has `χ_c = 4` (Corollary
+  F14). `at_four/cert59_1050_open_4.json.gz`, `check_theta.py` (now checks a certificate's units), note, paper (PDF
+  rebuilt), README, two slow tests, research log.
+- **`χ(ℝ²) ≥ 6` (OpenAI, September 2026), rebuilt in Lean (9 October).** OpenAI's proof that the plane is not
+  5-colourable ([openai/math](https://github.com/openai/math), family 158) is non-constructive and formalized in Lean
+  4.34.1 with the Mathlib commit of `lean/`. We compiled the 70 modules of its import closure against our Mathlib
+  build, restated the theorem ourselves and checked its axioms (`propext`, `Classical.choice`, `Quot.sound`).
+  `lean/external/openai-five/` (the procedure). README (state of the art, the section on six, which is now the search
+  for an explicit graph, the Spanish summary), the introductions and bibliographies of the six papers (PDFs rebuilt,
+  same page counts), `notes/local_global.md`, `notes/local_colourings.md`, `notes/worker_jobs.md`,
+  `notes/rigidity.md`, research log.
+- **A character with values in `ℤ/4` at a place above 2 (9 October).** Proposition F15′ (paper, Proposition 11): if
+  `F` has a place `v ∣ 2` with `F_v ≅ ℚ₂(√3)`, some homomorphism `ℤT → ℤ/4` maps `T` into `{1, 2, 3}`; so `κ(U) ≥ 1/4`
+  for every finite `U` over `ℚ(√59)`, `ℚ(√83)` and `ℚ(√3, √11)` (for quadratic fields the colouring is Fischer's,
+  1990, Theorem 10(i)), the tight-square alternative of Corollary 8 never applies there, and a finite witness at 4
+  contains a cycle of length at least 8 for each of the twelve such maps. Not so over `ℚ(√2, √3)` modulo 4. Refereed
+  (own programs, no error; wording findings applied). `at_four/quarter_character.py`, tests, paper (Section 10), note
+  §6.9, research log (including a corrected floating-point value for the 60 vectors of `H₄′`: `κ = 1/4`, not 0.178).
+- **Explicit subgraphs of the Cayley graphs with `χ_c = 4` (9 October).** `finite_witness/witness_q3_11_cayley` (1 874
+  points, the 7 887 pairs that differ by one of the 54 vectors of the construction, 3 389 cycles) and
+  `finite_witness/witness_q2_3_cayley` (1 657 points, 6 199 pairs, 120 vectors, 5 264 cycles) have `χ_c = 4`: drat-trim
+  and `cake_lpr` verify the refutations. The first is the finite subgraph of Corollary 8 for the 54 vectors, explicit.
+  `check_witness4.py` checks the new `generators` key; `construction_cayley/` reproduces both files and proofs byte for
+  byte; tests in `tests/test_at_four.py`. Refereed (`indep_W4c/`: own encoding, kissat, drat-trim, `cake_lpr`, 29
+  mutations per file; no discrepancy). Paper (Section 10), note §6.9 and Question 2, README files, research log.
+- **Audit of the base-point periods passages (6–7 October, night).** No mathematical error. Corrected: `H₄` is not a
+  subgraph of the Cayley graph of the 27 vectors (198 of its edges are other unit vectors, as its clausal cores used all
+  unit pairs; 39 edges of `H₄′` lie outside its 120 vectors); the remark replaces only the compactness step of Corollary
+  8 (not the one behind Proposition 10) and needs `S` without elements of order 2; the abstract (tight squares; the
+  computer-assisted step is also used for the attainment of 4); the `ℚ(√59)` search sentence; only `χ(ℚ(√2, √3)²) ≤ 4`
+  is used, and `H₄′` reproves `χ ≥ 4`; definitions before use and notation (`ξ`, `K_{a/b}`, `r_m`, `𝒮`, `|W|`, `w`).
+  Paper (31 pages), note §6.9 and Question 2, `finite_witness/README.md`, research log.
+- **A second explicit graph with `χ_c = 4`, over `ℚ(√2, √3)` (6 October, night).**
+  `data/number_fields/circular/finite_witness/witness_q2_3.json.gz`: 1 657 points (denominator 36), all 6 238 unit pairs
+  as edges, `χ_c = χ = 4`; so `χ_c(ℚ(√2, √3)²) = 4` with an explicit graph. Certified by `check_witness4.py` (which now
+  reads the field from the file) with drat-trim, and by a referee's own programs (`indep_W4b/`: two encodings, kissat,
+  drat-trim, `cake_lpr`, 77 sanity checks). Found with base-point periods from 60 unit vectors `ζ₂₄^j s^l` of `ℚ(ζ₂₄)`,
+  `ζ₂₄ = e^{iπ/12}`, `s = (1 + 2√−2)/3`; `construction_q2_3/` reproduces it byte for byte. The docstrings of the
+  construction scripts now say Lemma F17 (they said Lemma P). Note, paper (abstract, introduction, Section 10, Question
+  3), README files, research log, `tests/test_at_four.py`.
+- **The construction by base-point periods always works (6 October, night).** A remark after Lemma F17 (note §6.9;
+  after Lemma 24 in the paper): if `κ(U) ≤ 1/4`, some finite set of relations leaves the period system without a
+  solution (one relation `ρ_p` for each of the finitely many `p` allowed by the basis, from an integer point of a
+  rational cone), and the subgraph of `Cay(ℤU, U ∪ −U)` on the walks of its chains has a tight cycle in every proper
+  4-colouring. This replaces the compactness step of Corollary F14 by a finite construction. Refereed (correct;
+  wording fixes applied) and tested on 15 distance graphs on `ℤ` (`finite_witness/indep_W4/remark_check.py`, two
+  logs). Note, paper (remark, introduction, Question 3; 31 pages), README files, research log.
+- **An explicit graph with `χ_c = 4` over `ℚ(√3, √11)` (6 October, night).**
+  `data/number_fields/circular/finite_witness/witness_q3_11.json.gz`: 1 874 points, all 8 085 unit pairs as edges,
+  `χ_c = χ = 4`, so the value 4 of Theorem F16 is attained by an explicit graph. Certified by `check_witness4.py`
+  with drat-trim and by a referee's own programs (`indep_W4/`: second encoding, kissat, drat-trim, `cake_lpr`).
+  Found with base-point periods (Lemma F17 of the note, with proof, refereed; `construction_q3_11/` reproduces it). Note
+  §6.9 and Question 2, paper (the lemma on base-point periods, abstract, introduction, Question 3), README files,
+  research log, `tests/test_at_four.py`.
+- **27 explicit unit vectors with `κ = 1/4` over `ℚ(√3, √11)` (6 October, evening).** `R₆₀ʲ R_Aᵏ R_Gˡ (1, 0)`,
+  `j, k, l ∈ {−1, 0, 1}` (`R_A` the Moser angle, `R_G` cosine 11/14): a character of order 12 at exactly `1/4`
+  and an exact certificate (12 073 nodes) that none maps them into `(1/4, 3/4)`, so a finite `χ_c = 4` witness lies
+  in their Cayley graph (Corollary F14) without Theorem F; the witness is not known yet.
+  `data/number_fields/circular/at_four/` (`q3_11.py`, `theta311.json`, `cert311_open_4.json.gz`,
+  `cert_open_units.py`); `check_open.py` and `check_open_indep.py` accept this biquadratic plane and `P/Q = 4`.
+  Note §6.9, paper, research log, `tests/test_at_four.py`.
+- **Finite witnesses at four colours (6 October).** At `p/q = 4` the winding argument of Theorem W⁺ fails only on a
+  *tight square* `x → x + s → x + s + t → x + t → x`, which is itself a tight cycle; so a 4-colouring without tight
+  squares gives a character into `[1/4, 3/4]`, and conversely (Lemma F13). Hence, for a finite connection set with
+  `κ(S) ≤ 1/4` and a 4-colourable Cayley graph, some finite subgraph has `χ_c = 4` (Corollary F14), and, with a finite
+  form of Theorem F (Proposition F15), whenever `χ_c(F²) = 4` some finite unit-distance graph in `F²` has `χ_c = 4`
+  (Theorem F16; for example over `ℚ(√59)`, `ℚ(√83)`, `ℚ(√3, √11)`). This answers the question of the note and of
+  Question 3 of the paper, without a bound on the size. Refereed by an independent checker, with two programs of
+  its own on every abelian group of order at most 16 (`data/number_fields/circular/at_four/indep/`): no error.
+  `notes/circular_planes.md` §6.9, `papers/three-colours/` (subsection "Finite witnesses at four", abstract,
+  introduction, Question 3), `papers/winding/` (Proposition `prop:four`). Also: the character
+  `θ = (89/118, 1/2, 89/118, 1/2)` keeps the 108 unit vectors of `ℚ(√59)²` with denominator 210 at margin `15/59`, so
+  the growth with `D = 210` could not reach `χ_c = 4`; `θ = (3/8, 5/8, 5/8, 5/8)` gives margin exactly `1/4` for
+  denominator 1050 (`at_four/`, `check_theta.py`, `tests/test_at_four.py`).
+- **The Theorem W scan up to 10 000 (6 October).** `data/quadratic_planes/winding/scan` now holds an exact Theorem W
+  certificate for each of the 155 squarefree `d ≡ 11 (mod 12)` below 2000 (the smallest file found for each `d`; 50 MB,
+  31 MB of it for `d = 443`), each accepted by both checkers (`scan/checks.txt`), with a README. Between 2000 and 10 000
+  the search certified 593 of the 611 values; `scan/beyond2000.tsv` lists all 611, with the branch, git blob id and
+  sha256 of the 591 stored certificates (both checkers accept all of them; they stay on the branches
+  `claude/winding-share-z1` and `claude/winding-share-z2`, 327 MB) and the two that were checked once and not kept (over
+  50 MB). The search tools `single_scan.py`, `union_search.py` and `union_cert.py` are added;
+  `tests/test_winding_scan.py` checks the coverage, three certificates (all 155 when slow tests run) and the table.
+  Theorem 1 already proves the bound for every `d ≡ 11 (mod 12)`; the scan is an independent check, field by field,
+  through Theorem W alone.
+- **A fourth field with an explicit `7/2` witness: `ℚ(√911)` (5 October).** The growth from the 327-vertex graph over
+  `ℚ(√911)` stops at 873 vertices; deleting vertices with the cores of `kissat` and then CaDiCaL refutations, in blocks
+  of adaptive size, leaves a vertex-critical unit-distance graph with 324 vertices, 866 edges and `χ_c = 7/2`
+  (`witness_q911.json.gz`), certified like the others (both checkers, two encodings, `drat-trim` on both DRAT proofs,
+  `cake_lpr` on the LRAT form of one, criticality certificates). The paper, the note, the READMEs and the test of the
+  grown witnesses include it. The referee's programs (`indep_W/`), run by us on it, confirm it as they did
+  `witness_q11b` (`indep_W/results/witness_q911.log`).
+- **`witness_q11b` now has 155 vertices (5 October, night).** Deleting vertices, in a random order, from the union of
+  the 157-vertex witness and a 161-vertex one (another order on the same 205-point union) leaves a vertex-critical
+  unit-distance graph with 155 vertices, 404 edges and `χ_c = 7/2`. It replaces the 157-vertex graph under the same
+  file names and is certified the same way: both checkers, two encodings, `drat-trim` on both DRAT proofs, `cake_lpr`
+  on the LRAT form of one, and criticality certificates for every `H − v`. The paper, the note, the READMEs and the
+  test of the grown witnesses now give 155. Its cycle list first repeated 563 of its 1 836 cycles; the repeats are
+  removed (1 273 cycles) and both formulas refuted and checked again. The referee's programs (`indep_W/`), run by us
+  on it, confirm everything: the points and all unit pairs, a third encoding, cycle lists rebuilt from scratch, every
+  formula clause by clause, `kissat`, `drat-trim` and `cake_lpr` on all of them and on the stored proof, and the
+  criticality certificates through explicit `(7N, 2N + 1)`-colourings (`indep_W/results/witness_q11b.log`).
+- **A full reading of the three-colours paper (4 October, night).** A referee read the whole paper again, with
+  priority on Section 10 and the Questions, and reran the cheap checks with programs of its own: no mathematical
+  error. Its corrections are applied: the introduction now says that Lemma 19 also uses Proposition 6, in its case
+  `f ≥ 3`, which is proved by hand (only the case `f = 1`, `p ≥ 11` rests on a computation, used only for Corollary 5);
+  the sentence on the referee of the `7/2` witnesses no longer covers the 157-vertex witness, which only the two
+  checkers checked; Lemma 21 needs `p < 4q`, so it is unavailable already at 4; the notation of Lemma 22 no longer
+  clashes with `T`; the bound `19/4` now has an explicit map (`4a + 5b` on `μ₂₀ ⊂ 𝔽₃₆₁`); and small presentation
+  fixes. The README of the witnesses records that the programs reproduce `witness_q191` exactly.
+- **A full reading of `papers/four-colours/` and `papers/quadratic-planes/` (4 October, evening).** A separate agent
+  checked every proof step of Theorem 1 and its corollaries by hand and with its own exact programs (correct, no gap),
+  and every number and graph of the quadratic-planes draft against the data (all agree; CaDiCaL refutes all 27
+  formulas). Applied: the remark that the bound of Theorem 4(1) is sharp holds for `k ≤ 5` and not for `k ≥ 6`
+  (for `N = 5⁶` the 22 values `65 639 ≤ d ≤ 66 143` admit no character although `d ≥ 21N/5`; checked here with the
+  referee's exact decision, now `family/fc_case23.py`, and the binding rotation `ρ⁶` recomputed); "26 fields" was 27;
+  Moorhouse's Theorem 8.1 cited correctly; the checks section says which certificates use the `N` of the proof; the
+  second certificate checker the paper mentioned is now in the repository (`check_w_indep.py`, written separately by
+  a referee; it accepts all 26 stored certificates and rejects six kinds of corruption, also under `python -O`); a false
+  explanatory claim in the quadratic-planes draft (on denominators for `d = 83`) replaced by what holds; a gap in
+  its Hoffman remark closed (exact eigenvalues at 23 and 31); the quadratic-planes draft now records, in dated
+  remarks, what the later drafts proved; the repository pointers say the files are on the development branch;
+  references (Davies, de Bruijn–Erdős, Exoo–Ismailescu, Isbell, the title of MildlyMeticulous's repository) and
+  wording. Both PDFs rebuilt (6 and 7 pages, no warnings).
+- **A full reading of `papers/winding/` (4 October, afternoon).** A separate agent read the whole paper,
+  reran every certificate and wrote its own checker and tests: no false theorem and no broken proof. Applied: Question
+  14 no longer asks as open what `papers/four-colours/` proves (it now asks the four-colour local–global question);
+  the raw wind is not invariant under backtracks, so the exponent-4 argument uses the normalised wind, invariant
+  under backtracks and under every replacement of two consecutive steps by two with the same sum (the move of Krebs
+  and Sankar's homotopy; a second reading found that exchanges alone do not suffice); the remark that a locally constant colouring at a place gives a character now proves integrality at the
+  place; related literature added and checked (Wrochna, Matsushita, Gao–Jackson–Krohne–Seward, Heuberger,
+  Gujgiczer–Naserasr–S–Taruni, Ryabchenko, Berger, Robinson, Youngs, Day); an explicit 5-colouring of the plane over
+  `𝔽₁₁` in Theorem 12; bibliography (de Bruijn–Erdős pages, also in two other papers); the abstract's novelty claim
+  hedged; the certificate for 28 of the 54 vectors for `d = 83` regenerated, checked and stored
+  (`data/quadratic_planes/winding/cert_83_510_min28.json.gz`, in the slow tests); smaller points. The PDF is rebuilt
+  (12 pages).
+- **A full reading of `papers/three-colours/` (4 October, afternoon).** A separate agent read the whole paper
+  and found no mathematical error in a proof; its corrections are applied. Lemma 13 (the arithmetic of `𝔽₄₉` at the
+  places above 7: `A′₇ = {e : eē = −1}`, no coset of a subgroup inside it, the digit patterns) now has a proof by hand
+  (note §6.4), so Propositions 8 and 9 are the only computer-assisted steps of Theorems E and F; the sentence on
+  `ℚ(√47)` now says `4 ≤ χ_c ≤ 19/4`; the remark that Corollary 2 is contained in `papers/four-colours/` holds for real
+  quadratic fields only (`ℚ(√−73)` is split above 2 and 3); `χ(ℚ(√2, √7)²) ≤ 4` is stated in Section 7; the radius-2
+  ball of the 140 vectors of Theorem C is now described exactly (`twoprime/finite_ball.py`: the Cayley part is
+  bipartite, the induced unit-distance graph has `χ_c = 5/2`); attributions (Isbell, Fischer 1994, the special cases
+  of (a)), references (Exoo–Ismailescu, Heule, Parts, Soifer), notation and wording are corrected.
+  A second agent then refereed the hand proof of Lemma 13 (correct, no gap; its programs in `twoprime/indep_L13/`,
+  with a test) and the new sentences; its corrections (Proposition 6 rests on a computation of `κ₁` for
+  `11 ≤ p < 1001`, now said in the introduction, and ten minor points) are applied.
+- **Theorem D in the paper (4 October).** It now states only the bound `56/17`, proved by hand; the computer-assisted
+  bound `3.3315` is a remark, as Theorem E supersedes it. `data/number_fields/circular/twoprime/seven_patterns.py`:
+  three checks that had produced the last lines of its stored output, but were missing from the stored program, were
+  written again.
+- **Credit for earlier work (28 September).** The upper bound of `χ(ℚ(√2, √3)²) = 4`
+  and of Fischer's `χ(ℚ(√3, √11)²) = 4` is also a case of Corollary B′ of
+  [hn-2adic-obstruction](https://github.com/MildlyMeticulous/hn-2adic-obstruction), a public,
+  unrefereed repository of July 2026, whose Theorem A is the same reduction of
+  `z = x + iy` at a place over 2. We found it after our note. The front page,
+  `notes/literature.md` and the note (version 6) now say so; what remains ours is
+  the explicit case `ℚ(√2, √3)` with its lower bound, and the Lean proofs.
+- **The winding paper after a second referee** (3 October). Correct mathematics; attribution fixed: Steps 1–2 for
+  `K_{p/q}` are the wind of Brewster, McGuinness, Moore and Noel and of Brewster and Moore (for `K₃`, Krebs and Sankar);
+  the exponent-2/4 corollary is a uniform proof of known facts; the formal-proof remark says exactly what Lean checks;
+  citations and journal data updated; the character on all of `G` added in Lean (`theoremWplus_extended`).
 - **Layout.** The project moved from `research/hadwiger-nelson/` to the root of
   the repository, and the note to `papers/planes-4-chromatic/`, where each paper
   has its own folder. Commands now run from the root. Release 1.1.0, and
@@ -564,6 +556,17 @@ including every retracted claim, is the research log,
   integer matrices with FLINT.
 
 ### Fixed
+- **Statements dated by OpenAI's proof (9 October), after an audit of the public repository.** "No fractional
+  relaxation can see χ ≥ 5" was wrong: since χ ≥ ⌈χ_f⌉ and χ_f(ℝ²) > 4 (Dúcz–Varga), a fractional argument gives
+  χ ≥ 5; what it cannot give is χ ≥ 6 (`hn/density.py`, `tests/test_density.py`, `tests/README.md`, research log).
+  "The measurable chromatic number ≥ 6 is open" is no longer true, since it is at least χ(ℝ²) ≥ 6
+  (`notes/rigidity.md`, `hn/homcol.py`, research log). The package docstring, `notes/literature.md`,
+  `scripts/search_forced.py`, `tests/test_slack.py` and the opening of the research log now say that χ(ℝ²) ∈ {6, 7}
+  and that what is open is an explicit graph. χ(G₁₃) = 6 is now stated consistently, and G₁₇'s second part is
+  described as open. The search log of the 852-vertex graph (`data/flat852/search-log.md`, formerly
+  `REPORT-growth-agent.md`) and its background reports no longer contain working-directory housekeeping. The
+  review of plan D is called internal, and references to unpublished branches say so. The note on the two
+  4-chromatic planes is now version 7 (repository paths of release 1.2.0).
 - **Citations**, after an audit against primary sources:
   - standard results are now credited where they are used: de Bruijn–Erdős,
     Hoffman (with Haemers for the ratio form), Weil, Delsarte, Stiemke, Croft,
@@ -712,6 +715,7 @@ Corrections made before this release:
   import path, and two tests failed in a full run; it is now
   `scripts/degrey_forced_pair.py`.
 
-[Unreleased]: https://github.com/decalion89/chromatic-number-of-the-plane/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/decalion89/chromatic-number-of-the-plane/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/decalion89/chromatic-number-of-the-plane/releases/tag/v1.2.0
 [1.1.0]: https://github.com/decalion89/chromatic-number-of-the-plane/releases/tag/v1.1.0
 [1.0.0]: https://github.com/decalion89/chromatic-number-of-the-plane/releases/tag/v1.0.0

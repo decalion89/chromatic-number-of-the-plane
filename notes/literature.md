@@ -12,7 +12,7 @@ This note compares the project with the published record. Sources are:
 "New" means only that none of these sources has it. Nothing here has been
 refereed.
 
-## The strategy for six, and who had it
+## The strategy for an explicit graph for six, and who had it
 
 The main route is the reduction of Exoo and Ismailescu, which Polymath16 calls
 clamping onto a virtual edge:
@@ -206,7 +206,7 @@ The route is **not ours**.
 
 ## What this means
 
-The strategy for six is the known one. The new pieces are:
+The strategy for an explicit graph for six is the known one. The new pieces are:
 - the choice of distance;
 - the arithmetic that rules fields out for six;
 - the theorem χ(ℚ(√2, √3)²) = 4, and a short proof of Fischer's
