@@ -10917,3 +10917,69 @@ without a bound on the size.
   on clique minors, a different problem), 167 (counting unit distances) and 172 (Euclidean Ramsey configurations) are
   related but change nothing here; we found nothing on number-field planes, circular chromatic numbers or the other
   questions of this repository.
+
+## Six colours on the ruler-and-compass plane (9 October)
+
+- **Result.** OpenAI's proof that `χ(ℝ²) ≥ 6` works over the constructible numbers `E_c`, the smallest subfield of ℂ
+  closed under square roots. Every 5-colouring of the points of the plane constructible with ruler and compass gives
+  the same colour to two points at distance 1. Formally verified in Lean: the theorem
+  `sqrtClosure_plane_not_five_colourable` states it with the field written out, and its axioms are `propext`,
+  `Classical.choice` and `Quot.sound`. The proof is OpenAI's. Ours are the change of field, the observation that square
+  roots suffice, and the formal check. OpenAI's paper does not state this. A web search on 9 October found no
+  statement of it elsewhere, and the openai/math repository has not changed since 7 October.
+- **Why it was worth trying.** OpenAI's transfer theorem uses only a colouring of the algebraic points: their Lean type
+  of colourings is `E → Fin k` with `E` the algebraic numbers. So any smaller countable field with the properties the
+  proof uses gives a stronger theorem. A colouring of a larger plane restricts to a smaller one, so a smaller field
+  means a stronger statement.
+- **What the proof uses of its field** (`notes/six_over_fields.md`):
+  1. `E` is countable, algebraic, closed under conjugation, and contains `i`;
+  2. `F = E ∩ ℝ` is closed under square roots of nonnegative elements;
+  3. the unit circle `K` of `E` is divisible: in Lemma 2.4, and in Lemma 3.2 through the power maps of the multiple
+     averages.
+- **Three fields, in order.**
+  - The numbers expressible by radicals (`solvableByRad ℚ ℂ`): `K` is still divisible, so only the field interface
+    changed. A new `Field.lean`, with ten files adapted.
+  - The origami numbers (square and cube roots): exponents of the form `2^a 3^b` suffice. Lemma 2.4 needs only an
+    element of order 2, the rotation `−1`. A new lemma, `finite_image_involution`, handles it: a finite image of a
+    commutative group in which every element is a square kills every element of order 2. In our origami version the
+    triple average at the exponents 0, 1, 2 is shifted by 1, to 1, 2 and 3, which cube roots allow.
+  - The constructible numbers (square roots only). Here `u ↦ u³` is not onto `K`: angle trisection; for example
+    `(3 + 4i)/5` has no constructible cube root. So the triple average had to change. Since `U_u` is unitary and
+    commutes with the projection (and is multiplicative), the average at 0, 1, 2 equals the average at −1, 0, 1. There the fixed middle factor
+    is handled apart:
+    - a term whose only centred factor is the middle one projects to zero;
+    - the other terms reduce, on the relative product, to the two exponents ±1, whose difference is 2.
+
+    Two new Lean lemmas do this, `centered_conditional_mean_zero_fixed` and `conditional_multiple_mean_zero_fixed`.
+- **Lean.** The first build of the constructible case failed in `Energy.lean`, on two errors of form:
+  - an application of `Family.const … * …` needed a type ascription;
+  - a rewriting lemma was stated for families over `X` only, and the product of the projections lives over `Y`.
+
+  Both were fixed, and nothing in the mathematics changed. Then the build passed: 72 modules, none failed (OpenAI's 70,
+  `Field.lean` and the statement file), each taking about 10 to 100 s. Then three more checks:
+  - **Clean rebuild.** A fresh copy of OpenAI's sources was patched and built into an empty directory with
+    `build_closure.py`: 72 modules, none failed, in 1 174 s on 2 cores. The compiler printed three linter warnings
+    about style, in `Field.lean` and `Basic.lean`, and no error.
+  - **Kernel replay.** `leanchecker` replayed all 72 modules of the clean build in the kernel. Every one exited 0, in
+    687 s in all.
+  - **Referee.** A separate agent read the paper, the patch and the note, and found no mathematical error. It
+    corrected two descriptions of the code:
+    - OpenAI's formalization chooses its shift using that every power map is onto; it does not "add 1";
+    - the second use of the involution lemma is in `wild_line_null`.
+
+    It also asked for clarifications: the use of `L = √(AB)` in Lemma 3.3, the ergodicity of `R`, and the wording of
+    the Corollary. All are applied to the note.
+- **Consequences.**
+  - By de Bruijn–Erdős, some finite unit-distance graph with constructible coordinates has no proper 5-colouring.
+    Its coordinates lie in a field obtained from ℚ by finitely many square roots. We know of none.
+  - The planes over ℚ(√2, √3) and ℚ(√3, √11) have chromatic number 4. Along a suitable tower of square roots over
+    ℚ(√2, √3), one that eventually contains the coordinates of such a graph, the chromatic number rises to at least 6
+    at some finite stage. We do not know which.
+  - The method needs `F` Euclidean, and the real constructible numbers form the smallest Euclidean field. So `E_c` is
+    the end of this road. The Pythagorean closure of ℚ, or any explicitly given field of finite degree, would need a
+    different argument.
+- **Files.**
+  - `notes/six_over_fields.md`.
+  - `lean/external/openai-five/fields/`: the three patches against openai/math `fd4aeeb2`, the three statement files,
+    `build_field.sh` and a copy of OpenAI's Apache 2.0 licence.
+  - README, `lean/README.md`, `notes/README.md`, CHANGELOG.

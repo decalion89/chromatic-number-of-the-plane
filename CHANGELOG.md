@@ -12,6 +12,17 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Changed
+- **Six colours on the ruler-and-compass plane (9 October).** OpenAI's proof that χ(ℝ²) ≥ 6 runs over the
+  constructible numbers, the smallest subfield of ℂ closed under square roots. Every 5-colouring of the points
+  constructible with ruler and compass has two points at distance 1 with the same colour, so some finite unit-distance
+  graph with constructible coordinates has no proper 5-colouring. Formally verified in Lean, off CI; the axioms are
+  `propext`, `Classical.choice` and `Quot.sound`. The origami numbers (square and cube roots) and the numbers expressible
+  by radicals were done first.
+  - The changes to OpenAI's proof: a finite-image lemma that needs only square roots, and the triple average of its
+    radial inequality taken at the exponents −1, 0, 1, with two new lemmas for the fixed middle factor.
+  - Files: `notes/six_over_fields.md`; `lean/external/openai-five/fields/` (patches against openai/math `fd4aeeb2`, the
+    statements, `build_field.sh`, a copy of OpenAI's Apache 2.0 licence); README (state of the art, results, the
+    section on six, Spanish summary); `lean/README.md`; `notes/README.md`; research log.
 - **`κ(U_1050) = 1/4` over `ℚ(√59)`, certified (9 October).** An exact certificate (1 997 203 nodes; both checkers
   accept it) shows that no character maps the 300 unit vectors with denominator 1050 into `(1/4, 3/4)`; with the
   character `θ` of `at_four/`, `κ(U_1050) = 1/4`, so a finite subgraph of their Cayley graph has `χ_c = 4` (Corollary

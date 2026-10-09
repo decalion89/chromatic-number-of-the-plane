@@ -1,0 +1,520 @@
+diff -ruN a/OAI/Analysis/PlaneSpectrum/Basic.lean b/OAI/Analysis/PlaneSpectrum/Basic.lean
+--- a/OAI/Analysis/PlaneSpectrum/Basic.lean	2026-10-09 11:31:28.127557620 +0000
++++ b/OAI/Analysis/PlaneSpectrum/Basic.lean	2026-10-09 12:57:05.408710786 +0000
+@@ -1,4 +1,5 @@
+ import Mathlib
++import OAI.Analysis.PlaneSpectrum.Field
+ 
+ namespace OAI
+ 
+@@ -6,20 +7,18 @@
+ open scoped ComplexConjugate
+ namespace PlaneFiveColor.Spectral
+ 
+-abbrev E := algebraicClosure ℚ ℂ
+-
+ def K : Subgroup Circle where
+-  carrier := {u | IsAlgebraic ℚ (u : ℂ)}
+-  one_mem' := by simpa using (isAlgebraic_one : IsAlgebraic ℚ (1 : ℂ))
+-  mul_mem' := by intro a b ha hb; exact ha.mul hb
+-  inv_mem' := by intro a ha; exact ha.inv
++  carrier := {u | (u : ℂ) ∈ E}
++  one_mem' := by change ((1 : Circle) : ℂ) ∈ E; rw [Circle.coe_one]; exact one_mem E
++  mul_mem' := by
++    intro a b ha hb; change ((a * b : Circle) : ℂ) ∈ E; rw [Circle.coe_mul]; exact mul_mem ha hb
++  inv_mem' := by intro a ha; change ((a⁻¹ : Circle) : ℂ) ∈ E; rw [Circle.coe_inv]; exact inv_mem ha
+ 
+ theorem K_pow_surjective (n : ℕ) (hn : n ≠ 0) :
+     Function.Surjective (fun u : K => u ^ n) := by
+   intro u
+   obtain ⟨z, hz⟩ := IsAlgClosed.exists_pow_nat_eq (u.val : ℂ) (Nat.pos_of_ne_zero hn)
+-  have ha : IsAlgebraic ℚ z := IsAlgebraic.of_pow (Nat.pos_of_ne_zero hn) (by
+-    rw [hz]; exact u.property)
++  have ha : z ∈ E := E_rad_mem hn (by rw [hz]; exact u.property)
+   have hnrm : ‖z‖ = 1 := by
+     have hpow : ‖z‖ ^ n = (1 : ℝ) ^ n := by
+       simp only [← norm_pow, hz, Circle.norm_coe, one_pow]
+@@ -52,10 +51,7 @@
+ 
+ instance E_countable : Countable E := by
+   apply Set.Countable.to_subtype
+-  have heq : (algebraicClosure ℚ ℂ : Set ℂ) = {x | IsAlgebraic ℚ x} := by
+-    ext z; exact mem_algebraicClosure_iff
+-  rw [heq]
+-  exact Algebraic.countable ℚ ℂ
++  exact (Algebraic.countable ℚ ℂ).mono (fun z hz => E_isAlgebraic hz)
+ 
+ instance : Countable DiscreteE := inferInstanceAs (Countable E)
+ 
+@@ -221,7 +217,7 @@
+   let := Set.finite_univ_iff.mp hf
+   exact fixed_of_finite_orbit y (Set.toFinite _) g
+ 
+-def kCoeff (u : K) : E := ⟨(u.val : ℂ), mem_algebraicClosure_iff.mpr u.property⟩
++def kCoeff (u : K) : E := ⟨(u.val : ℂ), u.property⟩
+ 
+ @[simp] theorem kCoeff_one : kCoeff 1 = 1 := rfl
+ @[simp] theorem kCoeff_mul (u v : K) : kCoeff (u * v) = kCoeff u * kCoeff v := rfl
+@@ -282,8 +278,8 @@
+   rw [sub_eq_add_neg, scalar_add, scalar_neg, div_eq_mul_inv]
+ 
+ def minusOne : K := ⟨-1, by
+-  change IsAlgebraic ℚ (-1 : ℂ)
+-  exact isAlgebraic_one.neg⟩
++  change ((-1 : Circle) : ℂ) ∈ E
++  simpa using neg_mem (one_mem E)⟩
+ 
+ @[simp] theorem kCoeff_minusOne : kCoeff minusOne = -1 := rfl
+ 
+@@ -355,10 +351,7 @@
+   rw [hmul] at ht
+   exact hpi ht
+ 
+-def imagUnit : E := ⟨Complex.I, mem_algebraicClosure_iff.mpr
+-  (IsAlgebraic.of_pow (n := 2) (by norm_num) (by
+-    rw [Complex.I_sq]
+-    exact isAlgebraic_one.neg))⟩
++def imagUnit : E := ⟨Complex.I, E_I_mem⟩
+ 
+ @[simp] theorem coe_imagUnit : (imagUnit : ℂ) = Complex.I := rfl
+ 
+@@ -398,7 +391,7 @@
+ not a different countable plane. -/
+ theorem algebraic_complex_iff_coordinates (z : ℂ) :
+     IsAlgebraic ℚ z ↔ IsAlgebraic ℚ z.re ∧ IsAlgebraic ℚ z.im := by
+-  have hi : IsAlgebraic ℚ Complex.I := mem_algebraicClosure_iff.mp imagUnit.property
++  have hi : IsAlgebraic ℚ Complex.I := E_isAlgebraic E_I_mem
+   have hhalf : IsAlgebraic ℚ ((2 : ℂ)⁻¹) := (isAlgebraic_natCast 2).inv
+   constructor
+   · intro hz
+@@ -449,11 +442,8 @@
+       (continuous_id.mul continuous_const) (funext hrat)
+   refine ⟨F 1, fun t => ?_⟩
+   rw [← hF, congrFun hlinear t, mul_comm]
+-abbrev F := algebraicClosure ℚ ℝ
+-
+ theorem dense_F : Dense (F : Set ℝ) :=
+-  Dense.mono (Set.range_subset_iff.mpr fun q : ℚ =>
+-    mem_algebraicClosure_iff.mpr (isAlgebraic_ratCast ℚ q))
++  Dense.mono (Set.range_subset_iff.mpr fun q : ℚ => F_rat_mem q)
+     (Rat.denseRange_cast : DenseRange ((↑) : ℚ → ℝ))
+ 
+ /-- The source's exact ordinary-character description on the dense real algebraic field. -/
+@@ -486,8 +476,7 @@
+ 
+ /-- The real-algebraic inclusion into the algebraic plane. -/
+ def ofF : F →+* E where
+-  toFun t := ⟨(t : ℝ), mem_algebraicClosure_iff.mpr
+-    ((mem_algebraicClosure_iff.mp t.property).algebraMap (A := ℂ))⟩
++  toFun t := ⟨(t : ℝ), mem_F_iff.mp t.property⟩
+   map_zero' := by ext; simp
+   map_one' := by ext; simp
+   map_add' _ _ := by ext; simp
+@@ -573,10 +562,8 @@
+   rw [h]
+   exact measurableSet_CF.preimage (continuous_restrictLine a).measurable
+ 
+-def reF (z : E) : F := ⟨(z : ℂ).re, mem_algebraicClosure_iff.mpr
+-  ((algebraic_complex_iff_coordinates _).mp (mem_algebraicClosure_iff.mp z.property)).1⟩
+-def imF (z : E) : F := ⟨(z : ℂ).im, mem_algebraicClosure_iff.mpr
+-  ((algebraic_complex_iff_coordinates _).mp (mem_algebraicClosure_iff.mp z.property)).2⟩
++def reF (z : E) : F := ⟨(z : ℂ).re, F_re_mem z.property⟩
++def imF (z : E) : F := ⟨(z : ℂ).im, F_im_mem z.property⟩
+ 
+ @[simp] theorem coe_reF (z : E) : (reF z : ℝ) = (z : ℂ).re := rfl
+ @[simp] theorem coe_imF (z : E) : (imF z : ℝ) = (z : ℂ).im := rfl
+diff -ruN a/OAI/Analysis/PlaneSpectrum/Characters.lean b/OAI/Analysis/PlaneSpectrum/Characters.lean
+--- a/OAI/Analysis/PlaneSpectrum/Characters.lean	2026-10-09 11:31:28.122354599 +0000
++++ b/OAI/Analysis/PlaneSpectrum/Characters.lean	2026-10-09 12:58:09.327841252 +0000
+@@ -283,7 +283,7 @@
+     field_simp
+   · rw [← exp_frequency_div X (max N n), hN _ (Nat.le_max_left N n)]
+ 
+-abbrev F := algebraicClosure ℚ ℝ
++abbrev F := PlaneFiveColor.Spectral.F
+ 
+ def dyadicApprox (t : F) (n : ℕ) : F :=
+   (Int.floor ((2 : ℝ)^n * (t : ℝ)) : F) / (2 : F)^n
+@@ -460,11 +460,7 @@
+ 
+ instance F_countable : Countable F := by
+   apply Set.Countable.to_subtype
+-  have heq : (algebraicClosure ℚ ℝ : Set ℝ) = {x | IsAlgebraic ℚ x} := by
+-    ext z
+-    exact mem_algebraicClosure_iff
+-  rw [heq]
+-  exact Algebraic.countable ℚ ℝ
++  exact (Algebraic.countable ℚ ℝ).mono (fun t ht => PlaneFiveColor.Spectral.F_isAlgebraic ht)
+ 
+ lemma char_dyadicApprox_eq (χ : Multiplicative F →* Circle) (l : ℝ)
+     (hl : ∀ n : ℕ, χ (Multiplicative.ofAdd (((2 : F)^n)⁻¹)) =
+diff -ruN a/OAI/Analysis/PlaneSpectrum/ConditionalSpectrum.lean b/OAI/Analysis/PlaneSpectrum/ConditionalSpectrum.lean
+--- a/OAI/Analysis/PlaneSpectrum/ConditionalSpectrum.lean	2026-10-09 11:31:28.128500275 +0000
++++ b/OAI/Analysis/PlaneSpectrum/ConditionalSpectrum.lean	2026-10-09 12:58:50.116341120 +0000
+@@ -120,17 +120,14 @@
+   have hnon : 0 ≤ 1-r^2 := by nlinarith [sq_abs r, abs_nonneg r]
+   let s : ℝ := Real.sqrt (1-r^2)
+   have hs : s^2 = 1-r^2 := Real.sq_sqrt hnon
+-  have hrAlg : IsAlgebraic ℚ r := by
+-    change IsAlgebraic ℚ ((x / 2 : F) : ℝ)
+-    exact mem_algebraicClosure_iff.mp (x / 2 : F).property
+-  have hsAlg : IsAlgebraic ℚ s := IsAlgebraic.of_pow (by norm_num : 0 < 2) (by
+-    rw [hs]; exact isAlgebraic_one.sub (hrAlg.pow 2))
+-  have huAlg : IsAlgebraic ℚ ((r : ℂ) + Complex.I * s) :=
+-    (hrAlg.algebraMap (A := ℂ)).add
+-      ((isAlgebraic_iff_isIntegral.mpr (Complex.isIntegral_I ℚ)).mul (hsAlg.algebraMap (A := ℂ)))
+-  have hvAlg : IsAlgebraic ℚ ((r : ℂ) - Complex.I * s) :=
+-    (hrAlg.algebraMap (A := ℂ)).sub
+-      ((isAlgebraic_iff_isIntegral.mpr (Complex.isIntegral_I ℚ)).mul (hsAlg.algebraMap (A := ℂ)))
++  have hrE : r ∈ F := by
++    change ((x / 2 : F) : ℝ) ∈ F
++    exact (x / 2 : F).property
++  have hsE : s ∈ F := F_sqrt_mem (sub_mem (one_mem F) (pow_mem hrE 2)) hnon
++  have huAlg : (r : ℂ) + Complex.I * s ∈ E :=
++    add_mem (mem_F_iff.mp hrE) (mul_mem E_I_mem (mem_F_iff.mp hsE))
++  have hvAlg : (r : ℂ) - Complex.I * s ∈ E :=
++    sub_mem (mem_F_iff.mp hrE) (mul_mem E_I_mem (mem_F_iff.mp hsE))
+   have huNorm : ‖(r : ℂ)+Complex.I*s‖ = 1 := by
+     rw [← sq_eq_sq₀ (norm_nonneg _) zero_le_one]
+     rw [← Complex.normSq_eq_norm_sq]
+diff -ruN a/OAI/Analysis/PlaneSpectrum/Energy.lean b/OAI/Analysis/PlaneSpectrum/Energy.lean
+--- a/OAI/Analysis/PlaneSpectrum/Energy.lean	2026-10-09 11:31:28.124042181 +0000
++++ b/OAI/Analysis/PlaneSpectrum/Energy.lean	2026-10-09 12:58:50.116887890 +0000
+@@ -440,7 +440,7 @@
+   have hwc : (w : ℂ) ≠ 0 := fun h => hw (Subtype.ext h)
+   let c : Circle := ⟨(z : ℂ)/(w : ℂ), mem_sphere_zero_iff_norm.mpr (by
+     rw [norm_div, hn, div_self (norm_ne_zero_iff.mpr hwc)])⟩
+-  let u : K := ⟨c, mem_algebraicClosure_iff.mp (div_mem z.property w.property)⟩
++  let u : K := ⟨c, div_mem z.property w.property⟩
+   have he : kCoeff u * w = z := by
+     apply Subtype.ext
+     exact div_mul_cancel₀ _ hwc
+diff -ruN a/OAI/Analysis/PlaneSpectrum/Ergodicity.lean b/OAI/Analysis/PlaneSpectrum/Ergodicity.lean
+--- a/OAI/Analysis/PlaneSpectrum/Ergodicity.lean	2026-10-09 11:31:28.123978844 +0000
++++ b/OAI/Analysis/PlaneSpectrum/Ergodicity.lean	2026-10-09 12:58:50.117448166 +0000
+@@ -9,12 +9,7 @@
+ namespace PlaneFiveColor.Spectral
+ open EuclideanFiveColor.BoundedMeasurable
+ 
+-def normF (z : E) : F := ⟨‖(z:ℂ)‖,mem_algebraicClosure_iff.mpr (by
+-  apply IsAlgebraic.of_pow (n := 2) (by decide)
+-  rw [← Complex.normSq_eq_norm_sq,Complex.normSq_apply]
+-  have hr := mem_algebraicClosure_iff.mp (reF z).property
+-  have hi := mem_algebraicClosure_iff.mp (imF z).property
+-  exact (hr.mul hr).add (hi.mul hi))⟩
++def normF (z : E) : F := ⟨‖(z:ℂ)‖, F_norm_mem z.property⟩
+ @[simp] lemma normF_coe (z : E) : ((normF z : F):ℝ) = ‖(z:ℂ)‖ := rfl
+ lemma normF_pos {z : E} (hz : z ≠ 0) : 0 < normF z := by
+   change 0 < ‖(z:ℂ)‖
+diff -ruN a/OAI/Analysis/PlaneSpectrum/Field.lean b/OAI/Analysis/PlaneSpectrum/Field.lean
+--- a/OAI/Analysis/PlaneSpectrum/Field.lean	1970-01-01 00:00:00.000000000 +0000
++++ b/OAI/Analysis/PlaneSpectrum/Field.lean	2026-10-09 12:56:09.568269464 +0000
+@@ -0,0 +1,80 @@
++import Mathlib
++
++/-! The countable plane used by the transfer: here the numbers expressible by radicals, `E = solvableByRad ℚ ℂ`
++(the smallest subfield of `ℂ` closed under `n`-th roots), and its real points `F`. The rest of the proof uses only
++the facts proved in this file. -/
++
++namespace OAI
++
++noncomputable section
++open scoped ComplexConjugate
++namespace PlaneFiveColor.Spectral
++
++abbrev E : IntermediateField ℚ ℂ := solvableByRad ℚ ℂ
++
++theorem E_rad_mem {x : ℂ} {n : ℕ} (hn : n ≠ 0) (hx : x ^ n ∈ E) : x ∈ E :=
++  solvableByRad.rad_mem hn hx
++
++theorem E_isAlgebraic {x : ℂ} (hx : x ∈ E) : IsAlgebraic ℚ x :=
++  mem_algebraicClosure_iff.mp (solvableByRad_le_algClosure ℚ ℂ hx)
++
++theorem E_conj_mem {x : ℂ} (hx : x ∈ E) : conj x ∈ E := by
++  let c : ℂ →ₐ[ℚ] ℂ := (Complex.conjAe.restrictScalars ℚ).toAlgHom
++  have h : E ≤ E.comap c := by
++    apply solvableByRad_le
++    intro y n hn hy
++    change c y ∈ E
++    have hy' : c (y ^ n) ∈ E := hy
++    rw [map_pow] at hy'
++    exact E_rad_mem hn hy'
++  exact h hx
++
++theorem E_I_mem : Complex.I ∈ E :=
++  E_rad_mem (n := 2) two_ne_zero (by rw [Complex.I_sq]; exact neg_mem (one_mem _))
++
++theorem E_two_mem : (2 : ℂ) ∈ E := by exact_mod_cast E.natCast_mem 2
++
++theorem E_ofReal_re_mem {z : ℂ} (hz : z ∈ E) : ((z.re : ℝ) : ℂ) ∈ E := by
++  have h : ((z.re : ℝ) : ℂ) = (z + conj z) * (2 : ℂ)⁻¹ := by
++    apply Complex.ext <;> simp <;> ring
++  rw [h]
++  exact mul_mem (add_mem hz (E_conj_mem hz)) (inv_mem E_two_mem)
++
++theorem E_ofReal_im_mem {z : ℂ} (hz : z ∈ E) : ((z.im : ℝ) : ℂ) ∈ E := by
++  have h : ((z.im : ℝ) : ℂ) = (z - conj z) * ((2 : ℂ) * Complex.I)⁻¹ := by
++    apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im, Complex.inv_re, Complex.inv_im] <;> ring
++  rw [h]
++  exact mul_mem (sub_mem hz (E_conj_mem hz)) (inv_mem (mul_mem E_two_mem E_I_mem))
++
++theorem E_ofReal_norm_mem {z : ℂ} (hz : z ∈ E) : ((‖z‖ : ℝ) : ℂ) ∈ E := by
++  apply E_rad_mem (n := 2) two_ne_zero
++  have h : (((‖z‖ : ℝ) : ℂ)) ^ 2 = z * conj z := by
++    rw [Complex.mul_conj, ← Complex.ofReal_pow, Complex.sq_norm]
++  rw [h]
++  exact mul_mem hz (E_conj_mem hz)
++
++/-- The real points of `E`. -/
++abbrev F : IntermediateField ℚ ℝ := E.comap ((Complex.ofRealAm).restrictScalars ℚ)
++
++theorem mem_F_iff {t : ℝ} : t ∈ F ↔ (t : ℂ) ∈ E := Iff.rfl
++
++theorem F_rat_mem (q : ℚ) : (q : ℝ) ∈ F := by
++  rw [mem_F_iff]; push_cast; exact E.algebraMap_mem q
++
++theorem F_isAlgebraic {t : ℝ} (ht : t ∈ F) : IsAlgebraic ℚ t :=
++  (isAlgebraic_algebraMap_iff (R := ℚ) (S := ℝ) (A := ℂ) Complex.ofReal_injective).mp
++    (E_isAlgebraic (mem_F_iff.mp ht))
++
++theorem F_sqrt_mem {t : ℝ} (ht : t ∈ F) (h0 : 0 ≤ t) : Real.sqrt t ∈ F := by
++  rw [mem_F_iff]
++  apply E_rad_mem (n := 2) two_ne_zero
++  rw [← Complex.ofReal_pow, Real.sq_sqrt h0]
++  exact mem_F_iff.mp ht
++
++theorem F_re_mem {z : ℂ} (hz : z ∈ E) : z.re ∈ F := E_ofReal_re_mem hz
++theorem F_im_mem {z : ℂ} (hz : z ∈ E) : z.im ∈ F := E_ofReal_im_mem hz
++theorem F_norm_mem {z : ℂ} (hz : z ∈ E) : ‖z‖ ∈ F := E_ofReal_norm_mem hz
++
++end PlaneFiveColor.Spectral
++end
++end OAI
+diff -ruN a/OAI/Analysis/PlaneSpectrum/InvariantMean.lean b/OAI/Analysis/PlaneSpectrum/InvariantMean.lean
+--- a/OAI/Analysis/PlaneSpectrum/InvariantMean.lean	2026-10-09 11:31:28.126213806 +0000
++++ b/OAI/Analysis/PlaneSpectrum/InvariantMean.lean	2026-10-09 12:57:35.489393508 +0000
+@@ -1,4 +1,5 @@
+ import Mathlib
++import OAI.Analysis.PlaneSpectrum.Field
+ 
+ namespace OAI
+ 
+@@ -438,7 +439,7 @@
+   exact DFunLike.congr_fun he f
+ 
+ /-- The real algebraic field and the literal discrete quotient F/Z. -/
+-abbrev AF := algebraicClosure ℚ ℝ
++abbrev AF := OAI.PlaneFiveColor.Spectral.F
+ 
+ def PeriodGroup := AF ⧸ AddSubgroup.zmultiples (1 : AF) deriving AddCommGroup
+ instance : TopologicalSpace PeriodGroup := ⊥
+@@ -449,7 +450,7 @@
+ /-- The ordinary circle quotient map, before passage to F/Z. -/
+ def fieldCircle : AF →+ UnitAddCircle :=
+   (QuotientAddGroup.mk' (AddSubgroup.zmultiples (1 : ℝ))).comp
+-    (algebraicClosure ℚ ℝ).subtype.toAddMonoidHom
++    (OAI.PlaneFiveColor.Spectral.F).subtype.toAddMonoidHom
+ 
+ @[simp] lemma fieldCircle_apply (t : AF) : fieldCircle t = ((t : ℝ) : UnitAddCircle) := rfl
+ 
+diff -ruN a/OAI/Analysis/PlaneSpectrum/RadialEnergy.lean b/OAI/Analysis/PlaneSpectrum/RadialEnergy.lean
+--- a/OAI/Analysis/PlaneSpectrum/RadialEnergy.lean	2026-10-09 11:31:28.125381998 +0000
++++ b/OAI/Analysis/PlaneSpectrum/RadialEnergy.lean	2026-10-09 13:01:00.653906988 +0000
+@@ -120,13 +120,11 @@
+ namespace PlaneFiveColor.Spectral
+ open EuclideanFiveColor.BoundedMeasurable
+ 
+-def sqrtF (a : F) : F := ⟨Real.sqrt a, mem_algebraicClosure_iff.mpr (by
++def sqrtF (a : F) : F := ⟨Real.sqrt a, by
+   by_cases ha : 0 ≤ (a : ℝ)
+-  · apply IsAlgebraic.of_pow (n := 2) (by decide)
+-    rw [Real.sq_sqrt ha]
+-    exact mem_algebraicClosure_iff.mp a.property
++  · exact F_sqrt_mem a.property ha
+   · rw [Real.sqrt_eq_zero_of_nonpos (le_of_not_ge ha)]
+-    exact isAlgebraic_zero)⟩
++    exact zero_mem F⟩
+ lemma sqrtF_sq (a : F) (ha : 0 ≤ a) : sqrtF a ^ 2 = a := by
+   apply Subtype.ext
+   exact Real.sq_sqrt ha
+@@ -275,6 +273,18 @@
+     change (v:ℂ).re = (t:ℝ)
+     simp [hv]
+ 
++lemma generatedField_le_E (s : Finset ℂ) (hs : ∀ z ∈ s, z ∈ E) :
++    EuclideanFiveColor.AlgebraicCayley.generatedField s ≤ E := by
++  apply IntermediateField.adjoin_le_iff.mpr
++  intro w hw
++  simp only [EuclideanFiveColor.AlgebraicCayley.generatingSet, Finset.coe_union,
++    Finset.coe_singleton, Finset.coe_image, Set.mem_union, Set.mem_singleton_iff,
++    Set.mem_image, Finset.mem_coe] at hw
++  rcases hw with (rfl | ⟨z, hz, rfl⟩) | ⟨z, hz, rfl⟩
++  · exact E_I_mem
++  · exact E_ofReal_re_mem (hs z hz)
++  · exact E_ofReal_im_mem (hs z hz)
++
+ /-- Arithmetic propagation: one syndetic positive mass level forces uniformly
+ positive mass at every sufficiently small positive algebraic radius. -/
+ lemma cover_mass_positive (m : F → ℝ) (hm0 : m 0 = 1)
+@@ -293,13 +303,17 @@
+   have hQA : ∀ q ∈ Q.image (fun z : E => (z:ℂ)), IsAlgebraic ℚ q := by
+     intro q hq
+     obtain ⟨z,hz,rfl⟩ := Finset.mem_image.mp hq
+-    exact mem_algebraicClosure_iff.mp z.property
+-  have hA : ∀ v : ℂ, ‖v‖ = 1 → IsAlgebraic ℚ v → ∃ q ∈ Q.image (fun z : E => (z:ℂ)), A (q*v) := by
++    exact E_isAlgebraic z.property
++  have hNE := generatedField_le_E (Q.image (fun z : E => (z:ℂ))) (by
++    intro w hw
++    obtain ⟨z,_,rfl⟩ := Finset.mem_image.mp hw
++    exact z.property)
++  have hA : ∀ v : ℂ, ‖v‖ = 1 → v ∈ E → ∃ q ∈ Q.image (fun z : E => (z:ℂ)), A (q*v) := by
+     intro v hv hva
+-    let v' : E := ⟨v,mem_algebraicClosure_iff.mpr hva⟩
++    let v' : E := ⟨v,hva⟩
+     obtain ⟨q,hq,hgood⟩ := hcover v' hv
+     exact ⟨q,Finset.mem_image.mpr ⟨q,hq,rfl⟩,q*v',rfl,hgood⟩
+-  obtain ⟨D,M,hD,hM,hsel⟩ := uniform_selection _ hQN hQA A hA
++  obtain ⟨D,M,hD,hM,hsel⟩ := uniform_selection_in E _ hQN hQA hNE A hA
+   have hDp : (0:F) < D := Nat.cast_pos.mpr hD
+   have hMp : (0:F) < M := Nat.cast_pos.mpr hM
+   let δ : F := 2*r*D/(M+1)
+@@ -316,8 +330,8 @@
+     have hh : ((M:F)+1)⁻¹ ≤ 1 := (inv_le_one₀ (by positivity)).mpr (by linarith)
+     exact htM.le.trans hh
+   obtain ⟨v,hv,hvt⟩ := circle_realPart t ht1
+-  obtain ⟨n,k,a,b,hkg,ha,hb,hab⟩ := hsel (v:ℂ) hv (mem_algebraicClosure_iff.mp v.property)
+-  let k' : Fin n → E := fun j => ⟨k j,mem_algebraicClosure_iff.mpr (hkg j).2.1⟩
++  obtain ⟨n,k,a,b,hkg,ha,hb,hab⟩ := hsel (v:ℂ) hv v.property
++  let k' : Fin n → E := fun j => ⟨k j,(hkg j).2.1⟩
+   have ha' : (∑ j, a j • k' j) = D • (1:E) := by
+     apply Subtype.ext
+     simpa [k'] using ha
+@@ -437,7 +451,7 @@
+     obtain ⟨s,hs,rfl⟩ := Finset.mem_image.mp hz
+     exact Circle.norm_coe _
+   · intro v hv
+-    let u : K := ⟨⟨(v:ℂ),mem_sphere_zero_iff_norm.mpr hv⟩,mem_algebraicClosure_iff.mp v.property⟩
++    let u : K := ⟨⟨(v:ℂ),mem_sphere_zero_iff_norm.mpr hv⟩,v.property⟩
+     obtain ⟨s,hs,hsg⟩ := hS (mulRot u)
+     refine ⟨kCoeff (rotMul s),Finset.mem_image.mpr ⟨s,hs,rfl⟩,?_⟩
+     rw [massReal_abs μ q hq hqcov]
+diff -ruN a/OAI/Analysis/PlaneSpectrum/Selections.lean b/OAI/Analysis/PlaneSpectrum/Selections.lean
+--- a/OAI/Analysis/PlaneSpectrum/Selections.lean	2026-10-09 11:31:28.124746703 +0000
++++ b/OAI/Analysis/PlaneSpectrum/Selections.lean	2026-10-09 12:59:40.499126832 +0000
+@@ -172,6 +172,68 @@
+     exact Fintype.sum_equiv e _ _ (fun _ => by simp)
+   · rw [Fintype.sum_equiv e _ (fun j => (a i j).natAbs+(b i j).natAbs) (fun _ => rfl)]
+     exact (hab i).2.2
++/-- The same, inside an intermediate field `E'` containing the number field generated by `Q`. -/
++lemma uniform_selection_in (E' : IntermediateField ℚ ℂ) (Q : Finset ℂ)
++    (hQn : ∀ q ∈ Q, ‖q‖ = 1) (hQa : ∀ q ∈ Q, IsAlgebraic ℚ q)
++    (hNE : generatedField Q ≤ E')
++    (A : ℂ → Prop)
++    (hA : ∀ v : ℂ, ‖v‖ = 1 → v ∈ E' → ∃ q ∈ Q, A (q*v)) :
++    ∃ D M : ℕ, 0 < D ∧ 0 < M ∧ ∀ v : ℂ, ‖v‖ = 1 → v ∈ E' →
++      ∃ n : ℕ, ∃ k : Fin n → ℂ, ∃ a b : Fin n → ℤ,
++        (∀ j, ‖k j‖ = 1 ∧ k j ∈ E' ∧ A (k j*v)) ∧
++        (∑ j, a j • k j) = D • (1:ℂ) ∧
++        (∑ j, b j • k j) = D • Complex.I ∧
++        (∑ j, ((a j).natAbs+(b j).natAbs)) ≤ M := by
++  classical
++  let N := generatedField Q
++  have : FiniteDimensional ℚ N := generatedField_finite Q hQa
++  obtain ⟨S,hSc,hSn,hSg⟩ := numberField_general_position N (generatedField_I Q)
++    (generatedField_re_closed Q) (generatedField_im_closed Q)
++    (Q.card*(finrank ℚ N-1)+1)
++  let TS : Finset (Finset N) := S.powerset.filter (fun T => Submodule.span ℚ (T:Set N) = ⊤)
++  let I := Q × TS
++  let κ : I → Type := fun i => i.2.val
++  let qs : Q → N := fun q => ⟨q.val,generatedField_contains Q q.val q.property⟩
++  have hqs (q : Q) : qs q ≠ 0 := by
++    intro he
++    have hec := congrArg (fun z : N => (z:ℂ)) he
++    have hn := hQn q q.property
++    change q.val = 0 at hec
++    simp [hec] at hn
++  let k : ∀ i : I, κ i → N := fun i j => qs i.1*j.val
++  have hs (i : I) : Submodule.span ℚ (i.2.val:Set N) = ⊤ := (Finset.mem_filter.mp i.2.property).2
++  obtain ⟨D,M,hD,hM,a,b,hab⟩ := uniform_integral_representations k (1:N) (iN N (generatedField_I Q))
++    (fun i => span_mult_rep N i.2.val (hs i) _ (hqs _) _)
++    (fun i => span_mult_rep N i.2.val (hs i) _ (hqs _) _)
++  refine ⟨D,M,hD,hM,fun v hv hva => ?_⟩
++  have hAlg (z : N) : (z:ℂ) ∈ E' := hNE z.property
++  obtain ⟨q,hq,T,hTS,hTc,hTspan,hTA⟩ := spanning_selection Q S hSg (by omega)
++    (fun q s => A (q*(s:ℂ)*v)) (by
++      intro s hs
++      have hn : ‖(s:ℂ)*v‖ = 1 := by rw [norm_mul,hSn s hs,hv,one_mul]
++      obtain ⟨q,hq,hqA⟩ := hA ((s:ℂ)*v) hn (E'.mul_mem (hAlg s) hva)
++      exact ⟨q,hq,by simpa only [mul_assoc] using hqA⟩)
++  have hTmem : T ∈ TS := Finset.mem_filter.mpr ⟨Finset.mem_powerset.mpr hTS,hTspan⟩
++  let i : I := (⟨q,hq⟩,⟨T,hTmem⟩)
++  let e := (Fintype.equivFin (κ i)).symm
++  refine ⟨Fintype.card (κ i),fun j => (k i (e j):ℂ),fun j => a i (e j),fun j => b i (e j),?_,?_,?_,?_⟩
++  · intro j
++    have hj : (e j).val ∈ T := (e j).property
++    refine ⟨?_,hAlg (k i (e j)),?_⟩
++    · change ‖q*((e j).val:ℂ)‖ = 1
++      rw [norm_mul,hQn q hq,hSn _ (hTS hj),one_mul]
++    · exact hTA _ hj
++  · have he := congrArg (fun z : N => (z:ℂ)) (hab i).1
++    push_cast at he
++    rw [← he]
++    exact Fintype.sum_equiv e _ _ (fun _ => by simp)
++  · have he := congrArg (fun z : N => (z:ℂ)) (hab i).2.1
++    push_cast at he
++    change (∑ j, b i j • (k i j:ℂ)) = D • Complex.I at he
++    rw [← he]
++    exact Fintype.sum_equiv e _ _ (fun _ => by simp)
++  · rw [Fintype.sum_equiv e _ (fun j => (a i j).natAbs+(b i j).natAbs) (fun _ => rfl)]
++    exact (hab i).2.2
+ end EuclideanFiveColor.Arithmetic
+ end
+ 
+diff -ruN a/OAI/Geometry/PlaneColoring/BorelTransfer.lean b/OAI/Geometry/PlaneColoring/BorelTransfer.lean
+--- a/OAI/Geometry/PlaneColoring/BorelTransfer.lean	2026-10-09 11:31:28.126619300 +0000
++++ b/OAI/Geometry/PlaneColoring/BorelTransfer.lean	2026-10-09 13:01:00.651120661 +0000
+@@ -109,16 +109,9 @@
+         ((Complex.continuous_ofReal.comp continuous_snd).mul_const Complex.I))
+     · intro q r
+       apply subset_closure
+-      apply mem_algebraicClosure_iff.mpr
+-      have hq : IsAlgebraic ℚ ((q : ℝ) : ℂ) := by simpa using isAlgebraic_ratCast ℚ (A := ℂ) q
+-      have hr : IsAlgebraic ℚ ((r : ℝ) : ℂ) := by simpa using isAlgebraic_ratCast ℚ (A := ℂ) r
+-      exact hq.add (hr.mul (mem_algebraicClosure_iff.mp imagUnit.property))
++      exact add_mem (mem_F_iff.mp (F_rat_mem q)) (mul_mem (mem_F_iff.mp (F_rat_mem r)) E_I_mem)
+   simpa only [Complex.re_add_im] using hh z.re z.im
+-lemma algebraic_norm (z : E) : IsAlgebraic ℚ (‖(z:ℂ)‖ : ℂ) := by
+-  have hz : IsAlgebraic ℚ (z : ℂ) := mem_algebraicClosure_iff.mp z.property
+-  have hc : IsAlgebraic ℚ (conj (z : ℂ)) := hz.algHom (Complex.conjAe.restrictScalars ℚ).toAlgHom
+-  apply IsAlgebraic.of_pow (n := 2) (by norm_num)
+-  simpa only [Complex.mul_conj,Complex.normSq_eq_norm_sq,Complex.ofReal_pow] using hz.mul hc
++lemma algebraic_norm (z : E) : (‖(z:ℂ)‖ : ℂ) ∈ E := E_ofReal_norm_mem z.property
+ end PlaneFiveColor.Spectral
+ end
+ 
+@@ -172,11 +165,10 @@
+   have hn : ‖(z:ℂ)‖ ≠ 0 := norm_ne_zero_iff.mpr (Subtype.coe_ne_coe.mpr hz)
+   have hb : ‖(z:ℂ) / (‖(z:ℂ)‖ : ℂ)‖ = 1 := by
+     rw [norm_div,Complex.norm_real,Real.norm_eq_abs,abs_of_nonneg (norm_nonneg _),div_self hn]
+-  have hzalg : IsAlgebraic ℚ (z : ℂ) := mem_algebraicClosure_iff.mp z.property
+   exact ⟨⟨⟨_,mem_sphere_zero_iff_norm.mpr hb⟩,
+     by
+-      change IsAlgebraic ℚ ((z : ℂ)/(‖(z:ℂ)‖ : ℂ))
+-      simpa only [div_eq_mul_inv] using hzalg.mul (algebraic_norm z).inv⟩,rfl⟩
++      change (z : ℂ)/(‖(z:ℂ)‖ : ℂ) ∈ E
++      exact div_mem z.property (algebraic_norm z)⟩,rfl⟩
+ lemma circle_closed_induction {p : ℂ → Prop} (hp : IsClosed {z | p z})
+     (halg : ∀ b : K, p (b.val : ℂ)) (u : Circle) : p (u : ℂ) := by
+   obtain ⟨s,hs,ht⟩ := mem_closure_iff_seq_limit.mp (dense_E (u : ℂ))
+diff -ruN a/OAI/MeasureTheory/CompactFactors/Stationary.lean b/OAI/MeasureTheory/CompactFactors/Stationary.lean
+--- a/OAI/MeasureTheory/CompactFactors/Stationary.lean	2026-10-09 11:31:28.127752493 +0000
++++ b/OAI/MeasureTheory/CompactFactors/Stationary.lean	2026-10-09 13:01:00.651703780 +0000
+@@ -110,7 +110,7 @@
+ namespace PlaneFiveColor.Spectral
+ open MeasureTheory ProbabilityTheory EuclideanFiveColor
+ instance K_countable : Countable K := by
+-  let f : K → E := fun k => ⟨(k.val : ℂ), mem_algebraicClosure_iff.mpr k.property⟩
++  let f : K → E := fun k => ⟨(k.val : ℂ), k.property⟩
+   apply Function.Injective.countable (f := f)
+   intro a b h
+   apply Subtype.ext

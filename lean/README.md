@@ -263,4 +263,7 @@ compares the file with the graph). For `TheoremW.lean` and `Recurrence.lean`: Ma
 `AddSubgroup.closure`, `ZMod`, `round` and the absolute value on ℝ.
 
 `external/openai-five/` records our check of OpenAI's formal proof that χ(ℝ²) ≥ 6 (September 2026): the sources,
-the build, a restatement of the theorem and its axioms. It is not part of the build of this directory.
+the build, a restatement of the theorem and its axioms. Its subdirectory `fields/` runs the same proof over three
+smaller fields: the constructible numbers (ruler and compass), the origami numbers and the numbers expressible by
+radicals. It holds the patches, the statements, a build script and the axioms printed. None of this is part of the
+build of this directory.
