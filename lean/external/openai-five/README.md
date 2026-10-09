@@ -37,3 +37,12 @@ python3 lean/external/openai-five/build_closure.py math/lean "$LEAN" "$LP" /tmp/
 cp lean/external/openai-five/PlaneSix.lean math/lean/
 (cd math/lean && LEAN_PATH=/tmp/oai-build:$LP "$LEAN" PlaneSix.lean)
 ```
+
+## Smaller fields
+
+[`fields/`](fields/README.md) runs the same proof over three smaller fields: the constructible numbers (ruler and
+compass), the origami numbers and the numbers expressible by radicals. Already the constructible plane is not
+5-colourable, and some finite set of constructible points has no proper 5-colouring. The folder holds the patches,
+the statements, the axioms printed and a build script. The mathematics is in
+[`notes/six_over_fields.md`](../../../notes/six_over_fields.md) and
+[`papers/ruler-compass/`](../../../papers/ruler-compass/README.md).

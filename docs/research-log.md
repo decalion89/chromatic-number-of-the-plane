@@ -10983,3 +10983,44 @@ without a bound on the size.
   - `lean/external/openai-five/fields/`: the three patches against openai/math `fd4aeeb2`, the three statement files,
     `build_field.sh` and a copy of OpenAI's Apache 2.0 licence.
   - README, `lean/README.md`, `notes/README.md`, CHANGELOG.
+
+## The ruler-and-compass result: the finite form in Lean, and a short paper (9 October)
+
+- **Finite form.** `ConstructibleFinite.lean` proves `sqrtClosure_finite_set_not_five_colourable`: some finite set of
+  constructible points has no proper 5-colouring. It is derived from the infinite statement with Mathlib's compactness
+  theorem `SimpleGraph.nonempty_hom_of_forall_finite_subgraph_hom`, which gives homomorphisms to the complete graph on
+  `Fin 5`. The axioms are `propext`, `Classical.choice` and `Quot.sound`, and `leanchecker` passes. A first attempt
+  destructured an existential inside a definition, which Lean rejects; `Classical.choose` fixed it.
+- **Paper.** `papers/ruler-compass/` is a draft, *The ruler-and-compass plane is not 5-colourable* (four pages, five
+  after the review below). Its two lemmas are the order-2 lemma and the triple average at the exponents −1, 0, 1. It
+  also describes the formal proof, states the limit of the method, and lists two open questions: the Pythagorean
+  closure of ℚ, and how many square roots a field needs before its plane stops being 5-colourable. OpenAI is credited
+  for the proof.
+- **Paper referee.** A second AI-assisted reading, of the paper itself, found no mathematical error in the proof of
+  Theorem 1, and confirmed Lemmas 3 and 4. It found one wrong side claim, which also stood in the previous entry: that
+  any shift of the exponents 0, 1, 2 needs cube roots.
+  - This holds for the formalization's single shift, with every shifted exponent onto.
+  - It fails for the paper's argument read closely. The shift at (3.9) can be chosen for each term, and the proof of
+    (3.5) needs surjectivity only at the centred factor's exponent and at differences. Shifting by 1, or by −3 when
+    the centred factor sits at exponent 2, needs only `±1, ±2`.
+
+  So "the triple average had to change" in the previous entry is too strong: it had to change in the formal proof.
+  The exponents −1, 0, 1 are one convenient way to do it, and need no shift at all.
+
+  The other findings were wording and faithfulness, and all are applied to the paper and the note:
+  - the proof goes through OpenAI's Proposition 4.2 and Theorem 1.4, not their Theorem 1.3 as a whole;
+  - the origami and radical cases had incremental builds only;
+  - the Lean lemmas are stated for invariant means;
+  - Mathlib was prebuilt and not replayed.
+- **Script test.** `build_field.sh origami` ran from scratch as a test of the published script, with one job: 72
+  modules built, none failed, in 1 550 s, and the axioms are as above. The script was edited while that run was in
+  progress (to add the finite form), so the run ended with a shell syntax error after printing the axioms. The edited
+  script passes `sh -n`. The final script was then run from scratch on the constructible field, with two jobs: 72
+  modules built, none failed, in 1 196 s; it printed the axioms of the three theorems (the same three axioms) and
+  exited normally.
+- **Search path.** The clean builds and the first replay ran with the unpatched build on the search path, after the
+  new directory. `build_closure.py` compiles a module only after every module it imports is in the new directory, and
+  all 111 import lines of the patched sources are plain `import` lines that its pattern reads, so the unpatched files
+  were never read. To make sure, the build of the script test was replayed with a search path of that build and
+  Mathlib only: `leanchecker -v` exited 0 on all 72 modules (627 s in all) and on `ConstructibleFinite.lean`.
+

@@ -12,6 +12,14 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Changed
+- **The ruler-and-compass result: a five-page paper and the finite form in Lean (9 October).**
+  `papers/ruler-compass/` (*The ruler-and-compass plane is not 5-colourable*, draft) presents the result of the next
+  entry, with OpenAI credited for the proof. `lean/external/openai-five/fields/ConstructibleFinite.lean` proves that some
+  finite set of constructible points has no proper 5-colouring, from the infinite statement and Mathlib's compactness
+  theorem for graph homomorphisms. The axioms are the same three, and `leanchecker` passes. `build_field.sh` compiles
+  the file for the constructible field, and was tested from scratch on two fields. A review of the paper found no
+  mathematical error. It corrected one side claim, in the note and the research log too: only the single shift of the
+  formal proof needs cube roots. Note, README, papers index, research log.
 - **Six colours on the ruler-and-compass plane (9 October).** OpenAI's proof that χ(ℝ²) ≥ 6 runs over the
   constructible numbers, the smallest subfield of ℂ closed under square roots. Every 5-colouring of the points
   constructible with ruler and compass has two points at distance 1 with the same colour, so some finite unit-distance

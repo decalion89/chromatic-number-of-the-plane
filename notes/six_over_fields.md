@@ -51,6 +51,10 @@ first. They need fewer changes, and they follow from the constructible case.
 
 *Proof.* By the de Bruijn–Erdős theorem, a graph is 5-colourable if all its finite subgraphs are. ∎
 
+This step is formally verified too: `ConstructibleFinite.lean` proves the Corollary from the Theorem with Mathlib's
+compactness theorem for graph homomorphisms, `SimpleGraph.nonempty_hom_of_forall_finite_subgraph_hom`. The axioms are
+again `propext`, `Classical.choice` and `Quot.sound`.
+
 The coordinates of such a graph lie in a field obtained from ℚ by finitely many square roots. The proof gives no
 such graph, and we know of none.
 
@@ -76,7 +80,7 @@ OpenAI's paper works with `E = ℚ̄`, its real part `F = E ∩ ℝ`, and the gr
 
 For `E_c`, items 1 and 2 hold.
 
-Item 3 holds only for squares. The map `u ↦ u²` is onto `K`, because the square roots of `a + bi` with
+Item 3 holds only for the exponents `±2^k`. The map `u ↦ u²` is onto `K`, because the square roots of `a + bi` with
 `a² + b² = 1` have coordinates `±√((1 + a)/2)` and `±√((1 − a)/2)`. The map `u ↦ u³` is not onto, and this is
 the impossibility of trisecting angles. For example, `u = (3 + 4i)/5 = (2 + i)/(2 − i)` has valuation 1 at the
 prime `2 + i` of `ℤ[i]`. So `u` is not a cube in `ℚ(i)`, and `z³ − u` is irreducible over `ℚ(i)`. Its roots
@@ -106,12 +110,14 @@ Lemma 3.3 of the paper proves the inequality `m(A)m(B) ≤ m(|A − B|)`. It app
 (Lemma 3.2) to the product of characters `ψ_{−L} · U_u ψ_{A−B} · U_{u²} ψ_L`, at exponents 0, 1, 2. Its projection
 is then replaced by `g_{−L} · U_u g_{A−B} · U_{u²} g_L`.
 
-In the proof of Lemma 3.2, at (3.9), a common integer is added to the exponents so that none is zero. The formalization
-chooses such a shift and assumes that every nonzero power map is onto. A shift of 0, 1, 2 gives three consecutive
-nonzero integers, and one of them is a nonzero multiple of 3. So any shift needs `u ↦ u^{3k}` to be onto for some
-`k ≠ 0`, that is, cube roots.
+In the proof of Lemma 3.2, at (3.9), a common integer is added to the exponents of each term so that none is zero.
+The formalization uses one shift for all terms and assumes that every nonzero power map is onto. A shift of 0, 1, 2
+gives three consecutive nonzero integers, and one of them is a nonzero multiple of 3. So a single shift with every
+shifted exponent onto needs `u ↦ u^{3k}` to be onto for some `k ≠ 0`, that is, cube roots. A shift chosen separately
+for each term would avoid cube roots: by 1 when the centred factor sits at 0 or 1, by −3 when it sits at 2. The
+proof of (3.5) needs surjectivity only at the exponent of the centred factor and at differences of exponents.
 
-Two remarks let us avoid the shift:
+We avoid the shift altogether, by two remarks:
 
 - `U_u` is a unitary, multiplicative operator (it composes with a measure-preserving map), and it commutes with the
   conditional expectation `P`. So `‖P(a · U_u b · U_{u²} c)‖ = ‖P(U_{u⁻¹} a · b · U_u c)‖`.
