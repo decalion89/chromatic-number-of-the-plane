@@ -12,6 +12,14 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Changed
+- **`χ(ℝ²) ≥ 6` (OpenAI, September 2026), rebuilt in Lean (9 October).** OpenAI's proof that the plane is not
+  5-colourable ([openai/math](https://github.com/openai/math), family 158) is non-constructive and formalized in Lean
+  4.34.1 with the Mathlib commit of `lean/`. We compiled the 70 modules of its import closure against our Mathlib
+  build, restated the theorem ourselves and checked its axioms (`propext`, `Classical.choice`, `Quot.sound`).
+  `lean/external/openai-five/` (the procedure). README (state of the art, the section on six, which is now the search
+  for an explicit graph, the Spanish summary), the introductions and bibliographies of the six papers (PDFs rebuilt,
+  same page counts), `notes/local_global.md`, `notes/local_colourings.md`, `notes/worker_jobs.md`,
+  `notes/rigidity.md`, research log.
 - **A character with values in `ℤ/4` at a place above 2 (9 October).** Proposition F15′ (paper, Proposition 11): if
   `F` has a place `v ∣ 2` with `F_v ≅ ℚ₂(√3)`, some homomorphism `ℤT → ℤ/4` maps `T` into `{1, 2, 3}`; so `κ(U) ≥ 1/4`
   for every finite `U` over `ℚ(√59)`, `ℚ(√83)` and `ℚ(√3, √11)` (for quadratic fields the colouring is Fischer's,

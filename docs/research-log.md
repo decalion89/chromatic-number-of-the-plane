@@ -10864,3 +10864,39 @@ without a bound on the size.
   the points where the `d = 59` formula is 2-integral, the sentence on `ℚ(√2, √3)`, the explicit form of the other
   half of Guichard's characterisation, and the names `ζ₁₂` and `η`. It could not reach Fischer's paper (the
   publisher's site refused the download) and judged the attribution against the repository's notes.
+
+## OpenAI's proof that `χ(ℝ²) ≥ 6`, rebuilt in Lean (9 October)
+
+- **What.** The repository [openai/math](https://github.com/openai/math) collects 719 manuscripts in 372 families
+  produced by an internal OpenAI model (its README; about 42% of the top-line results are formalized in Lean, and
+  three manuscripts were withdrawn on 7 October for a sign error). Family 158, *The Euclidean plane is not
+  five-colorable* (23 September 2026), proves `χ(ℝ²) ≥ 6`, with no regularity assumption on the colour classes; so
+  `χ(ℝ²)` is 6 or 7. The proof is not constructive. An arbitrary proper colouring is averaged over the translations
+  and rotations of the plane of real algebraic points; a rigidity theorem (every rotation-invariant probability on the
+  dual of that discrete group with no mass on the continuous characters is Haar measure, proved with
+  Furstenberg–Zimmer compact extensions) turns the average into a measurable colouring with null exceptions; and an
+  argument on colour interfaces, ending with the Moser spindle, excludes such colourings with five colours. It gives
+  no finite graph.
+- **Our check.** Its formal statement, `OAI.EuclideanFiveColor.no_proper_five_coloring` (`¬ ∃ coloring : ℂ → Fin 5,
+  ProperColoring 5 coloring`), is proved in `lean/OAI/Geometry/PlaneColoring/Five.lean` of that repository, with Lean
+  4.34.1 and Mathlib d13f23b7, the versions of `lean/` here. We copied the 70 modules of its import closure at commit
+  `fd4aeeb2` (30 336 lines, in `Analysis/PlaneSpectrum`, `Geometry/PlaneColoring` and `MeasureTheory/CompactFactors`;
+  no other library besides Mathlib), found no `sorry`, `admit`, `axiom`, `native_decide` or `implemented_by` in them,
+  and compiled them against our Mathlib build (18 minutes, no error). We then stated the theorem ourselves, without
+  its definitions, `¬ ∃ c : ℂ → Fin 5, ∀ p q : ℂ, ‖p − q‖ = 1 → c p ≠ c q` (and the same for any `k ≤ 5` colours),
+  proved it from theirs, and `#print axioms` lists only `propext`, `Classical.choice` and `Quot.sound`. The procedure
+  is in `lean/external/openai-five/` (not part of the build of `lean/`).
+- **What it changes here.** The README and the introductions of the six papers now say that `χ(ℝ²)` is 6 or 7, and the
+  section on six becomes the search for an explicit graph, which is still open. By compactness some finite
+  unit-distance graph has no proper 5-colouring; moving its vertices to real algebraic points that keep its unit
+  distances (Tarski–Seidenberg) gives a real number field `F` with `χ(F²) ≥ 6`, a question of
+  `notes/local_colourings.md` §5 until now; by that section such an `F` has no non-split place with a 5-colourable
+  local plane. `χ_B(ℝ²)` and `χ_hom(ℝ²)` (`notes/rigidity.md` §7) are at least 6 as well. Nothing proved in this
+  repository is contradicted: our theorems concern planes over number fields with at most five colours, and the
+  conditional statements of the notes had hypotheses that are now known to fail.
+- **Also relevant.** Family 155: a finite tile of `ℤ³` that tiles but has no fully periodic tiling (also formalized;
+  we have not rebuilt it). With it, the proposition "aperiodic colourings" of `papers/winding` holds for `Γ = ℤ³`, the
+  least possible rank (a tile of `ℤ²` always tiles periodically, by Bhattacharya). Families 157 (Hadwiger's conjecture
+  on clique minors, a different problem), 167 (counting unit distances) and 172 (Euclidean Ramsey configurations) are
+  related but change nothing here; we found nothing on number-field planes, circular chromatic numbers or the other
+  questions of this repository.

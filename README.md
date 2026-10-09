@@ -10,14 +10,18 @@
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
 
 The Hadwiger–Nelson problem asks for the chromatic number χ(ℝ²) of the plane: the least number of
-colours such that no two points at distance exactly 1 share a colour. It has been known since 2018 that
-χ(ℝ²) is 5, 6 or 7.
+colours such that no two points at distance exactly 1 share a colour. It was known from 2018 that χ(ℝ²) is 5, 6
+or 7. In September 2026 OpenAI published a proof that χ(ℝ²) ≥ 6, formalized in Lean
+([*The Euclidean plane is not five-colorable*](https://github.com/openai/math/blob/main/preprints/The-Euclidean-plane-is-not-five-colorable-September-23-2026/paper.pdf)), so χ(ℝ²) is 6 or 7. That proof is not constructive: no finite
+unit-distance graph without a proper 5-colouring is known. We rebuilt its formal proof (see
+[Towards an explicit graph for six](#towards-an-explicit-graph-for-six)).
 
 | bound | who, when | how |
 |---|---|---|
 | χ(ℝ²) ≥ 4 | Nelson, 1950; L. and W. Moser, 1961 | the 7-vertex Moser spindle |
 | χ(ℝ²) ≥ 5 | de Grey, 2018 | a 1581-vertex unit-distance graph with no 4-colouring |
 | χ(ℝ²) ≥ 5 | Parts, 2020 | the same property on 509 vertices |
+| χ(ℝ²) ≥ 6 | OpenAI, 2026 | a non-constructive proof (ergodic averaging, then measure-theoretic interfaces), formalized in Lean; no explicit graph |
 | χ(ℝ²) ≤ 7 | Isbell, 1950 | a hexagonal tiling |
 
 Soifer's book (2024) tells the history of the problem and of these bounds.
@@ -290,11 +294,17 @@ or 6, and α(G₁₇) ≤ 57 would make it 6. The first part of that bound is ch
 (`scripts/g17_alpha.py`, `certificates/g17_part_a_checks.txt`); the certification of the second part is
 running.
 
-## Towards χ(ℝ²) ≥ 6
+## Towards an explicit graph for six
 
-**χ(ℝ²) ≥ 6 has not been proved.** By the de Bruijn–Erdős theorem, it holds exactly when some finite
-unit-distance graph has no proper 5-colouring. A finite object can be searched for, and anyone can check it
-once found. No such graph has been found.
+**χ(ℝ²) ≥ 6 was proved by OpenAI in September 2026, without an explicit graph.** The proof
+([paper](https://github.com/openai/math/blob/main/preprints/The-Euclidean-plane-is-not-five-colorable-September-23-2026/paper.pdf); Lean formalization in [openai/math](https://github.com/openai/math), file `lean/OAI/Geometry/PlaneColoring/Five.lean`) passes
+from an arbitrary 5-colouring to a measurable one by averaging over the algebraic plane, and excludes measurable
+5-colourings by an argument on colour interfaces that ends with the Moser spindle. Its formalization uses Lean 4.34.1
+and the same Mathlib commit as `lean/` here; we compiled the 70 modules of its import closure against our Mathlib
+build (18 minutes, no errors), found no `sorry` or added axiom in them, restated the theorem ourselves
+(`¬ ∃ c : ℂ → Fin 5, ∀ p q, ‖p − q‖ = 1 → c p ≠ c q`), and `#print axioms` lists only `propext`, `Classical.choice`
+and `Quot.sound` (research log, 9 October). By the de Bruijn–Erdős theorem some finite unit-distance graph has no
+proper 5-colouring, but none is known; finding one is now the open problem, and the searches below were made for it.
 
 The route searched in September 2026 is the reduction of Exoo and Ismailescu, which Polymath16 calls
 clamping onto "virtual edges":
@@ -303,8 +313,8 @@ clamping onto "virtual edges":
 2. a **gadget** for each `d`: a unit-distance graph in which two points at
    distance `d` always get different colours.
 
-The 187-point graph of [Results](#results) is such a witness: it would prove χ(ℝ²) ≥ 6 if a gadget
-existed for its orbit of distances.
+The 187-point graph of [Results](#results) is such a witness: with a gadget for its orbit of distances it would give
+an explicit unit-distance graph with no proper 5-colouring.
 
 Two observations that guided the search:
 - **Repulsive distances.** Some distances, such as 2/√3, are coloured alike
@@ -478,6 +488,8 @@ Code, data and text are released under the [MIT License](LICENSE).
 - N. G. de Bruijn, P. Erdős, *A colour problem for infinite graphs and a problem
   in the theory of relations*, Indag. Math. 13 (1951) 371–373
   ([doi](https://doi.org/10.1016/S1385-7258(51)50053-7))
+- OpenAI, *The Euclidean plane is not five-colorable*, OpenAI Math Release preprint,
+  23 September 2026 ([pdf](https://github.com/openai/math/blob/main/preprints/The-Euclidean-plane-is-not-five-colorable-September-23-2026/paper.pdf); Lean formalization in [openai/math](https://github.com/openai/math))
 - A. D. N. J. de Grey, *The chromatic number of the plane is at least 5*,
   Geombinatorics 28(1) (2018) 18–31; [arXiv:1804.02385](https://arxiv.org/abs/1804.02385)
 - G. Exoo, D. Ismailescu, *The chromatic number of the plane is at least 5: a
@@ -598,8 +610,10 @@ Code, data and text are released under the [MIT License](LICENSE).
 
 ## Resumen en español
 
-Este repositorio estudia el problema de Hadwiger–Nelson: el número cromático del plano, que se sabe que
-está entre 5 y 7. Se trabaja con aritmética exacta en cuerpos de números. Las afirmaciones de que un
+Este repositorio estudia el problema de Hadwiger–Nelson: el número cromático del plano. Desde septiembre de 2026
+se sabe que vale 6 o 7: OpenAI publicó una prueba, formalizada en Lean, de que el plano no se puede colorear con 5
+colores ([artículo](https://github.com/openai/math/blob/main/preprints/The-Euclidean-plane-is-not-five-colorable-September-23-2026/paper.pdf)); la hemos recompilado y comprobado sus axiomas. La prueba no da ningún grafo finito
+explícito, y encontrar uno sigue abierto. Se trabaja con aritmética exacta en cuerpos de números. Las afirmaciones de que un
 grafo no se puede colorear se deciden con resolutores SAT, y las principales van acompañadas de una
 prueba DRAT verificada por un programa independiente.
 

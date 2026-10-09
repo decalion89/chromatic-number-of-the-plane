@@ -34,8 +34,8 @@ For a place `v` of `F` let `χ_loc(v)` be:
   unit vectors are the norm-one elements of `O_w`, and this is the least chromatic
   number of a finite level `Cay(O_w/𝔪_w^r, T_r)`. (At 2-adic places `O_w` can be larger
   than `O_v[i]`: over `ℚ₂(√3)`, `(√3/2, 1/2)` is a unit vector.)
-- at a real place: the Borel chromatic number `χ_B(ℝ²)`, which is 5, 6 or 7
-  (Falconer's measurable bound 5; the hexagonal 7-colouring is Borel).
+- at a real place: the Borel chromatic number `χ_B(ℝ²)`, which is 6 or 7
+  (`χ_B(ℝ²) ≥ χ(ℝ²) ≥ 6` by OpenAI's theorem of 2026, see the README; the hexagonal 7-colouring is Borel).
 
 Then `χ(F²) ≤ min_v χ_loc(v)` for every real number field `F`.
 

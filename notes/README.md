@@ -13,6 +13,6 @@ prior work.
 | [`local_global.md`](local_global.md) | A local–global question: is χ(F²) the least of the local chromatic numbers? Proved for two colours (χ(F²) = 2 iff a prime of F above 2 ramifies in F(i), for every number field F); the evidence at three colours; at four colours it would give a triangle-free 5-chromatic unit-distance graph in the plane, through ℚ(√167). |
 | [`rigidity.md`](rigidity.md) | Coset colourings of unit-distance modules: the rotation κ that every coset colouring is blind to, coarse rigidity, and propagation. |
 | [`literature.md`](literature.md) | What the literature already had, and what we have not found elsewhere, with sources. |
-| [`worker_jobs.md`](worker_jobs.md) | Working note (September 2026): the parallel search jobs for χ(ℝ²) ≥ 6, via the Exoo–Ismailescu route at repulsive distances and Galois orbits. A status record, not a result. |
+| [`worker_jobs.md`](worker_jobs.md) | Working note (September 2026): the parallel search jobs for an explicit unit-distance graph with no proper 5-colouring (χ(ℝ²) ≥ 6 itself was proved without one by OpenAI in 2026), via the Exoo–Ismailescu route at repulsive distances and Galois orbits. A status record, not a result. |
 
 The full chronological account, including approaches that failed, is in [`../docs/research-log.md`](../docs/research-log.md).

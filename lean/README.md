@@ -261,3 +261,6 @@ LRAT proof of `q{d}.cnf` (cake_lpr is verified in HOL4 and compiled by the verif
 `#guard` that `q{d}.cnf` is `formula` (run by Lean's interpreter when the file is built; the Python checker also
 compares the file with the graph). For `TheoremW.lean` and `Recurrence.lean`: Mathlib's `AddCircle`,
 `AddSubgroup.closure`, `ZMod`, `round` and the absolute value on ℝ.
+
+`external/openai-five/` records our check of OpenAI's formal proof that χ(ℝ²) ≥ 6 (September 2026): the sources,
+the build, a restatement of the theorem and its axioms. It is not part of the build of this directory.

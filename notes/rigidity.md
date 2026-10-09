@@ -243,7 +243,8 @@ divisible. ∎
   field, proves `χ_hom(ℝ²) ≥ 6`: *no 5-colouring of the plane is of the form
   `⌊5·frac(φ(x))⌋` with `φ` additive.*
 - If instead every finite set passes at `k = 6`, then `χ(ℝ²) ≤ 6`, and at
-  `k = 5`, then `χ(ℝ²) = 5`.
+  `k = 5`, then `χ(ℝ²) = 5`. (OpenAI's theorem of 2026, `χ(ℝ²) ≥ 6`, see the README, shows that some finite set
+  fails at `k = 5`; so `χ_hom(ℝ²) ≥ 6`. It does not say which.)
 
 The circular gate computes exactly this, set by set. What it has found so far:
 - **`k = 4`:** the 803-graph fails, so `χ_hom ≥ 5`, as it must be.

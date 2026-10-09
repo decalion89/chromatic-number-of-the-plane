@@ -3,6 +3,9 @@
 A self-contained account of the arithmetic found on 24 September 2026. It does
 not prove `χ(ℝ²) ≥ 6`. It explains why the searches for six in the field of
 `five_rho7` could never succeed, and it says which fields are still in play.
+(Update, 9 October 2026: OpenAI has proved `χ(ℝ²) ≥ 6`, without an explicit graph; see the README. So some real
+number field carries a finite unit-distance graph with no proper 5-colouring, and by §5 such a field has no
+non-split place whose local plane is 5-colourable. No such graph is known.)
 Proofs of the finite-field facts are computer proofs (SAT, exact arithmetic).
 Each one names the script that reproduces it.
 
