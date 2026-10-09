@@ -26,6 +26,7 @@ the points constructible with ruler and compass cannot be 5-coloured. We checked
 | χ(ℝ²) ≥ 6 | OpenAI, 2026 | a non-constructive proof (ergodic averaging, then measure-theoretic interfaces), formalized in Lean; no explicit graph |
 | χ ≥ 6 already for the points constructible with ruler and compass, and so over every Euclidean field | this repository, October 2026 | OpenAI's proof run over the constructible numbers, where only square roots are available; formalized in Lean (the step to Euclidean fields on paper); no explicit graph |
 | χ(ℝ²) ≤ 7 | Isbell, 1950 | a hexagonal tiling |
+| χ(ℝ²) ∈ {6, 7}, both bounds checked in Lean in the statement of Erdős Problem 508 in Google DeepMind's [formal-conjectures](https://github.com/google-deepmind/formal-conjectures) | the formalization: this repository, October 2026 | χ(ℝ²) ≤ 7 by a brick colouring (the mathematics is classical); χ(ℝ²) ≥ 6 is OpenAI's theorem, moved to that statement |
 
 Soifer's book (2024) tells the history of the problem and of these bounds.
 
@@ -307,7 +308,11 @@ from an arbitrary 5-colouring to a measurable one by averaging over the algebrai
 and the same Mathlib commit as `lean/` here; we compiled the 70 modules of its import closure against our Mathlib
 build (18 minutes, no errors), found no `sorry` or added axiom in them, restated the theorem ourselves
 (`¬ ∃ c : ℂ → Fin 5, ∀ p q, ‖p − q‖ = 1 → c p ≠ c q`), and `#print axioms` lists only `propext`, `Classical.choice`
-and `Quot.sound` (research log, 9 October). By the de Bruijn–Erdős theorem some finite unit-distance graph has no
+and `Quot.sound` (research log, 9 October). We also proved χ(ℝ²) ≤ 7 in Lean, by a brick colouring
+([`lean/PlaneSeven.lean`](lean/PlaneSeven.lean)), in the formulation of Erdős Problem 508 in Google DeepMind's
+[formal-conjectures](https://github.com/google-deepmind/formal-conjectures), whose statement of that bound had no proof,
+and derived 6 ≤ χ(ℝ²) in the same formulation from OpenAI's theorem. So `χ(ℝ²) = 6 ∨ χ(ℝ²) = 7` is checked in Lean
+there ([`lean/external/openai-five/`](lean/external/openai-five/README.md)). By the de Bruijn–Erdős theorem some finite unit-distance graph has no
 proper 5-colouring, but none is known; finding one is now the open problem, and the searches below were made for it.
 
 **Smaller fields.** OpenAI's proof uses only a colouring of the algebraic points of the plane. We ran it over three
@@ -637,7 +642,10 @@ Bastan las raíces cuadradas con dos cambios: un lema sobre los elementos de ord
 tomada con los exponentes −1, 0, 1 en lugar de 0, 1, 2. Por tanto existe un grafo finito de distancia unidad, con
 coordenadas construibles con regla y compás, que no se puede colorear con 5 colores (también verificado en Lean),
 aunque no se conoce ninguno. Como los números construibles reales se encajan en todo cuerpo euclídeo, tampoco se
-puede colorear con 5 colores el plano sobre ningún cuerpo euclídeo, arquimediano o no.
+puede colorear con 5 colores el plano sobre ningún cuerpo euclídeo, arquimediano o no. También hemos demostrado en
+Lean que χ(ℝ²) ≤ 7 (con un coloreado por ladrillos) en el enunciado del problema 508 de Erdős de
+[formal-conjectures](https://github.com/google-deepmind/formal-conjectures) (Google DeepMind), y con el teorema de
+OpenAI, que χ(ℝ²) vale 6 o 7 en ese mismo enunciado.
 Se trabaja con aritmética exacta en cuerpos de números. Las afirmaciones de que un
 grafo no se puede colorear se deciden con resolutores SAT, y las principales van acompañadas de una
 prueba DRAT verificada por un programa independiente.

@@ -11052,3 +11052,29 @@ without a bound on the size.
   witness. The growth was resumed from it with that colouring (R = 20, near weight 3, kissat 12 hours per hard step).
 - **Full test suite on a fresh clone.** Started at 15:10 UTC on a clone of the published head `99dd1b05`, with the
   slow tests and drat-trim; the result goes in the next entry.
+
+
+## χ(ℝ²) is 6 or 7, in the statement of formal-conjectures (9 October)
+
+- **The statement.** Google DeepMind's formal-conjectures states the bounds of Erdős Problem 508 for
+  `χ(ℝ²) = SimpleGraph.chromaticNumber (UnitDistancePlaneGraph Set.univ)` on `EuclideanSpace ℝ (Fin 2)`. On 9 October
+  (commit `b3f26411`) `HadwigerNelsonAtLeastThree` had a proof there, `HadwigerNelsonAtLeast4` pointed to an outside
+  formal proof, and `HadwigerNelsonAtMostSeven` and `HadwigerNelsonAtLeastFive` were `sorry`. We found no formal proof
+  of `χ(ℝ²) ≤ 7` elsewhere.
+- **χ(ℝ²) ≤ 7.** `lean/PlaneSeven.lean`, a brick colouring: in units of 7/10, row `j` is `j ≤ y < j + 1`, brick `i` of
+  row `j` is `i ≤ x − (11/20)j < i + 1`, colour `i + 3j` mod 7. One brick has diameter below 1 (`0.49 + 0.49 < 1`).
+  Two bricks of one colour in the same row are at least six bricks apart; in adjacent rows the colour forces the
+  column difference to be at least 3 or 4 bricks in the direction that matters, and the gap is at least 1.45 bricks,
+  that is 1.015; two rows apart the horizontal gap is at least 1.1 bricks and the vertical gap at least one, so the
+  distance exceeds `√(0.77² + 0.7²) ≈ 1.04`; three rows apart the vertical gap alone is 1.4. In Lean the arithmetic is
+  one lemma (`brick_key`) on reals and integers: `omega` splits the row and column differences, `linarith` and
+  `nlinarith` give the gaps. The copied definition differs from formal-conjectures' only in writing `Dist.dist` and
+  `_root_.dist_comm`, because under `import Mathlib` the bare names inside `namespace SimpleGraph` mean the graph
+  distance. Built in 29 s; axioms `propext`, `Classical.choice`, `Quot.sound`; `leanchecker` passes.
+- **6 ≤ χ(ℝ²) there.** `lean/external/openai-five/PlaneSixOrSeven.lean`: a 5-colouring of the graph composed with
+  `Complex.orthonormalBasisOneI.repr` (a linear isometry `ℂ ≃ ℝ²`) is a 5-colouring of `ℂ`, which OpenAI's
+  `no_proper_five_coloring` excludes; then `χ(ℝ²) = 6 ∨ χ(ℝ²) = 7`, and the statements at least five and at least four.
+  Same three axioms; `leanchecker` passes. Both files were rebuilt from the repository copies.
+- **Not done.** We built against Lean 4.34.1 and Mathlib d13f23b7, not formal-conjectures' Lean 4.33.1 and Mathlib
+  `0df444a3`, and have not proposed anything to that repository.
+

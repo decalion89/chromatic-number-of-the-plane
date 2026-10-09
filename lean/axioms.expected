@@ -62,3 +62,4 @@
 'TwoRoots.not_colorable_three' depends on axioms: [propext, Classical.choice, Quot.sound]
 'TwoRoots.not_colorable_three_of_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
 'TwoRoots.not_colorable_three_23' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PlaneSeven.hadwigerNelson_atMostSeven' depends on axioms: [propext, Classical.choice, Quot.sound]

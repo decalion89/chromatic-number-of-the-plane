@@ -36,6 +36,7 @@ import TheoremWInf
 import FourColours
 import PadicFour
 import TwoRoots
+import PlaneSeven
 
 -- The axioms the theorems depend on; `axioms.expected` holds the expected output.
 #print axioms Q23.chromaticNumber_eq_four
@@ -102,3 +103,4 @@ import TwoRoots
 #print axioms TwoRoots.not_colorable_three
 #print axioms TwoRoots.not_colorable_three_of_sq
 #print axioms TwoRoots.not_colorable_three_23
+#print axioms PlaneSeven.hadwigerNelson_atMostSeven

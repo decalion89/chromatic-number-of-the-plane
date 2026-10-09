@@ -12,6 +12,14 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Changed
+- **χ(ℝ²) is 6 or 7, in Lean, in the statement of formal-conjectures (9 October).** `lean/PlaneSeven.lean` proves
+  `χ(ℝ²) ≤ 7` in the statement of Erdős Problem 508 (`HadwigerNelsonAtMostSeven`) in Google DeepMind's
+  formal-conjectures, with their definition of `UnitDistancePlaneGraph`, by a brick colouring (bricks 0.7 × 0.7, each
+  row shifted by 0.385, colour `i + 3j` mod 7). It is part of the build of `lean/` (sixty-five theorems in
+  `axioms.expected`; the CI replay list includes it). `lean/external/openai-five/PlaneSixOrSeven.lean` derives
+  `6 ≤ χ(ℝ²)` in the same statement from OpenAI's theorem, along the isometry `ℂ ≃ ℝ²`, and so
+  `χ(ℝ²) = 6 ∨ χ(ℝ²) = 7`. Both files use only the three standard axioms and pass `leanchecker`. The mathematics of
+  the upper bound is classical (Isbell); the lower bound is OpenAI's. README, Lean README, research log.
 - **Every Euclidean field, and where the method stops (9 October).** `papers/ruler-compass/` (now six pages),
   Section 6: for every Euclidean field `F`, every 5-colouring of `F²` has two points at distance 1 of the same colour
   (Corollary 5), because the real constructible numbers embed in `F`. For fields that contain a copy of the real

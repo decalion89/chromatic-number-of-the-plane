@@ -26,6 +26,37 @@ on 9 October 2026. It is not part of the build of `lean/`: the proof is OpenAI's
   'plane_not_k_colourable' depends on axioms: [propext, Classical.choice, Quot.sound]
   ```
 
+## χ(ℝ²) is 6 or 7, in the statement of formal-conjectures
+
+Google DeepMind's [formal-conjectures](https://github.com/google-deepmind/formal-conjectures) states the bounds of
+Erdős Problem 508 (`FormalConjectures/ErdosProblems/508.lean`) for
+`χ(ℝ²) = SimpleGraph.chromaticNumber (UnitDistancePlaneGraph Set.univ)`, the graph on `EuclideanSpace ℝ (Fin 2)` that
+joins two points at distance 1; on 9 October 2026 `HadwigerNelsonAtMostSeven`, `HadwigerNelsonAtLeastFive` and
+`HadwigerNelsonAtLeast4` had no proof there. [`../../PlaneSeven.lean`](../../PlaneSeven.lean), part of the build of
+`lean/`, proves `χ(ℝ²) ≤ 7` by a brick colouring. `PlaneSixOrSeven.lean` here moves OpenAI's theorem to `χ(ℝ²)`
+along the isometry `Complex.orthonormalBasisOneI.repr : ℂ ≃ₗᵢ[ℝ] EuclideanSpace ℝ (Fin 2)`: a 5-colouring of the graph
+would give one of `ℂ`. It proves
+
+```lean
+theorem PlaneSeven.hadwigerNelson_atLeastSix : 6 ≤ SimpleGraph.chromaticNumber (UnitDistancePlaneGraph Set.univ)
+theorem PlaneSeven.hadwigerNelson_six_or_seven :
+    SimpleGraph.chromaticNumber (UnitDistancePlaneGraph Set.univ) = 6 ∨
+      SimpleGraph.chromaticNumber (UnitDistancePlaneGraph Set.univ) = 7
+```
+
+and the statements `hadwigerNelson_atLeastFive` and `hadwigerNelson_atLeast4`. The output of the build:
+
+```
+'PlaneSeven.hadwigerNelson_atLeastSix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PlaneSeven.hadwigerNelson_six_or_seven' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
+`leanchecker` replays `PlaneSeven` and `PlaneSixOrSeven` without error (9 October; OpenAI's 70 modules were replayed
+before, see `fields/README.md`). The definition of `UnitDistancePlaneGraph` is formal-conjectures' with `dist` written
+`Dist.dist` and `dist_comm` written `_root_.dist_comm`: under `import Mathlib` these names inside `namespace SimpleGraph`
+mean Mathlib's graph distance. Our toolchain is Lean 4.34.1 and Mathlib d13f23b7; formal-conjectures used Lean 4.33.1
+and Mathlib 0df444a3 on that date, and we have not built the files there.
+
 ## To reproduce
 
 ```sh
@@ -36,6 +67,9 @@ LEAN=$(cd lean && lake env which lean)
 python3 lean/external/openai-five/build_closure.py math/lean "$LEAN" "$LP" /tmp/oai-build 2
 cp lean/external/openai-five/PlaneSix.lean math/lean/
 (cd math/lean && LEAN_PATH=/tmp/oai-build:$LP "$LEAN" PlaneSix.lean)
+(cd lean && lake build PlaneSeven)
+cp lean/external/openai-five/PlaneSixOrSeven.lean math/lean/
+(cd math/lean && LEAN_PATH=/tmp/oai-build:../../lean/.lake/build/lib/lean:$LP "$LEAN" PlaneSixOrSeven.lean)
 ```
 
 ## Smaller fields

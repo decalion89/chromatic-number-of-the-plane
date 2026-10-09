@@ -62,6 +62,13 @@ This directory holds proofs in Lean 4, with Mathlib, of:
   E, the relation for a forces 3 | E_e, so E_e is odd, and the relation for b forces E_e even. The same holds
   for the graph of x² + y² = 1 over every field of characteristic 0 containing square roots of such a and b, since
   ℚ(√a, √b) maps into it;
+- χ(ℝ²) ≤ 7, in the statement of Erdős Problem 508 (`HadwigerNelsonAtMostSeven`) in Google DeepMind's
+  [formal-conjectures](https://github.com/google-deepmind/formal-conjectures), with their definition of
+  `UnitDistancePlaneGraph` (`PlaneSeven.lean`). The colouring is a brick version of Isbell's hexagonal one: in units of
+  7/10, row j is the strip j ≤ y < j + 1 and brick i of row j is i ≤ x − (11/20)j < i + 1; brick (i, j) gets the colour
+  i + 3j (mod 7). Two points of one brick are less than 1 apart (0.7² + 0.7² < 1), and the case analysis on the row
+  difference in `brick_key` shows that two different bricks of one colour are more than 1 apart (the smallest gap,
+  1.015, is horizontal, between adjacent rows).
 
 ## The theorems
 
@@ -140,6 +147,9 @@ theorem DistLiu.liu_problem3_iff_unconditional (D : Finset ℤ) (hD3 : D.card = 
       ∃ α : ℝ, ∀ d ∈ D, (q : ℝ) / p ≤ |(d : ℝ) * α - round ((d : ℝ) * α)|
 -- and DistLiu.wplus_distance (any finite D, 2q ≤ p < 4q), DistLiu.wplus_distance_converse, and the lonely runner
 -- theorem for three speeds, DistLiu.lonely_runner_three (integers) and DistLiu.lonely_runner_real (reals)
+-- the plane is 7-colourable (formal-conjectures, Erdős Problem 508, HadwigerNelsonAtMostSeven):
+theorem PlaneSeven.hadwigerNelson_atMostSeven :
+    SimpleGraph.chromaticNumber (UnitDistancePlaneGraph Set.univ) ≤ 7
 ```
 
 Here `Q23.L`, `Q311.L` and `QuadraticPlanes.L d` are the subfields ℚ(√2, √3), ℚ(√3, √11) and ℚ(√d) of ℝ,
@@ -167,7 +177,7 @@ says that no assignment satisfies every clause. When a file is built, `#guard` c
 `data/quadratic_planes/q{d}.cnf` is exactly `formula`, and `scripts/verify_quadratic_planes.py --cake-lpr` has
 cake_lpr check an LRAT proof that this file is unsatisfiable.
 
-The sixty-four theorems depend only on Lean's three standard axioms, `propext`, `Classical.choice` and
+The sixty-five theorems depend only on Lean's three standard axioms, `propext`, `Classical.choice` and
 `Quot.sound`: `axioms.expected` records the output of `#print axioms`, and CI compares them.
 
 ## Checking the proofs
@@ -246,7 +256,8 @@ colourings exist but cannot be computed.
 | `FourColours.lean` | χ(ℚ(√d)²) ≥ 4 for every `d ≡ 11 (mod 12)`: `(3 + 4i)^j` modulo 2, 3 and 5, the sets `S_N` and the structure lemma by induction on `k` (`rep_of_inS`), the vectors `e, u₁, ū₁, u_n` and their two relations (`rel1`, `rel2`), the lift of a character to `ℝ` (`exists_lift`), the exact relations among the integer parts (`exact3`) and the contradictions modulo 2 and 3 (`contra_23`, `contra_11`) |
 | `TwoRoots.lean` | χ(K²) ≥ 4 for every real field `K` containing `√a` and `√b`, `a ≡ 2 (mod 3)`, `b ≡ 7 (mod 8)`: the vectors `e, u_a, ū_a, u_b, ū_b` and the relation `(1 + c)(u_c + ū_c) = 2(1 − c)e` (`rel`), the lemmas of `FourColours.lean` for the rest, the contradiction at 3 and 2 (`contra`), and the transfer to fields of characteristic 0 (`not_colorable_three_of_sq`) |
 | `DistLiu.lean` | Theorem W⁺ for distance graphs `G(ℤ, D)` (a periodic window, `TheoremWplus` on `ZMod P`, the extension of the character), the converse colouring `⌊p · frac(xα)⌋`, the lonely runner theorem for three speeds (`exists_odd_window`), and Problem 3 of Liu's survey |
-| `PrintAxioms.lean`, `axioms.expected` | the axioms of the sixty-four theorems |
+| `PlaneSeven.lean` | χ(ℝ²) ≤ 7: `UnitDistancePlaneGraph` (copied from formal-conjectures, Apache License 2.0; `dist` written `Dist.dist` because `import Mathlib` brings in the graph distance `SimpleGraph.dist`), the arithmetic core `brick_key`, the colour of a point (`row`, `col`, `colour`), and the colouring `brickColoring` |
+| `PrintAxioms.lean`, `axioms.expected` | the axioms of the sixty-five theorems |
 | `tools/q23_coefficients.py`, `tools/q311_coefficients.py` | sympy scripts that produce the coefficients of the `linear_combination` steps and the edge lists |
 | `tools/field_lean.py` | writes `Sqrt{d}.lean` from the data (`--check` compares, and checks the colouring of 𝔽₇² in `QuadraticPlanes.lean` against `finite_planes.json`; the tests run it) |
 
@@ -259,11 +270,14 @@ proof term that the kernel checks; nothing runs as native code, so neither the S
 trusted. The conditional theorems state their hypothesis; to use them one also trusts cake_lpr's check of the
 LRAT proof of `q{d}.cnf` (cake_lpr is verified in HOL4 and compiled by the verified compiler CakeML), and the
 `#guard` that `q{d}.cnf` is `formula` (run by Lean's interpreter when the file is built; the Python checker also
-compares the file with the graph). For `TheoremW.lean` and `Recurrence.lean`: Mathlib's `AddCircle`,
+compares the file with the graph). For `PlaneSeven.lean`: Mathlib's `EuclideanSpace`, `dist` and `ZMod`, and the
+definition of `UnitDistancePlaneGraph` in the file, which joins two points of a set `V` of `EuclideanSpace ℝ (Fin 2)` at
+distance 1. For `TheoremW.lean` and `Recurrence.lean`: Mathlib's `AddCircle`,
 `AddSubgroup.closure`, `ZMod`, `round` and the absolute value on ℝ.
 
 `external/openai-five/` records our check of OpenAI's formal proof that χ(ℝ²) ≥ 6 (September 2026): the sources,
 the build, a restatement of the theorem and its axioms. Its subdirectory `fields/` runs the same proof over three
 smaller fields: the constructible numbers (ruler and compass), the origami numbers and the numbers expressible by
-radicals. It holds the patches, the statements, a build script and the axioms printed. None of this is part of the
-build of this directory.
+radicals. It holds the patches, the statements, a build script and the axioms printed. Its file
+`PlaneSixOrSeven.lean` derives 6 ≤ χ(ℝ²) in the formulation of `PlaneSeven.lean` from OpenAI's theorem, so that
+χ(ℝ²) is 6 or 7 there. None of this is part of the build of this directory.
