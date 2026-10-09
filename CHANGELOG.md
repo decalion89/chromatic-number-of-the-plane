@@ -12,6 +12,13 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Changed
+- **Audit of the base-point periods passages (6–7 October, night).** No mathematical error. Corrected: `H₄` is not a
+  subgraph of the Cayley graph of the 27 vectors (198 of its edges are other unit vectors, as its clausal cores used all
+  unit pairs; 39 edges of `H₄′` lie outside its 120 vectors); the remark replaces only the compactness step of Corollary
+  8 (not the one behind Proposition 10) and needs `S` without elements of order 2; the abstract (tight squares; the
+  computer-assisted step is also used for the attainment of 4); the `ℚ(√59)` search sentence; only `χ(ℚ(√2, √3)²) ≤ 4`
+  is used, and `H₄′` reproves `χ ≥ 4`; definitions before use and notation (`ξ`, `K_{a/b}`, `r_m`, `𝒮`, `|W|`, `w`).
+  Paper (31 pages), note §6.9 and Question 2, `finite_witness/README.md`, research log.
 - **A second explicit graph with `χ_c = 4`, over `ℚ(√2, √3)` (6 October, night).**
   `data/number_fields/circular/finite_witness/witness_q2_3.json.gz`: 1 657 points (denominator 36), all 6 238 unit pairs
   as edges, `χ_c = χ = 4`; so `χ_c(ℚ(√2, √3)²) = 4` with an explicit graph. Certified by `check_witness4.py` (which now

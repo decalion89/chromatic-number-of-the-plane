@@ -62,9 +62,10 @@ $2$, $3$ or $7/2$. We show that these are the only values below $4$: for every n
 $7/2$ or at least $4$, and it is $7/2$ exactly when $\chi(F^2)\ge4$ and some prime of $F$ above $7$ has residue
 degree $1$; below $4$ it is the least circular chromatic number of the planes over the completions of $F$, and it is
 the circular chromatic number of some finite unit-distance graph in $F^2$; so is the value $4$, when it occurs (for
-example over $\Q(\sqrt{59})$), as at four colours the winding argument fails only on tight $4$-cycles; over
-$\Q(\sqrt3,\sqrt{11})$ and $\Q(\sqrt2,\sqrt3)$ we give explicit such graphs, with $1\,874$ and $1\,657$ vertices. The proof of this
-classification has one computer-assisted step, an exact finite computation along the rational rotations whose denominators divide $325$;
+example over $\Q(\sqrt{59})$), as at four colours the winding argument fails only on tight squares; over
+$\Q(\sqrt3,\sqrt{11})$ and $\Q(\sqrt2,\sqrt3)$ we give explicit such graphs, with $1\,874$ and $1\,657$ vertices,
+certified by checked SAT refutations. The proofs of this classification and of the attainment of $4$ have one
+computer-assisted step, an exact finite computation along the rational rotations whose denominators divide $325$;
 without it we show that $\chi_c(F^2)\ge56/17$ whenever $\chi(F^2)\ge4$.
 \end{abstract}
 
@@ -162,7 +163,8 @@ completion; more precisely, below $4$ it is the least circular chromatic number 
 $4$ the value is also the circular chromatic number of a finite unit-distance graph in $F^2$
 (Corollary~\ref{cor:finite}), and so is the value $4$ when $\chi_c(F^2)=4$ (Theorem~\ref{thm:finite4}). The proofs give
 no explicit bound on the size of such a graph (for the value $4$ the remark after Lemma~\ref{lem:periods} replaces
-compactness by a finite construction), but computer searches find explicit ones, certified: for the value $4$, over
+the compactness step of Corollary~\ref{cor:finiteS4}, though not the one behind Proposition~\ref{prop:quarter}, by a
+finite construction), but computer searches find explicit ones, certified: for the value $4$, over
 $\Q(\sqrt3,\sqrt{11})$ and $\Q(\sqrt2,\sqrt3)$, ones with $1\,874$ and $1\,657$ vertices (found with base-point
 periods, Lemma~\ref{lem:periods}); for
 $7/2$, over $\Q(\sqrt{11})$, one with $155$ vertices, and others over $\Q(\sqrt{455})$, $\Q(\sqrt{191})$ and
@@ -1790,12 +1792,16 @@ Theorem~\ref{thm:F}; for $\Q(\sqrt3,\sqrt{11})$, $\chi=4$ and (7) fails, as $7$ 
 An independent checker refereed this subsection with two programs of its own, which test Lemma~\ref{lem:square},
 Corollary~\ref{cor:finiteS4} and the four-colour form of Theorem~W$^+$ on every abelian group of order at most $16$
 (\nolinkurl{data/number_fields/circular/at_four/indep/}). The proof gives no explicit bound on the size of the witness
-(the remark after Lemma~\ref{lem:periods} replaces its compactness step by a finite construction); over
-$\Q(\sqrt{59})$ we know none. Colouring-guided growths over $\Q(\sqrt{59})$ with the unit vectors of denominator $210$, $1050$ and
+(the remark after Lemma~\ref{lem:periods} replaces the compactness step of Corollary~\ref{cor:finiteS4} by a finite
+construction; the set $U$ of Proposition~\ref{prop:quarter} still comes from compactness); over $\Q(\sqrt{59})$ we
+know none. Colouring-guided growths over $\Q(\sqrt{59})$ with the unit vectors of denominator $210$, $1050$ and
 $2730$ stopped at their limits; for $210$ this was bound to happen, as the character
 $\frac{(89a+59b+89c+59e)}{118}\bmod1$ of the points $(\frac{a+b\sqrt{59}}{210},\frac{c+e\sqrt{59}}{210})$ keeps all
 $108$ unit vectors with denominator $210$ at distance at least $\frac{15}{59}$ from $\Z$, so that every graph built
-from them maps to $K_{59/15}$. Over $\Q(\sqrt3,\sqrt{11})$ an explicit set at $\frac14$ is small: with $R_{60}$ the rotation by $60^\circ$, $R_A$ the rotation with cosine $\frac56$ and sine $\frac{\sqrt{11}}6$ (the angle of the Moser spindle) and $R_G$ the one with cosine $\frac{11}{14}$ and sine $\frac{5\sqrt3}{14}$, the $27$ unit vectors $R_{60}^jR_A^kR_G^l(1,0)$, $j,k,l\in\{-1,0,1\}$, have $\kappa=\frac14$: a character of order $12$ keeps them at distance at least $\frac14$ from $\Z$, and an exact certificate ($12\,073$ nodes, checked by two programs; \nolinkurl{data/number_fields/circular/at_four/}) shows that none maps them into $(\frac14,\frac34)$. So Corollary~\ref{cor:finiteS4} gives a finite subgraph with $\chi_c=4$ of the Cayley graph of these $54$ vectors directly, without Theorem~\ref{thm:F}; a construction based on the following lemma found one.
+from them maps to $K_{59/15}$. Over $\Q(\sqrt3,\sqrt{11})$ an explicit set at $\frac14$ is small: with $R_{60}$ the rotation by $60^\circ$, $R_A$ the rotation with cosine $\frac56$ and sine $\frac{\sqrt{11}}6$ (the angle of the Moser spindle) and $R_G$ the one with cosine $\frac{11}{14}$ and sine $\frac{5\sqrt3}{14}$, the $27$ unit vectors $R_{60}^jR_A^kR_G^l(1,0)$, $j,k,l\in\{-1,0,1\}$, have $\kappa=\frac14$: a character of order $12$ keeps them at distance at least $\frac14$ from $\Z$, and an exact certificate ($12\,073$ nodes, checked by two programs; \nolinkurl{data/number_fields/circular/at_four/}) shows that none maps them into $(\frac14,\frac34)$. So Corollary~\ref{cor:finiteS4} gives a finite subgraph with $\chi_c=4$ of the Cayley graph of these $54$ vectors
+(which is $4$-colourable, as $\chi(\Q(\sqrt3,\sqrt{11})^2)=4$) directly, without Theorem~\ref{thm:F}. A construction
+based on the following lemma, run in this Cayley graph, found an explicit finite unit-distance graph with $\chi_c=4$
+on points of $\Z U$, with all unit pairs as edges (some of them in other directions).
 
 \begin{lemma}[base-point periods]\label{lem:periods}
 Let $G$ be a graph on a finite set of points whose edges join $x$ and $x+s$ with $s\in U\cup-U$, for a finite set $U$
@@ -1809,69 +1815,80 @@ $W$ has $P$ steps in $U$ and $N$ in $-U$, $P+N\ge1$, then $\frac{P-3N}4<\mathrm{
 
 \begin{proof}
 The colour differences along $W$ sum to $0$ modulo $4$, so $4\mid\Lambda(W)$. $\Lambda$ and $N$ are additive; reversing
-$W$ replaces each representative $\delta$ by $4-\delta$ and exchanges the steps in $U$ and $-U$, so, with $L=P+N$,
-$\mathrm{per}(W^{-1})=(4L-\Lambda(W))/4-P=-\mathrm{per}(W)$. A backtrack adds $\delta+(4-\delta)=4$ to $\Lambda$ and one
+$W$ replaces each representative $\delta$ by $4-\delta$ and exchanges the steps in $U$ and $-U$, so, with $|W|=P+N$,
+$\mathrm{per}(W^{-1})=(4|W|-\Lambda(W))/4-P=-\mathrm{per}(W)$. A backtrack adds $\delta+(4-\delta)=4$ to $\Lambda$ and one
 step in $-U$. The paths $x\to x+s\to x+s+t$ and $x\to x+t\to x+s+t$ have sums of representatives in $\{2,\dots,6\}$
 that agree modulo $4$; if they differed, one would be $2$ and the other $6$, and the square
 $x\to x+s\to x+s+t\to x+t\to x$, or its reverse, would be a tight cycle (its four points are distinct as $s,t\ne0$ and
-$s\ne\pm t$). Finally $L\le\Lambda(W)\le3L$; if $\Lambda(W)=L$, every arc of $W$ is tight, and the closed walk $W$
+$s\ne\pm t$). Finally $|W|\le\Lambda(W)\le3|W|$; if $\Lambda(W)=|W|$, every arc of $W$ is tight, and the closed walk $W$
 contains a directed cycle of tight arcs, of length at least $3$ as an arc and its reverse are not both tight; if
-$\Lambda(W)=3L$, the same holds for $W^{-1}$. So $L<\Lambda(W)<3L$, which is the last claim.
+$\Lambda(W)=3|W|$, the same holds for $W^{-1}$. So $|W|<\Lambda(W)<3|W|$, which is the last claim.
 \end{proof}
 
-So suppose that $G$ contains the walk $W_\rho$ from a point $x_0$ (with $|n_u|$ steps $\mathrm{sign}(n_u)u$, in a fixed
-order of $U$) of each relation $\rho=\sum_un_uu=0$ in a finite set $S$, and that each $\rho\in S$ is joined to $0$ by
-chain steps $\rho'=\rho''\pm r_j$, where $r_1,\dots,r_k$ is a $\Z$-basis of the relation lattice, each realised inside
-$G$ by turning $W_{\rho''}W_{r_j}^{\pm1}$ into $W_{\rho'}$ with such moves. Then $\mathrm{per}(W_\rho)=p(\rho)$ for an
-integer homomorphism $p$ on the relation lattice (the empty walk has period $0$), with
-$\frac{P-3N}4<p(\rho)<\frac{3P-N}4$ for every $\rho\ne0$ met; if no such $p$ exists, every proper $4$-colouring of
-$G$ has a tight cycle. A character $\chi$ of $\Z U$ whose values have representatives $f(u)\in(\frac14,\frac34)$ would
-give such a $p$, namely $p(\rho)=\sum_un_uf(u)$, an integer as $\sum_un_u\chi(u)=0$; so the infeasibility of the
-system implies $\kappa(U)\le\frac14$, with finitely many relations. For the $27$ vectors above, the relations with $\sum_un_u^2\le12$ and $41$ of length $8$ found by a
-counterexample search (each $R_A^k$ times a relation among the vectors $\zeta^jg^l$, with $\zeta=e^{i\pi/3}$ and
-$g=\frac{11+5\sqrt{-3}}{14}$ the rotation $R_G$, with a coefficient $2$ or $3$, such as $3\bar\zeta+\zeta+g-3\bar\zeta g=0$)
-already leave no such $p$ (an integer-programming computation, which
-only guided the construction). The walks of $256$ of them, tied to a basis by bubble sorts, span $13\,230$ points, and
-clausal cores of SAT refutations reduced these to the graph $H_4$ of
-\nolinkurl{data/number_fields/circular/finite_witness/witness_q3_11.json.gz}: $1\,874$ points of
-$\Q(\sqrt3,\sqrt{11})^2$, with all $8\,085$ pairs at distance $1$ as edges. It has a proper $4$-colouring, and every
-proper $4$-colouring has a tight cycle among $4\,992$ listed ones, of lengths $4$, $8$ and $12$, by a SAT refutation
-that \texttt{drat-trim} checks and that an independent encoding, written by a referee from the file format alone,
-confirms with the verified checker \texttt{cake\_lpr}; Lemma~\ref{lem:tight} gives $\chi_c(H_4)\ge4$. So
-$\chi_c(H_4)=\chi(H_4)=4$, and the value $4$ of Theorem~\ref{thm:finite4} is attained by an explicit graph over
-$\Q(\sqrt3,\sqrt{11})$. Over $\Q(\sqrt2,\sqrt3)$, whose plane is the field $\Q(\zeta_{24})$ with $\zeta_{24}=e^{i\pi/12}$, the
-same construction starts from the $60$ unit vectors $\zeta_{24}^js^l$ ($|l|\le2$, one of each pair $\pm u$), with
-$s=\frac{1+2\sqrt{-2}}3$; already the relations with $\sum_un_u^2\le8$ leave no $p$, and it gives an induced
-unit-distance graph $H_4'$ with $1\,657$ vertices and $6\,238$ edges
-(\nolinkurl{data/number_fields/circular/finite_witness/witness_q2_3.json.gz}), with $\chi_c(H_4')=\chi(H_4')=4$ by a
-SAT refutation checked in the same two ways (the referee's for this graph has two encodings of its own). As
-$\chi(\Q(\sqrt2,\sqrt3)^2)=4$, this gives $\chi_c(\Q(\sqrt2,\sqrt3)^2)=4$ with an explicit finite graph. An independent referee checked Lemma~\ref{lem:periods} and this use of it, with a numerical
-test on random small instances (\nolinkurl{data/number_fields/circular/finite_witness/indep_W4/}). The same search
-over $\Q(\sqrt{59})$ found no infeasible system with relations of length up to $33$.
+For $\rho=(n_u)$ in the relation lattice $\{n\in\Z^U:\sum_un_uu=0\}$ let $P(\rho)=\sum_{n_u>0}n_u$ and
+$N(\rho)=\sum_{n_u<0}|n_u|$; we call $P(\rho)+N(\rho)$ the \emph{length} of $\rho$ and the open interval
+$(\frac{P(\rho)-3N(\rho)}4,\frac{3P(\rho)-N(\rho)}4)$ its \emph{range}, and we let $W_\rho$ be the walk from a point
+$x_0$ with $|n_u|$ steps $\mathrm{sign}(n_u)u$, in a fixed order of $U$. Suppose that $G$ contains $W_\rho$ for each
+$\rho$ in a finite set $\mathcal S$ of relations, and that each $\rho\in\mathcal S$ is joined to $0$ by chain steps
+$\rho'=\rho''\pm r_j$, where $r_1,\dots,r_m$ is a $\Z$-basis of the relation lattice, each realised inside $G$ by
+turning $W_{\rho''}W_{r_j}^{\pm1}$ into $W_{\rho'}$ with such moves. Then $\mathrm{per}(W_\rho)=p(\rho)$ for an
+integer homomorphism $p$ on the relation lattice (the empty walk has period $0$), with $p(\rho)$ in the range of
+$\rho$ for every $\rho\ne0$ met; if no such $p$ exists, every proper $4$-colouring of $G$ has a tight cycle. A
+character $\xi$ of $\Z U$ whose values have representatives $f(u)\in(\frac14,\frac34)$ would give such a $p$, namely
+$p(\rho)=\sum_un_uf(u)$, an integer as $\sum_un_u\xi(u)=0$; so an infeasible system on finitely many relations
+certifies $\kappa(U)\le\frac14$. For the $27$ vectors above, the relations with $\sum_un_u^2\le12$ and $41$ of length
+$8$ found by a counterexample search (each $R_A^k$ times a relation among the vectors $\zeta^jg^l$, with
+$\zeta=e^{i\pi/3}$ and $g=\frac{11+5\sqrt{-3}}{14}$ the rotation $R_G$, each with a coefficient $\pm3$, such as
+$3\bar\zeta+\zeta+g-3\bar\zeta g=0$) already leave no such $p$ (an integer-programming computation, which only guided
+the construction). The walks of $256$ of them, tied to a basis by bubble sorts, span $13\,230$ points, and clausal
+cores of SAT refutations, taken with all unit pairs as edges, reduced these to the graph $H_4$ of
+\nolinkurl{data/number_fields/circular/finite_witness/witness_q3_11.json.gz}: $1\,874$ points of $\Z U\subset
+\Q(\sqrt3,\sqrt{11})^2$, with all $8\,085$ pairs at distance $1$ as edges ($198$ of them in directions other than the
+$54$ vectors). It has a proper $4$-colouring, and every proper $4$-colouring has a tight cycle among $4\,992$ listed
+ones, of lengths $4$, $8$ and $12$, by a SAT refutation that \texttt{drat-trim} checks and that an independent
+encoding, written from scratch by a referee without repository code, confirms with the verified checker
+\texttt{cake\_lpr}; Lemma~\ref{lem:tight} gives $\chi_c(H_4)\ge4$. So $\chi_c(H_4)=\chi(H_4)=4$, and the value $4$ of
+Theorem~\ref{thm:finite4} is attained by an explicit graph over $\Q(\sqrt3,\sqrt{11})$. Over $\Q(\sqrt2,\sqrt3)$,
+whose plane is the field $\Q(\zeta_{24})$ with $\zeta_{24}=e^{i\pi/12}$, the same construction starts from the $60$
+unit vectors $\zeta_{24}^jw^l$ ($j\in\Z/24$, $|l|\le2$, one of each pair $\pm u$), with $w=\frac{1+2\sqrt{-2}}3$;
+already the relations with $\sum_un_u^2\le8$ leave no $p$ (again an integer-programming computation that only guided
+the construction), and it gives an induced unit-distance graph $H_4'$ with $1\,657$ vertices and $6\,238$ edges
+(\nolinkurl{data/number_fields/circular/finite_witness/witness_q2_3.json.gz}; $39$ of the edges are in directions
+other than the $120$ vectors), with $\chi_c(H_4')=\chi(H_4')=4$ by a SAT refutation checked in the same two ways (the
+referee's for this graph has two encodings of its own). As $\chi(\Q(\sqrt2,\sqrt3)^2)\le4$ (a residue colouring at the
+prime above $2$; \cite{P4C}), this gives $\chi_c(\Q(\sqrt2,\sqrt3)^2)=4$ with an explicit finite graph, and $H_4'$
+reproves $\chi(\Q(\sqrt2,\sqrt3)^2)\ge4$. An independent referee checked Lemma~\ref{lem:periods} and its use for
+$\Q(\sqrt3,\sqrt{11})$, with a numerical test on random small instances
+(\nolinkurl{data/number_fields/circular/finite_witness/indep_W4/}). Over $\Q(\sqrt{59})$, for $50$ of the $150$ unit
+vectors with denominator $1050$ (one of each pair $\pm u$), the same counterexample search stopped with a feasible
+system of $2\,926$ relations, each of length at most $33$.
 
-\begin{remark}[Corollary~\ref{cor:finiteS4} made effective]
-Conversely, if $\kappa(U)\le\frac14$, with $\kappa$ taken over all characters of $\Z U$, some finite $S$ leaves no
-such $p$, and the construction gives the finite subgraph of Corollary~\ref{cor:finiteS4} explicitly, without
-compactness. For a relation $\rho=\sum_un_uu$ let $P=\sum_{n_u>0}n_u$ and $N=\sum_{n_u<0}|n_u|$; then $\frac{P-3N}4$
-and $\frac{3P-N}4$ are the least and the largest value of $\sum_un_ub_u$ on the box $[\frac14,\frac34]^U$. Let $R$ be
-the matrix with rows $r_1,\dots,r_k$, and $\Pi$ the finite set of $p\in\Z^k$ with $p_j$ in the range of $r_j$ for
-every $j$. For $p\in\Pi$ no $f\in(\frac14,\frac34)^U$ has $Rf=p$: otherwise $\sum_un_uu\mapsto\sum_un_uf(u)\bmod1$
-would be a well-defined character of $\Z U$ (as $\sum_un_uf(u)$ is an integer for every relation) with
-representatives in $(\frac14,\frac34)$. So the affine space $\{f:Rf=p\}$ misses the open box; a linear form that
-separates them is constant on it, so it is $\langle yR,\cdot\rangle$ with $yR\ne0$, and replacing $y$ by $-y$ if
-necessary, $\langle y,p\rangle\ge\max_b\langle yR,b\rangle$ over the closed box. The set $C_p$ of all $y\in\R^k$ with
-this property is $\{y:\langle y,p-Rb\rangle\ge0\text{ for every vertex }b\in\{\frac14,\frac34\}^U\}$, a polyhedral
-cone defined over $\Q$; it is not $\{0\}$, so it contains a nonzero integer vector $y$, and $yR\ne0$ as the $r_j$ are
-linearly independent. Then $\rho_p=yR$ is a nonzero relation with $p(\rho_p)=\langle y,p\rangle\ge\frac{3P-N}4$,
-outside its range, and $S=\{r_1,\dots,r_k\}\cup\{\rho_p:p\in\Pi\}$ leaves no $p$. Let $H$ consist of $0$, all
-vertices of the walks $W_\rho$ and $W_{r_j}$ along chains from $0$ to the elements of $S$ (with $x_0=0$), and all
-fourth corners added by the swaps, and let $G$ be the subgraph of $\Cay(\Z U,U\cup-U)$ induced by $H$. By
-Lemma~\ref{lem:periods} and the paragraph after it, every proper $4$-colouring of $G$ has a tight cycle; so
-$\chi_c(G)\ge4$, with equality if and only if $G$ is $4$-colourable (Lemma~\ref{lem:tight}), for instance if
-$\Cay(\Z U,U\cup-U)$ is. As a character with values in $(\frac14,\frac34)$ gives a homomorphism of
-$\Cay(\Z U,U\cup-U)$ to some $K_{p/q}$ with $p/q<4$ (as in the converse after Corollary~\ref{cor:finiteS4}), some
-finite subgraph of $\Cay(\Z U,U\cup-U)$ has $\chi_c\ge4$ if and only if $\kappa(U)\le\frac14$, and then this
-construction finds one. The referee checked the remark by computer on $15$ sets $D$ of positive integers with
+\begin{remark}[Corollary~\ref{cor:finiteS4} made effective, for $S$ without elements of order $2$]
+Conversely, let $U$ be a finite set of nonzero vectors with $U\cap(-U)=\emptyset$, as in Lemma~\ref{lem:periods}, and
+$S=U\cup-U$ (for a finite symmetric $S$ such a $U$ exists if and only if no element of $S$ has order $2$; in $F^2$
+always). If $\kappa(U)\le\frac14$, with $\kappa$ taken over all characters of $\Z U$, some finite $\mathcal S$ leaves
+no such $p$, and the construction gives a finite subgraph as in Corollary~\ref{cor:finiteS4} effectively (though the
+set $\Pi$ below can be very large), without compactness. The least and the largest value of $\sum_un_ub_u$ on the box
+$[\frac14,\frac34]^U$ are $\frac{P(\rho)-3N(\rho)}4$ and $\frac{3P(\rho)-N(\rho)}4$, the ends of the range of $\rho$.
+Let $A$ be the matrix with rows $r_1,\dots,r_m$, and $\Pi$ the finite set of $p\in\Z^m$ with $p_j$ in the range of
+$r_j$ for every $j$. For $p\in\Pi$ no $f\in(\frac14,\frac34)^U$ has $Af=p$: otherwise
+$\sum_un_uu\mapsto\sum_un_uf(u)\bmod1$ would be a well-defined character of $\Z U$ (as $\sum_un_uf(u)$ is an integer
+for every relation) with representatives in $(\frac14,\frac34)$. So the affine space $\{f:Af=p\}$ misses the open box;
+a linear form that separates them is constant on it, so it is $\langle yA,\cdot\rangle$ with $yA\ne0$, and replacing
+$y$ by $-y$ if necessary, $\langle y,p\rangle\ge\max_b\langle yA,b\rangle$ over the closed box. The set $C_p$ of all
+$y\in\R^m$ with this property is $\{y:\langle y,p-Ab\rangle\ge0\text{ for every vertex }b\in\{\frac14,\frac34\}^U\}$,
+a polyhedral cone defined over $\Q$; it is not $\{0\}$, so it contains a nonzero integer vector $y$, and $yA\ne0$ as
+the $r_j$ are linearly independent. Then $\rho_p=yA$ is a nonzero relation with $p(\rho_p)=\langle y,p\rangle\ge
+\frac{3P(\rho_p)-N(\rho_p)}4$, outside its range, and $\mathcal S=\{r_1,\dots,r_m\}\cup\{\rho_p:p\in\Pi\}$ leaves no
+$p$. Let $X$ consist of $0$, all vertices of the walks $W_\rho$ and $W_{r_j}$ along chains from $0$ to the elements of
+$\mathcal S$ (with $x_0=0$), and all fourth corners added by the swaps, and let $G$ be the subgraph of $\Cay(\Z
+U,U\cup-U)$ induced by $X$. By Lemma~\ref{lem:periods} and the paragraph after it, every proper $4$-colouring of $G$
+has a tight cycle; so $\chi_c(G)=4$ by Lemma~\ref{lem:tight} if $G$ is $4$-colourable (for instance if $\Cay(\Z
+U,U\cup-U)$ is), and $\chi_c(G)>\chi(G)-1\ge4$ otherwise. As a character with values in $(\frac14,\frac34)$ gives a
+homomorphism of $\Cay(\Z U,U\cup-U)$ to some $K_{a/b}$ with $a/b<4$ (as in the converse after
+Corollary~\ref{cor:finiteS4}), some finite subgraph of $\Cay(\Z U,U\cup-U)$ has $\chi_c\ge4$ if and only if
+$\kappa(U)\le\frac14$, and then this construction finds one.
+The referee checked the remark by computer on $15$ sets $D$ of positive integers with
 $\kappa(D)\le\frac14$, as distance graphs on $\Z$
 (\nolinkurl{data/number_fields/circular/finite_witness/indep_W4/remark_check.py}): $S$ leaves no $p$, and a SAT
 encoding that does not use Lemma~\ref{lem:periods} shows that every proper $4$-colouring of $G$ has a tight cycle; in
@@ -2011,11 +2028,15 @@ has circular chromatic number $7/2$; the proof, by compactness, gives no bound o
 has $155$ vertices and is vertex-critical (Section~\ref{sec:twoprimes}). How small can it be? (For the value $3$ in
 a plane without unit triangles, nine vertices are needed, and they suffice over $\Q(\sqrt7)$ and $\Q(\sqrt{31})$;
 Section~\ref{sec:twoprimes}. Over other such planes the least number is open; over $\Q(\sqrt{15})$ the smallest
-witness we found has $13$ vertices (\nolinkurl{witness_q15.json.gz}), and none of the three nine-vertex graphs
+witness we found has $13$ vertices
+(\nolinkurl{data/number_fields/circular/finite_witness/witness_q15.json.gz}), and none of the three nine-vertex graphs
 appeared with the denominators we tried.)
-When $\chi_c(F^2)=4$ the value is attained as well (Theorem~\ref{thm:finite4}), and the proof, made effective by the
-remark after Lemma~\ref{lem:periods}, gives no explicit bound on the size of a witness; over $\Q(\sqrt3,\sqrt{11})$ and $\Q(\sqrt2,\sqrt3)$ we found ones with $1\,874$ and $1\,657$ vertices (Lemma~\ref{lem:periods} and the
-remarks after it), and over $\Q(\sqrt{59})$ we know none: how small can one be? Its edge vectors $U$ must satisfy $\kappa(U)\le\frac14$, which excludes those with denominator $210$ (Section~\ref{sec:twoprimes}).
+When $\chi_c(F^2)=4$ the value is attained as well (Theorem~\ref{thm:finite4}), and the proof gives no explicit bound
+on the size of a witness (the remark after Lemma~\ref{lem:periods} makes only its last step,
+Corollary~\ref{cor:finiteS4}, effective); over $\Q(\sqrt3,\sqrt{11})$ and $\Q(\sqrt2,\sqrt3)$ we found ones with
+$1\,874$ and $1\,657$ vertices (with Lemma~\ref{lem:periods} and the paragraph after it), and over $\Q(\sqrt{59})$ we
+know none: how small can one be? By the converse after Corollary~\ref{cor:finiteS4} the set $U$ of its edge vectors
+has $\kappa(U)\le\frac14$, so they cannot all have denominator $210$ (Section~\ref{sec:twoprimes}).
 \end{enumerate}
 
 \section*{Acknowledgements}

@@ -290,8 +290,10 @@ is worded more precisely.
 
 ## The value 4: a witness over `ℚ(√3, √11)`
 
-`witness_q3_11.json.gz` is an induced unit-distance graph `H₄` in `ℚ(√3, √11)²` with 1 874 vertices and 8 085 edges,
-and `χ_c(H₄) = χ(H₄) = 4`. A point is `[a0, a1, a2, a3, b0, b1, b2, b3]`, meaning
+`witness_q3_11.json.gz` is an induced unit-distance graph `H₄` in `ℚ(√3, √11)²` with 1 874 vertices and 8 085 edges, and
+`χ_c(H₄) = χ(H₄) = 4`. Its points lie in `ℤU` for the 27 unit vectors `U` below, but 198 of its edges are unit vectors
+other than those of `±U` (12 directions up to sign): the clausal cores of the construction were taken with all unit
+pairs as edges. A point is `[a0, a1, a2, a3, b0, b1, b2, b3]`, meaning
 `((a0 + a1√3 + a2√11 + a3√33)/84, (b0 + b1√3 + b2√11 + b3√33)/84)`; distance 1 is four integer equations in the basis
 `(1, √3, √11, √33)`. As `χ(ℚ(√3, √11)²) = 4`, `χ_c(ℚ(√3, √11)²) = 4`, and `H₄` attains it; Theorem F16 says that some
 finite graph does, without a bound.
@@ -339,35 +341,36 @@ character of `ℤU` with representatives in `(1/4, 3/4)` would give one, so if n
 
 reproduce `witness_q3_11.json.gz` and its formula exactly (checked again from these copies). Each round of
 `iter_shrink.sh` refutes the current formula with kissat and keeps the vertices that occur in the clausal core
-(`drat-trim -c`). Each of the 41 added relations lies among the vectors with one value of `k`, so it is `R_A^k`
-times a relation among the 18 vectors `ζ^j g^l` (`ζ = e^{iπ/3}`, `g = (11 + 5√−3)/14`, the rotation `R_G`); each has
-length 8 and a coefficient 2 or 3 (absolute coefficients 3, 3, 1, 1 for 17 of them, such as `3ζ̄ + ζ + g − 3ζ̄g = 0`;
-3, 2, 1, 1, 1 for 14; 3, 2, 2, 1 for 10), so its squared norm (20, 16 or 18) exceeds the bound 12 of the enumeration;
-with all 18 138 relations of squared norm at most 14 but without them a solution `p` exists. `core_min.py` reduces the infeasible
-system to 37 relations of length 8, whose walks and chains give 4 134 points, but kissat did not refute that formula
-in ten minutes. The integer solver (CP-SAT) only guided the construction; the proof of `χ_c(H₄) = 4` is the SAT
-refutation above.
+(`drat-trim -c`). Each of the 41 added relations lies among the vectors with one value of `k`, so it is `R_A^k` times a
+relation among the 18 vectors `ζ^j g^l` (`ζ = e^{iπ/3}`, `g = (11 + 5√−3)/14`, the rotation `R_G`); each has length 8
+and a coefficient ±3 (absolute coefficients 3, 3, 1, 1 for 17 of them, such as `3ζ̄ + ζ + g − 3ζ̄g = 0`; 3, 2, 1, 1, 1
+for 14; 3, 2, 2, 1 for 10), so its squared norm (20, 16 or 18) exceeds the bound 12 of the enumeration; with all 18 138
+relations of squared norm at most 14 but without them a solution `p` exists. `core_min.py` reduces the infeasible system
+to 37 relations of length 8, whose walks and chains give 4 134 points, but kissat did not refute that formula in ten
+minutes. The integer solver (CP-SAT) only guided the construction; the proof of `χ_c(H₄) = 4` is the SAT refutation
+above.
 
 **The construction always works** (the remark at the end of §6.9 of the note, after Lemma 24 in the paper). When
-`κ(U) ≤ 1/4` (over all characters of `ℤU`), some finite set of relations leaves no `p`: the ranges of the basis
-relations allow finitely many `p`, and for each an integer point of a rational cone gives a relation `ρ_p` outside
-whose range `p` falls. The subgraph of `Cay(ℤU, U ∪ −U)` induced by `0`, the walks along the chains to the basis
-and to the `ρ_p`, and the corners of the swaps then has a tight cycle in every proper 4-colouring, so this replaces
-the compactness step of Corollary F14 by a finite construction. The referee checked the remark
-(`indep_W4/REPORT.md`, section on the remark) and tested it with `indep_W4/remark_check.py` on 15 sets of integer
-distances: for each, the system on `S` has no solution, and a SAT encoding that does not use the lemma shows that
-every proper 4-colouring of the graph has a tight cycle; in 10 of them the chains of the basis alone are not
-enough. `results/remark_check_all.log` is a rerun from this copy (`KISSAT` names the binary), and
+`κ(U) ≤ 1/4` (over all characters of `ℤU`; `U ∩ −U = ∅`, so no element of `U ∪ −U` has order 2), some finite set of
+relations leaves no `p`: the ranges of the basis relations allow finitely many `p`, and for each an integer point of a
+rational cone gives a relation `ρ_p` outside whose range `p` falls. The subgraph of `Cay(ℤU, U ∪ −U)` induced by `0`,
+the walks along the chains to the basis and to the `ρ_p`, and the corners of the swaps then has a tight cycle in every
+proper 4-colouring, so this replaces the compactness step of Corollary F14 by a finite construction. The referee checked
+the remark (`indep_W4/REPORT.md`, section on the remark) and tested it with `indep_W4/remark_check.py` on 15 sets of
+integer distances: for each, the system on the relations found has no solution, and a SAT encoding that does not use the
+lemma shows that every proper 4-colouring of the graph has a tight cycle; in 10 of them the chains of the basis alone
+are not enough. `results/remark_check_all.log` is a rerun from this copy (`KISSAT` names the binary), and
 `results/remark_check_referee.log` the referee's own run.
 
 ## A second witness at 4: over `ℚ(√2, √3)`
 
-`witness_q2_3.json.gz` is an induced unit-distance graph `H₄′` in `ℚ(√2, √3)²` with 1 657 vertices and 6 238 edges,
-and `χ_c(H₄′) = χ(H₄′) = 4`. A point is `[a0, a1, a2, a3, b0, b1, b2, b3]`, meaning
-`((a0 + a1√2 + a2√3 + a3√6)/36, (b0 + b1√2 + b2√3 + b3√6)/36)`; `check_witness4.py` reads the field from the file.
-As `χ(ℚ(√2, √3)²) = 4` (the main result of this repository), `χ_c(ℚ(√2, √3)²) = 4`, and `H₄′` attains it. The value
-also follows from Theorems E and F (no prime of `ℚ(√2, √3)` above 7 has residue degree 1, as 3 is not a square
-modulo 7), but `H₄′` needs neither.
+`witness_q2_3.json.gz` is an induced unit-distance graph `H₄′` in `ℚ(√2, √3)²` with 1 657 vertices and 6 238 edges, and
+`χ_c(H₄′) = χ(H₄′) = 4`. A point is `[a0, a1, a2, a3, b0, b1, b2, b3]`, meaning
+`((a0 + a1√2 + a2√3 + a3√6)/36, (b0 + b1√2 + b2√3 + b3√6)/36)`; `check_witness4.py` reads the field from the file. As
+`χ(ℚ(√2, √3)²) ≤ 4` (a residue colouring at the prime above 2; `papers/planes-4-chromatic/`), `χ_c(ℚ(√2, √3)²) = 4`, and
+`H₄′` attains it; it also reproves `χ(ℚ(√2, √3)²) ≥ 4`. The value also follows from Theorem F (no prime of `ℚ(√2, √3)`
+above 7 has residue degree 1, as 3 is not a square modulo 7), but `H₄′` does not need it. 39 of its edges are unit
+vectors other than the 120 below (17 directions up to sign).
 
 - *Upper bound.* A proper 4-colouring (stored).
 - *Lower bound.* Every proper 4-colouring of `H₄′` has a tight cycle among the 6 062 listed ones (5 494 of length 4,
@@ -385,14 +388,14 @@ modulo 7), but `H₄′` needs neither.
 
 **How it was found** (`construction_q2_3/`; the method of the previous section). The plane `ℚ(√2, √3)²` is the field
 `ℚ(ζ₂₄)`, `ζ₂₄ = e^{iπ/12}` (the point `(x, y)` is `x + iy`), and its unit vectors are the elements of norm 1. Take the
-unit vectors `ζ₂₄^j s^l` (`j` modulo 24, `|l| ≤ 2`) with `s = (1 + 2√−2)/3`, the rotation with cosine 1/3, one of each
+unit vectors `ζ₂₄^j w^l` (`j` modulo 24, `|l| ≤ 2`) with `w = (1 + 2√−2)/3`, the rotation with cosine 1/3, one of each
 pair `±u`: 60 vectors, with coordinates over the power basis `1, ζ₂₄, …, ζ₂₄⁷` and denominator 9, and a relation lattice
 of rank 52 (`setup_z24.py`, with PARI/GP; `κ` of these vectors is about 1/6 by a floating-point integer program,
 `kappa_z24.py`, which is not needed). Already the 1 552 relations `Σ n_u u = 0` with `Σ n_u² ≤ 8` leave the period
 system of Lemma F17 without a solution, with no counterexample search; a minimal infeasible subset has 279 relations,
 all of length 8. Their walks, tied to the basis relations by bubble sorts, span 2 220 points, and twelve rounds of
-clausal cores reduce them to 1 657. With python-sat 1.9 (CaDiCaL 1.5.3), OR-Tools 9.15, PARI/GP 2.15, kissat 4.0.4
-and drat-trim, run in a scratch folder (`C` is this folder; `KISSAT` and `DRAT_TRIM` name the binaries),
+clausal cores reduce them to 1 657. With python-sat 1.9 (CaDiCaL 1.5.3), OR-Tools 9.15, PARI/GP 2.15, kissat 4.0.4 and
+drat-trim, run in a scratch folder (`C` is this folder; `KISSAT` and `DRAT_TRIM` name the binaries),
 
     python3 $C/setup_z24.py s2:2 cfg_s2_2.json             # the 60 vectors and a reduced basis of the 52 relations
     export CFG=cfg_s2_2.json

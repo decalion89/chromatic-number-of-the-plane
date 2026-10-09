@@ -10749,3 +10749,44 @@ without a bound on the size.
   the character of `at_four/theta59_1050.json` has margin exactly `1/4`, and whether `κ = 1/4` is still being
   certified. If it is, that is the boundary case of the remark after Lemma F17, where the refuting relations can be
   long (the search found none up to length 33); over `ℚ(√2, √3)`, with `κ ≈ 1/6`, short relations do.
+
+## Audit of the base-point periods passages (6–7 October, night)
+
+- **Audit (no mathematical error).** An independent reader checked Lemma 24 of the paper (Lemma F17 of the note), the
+  paragraph after it, the remark after it, Corollary 8 with its converse, and the two explicit witnesses at 4,
+  recomputing every count from the data files with an exact-integer script of its own (all pairs, edges, colourings,
+  cycles, denominators, the fixed vertex, the 27 and the 60 vectors) and rerunning the integer-programming steps of the
+  constructions; it did not rerun the SAT proofs. Every step of the proofs is correct, including the "if and only if" of
+  the remark.
+- **A factual error, corrected.** The paper said that the construction found a finite subgraph with `χ_c = 4` of the
+  Cayley graph of the 27 vectors over `ℚ(√3, √11)`. It did not: the points of `H₄` lie in `ℤU`, but 198 of its 8 085
+  edges are unit vectors outside `±U` (12 directions up to sign), because the clausal cores were taken with all unit
+  pairs as edges (`certify4.py`, `make_final4.py`); only 18 of the 27 directions occur among the other 7 887 edges.
+  Likewise 39 edges of `H₄′` (17 directions) lie outside the 120 vectors over `ℚ(√2, √3)`. Checked here again with exact
+  arithmetic. The sentence now says what was found.
+- **Other corrections.** Only the compactness step of Corollary 8 is made effective; the set of Proposition 10 still
+  comes from compactness (introduction, after Theorem G, Question 3, note). The remark needs `S = U ∪ −U` with
+  `U ∩ −U = ∅` (no element of order 2, automatic in `F²`); its construction is effective rather than explicit (`Π` can
+  be very large); and if `G` is not 4-colourable, `χ_c(G) > χ(G) − 1 ≥ 4`. The abstract says tight squares, and that the
+  computer-assisted step is also used for the attainment of 4. The length and the range of a relation are defined before
+  use. The `ℚ(√59)` sentence says what was run: 50 of the 150 vectors with denominator 1050, a search that stopped with
+  a feasible system of 2 926 relations of length at most 33. Only `χ(ℚ(√2, √3)²) ≤ 4` is used (a residue colouring at
+  the prime above 2), and `H₄′` reproves `χ ≥ 4`; Theorem E does not give `χ_c = 4` (note). Notation: `ξ` for the
+  character, `K_{a/b}`, `r_1, …, r_m`, `𝒮` for the set of relations, `|W|` for the length of a walk, `w = (1 + 2√−2)/3`,
+  `A` for the matrix, `X` for the point set. Smaller: "each with a coefficient ±3", `j ∈ ℤ/24`, "written from scratch by
+  a referee without repository code", "its use for `ℚ(√3, √11)`".
+- **The Cayley subgraphs (certified; to be integrated).** On the same points, with only the edges in the construction's
+  directions (7 887 and 6 199 edges), the formula with the listed cycles is satisfiable; adding the tight cycles of each
+  satisfying colouring (751 and 422 in three and two rounds) makes it unsatisfiable, three rounds of clausal cores leave
+  3 389 and 5 264 cycles, kissat refutes both formulas (14 and 26 seconds), and drat-trim and `cake_lpr` verify both
+  proofs. So the subgraph of the Cayley graph of the 54 vectors induced on the points of `H₄` has `χ_c = 4`, and
+  likewise for the 120 vectors over `ℚ(√2, √3)`: the original sentence holds for these subgraphs. They will be stored as
+  witness files after an independent check.
+- **`ℚ(√59)`, nothing claimed.** A floating-point MILP finds a character with margin at least `1/4` also on
+  `U_1050 ∪ U_390` (not the `θ` of `theta59_1050.json`, whose margin on `U_390` is `1/52`), so this union gives nothing:
+  every unit set tried over `ℚ(√59)` has `κ ≥ 1/4`, the boundary case of the remark. The counterexample search for
+  periods on all 150 vectors with denominator 1050 (a basis of 146 relations, of lengths 6 to 18) stayed feasible for 12
+  rounds (2 hours). The exact certificate for `κ(U_1050) = 1/4` (about 2 million nodes, 30 MB compressed) is assembled;
+  its two checkers were running when the machine restarted (9 October, 08:30 UTC). Started again, the independent one
+  (`check_open_indep.py`) accepted it in 336 seconds (format, the 150 units, the 146 relations and the tree of 1 997 203
+  nodes; that the units are all of `U_1050` is a separate check); the other is still running.
