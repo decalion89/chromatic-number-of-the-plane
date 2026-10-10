@@ -1,6 +1,6 @@
 # Uniform certificates for two forbidden distances
 
-These certificates prove Theorem 5 of [`papers/forbidden-distances/`](../../../papers/forbidden-distances/README.md):
+These certificates, with those in [`ie/`](ie/README.md) for 15 to 17 colours, prove Theorem 5 of [`papers/forbidden-distances/`](../../../papers/forbidden-distances/README.md):
 for every real algebraic `d ≥ 1`,
 
 | colours | for every `d` with |
@@ -13,6 +13,9 @@ for every real algebraic `d ≥ 1`,
 | `≥ 12` | `d ≥ 181` |
 | `≥ 13` | `d ≥ 655` |
 | `≥ 14` | `d ≥ 25 700` |
+| `≥ 15` | `d ≥ 5·10⁵` (inclusion–exclusion, [`ie/`](ie/README.md)) |
+| `≥ 16` | `d ≥ 7·10⁷` (inclusion–exclusion at two scales, [`ie/`](ie/README.md)) |
+| `≥ 17` | `d ≥ 8·10⁸` (inclusion–exclusion at two scales, [`ie/`](ie/README.md)) |
 
 and the same for `1/d`, since `χ(ℝ², {1, 1/d}) = χ(ℝ², {1, d})`. For measurable colourings the same holds for every
 real `d`. For arbitrary colourings no pair of distances was known to need 7 colours before the paper (the bound was 6;
@@ -99,7 +102,9 @@ misses.
 **`figure/`**: `uniform_fig.tex` draws the figure of the paper (`pdflatex uniform_fig.tex`) from `lpcurve.dat` and
 `tailcurve.dat`, which `scan.py` computes from the floating-point values in `lowscan.tsv` (the linear program for one
 `d`, with triangles, for `d` from 1.01 to 6.6) and `tailscan.tsv` (the program of Lemma 18, with triangles and
-spindles, for `D` from 5 to 2·10⁵, and at 10⁶ and 10⁷). These values are not proofs. In floating point, the program
+spindles, for `D` from 5 to 2·10⁵, and at 10⁶ and 10⁷), and from `iecurve.dat` and `hitcurve.dat`, the values of the
+programs of Propositions 19 and 21 (`ie/ie_lp.py`, the second with `--hit=certificates/ie_B.json`) at a few `D`.
+These values are not proofs. In floating point, the program
 of Lemma 18 gives `k = 7, …, 14` colours from about `d = 5.797, 10.42, 18.81, 35.53, 73.36, 179.5, 652.6 and 25 590` on. With triangles alone it gives 7, …, 13
 colours from about 5.800, 10.67, 20.04, 40.04, 90.24, 261.7 and 1544 on, and never 14; without triangles and spindles,
 from about 6.503, 12.03, 23.87, 52.85, 139.9, 599.2 and, for 13, from between 50 000 and 54 300. For one `d` with

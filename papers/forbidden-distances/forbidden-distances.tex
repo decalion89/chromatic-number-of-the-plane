@@ -38,10 +38,10 @@
 plane with algebraic forbidden distances}
 \author{Sergi Gal\'an}
 \thanks{These results were obtained with the assistance of an AI system (Claude, by Anthropic), which found the
-observation, wrote the programs, ran the checks and helped to draft this note. Five separate AI agents refereed
+observation, wrote the programs, ran the checks and helped to draft this note. Seven separate AI agents refereed
 the note with their own programs. The hard input is OpenAI's transfer theorem \cite{OpenAI}. No mathematician has
 checked the note yet. The author is not a professional mathematician and submits it for independent verification.}
-\date{Draft, version 7, 10 October 2026}
+\date{Draft, version 8, 11 October 2026}
 \subjclass[2020]{Primary 05C15, 52C10; Secondary 05C72, 42B10, 90C05}
 \keywords{Hadwiger--Nelson problem, chromatic number of the plane, forbidden distances, fractional chromatic number,
 distance-avoiding sets, linear programming bounds}
@@ -62,8 +62,13 @@ unit-distance graph tends to $m_1(\R^2)$, as conjectured by Dúcz and Varga. If 
 forbidden, at least $7$ colours are needed, improving the bound $6$ of Exoo and Ismailescu; the same holds for
 $\{1,\sqrt3\}$, and at least $8$, $10$, $11$ and $13$ colours are needed for $\{1,11/6\}$, $\{1,40\}$,
 $\{1,100\}$ and $\{1,1000\}$. Uniformly in $d$, $\chi(\R^2,\{1,d\})\ge7$ for every real algebraic $d\ge5.82$ and for
-$1.72\le d\le2.04$, and the bound rises step by step to $14$ for every real algebraic $d\ge25\,700$; each step is
-proved by a single certificate for a whole half-line of $d$, using unit equilateral triangles and Moser spindles. The
+$1.72\le d\le2.04$, and the bound rises step by step to $14$ for every real algebraic $d\ge25\,700$, $15$ for
+$d\ge5\cdot10^5$, $16$ for $d\ge7\cdot10^7$ and $17$ for $d\ge8\cdot10^8$; each step is proved by a single certificate for a
+whole half-line of $d$, using unit equilateral triangles, Moser spindles and, from $15$ colours on, the $23$-point
+inclusion--exclusion program of Ambrus, Csiszárik, Matolcsi, Varga and Zsámboki at the scale of $1$. For $16$ and
+$17$ a second copy of that program bounds, at the scale of $d$, the set of points near which the set meets a copy of
+their configuration; this makes the bounds at the two scales multiply, with explicit thresholds, as the optimal
+densities do in the limit by Bukh's theorem. The
 distances $1$, $100$ and $10^4$ force $27$ colours, $1$, $10$, $100$ and $1000$ force $26$, and $1$, $30$, $900$ and
 $27000$ force $48$. For
 suitable sets of $k$ integer distances more than $4.0485^k$ colours are needed, in the plane and in every higher
@@ -162,7 +167,7 @@ Moreover $\chi(\R^2,\{1,d\})\ge 17$ for every sufficiently large real algebraic 
 
 The finite bounds come from linear programs certified in Section~\ref{sec:lp} (Theorem~\ref{thm:uniform} below
 raises those for $\{1,40\}$, $\{1,100\}$ and $\{1,1000\}$ to $10$, $11$ and $13$), and the last statement from Bukh's
-theorem \cite{Bukh}; products of hexagonal colourings give $\chi(\R^2,\{1,d\})\le49$. For \emph{measurable}
+theorem \cite{Bukh} (Theorem~\ref{thm:uniform} gives it for every $d\ge8\cdot10^8$); products of hexagonal colourings give $\chi(\R^2,\{1,d\})\le49$. For \emph{measurable}
 colourings, bounds of this kind were known: Oliveira Filho and Vallentin \cite[§4]{OFV} report, from their linear
 program, the bound $0.141577<1/7$ for the density of a measurable set avoiding the distances $1$ and
 $j_{1,2}/j_{1,1}\approx1.8309$, a ratio of zeros of $J_1$, and, combining Bukh's theorem with their bound for
@@ -174,10 +179,10 @@ $\{1,\sqrt3\}$, which use clique inequalities, also seem to be new for measurabl
 The same linear program gives bounds for whole ranges of $d$ at once.
 
 \begin{theorem}\label{thm:uniform}
-Let $d\ge1$ be a real algebraic number and $7\le k\le14$. Then $\chi(\R^2,\{1,d\})\ge k$ whenever $d\ge d_k$, where
+Let $d\ge1$ be a real algebraic number and $7\le k\le17$. Then $\chi(\R^2,\{1,d\})\ge k$ whenever $d\ge d_k$, where
 \begin{gather*}
-d_7=5.82,\quad d_8=10.5,\quad d_9=18.9,\quad d_{10}=35.7,\quad d_{11}=73.6,\\
-d_{12}=181,\quad d_{13}=655,\quad d_{14}=25\,700.
+d_7=5.82,\quad d_8=10.5,\quad d_9=18.9,\quad d_{10}=35.7,\quad d_{11}=73.6,\quad d_{12}=181,\\
+d_{13}=655,\quad d_{14}=25\,700,\quad d_{15}=5\cdot10^5,\quad d_{16}=7\cdot10^7,\quad d_{17}=8\cdot10^8.
 \end{gather*}
 Moreover $\chi(\R^2,\{1,d\})\ge7$ for $1.72\le d\le2.04$, and $\chi(\R^2,\{1,d\})\ge8$ for $1.82\le d\le1.89$. The
 same bounds hold for $\chi(\R^2,\{1,1/d\})=\chi(\R^2,\{1,d\})$, and, for measurable colourings, for every real
@@ -193,9 +198,17 @@ bounds of this size were known for one pair \cite[§4]{OFV} and, by Bukh's theor
 threshold (see the discussion after Corollary~\ref{cor:two}); there the new content is the explicit thresholds and
 ranges. For each $k$ a single function serves every $d\ge d_k$ (Lemma~\ref{lem:tail} and Table~\ref{tab:uniform}),
 and each of the two bounded ranges is covered by finitely many functions, each serving an interval of $d$
-(Section~\ref{sec:uniform}). All of them use the clique inequalities of unit equilateral triangles, the tails also
-the inequalities of Moser spindles (Proposition~\ref{prop:lp} with $\alpha=2$, as in \cite{KMOR}), and the thresholds
-are close to the best this method can give: in floating point, the program of Lemma~\ref{lem:tail} gives $k$ colours
+(Section~\ref{sec:uniform}). Up to $14$ colours they use the clique inequalities of unit equilateral triangles, the
+tails also the inequalities of Moser spindles (Proposition~\ref{prop:lp} with $\alpha=2$, as in \cite{KMOR}); from
+$15$ colours on they use the inclusion--exclusion program of \cite{ACMVZ} at the scale of $1$
+(Proposition~\ref{prop:ie}), and for $16$ and $17$ also at the scale of $d$, applied to the set of points near which
+the set meets a copy of their configuration (Proposition~\ref{prop:hit}). Bukh's theorem gives $17$ colours beyond an
+unspecified threshold, and Theorem~\ref{thm:C} with de Grey's graph gives $18$ for $d\ge10^{25}$
+(Remark~\ref{rem:explicit}). For $15$, $16$ and $17$ colours Theorem~\ref{thm:uniform} lowers that threshold to
+$5\cdot10^5$, $7\cdot10^7$ and $8\cdot10^8$, and, unlike Theorem~\ref{thm:C}, it rests on density bounds: for these
+$d$ it also gives $\chif(\R^2,\{1,d\})>14.01$, $15.20$ and $16.04$ (Theorem~\ref{thm:main}), and for measurable
+colourings it holds for every real $d$. The thresholds up to $14$
+are close to the best the method of Lemma~\ref{lem:tail} can give: in floating point, the program of Lemma~\ref{lem:tail} gives $k$ colours
 from about $d=5.797$, $10.42$, $18.81$, $35.53$, $73.36$, $179.5$, $652.6$ and $25\,590$ on, for $k=7,\dots,14$. Without spindles it gives $7,\dots,13$ colours from about $5.800$,
 $10.67$, $20.04$, $40.04$, $90.24$, $261.7$ and $1544$ on and never $14$; without triangles and spindles, from about
 $6.503$, $12.03$, $23.87$, $52.85$, $139.9$, $599.2$ and, for $k=13$, from somewhere between $50\,000$ and
@@ -217,7 +230,8 @@ of Corollary~\ref{cor:two}. Grey, solid: $1/\mathrm{LP}(d)$, where $\mathrm{LP}(
 (not a proof), of the linear program for the single distance $d$ with unit-triangle cliques ($d\le6.6$); grey,
 dash-dotted: the same for the program of Lemma~\ref{lem:tail} with triangles and spindles, whose value at $D$ serves
 every $d\ge D$. A certified bound below $1/(k-1)$ gives $k$ colours, so each blue step lies less than one colour above
-the curve it follows. Dashed: the value $13.27$ approached by the construction of the remark after Lemma~\ref{lem:tail} (floating point). Dotted: $\chi(\R^2)\ge6$ \cite{OpenAI}, which
+the curve it follows. Grey dots on dash-dotted lines: the same for the programs of Propositions~\ref{prop:ie}
+and~\ref{prop:hit} (the latter with $L_B=17.764$), at a few values of $D$. Dotted: $\chi(\R^2)\ge6$ \cite{OpenAI}, which
 holds for every $d$. Left: the shaded range $1.6\le d\le2.15$ on a linear scale.}
 \label{fig:uniform}
 \end{figure}
@@ -652,8 +666,8 @@ one of them (we computed $2.2641$ from exact coordinates). For $W$ take the Mose
 edges and independence number $2$, so that $\chi_5(W)\ge5\cdot7/2$, that is $\chi_5(W)\ge18$. With $K=17$,
 $n=1581$, $\varepsilon=1/(4nK)=1/107508$ and $R=4.54$, the condition $K\,|E(W)|\,\varepsilon^{-2}\sqrt{R/(\pi N)}<1$
 of the proof holds as soon as $N>(17\cdot11\cdot107508^2)^2\cdot4.54/\pi\approx6.75\cdot10^{24}$. Hence
-$\chi(\R^2,\{1,N\})\ge18$ for every real algebraic $N\ge10^{25}$; the best certified linear-programming bound for a
-pair is $12$ (Table~\ref{tab:lp}). For $W$ one can also take the $607$-vertex unit-distance graph of Bellitto,
+$\chi(\R^2,\{1,N\})\ge18$ for every real algebraic $N\ge10^{25}$; density bounds give $17$ for every real algebraic
+$N\ge8\cdot10^8$ (Theorem~\ref{thm:uniform}). For $W$ one can also take the $607$-vertex unit-distance graph of Bellitto,
 P\^echer and S\'edillot, whose weighting has weighted independence ratio $512933/1999983$ \cite[§4.4]{BPS}, so that
 $\chif(W)\ge1999983/512933>3.8991$ (cf.\ \cite[Thm.~2]{BPS}) and $\chi_5(W)\ge20$; only $\chif(W)>3.8$ is needed.
 With $K=19$, $\varepsilon=1/120156$ and the trivial bound $|E(W)|\le\binom{607}{2}=183921$, the condition holds for
@@ -853,7 +867,9 @@ at $t=1$ replaced by a cut at $t_1$ with $Ct_1^2<1-1/\sqrt2$. With our unit tria
 seen in floating point, so with triangles alone the program did not reach $14$ colours. With spindles as well, $v$ is
 about $0.262476$ in floating point. A rigorous certificate with $v<0.26789$ gives $14$ colours for all large $d$ in
 this way (with $\mu$ in place of $\mu_0$): $S/S(0)$ for the certificate \texttt{tail\_k14.json} is one, with
-$v=0.267887$; Theorem~\ref{thm:uniform} gives $14$ colours from $d_{14}$ on in any case. Fifteen colours would need $v<0.2488$. For comparison,
+$v=0.267887$; Theorem~\ref{thm:uniform} gives $14$ colours from $d_{14}$ on in any case. Fifteen colours would need $v<0.2488$;
+the inclusion--exclusion program of \cite{ACMVZ} has $v=0.24697$, which is how Proposition~\ref{prop:ie} below gives
+$15$. For comparison,
 \cite{KMOR} reach (numerically) $0.26305$ with spindles alone and $0.258795$ with further inequalities.
 \end{remark}
 
@@ -878,6 +894,166 @@ missing triangle or spindle weight, a moved triangle or spindle, a threshold $D$
 raised $k$, a gap
 between intervals, a reversed interval, an interval extended below its range, and a certificate whose $g_d$ has
 minimum $-10^{-5}$ at a point that a sampling scan misses.
+
+\subsection*{Inclusion--exclusion at the unit scale}
+Ambrus, Csiszárik, Matolcsi, Varga and Zsámboki \cite{ACMVZ} bound $m_1(\R^2)$ by $0.2470$ with a linear program on
+a set $X=\{x_1,\dots,x_{23}\}$ of $23$ points with coordinates in $\Q(\sqrt3,\sqrt{11})$: the probabilities of the
+patterns in which a random copy of $X$ meets a set avoiding the distance $1$ satisfy linear equations
+(``inclusion--exclusion''). We use their program at the scale of $1$ and Lemma~\ref{lem:tail} at the scale of $d$.
+Let $E_1$ be the set of pairs $\{i,j\}$ with $|x_i-x_j|=1$ ($47$ pairs), $\mathcal S$ the family of subsets of
+$\{1,\dots,23\}$ containing no pair of $E_1$ ($13\,552$ sets, including $\emptyset$), $r_{ij}=|x_i-x_j|$, and
+$\mathcal C$ a list of pairs $(I,J)$ of sequences of distinct indices of the same length with $|x_{I_a}-x_{I_b}|=
+|x_{J_a}-x_{J_b}|$ for all $a,b$ (so some isometry of the plane maps $x_{I_a}$ to $x_{J_a}$ for every $a$).
+
+\begin{proposition}\label{prop:ie}
+Let $D>0$, $\delta_0\in\R$ and $\mu\ge-\min J_0$, and put $e(y)=\min(\mu,\sqrt{2/(\pi y)})$. Suppose that real numbers
+$\psi_0,\psi_T,\lambda_i,u_{ij}$ ($\{i,j\}\notin E_1$), $w_c$ ($c\in\mathcal C$) and $\eta,\tau\ge0$ satisfy
+\begin{gather*}
+\Phi(t)=\psi_0J_0(t)-\sum_i\lambda_i-\sum_{i<j}u_{ij}J_0(r_{ij}t)-\eta\,e(Dt)+2\delta_0\tau\ \ge\ 1\qquad(t>0),\\
+\Phi_0=\psi_0-\sum_i\lambda_i-\sum_{i<j}u_{ij}+\eta+\tau(2\delta_0-1)\ \ge\ 1,\\
+Q(S)=\psi_T+\sum_{i\in S}\lambda_i+\sum_{i<j,\ i,j\in S}u_{ij}+\sum_{(I,J)\in\mathcal C}w_{(I,J)}\bigl([I\subseteq S]-[J\subseteq S]\bigr)
+\ \ge\ 0\qquad(S\in\mathcal S),
+\end{gather*}
+where the sums of $u_{ij}$ run over the pairs $i<j$ with $\{i,j\}\notin E_1$. Then
+$m_{\{1,d\}}(\R^2)\le\psi_T+\tau\delta_0^2$ for every $d\ge D$.
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:periodic} it suffices to bound the density $\delta$ of a periodic measurable set $A$, with period
+lattice $\Lambda$, avoiding $1$ and $d$. Let $\nu$ be the spectral measure of its autocorrelation, as in the proof of
+Proposition~\ref{prop:lp}, and $\kappa$ the image of $\nu$ under $\xi\mapsto2\pi|\xi|$: a measure on $[0,\infty)$ with
+total mass $\delta$ and $\kappa(\{0\})=\delta^2$, and $f(r)=\int J_0(rt)\,d\kappa(t)$ is the radial average of the
+autocorrelation, so $f(1)=f(d)=0$. Choose $y$ uniformly in $\R^2/\Lambda$ and an isometry $g$ of the plane fixing $0$
+uniformly (Haar measure on $O(2)$), and let $S=\{i:y+gx_i\in A\}$. Then $S\in\mathcal S$, $\Pr(i\in S)=\delta$ and
+$\Pr(i,j\in S)=f(r_{ij})$, and $\Pr(I\subseteq S)=\Pr(J\subseteq S)$ for $(I,J)\in\mathcal C$, because an isometry
+$h$ with $h(x_{I_a})=x_{J_a}$ changes the pair $(y,g)$ into another uniformly distributed one. Taking expectations,
+$0\le\mathbb E\,Q(S)=\psi_T+\delta\sum_i\lambda_i+\sum_{i<j}u_{ij}f(r_{ij})$. Next, $f(d)=0$, $J_0(0)=1$ and
+$J_0(dt)\ge-e(dt)\ge-e(Dt)$ give $\kappa(\{0\})\le\int_{(0,\infty)}e(Dt)\,d\kappa$, and $\kappa(\{0\})=\delta^2\ge
+2\delta_0\delta-\delta_0^2$. Integrating $\Phi\ge1$ on $(0,\infty)$ and using $\Phi_0\ge1$ at $0$,
+\begin{multline*}
+\delta\le\int_{(0,\infty)}\Phi\,d\kappa+\Phi_0\kappa(\{0\})=\psi_0f(1)-\delta\sum_i\lambda_i-\sum_{i<j}u_{ij}f(r_{ij})\\
+-\eta\Bigl(\int_{(0,\infty)}e(Dt)\,d\kappa-\kappa(\{0\})\Bigr)+\tau\bigl(2\delta_0\delta-\kappa(\{0\})\bigr),
+\end{multline*}
+which is at most $\psi_T+\tau\delta_0^2$.
+\end{proof}
+
+Without the terms in $\eta$ and $\tau$, and with $\Phi\ge1$ required at $t=0$ as well, this is the bound
+$m_1(\R^2)\le\psi_T$ of \cite{ACMVZ}.
+
+\subsection*{The hit set}
+At the scale of $d$ Proposition~\ref{prop:ie} uses only $f(d)=0$, and in floating point its value tends to about
+$0.0711$ as $D\to\infty$ (end of this section), close to $0.2470\,\mu/(1+\mu)\approx0.0709$. Heuristically: take a
+near-optimal solution of the one-distance program of \cite{ACMVZ}, of value $v$, whose measure has mass at least $v^2$
+at $0$, as for genuine sets; mixing it with the empty pattern, with weights $\mu/(1+\mu)$ and $1/(1+\mu)$, and moving
+part of its mass at $0$ to a point $t_a\to0^+$ with $e(Dt_a)=\mu$ gives, up to $o(1)$, a solution of every constraint
+the proof uses, of value $v\mu/(1+\mu)$. We have not made this rigorous. A second program at the scale of $d$ enters
+through the set of points near which $A$ meets a copy of $X$. Put $n=|X|$ and $H(t)=\sum_{i,j=1}^nJ_0(r_{ij}t)$ (with
+$r_{ii}=0$). Then $H(t)=\int_{S^1}\bigl|\sum_{j=1}^ne^{it\langle\theta,x_j\rangle}\bigr|^2d\sigma(\theta)$, where
+$\sigma$ is the uniform probability measure on the unit circle, so $0\le H\le n^2$.
+
+\begin{lemma}\label{lem:near}
+Let $\beta_0,\beta_T,b_i,v_{ij}$ ($\{i,j\}\notin E_1$), $\varpi_{ij}$ ($\{i,j\}\in E_1$) and $\omega_c$ ($c\in\mathcal C$) be
+real numbers with
+\[
+\Phi_B(t)=\beta_0J_0(t)-\sum_ib_i-\sum_{i<j}v_{ij}J_0(r_{ij}t)\ \ge\ 1\qquad(t\ge0)
+\]
+and $Q_B(R)=\beta_T+\sum_{i\in R}b_i+\sum_{i<j,\ i,j\in R}v_{ij}+\sum_{\{i,j\}\in E_1(R)}\varpi_{ij}+\sum_{(I,J)\in\mathcal C}
+\omega_{(I,J)}([I\subseteq R]-[J\subseteq R])\ge0$ for \emph{every} $R\subseteq\{1,\dots,n\}$, where the sums of
+$v_{ij}$ run over the pairs $i<j$ with $\{i,j\}\notin E_1$ and $E_1(R)$ is the set of pairs of $E_1$ inside $R$, and
+put $L_B=\max(0,\beta_0+\sum_{\{i,j\}\in E_1}\varpi_{ij})$. Let $(B_g)_{g\in O(2)}$ be $\Lambda$-periodic sets such that
+$(g,y)\mapsto1_{B_g}(y)$ is measurable, $q$ the average of their densities, and $\varepsilon$ the average of the radial
+averages of their autocorrelations at distance $1$, both averages over the Haar measure of $O(2)$. Then
+$q\le\beta_T+L_B\varepsilon$.
+\end{lemma}
+
+\begin{proof}
+Choose $g$, $y\in\R^2/\Lambda$ and $h\in O(2)$ uniformly and let $R=\{i:y+hx_i\in B_g\}$. As in the proof of
+Proposition~\ref{prop:ie}, $\Pr(i\in R)=q$, $\Pr(i,j\in R)=f_B(r_{ij})$ with $f_B(r)=\int J_0(rt)\,d\kappa_B(t)$ for
+the average $\kappa_B$ of the spectral measures (total mass $q$), $\Pr(i,j\in R)=\varepsilon=f_B(1)$ for
+$\{i,j\}\in E_1$, and the congruence relations hold. Now $R$ may contain pairs of $E_1$, but $Q_B(R)\ge0$ for every
+$R$, so $0\le\mathbb E\,Q_B(R)=\beta_T+q\sum b_i+\sum v_{ij}f_B(r_{ij})+\varepsilon\sum\varpi_{ij}$, while
+$q\le\int\Phi_B\,d\kappa_B=\beta_0\varepsilon-q\sum b_i-\sum v_{ij}f_B(r_{ij})$. Adding,
+$q\le\beta_T+(\beta_0+\sum\varpi_{ij})\varepsilon\le\beta_T+L_B\varepsilon$, since $\varepsilon\ge0$: the
+autocorrelation of an indicator function is nonnegative.
+\end{proof}
+
+\begin{proposition}\label{prop:hit}
+Let the hypotheses of Proposition~\ref{prop:ie} hold, except that $\Phi$ and $Q(\emptyset)$ are replaced: for some
+$\zeta\ge0$ and numbers as in Lemma~\ref{lem:near},
+\[
+\Phi(t)-\zeta L_B\,e(Dt)\bigl(n^2-H(t)\bigr)\ \ge\ 1\quad(t>0),\qquad Q(S)\ge0\quad(\emptyset\ne S\in\mathcal S),
+\qquad\psi_T\ge\zeta.
+\]
+Then $m_{\{1,d\}}(\R^2)\le\psi_T+\tau\delta_0^2-\zeta(1-\beta_T)$ for every $d\ge D$.
+\end{proposition}
+
+\begin{proof}
+Keep the notation of the proof of Proposition~\ref{prop:ie}, and let $q=\Pr(S\ne\emptyset)$, the average over $g$ of
+the density of $B_g=\{y:(y+gX)\cap A\ne\emptyset\}=\bigcup_i(A-gx_i)$. Scaled by $1/d$, these sets satisfy
+Lemma~\ref{lem:near} with $\varepsilon=\mathbb E_g\,f_{B_g}(d)$. Since $1_{B_g}(y)\le\sum_i1_A(y+gx_i)$,
+\begin{multline*}
+\varepsilon\le\sum_{i,j}\mathbb E_{g,v}\,\varphi\bigl(dv+g(x_j-x_i)\bigr)=\int J_0(dt)H(t)\,d\kappa(t)\\
+=\int_{(0,\infty)}J_0(dt)\bigl(H(t)-n^2\bigr)\,d\kappa(t)\le\int_{(0,\infty)}e(Dt)\bigl(n^2-H(t)\bigr)\,d\kappa(t),
+\end{multline*}
+where $v$ is uniform on the unit circle, $\varphi$ is the autocorrelation of $A$, the averages over $v$ and $g$ of
+$e^{2\pi i\langle\xi,dv+gw\rangle}$ are $J_0(2\pi d|\xi|)J_0(2\pi|\xi||w|)$, the middle equality subtracts
+$n^2f(d)=0$, and the last inequality uses $J_0(dt)\ge-e(dt)\ge-e(Dt)$ and $H\le n^2$. So $1-\Pr(S=\emptyset)=q\le\beta_T+L_B\varepsilon$, and $\mathbb E\,Q(S)\ge\zeta\Pr(S=\emptyset)$ gives
+$\psi_T+\delta\sum\lambda_i+\sum u_{ij}f(r_{ij})\ge\zeta(1-\beta_T-L_B\varepsilon)$. Integrating as before, now with
+the extra term, $\delta\le\psi_T-\zeta(1-\beta_T-L_B\varepsilon)+\tau\delta_0^2-\zeta L_B\int_{(0,\infty)}e(Dt)(n^2-H)
+\,d\kappa\le\psi_T+\tau\delta_0^2-\zeta(1-\beta_T)$.
+\end{proof}
+
+As $D\to\infty$ the term with $\zeta$ tends to $0$ uniformly in $t$, since
+$\sup_{t>0}e(Dt)\bigl(n^2-H(t)\bigr)=O(D^{-1/2})$ (use $n^2-H(t)\le t^2\sum_{i,j}r_{ij}^2/4$ for small $t$). So the
+certificate of Lemma~\ref{lem:near}, multiplied by $1+O(D^{-1/2})$, can serve as well on the $A$ side, with
+$\eta=\tau=0$ and $\zeta=\psi_T$; this gives the bound $(1+O(D^{-1/2}))\,\beta_T^2$, so
+$\limsup_{d\to\infty}m_{\{1,d\}}(\R^2)\le\beta_T^2$. In floating point the value of the program of
+Proposition~\ref{prop:hit} approaches about $0.0610$, close to $\beta_T^2$. At the scale of $d$ the set $A$ behaves
+like a set avoiding $d$ whose points are, at the scale of $1$, spread like a set avoiding $1$. Proposition~\ref{prop:hit}
+is thus an effective form of the upper bound in Bukh's theorem $m_{\{1,d\}}(\R^2)\to m_1(\R^2)^2$ \cite{Bukh}, with
+$m_1(\R^2)$ replaced by the inclusion--exclusion bound $\beta_T$ and with usable thresholds; Bukh remarks that his
+zooming-out and supersaturation lemmas are effective, but states no threshold.
+
+
+\subsection*{The certificates for $15$, $16$ and $17$ colours}
+The linear programs behind Propositions~\ref{prop:ie} and~\ref{prop:hit} have the inclusion--exclusion rows of
+\cite{ACMVZ} for $X$ ($13\,552$ atoms; we generate the congruences ourselves: the independent sets with at least
+two points fall into $11\,226$ congruence classes, which give $2\,302$ relations $\Pr(I\subseteq S)=\Pr(J\subseteq S)$
+and imply all others), the variables $\kappa$ on a grid of $t$, and the rows for $f(1)=0$, the envelope, the tangent
+and the hit set. We solve them in floating point, round the multipliers to fractions, and verify the hypotheses
+exactly or in interval arithmetic. Table~\ref{tab:ie} lists the certificates.
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{rrlll}
+\toprule
+$k$ & $D$ & certificate & bound for all $d\ge D$ & proved by\\
+\midrule
+$15$ & $5\cdot10^5$ & \texttt{ie\_k15.json} & $0.0713614<1/14$ & Proposition~\ref{prop:ie}\\
+$16$ & $7\cdot10^7$ & \texttt{ie\_k16.json} & $0.0657685<1/15$ & Proposition~\ref{prop:hit}\\
+$17$ & $8\cdot10^8$ & \texttt{ie\_k17.json} & $0.0623330<1/16$ & Proposition~\ref{prop:hit}\\
+\bottomrule
+\end{tabular}
+\caption{The inclusion--exclusion certificates (bounds rounded up), each giving $\chi(\R^2,\{1,d\})\ge k$ for every
+real algebraic $d\ge D$. The last two use the certificate \texttt{ie\_B.json} of Lemma~\ref{lem:near}, with
+$\beta_T=0.2470097$ and $L_B=17.764$.}
+\label{tab:ie}
+\end{table}
+
+Two programs check them. \texttt{check\_ie.py} computes in $\Q(\sqrt3,\sqrt{11})$ the unit pairs of $X$, the
+independent sets and every congruence, checks $Q\ge0$ on the atoms in exact arithmetic, checks $Q_B\ge0$ on all
+$2^{23}$ subsets of $X$ with integers over a common denominator, and proves $\Phi\ge1$ (with the hit-set term) and
+$\Phi_B\ge1$ by bisecting $[0,t_{\max}]$ in $t$ with the Taylor enclosures of $J_0$ above, in Arb ball arithmetic, and
+by $|J_0(x)|\le\sqrt{2/(\pi x)}$ beyond $t_{\max}$. \texttt{check\_ie\_indep.py}, written separately, uses its own interval
+arithmetic on integers, its own power series and Hankel expansion for $J_0$, rigorous values of $\pi$ and of the
+distances, and a sweep with steps chosen from the values and the bound $|J_0''|\le1$; it has its own transcription of the
+coordinates of $X$, checked against the notebook of \cite{ACMVZ}. Both accept the four certificates and reject corrupted ones (a broken congruence, a
+lowered or misplaced multiplier, a raised $\eta$, $\zeta$ or $\tau$, a lowered penalty of the $B$ side). In floating
+point the program of Proposition~\ref{prop:ie} tends to about $0.0711=1/14.06$ as $D\to\infty$, close to
+$0.24697\cdot\mu/(1+\mu)$, so it gives no more than $15$ colours; the program of Proposition~\ref{prop:hit} gives
+$0.065758=1/15.21$ at $D=7\cdot10^7$ and $0.062324=1/16.05$ at $D=8\cdot10^8$, and tends to about $0.0610=1/16.4$, close to $0.24697^2$, so it gives no more than $17$.
+
 
 \section{Remarks}
 

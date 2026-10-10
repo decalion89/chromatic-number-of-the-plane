@@ -11311,3 +11311,52 @@ measurable set avoiding `D`; for finite `D` the fractional chromatic number of t
   `d`" rests on the rigorous `S/S(0)` of `tail_k14.json` (value 0.267887 < 0.267894) instead of the floating-point
   0.262476; 0.26305 of Keleti et al. is numerical; Corollary 4 points to Theorem 5; the caption no longer calls 13.27
   the program's limit; the single-`d` window includes "from about 5.55 on"; the test command excludes slow tests.
+
+### Inclusion–exclusion at two scales: 15, 16 and 17 colours for two distances (10–11 October, night)
+
+- **15 colours (Proposition 19).** The 23-point inclusion–exclusion program of Ambrus, Csiszárik, Matolcsi, Varga and
+  Zsámboki (`X23`, `m₁(ℝ²) ≤ 0.2470`) at the scale of 1, with only `f(d) = 0` at the scale of `d` (the envelope row of
+  Lemma 18: `κ(0) ≤ Σ_{t>0} κ(t) e(Dt)`) and the tangent `κ(0) ≥ 2δ₀δ − δ₀²` to `κ(0) = δ²`. In floating point the
+  value is `0.071271 = 1/14.03` at `D = 10⁶`, `0.071104 = 1/14.064` at `10⁸`, about `0.24697 · μ/(1 + μ)`: it stops at
+  15 colours. Certified: `m_{1,d}(ℝ²) ≤ 0.0713614 < 1/14` for every `d ≥ 5·10⁵` (`ie_k15.json`).
+- **The hit set (Lemma 20 and Proposition 21).** For `B_g = ⋃_i (A − g x_i)` (the points near which `A` meets the copy `gX23`),
+  `q = P(S ≠ ∅)` is its density; conditioning the program on `S ≠ ∅` gives `δ ≲ 0.247 q`, and at the scale of `d`,
+  `1_{B_g} ≤ Σ_i 1_A(· + g x_i)`, `f(d) = 0` and `J₀(dt) ≥ −e(Dt)` bound the autocorrelation of `B_g` at `d` by
+  `ε ≤ Σ_{t>0} κ(t) e(Dt)(529 − H(t))`, `H(t) = Σ_{i,j} J₀(r_ij t)` (the direction `v` of `d` and the rotation `g` are
+  independent, so `e^{2πi⟨ξ, dv + gw⟩}` averages to `J₀(2πd|ξ|)J₀(2π|ξ||w|)`). A second program bounds the density of a set that avoids the
+  distance 1 up to `ε`: `q ≤ ψ_T^B + L_B ε`; its certificate must satisfy `Q_B(T) ≥ 0` for **all** `2²³` subsets of
+  `X23` (with a penalty per unit pair), checked exactly with integers. The two scales then multiply: the value tends
+  to about `0.0610 ≈ 0.24697²` (`1/16.4`): an effective form of the upper bound in Bukh's theorem, with `m₁(ℝ²)`
+  replaced by the inclusion–exclusion bound `ψ_T^B`.
+- **Thresholds.** Floating-point values of the hit-set program (uniform penalty, `L_B = 29.87`): `1/14.72` at
+  `D = 10⁸`, `1/15.21` at `2·10⁸`, `1/15.87` at `10⁹`, `1/16.06` at `2.5·10⁹`, `1/16.23` at `10¹⁰`, `1/16.38` at
+  `10¹²`. One penalty per unit pair (cutting planes over the subsets) lowers `L_B` to `17.764`: `1/14.57` at `3·10⁷`,
+  `1/15.21` at `7·10⁷`, `1/15.40` at `10⁸`, `1/15.70` at `2·10⁸`, `1/16.05` at `8·10⁸`, `1/16.21` at `3·10⁹`, `1/16.29` at
+  `10¹⁰` and `1/16.36` at `10¹¹` (the dots of Figure 1).
+  Certified: 16 colours for `d ≥ 7·10⁷` and 17 for `d ≥ 8·10⁸` (`ie_k16.json`, `ie_k17.json`, with `ie_B.json`).
+  Before, the explicit thresholds were 14 from `25 700` (version 7) and 18 from `10²⁵` (Theorem C).
+- **Checks.** `check_ie.py` (exact arithmetic in `ℚ(√3, √11)`, Arb enclosures of `J₀`) and `check_ie_indep.py`
+  (written separately by an agent that did not see our code: its own integer interval arithmetic, power series and
+  Hankel expansion for `J₀`, its own transcription of the 23 points, checked against the notebook of Ambrus et al.)
+  accept the four certificates and reject corrupted ones. Our congruence list (`congruences.py`: 11 226 classes of
+  independent sets, 2 302 relations) replaces the list in Ambrus et al.'s data file and implies all of it.
+- **Referee.** The seventh internal referee read Propositions 19 and 21, Lemma 20, `check_ie.py` and the literature,
+  with a checker of its own: correct, with minor gaps. Its checker and `check_ie.py` both accept the four final
+  certificates (exact bounds `0.07136134675…`, `0.06576841780…`, `0.06233298787…`, which the table rounds up
+  correctly); it found nothing in the literature with an explicit threshold for 15–17 colours or a density bound below
+  `1/14` for a pair. Its main finding: `check_ie.py` range-checked point indices only
+  through the distances between pairs of positions, so a one-point "congruence" `[[1], [24], w]` (there is no point
+  24) passed, and a crafted certificate that paid for it with `λ₁` and `τ` was certified for 141 colours. The real
+  certificates have no such entry (both checkers range-check every index now, and the attack is a test). Also
+  applied: the novelty is stated as thresholds lowered from `10²⁵` for density bounds (which bound `χ_f` too);
+  "Bukh's theorem made effective" is qualified; `H(t) = ∫|Σ_j e^{it⟨θ, x_j⟩}|² dσ(θ) ≥ 0` is written out; the remark
+  that Proposition 19 stops near `0.2470 μ/(1+μ)` is labelled floating point with a heuristic explanation; the
+  limit remark is proved (`ie_B.json`, scaled by `1 + O(D^{-1/2})`, also serves as the A side, so
+  `lim sup m_{1,d} ≤ (ψ_T^B)²`); unused hypotheses (`0 < δ₀ < 1`, `ϖ_ij ≥ 0`) are dropped; notation renamed (`ϖ_ij`,
+  `E₁`, `R`, `L_B`; the edge index no longer clashes with the envelope `e`). An earlier certificate for 15 colours had its constant rounded down (0.07136135 for
+  0.0713613504); the final one is 0.0713613468 and `check_ie.py` now prints bounds rounded up.
+- **Two test corruptions that were not corruptions.** In the first run of `tests/test_inclusion_exclusion.py` two
+  "corrupted" certificates were accepted, rightly: halving `ψ_T` of `ie_k15.json` leaves a valid certificate (its
+  `ψ_T` is about `10⁻⁹`; the bound sits in `τδ₀²`), and reversing the first congruence, a pair, changes nothing.
+  They are replaced by corruptions that are invalid by construction (every `λ_i` lowered by `10⁻⁶`; the first
+  congruence whose rotation is not congruent).

@@ -1,6 +1,6 @@
 # Measurable density bounds hold for all colourings of the plane with algebraic forbidden distances
 
-[`forbidden-distances.pdf`](forbidden-distances.pdf) is a fifteen-page note (version 7). OpenAI's proof that χ(ℝ²) ≥ 6
+[`forbidden-distances.pdf`](forbidden-distances.pdf) is an eighteen-page note (version 8). OpenAI's proof that χ(ℝ²) ≥ 6
 ([*The Euclidean plane is not five-colorable*](https://github.com/openai/math/blob/main/preprints/The-Euclidean-plane-is-not-five-colorable-September-23-2026/paper.pdf),
 September 2026) first transfers an arbitrary proper colouring of the plane to a weak measurable one. The note
 observes that this transfer works, with the same proof, for every set `D` of algebraic forbidden distances and for
@@ -44,6 +44,16 @@ Known and new upper bounds for `m_D(ℝ²)` then give:
   6.52, 12.05, 24.3, 52.9, 140.2, 601 and 54 300 for 7 to 13 colours and could not give 14: without configurations
   the program's value tends to `1/12.13…`, the square of its one-distance value. With triangles and spindles it tends
   to about `1/13.27` in floating point, so these configurations do not give 15 colours.
+- **Inclusion–exclusion at two scales (version 8): 15, 16 and 17 colours.** For every real algebraic `d`,
+  `χ(ℝ², {1, d}) ≥ 15` for `d ≥ 5·10⁵`, `≥ 16` for `d ≥ 7·10⁷` and `≥ 17` for `d ≥ 8·10⁸` (before, the explicit
+  threshold for these numbers of colours was `10²⁵`, from the two-scale theorem; Bukh's theorem gives 17 beyond an
+  unspecified threshold). Proposition 19 runs the 23-point inclusion–exclusion program of Ambrus, Csiszárik,
+  Matolcsi, Varga and Zsámboki (which gives `m₁(ℝ²) ≤ 0.2470`) at the scale of 1, with Lemma 18 at the scale of `d`.
+  Lemma 20 and Proposition 21 are new: the set `B_g` of points near which `A` meets a copy of their configuration
+  almost avoids the distance `d`, so a second inclusion–exclusion certificate, valid on all `2²³` subsets of the
+  configuration, bounds its density, and the bounds at the two scales multiply — an effective form of the upper
+  bound in Bukh's theorem `m_{1,d} → m₁(ℝ²)²`, with `m₁(ℝ²)` replaced by the inclusion–exclusion bound
+  `0.2470097`. These are density bounds, so they also give `χ_f(ℝ², {1, d}) > 14.01`, `15.20` and `16.04`.
 
   ![Certified lower bounds for χ(ℝ², {1, d})](uniform-bounds.png)
 
@@ -53,7 +63,7 @@ library: [`lean/external/openai-five/distances/`](../../lean/external/openai-fiv
 axioms only, replayed by `leanchecker`. No finite graph is given: as in OpenAI's proof, the graphs exist by
 compactness.
 
-Six AI-assisted referees read the note.
+Seven AI-assisted referees read the note.
 - The first read the transfer theorems: correct, with minor errors and gaps, all fixed. Among them were a false
   numerical inequality in the headline (`4.0486 < 1/0.2470`), a clash with the notation of Matolcsi et al. (which
   led to proving the equality for the fractional chromatic number of the whole plane as well), the equality of
@@ -84,6 +94,14 @@ Six AI-assisted referees read the note.
   certificate in the remark (`z₀ + Σ α_c y_c`), asked for the conditions of the limiting construction to be stated,
   and found two overclaims (14 colours "follow" from a floating-point value; 13.27 called a limit of the program) and
   stale statements in Corollary 4 and the READMEs; all applied.
+- The seventh read version 8 (Propositions 19 and 21, Lemma 20, the checker `check_ie.py` and the literature), with
+  a checker of its own: no mathematical error, the certificates valid. It found that `check_ie.py` did not
+  range-check the point indices of one-point congruences, so that a crafted certificate (a "congruence" between point
+  1 and a nonexistent point 24) was certified for 141 colours; the real certificates contain no such entry, and both
+  checkers now reject it. It asked for the novelty to be stated as lowered thresholds (from `10²⁵`) for density
+  bounds, for "Bukh's theorem made effective" to be qualified (Proposition 21 is an effective form of the upper bound,
+  with `m₁(ℝ²)` replaced by the inclusion–exclusion bound `β_T`), for `H ≥ 0` to be proved, for the floating-point
+  remarks to be labelled as such and for clashing notation to be renamed; all applied.
 
 No mathematician has checked the note yet.
 
@@ -100,7 +118,10 @@ The files behind it:
 - [`data/forbidden_distances/`](../../data/forbidden_distances/README.md): the thirteen certificates, the programs
   that produce and check them (three independent checks), and `tests/test_forbidden_distances.py`;
 - [`data/forbidden_distances/uniform/`](../../data/forbidden_distances/uniform/README.md): the ten certificates of
-  Theorem 5, the two programs that check them, and the sources of the figure;
+  Theorem 5 up to 14 colours, the two programs that check them, and the sources of the figure;
+- [`data/forbidden_distances/uniform/ie/`](../../data/forbidden_distances/uniform/ie/README.md): the four
+  inclusion–exclusion certificates for 15 to 17 colours, the linear programs that produce them, and two checkers
+  written separately (`check_ie.py`, `check_ie_indep.py`), with `tests/test_inclusion_exclusion.py`;
 - [`lean/external/openai-five/distances/`](../../lean/external/openai-five/distances/README.md): the Lean proof of
   the transfer;
-- the research log, entries of 10 October.
+- the research log, entries of 10 and 11 October.
