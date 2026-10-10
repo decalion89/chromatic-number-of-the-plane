@@ -103,7 +103,8 @@ spindles, for `D` from 5 to 2·10⁵, and at 10⁶ and 10⁷). These values are 
 of Lemma 18 gives `k = 7, …, 14` colours from about `d = 5.797, 10.42, 18.81, 35.53, 73.36, 179.5, 652.6 and 25 590` on. With triangles alone it gives 7, …, 13
 colours from about 5.800, 10.67, 20.04, 40.04, 90.24, 261.7 and 1544 on, and never 14; without triangles and spindles,
 from about 6.503, 12.03, 23.87, 52.85, 139.9, 599.2 and, for 13, from between 50 000 and 54 300. For one `d` with
-triangles, the program gives 7 colours for `d < 5.8` only between about 1.716 and 2.045. Without configurations the
+triangles, the program gives 7 colours for `d < 5.8` only between about 1.716 and 2.045, and again from about 5.55
+on. Without configurations the
 value of the program of Lemma 18 tends to `μ₀²/(1 + μ₀)² = 1/12.13…` (`μ₀ = −min J₀`), the square of its value
 0.287119 for one distance, as `D → ∞` (proved in the remark after Lemma 18). With configurations whose one-distance
 program has value `v`, an explicit construction gives bounds that tend to `v·μ₀/(1 + μ₀)`: `v = 0.271823` with our
@@ -111,6 +112,7 @@ triangles (`1/12.81`; the floating-point value of the program is about `1/12.80`
 triangles and spindles (`1/13.27`; the floating-point value is about `1/13.20` at `D = 10⁷`). So these configurations
 give 14 colours; in floating point they do not give 15, which would need `v < 0.2488`.
 
-**Tests.** From the root of the repository, `python3 -m pytest -q tests/test_forbidden_distances.py -k uniform` runs
-both programs on every certificate and checks that both reject the corrupted ones (a few minutes); the corruption
-that the floating-point scan misses is marked slow.
+**Tests.** From the root of the repository, `python3 -m pytest -q -m "not slow" tests/test_forbidden_distances.py
+-k uniform` runs both programs on every certificate (except the second check of `interval_k7_1.72_2.04.json`, about
+20 minutes, which is a slow test) and checks that both reject the corrupted ones (a few minutes). The corruption that
+the floating-point scan misses is also a slow test. `tail.py` needs about 0.75 GB of memory.

@@ -1,6 +1,6 @@
 # Measurable density bounds hold for all colourings of the plane with algebraic forbidden distances
 
-[`forbidden-distances.pdf`](forbidden-distances.pdf) is a fourteen-page note (version 6). OpenAI's proof that χ(ℝ²) ≥ 6
+[`forbidden-distances.pdf`](forbidden-distances.pdf) is a fifteen-page note (version 7). OpenAI's proof that χ(ℝ²) ≥ 6
 ([*The Euclidean plane is not five-colorable*](https://github.com/openai/math/blob/main/preprints/The-Euclidean-plane-is-not-five-colorable-September-23-2026/paper.pdf),
 September 2026) first transfers an arbitrary proper colouring of the plane to a weak measurable one. The note
 observes that this transfer works, with the same proof, for every set `D` of algebraic forbidden distances and for
@@ -53,7 +53,7 @@ library: [`lean/external/openai-five/distances/`](../../lean/external/openai-fiv
 axioms only, replayed by `leanchecker`. No finite graph is given: as in OpenAI's proof, the graphs exist by
 compactness.
 
-Five AI-assisted referees read the note.
+Six AI-assisted referees read the note.
 - The first read the transfer theorems: correct, with minor errors and gaps, all fixed. Among them were a false
   numerical inequality in the headline (`4.0486 < 1/0.2470`), a clash with the notation of Matolcsi et al. (which
   led to proving the equality for the fractional chromatic number of the whole plane as well), the equality of
@@ -78,6 +78,12 @@ Five AI-assisted referees read the note.
   colours), and no earlier bound of 7 for a pair. It asked for the measurable statement to be argued, for one half of
   the limit in the remark to be proved (its construction is in the paper), and for an overclaim in the abstract
   ("each step by a single certificate", false for the step at 12.05) to be corrected; all applied.
+- The sixth read version 7 (unit triangles and Moser spindles in the uniform certificates), with a checker of its own
+  (no code or Bessel routine shared with ours): no mathematical error, all ten certificates valid (the smallest
+  margin, `min h ≥ 5.9·10⁻⁷`, is for 14 colours), the eight tails rebuilt byte for byte. It corrected the value of a
+  certificate in the remark (`z₀ + Σ α_c y_c`), asked for the conditions of the limiting construction to be stated,
+  and found two overclaims (14 colours "follow" from a floating-point value; 13.27 called a limit of the program) and
+  stale statements in Corollary 4 and the READMEs; all applied.
 
 No mathematician has checked the note yet.
 

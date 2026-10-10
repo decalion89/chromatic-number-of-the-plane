@@ -5,7 +5,7 @@ by OpenAI); the transfer of Theorem A is formalized in Lean on top of their libr
 ([`lean/external/openai-five/distances/`](../lean/external/openai-five/distances/README.md)); the density bounds are
 computer proofs checked by several programs.
 
-- **Referees.** Five AI-assisted referees inside the project. The first read the transfer theorems (correct, minor
+- **Referees.** Six AI-assisted referees inside the project. The first read the transfer theorems (correct, minor
   gaps, fixed). The second read the corollaries and the certificates with two checkers of its own (no mathematical
   error, every certificate valid; the priority claims were wrong and are corrected). The third read version 3 with a
   checker of its own (no mathematical error; Croft's constant was rounded up, one inequality was classical and
@@ -15,7 +15,10 @@ computer proofs checked by several programs.
   the uniform bounds of version 6 (Theorem 5, Lemma 18, the certificates and both programs) with a checker of its
   own sharing no code or Bessel routine with ours: no mathematical error, all ten certificates valid, no earlier bound
   of 7 for a pair; the measurable statement and one half of the limit in the remark are now argued, and an overclaim
-  in the abstract is corrected.
+  in the abstract is corrected. The sixth read version 7 (triangles and spindles in the uniform certificates) with a
+  checker of its own: no mathematical error, all ten certificates valid (the smallest margin, `min h ≥ 5.9·10⁻⁷`, is
+  for 14 colours), all eight tails rebuilt byte for byte; it corrected the value formula and an overclaim in the
+  remark, Corollary 4 against the abstract, and statements in the README and these notes.
 - **No human referee yet.**
 
 The paper is [`papers/forbidden-distances/`](../papers/forbidden-distances/README.md); this note is the record
@@ -116,7 +119,7 @@ finite graph.
 same holds with `1/d` in place of `d` (scale the plane), and, for measurable colourings, for every real `d`. Version 6
 had, without configurations, `d_k = 6.52, 12.05, 24.3, 52.9, 140.2, 601, 54 300` for `k = 7, …, 13` and the ranges
 `[1.75, 1.93]` and `[1.83, 1.855]`; version 7 adds the configuration inequalities of unit equilateral triangles (all
-certificates) and of Moser spindles (the tails). Theorem 5 now contains every finite bound of Corollary 7 (the pairs
+certificates) and of Moser spindles (the tails). Theorem 5 now contains every finite bound of Corollary 4 (the pairs
 `{1, √3}`, `{1, (√6+√2)/2}`, `{1, 2}`, `{1, 11/6}`, `{1, 40}`, `{1, 1000}`) and raises `{1, 40}`, `{1, 100}` and
 `{1, 1000}` to 10, 11 and 13 colours.
 
@@ -154,9 +157,9 @@ certificates) and of Moser spindles (the tails). Theorem 5 now contains every fi
   construction with a one-distance certificate of value `v` gives bounds that tend to `v·μ₀/(1 + μ₀)`: with our
   triangles `v = 0.271823` (limit `1/12.81`; floating-point value about `1/12.80` at `D = 10⁸`), with triangles and
   spindles `v = 0.262476` (limit `1/13.27`; about `1/13.20` at `D = 10⁷`). So these configurations give 14 colours;
-  in floating point they do not give 15, which would need `v < 0.2488` (Keleti, Matolcsi, Oliveira Filho and Ruzsa reach 0.26305 with spindles
+  in floating point they do not give 15, which would need `v < 0.2488` (Keleti, Matolcsi, Oliveira Filho and Ruzsa reach (numerically) 0.26305 with spindles
   alone and 0.258795 with further inequalities). For one `d` with triangles, the program gives 7 colours for
-  `1 < d < 5.8` only for `d` between about 1.716 and 2.045.
+  `1 < d < 5.8` only for `d` between about 1.716 and 2.045, and again from about 5.55 on.
 - **Programs.** `tail.py` and `uniform.py` (Arb, Taylor enclosures; they produce and re-verify) and
   `check_uniform.py` (separate code: point values and the Lipschitz bound `|J₁| ≤ 1/√2`, boxes in `t` and `d`, a
   floating-point counterexample search confirmed in Arb; radii recomputed from `o`, spindle distances from the points
@@ -300,3 +303,10 @@ Three programs check every certificate ([`data/forbidden_distances/`](../data/fo
   limit is attained, "each step by a single certificate" is restricted to `d ≥ 12.3` (the step at 12.05 uses interval
   certificates), the floating-point crossings are stated as "from about … on", the 13-colour crossing (between 50 000
   and 54 300) is given, and the measurable novelty is limited to the explicit thresholds.
+- **v7 (10 October, night).** Unit triangles and Moser spindles in the uniform certificates (Proposition 17 with
+  configurations), 14 colours from `d = 25 700` on. The sixth referee found no mathematical error; applied: the value
+  of a certificate in the remark is `z₀ + Σ α_c y_c`, the conditions the construction needs on `Q` are stated, "14
+  colours follow for all large `d`" now rests on a rigorous certificate (`S/S(0)` of `tail_k14.json`, value 0.267887,
+  below the exact threshold 0.267894) instead of the floating-point 0.262476, Keleti et al.'s 0.26305 is marked
+  numerical, Corollary 4 points to Theorem 5 for `{1, 40}`, `{1, 100}`, `{1, 1000}`, the figure caption no longer
+  calls 13.27 a limit of the program, and the single-`d` window includes "from about 5.55 on".

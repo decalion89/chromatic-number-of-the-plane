@@ -160,7 +160,8 @@ the second remains open.
 Moreover $\chi(\R^2,\{1,d\})\ge 17$ for every sufficiently large real algebraic number $d$.
 \end{corollary}
 
-The finite bounds come from linear programs certified in Section~\ref{sec:lp}, and the last statement from Bukh's
+The finite bounds come from linear programs certified in Section~\ref{sec:lp} (Theorem~\ref{thm:uniform} below
+raises those for $\{1,40\}$, $\{1,100\}$ and $\{1,1000\}$ to $10$, $11$ and $13$), and the last statement from Bukh's
 theorem \cite{Bukh}; products of hexagonal colourings give $\chi(\R^2,\{1,d\})\le49$. For \emph{measurable}
 colourings, bounds of this kind were known: Oliveira Filho and Vallentin \cite[§4]{OFV} report, from their linear
 program, the bound $0.141577<1/7$ for the density of a measurable set avoiding the distances $1$ and
@@ -204,7 +205,7 @@ without cliques tends to $\mu_0^2/(1+\mu_0)^2=1/12.13\ldots$, where $\mu_0=-\min
 its value $\mu_0/(1+\mu_0)=0.287119$ for one distance \cite[§3.2]{OFV} (Remark after Lemma~\ref{lem:tail}). With
 triangles and spindles its floating-point value at $D=10^7$ is $0.075778=1/13.20$, close to the product
 $0.075362=1/13.27$ of $0.287119$ and the value $0.262476$ of the one-distance program with our triangles and spindles
-(with triangles alone the values are $1/12.80$ and $0.271823$). So, in floating point, these configurations give no
+(with triangles alone the values are $1/12.80$, at $D=10^8$, and $0.271823$). So, in floating point, these configurations give no
 more than $14$ colours for two distances; Theorem~\ref{thm:C} gives more for very large $d$.
 
 \begin{figure}[ht]
@@ -216,7 +217,7 @@ of Corollary~\ref{cor:two}. Grey, solid: $1/\mathrm{LP}(d)$, where $\mathrm{LP}(
 (not a proof), of the linear program for the single distance $d$ with unit-triangle cliques ($d\le6.6$); grey,
 dash-dotted: the same for the program of Lemma~\ref{lem:tail} with triangles and spindles, whose value at $D$ serves
 every $d\ge D$. A certified bound below $1/(k-1)$ gives $k$ colours, so each blue step lies less than one colour above
-the curve it follows. Dashed: the limit $13.27$ of the second program (floating point). Dotted: $\chi(\R^2)\ge6$ \cite{OpenAI}, which
+the curve it follows. Dashed: the value $13.27$ approached by the construction of the remark after Lemma~\ref{lem:tail} (floating point). Dotted: $\chi(\R^2)\ge6$ \cite{OpenAI}, which
 holds for every $d$. Left: the shaded range $1.6\le d\le2.15$ on a linear scale.}
 \label{fig:uniform}
 \end{figure}
@@ -822,7 +823,8 @@ the last column is the number of boxes of \texttt{tail.py} on $[0,T]$.}
 \end{table}
 
 \begin{remark}
-These thresholds are near the limit of the method. Consider first the program without triangles and spindles,
+In floating point these thresholds are near the limit of the method (see the crossings after
+Theorem~\ref{thm:uniform}); for the program without configurations the limit is proved here. Consider first the program without triangles and spindles,
 $g_d(t)=z_0+z_1J_0(t)+z_2J_0(dt)$. Put $\mu_0=-\min J_0=0.40275\ldots$, let $d\ge20$, and normalise $s=1$. If
 $g_d\ge0$, its values at $t=j_{1,1}/d$ and at a point $t$ with $|t-j_{1,1}|\le\pi/(2d)$ and $J_0(dt)=0$
 (there is one, because $dj_{1,1}>j_{0,1}$ and consecutive zeros of $J_0$ are less than $\pi$ apart) give
@@ -844,12 +846,15 @@ for $y_0\le Dt\le2y_0$, for $2y_0\le Dt$ with $t\le1$, and for $t\ge1$). Hence f
 triangles and spindles never gives more than $13$ colours, and in floating point it never does for any $d$.
 
 The same construction with $\mu_0+J_0(t)$ replaced by $(1+\mu_0)Q(t)$, where $Q$ is a certificate for one distance
-of the form of Proposition~\ref{prop:lp} with $Q(0)=1$ and value $v$ (that is, $z_0+\sum_cy_c=v$), gives bounds that
-tend to $v\mu_0/(1+\mu_0)$. With our unit triangles $v$ is about $0.271823$, which explains the limit near $1/12.81$
+of the form of Proposition~\ref{prop:lp} with $Q(0)=1$ and value $v$ (that is, $z_0+\sum_c\alpha_cy_c=v$), gives bounds that
+tend to $v\mu_0/(1+\mu_0)$: the case analysis needs only $Q\ge0$, $Q(0)=1$ and $Q(t)\ge1-Ct^2$, where $C$ is the sum
+of $ar^2/4$ over the terms $aJ_0(rt)$ of $Q$ with $a>0$ (those with $a<0$ only help, since $J_0\le1$), with the cut
+at $t=1$ replaced by a cut at $t_1$ with $Ct_1^2<1-1/\sqrt2$. With our unit triangles $v$ is about $0.271823$, which explains the limit near $1/12.81$
 seen in floating point, so with triangles alone the program did not reach $14$ colours. With spindles as well, $v$ is
-about $0.262476$, below $0.2678$, so $14$ colours follow for all large $d$ in this way (with $\mu$ in place of $\mu_0$);
-Theorem~\ref{thm:uniform} gives them from $d_{14}$ on. Fifteen colours would need $v<0.2488$. For comparison,
-\cite{KMOR} reach $0.26305$ with spindles alone and $0.258795$ with further inequalities.
+about $0.262476$ in floating point. A rigorous certificate with $v<0.26789$ gives $14$ colours for all large $d$ in
+this way (with $\mu$ in place of $\mu_0$): $S/S(0)$ for the certificate \texttt{tail\_k14.json} is one, with
+$v=0.267887$; Theorem~\ref{thm:uniform} gives $14$ colours from $d_{14}$ on in any case. Fifteen colours would need $v<0.2488$. For comparison,
+\cite{KMOR} reach (numerically) $0.26305$ with spindles alone and $0.258795$ with further inequalities.
 \end{remark}
 
 For a bounded range of $d$ we certify $g_d\ge0$ for all $d$ in an interval $[a,b]$ at once. On a box

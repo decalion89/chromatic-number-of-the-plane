@@ -11302,3 +11302,12 @@ measurable set avoiding `D`; for finite `D` the fractional chromatic number of t
   out-of-memory killer again at 18:27 UTC, together with the threshold runs: its 3.8 GB LRAT output sat in
   `/dev/shm`, which counts against the same 14.3 GB limit. Part (b) now streams the proof: CaDiCaL 2.1.3 writes a
   binary LRAT proof into a FIFO and `cake_lpr` reads it from there, so no proof file is stored.
+- **Sixth referee** (version 7), with its own checker (integer interval arithmetic, its own series for `J₀` and `J₁`,
+  second-order Taylor models; no code or Bessel routine shared with ours): no mathematical error. All ten certificates
+  verified; the thinnest is `tail_k14.json` (bound `1.75·10⁻⁶` below `1/13`, `min h ∈ [5.95, 6.62]·10⁻⁷`; accepted with
+  `z₀` lowered by `5·10⁻⁷`, rejected at `7·10⁻⁷`); the eight tails rebuilt byte for byte; `α(M; {1, d}) = 2` checked
+  exactly for every spindle distance `d`. Applied: the value of a certificate in the remark is `z₀ + Σ α_c y_c`; the
+  limiting construction states what it needs of `Q` (`Q ≥ 0`, `Q(0) = 1`, `Q ≥ 1 − Ct²`); "14 colours for all large
+  `d`" rests on the rigorous `S/S(0)` of `tail_k14.json` (value 0.267887 < 0.267894) instead of the floating-point
+  0.262476; 0.26305 of Keleti et al. is numerical; Corollary 4 points to Theorem 5; the caption no longer calls 13.27
+  the program's limit; the single-`d` window includes "from about 5.55 on"; the test command excludes slow tests.
