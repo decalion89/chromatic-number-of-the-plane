@@ -2,7 +2,8 @@
 
 The folder [`uniform/`](uniform/README.md) holds the certificates of Theorem 5 of the paper, each valid for a whole range
 of `d`: `χ(ℝ², {1, d}) ≥ 7` for every algebraic `d ≥ 5.82` and for `1.72 ≤ d ≤ 2.04`, up to `≥ 14` for every
-algebraic `d ≥ 25 700`.
+algebraic `d ≥ 25 700`; its subfolder [`uniform/ie/`](uniform/ie/README.md) has the inclusion–exclusion certificates
+for `≥ 15`, `≥ 16` and `≥ 17` from `d = 5·10⁵`, `7·10⁷` and `8·10⁸`.
 
 Each file in `certificates/` is a dual solution of the linear program of Oliveira Filho and Vallentin
 (J. Eur. Math. Soc. 2010, Theorem 1.1), with clique inequalities added for `{1, 2}` and `{1, √3}`. It proves an

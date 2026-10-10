@@ -12,6 +12,24 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- **Fifteen, sixteen and seventeen colours for two distances (10–11 October, night; version 8 of the
+  forbidden-distances paper).** For every real algebraic `d`, `χ(ℝ², {1, d}) ≥ 15` for `d ≥ 5·10⁵`, `≥ 16` for
+  `d ≥ 7·10⁷` and `≥ 17` for `d ≥ 8·10⁸` (before: 14 from `25 700`, 18 only from `10²⁵`; Bukh's theorem gives 17
+  beyond an unspecified threshold). Proposition 19 puts the 23-point inclusion–exclusion program of Ambrus,
+  Csiszárik, Matolcsi, Varga and Zsámboki at the scale of 1 and Lemma 18 at the scale of `d`. Lemma 20 and
+  Proposition 21 are new: the *hit set* `B_g = ⋃_i (A − g x_i)` of a set `A` avoiding `{1, d}` almost avoids `d`
+  (its autocorrelation at `d` is bounded through `f(d) = 0`, the averages over the direction of `d` and over `g`
+  factoring into two Bessel functions), so a second
+  inclusion–exclusion certificate, valid on all `2²³` subsets of the configuration, bounds its density, and the two
+  scales multiply. New: `data/forbidden_distances/uniform/ie/` (the configuration, our own congruence list, the linear
+  programs, four certificates, `check_ie.py` and the separately written `check_ie_indep.py`, which accept all four
+  and reject corrupted ones), `tests/test_inclusion_exclusion.py`, Figure 1 extended to `3·10¹⁰`. Refereed by a
+  seventh internal referee with a checker of its own: no mathematical error. Applied: `check_ie.py` now range-checks
+  every point index (without it, a crafted certificate with a one-point "congruence" to a nonexistent point 24 was
+  certified for 141 colours; the real certificates never had such an entry, and the attack is in the tests); the
+  novelty is stated as thresholds lowered from `10²⁵` for density bounds (so they also bound `χ_f`); Proposition 21
+  is called an effective form of the upper bound in Bukh's theorem, with `m₁(ℝ²)` replaced by `β_T`; `H ≥ 0` is
+  proved; the floating-point remarks are labelled; unused hypotheses are dropped and notation is renamed.
 - **Fourteen colours for two distances (10 October, night; version 7 of the forbidden-distances paper).**
   Theorem 5 now uses configuration inequalities (Proposition 17 generalised as in Keleti, Matolcsi, Oliveira Filho
   and Ruzsa: a finite set `W` with at most `α` points pairwise at allowed distances gives

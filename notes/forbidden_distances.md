@@ -5,7 +5,7 @@ by OpenAI); the transfer of Theorem A is formalized in Lean on top of their libr
 ([`lean/external/openai-five/distances/`](../lean/external/openai-five/distances/README.md)); the density bounds are
 computer proofs checked by several programs.
 
-- **Referees.** Six AI-assisted referees inside the project. The first read the transfer theorems (correct, minor
+- **Referees.** Seven AI-assisted referees inside the project. The first read the transfer theorems (correct, minor
   gaps, fixed). The second read the corollaries and the certificates with two checkers of its own (no mathematical
   error, every certificate valid; the priority claims were wrong and are corrected). The third read version 3 with a
   checker of its own (no mathematical error; Croft's constant was rounded up, one inequality was classical and
@@ -18,7 +18,15 @@ computer proofs checked by several programs.
   in the abstract is corrected. The sixth read version 7 (triangles and spindles in the uniform certificates) with a
   checker of its own: no mathematical error, all ten certificates valid (the smallest margin, `min h ≥ 5.9·10⁻⁷`, is
   for 14 colours), all eight tails rebuilt byte for byte; it corrected the value formula and an overclaim in the
-  remark, Corollary 4 against the abstract, and statements in the README and these notes.
+  remark, Corollary 4 against the abstract, and statements in the README and these notes. The seventh read version 8 (Propositions 19 and 21, Lemma 20, `check_ie.py`
+  and the literature) with a checker of its own: no mathematical error; its checker and ours accept the four final
+  certificates, whose exact bounds the table rounds up correctly. It found that
+  `check_ie.py` did not range-check the point indices of one-point congruences, so that a crafted certificate (a
+  "congruence" between point 1 and a nonexistent point 24) was certified for 141 colours; the real certificates
+  contain no such entry, and both checkers now reject it (it is in the tests). It also asked for the novelty to be
+  stated as lowered thresholds (from `10²⁵`) for density bounds, for "Bukh's theorem made effective" to be qualified,
+  for `H ≥ 0` to be proved, for the floating-point remarks to be labelled as such, for unused hypotheses to be dropped
+  and for clashing notation to be renamed (`ϖ_ij`, `E₁`, `R`, `L_B`); all applied.
 - **No human referee yet.**
 
 The paper is [`papers/forbidden-distances/`](../papers/forbidden-distances/README.md); this note is the record
@@ -170,6 +178,42 @@ certificates) and of Moser spindles (the tails). Theorem 5 now contains every fi
   floating-point values of the program for one `d` with triangles and of the program of Lemma 18 with triangles and
   spindles, and the limit of the latter.
 
+## Inclusion–exclusion at two scales: 15, 16 and 17 colours (version 8)
+
+**Theorem 5 (version 8)** adds `d_15 = 5·10⁵`, `d_16 = 7·10⁷` and `d_17 = 8·10⁸`: for every real algebraic `d`,
+`χ(ℝ², {1, d}) ≥ 15` for `d ≥ 5·10⁵`, `≥ 16` for `d ≥ 7·10⁷` and `≥ 17` for `d ≥ 8·10⁸`. Before, the explicit
+thresholds were 14 from `25 700` (version 7) and 18 from `10²⁵` (Theorem 8, with de Grey's graph); Bukh's theorem
+gives 17 beyond a threshold it does not specify. Version 8 lowers the explicit thresholds for 15, 16 and 17 colours from
+`10²⁵` to `5·10⁵`, `7·10⁷` and `8·10⁸`, and, unlike Theorem 8, its bounds are density bounds: they also give
+`χ_f(ℝ², {1, d}) > 14.01, 15.20, 16.04` for these `d`, and for measurable colourings they hold for every real `d`.
+
+- **Proposition 19 (15 colours).** The inclusion–exclusion program of Ambrus, Csiszárik, Matolcsi, Varga and
+  Zsámboki for their 23 points `X23` (which gives `m₁(ℝ²) ≤ 0.2470`), at the scale of 1, with the envelope of
+  Lemma 18 at the scale of `d` (`κ(0) ≤ Σ_{t>0} κ(t) e(Dt)`, from `f(d) = 0`) and the tangent `κ(0) ≥ 2δ₀δ − δ₀²` to
+  `κ(0) = δ²`. Certificate: `ψ₀, ψ_T, λ_i, u_ij, w_c, η, τ` with `Φ(t) ≥ 1` (`t > 0`), `Φ₀ ≥ 1` and `Q(S) ≥ 0` on the
+  13 552 independent sets; bound `ψ_T + τδ₀²`. In floating point its value tends to about
+  `0.0711 ≈ 0.24697 · μ/(1 + μ)`, so it stops at 15 (an observation with a heuristic explanation, not a theorem).
+- **Lemma 20 and Proposition 21 (16 and 17 colours): the hit set.** For a set `A` avoiding `{1, d}` and a rotation
+  `g`, `B_g = ⋃_i (A − g x_i)` is the set of points `y` such that `y + gX23` meets `A`; its average density is
+  `q = P(S ≠ ∅)`. At the scale of 1, the inclusion–exclusion program conditioned on `S ≠ ∅` gives `δ ≲ 0.247 q`. At the
+  scale of `d`, `1_{B_g} ≤ Σ_i 1_A(· + g x_i)` and `f(d) = 0` give, for the autocorrelation of `B_g` at `d`,
+  `ε ≤ Σ_{t>0} κ(t) e(Dt)(529 − H(t))` with `H(t) = Σ_{i,j} J₀(r_ij t)` (the averages over the direction of `d` and
+  over `g` factor as `J₀(2πd|ξ|) J₀(2π|ξ||w|)`). Lemma 20, a second inclusion–exclusion certificate checked on all
+  `2²³` subsets of `X23` with a penalty `ϖ_ij` for each unit pair inside, gives `q ≤ ψ_T^B + L_B ε` for sets avoiding
+  the distance 1 up to `ε` (`ψ_T^B = 0.2470097`, `L_B = ψ₀^B + Σ ϖ_ij = 17.764`). Proposition 21 combines them with one more
+  multiplier `ζ`: if `ψ_T ≥ ζ` and `Φ(t) − ζL_B e(Dt)(529 − H(t)) ≥ 1`, then `m_{1,d} ≤ ψ_T + τδ₀² − ζ(1 − ψ_T^B)`.
+  As `D → ∞` the extra term is `O(D^{-1/2})`, so `ie_B.json` scaled by `1 + O(D^{-1/2})` also serves on the A side
+  (with `ζ = ψ_T`), and `lim sup_{d→∞} m_{1,d} ≤ (ψ_T^B)² ≈ 0.0610`; in floating point the value tends to about
+  `0.0610` too. This is an effective form of the upper bound in Bukh's theorem `m_{1,d} → m₁(ℝ²)²`, with `m₁(ℝ²)`
+  replaced by the inclusion–exclusion bound `ψ_T^B` and with usable thresholds.
+- **Certificates and checks.** `data/forbidden_distances/uniform/ie/`: `ie_k15.json`, `ie_k16.json`, `ie_k17.json`
+  and `ie_B.json`, with bounds 0.0713614, 0.0657685, 0.0623330. `check_ie.py` (exact arithmetic in `ℚ(√3, √11)`, Arb enclosures of
+  `J₀`) and `check_ie_indep.py` (written separately, without seeing our code: its own integer interval arithmetic,
+  power series and Hankel expansion for `J₀`, its own transcription of the 23 points) accept all four and reject
+  corrupted ones. The congruence relations come from `congruences.py` (11 226 classes of independent sets, 2 302
+  relations, which imply every congruence relation between independent sets).
+- **Floating-point values** of the program of Proposition 21 (`L_B = 17.764`): 0.065758 = 1/15.21 at `D = 7·10⁷` and 0.062324 = 1/16.05 at `D = 8·10⁸`; with one uniform penalty (`L_B = 29.87`) 1/14.72 at `10⁸`, 1/15.87 at `10⁹`, 1/16.23 at `10¹⁰` and 1/16.38 at `10¹²`.
+
 ## Formal verification of the transfer
 
 Theorem A in the form used by Theorem C — a proper `k`-colouring avoiding a set `D` of positive real algebraic
@@ -310,3 +354,9 @@ Three programs check every certificate ([`data/forbidden_distances/`](../data/fo
   below the exact threshold 0.267894) instead of the floating-point 0.262476, Keleti et al.'s 0.26305 is marked
   numerical, Corollary 4 points to Theorem 5 for `{1, 40}`, `{1, 100}`, `{1, 1000}`, the figure caption no longer
   calls 13.27 a limit of the program, and the single-`d` window includes "from about 5.55 on".
+- **v8 (10–11 October, night).** Propositions 19 and 21 and Lemma 20: the inclusion–exclusion program of Ambrus et
+  al. at the scale of 1, and the hit set at the scale of `d`; 15, 16 and 17 colours from `d = 5·10⁵`, `7·10⁷` and
+  `8·10⁸` on; `data/forbidden_distances/uniform/ie/` with four certificates and two checkers. The seventh referee
+  found no mathematical error; applied: index range checks in `check_ie.py` (a crafted certificate exploited their
+  absence), the novelty and Bukh wording, `H ≥ 0`, the floating-point labels, the limit remark (now proved), the
+  hypotheses and the notation.

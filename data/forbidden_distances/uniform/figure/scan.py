@@ -3,7 +3,9 @@
   cliques, for d in [1.01, 6.6] (step 0.005 on [1.6, 2.2], 0.02 elsewhere; envelope row at T = 200);
 - tailscan.tsv: 1/value of the program of Lemma 18 (one function for all d >= D) with unit triangles and Moser
   spindles, for D on a logarithmic grid of [5, 2*10^5] (step 10^0.1) and at 10^6 and 10^7.
-Then lpcurve.dat and tailcurve.dat (up to 2*10^5), the two curves drawn in uniform_fig.tex. Columns: d (or D), 1/value.
+Then lpcurve.dat and tailcurve.dat (up to 2*10^5), two of the curves drawn in uniform_fig.tex. Columns: d (or D), 1/value.
+iecurve.dat and hitcurve.dat hold 1/value of the programs of Propositions 19 and 21 at a few D, copied from runs of
+../ie/ie_lp.py (python3 ie_lp.py D d0 [--hit=certificates/ie_B.json]; 5 to 25 minutes and about 1 GB each).
 usage: python3 scan.py [low] [tail]   (both by default; about an hour each)"""
 import os, sys
 import numpy as np
