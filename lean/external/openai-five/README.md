@@ -72,6 +72,15 @@ cp lean/external/openai-five/PlaneSixOrSeven.lean math/lean/
 (cd math/lean && LEAN_PATH=/tmp/oai-build:../../lean/.lake/build/lib/lean:$LP "$LEAN" PlaneSixOrSeven.lean)
 ```
 
+## Forbidden distances
+
+[`distances/`](distances/README.md) proves OpenAI's transfer for every set `D` of positive real algebraic forbidden
+distances: a proper colouring of the plane avoiding `D` gives a measurable colouring that avoids `D` almost
+everywhere, and pairwise disjoint measurable sets avoiding `D` exactly whose union is conull. These are four new files
+on top of OpenAI's library (their proof with the distance `1` replaced by `D`), with a build script and the axioms
+printed (only `propext`, `Classical.choice`, `Quot.sound`); `leanchecker` replays the 37 modules of the closure. The
+mathematics is Theorem A of [`papers/forbidden-distances/`](../../../papers/forbidden-distances/README.md).
+
 ## Smaller fields
 
 [`fields/`](fields/README.md) runs the same proof over three smaller fields: the constructible numbers (ruler and

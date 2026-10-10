@@ -11,6 +11,67 @@ including every retracted claim, is the research log,
 
 ## [Unreleased]
 
+### Added
+- **Uniform bounds for two distances (10 October, version 6 of the forbidden-distances paper).** Every earlier
+  bound above 6 for a pair `{1, d}` was for an isolated `d`. Theorem 5: for every real algebraic `d`,
+  `χ(ℝ², {1, d}) ≥ 7` for `d ≥ 6.52`, and the bound rises to 8, 9, 10, 11, 12 and 13 from `d = 12.05`, `24.3`,
+  `52.9`, `140.2`, `601` and `54 300`; also 7 colours for `1.75 ≤ d ≤ 1.93` and 8 for `1.83 ≤ d ≤ 1.855`; the same for
+  `1/d`, and for measurable colourings for every real `d`. From `d = 12.3` on, each half-line is one certificate (Lemma 18:
+  `J₀(x) ≥ −min(0.4028, √(2/(πy)))` for `x ≥ y`, so one function serves all `d ≥ D`); three files of interval
+  certificates cover the bounded ranges. `tail.py`/`uniform.py` (Arb, Taylor enclosures) and `check_uniform.py`
+  (separate code, Lipschitz enclosures, boxes in `t` and `d`) accept all ten certificates and reject corrupted ones.
+  The thresholds are close to the program's own (from about 6.503, 12.03, 23.87, 52.85, 139.9, 599.2 in floating
+  point), and its value tends to `1/12.13…` as `d → ∞`, so it gives at most 13 colours for two distances (proved for
+  `d ≥ 20`). New: `data/forbidden_distances/uniform/`, Figure 1 of the paper (`uniform-bounds.pdf`, `.png`), 16 tests in
+  `tests/test_forbidden_distances.py`. Refereed by a fifth internal referee with a checker of its own (no mathematical
+  error; the measurable clause argued, the limit in the remark proved, an overclaim in the abstract corrected).
+- **Worker R (10 October): no explicit finite `{1, d}`-graph needing 7 colours.** The fractional route through Moser-type
+  rank-4 lattices does not reach independence ratio `1/6` at a certifiable size; the best checked ratio is 0.2451
+  (1489 vertices). Recorded in the research log.
+- **Two scales: two forbidden distances can force 25 colours (10 October, version 5 of the forbidden-distances
+  paper).** Using OpenAI's theorem a second time, as a statement about finite graphs, at the scale of `D₁` and
+  densities at the scale of `N·D₂`: for all large algebraic `N`, `χ(ℝ², D₁ ∪ N·D₂)` is at least the `c`-fold chromatic
+  number of the plane with distances `D₂`, `c = χ(ℝ², D₁)` (the lower half of a geometric Geller–Stahl formula). So
+  `χ(ℝ², {1, N}) ≥ 25` for all large `N`, although `χ_f(ℝ², {1, N}) < 19.01` for every `N`; three and four distances
+  force 102 and 413 colours, and `L₂(r) > 1.48·4.0486^r`. With explicit inputs the proof is effective: de Grey's
+  1581-vertex graph and the Moser spindle give `χ(ℝ², {1, N}) ≥ 18` for every algebraic `N ≥ 10^25`. Refereed by a
+  fourth internal referee (no mathematical error; attribution and wording fixes applied, among them the first 6-colour
+  pair, `{1, (1+√5)/2}`, now credited to Owings, Tetiva and Huddleston).
+- **OpenAI's transfer for any set of algebraic distances, in Lean (10 October).** `lean/external/openai-five/distances/`:
+  four new files on top of OpenAI's library prove Theorem A of the forbidden-distances paper (a proper colouring
+  avoiding a set `D` of positive real algebraic distances gives a measurable colouring avoiding `D` almost everywhere,
+  and pairwise disjoint measurable sets avoiding `D` with conull union). Standard axioms only; built from source and
+  replayed by `leanchecker` (37 modules).
+- **New certified bounds (10 October).** `χ(ℝ², {1, 1000}) ≥ 12`, the best certified pair (three checkers), and
+  `χ(ℝ², {1, 30, 900, 27000}) ≥ 48` (`certify_lp2.py`, 25.5 million steps, and `check3.py`); both rebuilt byte for
+  byte and in the tests. The slow tests no longer time out on the long certificates.
+- **Measurable density bounds hold for all colourings of the plane (10 October).** OpenAI's transfer from proper to
+  weak measurable colourings works for every set of algebraic forbidden distances and for fractional colourings, so
+  `χ(ℝ², D) ≥ 1/m_D(ℝ²)`, and for finite `D` the fractional chromatic number is exactly `1/m_D(ℝ²)`. Consequences:
+  `χ_f(ℝ²) = 1/m₁(ℝ²) ∈ (4.0485, 4.36)`; the least independence ratio of an `n`-point unit-distance graph tends to
+  `m₁(ℝ²)` (half of a conjecture of Dúcz and Varga); `χ(ℝ², {1, 2}) ≥ 7`, `χ(ℝ², {1, √3}) ≥ 7`, and 8, 9, 10 colours
+  for `{1, 11/6}`, `{1, 40}`, `{1, 100}`; `k` integer distances can force more than `4.0485^k` colours in the plane
+  and in space, against Erdős's expected polynomial growth (Erdős Problem #706). Dúcz and Varga had already shown
+  `χ_f(ℝ²) > 4.0007` (June 2026), and Davies the exponential growth in dimension at least 4 (8 October 2026); both
+  are credited. New: `papers/forbidden-distances/` (7 pages), `notes/forbidden_distances.md`,
+  `data/forbidden_distances/` (eight linear-programming certificates and three checkers, one of them adapted from a
+  referee's), `tests/test_forbidden_distances.py` (fast part in CI). Version 4 of the paper applies a third internal
+  referee (no mathematical error): Croft's constant is `0.2293647…`, so the bound `m₁ ≥ 0.229365` used before was
+  rounded up and is now `0.229364`; `f(n) ≥ m₁n` is credited as classical; the title now says "with algebraic
+  forbidden distances". It also adds certified bounds for three and four distances: `{1, 40, 1600}`,
+  `{1, 10, 100, 1000}` and `{1, 100, 10⁴}` need 22, 26 and 27 colours. The checkers now exit non-zero when a check
+  fails or the bound is too weak, and tests check that broken certificates are rejected.
+- **Where OpenAI's rigidity theorem fails (10 October).** The remark on the Pythagorean closure extends to every
+  subfield `F` of ℝ with a field embedding into ℝ other than the inclusion: the analogue of OpenAI's Theorem 2.3 is
+  false over `F(i)`, for instance for the totally real algebraic numbers and for every number field inside ℝ with two
+  or more real places. `notes/six_over_fields.md` gives the proof, the referee's two caveats and an open question
+  (is the plane over the totally real numbers 5-colourable?).
+- **The six-colour search, 9–10 October (research log).** Route 1's measure stays at 39 pairs from 6 177 to 13 177
+  points (closed, with the bounds `4 ≤ m ≤ 39`); sticky pairs, cyclotomic graphs, the topological bound and
+  near-unit grids closed as well; the 7 660-point W-growth step is 5-colourable; no pair at distance between 1/2
+  and 2 is forced in the route-1 seed (8 534 133 pairs); a literature check on two forbidden distances. The full test
+  suite passed on a fresh clone (1 222 tests).
+
 ## [1.2.0] - 2026-10-09
 
 ### Added

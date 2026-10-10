@@ -278,6 +278,8 @@ distance 1. For `TheoremW.lean` and `Recurrence.lean`: Mathlib's `AddCircle`,
 `external/openai-five/` records our check of OpenAI's formal proof that χ(ℝ²) ≥ 6 (September 2026): the sources,
 the build, a restatement of the theorem and its axioms. Its subdirectory `fields/` runs the same proof over three
 smaller fields: the constructible numbers (ruler and compass), the origami numbers and the numbers expressible by
-radicals. It holds the patches, the statements, a build script and the axioms printed. Its file
-`PlaneSixOrSeven.lean` derives 6 ≤ χ(ℝ²) in the formulation of `PlaneSeven.lean` from OpenAI's theorem, so that
+radicals. It holds the patches, the statements, a build script and the axioms printed. Its subdirectory `distances/`
+proves OpenAI's transfer for every set of positive algebraic forbidden distances (Theorem A of
+`papers/forbidden-distances/`): four new files on top of OpenAI's library, a build script and the axioms printed. Its
+file `PlaneSixOrSeven.lean` derives 6 ≤ χ(ℝ²) in the formulation of `PlaneSeven.lean` from OpenAI's theorem, so that
 χ(ℝ²) is 6 or 7 there. None of this is part of the build of this directory.
