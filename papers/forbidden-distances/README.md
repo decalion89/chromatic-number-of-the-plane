@@ -1,6 +1,6 @@
 # Measurable density bounds hold for all colourings of the plane with algebraic forbidden distances
 
-[`forbidden-distances.pdf`](forbidden-distances.pdf) is an eight-page note (version 4). OpenAI's proof that χ(ℝ²) ≥ 6
+[`forbidden-distances.pdf`](forbidden-distances.pdf) is a twelve-page note (version 5). OpenAI's proof that χ(ℝ²) ≥ 6
 ([*The Euclidean plane is not five-colorable*](https://github.com/openai/math/blob/main/preprints/The-Euclidean-plane-is-not-five-colorable-September-23-2026/paper.pdf),
 September 2026) first transfers an arbitrary proper colouring of the plane to a weak measurable one. The note
 observes that this transfer works, with the same proof, for every set `D` of algebraic forbidden distances and for
@@ -14,21 +14,34 @@ Known and new upper bounds for `m_D(ℝ²)` then give:
   disproof, and it answers their question whether the two fractional chromatic numbers agree.
 - **The least independence ratio of an `n`-point unit-distance graph tends to `m₁(ℝ²)`**: the first half of
   Conjecture 1 of Dúcz and Varga (that it is at least `m₁(ℝ²)` is classical).
-- **Two forbidden distances can force ten colours**: `χ(ℝ², {1, 2}) ≥ 7`, `χ(ℝ², {1, √3}) ≥ 7`,
-  `χ(ℝ², {1, (√6+√2)/2}) ≥ 7`, `χ(ℝ², {1, 11/6}) ≥ 8`, `χ(ℝ², {1, 40}) ≥ 9` and `χ(ℝ², {1, 100}) ≥ 10`. The best
-  bound known before for a pair was 6. Measurable versions of some of these were known (Oliveira Filho and
-  Vallentin, 2010); the bounds for `{1, 2}` and `{1, √3}` use clique inequalities and seem new even there.
-- **Three or four forbidden distances can force more than twenty colours**: `χ(ℝ², {1, 40, 1600}) ≥ 22`,
-  `χ(ℝ², {1, 10, 100, 1000}) ≥ 26` and `χ(ℝ², {1, 100, 10⁴}) ≥ 27`, from certified linear programs.
-- **`k` forbidden distances can force more than `4.0485^k` colours**, in the plane and in space. So Erdős's
-  `L₂(r)` (Erdős Problem #706) grows exponentially, `4.0485^r < L₂(r) ≤ 7^r`, whereas Erdős expected polynomial
-  growth. Davies proved the analogue in dimension at least 4 two days earlier by a different method
-  (arXiv:2610.12301, 8 October 2026).
+- **Two forbidden distances can force twelve colours, with certified bounds**: `χ(ℝ², {1, 2}) ≥ 7`,
+  `χ(ℝ², {1, √3}) ≥ 7`, `χ(ℝ², {1, (√6+√2)/2}) ≥ 7`, `χ(ℝ², {1, 11/6}) ≥ 8`, `χ(ℝ², {1, 40}) ≥ 9`,
+  `χ(ℝ², {1, 100}) ≥ 10` and `χ(ℝ², {1, 1000}) ≥ 12`. The best bound known before for a pair was 6. Measurable
+  versions of some of these were known (Oliveira Filho and Vallentin, 2010); the bounds for `{1, 2}` and `{1, √3}`
+  use clique inequalities and seem new even there.
+- **Three or four forbidden distances can force 48 colours**: `χ(ℝ², {1, 40, 1600}) ≥ 22`,
+  `χ(ℝ², {1, 10, 100, 1000}) ≥ 26`, `χ(ℝ², {1, 100, 10⁴}) ≥ 27` and `χ(ℝ², {1, 30, 900, 27000}) ≥ 48`, from
+  certified linear programs.
+- **`k` forbidden distances can force more than `4.0485^k` colours**, in the plane and in every higher dimension. So
+  Erdős's `L₂(r)` (Erdős Problem #706) grows exponentially, whereas Erdős expected polynomial growth. Davies proved
+  the analogue in dimension at least 4 two days earlier by a different method (arXiv:2610.12301, 8 October 2026).
+- **Two scales (version 5).** Using OpenAI's theorem a second time, as a statement about finite graphs, at the scale
+  of `D₁`, and densities at the scale of `N·D₂`: for all large algebraic `N`, `χ(ℝ², D₁ ∪ N·D₂)` is at least the
+  `c`-fold chromatic number of the plane with distances `D₂`, where `c = χ(ℝ², D₁)` — the lower half of a geometric
+  version of Geller and Stahl's formula `χ(G[H]) = χ_{χ(H)}(G)` for lexicographic products. Hence
+  **`χ(ℝ², {1, N}) ≥ 25` for every large algebraic `N`, although `χ_f(ℝ², {1, N}) < 19.01` for every `N`**: two
+  distances can force about 1.3 times the fractional chromatic number. Iterating, three and four distances force 102
+  and 413 colours, and `L₂(r) > 1.48·4.0486^r`. With explicit graphs the proof is effective: de Grey's graph and the
+  Moser spindle give `χ(ℝ², {1, N}) ≥ 18` for every algebraic `N ≥ 10^25` (and 20 for `N ≥ 10^34` with the graph of
+  Bellitto, Pêcher and Sédillot).
 
-All the lower bounds rest on OpenAI's rigidity theorem (their Theorem 2.3), which OpenAI formalized in Lean. No
-finite graph is given: as in OpenAI's proof, the graphs exist by compactness.
+All the lower bounds rest on OpenAI's rigidity theorem (their Theorem 2.3), which OpenAI formalized in Lean. The
+transfer of Theorem A (for proper colourings, not the fractional version) is formalized in Lean on top of their
+library: [`lean/external/openai-five/distances/`](../../lean/external/openai-five/distances/README.md), standard
+axioms only, replayed by `leanchecker`. No finite graph is given: as in OpenAI's proof, the graphs exist by
+compactness.
 
-Three AI-assisted referees read the note.
+Four AI-assisted referees read the note.
 - The first read the transfer theorems: correct, with minor errors and gaps, all fixed. Among them were a false
   numerical inequality in the headline (`4.0486 < 1/0.2470`), a clash with the notation of Matolcsi et al. (which
   led to proving the equality for the fractional chromatic number of the whole plane as well), the equality of
@@ -41,6 +54,12 @@ Three AI-assisted referees read the note.
   rounded up (`m₁ ≥ 0.229364`, not `0.229365`), that `f(n) ≥ m₁n` is classical and was not credited, and that the
   title said more than the theorem (now "with algebraic forbidden distances"); these and its minor findings are
   applied in version 4.
+- The fourth read version 5 (the two-scale theorem, its strong form, the explicit pairs, the Lean paragraph and the
+  48-colour certificate), with numerical checks and a certificate checker of its own: no mathematical error, nothing
+  in the literature that already contains the theorem or any bound above 6 for a pair. It asked for wording and
+  attribution fixes, all applied: the Lean paragraph names the declarations and says what is not formalized; the
+  first 6-colour pair, `{1, (1+√5)/2}`, is credited to Owings, Tetiva and Huddleston; Geller–Stahl is cited; and
+  the headline 25 is noted to need only a finite unit-distance graph with fractional chromatic number above 4.
 
 No mathematician has checked the note yet.
 
@@ -54,6 +73,8 @@ pdflatex forbidden-distances.tex && pdflatex forbidden-distances.tex
 The files behind it:
 - [`notes/forbidden_distances.md`](../../notes/forbidden_distances.md), the record: statements, what is new, what
   each referee found;
-- [`data/forbidden_distances/`](../../data/forbidden_distances/README.md): the eight certificates, the programs that
-  produce and check them (three independent checks), and `tests/test_forbidden_distances.py`;
-- the research log, entry of 10 October.
+- [`data/forbidden_distances/`](../../data/forbidden_distances/README.md): the thirteen certificates, the programs
+  that produce and check them (three independent checks), and `tests/test_forbidden_distances.py`;
+- [`lean/external/openai-five/distances/`](../../lean/external/openai-five/distances/README.md): the Lean proof of
+  the transfer;
+- the research log, entries of 10 October.

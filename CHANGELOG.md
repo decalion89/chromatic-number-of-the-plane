@@ -12,6 +12,23 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- **Two scales: two forbidden distances can force 25 colours (10 October, version 5 of the forbidden-distances
+  paper).** Using OpenAI's theorem a second time, as a statement about finite graphs, at the scale of `D₁` and
+  densities at the scale of `N·D₂`: for all large algebraic `N`, `χ(ℝ², D₁ ∪ N·D₂)` is at least the `c`-fold chromatic
+  number of the plane with distances `D₂`, `c = χ(ℝ², D₁)` (the lower half of a geometric Geller–Stahl formula). So
+  `χ(ℝ², {1, N}) ≥ 25` for all large `N`, although `χ_f(ℝ², {1, N}) < 19.01` for every `N`; three and four distances
+  force 102 and 413 colours, and `L₂(r) > 1.48·4.0486^r`. With explicit inputs the proof is effective: de Grey's
+  1581-vertex graph and the Moser spindle give `χ(ℝ², {1, N}) ≥ 18` for every algebraic `N ≥ 10^25`. Refereed by a
+  fourth internal referee (no mathematical error; attribution and wording fixes applied, among them the first 6-colour
+  pair, `{1, (1+√5)/2}`, now credited to Owings, Tetiva and Huddleston).
+- **OpenAI's transfer for any set of algebraic distances, in Lean (10 October).** `lean/external/openai-five/distances/`:
+  four new files on top of OpenAI's library prove Theorem A of the forbidden-distances paper (a proper colouring
+  avoiding a set `D` of positive real algebraic distances gives a measurable colouring avoiding `D` almost everywhere,
+  and pairwise disjoint measurable sets avoiding `D` with conull union). Standard axioms only; built from source and
+  replayed by `leanchecker` (37 modules).
+- **New certified bounds (10 October).** `χ(ℝ², {1, 1000}) ≥ 12`, the best certified pair (three checkers), and
+  `χ(ℝ², {1, 30, 900, 27000}) ≥ 48` (`certify_lp2.py`, 25.5 million steps, and `check3.py`); both rebuilt byte for
+  byte and in the tests. The slow tests no longer time out on the long certificates.
 - **Measurable density bounds hold for all colourings of the plane (10 October).** OpenAI's transfer from proper to
   weak measurable colourings works for every set of algebraic forbidden distances and for fractional colourings, so
   `χ(ℝ², D) ≥ 1/m_D(ℝ²)`, and for finite `D` the fractional chromatic number is exactly `1/m_D(ℝ²)`. Consequences:

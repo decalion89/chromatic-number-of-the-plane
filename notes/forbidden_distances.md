@@ -1,13 +1,17 @@
 # Measurable density bounds hold for all colourings of the plane with algebraic forbidden distances
 
 **Status (10 October 2026).** Proved on paper, using OpenAI's rigidity theorem (their Theorem 2.3, formalized in Lean
-by OpenAI); the density bounds are computer proofs checked by several programs.
+by OpenAI); the transfer of Theorem A is formalized in Lean on top of their library
+([`lean/external/openai-five/distances/`](../lean/external/openai-five/distances/README.md)); the density bounds are
+computer proofs checked by several programs.
 
-- **Referees.** Three AI-assisted referees inside the project. The first read the transfer theorems (correct, minor
+- **Referees.** Four AI-assisted referees inside the project. The first read the transfer theorems (correct, minor
   gaps, fixed). The second read the corollaries and the certificates with two checkers of its own (no mathematical
   error, every certificate valid; the priority claims were wrong and are corrected). The third read version 3 with a
   checker of its own (no mathematical error; Croft's constant was rounded up, one inequality was classical and
-  uncredited, the title said more than the theorem; all fixed in version 4).
+  uncredited, the title said more than the theorem; all fixed in version 4). The fourth read the two-scale theorem
+  of version 5, its strong form, the explicit pairs, the Lean paragraph and the 48-colour certificate (no
+  mathematical error, no prior occurrence in the literature; wording and attribution fixes, applied).
 - **No human referee yet.**
 
 The paper is [`papers/forbidden-distances/`](../papers/forbidden-distances/README.md); this note is the record
@@ -52,15 +56,64 @@ proofs.
 
 **Two distances** (certified bounds of the next section, then Theorem A):
 `χ(ℝ², {1, 2}) ≥ 7`, `χ(ℝ², {1, √3}) ≥ 7`, `χ(ℝ², {1, (√6+√2)/2}) ≥ 7`, `χ(ℝ², {1, 10}) ≥ 7`,
-`χ(ℝ², {1, 11/6}) ≥ 8`, `χ(ℝ², {1, 46/25}) ≥ 8`, `χ(ℝ², {1, 40}) ≥ 9`, `χ(ℝ², {1, 100}) ≥ 10`; and
-`χ(ℝ², {1, d}) ≥ 17` for every large enough algebraic `d` (Bukh's theorem: `m_{1,d} → m₁² < 1/16`; the threshold
-is not computed). Products of hexagonal colourings give `χ(ℝ², {1, d}) ≤ 49`.
+`χ(ℝ², {1, 11/6}) ≥ 8`, `χ(ℝ², {1, 46/25}) ≥ 8`, `χ(ℝ², {1, 40}) ≥ 9`, `χ(ℝ², {1, 100}) ≥ 10`,
+`χ(ℝ², {1, 1000}) ≥ 12`; and `χ(ℝ², {1, d}) ≥ 17` for every large enough algebraic `d` (Bukh's theorem:
+`m_{1,d} → m₁² < 1/16`), improved to 25 by the two-scale theorem below. Products of hexagonal colourings give
+`χ(ℝ², {1, d}) ≤ 49`.
 
 **Many distances.** For every `k` there are `k` positive integers `D = {1, t, …, t^{k−1}}` with
 `χ(ℝ³, D) ≥ χ(ℝ², D) ≥ m₁(ℝ²)^{−k} > 4.0485^k` (Bukh's theorem: `m_D → m₁^k` as `t → ∞`), and
 `sup{χ_f(ℝ², D) : D ⊆ F, |D| = k} = m₁(ℝ²)^{−k}` (Bukh also proves `m_D ≥ m₁^k` for every `k` distances). With the
-product colouring, Erdős's `L₂(r)` satisfies `4.0485^r < L₂(r) ≤ 7^r`. Explicitly, from certified linear programs:
-`χ(ℝ², {1, 40, 1600}) ≥ 22`, `χ(ℝ², {1, 10, 100, 1000}) ≥ 26` and `χ(ℝ², {1, 100, 10⁴}) ≥ 27`.
+product colouring, Erdős's `L₂(r)` satisfies `4.0485^r < L₂(r) ≤ 7^r` (and `L₂(r) > 1.48·4.0486^r` by the two-scale
+theorem). Explicitly, from certified linear programs: `χ(ℝ², {1, 40, 1600}) ≥ 22`,
+`χ(ℝ², {1, 10, 100, 1000}) ≥ 26`, `χ(ℝ², {1, 100, 10⁴}) ≥ 27` and `χ(ℝ², {1, 30, 900, 27000}) ≥ 48`. All of these hold
+in every dimension `d ≥ 2`, by restriction to a plane.
+
+## Two scales (version 5)
+
+The density bounds can never exceed the fractional chromatic number, and for two distances
+`χ_f(ℝ², {1, N}) = 1/m_{1,N} ≤ m₁^{−2} < 19.01` for every `N` (Bukh: `m_{1,N} ≥ m₁²`). Using OpenAI's theorem a
+second time, as a statement about finite graphs, gives more.
+
+- **Theorem C (two scales).** Let `D₁`, `D₂` be finite sets of positive real algebraic numbers, `c ≤ χ(ℝ², D₁)` and
+  `W` a finite graph drawn in the plane with edge lengths in `D₂`. For all large algebraic `N`,
+  `χ(ℝ², D₁ ∪ N·D₂) ≥ χ_c(W) ≥ c·χ_f(W)`, where `χ_c` is the `c`-fold chromatic number (Stahl's `c`-th chromatic
+  number). Hence `χ(ℝ², D₁ ∪ N·D₂) ≥ χ_c(ℝ², D₂) ≥ c/m_{D₂}(ℝ²)` for all large `N`, with `c = χ(ℝ², D₁)`: the lower
+  half of a geometric version of Geller and Stahl's formula `χ(G[H]) = χ_{χ(H)}(G)` for lexicographic products
+  (J. Combin. Theory Ser. B 19 (1975)). Whether the upper half holds is open.
+- **Corollary.** `χ(ℝ², {1, N}) ≥ 25` for every large algebraic `N` (`c = 6` by OpenAI, and a finite unit-distance
+  graph `W` with `χ_f(W) > 4`; Dúcz and Varga's graph suffices), while `χ_f(ℝ², {1, N}) < 19.01`. Iterating with
+  `χ_f(W) > 4.0486` (Theorem B and Ambrus et al.): integers `1 < d₂ < d₃ < d₄` with `χ ≥ 25, 102, 413` for
+  `{1, d₂}`, `{1, d₂, d₃}`, `{1, d₂, d₃, d₄}`, and `r` integer distances with `χ ≥ 6·4.0486^{r−1}`, so
+  `L₂(r) > 1.48·4.0486^r`. The bound `6/m₁` lies between 24.29 and 26.16 (it would be 26.16 if `m₁` is Croft's
+  value, as Dúcz and Varga conjecture, giving 27).
+- **Explicit pairs.** With de Grey's 1581-vertex graph (`c = 5`; all vertices within 2.2641 of one of them) and the
+  Moser spindle (`χ₅ ≥ 18`), the proof gives `χ(ℝ², {1, N}) ≥ 18` for every algebraic `N ≥ 10^25` (threshold
+  `6.75·10²⁴`); with the 607-vertex graph of Bellitto, Pêcher and Sédillot (`χ_f ≥ 1999983/512933`, so `χ₅ ≥ 20`)
+  and the trivial edge bound, `χ(ℝ², {1, N}) ≥ 20` for `N ≥ 10^34`. These avoid `χ(ℝ²) ≥ 6` but still rest on
+  Theorem A. The best certified LP bound for a pair is 12.
+
+**Proof idea.** By Theorem A, a `k`-colouring gives measurable sets `A₁, …, A_k` avoiding `D₁ ∪ N·D₂` with conull
+union. A finite graph `G` with edge lengths in `D₁` and `χ(G) ≥ c` (de Bruijn–Erdős) fits in a disc of radius `R₀`;
+averaging over its translates shows that in every disc of radius `R = 2R₀` at least `c` sets `A_i` have density at
+least `1/(4|V(G)|k)`. Let `S_i` be the set of centres where `A_i` has that density: every point lies in at least `c`
+of them. Since `A_i` avoids `N·d`, its `R`-averaged density has pair density at distance `N·d` at most
+`√(R/(πNd))` (Plancherel, with `|J₀(y)| ≤ √(2/(πy))` and `1 − (2J₁(s)/s)² ≤ min(1, s²/4)`; the true supremum of the
+factor is 0.775). Placing `N·W` at random, the sets `{i : φ(w) ∈ S_i}` would be a `c`-fold colouring of `W` with
+`k < χ_c(W)` colours unless some edge of `W` has both ends in some `S_i`, which happens with probability at most
+`k|E(W)|ε⁻²√(R/(πN))`, below 1 for large `N`. For `c = 6`, `N₀` is not explicit, because OpenAI's proof gives no
+finite graph.
+
+## Formal verification of the transfer
+
+Theorem A in the form used by Theorem C — a proper `k`-colouring avoiding a set `D` of positive real algebraic
+distances gives a measurable `k`-colouring whose classes weakly avoid `D`
+(`OAI.Ext.proper_to_borel_weak_distances`), and `k` pairwise disjoint measurable sets avoiding `D` with conull union
+(`OAI.Ext.proper_to_measurable_classes`) — is proved in Lean 4 on top of OpenAI's formalization
+([`lean/external/openai-five/distances/`](../lean/external/openai-five/distances/README.md)): four new files (774
+lines), only the standard axioms, built from source twice (37 modules) and replayed by `leanchecker`. Not
+formalized: the converse of Theorem A, `χ ≥ 1/m_D`, Theorem B, the lemmas of the two-scale theorem and the density
+bounds.
 
 ## What is new and what is not
 
@@ -92,6 +145,11 @@ Checked against the literature up to 10 October 2026 by the second referee and b
   (so 8 colours) and, with Bukh's theorem, pairs needing 14 measurable colours (17 with the bound of Ambrus et al.).
   New: the bounds hold for arbitrary colourings, the distances are rational or algebraic, the certificates are
   rigorous, and the clique-strengthened bounds for `{1, 2}` and `{1, √3}` seem new even for measurable colourings.
+- **Two scales.** The fourth referee searched for two-scale or lexicographic bounds of the form
+  `χ(ℝⁿ, D₁ ∪ tD₂) ≥ χ(ℝⁿ, D₁)·(something)` and for any bound above 6 for a pair, for arbitrary or measurable
+  colourings (Bukh 2008, Davies 2024 and 2026, Davies–McCarty–Pilipczuk, Naslund, Kula–Omar–Stockwell–Xie,
+  Chybowska-Sokół et al., Parts, Exoo–Ismailescu, De Neve et al., Grytczuk et al., Bellitto et al.) and found none;
+  Bukh's Theorem 1 is the measurable density version `m(t₁D₁ ∪ t₂D₂) → m(D₁)m(D₂)`.
 - **Limits.** No finite graph is given. Dúcz and Varga's graph can in principle be made explicit but is
   astronomically large; an explicit `{1, 2}`-graph with no proper 6-colouring remains to be found. The distances
   must be algebraic: that is a limitation of the method, and probably of the statement, since Bukh conjectured that
@@ -116,9 +174,11 @@ with all pairwise distances in `D`: the sets `{x ∈ A : x + w − p ∈ A}`, `w
 | `{1, 46/25}` | none | 0.139185 < 1/7 | 175 | `χ ≥ 8` |
 | `{1, 40}` | none | 0.115511 < 1/8 | 36 | `χ ≥ 9` |
 | `{1, 100}` | none | 0.103302 < 1/9 | 37 | `χ ≥ 10` |
+| `{1, 1000}` | none | 0.089085 < 1/11 | 37 | `χ ≥ 12` |
 | `{1, 40, 1600}` | none | 0.046389 < 1/21 | 36 | `χ ≥ 22` |
 | `{1, 10, 100, 1000}` | none | 0.039641 < 1/25 | 37 | `χ ≥ 26` |
 | `{1, 100, 10⁴}` | none | 0.037168 < 1/26 | 37 | `χ ≥ 27` |
+| `{1, 30, 900, 27000}` | none | 0.021264 < 1/47 | 36 | `χ ≥ 48` |
 
 Three programs check every certificate ([`data/forbidden_distances/`](../data/forbidden_distances/README.md)):
 - `certify_lp2.py` (Arb balls; distances and radii enclosed from their exact expressions; on `[0, T]` point values
@@ -156,3 +216,17 @@ Three programs check every certificate ([`data/forbidden_distances/`](../data/fo
   scripts that relied on `assert` and exited 0 when the bound failed (fixed: explicit checks, non-zero exit, and tests
   that broken certificates are rejected).
 - **v4 (10 October, afternoon).** The third referee's findings, and certified bounds for three and four distances.
+- **v5 (10 October, afternoon).** The two-scale theorem (first with fractional weights, then in the `c`-fold form),
+  the explicit pairs, the Lean proof of the transfer, `{1, 1000}` at 12 and `{1, 30, 900, 27000}` at 48.
+- **Fourth referee** (version 5, with numerical checks of every inequality of the smoothing lemma, a certificate
+  checker of a different design, an exact recomputation of de Grey's graph and a literature search): no mathematical
+  error; the true supremum in the smoothing lemma is 0.775, not 1, so the lemma has slack; nothing in the literature
+  states a two-scale bound or any bound above 6 for a pair. Applied: the first 6-colour pair `{1, (1+√5)/2}` is now
+  credited to Owings, Tetiva and Huddleston (Amer. Math. Monthly 2008; as reported by Chybowska-Sokół et al. and De
+  Neve et al.), and Parts is described without saying which pair his small graph is for; the Lean paragraph names the
+  declarations, versions and commit and lists what is not formalized; Geller–Stahl is cited; the window lemma no
+  longer assumes disjoint sets; the threshold `6.76·10²⁴` is `6.75·10²⁴`; the Bellitto–Pêcher–Sédillot bound is
+  cited as their weighting (their §4.4 heading has the inequality reversed); the headline 25 is noted to need only a
+  finite unit-distance graph with `χ_f > 4` (Dúcz–Varga's), so it does not depend on Theorem B or on Ambrus et al.;
+  Corollaries 5 and 8 are stated in every dimension. For `{1, (1+√5)/2}` our program with pentagon and triangle
+  cliques gives only 0.1769 > 1/6.

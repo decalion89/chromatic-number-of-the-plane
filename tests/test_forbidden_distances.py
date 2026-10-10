@@ -21,10 +21,10 @@ DIR = os.path.join(HERE, '..', 'data', 'forbidden_distances')
 # name -> k, the claim being bound < 1/k, hence chi(R^2, D) >= k + 1
 CERTS = {
     'cl_s3': 6, 's_vs': 6, 's_10': 6, 's_116': 7, 's_4625': 7, 's_40': 8,   # two distances
-    'cl_2': 6, 's_100': 9,
-    'm3_40': 21, 'm3_100': 26, 'm4_10': 25,                                # three and four distances
+    'cl_2': 6, 's_100': 9, 's_1000': 11,
+    'm3_40': 21, 'm3_100': 26, 'm4_10': 25, 'm4_30': 47,                   # three and four distances
 }
-SLOW = {'cl_2', 's_100', 'm3_40', 'm3_100', 'm4_10'}                       # check2.py takes minutes or more
+SLOW = {'cl_2', 's_100', 's_1000', 'm3_40', 'm3_100', 'm4_10', 'm4_30'}    # check2.py takes minutes or more
 
 
 def run(script, *args, timeout=1800):
@@ -90,7 +90,7 @@ def test_checkers_fail_when_the_bound_is_too_weak():
 def test_slow_certificate_checks(name):
     k = CERTS[name]
     assert exact_bound(name) < Fraction(1, k)
-    r = run('check2.py', os.path.join('certificates', name + '.cert.json'), str(k))
+    r = run('check2.py', os.path.join('certificates', name + '.cert.json'), str(k), timeout=None)  # hours for m4_30
     assert r.returncode == 0, r.stdout + r.stderr
     assert f'B < 1/{k}: True' in r.stdout
 
@@ -108,6 +108,6 @@ def test_certify_reproduces_a_certificate(tmp_path):
 @pytest.mark.parametrize('name', sorted(CERTS))
 def test_certify_reproduces_every_certificate(tmp_path, name):
     out = tmp_path / (name + '.cert.json')
-    r = run('certify_lp2.py', os.path.join('lp', name + '.json'), str(CERTS[name]), str(out))
+    r = run('certify_lp2.py', os.path.join('lp', name + '.json'), str(CERTS[name]), str(out), timeout=None)
     assert r.returncode == 0, r.stdout + r.stderr
     assert out.read_text() == open(os.path.join(DIR, 'certificates', name + '.cert.json')).read()

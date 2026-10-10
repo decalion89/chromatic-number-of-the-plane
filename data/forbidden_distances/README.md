@@ -16,9 +16,11 @@ upper bound `B` on `m_D(ℝ²)`, the largest density of a measurable planar set 
 | `s_4625.cert.json` | `{1, 46/25}` | none | 0.139185 < 1/7 | 175 | `χ ≥ 8` |
 | `s_40.cert.json` | `{1, 40}` | none | 0.115511 < 1/8 | 36 | `χ ≥ 9` |
 | `s_100.cert.json` | `{1, 100}` | none | 0.103302 < 1/9 | 37 | `χ ≥ 10` |
+| `s_1000.cert.json` | `{1, 1000}` | none | 0.089085 < 1/11 | 37 | `χ ≥ 12` |
 | `m3_40.cert.json` | `{1, 40, 1600}` | none | 0.046389 < 1/21 | 36 | `χ ≥ 22` |
 | `m4_10.cert.json` | `{1, 10, 100, 1000}` | none | 0.039641 < 1/25 | 37 | `χ ≥ 26` |
 | `m3_100.cert.json` | `{1, 100, 10⁴}` | none | 0.037168 < 1/26 | 37 | `χ ≥ 27` |
+| `m4_30.cert.json` | `{1, 30, 900, 27000}` | none | 0.021264 < 1/47 | 36 | `χ ≥ 48` |
 
 The bounds are rounded up; the exact values are fractions, printed by the programs.
 
@@ -45,8 +47,9 @@ The claim is that `g(t) = z0 + Σ_k z_k J₀(d_k t) + Σ_c y_c Σ_{w ∈ W_c} J�
   each enclosure is nonnegative, and checks the tail. It is adapted from the checker of the second referee.
 
 `python3 check3.py certificates/cl_2.cert.json 6` takes about ten seconds; the other certificates take one second
-or less. `certify_lp2.py` reproduces every stored certificate byte for byte; for the three- and four-distance ones
-its sweep takes from one to eight minutes (up to six million steps), and `check2.py` takes hours.
+or less. `certify_lp2.py` reproduces every stored certificate byte for byte; for `s_1000` and the three- and
+four-distance ones its sweep takes from twenty seconds to forty minutes (up to 26 million steps for `m4_30`), and
+`check2.py`, whose Lipschitz bound is global, takes minutes for `s_1000` and hours for the others.
 
 Every program exits with a non-zero code when a check fails, including when the bound is not below `1/k`; the
 checks do not use `assert`, so they also run under `python3 -O`.

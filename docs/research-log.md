@@ -11196,3 +11196,39 @@ measurable set avoiding `D`; for finite `D` the fractional chromatic number of t
   certifier's step no longer goes through a denominator bound of `10⁸`, so it can take the tiny steps these need; the
   eight earlier certificates are rebuilt byte for byte. Adding triangle cliques at every scale moved the floating-point
   value for `{1, 10, 100}` only from 0.0769 to 0.0743, so we did not pursue it.
+
+### Two scales, the transfer in Lean, and two more certificates (10 October, afternoon)
+
+- **The transfer in Lean.** A Lean agent generalised OpenAI's formal transfer to a set `D` of positive real algebraic
+  distances: four new files on top of their library (`lean/external/openai-five/distances/`), standard axioms only,
+  built from source with only Mathlib on the path (twice, the second time with the build script on a fresh copy of
+  OpenAI's sources) and replayed by `leanchecker` (37 modules). The statement used later — pairwise disjoint
+  measurable sets avoiding `D` with conull union — is proved there.
+- **Two scales.** The density bounds can never exceed the fractional chromatic number, and for two distances
+  `χ_f(ℝ², {1, N}) ≤ m₁^{−2} < 19.01` for every `N`. Using OpenAI's theorem a second time, as a statement about finite
+  graphs, at the small scale, and densities at the large one: in every disc of a fixed radius at least six colour
+  classes have density bounded below (a finite non-5-colourable unit-distance graph fits in the disc), and at the
+  scale `N` these classes behave like a 6-fold colouring of the plane. The smoothing step is a Plancherel estimate:
+  the `R`-averaged density of a set avoiding `N` has pair density at distance `N` at most `√(R/(πN))`. Result:
+  `χ(ℝ², D₁ ∪ N·D₂) ≥ χ_c(ℝ², D₂)` for large algebraic `N`, `c = χ(ℝ², D₁)` (the lower half of a geometric
+  Geller–Stahl formula), hence `χ(ℝ², {1, N}) ≥ 25` for all large `N`, and 102 and 413 for three and four distances;
+  `L₂(r) > 1.48·4.0486^r`. The first draft used fractional weights; the `c`-fold form came an hour later, with a
+  simpler proof, and both were refereed. With explicit inputs the proof is effective: de Grey's 1581-vertex graph
+  (radius 2.27 about one vertex) and the Moser spindle give `χ(ℝ², {1, N}) ≥ 18` for every algebraic `N ≥ 10^25`;
+  the 607-vertex graph of Bellitto, Pêcher and Sédillot (`χ_f ≥ 3.8991`) gives 20 for `N ≥ 10^34`.
+- **Fourth referee** (version 5): Theorem C correct as stated, and so are its strong form, the explicit pairs, the Lean
+  paragraph and the 48-colour certificate (checked with a checker of a different design: point evaluations plus a
+  rigorous bound on `g″`, 108 726 intervals; the true minimum of `g` is `9.89·10⁻⁵`). The smoothing inequality holds
+  with room: its true supremum is 0.775, not 1. A literature search found no two-scale bound and no bound above 6 for
+  any pair before this paper. **Corrected attribution:** the first pair known to need 6 colours is the golden-ratio pair
+  `{1, (1+√5)/2}` (Owings, Tetiva and Huddleston, Amer. Math. Monthly 2008, as reported by Chybowska-Sokół et al. and
+  De Neve et al.); our introduction had omitted it and described Parts's small graph as a `{1, 2}`-graph. Other fixes:
+  the Lean paragraph now names the declarations and says what is not formalized; Geller–Stahl cited; `6.75·10²⁴`, not
+  `6.76`; the Bellitto–Pêcher–Sédillot bound cited as their weighting (their §4.4 heading has the inequality
+  reversed). Our program gives only 0.1769 for the golden-ratio pair, so no 7 there.
+- **Certificates.** `χ(ℝ², {1, 30, 900, 27000}) ≥ 48` (`certify_lp2.py`, 25.5 million steps, and `check3.py`; rebuilt
+  byte for byte) and `χ(ℝ², {1, 1000}) ≥ 12` (all three checkers), the best certified pair. `{1, 10000}` gives 12 too
+  (0.084601). **Not added:** five distances `{1, 10, …, 10⁴}`: the float program gives 0.020324, below `1/49`, but the
+  certified bound is 0.0204217, so only `χ ≥ 49`; and `{1, 20, 400, 8000}` (0.026055, `χ ≥ 39`), dominated by the 48.
+- **Session restart** at 12:37 UTC: background jobs started from the session stopped (certifications, the build-script
+  test, the referee); the detached solvers survived. Everything was restarted and finished.
