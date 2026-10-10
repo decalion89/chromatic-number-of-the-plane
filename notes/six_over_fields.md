@@ -203,6 +203,34 @@ A Euclidean subfield of ℝ has no embedding into ℝ other than the inclusion, 
 gives nothing. The remark does not decide whether the plane over `P` is 5-colourable. It is a remark in
 [`papers/ruler-compass/`](../papers/ruler-compass/README.md), refereed once (correct).
 
+**The same holds whenever `F` has a second embedding into ℝ.** The proof above uses only a field embedding
+`σ: F → ℝ` other than the inclusion, for a subfield `F` of ℝ and `E = F(i)`:
+- `σ` extends to `E` with `σ(i) = i` (as `E ≅ F[x]/(x² + 1)`), commutes with complex conjugation, and `|σ(u)| = 1` for
+  `u ∈ K`, since `|σ(u)|² = σ(u·ū) = 1`;
+- if `σ(α) ≠ α` for some `α ∈ F`, then `x ↦ (x, σ(x))` maps `ℚ + ℚα` onto a dense subset of ℝ² (the restriction to ℚ²
+  of an invertible linear map), so `z = x + iy ↦ (z, σ(z))` with `x, y ∈ ℚ + ℚα` has dense image in ℂ², and steps 2–4
+  go through unchanged.
+
+So the analogue of OpenAI's Theorem 2.3 is false over `F(i)` for every such `F`: for example the field `T` of totally
+real algebraic numbers (a normal extension of ℚ, so every embedding of `T` into ℂ lands in ℝ; it contains `P`), and
+every number field inside ℝ with two or more real places. The Euclidean fields `ℚ̄ ∩ ℝ` and `F_c` have no such `σ`.
+Two caveats (from the referee):
+- Having no such `σ` is not what makes the theorem true. A `p`-adic version of the construction makes the analogue
+  fail over `F(i)` for every number field `F`, `ℚ(i)` included (for `ℚ(i)` and `p = 3`: the image of Haar measure on
+  `ℤ₃[i]` under `ξ ↦ ψ(Tr(ξ ·))`). The theorem needs the whole field `ℚ̄` or `E_c`.
+- The failure of the theorem over a field says nothing about colourings there. By the finite form above, some
+  `L = ℚ(√a₁, …, √aₙ) ⊂ F_c` has a plane `L²` that is not 5-colourable, and flipping the sign of `√aₙ` is a second real
+  embedding of `L`, so the construction applies to `L(i)` as well.
+
+*A question for the search.* Every graph in this repository, and the Moser spindle, has its coordinates in `T`: the
+multiquadratic fields here have positive generators, and the vertices of the 852-vertex graph lie in `ℚ(ζ₂₁)`, whose
+points have real and imaginary parts in the totally real field `ℚ(ζ₈₄)⁺`. Every target distance of the current
+searches is totally real too (`d² = (9 ∓ √33)/6`, `(14 ∓ 2√33)/3`, `4/3`, `7/3`, `13/3`). Is the plane over `T`
+5-colourable? This is open, and nothing above is evidence either way. If it were, every finite 6-chromatic
+unit-distance graph would need a coordinate outside `T`, for instance `√((√33 − 1)/6)`, a constructible number whose
+conjugate `√((−√33 − 1)/6)` is not real (so `F_c ⊄ T`; also `T ⊄ F_c`, since `2cos(2π/7)` is in `T` but not
+constructible).
+
 ## Every Euclidean field
 
 A *Euclidean field* is an ordered field in which every positive element is a square. For a field `F`, call two points

@@ -11,6 +11,18 @@ including every retracted claim, is the research log,
 
 ## [Unreleased]
 
+### Added
+- **Where OpenAI's rigidity theorem fails (10 October).** The remark on the Pythagorean closure extends to every
+  subfield `F` of ℝ with a field embedding into ℝ other than the inclusion: the analogue of OpenAI's Theorem 2.3 is
+  false over `F(i)`, for instance for the totally real algebraic numbers and for every number field inside ℝ with two
+  or more real places. `notes/six_over_fields.md` gives the proof, the referee's two caveats and an open question
+  (is the plane over the totally real numbers 5-colourable?).
+- **The six-colour search, 9–10 October (research log).** Route 1's measure stays at 39 pairs from 6 177 to 13 177
+  points (closed, with the bounds `4 ≤ m ≤ 39`); sticky pairs, cyclotomic graphs, the topological bound and
+  near-unit grids closed as well; the 7 660-point W-growth step is 5-colourable; no pair at distance between 1/2
+  and 2 is forced in the route-1 seed (8 534 133 pairs); a literature check on two forbidden distances. The full test
+  suite passed on a fresh clone (1 222 tests).
+
 ## [1.2.0] - 2026-10-09
 
 ### Added
