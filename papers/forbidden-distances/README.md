@@ -1,6 +1,6 @@
 # Measurable density bounds hold for all colourings of the plane with algebraic forbidden distances
 
-[`forbidden-distances.pdf`](forbidden-distances.pdf) is a twelve-page note (version 5). OpenAI's proof that χ(ℝ²) ≥ 6
+[`forbidden-distances.pdf`](forbidden-distances.pdf) is a fourteen-page note (version 6). OpenAI's proof that χ(ℝ²) ≥ 6
 ([*The Euclidean plane is not five-colorable*](https://github.com/openai/math/blob/main/preprints/The-Euclidean-plane-is-not-five-colorable-September-23-2026/paper.pdf),
 September 2026) first transfers an arbitrary proper colouring of the plane to a weak measurable one. The note
 observes that this transfer works, with the same proof, for every set `D` of algebraic forbidden distances and for
@@ -34,6 +34,16 @@ Known and new upper bounds for `m_D(ℝ²)` then give:
   and 413 colours, and `L₂(r) > 1.48·4.0486^r`. With explicit graphs the proof is effective: de Grey's graph and the
   Moser spindle give `χ(ℝ², {1, N}) ≥ 18` for every algebraic `N ≥ 10^25` (and 20 for `N ≥ 10^34` with the graph of
   Bellitto, Pêcher and Sédillot).
+- **Uniform bounds for two distances (version 6).** One certificate can serve a whole range of `d`: for every real
+  algebraic `d`, `χ(ℝ², {1, d}) ≥ 7` for `d ≥ 6.52`, and the bound rises to 8, 9, 10, 11, 12 and 13 from
+  `d = 12.05`, `24.3`, `52.9`, `140.2`, `601` and `54 300`; also 7 colours for `1.75 ≤ d ≤ 1.93` and 8 for
+  `1.83 ≤ d ≤ 1.855` (Theorem 5). The same holds for `1/d`, and for measurable colourings for every real `d`. For
+  `d ≥ 12.3` each step is one function `z₀ + z₁J₀(t) + z₂J₀(dt)` that works for every `d ≥ D` at once (Lemma 18:
+  `J₀(x) ≥ −min(0.4028, √(2/(πx₀)))` for `x ≥ x₀`). The thresholds are close to the best this linear program gives,
+  and its value tends to `1/12.13…`, the square of its one-distance value, so it gives at most 13 colours for two
+  distances.
+
+  ![Certified lower bounds for χ(ℝ², {1, d})](uniform-bounds.png)
 
 All the lower bounds rest on OpenAI's rigidity theorem (their Theorem 2.3), which OpenAI formalized in Lean. The
 transfer of Theorem A (for proper colourings, not the fractional version) is formalized in Lean on top of their
@@ -41,7 +51,7 @@ library: [`lean/external/openai-five/distances/`](../../lean/external/openai-fiv
 axioms only, replayed by `leanchecker`. No finite graph is given: as in OpenAI's proof, the graphs exist by
 compactness.
 
-Four AI-assisted referees read the note.
+Five AI-assisted referees read the note.
 - The first read the transfer theorems: correct, with minor errors and gaps, all fixed. Among them were a false
   numerical inequality in the headline (`4.0486 < 1/0.2470`), a clash with the notation of Matolcsi et al. (which
   led to proving the equality for the fractional chromatic number of the whole plane as well), the equality of
@@ -60,6 +70,12 @@ Four AI-assisted referees read the note.
   attribution fixes, all applied: the Lean paragraph names the declarations and says what is not formalized; the
   first 6-colour pair, `{1, (1+√5)/2}`, is credited to Owings, Tetiva and Huddleston; Geller–Stahl is cited; and
   the headline 25 is noted to need only a finite unit-distance graph with fractional chromatic number above 4.
+- The fifth read version 6 (Theorem 5, Lemma 18, the certificates, the programs and the figure), with a checker of
+  its own that shares no code or Bessel routine with ours (integer interval arithmetic, its own series for `J₀` and
+  `J₁`, Taylor models): no mathematical error, all ten certificates valid (the smallest margin is `2.5·10⁻⁷`, for 13
+  colours), and no earlier bound of 7 for a pair. It asked for the measurable statement to be argued, for one half of
+  the limit in the remark to be proved (its construction is in the paper), and for an overclaim in the abstract
+  ("each step by a single certificate", false for the step at 12.05) to be corrected; all applied.
 
 No mathematician has checked the note yet.
 
@@ -75,6 +91,8 @@ The files behind it:
   each referee found;
 - [`data/forbidden_distances/`](../../data/forbidden_distances/README.md): the thirteen certificates, the programs
   that produce and check them (three independent checks), and `tests/test_forbidden_distances.py`;
+- [`data/forbidden_distances/uniform/`](../../data/forbidden_distances/uniform/README.md): the ten certificates of
+  Theorem 5, the two programs that check them, and the sources of the figure;
 - [`lean/external/openai-five/distances/`](../../lean/external/openai-five/distances/README.md): the Lean proof of
   the transfer;
 - the research log, entries of 10 October.

@@ -12,6 +12,22 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- **Uniform bounds for two distances (10 October, version 6 of the forbidden-distances paper).** Every earlier
+  bound above 6 for a pair `{1, d}` was for an isolated `d`. Theorem 5: for every real algebraic `d`,
+  `χ(ℝ², {1, d}) ≥ 7` for `d ≥ 6.52`, and the bound rises to 8, 9, 10, 11, 12 and 13 from `d = 12.05`, `24.3`,
+  `52.9`, `140.2`, `601` and `54 300`; also 7 colours for `1.75 ≤ d ≤ 1.93` and 8 for `1.83 ≤ d ≤ 1.855`; the same for
+  `1/d`, and for measurable colourings for every real `d`. From `d = 12.3` on, each half-line is one certificate (Lemma 18:
+  `J₀(x) ≥ −min(0.4028, √(2/(πy)))` for `x ≥ y`, so one function serves all `d ≥ D`); three files of interval
+  certificates cover the bounded ranges. `tail.py`/`uniform.py` (Arb, Taylor enclosures) and `check_uniform.py`
+  (separate code, Lipschitz enclosures, boxes in `t` and `d`) accept all ten certificates and reject corrupted ones.
+  The thresholds are close to the program's own (from about 6.503, 12.03, 23.87, 52.85, 139.9, 599.2 in floating
+  point), and its value tends to `1/12.13…` as `d → ∞`, so it gives at most 13 colours for two distances (proved for
+  `d ≥ 20`). New: `data/forbidden_distances/uniform/`, Figure 1 of the paper (`uniform-bounds.pdf`, `.png`), 16 tests in
+  `tests/test_forbidden_distances.py`. Refereed by a fifth internal referee with a checker of its own (no mathematical
+  error; the measurable clause argued, the limit in the remark proved, an overclaim in the abstract corrected).
+- **Worker R (10 October): no explicit finite `{1, d}`-graph needing 7 colours.** The fractional route through Moser-type
+  rank-4 lattices does not reach independence ratio `1/6` at a certifiable size; the best checked ratio is 0.2451
+  (1489 vertices). Recorded in the research log.
 - **Two scales: two forbidden distances can force 25 colours (10 October, version 5 of the forbidden-distances
   paper).** Using OpenAI's theorem a second time, as a statement about finite graphs, at the scale of `D₁` and
   densities at the scale of `N·D₂`: for all large algebraic `N`, `χ(ℝ², D₁ ∪ N·D₂)` is at least the `c`-fold chromatic

@@ -5,13 +5,17 @@ by OpenAI); the transfer of Theorem A is formalized in Lean on top of their libr
 ([`lean/external/openai-five/distances/`](../lean/external/openai-five/distances/README.md)); the density bounds are
 computer proofs checked by several programs.
 
-- **Referees.** Four AI-assisted referees inside the project. The first read the transfer theorems (correct, minor
+- **Referees.** Five AI-assisted referees inside the project. The first read the transfer theorems (correct, minor
   gaps, fixed). The second read the corollaries and the certificates with two checkers of its own (no mathematical
   error, every certificate valid; the priority claims were wrong and are corrected). The third read version 3 with a
   checker of its own (no mathematical error; Croft's constant was rounded up, one inequality was classical and
   uncredited, the title said more than the theorem; all fixed in version 4). The fourth read the two-scale theorem
   of version 5, its strong form, the explicit pairs, the Lean paragraph and the 48-colour certificate (no
-  mathematical error, no prior occurrence in the literature; wording and attribution fixes, applied).
+  mathematical error, no prior occurrence in the literature; wording and attribution fixes, applied). The fifth read
+  the uniform bounds of version 6 (Theorem 5, Lemma 18, the certificates and both programs) with a checker of its
+  own sharing no code or Bessel routine with ours: no mathematical error, all ten certificates valid, no earlier bound
+  of 7 for a pair; the measurable statement and one half of the limit in the remark are now argued, and an overclaim
+  in the abstract is corrected.
 - **No human referee yet.**
 
 The paper is [`papers/forbidden-distances/`](../papers/forbidden-distances/README.md); this note is the record
@@ -37,7 +41,7 @@ distance in `D` (`m₁ = m_{{1}}`).
 - **Theorem B.** For every `D ⊆ F_{>0}`, the finitary fractional chromatic number (the supremum over finite graphs
   drawn with edge lengths in `D`) is at least `1/m_D(ℝ²)`.
 - **Theorem 1.** For finite `D ⊆ F_{>0}`: `χ(ℝ², D) ≥ χ_{f,0}(ℝ², D) = χ_f(ℝ², D) = 1/m_D(ℝ²)`. The upper bound
-  `χ_f ≤ 1/m_D` is elementary: translates of a periodic set of density close to `m_D` (Lemma 9 of the paper).
+  `χ_f ≤ 1/m_D` is elementary: translates of a periodic set of density close to `m_D` (Lemma 13 of the paper).
 
 Theorems A and B are [OAI, Section 4] with the unit circle replaced by the circles of radii `d ∈ D` (countably many,
 since `D ⊆ F`) and, for B, with one indicator function in place of the `k` colour classes; the paper gives the
@@ -104,6 +108,43 @@ factor is 0.775). Placing `N·W` at random, the sets `{i : φ(w) ∈ S_i}` would
 `k|E(W)|ε⁻²√(R/(πN))`, below 1 for large `N`. For `c = 6`, `N₀` is not explicit, because OpenAI's proof gives no
 finite graph.
 
+## Uniform bounds for two distances (version 6)
+
+**Theorem 5.** For every real algebraic `d ≥ 1`: `χ(ℝ², {1, d}) ≥ k` for `d ≥ d_k`, where `d_7 = 6.52`, `d_8 = 12.05`,
+`d_9 = 24.3`, `d_10 = 52.9`, `d_11 = 140.2`, `d_12 = 601`, `d_13 = 54 300`; moreover `χ ≥ 7` for `1.75 ≤ d ≤ 1.93`
+and `χ ≥ 8` for `1.83 ≤ d ≤ 1.855`. The same holds with `1/d` in place of `d` (scale the plane), and, for measurable
+colourings, for every real `d`.
+
+- **Why it is new.** For arbitrary colourings no pair was known to need 7 colours before this paper
+  (Chybowska-Sokół, Junosza-Szaniawski and Węsek record it as open), and our earlier bounds above 6 were for isolated
+  values of `d`; here a whole half-line of algebraic `d` needs 7 colours, and 13 from `54 300` on. For measurable
+  colourings, Oliveira Filho and Vallentin had 8 colours for one pair and Bukh's theorem gives 14 or more for all `d`
+  beyond an unspecified threshold, so there only the explicit thresholds and ranges are new.
+- **Lemma 18 (one certificate for all `d ≥ D`).** With `μ = 0.4028 ≥ −min J₀` and `e(y) = min(μ, √(2/(πy)))`,
+  `J₀(x) ≥ −e(y)` for every `x ≥ y > 0`. So if `z2 ≥ 0`, `s = z0 + z1 + z2 > 0` and
+  `h(t) = z0 + z1 J₀(t) − z2 e(Dt) ≥ 0` for `t > 0`, then `g_d(t) = z0 + z1 J₀(t) + z2 J₀(dt) ≥ h(t) ≥ 0` for every
+  `d ≥ D`, and `m_{1,d}(ℝ²) ≤ z0/s`. Checking `h ≥ 0` is a problem in one variable.
+- **Interval certificates.** For `[1.75, 1.93]` (k = 7, 19 intervals), `[1.83, 1.855]` (k = 8, 5 intervals) and
+  `[12.05, 12.3]` (k = 8, 11 intervals) one function per interval of `d`: on a box `[a, b] × [t0, t1]`,
+  `dt ∈ [a t0, b t1]`, and `J₀` on an interval is enclosed by Taylor at the midpoint (`|J₀''| ≤ 1`), by
+  `[−μ, 1]` and by the envelope.
+- **How close to the program's limit.** In floating point, for `d > 2`, the program gives `k = 7, …, 12` colours from
+  about `d = 6.503, 12.03, 23.87, 52.85, 139.9, 599.2` on, and 13 from somewhere between 50 000 and 54 300. As
+  `d → ∞` its value tends to `μ₀²/(1 + μ₀)² = 1/12.13…` (`μ₀ = −min J₀ = 0.40275…`), the square of its value
+  0.287119 for one distance: for `d ≥ 20` it is above `1/12.2` (two constraints of the program, at `t = j_{1,1}/d`
+  and near `t = j_{1,1}`), and the limit is attained by an explicit family of certificates (the fifth referee's), so
+  it never gives 14 colours for `d ≥ 20` (nor, in floating point, for any `d`). For `1 < d < 6.5` it gives 7 only for
+  `d` between about 1.747 and 1.934; on `(2, 6.5)` it is largest near `d = 2.59`, where it is `1/4.68`.
+- **Programs.** `tail.py` and `uniform.py` (Arb, Taylor enclosures; they produce and re-verify) and
+  `check_uniform.py` (separate code: point values and the Lipschitz bound `|J₁| ≤ 1/√2`, boxes in `t` and `d`, a
+  floating-point counterexample search confirmed in Arb). Both accept the ten certificates and reject eleven
+  corrupted ones (plus a slow twelfth: a dip of `−10⁻⁵` that the floating-point scan misses). `tail.py` rebuilds all
+  seven tail certificates byte for byte (the fifth referee checked this; the test checks `tail_k13.json`). The
+  referee's own checker (integer interval arithmetic, its own Bessel series) also verifies all ten; the smallest
+  margin is `min h ∈ [2.50, 2.79]·10⁻⁷` for 13 colours.
+- **Figure.** `papers/forbidden-distances/uniform-bounds.pdf` (and `.png`): the certified staircase, the
+  floating-point curve `1/LP(d)` and its limit.
+
 ## Formal verification of the transfer
 
 Theorem A in the form used by Theorem C — a proper `k`-colouring avoiding a set `D` of positive real algebraic
@@ -162,7 +203,7 @@ Each bound is a dual solution of the linear program of Oliveira Filho and Vallen
 Theorem 1.1): if `g(t) = z₀ + Σ_k z_k J₀(d_k t) + Σ_c y_c Σ_{w∈W_c} J₀(|w − p_c| t) ≥ 0` for all `t ≥ 0`, with
 `y_c ≥ 0`, then `m_D(ℝ²) ≤ (z₀ + Σ_c y_c)/(z₀ + Σ_k z_k + Σ_c y_c |W_c|)`. The clique terms come from point sets `W_c`
 with all pairwise distances in `D`: the sets `{x ∈ A : x + w − p ∈ A}`, `w ∈ W_c`, are disjoint subsets of `A`
-(Proposition 10 of the paper).
+(Proposition 17 of the paper).
 
 | `D` | clique sets | certified bound | `T` | gives |
 |---|---|---|---|---|
@@ -230,3 +271,10 @@ Three programs check every certificate ([`data/forbidden_distances/`](../data/fo
   finite unit-distance graph with `χ_f > 4` (Dúcz–Varga's), so it does not depend on Theorem B or on Ambrus et al.;
   Corollaries 5 and 8 are stated in every dimension. For `{1, (1+√5)/2}` our program with pentagon and triangle
   cliques gives only 0.1769 > 1/6.
+- **v6 (10 October, evening).** Theorem 5 (uniform bounds for two distances), Lemma 18 (one certificate for all
+  `d ≥ D`), the remark on the limit of the two-distance program, Figure 1, and the folder
+  `data/forbidden_distances/uniform/` with ten certificates and two programs. The fifth referee found no mathematical
+  error; applied: the measurable clause is argued, the remark states its hypotheses (`d ≥ 20`) and proves that the
+  limit is attained, "each step by a single certificate" is restricted to `d ≥ 12.3` (the step at 12.05 uses interval
+  certificates), the floating-point crossings are stated as "from about … on", the 13-colour crossing (between 50 000
+  and 54 300) is given, and the measurable novelty is limited to the explicit thresholds.

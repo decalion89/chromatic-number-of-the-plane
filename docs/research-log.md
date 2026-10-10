@@ -11232,3 +11232,41 @@ measurable set avoiding `D`; for finite `D` the fractional chromatic number of t
   certified bound is 0.0204217, so only `χ ≥ 49`; and `{1, 20, 400, 8000}` (0.026055, `χ ≥ 39`), dominated by the 48.
 - **Session restart** at 12:37 UTC: background jobs started from the session stopped (certifications, the build-script
   test, the referee); the detached solvers survived. Everything was restarted and finished.
+
+### Uniform bounds for two distances (10 October, evening)
+
+- **The question.** Every bound above 6 for a pair `{1, d}`, ours included, was for one value of `d`. Can one
+  certificate serve a whole range of `d`?
+- **Intervals.** On a box `[a, b] × [t₀, t₁]` the argument `dt` lies in `[a t₀, b t₁]`, so the enclosures of `J₀` used
+  for single certificates extend to intervals of `d`. A first run covered `[6.53, 21.5]` with 81 intervals for 7
+  colours, `[12.05, 57]` with 116 for 8, and similar ranges up to 12 colours, joined to two-region tail lemmas (all
+  `d ≥ 21.5, 57, 143, 400, 1420, 9500` and `3.4·10⁶` for 7 to 13 colours).
+- **One certificate per half-line (Lemma 18).** While testing the second checker, two "broken" certificates turned
+  out to be valid: the coefficients found for `d ∈ [7, 7.1]` work for every `d ≥ 7`. The reason is
+  `J₀(x) ≥ −min(0.4028, √(2/(πy)))` for all `x ≥ y`: with `y = Dt` this bounds `z₂J₀(dt)` below for every `d ≥ D` at
+  once, and leaves an inequality in one variable. Its thresholds, 6.52, 12.3, 24.3, 52.9, 140.2, 601 and 54 300 for 7
+  to 13 colours, are within a few percent of the program's own (6.503, 12.03, 23.87, 52.85, 139.9 and 599.2 in
+  floating point), so the interval certificates are kept only for `[1.75, 1.93]`, `[1.83, 1.855]` and
+  `[12.05, 12.3]`. The threshold for 13 fell from `3.4·10⁶` to 54 300.
+- **The limit.** As `d → ∞` the program's value tends to `μ₀²/(1 + μ₀)² = 1/12.13…` (`μ₀ = −min J₀`); two of its
+  constraints show it stays above `1/12.2` for `d ≥ 20`, so two distances give at most 13 colours this way.
+- **Second checker.** Its first version swept with a global Lipschitz bound and took tens of minutes to reject a
+  broken certificate (its steps shrink geometrically near a negative region); the published version looks for a
+  counterexample in floating point first, confirms it in Arb, and bisects boxes in `t` and `d`. It rejects a dip of
+  `−10⁻⁵` that the floating-point scan misses (the slow test).
+- **Explicit graph: negative (worker R).** No finite `{1, d}`-graph with independence ratio below `1/6` was found;
+  the best checked ratio is 0.2451 (1489 vertices, `ℚ(ζ₁₂)`). Rank-4 lattices are either killed by an exact gate (a
+  place, a map to `ℤ/N`, a circle colouring of density at least `1/6`) or have linear-programming value above 0.2;
+  the only lattice below `1/6` has covolume `1.6·10⁻⁷`, so a useful window would have about `10⁸` points.
+- **Incident.** A floating-point sanity check allocated 14 GB, and the out-of-memory killer stopped the
+  `drat-trim -L` run of the second certification of the `ℚ(√35)` witness after two hours (the first certification,
+  `drat-trim -l` and `check_witness.py`, had passed). Part (b) was restarted at 15:28 UTC.
+- **Fifth referee** (version 6), with its own checker (integer interval arithmetic, its own series for `J₀` and `J₁`,
+  Taylor models; no code or Bessel routine shared with ours): no mathematical error; all ten certificates verified,
+  the smallest margin `min h ∈ [2.50, 2.79]·10⁻⁷` (13 colours, `D = 54 300`); all seven tails rebuilt byte for byte;
+  no earlier bound of 7 for a pair (Chybowska-Sokół, Junosza-Szaniawski and Węsek record it as open). Applied: the
+  measurable clause is argued (and its novelty limited to the explicit thresholds: Oliveira Filho–Vallentin had 8 for
+  one pair, Bukh's theorem 14 or more beyond an unspecified threshold); the remark states `d ≥ 20` and proves, with the
+  referee's explicit certificates, that the limit `1/12.13…` is attained; "each step by a single certificate" is
+  restricted to `d ≥ 12.3`; crossings are "from about … on", and the 13-colour crossing lies between 50 000 and
+  54 300. Not applied: its optional strengthening of the remark to `d ≥ 1.33` (with `|J₀''| ≤ 1/2`).

@@ -1,5 +1,8 @@
 # Density certificates for planar sets avoiding given distances
 
+The folder [`uniform/`](uniform/README.md) holds the certificates of Theorem 5 of the paper, each valid for a whole range
+of `d`: `χ(ℝ², {1, d}) ≥ 7` for every algebraic `d ≥ 6.52`, up to `≥ 13` for every algebraic `d ≥ 54 300`.
+
 Each file in `certificates/` is a dual solution of the linear program of Oliveira Filho and Vallentin
 (J. Eur. Math. Soc. 2010, Theorem 1.1), with clique inequalities added for `{1, 2}` and `{1, √3}`. It proves an
 upper bound `B` on `m_D(ℝ²)`, the largest density of a measurable planar set with no two points at a distance in
@@ -32,7 +35,7 @@ The bounds are rounded up; the exact values are fractions, printed by the progra
 - `T`: the end of the sweep.
 
 The claim is that `g(t) = z0 + Σ_k z_k J₀(d_k t) + Σ_c y_c Σ_{w ∈ W_c} J₀(|w − p_c| t)` is nonnegative for all
-`t ≥ 0`. Then `m_D(ℝ²) ≤ B = (z0 + Σ_c y_c) / (z0 + Σ_k z_k + Σ_c y_c |W_c|)` (Proposition 10 of the paper).
+`t ≥ 0`. Then `m_D(ℝ²) ≤ B = (z0 + Σ_c y_c) / (z0 + Σ_k z_k + Σ_c y_c |W_c|)` (Proposition 17 of the paper).
 
 **Programs** (run them in this folder):
 - `lp_simple_json.py "1;40" lp/s_40.json`, `lp_multi.py "1;100;10000" lp/m3_100.json` (a cutting-plane version

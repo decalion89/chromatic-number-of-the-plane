@@ -4,6 +4,7 @@
 \usepackage{amssymb}
 \usepackage{microtype}
 \usepackage{booktabs}
+\usepackage{graphicx}
 \usepackage[hyphens]{url}
 \usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
 \usepackage[margin=2.5cm]{geometry}
@@ -37,10 +38,10 @@
 plane with algebraic forbidden distances}
 \author{Sergi Gal\'an}
 \thanks{These results were obtained with the assistance of an AI system (Claude, by Anthropic), which found the
-observation, wrote the programs, ran the checks and helped to draft this note. Four separate AI agents refereed
+observation, wrote the programs, ran the checks and helped to draft this note. Five separate AI agents refereed
 the note with their own programs. The hard input is OpenAI's transfer theorem \cite{OpenAI}. No mathematician has
 checked the note yet. The author is not a professional mathematician and submits it for independent verification.}
-\date{Draft, version 5, 10 October 2026}
+\date{Draft, version 6, 10 October 2026}
 \subjclass[2020]{Primary 05C15, 52C10; Secondary 05C72, 42B10, 90C05}
 \keywords{Hadwiger--Nelson problem, chromatic number of the plane, forbidden distances, fractional chromatic number,
 distance-avoiding sets, linear programming bounds}
@@ -60,7 +61,9 @@ points at distance $1$, so it lies between $4.0485$ and $4.36$; and the least in
 unit-distance graph tends to $m_1(\R^2)$, as conjectured by Dúcz and Varga. If the distances $1$ and $2$ are both
 forbidden, at least $7$ colours are needed, improving the bound $6$ of Exoo and Ismailescu; the same holds for
 $\{1,\sqrt3\}$, and at least $8$, $9$, $10$ and $12$ colours are needed for $\{1,11/6\}$, $\{1,40\}$, $\{1,100\}$
-and $\{1,1000\}$. The
+and $\{1,1000\}$. Uniformly in $d$, $\chi(\R^2,\{1,d\})\ge7$ for every real algebraic $d\ge6.52$, and the
+bound rises step by step to $13$ for every real algebraic $d\ge54\,300$; from $d=12.3$ on, each step is proved by a
+single certificate for a whole half-line of $d$. The
 distances $1$, $100$ and $10^4$ force $27$ colours, $1$, $10$, $100$ and $1000$ force $26$, and $1$, $30$, $900$ and
 $27000$ force $48$. For
 suitable sets of $k$ integer distances more than $4.0485^k$ colours are needed, in the plane and in every higher
@@ -166,6 +169,51 @@ $m_1(\R^2)$, they show $\inf_{d_1,d_2}m_{\{d_1,d_2\}}(\R^2)\le m_1(\R^2)^2\le0.0
 density is close to $m_1(\R^2)^2$ need $14$ colours for measurable colourings ($17$ with the bound of
 \cite{ACMVZ}). What is new here is that such bounds hold for arbitrary colourings; the bounds for $\{1,2\}$ and
 $\{1,\sqrt3\}$, which use clique inequalities, also seem to be new for measurable colourings.
+
+The same linear program gives bounds for whole ranges of $d$ at once.
+
+\begin{theorem}\label{thm:uniform}
+Let $d\ge1$ be a real algebraic number and $7\le k\le13$. Then $\chi(\R^2,\{1,d\})\ge k$ whenever $d\ge d_k$, where
+\[
+d_7=6.52,\quad d_8=12.05,\quad d_9=24.3,\quad d_{10}=52.9,\quad d_{11}=140.2,\quad d_{12}=601,\quad
+d_{13}=54\,300.
+\]
+Moreover $\chi(\R^2,\{1,d\})\ge7$ for $1.75\le d\le1.93$, and $\chi(\R^2,\{1,d\})\ge8$ for $1.83\le d\le1.855$. The
+same bounds hold for $\chi(\R^2,\{1,1/d\})=\chi(\R^2,\{1,d\})$, and, for measurable colourings, for every real
+$d$.
+\end{theorem}
+
+Theorem~\ref{thm:uniform} contains the finite bounds of Corollary~\ref{cor:two} except those for $2$, $\sqrt3$ and
+$(\sqrt6+\sqrt2)/2$; see Figure~\ref{fig:uniform}. Scaling the plane by $1/d$ turns $\{1,d\}$ into $\{1/d,1\}$,
+which gives the equality with $1/d$. For measurable colourings neither the transfer nor algebraicity is needed:
+Proposition~\ref{prop:lp} and Lemma~\ref{lem:tail} do not use them, and one class of a measurable proper $k$-colouring
+avoiding $\{1,d\}$ is a measurable set avoiding $\{1,d\}$ of upper density at least $1/k$. For measurable colourings
+bounds of this size were known for one pair \cite[§4]{OFV} and, by Bukh's theorem, for all $d$ beyond an unspecified
+threshold (see the discussion after Corollary~\ref{cor:two}); there the new content is the explicit thresholds and
+ranges. For each $k$ a single function serves every $d\ge D_k$ (Lemma~\ref{lem:tail} and Table~\ref{tab:uniform};
+$D_k=d_k$ except $D_8=12.3$), and the two bounded ranges and $[12.05,12.3]$ are covered by finitely many functions,
+each serving an interval of $d$ (Section~\ref{sec:uniform}). The thresholds are close to the best this linear program
+can give: in floating point its value is below $1/(k-1)$ from about $d=6.503$, $12.03$, $23.87$, $52.85$, $139.9$ and
+$599.2$ on, for $k=7,\dots,12$, and for $k=13$ from somewhere between $50\,000$ and $54\,300$. For $1<d<6.5$ it is
+below $1/6$ only for $d$ between about $1.747$ and $1.934$, and on $(2,6.5)$ it is largest near $d=2.59$, where it is
+$1/4.68$. As $d\to\infty$ its value tends to $\mu_0^2/(1+\mu_0)^2=1/12.13\ldots$, where $\mu_0=-\min J_0=0.40275\ldots$:
+the square of its value $\mu_0/(1+\mu_0)=0.287119$ for one distance \cite[§3.2]{OFV} (Remark after
+Lemma~\ref{lem:tail}). So for two distances it gives at most $13$ colours (for $d\ge20$ by that Remark, and in floating
+point for every $d$); Theorem~\ref{thm:C} gives more for very large $d$.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{uniform-bounds}
+\caption{Lower bounds for $\chi(\R^2,\{1,d\})$, $d\ge1$; the same hold for $1/d$. Thick blue: Theorem~\ref{thm:uniform},
+for every real algebraic $d$ in the range. Orange: the pairs $\{1,\sqrt3\}$, $\{1,2\}$ and $\{1,(\sqrt6+\sqrt2)/2\}$
+of Corollary~\ref{cor:two}, certified with clique inequalities or at a single $d$. Grey: $1/\mathrm{LP}(d)$, where
+$\mathrm{LP}(d)$ is the value of the linear program in floating point (not a proof); a certified bound below
+$1/(k-1)$ gives $k$ colours, so the blue steps are less than one colour above the grey curve, and at most slightly
+below it. Dashed: the limit
+$12.13\ldots$ of the grey curve. Dotted: $\chi(\R^2)\ge6$ \cite{OpenAI}, which holds for every $d$. Left: the
+shaded range $1.6\le d\le2.15$ on a linear scale.}
+\label{fig:uniform}
+\end{figure}
 
 \subsection*{Many distances}
 
@@ -692,6 +740,95 @@ $0.141577$ for $\{1,j_{1,2}/j_{1,1}\}$, where $j_{1,k}$ are zeros of $J_1$; that
 so Theorem~\ref{thm:A} does not apply to it directly, but nearby rationals such as $11/6$ and $46/25$ do. For the
 golden-ratio pair $\{1,(1+\sqrt5)/2\}$ of \cite{OTH}, the program with regular unit pentagons (whose sides and
 diagonals are $1$ and $(1+\sqrt5)/2$) and triangles as cliques gives only $0.1769$, above $1/6$.
+
+\section{Uniform certificates for two distances}\label{sec:uniform}
+
+For $d\ge1$ and real numbers $z_0,z_1,z_2$ put $g_d(t)=z_0+z_1J_0(t)+z_2J_0(dt)$ and $s=z_0+z_1+z_2$. By
+Proposition~\ref{prop:lp} without clique terms, if $s>0$ and $g_d\ge0$ on $[0,\infty)$, then
+$m_{\{1,d\}}(\R^2)\le z_0/s$. Besides $|J_0(x)|\le\sqrt{2/(\pi x)}$ for $x>0$ (Section~\ref{sec:lp}) we use
+$|J_0'|=|J_1|\le1/\sqrt2$ and $|J_0''|=|J_0-J_2|/2\le1$ on $\R$ \cite[10.14.1]{DLMF}, and $J_0\ge-\mu$ on
+$[0,\infty)$ with $\mu=0.4028$; the minimum of $J_0$ is $J_0(j_{1,1})=-0.402759\ldots$, and the programs check
+$J_0\ge-\mu$ in interval arithmetic on $[0,4]$, while beyond $4$ it follows from $\sqrt{2/(4\pi)}<0.399$.
+
+\begin{lemma}\label{lem:tail}
+Let $D>0$, $z_2\ge0$ and $s>0$, and put $e(y)=\min\{\mu,\sqrt{2/(\pi y)}\}$ for $y>0$. If
+\[
+h(t)=z_0+z_1J_0(t)-z_2\,e(Dt)\ \ge\ 0\qquad(t>0),
+\]
+then $g_d\ge0$ on $[0,\infty)$ for every $d\ge D$, so that $m_{\{1,d\}}(\R^2)\le z_0/s$ for every $d\ge D$.
+\end{lemma}
+
+\begin{proof}
+For $x\ge y>0$ we have $J_0(x)\ge-\mu$ and $J_0(x)\ge-\sqrt{2/(\pi x)}\ge-\sqrt{2/(\pi y)}$, so $J_0(x)\ge-e(y)$.
+For $d\ge D$ and $t>0$ apply this with $x=dt$ and $y=Dt$; since $z_2\ge0$, $g_d(t)\ge h(t)\ge0$. Finally
+$g_d(0)=s>0$.
+\end{proof}
+
+So one function serves every $d\ge D$, and checking it is a problem in one variable, in which nothing oscillates
+faster than $J_0(t)$. Table~\ref{tab:uniform} lists the seven certificates. Each is checked on $[0,10]$, and on
+$[10,\infty)$ by $h(t)\ge z_0-|z_1|\sqrt{2/(10\pi)}-z_2\sqrt{2/(10\pi D)}>0$.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrlr}
+\toprule
+$k$ & $D$ & certified bound $z_0/s$ for all $d\ge D$ & boxes\\
+\midrule
+$7$ & $6.52$ & $0.1666308<1/6$ & $297$\\
+$8$ & $12.3$ & $0.1428093<1/7$ & $169$\\
+$9$ & $24.3$ & $0.1249785<1/8$ & $161$\\
+$10$ & $52.9$ & $0.1111073<1/9$ & $237$\\
+$11$ & $140.2$ & $0.0999955<1/10$ & $139$\\
+$12$ & $601$ & $0.0909057<1/11$ & $97$\\
+$13$ & $54\,300$ & $0.0833328<1/12$ & $75$\\
+\bottomrule
+\end{tabular}
+\caption{The certificates of Lemma~\ref{lem:tail} (bounds rounded up; \texttt{tail\_k$k$.json}), each giving
+$\chi(\R^2,\{1,d\})\ge k$ for every real algebraic $d\ge D$. The last column is the number of boxes of
+\texttt{tail.py} on $[0,10]$.}
+\label{tab:uniform}
+\end{table}
+
+\begin{remark}
+These thresholds are near the limit of the method. Put $\mu_0=-\min J_0=0.40275\ldots$, let $d\ge20$, and normalise
+$s=1$. If $g_d\ge0$, its values at $t=j_{1,1}/d$ and at a point $t$ with $|t-j_{1,1}|\le\pi/(2d)$ and $J_0(dt)=0$
+(there is one, because $dj_{1,1}>j_{0,1}$ and consecutive zeros of $J_0$ are less than $\pi$ apart) give
+\[
+z_0+az_1-\mu_0z_2\ge0\qquad\text{and}\qquad z_0+bz_1\ge0,
+\]
+with $a=J_0(j_{1,1}/d)\in(0,1]$ and $|b+\mu_0|\le\eta=\pi^2/(8d^2)<\mu_0$, because $J_0'(j_{1,1})=0$ and
+$|J_0''|\le1$. If $z_1<0$ the first inequality gives $z_0>\mu_0/(1+\mu_0)$; otherwise the two give
+\[
+z_0\ \ge\ \frac{\mu_0(\mu_0-\eta)}{a+\mu_0+(1+\mu_0)(\mu_0-\eta)}\ >\ \frac1{12.2}.
+\]
+As $d\to\infty$ the right-hand side tends to $L=\mu_0^2/(1+\mu_0)^2=1/12.13\ldots$, and $L$ is the limit of the
+program: with $\mu_0$ in place of $\mu$ in Lemma~\ref{lem:tail}, the coefficients $z_1=\mu_0/(1+\mu_0)^2$,
+$z_2=1/(1+\mu_0)$ and $z_0=L+\delta$, where $\delta=z_2\sqrt{2/(\pi D)}+z_1(y_0/D)^2$ and $y_0=2/(\pi\mu_0^2)$, satisfy
+$h\ge0$ and give the bound $(L+\delta)/(1+\delta)$ for every $d\ge D$. Indeed $L=\mu_0z_1$ and $\mu_0z_2=(1+\mu_0)z_1$,
+so $h(t)=\delta+z_1(J_0(t)-1)$ for $Dt\le y_0$, $h(t)=\delta+z_1\bigl(\mu_0+J_0(t)-(1+\mu_0)\sqrt{y_0/(Dt)}\bigr)$
+for $Dt\ge y_0$, and $J_0(t)\ge1-t^2/4$ for $t\le2$ and $\mu_0+J_0\ge0$ give $h\ge0$ (separately for $Dt\le y_0$,
+for $y_0\le Dt\le2y_0$, for $2y_0\le Dt$ with $t\le1$, and for $t\ge1$). Hence for $d\ge20$ the program never gives
+more than $13$ colours, and in floating point it never does for any $d$.
+\end{remark}
+
+For a bounded range of $d$ we certify $g_d\ge0$ for all $d$ in an interval $[a,b]$ at once. On a box
+$[a,b]\times[t_0,t_1]$ the argument $dt$ lies in $[at_0,bt_1]$, and $J_0$ on an interval $[m-r,m+r]$ is enclosed by
+$J_0(m)\pm(|J_1(m)|r+r^2/2)$, by $[-\mu,1]$, and by $\pm\sqrt{2/(\pi x_0)}$ if the interval starts at $x_0>0$. The
+program bisects $[0,T]$ in $t$ until every box has a nonnegative lower bound for $g_d$, and on $[T,\infty)$ it uses
+$g_d(t)\ge z_0-|z_1|\sqrt{2/(\pi T)}-|z_2|\sqrt{2/(\pi aT)}>0$. Three files of such certificates cover
+$[1.75,1.93]$ with $k=7$ ($19$ intervals), $[1.83,1.855]$ with $k=8$ ($5$ intervals) and $[12.05,12.3]$ with $k=8$
+($11$ intervals), which completes the proof of Theorem~\ref{thm:uniform}.
+
+\texttt{tail.py} and \texttt{uniform.py} choose the coefficients by a floating-point linear program, round them to
+fractions, raise $z_0$ by a third of the slack, and prove $h\ge0$, respectively $g_d\ge0$ on each interval, with the
+enclosures above in Arb ball arithmetic; the same programs re-verify stored certificates, and \texttt{tail.py}
+reproduces its certificates byte for byte. \texttt{check\_uniform.py}, written separately, recomputes every target
+$1/(k-1)$ from $k$, checks that the intervals of a file are contiguous and cover its range, encloses $J_0$ by point
+values and the Lipschitz bound $1/\sqrt2$ instead of the Taylor bound, bisects boxes in both $t$ and $d$, sweeps $h$
+with steps chosen from its value, and checks $J_0\ge-\mu$ itself. Both accept all ten certificates, and both reject
+corrupted ones: a lowered $z_0$, a scaled $z_2$, a threshold $D$ moved below the certified one, a raised $k$, a gap
+between intervals, a reversed interval, an interval extended below its range, and a certificate whose $g_d$ has
+minimum $-10^{-5}$ at a point that a sampling scan misses.
 
 \section{Remarks}
 
