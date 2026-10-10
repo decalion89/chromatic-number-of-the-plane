@@ -11132,3 +11132,46 @@ No 6-chromatic graph. The items below are what the searches settled; every negat
   graphs of De Neve et al. (Monthly 2025; `d = √3`, 33 vertices, and `d = (√6 + √2)/2`, 117 vertices) were rechecked
   in exact arithmetic: not 5-colourable, 6-colourable. Small probes (triangular-lattice graphs with distances
   `{1, √n}`, `n ≤ 28`, and balls in `ℤ[ζ₅]` with `{1, φ}`) are all 6-colourable.
+
+## Measurable density bounds hold for all colourings: forbidden distances (10 October)
+
+While reading OpenAI's Section 4 for the six-colour search, we noticed that their transfer (Theorem 1.3: a proper
+`k`-colouring of the plane exists if and only if a weak measurable one does) never uses that the forbidden distance
+is 1, nor that a colouring has finitely many colours rather than being fractional. Run with the circles of radii
+`d ∈ D` for a countable set `D` of algebraic distances, and with one indicator function in place of the colour
+classes, it gives `χ(ℝ², D) ≥ 1/m_D(ℝ²)` and `χ_{f,0}(ℝ², D) ≥ 1/m_D(ℝ²)`, where `m_D` is the largest density of a
+measurable set avoiding `D`; for finite `D` the fractional chromatic number of the whole plane equals `1/m_D`
+(translates of a periodic set). The hard input stays OpenAI's rigidity theorem (their Theorem 2.3). Write-up:
+[`notes/forbidden_distances.md`](../notes/forbidden_distances.md) and
+[`papers/forbidden-distances/`](../papers/forbidden-distances/README.md).
+
+- **Consequences.** `χ_f(ℝ²) = 1/m₁(ℝ²) ∈ (4.0485, 4.36)`; `f(n)/n → m₁(ℝ²)` for the least independence number
+  `f(n)` of an `n`-point unit-distance graph; `χ(ℝ², {1, 2}) ≥ 7`, `χ(ℝ², {1, √3}) ≥ 7`, `{1, 11/6}` needs 8,
+  `{1, 40}` needs 9, `{1, 100}` needs 10; `k` integer distances can force more than `4.0485^k` colours, in the plane
+  and in space, against Erdős's expectation of polynomial growth (Erdős Problem #706). The density bounds are linear
+  programs of Oliveira Filho and Vallentin, with clique inequalities for `{1, 2}` and `{1, √3}`, certified by three
+  programs (`data/forbidden_distances/`), and theorems of Bukh and of Ambrus et al.
+- **A wrong number, caught.** A floating-point run of the clique program for `{1, 2}` first gave 0.15. Its function
+  `g` was nonnegative only on the sampled range of `t` (it had `z₀ < 0`, so it is negative at infinity) and used a
+  clique point almost at a vertex. We stopped its certification and discarded the run before anything was
+  claimed. With `z₀ ≥ 0` required and `t` sampled up to 400 the certified bound is 0.159222, still below 1/6.
+- **First referee** (the transfer theorems): correct with minor gaps. Among its findings: the headline inequality
+  `4.0486 < 1/0.2470` was false (`1/0.2470 = 4.04858…`); our `χ_f(ℝ²)` was Matolcsi et al.'s `χ_{f,0}(ℝ²)`, which led
+  to proving the equality for the whole plane too; the equality of densities over discs and over squares was missing.
+- **Second referee** (corollaries, certificates, literature): no mathematical error and every certificate valid,
+  checked with two programs of its own. **Withdrawn:** the claim that the draft refuted Conjecture 1 of Matolcsi,
+  Ruzsa, Varga and Zsámboki first. Dúcz and Varga had already disproved it (arXiv:2606.28157, 26 June 2026,
+  `χ_f(ℝ²) > 4.0007`), and Davies proved the analogues of the exponential-growth statement in dimension at least 4
+  on 8 October (arXiv:2610.12301), by a different method. The novelty is now stated relative to both;
+  the measurable precedents of Oliveira Filho and Vallentin are credited; Erdős's question is quoted from the
+  original (Combinatorica 1981). The referee also pointed out that `{1, 2}` was still listed at 6 in the note's table
+  although our own certificate gave 7, and that the tool gives `{1, 100}` at 10.
+- **Code.** The clique check of `certify_lp2.py` and `check2.py` went through numerical identification
+  (`nsimplify`); it is now exact (minimal polynomial; symbolic simplification), and the distances and radii are
+  enclosed in Arb from their exact expressions rather than from 50-digit decimals. The comment "`|J_α| ≤ 1/√2` for
+  `α > 0`" was false for small `α` (only `α = 1` is used; DLMF 10.14.1 gives it for `α ≥ 1`). A third checker,
+  `check3.py`, adapted from the referee's, encloses `g` over whole intervals with exact `ℚ(√3)` clique geometry. All
+  eight certificates pass all three programs, and `certify_lp2.py` rebuilds each byte for byte.
+- **Open.** An explicit finite graph for any of these bounds; the threshold `d₀` beyond which `{1, d}` needs 17;
+  a formal proof of the generalised transfer (OpenAI's Lean files would need the radius as a parameter). A third
+  reading of the final version is under way.

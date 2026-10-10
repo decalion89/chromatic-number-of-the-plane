@@ -12,6 +12,18 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- **Measurable density bounds hold for all colourings of the plane (10 October).** OpenAI's transfer from proper to
+  weak measurable colourings works for every set of algebraic forbidden distances and for fractional colourings, so
+  `χ(ℝ², D) ≥ 1/m_D(ℝ²)`, and for finite `D` the fractional chromatic number is exactly `1/m_D(ℝ²)`. Consequences:
+  `χ_f(ℝ²) = 1/m₁(ℝ²) ∈ (4.0485, 4.36)`; the least independence ratio of an `n`-point unit-distance graph tends to
+  `m₁(ℝ²)` (half of a conjecture of Dúcz and Varga); `χ(ℝ², {1, 2}) ≥ 7`, `χ(ℝ², {1, √3}) ≥ 7`, and 8, 9, 10 colours
+  for `{1, 11/6}`, `{1, 40}`, `{1, 100}`; `k` integer distances can force more than `4.0485^k` colours in the plane
+  and in space, against Erdős's expected polynomial growth (Erdős Problem #706). Dúcz and Varga had already shown
+  `χ_f(ℝ²) > 4.0007` (June 2026), and Davies the exponential growth in dimension at least 4 (8 October 2026); both
+  are credited. New: `papers/forbidden-distances/` (7 pages), `notes/forbidden_distances.md`,
+  `data/forbidden_distances/` (eight linear-programming certificates and three checkers, one of them adapted from a
+  referee's), `tests/test_forbidden_distances.py` (fast part in CI). Two internal referees; a third reading of the
+  final version is under way.
 - **Where OpenAI's rigidity theorem fails (10 October).** The remark on the Pythagorean closure extends to every
   subfield `F` of ℝ with a field embedding into ℝ other than the inclusion: the analogue of OpenAI's Theorem 2.3 is
   false over `F(i)`, for instance for the totally real algebraic numbers and for every number field inside ℝ with two

@@ -30,6 +30,13 @@ the points constructible with ruler and compass cannot be 5-coloured. We checked
 
 Soifer's book (2024) tells the history of the problem and of these bounds.
 
+OpenAI's first step, the transfer from arbitrary colourings to measurable ones, also works for every set of algebraic
+forbidden distances and for fractional colourings ([`papers/forbidden-distances/`](papers/forbidden-distances/README.md),
+10 October 2026). So the known bounds for measurable sets become bounds for all colourings: the fractional chromatic
+number of the plane is exactly 1/m₁(ℝ²), between 4.0485 and 4.36; two forbidden distances can force ten colours
+(χ(ℝ², {1, 2}) ≥ 7 and χ(ℝ², {1, 100}) ≥ 10, where 6 was the best bound known for a pair); and k forbidden distances
+can force more than 4.0485^k colours, whereas Erdős expected polynomial growth. No explicit graph is given.
+
 This repository studies the problem through exact arithmetic in number fields:
 - every point has algebraic coordinates, so "distance 1" is decided exactly;
 - claims that a graph cannot be coloured are decided by SAT solvers, and the main ones are certified by
@@ -283,6 +290,7 @@ None of these results has been refereed. Each has one or more of these statuses:
 | χ(ℚ(√−3, √−11)) = 4 and χ(ℚ(√−3, √−11, √−247)) = 5, for the whole complex fields | Known; new local proofs | The first follows from Fischer's theorem, the second from Madore's reduction at 11 and Exoo–Ismailescu's graph. Our proofs reduce at the primes 2 and 11 ([`notes/local_colourings.md`](notes/local_colourings.md) §3, [`notes/rigidity.md`](notes/rigidity.md)); the lower bound graph `five_247_c` has a DRAT proof (`certificates/five_247_c_no4coloring.json`). |
 | Necessary local conditions for a field to hold a 6-chromatic unit-distance graph | Proved | [`notes/local_colourings.md`](notes/local_colourings.md) §5–§9, `scripts/fieldscreen.py` |
 | **Six colours on the ruler-and-compass plane.** Every colouring of the points of the plane constructible with ruler and compass with five colours gives the same colour to two points at distance 1. So some finite unit-distance graph with constructible coordinates has no proper 5-colouring (also in Lean, by Mathlib's compactness theorem); we know of none. Since the real constructible numbers embed in every Euclidean field, the plane over every Euclidean field, Archimedean or not, is not 5-colourable either (on paper). This is OpenAI's proof that χ(ℝ²) ≥ 6, run over the constructible numbers. Square roots suffice: a lemma on elements of order 2 and a triple average taken at the exponents −1, 0, 1 replace the two uses of higher roots. The origami and radical planes were done first. | Formally verified, off CI (OpenAI's proof with the field changed); refereed twice inside the project, as a note and as a paper (no error in the proof); the Euclidean-field corollary and a remark that OpenAI's rigidity theorem fails over the Pythagorean closure of ℚ, once each (no error; one overclaim corrected) | [`notes/six_over_fields.md`](notes/six_over_fields.md), [the paper](papers/ruler-compass/ruler-compass.pdf); [`lean/external/openai-five/fields/`](lean/external/openai-five/fields/README.md): patches against openai/math, the statements, and `#print axioms` (only `propext`, `Classical.choice`, `Quot.sound`) |
+| **All colourings obey the measurable density bounds.** For every set D of algebraic distances, χ(ℝ², D) ≥ 1/m_D(ℝ²), where m_D(ℝ²) is the largest density of a measurable planar set with no two points at a distance in D; for finite D the fractional chromatic number is exactly 1/m_D(ℝ²). This is OpenAI's transfer, run with several distances and for fractional colourings. Consequences: χ_f(ℝ²) = 1/m₁(ℝ²), between 4.0485 and 4.36 (Dúcz and Varga had shown χ_f(ℝ²) > 4.0007 in June); the least independence ratio of an n-point unit-distance graph tends to m₁(ℝ²) (half of a conjecture of Dúcz and Varga); χ(ℝ², {1, 2}) ≥ 7, χ(ℝ², {1, √3}) ≥ 7, and {1, 11/6}, {1, 40}, {1, 100} need 8, 9 and 10 colours; k integer distances can force more than 4.0485^k colours in the plane and in space, so Erdős's L₂(r) (Erdős Problem #706) grows exponentially, against his expectation (Davies proved the analogue for dimension at least 4 on 8 October). No explicit graph. | Proved, using OpenAI's rigidity theorem (formalized in Lean by OpenAI); the density bounds are computer proofs (eight linear-programming certificates, each accepted by three programs); refereed twice inside the project (no mathematical error; the priority claims corrected) | [The paper](papers/forbidden-distances/forbidden-distances.pdf), [`notes/forbidden_distances.md`](notes/forbidden_distances.md), [`data/forbidden_distances/`](data/forbidden_distances/README.md), `tests/test_forbidden_distances.py` |
 | **Six colours for finite planes.** χ(G_q) ≥ 6 for every prime q ≥ 29 except 31, and χ(𝔽_q²) ≥ 6 for q = 37, 41, 43, 47, 59 and every prime q ≥ 67; χ(𝔽₄₁²) ∈ {6, 7}. Here 𝔽_q² is the plane x² + y² (Moorhouse's table stops at q = 17), and G_q the anisotropic plane, a local plane of number fields. | Computer proof; proved for large q | For 𝔽₃₇², 𝔽₄₁², 𝔽₄₃², 𝔽₄₇², G₂₉, G₃₇ and G₄₁, Schrijver's three-point bound gives α < q²/5, and each dual certificate is checked in interval and exact rational arithmetic, and again by an independent checker. The other cases follow from Proposition B and Hoffman's bound, with Weil's estimate or the exact spectrum. [`notes/local_colourings.md`](notes/local_colourings.md) §14, [`data/threepoint/`](data/threepoint/README.md), `scripts/threepoint_verify.py`, `scripts/threepoint_verify_indep.py` |
 | **α(G₁₃) = 36.** The anisotropic plane over 𝔽₁₃ has no 37 independent points, so its fractional chromatic number is 169/36. χ(G₁₃) = 6: see the next row. | Computer proof | [`notes/g13.md`](notes/g13.md): a case split, then four formulas and the 4 822 leaves of a cube tree, each refuted by kissat with a DRAT proof checked by drat-trim, and every proof and the cover checked again by cake_lpr, a checker verified in HOL4 (`certificates/g13_*`); an audit checks every clause of the formulas from their text alone (`scripts/g13/g13_audit.py`). `scripts/verify_g13.py`, `tests/test_g13.py` |
 | **χ(G₁₃) = 6.** The anisotropic plane over 𝔽₁₃ has no proper 5-colouring, although its fractional chromatic number is 169/36 < 5. | Computer proof | [`notes/g13_chi.md`](notes/g13_chi.md): a case split on the size of the largest colour class (34, 35 or 36 points, since α(G₁₃) = 36), one formula for each size with the symmetry broken, and cube and conquer: 136 548 leaves, each refuted by kissat with a DRAT proof checked by drat-trim (`certificates/g13_chi_*`). `scripts/verify_g13_chi.py`, `tests/test_g13_chi.py` |
@@ -409,6 +417,7 @@ sh scripts/worker_setup.sh                   # kissat and drat-trim, for the sea
 | α(G₁₃) = 36, without a solver: the 36-point sets, the audit of the formulas, the cover, and every formula against the logs; with `--kissat` and `--drat-trim` it refutes all 4 826 formulas again | `python3 scripts/verify_g13.py --no-solve` | seconds; about 2 hours on 4 cores with the solvers |
 | χ(G₁₃) = 6, without a solver: the 6-colouring, the case formulas written again by the code, every cube tree, and a drat-trim VERIFIED line for every leaf | `python3 scripts/verify_g13_chi.py` | A few minutes and 6.6 GB of disk |
 | the 852-vertex spindle-free graph: its exact edges, the 5-colouring and the stored formula; with `--kissat` and `--drat-trim` it writes the formula again, solves it and checks the proof | `python3 scripts/verify_flat852.py` | under a second; about an hour with the solvers |
+| the density certificates for two forbidden distances (χ(ℝ², {1, 2}) ≥ 7 up to χ(ℝ², {1, 100}) ≥ 10), with three checkers | `python3 -m pytest -q -m "not slow" tests/test_forbidden_distances.py` | under a minute |
 | de Grey's graph needs five colours | `python3 -m pytest -q tests/test_degrey.py` | up to four hours |
 
 `scripts/verify_pair.py` rebuilds a unit-distance graph or gadget from its data file, recomputes every
@@ -421,7 +430,7 @@ cvxopt 1.3.3 (DSDP) and clarabel 0.11.1; checking them needs only numpy, scipy a
 their contents. `requirements-lock.txt` lists the exact versions of the Python packages used for the
 results and of their dependencies, and `scripts/worker_setup.sh` builds the pinned kissat and drat-trim.
 
-GitHub Actions runs the fast part of the suite, 657 tests in 43 files
+GitHub Actions runs the fast part of the suite, 672 tests in 44 files
 ([`tests.yml`](.github/workflows/tests.yml)), and builds and checks the Lean proofs
 ([`lean.yml`](.github/workflows/lean.yml)), on pushes to `main` and on pull requests.
 
@@ -436,7 +445,7 @@ GitHub Actions runs the fast part of the suite, 657 tests in 43 files
 | [`data/`](data/README.md) | graphs and witnesses in exact coordinates (JSON), and the three-point certificates |
 | [`certificates/`](certificates/README.md) | colourings, DRAT verification logs and non-colourability claims |
 | [`scripts/`](scripts/README.md) | maintained tools: verification, search, figures; `scripts/experiments/` keeps the 734 one-off experiments behind the research log |
-| [`tests/`](tests/README.md) | the test suite: 1 222 tests, 215 of them marked slow |
+| [`tests/`](tests/README.md) | the test suite: 1 247 tests, 225 of them marked slow |
 | [`docs/`](docs/README.md) | the research log, the full chronological record, and the figures |
 
 Each of these folders has a README describing its contents. Up to release 1.1.0 the project sat in
@@ -647,6 +656,13 @@ puede colorear con 5 colores el plano sobre ningún cuerpo euclídeo, arquimedia
 Lean que χ(ℝ²) ≤ 7 (con un coloreado por ladrillos) en el enunciado del problema 508 de Erdős de
 [formal-conjectures](https://github.com/google-deepmind/formal-conjectures) (Google DeepMind), y con el teorema de
 OpenAI, que χ(ℝ²) vale 6 o 7 en ese mismo enunciado.
+Nuevo (10 de octubre): el primer paso de la prueba de OpenAI funciona para cualquier conjunto de distancias prohibidas
+algebraicas y para coloreados fraccionarios ([artículo](papers/forbidden-distances/forbidden-distances.pdf)). Así, el
+número cromático fraccionario del plano es exactamente 1/m₁(ℝ²), entre 4,0485 y 4,36; si se prohíben las distancias
+1 y 2 hacen falta al menos 7 colores, y con 1 y 100 al menos 10 (antes, 6 era lo mejor conocido para dos
+distancias); y con k distancias pueden hacer falta más de 4,0485^k colores, en contra de lo que esperaba Erdős. Dúcz
+y Varga ya habían probado que el número cromático fraccionario supera 4,0007, y Davies ha probado el crecimiento
+exponencial en dimensión 4 o más; los dos están citados.
 Se trabaja con aritmética exacta en cuerpos de números. Las afirmaciones de que un
 grafo no se puede colorear se deciden con resolutores SAT, y las principales van acompañadas de una
 prueba DRAT verificada por un programa independiente.

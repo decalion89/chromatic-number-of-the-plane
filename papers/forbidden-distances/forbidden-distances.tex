@@ -1,0 +1,482 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage[hyphens]{url}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
+\usepackage[margin=2.5cm]{geometry}
+
+\hypersetup{
+  pdftitle={Measurable density bounds hold for all colourings of the plane},
+  pdfauthor={Sergi Gal\'an},
+  pdfsubject={The Hadwiger-Nelson problem},
+  pdfkeywords={Hadwiger-Nelson problem, chromatic number of the plane, forbidden distances, fractional chromatic
+  number, distance-avoiding sets, linear programming}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\dens}{\overline{\delta}}
+\newcommand{\chif}{\chi_{\mathrm f}}
+
+\title{Measurable density bounds hold for all colourings of the plane}
+\author{Sergi Gal\'an}
+\thanks{These results were obtained with the assistance of an AI system (Claude, by Anthropic), which found the
+observation, wrote the programs, ran the checks and helped to draft this note. Two separate AI agents refereed the
+note with their own programs. The hard input is OpenAI's transfer theorem \cite{OpenAI}. No mathematician has
+checked the note yet. The author is not a professional mathematician and submits it for independent verification.}
+\date{Draft, version 3, 10 October 2026}
+\subjclass[2020]{Primary 05C15, 52C10; Secondary 05C72, 42B10, 90C05}
+\keywords{Hadwiger--Nelson problem, chromatic number of the plane, forbidden distances, fractional chromatic number,
+distance-avoiding sets, linear programming bounds}
+
+\begin{document}
+
+\begin{abstract}
+OpenAI recently proved that every colouring of the plane with five colours gives the same colour to two points at
+distance $1$. The proof transfers an arbitrary proper colouring of the plane to a \emph{weak measurable} one, and then
+excludes weak measurable $5$-colourings. We observe that the transfer works, with the same proof, for every set of
+algebraic forbidden distances and for fractional colourings. Upper bounds for the density of measurable sets avoiding
+given distances therefore become lower bounds for arbitrary colourings. Consequences: the fractional chromatic number
+of the plane equals $1/m_1(\R^2)$, where $m_1(\R^2)$ is the largest density of a measurable planar set with no two
+points at distance $1$, so it lies between $4.0485$ and $4.36$; and the least independence ratio of an $n$-point
+unit-distance graph tends to $m_1(\R^2)$, as conjectured by Dúcz and Varga. If the distances $1$ and $2$ are both
+forbidden, at least $7$ colours are needed, improving the bound $6$ of Exoo and Ismailescu; the same holds for
+$\{1,\sqrt3\}$, and at least $8$, $9$ and $10$ colours are needed for $\{1,11/6\}$, $\{1,40\}$ and $\{1,100\}$. For
+suitable sets of $k$ integer distances more than $4.0485^k$ colours are needed, in the plane and in space, so the
+chromatic number with $k$ forbidden distances grows exponentially in $k$, whereas Erd\H{o}s expected polynomial
+growth. Davies has just proved the analogous statements in dimension at least $4$ by a different method. The density
+bounds we use are linear-programming bounds of Oliveira Filho and Vallentin, which we certify in interval arithmetic,
+and theorems of Bukh and of Ambrus, Csiszárik, Matolcsi, Varga and Zsámboki.
+\end{abstract}
+
+\maketitle
+
+\section{Results}
+
+For a set $D$ of positive real numbers, $\chi(\R^2,D)$ is the least number of colours needed to colour the plane so
+that no two points whose distance lies in $D$ get the same colour. The Hadwiger--Nelson problem is the case
+$D=\{1\}$; OpenAI \cite{OpenAI} proved $\chi(\R^2)\ge 6$, and $\chi(\R^2)\le 7$ is Isbell's hexagonal colouring
+\cite{Soifer}. For two distances $\{1,d\}$ the best known lower bound was $6$. Exoo and Ismailescu \cite{EI} proved
+$\chi(\R^2,\{1,2\})\ge 6$, Parts \cite{Parts} found smaller graphs for it, and De Neve, Vanden Kerchove, Colle,
+Tavernier and Pickavet \cite{DeNeve} gave $6$-chromatic graphs for $d=\sqrt3$ and $d=(\sqrt6+\sqrt2)/2$, two cases
+claimed earlier in the Polymath16 project \cite{Polymath}; Chybowska-Sokół, Junosza-Szaniawski and Węsek \cite{CJW}
+record as open whether some pair $\{1,d\}$ forces $7$ colours.
+
+OpenAI's proof has two steps. Their Theorem~1.3 (the transfer) says that the plane has a proper $k$-colouring if and
+only if it has a \emph{weak measurable} $k$-colouring: a measurable colouring in which the pairs of points at distance
+$1$ with the same colour have measure zero. Their Theorem~1.4 excludes weak measurable $5$-colourings. The transfer
+rests on a rigidity theorem for invariant measures on the character group of the algebraic plane
+\cite[Thm.~2.3]{OpenAI}. Its proof uses neither that the forbidden distance is $1$ nor that a colouring uses finitely
+many colours rather than being fractional. We record the two generalisations (Theorems~\ref{thm:A}
+and~\ref{thm:B}) and their consequences.
+
+Write $m_D(\R^2)$ for the supremum of the upper densities of measurable sets $A\subseteq\R^2$ with no two points at a
+distance in $D$, and $m_1(\R^2)=m_{\{1\}}(\R^2)$. Croft's construction gives $m_1(\R^2)\ge 0.229365$ \cite{Croft},
+and Ambrus, Csiszárik, Matolcsi, Varga and Zsámboki \cite{ACMVZ} proved $m_1(\R^2)\le 0.2470$, confirming a
+conjecture of Erd\H{o}s that $m_1(\R^2)<1/4$. For the fractional chromatic number we use two versions, defined in
+Section~\ref{sec:notation}: the finitary one $\chi_{\mathrm f,0}(\R^2,D)$, the supremum over finite graphs drawn in
+the plane with edge lengths in $D$, and the fractional chromatic number $\chif(\R^2,D)$ of the whole infinite graph.
+
+\begin{theorem}\label{thm:main}
+Let $D$ be a finite set of positive real algebraic numbers. Then
+\[
+\chi(\R^2,D)\;\ge\;\chi_{\mathrm f,0}(\R^2,D)\;=\;\chif(\R^2,D)\;=\;\frac1{m_D(\R^2)}.
+\]
+\end{theorem}
+
+\subsection*{One distance}
+
+\begin{corollary}\label{cor:frac}
+$\chi_{\mathrm f,0}(\R^2)=\chif(\R^2)=1/m_1(\R^2)$, and $4.0485<1/0.2470\le\chif(\R^2)\le 1/0.229365<4.36$.
+\end{corollary}
+
+The constants in \cite[§8]{ACMVZ} give $m_1(\R^2)<0.2469975$, hence $\chif(\R^2)>4.0486$. Matolcsi, Ruzsa, Varga and
+Zsámboki \cite{MRVZ} proved $\chif(\R^2)\ge 4$ and conjectured that $\chi_{\mathrm f,0}(\R^2)=4$ and that
+$\chif(G)<4$ for every finite unit-distance graph $G$ \cite[Conj.~1]{MRVZ}; the value $4$ had also been conjectured
+in \cite[Remark after Cor.~2]{ACMVZ}. Dúcz and Varga \cite{DV} disproved this conjecture: they found a unit-distance
+graph $G_{29}$ whose geometric fractional chromatic number exceeds $4.0007$, which gives a finite unit-distance graph
+with independence ratio below $1/4$ and $\chif(\R^2)>4.0007$. Corollary~\ref{cor:frac} gives a second disproof and
+determines $\chif(\R^2)$ in terms of $m_1(\R^2)$. It also answers the question of \cite{MRVZ} whether
+$\chi_{\mathrm f,0}(\R^2)=\chif(\R^2)$, and with \cite[Thm.~2]{MRVZ} it shows that the finitary independence ratio
+of the plane equals the measurable one, which \cite{MRVZ} remark would fail if their conjecture held. Let $f(n)$ be
+the least independence number of the unit-distance graph of a set of $n$ points in the plane, the function of
+Erd\H{o}s's question answered by Dúcz and Varga.
+
+\begin{corollary}\label{cor:ratio}
+$f(n)\ge m_1(\R^2)\,n$ for every $n$, and $f(n)/n\to m_1(\R^2)$ as $n\to\infty$. In particular $f(n)<0.2470\,n$ for
+all large $n$.
+\end{corollary}
+
+Dúcz and Varga conjectured that $f(n)/n=m_1(\R^2)+o(1)$, and in particular that $m_1(\R^2)$ is the density
+$0.229365\ldots$ of Croft's construction \cite[Conj.~1]{DV}. Corollary~\ref{cor:ratio} proves the first statement;
+the second remains open.
+
+\subsection*{Two distances}
+
+\begin{corollary}\label{cor:two}
+\begin{gather*}
+\chi(\R^2,\{1,2\})\ge 7,\qquad \chi(\R^2,\{1,\sqrt3\})\ge 7,\qquad
+\chi\bigl(\R^2,\{1,(\sqrt6+\sqrt2)/2\}\bigr)\ge 7,\\
+\chi(\R^2,\{1,11/6\})\ge 8,\qquad \chi(\R^2,\{1,40\})\ge 9,\qquad \chi(\R^2,\{1,100\})\ge 10.
+\end{gather*}
+Moreover $\chi(\R^2,\{1,d\})\ge 17$ for every sufficiently large real algebraic number $d$.
+\end{corollary}
+
+The finite bounds come from linear programs certified in Section~\ref{sec:lp}, and the last statement from Bukh's
+theorem \cite{Bukh}; products of hexagonal colourings give $\chi(\R^2,\{1,d\})\le49$. For \emph{measurable}
+colourings, bounds of this kind were known: Oliveira Filho and Vallentin \cite[§4]{OFV} proved that a measurable set
+avoiding the distances $1$ and $j_{1,2}/j_{1,1}\approx1.8309$, a ratio of zeros of $J_1$, has density at most
+$0.141577<1/7$, and, combining Bukh's theorem with their bound for $m_1(\R^2)$, that some pairs of distances allow
+density at most $m_1(\R^2)^2\le0.072046$, so that measurable colourings need $14$ colours ($17$ with the bound of
+\cite{ACMVZ}). What is new here is that such bounds hold for arbitrary colourings; the bounds for $\{1,2\}$ and
+$\{1,\sqrt3\}$, which use clique inequalities, also seem to be new for measurable colourings.
+
+\subsection*{Many distances}
+
+\begin{corollary}\label{cor:many}
+For every $k\ge1$ there is a set $D$ of $k$ positive integers with
+$\chi(\R^3,D)\ge\chi(\R^2,D)\ge m_1(\R^2)^{-k}>4.0485^k$. Moreover
+\[
+\sup\bigl\{\chif(\R^2,D):D\subseteq F,\ |D|=k\bigr\}=m_1(\R^2)^{-k},
+\]
+where $F$ is the field of real algebraic numbers.
+\end{corollary}
+
+Erd\H{o}s \cite{Erdos81} defined $L_2(r)$ as the largest chromatic number of the plane with $r$ forbidden distances
+and asked: ``Does $L_2(r)$ increase polynomially or exponentially? I expect that $L_2(r)<r^c$ for some absolute
+constant $c$.'' The question is Problem~\#706 on Bloom's list \cite{EP706}; Croft, Falconer and Guy ask the same
+\cite[Problem G11]{CFG}, and the best lower bound in the plane was of order $k\sqrt{\log k}$ (see \cite{Bukh}). By
+Corollary~\ref{cor:many} and the product colouring,
+\[
+4.0485^r<L_2(r)\le7^r ,
+\]
+so $L_2(r)$ grows exponentially, contrary to Erd\H{o}s's expectation. Bukh \cite{Bukh} proved exponential growth for
+measurable colourings, and Davies \cite{Davies} has just proved it for arbitrary colourings of $\R^d$, $d\ge4$, with a
+different transfer (see the Remarks); Corollary~\ref{cor:many} gives it for $d=2$ and $d=3$. Like all our results on
+arbitrary colourings, it rests on OpenAI's \cite[Thm.~2.3]{OpenAI}. Bukh also conjectured that $\chi(\R^d,D)$ is
+bounded independently of $D$ when the elements of $D$ are algebraically independent \cite{Bukh}; Theorem~\ref{thm:A}
+says nothing about such $D$.
+
+None of these results comes with an explicit finite graph: as in \cite{OpenAI}, the finite graphs exist by
+compactness.
+
+\section{Notation}\label{sec:notation}
+
+Identify the plane with $\C$. Let $F=\overline{\Q}\cap\R$, let $E=F(i)$ be the plane of algebraic points and
+$K=\{u\in E:|u|=1\}$ its group of rotations, as in \cite[Def.~2.1]{OpenAI}. For $D\subseteq(0,\infty)$ and
+$X\subseteq\C$ let $G(X,D)$ be the graph on $X$ in which two points are adjacent when their distance lies in $D$. A
+set of real algebraic numbers is countable, and for $d\in F$ the points of $E$ at distance $d$ from $0$ are exactly
+those of $dK$.
+
+\emph{Fractional chromatic numbers.} For a graph $G$ with countably many vertices, $\chif(G)$ is the least $t$ such
+that some Borel probability measure on the closed set of independent sets of $G$ in $\{0,1\}^{V(G)}$ gives every
+vertex probability at least $1/t$ of lying in the random set. For finite $G$ this is the usual fractional chromatic
+number, and by weak-$*$ compactness $\chif(G)$ is the supremum over the finite subgraphs of $G$. We write
+$\chi_{\mathrm f,0}(\R^2,D)$ for the supremum of $\chif(H)$ over finite graphs $H$ drawn in the plane with all edge
+lengths in $D$, the \emph{finitary} fractional chromatic number of \cite{MRVZ} when $D=\{1\}$, and $\chif(\R^2,D)$
+for the infimum of $\sum_I w(I)$ over finitely supported weightings $w\ge0$ of independent sets of $G(\C,D)$ with
+$\sum_{I\ni x}w(I)\ge1$ for every point $x$. Clearly $\chi_{\mathrm f,0}\le\chif$. Since $F$ is real closed,
+Tarski's transfer principle lets every finite graph drawn with edge lengths in $D\subseteq F$ be redrawn with
+vertices in $E$; so, for $D\subseteq F$,
+\[
+\chi_{\mathrm f,0}(\R^2,D)=\chif(G(E,D))\quad\text{and}\quad\chi(\R^2,D)=\chi(G(E,D)).
+\]
+
+\emph{Densities.} The upper density of a measurable $A\subseteq\C$ is
+\[
+\dens(A)=\limsup_{R\to\infty}\frac{|A\cap B(0,R)|}{|B(0,R)|}.
+\]
+A set \emph{avoids} $D$ if no two of its points are at a
+distance in $D$, and $m_D(\R^2)$ is the supremum of $\dens(A)$ over measurable sets $A$ avoiding $D$. For bounded $D$
+it is also the supremum of the densities of periodic sets avoiding $D$ (Lemma~\ref{lem:periodic}), so it does not
+matter whether densities are taken over discs, as here, or over squares, as in \cite{OFV,Bukh}. A measurable set $A$
+\emph{weakly avoids} $D$ if
+\[
+\int_{B(0,R)}\int_{S^1}1_A(x)\,1_A(x+du)\,d\sigma(u)\,dx=0\qquad\text{for all }d\in D,\ R>0,
+\]
+where $\sigma$ is the normalized arc length. A \emph{weak measurable $k$-colouring avoiding $D$} is a measurable map
+$c:\C\to\{1,\dots,k\}$ whose classes weakly avoid $D$.
+
+\section{The transfers}\label{sec:transfer}
+
+From \cite{OpenAI} we use Lemma~4.1 (the continuous vectors of a measure-preserving action of $E$ form $L^2$ of a
+factor, and the translations extend to a strongly continuous action $T_x$, $x\in\R^2$, on it), Theorem~2.3 (every
+$K$-invariant Borel probability measure on the character group of the discrete group $E$ that gives measure zero to
+the continuous characters is Haar measure), the measurable sampling step in the proof of Proposition~4.2, and
+Lemma~4.3. None of them involves a distance.
+
+\begin{lemma}\label{lem:density}
+If a measurable set $A$ weakly avoids $D$, then the set $A^*$ of points of density one of $A$ avoids $D$, and
+$|A\setminus A^*|=0$.
+\end{lemma}
+
+\begin{proof}
+This is \cite[Lemma~4.3]{OpenAI} at radius $d$. Let $x,\ y=x+v\in A^*$ with $|v|=d\in D$. For small $h>0$ choose
+$x'$ uniformly in $B(x,h)$ and, independently, $v'=du'$ with $u'$ uniform on the arc $\{u\in S^1:|du-v|<h\}$. Then
+$P(x'\notin A)\to0$. The point $x'+v'$ is a mixture of uniform points of discs of radius $h$, so it has a density at
+most $1/(\pi h^2)$, and it lies in $B(y,2h)$; hence $P(x'+v'\notin A)\le|B(y,2h)\setminus A|/(\pi h^2)\to0$. For
+small $h$ both points lie in $A$ with positive probability, while the law of $(x',u')$ is absolutely continuous with
+respect to $dx\,d\sigma(u)$. This contradicts weak avoidance. The second statement is Lebesgue's density theorem.
+\end{proof}
+
+\begin{theorem}\label{thm:A}
+Let $D\subseteq F$ be a set of positive real algebraic numbers and $k\ge1$. If $G(E,D)$ has a proper $k$-colouring,
+the plane has a weak measurable $k$-colouring avoiding $D$; conversely, such a colouring gives a proper
+$k$-colouring of $G(\C,D)$. In particular $\chi(\R^2,D)\ge 1/m_D(\R^2)$.
+\end{theorem}
+
+\begin{proof}
+This is the proof of \cite[Thm.~1.3]{OpenAI} with the unit circle replaced by the circles of radii $d\in D$.
+\begin{enumerate}
+\item Let $\Omega_D\subseteq\{1,\dots,k\}^E$ be the closed set of proper colourings of $G(E,D)$, nonempty by
+hypothesis. Translations by $E$ and rotations by $K$ preserve it. The group $E\rtimes K$ is amenable, so averages of a
+point mass along a F\o lner sequence have an invariant weak-$*$ limit $\mu$.
+\item Let $f_i$ be the indicator that the origin has colour $i$. Properness gives $\langle f_i,T_zf_i\rangle=0$ for
+$z\in dK$, $d\in D$.
+\item By \cite[Lemma~4.1]{OpenAI}, $f_i=p_i+b_i$ where $p_i$ is the conditional expectation on the factor of
+continuous vectors; $0\le p_i\le1$, $\sum_ip_i=1$, both parts are rotation-fixed, and the spectral measure of $b_i$ is
+$K$-invariant and null on the continuous characters. By \cite[Thm.~2.3]{OpenAI} it is a multiple of Haar measure, so
+$\langle b_i,T_zb_i\rangle=0$ for $z\in E\setminus\{0\}$; the cross terms vanish because the continuous subspace and
+its orthogonal complement are translation invariant. Hence $\langle p_i,T_zp_i\rangle=0$ for $z\in dK$.
+\item The $T_x$ act strongly continuously and $dK$ is dense in the circle of radius $d$, so
+$\langle p_i,T_xp_i\rangle=0$ whenever $|x|\in D$.
+\item The sampling step of \cite[Prop.~4.2]{OpenAI} gives jointly measurable fields $H_i(x,\omega)$ representing
+$T_xp_i$. Since $D$ is countable, a single sample $\omega$ makes all the integrals
+\[
+\int_{B(0,m)}\int_{S^1}H_i(x,\omega)H_i(x+du,\omega)\,d\sigma(u)\,dx\qquad(m\in\N,\ d\in D,\ \text{all } i)
+\]
+vanish and has $\sum_iH_i(x,\omega)=1$ for almost every $x$. Giving $x$ the least $i$ with $H_i(x,\omega)>0$ defines the weak
+measurable colouring.
+\item Conversely, by Lemma~\ref{lem:density} the density-one points of the classes form disjoint sets avoiding $D$
+whose union is conull. Every finite configuration has a translate inside that union, so every finite subgraph of
+$G(\C,D)$ is $k$-colourable, and the de~Bruijn--Erd\H{o}s theorem \cite{dBE} gives a proper colouring. One of the $k$
+sets has upper density at least $1/k$, so $k\ge 1/m_D(\R^2)$.\qedhere
+\end{enumerate}
+\end{proof}
+
+\begin{theorem}\label{thm:B}
+For every set $D\subseteq F$ of positive real algebraic numbers, $\chi_{\mathrm f,0}(\R^2,D)\ge 1/m_D(\R^2)$.
+\end{theorem}
+
+\begin{proof}
+Let $t\ge\chi_{\mathrm f,0}(\R^2,D)=\chif(G(E,D))$ and let $P$ be a Borel probability measure on the compact
+metrizable space $\Omega$ of independent sets of $G(E,D)$ with $P(z\in I)\ge1/t$ for all $z\in E$. Averaging the
+push-forwards of $P$ under $E\rtimes K$ along a F\o lner sequence and taking a weak-$*$ limit gives an invariant
+probability $\mu$ with $\mu(0\in I)\ge1/t$, since each push-forward has this property and the event is clopen. Let
+$f=1[0\in I]$. It is rotation-fixed, and $\langle f,T_zf\rangle=\mu(0\in I,\ z\in I)=0$ for $z\in dK$, $d\in D$,
+because $I$ is independent. Steps 3 and 4 of the proof of Theorem~\ref{thm:A} apply to the single function $f$, with
+$\sum_ip_i=1$ (which is used only in Step 5) replaced by $\E_\mu p=\E_\mu f$: for $p=\E(f\mid\text{continuous
+factor})$ we get $0\le p\le1$, $\E_\mu p\ge1/t$ and $\langle p,T_xp\rangle=0$ whenever $|x|\in D$.
+
+Take a jointly measurable $H:\C\times\Omega\to[0,1]$ with $H(x,\cdot)=T_xp$ in $L^2(\mu)$ for almost every $x$ (the
+sampling step of \cite[Prop.~4.2]{OpenAI}). For $m\in\N$ and $d\in D$,
+\[
+\int_\Omega\int_{B(0,m)}\int_{S^1}H(x,\omega)H(x+du,\omega)\,d\sigma(u)\,dx\,d\mu(\omega)
+=\int_{B(0,m)}\int_{S^1}\langle T_xp,T_{x+du}p\rangle\,d\sigma(u)\,dx=0,
+\]
+so, $D$ being countable, for $\mu$-almost every $\omega$ all these inner integrals vanish. Let
+$X_n(\omega)=|B(0,n)|^{-1}\int_{B(0,n)}H(x,\omega)\,dx\in[0,1]$. Since $\E_\mu H(x,\cdot)=\langle
+T_xp,1\rangle=\langle p,1\rangle\ge1/t$ for almost every $x$ ($T_x1=1$ and $T_x$ is unitary), $\E_\mu X_n\ge1/t$,
+and the reverse Fatou lemma gives $\E_\mu\limsup_nX_n\ge1/t$. Hence $\limsup_nX_n\ge1/t$ on a set of positive
+measure, and we choose $\omega$ in it and in the conull set above. Let $A=\{x:H(x,\omega)>0\}$. Then
+$1_A\ge H(\cdot,\omega)$, so $\dens(A)\ge1/t$; and $H(x,\omega)H(x+du,\omega)=0$ for almost every $(x,u)$ gives
+$1_A(x)1_A(x+du)=0$ almost everywhere, so $A$ weakly avoids $D$. By Lemma~\ref{lem:density}, $A^*$ avoids $D$ and
+$\dens(A^*)\ge1/t$. Hence $m_D(\R^2)\ge1/t$.
+\end{proof}
+
+\section{The upper bound and the corollaries}\label{sec:upper}
+
+\begin{lemma}\label{lem:periodic}
+Let $D$ be finite, $M=\max D$ and $\varepsilon>0$. There are $\eta>0$ and a periodic set $A'$ with period lattice
+$N\Z^2$, each period a finite union of squares, that avoids $D_\eta=D+[-\eta,\eta]$ and has density at least
+$m_D(\R^2)-\varepsilon$.
+\end{lemma}
+
+\begin{proof}
+Let $A$ be measurable, avoiding $D$, with $\dens(A)>m_D-\varepsilon/4$, and fix $L>0$. For the radii $R$ realising
+the upper density, with $R$ large, the squares of the grid $L\Z^2$ meeting $B(0,R)$ (at most $\pi(R+\sqrt2L)^2/L^2$
+of them) have average density of $A$ above $m_D-\varepsilon/2$, so one of them, $S$, has
+$|A\cap S|\ge(m_D-\varepsilon/2)L^2$. By inner regularity there is a compact $C\subseteq A\cap S$ with
+$|C|\ge(m_D-3\varepsilon/4)L^2$. Its distance set $\{|x-y|:x,y\in C\}$ is compact and misses the finite set $D$, so
+it misses $D_{2\eta}$ for some $\eta\in(0,1)$. Let $U$ be the union of the closed squares of a grid of squares of
+diameter less than $\eta/2$ that meet $C$. It lies in the $\eta/2$-neighbourhood of $C$, so it avoids $D_\eta$, and
+$|U|\ge|C|$. The set $A'=U+N\Z^2$ with $N=L+M+2$ avoids $D_\eta$, since points of different copies are more than
+$M+1$ apart, and has density $|U|/N^2\ge m_D-\varepsilon$ once $L$ is large.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+By Theorem~\ref{thm:B}, $\chif(\R^2,D)\ge\chi_{\mathrm f,0}(\R^2,D)\ge1/m_D$, and $\chi\ge\chi_{\mathrm f,0}$
+always. Let $A'$ be as in Lemma~\ref{lem:periodic}, with density $\delta\ge m_D-\varepsilon$ and fundamental square
+$Q=[0,N)^2$. For $n\ge1$ take the $n^2$ translates $A'+s$, $s\in(N/n)\Z^2\cap Q$; each avoids $D$. A point $x$ lies in
+$A'+s$ if and only if $x-s\in A'$, so the number of these translates containing $x$ is the number of points of the
+grid $x-(N/n)\Z^2$ in one period of $A'$. One period is a finite union of squares, so its boundary meets $O(n)$ cells
+of that grid, uniformly in $x$, and the count is at least $\delta n^2-O(n)$ for every $x$. Giving each translate the
+weight $1/(\delta n^2-O(n))$ is a fractional colouring of $G(\C,D)$ with total weight tending to $1/\delta$. Hence
+$\chif(\R^2,D)\le1/(m_D-\varepsilon)$ for every $\varepsilon>0$.
+\end{proof}
+
+\begin{proof}[Proof of Corollaries~\ref{cor:frac}--\ref{cor:many}]
+Corollary~\ref{cor:frac} is Theorem~\ref{thm:main} with $D=\{1\}$, together with $0.229365\le m_1\le0.2470$
+\cite{Croft,ACMVZ}; \cite[§8]{ACMVZ} proves $m_1\le(w_T+\nu)/(1-\mu)$ with $w_T=0.24697262945998308$, $\nu=10^{-5}$
+and $\mu=6\cdot10^{-5}$, which is less than $0.2469975$.
+
+Corollary~\ref{cor:ratio}. If $X$ is a set of $n$ points, its unit-distance graph $G$ has
+$\chif(G)\le\chi_{\mathrm f,0}(\R^2)=1/m_1(\R^2)$, so $\alpha(G)\ge n/\chif(G)\ge m_1(\R^2)\,n$. Conversely,
+\cite[Thm.~2]{MRVZ} states $\chi_{\mathrm f,0}(\R^2)=1/\alpha_1(\R^2)$, where $\alpha_1(\R^2)$ is the infimum of
+$\alpha(G)/|V(G)|$ over finite unit-distance graphs $G$ in the plane; adding the missing unit-distance edges does not
+increase $\alpha(G)$, so $\inf_nf(n)/n\le\alpha_1(\R^2)=m_1(\R^2)$ by Corollary~\ref{cor:frac}. Placing two point
+sets far apart shows $f(a+b)\le f(a)+f(b)$, so by Fekete's lemma $f(n)/n$ converges to $\inf_nf(n)/n=m_1(\R^2)$.
+
+Corollary~\ref{cor:two}. The finite bounds follow from Theorem~\ref{thm:A} and the density bounds of
+Table~\ref{tab:lp}. For the last statement, Bukh's Theorem~1 \cite{Bukh} gives
+$m_{\{1,d\}}(\R^2)\to m_1(\R^2)^2\le0.2470^2<1/16$ as $d\to\infty$; Theorem~\ref{thm:A} then gives
+$\chi(\R^2,\{1,d\})\ge17$ for large algebraic $d$.
+
+Corollary~\ref{cor:many}. Bukh's Theorem~1 gives $m_D(\R^2)\to m_1(\R^2)^k$ for $D=\{1,t,\dots,t^{k-1}\}$ as
+$t\to\infty$. For integers $t$, Theorem~\ref{thm:A} gives $\chi(\R^2,D)\ge1/m_D(\R^2)$; since $\chi(\R^2,D)$ is an
+integer and $1/m_D(\R^2)\to m_1(\R^2)^{-k}$, we get $\chi(\R^2,D)\ge m_1(\R^2)^{-k}$ for large $t$. Restricting a
+colouring of $\R^3$ to a plane gives $\chi(\R^3,D)\ge\chi(\R^2,D)$. For the supremum, Theorem~\ref{thm:main} gives
+$\chif(\R^2,D)=1/m_D(\R^2)$ for finite $D\subseteq F$; Bukh proves $m_D(\R^2)\ge m_1(\R^2)^k$ whenever $|D|=k$
+\cite{Bukh}, and the sets $\{1,t,\dots,t^{k-1}\}$ show that the bound $m_1(\R^2)^{-k}$ is approached. (By
+\cite[Thm.~5.1]{OFV}, $m_D(\R^2)\le2^{-k}$ as soon as consecutive ratios exceed some $r(k)$ that their proof makes
+effective, which gives $\chi(\R^2,D)\ge2^k$ for such $D$.)
+\end{proof}
+
+\section{Linear-programming certificates}\label{sec:lp}
+
+\begin{proposition}[Oliveira Filho--Vallentin \cite{OFV}, with clique inequalities]\label{prop:lp}
+Let $D=\{d_1,\dots,d_N\}$ and let $W_1,\dots,W_r$ be finite planar point sets, each with all pairwise distances in
+$D$, and $p_1,\dots,p_r$ points. Suppose $z_0,\dots,z_N\in\R$ and $y_1,\dots,y_r\ge0$ satisfy
+\[
+g(t)=z_0+\sum_{k}z_kJ_0(d_kt)+\sum_cy_c\sum_{w\in W_c}J_0(|w-p_c|\,t)\ \ge\ 0\qquad(t\ge0),
+\]
+with $s=z_0+\sum_kz_k+\sum_cy_c|W_c|>0$. Then $m_D(\R^2)\le(z_0+\sum_cy_c)/s$.
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:periodic} it suffices to consider a periodic measurable set $A$ of density $\delta>0$ avoiding
+$D$. Its autocorrelation $\varphi(v)=\delta(A\cap(A-v))$ is positive definite, with spectral measure $\nu$ on the dual
+lattice, $\nu(\{0\})=\delta^2$, total mass $\delta$; its radial average is $f(r)=\int J_0(r|\xi|)\,d\nu(\xi)$, with
+$f(0)=\delta$ and $f(d_k)=0$. For a set $W$ with pairwise distances in $D$ and any $p$, the sets
+$\{x\in A:x+w-p\in A\}$, $w\in W$, are disjoint subsets of $A$, so $\sum_{w}\varphi(w-p)\le\delta$; averaging over
+rotations of $W$ about $p$ gives $\sum_wf(|w-p|)\le\delta$. Integrating $g(|\xi|)\ge0$ against $\nu$,
+$\delta^2g(0)\le\int g(|\xi|)\,d\nu=z_0\delta+\sum_cy_c\sum_wf(|w-p_c|)\le(z_0+\sum_cy_c)\delta$, and $g(0)=s$.
+Without clique terms this is \cite[Thm.~1.1]{OFV}; the clique terms are in the spirit of \cite[§3.1]{OFV}, which uses
+simplices, while we also use a rhombus.
+\end{proof}
+
+We solve the linear program in floating point, round the coefficients to rationals and verify $g\ge0$ rigorously.
+Three programs check every certificate.
+\begin{itemize}
+\item \texttt{certify\_lp2.py} uses Arb ball arithmetic, with distances and radii enclosed from their exact
+expressions. On $[0,T]$ it walks with adaptive steps: at a point $t$ it encloses $g(t)$ and moves on by about
+$g(t)/L$, where $L=\sum|{\rm coefficient}|\cdot{\rm radius}/\sqrt2$ bounds $|g'|$ because $|J_1(x)|\le1/\sqrt2$ for
+real $x$ \cite[10.14.1]{DLMF}. On $[T,\infty)$ it uses $|J_0(x)|\le\sqrt{2/(\pi x)}$ for $x>0$: $u=\sqrt xJ_0(x)$
+solves $u''+(1+1/(4x^2))u=0$, so $u^2+u'^2/(1+1/(4x^2))$ is nondecreasing (Sonin--P\'olya) with limit $2/\pi$. The
+clique distances are checked exactly with a computer algebra system, and the bound is an exact fraction.
+\item \texttt{check2.py}, written separately, repeats the check with $60$-digit floating point and its own sweep.
+\item \texttt{check3.py}, adapted from the checker of one of the referees, encloses $g$ by Arb over whole intervals
+of $t$, bisecting until each enclosure is nonnegative, and builds the cliques and their radii in exact arithmetic of
+$\Q(\sqrt3)$.
+\end{itemize}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lllcl}
+\toprule
+$D$ & clique sets & certified bound for $m_D(\R^2)$ & sweep & consequence\\
+\midrule
+$\{1,2\}$ & $6+2$ triangles & $0.159222<1/6$ & $[0,1297]$ & $\chi\ge7$\\
+$\{1,\sqrt3\}$ & triangle, rhombus & $0.162866<1/6$ & $[0,757]$ & $\chi\ge7$\\
+$\{1,(\sqrt6+\sqrt2)/2\}$ & none & $0.166018<1/6$ & $[0,107]$ & $\chi\ge7$\\
+$\{1,10\}$ & none & $0.149599<1/6$ & $[0,36]$ & $\chi\ge7$\\
+$\{1,11/6\}$ & none & $0.140995<1/7$ & $[0,171]$ & $\chi\ge8$\\
+$\{1,46/25\}$ & none & $0.139185<1/7$ & $[0,175]$ & $\chi\ge8$\\
+$\{1,40\}$ & none & $0.115511<1/8$ & $[0,36]$ & $\chi\ge9$\\
+$\{1,100\}$ & none & $0.103302<1/9$ & $[0,37]$ & $\chi\ge10$\\
+\bottomrule
+\end{tabular}
+\caption{Certified density bounds (rounded up). For $\{1,2\}$ the clique sets are six unit equilateral triangles and
+two equilateral triangles of side $2$, each at one position; for $\{1,\sqrt3\}$, one unit equilateral triangle and one
+rhombus made of two such triangles (diagonals $1$ and $\sqrt3$). All three programs accept every certificate.}
+\label{tab:lp}
+\end{table}
+
+For $\{1,\sqrt3\}$ Oliveira Filho and Vallentin \cite[§4]{OFV} found the bound $0.170213$ without clique terms, and
+$0.141577$ for $\{1,j_{1,2}/j_{1,1}\}$, where $j_{1,k}$ are zeros of $J_1$; that ratio is presumably transcendental,
+so Theorem~\ref{thm:A} does not apply to it directly, but nearby rationals such as $11/6$ and $46/25$ do.
+
+\section{Remarks}
+
+\begin{enumerate}
+\item The hard input is OpenAI's rigidity theorem \cite[Thm.~2.3]{OpenAI}, which OpenAI formalized in Lean. Our
+contribution is the observation that their transfer holds for every set of algebraic distances and for fractional
+colourings, and the consequences of combining it with density bounds.
+\item Davies \cite{Davies} proves, by a different method, that in $\R^d$ with $d\ge4$, and for finite $D$ whose
+elements have rational squares, the chromatic number equals the measurable chromatic number and the independence
+ratio equals the measurable one; his certificates come from the completely positive framework of DeCorte,
+Oliveira Filho and Vallentin and are transferred through lattice embeddings. With Bukh's theorem this gives
+exponential growth in $k$ for $d\ge4$, and he hopes to extend the method to $d=2,3$. Our results concern $d=2$ (and
+$d=3$ for Corollary~\ref{cor:many}), allow arbitrary algebraic distances, and rest on OpenAI's transfer.
+\item The distances must be algebraic because \cite[Thm.~2.3]{OpenAI} is a statement about the algebraic plane.
+This is a limitation of the method, but probably also of the statement: if Bukh's conjecture above holds, the
+inequality $\chi(\R^2,D)\ge1/m_D(\R^2)$ fails for some algebraically independent $D$. By \cite{RC}, the transfer also
+holds over the plane of constructible points, so for constructible distances the results hold for the constructible
+plane.
+\item No explicit graph is given. The graph of Dúcz and Varga can in principle be made explicit but is astronomically
+large; an explicit unit-distance graph of reasonable size with fractional chromatic number above $4$, or an explicit
+graph with edges of lengths $1$ and $2$ and no proper $6$-colouring, remains to be found.
+\end{enumerate}
+
+\begin{thebibliography}{99}
+\bibitem{ACMVZ} G. Ambrus, A. Csiszárik, M. Matolcsi, D. Varga and P. Zsámboki, \emph{The density of planar sets
+avoiding unit distances}, Math. Program. 207 (2024) 303--327; arXiv:2207.14179.
+\bibitem{Bukh} B. Bukh, \emph{Measurable sets with excluded distances}, Geom. Funct. Anal. 18 (2008) 668--697.
+\bibitem{CJW} A. Chybowska-Sokół, K. Junosza-Szaniawski and K. Węsek, \emph{Coloring distance graphs on the plane},
+arXiv:2201.04499.
+\bibitem{CFG} H. T. Croft, K. J. Falconer and R. K. Guy, \emph{Unsolved Problems in Geometry}, Springer, 1991.
+\bibitem{Croft} H. T. Croft, \emph{Incidence incidents}, Eureka 30 (1967) 22--26.
+\bibitem{Davies} J. Davies, \emph{Measurable obstructions for unmeasurable colourings}, arXiv:2610.12301 (8 October
+2026).
+\bibitem{dBE} N. G. de Bruijn and P. Erd\H{o}s, \emph{A colour problem for infinite graphs and a problem in the theory
+of relations}, Indag. Math. 13 (1951) 369--373.
+\bibitem{DeNeve} J. De Neve, F. Vanden Kerchove, D. Colle, W. Tavernier and M. Pickavet, \emph{On the chromatic
+number of the plane with two forbidden distances}, Amer. Math. Monthly 132 (2025).
+\bibitem{DLMF} NIST Digital Library of Mathematical Functions, \url{https://dlmf.nist.gov}, equation 10.14.1.
+\bibitem{DV} Á. Dúcz and D. Varga, \emph{A unit-distance graph in the plane with independence ratio below $1/4$},
+arXiv:2606.28157 (26 June 2026).
+\bibitem{EI} G. Exoo and D. Ismailescu, \emph{A $6$-chromatic two-distance graph in the plane}, arXiv:1909.13177.
+\bibitem{EP706} T. F. Bloom, \emph{Erd\H{o}s Problem \#706}, \url{https://www.erdosproblems.com/706}, accessed 10
+October 2026.
+\bibitem{Erdos81} P. Erd\H{o}s, \emph{On the combinatorial problems which I would most like to see solved},
+Combinatorica 1 (1981) 25--42.
+\bibitem{MRVZ} M. Matolcsi, I. Z. Ruzsa, D. Varga and P. Zsámboki, \emph{The fractional chromatic number of the
+plane is at least 4}, arXiv:2311.10069 (v4, 2025).
+\bibitem{OFV} F. M. de Oliveira Filho and F. Vallentin, \emph{Fourier analysis, linear programming, and densities of
+distance avoiding sets in $\R^n$}, J. Eur. Math. Soc. 12 (2010) 1417--1428.
+\bibitem{OpenAI} OpenAI, \emph{The Euclidean plane is not five-colorable}, preprint (23 September 2026), with a
+formalization in Lean, \url{https://github.com/openai/math}.
+\bibitem{Parts} J. Parts, \emph{Graph minimization, focusing on the example of 5-chromatic unit-distance graphs in
+the plane}, Geombinatorics 29 (2020); arXiv:2010.12656.
+\bibitem{Polymath} D. H. J. Polymath, \emph{The Hadwiger--Nelson problem}, Polymath16 project, 2018--2020.
+\bibitem{RC} S. Gal\'an, \emph{The ruler-and-compass plane is not 5-colourable}, 2026, \texttt{papers/ruler-compass/}
+in the repository \url{https://github.com/decalion89/chromatic-number-of-the-plane}.
+\bibitem{Soifer} A. Soifer, \emph{The New Mathematical Coloring Book}, Springer, 2024.
+\end{thebibliography}
+
+\end{document}
