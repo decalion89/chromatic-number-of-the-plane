@@ -1,12 +1,13 @@
-# Measurable density bounds hold for all colourings of the plane
+# Measurable density bounds hold for all colourings of the plane with algebraic forbidden distances
 
-**Status (10 October 2026).** Proved on paper, conditional only on OpenAI's rigidity theorem (their Theorem 2.3,
-formalized in Lean by OpenAI); the density bounds are computer proofs checked by three programs.
+**Status (10 October 2026).** Proved on paper, using OpenAI's rigidity theorem (their Theorem 2.3, formalized in Lean
+by OpenAI); the density bounds are computer proofs checked by several programs.
 
-- **Referees.** Two AI-assisted referees inside the project. The first read the transfer theorems (correct, minor
-  gaps, fixed); the second read the corollaries and the certificates with two checkers of its own (no mathematical
-  error, every certificate valid; the priority claims were wrong and are corrected). A third reading of the final
-  version is under way.
+- **Referees.** Three AI-assisted referees inside the project. The first read the transfer theorems (correct, minor
+  gaps, fixed). The second read the corollaries and the certificates with two checkers of its own (no mathematical
+  error, every certificate valid; the priority claims were wrong and are corrected). The third read version 3 with a
+  checker of its own (no mathematical error; Croft's constant was rounded up, one inequality was classical and
+  uncredited, the title said more than the theorem; all fixed in version 4).
 - **No human referee yet.**
 
 The paper is [`papers/forbidden-distances/`](../papers/forbidden-distances/README.md); this note is the record
@@ -43,11 +44,11 @@ proofs.
 **One distance.**
 - `χ_{f,0}(ℝ²) = χ_f(ℝ²) = 1/m₁(ℝ²)`, so `4.0485 < χ_f(ℝ²) < 4.36` (Ambrus, Csiszárik, Matolcsi, Varga and
   Zsámboki: `m₁ ≤ 0.2470`, and their constants give `m₁ < 0.2469975`, so `χ_f > 4.0486`; Croft:
-  `m₁ ≥ 0.229365`).
+  `m₁ ≥ 0.2293647…`, so `m₁ ≥ 0.229364`; the value 0.229365 often quoted is rounded up).
 - `f(n)`, the least independence number of the unit-distance graph of `n` points in the plane, satisfies
-  `f(n) ≥ m₁ n` for every `n` and `f(n)/n → m₁(ℝ²)`. The limit uses Theorem 2 of Matolcsi, Ruzsa, Varga and
-  Zsámboki (the finitary fractional chromatic number equals the reciprocal of the finitary independence ratio) and
-  Fekete's lemma.
+  `f(n) ≥ m₁ n` for every `n` (the classical averaging bound `m₁ ≤ α₁`) and `f(n)/n → m₁(ℝ²)`, which is new. The
+  limit uses Theorem 2 of Matolcsi, Ruzsa, Varga and Zsámboki (the finitary fractional chromatic number equals the
+  reciprocal of the finitary independence ratio) and Fekete's lemma.
 
 **Two distances** (certified bounds of the next section, then Theorem A):
 `χ(ℝ², {1, 2}) ≥ 7`, `χ(ℝ², {1, √3}) ≥ 7`, `χ(ℝ², {1, (√6+√2)/2}) ≥ 7`, `χ(ℝ², {1, 10}) ≥ 7`,
@@ -58,7 +59,8 @@ is not computed). Products of hexagonal colourings give `χ(ℝ², {1, d}) ≤ 4
 **Many distances.** For every `k` there are `k` positive integers `D = {1, t, …, t^{k−1}}` with
 `χ(ℝ³, D) ≥ χ(ℝ², D) ≥ m₁(ℝ²)^{−k} > 4.0485^k` (Bukh's theorem: `m_D → m₁^k` as `t → ∞`), and
 `sup{χ_f(ℝ², D) : D ⊆ F, |D| = k} = m₁(ℝ²)^{−k}` (Bukh also proves `m_D ≥ m₁^k` for every `k` distances). With the
-product colouring, Erdős's `L₂(r)` satisfies `4.0485^r < L₂(r) ≤ 7^r`.
+product colouring, Erdős's `L₂(r)` satisfies `4.0485^r < L₂(r) ≤ 7^r`. Explicitly, from certified linear programs:
+`χ(ℝ², {1, 40, 1600}) ≥ 22`, `χ(ℝ², {1, 10, 100, 1000}) ≥ 26` and `χ(ℝ², {1, 100, 10⁴}) ≥ 27`.
 
 ## What is new and what is not
 
@@ -70,7 +72,7 @@ Checked against the literature up to 10 October 2026 by the second referee and b
   (`χ_{f,0}(ℝ²) = 4`). Our draft v2 did not know this and claimed the disproof; the claim is withdrawn. What
   remains new: the exact value `1/m₁(ℝ²)` (so the bound `4.0485`), the equality `χ_{f,0} = χ_f` that Matolcsi et al.
   left open, and the first half of Dúcz and Varga's own Conjecture 1 (`f(n)/n = m₁(ℝ²) + o(1)`; their second half,
-  `m₁ = 0.229365…` from Croft's construction, stays open).
+  `m₁ = 0.2293647…` from Croft's construction, stays open).
 - **Davies**, *Measurable obstructions for unmeasurable colourings*, arXiv:2610.12301 (8 October 2026), proves by a
   different method that in `ℝ^d` with `d ≥ 4`, for finite `D` with rational squares, the chromatic number equals the
   measurable one and the independence ratio equals the measurable one; with Bukh's theorem he gets
@@ -114,6 +116,9 @@ with all pairwise distances in `D`: the sets `{x ∈ A : x + w − p ∈ A}`, `w
 | `{1, 46/25}` | none | 0.139185 < 1/7 | 175 | `χ ≥ 8` |
 | `{1, 40}` | none | 0.115511 < 1/8 | 36 | `χ ≥ 9` |
 | `{1, 100}` | none | 0.103302 < 1/9 | 37 | `χ ≥ 10` |
+| `{1, 40, 1600}` | none | 0.046389 < 1/21 | 36 | `χ ≥ 22` |
+| `{1, 10, 100, 1000}` | none | 0.039641 < 1/25 | 37 | `χ ≥ 26` |
+| `{1, 100, 10⁴}` | none | 0.037168 < 1/26 | 37 | `χ ≥ 27` |
 
 Three programs check every certificate ([`data/forbidden_distances/`](../data/forbidden_distances/README.md)):
 - `certify_lp2.py` (Arb balls; distances and radii enclosed from their exact expressions; on `[0, T]` point values
@@ -142,4 +147,12 @@ Three programs check every certificate ([`data/forbidden_distances/`](../data/fo
   stated explicitly; measurable precedents to be credited; `{1, 100}` gives 10; code and citation fixes (the bound
   `|J_α| ≤ 1/√2` holds for `α ≥ 1`, not for every `α > 0`; a clique check that used numerical identification; radii
   through decimal evaluation). All applied in v3.
-- **v3 (10 October, afternoon).** The paper as it stands, with the third checker.
+- **v3 (10 October, afternoon).** The paper with the third checker.
+- **Third referee** (version 3): no mathematical error; the new material (the limit `f(n)/n → m₁`, the supremum
+  identity, the integer rounding, the Erdős bounds) checked line by line against the sources; all certificates
+  accepted by its own checker, and broken ones rejected. Findings: Croft's density is `0.2293647…`, so `m₁ ≥ 0.229365`
+  was rounded up (now `0.229364`); `f(n) ≥ m₁n` is classical and is now credited; the title now says "with algebraic
+  forbidden distances"; a wrong bibliography entry (Parts); the paraphrase of Oliveira Filho and Vallentin §4;
+  scripts that relied on `assert` and exited 0 when the bound failed (fixed: explicit checks, non-zero exit, and tests
+  that broken certificates are rejected).
+- **v4 (10 October, afternoon).** The third referee's findings, and certified bounds for three and four distances.

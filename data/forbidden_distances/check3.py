@@ -119,7 +119,8 @@ def main():
     dexprs = C['D'].split(';')
     z0 = Fr(C['z0'])
     z = [Fr(v) for v in C['z']]
-    assert len(z) == len(dexprs)
+    if len(z) != len(dexprs):
+        raise SystemExit('check3: one coefficient per distance expected')
     terms = [(z[i], parse(dexprs[i], 'arb')) for i in range(len(dexprs))]
     ysum = Fr(0)
     m = Fr(0)
@@ -127,11 +128,13 @@ def main():
         Dsq = [d * d for d in (parse(e, 'q3') for e in dexprs)]
     for c in C['cliques']:
         y = Fr(c['y'])
-        assert y >= 0
+        if y < 0:
+            raise SystemExit('check3: negative clique weight')
         W = SHAPES_Q3[c['shape']]
         for P, R in itertools.combinations(W, 2):
             d2 = (P[0] - R[0]) * (P[0] - R[0]) + (P[1] - R[1]) * (P[1] - R[1])
-            assert any(d2 == dd for dd in Dsq), ('not a clique', c['shape'])
+            if not any(d2 == dd for dd in Dsq):
+                raise SystemExit(f"check3: not a clique: {c['shape']}")
         n = len(W)
         cx = sum((w[0] for w in W), Q3(0)) / n
         cy = sum((w[1] for w in W), Q3(0)) / n
@@ -146,7 +149,8 @@ def main():
     T = Fr(C['T'])
     # [T, oo): |sum_i c_i J0(r_i t)| <= sum_i |c_i| sqrt(2/(pi r_i T)) < z0
     tail = sum((abs(cf) * (arb(2) / (arb.pi() * r * A(T))).sqrt() for cf, r in coefs), arb(0))
-    assert Z0 - tail > 0, 'tail bound fails'
+    if not Z0 - tail > 0:
+        raise SystemExit('check3: tail bound fails')
     # [0, T]: enclose g over whole intervals, bisecting until the enclosure is certainly >= 0
     stack = [(Fr(i) * T / 64, Fr(i + 1) * T / 64) for i in range(64)]
     pieces = 0
@@ -161,15 +165,18 @@ def main():
             lo = g.lower()
             worst = lo if worst is None or lo < worst else worst
             continue
-        if b - a < Fr(1, 10**9):
+        if b - a < Fr(1, 10**15):
             raise SystemExit(f'check3: cannot certify g >= 0 near t = {float(a)}')
         stack += [(a, mid), (mid, b)]
     s = z0 + sum(z) + m
-    assert s > 0
+    if not s > 0:
+        raise SystemExit('check3: s <= 0')
     B = (z0 + ysum) / s
     print(f"check3: {pieces} intervals on [0, {C['T']}], min lower bound of g {float(worst.mid()):.3e}, "
           f"tail {float(tail.mid()):.3e} < z0 {float(z0):.6f}")
     print(f"check3: B = {float(B):.8f}, 1/B = {float(1 / B):.5f}, B < 1/{k}: {B < Fr(1, k)}")
+    if not B < Fr(1, k):
+        raise SystemExit(1)
 
 
 if __name__ == '__main__':

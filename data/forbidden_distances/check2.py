@@ -24,10 +24,13 @@ for c in C['cliques']:
     W = [(S(x), S(y)) for x, y in SHAPES[c['shape']]]
     for a, b in itertools.combinations(range(len(W)), 2):
         d2 = (W[a][0] - W[b][0])**2 + (W[a][1] - W[b][1])**2
-        assert any(sp.simplify(sp.expand(d2 - dd**2)) == 0 for dd in D), 'clique'   # symbolic, no numerics
+        if not any(sp.simplify(sp.expand(d2 - dd**2)) == 0 for dd in D):   # symbolic, no numerics
+            raise SystemExit(f"check2: not a clique: {c['shape']}")
     cx = sum(w[0] for w in W) / len(W); cy = sum(w[1] for w in W) / len(W)
     px, py = cx + sp.Rational(c['ox']), cy + sp.Rational(c['oy'])
-    y = Fr(c['y']); assert y >= 0
+    y = Fr(c['y'])
+    if y < 0:
+        raise SystemExit('check2: negative clique weight')
     for wx, wy in W:
         terms.append((y, sp.sqrt((wx - px)**2 + (wy - py)**2)))
     ysum += y; m += y * len(W)
@@ -45,8 +48,11 @@ while t < T:
     gmin = v if gmin is None or v < gmin else gmin
     t += v / L * mp.mpf('0.99'); n += 1
 tail = sum(abs(c) * mp.sqrt(2 / (mp.pi * r * T)) for c, r in zip(Cf, R))
-assert Z0 - tail > 0, 'tail'
+if not Z0 - tail > 0:
+    raise SystemExit('check2: tail bound fails')
 s = z0 + sum(z) + m
 B = (z0 + ysum) / s
 print(f"check2: {n} steps on [0, {C['T']}], min g {mp.nstr(gmin, 6)}, tail {mp.nstr(tail, 6)} < z0 {mp.nstr(Z0, 6)}")
 print(f"check2: B = {float(B):.8f}, 1/B = {float(1/B):.5f}, B < 1/{k}: {B < Fr(1, k)}")
+if not B < Fr(1, k):
+    raise SystemExit(1)

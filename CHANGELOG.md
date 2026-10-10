@@ -22,8 +22,12 @@ including every retracted claim, is the research log,
   `χ_f(ℝ²) > 4.0007` (June 2026), and Davies the exponential growth in dimension at least 4 (8 October 2026); both
   are credited. New: `papers/forbidden-distances/` (7 pages), `notes/forbidden_distances.md`,
   `data/forbidden_distances/` (eight linear-programming certificates and three checkers, one of them adapted from a
-  referee's), `tests/test_forbidden_distances.py` (fast part in CI). Two internal referees; a third reading of the
-  final version is under way.
+  referee's), `tests/test_forbidden_distances.py` (fast part in CI). Version 4 of the paper applies a third internal
+  referee (no mathematical error): Croft's constant is `0.2293647…`, so the bound `m₁ ≥ 0.229365` used before was
+  rounded up and is now `0.229364`; `f(n) ≥ m₁n` is credited as classical; the title now says "with algebraic
+  forbidden distances". It also adds certified bounds for three and four distances: `{1, 40, 1600}`,
+  `{1, 10, 100, 1000}` and `{1, 100, 10⁴}` need 22, 26 and 27 colours. The checkers now exit non-zero when a check
+  fails or the bound is too weak, and tests check that broken certificates are rejected.
 - **Where OpenAI's rigidity theorem fails (10 October).** The remark on the Pythagorean closure extends to every
   subfield `F` of ℝ with a field embedding into ℝ other than the inclusion: the analogue of OpenAI's Theorem 2.3 is
   false over `F(i)`, for instance for the totally real algebraic numbers and for every number field inside ℝ with two

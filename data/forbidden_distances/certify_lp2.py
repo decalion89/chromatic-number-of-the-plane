@@ -66,8 +66,8 @@ def main():
         W = [(sym(x), sym(yv)) for x, yv in SHAPES[c['shape']]]
         for a, b in itertools.combinations(range(len(W)), 2):
             d2 = (W[a][0] - W[b][0])**2 + (W[a][1] - W[b][1])**2
-            assert any(sp.minimal_polynomial(d2 - dd**2, sp.Symbol('X')) == sp.Symbol('X')
-                       for dd in Dsym), ('not a clique', c['shape'], d2)
+            if not any(sp.minimal_polynomial(d2 - dd**2, sp.Symbol('X')) == sp.Symbol('X') for dd in Dsym):
+                raise SystemExit(f"not a clique: {c['shape']}, squared distance {d2}")
         cx = sum(w[0] for w in W) / len(W); cy = sum(w[1] for w in W) / len(W)
         if 'ox' in c:
             px = cx + sp.Rational(c['ox']); py = cy + sp.Rational(c['oy'])
@@ -91,7 +91,7 @@ def main():
     z0 = Fr(zest).limit_denominator(10**9) + eps
     Z0 = arb(z0.numerator) / arb(z0.denominator)
     t = Fr(0); nsteps = 0; lo = None
-    hmin = Fr(1, 10**6)
+    hmin = Fr(1, 10**15)
     while t < T:
         tm = arb(t.numerator) / arb(t.denominator)
         h = sum(arb(cf.numerator) / arb(cf.denominator) * (r * tm).bessel_j(0) for cf, r in coef_r)
@@ -99,17 +99,19 @@ def main():
         gl = float(val.mid()) - float(val.rad())
         if gl <= 0:
             raise SystemExit(f'g(t) <= 0 at t = {float(t)} (lower bound {gl}); increase eps')
-        step = Fr(gl / float(L.upper().mid()) * 0.999).limit_denominator(10**8)
+        step = Fr(gl / float(L.upper().mid()) * 0.999)   # the exact (dyadic) value of the float
         if step < hmin:
             raise SystemExit(f'step too small at t = {float(t)}')
         # rigorous check of the Lipschitz condition with this step
-        assert (h + Z0 - L * (arb(step.numerator) / arb(step.denominator))).lower() >= 0
+        if not (h + Z0 - L * (arb(step.numerator) / arb(step.denominator))).lower() >= 0:
+            raise SystemExit(f'Lipschitz step not certified at t = {float(t)}')
         t += step; nsteps += 1
         if lo is None or val < lo:
             lo = val
     print(f'  sweep: {nsteps} steps on [0, {T}], min lower bound of g = {float(lo.mid()):.6f}')
     tail = sum(abs(arb(cf.numerator) / arb(cf.denominator)) * (arb(2) / (arb.pi() * r * T)).sqrt() for cf, r in coef_r)
-    assert arb(z0.numerator) / arb(z0.denominator) - tail > 0, 'tail bound fails'
+    if not arb(z0.numerator) / arb(z0.denominator) - tail > 0:
+        raise SystemExit('tail bound fails')
     cert = {'D': J['D'], 'T': T, 'z0': str(z0), 'z': [str(v) for v in z],
             'cliques': [{'shape': c['shape'], 'ox': c.get('ox', str(Fr(c.get('i', 0)) * grid)),
                          'oy': c.get('oy', str(Fr(c.get('j', 0)) * grid)), 'y': str(Fr(round(c['y'] * digits), digits))}
@@ -117,11 +119,14 @@ def main():
     out = sys.argv[3] if len(sys.argv) > 3 else sys.argv[1].replace('.json', '') + '.cert.json'
     json.dump(cert, open(out, 'w'), indent=1)
     s = z0 + sum(z) + mterm
-    assert s > 0
+    if not s > 0:
+        raise SystemExit('s <= 0')
     B = (z0 + ysum) / s
     print(f"D = {J['D']}: float LP {J['lp']:.6f}; {len(J['cliques'])} clique placements; T = {T}, adaptive steps")
     print(f"  certified z0 = {float(z0):.8f}, sum y = {float(ysum):.8f}, s = {float(s):.8f}")
     print(f"  bound B = {float(B):.8f} -> 1/B = {float(1/B):.5f};  B < 1/{k}: {B < Fr(1, k)}  (exact B = {B})")
+    if not B < Fr(1, k):
+        raise SystemExit(1)
 
 if __name__ == '__main__':
     main()

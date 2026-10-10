@@ -18,12 +18,13 @@ import pytest
 HERE = os.path.dirname(os.path.abspath(__file__))
 DIR = os.path.join(HERE, '..', 'data', 'forbidden_distances')
 
-# name -> (k, claimed: bound < 1/k, hence chi(R^2, D) >= k + 1)
+# name -> k, the claim being bound < 1/k, hence chi(R^2, D) >= k + 1
 CERTS = {
-    'cl_s3': 6, 's_vs': 6, 's_10': 6, 's_116': 7, 's_4625': 7, 's_40': 8,   # fast
-    'cl_2': 6, 's_100': 9,                                                 # slow
+    'cl_s3': 6, 's_vs': 6, 's_10': 6, 's_116': 7, 's_4625': 7, 's_40': 8,   # two distances
+    'cl_2': 6, 's_100': 9,
+    'm3_40': 21, 'm3_100': 26, 'm4_10': 25,                                # three and four distances
 }
-SLOW = {'cl_2', 's_100'}
+SLOW = {'cl_2', 's_100', 'm3_40', 'm3_100', 'm4_10'}                       # check2.py takes minutes or more
 
 
 def run(script, *args, timeout=1800):
@@ -57,6 +58,31 @@ def test_certificate_check3(name):
     r = run('check3.py', os.path.join('certificates', name + '.cert.json'), str(k))
     assert r.returncode == 0, r.stdout + r.stderr
     assert f'B < 1/{k}: True' in r.stdout
+
+
+def _broken(tmp_path, name, mutate):
+    C = json.load(open(os.path.join(DIR, 'certificates', name + '.cert.json')))
+    mutate(C)
+    path = tmp_path / (name + '.broken.cert.json')
+    path.write_text(json.dumps(C))
+    return str(path)
+
+
+@pytest.mark.parametrize('name,k,mutate', [
+    ('s_116', 7, lambda C: C.update(z0=str(Fraction(C['z0']) - Fraction(1, 100)))),   # g < 0 somewhere
+    ('cl_s3', 6, lambda C: C['cliques'][0].update(shape='tri222')),                    # side 2 is not in D
+    ('cl_2', 6, lambda C: C['cliques'][0].update(y='-1/1000')),                       # negative weight
+])
+def test_check3_rejects_broken_certificates(tmp_path, name, k, mutate):
+    r = run('check3.py', _broken(tmp_path, name, mutate), str(k))
+    assert r.returncode != 0, r.stdout
+
+
+def test_checkers_fail_when_the_bound_is_too_weak():
+    """B = 0.14099... for {1, 11/6} is not below 1/8: both checkers must exit non-zero."""
+    for script in ('check3.py', 'check2.py'):
+        r = run(script, os.path.join('certificates', 's_116.cert.json'), '8')
+        assert r.returncode != 0 and 'B < 1/8: False' in r.stdout, script + r.stdout + r.stderr
 
 
 @pytest.mark.slow

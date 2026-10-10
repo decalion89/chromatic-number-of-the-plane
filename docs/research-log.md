@@ -11175,3 +11175,24 @@ measurable set avoiding `D`; for finite `D` the fractional chromatic number of t
 - **Open.** An explicit finite graph for any of these bounds; the threshold `d₀` beyond which `{1, d}` needs 17;
   a formal proof of the generalised transfer (OpenAI's Lean files would need the radius as a parameter). A third
   reading of the final version is under way.
+
+### Third referee, and three or four distances (10 October, afternoon)
+
+- **Third referee** (version 3 of the paper, with a checker of its own): no mathematical error. The new material — the
+  limit `f(n)/n → m₁(ℝ²)`, the identity `sup χ_f = m₁^{−k}`, the rounding to integers in the many-distance corollary,
+  the bounds on Erdős's `L₂(r)` — checked line by line against the sources. **Corrected:** Croft's density is
+  `0.2293647…` (the tortoise with apothem `0.48277`; 1/δ = 4.3598682, as in Matolcsi et al.), so the bound
+  `m₁ ≥ 0.229365` we had copied from the literature was rounded up; it is now `0.229364`, and the upper bound
+  `χ_f(ℝ²) < 4.36` is unchanged. **Credited:** `f(n) ≥ m₁n` is the classical averaging bound `m₁ ≤ α₁`; only the limit is
+  new. **Retitled:** the paper now says "with algebraic forbidden distances", since the inequality probably fails for
+  some algebraically independent distances. Smaller findings applied: the Parts reference, the paraphrase of Oliveira
+  Filho–Vallentin §4, which inputs involve a distance, finite versus bounded `D`, the `2π` in the Fourier
+  normalisation, citations (Erdős 1987, Naslund 2023, Problem G11 as quoted by Bukh), and the checkers, which used
+  `assert` and exited 0 when the bound failed (now explicit checks, a non-zero exit code, and tests with broken
+  certificates).
+- **Three and four distances, explicitly.** A cutting-plane version of the linear program (`lp_multi.py`) and the same
+  certification give `χ(ℝ², {1, 40, 1600}) ≥ 22`, `χ(ℝ², {1, 10, 100, 1000}) ≥ 26` and `χ(ℝ², {1, 100, 10⁴}) ≥ 27`
+  (bounds 0.046389, 0.039641, 0.037168; `certify_lp2.py` with up to six million rigorous steps, and `check3.py`). The
+  certifier's step no longer goes through a denominator bound of `10⁸`, so it can take the tiny steps these need; the
+  eight earlier certificates are rebuilt byte for byte. Adding triangle cliques at every scale moved the floating-point
+  value for `{1, 10, 100}` only from 0.0769 to 0.0743, so we did not pursue it.

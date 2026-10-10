@@ -1,4 +1,4 @@
-# Density certificates for planar sets avoiding two distances
+# Density certificates for planar sets avoiding given distances
 
 Each file in `certificates/` is a dual solution of the linear program of Oliveira Filho and Vallentin
 (J. Eur. Math. Soc. 2010, Theorem 1.1), with clique inequalities added for `{1, 2}` and `{1, √3}`. It proves an
@@ -16,6 +16,9 @@ upper bound `B` on `m_D(ℝ²)`, the largest density of a measurable planar set 
 | `s_4625.cert.json` | `{1, 46/25}` | none | 0.139185 < 1/7 | 175 | `χ ≥ 8` |
 | `s_40.cert.json` | `{1, 40}` | none | 0.115511 < 1/8 | 36 | `χ ≥ 9` |
 | `s_100.cert.json` | `{1, 100}` | none | 0.103302 < 1/9 | 37 | `χ ≥ 10` |
+| `m3_40.cert.json` | `{1, 40, 1600}` | none | 0.046389 < 1/21 | 36 | `χ ≥ 22` |
+| `m4_10.cert.json` | `{1, 10, 100, 1000}` | none | 0.039641 < 1/25 | 37 | `χ ≥ 26` |
+| `m3_100.cert.json` | `{1, 100, 10⁴}` | none | 0.037168 < 1/26 | 37 | `χ ≥ 27` |
 
 The bounds are rounded up; the exact values are fractions, printed by the programs.
 
@@ -30,8 +33,9 @@ The claim is that `g(t) = z0 + Σ_k z_k J₀(d_k t) + Σ_c y_c Σ_{w ∈ W_c} J�
 `t ≥ 0`. Then `m_D(ℝ²) ≤ B = (z0 + Σ_c y_c) / (z0 + Σ_k z_k + Σ_c y_c |W_c|)` (Proposition 10 of the paper).
 
 **Programs** (run them in this folder):
-- `lp_simple_json.py "1;40" lp/s_40.json` and `lp4.py "1;2" tri111,tri222 lp/cl_2.json` solve the linear programs
-  in floating point. They only choose a certificate; nothing they compute is trusted.
+- `lp_simple_json.py "1;40" lp/s_40.json`, `lp_multi.py "1;100;10000" lp/m3_100.json` (a cutting-plane version
+  for distances far apart) and `lp4.py "1;2" tri111,tri222 lp/cl_2.json` solve the linear programs in floating
+  point. They only choose a certificate; nothing they compute is trusted.
 - `certify_lp2.py lp/NAME.json k [certificates/NAME.cert.json]` rounds the coefficients to fractions, checks the
   cliques exactly, proves `g ≥ 0` on `[0, T]` with Arb balls (point values and the Lipschitz bound
   `|J₁(x)| ≤ 1/√2`, DLMF 10.14.1) and on `[T, ∞)` with `|J₀(x)| ≤ √(2/(πx))`, and writes the certificate.
@@ -41,12 +45,17 @@ The claim is that `g(t) = z0 + Σ_k z_k J₀(d_k t) + Σ_c y_c Σ_{w ∈ W_c} J�
   each enclosure is nonnegative, and checks the tail. It is adapted from the checker of the second referee.
 
 `python3 check3.py certificates/cl_2.cert.json 6` takes about ten seconds; the other certificates take one second
-or less. `certify_lp2.py` reproduces every stored certificate byte for byte.
+or less. `certify_lp2.py` reproduces every stored certificate byte for byte; for the three- and four-distance ones
+its sweep takes from one to eight minutes (up to six million steps), and `check2.py` takes hours.
+
+Every program exits with a non-zero code when a check fails, including when the bound is not below `1/k`; the
+checks do not use `assert`, so they also run under `python3 -O`.
 
 **Tests.** From the root of the repository, `python3 -m pytest -q -m "not slow" tests/test_forbidden_distances.py`
-runs `check3.py` on all eight certificates, `check2.py` on six of them and `certify_lp2.py` on one (under a minute;
-CI runs these). Without `-m` the file also runs `check2.py` on the other two and rebuilds every certificate with
-`certify_lp2.py` (about five minutes).
+runs `check3.py` on all the certificates, `check2.py` on six of them and `certify_lp2.py` on one, and checks that
+`check3.py` rejects three broken certificates and both checkers reject a claim that is too strong (about a minute;
+CI runs these). Without `-m` the file also runs `check2.py` on the others and rebuilds every certificate with
+`certify_lp2.py` (hours, because of `check2.py` on the three- and four-distance certificates).
 
 **Requirements.** `python-flint` (Arb), `sympy` and `mpmath`; the two linear-programming scripts also need `numpy`
 and `scipy`.
