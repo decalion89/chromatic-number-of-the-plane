@@ -41,7 +41,7 @@ plane with algebraic forbidden distances}
 observation, wrote the programs, ran the checks and helped to draft this note. Five separate AI agents refereed
 the note with their own programs. The hard input is OpenAI's transfer theorem \cite{OpenAI}. No mathematician has
 checked the note yet. The author is not a professional mathematician and submits it for independent verification.}
-\date{Draft, version 6, 10 October 2026}
+\date{Draft, version 7, 10 October 2026}
 \subjclass[2020]{Primary 05C15, 52C10; Secondary 05C72, 42B10, 90C05}
 \keywords{Hadwiger--Nelson problem, chromatic number of the plane, forbidden distances, fractional chromatic number,
 distance-avoiding sets, linear programming bounds}
@@ -60,10 +60,10 @@ of the plane equals $1/m_1(\R^2)$, where $m_1(\R^2)$ is the largest density of a
 points at distance $1$, so it lies between $4.0485$ and $4.36$; and the least independence ratio of an $n$-point
 unit-distance graph tends to $m_1(\R^2)$, as conjectured by Dúcz and Varga. If the distances $1$ and $2$ are both
 forbidden, at least $7$ colours are needed, improving the bound $6$ of Exoo and Ismailescu; the same holds for
-$\{1,\sqrt3\}$, and at least $8$, $9$, $10$ and $12$ colours are needed for $\{1,11/6\}$, $\{1,40\}$, $\{1,100\}$
-and $\{1,1000\}$. Uniformly in $d$, $\chi(\R^2,\{1,d\})\ge7$ for every real algebraic $d\ge6.52$, and the
-bound rises step by step to $13$ for every real algebraic $d\ge54\,300$; from $d=12.3$ on, each step is proved by a
-single certificate for a whole half-line of $d$. The
+$\{1,\sqrt3\}$, and at least $8$, $10$, $11$ and $13$ colours are needed for $\{1,11/6\}$, $\{1,40\}$,
+$\{1,100\}$ and $\{1,1000\}$. Uniformly in $d$, $\chi(\R^2,\{1,d\})\ge7$ for every real algebraic $d\ge5.82$ and for
+$1.72\le d\le2.04$, and the bound rises step by step to $14$ for every real algebraic $d\ge25\,700$; each step is
+proved by a single certificate for a whole half-line of $d$, using unit equilateral triangles and Moser spindles. The
 distances $1$, $100$ and $10^4$ force $27$ colours, $1$, $10$, $100$ and $1000$ force $26$, and $1$, $30$, $900$ and
 $27000$ force $48$. For
 suitable sets of $k$ integer distances more than $4.0485^k$ colours are needed, in the plane and in every higher
@@ -173,45 +173,51 @@ $\{1,\sqrt3\}$, which use clique inequalities, also seem to be new for measurabl
 The same linear program gives bounds for whole ranges of $d$ at once.
 
 \begin{theorem}\label{thm:uniform}
-Let $d\ge1$ be a real algebraic number and $7\le k\le13$. Then $\chi(\R^2,\{1,d\})\ge k$ whenever $d\ge d_k$, where
-\[
-d_7=6.52,\quad d_8=12.05,\quad d_9=24.3,\quad d_{10}=52.9,\quad d_{11}=140.2,\quad d_{12}=601,\quad
-d_{13}=54\,300.
-\]
-Moreover $\chi(\R^2,\{1,d\})\ge7$ for $1.75\le d\le1.93$, and $\chi(\R^2,\{1,d\})\ge8$ for $1.83\le d\le1.855$. The
+Let $d\ge1$ be a real algebraic number and $7\le k\le14$. Then $\chi(\R^2,\{1,d\})\ge k$ whenever $d\ge d_k$, where
+\begin{gather*}
+d_7=5.82,\quad d_8=10.5,\quad d_9=18.9,\quad d_{10}=35.7,\quad d_{11}=73.6,\\
+d_{12}=181,\quad d_{13}=655,\quad d_{14}=25\,700.
+\end{gather*}
+Moreover $\chi(\R^2,\{1,d\})\ge7$ for $1.72\le d\le2.04$, and $\chi(\R^2,\{1,d\})\ge8$ for $1.82\le d\le1.89$. The
 same bounds hold for $\chi(\R^2,\{1,1/d\})=\chi(\R^2,\{1,d\})$, and, for measurable colourings, for every real
 $d$.
 \end{theorem}
 
-Theorem~\ref{thm:uniform} contains the finite bounds of Corollary~\ref{cor:two} except those for $2$, $\sqrt3$ and
-$(\sqrt6+\sqrt2)/2$; see Figure~\ref{fig:uniform}. Scaling the plane by $1/d$ turns $\{1,d\}$ into $\{1/d,1\}$,
+Theorem~\ref{thm:uniform} contains the finite bounds of Corollary~\ref{cor:two} and raises the ones for $\{1,40\}$,
+$\{1,100\}$ and $\{1,1000\}$ to $10$, $11$ and $13$; see Figure~\ref{fig:uniform}. Scaling the plane by $1/d$ turns $\{1,d\}$ into $\{1/d,1\}$,
 which gives the equality with $1/d$. For measurable colourings neither the transfer nor algebraicity is needed:
 Proposition~\ref{prop:lp} and Lemma~\ref{lem:tail} do not use them, and one class of a measurable proper $k$-colouring
 avoiding $\{1,d\}$ is a measurable set avoiding $\{1,d\}$ of upper density at least $1/k$. For measurable colourings
 bounds of this size were known for one pair \cite[§4]{OFV} and, by Bukh's theorem, for all $d$ beyond an unspecified
 threshold (see the discussion after Corollary~\ref{cor:two}); there the new content is the explicit thresholds and
-ranges. For each $k$ a single function serves every $d\ge D_k$ (Lemma~\ref{lem:tail} and Table~\ref{tab:uniform};
-$D_k=d_k$ except $D_8=12.3$), and the two bounded ranges and $[12.05,12.3]$ are covered by finitely many functions,
-each serving an interval of $d$ (Section~\ref{sec:uniform}). The thresholds are close to the best this linear program
-can give: in floating point its value is below $1/(k-1)$ from about $d=6.503$, $12.03$, $23.87$, $52.85$, $139.9$ and
-$599.2$ on, for $k=7,\dots,12$, and for $k=13$ from somewhere between $50\,000$ and $54\,300$. For $1<d<6.5$ it is
-below $1/6$ only for $d$ between about $1.747$ and $1.934$, and on $(2,6.5)$ it is largest near $d=2.59$, where it is
-$1/4.68$. As $d\to\infty$ its value tends to $\mu_0^2/(1+\mu_0)^2=1/12.13\ldots$, where $\mu_0=-\min J_0=0.40275\ldots$:
-the square of its value $\mu_0/(1+\mu_0)=0.287119$ for one distance \cite[§3.2]{OFV} (Remark after
-Lemma~\ref{lem:tail}). So for two distances it gives at most $13$ colours (for $d\ge20$ by that Remark, and in floating
-point for every $d$); Theorem~\ref{thm:C} gives more for very large $d$.
+ranges. For each $k$ a single function serves every $d\ge d_k$ (Lemma~\ref{lem:tail} and Table~\ref{tab:uniform}),
+and each of the two bounded ranges is covered by finitely many functions, each serving an interval of $d$
+(Section~\ref{sec:uniform}). All of them use the clique inequalities of unit equilateral triangles, the tails also
+the inequalities of Moser spindles (Proposition~\ref{prop:lp} with $\alpha=2$, as in \cite{KMOR}), and the thresholds
+are close to the best this method can give: in floating point, the program of Lemma~\ref{lem:tail} gives $k$ colours
+from about $d=5.797$, $10.42$, $18.81$, $35.53$, $73.36$, $179.5$, $652.6$ and $25\,590$ on, for $k=7,\dots,14$. Without spindles it gives $7,\dots,13$ colours from about $5.800$,
+$10.67$, $20.04$, $40.04$, $90.24$, $261.7$ and $1544$ on and never $14$; without triangles and spindles, from about
+$6.503$, $12.03$, $23.87$, $52.85$, $139.9$, $599.2$ and, for $k=13$, from somewhere between $50\,000$ and
+$54\,300$. For a single $d$ the program with triangles is below $1/6$, for $1<d<5.8$,
+only for $d$ between about $1.716$ and $2.045$ and from about $5.55$ on. As $d\to\infty$ the value of the program
+without cliques tends to $\mu_0^2/(1+\mu_0)^2=1/12.13\ldots$, where $\mu_0=-\min J_0=0.40275\ldots$: the square of
+its value $\mu_0/(1+\mu_0)=0.287119$ for one distance \cite[§3.2]{OFV} (Remark after Lemma~\ref{lem:tail}). With
+triangles and spindles its floating-point value at $D=10^7$ is $0.075778=1/13.20$, close to the product
+$0.075362=1/13.27$ of $0.287119$ and the value $0.262476$ of the one-distance program with our triangles and spindles
+(with triangles alone the values are $1/12.80$ and $0.271823$). So, in floating point, these configurations give no
+more than $14$ colours for two distances; Theorem~\ref{thm:C} gives more for very large $d$.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth]{uniform-bounds}
 \caption{Lower bounds for $\chi(\R^2,\{1,d\})$, $d\ge1$; the same hold for $1/d$. Thick blue: Theorem~\ref{thm:uniform},
 for every real algebraic $d$ in the range. Orange: the pairs $\{1,\sqrt3\}$, $\{1,2\}$ and $\{1,(\sqrt6+\sqrt2)/2\}$
-of Corollary~\ref{cor:two}, certified with clique inequalities or at a single $d$. Grey: $1/\mathrm{LP}(d)$, where
-$\mathrm{LP}(d)$ is the value of the linear program in floating point (not a proof); a certified bound below
-$1/(k-1)$ gives $k$ colours, so the blue steps are less than one colour above the grey curve, and at most slightly
-below it. Dashed: the limit
-$12.13\ldots$ of the grey curve. Dotted: $\chi(\R^2)\ge6$ \cite{OpenAI}, which holds for every $d$. Left: the
-shaded range $1.6\le d\le2.15$ on a linear scale.}
+of Corollary~\ref{cor:two}. Grey, solid: $1/\mathrm{LP}(d)$, where $\mathrm{LP}(d)$ is the value, in floating point
+(not a proof), of the linear program for the single distance $d$ with unit-triangle cliques ($d\le6.6$); grey,
+dash-dotted: the same for the program of Lemma~\ref{lem:tail} with triangles and spindles, whose value at $D$ serves
+every $d\ge D$. A certified bound below $1/(k-1)$ gives $k$ colours, so each blue step lies less than one colour above
+the curve it follows. Dashed: the limit $13.27$ of the second program (floating point). Dotted: $\chi(\R^2)\ge6$ \cite{OpenAI}, which
+holds for every $d$. Left: the shaded range $1.6\le d\le2.15$ on a linear scale.}
 \label{fig:uniform}
 \end{figure}
 
@@ -657,13 +663,14 @@ OpenAI's rigidity theorem.
 
 \section{Linear-programming certificates}\label{sec:lp}
 
-\begin{proposition}[Oliveira Filho--Vallentin \cite{OFV}, with clique inequalities]\label{prop:lp}
-Let $D=\{d_1,\dots,d_\ell\}$ and let $W_1,\dots,W_r$ be finite planar point sets, each with all pairwise distances in
-$D$, and $p_1,\dots,p_r$ points. Suppose $z_0,\dots,z_\ell\in\R$ and $y_1,\dots,y_r\ge0$ satisfy
+\begin{proposition}[Oliveira Filho--Vallentin \cite{OFV}, with configuration inequalities]\label{prop:lp}
+Let $D=\{d_1,\dots,d_\ell\}$, let $W_1,\dots,W_r$ be finite planar point sets and $p_1,\dots,p_r$ points, and let
+$\alpha_c$ be the largest number of points of $W_c$ no two of which are at a distance in $D$ (so $\alpha_c=1$ when all
+pairwise distances of $W_c$ lie in $D$). Suppose $z_0,\dots,z_\ell\in\R$ and $y_1,\dots,y_r\ge0$ satisfy
 \[
 g(t)=z_0+\sum_{k}z_kJ_0(d_kt)+\sum_cy_c\sum_{w\in W_c}J_0(|w-p_c|\,t)\ \ge\ 0\qquad(t\ge0),
 \]
-with $s=z_0+\sum_kz_k+\sum_cy_c|W_c|>0$. Then $m_D(\R^2)\le(z_0+\sum_cy_c)/s$.
+with $s=z_0+\sum_kz_k+\sum_cy_c|W_c|>0$. Then $m_D(\R^2)\le(z_0+\sum_c\alpha_cy_c)/s$.
 \end{proposition}
 
 \begin{proof}
@@ -671,12 +678,16 @@ By Lemma~\ref{lem:periodic} it suffices to consider a periodic measurable set $A
 $D$. Its autocorrelation $\varphi(v)=\delta(A\cap(A-v))$ is positive definite, with spectral measure $\nu$ on the dual
 lattice, $\nu(\{0\})=\delta^2$, total mass $\delta$, so that $\varphi(v)=\int e^{2\pi i\langle\xi,v\rangle}\,d\nu(\xi)$;
 its radial average is $f(r)=\int J_0(2\pi r|\xi|)\,d\nu(\xi)$, with
-$f(0)=\delta$ and $f(d_k)=0$. For a set $W$ with pairwise distances in $D$ and any $p$, the sets
-$\{x\in A:x+w-p\in A\}$, $w\in W$, are disjoint subsets of $A$, so $\sum_{w}\varphi(w-p)\le\delta$; averaging over
-rotations of $W$ about $p$ gives $\sum_wf(|w-p|)\le\delta$. Integrating $g(2\pi|\xi|)\ge0$ against $\nu$,
-$\delta^2g(0)\le\int g(2\pi|\xi|)\,d\nu=z_0\delta+\sum_cy_c\sum_wf(|w-p_c|)\le(z_0+\sum_cy_c)\delta$, and $g(0)=s$.
-Without clique terms this is \cite[Thm.~1.1]{OFV}; the clique terms are in the spirit of \cite[§3.1]{OFV}, which uses
-simplices, while we also use a rhombus.
+$f(0)=\delta$ and $f(d_k)=0$. For a finite set $W$, its number $\alpha$ as above, and any $p$, every point $x$ of $A$
+lies in at most $\alpha$ of the sets $\{x\in A:x+w-p\in A\}$, $w\in W$, because the points $x+w-p$ that lie in $A$
+have no two at a distance in $D$; so $\sum_{w}\varphi(w-p)\le\alpha\delta$, and averaging over rotations of $W$ about
+$p$ gives $\sum_wf(|w-p|)\le\alpha\delta$. Integrating $g(2\pi|\xi|)\ge0$ against $\nu$,
+$\delta^2g(0)\le\int g(2\pi|\xi|)\,d\nu=z_0\delta+\sum_cy_c\sum_wf(|w-p_c|)\le(z_0+\sum_c\alpha_cy_c)\delta$, and
+$g(0)=s$. Without the terms in $y_c$ this is \cite[Thm.~1.1]{OFV}. The terms with $\alpha_c=1$ are in the spirit of
+\cite[§3.1]{OFV}, which uses simplices (we also use a rhombus), and the inequality for a finite unit-distance graph
+with independence number $\alpha$ is \cite[Lemma~3.2]{KMOR}, where Keleti, Matolcsi, Oliveira Filho and Ruzsa use
+copies of the Moser spindle ($\alpha=2$) to bound $m_1(\R^2)$; for $D\ni1$ the number $\alpha_c$ of a unit-distance
+graph is at most its independence number.
 \end{proof}
 
 We solve the linear program in floating point, round the coefficients to rationals and verify $g\ge0$ rigorously.
@@ -743,9 +754,21 @@ diagonals are $1$ and $(1+\sqrt5)/2$) and triangles as cliques gives only $0.176
 
 \section{Uniform certificates for two distances}\label{sec:uniform}
 
-For $d\ge1$ and real numbers $z_0,z_1,z_2$ put $g_d(t)=z_0+z_1J_0(t)+z_2J_0(dt)$ and $s=z_0+z_1+z_2$. By
-Proposition~\ref{prop:lp} without clique terms, if $s>0$ and $g_d\ge0$ on $[0,\infty)$, then
-$m_{\{1,d\}}(\R^2)\le z_0/s$. Besides $|J_0(x)|\le\sqrt{2/(\pi x)}$ for $x>0$ (Section~\ref{sec:lp}) we use
+Let $W=\{(0,0),(1,0),(1/2,\sqrt3/2)\}$ be the unit equilateral triangle and, for a rational $o$, let
+$p_o=(1/2,\sqrt3/6+o)$, the centroid of $W$ moved by $o$ along an axis of symmetry. The distances from $p_o$ to the
+vertices of $W$ are $r_1(o)$ (twice) and $r_3(o)$, where $r_1(o)^2=1/3+o/\sqrt3+o^2$ and $r_3(o)=|1/\sqrt3-o|$. Let
+$M=\{0,1,\omega,1+\omega,\rho,\rho\omega,\rho(1+\omega)\}\subset\C=\R^2$, with $\omega=e^{i\pi/3}$ and
+$\rho=(5+i\sqrt{11})/6$, be the Moser spindle: two rhombi, each made of two unit equilateral triangles, with the common
+vertex $0$ and the far vertices $1+\omega$ and $\rho(1+\omega)$ at distance $1$. Among any three of its points two are
+at distance $1$, so a set avoiding the distance $1$ contains at most two of them. For $d\ge1$, real numbers
+$z_0,z_1,z_2$, rationals $o_1,\dots,o_r$, points $q_1,\dots,q_n$ with rational coordinates and $y_c,u_m\ge0$ put
+\begin{gather*}
+S(t)=z_0+z_1J_0(t)+\sum_cy_c\bigl(2J_0(r_1(o_c)t)+J_0(r_3(o_c)t)\bigr)+\sum_mu_m\sum_{w\in M}J_0(|w-q_m|\,t),\\
+g_d(t)=S(t)+z_2J_0(dt),
+\end{gather*}
+and $s=z_0+z_1+z_2+3\sum_cy_c+7\sum_mu_m$. Proposition~\ref{prop:lp}, with the cliques $W$ at the points $p_{o_c}$ and
+the spindles $M$ at the points $q_m$ ($\alpha=2$), shows: if $s>0$ and $g_d\ge0$ on $[0,\infty)$, then
+$m_{\{1,d\}}(\R^2)\le(z_0+\sum_cy_c+2\sum_mu_m)/s$. Without triangles and spindles the bound is $z_0/s$. Besides $|J_0(x)|\le\sqrt{2/(\pi x)}$ for $x>0$ (Section~\ref{sec:lp}) we use
 $|J_0'|=|J_1|\le1/\sqrt2$ and $|J_0''|=|J_0-J_2|/2\le1$ on $\R$ \cite[10.14.1]{DLMF}, and $J_0\ge-\mu$ on
 $[0,\infty)$ with $\mu=0.4028$; the minimum of $J_0$ is $J_0(j_{1,1})=-0.402759\ldots$, and the programs check
 $J_0\ge-\mu$ in interval arithmetic on $[0,4]$, while beyond $4$ it follows from $\sqrt{2/(4\pi)}<0.399$.
@@ -753,9 +776,10 @@ $J_0\ge-\mu$ in interval arithmetic on $[0,4]$, while beyond $4$ it follows from
 \begin{lemma}\label{lem:tail}
 Let $D>0$, $z_2\ge0$ and $s>0$, and put $e(y)=\min\{\mu,\sqrt{2/(\pi y)}\}$ for $y>0$. If
 \[
-h(t)=z_0+z_1J_0(t)-z_2\,e(Dt)\ \ge\ 0\qquad(t>0),
+h(t)=S(t)-z_2\,e(Dt)\ \ge\ 0\qquad(t>0),
 \]
-then $g_d\ge0$ on $[0,\infty)$ for every $d\ge D$, so that $m_{\{1,d\}}(\R^2)\le z_0/s$ for every $d\ge D$.
+then $g_d\ge0$ on $[0,\infty)$ for every $d\ge D$, so that $m_{\{1,d\}}(\R^2)\le(z_0+\sum_cy_c+2\sum_mu_m)/s$ for every
+$d\ge D$.
 \end{lemma}
 
 \begin{proof}
@@ -765,33 +789,42 @@ $g_d(0)=s>0$.
 \end{proof}
 
 So one function serves every $d\ge D$, and checking it is a problem in one variable, in which nothing oscillates
-faster than $J_0(t)$. Table~\ref{tab:uniform} lists the seven certificates. Each is checked on $[0,10]$, and on
-$[10,\infty)$ by $h(t)\ge z_0-|z_1|\sqrt{2/(10\pi)}-z_2\sqrt{2/(10\pi D)}>0$.
+faster than $J_0(2.59\,t)$. Table~\ref{tab:uniform} lists the eight certificates. Each is checked on $[0,T]$, with
+$T\in\{20,40,80\}$, and on $[T,\infty)$ by
+\[
+h(t)\ge z_0-|z_1|\sqrt{\tfrac2{\pi T}}-z_2\sqrt{\tfrac2{\pi DT}}
+-\sum_cy_c\Bigl(2\sqrt{\tfrac2{\pi r_1(o_c)T}}+\sqrt{\tfrac2{\pi r_3(o_c)T}}\Bigr)
+-\sum_mu_m\sum_{w\in M}\sqrt{\tfrac2{\pi|w-q_m|T}}>0.
+\]
 
 \begin{table}[ht]
 \centering
-\begin{tabular}{rrlr}
+\small
+\begin{tabular}{rrrrrlr}
 \toprule
-$k$ & $D$ & certified bound $z_0/s$ for all $d\ge D$ & boxes\\
+$k$ & $D$ & triangles & spindles & $T$ & bound for all $d\ge D$ & boxes\\
 \midrule
-$7$ & $6.52$ & $0.1666308<1/6$ & $297$\\
-$8$ & $12.3$ & $0.1428093<1/7$ & $169$\\
-$9$ & $24.3$ & $0.1249785<1/8$ & $161$\\
-$10$ & $52.9$ & $0.1111073<1/9$ & $237$\\
-$11$ & $140.2$ & $0.0999955<1/10$ & $139$\\
-$12$ & $601$ & $0.0909057<1/11$ & $97$\\
-$13$ & $54\,300$ & $0.0833328<1/12$ & $75$\\
+$7$ & $5.82$ & $3$ & $1$ & $20$ & $0.1665379<1/6$ & $793$\\
+$8$ & $10.5$ & $3$ & $2$ & $40$ & $0.1426634<1/7$ & $1209$\\
+$9$ & $18.9$ & $3$ & $2$ & $80$ & $0.1249086<1/8$ & $1633$\\
+$10$ & $35.7$ & $3$ & $2$ & $80$ & $0.1110473<1/9$ & $1843$\\
+$11$ & $73.6$ & $2$ & $2$ & $80$ & $0.0999702<1/10$ & $2567$\\
+$12$ & $181$ & $2$ & $2$ & $80$ & $0.0908619<1/11$ & $2171$\\
+$13$ & $655$ & $1$ & $3$ & $80$ & $0.0833234<1/12$ & $4723$\\
+$14$ & $25\,700$ & $1$ & $3$ & $80$ & $0.0769214<1/13$ & $10263$\\
 \bottomrule
 \end{tabular}
 \caption{The certificates of Lemma~\ref{lem:tail} (bounds rounded up; \texttt{tail\_k$k$.json}), each giving
-$\chi(\R^2,\{1,d\})\ge k$ for every real algebraic $d\ge D$. The last column is the number of boxes of
-\texttt{tail.py} on $[0,10]$.}
+$\chi(\R^2,\{1,d\})\ge k$ for every real algebraic $d\ge D$. The columns give the numbers of triangle positions
+$o_c$ and of spindle points $q_m$ used, with positive rational weights; the bound is $(z_0+\sum_cy_c+2\sum_mu_m)/s$, and
+the last column is the number of boxes of \texttt{tail.py} on $[0,T]$.}
 \label{tab:uniform}
 \end{table}
 
 \begin{remark}
-These thresholds are near the limit of the method. Put $\mu_0=-\min J_0=0.40275\ldots$, let $d\ge20$, and normalise
-$s=1$. If $g_d\ge0$, its values at $t=j_{1,1}/d$ and at a point $t$ with $|t-j_{1,1}|\le\pi/(2d)$ and $J_0(dt)=0$
+These thresholds are near the limit of the method. Consider first the program without triangles and spindles,
+$g_d(t)=z_0+z_1J_0(t)+z_2J_0(dt)$. Put $\mu_0=-\min J_0=0.40275\ldots$, let $d\ge20$, and normalise $s=1$. If
+$g_d\ge0$, its values at $t=j_{1,1}/d$ and at a point $t$ with $|t-j_{1,1}|\le\pi/(2d)$ and $J_0(dt)=0$
 (there is one, because $dj_{1,1}>j_{0,1}$ and consecutive zeros of $J_0$ are less than $\pi$ apart) give
 \[
 z_0+az_1-\mu_0z_2\ge0\qquad\text{and}\qquad z_0+bz_1\ge0,
@@ -807,26 +840,37 @@ $z_2=1/(1+\mu_0)$ and $z_0=L+\delta$, where $\delta=z_2\sqrt{2/(\pi D)}+z_1(y_0/
 $h\ge0$ and give the bound $(L+\delta)/(1+\delta)$ for every $d\ge D$. Indeed $L=\mu_0z_1$ and $\mu_0z_2=(1+\mu_0)z_1$,
 so $h(t)=\delta+z_1(J_0(t)-1)$ for $Dt\le y_0$, $h(t)=\delta+z_1\bigl(\mu_0+J_0(t)-(1+\mu_0)\sqrt{y_0/(Dt)}\bigr)$
 for $Dt\ge y_0$, and $J_0(t)\ge1-t^2/4$ for $t\le2$ and $\mu_0+J_0\ge0$ give $h\ge0$ (separately for $Dt\le y_0$,
-for $y_0\le Dt\le2y_0$, for $2y_0\le Dt$ with $t\le1$, and for $t\ge1$). Hence for $d\ge20$ the program never gives
-more than $13$ colours, and in floating point it never does for any $d$.
+for $y_0\le Dt\le2y_0$, for $2y_0\le Dt$ with $t\le1$, and for $t\ge1$). Hence for $d\ge20$ the program without
+triangles and spindles never gives more than $13$ colours, and in floating point it never does for any $d$.
+
+The same construction with $\mu_0+J_0(t)$ replaced by $(1+\mu_0)Q(t)$, where $Q$ is a certificate for one distance
+of the form of Proposition~\ref{prop:lp} with $Q(0)=1$ and value $v$ (that is, $z_0+\sum_cy_c=v$), gives bounds that
+tend to $v\mu_0/(1+\mu_0)$. With our unit triangles $v$ is about $0.271823$, which explains the limit near $1/12.81$
+seen in floating point, so with triangles alone the program did not reach $14$ colours. With spindles as well, $v$ is
+about $0.262476$, below $0.2678$, so $14$ colours follow for all large $d$ in this way (with $\mu$ in place of $\mu_0$);
+Theorem~\ref{thm:uniform} gives them from $d_{14}$ on. Fifteen colours would need $v<0.2488$. For comparison,
+\cite{KMOR} reach $0.26305$ with spindles alone and $0.258795$ with further inequalities.
 \end{remark}
 
 For a bounded range of $d$ we certify $g_d\ge0$ for all $d$ in an interval $[a,b]$ at once. On a box
 $[a,b]\times[t_0,t_1]$ the argument $dt$ lies in $[at_0,bt_1]$, and $J_0$ on an interval $[m-r,m+r]$ is enclosed by
 $J_0(m)\pm(|J_1(m)|r+r^2/2)$, by $[-\mu,1]$, and by $\pm\sqrt{2/(\pi x_0)}$ if the interval starts at $x_0>0$. The
-program bisects $[0,T]$ in $t$ until every box has a nonnegative lower bound for $g_d$, and on $[T,\infty)$ it uses
-$g_d(t)\ge z_0-|z_1|\sqrt{2/(\pi T)}-|z_2|\sqrt{2/(\pi aT)}>0$. Three files of such certificates cover
-$[1.75,1.93]$ with $k=7$ ($19$ intervals), $[1.83,1.855]$ with $k=8$ ($5$ intervals) and $[12.05,12.3]$ with $k=8$
-($11$ intervals), which completes the proof of Theorem~\ref{thm:uniform}.
+program bisects $[0,T]$ in $t$ until every box has a nonnegative lower bound for $g_d$ (with the triangle terms
+enclosed in the same way), and on $[T,\infty)$ it uses the envelope bound above, with $|z_2|\sqrt{2/(\pi aT)}$ for the
+term in $d$. Two files of such certificates, all with triangles, cover $[1.72,2.04]$ with $k=7$ ($51$ intervals)
+and $[1.82,1.89]$ with $k=8$ ($14$ intervals), which completes the proof of Theorem~\ref{thm:uniform}.
 
 \texttt{tail.py} and \texttt{uniform.py} choose the coefficients by a floating-point linear program, round them to
 fractions, raise $z_0$ by a third of the slack, and prove $h\ge0$, respectively $g_d\ge0$ on each interval, with the
 enclosures above in Arb ball arithmetic; the same programs re-verify stored certificates, and \texttt{tail.py}
 reproduces its certificates byte for byte. \texttt{check\_uniform.py}, written separately, recomputes every target
-$1/(k-1)$ from $k$, checks that the intervals of a file are contiguous and cover its range, encloses $J_0$ by point
-values and the Lipschitz bound $1/\sqrt2$ instead of the Taylor bound, bisects boxes in both $t$ and $d$, sweeps $h$
-with steps chosen from its value, and checks $J_0\ge-\mu$ itself. Both accept all ten certificates, and both reject
-corrupted ones: a lowered $z_0$, a scaled $z_2$, a threshold $D$ moved below the certified one, a raised $k$, a gap
+$1/(k-1)$ from $k$, every radius $r_1(o)$, $r_3(o)$ from $o$ and every spindle distance from the points of $M$ (which
+it builds by complex multiplication), checks that the intervals of a file are contiguous
+and cover its range, encloses $J_0$ by point values and the Lipschitz bound $1/\sqrt2$ instead of the Taylor bound,
+bisects boxes in both $t$ and $d$, sweeps $h$ with steps chosen from its value, and checks $J_0\ge-\mu$ itself. Both
+accept all ten certificates, and both reject corrupted ones: a lowered $z_0$, a scaled $z_2$, a negative or a
+missing triangle or spindle weight, a moved triangle or spindle, a threshold $D$ moved below the certified one, a
+raised $k$, a gap
 between intervals, a reversed interval, an interval extended below its range, and a certificate whose $g_d$ has
 minimum $-10^{-5}$ at a point that a sampling scan misses.
 
@@ -884,6 +928,8 @@ Combinatorica 1 (1981) 25--42.
 J. Combin. Theory Ser. B 19 (1975) 87--95.
 \bibitem{GJSW} J. Grytczuk, K. Junosza-Szaniawski, J. Sokół and K. Węsek, \emph{Fractional and $j$-fold colouring of
 the plane}, Discrete Comput. Geom. 55 (2016) 594--609; arXiv:1506.01887.
+\bibitem{KMOR} T. Keleti, M. Matolcsi, F. M. de Oliveira Filho and I. Z. Ruzsa, \emph{Better bounds for planar sets
+avoiding unit distances}, Discrete Comput. Geom. 55 (2016) 642--661; arXiv:1501.00168.
 \bibitem{MRVZ} M. Matolcsi, I. Z. Ruzsa, D. Varga and P. Zsámboki, \emph{The fractional chromatic number of the
 plane is at least 4}, arXiv:2311.10069 (v4, 2025).
 \bibitem{Naslund} E. Naslund, \emph{The chromatic number of $\R^n$ with multiple forbidden distances}, Mathematika 69

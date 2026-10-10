@@ -11270,3 +11270,35 @@ measurable set avoiding `D`; for finite `D` the fractional chromatic number of t
   referee's explicit certificates, that the limit `1/12.13…` is attained; "each step by a single certificate" is
   restricted to `d ≥ 12.3`; crossings are "from about … on", and the 13-colour crossing lies between 50 000 and
   54 300. Not applied: its optional strengthening of the remark to `d ≥ 1.33` (with `|J₀''| ≤ 1/2`).
+
+### Unit triangles and Moser spindles: fourteen colours for two distances (10 October, night)
+
+- **Configurations in the uniform certificates.** Proposition 17 allows any finite configuration `W` with at most `α`
+  points pairwise at allowed distances: `Σ_{w∈W} f(|w − p|) ≤ αδ` (Keleti, Matolcsi, Oliveira Filho and Ruzsa,
+  Lemma 3.2(2)). A unit equilateral triangle (`α = 1`) and a Moser spindle (`α = 2`: among any three of its seven
+  points two are at distance 1) do not depend on `d`, so their terms fit Lemma 18 unchanged: `h(t) = S(t) − z₂e(Dt)`
+  with `S` containing them. The linear program is offered triangle positions `o = i/25` (`|i| ≤ 40`) and spindle
+  points `(i/10, j/10)` (`i, j` odd from −7 to 21) and uses 1 to 3 of each.
+- **Thresholds.** With triangles alone (first step of version 7): 7, …, 13 colours from `d ≥ 5.85, 10.73, 20.13,
+  40.23, 90.73, 263, 1552`; the program's value at `D = 10⁸` is about `1/12.80`, near `0.287119 · 0.271823 = 1/12.81`,
+  so triangles alone do not reach 14. With spindles as well the one-distance value drops from 0.271823 to 0.262476,
+  below the 0.2678 needed for 14, and the certified thresholds are `5.82, 10.5, 18.9, 35.7, 73.6,
+  181, 655, 25 700` for 7, …, 14 colours (floating-point crossings about 5.797, 10.42, 18.81, 35.53, 73.36, 179.5, 652.6 and 25 590). Intervals with
+  triangles: 7 colours on `[1.72, 2.04]` (51 intervals, containing `√3`, `(√6+√2)/2` and `2`) and 8 on
+  `[1.82, 1.89]` (14). So `{1, 40}`, `{1, 100}`, `{1, 1000}` need 10, 11, 13 colours.
+- **The limit.** The construction of the remark after Lemma 18, with a one-distance certificate of value `v`, gives
+  bounds tending to `v·μ₀/(1 + μ₀)`; with triangles and spindles this is `1/13.27` (floating point: about
+  `1/13.20` at `D = 10⁷`). Fifteen colours would need `v < 0.2488`; Keleti et al. reach 0.26305 with spindles
+  alone and 0.258795 with further inequalities, so 15 needs configurations beyond theirs.
+- **A correction before publication.** A number carried over from an earlier exploration put the one-distance value
+  with triangles at 0.268373; recomputed before it went into the paper, it is 0.271823 (same with finer grids and
+  envelope rows at `T = 400` and `1000`).
+- **Checks.** Both programs accept all ten certificates (`check_uniform.py` recomputes every radius from `o` and every
+  spindle distance from the points of `M`, built by complex multiplication); the 14-colour margin is thin
+  (`0.0769214 < 1/13 = 0.0769231`). The test suite gained spindle corruptions (a negative, a missing and a moved
+  spindle); a moved triangle in the 8-colour tail turned out still valid (both programs agree), so that corruption
+  now moves a triangle of the 9-colour tail.
+- **Memory.** The second certification of the `ℚ(√35)` witness (`drat-trim -L`, 10.2 GB) was killed by the
+  out-of-memory killer again at 18:27 UTC, together with the threshold runs: its 3.8 GB LRAT output sat in
+  `/dev/shm`, which counts against the same 14.3 GB limit. Part (b) now streams the proof: CaDiCaL 2.1.3 writes a
+  binary LRAT proof into a FIFO and `cake_lpr` reads it from there, so no proof file is stored.

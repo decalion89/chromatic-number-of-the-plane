@@ -1,7 +1,8 @@
 # Density certificates for planar sets avoiding given distances
 
 The folder [`uniform/`](uniform/README.md) holds the certificates of Theorem 5 of the paper, each valid for a whole range
-of `d`: `χ(ℝ², {1, d}) ≥ 7` for every algebraic `d ≥ 6.52`, up to `≥ 13` for every algebraic `d ≥ 54 300`.
+of `d`: `χ(ℝ², {1, d}) ≥ 7` for every algebraic `d ≥ 5.82` and for `1.72 ≤ d ≤ 2.04`, up to `≥ 14` for every
+algebraic `d ≥ 25 700`.
 
 Each file in `certificates/` is a dual solution of the linear program of Oliveira Filho and Vallentin
 (J. Eur. Math. Soc. 2010, Theorem 1.1), with clique inequalities added for `{1, 2}` and `{1, √3}`. It proves an
