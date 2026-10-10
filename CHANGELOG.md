@@ -12,6 +12,21 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- **Fourteen colours for two distances (10 October, night; version 7 of the forbidden-distances paper).**
+  Theorem 5 now uses configuration inequalities (Proposition 17 generalised as in Keleti, Matolcsi, Oliveira Filho
+  and Ruzsa: a finite set `W` with at most `α` points pairwise at allowed distances gives
+  `Σ_{w∈W} f(|w − p|) ≤ αδ`): unit equilateral triangles (`α = 1`) in every certificate and Moser spindles (`α = 2`)
+  in the tails. For every real algebraic `d`, `χ(ℝ², {1, d}) ≥ k` for `d ≥ 5.82, 10.5, 18.9, 35.7,
+  73.6, 181, 655, 25 700` and `k = 7, …, 14` (version 6: 6.52, 12.05, 24.3, 52.9, 140.2, 601, 54 300
+  for 7 to 13, and no 14), 7 colours for `1.72 ≤ d ≤ 2.04` and 8 for `1.82 ≤ d ≤ 1.89`; so `{1, 40}`, `{1, 100}`
+  and `{1, 1000}` need 10, 11 and 13 colours. Without configurations the method stops at 13
+  (its value tends to `1/12.13…`); with triangles alone at 13 (`1/12.81`); with triangles and spindles it tends to
+  about `1/13.27`, so 15 would need a one-distance value below 0.2488 (ours is 0.262476). Eight tail and two
+  interval certificates, each accepted by `tail.py`/`uniform.py` and by `check_uniform.py` (which builds the spindle
+  by complex multiplication); `tail.py` rebuilds the tails byte for byte; the tests cover spindle corruptions.
+  Refereed by a sixth internal referee with a checker of its own (no mathematical error; all ten certificates valid,
+  smallest margin `5.9·10⁻⁷` for 14 colours). Applied: the value formula and two overclaims in the remark and the
+  caption, Corollary 4 against the abstract, the single-`d` window and the test command in the READMEs.
 - **Uniform bounds for two distances (10 October, version 6 of the forbidden-distances paper).** Every earlier
   bound above 6 for a pair `{1, d}` was for an isolated `d`. Theorem 5: for every real algebraic `d`,
   `χ(ℝ², {1, d}) ≥ 7` for `d ≥ 6.52`, and the bound rises to 8, 9, 10, 11, 12 and 13 from `d = 12.05`, `24.3`,

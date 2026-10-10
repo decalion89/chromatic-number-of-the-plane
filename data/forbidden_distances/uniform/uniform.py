@@ -60,32 +60,56 @@ def j0_box(a, b, use_global=True):
         if U > 1: U = arb(1)
     return L, U
 
-def g_lower(z, a_d, b_d, t0, t1):
+S3 = arb(3).sqrt()
+
+def exact(x):
+    m, e = x.mid().man_exp(); m, e = int(m), int(e)
+    return Fr(m * 2 ** e) if e >= 0 else Fr(m, 2 ** -e)
+
+def radii(oy):
+    """rational enclosures (lo, hi) of the distances r1 (twice) and r3 from centroid + (0, oy) to the vertices of the
+    unit triangle (0,0), (1,0), (1/2, sqrt3/2): r1^2 = 1/3 + oy/sqrt3 + oy^2, r3 = |1/sqrt3 - oy|"""
+    o = A(oy)
+    out = []
+    for r in ((arb(1) / 3 + o / S3 + o * o).sqrt(), abs(arb(1) / S3 - o)):
+        l, u = exact(r.lower()), exact(r.upper())
+        if not 0 < l <= u: raise SystemExit("a clique radius is not separated from 0")
+        out.append((l, u))
+    return out
+
+def g_lower(z, a_d, b_d, t0, t1, cl=()):
+    """lower bound of z0 + z1 J0(t) + sum y (2 J0(r1 t) + J0(r3 t)) + z2 J0(d t) on [a_d, b_d] x [t0, t1]"""
     z0, z1, z2 = z
     L1, U1 = j0_box(t0, t1)
     L2, U2 = j0_box(a_d * t0, b_d * t1)
     v = A(z0) + (A(z1) * L1 if z1 >= 0 else A(z1) * U1) + (A(z2) * L2 if z2 >= 0 else A(z2) * U2)
+    for y, ((a1, b1), (a3, b3)) in cl:
+        La, _ = j0_box(a1 * t0, b1 * t1); Lb, _ = j0_box(a3 * t0, b3 * t1)
+        v = v + A(y) * (2 * La + Lb)
     return lo(v)
 
-def tail_T(z, a_d):
+def tail_T(z, a_d, cl=()):
     z0, z1, z2 = z
     T = Fr(10)
     while True:
         v = A(z0) - abs(A(z1)) * (A(2) / (PI * A(T))).sqrt() - abs(A(z2)) * (A(2) / (PI * A(a_d) * A(T))).sqrt()
+        for y, ((a1, b1), (a3, b3)) in cl:
+            v = v - A(y) * (2 * (A(2) / (PI * A(a1) * A(T))).sqrt() + (A(2) / (PI * A(a3) * A(T))).sqrt())
         if lo(v) > 0: return T
         T *= 2
-        if T > 10**7: raise SystemExit("no tail")
+        if T > 10**7: return None
 
-def verify(z, a_d, b_d, min_w=Fr(1, 10**6), stats=None):
+def verify(z, a_d, b_d, cl=(), min_w=Fr(1, 10**6), stats=None):
     """True iff g >= 0 is certified on [a_d, b_d] x [0, oo)."""
-    T = tail_T(z, a_d)
+    T = tail_T(z, a_d, cl)
+    if T is None: return False
     stack = [(Fr(0), T)]
     nbox = 0
     while stack:
         t0, t1 = stack.pop()
         nbox += 1
-        if g_lower(z, a_d, b_d, t0, t1) >= 0: continue
-        if t1 - t0 < min_w: 
+        if g_lower(z, a_d, b_d, t0, t1, cl) >= 0: continue
+        if t1 - t0 < min_w:
             if stats is not None: stats['fail_t'] = float(t0)
             return False
         mid = (t0 + t1) / 2
@@ -93,49 +117,53 @@ def verify(z, a_d, b_d, min_w=Fr(1, 10**6), stats=None):
     if stats is not None: stats['boxes'] = nbox; stats['T'] = float(T)
     return True
 
-def robust_lp(a_d, b_d, nd=7, T=40.0):
-    ds = np.linspace(float(a_d), float(b_d), nd)
-    n = int(T * float(b_d) * 15) + 2000
-    t = np.concatenate([np.linspace(1e-6, 30.0 / float(b_d), 3000), np.linspace(30.0 / float(b_d), T, n)])
-    rows = [np.column_stack([np.ones_like(t), fj0(t), fj0(d * t)]) for d in ds]
-    Mx = np.vstack(rows)
-    r = linprog([1, 0, 0], A_ub=-Mx, b_ub=np.zeros(len(Mx)), A_eq=[[1, 1, 1]], b_eq=[1],
-                bounds=[(0, None), (None, None), (None, None)], method='highs')
-    return r.fun, r.x
+def bound_of(z, ys):
+    return (z[0] + sum(ys)) / (sum(z) + 3 * sum(ys))
 
-def certify_interval(a_d, b_d, target, depth=0, out=None, log=None):
+def certify_interval(a_d, b_d, target, depth=0, out=None, log=None, cliques=False, T=None):
     """Cover [a_d, b_d] by certified intervals with bound < target; returns list of records."""
     out = [] if out is None else out
     from lpcp import lp_cp
-    val, x = lp_cp(np.linspace(float(a_d), float(b_d), 7))
+    res = lp_cp(np.linspace(float(a_d), float(b_d), 7), T=T, cliques=cliques)
+    val, x = res[0], res[1]
+    cq = [(oy, Fr(y).limit_denominator(10**9)) for oy, y in res[2]] if cliques else []
     slack = float(target) - val
     if slack > 1e-4:
         delta = Fr(slack / 3).limit_denominator(10**9)
         z1 = Fr(x[1]).limit_denominator(10**8); z2 = Fr(x[2]).limit_denominator(10**8)
-        z0 = 1 - z1 - z2 + delta
-        bound = z0 / (z0 + z1 + z2)
+        ys = [y for _, y in cq]
+        z0 = 1 - z1 - z2 - 3 * sum(ys) + delta
+        z = (z0, z1, z2)
+        bound = bound_of(z, ys)
         st = {}
-        if bound < target and verify((z0, z1, z2), a_d, b_d, stats=st):
-            rec = {'a': str(a_d), 'b': str(b_d), 'z0': str(z0), 'z1': str(z1), 'z2': str(z2), 'bound': str(bound),
-                   'boxes': st.get('boxes'), 'T': st.get('T')}
+        if z0 > 0 and bound < target and verify(z, a_d, b_d, [(y, radii(oy)) for oy, y in cq], stats=st):
+            rec = {'a': str(a_d), 'b': str(b_d), 'z0': str(z0), 'z1': str(z1), 'z2': str(z2)}
+            if cq: rec['cliques'] = [{'oy': str(oy), 'y': str(y)} for oy, y in cq]
+            rec.update({'bound': str(bound), 'boxes': st.get('boxes'), 'T': st.get('T')})
             out.append(rec)
-            if log: print(f"  OK [{float(a_d):.5f}, {float(b_d):.5f}] LP {val:.5f} bound {float(bound):.5f} boxes {st.get('boxes')}", file=log, flush=True)
+            if log: print(f"  OK [{float(a_d):.5f}, {float(b_d):.5f}] LP {val:.5f} bound {float(bound):.5f} "
+                          f"boxes {st.get('boxes')}", file=log, flush=True)
             return out
     if depth > 40: raise SystemExit(f"cannot certify near {float(a_d)}")
     mid = Fr((a_d + b_d) / 2).limit_denominator(10**7)
-    certify_interval(a_d, mid, target, depth + 1, out, log)
-    certify_interval(mid, b_d, target, depth + 1, out, log)
+    certify_interval(a_d, mid, target, depth + 1, out, log, cliques, T)
+    certify_interval(mid, b_d, target, depth + 1, out, log, cliques, T)
     return out
 
 def check_file(path):
     """Re-verify a stored interval certificate with the method above."""
     C = json.load(open(path)); k = int(C['k']); target = Fr(1, k - 1)
     ivs = sorted(C['intervals'], key=lambda r: Fr(r['a']))
-    ok = Fr(C['target']) == target and all(Fr(r['a']) < Fr(r['b']) for r in ivs) and         Fr(ivs[0]['a']) == Fr(C['a']) and Fr(ivs[-1]['b']) == Fr(C['b']) and         all(Fr(ivs[i]['b']) == Fr(ivs[i + 1]['a']) for i in range(len(ivs) - 1))
+    ok = (Fr(C['target']) == target and all(Fr(r['a']) < Fr(r['b']) for r in ivs)
+          and Fr(ivs[0]['a']) == Fr(C['a']) and Fr(ivs[-1]['b']) == Fr(C['b'])
+          and all(Fr(ivs[i]['b']) == Fr(ivs[i + 1]['a']) for i in range(len(ivs) - 1)))
     for r in ivs:
         if not ok: break
         z = (Fr(r['z0']), Fr(r['z1']), Fr(r['z2']))
-        ok = Fr(r['a']) > 0 and z[0] > 0 and sum(z) > 0 and z[0] / sum(z) < target and             verify(z, Fr(r['a']), Fr(r['b']))
+        cq = [(Fr(c['oy']), Fr(c['y'])) for c in r.get('cliques', [])]
+        ys = [y for _, y in cq]
+        ok = (Fr(r['a']) > 0 and z[0] > 0 and all(y >= 0 for y in ys) and sum(z) + 3 * sum(ys) > 0
+              and bound_of(z, ys) < target and verify(z, Fr(r['a']), Fr(r['b']), [(y, radii(oy)) for oy, y in cq]))
     print(f"{path}: k={k} [{float(Fr(C['a']))}, {float(Fr(C['b']))}], {len(ivs)} intervals -> "
           f"{'CERTIFIED' if ok else 'FAILED'}", flush=True)
     return ok
@@ -145,12 +173,15 @@ if __name__ == "__main__":
     if sys.argv[1] == 'check':
         sys.exit(0 if all([check_file(p) for p in sys.argv[2:]]) else 1)
     k = int(sys.argv[1]); a_d = Fr(sys.argv[2]); b_d = Fr(sys.argv[3]); step = Fr(sys.argv[4])
+    cliques = '--cliques' in sys.argv[5:]
+    TL = [float(v[4:]) for v in sys.argv[5:] if v.startswith('--T=')]
+    TL = TL[0] if TL else None
     target = Fr(1, k - 1)
     t0 = time.time(); recs = []
     x = a_d
     while x < b_d:
         y = min(x + step, b_d)
-        certify_interval(x, y, target, out=recs, log=sys.stdout)
+        certify_interval(x, y, target, out=recs, log=sys.stdout, cliques=cliques, T=TL)
         x = y
     json.dump({'k': k, 'target': str(target), 'a': str(a_d), 'b': str(b_d), 'intervals': recs},
               open(f"interval_k{k}_{float(a_d):g}_{float(b_d):g}.json", "w"))

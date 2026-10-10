@@ -5,7 +5,7 @@ by OpenAI); the transfer of Theorem A is formalized in Lean on top of their libr
 ([`lean/external/openai-five/distances/`](../lean/external/openai-five/distances/README.md)); the density bounds are
 computer proofs checked by several programs.
 
-- **Referees.** Five AI-assisted referees inside the project. The first read the transfer theorems (correct, minor
+- **Referees.** Six AI-assisted referees inside the project. The first read the transfer theorems (correct, minor
   gaps, fixed). The second read the corollaries and the certificates with two checkers of its own (no mathematical
   error, every certificate valid; the priority claims were wrong and are corrected). The third read version 3 with a
   checker of its own (no mathematical error; Croft's constant was rounded up, one inequality was classical and
@@ -15,7 +15,10 @@ computer proofs checked by several programs.
   the uniform bounds of version 6 (Theorem 5, Lemma 18, the certificates and both programs) with a checker of its
   own sharing no code or Bessel routine with ours: no mathematical error, all ten certificates valid, no earlier bound
   of 7 for a pair; the measurable statement and one half of the limit in the remark are now argued, and an overclaim
-  in the abstract is corrected.
+  in the abstract is corrected. The sixth read version 7 (triangles and spindles in the uniform certificates) with a
+  checker of its own: no mathematical error, all ten certificates valid (the smallest margin, `min h ≥ 5.9·10⁻⁷`, is
+  for 14 colours), all eight tails rebuilt byte for byte; it corrected the value formula and an overclaim in the
+  remark, Corollary 4 against the abstract, and statements in the README and these notes.
 - **No human referee yet.**
 
 The paper is [`papers/forbidden-distances/`](../papers/forbidden-distances/README.md); this note is the record
@@ -108,42 +111,64 @@ factor is 0.775). Placing `N·W` at random, the sets `{i : φ(w) ∈ S_i}` would
 `k|E(W)|ε⁻²√(R/(πN))`, below 1 for large `N`. For `c = 6`, `N₀` is not explicit, because OpenAI's proof gives no
 finite graph.
 
-## Uniform bounds for two distances (version 6)
+## Uniform bounds for two distances (versions 6 and 7)
 
-**Theorem 5.** For every real algebraic `d ≥ 1`: `χ(ℝ², {1, d}) ≥ k` for `d ≥ d_k`, where `d_7 = 6.52`, `d_8 = 12.05`,
-`d_9 = 24.3`, `d_10 = 52.9`, `d_11 = 140.2`, `d_12 = 601`, `d_13 = 54 300`; moreover `χ ≥ 7` for `1.75 ≤ d ≤ 1.93`
-and `χ ≥ 8` for `1.83 ≤ d ≤ 1.855`. The same holds with `1/d` in place of `d` (scale the plane), and, for measurable
-colourings, for every real `d`.
+**Theorem 5 (version 7).** For every real algebraic `d ≥ 1`: `χ(ℝ², {1, d}) ≥ k` for `d ≥ d_k`, where
+`d_7 = 5.82`, `d_8 = 10.5`, `d_9 = 18.9`, `d_10 = 35.7`, `d_11 = 73.6`, `d_12 = 181`,
+`d_13 = 655`, `d_14 = 25 700`; moreover `χ ≥ 7` for `1.72 ≤ d ≤ 2.04` and `χ ≥ 8` for `1.82 ≤ d ≤ 1.89`. The
+same holds with `1/d` in place of `d` (scale the plane), and, for measurable colourings, for every real `d`. Version 6
+had, without configurations, `d_k = 6.52, 12.05, 24.3, 52.9, 140.2, 601, 54 300` for `k = 7, …, 13` and the ranges
+`[1.75, 1.93]` and `[1.83, 1.855]`; version 7 adds the configuration inequalities of unit equilateral triangles (all
+certificates) and of Moser spindles (the tails). Theorem 5 now contains every finite bound of Corollary 4 (the pairs
+`{1, √3}`, `{1, (√6+√2)/2}`, `{1, 2}`, `{1, 11/6}`, `{1, 40}`, `{1, 1000}`) and raises `{1, 40}`, `{1, 100}` and
+`{1, 1000}` to 10, 11 and 13 colours.
 
 - **Why it is new.** For arbitrary colourings no pair was known to need 7 colours before this paper
   (Chybowska-Sokół, Junosza-Szaniawski and Węsek record it as open), and our earlier bounds above 6 were for isolated
-  values of `d`; here a whole half-line of algebraic `d` needs 7 colours, and 13 from `54 300` on. For measurable
+  values of `d`; here a whole half-line of algebraic `d` needs 7 colours, and 14 from `25 700` on. For measurable
   colourings, Oliveira Filho and Vallentin had 8 colours for one pair and Bukh's theorem gives 14 or more for all `d`
   beyond an unspecified threshold, so there only the explicit thresholds and ranges are new.
+- **The configurations (Proposition 17).** For a finite set `W` whose largest subset with no two points at a
+  distance in `{1, d}` has `α(W)` points, and a point `p`, a measurable set of density `δ` avoiding `{1, d}` satisfies
+  `Σ_{w∈W} f(|w − p|) ≤ α(W)δ` for its autocorrelation `f` (the inequality of Keleti, Matolcsi, Oliveira Filho and
+  Ruzsa); in the dual this adds `y Σ_{w∈W} J₀(|w − p|t)`, `y ≥ 0`, to `g`, `α(W)y` to the numerator of the bound and
+  `|W|y` to `s`. Two kinds of `W` are used, neither depending on `d`. *Unit triangles*: `W = {(0,0), (1,0),
+  (1/2, √3/2)}` (`α = 1`) and `p_o` its centroid moved by a rational `o` along its axis, at distances `r₁(o)` (twice)
+  and `r₃(o)`, `r₁(o)² = 1/3 + o/√3 + o²`, `r₃(o) = |1/√3 − o|`. *Moser spindles*:
+  `M = {0, 1, ω, 1 + ω, ρ, ρω, ρ(1 + ω)}` in complex notation, `ω = e^{iπ/3}`, `ρ = (5 + i√11)/6` (`α = 2`: among any
+  three of its points two are at distance 1), at a point `q` with rational coordinates. The linear program is offered
+  `o = i/25`, `|i| ≤ 40`, and `q = (i/10, j/10)`, `i, j` odd from −7 to 21; the tails use 1 to 3 triangle positions
+  and 1 to 3 spindle points.
 - **Lemma 18 (one certificate for all `d ≥ D`).** With `μ = 0.4028 ≥ −min J₀` and `e(y) = min(μ, √(2/(πy)))`,
-  `J₀(x) ≥ −e(y)` for every `x ≥ y > 0`. So if `z2 ≥ 0`, `s = z0 + z1 + z2 > 0` and
-  `h(t) = z0 + z1 J₀(t) − z2 e(Dt) ≥ 0` for `t > 0`, then `g_d(t) = z0 + z1 J₀(t) + z2 J₀(dt) ≥ h(t) ≥ 0` for every
-  `d ≥ D`, and `m_{1,d}(ℝ²) ≤ z0/s`. Checking `h ≥ 0` is a problem in one variable.
-- **Interval certificates.** For `[1.75, 1.93]` (k = 7, 19 intervals), `[1.83, 1.855]` (k = 8, 5 intervals) and
-  `[12.05, 12.3]` (k = 8, 11 intervals) one function per interval of `d`: on a box `[a, b] × [t0, t1]`,
-  `dt ∈ [a t0, b t1]`, and `J₀` on an interval is enclosed by Taylor at the midpoint (`|J₀''| ≤ 1`), by
-  `[−μ, 1]` and by the envelope.
-- **How close to the program's limit.** In floating point, for `d > 2`, the program gives `k = 7, …, 12` colours from
-  about `d = 6.503, 12.03, 23.87, 52.85, 139.9, 599.2` on, and 13 from somewhere between 50 000 and 54 300. As
-  `d → ∞` its value tends to `μ₀²/(1 + μ₀)² = 1/12.13…` (`μ₀ = −min J₀ = 0.40275…`), the square of its value
-  0.287119 for one distance: for `d ≥ 20` it is above `1/12.2` (two constraints of the program, at `t = j_{1,1}/d`
-  and near `t = j_{1,1}`), and the limit is attained by an explicit family of certificates (the fifth referee's), so
-  it never gives 14 colours for `d ≥ 20` (nor, in floating point, for any `d`). For `1 < d < 6.5` it gives 7 only for
-  `d` between about 1.747 and 1.934; on `(2, 6.5)` it is largest near `d = 2.59`, where it is `1/4.68`.
+  `J₀(x) ≥ −e(y)` for every `x ≥ y > 0`. So if `z2 ≥ 0`, `s > 0` and `h(t) = S(t) − z2 e(Dt) ≥ 0` for `t > 0`, where
+  `S(t) = z0 + z1 J₀(t) + Σ_c y_c (2J₀(r₁(o_c)t) + J₀(r₃(o_c)t)) + Σ_m u_m Σ_{w∈M} J₀(|w − q_m|t)`, then
+  `g_d(t) = S(t) + z2 J₀(dt) ≥ h(t) ≥ 0` for every `d ≥ D`, and `m_{1,d}(ℝ²) ≤ (z0 + Σy + 2Σu)/s` with
+  `s = z0 + z1 + z2 + 3Σy + 7Σu`. Checking `h ≥ 0` is a problem in one variable.
+- **Interval certificates.** For `[1.72, 2.04]` (k = 7, 51 intervals) and `[1.82, 1.89]` (k = 8, 14 intervals)
+  one function per interval of `d`, with triangles: on a box `[a, b] × [t0, t1]`, `dt ∈ [a t0, b t1]`, and `J₀` on an
+  interval is enclosed by Taylor at the midpoint (`|J₀''| ≤ 1`), by `[−μ, 1]` and by the envelope.
+- **How close to the method's limit.** In floating point, the program of Lemma 18 with triangles and spindles gives
+  `k = 7, …, 14` colours from about `d = 5.797, 10.42, 18.81, 35.53, 73.36, 179.5, 652.6 and 25 590` on; with triangles alone, 7 to 13 from about 5.800, 10.67,
+  20.04, 40.04, 90.24, 261.7 and 1544 on and never 14; without configurations, from about 6.503, 12.03, 23.87, 52.85,
+  139.9, 599.2 and, for 13, from somewhere between 50 000 and 54 300. Without configurations its value tends to
+  `μ₀²/(1 + μ₀)² = 1/12.13…` (`μ₀ = −min J₀ = 0.40275…`), the square of its value 0.287119 for one distance: for
+  `d ≥ 20` it is above `1/12.2` (two constraints of the program, at `t = j_{1,1}/d` and near `t = j_{1,1}`), and the
+  limit is attained by an explicit family of certificates (the fifth referee's). With configurations, the same
+  construction with a one-distance certificate of value `v` gives bounds that tend to `v·μ₀/(1 + μ₀)`: with our
+  triangles `v = 0.271823` (limit `1/12.81`; floating-point value about `1/12.80` at `D = 10⁸`), with triangles and
+  spindles `v = 0.262476` (limit `1/13.27`; about `1/13.20` at `D = 10⁷`). So these configurations give 14 colours;
+  in floating point they do not give 15, which would need `v < 0.2488` (Keleti, Matolcsi, Oliveira Filho and Ruzsa reach (numerically) 0.26305 with spindles
+  alone and 0.258795 with further inequalities). For one `d` with triangles, the program gives 7 colours for
+  `1 < d < 5.8` only for `d` between about 1.716 and 2.045, and again from about 5.55 on.
 - **Programs.** `tail.py` and `uniform.py` (Arb, Taylor enclosures; they produce and re-verify) and
   `check_uniform.py` (separate code: point values and the Lipschitz bound `|J₁| ≤ 1/√2`, boxes in `t` and `d`, a
-  floating-point counterexample search confirmed in Arb). Both accept the ten certificates and reject eleven
-  corrupted ones (plus a slow twelfth: a dip of `−10⁻⁵` that the floating-point scan misses). `tail.py` rebuilds all
-  seven tail certificates byte for byte (the fifth referee checked this; the test checks `tail_k13.json`). The
-  referee's own checker (integer interval arithmetic, its own Bessel series) also verifies all ten; the smallest
-  margin is `min h ∈ [2.50, 2.79]·10⁻⁷` for 13 colours.
+  floating-point counterexample search confirmed in Arb; radii recomputed from `o`, spindle distances from the points
+  of `M`, built by complex multiplication). Both accept the ten certificates and reject eighteen corrupted ones (plus
+  a slow nineteenth: a dip of `−10⁻⁵` that the floating-point scan misses). `tail.py k D --cliques --spindles`
+  rebuilds the tail certificates byte for byte (the test checks `tail_k14.json`).
 - **Figure.** `papers/forbidden-distances/uniform-bounds.pdf` (and `.png`): the certified staircase, the
-  floating-point curve `1/LP(d)` and its limit.
+  floating-point values of the program for one `d` with triangles and of the program of Lemma 18 with triangles and
+  spindles, and the limit of the latter.
 
 ## Formal verification of the transfer
 
@@ -278,3 +303,10 @@ Three programs check every certificate ([`data/forbidden_distances/`](../data/fo
   limit is attained, "each step by a single certificate" is restricted to `d ≥ 12.3` (the step at 12.05 uses interval
   certificates), the floating-point crossings are stated as "from about … on", the 13-colour crossing (between 50 000
   and 54 300) is given, and the measurable novelty is limited to the explicit thresholds.
+- **v7 (10 October, night).** Unit triangles and Moser spindles in the uniform certificates (Proposition 17 with
+  configurations), 14 colours from `d = 25 700` on. The sixth referee found no mathematical error; applied: the value
+  of a certificate in the remark is `z₀ + Σ α_c y_c`, the conditions the construction needs on `Q` are stated, "14
+  colours follow for all large `d`" now rests on a rigorous certificate (`S/S(0)` of `tail_k14.json`, value 0.267887,
+  below the exact threshold 0.267894) instead of the floating-point 0.262476, Keleti et al.'s 0.26305 is marked
+  numerical, Corollary 4 points to Theorem 5 for `{1, 40}`, `{1, 100}`, `{1, 1000}`, the figure caption no longer
+  calls 13.27 a limit of the program, and the single-`d` window includes "from about 5.55 on".

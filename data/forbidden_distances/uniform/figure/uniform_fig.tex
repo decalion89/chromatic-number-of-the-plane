@@ -8,44 +8,47 @@
 \definecolor{lpc}{HTML}{8A8A85}
 \definecolor{pts}{HTML}{EB6834}
 \definecolor{ink}{HTML}{52514E}
-\pgfplotsset{common/.style={height=8.4cm, ymin=3, ymax=14, ytick={3,4,5,6,7,8,9,10,11,12,13,14},
+\pgfplotsset{common/.style={height=8.8cm, ymin=3, ymax=15, ytick={3,4,5,6,7,8,9,10,11,12,13,14,15},
   ymajorgrids, grid style={draw=black!8}, axis line style={draw=black!45}, tick style={draw=black!45},
   label style={font=\small}, tick label style={font=\small}}}
 \begin{document}
 \begin{tikzpicture}
 \begin{axis}[common, name=zoom, width=5.2cm, xmin=1.6, xmax=2.15, xtick={1.6,1.8,2}, xlabel={$d$},
   ylabel={colours}, title={\small $d$ near $1.84$}, title style={yshift=-4pt}]
-\fill[black!4] (axis cs:1.6,3) rectangle (axis cs:2.15,14);
+\fill[black!4] (axis cs:1.6,3) rectangle (axis cs:2.15,15);
 \addplot[ink, densely dotted, line width=0.8pt, domain=1.6:2.15] {6};
 \addplot[lpc, line width=0.7pt, restrict x to domain=1.5:2.3] table[x=d, y=inv] {lpcurve.dat};
-\addplot[cert, line width=1.6pt] coordinates {(1.75,7) (1.93,7)};
-\addplot[cert, line width=1.6pt] coordinates {(1.83,8) (1.855,8)};
+\addplot[cert, line width=1.6pt] coordinates {(1.72,7) (2.04,7)};
+\addplot[cert, line width=1.6pt] coordinates {(1.82,8) (1.89,8)};
 \addplot[only marks, mark=*, mark size=1.6pt, pts] coordinates {(1.7320508,7) (2,7) (1.9318517,7)};
-\node[cert, font=\scriptsize, anchor=south] at (axis cs:1.8425,8.05) {$[1.83,1.855]$};
-\node[cert, font=\scriptsize, anchor=south] at (axis cs:1.84,7.05) {$[1.75,1.93]$};
-\node[pts, font=\scriptsize, anchor=north] at (axis cs:1.7320508,6.9) {$\sqrt3$};
-\node[pts, font=\scriptsize, anchor=west] at (axis cs:2.01,7.0) {$2$};
-\node[pts, font=\scriptsize, anchor=north] at (axis cs:1.9318517,6.9) {$\tfrac{\sqrt6+\sqrt2}2$};
+\node[cert, font=\scriptsize, anchor=north west, align=left] at (axis cs:1.615,14.8)
+  {$\ge8$ on $[1.82,1.89]$\\ $\ge7$ on $[1.72,2.04]$};
+\node[pts, font=\scriptsize, anchor=north] at (axis cs:1.7320508,6.85) {$\sqrt3$};
+\node[pts, font=\scriptsize, anchor=north west] at (axis cs:1.99,6.85) {$2$};
+\node[pts, font=\scriptsize, anchor=north east] at (axis cs:1.945,6.85) {$\tfrac{\sqrt6+\sqrt2}2$};
 \end{axis}
 \begin{axis}[common, at={(zoom.south east)}, anchor=south west, xshift=0.5cm, width=11.6cm,
   xmode=log, xmin=1, xmax=2e5, xtick={1,10,100,1000,10000,100000},
   xticklabels={$1$,$10$,$10^2$,$10^3$,$10^4$,$10^5$}, xlabel={$d$ (logarithmic)}, yticklabels={},
   title={\small all $d\ge1$}, title style={yshift=-4pt}]
-\fill[black!4] (axis cs:1.6,3) rectangle (axis cs:2.15,14);
+\fill[black!4] (axis cs:1.6,3) rectangle (axis cs:2.15,15);
 \addplot[lpc, line width=0.7pt] table[x=d, y=inv] {lpcurve.dat};
-\node[lpc, font=\footnotesize, anchor=north west] at (axis cs:2.6,4.55) {$1/\mathrm{LP}(d)$, floating point};
-\addplot[lpc, dashed, line width=0.6pt, domain=700:2e5] {12.130};
-\node[lpc, font=\footnotesize, anchor=south west] at (axis cs:1000,12.2) {its limit $12.13\ldots$};
+\node[lpc, font=\footnotesize, anchor=north west] at (axis cs:2.3,4.55) {$1/\mathrm{LP}(d)$, one $d$, triangles};
+\addplot[lpc, dash dot, line width=0.7pt] table[x=d, y=inv] {tailcurve.dat};
+\node[lpc, font=\footnotesize, anchor=north west, align=left] at (axis cs:60,9.2)
+  {Lemma 18 with triangles and\\ spindles: one function for all $d\ge D$};
+\addplot[lpc, dashed, line width=0.6pt, domain=3000:2e5] {13.27};
+\node[lpc, font=\footnotesize, anchor=south east] at (axis cs:2e5,13.27) {limit $13.27$};
 \addplot[ink, densely dotted, line width=0.8pt, domain=1:2e5] {6};
 \node[ink, font=\footnotesize, anchor=north east] at (axis cs:2e5,5.93) {$\chi(\mathbb{R}^2)\ge6$ (OpenAI): every $d$};
 \addplot[cert, line width=1.6pt, const plot] coordinates {
-  (6.52,7) (12.05,8) (24.3,9) (52.9,10) (140.2,11) (601,12) (54300,13) (2e5,13)};
-\addplot[cert, line width=1.6pt] coordinates {(6.52,6) (6.52,7)};
-\addplot[cert, line width=1.6pt] coordinates {(1.75,7) (1.93,7)};
-\addplot[cert, line width=1.6pt] coordinates {(1.83,8) (1.855,8)};
-\foreach \x/\y/\l in {6.52/7/6.52, 12.05/8/12.05, 24.3/9/24.3, 52.9/10/52.9, 140.2/11/140.2, 601/12/601, 54300/13/{54\,300}}
+  (5.82,7) (10.5,8) (18.9,9) (35.7,10) (73.6,11) (181,12) (655,13) (25700,14) (2e5,14)};
+\addplot[cert, line width=1.6pt] coordinates {(5.82,6) (5.82,7)};
+\addplot[cert, line width=1.6pt] coordinates {(1.72,7) (2.04,7)};
+\addplot[cert, line width=1.6pt] coordinates {(1.82,8) (1.89,8)};
+\foreach \x/\y/\l in {5.82/7/5.82, 10.5/8/10.5, 18.9/9/18.9, 35.7/10/35.7, 73.6/11/73.6, 181/12/181, 655/13/655, 25700/14/{25\,700}}
   {\edef\tmp{\noexpand\node[cert, font=\noexpand\footnotesize, anchor=south east] at (axis cs:\x,\y.05) {$\l$};}\tmp}
-\node[cert, font=\footnotesize, anchor=north west, align=left] at (axis cs:1.15,13.8)
+\node[cert, font=\footnotesize, anchor=north west, align=left] at (axis cs:1.15,14.8)
   {thick: $\chi(\mathbb{R}^2,\{1,d\})\ge k$ for every\\ real algebraic $d$ in the range (certified)};
 \end{axis}
 \end{tikzpicture}

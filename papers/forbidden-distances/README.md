@@ -1,6 +1,6 @@
 # Measurable density bounds hold for all colourings of the plane with algebraic forbidden distances
 
-[`forbidden-distances.pdf`](forbidden-distances.pdf) is a fourteen-page note (version 6). OpenAI's proof that χ(ℝ²) ≥ 6
+[`forbidden-distances.pdf`](forbidden-distances.pdf) is a fifteen-page note (version 7). OpenAI's proof that χ(ℝ²) ≥ 6
 ([*The Euclidean plane is not five-colorable*](https://github.com/openai/math/blob/main/preprints/The-Euclidean-plane-is-not-five-colorable-September-23-2026/paper.pdf),
 September 2026) first transfers an arbitrary proper colouring of the plane to a weak measurable one. The note
 observes that this transfer works, with the same proof, for every set `D` of algebraic forbidden distances and for
@@ -34,14 +34,16 @@ Known and new upper bounds for `m_D(ℝ²)` then give:
   and 413 colours, and `L₂(r) > 1.48·4.0486^r`. With explicit graphs the proof is effective: de Grey's graph and the
   Moser spindle give `χ(ℝ², {1, N}) ≥ 18` for every algebraic `N ≥ 10^25` (and 20 for `N ≥ 10^34` with the graph of
   Bellitto, Pêcher and Sédillot).
-- **Uniform bounds for two distances (version 6).** One certificate can serve a whole range of `d`: for every real
-  algebraic `d`, `χ(ℝ², {1, d}) ≥ 7` for `d ≥ 6.52`, and the bound rises to 8, 9, 10, 11, 12 and 13 from
-  `d = 12.05`, `24.3`, `52.9`, `140.2`, `601` and `54 300`; also 7 colours for `1.75 ≤ d ≤ 1.93` and 8 for
-  `1.83 ≤ d ≤ 1.855` (Theorem 5). The same holds for `1/d`, and for measurable colourings for every real `d`. For
-  `d ≥ 12.3` each step is one function `z₀ + z₁J₀(t) + z₂J₀(dt)` that works for every `d ≥ D` at once (Lemma 18:
-  `J₀(x) ≥ −min(0.4028, √(2/(πx₀)))` for `x ≥ x₀`). The thresholds are close to the best this linear program gives,
-  and its value tends to `1/12.13…`, the square of its one-distance value, so it gives at most 13 colours for two
-  distances.
+- **Uniform bounds for two distances (versions 6 and 7).** One certificate can serve a whole range of `d`: for every
+  real algebraic `d`, `χ(ℝ², {1, d}) ≥ 7` for `d ≥ 5.82`, and the bound rises to 8, 9, 10, 11, 12, 13 and 14 from
+  `d = 10.5`, `18.9`, `35.7`, `73.6`, `181`, `655` and `25 700`; also 7 colours for
+  `1.72 ≤ d ≤ 2.04` (which contains `√3`, `(√6+√2)/2` and `2`) and 8 for `1.82 ≤ d ≤ 1.89` (Theorem 5). The same
+  holds for `1/d`, and for measurable colourings for every real `d`. Each step is one function that works for every
+  `d ≥ D` at once (Lemma 18: `J₀(x) ≥ −min(0.4028, √(2/(πx₀)))` for `x ≥ x₀`), with the configuration inequalities of
+  unit equilateral triangles and of Moser spindles in the linear program; version 6, without them, had the thresholds
+  6.52, 12.05, 24.3, 52.9, 140.2, 601 and 54 300 for 7 to 13 colours and could not give 14: without configurations
+  the program's value tends to `1/12.13…`, the square of its one-distance value. With triangles and spindles it tends
+  to about `1/13.27` in floating point, so these configurations do not give 15 colours.
 
   ![Certified lower bounds for χ(ℝ², {1, d})](uniform-bounds.png)
 
@@ -51,7 +53,7 @@ library: [`lean/external/openai-five/distances/`](../../lean/external/openai-fiv
 axioms only, replayed by `leanchecker`. No finite graph is given: as in OpenAI's proof, the graphs exist by
 compactness.
 
-Five AI-assisted referees read the note.
+Six AI-assisted referees read the note.
 - The first read the transfer theorems: correct, with minor errors and gaps, all fixed. Among them were a false
   numerical inequality in the headline (`4.0486 < 1/0.2470`), a clash with the notation of Matolcsi et al. (which
   led to proving the equality for the fractional chromatic number of the whole plane as well), the equality of
@@ -76,6 +78,12 @@ Five AI-assisted referees read the note.
   colours), and no earlier bound of 7 for a pair. It asked for the measurable statement to be argued, for one half of
   the limit in the remark to be proved (its construction is in the paper), and for an overclaim in the abstract
   ("each step by a single certificate", false for the step at 12.05) to be corrected; all applied.
+- The sixth read version 7 (unit triangles and Moser spindles in the uniform certificates), with a checker of its own
+  (no code or Bessel routine shared with ours): no mathematical error, all ten certificates valid (the smallest
+  margin, `min h ≥ 5.9·10⁻⁷`, is for 14 colours), the eight tails rebuilt byte for byte. It corrected the value of a
+  certificate in the remark (`z₀ + Σ α_c y_c`), asked for the conditions of the limiting construction to be stated,
+  and found two overclaims (14 colours "follow" from a floating-point value; 13.27 called a limit of the program) and
+  stale statements in Corollary 4 and the READMEs; all applied.
 
 No mathematician has checked the note yet.
 

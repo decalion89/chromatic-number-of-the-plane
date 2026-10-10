@@ -7,9 +7,10 @@ code) and check3.py (Arb enclosures over whole intervals, exact clique geometry 
 check3.py on every certificate, check2.py on the small ones and certify_lp2.py on one input; the slow ones run the
 rest.
 
-The uniform certificates of data/forbidden_distances/uniform/ (Theorem 5 of the paper) cover whole ranges of d:
-tail.py and uniform.py (Taylor enclosures on t-boxes) and check_uniform.py (separate code: Lipschitz enclosures,
-boxes in t and d) must accept all of them and reject corrupted ones.
+The uniform certificates of data/forbidden_distances/uniform/ (Theorem 5 of the paper) cover whole ranges of d, with
+unit equilateral triangles as cliques and, in the tails, Moser spindles (two points at most in a 1-avoiding set):
+tail.py and uniform.py (Taylor enclosures on t-boxes) and check_uniform.py (separate code: Lipschitz enclosures, boxes
+in t and d, radii recomputed) must accept all of them and reject corrupted ones.
 """
 import json
 import os
@@ -119,9 +120,8 @@ def test_certify_reproduces_every_certificate(tmp_path, name):
 
 # ----------------------------------------------------------------- uniform certificates (Theorem 5 of the paper)
 UDIR = os.path.join(DIR, 'uniform')
-TAILS = {7: '163/25', 8: '123/10', 9: '243/10', 10: '529/10', 11: '701/5', 12: '601', 13: '54300'}   # k: D
-INTERVALS = {'interval_k7_1.75_1.93': (7, '7/4', '193/100'), 'interval_k8_1.83_1.855': (8, '183/100', '371/200'),
-             'interval_k8_12.05_12.3': (8, '241/20', '123/10')}
+TAILS = {7: '291/50', 8: '21/2', 9: '189/10', 10: '357/10', 11: '368/5', 12: '181', 13: '655', 14: '25700'}   # k: D
+INTERVALS = {'interval_k7_1.72_2.04': (7, '43/25', '51/25'), 'interval_k8_1.82_1.89': (8, '91/50', '189/100')}
 
 
 def urun(script, *args, cwd=UDIR, timeout=1800):
@@ -137,13 +137,22 @@ def uload(name):
     return json.load(open(os.path.join(UDIR, ucert(name))))
 
 
+def ubound(rec):
+    """(z0 + sum y + 2 sum u) / (z0 + z1 + z2 + 3 sum y + 7 sum u), and the data it is computed from"""
+    z = [Fraction(rec[x]) for x in ('z0', 'z1', 'z2')]
+    ys = [Fraction(c['y']) for c in rec.get('cliques', [])] + [Fraction(c['u']) for c in rec.get('spindles', [])]
+    ny = len(rec.get('cliques', []))
+    num = z[0] + sum(ys[:ny]) + 2 * sum(ys[ny:]); den = sum(z) + 3 * sum(ys[:ny]) + 7 * sum(ys[ny:])
+    return num / den, z, ys
+
+
 def test_uniform_files_match_the_statement():
-    """Theorem 5: chi >= k for d >= D_k (one tail file each) and on the intervals of the three interval files."""
+    """Theorem 5: chi >= k for d >= D_k (one tail file each) and on the intervals of the two interval files."""
     for k, D in TAILS.items():
         C = uload(f'tail_k{k}')
-        z = [Fraction(C[x]) for x in ('z0', 'z1', 'z2')]
-        assert C['k'] == k and Fraction(C['D']) == Fraction(D)
-        assert z[2] >= 0 and z[0] > 0 and z[0] / sum(z) < Fraction(1, k - 1) and Fraction(C['bound']) == z[0] / sum(z)
+        b, z, ys = ubound(C)
+        assert C['k'] == k and Fraction(C['D']) == Fraction(D) and ys and all(y > 0 for y in ys)
+        assert z[2] >= 0 and z[0] > 0 and b < Fraction(1, k - 1) and Fraction(C['bound']) == b
     for name, (k, a, b) in INTERVALS.items():
         C = uload(name)
         assert C['k'] == k and Fraction(C['target']) == Fraction(1, k - 1)
@@ -152,11 +161,10 @@ def test_uniform_files_match_the_statement():
         assert Fraction(ivs[0]['a']) == Fraction(a) and Fraction(ivs[-1]['b']) == Fraction(b)
         assert all(Fraction(ivs[i]['b']) == Fraction(ivs[i + 1]['a']) for i in range(len(ivs) - 1))
         for r in ivs:
-            z = [Fraction(r[x]) for x in ('z0', 'z1', 'z2')]
-            assert Fraction(r['a']) < Fraction(r['b']) and z[0] > 0 and sum(z) > 0
-            assert z[0] / sum(z) < Fraction(1, k - 1)
-    assert Fraction(INTERVALS['interval_k8_12.05_12.3'][2]) == Fraction(TAILS[8])   # 8 colours from 12.05 on
-    assert all(Fraction(TAILS[k]) < Fraction(TAILS[k + 1]) for k in range(7, 13))
+            b, z, ys = ubound(r)
+            assert Fraction(r['a']) < Fraction(r['b']) and z[0] > 0 and all(y >= 0 for y in ys)
+            assert b < Fraction(1, k - 1) and Fraction(r['bound']) == b
+    assert all(Fraction(TAILS[k]) < Fraction(TAILS[k + 1]) for k in range(7, 14))
 
 
 def test_uniform_primary_programs_accept():
@@ -167,15 +175,23 @@ def test_uniform_primary_programs_accept():
 
 
 def test_uniform_second_checker_accepts():
-    r = urun('check_uniform.py', *[ucert(f'tail_k{k}') for k in TAILS], *[ucert(n) for n in INTERVALS])
-    assert r.returncode == 0 and r.stdout.count('ACCEPTED') == len(TAILS) + len(INTERVALS), r.stdout + r.stderr
+    """check_uniform.py on the tails and the 8-colour intervals; the 7-colour file takes longer (slow test below)."""
+    files = [ucert(f'tail_k{k}') for k in TAILS] + [ucert('interval_k8_1.82_1.89')]
+    r = urun('check_uniform.py', *files)
+    assert r.returncode == 0 and r.stdout.count('ACCEPTED') == len(files), r.stdout + r.stderr
+
+
+@pytest.mark.slow
+def test_uniform_second_checker_accepts_the_7_colour_intervals():
+    r = urun('check_uniform.py', ucert('interval_k7_1.72_2.04'), timeout=None)
+    assert r.returncode == 0 and r.stdout.count('ACCEPTED') == 1, r.stdout + r.stderr
 
 
 def test_uniform_tail_reproduced(tmp_path):
-    """tail.py rebuilds the certificate for 13 colours (d >= 54 300) byte for byte."""
-    r = urun('tail.py', '13', '54300', cwd=str(tmp_path))
+    """tail.py rebuilds the certificate for 14 colours byte for byte."""
+    r = urun('tail.py', '14', TAILS[14], '--cliques', '--spindles', cwd=str(tmp_path))
     assert r.returncode == 0 and 'CERTIFIED' in r.stdout, r.stdout + r.stderr
-    assert (tmp_path / 'tail_k13.json').read_text() == open(os.path.join(UDIR, ucert('tail_k13'))).read()
+    assert (tmp_path / 'tail_k14.json').read_text() == open(os.path.join(UDIR, ucert('tail_k14'))).read()
 
 
 def _first(C, **kw):
@@ -183,18 +199,43 @@ def _first(C, **kw):
     C['intervals'][0].update(kw)
 
 
+def _clique(C, i, **kw):
+    C['cliques'][i].update(kw)
+
+
+def _heaviest(C):
+    return max(range(len(C['cliques'])), key=lambda i: Fraction(C['cliques'][i]['y']))
+
+
+def _spindle(C, i, **kw):
+    C['spindles'][i].update(kw)
+
+
+def _heaviest_sp(C):
+    return max(range(len(C['spindles'])), key=lambda i: Fraction(C['spindles'][i]['u']))
+
+
 UBROKEN = [
-    ('tail_k13', lambda C: C.update(z0=str(Fraction(C['z0']) - Fraction(1, 10**5)))),   # h < 0 near t = 3.83
-    ('tail_k13', lambda C: C.update(D='50000')),                                        # threshold too low
-    ('tail_k13', lambda C: C.update(k=14)),                                             # one colour too many
-    ('tail_k7', lambda C: C.update(D='6')),
+    ('tail_k14', lambda C: C.update(z0=str(Fraction(C['z0']) - Fraction(1, 10**5)))),   # h < 0 somewhere
+    ('tail_k14', lambda C: C.update(D=str(Fraction(C['D']) * Fraction(9, 10)))),        # threshold too low
+    ('tail_k14', lambda C: C.update(k=15)),                                             # one colour too many
+    ('tail_k14', lambda C: _spindle(C, 0, u=str(-Fraction(C['spindles'][0]['u'])))),    # a negative spindle weight
+    ('tail_k13', lambda C: C['spindles'].pop(_heaviest_sp(C))),                         # a spindle left out
+    ('tail_k12', lambda C: _spindle(C, _heaviest_sp(C), qx=str(Fraction(C['spindles'][_heaviest_sp(C)]['qx'])
+                                                            + Fraction(1, 5)))),        # a spindle moved
+    ('tail_k7', lambda C: C.update(D='57/10')),
     ('tail_k9', lambda C: C.update(z2=str(-Fraction(C['z2'])))),                        # z2 < 0: lemma not applicable
-    ('interval_k7_1.75_1.93', lambda C: _first(C, z0=str(Fraction(C['intervals'][0]['z0']) - Fraction(1, 100)))),
-    ('interval_k8_1.83_1.855', lambda C: _first(C, z2=str(Fraction(C['intervals'][0]['z2']) * Fraction(11, 10)))),
-    ('interval_k7_1.75_1.93', lambda C: C['intervals'].pop(5)),                         # a gap
-    ('interval_k7_1.75_1.93', lambda C: _first(C, a=C['intervals'][0]['b'], b=C['intervals'][0]['a'])),  # reversed
-    ('interval_k7_1.75_1.93', lambda C: (C.update(a='17/10'), _first(C, a='17/10'))),  # below the range of the LP
-    ('interval_k8_12.05_12.3', lambda C: C.update(k=9, target='1/8')),                 # one colour too many
+    ('tail_k12', lambda C: _clique(C, 0, y=str(-Fraction(C['cliques'][0]['y'])))),      # a negative triangle weight
+    ('tail_k10', lambda C: C['cliques'].pop(_heaviest(C))),                             # a triangle left out
+    ('tail_k9', lambda C: _clique(C, _heaviest(C), oy=str(Fraction(C['cliques'][_heaviest(C)]['oy'])
+                                                         + Fraction(1, 25)))),           # a triangle moved
+    ('interval_k7_1.72_2.04', lambda C: _first(C, z0=str(Fraction(C['intervals'][0]['z0']) - Fraction(1, 100)))),
+    ('interval_k8_1.82_1.89', lambda C: _first(C, z2=str(Fraction(C['intervals'][0]['z2']) * Fraction(11, 10)))),
+    ('interval_k7_1.72_2.04', lambda C: _first(C, cliques=[])),                         # triangles left out
+    ('interval_k7_1.72_2.04', lambda C: C['intervals'].pop(5)),                         # a gap
+    ('interval_k7_1.72_2.04', lambda C: _first(C, a=C['intervals'][0]['b'], b=C['intervals'][0]['a'])),  # reversed
+    ('interval_k7_1.72_2.04', lambda C: (C.update(a='33/20'), _first(C, a='33/20'))),  # below the range of the LP
+    ('interval_k8_1.82_1.89', lambda C: C.update(k=9, target='1/8')),                  # one colour too many
 ]
 
 
@@ -213,21 +254,24 @@ def test_uniform_programs_reject_broken_certificates(tmp_path, i):
 
 @pytest.mark.slow
 def test_uniform_programs_reject_a_small_negative_dip(tmp_path):
-    """g has minimum -1e-5 on the first interval of interval_k7_1.75_1.93: the floating-point scan of check_uniform.py
+    """g has minimum -1e-5 on the first interval of interval_k7_1.72_2.04: the floating-point scan of check_uniform.py
     need not see it, and the rigorous parts of both programs must still refuse the certificate."""
     import numpy as np
     from scipy.special import j0
     from scipy.optimize import minimize
-    C = uload('interval_k7_1.75_1.93')
+    C = uload('interval_k7_1.72_2.04')
     C['intervals'] = sorted(C['intervals'], key=lambda r: Fraction(r['a']))
     r0 = C['intervals'][0]
     a, b = float(Fraction(r0['a'])), float(Fraction(r0['b']))
     z = [float(Fraction(r0[x])) for x in ('z0', 'z1', 'z2')]
-    g = lambda v: z[0] + z[1] * j0(v[1]) + z[2] * j0(v[0] * v[1])
+    cl = [(float(Fraction(c['y'])), np.sqrt(1 / 3 + float(Fraction(c['oy'])) / np.sqrt(3) + float(Fraction(c['oy'])) ** 2),
+           abs(1 / np.sqrt(3) - float(Fraction(c['oy'])))) for c in r0.get('cliques', [])]
+    slow = lambda t: z[0] + z[1] * j0(t) + sum(y * (2 * j0(r1 * t) + j0(r3 * t)) for y, r1, r3 in cl)
+    g = lambda v: slow(v[1]) + z[2] * j0(v[0] * v[1])
     best = None
     for d in np.linspace(a, b, 21):
         t = np.linspace(0, 40, 400001)
-        vals = z[0] + z[1] * j0(t) + z[2] * j0(d * t)
+        vals = slow(t) + z[2] * j0(d * t)
         i = int(np.argmin(vals))
         res = minimize(g, [d, t[i]], bounds=[(a, b), (0, 40)], method='L-BFGS-B', options={'ftol': 1e-15, 'gtol': 1e-12})
         if best is None or res.fun < best[0]:
