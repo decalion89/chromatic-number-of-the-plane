@@ -1,0 +1,30 @@
+certificate: m1_x23.json
+the points are the published 23-point set in its published order
+J0 self-test: 14 tabulated values, 60 series/large-argument comparisons, 0 failures
+n = 23 points, 47 unit-distance pairs, 27 distinct distances; 206 u entries; 2122 wc entries (sizes {3: 668, 4: 871, 5: 446, 6: 116, 7: 20, 8: 1}), 13878 pairwise distance equalities checked
+[PASS] (G) at least one point, no two points equal 
+[PASS] (G) one lam per point 
+[PASS] (G) u: indices in 1..n, i < j, no repeated pair, no pair at distance 1 
+[PASS] (G) wc: |I| = |J| >= 1, indices in 1..n and distinct, congruent in order (exact) 
+(G) done in 0.0 s
+(A) number of independent sets (including the empty set): 13552
+(A) common denominator 1099511627776 = 2^40; sum of |terms| x denominator < 2^48 -> int64 arithmetic; 0 coefficient masks are not independent (they never contribute)
+(A) exact recomputation from the definition at 1434 sets: 0 mismatches
+[PASS] (A) 13552 independent sets enumerated (count cross-checked) 
+[PASS] (A) Q(S) >= 0 for every independent set (exact) (#negative 0, recomputation mismatches 0)
+(A) min Q = 275/274877906944 (~1.000444e-09) at S = [1, 7, 11, 12, 20, 23] ; Q(empty) = psiT = 271568008033/1099511627776 ; 3.1 s
+(P) Phi(0) = 1099533618013/1099511627776 (~1.00002); Phi(oo) = -sum(lam) = 1.059578322; 206 u entries in 26 distance classes; M2 = 4.15572
+[PASS] (P) tail: Phi(t) >= 1.0008538 for t >= T = 550 (T >= 534.35 needed; |J0(x)| <= sqrt(2/(pi x))) 
+[PASS] (P) Phi(t) >= 1 on [0, T] (t = 0 included) T = 550, 3828 steps, 27 J0 enclosures per grid point (12625 by power series, 90758 by large-argument expansion); smallest certified lower bound of Phi - 1 on a step: 1.4686e-05 on [3.74515, 3.74839]; 7.0 s
+(P) done in 7.0 s
+
+summary: n = 23 points, 47 unit-distance pairs, 13552 independent sets; min Q = 1.000444e-09; smallest certified margin of Phi - 1 = 1.4686e-05; psiT = 271568008033/1099511627776 (~0.2469896645)
+
+==============================================================================
+8 checks passed, 0 failed
+time: 10.4 s
+ACCEPTED: m_1(R^2) <= 0.24698967 (23 points)
+
+real	0m10.410s
+user	0m10.526s
+sys	0m0.020s

@@ -12,6 +12,15 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- **`m₁(ℝ²) ≤ 0.24415` (11 October).** Every measurable planar set with no two points at distance 1 has upper density
+  at most `0.24415`; the published bound was `0.2470` (Ambrus, Csiszárik, Matolcsi, Varga and Zsámboki, Math.
+  Program. 2024), and `χ_f(ℝ²) ≥ 4.0959` follows (was `4.0485`). Their inclusion–exclusion program, with six more
+  points of `ℚ(√3, √11)` added to their 23 one at a time. The same group announced `0.2415` in December 2023 without
+  a published proof; this is cited everywhere. New: `data/forbidden_distances/m1/` (configurations `x23`, `x26`,
+  `x29`; certificates `0.24698967`, `0.24522384`, `0.24414455`; `check_m1.py` and the separately written
+  `check_m1_indep.py`; the generator `m1cert2.py`; the search programs), `papers/unit-distance-density/` (5 pages),
+  `tests/test_m1_density.py` (both checkers on the three certificates, eight corruptions each). Refereed once inside
+  the project (correct; `check_m1.py` no longer relies on `assert`).
 - **Fifteen, sixteen and seventeen colours for two distances (10–11 October, night; version 8 of the
   forbidden-distances paper).** For every real algebraic `d`, `χ(ℝ², {1, d}) ≥ 15` for `d ≥ 5·10⁵`, `≥ 16` for
   `d ≥ 7·10⁷` and `≥ 17` for `d ≥ 8·10⁸` (before: 14 from `25 700`, 18 only from `10²⁵`; Bukh's theorem gives 17

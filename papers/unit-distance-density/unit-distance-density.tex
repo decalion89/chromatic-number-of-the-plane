@@ -1,0 +1,301 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage[hyphens]{url}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
+\usepackage[margin=2.5cm]{geometry}
+
+\hypersetup{
+  pdftitle={A new upper bound for the density of planar sets avoiding unit distances},
+  pdfauthor={Sergi Gal\'an},
+  pdfsubject={Planar sets avoiding unit distances},
+  pdfkeywords={unit distance graph, distance avoiding sets, density, fractional chromatic number, chromatic number of
+  the plane, linear programming, inclusion-exclusion}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\chif}{\chi_{\mathrm f}}
+% the numbers of the main certificate (filled in from the certificate file)
+\newcommand{\NPTS}{29}
+\newcommand{\NNEW}{6}
+\newcommand{\MONE}{0.24415}
+\newcommand{\INVM}{4.0959}
+\newcommand{\NUNIT}{76}
+\newcommand{\NATOMS}{55\,610}
+\newcommand{\NCONG}{10\,012}
+
+\title{A new upper bound for the density of planar sets avoiding unit distances}
+\author{Sergi Gal\'an}
+\thanks{These results were obtained with the assistance of an AI system (Claude, by Anthropic), which found the
+configuration, wrote the programs, ran the checks and helped to draft this note; a second program and a referee report
+were produced by separate AI agents. The method and the 23-point configuration are those of Ambrus, Csisz\'arik,
+Matolcsi, Varga and Zs\'amboki \cite{ACMVZ}. No mathematician has checked the note yet. The author is not a
+professional mathematician and submits it for independent verification.}
+\date{Draft, 11 October 2026}
+\subjclass[2020]{Primary 52C10, 05C15; Secondary 42B10, 90C05}
+\keywords{unit distance graph, distance avoiding sets, density, fractional chromatic number, chromatic number of the
+plane, linear programming bounds, inclusion--exclusion}
+
+\begin{document}
+
+\begin{abstract}
+Let $m_1(\R^2)$ be the supremum of the upper densities of measurable planar sets in which no two points are at
+distance $1$. Ambrus, Csisz\'arik, Matolcsi, Varga and Zs\'amboki proved $m_1(\R^2)\le0.2470$, confirming Erd\H{o}s's
+conjecture $m_1(\R^2)<1/4$, with a linear program whose constraints come from the patterns in which a random copy of a
+set $X_{23}$ of $23$ points meets the set; their computer search for $X$ stopped at $24$ points. Adding $\NNEW$ points
+to $X_{23}$, with coordinates in the same field $\Q(\sqrt3,\sqrt{11})$, we prove $m_1(\R^2)\le\MONE$. This improves the published bound; the same group has announced $0.2415$ without a
+published proof. Our proof is a rational certificate for the program, checked in exact and interval arithmetic by two
+programs written separately.
+With the transfer theorem of OpenAI, as extended to fractional colourings in an earlier note, the fractional chromatic
+number of the plane is therefore at least $\INVM$. In floating point the value of the program keeps decreasing as points
+are added, so the method has not reached its limit.
+\end{abstract}
+
+\maketitle
+
+\section{The result}
+
+A set $A\subseteq\R^2$ \emph{avoids the distance $1$} if $|x-y|\ne1$ for all $x,y\in A$. Its upper density is
+$\overline\delta(A)=\limsup_{R\to\infty}|A\cap B(0,R)|/|B(0,R)|$, and
+\[
+m_1(\R^2)=\sup\{\overline\delta(A):A\subseteq\R^2\text{ measurable, avoiding the distance }1\}.
+\]
+The question was popularized by Leo Moser; Croft's construction gives $m_1(\R^2)\ge0.22936$ \cite{Croft}, and no better
+construction is known. Erd\H{o}s wrote that ``it seems very likely that $m_1(\R^2)$ is less than $1/4$''
+\cite{Erdos85}. The upper bounds came from unit-distance graphs with large fractional chromatic number (the Moser spindle
+gives $2/7$; Bellitto, P\^echer and S\'edillot $0.2565$ \cite{BPS}) and from linear programs on the autocorrelation of
+$A$: Sz\'ekely $12/43\approx0.2791$ \cite{Szekely}, Oliveira Filho and Vallentin $0.2684$ \cite{OFV}, Keleti, Matolcsi,
+Oliveira Filho and Ruzsa $0.2588$ \cite{KMOR}, Ambrus and Matolcsi $0.2544$ \cite{AM}, and finally Ambrus,
+Csisz\'arik, Matolcsi, Varga and Zs\'amboki, $m_1(\R^2)\le0.2470$ \cite{ACMVZ}, which settled Erd\H{o}s's conjecture.
+In December 2023 Varga announced that the group had improved this to $0.2415$ \cite{Varga}; we found no paper, preprint
+or certificate for that bound.
+Their program combines both approaches: for a finite set $X$, the probabilities of the patterns in which a random
+congruent copy of $X$ meets $A$ satisfy linear equations (``inclusion--exclusion''), whose coefficients are values of
+the autocorrelation of $A$. They found a set $X_{23}$ of $23$ points by a beam search over sets of at most $24$ points
+(a week on $128$ processors \cite[§9]{ACMVZ}).
+
+\begin{theorem}\label{thm:main}
+Every measurable planar set avoiding the distance $1$ has upper density at most $\MONE$. That is,
+$m_1(\R^2)\le\MONE$.
+\end{theorem}
+
+This is weaker than the announced $0.2415$, but, as far as we know, it is the best upper bound with a published proof.
+The method is entirely that of \cite{ACMVZ}; what is new is the configuration and the certificate. The proof is the
+program of \cite{ACMVZ} for a set $X_{\NPTS}$ of $\NPTS$ points: $X_{23}$ and $\NNEW$ more points in
+the same field $\Q(\sqrt3,\sqrt{11})$ (Section~\ref{sec:config}). Section~\ref{sec:ie} states the certificate that
+proves the bound and Section~\ref{sec:checks} how it was checked. Section~\ref{sec:search} describes how the points were
+found and what larger sets give in floating point.
+
+\subsection*{Consequences}
+Write $\chif(\R^2)$ for the fractional chromatic number of the unit-distance graph of the plane, that is, the supremum of
+$\chif(G)$ over finite unit-distance graphs $G$. Averaging translates of a set avoiding $1$ over the vertices of $G$
+gives $m_1(\R^2)\le1/\chif(G)$; the converse direction is the hard one.
+
+\begin{corollary}\label{cor:frac}
+$\chif(\R^2)\ge1/m_1(\R^2)\ge\INVM$, and the measurable fractional chromatic number of the plane is at least $\INVM$.
+For every $\varepsilon>0$ and every large $n$ there are $n$-point unit-distance graphs whose independence number is
+below $(\MONE+\varepsilon)n$.
+\end{corollary}
+
+\begin{proof}
+The measurable statement is the averaging argument above in the measurable setting. That $\chif(\R^2)=1/m_1(\R^2)$, and
+that the least independence ratio of $n$-point unit-distance graphs tends to $m_1(\R^2)$, is proved in
+\cite[Cors.~2 and~3]{Galan} from the transfer theorem of OpenAI \cite[Thm.~2.3]{OpenAI}; insert
+Theorem~\ref{thm:main}.
+\end{proof}
+
+Before, these bounds were $4.0485$ and $0.2470$ \cite{ACMVZ,Galan}; Dúcz and Varga had found a finite unit-distance
+graph with fractional chromatic number above $4.0007$ \cite{DV}. The same substitution improves the other bounds of
+\cite{Galan} that use $m_1(\R^2)$: for instance, for suitable sets $D$ of $k$ integers, $\chi(\R^2,D)\ge
+m_1(\R^2)^{-k}>\INVM^k$ \cite[Cor.~6]{Galan}.
+
+\section{The inclusion--exclusion bound}\label{sec:ie}
+
+Let $X=\{x_1,\dots,x_n\}\subseteq\R^2$, $r_{ij}=|x_i-x_j|$, let $E_1$ be the set of pairs $\{i,j\}$ with $r_{ij}=1$, and
+let $\mathcal S$ be the family of subsets of $\{1,\dots,n\}$ containing no pair of $E_1$ (the independent sets of the
+unit-distance graph of $X$, including $\emptyset$). Let $\mathcal C$ be a list of pairs $(I,J)$ of sequences of distinct
+indices of the same length with $|x_{I_a}-x_{I_b}|=|x_{J_a}-x_{J_b}|$ for all $a,b$.
+
+\begin{proposition}[Ambrus, Csisz\'arik, Matolcsi, Varga, Zs\'amboki \cite{ACMVZ}]\label{prop:ie}
+Suppose that real numbers $\psi_0,\psi_T,\lambda_i$ $(1\le i\le n)$, $u_{ij}$ $(\{i,j\}\notin E_1)$ and $w_c$
+$(c\in\mathcal C)$ satisfy
+\begin{gather*}
+\Phi(t)=\psi_0J_0(t)-\sum_i\lambda_i-\sum_{i<j}u_{ij}J_0(r_{ij}t)\ \ge\ 1\qquad(t\ge0),\\
+Q(S)=\psi_T+\sum_{i\in S}\lambda_i+\sum_{i<j,\ i,j\in S}u_{ij}+\sum_{(I,J)\in\mathcal C}w_{(I,J)}\bigl([I\subseteq S]-[J\subseteq S]\bigr)
+\ \ge\ 0\qquad(S\in\mathcal S),
+\end{gather*}
+where the sums of $u_{ij}$ run over the pairs $i<j$ with $\{i,j\}\notin E_1$. Then $m_1(\R^2)\le\psi_T$.
+\end{proposition}
+
+\begin{proof}[Proof (after \cite{ACMVZ})]
+It suffices to bound the density $\delta$ of a measurable set $A$ avoiding $1$ that is periodic for a lattice
+$\Lambda$ \cite[§2]{ACMVZ}. Let $c_\xi$ ($\xi\in\Lambda^*$) be the Fourier coefficients of $1_A$ on $\R^2/\Lambda$, and
+$\kappa$ the image of the measure $\sum_\xi|c_\xi|^2\delta_\xi$ under $\xi\mapsto2\pi|\xi|$: a measure on $[0,\infty)$ of
+total mass $\delta$ (Parseval) with $\kappa(\{0\})=\delta^2$. The radial average of the autocorrelation
+$\varphi(v)=\delta(A\cap(A-v))$ is $f(r)=\int J_0(rt)\,d\kappa(t)$, and $f(1)=0$ since $A$ avoids $1$. Choose $y$
+uniformly in $\R^2/\Lambda$ and $g\in O(2)$ according to Haar measure, and let $S=\{i:y+gx_i\in A\}$. Then
+$S\in\mathcal S$, $\Pr(i\in S)=\delta$, $\Pr(i,j\in S)=f(r_{ij})$, and $\Pr(I\subseteq S)=\Pr(J\subseteq S)$ for
+$(I,J)\in\mathcal C$: some isometry $h=h_0+c$ maps $x_{I_a}$ to $x_{J_a}$ for every $a$, and $(y,g)\mapsto(y+gc,gh_0)$
+preserves the distribution of $(y,g)$ (reflections are allowed because $g$ ranges over $O(2)$; $6393$ of the $10012$
+relations of our certificate for $X_{29}$ need an isometry that reverses orientation). Hence
+$0\le\E\,Q(S)=\psi_T+\delta\sum_i\lambda_i+\sum_{i<j}u_{ij}f(r_{ij})$. Integrating $\Phi\ge1$ against $\kappa$,
+including the atom at $0$,
+\[
+\delta=\int d\kappa\le\int\Phi\,d\kappa=\psi_0f(1)-\delta\sum_i\lambda_i-\sum_{i<j}u_{ij}f(r_{ij})\le\psi_T.\qedhere
+\]
+\end{proof}
+
+The best such bound for given $X$ and $\mathcal C$ is the value of a linear program, whose dual variables are the
+probabilities of the patterns and the measure $\kappa$; for $X_{23}$ it is $0.2469726\ldots$ \cite[§8]{ACMVZ}, and we
+compute $0.24697261$ for the same program, discretized as in \cite{ACMVZ}.
+
+\section{The configuration}\label{sec:config}
+
+Write points as complex numbers. $X_{\NPTS}$ consists of the $23$ points of \cite[Table~1]{ACMVZ}, in their order, and the
+$\NNEW$ points of Table~\ref{tab:new}. All coordinates lie in $\Q(\sqrt3,\sqrt{11})$; we compute in this field exactly,
+with the basis $1,\sqrt3,\sqrt{11},\sqrt{33}$. The unit-distance graph of $X_{\NPTS}$ has $\NUNIT$ edges (that of $X_{23}$
+has $47$) and $\NATOMS$ independent sets.
+
+\begin{table}[ht]
+\centering
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{rlll}
+\toprule
+$k$ & $\operatorname{Re}x_k$ & $\operatorname{Im}x_k$ & points at distance $1$\\
+\midrule
+$24$ & $\frac{3-\sqrt{33}}{6}$ & $\frac{\sqrt3}{3}$ & 3, 15, 20, 22, 25, 27 \\
+$25$ & $\frac{11-\sqrt{33}}{12}$ & $\frac{-\sqrt3+\sqrt{11}}{12}$ & 6, 15, 21, 22, 24 \\
+$26$ & $\frac{1}{6}$ & $-\frac{\sqrt{11}}{6}$ & 2, 11, 12, 21 \\
+$27$ & $\frac{9-\sqrt{33}}{6}$ & $\frac{\sqrt3}{3}$ & 4, 7, 10, 16, 20, 24 \\
+$28$ & $\frac{4}{3}$ & $\frac{3\sqrt3+\sqrt{11}}{6}$ & 3, 5, 17, 18, 22 \\
+$29$ & $\frac{2-\sqrt{33}}{6}$ & $\frac{2\sqrt3+\sqrt{11}}{6}$ & 12, 13, 18, 19, 22 \\
+\bottomrule
+\end{tabular}
+\caption{The points $x_{24},\dots,x_{29}$ added to $X_{23}$, and the points of $X_{29}$ at distance $1$ from each.}\label{tab:new}
+\end{table}
+
+\begin{figure}[ht]
+\centering
+\input{fig-config.tex}
+\caption{The configuration $X_{\NPTS}$ and its $\NUNIT$ unit distances. The $23$ points of \cite{ACMVZ} are black, the
+$\NNEW$ new points red; red segments are the unit distances at a new point.}\label{fig:config}
+\end{figure}
+
+\section{The certificate and its verification}\label{sec:checks}
+
+The program for $X_{\NPTS}$ has the inclusion--exclusion rows of \cite{ACMVZ}: one variable for each independent set,
+the equations $\Pr(i\in S)=\delta$ and $\Pr(i,j\in S)=f(r_{ij})$, and the congruence relations. We generate the latter
+ourselves: the independent sets with at least three points fall into congruence classes (compared exactly), and each
+class $S_1,\dots,S_m$ gives the $m-1$ relations $\Pr(S_1\subseteq S)=\Pr(S_j\subseteq S)$, with $S_j$ listed in the order
+of a distance-preserving bijection. (Relations between pairs repeat the equations $\Pr(i,j\in S)=f(r_{ij})$.)
+
+The certificate is found in two steps. First the program is solved in floating point, with $\kappa$ supported on the
+grid $t\in\{0,0.1,\dots,100\}\cup\{100.25,100.5,\dots,400\}$; its multipliers $w$ of the relations are rounded to
+multiples of $2^{-40}$ and frozen.
+For frozen $w$ the best $\psi_0,\psi_T,\lambda,u$ solve a second, small program (one variable per point and per pair):
+minimize $\psi_T$ subject to $Q\ge0$ on every independent set, $-\sum_i\lambda_i\ge1.03$, and
+$\Phi(t)\ge1+2\cdot10^{-5}$ at the points of a grid of step $0.005$ on $[0,50]$ and $0.02$ on $[50,1000]$ where it is
+needed (rows are added at the local minima of $\Phi$ until none is violated). Then $\psi_0$, $\lambda$ and $u$ are
+rounded to multiples of $2^{-40}$ and $\psi_T$ is raised until $Q\ge0$ holds exactly on every independent set. The
+certificate for $X_{\NPTS}$ uses $\NCONG$ relations and gives $\psi_T<\MONE$; it is the file
+\texttt{data/forbidden\_distances/m1/certificates/m1\_x29.json}. Nothing in this construction needs to be trusted: the checks below take the certificate as it is.
+
+Two programs, written separately, check the certificate and prove Theorem~\ref{thm:main}:
+\begin{itemize}
+\item \texttt{check\_m1.py} computes the unit-distance graph of $X$ exactly in $\Q(\sqrt3,\sqrt{11})$, checks that every
+index lies in range, that no $u_{ij}$ sits on a unit pair and that every relation in $\mathcal C$ is a congruence, checks
+$Q\ge0$ on all independent sets with integers over a common denominator, and proves $\Phi\ge1$ on $[0,T]$ by bisection
+with Taylor enclosures of $J_0$ in Arb ball arithmetic, and beyond $T$ by $|J_0(x)|\le\sqrt{2/(\pi x)}$; it
+cross-checks the number of independent sets by the recursion $I(G)=I(G-v)+I(G-N[v])$, and it does not rely on
+\texttt{assert} statements, which Python skips under its option \texttt{-O}.
+\item \texttt{check\_m1\_indep.py} has its own exact arithmetic, its own transcription-independent reading of the points,
+its own integer interval arithmetic with the power series and the Hankel expansion of $J_0$, and an adaptive sweep based
+on $|J_0''|\le1$; it computes $Q$ on all independent sets by a subset-sum pass and recomputes a sample from the
+definition.
+\end{itemize}
+The facts about $J_0$ used are: $J_0(x)=\frac1\pi\int_0^\pi\cos(x\sin s)\,ds$, so $|J_0|\le1$ and $|J_0''|\le1$;
+$J_0\ge-0.4028$, proved by \texttt{check\_m1.py} on $[0,4]$ by interval arithmetic and beyond by the next bound; and
+$|J_0(x)|\le\sqrt{2/(\pi x)}$ for $x>0$, which follows from Nicholson's formula
+$J_0(x)^2+Y_0(x)^2=\frac8{\pi^2}\int_0^\infty K_0(2x\sinh u)\,du$ \cite[10.9.30]{DLMF}, \cite[§§13.73--13.74]{Watson}.
+
+Both accept the certificate (in under a minute) and the certificate for $X_{23}$ alone, which gives $0.24698967$ and
+reproduces the bound of \cite{ACMVZ}. Both reject corrupted copies: an index out of range (also in one-point
+relations), a broken congruence, a $u_{ij}$ on a unit pair, a moved point, a lowered $\psi_T$, a raised $\lambda_i$, a
+lowered $\psi_0$. A referee report, written by a separate AI agent, proves Proposition~\ref{prop:ie} in full; its own checker, written before it read ours, accepts the three certificates, and of $28$ corrupted certificates every invalid one is rejected by all three checkers. It found one weakness, now removed: \texttt{check\_m1.py} relied on \texttt{assert} statements.
+
+\section{How the points were found}\label{sec:search}
+
+The search follows \cite[§7]{ACMVZ}: a new point must lie at distance $1$ from at least two points already present and at
+distance at least $0.1$ from all of them. For $X_{23}$ there are $208$ such points. Adding one of them alone lowers the
+value of the program (in floating point, discretized with step $0.1$ up to $t=100$, where $X_{23}$ gives $0.246948$) to as
+little as $0.246083$; the gains of different points roughly add up. Adding the best ones in turn gives the values of
+Table~\ref{tab:values}. Each point gains about $4\cdot10^{-4}$, slowly less as the set grows, while the program grows with
+the number of independent sets; we stopped at $\NPTS$ points for the certificate.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrcc}
+\toprule
+points & independent sets & relations & value (floating point) & certified bound\\
+\midrule
+$23$ & 13\,552 & 2\,122 & $0.246948$ & $0.24698967$ \\
+$25$ & 19\,868 & 4\,091 & $0.245583$ & -- \\
+$26$ & 28\,622 & 5\,008 & $0.245169$ & $0.24522384$ \\
+$27$ & 33\,898 & 6\,044 & $0.244841$ & -- \\
+$29$ & 55\,610 & 10\,012 & $0.244090$ & $0.24414455$ \\
+\bottomrule
+\end{tabular}
+\caption{The program for $X_{23}$ and its extensions: the value in floating point (step $0.1$ up to $t=100$), and the bound proved by a certificate (rounded up).}\label{tab:values}
+\end{table}
+
+\begin{remark}
+Ambrus et al.\ observed that the last point of their $24$-point set did not improve the bound and removed it
+\cite[§9]{ACMVZ}. Our points improve it from the first one on: the best single point lowers the value by $8.7\cdot10^{-4}$.
+We do not know how the announced bound $0.2415$ \cite{Varga} was obtained, so we cannot compare the methods.
+\end{remark}
+
+\begin{thebibliography}{99}
+\bibitem{ACMVZ} G. Ambrus, A. Csisz\'arik, M. Matolcsi, D. Varga and P. Zs\'amboki, \emph{The density of planar sets
+avoiding unit distances}, Math. Program. 207 (2024) 303--327; arXiv:2207.14179.
+\bibitem{AM} G. Ambrus and M. Matolcsi, \emph{Density estimates of $1$-avoiding sets via higher order correlations},
+Discrete Comput. Geom. 67 (2022) 1245--1256; arXiv:1809.05453.
+\bibitem{BPS} T. Bellitto, A. P\^echer and A. S\'edillot, \emph{On the density of sets of the Euclidean plane avoiding
+distance $1$}, Discrete Math. Theor. Comput. Sci. 23(1) (2021); arXiv:1810.00960.
+\bibitem{Croft} H. T. Croft, \emph{Incidence incidents}, Eureka 30 (1967) 22--26.
+\bibitem{DLMF} \emph{NIST Digital Library of Mathematical Functions}, \url{https://dlmf.nist.gov}.
+\bibitem{DV} \'A. D\'ucz and D. Varga, \emph{A unit-distance graph in the plane with independence ratio below $1/4$},
+arXiv:2606.28157 (26 June 2026).
+\bibitem{Erdos85} P. Erd\H{o}s, \emph{Problems and results in combinatorial geometry}, in: Discrete Geometry and
+Convexity, Ann. New York Acad. Sci. 440 (1985) 1--11.
+\bibitem{Galan} S. Gal\'an, \emph{Measurable density bounds hold for all colourings of the plane with algebraic
+forbidden distances}, preprint, version 8 (11 October 2026),
+\url{https://github.com/decalion89/chromatic-number-of-the-plane}.
+\bibitem{KMOR} T. Keleti, M. Matolcsi, F. M. de Oliveira Filho and I. Z. Ruzsa, \emph{Better bounds for planar sets
+avoiding unit distances}, Discrete Comput. Geom. 55 (2016) 642--661; arXiv:1501.00168.
+\bibitem{OFV} F. M. de Oliveira Filho and F. Vallentin, \emph{Fourier analysis, linear programming, and densities of
+distance avoiding sets in $\R^n$}, J. Eur. Math. Soc. 12 (2010) 1417--1428.
+\bibitem{OpenAI} OpenAI, \emph{The Euclidean plane is not five-colorable}, preprint (23 September 2026), with a
+formalization in Lean, \url{https://github.com/openai/math}.
+\bibitem{Varga} D. Varga, \emph{Solving a conjecture of Erd\H{o}s}, blog post of the AI group of the Alfr\'ed R\'enyi
+Institute of Mathematics, 10 December 2023, \url{https://ai.renyi.hu/posts/solving-erdos-conjecture/}.
+\bibitem{Watson} G. N. Watson, \emph{A Treatise on the Theory of Bessel Functions}, 2nd ed., Cambridge University
+Press, 1944.
+\bibitem{Szekely} L. A. Sz\'ekely, \emph{Measurable chromatic number of geometric graphs and sets without some distances
+in Euclidean space}, Combinatorica 4 (1984) 213--218.
+\end{thebibliography}
+
+\end{document}
