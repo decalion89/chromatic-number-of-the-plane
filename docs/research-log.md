@@ -11407,3 +11407,28 @@ measurable set avoiding `D`; for finite `D` the fractional chromatic number of t
   of independent sets, falls back to Python integers instead of rejecting large denominators and reports proven
   violations of `Φ ≥ 1`; `m1cert2.py` no longer overflows when it rescales and checks `Φ` up to `t = 10 000`; the paper
   cites the facts about `J₀` (Nicholson's formula for `|J₀(x)| ≤ √(2/(πx))`).
+
+## m₁(ℝ²) ≤ 0.24380: a seventh point (11 October)
+
+- **The result.** `X₃₀ = X₂₉ ∪ {x₃₀}` with `x₃₀ = x₆ + 1 = (17 − √33)/12 + i(5√3 + √11)/12`, at distance 1 from `x₂`,
+  `x₆`, `x₁₂` and `x₂₅`: 84 893 independent sets and 15 709 relations. The program (`κ` up to `t = 400`) gives
+  `0.24374315` (`X₂₉`: `0.24409208`) after 51 minutes on one core; the certificate has `ψ_T = 0.2437968178`, so
+  `m₁(ℝ²) ≤ 0.24380` and `χ_f(ℝ²) ≥ 4.1017`. `check_m1.py` (52 s), `check_m1_indep.py` (38 s) and the referee's own
+  checker (26 s) accept it; 9 474 of its 15 709 relations need a reflection; `m1cert2.py --reuse` rebuilds it byte for
+  byte from `m1_x30.json.lp.npz`.
+- **Which point.** On `X₂₃`, `x₃₀` had the third largest single gain (`7.38·10⁻⁴`) but only three unit neighbours, so
+  the first six additions, all of unit degree at least 4 on `X₂₃`, passed it over; on `X₂₉` it has four. Its gain on
+  `X₂₉` is `3.49·10⁻⁴`, half its gain on `X₂₃`.
+- **What did not help.**
+  - A finer grid in the first program (step `0.025` instead of `0.1` up to `t = 100`, on `X₂₃`): the value rises by
+    `2.8·10⁻⁵` (the coarse grid misses the dips of `Φ` between grid points, at `t = 3.75, 6.25, 10.25, …` for `X₂₉`,
+    up to `3·10⁻⁴` deep) and the certificate improves by only `7·10⁻⁶` (`0.24698285` instead of `0.24698966`), for
+    a program 65% slower.
+  - The atom of the spectral measure at 0: for a periodic set of density `δ`, `κ({0}) = δ²`, which the program does
+    not impose. At the optimum for `X₂₃` it holds anyway (`κ(0) = 0.060991 ≥ δ² = 0.060983`), so imposing it changes
+    nothing.
+  - Fewer relations on `X₂₉`: triangles alone give `0.24805`, sizes 3–4 `0.24496`, sizes 3–5 `0.24418`, all
+    `0.24409`. Even the relations between sets of 6 to 9 points, a fifth of them, are worth `8·10⁻⁵`, a quarter of a
+    point, and the restricted programs were not faster (run four at a time, they took 6 to 38 minutes against 16 for
+    the full program run alone).
+  - Symmetry: neither `X₂₃` nor `X₂₉` has one; the reflection that keeps the most of `X₂₉` adds six points.

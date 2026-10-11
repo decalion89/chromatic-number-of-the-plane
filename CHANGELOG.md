@@ -12,6 +12,12 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- **`m₁(ℝ²) ≤ 0.24380` (11 October, morning).** A seventh point, `x₃₀ = x₆ + 1`, lowers the certified bound from
+  `0.24415` to `0.24380`, so `χ_f(ℝ²) ≥ 4.1017`. New: `configurations/x30.json` and `certificates/m1_x30.json`
+  (84 893 independent sets, 15 709 relations), accepted by both checkers and by the referee's own checker; the paper,
+  the READMEs and the tests are updated. The tables now give the value of the program on the certificate generator's
+  grid (up to `t = 400`), and the paper and the README state the order in which the points were added exactly (the
+  six best of unit degree at least 4 on `X₂₃`, then the best of the others).
 - **`m₁(ℝ²) ≤ 0.24415` (11 October).** Every measurable planar set with no two points at distance 1 has upper density
   at most `0.24415`; the published bound was `0.2470` (Ambrus, Csiszárik, Matolcsi, Varga and Zsámboki, Math.
   Program. 2024), and `χ_f(ℝ²) ≥ 4.0959` follows (was `4.0485`). Their inclusion–exclusion program, with six more
