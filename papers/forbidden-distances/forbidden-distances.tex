@@ -74,7 +74,7 @@ $27000$ force $48$. For
 suitable sets of $k$ integer distances more than $4.0485^k$ colours are needed, in the plane and in every higher
 dimension, so the
 chromatic number with $k$ forbidden distances grows exponentially in $k$, whereas Erd\H{o}s expected polynomial
-growth. Davies has just proved the analogous statements in dimension at least $4$ by a different method. Using OpenAI's
+growth (this answers Erd\H{o}s Problem \#706). Davies has just proved the analogous statements in dimension at least $4$ by a different method. Using OpenAI's
 theorem itself at a small scale and density bounds at a large one, we show that the distances $1$ and $N$ force at
 least $25$ colours for every large algebraic $N$, although $19.01$ colours suffice fractionally, and, with de
 Grey's graph, at least $18$ colours for every algebraic $N\ge10^{25}$; iterating, $k$ distances can force at least
@@ -252,11 +252,29 @@ and asked: ``Does $L_2(r)$ increase polynomially or exponentially? I expect that
 constant $c$.'' The question is Problem~\#706 on Bloom's list \cite{EP706}, where it is stated for finite point sets,
 which gives the same $L_2(r)$ by the de~Bruijn--Erd\H{o}s theorem; Croft, Falconer and Guy ask whether the growth is
 exponential \cite[Problem G11]{CFG} (as quoted by Bukh \cite{Bukh}), and the best lower bound in the plane was of order
-$k\sqrt{\log k}$ (see \cite{Bukh,Naslund}). By Corollary~\ref{cor:many} and the product colouring,
+$k\sqrt{\log k}$ (see \cite{Bukh,Naslund}).
+
+\begin{corollary}[Erd\H{o}s Problem \#706]\label{cor:706}
+For every $r\ge1$ there are positive integers $a_1<\dots<a_r$ and a finite set $P\subset\R^2$ such that the graph on
+$P$ in which two points are joined when their distance is one of $a_1,\dots,a_r$ has chromatic number greater than
+$4.0485^r$. Consequently
 \[
 4.0485^r<L_2(r)\le7^r ,
 \]
-so $L_2(r)$ grows exponentially, contrary to Erd\H{o}s's expectation. Bukh \cite{Bukh} proved exponential growth for
+for every $r\ge1$, both for $L_2(r)$ defined through the whole plane and through finite point sets; in particular
+$L_2(r)$ is not bounded by any polynomial in $r$.
+\end{corollary}
+
+\begin{proof}
+Let $D=\{a_1,\dots,a_r\}$ be the set of Corollary~\ref{cor:many} for $k=r$, so $\chi(\R^2,D)>4.0485^r$. Colouring the
+plane by a product of $r$ hexagonal $7$-colourings, the $i$-th scaled so that it avoids the distance $a_i$, gives
+$\chi(\R^2,D)\le7^r$; so $\chi(\R^2,D)$ is a finite integer $c>4.0485^r$. By the de~Bruijn--Erd\H{o}s theorem
+\cite{dBE}, the graph on $\R^2$ with edge distances in $D$ has a finite subgraph that is not $(c-1)$-colourable; let $P$
+be its vertex set. The upper bound $L_2(r)\le7^r$ holds for every $r$-element set of distances by the same product
+colouring, and a finite point set needs no more colours than the whole plane.
+\end{proof}
+
+So $L_2(r)$ grows exponentially, contrary to Erd\H{o}s's expectation. Bukh \cite{Bukh} proved exponential growth for
 measurable colourings and remarked that it is ``very likely that the usual chromatic number does not share this
 behavior''; Corollary~\ref{cor:many} shows that it does, for integer distances. Davies \cite{Davies} has just proved
 exponential growth for arbitrary colourings of $\R^d$, $d\ge4$, with a different transfer (see the Remarks);
