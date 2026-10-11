@@ -1,0 +1,29 @@
+certificate: m1_x30.json
+J0 self-test: 14 tabulated values, 60 series/large-argument comparisons, 0 failures
+n = 30 points, 80 unit-distance pairs, 35 distinct distances; 355 u entries; 15709 wc entries (sizes {3: 1737, 4: 4313, 5: 5340, 6: 3175, 7: 968, 8: 158, 9: 17, 10: 1}), 157523 pairwise distance equalities checked
+[PASS] (G) at least one point, no two points equal 
+[PASS] (G) one lam per point 
+[PASS] (G) u: indices in 1..n, i < j, no repeated pair, no pair at distance 1 
+[PASS] (G) wc: |I| = |J| >= 1, indices in 1..n and distinct, congruent in order (exact) 
+(G) done in 0.3 s
+(A) number of independent sets (including the empty set): 84893
+(A) common denominator 1099511627776 = 2^40; sum of |terms| x denominator < 2^52 -> int64 arithmetic; 0 coefficient masks are not independent (they never contribute)
+(A) exact recomputation from the definition at 1482 sets: 0 mismatches
+[PASS] (A) 84893 independent sets enumerated (count cross-checked) 
+[PASS] (A) Q(S) >= 0 for every independent set (exact) (#negative 0, recomputation mismatches 0)
+(A) min Q = 275/274877906944 (~1.000444e-09) at S = [2, 6, 10, 21, 28] ; Q(empty) = psiT = 268057436027/1099511627776 ; 25.2 s
+(P) Phi(0) = 1099533618001/1099511627776 (~1.00002); Phi(oo) = -sum(lam) = 1.068077893; 355 u entries in 34 distance classes; M2 = 5.74541
+[PASS] (P) tail: Phi(t) >= 1.0009455 for t >= T = 710 (T >= 690.42 needed; |J0(x)| <= sqrt(2/(pi x))) 
+[PASS] (P) Phi(t) >= 1 on [0, T] (t = 0 included) T = 710, 5485 steps, 35 J0 enclosures per grid point (16286 by power series, 175724 by large-argument expansion); smallest certified lower bound of Phi - 1 on a step: 1.4721e-05 on [3.74656, 3.74929]; 12.6 s
+(P) done in 12.6 s
+
+summary: n = 30 points, 80 unit-distance pairs, 84893 independent sets; min Q = 1.000444e-09; smallest certified margin of Phi - 1 = 1.4721e-05; psiT = 268057436027/1099511627776 (~0.2437968178)
+
+==============================================================================
+8 checks passed, 0 failed
+time: 38.4 s
+ACCEPTED: m_1(R^2) <= 0.24379682 (30 points)
+
+real	0m38.420s
+user	0m38.195s
+sys	0m0.020s

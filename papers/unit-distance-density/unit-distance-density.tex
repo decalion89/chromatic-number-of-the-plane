@@ -30,13 +30,13 @@
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\chif}{\chi_{\mathrm f}}
 % the numbers of the main certificate (filled in from the certificate file)
-\newcommand{\NPTS}{29}
-\newcommand{\NNEW}{6}
-\newcommand{\MONE}{0.24415}
-\newcommand{\INVM}{4.0959}
-\newcommand{\NUNIT}{76}
-\newcommand{\NATOMS}{55\,610}
-\newcommand{\NCONG}{10\,012}
+\newcommand{\NPTS}{30}
+\newcommand{\NNEW}{7}
+\newcommand{\MONE}{0.24380}
+\newcommand{\INVM}{4.1017}
+\newcommand{\NUNIT}{80}
+\newcommand{\NATOMS}{84\,893}
+\newcommand{\NCONG}{15\,709}
 
 \title{A new upper bound for the density of planar sets avoiding unit distances}
 \author{Sergi Gal\'an}
@@ -150,8 +150,8 @@ $\varphi(v)=\delta(A\cap(A-v))$ is $f(r)=\int J_0(rt)\,d\kappa(t)$, and $f(1)=0$
 uniformly in $\R^2/\Lambda$ and $g\in O(2)$ according to Haar measure, and let $S=\{i:y+gx_i\in A\}$. Then
 $S\in\mathcal S$, $\Pr(i\in S)=\delta$, $\Pr(i,j\in S)=f(r_{ij})$, and $\Pr(I\subseteq S)=\Pr(J\subseteq S)$ for
 $(I,J)\in\mathcal C$: some isometry $h=h_0+c$ maps $x_{I_a}$ to $x_{J_a}$ for every $a$, and $(y,g)\mapsto(y+gc,gh_0)$
-preserves the distribution of $(y,g)$ (reflections are allowed because $g$ ranges over $O(2)$; $6393$ of the $10012$
-relations of our certificate for $X_{29}$ need an isometry that reverses orientation). Hence
+preserves the distribution of $(y,g)$ (reflections are allowed because $g$ ranges over $O(2)$; $9\,474$ of the $\NCONG$
+relations of our certificate for $X_{\NPTS}$ need an isometry that reverses orientation). Hence
 $0\le\E\,Q(S)=\psi_T+\delta\sum_i\lambda_i+\sum_{i<j}u_{ij}f(r_{ij})$. Integrating $\Phi\ge1$ against $\kappa$,
 including the atom at $0$,
 \[
@@ -178,14 +178,15 @@ has $47$) and $\NATOMS$ independent sets.
 $k$ & $\operatorname{Re}x_k$ & $\operatorname{Im}x_k$ & points at distance $1$\\
 \midrule
 $24$ & $\frac{3-\sqrt{33}}{6}$ & $\frac{\sqrt3}{3}$ & 3, 15, 20, 22, 25, 27 \\
-$25$ & $\frac{11-\sqrt{33}}{12}$ & $\frac{-\sqrt3+\sqrt{11}}{12}$ & 6, 15, 21, 22, 24 \\
+$25$ & $\frac{11-\sqrt{33}}{12}$ & $\frac{-\sqrt3+\sqrt{11}}{12}$ & 6, 15, 21, 22, 24, 30 \\
 $26$ & $\frac{1}{6}$ & $-\frac{\sqrt{11}}{6}$ & 2, 11, 12, 21 \\
 $27$ & $\frac{9-\sqrt{33}}{6}$ & $\frac{\sqrt3}{3}$ & 4, 7, 10, 16, 20, 24 \\
 $28$ & $\frac{4}{3}$ & $\frac{3\sqrt3+\sqrt{11}}{6}$ & 3, 5, 17, 18, 22 \\
 $29$ & $\frac{2-\sqrt{33}}{6}$ & $\frac{2\sqrt3+\sqrt{11}}{6}$ & 12, 13, 18, 19, 22 \\
+$30$ & $\frac{17-\sqrt{33}}{12}$ & $\frac{5\sqrt3+\sqrt{11}}{12}$ & 2, 6, 12, 25 \\
 \bottomrule
 \end{tabular}
-\caption{The points $x_{24},\dots,x_{29}$ added to $X_{23}$, and the points of $X_{29}$ at distance $1$ from each.}\label{tab:new}
+\caption{The points $x_{24},\dots,x_{30}$ added to $X_{23}$, and the points of $X_{30}$ at distance $1$ from each.}\label{tab:new}
 \end{table}
 
 \begin{figure}[ht]
@@ -212,7 +213,7 @@ $\Phi(t)\ge1+2\cdot10^{-5}$ at the points of a grid of step $0.005$ on $[0,50]$ 
 needed (rows are added at the local minima of $\Phi$ until none is violated). Then $\psi_0$, $\lambda$ and $u$ are
 rounded to multiples of $2^{-40}$ and $\psi_T$ is raised until $Q\ge0$ holds exactly on every independent set. The
 certificate for $X_{\NPTS}$ uses $\NCONG$ relations and gives $\psi_T<\MONE$; it is the file
-\texttt{data/forbidden\_distances/m1/certificates/m1\_x29.json}. Nothing in this construction needs to be trusted: the checks below take the certificate as it is.
+\texttt{data/forbidden\_distances/m1/certificates/m1\_x30.json}. Nothing in this construction needs to be trusted: the checks below take the certificate as it is.
 
 Two programs, written separately, check the certificate and prove Theorem~\ref{thm:main}:
 \begin{itemize}
@@ -235,15 +236,17 @@ $J_0(x)^2+Y_0(x)^2=\frac8{\pi^2}\int_0^\infty K_0(2x\sinh u)\,du$ \cite[10.9.30]
 Both accept the certificate (in under a minute) and the certificate for $X_{23}$ alone, which gives $0.24698967$ and
 reproduces the bound of \cite{ACMVZ}. Both reject corrupted copies: an index out of range (also in one-point
 relations), a broken congruence, a $u_{ij}$ on a unit pair, a moved point, a lowered $\psi_T$, a raised $\lambda_i$, a
-lowered $\psi_0$. A referee report, written by a separate AI agent, proves Proposition~\ref{prop:ie} in full; its own checker, written before it read ours, accepts the three certificates, and of $28$ corrupted certificates every invalid one is rejected by all three checkers. It found one weakness, now removed: \texttt{check\_m1.py} relied on \texttt{assert} statements.
+lowered $\psi_0$. A referee report, written by a separate AI agent, proves Proposition~\ref{prop:ie} in full; its own checker, written before it read ours, accepts the four certificates, and of $28$ corrupted certificates every invalid one is rejected by all three checkers. It found one weakness, now removed: \texttt{check\_m1.py} relied on \texttt{assert} statements.
 
 \section{How the points were found}\label{sec:search}
 
 The search follows \cite[§7]{ACMVZ}: a new point must lie at distance $1$ from at least two points already present and at
 distance at least $0.1$ from all of them. For $X_{23}$ there are $208$ such points. Adding one of them alone lowers the
 value of the program (in floating point, discretized with step $0.1$ up to $t=100$, where $X_{23}$ gives $0.246948$) to as
-little as $0.246083$; the gains of different points roughly add up. Adding the best ones in turn gives the values of
-Table~\ref{tab:values}. Each point gains about $4\cdot10^{-4}$, slowly less as the set grows, while the program grows with
+little as $0.246083$, and the gains of different points partly add up: the two best together gain $1.36\cdot10^{-3}$,
+four fifths of the sum of their single gains. The six best points at distance $1$ from at least four points of
+$X_{23}$, added in the order of their single gains, give $X_{29}$, and $x_{30}$ is the best of the others, with the third
+largest single gain (Table~\ref{tab:values}). Each point gains about $4\cdot10^{-4}$, slowly less as the set grows, while the program grows with
 the number of independent sets; we stopped at $\NPTS$ points for the certificate.
 
 \begin{table}[ht]
@@ -256,10 +259,11 @@ $23$ & 13\,552 & 2\,122 & $0.246948$ & $0.24698967$ \\
 $25$ & 19\,868 & 4\,091 & $0.245583$ & -- \\
 $26$ & 28\,622 & 5\,008 & $0.245169$ & $0.24522384$ \\
 $27$ & 33\,898 & 6\,044 & $0.244841$ & -- \\
-$29$ & 55\,610 & 10\,012 & $0.244090$ & $0.24414455$ \\
+$29$ & 55\,610 & 10\,012 & $0.244092$ & $0.24414455$ \\
+$30$ & 84\,893 & 15\,709 & $0.243743$ & $0.24379682$ \\
 \bottomrule
 \end{tabular}
-\caption{The program for $X_{23}$ and its extensions: the value in floating point (step $0.1$ up to $t=100$), and the bound proved by a certificate (rounded up).}\label{tab:values}
+\caption{The program for $X_{23}$ and its extensions: the value in floating point (with $\kappa$ on the grid of Section~\ref{sec:checks}), and the bound proved by a certificate (rounded up).}\label{tab:values}
 \end{table}
 
 \begin{remark}
