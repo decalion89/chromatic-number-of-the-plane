@@ -1,0 +1,269 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage[hyphens]{url}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
+\usepackage[margin=2.5cm]{geometry}
+
+\hypersetup{
+  pdftitle={A new upper bound for the density of sets in three-space avoiding unit distances},
+  pdfauthor={Sergi Gal\'an},
+  pdfsubject={Sets in R^3 avoiding unit distances},
+  pdfkeywords={unit distance graph, distance avoiding sets, density, measurable chromatic number, linear programming,
+  inclusion-exclusion}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\NPTS}{27}
+\newcommand{\MONE}{0.15158538}
+\newcommand{\INVM}{6.5969}
+\newcommand{\NUNIT}{82}
+\newcommand{\NATOMS}{44\,221}
+\newcommand{\NCONG}{1\,078}
+\newcommand{\NREV}{442}
+
+\title{A new upper bound for the density of sets in three-space avoiding unit distances}
+\author{Sergi Gal\'an}
+\thanks{These results were obtained with the assistance of an AI system (Claude, by Anthropic), which found the
+configuration, wrote the programs, ran the checks and helped to draft this note; a second program and a referee report
+were produced by separate AI agents. The method is that of Ambrus, Csisz\'arik, Matolcsi, Varga and Zs\'amboki
+\cite{ACMVZ}, who used it in the plane. No mathematician has checked the note yet. The author is not a professional
+mathematician and submits it for independent verification.}
+\date{Draft, 11 October 2026}
+\subjclass[2020]{Primary 52C10, 05C15; Secondary 42B10, 90C05}
+\keywords{unit distance graph, distance avoiding sets, density, measurable chromatic number, linear programming bounds,
+inclusion--exclusion}
+
+\begin{document}
+
+\begin{abstract}
+Let $m_1(\R^3)$ be the supremum of the upper densities of measurable sets in $\R^3$ in which no two points are at
+distance $1$. The best published bound was $m_1(\R^3)\le0.1532996$, by DeCorte, Oliveira Filho and Vallentin. We
+prove $m_1(\R^3)\le\MONE$. We carry to three dimensions the inclusion--exclusion linear program with which Ambrus,
+Csisz\'arik, Matolcsi, Varga and Zs\'amboki bounded the planar density, add to it the atom $\delta^2$ that the spectral
+measure of a set of density $\delta$ has at the origin, and apply it to a set of $\NPTS$ points whose coordinates are
+rational multiples of $1/\sqrt2$, grown from a cuboctahedron. The proof is a rational certificate for the program,
+checked in exact and interval arithmetic by two programs written separately.
+\end{abstract}
+
+\maketitle
+
+\section{The result}
+
+A set $A\subseteq\R^3$ \emph{avoids the distance $1$} if $|x-y|\ne1$ for all $x,y\in A$. Its upper density is
+$\overline\delta(A)=\limsup_{R\to\infty}|A\cap[-R,R]^3|/(2R)^3$, and
+\[
+m_1(\R^3)=\sup\{\overline\delta(A):A\subseteq\R^3\text{ measurable, avoiding the distance }1\}.
+\]
+Since a set avoiding $1$ contains at most one vertex of each unit regular tetrahedron, $m_1(\R^3)\le1/4$. The known
+upper bounds are $3/16$ (Sz\'ekely and Wormald \cite{SW}), $0.165609$ (Oliveira Filho and Vallentin \cite{OFV}, by a
+linear program on the autocorrelation of $A$ with extra inequalities from regular simplices) and $0.1532996$ (DeCorte,
+Oliveira Filho and Vallentin \cite[Table~2]{DOV}, by adding constraints of the Boolean quadric polytope on finite point
+sets, found by separation)\footnote{\cite[Table~2]{DOV} gives the previous value as $0.1645090$; the tables of
+\cite{OFV} (in both the arXiv and the journal versions) give $0.165609$.}. Bachoc, Passuello and Thiery \cite{BPT}
+improved the bounds in dimensions $4$ to $24$ but not in dimension $3$. In the plane, Ambrus, Csisz\'arik, Matolcsi,
+Varga and Zs\'amboki \cite{ACMVZ} proved $m_1(\R^2)\le0.2470$ with a linear program built from the patterns in which a
+random congruent copy of a finite set $X$ meets the set $A$; they treated only the plane.
+
+\begin{theorem}\label{thm:main}
+Every measurable set in $\R^3$ avoiding the distance $1$ has upper density at most $\MONE$. That is,
+$m_1(\R^3)\le\MONE$.
+\end{theorem}
+
+The proof (Section~\ref{sec:ie}) is the program of \cite{ACMVZ} in $\R^3$, where the Bessel function $J_0$ becomes
+$\Omega(x)=\sin x/x$, together with the atom $\kappa(\{0\})=\delta^2$ of the spectral measure, used as in
+\cite[Prop.~3.5]{KMOR}; the configuration has $\NPTS$ points (Section~\ref{sec:config}).
+
+\begin{corollary}
+The measurable fractional chromatic number of $\R^3$ is at least $1/\MONE>\INVM$.
+\end{corollary}
+
+\begin{proof}
+If $\R^3$ is covered by measurable sets $A_1,\dots,A_k$ avoiding $1$ with weights $w_i\ge0$, $\sum_{x\in A_i}w_i\ge1$ at
+every point, averaging over a large cube gives $1\le\sum_iw_i\overline\delta(A_i)\le m_1(\R^3)\sum_iw_i$.
+\end{proof}
+
+The bound $\chi_m(\R^3)\ge7$ on the measurable chromatic number \cite{OFV} is not changed: that would need
+$m_1(\R^3)<1/7$. Unlike the plane \cite{Galan}, we know no transfer theorem that would turn the corollary into a bound
+for all colourings.
+
+\section{The inclusion--exclusion bound in $\R^3$}\label{sec:ie}
+
+Let $X=\{x_1,\dots,x_n\}\subseteq\R^3$, $r_{ij}=|x_i-x_j|$, let $E_1$ be the set of pairs $\{i,j\}$ with $r_{ij}=1$, and
+let $\mathcal S$ be the family of subsets of $\{1,\dots,n\}$ containing no pair of $E_1$ (including $\emptyset$). Let
+$\mathcal C$ be a list of pairs $(I,J)$ of sequences of distinct indices of the same length with
+$|x_{I_a}-x_{I_b}|=|x_{J_a}-x_{J_b}|$ for all $a,b$. Let $\Omega(x)=\sin x/x$, $\Omega(0)=1$.
+
+\begin{proposition}\label{prop:ie}
+Suppose that real numbers $\psi_0,\psi_T,m,\lambda_i$ $(1\le i\le n)$, $u_{ij}$ $(\{i,j\}\notin E_1)$ and $w_c$
+$(c\in\mathcal C)$ satisfy
+\begin{gather*}
+\Phi(t)=\psi_0\Omega(t)-\sum_i\lambda_i-\sum_{i<j}u_{ij}\Omega(r_{ij}t)\ \ge\ m\qquad(t>0),\\
+Q(S)=\psi_T+\sum_{i\in S}\lambda_i+\sum_{i<j,\ i,j\in S}u_{ij}+\sum_{(I,J)\in\mathcal C}w_{(I,J)}\bigl([I\subseteq S]-[J\subseteq S]\bigr)
+\ \ge\ 0\qquad(S\in\mathcal S),
+\end{gather*}
+and $c:=\Phi(0)-m>0$, where the sums of $u_{ij}$ run over the pairs $i<j$ with $\{i,j\}\notin E_1$. Then $m_1(\R^3)$ is at
+most the positive root of $cx^2+mx-\psi_T$.
+\end{proposition}
+
+\begin{proof}[Proof (after \cite{ACMVZ})]
+It suffices to bound the density $\delta$ of a measurable set $A$ avoiding $1$ that is periodic for a lattice
+$\Lambda$ \cite[§2]{OFV}: copies of $A\cap[-T+1,T-1]^3$ placed on $2T\Z^3$ avoid $1$ and have density arbitrarily close
+to $\overline\delta(A)$ along a sequence $T\to\infty$. Let $c_\xi$ ($\xi\in\Lambda^*$) be the Fourier coefficients of
+$1_A$ on $\R^3/\Lambda$, and $\kappa$ the image of the measure $\sum_\xi|c_\xi|^2\delta_\xi$ under $\xi\mapsto2\pi|\xi|$: a
+measure on $[0,\infty)$ of total mass $\delta$ (Parseval) with $\kappa(\{0\})=|c_0|^2=\delta^2$. The average over the
+orthogonal group $O(3)$ of the autocorrelation $\varphi(v)=\delta(A\cap(A-v))$ is
+$f(r)=\int\Omega(rt)\,d\kappa(t)$, because the average of $e^{i\langle\xi,gv\rangle}$ over $g\in O(3)$ is
+$\Omega(|\xi||v|)$; and $f(1)=0$ since $A$ avoids $1$. Choose $y$ uniformly in $\R^3/\Lambda$ and $g\in O(3)$ according
+to Haar measure, and let $S=\{i:y+gx_i\in A\}$. (The probabilities below are integrals over $g$ of densities of atoms
+of the sets $A-gx_i$, which are continuous in $g$ because translation is continuous in $L^1(\R^3/\Lambda)$.) Then
+$S\in\mathcal S$, $\Pr(i\in S)=\delta$, $\Pr(i,j\in S)=f(r_{ij})$, and $\Pr(I\subseteq S)=\Pr(J\subseteq S)$ for
+$(I,J)\in\mathcal C$: a distance-preserving bijection between finite subsets of $\R^3$ extends to an isometry $h=h_0+b$
+with $h_0\in O(3)$, and $(y,g)\mapsto(y+gb,gh_0)$ preserves the distribution of $(y,g)$. Reflections are allowed
+because $g$ ranges over $O(3)$; $\NREV$ of the $\NCONG$ relations of our certificate relate sets that are not
+coplanar by an isometry that reverses orientation. Hence $0\le\E\,Q(S)=\psi_T+\delta\sum_i\lambda_i+\sum_{i<j}u_{ij}f(r_{ij})$,
+and adding $\psi_0f(1)=0$,
+\[
+\int\Phi\,d\kappa=\psi_0f(1)-\delta\sum_i\lambda_i-\sum_{i<j}u_{ij}f(r_{ij})\le\psi_T.
+\]
+Since $\Phi\ge m$ on $(0,\infty)$ and $\kappa(\{0\})=\delta^2$, the left side is at least
+$m(\delta-\delta^2)+\Phi(0)\delta^2=m\delta+c\delta^2$. So $c\delta^2+m\delta-\psi_T\le0$; as $c>0$ and
+$\psi_T=Q(\emptyset)\ge0$, $\delta$ is at most the positive root.
+\end{proof}
+
+With $m=1$, $c=0$ this is the program of \cite{ACMVZ}, with $\Omega$ in place of $J_0$. The atom at $0$ is what lets $m$
+be negative: for $X$ a single point, $\psi_0=1$ and $m=\min\Omega=-0.21723\ldots$ give $\delta\le-m/(1-m)=0.17850\ldots$,
+the bound of \cite[(8)]{OFV} for $n=3$. The program behind Proposition~\ref{prop:ie} is linear once the condition
+$\kappa(\{0\})\ge\delta^2$ is replaced by its tangents $\kappa(\{0\})\ge2a\delta-a^2$ (we use $a=0.1,0.1025,\dots,0.1975$).
+
+\section{The configuration}\label{sec:config}
+
+All points of $X_{\NPTS}$ have the form $q/\sqrt2$ with $q\in\Q^3$, so all squared distances are rational and we compute
+exactly. The first $13$ points are the centre and the vertices of a cuboctahedron, that is, the points of the
+face-centred cubic lattice $\{q\in\Z^3:q_1+q_2+q_3\text{ even}\}/\sqrt2$ at distance at most $1$ from the origin. Each
+further point is at distance $1$ from at least three points already present (Table~\ref{tab:pts}). The unit-distance
+graph of $X_{\NPTS}$ has $\NUNIT$ edges and $\NATOMS$ independent sets.
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{lll}
+\toprule
+point & coordinates & at distance $1$ from\\
+\midrule
+$x_{14}$ & $(0,\ 0,\ -2)/\sqrt2$ & $2, 5, 8, 11$\\
+$x_{15}$ & $(-\tfrac{1}{3},\ -\tfrac{1}{3},\ -\tfrac{2}{3})/\sqrt2$ & $8, 11, 14$\\
+$x_{16}$ & $(0,\ -\tfrac{1}{5},\ -\tfrac{3}{5})/\sqrt2$ & $1, 10, 14$\\
+$x_{17}$ & $(\tfrac{1}{11},\ -\tfrac{4}{11},\ -\tfrac{7}{11})/\sqrt2$ & $1, 8, 14$\\
+$x_{18}$ & $(\tfrac{1}{5},\ 0,\ -\tfrac{3}{5})/\sqrt2$ & $10, 13, 14$\\
+$x_{19}$ & $(0,\ \tfrac{1}{5},\ -\tfrac{3}{5})/\sqrt2$ & $4, 13, 14$\\
+$x_{20}$ & $(-\tfrac{8}{11},\ -\tfrac{8}{11},\ \tfrac{2}{11})/\sqrt2$ & $2, 5, 18, 19$\\
+$x_{21}$ & $(\tfrac{11}{35},\ \tfrac{8}{35},\ \tfrac{1}{7})/\sqrt2$ & $8, 10, 20$\\
+$x_{22}$ & $(\tfrac{80}{249},\ \tfrac{55}{249},\ \tfrac{55}{249})/\sqrt2$ & $10, 11, 20$\\
+$x_{23}$ & $(\tfrac{60}{241},\ \tfrac{35}{241},\ -\tfrac{85}{241})/\sqrt2$ & $2, 10, 20$\\
+$x_{24}$ & $(\tfrac{8}{11},\ -\tfrac{8}{11},\ \tfrac{2}{11})/\sqrt2$ & $5, 11, 15, 19$\\
+$x_{25}$ & $(\tfrac{7}{33},\ \tfrac{7}{33},\ -\tfrac{10}{33})/\sqrt2$ & $2, 5, 20$\\
+$x_{26}$ & $(-\tfrac{55}{249},\ \tfrac{80}{249},\ \tfrac{55}{249})/\sqrt2$ & $8, 13, 24$\\
+$x_{27}$ & $(0,\ \tfrac{25}{73},\ \tfrac{55}{73})/\sqrt2$ & $4, 13, 20, 24$\\
+\bottomrule
+\end{tabular}
+\caption{The points $x_{14},\dots,x_{27}$ of $X_{27}$, in the order in which they were added, and their unit neighbours among the earlier points. Points $x_1,\dots,x_{13}$ are $q/\sqrt2$ for the $13$ vectors $q\in\Z^3$ with $q_1+q_2+q_3$ even and $|q|^2\le2$, in lexicographic order ($x_7=0$).}\label{tab:pts}
+\end{table}
+
+\section{The certificate and its verification}\label{sec:checks}
+
+The congruence relations are generated as in the plane: the independent sets with at least three points fall into
+congruence classes (equal multisets of squared distances, then a distance-preserving bijection found by backtracking,
+all exact), and each class $S_1,\dots,S_k$ gives the $k-1$ relations $\Pr(S_1\subseteq S)=\Pr(S_j\subseteq S)$.
+
+The program is first solved in floating point, with $\kappa$ supported on the grid $t\in\{0,0.02,\dots,60\}\cup
+\{60,60.1,\dots,100\}\cup\{100.25,100.5,\dots,600\}$ and the tangent cuts above; its relation multipliers, normalized to
+$c=1$, are rounded to multiples of $2^{-40}$ and frozen. For frozen $w$, a small program in $\psi_0,\psi_T,m,\lambda,u$
+minimizes $\psi_T-am$ (the tangent of the bound at $a=0.1522$) subject to $Q\ge0$ on every independent set,
+$\Phi(0)-m=1$, $-\sum_i\lambda_i-m\ge0.002$ and $\Phi(t)-m\ge2\cdot10^{-5}$ on a grid. The values are rounded to multiples
+of $2^{-40}$; $m$ is set $10^{-5}$ below the minimum of $\Phi$ on a fine grid, and $\psi_T$ is raised until $Q\ge0$ holds
+exactly. The certificate is the file \texttt{m1r3\_x27.json}.
+
+Two programs, written separately, check it and prove Theorem~\ref{thm:main}:
+\begin{itemize}
+\item \texttt{check\_m1r3.py} computes the unit-distance graph exactly, checks indices, that no $u_{ij}$ sits on a unit
+pair and that every relation is a congruence, checks $Q\ge0$ on all independent sets with integers over a common
+denominator (cross-checking their number by $I(G)=I(G-v)+I(G-N[v])$) and $c>0$ exactly, and proves $\Phi\ge m$ on $(0,T]$
+by bisection with second-order Taylor enclosures of $\Omega$ in Arb ball arithmetic and beyond $T$ by $|\Omega(x)|\le1/x$.
+\item \texttt{check\_m1r3\_indep.py} enumerates and counts the independent sets in its own way (three counts for $n\le24$),
+evaluates $Q$ exactly, and proves $\Phi\ge m$ with a bound $t^2$ near $0$, third-order Taylor expansions with an explicit
+bound for $\Phi'''$ in between, and $|\Omega(x)|\le1/x$ in the tail.
+\end{itemize}
+The facts about $\Omega$ used are: $\Omega(x)=\int_0^1\cos(xs)\,ds$, so $|\Omega^{(k)}|\le1/(k+1)$; $\Omega\ge-0.2173$,
+proved by \texttt{check\_m1r3.py} on $[0,5]$ by interval arithmetic and beyond by $|\Omega(x)|\le1/x$. Both programs accept
+the certificate (in seconds) and reject corrupted copies (a lowered $\lambda_i$ or $\psi_T$, a raised $m$ or $u_{ij}$, a
+broken congruence, a $u_{ij}$ on a unit pair, a moved or repeated point, $c\le0$). A referee report, written by a separate AI agent, checked Proposition~\ref{prop:ie} against the sources and found no error; it asked for the continuity of the averaged atom densities in $g$ and for the attribution of the previous bounds (both now in the text) and audited \texttt{check\_m1r3.py}. Its own program, run on the certificate for $X_{\NPTS}$, recounts the $\NATOMS$ independent sets by brute force over all $2^{\NPTS}$ subsets, finds $\min Q>0$ in exact arithmetic, confirms every relation (and that $\NREV$ of them reverse orientation), and finds $\Phi-m\ge9.9\cdot10^{-6}$ on a dense grid (a floating-point check only).
+
+\section{How the points were found}\label{sec:search}
+
+Starting from the cuboctahedron with its centre (program value $0.178467$, the single-point bound), we added one point at
+a time. The candidates are the points at distance $1$ from three points already present (from the $20$th point on, only
+those with coordinates in $\Q^3/\sqrt2$; the points chosen before were in it anyway); we evaluated the program for the
+$40$ (from the $25$th point on, $48$) candidates of highest unit degree, ties broken by distance from the origin, and kept
+the best (Table~\ref{tab:values}). The gains shrink as the set grows (about $3\cdot10^{-4}$ per point at $24$ points,
+$1\cdot10^{-4}$ for the $27$th) while the number of independent sets grows by a factor of about $1.6$ per point; we stopped
+at $27$ points. The bound $1/7$ that would give $\chi_m(\R^3)\ge8$ is far out of reach of this search.
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{rrr}
+\toprule
+points & independent sets & value (floating point)\\
+\midrule
+13 & 109 & 0.178467\\
+14 & 144 & 0.177956\\
+15 & 209 & 0.173205\\
+16 & 322 & 0.160467\\
+17 & 544 & 0.157160\\
+18 & 882 & 0.156954\\
+19 & 1459 & 0.156470\\
+20 & 1741 & 0.155119\\
+21 & 2968 & 0.154027\\
+22 & 5018 & 0.152828\\
+23 & 8430 & 0.152137\\
+24 & 10175 & 0.151987\\
+25 & 15671 & 0.151720\\
+26 & 26117 & 0.151549\\
+27 & 44221 & 0.151456\\
+\bottomrule
+\end{tabular}
+\caption{The value of the program for the first $k$ points of $X_{27}$, discretized with step $0.1$ up to $t=100$ and $0.25$ up to $400$ (a little below the value of the finer program used for the certificate).}\label{tab:values}
+\end{table}
+
+\begin{thebibliography}{99}
+\bibitem{ACMVZ} G. Ambrus, A. Csisz\'arik, M. Matolcsi, D. Varga and P. Zs\'amboki, \emph{The density of planar sets
+avoiding unit distances}, Math. Program. 207 (2024) 303--327; arXiv:2207.14179.
+\bibitem{BPT} C. Bachoc, A. Passuello and A. Thiery, \emph{The density of sets avoiding distance $1$ in Euclidean space},
+Discrete Comput. Geom. 53 (2015) 783--808; arXiv:1401.6140.
+\bibitem{DOV} E. DeCorte, F. M. de Oliveira Filho and F. Vallentin, \emph{Complete positivity and distance-avoiding
+sets}, Math. Program. 191 (2022) 487--558; arXiv:1804.09099.
+\bibitem{Galan} S. Gal\'an, \emph{Measurable density bounds hold for all colourings of the plane with algebraic
+forbidden distances}, preprint, version 8 (11 October 2026),
+\url{https://github.com/decalion89/chromatic-number-of-the-plane}.
+\bibitem{KMOR} T. Keleti, M. Matolcsi, F. M. de Oliveira Filho and I. Z. Ruzsa, \emph{Better bounds for planar sets
+avoiding unit distances}, Discrete Comput. Geom. 55 (2016) 642--661; arXiv:1501.00168.
+\bibitem{OFV} F. M. de Oliveira Filho and F. Vallentin, \emph{Fourier analysis, linear programming, and densities of
+distance avoiding sets in $\R^n$}, J. Eur. Math. Soc. 12 (2010) 1417--1428; arXiv:0808.1822.
+\bibitem{SW} L. A. Sz\'ekely and N. C. Wormald, \emph{Bounds on the measurable chromatic number of $\R^n$}, Discrete
+Math. 75 (1989) 343--372.
+\end{thebibliography}
+
+\end{document}

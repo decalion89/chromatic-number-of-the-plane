@@ -11451,3 +11451,32 @@ measurable set avoiding `D`; for finite `D` the fractional chromatic number of t
   or the Moser spindle gives exactly the value of `X₂₃` alone (`0.24694784`); the extra blocks constrain nothing.
 - **Practical.** The container restarted at 04:37 UTC, killing the first run for 32 points after 40 minutes; it was
   restarted. A run of the first program for 31 points needs about 2.5 GB.
+
+## m₁(ℝ³) ≤ 0.15158538: the inclusion–exclusion program in three dimensions (11 October)
+
+- **Literature.** A search (arXiv and the published versions) found the bounds `3/16` (Székely–Wormald 1989),
+  `0.165609` (Oliveira Filho–Vallentin 2010; DeCorte et al. cite it as `0.1645090`) and `0.1532996` (DeCorte, Oliveira
+  Filho and Vallentin, Math. Program. 2022, Table 2: theta-type program with Boolean-quadric constraints found by
+  separation). The program of Ambrus et al. had been used only in the plane; nothing later improves `ℝ³`.
+- **The program in `ℝ³`.** Same as in the plane with `Ω(x) = sin x / x` in place of `J₀`, averaging over `O(3)`
+  (reflections included), congruence tested by distance-preserving bijections. Without the atom at the origin the
+  program for one point is trivial (value 1); with `κ({0}) = δ²` (tangent cuts `κ(0) ≥ 2aδ − a²` in floating point) it
+  gives `0.178467`, Oliveira Filho–Vallentin's basic bound for `n = 3`. The dual certificate is then `Φ ≥ m` for
+  `t > 0` with `m < 0` allowed, `c = Φ(0) − m > 0`, and `mδ + cδ² ≤ ψ_T`; in practice `ψ_T ≈ 0` and the bound is
+  `≈ −m`. A first polishing step that kept the plane's normalization (`Φ ≥ 1`) lost the atom and gave `0.1662` for 19
+  points; and a tail margin of `0.03` (fine for `Φ ≥ 1`, but 20 % of `|m|`) cost `1.4·10⁻⁴`; both fixed.
+- **Configuration.** The face-centred cubic lattice alone helps little (19 lattice points: `0.176805`). Greedy growth
+  from the cuboctahedron and its centre, adding at each step the best of 40–48 points at distance 1 from three points
+  already present: `0.1605` at 16 points, `0.1528` at 22 (below `0.1533`), `0.151456` at 27. The first run picked an
+  irrational point at 20; from 19 on we kept only points of `ℚ³/√2` (all chosen points before were in it). Gains per
+  point fall from `10⁻³` to `10⁻⁴` while the independent sets grow by `1.6×` per point; the 27th point improved the
+  certified bound by only `1.7·10⁻⁵`, so we stopped. `1/7` (which would give `χ_m(ℝ³) ≥ 8`) is out of reach this way.
+- **Certificates.** 23 points `0.15218069`, 26 points `0.15160217`, 27 points **`0.15158538`** (1 078 relations, 442 of
+  them orientation-reversing between non-coplanar sets). `check_m1r3.py` (13 s) and `check_m1r3_indep.py` (1 s,
+  written by a separate agent without reading the first) accept them; the second rejects all 19 corruption types it
+  was given (and the test suite runs nine more through both). A lowered `ψ₀` is *not* a corruption here: `Φ` only drops
+  where `Ω > 0`, where it has room, and the certificate stays valid.
+- **Referee.** No error in the argument (periodic reduction from Oliveira Filho–Vallentin §2, Fourier expansion,
+  `κ(0) = δ²` exactly, `O(3)` averaging, the quadratic bound); asked for the continuity in `g` of the averaged atom
+  densities, and the attribution of the earlier bounds; audited the checker (exact sign of each coefficient now taken
+  from the rational, not its ball).

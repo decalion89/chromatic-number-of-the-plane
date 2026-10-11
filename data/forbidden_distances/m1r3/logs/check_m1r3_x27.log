@@ -1,0 +1,9 @@
+(G) 27 points, 82 unit pairs, 1078 congruences checked exactly
+(A) 44221 independent sets (count cross-checked): min Q = 1.000e-09 (Q(empty) = psiT = 7.995e-08)
+(B) c = Phi(0) - m = 0.999992473 > 0, m = -0.151583711
+(P) Phi >= m on [0, 200] (3325 boxes, 12s) and on [200, oo) by |Om(x)| <= 1/x
+CERTIFIED: every measurable set in R^3 avoiding the distance 1 has upper density at most 0.15158538 = 1/6.59694 (m delta + c delta^2 <= psiT with m = -0.151583711, c = 0.999992473, psiT = 7.995e-08)
+
+real	0m13.016s
+user	0m12.133s
+sys	0m0.020s

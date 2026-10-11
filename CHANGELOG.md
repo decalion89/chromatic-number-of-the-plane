@@ -12,6 +12,13 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- **`m₁(ℝ³) ≤ 0.15158538` (11 October).** Every measurable set in `ℝ³` with no two points at distance 1 has upper
+  density at most `0.15158538`; the published bound was `0.1532996` (DeCorte, Oliveira Filho and Vallentin, Math.
+  Program. 2022). The inclusion–exclusion program of Ambrus et al. carried to `ℝ³` (kernel `sin x / x`), with the atom
+  `δ²` of the spectral measure at the origin, on 27 points `q/√2` (`q ∈ ℚ³`) grown from a cuboctahedron. New:
+  `data/forbidden_distances/m1r3/` (configuration `x27.json`, certificate `m1r3_x27.json`, `check_m1r3.py`, the
+  separately written `check_m1r3_indep.py`, the generator `m1cert3.py`, the growth program `grow3.py`, logs),
+  `papers/unit-distance-density-3d/` (4 pages, one internal referee: no error) and `tests/test_m1r3_density.py`.
 - **`m₁(ℝ²) ≤ 0.24353` (11 October, morning).** An eighth point, `x₃₁ = x₇ − (1 + i√11)/2`, lowers the certified bound
   to `0.24353`, so `χ_f(ℝ²) ≥ 4.1063`. New: `configurations/x31.json` and `certificates/m1_x31.json` (118 421 independent
   sets, 23 863 relations; the first program takes two hours), accepted by both checkers and by the referee's own

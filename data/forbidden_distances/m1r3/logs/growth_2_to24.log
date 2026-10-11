@@ -1,0 +1,11 @@
+seed n=19 value 0.156470 atoms 1459 (2.4s)
+n=19: 250 candidates, degrees [0, 0, 0, 226, 22, 2], evaluating 40
+  added [-0.51426, -0.51426, 0.12856] deg 4: value 0.155119 atoms 1741 (127s)
+n=20: 289 candidates, degrees [0, 0, 0, 264, 23, 2], evaluating 40
+  added [0.22223, 0.16162, 0.10102] deg 3: value 0.154027 atoms 2968 (155s)
+n=21: 335 candidates, degrees [0, 0, 0, 308, 25, 2], evaluating 40
+  added [0.22718, 0.15619, 0.15619] deg 3: value 0.152828 atoms 5018 (210s)
+n=22: 366 candidates, degrees [0, 0, 0, 339, 25, 2], evaluating 40
+  added [0.17604, 0.10269, -0.24939] deg 3: value 0.152137 atoms 8430 (319s)
+n=23: 401 candidates, degrees [0, 0, 0, 374, 25, 2], evaluating 40
+  added [0.51426, -0.51426, 0.12856] deg 4: value 0.151987 atoms 10175 (517s)

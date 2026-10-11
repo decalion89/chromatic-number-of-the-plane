@@ -1,0 +1,6 @@
+independent sets (brute force): 44221
+min Q exact 1.000444171950221e-09 [1, 14, 21, 25, 26]
+wc bad 0 wc entries needing a reflection (non-coplanar, det<0): 442 sizes [3, 4, 5, 6, 7]
+grid min Phi -0.15157378394200488 at t= 86.2800001372  m= -0.1515837114848182  margin 9.927542813314982e-06
+Phi(0)= 0.8484087617243858 c= 0.999992473209204
+root 0.151585379886066453384945303788

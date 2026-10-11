@@ -1,0 +1,11 @@
+loaded: n=27 points, 267 u-pairs, 1078 wc entries
+(G) ok: 82 unit edges, points distinct, u off unit pairs, all 1078 wc congruent
+(B) ok: c = 549751675991/549755813888 ~ 0.999992473209 > 0, psiT = 43955/549755813888 ~ 7.99537e-08 >= 0
+(A) ok: 44221 independent sets (recursion 44221, brute force None); min Q(S) = 275/274877906944 ~ 1.00044e-09 [0.6s]
+(P) ok: Phi >= m on [0,1] by t^2 bound, on [t1,172.7510] by 284 Taylor intervals (min certified margin 2.250e-06 near t=86.2465), tail t >= 172.7509 by |Om(x)|<=1/x; 128 distinct distances [0.3s]
+B <= 15158538/10^8 = 0.15158538 (exact: c*x^2+m*x-psiT >= 0 at x=0.15158538)
+ACCEPTED: upper density <= B <= 0.15158538  (total 1.0s)
+
+real	0m1.046s
+user	0m0.813s
+sys	0m0.036s

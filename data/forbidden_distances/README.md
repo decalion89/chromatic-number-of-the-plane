@@ -9,6 +9,10 @@ The folder [`m1/`](m1/README.md) holds the certificates for one distance: `m₁(
 inclusion–exclusion program of Ambrus, Csiszárik, Matolcsi, Varga and Zsámboki for their 23 points and eight more
 points of `ℚ(√3, √11)` ([`papers/unit-distance-density/`](../../papers/unit-distance-density/README.md)).
 
+The folder [`m1r3/`](m1r3/README.md) does the same in three dimensions: `m₁(ℝ³) ≤ 0.15158538`, from the same program
+carried to `ℝ³`, with the atom `δ²` at the origin, on 27 points `q/√2`, `q ∈ ℚ³`
+([`papers/unit-distance-density-3d/`](../../papers/unit-distance-density-3d/README.md)).
+
 Each file in `certificates/` is a dual solution of the linear program of Oliveira Filho and Vallentin
 (J. Eur. Math. Soc. 2010, Theorem 1.1), with clique inequalities added for `{1, 2}` and `{1, √3}`. It proves an
 upper bound `B` on `m_D(ℝ²)`, the largest density of a measurable planar set with no two points at a distance in
