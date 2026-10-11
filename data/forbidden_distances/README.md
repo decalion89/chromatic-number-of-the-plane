@@ -5,6 +5,10 @@ of `d`: `χ(ℝ², {1, d}) ≥ 7` for every algebraic `d ≥ 5.82` and for `1.72
 algebraic `d ≥ 25 700`; its subfolder [`uniform/ie/`](uniform/ie/README.md) has the inclusion–exclusion certificates
 for `≥ 15`, `≥ 16` and `≥ 17` from `d = 5·10⁵`, `7·10⁷` and `8·10⁸`.
 
+The folder [`m1/`](m1/README.md) holds the certificates for one distance: `m₁(ℝ²) ≤ 0.24415`, from the
+inclusion–exclusion program of Ambrus, Csiszárik, Matolcsi, Varga and Zsámboki for their 23 points and six more
+points of `ℚ(√3, √11)` ([`papers/unit-distance-density/`](../../papers/unit-distance-density/README.md)).
+
 Each file in `certificates/` is a dual solution of the linear program of Oliveira Filho and Vallentin
 (J. Eur. Math. Soc. 2010, Theorem 1.1), with clique inequalities added for `{1, 2}` and `{1, √3}`. It proves an
 upper bound `B` on `m_D(ℝ²)`, the largest density of a measurable planar set with no two points at a distance in

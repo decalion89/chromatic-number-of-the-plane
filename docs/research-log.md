@@ -11360,3 +11360,50 @@ measurable set avoiding `D`; for finite `D` the fractional chromatic number of t
   `ψ_T` is about `10⁻⁹`; the bound sits in `τδ₀²`), and reversing the first congruence, a pair, changes nothing.
   They are replaced by corruptions that are invalid by construction (every `λ_i` lowered by `10⁻⁶`; the first
   congruence whose rotation is not congruent).
+
+## m₁(ℝ²) ≤ 0.24415: the inclusion–exclusion program beyond 23 points (11 October)
+
+- **The result.** Every measurable planar set avoiding the distance 1 has upper density at most `0.24415`
+  (`m₁(ℝ²) ≤ 0.24415`; before: `0.2470`, Ambrus, Csiszárik, Matolcsi, Varga and Zsámboki, Math. Program. 2024). The
+  program is theirs; the configuration `X₂₉` is their `X₂₃` plus six points of `ℚ(√3, √11)`, each at distance 1 from
+  four to six points of `X₂₉`. With the transfer theorem (papers/forbidden-distances), `χ_f(ℝ²) ≥ 4.0959` (was
+  `4.0485`). Data: `data/forbidden_distances/m1/`; paper: `papers/unit-distance-density/` (draft).
+- **The search.** The rule of Ambrus et al. (§7): a candidate is at distance 1 from two points and at distance at
+  least 0.1 from all. `X₂₃` has 208 candidates; 61 were evaluated one at a time (the 29 of unit degree at least 3 and
+  32 of degree 2), each by the program for `X₂₃` plus that point (floating point, `κ` on `t = 0, 0.1, …, 100`, where
+  `X₂₃` gives `0.246948`). The best single point lowers the value to `0.246083` (`8.65·10⁻⁴`); unit degree helps on
+  average (mean gains `0.9`, `2.5`, `4.2`, `5.3·10⁻⁴` for degrees 2–5). Adding the best points in turn: `0.245583`
+  (25 points), `0.245169` (26), `0.244841` (27), `0.244090` (29): about 81% of the sum of the single gains. Ambrus et
+  al. had stopped at 24 points because their last point did not help.
+- **Certificates.** `m1cert2.py`: the program in floating point (`κ` on `0, 0.1, …, 100` and `100.25, …, 400`,
+  relations between sets of at least three points), the relation multipliers rounded and frozen, then a small program
+  in `(ψ₀, ψ_T, λ, u)` alone with `Φ ≥ 1 + 2·10⁻⁵` on a fine grid and `Q ≥ 0` on all independent sets. This beats
+  rounding and rescaling the whole dual (`X₂₃`: `0.24698967` instead of `0.24700966`) and is faster. A first version
+  with `κ` only up to `t = 100` left a dip `Φ ≈ 0.9965` near `t = 104` for `X₂₉`, which cost `3·10⁻⁴` to repair with
+  `w` frozen; the tail grid removes it. Certified: `0.24698967` (`X₂₃`, the bound of Ambrus et al.), `0.24522384` (`X₂₆`),
+  `0.24414455` (`X₂₉`). `check_m1.py` and the separately written `check_m1_indep.py` accept all three and reject eight
+  kinds of corrupted copies (tests/test_m1_density.py).
+- **What did not speed up the program** (its cost grows like the cube of the number of relation rows: 25 points 100 s,
+  29 points 1800 s, 31 points estimated at hours): column generation over the independent sets (the relation rows block
+  partial sets of columns; the value stalled at `0.085` with growing multipliers); generating relation rows from the
+  violated ones (still needs 1 568 of 2 122 relations to reach `0.2474` on `X₂₃`, against `0.24695` with all);
+  keeping the multipliers of a smaller configuration and freeing only the relations through new points (`X₂₆ → X₂₉`:
+  `0.24516` instead of `0.24409`); PDLP (gap `3·10⁻⁵` after 90 000 iterations on `X₂₃`, where the interior-point
+  method takes 34 s); HiGHS simplex (over ten minutes on `X₂₃`); Clarabel (as fast as HiGHS, but over 10 GB at 31
+  points). Dropping the relations between pairs (they repeat the pair equations) and the crossover saves about 25%.
+  Relations matter at all sizes: on `X₂₃`, triangles alone give `0.25028`, sizes 3–4 `0.24754`, 3–5 `0.24697`, all
+  `0.24695`.
+- **Priority.** Varga announced on the blog of the Rényi Institute's AI group (*Solving a Conjecture of Erdős*,
+  10 December 2023) that the group had improved `0.2470` to `0.2415`; the referee found no paper, preprint or
+  certificate for it, nor any other improvement of `0.2470` (14 citing works checked, Vallentin's ICM 2026 survey still
+  cites `0.2470`). So `0.24415` improves the bound with a published proof, not the announced one, and every text says
+  so. (A May 2026 news article that repeats `0.2415` is a garbled secondary report of the blog post.)
+- **Referee (AI agent, separately).** Proved "(P) and (A) imply `m₁ ≤ ψ_T`" in full, including the periodic
+  reduction and why `t = 0` and the reflections are needed (6 393 of the 10 012 relations of `m1_x29.json` need an
+  orientation-reversing isometry); wrote its own checker before reading ours, which accepts all certificates; ran 28
+  corrupted certificates and two sharpness tests (`min Φ = 1 ∓ 10⁻⁸`) through the three checkers: every invalid one
+  rejected. Findings applied: `check_m1.py` used `assert` for every check, so under `python3 -O` it certified invalid
+  certificates (demonstrated: `min Q = −1/3`); it now uses explicit checks, is self-contained, cross-checks the number
+  of independent sets, falls back to Python integers instead of rejecting large denominators and reports proven
+  violations of `Φ ≥ 1`; `m1cert2.py` no longer overflows when it rescales and checks `Φ` up to `t = 10 000`; the paper
+  cites the facts about `J₀` (Nicholson's formula for `|J₀(x)| ≤ √(2/(πx))`).
