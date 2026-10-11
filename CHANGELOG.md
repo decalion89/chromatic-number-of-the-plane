@@ -12,6 +12,10 @@ including every retracted claim, is the research log,
 ## [Unreleased]
 
 ### Added
+- **`m₁(ℝ²) ≤ 0.24353` (11 October, morning).** An eighth point, `x₃₁ = x₇ − (1 + i√11)/2`, lowers the certified bound
+  to `0.24353`, so `χ_f(ℝ²) ≥ 4.1063`. New: `configurations/x31.json` and `certificates/m1_x31.json` (118 421 independent
+  sets, 23 863 relations; the first program takes two hours), accepted by both checkers and by the referee's own
+  checker; the paper, the READMEs and the tests are updated.
 - **`m₁(ℝ²) ≤ 0.24380` (11 October, morning).** A seventh point, `x₃₀ = x₆ + 1`, lowers the certified bound from
   `0.24415` to `0.24380`, so `χ_f(ℝ²) ≥ 4.1017`. New: `configurations/x30.json` and `certificates/m1_x30.json`
   (84 893 independent sets, 15 709 relations), accepted by both checkers and by the referee's own checker; the paper,

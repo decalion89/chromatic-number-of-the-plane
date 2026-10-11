@@ -1,0 +1,8 @@
+(G) 31 points, 84 unit pairs, 23863 congruences checked exactly
+(A) 118421 independent sets (count cross-checked): min Q = 1.000e-09 (Q(empty) = psiT = 0.2435246150)
+(P) Phi >= 1 on [0, 800] (17837 boxes, 49s) and on [800, oo) by the envelope
+CERTIFIED: every measurable planar set avoiding the distance 1 has upper density at most psiT = 0.24352462 (rounded up) = 1/4.10636
+
+real	1m4.481s
+user	1m2.176s
+sys	0m0.305s
