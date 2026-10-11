@@ -1,5 +1,5 @@
 """TikZ picture of a configuration: the points of X23 in black, the new points in red, unit-distance edges in grey
-(edges at a new point in red). usage: python3 fig_config.py ../../data/forbidden_distances/m1/configurations/x30.json fig-config.tex"""
+(edges at a new point in red). usage: python3 fig_config.py ../../data/forbidden_distances/m1/configurations/x31.json fig-config.tex"""
 import sys
 import os
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'data', 'forbidden_distances', 'm1'))

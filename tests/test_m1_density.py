@@ -1,5 +1,5 @@
 """Density of planar sets avoiding the distance 1 (data/forbidden_distances/m1/, papers/unit-distance-density/):
-m_1(R^2) <= psiT for the configurations X23 (Ambrus, Csiszarik, Matolcsi, Varga and Zsamboki), X26, X29 and X30.
+m_1(R^2) <= psiT for the configurations X23 (Ambrus, Csiszarik, Matolcsi, Varga and Zsamboki), X26, X29, X30 and X31.
 
 The configurations must extend each other, with every new point in Q(sqrt3, sqrt11) at distance 1 from at least two
 earlier points; check_m1.py (exact arithmetic and Arb) and check_m1_indep.py (written separately: its own field
@@ -18,8 +18,8 @@ MDIR = os.path.join(HERE, '..', 'data', 'forbidden_distances', 'm1')
 IEDIR = os.path.join(HERE, '..', 'data', 'forbidden_distances', 'uniform', 'ie')
 # name: (points, unit pairs, independent sets, bound on m_1 rounded up to 8 decimals)
 CONFIGS = {'x23': (23, 47, 13552, '0.24698967'), 'x26': (26, 60, 28622, '0.24522384'), 'x29': (29, 76, 55610, '0.24414455'),
-           'x30': (30, 80, 84893, '0.24379682')}
-ORDER = ['x23', 'x26', 'x29', 'x30']
+           'x30': (30, 80, 84893, '0.24379682'), 'x31': (31, 84, 118421, '0.24352462')}
+ORDER = ['x23', 'x26', 'x29', 'x30', 'x31']
 
 
 def mrun(script, *args, timeout=3600):
@@ -76,7 +76,7 @@ def test_certificates_match_the_configurations_and_improve():
         b = Fraction(C['psiT'])
         assert b < last and b < Fraction(1, 4)
         last = b
-    assert last < Fraction(24380, 100000)
+    assert last < Fraction(24353, 100000)
 
 
 @pytest.mark.parametrize('name', sorted(CONFIGS))

@@ -11432,3 +11432,22 @@ measurable set avoiding `D`; for finite `D` the fractional chromatic number of t
     point, and the restricted programs were not faster (run four at a time, they took 6 to 38 minutes against 16 for
     the full program run alone).
   - Symmetry: neither `X₂₃` nor `X₂₉` has one; the reflection that keeps the most of `X₂₉` adds six points.
+
+## m₁(ℝ²) ≤ 0.24353: an eighth point, and a better candidate (11 October)
+
+- **The result.** `X₃₁ = X₃₀ ∪ {x₃₁}` with `x₃₁ = x₇ − (1 + i√11)/2 = (9 − √33)/12 + i(5√3 − 3√11)/12`, at distance 1
+  from `x₃`, `x₁₇`, `x₂₁` and `x₂₄`: 118 421 independent sets and 23 863 relations. The program gives `0.24347415`
+  after 7 133 s (two hours) on one core; the certificate has `ψ_T = 0.2435246150`, so `m₁(ℝ²) ≤ 0.24353` and
+  `χ_f(ℝ²) ≥ 4.1063`. `check_m1.py` (59 s), `check_m1_indep.py` (53 s) and the referee's own checker (42 s) accept
+  it; 15 125 of its 23 863 relations need a reflection.
+- **Other candidates on `X₂₉`** (the program for `X₂₉` plus one point, `0.24409208` without it): `x₃₀` gains
+  `3.49·10⁻⁴`; `(−0.2287, 1.5508)` (unit degree 4) `2.53·10⁻⁴`; `(−0.5620, 0.1320)` (degree 5) `2.35·10⁻⁴`; and
+  `c* = (15 − √33)/12 − i(√3 + 3√11)/12 ≈ 0.7713 − 0.9735i`, of unit degree 2, **`5.80·10⁻⁴`**, the most of any point
+  tried on `X₂₉`. On `X₂₃` its single gain was `7.13·10⁻⁴`, so it keeps most of it while `x₃₀` keeps half: points of
+  low unit degree, passed over for the first six additions, are worth more than their degree suggests. `X₃₁ ∪ {c*}`
+  (174 474 independent sets, 32 737 relations) is being certified.
+- **Several configurations in one program** (each with its own pattern distribution, sharing the measure `κ` and
+  the congruences across blocks): `X₂₃` together with a triangular-lattice hexagon of 19 points, a 4 × 4 square grid
+  or the Moser spindle gives exactly the value of `X₂₃` alone (`0.24694784`); the extra blocks constrain nothing.
+- **Practical.** The container restarted at 04:37 UTC, killing the first run for 32 points after 40 minutes; it was
+  restarted. A run of the first program for 31 points needs about 2.5 GB.
